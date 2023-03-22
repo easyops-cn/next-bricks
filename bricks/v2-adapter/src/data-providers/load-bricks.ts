@@ -25,7 +25,6 @@ import * as JsYaml from "js-yaml";
 import lodash from "lodash";
 import moment from "moment";
 import "@next-core/theme";
-import type { EasyOpsIconProps } from "@next-bricks/icons/easyops-icon";
 import { getLegacyUseBrick } from "./legacy-brick-kit/getLegacyUseBrick.js";
 import { getLegacyRuntime } from "./legacy-brick-kit/getLegacyRuntime.js";
 import { loadLazyBricks } from "./legacy-brick-kit/LazyBrickRegistry.js";
@@ -175,7 +174,7 @@ async function loadMainDll(adapterPkgFilePath: string) {
   const LegacyErrorBoundary = getLegacyErrorBoundary(LegacyReact);
 
   defineModule(LegacyBrickIcons, {
-    BrickIcon({ category, icon }: EasyOpsIconProps) {
+    BrickIcon({ category, icon }: { category?: string, icon: string }) {
       return LegacyReact.createElement(EASYOPS_ICON_BRICK, {
         category,
         icon,
