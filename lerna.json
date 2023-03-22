@@ -1,0 +1,18 @@
+{
+  "packages": ["bricks/*"],
+  "version": "independent",
+  "npmClient": "yarn",
+  "stream": true,
+  "useWorkspaces": true,
+  "useNx": true,
+  "conventionalCommits": true,
+  "command": {
+    "publish": {
+      "npmClient": "npm",
+      "allowBranch": ["master"],
+      "verifyAccess": false,
+      "message": "chore(release): publish",
+      "registry": "https://registry.npmjs.org"
+    }
+  }
+}

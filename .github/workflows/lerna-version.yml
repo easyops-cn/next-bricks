@@ -1,0 +1,30 @@
+name: Lerna version
+
+on: workflow_dispatch
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GH_TOKEN_EVE }}
+        fetch-depth: 0
+
+    - run: |
+        git config --global user.name 'easyops-eve'
+        git config --global user.email 'easyops-eve@users.noreply.github.com'
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Lerna Version
+      run: npx lerna version --yes

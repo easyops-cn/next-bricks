@@ -1,0 +1,57 @@
+{
+  "name": "next-bricks",
+  "private": true,
+  "homepage": "https://github.com/easyops-cn/next-bricks",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:easyops-cn/next-bricks.git"
+  },
+  "license": "GPL-3.0",
+  "scripts": {
+    "prepare": "lerna bootstrap && husky install",
+    "serve": "brick-container-serve",
+    "serve:e2e": "brick-container-serve --no-remote",
+    "serve:playground": "brick-playground-serve",
+    "build": "lerna run build",
+    "test": "test-next-project",
+    "test:ci": "lerna run test:ci --",
+    "lint-staged": "lint-staged"
+  },
+  "browserslist": {
+    "development": [
+      "extends @next-core/browserslist-config-next/development"
+    ],
+    "production": [
+      "extends @next-core/browserslist-config-next/production"
+    ]
+  },
+  "devDependencies": {
+    "@next-core/brick-container": "^3.0.2",
+    "@next-core/brick-playground": "^1.0.2",
+    "@next-core/test-next": "^1.0.2",
+    "@types/history": "^4.7.11",
+    "@types/js-yaml": "^3.12.7",
+    "@types/lodash": "^4.14.191",
+    "@types/node": "^16.18.14",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.56.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^8.36.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.3",
+    "lerna": "^6.5.1",
+    "lint-staged": "^13.2.0",
+    "prettier": "^2.8.6",
+    "typescript": "^5.0.2"
+  },
+  "workspaces": [
+    "bricks/*"
+  ],
+  "resolutions": {
+    "@types/react": "^18.0.28",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4"
+  }
+}
