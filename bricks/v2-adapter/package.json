@@ -43,7 +43,7 @@
     "@next-core/runtime": "^1.0.2",
     "@next-core/theme": "^1.0.2",
     "@next-core/utils": "^1.0.2",
-    "history": "^4.10.1",
+    "history": "^5.3.0",
     "js-yaml": "^3.14.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.4"
