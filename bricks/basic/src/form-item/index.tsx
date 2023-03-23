@@ -10,7 +10,7 @@ import "@next-core/theme";
 
 type CurrentElement = HTMLElement & {
   size?: ComponentSize;
-  validateState?: MessageBody;
+  validateState?: MessageBody | string;
   [key: string]: any;
 };
 
@@ -31,6 +31,7 @@ export interface FormItemProps {
   size?: ComponentSize;
   trigger?: string;
   valuePropsName?: string;
+  validator?: (value: any) => MessageBody | string;
 }
 
 const { defineElement, property } = createDecorators();
@@ -198,6 +199,15 @@ class FormItem extends FormItemElement implements FormItemProps {
   @property()
   accessor trigger!: string;
 
+  /**
+   * @default false
+   * @description 表单项校验方法
+   */
+   @property({
+    attribute: false
+  })
+  accessor validator: ((value: any) => MessageBody) | undefined;
+
   render() {
     return (
       <FormItemComponent
@@ -214,6 +224,7 @@ class FormItem extends FormItemElement implements FormItemProps {
         layout={this.layout || this.formElement?.layout}
         trigger={this.trigger}
         valuePropsName={this.valuePropsName}
+        validator={this.validator}
       />
     );
   }
@@ -236,6 +247,7 @@ export function FormItemComponent(props: FormItemProps) {
     size,
     trigger = "onChange",
     layout,
+    validator,
   } = props;
   const formInstance = formElement?.formStore;
 
@@ -283,6 +295,7 @@ export function FormItemComponent(props: FormItemProps) {
         max,
         min,
         message,
+        validator,
       },
     });
 
@@ -304,6 +317,7 @@ export function FormItemComponent(props: FormItemProps) {
     pattern,
     required,
     size,
+    validator,
   ]);
 
   return (

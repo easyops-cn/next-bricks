@@ -28,6 +28,7 @@ interface Validate {
     min?: string;
     max?: string;
   };
+  validator?: (value: any) => MessageBody | string;
 }
 
 let uid = 0;
@@ -96,6 +97,7 @@ export class FormStore extends PubSub {
     Object.entries(values).forEach(([k, v]) => {
       if (allFields.includes(k)) {
         newFormData[k] = v;
+        this.#initData && (this.#initData[k] = v);
         this.publish(`${k}.init.value`, v);
       }
     });
@@ -126,7 +128,7 @@ export class FormStore extends PubSub {
 
   validateFields(callback: (err: boolean, value: any) => void) {
     const allFields = this.#getAllFields();
-    const results: MessageBody[] = [];
+    const results: Array<MessageBody | undefined> = [];
     allFields.forEach((name) => {
       const field = this.#fields.get(name);
       if (field) {
@@ -134,15 +136,17 @@ export class FormStore extends PubSub {
       }
     });
 
-    if (results.some((result) => result.type !== "normal")) {
+    if (results.some((result) => result?.type !== "normal")) {
       callback(true, results);
     } else {
       callback(false, this.#formData);
     }
   }
 
-  validateField(field: FieldDetail) {
-    const { name, label, validate } = field;
+  validateField(field: string | FieldDetail) {
+    const fieldDetail = typeof field === "string" ? this.#fields.get(field)?.detail : field;
+    if (!fieldDetail) return;
+    const { name, label, validate } = fieldDetail;
     const validateValue = this.#formData[name];
 
     const messageBody = (message: string, type = "error") => {
@@ -153,7 +157,7 @@ export class FormStore extends PubSub {
     };
 
     const valid = (validate: Validate, value: string): MessageBody => {
-      const { required, pattern, message, min, max } = validate;
+      const { required, pattern, message, min, max, validator } = validate;
 
       if (required && !value) {
         return messageBody(message?.required || `${label}为必填项`);
@@ -174,6 +178,11 @@ export class FormStore extends PubSub {
 
       if (max && value && value.length > max) {
         return messageBody(message?.max || `${label}不能超过 ${max} 个字符`);
+      }
+
+      if (validator) {
+        const result = validator(value);
+        if (result) return result === "string" ? messageBody(result, result ? "error" : "normal") : result as MessageBody;
       }
 
       return messageBody("", "normal");

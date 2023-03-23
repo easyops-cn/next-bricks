@@ -31,6 +31,11 @@ declare module "*.png" {
   export = value;
 }
 
+declare module '*.json' {
+  const value: any;
+  export default value;
+}
+
 declare module "@ungap/event-target" {
   export default EventTarget;
 }
