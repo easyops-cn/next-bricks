@@ -1924,12 +1924,7 @@
   dependencies:
     "@next-core/styles-v3" "^0.2.1"
 
-"@next-core/types@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@next-core/types/-/types-1.0.2.tgz#38079b5a5414598e96b598a63e1d7fcd62ab96d5"
-  integrity sha512-ZA0+lg/d+xAQsZFNWufU9vRynp39z+eN90KeZi3hV9IJ3yqCQYQiaMzQicwuWL2Jqdr7UuNXDahJr4c1w0Rt0g==
-
-"@next-core/types@^1.0.3":
+"@next-core/types@^1.0.2", "@next-core/types@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@next-core/types/-/types-1.0.3.tgz#97557437ed068e988f7d4c05fbe24cd63b86ebbd"
   integrity sha512-aysG8ZL57ywQvrAmmVNtVJcacl+0ZpdmjlU3KHVZ6eCVDSXkHecShVHrv2axK2PQ8lhCduyplZIlsF/XqAcq0Q==
@@ -9606,6 +9601,13 @@ react@0.0.0-experimental-ee8509801-20230117:
   version "0.0.0-experimental-ee8509801-20230117"
   resolved "https://registry.yarnpkg.com/react/-/react-0.0.0-experimental-ee8509801-20230117.tgz#07d19ce8c9f7f4288b1ca05eeb8b4b8016c081ed"
   integrity sha512-RriS2Fco7EKsXFXi63e9RFEz9xPnDakzHVKGzQ5iwy0jaFwHpvZbYr4fSbPmmUyGUXjDFtr4BfzANERUju1byw==
+  dependencies:
+    loose-envify "^1.1.0"
+
+react@18.2.0:
+  version "18.2.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
+  integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
   dependencies:
     loose-envify "^1.1.0"
 
