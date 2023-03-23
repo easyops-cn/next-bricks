@@ -41,6 +41,7 @@
   /* 背景色 */
   --color-fill-global-bg: #0f1014;
   --color-fill-bg-container: var(--palette-rgba-white-1);
+  --color-fill-bg-container-2: #1F222F;
   --color-fill-bg-base-1: rgba(101, 106, 134, 20%);
   --color-fill-bg-base-2: rgba(15, 16, 20, 0%);
   --color-fill-bg-base-3: rgba(0, 0, 0, 20%);
