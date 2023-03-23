@@ -1,12 +1,10 @@
 // Copy from ace/mode/terraform
 // Terraform mode is not supported in the react-ace 7.x version
 import ace from "ace-builds";
-import { loadPluginsForCodeEditor } from "../brace/index.js";
+import "../aceBuilds/index.js";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/explicit-function-return-type
 export function getTerraformMode() {
-  loadPluginsForCodeEditor();
-
   const CstyleBehaviour = ace.require(
     "ace/mode/behaviour/cstyle"
   ).CstyleBehaviour;

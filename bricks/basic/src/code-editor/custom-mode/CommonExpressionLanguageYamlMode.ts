@@ -1,12 +1,10 @@
 import ace from "ace-builds";
-import { loadPluginsForCodeEditor } from "../brace/index.js";
+import "../aceBuilds/index.js";
 import { getCommonExpressionLanguageRules } from "./CommonExpressionLanguageRules.js";
 import { AceLanguageRule, AceLanguageRules } from "../interfaces.js";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/explicit-function-return-type
 export function getCommonExpressionLanguageYamlMode() {
-  loadPluginsForCodeEditor();
-
   // Ref https://github.com/ajaxorg/ace/wiki/Creating-or-Extending-an-Edit-Mode
   // istanbul ignore next
   class CustomHighlightRules extends ace.require(

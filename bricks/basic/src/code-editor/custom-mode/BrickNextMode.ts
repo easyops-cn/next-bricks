@@ -1,11 +1,9 @@
 import { brickNextEntryRules, generateBrickNextRules } from "./BrickNextRules.js";
 import ace from "ace-builds";
-import { loadPluginsForCodeEditor } from "../brace/index.js";
+import "../aceBuilds/index.js";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/explicit-function-return-type
 export function getBrickNextMode() {
-  loadPluginsForCodeEditor();
-
   const JavaScriptHighlightRules = ace.require(
     "ace/mode/javascript_highlight_rules"
   ).JavaScriptHighlightRules;

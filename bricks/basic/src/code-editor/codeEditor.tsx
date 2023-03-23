@@ -17,20 +17,18 @@ import { getBrickNextYamlMode } from "./custom-mode/BrickNextYamlMode.js";
 import { getTerraformMode } from "./custom-mode/TerraformMode.js";
 import { brickNextCompleters } from "./custom-mode/brickNextUtil.js";
 import { CodeEditorProps, ExtendedMarker, Annotation } from "./interfaces.js";
-import { loadPluginsForCodeEditor } from "./brace/index.js";
 import { getCommonExpressionLanguageYamlMode } from "./custom-mode/CommonExpressionLanguageYamlMode.js";
 import { getCommonExpressionLanguageMode } from "./custom-mode/CommonExpressionLanguageMode.js";
 import { CommonExpressionLanguageCompleter } from "./custom-mode/CommonExpressionLanguageRules.js";
 import { getHighlightMarkers } from "./getHighlightMarkers.js";
 import { getClickableMarker } from "./getClickableMarker.js";
 import ResizeObserver from "resize-observer-polyfill";
+import "./aceBuilds/index.js";
 
 export function CodeEditorItem(
   props: CodeEditorProps,
   ref: any
 ): React.ReactElement {
-  loadPluginsForCodeEditor();
-
   const [editor, setEditor] = useState<IEditorProps>();
   const [ajv, setAjv] = useState<any>();
   const [jsonSchema, setJsonSchema] = useState(props.jsonSchema);
