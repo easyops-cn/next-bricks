@@ -1,19 +1,19 @@
 import { brickNextEntryRules, BrickNextRules } from "./BrickNextRules.js";
 import { findIndex } from "lodash";
-import ace from "brace";
+import ace from "ace-builds";
 import { loadPluginsForCodeEditor } from "../brace/index.js";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/explicit-function-return-type
 export function getBrickNextYamlMode() {
   loadPluginsForCodeEditor();
 
-  const JavaScriptHighlightRules = ace.acequire(
+  const JavaScriptHighlightRules = ace.require(
     "ace/mode/javascript_highlight_rules"
   ).JavaScriptHighlightRules;
 
   // Ref https://github.com/ajaxorg/ace/wiki/Creating-or-Extending-an-Edit-Mode
   // istanbul ignore next
-  class CustomHighlightRules extends ace.acequire(
+  class CustomHighlightRules extends ace.require(
     "ace/mode/yaml_highlight_rules"
   ).YamlHighlightRules {
     constructor() {
@@ -87,7 +87,7 @@ export function getBrickNextYamlMode() {
     }
   }
 
-  return class BrickNextYamlMode extends ace.acequire("ace/mode/yaml").Mode {
+  return class BrickNextYamlMode extends ace.require("ace/mode/yaml").Mode {
     constructor() {
       super();
       this.HighlightRules = CustomHighlightRules;

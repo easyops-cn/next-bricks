@@ -1,5 +1,3 @@
-import { Annotation } from "brace";
-// import { FormItemWrapperProps } from "@next-libs/forms";
 import { IMarker } from "react-ace";
 import type { FormItemProps } from "../form-item/index.js";
 
@@ -94,3 +92,14 @@ export interface AceLanguageRule {
 }
 
 export type AceTokenFunction = (value: string) => string;
+
+export interface Annotation {
+
+  row: number;
+
+  column: number;
+
+  text: string;
+
+  type: string;
+}

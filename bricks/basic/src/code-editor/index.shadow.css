@@ -1,7 +1,3 @@
-/* react-ace 7.0.5 版本样式无法在shadow dom中支持，需手动引入, 目前只支持一种主题 */
-@import url("ace-builds/css/ace.css");
-@import url("ace-builds/css/theme/monokai.css");
-
 .aceContainer {
   border: 1px solid var(--color-border-divider-line);
   border-radius: var(--larger-border-radius);
@@ -62,26 +58,10 @@
 }
 
 /* 样式兼容修复fix */
-.ace_text-layer > .ace_line, .ace_text-layer > .ace_line_group {
-  position: relative;
-}
-
 .ace_start, .ace_end {
   margin: 0;
 }
 
 .ace_print-margin-layer {
   display: none;
-}
-
-.ace_gutter {
-  width: 32px;
-}
-
-.ace_gutter .ace_gutter-cell  {
-  position: relative;
-}
-
-.ace_scroller {
-  left: 38px;
 }

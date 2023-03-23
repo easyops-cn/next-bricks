@@ -45,13 +45,10 @@
     "@next-core/react-runtime": "^1.0.2",
     "@next-core/theme": "^1.0.2",
     "@next-core/types": "^1.0.3",
-    "ace-builds": "^1.16.0",
-    "brace": "^0.11.1",
     "classnames": "^2.3.2",
-    "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
     "react": "0.0.0-experimental-ee8509801-20230117",
-    "react-ace": "^7.0.5",
+    "react-ace": "^10.1.0",
     "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {

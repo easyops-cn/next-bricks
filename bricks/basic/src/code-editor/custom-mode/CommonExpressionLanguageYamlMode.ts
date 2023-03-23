@@ -1,4 +1,4 @@
-import ace from "brace";
+import ace from "ace-builds";
 import { loadPluginsForCodeEditor } from "../brace/index.js";
 import { getCommonExpressionLanguageRules } from "./CommonExpressionLanguageRules.js";
 import { AceLanguageRule, AceLanguageRules } from "../interfaces.js";
@@ -9,7 +9,7 @@ export function getCommonExpressionLanguageYamlMode() {
 
   // Ref https://github.com/ajaxorg/ace/wiki/Creating-or-Extending-an-Edit-Mode
   // istanbul ignore next
-  class CustomHighlightRules extends ace.acequire(
+  class CustomHighlightRules extends ace.require(
     "ace/mode/yaml_highlight_rules"
   ).YamlHighlightRules {
     constructor() {
@@ -98,7 +98,7 @@ export function getCommonExpressionLanguageYamlMode() {
     }
   }
 
-  return class CommonExpressionLanguageYamlMode extends ace.acequire(
+  return class CommonExpressionLanguageYamlMode extends ace.require(
     "ace/mode/yaml"
   ).Mode {
     constructor() {

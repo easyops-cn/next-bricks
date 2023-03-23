@@ -9,7 +9,6 @@ import React, {
 import AceEditor, { IEditorProps } from "react-ace";
 import { isEqual, isEmpty, uniqWith, isString, map } from "lodash";
 import Ajv from "ajv";
-import { Annotation } from "brace";
 import classNames from "classnames";
 import yaml from "js-yaml";
 import storyboardJsonSchema from "@next-core/types/storyboard.json";
@@ -17,7 +16,7 @@ import { getBrickNextMode } from "./custom-mode/BrickNextMode.js";
 import { getBrickNextYamlMode } from "./custom-mode/BrickNextYamlMode.js";
 import { getTerraformMode } from "./custom-mode/TerraformMode.js";
 import { brickNextCompleters } from "./custom-mode/brickNextUtil.js";
-import { CodeEditorProps, ExtendedMarker } from "./interfaces.js";
+import { CodeEditorProps, ExtendedMarker, Annotation } from "./interfaces.js";
 import { loadPluginsForCodeEditor } from "./brace/index.js";
 import { getCommonExpressionLanguageYamlMode } from "./custom-mode/CommonExpressionLanguageYamlMode.js";
 import { getCommonExpressionLanguageMode } from "./custom-mode/CommonExpressionLanguageMode.js";
@@ -97,7 +96,6 @@ export function CodeEditorItem(
   };
 
   const yamlLint = (): Annotation[] => {
-    // 当前版本不做升级，由于高版本存在json格式错误不做校验，详情可见： https://github.com/securingsincity/react-ace/issues/811
     // ace 官方库缺少 yaml 语法校验，这里主动校验。等 https://github.com/ajaxorg/ace/pull/3979 合并后可去掉
     let yamlLintAnnotations: Annotation[] = [];
     let schemaAnnotations: Annotation[] = [];

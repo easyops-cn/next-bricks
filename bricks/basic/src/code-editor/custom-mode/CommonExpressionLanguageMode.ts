@@ -1,4 +1,4 @@
-import ace from "brace";
+import ace from "ace-builds";
 import { loadPluginsForCodeEditor } from "../brace/index.js";
 import { getCommonExpressionLanguageRules } from "./CommonExpressionLanguageRules.js";
 
@@ -7,7 +7,7 @@ export function getCommonExpressionLanguageMode() {
   loadPluginsForCodeEditor();
 
   // istanbul ignore next
-  class CommonExpressionLanguageHighlightRules extends ace.acequire(
+  class CommonExpressionLanguageHighlightRules extends ace.require(
     "ace/mode/text_highlight_rules"
   ).TextHighlightRules {
     constructor() {
@@ -17,7 +17,7 @@ export function getCommonExpressionLanguageMode() {
     }
   }
 
-  return class CommonExpressionLanguageMode extends ace.acequire(
+  return class CommonExpressionLanguageMode extends ace.require(
     "ace/mode/text"
   ).Mode {
     constructor() {

@@ -1,25 +1,25 @@
 // Copy from ace/mode/terraform
 // Terraform mode is not supported in the react-ace 7.x version
-import ace from "brace";
+import ace from "ace-builds";
 import { loadPluginsForCodeEditor } from "../brace/index.js";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/explicit-function-return-type
 export function getTerraformMode() {
   loadPluginsForCodeEditor();
 
-  const CstyleBehaviour = ace.acequire(
+  const CstyleBehaviour = ace.require(
     "ace/mode/behaviour/cstyle"
   ).CstyleBehaviour;
 
-  const CStyleFoldMode = ace.acequire("ace/mode/folding/cstyle").FoldMode;
+  const CStyleFoldMode = ace.require("ace/mode/folding/cstyle").FoldMode;
 
-  const MatchingBraceOutdent = ace.acequire(
+  const MatchingBraceOutdent = ace.require(
     "ace/mode/matching_brace_outdent"
   ).MatchingBraceOutdent;
 
   // Ref https://github.com/ajaxorg/ace/wiki/Creating-or-Extending-an-Edit-Mode
   // istanbul ignore next
-  class TerraformHighlightRules extends ace.acequire(
+  class TerraformHighlightRules extends ace.require(
     "ace/mode/text_highlight_rules"
   ).TextHighlightRules {
     constructor() {
@@ -206,7 +206,7 @@ export function getTerraformMode() {
     }
   }
 
-  return class TerraformMode extends ace.acequire("ace/mode/text").Mode {
+  return class TerraformMode extends ace.require("ace/mode/text").Mode {
     constructor() {
       super();
       this.HighlightRules = TerraformHighlightRules;
