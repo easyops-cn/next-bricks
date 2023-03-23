@@ -1,0 +1,74 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.treemap {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  cursor: url("./dot.svg") 10 10, pointer;
+}
+
+.treemap-leaf {
+  position: absolute;
+  overflow: hidden;
+  border-radius: var(--no-border-radius);
+  background: var(--color-fill-bg-container-2) radial-gradient(farthest-corner, #0F1014ff 0%, #0F101400 100%);
+  box-shadow: inset 5px 5px 8px 1px rgba(51, 102, 255, 0.24);
+}
+
+.tooltip {
+  display: inline-block;
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 8px 8px 8px 15px;
+  font-size: var(--chart-tooltips-font-size-2);
+  line-height: 20px;
+  font-weight: var(--font-weight-500);
+  color: var(--color-normal-text);
+  --treemap-tooltip-background: rgba(103, 149, 219, 0.12) radial-gradient(100% 100% ellipse at 12px 4px, rgba(var(--palette-tech-blue-6-channel), 0.3), rgba(var(--palette-tech-blue-6-channel), 0));
+  --treemap-backdrop-filter: blur(5px);
+  z-index: 0;
+}
+
+.tooltip::before,
+.tooltip::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: -1;
+  background: var(--treemap-tooltip-background);
+  backdrop-filter: var(--treemap-backdrop-filter);
+}
+
+.tooltip::before {
+  clip-path: inset(0 0 0 7px round var(--medius-border-radius));
+}
+
+.tooltip::after {
+  clip-path: polygon(0 50%, 7px calc(50% - 7px), 7px calc(50% + 7px));
+}
