@@ -108,6 +108,14 @@ class Form extends ReactNextElement {
     return this.formStore.getFieldsValue(name);
   }
 
+  /**
+   * @description
+   */
+  @method()
+  validateField(name: string) {
+    this.formStore.validateField(name);
+  }
+
   render() {
     return <FormComponent />;
   }
