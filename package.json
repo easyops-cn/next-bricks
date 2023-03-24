@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@next-core/babel-preset-next": "^1.0.2",
-    "@next-core/brick-container": "^3.0.4",
+    "@next-core/brick-container": "^3.0.5",
     "@next-core/brick-playground": "^1.0.4",
     "@next-core/browserslist-config-next": "^1.0.2",
     "@next-core/test-next": "^1.0.2",
