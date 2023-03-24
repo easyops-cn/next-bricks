@@ -1887,10 +1887,10 @@
   dependencies:
     express "^4.18.2"
 
-"@next-core/styles-v3@^0.2.1", "@next-core/styles-v3@^0.2.14":
-  version "0.2.14"
-  resolved "https://registry.yarnpkg.com/@next-core/styles-v3/-/styles-v3-0.2.14.tgz#22bd7723f485ce96e8ac3bd410a6679d69c8ba6f"
-  integrity sha512-mScEzUsEORrH30KoGXewlc74EMaMLG0f3eWb5+/oEOwxbEkk8GhfzU/CQywF6UarA832r3ZVClrdaxsZ5i2hZA==
+"@next-core/styles-v3@^0.2.1", "@next-core/styles-v3@^0.2.15":
+  version "0.2.15"
+  resolved "https://registry.yarnpkg.com/@next-core/styles-v3/-/styles-v3-0.2.15.tgz#9649a813c6ae8f7cd9f62dc9e9313a20a488e872"
+  integrity sha512-2vqdQU/3WDxBtt0MpzD3Lyec2YB5SUwnQwbJb8UeknkTS0Cit3M1P+Gu4HJ21TIaMlioEOfJPmNcmuNW0NhxdA==
 
 "@next-core/supply@^2.0.2":
   version "2.0.2"
@@ -1938,10 +1938,10 @@
     "@next-core/types" "^1.0.3"
     lodash "^4.17.21"
 
-"@next-dll/ace@^2.0.598":
-  version "2.0.598"
-  resolved "https://registry.yarnpkg.com/@next-dll/ace/-/ace-2.0.598.tgz#cf81b1d66076c2e7f0492b10901546175483b061"
-  integrity sha512-byXEhiQMKHazON9UajW5L+QRwq7EnInRBfB7yKwP7hKchr++Kf/lQMgU5Tff2NoI8yT/Xx/6zIgQqa/SaRytzg==
+"@next-dll/ace@^2.0.599":
+  version "2.0.599"
+  resolved "https://registry.yarnpkg.com/@next-dll/ace/-/ace-2.0.599.tgz#5eb46a93ca0076a012b674d8bb2854540a3c8a45"
+  integrity sha512-MARarqVOSWVsp0Kxbp3FNLzPK75QfEZntJFxcWliK5a4MrZimWBs9WtaFWNMC8SaCXRWJbvrGkMjUxy1a1rkWA==
 
 "@next-dll/d3@^2.0.78":
   version "2.0.78"
@@ -1953,15 +1953,15 @@
   resolved "https://registry.yarnpkg.com/@next-dll/echarts/-/echarts-2.0.79.tgz#27c392745b57b95432b4bdd366098ae6fea60808"
   integrity sha512-CumG4+kAMIyfThntJgQZCvYn8NjPco9ockU+MmNM7M87CK6nCb6czOd1EDXn9y0XBb0zd/2bm2RMXCdzmfrodg==
 
-"@next-dll/editor-bricks-helper@^0.34.66":
-  version "0.34.66"
-  resolved "https://registry.yarnpkg.com/@next-dll/editor-bricks-helper/-/editor-bricks-helper-0.34.66.tgz#922d0c0c685436ad2fa2ba5c5ba37aa5b89d5715"
-  integrity sha512-xYBkx2Z4x2o16WFdiFdPh11KjeMPZps71KNs6XLIPnVmlNH+JjoMbj7IYxijpcjE8FdzMJb5unRlFJAdufRhxw==
+"@next-dll/editor-bricks-helper@^0.34.67":
+  version "0.34.67"
+  resolved "https://registry.yarnpkg.com/@next-dll/editor-bricks-helper/-/editor-bricks-helper-0.34.67.tgz#9ab40ed6c1b8a11844432870d38008aedc68b070"
+  integrity sha512-/m4FFLm44KxiU1EMaU4kNBOPuZ38CY5jDKL2h1RzDqfh/eWAnO2Sm8ibIzPRZL/TVd+V2eF5WW5A8YkOnw/F9Q==
 
-"@next-dll/react-dnd@^0.1.536":
-  version "0.1.536"
-  resolved "https://registry.yarnpkg.com/@next-dll/react-dnd/-/react-dnd-0.1.536.tgz#a3f26ede29bffde1ebede452da239ec6eb80ef69"
-  integrity sha512-DiK8Q9ZNBzezmr8ESBfmmYyMW+oGoGJmqP+GftfZKs0WHagXMU2mgGH53UI5CzIe2lpDsUOGWh5YpA9g3nw8nQ==
+"@next-dll/react-dnd@^0.1.537":
+  version "0.1.537"
+  resolved "https://registry.yarnpkg.com/@next-dll/react-dnd/-/react-dnd-0.1.537.tgz#d361d4fa5c040e2fcf88e66d2fa2e57a1a1dbade"
+  integrity sha512-tqyUBntzG8gHs7kgCiHI+xCPPxiqGnmYm3PXctPvUAuzqnN+X3RsdHkh07DlFd1xQF2Yw9s4SShmLHw+3EjP/Q==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
