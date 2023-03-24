@@ -5,8 +5,8 @@
     height: 100vh;
     z-index: 1000;
 }
-.drawerWrapper.open  .drawerBody,
-.drawerWrapper.close  .drawerBody
+.drawerWrapper.open,
+.drawerWrapper.close
 {
     transition: transform 0.3s cubic-bezier(0.7, 0.3, 0.1, 1),
     box-shadow 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
@@ -16,11 +16,12 @@
     display: flex;
     min-width: 200px;
     height: 100%;
+    background: var(--color-fill-global-bg);
 }
-.drawerWrapper.open  .drawerBody {
+.drawerWrapper.open {
     transform: translate(0, 0);
 }
-.drawerWrapper.close  .drawerBody {
+.drawerWrapper.close {
     transform: translateX(100%);
 }
 .drawerBodyHidden {
@@ -30,7 +31,7 @@
     position: relative;
     width: 46px;
     height: 100%;
-    background: linear-gradient(180deg, #232431 0%, #15191F 53%, #232431 100%);
+    background: var(--color-fill-bg-base-1);
 }
 
 .menuMask{
@@ -62,9 +63,8 @@
 .closeIcon {
    width: 3px;
     height: 11px;
-    border-left: 2px solid #fff;
-    border-right: 2px solid #fff;
-
+    border-left: 2px solid var(--color-normal-text);
+    border-right: 2px solid var(--color-normal-text);
 }
 
 .menuIconItem {
@@ -72,14 +72,16 @@
     height: 46px;
     text-align: center;
     line-height: 46px;
-    color: #fff;
+    color: var(--color-normal-text);
     background: rgba(25,26,34,0);
     opacity: 0.4;
     position: relative;
-
 }
-.menuIconItem:hover,.menuIconItem.active {
-    background: #191A22;
+.menuIconItem:hover {
+    opacity: 0.8;
+}
+.menuIconItem.active {
+    background: var(--color-fill-global-bg);
     opacity: 1;
 }
 
@@ -126,5 +128,4 @@
 }
 .content {
     flex: 1;
-    background: #0F1014;
 }
