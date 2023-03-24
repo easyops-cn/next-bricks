@@ -57,6 +57,8 @@ export function getLegacyRuntime(): {
           return function reloadMicroApps() {
             //
           };
+        case "reloadSharedData":
+          return function () {};
       }
     },
   });
