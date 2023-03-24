@@ -1724,10 +1724,10 @@
     "@babel/preset-react" "^7.18.6"
     "@babel/preset-typescript" "^7.21.0"
 
-"@next-core/brick-container@^3.0.4":
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.0.4.tgz#2b55163371389ce683135a1656d610f03bf65c4d"
-  integrity sha512-V3+Fcs9dpwSj+bh436Rpujc+bupj/wgI1ZrCBnZBOgFo0O1RkNRCcATtaFusiSsri0ACaKN9xYc0MsG6uNoRUg==
+"@next-core/brick-container@^3.0.5":
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.0.5.tgz#1b7cd760a3b823f0d9b2d8386683f1dba58f1001"
+  integrity sha512-Ys/bxaqr8oK6P/MlbHGx9DJA+4hB8SNVkeFj3a7WHdnH07XYmUr8Y9C1LPlc3niMqfjhnACbhKIwm9WJosCSUQ==
   dependencies:
     "@next-core/serve-helpers" "^1.0.2"
     body-parser "^1.20.1"
@@ -1745,10 +1745,10 @@
   resolved "https://registry.yarnpkg.com/@next-core/brick-dll-v3/-/brick-dll-v3-0.4.0.tgz#8ef5226938764b4fcb2d91b90837a4df21379733"
   integrity sha512-fbQnLYWdcKR52RL0EcwP1pLafE7W7okl0C6CqBNCtPXThSb7tD2RoYndjYW0yYc64itjuYD6XzcXyFnACxsJrw==
 
-"@next-core/brick-icons@^2.31.24":
-  version "2.31.24"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-icons/-/brick-icons-2.31.24.tgz#aff4729cc6b5f5641f3d448cc47e2dfcd428df3d"
-  integrity sha512-OHIy6Ne+QEgZoXBt25gZWTmfm1e15Bhx88V5syHWYRJZPG7m6zRTuhCiuXIUTemPJH1wT5gI4v628nKQ1HHmRg==
+"@next-core/brick-icons@^2.31.25":
+  version "2.31.25"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-icons/-/brick-icons-2.31.25.tgz#21c917837ce49a4f9f29c876fd29a963d3d00d81"
+  integrity sha512-XFujLB3+NAMqLMZWzyUlwgC0ILuLmGbH6148AWFPT+I26lKcBNnya3oPa2xFSzxAdGLWkxhiO41b0CLn1lnFLg==
 
 "@next-core/brick-playground@^1.0.4":
   version "1.0.4"
