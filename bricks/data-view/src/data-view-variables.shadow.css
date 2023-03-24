@@ -31,8 +31,14 @@
   --palette-sea-green-4-channel: 131, 245, 225;
   --palette-sea-green-4: rgb(var(--palette-sea-green-4-channel));
 
+  --palette-green-6-channel: 81, 235, 73;
+  --palette-green-6: rgb(var(--palette-green-6-channel));
+
   --palette-lotus-pink-7-channel: 204, 0, 102;
   --palette-lotus-pink-7: rgb(var(--palette-lotus-pink-7-channel));
+
+  --palette-lotus-red-6-channel: 242, 39, 39;
+  --palette-lotus-red-6: rgb(var(--palette-lotus-red-6-channel));
 
   /* ============== 基本色 End ============== */
 
@@ -40,7 +46,7 @@
 
   /* 背景色 */
   --color-fill-global-bg: #0f1014;
-  --color-fill-bg-container: var(--palette-rgba-white-1);
+  --color-fill-bg-container-1: var(--palette-rgba-white-1);
   --color-fill-bg-container-2: #1F222F;
   --color-fill-bg-base-1: rgba(101, 106, 134, 20%);
   --color-fill-bg-base-2: rgba(15, 16, 20, 0%);
@@ -55,7 +61,8 @@
   --color-contrast-1: var(--palette-sea-green-4);
 
   /* 状态色 */
-  --color-error: var(--palette-lotus-pink-7);
+  --color-error: var(--palette-red-6);
+  --color-success: var(--palette-green-6);
 
   /* 文字色 */
   --color-header-text-big: var(--palette-rgba-white-10);
@@ -99,6 +106,7 @@
   /* 统计数值 */
   --overview-data-font-size: 34px;
   --statistics-data-font-size: 28px;
+  --normal-data-font-size-larger: 20px;
   --normal-data-font-size: 16px;
 
   /* 图表 */
