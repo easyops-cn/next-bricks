@@ -5,6 +5,7 @@ import type {
     GeneralIcon,
     GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
+import variablesStyleText from "../data-view-variables.shadow.css";
 import styleText from "./tabs-drawer.shadow.css";
 import classNames from "classnames";
 const { defineElement, property ,event, method} = createDecorators();
@@ -23,7 +24,7 @@ export interface TabItem {
 }
 interface TabsDrawerProps {
     tabList: TabItem[];
-    activeKey: string;
+    activeKey?: string;
     width?: number | string;
     drawerStyle?: React.CSSProperties;
     bodyStyle?: React.CSSProperties;
@@ -43,7 +44,7 @@ interface TabsDrawerProps {
  */
 
 @defineElement("data-view.tabs-drawer",{
-    styleTexts: [styleText]
+    styleTexts: [variablesStyleText,styleText]
 })
 class TabsDrawer extends ReactNextElement implements TabsDrawerProps {
     /**
@@ -142,6 +143,7 @@ class TabsDrawer extends ReactNextElement implements TabsDrawerProps {
     accessor #tabChangeEvent!: EventEmitter<string>;
 
     #handleTabChange =(key:string)=>{
+        this.activeKey= key;
         this.#tabChangeEvent.emit(key)
     }
     #handleDrawerOpen = () => {
@@ -198,14 +200,13 @@ export function TabsDrawerComponent(props: TabsDrawerProps): React.ReactElement 
             });
             setActiveKey(key);
         }
-        onTabChange?.(key);
     };
 
     useEffect(() => {
         if (tabList.length) {
-            setActiveItem(activeKey ?? tabList[0].key);
+            setActiveItem(props.activeKey ?? tabList[0].key);
         }
-    }, [activeKey, tabList])
+    }, [props.activeKey, tabList])
 
     const menuElement = useMemo(() => (
         <div className="menuWrapper">
@@ -217,7 +218,7 @@ export function TabsDrawerComponent(props: TabsDrawerProps): React.ReactElement 
                         active: item.key === activeKey
                     })}
                          key={`menu-${index}`}
-                         onClick={() => setActiveItem(item.key)}
+                         onClick={() => onTabChange?.(item.key)}
                     >
                         {item.icon && <WrappedIcon {...item.icon} />}
                         {item.tooltip && <div className="menuIconTooltip">{item.tooltip}</div>}
@@ -235,15 +236,16 @@ export function TabsDrawerComponent(props: TabsDrawerProps): React.ReactElement 
                      ...(zIndex ? {zIndex} : {})
                  }}
     >
+        <span className="closeIconBtn" onClick={() => visible ? onClose?.() : onOpen?.()}>
+                   <span className="closeIcon"/>
+          </span>
         <div className={classNames("drawerBody")}
              style={{
                  ...bodyStyle,
                  width,
              }}
         >
-                <span className="closeIconBtn" onClick={() => visible ? onClose?.() : onOpen?.()}>
-                   <span className="closeIcon"/>
-                 </span>
+
             {menuElement}
             <div className="content" ref={contentRef}>
                 {

@@ -35,6 +35,9 @@ describe("data-view.tabs-drawer", ()=>{
         });
         element.open();
         expect(element.visible).toBe(true);
+       const tabElement= element.shadowRoot.querySelector(".menuIconItem");
+        fireEvent.click(tabElement);
+
         element.close();
         expect(element.visible).toBe(false);
         expect(document.body.contains(element)).toBeTruthy();
@@ -48,7 +51,8 @@ describe("data-view.tabs-drawer", ()=>{
     test("change tab", async ()=>{
         const openMockFn = jest.fn();
         const closeMockFn = jest.fn();
-        const {container,asFragment} = render(
+        const changeMockFn= jest.fn();
+        const {container,asFragment ,rerender} = render(
             <TabsDrawerComponent
                 tabList={tabList}
                 activeKey="search"
@@ -56,18 +60,26 @@ describe("data-view.tabs-drawer", ()=>{
                 onClose={closeMockFn}
                 width={500}
                 zIndex={999}
+                onTabChange={changeMockFn}
             />
         );
         expect(asFragment()).toBeTruthy();
         const closeBtn = container.querySelector(".closeIconBtn");
         fireEvent.click(closeBtn);
         expect(openMockFn).toBeCalledTimes(1);
+        expect(changeMockFn).toBeCalledTimes(0);
        const menuItems  = container.querySelector(".menuIconItem");
        expect(menuItems.childNodes.length).toBe(2);
        const activeElement = menuItems.firstElementChild;
        const noActiveElement = menuItems.lastElementChild;
        fireEvent.click(noActiveElement);
        expect(activeElement.classList.contains("active")).toBeFalsy();
-
+       expect(changeMockFn).toBeCalledTimes(1);
+       rerender(
+           <TabsDrawerComponent
+               tabList={tabList}
+           />
+       )
+        expect(asFragment()).toBeTruthy();
     })
 })
