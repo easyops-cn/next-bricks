@@ -24,6 +24,12 @@
       "groupName": "legacy v2 packages"
     },
     {
+      "matchPackageNames": ["history", "js-yaml", "node", "react", "react-dom"],
+      "matchPackagePatterns": ["^@types/"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
       "depTypeList": ["engines"],
       "enabled": false
     },
