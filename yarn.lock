@@ -1797,6 +1797,14 @@
   resolved "https://registry.yarnpkg.com/@next-core/element/-/element-1.0.2.tgz#afe7d0e5c51bb63588fd758d8c628ab32c9a69f5"
   integrity sha512-dwhPZ2gTm47yaqrg18/nJ9khlbEYOlKyeHi3FmDjMIrMj1648M3YSKgKBCMjcy77c6uV5DYI2RnpM/oMChi2kQ==
 
+"@next-core/eslint-config-next@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@next-core/eslint-config-next/-/eslint-config-next-2.0.2.tgz#289a7fdb73b31b0fd8341acac25c72272103bd95"
+  integrity sha512-o6DrVtdx3ftQQUbqJj48a5AblSqDxcXQgyHdN1mhEz208aHpCj/7/w7zQnAfZNYkCvdRJyWIE1uJSpLu0b0tGA==
+  dependencies:
+    "@typescript-eslint/parser" "^5.56.0"
+    eslint-config-prettier "^8.8.0"
+
 "@next-core/http@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@next-core/http/-/http-1.0.2.tgz#d94e936a1775bb3c54b77c6382d5fea59eb1ba87"
@@ -2839,6 +2847,16 @@
     natural-compare-lite "^1.4.0"
     semver "^7.3.7"
     tsutils "^3.21.0"
+
+"@typescript-eslint/parser@^5.56.0":
+  version "5.56.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-5.56.0.tgz#42eafb44b639ef1dbd54a3dbe628c446ca753ea6"
+  integrity sha512-sn1OZmBxUsgxMmR8a8U5QM/Wl+tyqlH//jTqCg8daTAmhAk26L2PFhcqPLlYBhYUJMZJK276qLXlHN3a83o2cg==
+  dependencies:
+    "@typescript-eslint/scope-manager" "5.56.0"
+    "@typescript-eslint/types" "5.56.0"
+    "@typescript-eslint/typescript-estree" "5.56.0"
+    debug "^4.3.4"
 
 "@typescript-eslint/scope-manager@5.56.0":
   version "5.56.0"
@@ -4973,6 +4991,11 @@ escodegen@^2.0.0:
     optionator "^0.8.1"
   optionalDependencies:
     source-map "~0.6.1"
+
+eslint-config-prettier@^8.8.0:
+  version "8.8.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-8.8.0.tgz#bfda738d412adc917fd7b038857110efe98c9348"
+  integrity sha512-wLbQiFre3tdGgpDv67NQKnJuTlcUVYHas3k+DZCc2U2BadthoEY4B7hLPvAxaqdyOGCzuLfii2fqGph10va7oA==
 
 eslint-plugin-react-hooks@^4.6.0:
   version "4.6.0"
