@@ -75,7 +75,7 @@ class GaugeChart extends ReactNextElement implements GaugeChartProps {
   }
 }
 
-function GaugeChartComponent(props: GaugeChartProps): React.ReactElement {
+export function GaugeChartComponent(props: GaugeChartProps) {
   const { value, radius, strokeWidth = 20, description, fontSize } = props;
   const [x, setX] = useState<number>(-radius);
   const [y, setY] = useState<number>(0);
@@ -120,25 +120,28 @@ function GaugeChartComponent(props: GaugeChartProps): React.ReactElement {
     return _path;
   }, [value, radius]);
   const transform = useMemo(() => {
-    //例如半径为 150， 那么最外围的刻度线就是180,  求最小高度和宽度 width、height
+    //例如半径为 150， 那么最外围的刻度线就是180, 30是上述间隔， 求最小高度和宽度 height、width
     const width = (radius + 30) * 2;
     const height = radius + 30;
+    const circleR = Math.round(strokeWidth + 4) / 2;
     return {
       x: width / 2,
       y: radius + 30,
-      height,
+      height: height,
       width,
+      circleR
     };
   }, [radius]);
   const innerStrokeRadius = radius - strokeWidth / 2;
   return (
     <div className="gaugeChartWrapper">
+      {/* 盒子比例 x/y = x1 /y+circleR , 视图高度永远要比height高 circleR */}
       <svg
         width={`${transform.width}px`}
         height={`${transform.height}px`}
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
-        viewBox={`0 0 ${transform.width} ${transform.height}`}
+        viewBox={`0 0 ${(transform.width*(transform.height + transform.circleR)) /transform.height} ${transform.height + transform.circleR}`}
       >
         <defs>
           <linearGradient id="strokeGradient">
@@ -187,14 +190,14 @@ function GaugeChartComponent(props: GaugeChartProps): React.ReactElement {
           fill="#fff"
           cx={x}
           cy={-y}
-          r={Math.round(strokeWidth + 4) / 2}
+          r={transform.circleR}
         />
         <circle
           transform={`translate(${transform.x}, ${transform.y})`}
           fill="#46E0DB"
           cx={x}
           cy={-y}
-          r={Math.round(strokeWidth + 4) / 6}
+          r={transform.circleR/3}
         />
         {/* 内部刻度的 */}
         <path
