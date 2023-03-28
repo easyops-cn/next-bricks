@@ -42,7 +42,7 @@
     "@next-core/element": "^1.0.2",
     "@next-core/http": "^1.0.2",
     "@next-core/react-element": "^1.0.2",
-    "@next-core/react-runtime": "^1.0.5",
+    "@next-core/react-runtime": "^1.0.6",
     "@next-core/theme": "^1.0.2",
     "@next-core/types": "^1.0.3",
     "brace": "^0.11.1",
@@ -53,7 +53,7 @@
     "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.1.0",
+    "@next-core/build-next-bricks": "^1.1.1",
     "@next-core/test-next": "^1.0.2"
   }
 }
