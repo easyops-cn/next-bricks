@@ -1,10 +1,10 @@
 {
   "name": "@next-bricks/illustrations",
   "version": "0.0.0",
-  "homepage": "https://github.com/easyops-cn/next-core/tree/master/bricks/illustrations",
+  "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/illustrations",
   "repository": {
     "type": "git",
-    "url": "git@github.com:easyops-cn/next-core.git"
+    "url": "git@github.com:easyops-cn/next-bricks.git"
   },
   "license": "GPL-3.0",
   "type": "module",
@@ -40,8 +40,13 @@
     "test:ci": "cross-env NODE_ENV='test' CI=true test-next"
   },
   "dependencies": {
-    "@next-core/illustrations": "^0.11.7",
     "@next-core/types": "^1.0.3",
     "@next-core/utils": "^1.0.3"
+  },
+  "devDependencies": {
+    "@next-core/build-next-bricks": "^1.1.0",
+    "@next-core/illustrations": "^0.11.7",
+    "@next-core/test-next": "^1.0.2",
+    "lodash": "^4.17.21"
   }
 }
