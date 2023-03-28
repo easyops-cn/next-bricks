@@ -53,7 +53,7 @@
     "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.1.1",
+    "@next-core/build-next-bricks": "^1.1.2",
     "@next-core/test-next": "^1.0.2"
   }
 }

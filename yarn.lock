@@ -1724,10 +1724,10 @@
     "@babel/preset-react" "^7.18.6"
     "@babel/preset-typescript" "^7.21.0"
 
-"@next-core/brick-container@^3.0.8":
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.0.8.tgz#fe28ae45e095944c8d239a74c028dbd0a541b707"
-  integrity sha512-v2tMqeP7Z4fDcOJ9ESudN8JzxYVV/z75iBvEvA52PupI57KMv0nnQWtB3GrnP45n4mzOl8wP4tlnyCGnrSDcuA==
+"@next-core/brick-container@^3.0.9":
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.0.9.tgz#2152c8f8c37593e3442260a07594212459b0cfaa"
+  integrity sha512-pda2cV35IdunN6z/fGnNwl6Q06+Kxneix+bzlvyPYIhKp5A+WnA9GF9/3JMT9UTrII3maSs/gXEw6AUwDyXS0A==
   dependencies:
     "@next-core/serve-helpers" "^1.0.3"
     body-parser "^1.20.1"
@@ -1750,10 +1750,10 @@
   resolved "https://registry.yarnpkg.com/@next-core/brick-icons/-/brick-icons-2.31.25.tgz#21c917837ce49a4f9f29c876fd29a963d3d00d81"
   integrity sha512-XFujLB3+NAMqLMZWzyUlwgC0ILuLmGbH6148AWFPT+I26lKcBNnya3oPa2xFSzxAdGLWkxhiO41b0CLn1lnFLg==
 
-"@next-core/brick-playground@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.0.7.tgz#23a563e660bb6f440afd6c111f6ef50053748441"
-  integrity sha512-erOTZNRf1oIMVojfWwje3fXjGPpKZhyBhfnRe7Qdyp2Whn260PCV5nvg6PERfAUQ+dlQ7nVavYI44QQzGFEe3w==
+"@next-core/brick-playground@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.0.8.tgz#2d6989bedfd8b9d323b8617cc6912563f8f6c393"
+  integrity sha512-N3hrQCHlSYD0xVY/CxB7UJqWAsPRwxYPP4Z6PtwJIgWZmw6VK3pYKxn6+yC7Y5pQsgega8Qt9Ze+rQWBA7kz/Q==
   dependencies:
     "@next-core/serve-helpers" "^1.0.3"
     compression "^1.7.4"
@@ -1764,10 +1764,10 @@
   resolved "https://registry.yarnpkg.com/@next-core/browserslist-config-next/-/browserslist-config-next-1.0.2.tgz#1ad28ef1218e58c94fb9bd4cef9f7cf3666bba19"
   integrity sha512-uIpTKMurc0CxdsGJZaWEnITkh+I8bwZyC1Fpy5dxh6aOxl6xEVTVLngVfAyhk6UGBtWDML83dpXXowpKWBNK7A==
 
-"@next-core/build-next-bricks@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@next-core/build-next-bricks/-/build-next-bricks-1.1.1.tgz#1cfc322ae5846c478f7c2852b0b6464433157b6b"
-  integrity sha512-/SFxG3nrK7DRWF04vMgZ4r+finx/BRGhZMAiUhaTWJ7NKlda7ElMzMjB/A6W0owHs+5cQrmSvVvA7K8Im6/wyA==
+"@next-core/build-next-bricks@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@next-core/build-next-bricks/-/build-next-bricks-1.1.2.tgz#eecc9e1b341018b028a44f56f2e54c85e3073851"
+  integrity sha512-h4Zi7CDipV+mpyNan3YOXuekVauqT6TdQQz7uG4mmQ17qy2e+Q3l/fyYUVu2QhFumzaXKIHd5HL2O5NyjvdfVg==
   dependencies:
     "@babel/parser" "^7.21.2"
     "@babel/traverse" "^7.21.2"
