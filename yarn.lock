@@ -1740,10 +1740,10 @@
     mockdate "^3.0.5"
     ws "^8.13.0"
 
-"@next-core/brick-dll-v3@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-dll-v3/-/brick-dll-v3-0.5.0.tgz#96f6129a0ca31e178adc9d7b5ae342c97090c136"
-  integrity sha512-cIvZhtbWi+hupDUxhScc6V9/+UpwsXSc3xotdD/DKzDlmHZxXBgFA0qcpZyBEJmTSfHfM9iXhmVzvVMPm9A3Pw==
+"@next-core/brick-dll-v3@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-dll-v3/-/brick-dll-v3-0.5.1.tgz#b120a13a3720e1dcd1f545e3a2e9a707d4132aba"
+  integrity sha512-f/eEcqLuZTLPZCPqQuOLMAERGSLvE2sgyieI/H4j6+wawXhff+6g4APjL6EfM6JWgukO02To3etv1K1FuHdyJQ==
 
 "@next-core/brick-icons@^2.31.25":
   version "2.31.25"

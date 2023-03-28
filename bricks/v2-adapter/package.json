@@ -49,7 +49,7 @@
     "moment": "^2.29.4"
   },
   "devDependencies": {
-    "@next-core/brick-dll-v3": "^0.5.0",
+    "@next-core/brick-dll-v3": "^0.5.1",
     "@next-core/build-next-bricks": "^1.1.0",
     "@next-core/styles-v3": "^0.2.16",
     "@next-core/test-next": "^1.0.2",
