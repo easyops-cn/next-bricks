@@ -1,5 +1,4 @@
 import React from "react";
-import { StyleProvider } from "@ant-design/cssinjs";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import styleText from "./table.shadow.css";
@@ -1437,35 +1436,34 @@ class TableComponent extends ReactNextElement {
     this._initConfigProps();
     return (
       // https://github.com/ant-design/ant-design/issues/38911
-      <StyleProvider container={this.shadowRoot as ShadowRoot}>
-        <BrickTable
-          dataSource={this._dataSource || []}
-          columns={this.getModifyColumns()}
-          configProps={this._finalConfigProps}
-          error={this._error}
-          onChange={this._handleOnChange}
-          showCard={this.showCard}
-          showHeader={this.showHeader}
-          expandedRowBrick={this.expandedRowBrick}
-          expandIconAsCell={this.expandIconAsCell}
-          expandIconColumnIndex={this.expandIconColumnIndex}
-          expandRowByClick={this.expandRowByClick}
-          defaultExpandAllRows={this.defaultExpandAllRows}
-          onExpand={this._handleOnExpand}
-          onExpandedRowsChange={this._handleOnExpandedRowsChange}
-          expandedRowKeys={this.expandedRowKeys}
-          rowKey={this._getRowKey()}
-          childrenColumnName={this.childrenColumnName}
-          tableDraggable={this.tableDraggable || this.draggable}
-          onDrag={this._handleOnDrag}
-          zebraPattern={this.zebraPattern}
-          expandIcon={this.expandIcon}
-          scroll={this.scrollConfigs}
-          optimizedColumns={this.optimizedColumns}
-          ellipsisInfo={this.ellipsisInfo}
-          thTransparent={this.thTransparent}
-        />
-      </StyleProvider>
+      <BrickTable
+        shadowRoot={this.shadowRoot}
+        dataSource={this._dataSource || []}
+        columns={this.getModifyColumns()}
+        configProps={this._finalConfigProps}
+        error={this._error}
+        onChange={this._handleOnChange}
+        showCard={this.showCard}
+        showHeader={this.showHeader}
+        expandedRowBrick={this.expandedRowBrick}
+        expandIconAsCell={this.expandIconAsCell}
+        expandIconColumnIndex={this.expandIconColumnIndex}
+        expandRowByClick={this.expandRowByClick}
+        defaultExpandAllRows={this.defaultExpandAllRows}
+        onExpand={this._handleOnExpand}
+        onExpandedRowsChange={this._handleOnExpandedRowsChange}
+        expandedRowKeys={this.expandedRowKeys}
+        rowKey={this._getRowKey()}
+        childrenColumnName={this.childrenColumnName}
+        tableDraggable={this.tableDraggable || this.draggable}
+        onDrag={this._handleOnDrag}
+        zebraPattern={this.zebraPattern}
+        expandIcon={this.expandIcon}
+        scroll={this.scrollConfigs}
+        optimizedColumns={this.optimizedColumns}
+        ellipsisInfo={this.ellipsisInfo}
+        thTransparent={this.thTransparent}
+      />
     );
   }
 
