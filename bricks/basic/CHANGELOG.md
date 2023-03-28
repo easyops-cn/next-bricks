@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# 0.1.0 (2023-03-28)
+
+
+### Features
+
+* add brace depencies ([d29bb74](https://github.com/easyops-cn/next-core/commit/d29bb748603f82132c2f8bde1095f696aac28331))
+* support code editor component ([e3b127b](https://github.com/easyops-cn/next-core/commit/e3b127b48404750213dc4d55eabbf06fbaa986b7))
+* update ace-builds import ([373ed83](https://github.com/easyops-cn/next-core/commit/373ed83e1870656f08eb8991197e9d8a77ad22c0))
+* update react-ace version ([ff1c7f5](https://github.com/easyops-cn/next-core/commit/ff1c7f5e2b7f79fb3f1761c6dc794f0f19d722e2))
+* update unit test ([d123082](https://github.com/easyops-cn/next-core/commit/d123082022f773381030970482fc68629daa1168))
+
+
+
+
+
 ## [0.0.2](https://github.com/easyops-cn/next-core/compare/@next-bricks/basic@0.0.1...@next-bricks/basic@0.0.2) (2023-03-22)
 
 **Note:** Version bump only for package @next-bricks/basic

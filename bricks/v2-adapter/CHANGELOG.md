@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.0.3 (2023-03-28)
+
+
+### Bug Fixes
+
+* add missing v2 method: reloadSharedData ([d628aeb](https://github.com/easyops-cn/next-core/commit/d628aebf97bf50acc962fd90aa76a07c78a17fe4))
+* use v3 illustrations for v2 bricks ([b0730b1](https://github.com/easyops-cn/next-core/commit/b0730b1690885fa422d6e8e89b007cecda29f06e))
+
+
+
+
+
 ## [0.0.2](https://github.com/easyops-cn/next-core/compare/@next-bricks/v2-adapter@0.0.1...@next-bricks/v2-adapter@0.0.2) (2023-03-22)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
