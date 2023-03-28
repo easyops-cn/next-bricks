@@ -135,13 +135,13 @@ export function GaugeChartComponent(props: GaugeChartProps) {
   const innerStrokeRadius = radius - strokeWidth / 2;
   return (
     <div className="gaugeChartWrapper">
-      {/* 盒子比例 x/y = x1 /y+circleR , 视图高度永远要比height高 circleR */}
+      {/* 盒子比例: 视图高度永远要比height高 circleR */}
       <svg
         width={`${transform.width}px`}
         height={`${transform.height}px`}
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
-        viewBox={`0 0 ${(transform.width*(transform.height + transform.circleR)) /transform.height} ${transform.height + transform.circleR}`}
+        viewBox={`0 0 ${transform.width} ${transform.height + transform.circleR}`}
       >
         <defs>
           <linearGradient id="strokeGradient">
