@@ -1,0 +1,47 @@
+{
+  "name": "@next-bricks/illustrations",
+  "version": "0.0.0",
+  "homepage": "https://github.com/easyops-cn/next-core/tree/master/bricks/illustrations",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:easyops-cn/next-core.git"
+  },
+  "license": "GPL-3.0",
+  "type": "module",
+  "sideEffects": true,
+  "files": [
+    "dist",
+    "dist-types"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    "./*": {
+      "types": "./dist-types/*/index.d.ts"
+    }
+  },
+  "nx": {
+    "targets": {
+      "build": {
+        "outputs": [
+          "{projectRoot}/dist",
+          "{projectRoot}/src/generated"
+        ]
+      }
+    }
+  },
+  "scripts": {
+    "prestart": "node ./scripts/pre-build.js",
+    "start": "cross-env NODE_ENV=development build-next-bricks --watch",
+    "prebuild": "node ./scripts/pre-build.js",
+    "build": "npm run build:main && npm run build:types",
+    "build:main": "cross-env NODE_ENV=production build-next-bricks",
+    "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist-types --project tsconfig.json",
+    "test": "cross-env NODE_ENV='test' test-next",
+    "test:ci": "cross-env NODE_ENV='test' CI=true test-next"
+  },
+  "dependencies": {
+    "@next-core/illustrations": "^0.11.7",
+    "@next-core/types": "^1.0.3",
+    "@next-core/utils": "^1.0.3"
+  }
+}

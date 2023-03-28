@@ -1,4 +1,12 @@
 {
   "root": true,
-  "extends": "@next-core/eslint-config-next"
+  "extends": "@next-core/eslint-config-next",
+  "overrides": [
+    {
+      "files": [
+        "bricks/*/scripts/**/*.js"
+      ],
+      "extends": "@next-core/eslint-config-next/node"
+    }
+  ]
 }
