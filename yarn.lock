@@ -1821,6 +1821,11 @@
     i18next-browser-languagedetector "^7.0.1"
     react-i18next "^12.2.0"
 
+"@next-core/illustrations@^0.11.7":
+  version "0.11.7"
+  resolved "https://registry.yarnpkg.com/@next-core/illustrations/-/illustrations-0.11.7.tgz#8ee0995f7bdd3e813f261aef8c412259102d5118"
+  integrity sha512-g1wfv2LPi25eJT9oEiCpFVchbWaryH8ngsRWj2WJ+/OqyBBg3/3WWmhBgkEw6o5ma922YKkaVeoFuWIGWF5gcA==
+
 "@next-core/inject@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@next-core/inject/-/inject-1.0.3.tgz#1ce8bdf0519815813bc57981090dbdf4e89f9156"
