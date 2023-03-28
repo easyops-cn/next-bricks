@@ -1685,33 +1685,33 @@
     validate-npm-package-name "^4.0.0"
     yargs-parser "20.2.4"
 
-"@next-api-sdk/api-gateway-sdk@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@next-api-sdk/api-gateway-sdk/-/api-gateway-sdk-1.0.2.tgz#5bb4620c1d2a4109ee8116a084c56379bd44acab"
-  integrity sha512-7IjxwP3mJMvIKTldKtQD9QSnqMwsl9W29sFnMA+BDTLIEETST4z23odd/wRXMoRCCtcVWKaJEsp6KDzBR9TfaQ==
+"@next-api-sdk/api-gateway-sdk@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@next-api-sdk/api-gateway-sdk/-/api-gateway-sdk-1.1.0.tgz#6eaa4e4d8f1a53311b8ce6383d2b38d38e6a0650"
+  integrity sha512-uAZ/IwGHJjg28z0jCfWIANbKPTWEds5UzRan02obzWFYRpUOejij8h6ZBh08hTo6mnT9pZ+4+ma/JKuJZwNcGA==
   dependencies:
-    "@next-core/http" "^1.0.2"
+    "@next-core/http" "^1.0.0"
 
-"@next-api-sdk/cmdb-sdk@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@next-api-sdk/cmdb-sdk/-/cmdb-sdk-1.0.2.tgz#0b116c5b71f761918d9a73f022aac8ce39083f23"
-  integrity sha512-KcOotgCVoWPMpBKBiGsCGNUM7jErDvpAev2GREtAo86JvPxAMbDPp5kcNh0m9BTjmIaOyJRC0xLHDJtJm1jLRQ==
+"@next-api-sdk/cmdb-sdk@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@next-api-sdk/cmdb-sdk/-/cmdb-sdk-1.1.0.tgz#5c99b7b6ad51b2d2d4417a1d824ccf208caf8346"
+  integrity sha512-ov+wuAhZF/qaUpIafkGugjzaJ8XeLjmCca0BudYSXw7n40CTeMJgXRqETJjQ25PPTnPRed2Oc9XzkDP4rGOPcg==
   dependencies:
-    "@next-core/http" "^1.0.2"
+    "@next-core/http" "^1.0.0"
 
-"@next-api-sdk/micro-app-sdk@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@next-api-sdk/micro-app-sdk/-/micro-app-sdk-1.0.2.tgz#c750031442ac8604c604fc13169b58088a08d0f9"
-  integrity sha512-/+eaKh3WJ3L1XlCszeOAnPBJqS3ppKyrkVCTd3tvnp30Wp83VGJKoaORwJtlWrbxr4Z9EKhnlmVDbLpxNC1LVg==
+"@next-api-sdk/micro-app-sdk@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@next-api-sdk/micro-app-sdk/-/micro-app-sdk-1.1.0.tgz#6bc65863f021532a3765e077d97bec1711361c25"
+  integrity sha512-P9Z5R0FPKe4hK7h2HXNuiCLJji0Xl6bg2jIEGW1snLXCYGQRQH7COXWEeeSDbi1MKgknLiZU5yNP1Vskj1J7jw==
   dependencies:
-    "@next-core/http" "^1.0.2"
+    "@next-core/http" "^1.0.0"
 
-"@next-api-sdk/micro-app-standalone-sdk@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@next-api-sdk/micro-app-standalone-sdk/-/micro-app-standalone-sdk-1.0.2.tgz#5b077ebfc07f6a5abed7d296804155bc80463870"
-  integrity sha512-ULPmJEMHEqPIikFD84z92NqOsVDqn/gakIR1tLO+NJq17wog3wXsD8sxbOP810Fzj+YFsPg5urdGNENMpPm6YQ==
+"@next-api-sdk/micro-app-standalone-sdk@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@next-api-sdk/micro-app-standalone-sdk/-/micro-app-standalone-sdk-1.1.0.tgz#8c98d78fa9853eaf1669fba11a1ba6cdc22002db"
+  integrity sha512-FHeVX83d5otNWwBzaja6kftK3fW6iGSxkoTSNXMxHVh39v8+E1Tk2OFA9OvBaOBCKi6ULgH9MYLlHpFDiIKLYw==
   dependencies:
-    "@next-core/http" "^1.0.2"
+    "@next-core/http" "^1.0.0"
 
 "@next-core/babel-preset-next@^1.0.2":
   version "1.0.2"
@@ -1724,12 +1724,12 @@
     "@babel/preset-react" "^7.18.6"
     "@babel/preset-typescript" "^7.21.0"
 
-"@next-core/brick-container@^3.0.5":
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.0.5.tgz#1b7cd760a3b823f0d9b2d8386683f1dba58f1001"
-  integrity sha512-Ys/bxaqr8oK6P/MlbHGx9DJA+4hB8SNVkeFj3a7WHdnH07XYmUr8Y9C1LPlc3niMqfjhnACbhKIwm9WJosCSUQ==
+"@next-core/brick-container@^3.0.7":
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.0.7.tgz#7d54c571d4b947384ce1e03deb4dc6d145a4334b"
+  integrity sha512-bBvdCdLghSO2Tm1Ms94vtp5bW87fKmbD32XzPP2rXt8JI8g+9ENMTTM9mFt3ZAZMd8D2yRwuMyE7IAn9tfwazQ==
   dependencies:
-    "@next-core/serve-helpers" "^1.0.2"
+    "@next-core/serve-helpers" "^1.0.3"
     body-parser "^1.20.1"
     compression "^1.7.4"
     express "^4.18.2"
@@ -1750,12 +1750,12 @@
   resolved "https://registry.yarnpkg.com/@next-core/brick-icons/-/brick-icons-2.31.25.tgz#21c917837ce49a4f9f29c876fd29a963d3d00d81"
   integrity sha512-XFujLB3+NAMqLMZWzyUlwgC0ILuLmGbH6148AWFPT+I26lKcBNnya3oPa2xFSzxAdGLWkxhiO41b0CLn1lnFLg==
 
-"@next-core/brick-playground@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.0.4.tgz#a8a8fb53f8a49aeee545b3dacbe0c34eff878a30"
-  integrity sha512-VNOe+hzL936McSGzGWaIrgZML1rqwij7jqbRCkL/9iCvOPTziYEmqivE5R6n+jxQfcKEkoZqklNMGDr8EHPNmw==
+"@next-core/brick-playground@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.0.6.tgz#f2f67b1e7efd662ce31b626c24ad69c9690dab6a"
+  integrity sha512-kAebA0jH5xkwRv7EB+4t97zPe0BjRRZQbrNNGqZ/azGWaeWsaLt13BfZPf+sDJ1ImIZ9Ag2syQLs0Hpa4AmKbA==
   dependencies:
-    "@next-core/serve-helpers" "^1.0.2"
+    "@next-core/serve-helpers" "^1.0.3"
     compression "^1.7.4"
     express "^4.18.2"
 
@@ -1764,10 +1764,10 @@
   resolved "https://registry.yarnpkg.com/@next-core/browserslist-config-next/-/browserslist-config-next-1.0.2.tgz#1ad28ef1218e58c94fb9bd4cef9f7cf3666bba19"
   integrity sha512-uIpTKMurc0CxdsGJZaWEnITkh+I8bwZyC1Fpy5dxh6aOxl6xEVTVLngVfAyhk6UGBtWDML83dpXXowpKWBNK7A==
 
-"@next-core/build-next-bricks@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@next-core/build-next-bricks/-/build-next-bricks-1.0.2.tgz#2686869017eac4747cdbe7eab0d8dfd99a1b8284"
-  integrity sha512-Xz2xyZoj3lHGxCZP2s9azwOTNm+BG3DUWQ3AtJ6x/JhszqlBQTPH3+tS4FdQq1LBoFqdPqCmA9TI3VZixvCTfQ==
+"@next-core/build-next-bricks@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@next-core/build-next-bricks/-/build-next-bricks-1.1.0.tgz#0d08036588eff1f055cf7e9aed665a7aa1b8b41f"
+  integrity sha512-gEh6uXNZRsVAChEzeecPjtVlMcYl625fAV6u3Injp3ajxqAlQpdQlt0AqAjqygqRD7lXeeJpI1cICQwINJ/cvA==
   dependencies:
     "@babel/parser" "^7.21.2"
     "@babel/traverse" "^7.21.2"
@@ -1805,7 +1805,7 @@
     "@typescript-eslint/parser" "^5.56.0"
     eslint-config-prettier "^8.8.0"
 
-"@next-core/http@^1.0.2":
+"@next-core/http@^1.0.0", "@next-core/http@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@next-core/http/-/http-1.0.2.tgz#d94e936a1775bb3c54b77c6382d5fea59eb1ba87"
   integrity sha512-k2MZuexiv3t7466hHMDNcvDkOZZP7RbdixirE37m/V2OXBIt7krKYHmVApSDQurC4vF0tAyhGKCvdZaYFeYAvg==
@@ -1854,25 +1854,25 @@
     react "0.0.0-experimental-ee8509801-20230117"
     react-dom "0.0.0-experimental-ee8509801-20230117"
 
-"@next-core/react-runtime@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@next-core/react-runtime/-/react-runtime-1.0.4.tgz#8d77743628ba31988843444389b0e2fef0806d8b"
-  integrity sha512-BIxgfaD2kbbnWFuEMV3Mggvlk3HwZQomOlxREho+M+WWzkU9JSg8F5m/NylppfaWZ3zRDSBzk59Lp5ex9wMazw==
+"@next-core/react-runtime@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@next-core/react-runtime/-/react-runtime-1.0.5.tgz#3fe3293c4b690eb2fa2244c0766eecf58189ec04"
+  integrity sha512-8yyLzir8ga/7ggBElCujFWSX7yQE3yHr7luiEoZIe5xPC0Wu9nIFrZtJ8jb/576UflMPQfR3gvy8iWtM2eelow==
   dependencies:
-    "@next-core/runtime" "^1.0.4"
+    "@next-core/runtime" "^1.0.5"
     "@next-core/types" "^1.0.3"
     react "0.0.0-experimental-ee8509801-20230117"
     react-dom "0.0.0-experimental-ee8509801-20230117"
 
-"@next-core/runtime@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@next-core/runtime/-/runtime-1.0.4.tgz#e165f70b4cac9e44ebd8e03ed8090ea2867f38a4"
-  integrity sha512-ONtv7OfdhEbqPm0hPIXMTCaLnDVdd8oFX2/7IWH4tjFyr80XGd4NqHjCklhCXaUHO2muwsf1HE0V85IMN8+09w==
+"@next-core/runtime@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@next-core/runtime/-/runtime-1.0.5.tgz#eb2a35947779195396af43aa4d86854226f83f79"
+  integrity sha512-AeRfz/PUAk/3qgxYmPPLY0GToeqYPxE+l5x6dCqJ9nlcaNE3xBXYtkbdQA6y6QlJG9kqFR/qqGL2iWxaS6611Q==
   dependencies:
-    "@next-api-sdk/api-gateway-sdk" "^1.0.2"
-    "@next-api-sdk/cmdb-sdk" "^1.0.2"
-    "@next-api-sdk/micro-app-sdk" "^1.0.2"
-    "@next-api-sdk/micro-app-standalone-sdk" "^1.0.2"
+    "@next-api-sdk/api-gateway-sdk" "^1.1.0"
+    "@next-api-sdk/cmdb-sdk" "^1.1.0"
+    "@next-api-sdk/micro-app-sdk" "^1.1.0"
+    "@next-api-sdk/micro-app-standalone-sdk" "^1.1.0"
     "@next-core/cook" "^2.0.2"
     "@next-core/http" "^1.0.2"
     "@next-core/i18n" "^1.0.3"
@@ -1888,10 +1888,10 @@
     moment "^2.29.4"
     path-to-regexp "^6.2.1"
 
-"@next-core/serve-helpers@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@next-core/serve-helpers/-/serve-helpers-1.0.2.tgz#3c96abdbc099f7a2136aa8e9ceabf03a48e26b12"
-  integrity sha512-XqMFgn5EQinw5zhCTLN0fzjkh1eRsmZT42CO0Cd7lAY1dKBzsSc9t3yYwthCWgRqW6mvIt/8TqPoi0sY8d8xXQ==
+"@next-core/serve-helpers@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@next-core/serve-helpers/-/serve-helpers-1.0.3.tgz#6a1fe2a4b54c1db997e9cd32d0a79cd35208ca93"
+  integrity sha512-W6BhXhah+CBfKd+BEMX9lV9182wCgZM7cgAi5tkatUoTeEsgvZD+Uv7Eqf6jMpiSH0+G1haF4jHAayZlOV3Otw==
   dependencies:
     express "^4.18.2"
 
