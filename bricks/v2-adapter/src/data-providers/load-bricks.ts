@@ -1,5 +1,6 @@
-import { loadScript, loadBricksImperatively } from "@next-core/loader";
-import { createProviderClass } from "@next-core/utils/storyboard";
+import { loadScript } from "@next-core/loader";
+import { createProviderClass, unwrapProvider } from "@next-core/utils/storyboard";
+import { wrapBrick } from "@next-core/react-element";
 import {
   authenticate,
   getAuth,
@@ -19,7 +20,7 @@ import {
 } from "@next-core/runtime";
 import { i18n, i18nText } from "@next-core/i18n";
 import * as Http from "@next-core/http";
-import type { BrickPackage, SiteTheme } from "@next-core/types";
+import type { SiteTheme } from "@next-core/types";
 import * as History from "history";
 import * as JsYaml from "js-yaml";
 import lodash from "lodash";
@@ -47,72 +48,22 @@ interface IconsByCategory {
   [category: string]: string[];
 }
 
-interface IconsResolver {
-  resolve(): Promise<IconsByCategory>;
-}
-
 const MAIN_KEY = "";
-const ICONS_KEY = "_icons";
-const EASYOPS_ICON_BRICK = "icons.easyops-icon";
-const FA_ICON_BRICK = "icons.fa-icon";
-const GET_EASYOPS_ICONS = "icons.get-easyops-icons";
-const GET_FA_ICONS = "icons.get-fa-icons";
-const ILLUSTRATIONS_KEY = "_illustrations";
-const GET_ILLUSTRATION_BRICK = "illustrations.get-illustration";
-const TRANSLATE_ILLUSTRATION_CONFIG_BRICK = "illustrations.translate-illustration-config";
 
-let easyopsIcons: IconsByCategory = {};
-let faIcons: IconsByCategory = {};
-let getIllustration: Function = () => {
-  //
-};
-let translateIllustrationConfig: Function = () => {
-  //
-};
+// Specify brick dependencies:
+/*#__PURE__*/ wrapBrick("icons.easyops-icon");
+/*#__PURE__*/ wrapBrick("icons.fa-icon");
+const getEasyopsIcons = unwrapProvider("icons.get-easyops-icons");
+const getFaIcons = unwrapProvider("icons.get-fa-icons");
+const getIllustration = unwrapProvider("illustrations.get-illustration");
+const translateIllustrationConfig = unwrapProvider("illustrations.translate-illustration-config");
 
 export async function loadBricks(
   adapterPkgFilePath: string,
   brickPkgFilePath: string,
   bricks: string[],
-  dlls: string[] | undefined,
-  brickPackages: BrickPackage[]
+  dlls: string[] | undefined
 ) {
-  if (!dllPromises.has(ICONS_KEY)) {
-    // Load the icon brick, but do not wait for it.
-    const iconsPromise = loadBricksImperatively(
-      [EASYOPS_ICON_BRICK, FA_ICON_BRICK, GET_EASYOPS_ICONS, GET_FA_ICONS],
-      brickPackages
-    ).then(async () => {
-      [easyopsIcons, faIcons] = await Promise.all([
-        (
-          document.createElement(GET_EASYOPS_ICONS) as unknown as IconsResolver
-        ).resolve(),
-        (
-          document.createElement(GET_FA_ICONS) as unknown as IconsResolver
-        ).resolve(),
-      ]);
-    });
-    dllPromises.set(ICONS_KEY, iconsPromise);
-  }
-  if (!dllPromises.has(ILLUSTRATIONS_KEY)) {
-    // Load the illustration brick, but do not wait for it.
-    const illustrationsPromise = loadBricksImperatively(
-      [GET_ILLUSTRATION_BRICK, TRANSLATE_ILLUSTRATION_CONFIG_BRICK],
-      brickPackages
-    ).then(async () => {
-      const getIllustrationBrick =
-        document.createElement(GET_ILLUSTRATION_BRICK) as unknown as {
-          resolve: Function;
-        };
-      getIllustration = (...args: unknown[]) => getIllustrationBrick.resolve(...args);
-      const translateIllustrationConfigBrick =
-        document.createElement(TRANSLATE_ILLUSTRATION_CONFIG_BRICK) as unknown as {
-          resolve: Function;
-        };
-      translateIllustrationConfig = (...args: unknown[]) => translateIllustrationConfigBrick.resolve(...args);
-    });
-    dllPromises.set(ILLUSTRATIONS_KEY, illustrationsPromise);
-  }
   let mainPromise = dllPromises.get(MAIN_KEY);
   if (!mainPromise) {
     mainPromise = loadMainDll(adapterPkgFilePath);
@@ -164,8 +115,11 @@ async function loadMainDll(adapterPkgFilePath: string) {
 
   import("@next-core/styles-v3");
 
-  await doLoadDll(adapterPkgFilePath, "");
-  await dllPromises.get(ICONS_KEY);
+  const [easyopsIcons, faIcons] = await Promise.all([
+    getEasyopsIcons(),
+    getFaIcons() as Promise<IconsByCategory>,
+    doLoadDll(adapterPkgFilePath, "")
+  ]);
 
   const dll = (window as unknown as { dll: DLL }).dll;
 
@@ -204,7 +158,7 @@ async function loadMainDll(adapterPkgFilePath: string) {
 
   defineModule(LegacyBrickIcons, {
     BrickIcon({ category, icon }: { category?: string, icon: string }) {
-      return LegacyReact.createElement(EASYOPS_ICON_BRICK, {
+      return LegacyReact.createElement("icons.easyops-icon", {
         category,
         icon,
       });
@@ -215,7 +169,7 @@ async function loadMainDll(adapterPkgFilePath: string) {
   defineModule(LegacyReactFontAwesome, {
     FontAwesomeIcon({ icon }: { icon: [string, string] | string }) {
       return LegacyReact.createElement(
-        FA_ICON_BRICK,
+        "icons.fa-icon",
         Array.isArray(icon)
           ? {
               prefix: icon[0],
