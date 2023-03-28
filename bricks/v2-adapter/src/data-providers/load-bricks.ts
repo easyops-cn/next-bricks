@@ -57,9 +57,18 @@ const EASYOPS_ICON_BRICK = "icons.easyops-icon";
 const FA_ICON_BRICK = "icons.fa-icon";
 const GET_EASYOPS_ICONS = "icons.get-easyops-icons";
 const GET_FA_ICONS = "icons.get-fa-icons";
+const ILLUSTRATIONS_KEY = "_illustrations";
+const GET_ILLUSTRATION_BRICK = "illustrations.get-illustration";
+const TRANSLATE_ILLUSTRATION_CONFIG_BRICK = "illustrations.translate-illustration-config";
 
 let easyopsIcons: IconsByCategory = {};
 let faIcons: IconsByCategory = {};
+let getIllustration: Function = () => {
+  //
+};
+let translateIllustrationConfig: Function = () => {
+  //
+};
 
 export async function loadBricks(
   adapterPkgFilePath: string,
@@ -84,6 +93,25 @@ export async function loadBricks(
       ]);
     });
     dllPromises.set(ICONS_KEY, iconsPromise);
+  }
+  if (!dllPromises.has(ILLUSTRATIONS_KEY)) {
+    // Load the illustration brick, but do not wait for it.
+    const illustrationsPromise = loadBricksImperatively(
+      [GET_ILLUSTRATION_BRICK, TRANSLATE_ILLUSTRATION_CONFIG_BRICK],
+      brickPackages
+    ).then(async () => {
+      const getIllustrationBrick =
+        document.createElement(GET_ILLUSTRATION_BRICK) as unknown as {
+          resolve: Function;
+        };
+      getIllustration = (...args: unknown[]) => getIllustrationBrick.resolve(...args);
+      const translateIllustrationConfigBrick =
+        document.createElement(TRANSLATE_ILLUSTRATION_CONFIG_BRICK) as unknown as {
+          resolve: Function;
+        };
+      translateIllustrationConfig = (...args: unknown[]) => translateIllustrationConfigBrick.resolve(...args);
+    });
+    dllPromises.set(ILLUSTRATIONS_KEY, illustrationsPromise);
   }
   let mainPromise = dllPromises.get(MAIN_KEY);
   if (!mainPromise) {
@@ -147,6 +175,7 @@ async function loadMainDll(adapterPkgFilePath: string) {
   const LegacyReactI18next = dll("9kay");
   const LegacyHttp = dll("JxWY");
   const LegacyBrickIcons = dll("AE1K");
+  const LegacyIllustrations = dll("M7uQ");
   const LegacyHistory = dll("LhCv");
   const LegacyJsYaml = dll("ZR4k");
   const LegacyReactFontAwesome = dll("IP2g");
@@ -213,6 +242,11 @@ async function loadMainDll(adapterPkgFilePath: string) {
       ])
     )
   );
+
+  defineModule(LegacyIllustrations, {
+    getIllustration,
+    translateIllustrationConfig
+  });
 
   defineModule(LegacyBrickKit, {
     getRuntime: getLegacyRuntime,
