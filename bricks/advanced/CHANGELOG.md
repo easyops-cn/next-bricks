@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.5](https://github.com/easyops-cn/next-core/compare/@next-bricks/advanced@0.0.4...@next-bricks/advanced@0.0.5) (2023-03-29)
+
+
+### Bug Fixes
+
+* in one page the second table style miss ([19927f3](https://github.com/easyops-cn/next-core/commit/19927f3fbec7f153ce2d5059bfcc7fc2c2f7cb08))
+
+
+
+
+
 ## [0.0.4](https://github.com/easyops-cn/next-core/compare/@next-bricks/advanced@0.0.3...@next-bricks/advanced@0.0.4) (2023-03-28)
 
 **Note:** Version bump only for package @next-bricks/advanced

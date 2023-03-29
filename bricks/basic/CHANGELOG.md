@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/easyops-cn/next-core/compare/@next-bricks/basic@0.1.1...@next-bricks/basic@0.2.0) (2023-03-29)
+
+
+### Features
+
+* bricks move to containers package ([f860dae](https://github.com/easyops-cn/next-core/commit/f860dae5da65a5fbad8c5cbac9a7bc834eb9a88b))
+* bricks move to form package ([7270eae](https://github.com/easyops-cn/next-core/commit/7270eaeae4d24815ee819d14d5666cc91e9b4998))
+* component update and unit test fix ([44ac968](https://github.com/easyops-cn/next-core/commit/44ac9683a44a55d2db7874be9a645224033f01ba))
+* select support input search ([9d5ce37](https://github.com/easyops-cn/next-core/commit/9d5ce376ecc0028892834ed50aea38981a3360ab))
+* support dynamicFormItem component ([dc1ce55](https://github.com/easyops-cn/next-core/commit/dc1ce55c82d1eb1c03754c6b9b3d012114822321))
+
+
+
+
+
 ## [0.1.1](https://github.com/easyops-cn/next-core/compare/@next-bricks/basic@0.1.0...@next-bricks/basic@0.1.1) (2023-03-28)
 
 **Note:** Version bump only for package @next-bricks/basic
