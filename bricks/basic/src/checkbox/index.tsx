@@ -123,10 +123,10 @@ class Checkbox extends FormItemElement {
    * @description 复选框变化事件
    */
   @event({ type: "change" })
-  accessor #checkboxChangeEvent!: EventEmitter<void>;
+  accessor #checkboxChangeEvent!: EventEmitter<CheckboxOptionType[]>;
 
-  #handleCheckboxChange = () => {
-    this.#checkboxChangeEvent.emit();
+  #handleCheckboxChange = (detail: CheckboxOptionType[]) => {
+    this.#checkboxChangeEvent.emit(detail);
   };
 
   render() {
@@ -156,7 +156,11 @@ function CheckboxComponent(props: CheckboxProps) {
     setOptions(props.options || []);
   }, [props.options]);
 
-  const handleInputClick = (e: any, item: CheckboxOptionType) => {
+  const handleInputClick = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    item: CheckboxOptionType
+  ) => {
+    e.stopPropagation();
     if (e.target.checked) {
       newValue = [...newValue, item.value];
     }
@@ -228,7 +232,6 @@ function CheckboxComponent(props: CheckboxProps) {
                 type="checkbox"
                 value={item.value}
                 name={name}
-                id={item.value}
                 defaultChecked={props?.value?.includes(item.value)}
                 disabled={disabled || item?.disabled}
                 onChange={(e) => handleInputClick(e, item)}
@@ -286,7 +289,7 @@ function CheckboxComponent(props: CheckboxProps) {
                   })}
                 >
                   <input
-                    onClick={(e) => handleInputClick(e, item)}
+                    onChange={(e) => handleInputClick(e, item)}
                     disabled={item.disabled}
                     defaultChecked={props?.value?.includes(item.value)}
                     className={classNames({

@@ -47,6 +47,6 @@
 }
 
 .category-item-content {
-  overflow: hidden;
+  /* overflow: hidden; */
   padding: 24px 20px;
 }

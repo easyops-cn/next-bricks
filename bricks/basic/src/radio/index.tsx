@@ -20,7 +20,8 @@ import type {
 } from "@next-bricks/icons/general-icon";
 import { formatOptions } from "../formatOptions.js";
 import { FormItemElement } from "../form-item/FormItemElement.js";
-import { toNumber, isBoolean } from "lodash";
+import { isBoolean } from "lodash";
+import type { Form } from "../form/index.jsx";
 
 const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
   "icons.general-icon"
@@ -42,25 +43,21 @@ interface CustomOptions {
 export interface RadioProps {
   type?: RadioType;
   curElement: HTMLElement;
+  formElement: Form;
   options: GeneralOption[] | CustomOptions[] | undefined;
   value?: any;
   name?: string;
   disabled?: boolean;
-  onChange?: (value: any) => void;
-  optionsChange?: (options: any, name: string) => void;
   buttonStyle?: RadioGroupButtonStyle;
   size?: "large" | "middle" | "small";
   ui?: UIType;
   useBrick?: UseSingleBrickConf;
   customStyle?: React.CSSProperties;
   label?: string;
+  trigger?: string;
+  onChange?: (value: any) => void;
+  optionsChange?: (options: any, name: string) => void;
 }
-
-declare type SrcIcon = {
-  imgSrc?: string;
-  imgStyle?: React.CSSProperties;
-};
-
 const { defineElement, property, event } = createDecorators();
 
 /**
@@ -82,7 +79,7 @@ class Radio extends FormItemElement {
    * @description 下拉框字段名
    * @group basicFormItem
    */
-  @property({ attribute: false }) accessor name: string | undefined;
+  @property() accessor name: string | undefined;
 
   /**
    * @kind string
@@ -226,9 +223,8 @@ class Radio extends FormItemElement {
     value: any;
     [key: string]: any;
   }): void => {
-    Promise.resolve().then(() => {
-      this.#changeEvent.emit(value);
-    });
+    this.value = value;
+    this.#changeEvent.emit(value);
   };
 
   private _handleOptionsChange = (
@@ -248,6 +244,7 @@ class Radio extends FormItemElement {
     return (
       <RadioComponent
         curElement={this}
+        formElement={this.getFormElement()}
         useBrick={this.useBrick}
         ui={this.ui}
         disabled={this.disabled}
@@ -256,6 +253,7 @@ class Radio extends FormItemElement {
         type={this.type}
         value={this.value}
         onChange={this._handleChange}
+        trigger="_handleChange"
         optionsChange={this._handleOptionsChange}
         name={this.name}
         label={this.label}
@@ -267,7 +265,7 @@ class Radio extends FormItemElement {
 export function RadioComponent(props: RadioProps) {
   const { options, name, disabled, type, customStyle, optionsChange, size } =
     props;
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState();
 
   React.useEffect(() => {
     setValue(props.value);
@@ -277,12 +275,10 @@ export function RadioComponent(props: RadioProps) {
     optionsChange?.(props.options, name as string);
   }, [props.options]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const curIndex = toNumber(e.target.value);
-    const _options = options as GeneralComplexOption[];
-    const newValueV2 = _options?.find((item, index) => curIndex === index);
-    setValue((newValueV2 as GeneralComplexOption)?.value as any);
-    props.onChange?.(newValueV2);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, option: GeneralComplexOption): void => {
+    e.stopPropagation();
+    setValue((option as GeneralComplexOption)?.value as any);
+    props.onChange?.(option?.value);
   };
 
   return (
@@ -331,11 +327,10 @@ export function RadioComponent(props: RadioProps) {
             >
               <input
                 type="radio"
-                value={index} //这里注意一下。
                 name={name}
                 disabled={disabled || item.disabled}
                 id={key}
-                onChange={handleChange}
+                onChange={(e) => handleChange(e, item)}
                 checked={value === item.value}
               />
               {type === "icon" ? (
