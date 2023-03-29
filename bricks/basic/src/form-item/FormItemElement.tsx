@@ -8,6 +8,7 @@ export abstract class FormItemElement extends ReactNextElement {
   accessor isFormItemElement = true;
   accessor #_notRender = false;
   accessor #validate = "normal";
+  accessor #bindFormItem = false;
 
   set validateState(value: string) {
     this.#validate = value;
@@ -30,6 +31,14 @@ export abstract class FormItemElement extends ReactNextElement {
   }
   get notRender(): boolean {
     return this.#_notRender;
+  }
+
+  get $bindFormItem() {
+    return this.#bindFormItem;
+  }
+  set $bindFormItem(value: boolean) {
+    this.#bindFormItem = value;
+    this._render()
   }
 
   /**

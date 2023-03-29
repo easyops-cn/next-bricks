@@ -6,6 +6,24 @@ import { ComponentSize, Layout } from "../interface.js";
 
 const { defineElement, property, event, method } = createDecorators();
 
+interface FormProps {
+  values?: Record<string, any>;
+  layout?: Layout;
+  size?: ComponentSize;
+}
+
+export interface FormEvents {
+  valuesChange?: Event;
+  validateSuccess?: Event;
+  validateError?: Event;
+}
+
+export interface FormMapEvents {
+  onValuesChange: "values.change";
+  onValidateSuccess: "validate.success";
+  onValidateError: "validate.error";
+}
+
 /**
  * @id basic.general-form
  * @name basic.general-form
@@ -17,10 +35,11 @@ const { defineElement, property, event, method } = createDecorators();
 @defineElement("basic.general-form", {
   styleTexts: [],
 })
-class Form extends ReactNextElement {
+class Form extends ReactNextElement implements FormProps {
   readonly isFormElement = true;
   formStore: FormStore;
   #_values!: Record<string, unknown>;
+  defaultEmitValuesChange = true;
 
   constructor() {
     super();
@@ -39,10 +58,10 @@ class Form extends ReactNextElement {
   }
 
   #_setInitValue(values: Record<string, unknown>) {
-    this.formStore.setInitValue(values);
+    this.formStore.setInitValue(values, this.defaultEmitValuesChange);
   }
 
-  @property() accessor layout: Layout = "horizontal";
+  @property() accessor layout: Layout | undefined;
 
   @property() accessor size: ComponentSize | undefined;
 
@@ -74,8 +93,8 @@ class Form extends ReactNextElement {
    * @description
    */
   @method()
-  validate(): void {
-    this.formStore.validateFields((err, values) => {
+  validate(): boolean | Record<string, unknown> {
+    return this.formStore.validateFields((err, values) => {
       if (err) {
         this.#errorEvent.emit(values);
       } else {
@@ -116,17 +135,35 @@ class Form extends ReactNextElement {
     this.formStore.validateField(name);
   }
 
+  /**
+   * @description
+   */
+  @method()
+  resetValidateState() {
+    this.formStore.resetValidateState()
+  }
+
   render() {
-    return <FormComponent />;
+    return <FormComponent layout={this.layout} size={this.size} />;
   }
 }
 
-export function FormComponent() {
+interface FormComponentProps extends FormProps {
+  onValuesChange?: (value: Record<string, any>) => void;
+  onValidateSuccess?: () => void;
+  onValidateError?: () => void;
+}
+
+export function FormComponent({
+  layout = "horizontal"
+}: FormComponentProps) {
   return (
     <form>
-      <slot></slot>
+      <slot style={{
+        display: layout === "inline" ? "flex" : "",
+      }} />
     </form>
   );
 }
 
-export { Form };
+export { Form, FormProps };

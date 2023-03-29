@@ -23,3 +23,4 @@ import "./checkbox/index.js";
 import "./tag/index.js";
 import "./tag-list/index.js";
 import "./code-editor/index.js";
+import "./dynamic-form-item/index.js";

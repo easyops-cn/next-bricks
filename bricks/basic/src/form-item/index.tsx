@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { createDecorators } from "@next-core/element";
 import { FormItemElement } from "./FormItemElement.js";
 import type { Form } from "../form/index.jsx";
@@ -31,6 +31,7 @@ export interface FormItemProps {
   size?: ComponentSize;
   trigger?: string;
   valuePropsName?: string;
+  needValidate?: boolean;
   validator?: (value: any) => MessageBody | string;
 }
 
@@ -208,6 +209,16 @@ class FormItem extends FormItemElement implements FormItemProps {
   })
   accessor validator: ((value: any) => MessageBody) | undefined;
 
+  /**
+   * @default
+   * @required
+   * @description 值变化时是否主动出发校验
+   */
+  @property({
+    type: Boolean
+  })
+  accessor needValidate: boolean | undefined;
+
   render() {
     return (
       <FormItemComponent
@@ -224,6 +235,7 @@ class FormItem extends FormItemElement implements FormItemProps {
         layout={this.layout || this.formElement?.layout}
         trigger={this.trigger}
         valuePropsName={this.valuePropsName}
+        needValidate={this.needValidate}
         validator={this.validator}
       />
     );
@@ -247,20 +259,25 @@ export function FormItemComponent(props: FormItemProps) {
     size,
     trigger = "onChange",
     layout,
+    needValidate = true,
     validator,
   } = props;
   const formInstance = formElement?.formStore;
 
-  const [validateState, setValidateState] = useState({
+  const defaultValidateState = useRef<MessageBody>({
     message: "",
     type: "normal",
   });
+  const [validateState, setValidateState] = useState<MessageBody>(defaultValidateState.current);
 
   useEffect(() => {
-    if (!formInstance || !name) return;
+    if (!formInstance || !name || curElement.$bindFormItem) return;
     const originTrigger = curElement[trigger];
     curElement[trigger] = (e: React.ChangeEvent) =>
-      formInstance.onWatch(name, e, originTrigger);
+      formInstance.onWatch(name, e, originTrigger, {
+        needValidate,
+      });
+    curElement.$bindFormItem = true;
 
     formInstance.subscribe(`${name}.validate`, (_, detail) => {
       setValidateState(detail);
@@ -275,6 +292,10 @@ export function FormItemComponent(props: FormItemProps) {
     formInstance.subscribe("reset.fields", () => {
       curElement[valuePropsName] = "";
     });
+    formInstance.subscribe("reset.validate", () => {
+      setValidateState(defaultValidateState.current);
+      curElement.validateState = defaultValidateState.current.type;
+    })
 
     return () => {
       formInstance.unsubscribe(`${name}.validate`);
@@ -282,7 +303,7 @@ export function FormItemComponent(props: FormItemProps) {
       formInstance.unsubscribe(`${name}.reset.fields`);
       formInstance.unsubscribe("reset.fields");
     };
-  }, []);
+  }, [curElement, formInstance, name, trigger, valuePropsName, needValidate]);
 
   useEffect(() => {
     if (!formInstance || !name) return;
