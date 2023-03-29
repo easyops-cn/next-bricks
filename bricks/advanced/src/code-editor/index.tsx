@@ -1,24 +1,11 @@
-import React, { useCallback, useRef } from "react";
+import React from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
-import { wrapBrick } from "@next-core/react-element";
+import { CodeEditorItemWrapper } from './codeEditor.js';
+import { CodeEditorProps, HighlightTokenSettings, Annotation } from "./interfaces.js";
 import { isEqual, some } from "lodash";
-import { FormItemElement } from "../form-item/FormItemElement.js";
-import type { FormItem, FormItemProps } from "../form-item/index.js";
-import type { CodeEditor, CodeEditorProps, CodeEditorEvents, CodeEditorMapEvents, Annotation, HighlightTokenSettings, } from "@next-bricks/advanced/code-editor";
+import styleText from "./index.shadow.css";
+import { ReactNextElement } from '@next-core/react-element';
 
-const WrappedFormItem = wrapBrick<FormItem, FormItemProps>(
-  "form.general-form-item"
-);
-
-const WrappedCodeEditor = wrapBrick<CodeEditor, CodeEditorProps, CodeEditorEvents, CodeEditorMapEvents>(
-  "advanced.code-editor",
-  {
-    "onChange": "change",
-    "onBlur": "blur",
-    "onError": "error",
-    "onHightlightClick": "hightlight.click",
-  }
-);
 
 const { defineElement, property, event, } = createDecorators();
 
@@ -27,20 +14,33 @@ export interface Error {
   hasError: boolean;
 }
 
-type FormCodeEditorProps = CodeEditorProps & FormItemProps;
+export interface CodeEditorEvents {
+  change?: Event;
+  error?: Event;
+  blur?: Event;
+  highlightClick?: Event;
+}
+
+export interface CodeEditorMapEvents {
+  onChange: "change";
+  onError: "error";
+  onBlur: "blur";
+  onHightlightClick: "hightlight.click";
+}
+
 
 /**
- * @id form.code-editor
- * @name form.code-editor
+ * @id advanced.code-editor
+ * @name advanced.code-editor
  * @docKind brick
- * @description 通用输入框构件
+ * @description 代码编辑器
  * @author sailor
  * @noInheritDoc
  */
-@defineElement("form.code-editor", {
-  styleTexts: [],
+@defineElement("advanced.code-editor", {
+  styleTexts: [styleText],
 })
-class FormCodeEditor extends FormItemElement {
+class CodeEditor extends ReactNextElement {
   /**
    * @description
    * @required -
@@ -289,7 +289,7 @@ class FormCodeEditor extends FormItemElement {
    * @detail `{err:Record<string,any>[],hasError:boolean}`
    * @description 值错误变化的时候发出的事件，err 为具体错误信息，hasError 为是否有错误
    */
-  @event({ type: "change" })
+  @event({ type: "error" })
   accessor #errorChangeEvent!: EventEmitter<Error>;
   private _handleErrorChange = (error: Error): void => {
     if (!isEqual(error, this.#previousError)) {
@@ -316,13 +316,10 @@ class FormCodeEditor extends FormItemElement {
 
   render() {
     return <CodeEditorComponent
-      curElement={this}
-      formElement={this.getFormElement()}
       name={this.name}
       label={this.label}
       placeholder={this.placeholder}
       value={this.value}
-      required={this.required}
       theme={this.theme}
       mode={this.mode}
       readOnly={this.readOnly}
@@ -343,7 +340,6 @@ class FormCodeEditor extends FormItemElement {
       customCompleters={this.customCompleters}
       loadYamlInJsonMode={this.loadYamlInJsonMode}
       highlightTokens={this.highlightTokens}
-      trigger="_handleChange"
       onChange={this._handleChange}
       onBlur={this._handleBlur}
       onErrorChange={this._handleErrorChange}
@@ -352,59 +348,18 @@ class FormCodeEditor extends FormItemElement {
   }
 }
 
-export function CodeEditorComponent(props: FormCodeEditorProps) {
-  const isError = useRef<boolean>();
-  const hasJsonSchemaError = useRef<boolean>();
-
-  const getMessage = useCallback((): string => {
-    return isError.current ? hasJsonSchemaError.current
-          ? "请填写正确的数据结构"
-          : `请填写正确的 ${
-              props.mode === "brick_next"
-                ? "json"
-                : props.mode === "brick_next_yaml" || props.mode === "cel_yaml"
-                ? "yaml"
-                : props.mode
-            } 语法` : "";
-  }, [props.mode])
-
-  const handleValidator = useCallback(() => {
-    if (isError.current) {
-      const message = {
-        message: getMessage(),
-        type: "error",
-      }
-      return message;
-    } else {
-      return "";
-    }
-  }, [getMessage])
-
-  const onValidate = (event: CustomEvent<Error>): void => {
-    if (event.detail.hasError) {
-      const jsonSchemaError =
-        props.validateJsonSchemaMode === "error" &&
-        some(event.detail.err, (v: any) => v.type === "error" && v.raw?.length > 0);
-      isError.current = true;
-      hasJsonSchemaError.current = jsonSchemaError;
-      props.formElement?.validateField(props.name as string);
-    } else {
-      isError.current = false;
-      hasJsonSchemaError.current = false;
-    }
-    props.onErrorChange && props.onErrorChange(event.detail);
+export function CodeEditorComponent(props: CodeEditorProps) {
+  const onValidate = (err: Annotation[]): void => {
+    const error = some(err, ["type", "error"]);
+    props.onErrorChange && props.onErrorChange({ err, hasError: error });
   };
 
   return (
-    <WrappedFormItem {...props as FormItemProps} validator={handleValidator}>
-      <WrappedCodeEditor
-        {...props}
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        onError={onValidate}
-      />
-    </WrappedFormItem>
+    <CodeEditorItemWrapper
+      {...props}
+      onValidate={onValidate}
+    />
   );
 }
 
-export { FormCodeEditor };
+export { CodeEditor, CodeEditorProps, Annotation, HighlightTokenSettings, };

@@ -353,6 +353,7 @@ export function CodeEditorItem(
   }, [editor, props.highlightTokens, props.onClickHighlightToken]);
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const resizeObserver = new ResizeObserver(() => {
       editor?.resize();
@@ -382,12 +383,13 @@ export function CodeEditorItem(
   }, [expanded]);
 
   const renderEditor = () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     return <AceEditor
         ref={ref}
         onLoad={onLoad}
         className={classNames("aceContainer", {
-          error: props.curElement.validateState === "error",
+          error: props.validateState === "error",
         })}
         name={props.name ?? "commands-editor"}
         placeholder={props.placeholder}

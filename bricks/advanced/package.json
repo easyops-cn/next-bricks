@@ -47,12 +47,15 @@
     "@next-core/theme": "^1.0.2",
     "@next-core/types": "^1.0.3",
     "antd": "^5.2.3",
+    "brace": "^0.11.1",
     "classnames": "^2.3.2",
     "immutability-helper": "^3.1.1",
     "lodash": "^4.17.21",
     "react": "0.0.0-experimental-ee8509801-20230117",
+    "react-ace": "^10.1.0",
     "react-dnd": "^16.0.1",
-    "react-dnd-html5-backend": "^16.0.1"
+    "react-dnd-html5-backend": "^16.0.1",
+    "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {
     "@next-core/build-next-bricks": "^1.1.2",

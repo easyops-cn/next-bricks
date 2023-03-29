@@ -1,7 +1,7 @@
 import { describe, test, expect } from "@jest/globals";
 import { act } from "react-dom/test-utils";
 import "./index.js";
-import { FormCodeEditor } from "./index.js";
+import { CodeEditor } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
@@ -10,7 +10,7 @@ describe("form.code-editor", () => {
   test("basic usage", async () => {
     const element = document.createElement(
       "form.code-editor"
-    ) as FormCodeEditor;
+    ) as CodeEditor;
 
     const codeChangeEvent = jest.fn();
     element.addEventListener("change", codeChangeEvent);
@@ -23,7 +23,7 @@ describe("form.code-editor", () => {
       document.body.appendChild(element);
     });
     expect(element.shadowRoot).toBeTruthy();
-    expect(element.shadowRoot?.childNodes.length).toBe(1);
+    expect(element.shadowRoot?.childNodes.length).toBe(5);
 
     expect(codeChangeEvent).toBeCalledTimes(0);
 
