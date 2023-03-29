@@ -6,7 +6,7 @@ import { TableComponent } from "./index.jsx";
 
 jest.mock("./BrickTable.js", () => ({
   BrickTable: () => {
-    <div>hello world</div>;
+    return <div>hello world</div>;
   },
 }));
 jest.mock("@next-core/theme", () => ({}));
@@ -17,10 +17,32 @@ describe("advanced.general-table", () => {
       "advanced.general-table"
     ) as TableComponent;
 
+    element.columns = [
+      {
+        title: "name",
+        key: "name",
+        dataIndex: "name"
+      },
+      {
+        title: "age",
+        key: "age",
+        dataIndex: "age"
+      }
+    ]
+
+    element.dataSource = [
+      {
+        name: "sailor",
+        age: "18"
+      }
+    ]
+
     expect(element.shadowRoot).toBeFalsy();
     act(() => {
       document.body.appendChild(element);
     });
+    expect(element.shadowRoot?.childNodes.length).toBe(2);
+    expect(element.columns.length).toBe(2);
     expect(element.shadowRoot).toBeTruthy();
 
     act(() => {

@@ -7,9 +7,10 @@ import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import update from "immutability-helper";
 import { CustomColumn } from "./index.js";
-import { ReactUseBrick } from "@next-core/react-runtime";
+import { ReactUseMultipleBricks } from "@next-core/react-runtime";
 import type { UseSingleBrickConf } from "@next-core/types";
 import { wrapBrick } from "@next-core/react-element";
+import { StyleProvider, createCache } from '@ant-design/cssinjs';
 import type {
   GeneralIcon,
   GeneralIconProps,
@@ -33,6 +34,7 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
 );
 
 export interface BrickTableProps {
+  shadowRoot: ShadowRoot | null;
   dataSource: Record<string, any>[];
   columns: CustomColumn[];
   configProps?: TableProps<any>;
@@ -118,7 +120,7 @@ const getCustomHeader = (
   data?: { title: unknown }
 ): (() => React.ReactElement) => {
   return function CustomHeader() {
-    return <ReactUseBrick useBrick={useBrick} data={data} />;
+    return <ReactUseMultipleBricks useBrick={useBrick} data={data} />;
   };
 };
 
@@ -150,7 +152,7 @@ const getCustomComp = (
         itemBrickDataMap?.set(item, brickData);
       }
 
-      return <ReactUseBrick useBrick={useBrick} data={brickData} />;
+      return <ReactUseMultipleBricks useBrick={useBrick} data={brickData} />;
     }
   };
 };
@@ -241,7 +243,7 @@ export function BrickTable(props: BrickTableProps): React.ReactElement {
 
         if (filterDropdownBrick?.useBrick) {
           columnConf.filterDropdown = (
-            <ReactUseBrick useBrick={filterDropdownBrick.useBrick} />
+            <ReactUseMultipleBricks useBrick={filterDropdownBrick.useBrick} />
           );
         }
 
@@ -353,7 +355,7 @@ export function BrickTable(props: BrickTableProps): React.ReactElement {
     }
 
     return (
-      <ReactUseBrick
+      <ReactUseMultipleBricks
         useBrick={props.expandedRowBrick?.useBrick as UseSingleBrickConf}
         data={data}
       />
@@ -494,5 +496,13 @@ export function BrickTable(props: BrickTableProps): React.ReactElement {
     table = <DndProvider backend={HTML5Backend}>{table}</DndProvider>;
   }
 
-  return table;
+  const cahce = useMemo(() => {
+    return createCache()
+  }, [])
+
+  return (
+    <StyleProvider container={props.shadowRoot as ShadowRoot} cache={cahce}>
+       { table }
+    </StyleProvider>
+  );
 }
