@@ -1,4 +1,5 @@
 import { PubSub } from "../utils/PubSub.js";
+import { isEmpty } from 'lodash';
 
 interface FormStoreOptions {
   onValuesChanged?: (data: any) => void;
@@ -15,6 +16,10 @@ interface FieldDetail {
 export interface MessageBody {
   message: string;
   type: string;
+}
+
+export interface WatchOptions {
+  needValidate?: boolean;
 }
 
 interface Validate {
@@ -76,9 +81,9 @@ export class FormStore extends PubSub {
     return this.#formData;
   }
 
-  setInitValue(values: Record<string, unknown>) {
+  setInitValue(values: Record<string, unknown>, isEmitValuseChange = true) {
     this.#initData = values;
-    this.setFieldsValue(values);
+    this.setFieldsValue(values, isEmitValuseChange);
   }
 
   setFieldsValueByInitData(name: string) {
@@ -89,7 +94,7 @@ export class FormStore extends PubSub {
     }
   }
 
-  setFieldsValue(values: Record<string, unknown>) {
+  setFieldsValue(values: Record<string, unknown>, isEmitValuseChange = true) {
     const allFields = this.#getAllFields();
     const newFormData: Record<string, unknown> = {
       ...this.#formData,
@@ -103,10 +108,12 @@ export class FormStore extends PubSub {
     });
     this.#formData = newFormData;
 
-    this.#options?.onValuesChanged?.({
-      changedValues: values,
-      allValues: this.getAllValues(),
-    });
+    if (isEmitValuseChange) {
+      this.#options?.onValuesChanged?.({
+        changedValues: values,
+        allValues: this.getAllValues(),
+      });
+    }
   }
 
   resetFields(name?: string) {
@@ -126,7 +133,7 @@ export class FormStore extends PubSub {
     return this.getAllValues();
   }
 
-  validateFields(callback: (err: boolean, value: any) => void) {
+  validateFields(callback: (err: boolean, value: any) => void): boolean | Record<string, unknown> {
     const allFields = this.#getAllFields();
     const results: Array<MessageBody | undefined> = [];
     allFields.forEach((name) => {
@@ -138,8 +145,10 @@ export class FormStore extends PubSub {
 
     if (results.some((result) => result?.type !== "normal")) {
       callback(true, results);
+      return false;
     } else {
       callback(false, this.#formData);
+      return this.#formData;
     }
   }
 
@@ -156,10 +165,13 @@ export class FormStore extends PubSub {
       };
     };
 
+    const getName = () => label ?? name;
+
     const valid = (validate: Validate, value: string): MessageBody => {
       const { required, pattern, message, min, max, validator } = validate;
+      const label = getName();
 
-      if (required && !value) {
+      if (required && (typeof value === "object" ? isEmpty(value) : !value)) {
         return messageBody(message?.required || `${label}为必填项`);
       }
 
@@ -182,7 +194,7 @@ export class FormStore extends PubSub {
 
       if (validator) {
         const result = validator(value);
-        if (result) return result === "string" ? messageBody(result, result ? "error" : "normal") : result as MessageBody;
+        if (result) return typeof result === "string" ? messageBody(result, result ? "error" : "normal") : result as MessageBody;
       }
 
       return messageBody("", "normal");
@@ -201,10 +213,15 @@ export class FormStore extends PubSub {
     return target.type === "checkbox" ? target.checked : target.value;
   }
 
+  resetValidateState() {
+    this.publish(`reset.validate`, null);
+  }
+
   onWatch(
     name: string,
     event: React.ChangeEvent,
-    callback?: (v: string) => void
+    callback?: (v: string) => void,
+    options?: WatchOptions
   ) {
     const field = this.#fields.get(name);
 
@@ -215,8 +232,9 @@ export class FormStore extends PubSub {
         [name]: value,
       });
 
-      this.validateField(field.detail);
-
+      if (options?.needValidate ?? true) {
+        this.validateField(field.detail);
+      }
       callback?.(value);
     }
   }

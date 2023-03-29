@@ -1,0 +1,25 @@
+.dynamic-form-wrapper {
+  border-radius: 6px;
+  padding: 16px;
+  background: var(--color-fill-bg-base-1);
+}
+
+.remove-btn {
+  cursor: pointer;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  width: 16px;
+  height: 16px;
+  border: 1px solid;
+  border-radius: 50%;
+  line-height: 16px;
+  padding: 2px 2px 1px 2px;
+  margin-left: 8px;
+  margin-top: 4px;
+}
+
+.dynamic-form > *:not(.remove-btn) {
+  flex: 1;
+  margin-right: 4px;
+}
