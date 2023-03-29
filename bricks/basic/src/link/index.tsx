@@ -1,15 +1,24 @@
 import React from "react";
 import { createDecorators } from "@next-core/element";
-import { ReactNextElement } from "@next-core/react-element";
+import { ReactNextElement, wrapBrick } from "@next-core/react-element";
+import type {
+  GeneralIcon,
+  GeneralIconProps,
+} from "@next-bricks/icons/general-icon";
 import type { LinkType, Target } from "../interface.js";
 import styleText from "./link.shadow.css";
 import classNames from "classnames";
 import "@next-core/theme";
 
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
+  "icons.general-icon"
+);
+
 export interface LinkProps {
   type?: LinkType;
   disabled?: boolean;
   href?: string;
+  icon?: GeneralIconProps;
   target?: Target;
   underline?: boolean;
   linkStyle?: React.CSSProperties;
@@ -77,6 +86,18 @@ class Link extends ReactNextElement implements LinkProps {
   @property() accessor underline: boolean | undefined;
 
   /**
+   * @kind GeneralIconProps
+   * @required false
+   * @default -
+   * @description 图标
+   * @group basic
+   */
+  @property({
+    attribute: false,
+  })
+  accessor icon: GeneralIconProps | undefined;
+
+  /**
    * @kind React.CSSProperties
    * @required false
    * @default -
@@ -94,6 +115,7 @@ class Link extends ReactNextElement implements LinkProps {
         disabled={this.disabled}
         href={this.href}
         target={this.target}
+        icon={this.icon}
         underline={this.underline}
         linkStyle={this.linkStyle}
       />
@@ -106,6 +128,7 @@ export function LinkComponent({
   disabled,
   href,
   target,
+  icon,
   underline,
   linkStyle,
 }: LinkProps) {
@@ -129,6 +152,7 @@ export function LinkComponent({
       target={target}
       onClick={handleClick}
     >
+      { icon && <WrappedIcon {...icon} /> }
       <slot />
     </a>
   );

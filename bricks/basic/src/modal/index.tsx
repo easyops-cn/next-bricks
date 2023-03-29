@@ -43,6 +43,7 @@ export interface ModalProps {
   cancelText?: string;
   fullscreen?: boolean;
   confirmDisabled?: boolean;
+  closeWhenConfirm?: boolean;
   visible?: boolean;
 }
 
@@ -122,7 +123,7 @@ class Modal extends ReactNextElement implements ModalProps {
   @property({
     type: Boolean,
   })
-  accessor autoCloseWhenConfirm: boolean | undefined = true;
+  accessor closeWhenConfirm: boolean | undefined;
 
   /**
    * @kind boolean
@@ -173,10 +174,10 @@ class Modal extends ReactNextElement implements ModalProps {
    */
   @event({ type: "confirm" })
   accessor #modalConfirm!: EventEmitter<void>;
-  #handleModelConfirm = () => {
+  #handleModelConfirm = (isClose: boolean) => {
     if (this.confirmDisabled) return;
     this.#modalConfirm.emit();
-    if (this.autoCloseWhenConfirm) {
+    if (isClose) {
       this.close();
     }
   };
@@ -210,6 +211,11 @@ class Modal extends ReactNextElement implements ModalProps {
     this.#handleModelClose();
   }
 
+  #closeModal = () => {
+    this.visible = false;
+    this.#handleModelClose();
+  }
+
   render() {
     return (
       <ModalComponent
@@ -219,7 +225,8 @@ class Modal extends ReactNextElement implements ModalProps {
         visible={this.visible}
         fullscreen={this.fullscreen}
         confirmDisabled={this.confirmDisabled}
-        onModalClose={() => (this.visible = false)}
+        closeWhenConfirm={this.closeWhenConfirm}
+        onModalClose={this.#closeModal}
         onModalConfirm={this.#handleModelConfirm}
         onModalCancel={this.#handleModelCancel}
       />
@@ -231,7 +238,7 @@ export { Modal };
 
 interface ModalComponentProps extends ModalProps {
   onModalClose: () => void;
-  onModalConfirm: () => void;
+  onModalConfirm: (isClose: boolean) => void;
   onModalCancel: () => void;
 }
 
@@ -244,6 +251,7 @@ function ModalComponent({
   visible: open = false,
   fullscreen,
   confirmDisabled,
+  closeWhenConfirm = true,
   onModalConfirm,
   onModalCancel,
   onModalClose,
@@ -263,8 +271,8 @@ function ModalComponent({
   );
 
   const handleConfirmClick = useCallback(() => {
-    onModalConfirm();
-  }, [onModalConfirm]);
+    onModalConfirm(closeWhenConfirm);
+  }, [onModalConfirm, closeWhenConfirm]);
 
   const handleCancelClick = useCallback(() => {
     onModalCancel();
