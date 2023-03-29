@@ -1724,13 +1724,14 @@
     "@babel/preset-react" "^7.18.6"
     "@babel/preset-typescript" "^7.21.0"
 
-"@next-core/brick-container@^3.0.9":
-  version "3.0.9"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.0.9.tgz#2152c8f8c37593e3442260a07594212459b0cfaa"
-  integrity sha512-pda2cV35IdunN6z/fGnNwl6Q06+Kxneix+bzlvyPYIhKp5A+WnA9GF9/3JMT9UTrII3maSs/gXEw6AUwDyXS0A==
+"@next-core/brick-container@^3.0.10":
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.0.10.tgz#fb99d035bbcf86caca1081be60db9056e00aabae"
+  integrity sha512-I87O4mWYpCwc+GQExZfRWTAZzLlJE93G9KU2ZNqdWF0fk4tzb3/NcpD17fIhonR9lBO7zIRrwP/hlYXF+d35zQ==
   dependencies:
     "@next-core/serve-helpers" "^1.0.3"
     body-parser "^1.20.1"
+    chalk "^4.1.2"
     compression "^1.7.4"
     express "^4.18.2"
     http-proxy-middleware "^2.0.6"
@@ -1750,10 +1751,10 @@
   resolved "https://registry.yarnpkg.com/@next-core/brick-icons/-/brick-icons-2.31.25.tgz#21c917837ce49a4f9f29c876fd29a963d3d00d81"
   integrity sha512-XFujLB3+NAMqLMZWzyUlwgC0ILuLmGbH6148AWFPT+I26lKcBNnya3oPa2xFSzxAdGLWkxhiO41b0CLn1lnFLg==
 
-"@next-core/brick-playground@^1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.0.8.tgz#2d6989bedfd8b9d323b8617cc6912563f8f6c393"
-  integrity sha512-N3hrQCHlSYD0xVY/CxB7UJqWAsPRwxYPP4Z6PtwJIgWZmw6VK3pYKxn6+yC7Y5pQsgega8Qt9Ze+rQWBA7kz/Q==
+"@next-core/brick-playground@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.1.0.tgz#786f1da3c70ed38a5b23d736322a9812654fb2d9"
+  integrity sha512-35QJ6+dhSNTJToV8Bsw8rYvxd4Rw0thLIxZ7v1brLU0Co5rrf33c+xIcbMCboNfHVQtCBMLhGySqB1eotIvRaw==
   dependencies:
     "@next-core/serve-helpers" "^1.0.3"
     compression "^1.7.4"
@@ -3844,7 +3845,7 @@ chalk@^3.0.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chalk@^4.0.0, chalk@^4.0.2, chalk@^4.1.0, chalk@^4.1.1:
+chalk@^4.0.0, chalk@^4.0.2, chalk@^4.1.0, chalk@^4.1.1, chalk@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.1.2.tgz#aac4e2b7734a740867aeb16bf02aad556a1e7a01"
   integrity sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==
