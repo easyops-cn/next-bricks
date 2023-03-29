@@ -1,7 +1,7 @@
 {
-  "name": "@next-bricks/basic",
-  "version": "0.1.1",
-  "homepage": "https://github.com/easyops-cn/next-core/tree/master/bricks/basic",
+  "name": "@next-bricks/form",
+  "version": "0.0.0",
+  "homepage": "https://github.com/easyops-cn/next-core/tree/master/bricks/form",
   "repository": {
     "type": "git",
     "url": "git@github.com:easyops-cn/next-core.git"
@@ -45,9 +45,12 @@
     "@next-core/react-runtime": "^1.0.6",
     "@next-core/theme": "^1.0.2",
     "@next-core/types": "^1.0.3",
+    "brace": "^0.11.1",
     "classnames": "^2.3.2",
     "lodash": "^4.17.21",
-    "react": "0.0.0-experimental-ee8509801-20230117"
+    "react": "0.0.0-experimental-ee8509801-20230117",
+    "react-ace": "^10.1.0",
+    "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {
     "@next-core/build-next-bricks": "^1.1.2",

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div>normal:</div>
+    <form.general-input></form.general-input>
+
+    <div style="margin-top: 20px">size:</div>
+    <form.general-input
+      id="input1"
+      placeholder="large"
+      size="large"
+    ></form.general-input>
+    <div style="height: 20px"></div>
+    <form.general-input
+      placeholder="middle"
+      size="middle"
+    ></form.general-input>
+    <div style="height: 20px"></div>
+    <form.general-input placeholder="small" size="small"></form.general-input>
+
+    <div style="margin-top: 20px">disabled:</div>
+    <form.general-input
+      placeholder="disabled"
+      disabled="true"
+    ></form.general-input>
+
+    <div style="margin-top: 20px">inputStyle:</div>
+    <form.general-input
+      id="input2"
+      placeholder="inputStyle"
+    ></form.general-input>
+
+    <div style="margin-top: 20px">maxLength:</div>
+    <form.general-input
+      max-length="10"
+      value="abcdefghij"
+    ></form.general-input>
+
+    <div style="margin-top: 20px">minLength:</div>
+    <form.general-input
+      min-length="10"
+      value="abcdefghij"
+    ></form.general-input>
+
+    <div style="margin-top: 20px">type:</div>
+    <div style="margin-top: 10px">password</div>
+    <form.general-input type="password"></form.general-input>
+    <div style="margin-top: 10px">date</div>
+    <form.general-input type="date"></form.general-input>
+    <div style="margin-top: 10px">color</div>
+    <form.general-input type="color"></form.general-input>
+    <div style="margin-top: 10px">search</div>
+    <form.general-input type="search"></form.general-input>
+    <div>...</div>
+  </body>
+  <script>
+    var input1 = document.getElementById("input1");
+    var input2 = document.getElementById("input2");
+
+    input1.addEventListener("focus", (e) => {
+      console.log("focus", e);
+    });
+
+    input1.addEventListener("blur", (e) => {
+      console.log("blur", e);
+    });
+
+    input1.addEventListener("change", (e) => {
+      console.log("change", e);
+    });
+
+    input2.inputStyle = {
+      width: "180px",
+    };
+  </script>
+</html>
