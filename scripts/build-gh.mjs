@@ -64,3 +64,8 @@ await writeFile(
     brickPackages: brickPackages.filter(Boolean)
   })
 );
+
+await writeFile(
+  path.join(distDir, ".nojekyll"),
+  ""
+);
