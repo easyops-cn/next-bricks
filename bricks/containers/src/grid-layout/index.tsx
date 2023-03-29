@@ -30,14 +30,14 @@ const mediaQueryMap: Record<MediaSize, string> = {
 };
 
 /**
- * @id basic.grid-layout
- * @name basic.grid-layout
+ * @id containers.grid-layout
+ * @name containers.grid-layout
  * @docKind brick
  * @description 提供多行多列的响应式网格布局
  * @author abert
  *
  */
-@defineElement("basic.grid-layout", {
+@defineElement("containers.grid-layout", {
   styleTexts: [styleText],
 })
 class GridLayout extends ReactNextElement {

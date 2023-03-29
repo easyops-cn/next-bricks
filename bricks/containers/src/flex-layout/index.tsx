@@ -5,7 +5,7 @@ import styleText from "./flex-layout.shadow.css";
 
 const { defineElement, property } = createDecorators();
 
-@defineElement("basic.flex-layout", {
+@defineElement("containers.flex-layout", {
   styleTexts: [styleText],
 })
 class FlexLayout extends ReactNextElement {

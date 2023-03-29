@@ -9,7 +9,7 @@
 
   <body>
     <basic.general-button id="btn-left">左侧弹出</basic.general-button>
-    <basic.general-drawer
+    <containers.general-drawer
       id="drawer-left"
       placement="left"
       width="1000"
@@ -17,10 +17,10 @@
       mask-closeable="true"
     >
       <div>body</div>
-    </basic.general-drawer>
+    </containers.general-drawer>
 
     <basic.general-button id="btn-right">右侧弹出</basic.general-button>
-    <basic.general-drawer
+    <containers.general-drawer
       id="drawer-right"
       placement="right"
       custom-title="遮罩层无法点击"
@@ -29,10 +29,10 @@
       <div style="height: 1000px; background: red; color: #fff">
         overflow auto
       </div>
-    </basic.general-drawer>
+    </containers.general-drawer>
 
     <basic.general-button id="btn-top">上方弹出</basic.general-button>
-    <basic.general-drawer
+    <containers.general-drawer
       id="drawer-top"
       placement="top"
       height="500"
@@ -40,10 +40,10 @@
       mask-closeable="true"
     >
       <div>body</div>
-    </basic.general-drawer>
+    </containers.general-drawer>
 
     <basic.general-button id="btn-bottom">下方弹出</basic.general-button>
-    <basic.general-drawer
+    <containers.general-drawer
       id="drawer-bottom"
       placement="bottom"
       custom-title="下方弹出"
@@ -52,7 +52,7 @@
       <basic.general-button id="btn-bottom-inner"
         >点击关闭抽屉</basic.general-button
       >
-    </basic.general-drawer>
+    </containers.general-drawer>
   </body>
   <script>
     var btnLeft = document.getElementById("btn-left");

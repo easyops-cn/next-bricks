@@ -62,12 +62,6 @@ export type Layout = "horizontal" | "vertical" | "inline";
 
 /* ============== Input Type End ============== */
 
-/* ============== Drawer Type Start ============== */
-
-export type Placement = "left" | "right" | "top" | "bottom";
-
-/* ============== Drawer Type Start ============== */
-
 /* ============== Radio Type Start ============== */
 
 export type RadioType =

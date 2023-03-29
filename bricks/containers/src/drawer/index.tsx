@@ -6,8 +6,8 @@ import type {
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
 import classNames from "classnames";
-import "@next-core/theme";
 import type { Placement } from "../interface.js";
+import "@next-core/theme";
 import styleText from "./drawer.shadow.css";
 
 export interface DrawerEvents {
@@ -37,14 +37,14 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
 );
 
 /**
- * @id basic.general-drawer
- * @name basic.general-drawer
+ * @id containers.general-drawer
+ * @name containers.general-drawer
  * @docKind brick
  * @description 通用抽屉构件
  * @author sailor
  * @noInheritDoc
  */
-@defineElement("basic.general-drawer", {
+@defineElement("containers.general-drawer", {
   styleTexts: [styleText],
 })
 class Drawer extends ReactNextElement implements DrawerProps {

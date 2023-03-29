@@ -1,11 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { createDecorators, type EventEmitter } from "@next-core/element";
+import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
-
+import type { Button, ButtonProps } from "@next-bricks/basic/button";
+import { isEmpty } from "lodash";
 import styleText from "./card.shadow.css";
 import "@next-core/theme";
-import type { Button, ButtonProps } from "../button/index.js";
-import { isEmpty } from "lodash";
 
 export interface OperationButton {
   id: string;
@@ -28,15 +27,15 @@ const WrappedButton = wrapBrick<Button, ButtonProps>("basic.general-button");
 
 const { defineElement, property } = createDecorators();
 /**
- * @id basic.general-card
- * @name basic.general-card
+ * @id containers.general-card
+ * @name containers.general-card
  * @docKind brick
  * @description 通用卡片构件
  * @author julielai
  * @noInheritDoc
  */
 
-@defineElement("basic.general-card", {
+@defineElement("containers.general-card", {
   styleTexts: [styleText],
 })
 class Card extends ReactNextElement implements CardProps {
