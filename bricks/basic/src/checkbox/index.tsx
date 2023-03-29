@@ -1,4 +1,4 @@
-import React, { HtmlHTMLAttributes, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
 import classNames from "classnames";
@@ -11,7 +11,7 @@ import type {
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
 
-const { defineElement, property, event, method } = createDecorators();
+const { defineElement, property, event } = createDecorators();
 
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>(
   "basic.general-form-item"

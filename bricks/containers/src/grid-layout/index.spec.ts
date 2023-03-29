@@ -16,9 +16,9 @@ window.matchMedia = jest.fn().mockImplementation((query) => {
   };
 });
 
-describe("basic.grid-layout", () => {
+describe("containers.grid-layout", () => {
   test("basic usage", () => {
-    const element = document.createElement("basic.grid-layout") as GridLayout;
+    const element = document.createElement("containers.grid-layout") as GridLayout;
 
     expect(element.shadowRoot).toBeFalsy();
 
@@ -43,7 +43,7 @@ describe("basic.grid-layout", () => {
   });
 
   test("showGridBorder is true", () => {
-    const element = document.createElement("basic.grid-layout") as GridLayout;
+    const element = document.createElement("containers.grid-layout") as GridLayout;
 
     expect(element.shadowRoot).toBeFalsy();
 
@@ -69,7 +69,7 @@ describe("basic.grid-layout", () => {
   });
 
   it("should be responsive", async () => {
-    const element = document.createElement("basic.grid-layout") as GridLayout;
+    const element = document.createElement("containers.grid-layout") as GridLayout;
     Object.assign(element, {
       responsive: {
         large: {

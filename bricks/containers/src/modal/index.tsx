@@ -13,7 +13,7 @@ import type {
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
 import "@next-core/theme";
-import type { Button, ButtonProps } from "../button/index.js";
+import type { Button, ButtonProps } from "@next-bricks/basic/button";
 import styleText from "./modal.shadow.css";
 
 /**
@@ -22,7 +22,7 @@ import styleText from "./modal.shadow.css";
  * ```ts
  * import type { Modal, ModalProps, ModalEvents, ModalMapEvents } from "@next-bricks/basic/modal";
  *
- * const WrappedModal = wrapBrick<Modal, ModalProps, ModalEvents, ModalMapEvents>("basic.general-modal", {
+ * const WrappedModal = wrapBrick<Modal, ModalProps, ModalEvents, ModalMapEvents>("containers.general-modal", {
  *   onClose: "close",
  *   onConfirm: "confirm",
  *   onCancel: "cancel",
@@ -67,7 +67,7 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
 
 const { defineElement, property, event, method } = createDecorators();
 
-@defineElement("basic.general-modal", {
+@defineElement("containers.general-modal", {
   styleTexts: [styleText],
 })
 class Modal extends ReactNextElement implements ModalProps {

@@ -5,9 +5,9 @@ import { Modal } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
-describe("basic.general-button", () => {
+describe("containers.general-modal", () => {
   test("basic usage", async () => {
-    const element = document.createElement("basic.general-modal") as Modal;
+    const element = document.createElement("containers.general-modal") as Modal;
     const bodyElement = document.createElement("div");
     bodyElement.textContent = "This is a body";
     element.modalTitle = "Modal Title";
@@ -105,7 +105,7 @@ describe("basic.general-button", () => {
   });
 
   test("closeWhenConfirm was true and click confirm button not close the modal", async () => {
-    const element = document.createElement("basic.general-modal") as Modal;
+    const element = document.createElement("containers.general-modal") as Modal;
     element.modalTitle = "Modal Title";
     element.closeWhenConfirm = false;
 
