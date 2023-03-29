@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { createDecorators, EventEmitter } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
 import type { GeneralComplexOption } from "../interface.js";
@@ -264,28 +270,30 @@ class Select extends FormItemElement {
 
 export function SelectComponent(props: SelectProps) {
   const {
-    curElement,
-    options,
+    options = [],
     name,
     disabled,
     multiple,
-    clearable,
+    clearable = true,
     inputStyle,
     placeholder,
     validateState,
     optionsChange,
     onChange,
   } = props;
-  const [value, setValue] = React.useState<any>(multiple ? [] : undefined);
-  const [isDropHidden, setIsDropHidden] = React.useState<boolean>(true);
-  const [isFocused, setIsFocused] = React.useState<boolean>(false);
+  const [inputValue, setInputValue] = useState<string>("");
+  const [selectValue, setSelectValue] = useState<any>(
+    multiple ? [] : undefined
+  );
+  const [isDropHidden, setIsDropHidden] = useState<boolean>(true);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
+  const [customSelectvalue, setCustomSelectValue] = useState<string[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const handleDocumentClick = (e: MouseEvent) => {
-      if (isFocused && !curElement.contains(e.target as HTMLElement)) {
-        setIsFocused(false);
-        setIsDropHidden(true);
-      }
+      setIsFocused(false);
+      setIsDropHidden(true);
     };
     document.addEventListener("click", handleDocumentClick);
     return () => {
@@ -294,7 +302,7 @@ export function SelectComponent(props: SelectProps) {
   });
 
   useEffect(() => {
-    setValue(props.value);
+    setSelectValue(props.value);
   }, [props.value]);
 
   useEffect(() => {
@@ -305,35 +313,68 @@ export function SelectComponent(props: SelectProps) {
     (option: GeneralComplexOption): void => {
       let newValue;
       if (multiple) {
-        newValue = (value ?? []).includes(option.value)
-          ? (value as string[]).filter((item) => item !== option.value)
-          : (((value as any[]) ?? []).concat(option.value) as string[]);
+        newValue = (selectValue ?? []).includes(option.value)
+          ? (selectValue as string[]).filter((item) => item !== option.value)
+          : (((selectValue as any[]) ?? []).concat(option.value) as string[]);
       } else {
         newValue = option.value;
       }
-      setValue(newValue);
+      setSelectValue(newValue);
       onChange?.(newValue);
       !multiple && setIsDropHidden(true);
     },
-    [multiple, value, onChange]
+    [multiple, selectValue, onChange]
   );
 
   const handleMultipleItemClose = useCallback(
     (closeValue: string | number | boolean) => {
-      const newValue = (value as string[]).filter(
+      const newValue = (selectValue as string[]).filter(
         (item) => item !== closeValue
       );
-      setValue(newValue);
+      setSelectValue(newValue);
       onChange?.(newValue);
     },
-    [onChange, value]
+    [onChange, selectValue]
   );
 
   const handleClear = (e: React.MouseEvent): void => {
     e.stopPropagation();
-    setValue(undefined);
+    setSelectValue(undefined);
     onChange?.(undefined);
   };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.stopPropagation();
+    const value = e.target.value;
+    setInputValue(value);
+  };
+
+  const computedOptions = React.useMemo(() => {
+    return options.concat(
+      customSelectvalue.map((item, index) => ({
+        key: index,
+        label: item,
+        value: item,
+      }))
+    );
+  }, [options, customSelectvalue]);
+
+  const handleKeydown = useCallback((e: KeyboardEvent): void => {
+    if (e.code === "Enter" && inputValue) {
+      if (!computedOptions.find(item => item.value === inputValue)) {
+        setCustomSelectValue(customSelectvalue.concat(inputValue));
+      }
+      handleChange({
+        value: inputValue,
+        label: inputValue,
+      });
+      setInputValue("");
+    }
+    if (e.code === "Backspace" && multiple && inputValue === "" && selectValue?.length) {
+      selectValue.pop();
+      setSelectValue([...selectValue]);
+    }
+  }, [computedOptions, customSelectvalue, handleChange, inputValue, multiple, selectValue]);
 
   const renderTag = useCallback(
     (list: Array<number | string | boolean>) => {
@@ -355,7 +396,7 @@ export function SelectComponent(props: SelectProps) {
           option = item;
         } else {
           option =
-            options.find((option) => option.value === item) ??
+            computedOptions.find((option) => option.value === item) ??
             ({} as GeneralComplexOption);
           option.closeable = !disabled;
         }
@@ -375,7 +416,7 @@ export function SelectComponent(props: SelectProps) {
         );
       });
     },
-    [handleMultipleItemClose, options, disabled]
+    [handleMultipleItemClose, computedOptions, disabled]
   );
 
   const getLabel = useCallback(
@@ -384,21 +425,30 @@ export function SelectComponent(props: SelectProps) {
         return (
           (Array.isArray(value)
             ? renderTag(value)
-            : options.find((item) => item.value === value)?.label) ?? ""
+            : computedOptions.find((item) => item.value === value)?.label) ?? ""
         );
       }
       return "";
     },
-    [options, renderTag]
+    [computedOptions, renderTag]
   );
 
   const renderLabel = useMemo(() => {
-    return getLabel(value) || (placeholder as string);
-  }, [getLabel, placeholder, value]);
+    return getLabel(selectValue) || (placeholder as string);
+  }, [getLabel, placeholder, selectValue]);
 
   const isEmptyValue = useMemo(() => {
-    return typeof value === "object" ? isEmpty(value) : !value;
-  }, [value]);
+    return typeof selectValue === "object"
+      ? isEmpty(selectValue)
+      : !selectValue;
+  }, [selectValue]);
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeydown);
+    return () => {
+      window.removeEventListener("keydown", handleKeydown);
+    };
+  }, [handleKeydown]);
 
   return (
     <WrappedFormItem {...props}>
@@ -409,7 +459,8 @@ export function SelectComponent(props: SelectProps) {
           "select-single": !multiple,
           "select-multiple": multiple,
         })}
-        style={inputStyle ?? { width: "180px" }}
+        style={inputStyle}
+        onClick={(e) => {e.stopPropagation()}}
       >
         <div
           className={classNames("select-selector", {
@@ -420,22 +471,13 @@ export function SelectComponent(props: SelectProps) {
             if (!disabled) {
               setIsDropHidden(!isDropHidden);
               setIsFocused(!isFocused);
+              inputRef.current && inputRef.current.focus();
             }
           }}
         >
-          <span className="select-selection-search">
-            <input
-              type="text"
-              readOnly={true}
-              className="select-selection-search-input"
-            ></input>
-          </span>
-          <span
-            style={{ overflow: "hidden", textOverflow: "ellipsis" }}
-            className="select-selection-item"
-          >
+          <div className="select-selection-overflow">
             <div
-              className="option"
+              className="selected-item"
               style={
                 isEmptyValue
                   ? { color: "var(--antd-input-placeholder-color)" }
@@ -444,7 +486,19 @@ export function SelectComponent(props: SelectProps) {
             >
               <span className="label">{renderLabel}</span>
             </div>
-          </span>
+            { multiple && <div className="selected-item">
+              <div className="select-selection-search">
+                <input
+                  type="text"
+                  readOnly={!multiple}
+                  value={inputValue}
+                  ref={inputRef}
+                  className="select-selection-search-input"
+                  onChange={handleInputChange}
+                />
+              </div>
+            </div> }
+          </div>
           <span className="select-arrow">
             {!isEmptyValue && isFocused && clearable ? (
               <WrappedIcon
@@ -476,8 +530,8 @@ export function SelectComponent(props: SelectProps) {
           <div className="dropdown-list">
             <div>
               <div className="dropdown-inner">
-                {options &&
-                  options.map((item) => {
+                {computedOptions.length > 0 ? (
+                  computedOptions.map((item) => {
                     return (
                       <div
                         key={item.value.toString()}
@@ -486,9 +540,9 @@ export function SelectComponent(props: SelectProps) {
                           "select-item-option",
                           {
                             "select-option-selected":
-                              typeof value !== "object"
-                                ? value === item.value
-                                : (value as any[]).includes(item.value),
+                              typeof selectValue !== "object"
+                                ? selectValue === item.value
+                                : (selectValue as any[]).includes(item.value),
                           }
                         )}
                         onClick={() => handleChange(item)}
@@ -509,7 +563,19 @@ export function SelectComponent(props: SelectProps) {
                         </div>
                       </div>
                     );
-                  })}
+                  })
+                ) : (
+                  <div className="empty-tips">
+                    <WrappedIcon
+                      {...{ lib: "antd", icon: "warning", theme: "filled", color: "yellow" }}
+                      style={{
+                        fontSize: 16,
+                        marginRight: 12,
+                      }}
+                    />
+                    无数据
+                  </div>
+                )}
               </div>
             </div>
           </div>
