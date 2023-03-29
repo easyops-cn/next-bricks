@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div>normal:</div>
+    <form.general-textarea></form.general-textarea>
+
+    <div style="margin-top: 20px">placeholder:</div>
+    <form.general-textarea
+      placeholder="Hello World! This is a placeholder!"
+    ></form.general-textarea>
+
+    <div style="margin-top: 20px">value:</div>
+    <form.general-textarea value="this is a value!"></form.general-textarea>
+
+    <div style="margin-top: 20px">autoSize:</div>
+    <form.general-textarea
+      id="textarea-1"
+      placeholder="autoSize: { minRows: 2, maxRows: 5 }"
+    ></form.general-textarea>
+
+    <div style="margin-top: 20px">diabled:</div>
+    <form.general-textarea
+      disabled="true"
+      value="disabled"
+    ></form.general-textarea>
+
+    <div style="margin-top: 20px">maxLength & minLength:</div>
+    <form.general-textarea
+      max-length="10"
+      min-length="2"
+    ></form.general-textarea>
+  </body>
+  <script>
+    var textarea1 = document.getElementById("textarea-1");
+
+    textarea1.addEventListener("change", (e) => {
+      console.log("change", e);
+    });
+
+    textarea1.addEventListener("focus", (e) => {
+      console.log("focus", e);
+    });
+
+    textarea1.addEventListener("blur", (e) => {
+      console.log("blur", e);
+    });
+
+    textarea1.autoSize = {
+      minRows: 2,
+      maxRows: 5,
+    };
+  </script>
+</html>
