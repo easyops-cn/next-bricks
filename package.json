@@ -13,6 +13,7 @@
     "serve:e2e": "brick-container-serve --no-remote",
     "serve:playground": "brick-playground-serve",
     "build": "lerna run build",
+    "build:gh": "node scripts/build-gh.mjs",
     "test": "test-next-project",
     "test:ci": "lerna run test:ci --",
     "lint-staged": "lint-staged"
