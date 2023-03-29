@@ -70,3 +70,15 @@ jobs:
       with:
         npm-token: ${{ secrets.NPM_TOKEN }}
       if: github.event_name == 'push'
+
+    - run: yarn build:gh
+      if: github.event_name == 'push'
+
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist
+        publish_branch: gh-pages
+        force_orphan: true
+      if: github.event_name == 'push'
