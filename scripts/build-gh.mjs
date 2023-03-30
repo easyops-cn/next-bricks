@@ -3,6 +3,8 @@ import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
 import { existsSync } from "node:fs";
 import { cp, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
+import getExamples from "@next-core/brick-playground/getExamples";
 
 const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -31,16 +33,19 @@ await cp(
 const srcBricksDir = path.join(__dirname, "../bricks");
 const distBricksDir = path.join(distPlaygroundDir, "bricks");
 
-const list = await readdir(
+const pkgDirList = await readdir(
   srcBricksDir,
   { withFileTypes: true }
 );
 
-const brickPackages = await Promise.all(
-  list.map(
+const brickPackages = [];
+
+await Promise.all(
+  pkgDirList.map(
     async (dir) => {
       if (dir.isDirectory()) {
-        const itemDistDir = path.join(srcBricksDir, dir.name, "dist");
+        const pkgDir = path.join(srcBricksDir, dir.name);
+        const itemDistDir = path.join(pkgDir, "dist");
         if (existsSync(itemDistDir)) {
           const bricksJsonPath = path.join(itemDistDir, "bricks.json");
           if (existsSync(bricksJsonPath)) {
@@ -50,7 +55,7 @@ const brickPackages = await Promise.all(
             const bricksJson = JSON.parse(
               await readFile(bricksJsonPath, "utf-8")
             );
-            return bricksJson;
+            brickPackages.push(bricksJson);
           }
         }
       }
@@ -58,14 +63,49 @@ const brickPackages = await Promise.all(
   )
 );
 
+const bootstrapJson = JSON.stringify({ brickPackages });
+const bootstrapHash = getContentHash(bootstrapJson);
+const bootstrapJsonPath = `bootstrap.${bootstrapHash}.json`;
+
 await writeFile(
-  path.join(distPlaygroundDir, "bootstrap.hash.json"),
-  JSON.stringify({
-    brickPackages: brickPackages.filter(Boolean)
-  })
+  path.join(distPlaygroundDir, bootstrapJsonPath),
+  bootstrapJson
+);
+
+const examplesJson = JSON.stringify({ examples: await getExamples(srcBricksDir) });
+const examplesHash = getContentHash(examplesJson);
+const examplesJsonPath = `examples.${examplesHash}.json`;
+
+await writeFile(
+  path.join(distPlaygroundDir, examplesJsonPath),
+  examplesJson
+);
+
+await replaceContent(
+  path.join(distPlaygroundDir, "index.html"),
+  "examples.hash.json",
+  examplesJsonPath
+);
+
+await replaceContent(
+  path.join(distPlaygroundDir, "preview.html"),
+  "bootstrap.hash.json",
+  bootstrapJsonPath
 );
 
 await writeFile(
   path.join(distDir, ".nojekyll"),
   ""
 );
+
+function getContentHash(content) {
+  const hash = createHash("sha1");
+  hash.update(content);
+  return hash.digest("hex").slice(0, 8);
+}
+
+// Replace content in file
+async function replaceContent(filePath, match, replacement) {
+  const content = await readFile(filePath, "utf-8");
+  await writeFile(filePath, content.replace(match, replacement));
+}
