@@ -1751,10 +1751,10 @@
   resolved "https://registry.yarnpkg.com/@next-core/brick-icons/-/brick-icons-2.31.25.tgz#21c917837ce49a4f9f29c876fd29a963d3d00d81"
   integrity sha512-XFujLB3+NAMqLMZWzyUlwgC0ILuLmGbH6148AWFPT+I26lKcBNnya3oPa2xFSzxAdGLWkxhiO41b0CLn1lnFLg==
 
-"@next-core/brick-playground@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.3.0.tgz#1f82d6d8941279de8f0c00b049a868af36edee62"
-  integrity sha512-y+o1ujotz+4wUj4Bc8Sq0GwRWjrsoWFp1mlBJtadkwNUJaV4YrJHDZ3Uc9ZqyU9SL8CsKe8jaQTwUSDSQBuUQg==
+"@next-core/brick-playground@^1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.3.1.tgz#d783f67fc7863e70673b063759a7d54d0a1de8d0"
+  integrity sha512-tTUdor2JxVsr3fy6HlMbYPh/XKtJ9gPUs/FNSupPPUe2r0RJ19L4Kyu5l5NeuNd6EzpoNUCcDLtQajE9Hda0kQ==
   dependencies:
     "@next-core/serve-helpers" "^1.0.4"
     compression "^1.7.4"
