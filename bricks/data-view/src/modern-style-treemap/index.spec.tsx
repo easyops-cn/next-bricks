@@ -1,8 +1,17 @@
+import React from "react";
 import { describe, test, expect } from "@jest/globals";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import "./index.jsx";
 import { ModernStyleTreemap } from "./index.jsx";
+
+jest.mock("@next-core/react-runtime", () => ({
+  ReactUseMultipleBricks: ({ data }: any) => {
+    return <div>{data.data?.name}</div>
+  }
+}));
+
+jest.useFakeTimers();
 
 describe("data-view.modern-style-treemap", () => {
   test("basic usage", async () => {
@@ -45,6 +54,8 @@ describe("data-view.modern-style-treemap", () => {
     element.tooltipStyle = {
       color: "green"
     };
+    element.leafUseBrick = { useBrick: { brick: "div", properties: { textContent: "<% DATA.data.name %>" } } };
+    element.tooltipUseBrick = { useBrick: { brick: "div", properties: { textContent: "<% DATA.data.name %>" } } };
 
     expect(element.shadowRoot).toBeFalsy();
     act(() => {
@@ -53,6 +64,7 @@ describe("data-view.modern-style-treemap", () => {
     expect(element.shadowRoot).toBeTruthy();
 
     expect(element.shadowRoot.querySelectorAll(".treemap-leaf").length).toBe(6);
+    expect(element.shadowRoot.querySelectorAll(".treemap-leaf")[0].innerHTML).toBe("<div>a</div>");
     expect(
       (element.shadowRoot.querySelector(".treemap-leaf") as HTMLDivElement).style
         .color
@@ -71,7 +83,18 @@ describe("data-view.modern-style-treemap", () => {
       (element.shadowRoot.querySelector(".tooltip") as HTMLDivElement).style
         .visibility
     ).toBe("visible");
-    fireEvent.mouseMove(element.shadowRoot.querySelector("[data-leaf-id='c']"));
+
+    act(()=>{
+      fireEvent.mouseMove(element.shadowRoot.querySelector("[data-leaf-id='c']"));
+      jest.runAllTimers();
+    })
+    expect(element.shadowRoot.querySelector(".tooltip").innerHTML).toBe("<div>c</div>");
+    act(()=>{
+      fireEvent.mouseMove(element.shadowRoot.querySelector(".treemap"));
+      jest.runAllTimers();
+    })
+    expect(element.shadowRoot.querySelector(".tooltip").innerHTML).toBe("<div>c</div>");
+
     fireEvent.mouseLeave(element.shadowRoot.querySelector(".treemap"));
     expect(
       (element.shadowRoot.querySelector(".tooltip") as HTMLDivElement).style

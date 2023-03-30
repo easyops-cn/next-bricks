@@ -10,6 +10,7 @@ import {
 import variablesStyleText from "../data-view-variables.shadow.css";
 import styleText from "./modern-style-treemap.shadow.css";
 import { useResizeObserver } from "../hooks/index.js";
+import { debounceByAnimationFrame } from "../utils/debounceByAnimationFrame.js";
 import { keyBy } from "lodash";
 
 const { defineElement, property } = createDecorators();
@@ -32,9 +33,9 @@ type TreemapData = {
 interface ModernStyleTreemapProps {
   data: TreemapData;
   tail?: TailTypes;
-  leafUseBrick?: UseBrickConf;
+  leafUseBrick?: { useBrick: UseBrickConf };
   leafContainerStyle?: CSSProperties;
-  tooltipUseBrick?: UseBrickConf;
+  tooltipUseBrick?: { useBrick: UseBrickConf };
   tooltipStyle?: CSSProperties;
 }
 
@@ -75,7 +76,7 @@ class ModernStyleTreemap
   accessor tail: TailTypes = TailTypes["treemapSquarify"];
 
   /**
-   * @kind UseBrickConf
+   * @kind { useBrick: UseBrickConf }
    * @required false
    * @default -
    * @description 叶子节点useBrick
@@ -83,7 +84,7 @@ class ModernStyleTreemap
   @property({
     attribute: false,
   })
-  accessor leafUseBrick: UseBrickConf;
+  accessor leafUseBrick: { useBrick: UseBrickConf };
 
   /**
    * @kind CSSProperties
@@ -97,7 +98,7 @@ class ModernStyleTreemap
   accessor leafContainerStyle: CSSProperties;
 
   /**
-   * @kind UseBrickConf
+   * @kind { useBrick: UseBrickConf }
    * @required false
    * @default -
    * @description tooltip useBrick
@@ -105,7 +106,7 @@ class ModernStyleTreemap
   @property({
     attribute: false,
   })
-  accessor tooltipUseBrick: UseBrickConf;
+  accessor tooltipUseBrick: { useBrick: UseBrickConf };
 
   /**
    * @kind CSSProperties
@@ -164,30 +165,55 @@ function ModernStyleTreemapElement(
       .round(true)
   }, [tail, wrapperWidth, wrapperHeight]);
 
-  const root = useMemo(() => {
-    return tm(hierarchyNode);
+  const [leaves, leavesMap] = useMemo(() => {
+    // 这里只要hierarchyNode不变化，即使tm更新了，root、leaves还是同一个对象
+    const root = tm(hierarchyNode);
+    // 这里使用解构让leaves里面每个node变成新对象
+    const _leaves = root.leaves().map(v => ({ ...v }));
+    return [_leaves, keyBy(_leaves, "data.name")];
   }, [tm, hierarchyNode]);
 
-  const [leaves, leavesMap] = useMemo(() => {
-    const _leaves = root.leaves();
-    return [_leaves, keyBy(_leaves, "data.name")];
-  }, [root]);
+  const leavesNode = useMemo(() => {
+    return leaves.map(d => {
+      const
+        top = d.y0,
+        left = d.x0,
+        width = d.x1 - d.x0,
+        height = d.y1 - d.y0;
+
+      return <div key={d.data.name}
+        className="treemap-leaf"
+        data-leaf-id={d.data.name}
+        style={{
+          ...leafContainerStyle,
+          top: 0,
+          left: 0,
+          transform: `translate(${left}px, ${top}px)`,
+          width,
+          height,
+        }}>
+        {leafUseBrick?.useBrick && <ReactUseMultipleBricks useBrick={leafUseBrick.useBrick} data={d} />}
+      </div>
+    })
+  }, [leafContainerStyle, leafUseBrick?.useBrick, leaves])
 
   const curTooltipData = useMemo(() => {
-    return leavesMap[mouseData.name];
+    return { ...leavesMap[mouseData.name] };
   }, [leavesMap, mouseData.name]);
 
-  const handleMouseMove = useCallback(((e: MouseEvent<HTMLDivElement>) => {
-    const curLeaf = (e.target as HTMLDivElement).closest(".treemap-leaf");
-    const curName = curLeaf?.getAttribute("data-leaf-id");
-    setMouseData(pre => {
-      return {
-        clientX: e.clientX,
-        clientY: e.clientY,
-        name: curLeaf ? curName : pre.name,
-      };
-    });
-  }), []);
+  const handleMouseMove = useMemo(() => {
+    return debounceByAnimationFrame((e: MouseEvent<HTMLDivElement>) => {
+      const curLeaf = (e.target as HTMLDivElement).closest(".treemap-leaf");
+      const curName = curLeaf?.getAttribute("data-leaf-id");
+      setMouseData(pre => {
+        return {
+          clientX: e.clientX,
+          clientY: e.clientY,
+          name: curLeaf ? curName : pre.name,
+        };
+      });
+    })
+  }, []);
 
   return (
     <div className="wrapper">
@@ -202,27 +228,7 @@ function ModernStyleTreemapElement(
           tooltipRef.current.style.visibility = "hidden";
         }}
       >
-        {leaves.map(d => {
-          const
-            top = d.y0,
-            left = d.x0,
-            width = d.x1 - d.x0,
-            height = d.y1 - d.y0;
-
-          return <div key={d.data.name}
-            className="treemap-leaf"
-            data-leaf-id={d.data.name}
-            style={{
-              ...leafContainerStyle,
-              top: 0,
-              left: 0,
-              transform: `translate(${left}px, ${top}px)`,
-              width,
-              height,
-            }}>
-            {leafUseBrick && <ReactUseMultipleBricks useBrick={leafUseBrick} data={d} />}
-          </div>
-        })}
+        {leavesNode}
       </div>
       <div className="tooltip"
         style={{
@@ -232,7 +238,7 @@ function ModernStyleTreemapElement(
             ${mouseData.clientY - wrapperRef.current?.getBoundingClientRect().top - tooltipHeight / 2}px)`
         }}
         ref={tooltipRef}>
-        {tooltipUseBrick && <ReactUseMultipleBricks useBrick={tooltipUseBrick} data={curTooltipData} />}
+        {tooltipUseBrick?.useBrick && <ReactUseMultipleBricks useBrick={tooltipUseBrick.useBrick} data={curTooltipData} />}
       </div>
     </div>
   );
