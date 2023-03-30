@@ -58,6 +58,32 @@ jobs:
       if: steps.yarn-lock-check-before.outputs.sum != steps.yarn-lock-check-after.outputs.sum
 
     - run: yarn build
+      if: github.event_name != 'pull_request'
+
+    # v2-adapter is not used in playground
+    - run: yarn build --ignore @next-bricks/v2-adapter
+      if: github.event_name == 'pull_request'
+
+    - run: yarn build:gh
+
+    - name: Deploy to Netlify
+      uses: nwtgck/actions-netlify@v2.0
+      with:
+        publish-dir: './dist/playground'
+        production-branch: master
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        deploy-message: ${{ github.event.pull_request.title }}
+        alias: deploy-preview-${{ github.event.number }}
+        netlify-config-path: ./netlify.toml
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      timeout-minutes: 1
+      if: github.event_name == 'pull_request'
+
+    - run: yarn build --scope @next-bricks/v2-adapter
+      if: github.event_name == 'pull_request'
+
     - run: yarn test:ci
 
     - name: Codecov
@@ -69,9 +95,6 @@ jobs:
     - uses: easyops-cn/actions-next-publish-from-tags@master
       with:
         npm-token: ${{ secrets.NPM_TOKEN }}
-      if: github.event_name == 'push'
-
-    - run: yarn build:gh
       if: github.event_name == 'push'
 
     - name: Deploy

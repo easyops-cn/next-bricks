@@ -11,6 +11,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const distDir = path.join(__dirname, "../dist");
 const distPlaygroundDir = path.join(distDir, "playground");
+const distPreviewDir = path.join(distPlaygroundDir, "preview");
+const srcPlaygroundDir = path.join(
+  require.resolve("@next-core/brick-playground/package.json"),
+  ".."
+);
 
 if (existsSync(distDir)) {
   await rm(distDir, { recursive: true, force: true });
@@ -20,18 +25,23 @@ await mkdir(distDir);
 await mkdir(distPlaygroundDir);
 
 await cp(
-  path.join(
-    require.resolve("@next-core/brick-playground/package.json"),
-    "../dist"
-  ),
+  path.join(srcPlaygroundDir, "dist"),
   distPlaygroundDir,
   {
     recursive: true
   }
 );
 
+await cp(
+  path.join(srcPlaygroundDir, "dist-preview"),
+  distPreviewDir,
+  {
+    recursive: true
+  }
+);
+
 const srcBricksDir = path.join(__dirname, "../bricks");
-const distBricksDir = path.join(distPlaygroundDir, "bricks");
+const distBricksDir = path.join(distPreviewDir, "bricks");
 
 const pkgDirList = await readdir(
   srcBricksDir,
@@ -68,7 +78,7 @@ const bootstrapHash = getContentHash(bootstrapJson);
 const bootstrapJsonPath = `bootstrap.${bootstrapHash}.json`;
 
 await writeFile(
-  path.join(distPlaygroundDir, bootstrapJsonPath),
+  path.join(distPreviewDir, bootstrapJsonPath),
   bootstrapJson
 );
 
@@ -88,7 +98,7 @@ await replaceContent(
 );
 
 await replaceContent(
-  path.join(distPlaygroundDir, "preview.html"),
+  path.join(distPreviewDir, "index.html"),
   "bootstrap.hash.json",
   bootstrapJsonPath
 );
