@@ -6,10 +6,10 @@ import { CodeEditor } from "./index.js";
 jest.mock("@next-core/theme", () => ({}));
 
 // todo: write unit test
-describe("form.code-editor", () => {
+describe("advanced.code-editor", () => {
   test("basic usage", async () => {
     const element = document.createElement(
-      "form.code-editor"
+      "advanced.code-editor"
     ) as CodeEditor;
 
     const codeChangeEvent = jest.fn();
