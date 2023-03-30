@@ -1,0 +1,15 @@
+- brick: icons.general-icon
+  properties:
+    lib: antd
+    theme: outlined
+    icon: branches
+- brick: icons.general-icon
+  properties:
+    lib: fa
+    prefix: far
+    icon: bell
+- brick: icons.general-icon
+  properties:
+    lib: easyops
+    category: default
+    icon: account

@@ -3,6 +3,8 @@
 
 Bricks for Brick Next V3
 
+[Playground](https://easyops-cn.github.io/next-bricks/playground/?example=basic%2Fbutton)
+
 ## 构件开发
 
 ### Brick Playground
