@@ -13,12 +13,20 @@
         "^@next-core/"
       ],
       "excludePackageNames": [
-        "@next-core/brick-dll-v3", "@next-core/styles-v3"
+        "@next-core/brick-dll-v3",
+        "@next-core/styles-v3",
+        "@next-core/brick-icons",
+        "@next-core/illustrations"
       ],
       "groupName": "next-core packages"
     },
     {
-      "matchPackageNames": ["@next-core/brick-dll-v3", "@next-core/styles-v3"],
+      "matchPackageNames": [
+        "@next-core/brick-dll-v3",
+        "@next-core/styles-v3",
+        "@next-core/brick-icons",
+        "@next-core/illustrations"
+      ],
       "matchPackagePatterns": ["^@next-dll/"],
       "enabled": true,
       "groupName": "legacy v2 packages"
