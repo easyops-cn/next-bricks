@@ -39,6 +39,10 @@
   color: var(--color-disabled-text);
 }
 
+.select:hover .select-selector-item~.select-arrow {
+  opacity: 0;
+}
+
 .select-selector {
   display: flex;
   position: relative;
@@ -124,7 +128,7 @@
 
 .select-arrow {
   pointer-events: none;
-  transition: none;
+  transition: opacity .3s ease;
 }
 
 .select-clear {
