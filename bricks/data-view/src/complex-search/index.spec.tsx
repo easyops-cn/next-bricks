@@ -87,6 +87,7 @@ describe("data-view.complex-search", ()=>{
         expect(tooltipNode.getAttribute("style")).toBe("top: 0px; visibility: visible;");
         fireEvent.mouseEnter(tooltipNode);
         fireEvent.mouseLeave(tooltipNode);
+        expect(tooltipNode.getAttribute("style")).toBe("top: 0px; visibility: hidden;");
         fireEvent.click(menuItem);
         expect(mockSelectFn).toHaveBeenCalled();
         fireEvent.mouseLeave(menuItem);
