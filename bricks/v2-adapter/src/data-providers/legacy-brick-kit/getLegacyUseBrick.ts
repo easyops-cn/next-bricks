@@ -5,6 +5,7 @@ import { __secret_internals, handleHttpError } from "@next-core/runtime";
 interface ReactUseBrickProps {
   useBrick: UseSingleBrickConf;
   data?: unknown;
+  refCallback?: (element: HTMLElement | null) => void;
 }
 
 interface ReactUseMultipleBricksProps {
@@ -21,6 +22,7 @@ export function getLegacyUseBrick(LegacyReact: typeof React) {
   function ReactUseBrick({
     useBrick,
     data,
+    refCallback
   }: ReactUseBrickProps): React.ReactElement | null {
     const [renderResult, setRenderResult] =
       useState<__secret_internals.RenderUseBrickResult | null>(null);
@@ -50,8 +52,8 @@ export function getLegacyUseBrick(LegacyReact: typeof React) {
       init();
     }, [data, useBrick]);
 
-    const refCallback = useCallback(
-      (element: HTMLElement) => {
+    const _refCallback = useCallback(
+      (element: HTMLElement | null) => {
         if (element) {
           mountResult.current = __secret_internals.mountUseBrick(
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -66,6 +68,7 @@ export function getLegacyUseBrick(LegacyReact: typeof React) {
           );
           mountResult.current = undefined;
         }
+        refCallback?.(element);
       },
       [renderResult]
     );
@@ -84,7 +87,7 @@ export function getLegacyUseBrick(LegacyReact: typeof React) {
     const WebComponent = tagName as any;
     return LegacyReact.createElement(WebComponent, {
       key: renderKey,
-      ref: refCallback,
+      ref: _refCallback,
     });
   }
 
