@@ -17,6 +17,7 @@ import {
   checkIfByTransform,
   checkIfOfComputed,
   StoryboardFunctionRegistryFactory,
+  __secret_internals,
 } from "@next-core/runtime";
 import { i18n, i18nText } from "@next-core/i18n";
 import * as Http from "@next-core/http";
@@ -243,6 +244,9 @@ async function loadMainDll(adapterPkgFilePath: string) {
     getCurrentMode,
     batchSetAppsLocalTheme,
     applyTheme,
+
+    // Todo: remove `as` after update deps
+    doTransform: (__secret_internals as any).legacyDoTransform,
 
     BrickWrapper(props: { children: unknown }) {
       // istanbul ignore next
