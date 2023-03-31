@@ -48,6 +48,15 @@ interface IconsByCategory {
   [category: string]: string[];
 }
 
+interface LegacyFaIconProps {
+  icon: [string, string] | string;
+  gradientColor?: {
+    startColor: string;
+    endColor: string;
+    direction?: string;
+  }
+}
+
 const MAIN_KEY = "";
 
 // Specify brick dependencies:
@@ -167,17 +176,27 @@ async function loadMainDll(adapterPkgFilePath: string) {
   });
 
   defineModule(LegacyReactFontAwesome, {
-    FontAwesomeIcon({ icon }: { icon: [string, string] | string }) {
+    FontAwesomeIcon({ icon, gradientColor }: LegacyFaIconProps) {
       return LegacyReact.createElement(
         "icons.fa-icon",
-        Array.isArray(icon)
+        {
+          ...(Array.isArray(icon)
           ? {
               prefix: icon[0],
               icon: icon[1],
             }
           : {
               icon,
+            }),
+          ...(gradientColor
+            ? {
+              "start-color": gradientColor.startColor,
+              "end-color": gradientColor.endColor,
+              "gradient-direction": gradientColor.direction,
             }
+            : null
+          )
+        }
       );
     },
   });
