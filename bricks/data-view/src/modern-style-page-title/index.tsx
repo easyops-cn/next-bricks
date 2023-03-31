@@ -35,9 +35,7 @@ class ModernStylePageTitle
    * @default -
    * @description 页面标题
    */
-  @property({
-    attribute: false,
-  })
+  @property()
   accessor pageTitle: string;
 
   /**
@@ -46,9 +44,7 @@ class ModernStylePageTitle
    * @default -
    * @description 辅助描述
    */
-  @property({
-    attribute: false,
-  })
+  @property()
   accessor description: string;
 
   /**

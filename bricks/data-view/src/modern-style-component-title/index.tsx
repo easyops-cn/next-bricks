@@ -36,7 +36,7 @@ class ModernStyleComponentTitle
    * @description 是否隐藏左侧装饰
    */
   @property({
-    attribute: false,
+    type: Boolean,
   })
   accessor hideLeftComponent = false;
 
@@ -47,7 +47,7 @@ class ModernStyleComponentTitle
    * @description 是否隐藏右侧装饰
    */
   @property({
-    attribute: false,
+    type: Boolean,
   })
   accessor hideRightComponent = true;
 
@@ -57,9 +57,7 @@ class ModernStyleComponentTitle
    * @default -
    * @description 组件标题
    */
-  @property({
-    attribute: false,
-  })
+  @property()
   accessor componentTitle: string;
 
   /**

@@ -41,12 +41,14 @@
 
   --palette-green-6-channel: 81, 235, 73;
   --palette-green-6: rgb(var(--palette-green-6-channel));
+  --palette-green-2: rgba(var(--palette-green-6-channel), 20%);
 
   --palette-lotus-pink-7-channel: 204, 0, 102;
   --palette-lotus-pink-7: rgb(var(--palette-lotus-pink-7-channel));
 
-  --palette-lotus-red-6-channel: 242, 39, 39;
-  --palette-lotus-red-6: rgb(var(--palette-lotus-red-6-channel));
+  --palette-red-6-channel: 242, 39, 39;
+  --palette-red-6: rgb(var(--palette-red-6-channel));
+  --palette-red-2: rgba(var(--palette-red-6-channel), 20%);
 
   /* ============== 基本色 End ============== */
 
@@ -74,7 +76,9 @@
 
   /* 状态色 */
   --color-error: var(--palette-red-6);
+  --color-error-bg: var(--palette-red-2);
   --color-success: var(--palette-green-6);
+  --color-success-bg: var(--palette-green-2);
 
   /* 文字色 */
   --color-header-text-big: var(--palette-rgba-white-10);
@@ -128,7 +132,9 @@
   --chart-tooltips-font-size-1: 12px;
   --chart-tooltips-font-size-2: 12px;
   --chart-axis-x-font-size: 12px;
+  --chart-axis-x-font-size-larger: 14px;
   --chart-axis-y-font-size: 12px;
+  --chart-axis-y-font-size-larger: 14px;
 
   /* 字重 */
   --font-weight-600: 600;
