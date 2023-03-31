@@ -3,7 +3,7 @@ import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import variablesStyleText from "../data-view-variables.shadow.css";
 import styleText from "./dropdown-menu.shadow.css";
-import emptyUrl from "./empty.png";
+import emptyUrl from "../asset/images/empty.png";
 import type {
   GeneralIcon,
   GeneralIconProps,
