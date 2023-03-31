@@ -5,7 +5,7 @@ import { Radio } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
-describe("form.general-button", () => {
+describe("basic.general-button", () => {
   test("basic usage", async () => {
     const element = document.createElement("form.general-radio") as Radio;
     element.options = [

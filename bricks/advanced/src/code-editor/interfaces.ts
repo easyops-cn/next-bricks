@@ -1,5 +1,4 @@
 import { IMarker } from "react-ace";
-import type { FormItemProps } from "../form-item/index.js";
 
 export interface Error {
   err: Annotation[];
@@ -11,14 +10,11 @@ export interface ExtendedMarker extends IMarker {
   identifier: string;
 }
 
-export interface CodeEditorProps extends FormItemProps {
+export interface CodeEditorProps {
   placeholder?: string;
   label?: string;
   name?: string;
   value: string;
-  onChange?: (value: string) => void;
-  onBlur?: () => void;
-  onErrorChange?: (error: Error) => void;
   disabled?: boolean;
   theme?: string;
   mode: string;
@@ -30,7 +26,6 @@ export interface CodeEditorProps extends FormItemProps {
   showGutter?: boolean;
   printMargin?: boolean;
   highlightActiveLine?: boolean;
-  onValidate?: (error: Annotation[]) => void;
   showExportButton?: boolean;
   showCopyButton?: boolean;
   showExpandButton?: boolean;
@@ -50,6 +45,11 @@ export interface CodeEditorProps extends FormItemProps {
   loadYamlInJsonMode?: boolean;
   showPrintMargin?: boolean;
   highlightTokens?: HighlightTokenSettings[];
+  validateState?: string;
+  onValidate?: (error: Annotation[]) => void;
+  onChange?: (value: string) => void;
+  onBlur?: () => void;
+  onErrorChange?: (error: Error) => void;
   onClickHighlightToken?: (token: {
     type: HighlightTokenType;
     value: string;
