@@ -8,8 +8,11 @@ import type {
     GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
 import {ReactUseMultipleBricks, ReactUseMultipleBricksProps} from "@next-core/react-runtime";
+import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
+import { K, NS, locales } from "./i18n.js";
 import empty from "../asset/images/empty.png"
 const {defineElement, property, event} = createDecorators();
+initializeReactI18n(NS, locales);
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
     "icons.general-icon"
 );
@@ -169,7 +172,8 @@ export function ComplexSearchComponent(props: ComplexSearchProps): React.ReactEl
         placeholder,
         onSelect,
         options = []
-    } = props
+    } = props;
+    const { t } = useTranslation(NS);
     const [allowClear, setAllowClear] = useState<boolean>(false);
     const contentRef = useRef<HTMLDivElement>(null);
     const [visible, setVisible] = useState(false);
@@ -190,7 +194,7 @@ export function ComplexSearchComponent(props: ComplexSearchProps): React.ReactEl
     const handleSelect = (data: OptionItem) => {
         onSelect(data);
         setVisible(false);
-        setTooltipVisible(false);
+        // setTooltipVisible(false);
     }
     useEffect(() => {
         setAllowClear(!!value);
@@ -211,12 +215,11 @@ export function ComplexSearchComponent(props: ComplexSearchProps): React.ReactEl
     }
     const handleValueChange = (value:string) => {
         onInputChange(value);
-        setVisible(!!value);
+        setVisible(true);
     }
     const onClearValue = () => {
         onInputChange("");
         setVisible(false);
-        setTooltipVisible(false);
     }
     const TooltipBrick = useMemo(() => {
         if (!tooltipUseBrick?.useBrick) {
@@ -236,8 +239,7 @@ export function ComplexSearchComponent(props: ComplexSearchProps): React.ReactEl
                     </div>
                 </div>)
         }
-    }, [currentData, tooltipUseBrick, positionTop])
-
+    }, [currentData, tooltipUseBrick, positionTop, tooltipVisible])
     useEffect(() => {
         document.addEventListener("click", handleClick)
         return () => document.removeEventListener("click", handleClick)
@@ -278,8 +280,8 @@ export function ComplexSearchComponent(props: ComplexSearchProps): React.ReactEl
                             }
                         </div>)
                     : (<div className="emptyData">
-                         <img src={empty} alt="暂无数据"/>
-                         <span>空数据</span>
+                         <img src={empty} alt={t(K.EMPTY_DATA)} />
+                         <span>{t(K.EMPTY_DATA)}</span>
                     </div>)
             }
         </div>

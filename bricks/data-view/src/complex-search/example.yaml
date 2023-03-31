@@ -1,0 +1,21 @@
+- brick: data-view.complex-search
+  properties:
+    options:
+      - name: 主机1
+        icon:
+          lib: "antd"
+          icon: "account-book"
+          theme : "outlined"
+      - name: 主机2
+        icon:
+          lib: "antd"
+          icon: "account-book"
+          theme: "outlined"
+  events:
+    select:
+      - action: console.log
+    search:
+      - action: console.log
+    focus:
+      - action: console.log
+
