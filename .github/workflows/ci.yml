@@ -79,6 +79,7 @@ jobs:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
       timeout-minutes: 1
+      continue-on-error: true
       if: github.event_name == 'pull_request'
 
     - run: yarn build --scope @next-bricks/v2-adapter

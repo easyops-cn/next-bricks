@@ -1,15 +1,66 @@
-- brick: icons.general-icon
+- brick: div
   properties:
-    lib: antd
-    theme: outlined
-    icon: branches
-- brick: icons.general-icon
-  properties:
-    lib: fa
-    prefix: far
-    icon: bell
-- brick: icons.general-icon
-  properties:
-    lib: easyops
-    category: default
-    icon: account
+    style:
+      display: grid
+      gridTemplateColumns: repeat(3, 1fr)
+      justifyItems: center
+      fontSize: 32px
+  children:
+  - brick: icons.general-icon
+    properties:
+      lib: antd
+      theme: outlined
+      icon: branches
+  - brick: icons.general-icon
+    properties:
+      lib: fa
+      prefix: far
+      icon: bell
+  - brick: icons.general-icon
+    properties:
+      lib: easyops
+      category: default
+      icon: account
+  - brick: icons.antd-icon
+    properties:
+      lib: antd
+      theme: outlined
+      icon: branches
+      style:
+        color: cyan
+  - brick: icons.general-icon
+    properties:
+      lib: fa
+      prefix: far
+      icon: bell
+      style:
+        color: orange
+  - brick: icons.general-icon
+    properties:
+      lib: easyops
+      category: default
+      icon: account
+      style:
+        color: gray
+  - brick: icons.general-icon
+    properties:
+      lib: antd
+      theme: outlined
+      icon: branches
+      startColor: yellow
+      endColor: red
+  - brick: icons.general-icon
+    properties:
+      lib: antd
+      theme: outlined
+      icon: function
+      startColor: green
+      endColor: blue
+      gradientDirection: left-to-right
+  - brick: icons.general-icon
+    properties:
+      lib: fa
+      prefix: far
+      icon: bell
+      startColor: pink
+      endColor: purple

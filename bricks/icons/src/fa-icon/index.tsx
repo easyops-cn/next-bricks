@@ -4,36 +4,42 @@ import { ReactNextElement, wrapLocalBrick } from "@next-core/react-element";
 import { hasOwnProperty } from "@next-core/utils/general";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type IconDefinition, config } from "@fortawesome/fontawesome-svg-core";
+import { DefineLinearGradient, DefineLinearGradientProps, GradientDirection } from "../shared/DefineLinearGradient.js";
 import styleText from "./generated/fa-icon.shadow.css";
+import linearGradientStyleText from "../shared/DefineLinearGradient.shadow.css";
 import alias from "./generated/alias.json";
 
 config.autoAddCss = false;
 
 const { defineElement, property } = createDecorators();
 
-export interface FaIconProps {
+export interface FaIconProps extends DefineLinearGradientProps {
+  /** Defaults to "fas" */
   prefix?: string;
   icon?: string;
   spin?: boolean;
 }
 
 @defineElement("icons.fa-icon", {
-  styleTexts: [styleText],
+  styleTexts: [styleText, linearGradientStyleText],
 })
 class FaIcon extends ReactNextElement implements FaIconProps {
   // Note: `prefix` is a native prop on Element, but it's only used in XML documents.
   @property() accessor prefix!: string;
   @property() accessor icon: string | undefined;
   @property({ type: Boolean }) accessor spin: boolean | undefined;
+  @property() accessor startColor: string | undefined;
+  @property() accessor endColor: string | undefined;
+  @property() accessor gradientDirection: GradientDirection | undefined;
 
   render() {
     return (
-      <FaIconComponent prefix={this.prefix} icon={this.icon} spin={this.spin} />
+      <FaIconComponent prefix={this.prefix} icon={this.icon} spin={this.spin} startColor={this.startColor} endColor={this.endColor} gradientDirection={this.gradientDirection} />
     );
   }
 }
 
-function FaIconComponent({ prefix: _prefix, icon, spin }: FaIconProps) {
+function FaIconComponent({ prefix: _prefix, icon, spin, startColor, endColor, gradientDirection }: FaIconProps) {
   const prefix = _prefix ?? "fas";
   const [iconDefinition, setIconDefinition] = useState<IconDefinition | null>(
     null
@@ -71,7 +77,12 @@ function FaIconComponent({ prefix: _prefix, icon, spin }: FaIconProps) {
     return null;
   }
 
-  return <FontAwesomeIcon icon={iconDefinition} spin={spin} />;
+  return (
+    <>
+      <FontAwesomeIcon icon={iconDefinition} spin={spin} />
+      <DefineLinearGradient startColor={startColor} endColor={endColor} gradientDirection={gradientDirection} />
+    </>
+  );
 }
 
 interface Alias {

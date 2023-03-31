@@ -5,6 +5,7 @@ import { ReactNextElement, wrapLocalBrick } from "@next-core/react-element";
 const { defineElement, property } = createDecorators();
 
 export interface EasyOpsIconProps {
+  /** Defaults to "default" */
   category?: string;
   icon?: string;
 }

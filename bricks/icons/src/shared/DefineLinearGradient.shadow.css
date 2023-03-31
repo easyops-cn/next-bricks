@@ -1,0 +1,3 @@
+:host([start-color][end-color]) path {
+  fill: url("#linear-gradient");
+}
