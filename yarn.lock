@@ -1724,10 +1724,10 @@
     "@babel/preset-react" "^7.18.6"
     "@babel/preset-typescript" "^7.21.0"
 
-"@next-core/brick-container@^3.0.13":
-  version "3.0.13"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.0.13.tgz#5240bdcd139794ae0d682807ae51f0485f5ecd9f"
-  integrity sha512-TOmkYg5BdHWCOOye7A4s7ys73chEeb36TYld7UiIi7APpHcg3P7DMGrx+SO2iVGMnSxF5z228moNxgvQc9vaNQ==
+"@next-core/brick-container@^3.0.14":
+  version "3.0.14"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.0.14.tgz#ddd8945b81901ebf3d3da0450ccbf9df39e30f9a"
+  integrity sha512-ESmEiojSSwRsFoTuNCf29Rwo65b63HLNOwdY608yKFqVSu3vc2T4uKBcDgsr7scQc8Ni4vU8mc1yhgo0d1VgUg==
   dependencies:
     "@next-core/serve-helpers" "^1.0.4"
     body-parser "^1.20.1"
@@ -1751,10 +1751,10 @@
   resolved "https://registry.yarnpkg.com/@next-core/brick-icons/-/brick-icons-2.31.25.tgz#21c917837ce49a4f9f29c876fd29a963d3d00d81"
   integrity sha512-XFujLB3+NAMqLMZWzyUlwgC0ILuLmGbH6148AWFPT+I26lKcBNnya3oPa2xFSzxAdGLWkxhiO41b0CLn1lnFLg==
 
-"@next-core/brick-playground@^1.3.2":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.3.2.tgz#055dae288ffe3d37853f41e59e528aba4fe2faf5"
-  integrity sha512-6eX1/C4PX6KS+Z2owisr2YdPDGQs+/qdg3PTHg/jsrbWetUtWC/CqTvwxnYG1PmiwFRaQ23MEHmpuxJPUCDIQA==
+"@next-core/brick-playground@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.4.0.tgz#f04e91345f87cb07d818d8f53d945f2a8919abdb"
+  integrity sha512-yG7V6MLqDmw/kd4Fhg7DS0m2KeHoP5KyFiQTvU3/qkd438SIeDYrFS3cCodpVNIuEDnlzy9Np1NQTmL+91NhfA==
   dependencies:
     "@next-core/serve-helpers" "^1.0.4"
     compression "^1.7.4"
@@ -1930,10 +1930,10 @@
     ts-jest-resolver "^2.0.1"
     typescript "^5.0.2"
 
-"@next-core/theme@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@next-core/theme/-/theme-1.0.2.tgz#5a57fe90d14f64020275ac72defc4290829b233d"
-  integrity sha512-BzTU01eqEOhMFn/hIQBBw+qumIPGPBw/tL9k467f8HpzsrS0MYJ6AnxjI7YUziNBXP+WemhuUPtHvN9WDvRybg==
+"@next-core/theme@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@next-core/theme/-/theme-1.1.0.tgz#edccb99642779d7ed71997678317dc7af710575c"
+  integrity sha512-74LNBEQgonQgSH/e6Tg8PdKF/QNE2BXnooUX8pLIqnyp/nBsOudLxXJl5pYw+b8Se+xoX8i4xwONs/3MsiRCCA==
   dependencies:
     "@next-core/styles-v3" "^0.2.1"
 
