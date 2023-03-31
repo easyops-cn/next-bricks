@@ -165,7 +165,9 @@ function DropdownMenuElement(
           : <div className="select-selection-placeholder" style={{ visibility: inputValue ? "hidden" : "visible" }}>{placeholder}</div>
         }
         <div className="select-arrow" >
-          <WrappedIcon className="ant-select-suffix" lib="antd" theme="outlined" icon={isInputFocused ? "search" : "down"} />
+          {isInputFocused
+            ? <WrappedIcon className="ant-select-suffix search-icon" lib="antd" theme="outlined" icon="search" />
+            : <WrappedIcon className="ant-select-suffix down-icon" lib="antd" theme="outlined" icon="down" />}
         </div>
         <div className="select-clear" style={{ visibility: !value ? "hidden" : "visible" }}
           onMouseDown={(e) => {
@@ -177,7 +179,7 @@ function DropdownMenuElement(
             onChange?.(null);
           }}
         >
-          <WrappedIcon className="ant-select-suffix" lib="antd" theme="filled" icon="close-circle" />
+          <WrappedIcon className="ant-select-suffix clear-icon" lib="antd" theme="filled" icon="close-circle" />
         </div>
       </div>
     </div>
@@ -208,7 +210,7 @@ function DropdownMenuElement(
             </div>
           </div>
           : <div className="empty-state">
-            <img src={emptyUrl as unknown as string} className="empty-image" />
+            <img src={emptyUrl} className="empty-image" />
             <div className="empty-description">暂无数据</div>
           </div>
       }
