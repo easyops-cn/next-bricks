@@ -58,7 +58,9 @@ export function getLegacyRuntime(): {
             //
           };
         case "reloadSharedData":
-          return function () {};
+          return function () {
+            //
+          };
       }
     },
   });
