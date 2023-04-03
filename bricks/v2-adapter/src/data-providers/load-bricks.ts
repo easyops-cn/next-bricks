@@ -245,8 +245,7 @@ async function loadMainDll(adapterPkgFilePath: string) {
     batchSetAppsLocalTheme,
     applyTheme,
 
-    // Todo: remove `as` after update deps
-    doTransform: (__secret_internals as any).legacyDoTransform,
+    doTransform: __secret_internals.legacyDoTransform,
 
     BrickWrapper(props: { children: unknown }) {
       // istanbul ignore next
@@ -310,6 +309,10 @@ async function loadMainDll(adapterPkgFilePath: string) {
     ...getLegacyUseBrick(LegacyReact),
 
     ...getLegacyUseRecentApps(LegacyReact),
+
+    developHelper: {
+      renderPreviewBricks: __secret_internals.renderPreviewBricks,
+    },
   });
 }
 
