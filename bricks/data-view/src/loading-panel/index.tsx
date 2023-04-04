@@ -99,17 +99,17 @@ export function LoadingPanelComponent(props:LoadingPanelProps): React.ReactEleme
             }
             setProgressValue(init);
             // 由于step未知，所以会出现 init + step > end； 这时候，我们就要取 end
-            init = init + (step?? 1);
+            init = init + step
         }, time);
     }
     const prevProgress = usePrevious(progress);
     const getStep = (curVal:number, start:number, end:number):number =>{
-        return  curVal >= start ? 1: Math.round((end-curVal)/20);
+        return  curVal >= start ? 1: Math.ceil((end-curVal)/10);
     }
     useEffect(()=>{
         let step = 1;
          if(!useRealTimeProgress && !loading){
-             // 假数据的时候，如果 loading结束，但是 progressValue 已经到了80，那么step为1，如果小于80，可以分段考虑,保证后面的速度就是20下；
+             // 假数据的时候，如果 loading结束，但是 progressValue 已经到了80，那么step为1，如果小于80，可以分段考虑,保证后面的记载次数为10次完成；
              step = getStep(progressValue,80, 100 );
          }
          if(useRealTimeProgress) {
