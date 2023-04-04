@@ -1,0 +1,6 @@
+- brick: data-view.loading-panel
+  properties:
+    customTitle: Hello World!!
+    loading: false
+
+
