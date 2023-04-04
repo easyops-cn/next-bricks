@@ -310,9 +310,14 @@ async function loadMainDll(adapterPkgFilePath: string) {
 
     ...getLegacyUseRecentApps(LegacyReact),
 
-    developHelper: {
-      renderPreviewBricks: __secret_internals.renderPreviewBricks,
-    },
+    developHelper: lodash.pick(__secret_internals, [
+      "renderPreviewBricks",
+      "updateStoryboardByRoute",
+      "updateStoryboardByTemplate",
+      "updateTemplatePreviewSettings",
+      "updateStoryboardBySnippet",
+      "updateSnippetPreviewSettings",
+    ]),
   });
 }
 
