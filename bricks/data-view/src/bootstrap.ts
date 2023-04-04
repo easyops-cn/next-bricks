@@ -6,4 +6,5 @@ import "./modern-style-treemap/index.js";
 import "./battery-chart/index.js";
 import "./dropdown-menu/index.js";
 import "./complex-search/index.js";
+import "./loading-panel/index.js";
 
