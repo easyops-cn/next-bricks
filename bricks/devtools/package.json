@@ -1,0 +1,33 @@
+{
+  "name": "@next-bricks/devtools",
+  "version": "0.0.0",
+  "homepage": "https://github.com/easyops-cn/next-core/tree/master/bricks/devtools",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:easyops-cn/next-core.git"
+  },
+  "license": "GPL-3.0",
+  "type": "module",
+  "sideEffects": true,
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "start": "cross-env NODE_ENV=development build-next-bricks --watch",
+    "build": "cross-env NODE_ENV=production build-next-bricks",
+    "test": "cross-env NODE_ENV='test' test-next",
+    "test:ci": "cross-env NODE_ENV='test' CI=true test-next"
+  },
+  "dependencies": {
+    "@next-core/runtime": "^1.2.0",
+    "@next-core/utils": "^1.2.0",
+    "html2canvas": "^1.4.1"
+  },
+  "devDependencies": {
+    "@next-core/build-next-bricks": "^1.3.0",
+    "@next-core/test-next": "^1.0.2"
+  }
+}
