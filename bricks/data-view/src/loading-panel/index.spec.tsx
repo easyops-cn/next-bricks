@@ -16,24 +16,32 @@ describe("data-view.loading-panel", ()=>{
     });
     test("basic usage", async ()=>{
         const element =  document.createElement("data-view.loading-panel") as LoadingPanel;
+        const mockEndFn = jest.fn();
         expect(element.shadowRoot).toBeFalsy();
         act(()=>{
             element.loading = true;
             element.customTitle = "Hello world";
             element.useRealTimeProgress = false;
+            element.onEnd();
             document.body.appendChild(element);
         });
         expect(element.shadowRoot).toBeTruthy();
         expect(element.shadowRoot.querySelector(".title").innerHTML).toBe("Hello world");
         const {container ,rerender} = await act( async () =>
-             render(<LoadingPanelComponent
-                 useRealTimeProgress={false}
-                 loading={false}
-                 customTitle="hello" />));
+            render(<LoadingPanelComponent
+                useRealTimeProgress={false}
+                loading={false}
+                customTitle="hello"
+            />));
         expect(container.querySelector(".title").innerHTML).toBe("hello");
-        rerender(<LoadingPanelComponent useRealTimeProgress={true} progress={0} intervalTime={300} />);
+        expect(setInterval).toBeCalledTimes(2);
+        expect(setInterval).lastCalledWith(expect.any(Function), 100);
+        rerender(<LoadingPanelComponent useRealTimeProgress={true} progress={100} intervalTime={300}  onEnd={mockEndFn} />);
+        await act(async ()=>{
+            jest.runAllTimers();
+        })
         expect(container.querySelector(".title").innerHTML).toBe("Tarsier");
-        expect(container.querySelector(".progress").innerHTML).toBe("0%");
+        expect(container.querySelector(".progress").innerHTML).toBe("100%");
         act(() => {
             document.body.removeChild(element);
         });

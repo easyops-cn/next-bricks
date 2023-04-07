@@ -7,4 +7,5 @@ import "./battery-chart/index.js";
 import "./dropdown-menu/index.js";
 import "./complex-search/index.js";
 import "./loading-panel/index.js";
+import "./particle-animation/index.js";
 
