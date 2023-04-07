@@ -1,16 +1,17 @@
 import React, { useEffect, useRef, useState} from "react";
-import { createDecorators } from "@next-core/element";
+import {createDecorators, EventEmitter} from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import variablesStyleText from "../data-view-variables.shadow.css";
 import styleText from "./loading-panel.shadow.css"
-const { defineElement, property } = createDecorators();
+const { defineElement, property,event } = createDecorators();
 import { usePrevious } from "../hooks/index.js";
 interface LoadingPanelProps {
     loading?: boolean;
     customTitle?: string;
     progress?: number;
     useRealTimeProgress?: boolean;
-    intervalTime?: number
+    intervalTime?: number;
+    onEnd?: ()=>void;
 }
 
 /**
@@ -70,6 +71,17 @@ class LoadingPanel extends ReactNextElement implements LoadingPanelProps {
     @property({type: Number})
     accessor intervalTime: number;
 
+    /**
+     * @detail
+     * @description loading结束事件
+     */
+    @event({type: "end"})
+    accessor #onEndEvent!: EventEmitter<void>;
+
+    onEnd = () =>{
+        this.#onEndEvent.emit()
+    }
+
     render(): React.ReactNode {
         return <LoadingPanelComponent
             loading={this.loading}
@@ -77,11 +89,12 @@ class LoadingPanel extends ReactNextElement implements LoadingPanelProps {
             progress={this.progress}
             useRealTimeProgress={this.useRealTimeProgress}
             intervalTime={this.intervalTime}
+            onEnd={this.onEnd}
         />;
     }
 }
 export function LoadingPanelComponent(props:LoadingPanelProps): React.ReactElement {
-    const {customTitle, loading, progress,useRealTimeProgress, intervalTime =100} = props;
+    const {customTitle, loading, progress,useRealTimeProgress, intervalTime =100, onEnd} = props;
     const [progressValue, setProgressValue] = useState<number>(0);
     const timerRef = useRef<number>(null);
     const intervalTimer = (params:{curVal: number; step: number; time?:number}) => {
@@ -120,7 +133,11 @@ export function LoadingPanelComponent(props:LoadingPanelProps): React.ReactEleme
             window.clearInterval(timerRef.current)
         }
     },[loading , progress , useRealTimeProgress, intervalTime])
-
+    useEffect(()=>{
+        if(progressValue === 100){
+            onEnd?.()
+        }
+    },[progressValue])
 
     return <div className="wrapper">
             <div className="titleWrapper">
