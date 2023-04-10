@@ -150,6 +150,24 @@ class Modal extends ReactNextElement implements ModalProps {
   accessor visible: boolean | undefined;
 
   /**
+   * @kind string
+   * @required false
+   * @default -
+   * @description 宽度
+   * @group basic
+   */
+  @property() accessor confirmText: string | undefined;
+
+  /**
+   * @kind string
+   * @required false
+   * @default -
+   * @description 宽度
+   * @group basic
+   */
+  @property() accessor cancelText: string | undefined;
+
+  /**
    * @detail
    * @description 打开弹窗事件
    */
@@ -214,7 +232,7 @@ class Modal extends ReactNextElement implements ModalProps {
   #closeModal = () => {
     this.visible = false;
     this.#handleModelClose();
-  }
+  };
 
   render() {
     return (
@@ -223,6 +241,8 @@ class Modal extends ReactNextElement implements ModalProps {
         width={this.width}
         maskClosable={this.maskClosable}
         visible={this.visible}
+        confirmText={this.confirmText}
+        cancelText={this.cancelText}
         fullscreen={this.fullscreen}
         confirmDisabled={this.confirmDisabled}
         closeWhenConfirm={this.closeWhenConfirm}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import type {
@@ -9,6 +9,11 @@ import type { LinkType, Target } from "../interface.js";
 import styleText from "./link.shadow.css";
 import classNames from "classnames";
 import "@next-core/theme";
+import { getHistory } from "@next-core/runtime";
+import {
+  createLocation,
+  LocationState,
+} from "history";
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
   "icons.general-icon"
@@ -21,6 +26,7 @@ export interface LinkProps {
   icon?: GeneralIconProps;
   target?: Target;
   underline?: boolean;
+  replace?: boolean;
   linkStyle?: React.CSSProperties;
 }
 
@@ -83,7 +89,18 @@ class Link extends ReactNextElement implements LinkProps {
    * @description 下划线
    * @group basic
    */
-  @property() accessor underline: boolean | undefined;
+  @property({
+    type: Boolean,
+  }) accessor underline: boolean | undefined;
+
+  /**
+   * @kind boolean
+   * @required false
+   * @default false
+   * @description 是否替换当前url
+   * @group basic
+   */
+  @property() accessor replace: boolean | undefined;
 
   /**
    * @kind GeneralIconProps
@@ -118,6 +135,7 @@ class Link extends ReactNextElement implements LinkProps {
         icon={this.icon}
         underline={this.underline}
         linkStyle={this.linkStyle}
+        replace={this.replace}
       />
     );
   }
@@ -130,14 +148,37 @@ export function LinkComponent({
   target,
   icon,
   underline,
+  replace,
   linkStyle,
 }: LinkProps) {
+  const history = getHistory();
+
+  const computedHref = useMemo(() => {
+    if (!href) return "";
+    const loc = createLocation(
+      href,
+      null,
+      undefined,
+      history.location
+    ) as LocationState;
+    return loc ? history.createHref(loc) : "";
+  }, [history, href]);
+
   const handleClick = (e: React.MouseEvent) => {
     if (disabled) {
       e.preventDefault();
       e.stopPropagation();
       return;
     }
+
+    if (target === "_blank") {
+      window.open(computedHref);
+      return;
+    }
+
+    const method = replace ? history.replace : history.push;
+
+    method(computedHref);
   };
 
   return (
@@ -148,11 +189,11 @@ export function LinkComponent({
         underline: underline,
       })}
       style={linkStyle}
-      href={href}
+      href={computedHref}
       target={target}
       onClick={handleClick}
     >
-      { icon && <WrappedIcon {...icon} /> }
+      {icon && <WrappedIcon {...icon} />}
       <slot />
     </a>
   );
