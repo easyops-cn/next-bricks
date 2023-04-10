@@ -5,20 +5,22 @@
       bricks:
         - brick: data-view.app-wall-system-card
           properties:
-            cardTitle: 标题
+            cardTitle: xxx购物系统
             itemList:
-              - key: 信息项
-                value: 值
+              - key: 名称
+                value: xxx购物系统
+              - key: 英文名称
+                value: xxx
               - key: 备注
-                value: 正常卡片信息
-            buttonName: 按钮标题
+                value: xxx  
+            buttonName: 点击进入详情
         - brick: data-view.app-wall-system-card
           properties:
-            cardTitle: 标题
+            cardTitle: xxx系统
             itemList:
-              - key: 信息项
-                value: 值
+              - key: 名称
+                value: xxx系统
               - key: 备注
-                value: warning卡片信息
-            buttonName: 按钮标题
+                value: xxx
+            buttonName: 点击进入详情
             status: warning
