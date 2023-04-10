@@ -5,22 +5,35 @@
       bricks:
         - brick: data-view.app-wall-system-card
           properties:
-            cardTitle: xxx购物系统
+            cardTitle: A系统
             itemList:
-              - key: 名称
-                value: xxx购物系统
-              - key: 英文名称
-                value: xxx
-              - key: 备注
-                value: xxx  
-            buttonName: 点击进入详情
+            itemList:
+              - key: 实例ID
+                value: 5d570a851bef6
+              - key: 系统英文缩写
+                value: system-fms
+              - key: 实例ID
+                value: 5d570a851bef6
+              - key: 系统英文名称
+                value: app-fms
+              - key: 系统中文名称
+                value: A财务系统
+              - key: 归属部门
+                value: 财务系统部
+              - key: 系统类型
+                value: 应用系统
+              - key: 系统描述
+                value: 1、使用场景概述：财务应收和应付结算
+            buttonName: 应用墙大屏
         - brick: data-view.app-wall-system-card
           properties:
-            cardTitle: xxx系统
+            cardTitle: B系统
             itemList:
-              - key: 名称
-                value: xxx系统
-              - key: 备注
-                value: xxx
-            buttonName: 点击进入详情
+              - key: 实例ID
+                value: 5d570a851bef6
+              - key: 系统英文缩写
+                value: system-fms-B
+              - key: 系统描述
+                value: 1、使用场景概述：财务应收和应付结算
+            buttonName: 应用墙大屏
             status: warning
