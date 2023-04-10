@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0](https://github.com/easyops-cn/next-core/compare/@next-bricks/icons@0.0.4...@next-bricks/icons@0.1.0) (2023-04-10)
+
+
+### Features
+
+* support setting gradient color ([ea8b622](https://github.com/easyops-cn/next-core/commit/ea8b622190bdc026f3142d6a80b7684c222867dc))
+
+
+
+
+
 ## [0.0.4](https://github.com/easyops-cn/next-core/compare/@next-bricks/icons@0.0.3...@next-bricks/icons@0.0.4) (2023-03-28)
 
 **Note:** Version bump only for package @next-bricks/icons

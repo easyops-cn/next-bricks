@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.5](https://github.com/easyops-cn/next-core/compare/@next-bricks/v2-adapter@0.0.4...@next-bricks/v2-adapter@0.0.5) (2023-04-10)
+
+
+### Bug Fixes
+
+* add legacy developHelper ([92b04ee](https://github.com/easyops-cn/next-core/commit/92b04ee5feb4aa9b9652ecf651819847c1e7ea2d))
+* fix legacy useBrick and doTransform ([9bfa8ed](https://github.com/easyops-cn/next-core/commit/9bfa8ed4c090b49bc6430d273947096a5da4eaef))
+* legacy fa icons with gradient color ([483ee58](https://github.com/easyops-cn/next-core/commit/483ee589db8d36dc5480c7f3e34de388c831f275))
+* support legacy preview methods of developHelper ([84b49a9](https://github.com/easyops-cn/next-core/commit/84b49a95bf0c1579ee252684201bbcea44901207))
+
+
+
+
+
 ## [0.0.4](https://github.com/easyops-cn/next-core/compare/@next-bricks/v2-adapter@0.0.3...@next-bricks/v2-adapter@0.0.4) (2023-03-28)
 
 

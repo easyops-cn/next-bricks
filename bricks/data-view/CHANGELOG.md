@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/easyops-cn/next-core/compare/@next-bricks/data-view@0.1.1...@next-bricks/data-view@0.2.0) (2023-04-10)
+
+
+### Bug Fixes
+
+* modify step ([d194ea1](https://github.com/easyops-cn/next-core/commit/d194ea1e992c0ccce83f5652dfb1452ab9a90a72))
+* useBrick data数据没有位置信息 ([2db9ac5](https://github.com/easyops-cn/next-core/commit/2db9ac506acb2b9a8d837a69a7a352ba744626e0))
+
+
+### Features
+
+* brick data-view.app-wall-card-item ([b2737f6](https://github.com/easyops-cn/next-core/commit/b2737f661d6e28d10c89a477bf90b27119c72025))
+* brick data-view.dropdown-menu ([439b6d7](https://github.com/easyops-cn/next-core/commit/439b6d7d8712109b98907f76d2b2079746005f72))
+* support complex-search  component ([d45e25f](https://github.com/easyops-cn/next-core/commit/d45e25fa1dac1aec014ca3965745e25e53fc118e))
+* support loading-panel component ([acaa9cc](https://github.com/easyops-cn/next-core/commit/acaa9cc74f70bc75e7a40e61b8725a0da1be9eab))
+* support particle-animation component && add loading-panel end event ([6afbe7b](https://github.com/easyops-cn/next-core/commit/6afbe7b4b45b9bb010b228aaaa178835e481f2ad))
+* support system-card component ([e793a9e](https://github.com/easyops-cn/next-core/commit/e793a9e85988c43046872d4dc81c203ac093190b))
+
+
+
+
+
 ## [0.1.1](https://github.com/easyops-cn/next-core/compare/@next-bricks/data-view@0.1.0...@next-bricks/data-view@0.1.1) (2023-03-28)
 
 **Note:** Version bump only for package @next-bricks/data-view
