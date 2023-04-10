@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import type {
@@ -12,31 +12,12 @@ import "@next-core/theme";
 import { getHistory } from "@next-core/runtime";
 import {
   createLocation,
-  LocationDescriptor,
-  LocationDescriptorObject,
   LocationState,
 } from "history";
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
   "icons.general-icon"
 );
-
-export interface PluginHistoryState {
-  notify?: boolean;
-  from?: LocationDescriptor<PluginHistoryState>;
-}
-
-export type ExtendedLocationDescriptorObject =
-  LocationDescriptorObject<PluginHistoryState> & {
-    /**
-     * Whether to keep current search when click on links, defaults to `false`.
-     *
-     * `true` - Keep all current search params.
-     * `false` - Ignore all current search params.
-     * `[...]` - Keep specified current search params.
-     */
-    keepCurrentSearch?: boolean | string[];
-  };
 
 export interface LinkProps {
   type?: LinkType;
@@ -154,6 +135,7 @@ class Link extends ReactNextElement implements LinkProps {
         icon={this.icon}
         underline={this.underline}
         linkStyle={this.linkStyle}
+        replace={this.replace}
       />
     );
   }
@@ -215,33 +197,6 @@ export function LinkComponent({
       <slot />
     </a>
   );
-}
-
-export function getExtendedLocationDescriptor(
-  _to: ExtendedLocationDescriptorObject,
-  currentLocation: Location
-): LocationDescriptorObject<PluginHistoryState> {
-  const { keepCurrentSearch, ...to } = _to;
-  if (!keepCurrentSearch) {
-    return to;
-  }
-
-  const currentUrlSearchParams = new URLSearchParams(currentLocation.search);
-  const newUrlSearchParams = new URLSearchParams(to.search ?? "");
-
-  for (const [key, value] of currentUrlSearchParams.entries()) {
-    if (
-      !newUrlSearchParams.has(key) &&
-      (keepCurrentSearch === true || keepCurrentSearch.includes(key))
-    ) {
-      newUrlSearchParams.append(key, value);
-    }
-  }
-  const search = newUrlSearchParams.toString();
-  return {
-    ...to,
-    search: search ? `?${search}` : search,
-  };
 }
 
 export { Link };
