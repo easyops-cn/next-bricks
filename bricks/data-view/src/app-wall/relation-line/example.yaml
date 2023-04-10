@@ -1,0 +1,5 @@
+- brick: data-view.app-wall-relation-line
+  properties:
+    lightColor: purple
+    style:
+      height: 200px
