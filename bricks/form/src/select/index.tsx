@@ -205,7 +205,7 @@ class Select extends FormItemElement {
    * @detail `{options:{label: string, value: any, [key: string]: any},name:string}	`
    * @description 下拉框选项列表变化时被触发
    */
-  @event({ type: "optionsChange" }) accessor #optionsChange!: EventEmitter<{
+  @event({ type: "options.change" }) accessor #optionsChange!: EventEmitter<{
     options: {
       label: string;
       value: any;
