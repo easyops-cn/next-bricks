@@ -1,4 +1,4 @@
-const _dataSource = [
+const dataSource = [
   {
     name: "数字孪生门店",
     key: "diss",
@@ -257,66 +257,15 @@ const _dataSource = [
   }
 ]
 
-const dataSource = _dataSource.map(v => {
-  return {
-    key: v.instanceId,
-    status: v.isError ? "warning" : "normal",
-    cardItemProps: {
-      cardTitle: v.key,
-      description: v.name,
-    },
-    systemCardProps: {
-      cardTitle: v.name,
-      itemList: [
-        {
-          "key": "实例ID",
-          "value": "5d570a851bef6"
-        },
-        {
-          "key": "系统英文缩写",
-          "value": "system-fms"
-        },
-        {
-          "key": "实例ID",
-          "value": "5d570a851bef6"
-        },
-        {
-          "key": "系统英文名称",
-          "value": "app-fms"
-        },
-        {
-          "key": "系统中文名称",
-          "value": "A财务系统"
-        },
-        {
-          "key": "归属部门",
-          "value": "财务系统部"
-        },
-        {
-          "key": "系统类型",
-          "value": "应用系统"
-        },
-        {
-          "key": "系统描述",
-          "value": "1、使用场景概述：财务应收和应付结算"
-        }
-      ],
-      buttonName: "应用墙大屏",
-      // handleClick?: ()=>void;
-      // containerStyle?: React.CSSProperties;
-    },
-  }
-})
-
 const relations = [{
-  source: "5e63e70340f6f",
-  target: "5e63e70340f76"
+  sourceCiCode: "8728614514950291",
+  targetCiCode: "122986305065597"
 }, {
-  source: "5e63e70340f73",
-  target: "5e63e70340f6f"
+  sourceCiCode: "8728614514950350",
+  targetCiCode: "8728614514950291"
 }, {
-  source: "5e63e70340f73",
-  target: "5e63e70340f81"
+  sourceCiCode: "8728614514950350",
+  targetCiCode: "8728614515255253"
 }]
 
 export { dataSource, relations }
