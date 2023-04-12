@@ -19,7 +19,7 @@ interface DescriptionItem {
     value: string;
 
 }
-interface SystemCardProps {
+export interface SystemCardProps {
     status: StatusType;
     cardTitle: string|undefined;
     itemList?: DescriptionItem[];

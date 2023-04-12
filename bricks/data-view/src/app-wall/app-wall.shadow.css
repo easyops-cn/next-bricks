@@ -1,0 +1,63 @@
+:host {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.container {
+  position: relative;
+}
+
+.card-item {
+  opacity: 1;
+  transition: opacity 0.5s ease, width 0.3s, height 0.3s;
+}
+
+.card-item.dark {
+  opacity: 0.3;
+}
+
+.relation-line {
+  pointer-events: none !important;
+}
+
+
+
+
+
+
+
+.circle {
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+}
+
+.circle2 {
+  width: 10px;
+  height: 10px;
+  background-color: blue;
+  border-radius: 50%;
+}
+
+.test {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+}
+
+.line {
+  width: 10px;
+  height: 1000px;
+}
