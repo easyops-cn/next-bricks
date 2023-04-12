@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useRef } from "react";
-import { Vector3, PerspectiveCamera, Scene, MathUtils, CameraHelper } from "three";
+import { Vector3, PerspectiveCamera, Scene, MathUtils, CameraHelper, Object3D } from "three";
 import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
 import { CSS3DObject, CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js';
 import { Tween, Easing, Group } from "@tweenjs/tween.js";
 
 import { createHelper } from "./helpers.js";
-import { createCardItems, createRelationLine, type AppData, type UserData, createSystemCard } from "./utils.js";
+import { createCardItems, createRelationLine, type AppData, type UserData, createSystemCard, systemCardStyle } from "./utils.js";
 import type { AppWallProps } from "./index.jsx";
 
 // get set
@@ -15,6 +15,8 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
   const { relations, dataSource } = props;
 
   const containerRef = useRef<HTMLDivElement>();
+  const maskRef = useRef<HTMLDivElement>();
+
   const rendererRef = useRef<CSS3DRenderer>();
   const sceneRef = useRef<Scene>();
   const cameraRef = useRef<PerspectiveCamera>();
@@ -24,6 +26,10 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
 
   const notTriggerHover = useRef(false);
   const cardItemSize = useRef({ width: 0, height: 0 });
+  const controlPointsRef = useRef({
+    leftControlPoint: new Object3D(),
+    rightControlPoint: new Object3D(),
+  });
 
   const render = useCallback(() => {
     cameraHelperRef.current.update();
@@ -79,10 +85,9 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
   }, []);
 
   const onElementMouseEnter = useCallback((curCss3DObject: CSS3DObject, css3DObjects: CSS3DObject[]) => {
-    if (notTriggerHover.current) return;
+    // if (notTriggerHover.current) return;
     const { appData, object3D } = curCss3DObject.userData as UserData;
 
-    // const newPosition = { x: userData.position.x, y: userData.position.y, z: userData.position.z + 40 };
     const newPosition = { x: object3D.position.x, y: object3D.position.y, z: object3D.position.z + 40 };
     const newVector = new Vector3(newPosition.x, newPosition.y, newPosition.z);
     const newRotation = { x: object3D.rotation.x, y: object3D.rotation.y, z: object3D.rotation.z };
@@ -136,7 +141,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
   }, []);
 
   const onElementMouseLeave = useCallback((curCss3DObject: CSS3DObject, css3DObjects: CSS3DObject[]) => {
-    if (notTriggerHover.current) return;
+    // if (notTriggerHover.current) return;
     const { appData, object3D } = curCss3DObject.userData as UserData;
 
     const newPosition = { x: object3D.position.x, y: object3D.position.y, z: object3D.position.z };
@@ -175,20 +180,20 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
     const { appData, object3D } = curCss3DObject.userData as UserData;
     const systemCardElement = systemCardObject.element as any;
 
-    const turningPosition = { x: curCss3DObject.position.x, y: curCss3DObject.position.y, z: curCss3DObject.position.z };
-    const turningRotation = { x: curCss3DObject.rotation.x, y: curCss3DObject.rotation.y, z: curCss3DObject.rotation.z };
+    const controlPoint = (object3D.position.x < 0 ? controlPointsRef.current.rightControlPoint : controlPointsRef.current.leftControlPoint).clone();
+    const turningPosition = controlPoint.position;
+    const turningRotation = controlPoint.rotation;
     const turningStyle = { width: cardItemSize.current.width * 1.2, height: cardItemSize.current.height * 1.2 };
-    // const turningRotation = { x: 0, y: Math.PI / 2, z: 0 };
 
-    new Tween({ width: 260, height: 354 }, tweenGroupRef.current)
+    new Tween({ ...systemCardStyle }, tweenGroupRef.current)
       .to(turningStyle, 500)
       .onUpdate((e) => {
         systemCardElement.containerStyle = { ...e };
       })
       .easing(Easing.Linear.None)
       .chain(
-        new Tween(turningStyle, tweenGroupRef.current)
-          .to({ ...cardItemSize.current }, 500)
+        new Tween({ ...turningStyle }, tweenGroupRef.current)
+          .to(cardItemSize.current, 500)
           .onUpdate((e) => {
             curCss3DObject.element.style.width = e.width + 'px';
             curCss3DObject.element.style.height = e.height + 'px';
@@ -210,7 +215,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
         systemCardObject.visible = false;
       })
     new Tween(systemCardObject.rotation, tweenGroupRef.current)
-      .to(turningRotation, 500)
+      .to({ x: turningRotation.x, y: turningRotation.y, z: turningRotation.z }, 500)
       .easing(Easing.Linear.None)
       .start()
       .chain(
@@ -224,11 +229,9 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       .onUpdate(render)
       .start()
       .onComplete(() => {
-        notTriggerHover.current = false;
+        // notTriggerHover.current = false;
       })
 
-
-    // curCss3DObject.visible = true;
     // const newPosition = { x: [60, -position.x / 2, v.position.x], y: v.position.y, z: v.position.z }
     // new Tween(position)
     //   .to({ ...newPosition }, 1000)
@@ -244,24 +247,46 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
     //   .start()
   }, []);
 
+  const onElementDblclick = useCallback((curCss3DObject: CSS3DObject, css3DObjects: CSS3DObject[]) => {
+    css3DObjects.map(object => {
+      const { flatObject3D } = object.userData as UserData;
+
+      new Tween(object.position, tweenGroupRef.current)
+        .to({ x: flatObject3D.position.x, y: flatObject3D.position.y, z: flatObject3D.position.z }, 1000)
+        .easing(Easing.Exponential.InOut)
+        .start();
+
+      new Tween(object.rotation, tweenGroupRef.current)
+        .to({ x: flatObject3D.rotation.x, y: flatObject3D.rotation.y, z: flatObject3D.rotation.z }, 1000)
+        .easing(Easing.Exponential.InOut)
+        .start();
+    })
+
+    new Tween({}, tweenGroupRef.current)
+      .to({}, 1000)
+      .onUpdate(render)
+      .start();
+  }, []);
+
   const onElementMouseClick = useCallback((curCss3DObject: CSS3DObject, css3DObjects: CSS3DObject[]) => {
-    notTriggerHover.current = true;
+    // notTriggerHover.current = true;
+    maskRef.current.classList.add("show");
+    maskRef.current.classList.remove("transparent");
     // controls.reset();
     // TWEEN.removeAll();
     const { appData, object3D } = curCss3DObject.userData as UserData;
 
     // setCurrentObejct(object);
-    // const vector = new Vector3(position.x, position.y, position.z);
-    // curCss3DObject.lookAt(vector);
 
-    const turningPosition = { x: -object3D.position.x / 2, y: 100, z: 0 };
-    const turningRotation = { x: 0, y: Math.PI / 2, z: 0 };
+    const controlPoint = (object3D.position.x < 0 ? controlPointsRef.current.rightControlPoint : controlPointsRef.current.leftControlPoint).clone();
+    const turningPosition = controlPoint.position;
+    const turningRotation = controlPoint.rotation;
     const turningStyle = { width: cardItemSize.current.width * 1.2, height: cardItemSize.current.height * 1.2 };
 
     const systemCardObject = createSystemCard(appData);
     const systemCardElement = systemCardObject.element as any;
-    systemCardObject.position.set(turningPosition.x, turningPosition.y, turningPosition.z);
-    systemCardObject.rotation.set(turningRotation.x, turningRotation.y, turningRotation.z);
+    systemCardObject.position.copy(turningPosition);
+    systemCardObject.rotation.copy(turningRotation);
     systemCardElement.containerStyle = turningStyle;
     systemCardObject.visible = false;
 
@@ -273,7 +298,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       .start()
       .chain(
         new Tween(systemCardObject.position, tweenGroupRef.current)
-          .to({ x: 0, y: -Math.PI * 2, z: 0 }, 500)
+          .to({ x: 0, y: 0, z: 0 }, 500)
           .easing(Easing.Linear.None),
       )
       .onComplete(() => {
@@ -281,12 +306,12 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
         systemCardObject.visible = true;
       })
     new Tween(curCss3DObject.rotation, tweenGroupRef.current)
-      .to(turningRotation, 500)
+      .to({ x: turningRotation.x, y: turningRotation.y, z: turningRotation.z }, 500)
       .easing(Easing.Linear.None)
       .start()
       .chain(
         new Tween(systemCardObject.rotation, tweenGroupRef.current)
-          .to({ x: 0, y: 0, z: 0 }, 500)
+          .to(object3D.position.x < 0 ? { x: 0, y: - Math.PI, z: 0 } : { x: 0, y: Math.PI, z: 0 }, 500)
           .easing(Easing.Linear.None)
       )
     new Tween({ ...cardItemSize.current }, tweenGroupRef.current)
@@ -298,8 +323,8 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       .easing(Easing.Linear.None)
       .start()
       .chain(
-        new Tween(turningStyle, tweenGroupRef.current)
-          .to({ width: 260, height: 354 }, 500)
+        new Tween({ ...turningStyle }, tweenGroupRef.current)
+          .to(systemCardStyle, 500)
           .onUpdate((e) => {
             systemCardElement.containerStyle = { ...e };
           })
@@ -311,25 +336,34 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       .onUpdate(render)
       .start();
 
-    systemCardElement.addEventListener('pointerdown', (e: PointerEvent) => {
-      e.preventDefault();
-      onMaskClick(curCss3DObject, css3DObjects, systemCardObject)
-    }, false);
+    // systemCardElement.addEventListener('pointerdown', (e: PointerEvent) => {
+    //   e.preventDefault();
+    //   onMaskClick(curCss3DObject, css3DObjects, systemCardObject)
+    // }, false);
   }, []);
+
+  const handleMaskClick = useCallback(() => {
+
+    maskRef.current.classList.add("transparent");
+
+
+    maskRef.current.classList.remove("show");
+
+   }, []);
 
   const entranceAnimation = useCallback((css3DObjects: CSS3DObject[]) => {
     const duration = 2000;
 
     css3DObjects.map(object => {
-      const target = object.userData.object3D;
+      const { object3D } = object.userData as UserData;
 
       new Tween(object.position, tweenGroupRef.current)
-        .to({ x: target.position.x, y: target.position.y, z: target.position.z }, MathUtils.randFloat(duration, duration * 2))
+        .to({ x: object3D.position.x, y: object3D.position.y, z: object3D.position.z }, MathUtils.randFloat(duration, duration * 2))
         .easing(Easing.Exponential.InOut)
         .start();
 
       new Tween(object.rotation, tweenGroupRef.current)
-        .to({ x: target.rotation.x, y: target.rotation.y, z: target.rotation.z }, MathUtils.randFloat(duration, duration * 2))
+        .to({ x: object3D.rotation.x, y: object3D.rotation.y, z: object3D.rotation.z }, MathUtils.randFloat(duration, duration * 2))
         .easing(Easing.Exponential.InOut)
         .start();
     });
@@ -350,16 +384,15 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
           element.addEventListener('mouseleave', (e) => {
             onElementMouseLeave(object, css3DObjects);
           }, false)
-
-          // maskRef.current.addEventListener("click", (e) => {
-          //   console.log(123);
-          //   onMaskClick(css3DObject, css3DObjects, render, scene, detailRef, maskRef)
-          // })
           // 鼠标点击
-          element.addEventListener('pointerdown', (e) => {
-            e.preventDefault();
-            onElementMouseClick(object, css3DObjects);
-          }, false);
+          // element.addEventListener('pointerdown', (e) => {
+          //   e.preventDefault();
+          //   onElementMouseClick(object, css3DObjects);
+          // }, false);
+          // 鼠标双击
+          element.addEventListener('dblclick', (e) => {
+            onElementDblclick(object, css3DObjects);
+          }, false)
         })
       });
   }, [])
@@ -389,8 +422,10 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
 
   useEffect(() => {
     const helpers = createHelper();
-    const { css3DObjects, elementHeight, elementWidth } = createCardItems(dataSource as AppData[]);
-    cardItemSize.current = { width: elementWidth, height: elementHeight };
+    const { css3DObjects, elementSize, controlPoints } = createCardItems(dataSource as AppData[]);
+    cardItemSize.current = elementSize;
+    controlPointsRef.current = controlPoints;
+
     sceneRef.current.add(...css3DObjects, ...helpers);
     render();
     entranceAnimation(css3DObjects);
@@ -400,39 +435,11 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
     }
   }, [dataSource])
 
-  return (
+  return (<>
     <div className="container" ref={containerRef} >
-      <div>
-        {/* <div ref={maskRef} className={"detail-mask"} style={{ display: "none" }}
-        // onClick={onMaskClick}
-        ></div> */}
-        {/* <div
-          ref={detailRef}
-          className={"app-info-container"}
-          style={{ display: "none", width: 240, height: 320 }}
-        >
-          <div className={"app-info-content"}>
-            <div className={"app-cards-wrapper"}>
-              <div className={"app-info-card"}>
-                <div className={"app-config-info"}>
-                  <div className={"app-card-name"}>namenamenamenamenamenamenamenamenamename</div>
-                  <div className={"app-config-wrapper"}>
-                    <ul className={"config-info"}>
-                      {([1, 2, 3, 4, 5]).map((item, index) => (
-                        <li key={index} className={"infos-item"}>
-                          <span className={"attr-key"}>jajajksdjakdjkadasd</span>
-                          <span className={"attr-value"}>qjlwejqwlejejqlejq</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <div className={"jump-link"}>应用墙大屏</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
-      </div>
+      <div className="mask" ref={maskRef} onClick={handleMaskClick} />
     </div>
+    <div style={systemCardStyle}></div>
+  </>
   );
 }

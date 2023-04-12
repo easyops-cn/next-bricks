@@ -89,7 +89,7 @@
 .card-item-title,
 .card-item-description {
   /* Todo: font-size min 12px */
-  font-size: 8px;
+  font-size: 20px;
   font-weight: var(--font-weight-500);
   color: var(--color-normal-text);
 }

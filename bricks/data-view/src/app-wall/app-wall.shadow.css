@@ -18,6 +18,25 @@
   position: relative;
 }
 
+.mask {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: none;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.mask.transparent {
+  opacity: 0;
+}
+
+.mask.show {
+  display: block;
+}
+
 .card-item {
   opacity: 1;
   transition: opacity 0.5s ease, width 0.3s, height 0.3s;

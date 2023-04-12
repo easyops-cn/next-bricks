@@ -21,16 +21,17 @@ export interface Relation {
 
 export interface UserData {
   object3D: Object3D,
+  flatObject3D: Object3D,
   appData: AppData,
 }
 
 export const getCoordinates = (columnNum: number, rowNum: number) => {
   const padding = 10
-  const deg = 40;
+  const deg = 55;
   const rad = MathUtils.degToRad(deg);
   const xRadius = 1800;
   const yRadius = 1800;
-  const ellipseHeight = 1200;
+  const ellipseHeight = 2400;
 
   const ellipseCurve = new EllipseCurve(
     0, 0,
@@ -38,35 +39,59 @@ export const getCoordinates = (columnNum: number, rowNum: number) => {
     -Math.PI / 2 - rad, -Math.PI / 2 + rad,
     false, 0
   );
-  const lineCurve = new LineCurve(new Vector2(0, ellipseHeight / 2), new Vector2(0, -ellipseHeight / 2));
+  const ellipseCurveLength = ellipseCurve.getLength();
+
+  const verticalLineCurve = new LineCurve(new Vector2(0, ellipseHeight / 2), new Vector2(0, -ellipseHeight / 2));
+  const horizontalLineCurve = new LineCurve(new Vector2(-ellipseCurveLength / 2, 0), new Vector2(ellipseCurveLength / 2, 0));
 
   const elementWidth = ellipseCurve.getLength() / columnNum - padding;
   const elementHeight = ellipseHeight / rowNum - padding;
   const columnPoints = ellipseCurve.getSpacedPoints(2 * columnNum);
-  const rowPoints = lineCurve.getSpacedPoints(2 * rowNum);
+  const rowPoints = verticalLineCurve.getSpacedPoints(2 * rowNum);
+  const flatColumnPoints = horizontalLineCurve.getSpacedPoints(2 * columnNum);
 
-  const coordinates: { position: Vector3, lookAt: Vector3 }[] = [];
+  const leftControlVector3 = new Vector3(ellipseCurve.getPoint(0.3).x, verticalLineCurve.getPoint(0.5).y, -yRadius / 2);
+  const leftControlPoint = new Object3D();
+  leftControlPoint.position.copy(leftControlVector3);
+  leftControlPoint.lookAt(new Vector3().multiplyVectors(leftControlVector3, new Vector3(-1, 1, 1)));
+
+  const rightControlVector3 = new Vector3(ellipseCurve.getPoint(0.7).x, verticalLineCurve.getPoint(0.5).y, -yRadius / 2);
+  const rightControlPoint = new Object3D();
+  rightControlPoint.position.copy(rightControlVector3);
+  rightControlPoint.lookAt(new Vector3().multiplyVectors(rightControlVector3, new Vector3(-1, 1, 1)));
+
+  const coordinates: { object3D: Object3D, flatObject3D: Object3D }[] = [];
 
   for (let ri = 0; ri < rowNum; ri++) {
     const rowPoint = rowPoints[2 * ri + 1];
 
     for (let ci = 0; ci < columnNum; ci++) {
+      const object3D = new Object3D();
       const columnPoint = columnPoints[2 * ci + 1];
       const position = new Vector3(columnPoint.x, rowPoint.y, columnPoint.y);
       const lookAt = new Vector3().multiplyVectors(position, new Vector3(-2, 1, -2));
+      object3D.position.copy(position);
+      object3D.lookAt(lookAt);
 
-      coordinates.push({ position, lookAt });
+      const flatObject3D = new Object3D();
+      const flatColumnPoint = flatColumnPoints[2 * ci + 1];
+      const flatPosition = new Vector3(flatColumnPoint.x, rowPoint.y, -xRadius);
+      const flatLookAt = new Vector3(flatColumnPoint.x, rowPoint.y, 0);
+      flatObject3D.position.copy(flatPosition);
+      flatObject3D.lookAt(flatLookAt);
+
+      coordinates.push({ object3D, flatObject3D });
     }
   }
 
-  return { elementWidth, elementHeight, coordinates };
+  return { elementWidth, elementHeight, coordinates, leftControlPoint, rightControlPoint };
 }
 
 export const createCardItems = (dataSource: AppData[]) => {
   const css3DObjects: CSS3DObject[] = [];
 
   // const coordinates = computeCoordinate(dataSource.length);
-  const { elementWidth, elementHeight, coordinates } = getCoordinates(17, 4);
+  const { elementWidth, elementHeight, coordinates, leftControlPoint, rightControlPoint } = getCoordinates(17, 7);
 
   dataSource.map((item, index) => {
     // .card-item-container.large1231312 {
@@ -88,20 +113,25 @@ export const createCardItems = (dataSource: AppData[]) => {
     css3DObject.name = `card-item-${item.key}`;
     css3DObject.position.set(MathUtils.randFloatSpread(4000), MathUtils.randFloatSpread(4000), 0);
 
-    const object3D = new Object3D();
-    const { position, lookAt } = coordinates[index];
-    object3D.position.copy(position);
-    object3D.lookAt(lookAt);
+    const { object3D, flatObject3D } = coordinates[index];
 
     css3DObject.userData = {
       object3D,
+      flatObject3D,
       appData: item,
     };
 
     css3DObjects.push(css3DObject);
   })
 
-  return { css3DObjects, elementHeight, elementWidth };
+  return {
+    css3DObjects,
+    elementSize: { height: elementHeight, width: elementWidth },
+    controlPoints: {
+      leftControlPoint,
+      rightControlPoint
+    }
+  };
 };
 
 export const createRelationLine = (sourceVector: Vector3, targetVector: Vector3, lightColor: AppWallRelationLineProps["lightColor"]): CSS3DObject => {
@@ -116,12 +146,16 @@ export const createRelationLine = (sourceVector: Vector3, targetVector: Vector3,
 
   const centerVector = new Vector3().lerpVectors(sourceVector, targetVector, 0.5);
   lineObject.position.copy(centerVector);
+  // lineObject.lookAt(new Vector3(0, 0, 10).add(centerVector));
+  // lineObject.lookAt(new Vector3(0, 10000, 0));
 
   const quaternion = new Quaternion().setFromUnitVectors(new Vector3(0, 1, 0).normalize(), subVector.clone().normalize());
   lineObject.setRotationFromQuaternion(quaternion);
 
   return lineObject;
 };
+
+export const systemCardStyle = { width: 700, height: 1200 };
 
 export const createSystemCard = (props: AppData) => {
   const { key, status, systemCardProps } = props;
