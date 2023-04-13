@@ -23,6 +23,11 @@ export interface UserData {
   object3D: Object3D,
   flatObject3D: Object3D,
   appData: AppData,
+  elementStyle: {
+    width: number,
+    height: number,
+  },
+  controlPoint: Object3D,
 }
 
 export const getCoordinates = (columnNum: number, rowNum: number) => {
@@ -115,22 +120,24 @@ export const createCardItems = (dataSource: AppData[]) => {
 
     const { object3D, flatObject3D } = coordinates[index];
 
-    css3DObject.userData = {
+    const userData: UserData = {
       object3D,
       flatObject3D,
       appData: item,
-    };
+      elementStyle: {
+        width: elementWidth,
+        height: elementHeight,
+      },
+      controlPoint: object3D.position.x < 0 ? rightControlPoint : leftControlPoint,
+    }
+
+    css3DObject.userData = userData;
 
     css3DObjects.push(css3DObject);
   })
 
   return {
     css3DObjects,
-    elementSize: { height: elementHeight, width: elementWidth },
-    controlPoints: {
-      leftControlPoint,
-      rightControlPoint
-    }
   };
 };
 

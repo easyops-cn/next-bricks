@@ -30,11 +30,6 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
   const controlsRef = useRef<TrackballControls>();
   const tweenGroupRef = useRef<Group>(new Group());
 
-  const cardItemSize = useRef({ width: 0, height: 0 });
-  const controlPointsRef = useRef({
-    leftControlPoint: new Object3D(),
-    rightControlPoint: new Object3D(),
-  });
   const [curClickCardItemObject, setCurClickCardItemObject] = useState<CSS3DObject>(null);
 
   const render = useCallback(() => {
@@ -181,13 +176,13 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
     // maskRef.current.style.display = "none";
     // detailRef.current.style.display = "none";
 
-    const { appData, object3D } = curCss3DObject.userData as UserData;
+    const { appData, object3D, elementStyle, controlPoint } = curCss3DObject.userData as UserData;
     const systemCardElement = systemCardObject.element as SystemCard;
 
-    const controlPoint = (object3D.position.x < 0 ? controlPointsRef.current.rightControlPoint : controlPointsRef.current.leftControlPoint).clone();
-    const turningPosition = controlPoint.position;
-    const turningRotation = controlPoint.rotation;
-    const turningStyle = { width: cardItemSize.current.width * 1.2, height: cardItemSize.current.height * 1.2 };
+    const _controlPoint = controlPoint.clone();
+    const turningPosition = _controlPoint.position;
+    const turningRotation = _controlPoint.rotation;
+    const turningStyle = { width: elementStyle.width * 1.2, height: elementStyle.height * 1.2 };
 
     new Tween({ ...systemCardStyle }, tweenGroupRef.current)
       .to(turningStyle, 500)
@@ -197,7 +192,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       .easing(Easing.Linear.None)
       .chain(
         new Tween({ ...turningStyle }, tweenGroupRef.current)
-          .to(cardItemSize.current, 500)
+          .to(elementStyle, 500)
           .onUpdate((e) => {
             curCss3DObject.element.style.width = e.width + 'px';
             curCss3DObject.element.style.height = e.height + 'px';
@@ -278,12 +273,12 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
     // TWEEN.removeAll();
 
     setCurClickCardItemObject(curCss3DObject);
-    const { appData, object3D } = curCss3DObject.userData as UserData;
+    const { appData, object3D, elementStyle, controlPoint } = curCss3DObject.userData as UserData;
 
-    const controlPoint = (object3D.position.x < 0 ? controlPointsRef.current.rightControlPoint : controlPointsRef.current.leftControlPoint).clone();
-    const turningPosition = controlPoint.position;
-    const turningRotation = controlPoint.rotation;
-    const turningStyle = { width: cardItemSize.current.width * 1.2, height: cardItemSize.current.height * 1.2 };
+    const _controlPoint = controlPoint.clone();
+    const turningPosition = _controlPoint.position;
+    const turningRotation = _controlPoint.rotation;
+    const turningStyle = { width: elementStyle.width * 1.2, height: elementStyle.height * 1.2 };
 
     const systemCardObject = createSystemCard(appData);
     const systemCardElement = systemCardObject.element as SystemCard;
@@ -316,7 +311,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
           .to(object3D.position.x < 0 ? { x: 0, y: - Math.PI, z: 0 } : { x: 0, y: Math.PI, z: 0 }, 500)
           .easing(Easing.Linear.None)
       )
-    new Tween({ ...cardItemSize.current }, tweenGroupRef.current)
+    new Tween({ ...elementStyle }, tweenGroupRef.current)
       .to(turningStyle, 500)
       .onUpdate((e) => {
         curCss3DObject.element.style.width = e.width + 'px';
@@ -347,15 +342,15 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
   const handleMaskClick = () => {
     maskRef.current.classList.add("transparent");
 
-    const { appData, object3D } = curClickCardItemObject.userData as UserData;
+    const { appData, object3D, elementStyle ,controlPoint} = curClickCardItemObject.userData as UserData;
     const systemCardObject = sceneRef.current.getObjectByName(`system-card-${appData.key}`) as CSS3DObject;
 
     const systemCardElement = systemCardObject.element as SystemCard;
 
-    const controlPoint = (object3D.position.x < 0 ? controlPointsRef.current.rightControlPoint : controlPointsRef.current.leftControlPoint).clone();
-    const turningPosition = controlPoint.position;
-    const turningRotation = controlPoint.rotation;
-    const turningStyle = { width: cardItemSize.current.width * 1.2, height: cardItemSize.current.height * 1.2 };
+    const _controlPoint = controlPoint.clone();
+    const turningPosition = _controlPoint.position;
+    const turningRotation = _controlPoint.rotation;
+    const turningStyle = { width: elementStyle.width * 1.2, height: elementStyle.height * 1.2 };
 
     new Tween({ ...systemCardStyle }, tweenGroupRef.current)
       .to(turningStyle, 500)
@@ -365,7 +360,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       .easing(Easing.Linear.None)
       .chain(
         new Tween({ ...turningStyle }, tweenGroupRef.current)
-          .to(cardItemSize.current, 500)
+          .to(elementStyle, 500)
           .onUpdate((e) => {
             curClickCardItemObject.element.style.width = e.width + 'px';
             curClickCardItemObject.element.style.height = e.height + 'px';
@@ -482,9 +477,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
 
   useEffect(() => {
     const helpers = createHelper();
-    const { css3DObjects, elementSize, controlPoints } = createCardItems(dataSource);
-    cardItemSize.current = elementSize;
-    controlPointsRef.current = controlPoints;
+    const { css3DObjects } = createCardItems(dataSource);
 
     sceneRef.current.add(...css3DObjects, ...helpers);
     render();
