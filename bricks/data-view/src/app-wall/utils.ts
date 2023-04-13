@@ -30,6 +30,7 @@ export interface UserData {
     height: number,
   },
   controlPoint: Object3D,
+  systemCardObject: CSS3DObject,
 }
 
 export const getCoordinates = (columnNum: number, rowNum: number) => {
@@ -99,6 +100,24 @@ export const getCoordinates = (columnNum: number, rowNum: number) => {
   return { elementWidth, elementHeight, coordinates, leftControlPoint, rightControlPoint };
 }
 
+export const systemCardStyle = { width: 280, height: 382 };
+
+const createSystemCard = (props: AppData) => {
+  const { key, status, systemCardProps } = props;
+  const systemCardElement = document.createElement("data-view.app-wall-system-card") as SystemCard;
+  systemCardElement.status = status;
+  systemCardElement.cardTitle = systemCardProps.cardTitle;
+  systemCardElement.itemList = systemCardProps.itemList;
+  systemCardElement.buttonName = systemCardProps.buttonName;
+  systemCardElement.handleClick = systemCardProps.handleClick;
+  systemCardElement.containerStyle = systemCardProps.containerStyle;
+
+  const object = new CSS3DObject(systemCardElement);
+  object.name = `system-card-${key}`;
+
+  return object;
+}
+
 export const createCardItems = (dataSource: AppData[]) => {
   const css3DObjects: CSS3DObject[] = [];
 
@@ -121,6 +140,7 @@ export const createCardItems = (dataSource: AppData[]) => {
     element.style.height = elementHeight + "px";
     element.classList.add("card-item");
 
+    const systemCardObject = createSystemCard(item);
     const css3DObject = new CSS3DObject(element);
     css3DObject.name = `card-item-${item.key}`;
     css3DObject.position.set(MathUtils.randFloatSpread(4000), MathUtils.randFloatSpread(4000), 0);
@@ -136,6 +156,7 @@ export const createCardItems = (dataSource: AppData[]) => {
         height: elementHeight,
       },
       controlPoint: object3D.position.x < 0 ? rightControlPoint : leftControlPoint,
+      systemCardObject,
     }
 
     css3DObject.userData = userData;
@@ -169,23 +190,6 @@ export const createRelationLine = (sourceVector: Vector3, targetVector: Vector3,
   return lineObject;
 };
 
-export const systemCardStyle = { width: 700, height: 1200 };
-
-export const createSystemCard = (props: AppData) => {
-  const { key, status, systemCardProps } = props;
-  const systemCardElement = document.createElement("data-view.app-wall-system-card") as SystemCard;
-  systemCardElement.status = status;
-  systemCardElement.cardTitle = systemCardProps.cardTitle;
-  systemCardElement.itemList = systemCardProps.itemList;
-  systemCardElement.buttonName = systemCardProps.buttonName;
-  systemCardElement.handleClick = systemCardProps.handleClick;
-  systemCardElement.containerStyle = systemCardProps.containerStyle;
-
-  const object = new CSS3DObject(systemCardElement);
-  object.name = `system-card-${key}`;
-
-  return object;
-}
 export const getCenterPointOrSubPoint = (start:[number,number,number],end:[number,number,number]) => {
   const pointA = new Vector3(start[0], start[1],start[2]);
   const pointB = new Vector3(end[0], end[1],end[2]);
@@ -207,7 +211,7 @@ export const createTrapezoidalObject = (props:TrapezoidalObjectProps)=>{
     bottomCard.style.cssText = `
                    width: ${BW}px;
                    height: ${BH}px;
-   
+
                    box-shadow: inset 0px 1px 2px 0px rgba(255,255,255,0.45);
                    border: 1px solid rgba(118,255,255,0.58);
                    `
@@ -350,4 +354,3 @@ export const createTrapezoidalObject = (props:TrapezoidalObjectProps)=>{
         .start();
     return objectContainer;
 }
-
