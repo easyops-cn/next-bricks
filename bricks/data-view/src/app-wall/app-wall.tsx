@@ -41,7 +41,6 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
   const systemCardRef = useRef<SystemCard>();
 
   const render = useCallback(() => {
-    console.log(cameraRef.current);
     cameraHelperRef.current.update();
     rendererRef.current.render(sceneRef.current, cameraRef.current);
   }, []);
@@ -202,7 +201,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       const { flatObject3D } = object.userData as UserData;
 
       new Tween(object.position, tweenGroupRef.current)
-        .to({ x: flatObject3D.position.x, y: flatObject3D.position.y, z: flatObject3D.position.z }, 1000)
+        .to(flatObject3D.position, 1000)
         .easing(Easing.Exponential.InOut)
         // .chain(new Tween( threeGroupRef.current.position, dbClickTweenGroupRef.current).to(new Vector3(0 ,0,0)).easing(Easing.Exponential.InOut))
         // .to({},1000)
@@ -220,22 +219,25 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       .onUpdate(render)
       .start();
 
-    trapezoidalRef.current = createTrapezoidalObject({
-      objectData: {
-        width: curCss3DObject.userData.elementStyle.width,
-        height: curCss3DObject.userData.elementStyle.height,
-        point: curCss3DObject.userData.flatObject3D.position
-      },
-      trapezoidalTweenRef,
-      leftBtnName: "应用健康监控大屏",
-      rightBtnName: "应用部署架构"
+    // threeGroupRef.current.rotateX(-Math.PI/2);
+    // threeGroupRef.current.add(trapezoidalRef.current);
+    new Tween(threeGroupRef.current.rotation, dbClickTweenGroupRef.current)
+        .to({x:-Math.PI/4,y:0, z:0},1000).easing(Easing.Exponential.InOut)
+        .start().onComplete(()=>{
+          trapezoidalRef.current = createTrapezoidalObject({
+            objectData: {
+              width: curCss3DObject.userData.elementStyle.width,
+              height: curCss3DObject.userData.elementStyle.height,
+              point: curCss3DObject.userData.flatObject3D.position
+            },
+            trapezoidalTweenRef,
+            leftBtnName: "应用健康监控大屏",
+            rightBtnName: "应用部署架构"
+          })
+         threeGroupRef.current.add(trapezoidalRef.current);
+          render()
+         maskRef.current.classList.remove("show");
     })
-    threeGroupRef.current.add(trapezoidalRef.current);
-    new Tween(threeGroupRef.current.position, dbClickTweenGroupRef.current)
-      .to(new Vector3(0, -2176.3738498440684, 743.8130418371526))
-      .easing(Easing.Exponential.InOut)
-      .start()
-
   }, []);
 
   const onElementMouseClick = useCallback((curCss3DObject: CSS3DObject, css3DObjects: CSS3DObject[]) => {
@@ -406,15 +408,15 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
           const element = object.element;
 
           // 鼠标移入
-          element.addEventListener('mouseenter', (e) => {
-            console.log("mouseenter");
-            onElementMouseEnter(object, css3DObjects);
-          }, false);
-          // 鼠标移出
-          element.addEventListener('mouseleave', (e) => {
-            console.log("mouseleave");
-            onElementMouseLeave(object, css3DObjects);
-          }, false)
+          // element.addEventListener('mouseenter', (e) => {
+          //   console.log("mouseenter");
+          //   onElementMouseEnter(object, css3DObjects);
+          // }, false);
+          // // 鼠标移出
+          // element.addEventListener('mouseleave', (e) => {
+          //   console.log("mouseleave");
+          //   onElementMouseLeave(object, css3DObjects);
+          // }, false)
           // 鼠标点击
           element.addEventListener('click', (e) => {
             isDBClickRef.current = false;
@@ -439,17 +441,17 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
     containerRef.current.addEventListener('click', (e) => {
       const customEle = document.elementFromPoint(e.clientX, e.clientY)
       const target = customEle?.shadowRoot.elementFromPoint(e.clientX, e.clientY);
-      console.log(target, target.tagName);
+      // console.log(target, target.tagName);
       if (target?.tagName === 'DATA-VIEW.APP-WALL-CARD-ITEM') {
         const object = (target as any)._css3DObject;
         clicks++;
         if (clicks === 1) {
           setTimeout(() => {
             if (clicks == 1) {
-              console.log('单击')
+              // console.log('单击')
               onElementMouseClick(object, css3DObjects);
             } else {
-              console.log('双击')
+              // console.log('双击')
               onElementDblclick(object, css3DObjects);
             }
             clicks = 0;

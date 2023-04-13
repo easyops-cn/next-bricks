@@ -7,7 +7,6 @@ import type { AppWallCardItem, AppWallCardItemProps } from "./card-item/index.js
 import type { AppWallRelationLine, AppWallRelationLineProps } from "./relation-line/index.js";
 import type { SystemCard, SystemCardProps } from "./system-card/index.js";
 import {TrapezoidalObjectProps} from "./interface.js";
-import {Easing, Tween} from "@tweenjs/tween.js";
 
 export interface AppData {
   key: string;
@@ -83,10 +82,8 @@ export const getCoordinates = (columnNum: number, rowNum: number) => {
 
       const flatObject3D = new Object3D();
       const flatColumnPoint = flatColumnPoints[2 * ci + 1];
-      // const flatPosition = new Vector3(flatColumnPoint.x, rowPoint.y, -xRadius);
-        const flatPosition = new Vector3(flatColumnPoint.x, rowPoint.y, -xRadius +1000);
-      // const flatLookAt = new Vector3(flatColumnPoint.x, rowPoint.y, 0);
-        const flatLookAt = new Vector3(flatColumnPoint.x, rowPoint.y, 0);
+      const flatPosition = new Vector3(flatColumnPoint.x, rowPoint.y, -xRadius);
+      const flatLookAt = new Vector3(flatColumnPoint.x, rowPoint.y, 0);
       // const _rotateAngleX = new Euler( 0, 0, 0, 'XYZ' );
 
       flatObject3D.position.copy(flatPosition);
@@ -211,7 +208,6 @@ export const createTrapezoidalObject = (props:TrapezoidalObjectProps)=>{
     bottomCard.style.cssText = `
                    width: ${BW}px;
                    height: ${BH}px;
-
                    box-shadow: inset 0px 1px 2px 0px rgba(255,255,255,0.45);
                    border: 1px solid rgba(118,255,255,0.58);
                    `
@@ -224,13 +220,14 @@ export const createTrapezoidalObject = (props:TrapezoidalObjectProps)=>{
     topCard.style.cssText = `
                    width: ${TW}px;
                    height:${TH}px;
-                   background: linear-gradient(180deg, #0D36B3 0%, #4A6C9C 100%);
+                   background: linear-gradient(180deg, #0D36B3 0%, #4A6C9C76 100%);
                    padding: 2% 10%;
+                   filter: blur(0.5px);
                    `;
     const topoCard = document.createElement("div");
     topoCard.style.cssText = `
                 background: linear-gradient(180deg, #6598FF 0%, #063EE8 100%);
-                opacity: 0.59;
+                opacity: 0.5;
                 width: 100%;
                 height: 100%;
             `;
@@ -310,7 +307,6 @@ export const createTrapezoidalObject = (props:TrapezoidalObjectProps)=>{
                  font-size: 16px;
                  font-weight: 500;
                  width: ${TW / 2}px;
-
                  line-height: 16px;
                  `;
       const wordNode = document.createElement("span");
@@ -343,14 +339,5 @@ export const createTrapezoidalObject = (props:TrapezoidalObjectProps)=>{
       objectContainer.add(btnRightObject);
       textNode.onclick = rightOnClick
     }
-    new Tween({}, trapezoidalTweenRef.current)
-        .to({}, 500).onUpdate(console.log)
-        .easing(Easing.Linear.None)
-        .chain(new Tween({}, trapezoidalTweenRef.current)
-            .to({}, 60)
-            .onUpdate((e) => {
-              objectContainer.add(objectTopModel)
-            }).easing(Easing.Linear.None))
-        .start();
     return objectContainer;
 }
