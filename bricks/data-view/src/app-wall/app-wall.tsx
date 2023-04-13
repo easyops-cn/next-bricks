@@ -1,12 +1,20 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { wrapBrick } from "@next-core/react-element";
-import { Vector3, PerspectiveCamera, Scene, MathUtils, CameraHelper, Object3D } from "three";
+import { Vector3, PerspectiveCamera, Scene, MathUtils, CameraHelper, Object3D,Euler,Group as ThreeGroup } from "three";
 import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
 import { CSS3DObject, CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js';
 import { Tween, Easing, Group } from "@tweenjs/tween.js";
 
 import { createHelper } from "./helpers.js";
-import { createCardItems, createRelationLine, type AppData, type UserData, createSystemCard, systemCardStyle } from "./utils.js";
+import {
+  createCardItems,
+  createRelationLine,
+  type AppData,
+  type UserData,
+  createSystemCard,
+  systemCardStyle,
+  createTrapezoidalObject
+} from "./utils.js";
 import type { AppWallProps } from "./index.jsx";
 import type { SystemCard, SystemCardProps } from "./system-card/index.js";
 
@@ -29,10 +37,18 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
   const cameraHelperRef = useRef<CameraHelper>();
   const controlsRef = useRef<TrackballControls>();
   const tweenGroupRef = useRef<Group>(new Group());
+  const trapezoidalTweenRef = useRef<Group>(new  Group()); //梯形内部的动画组
+  const trapezoidalRef = useRef<CSS3DObject>(); // 梯形模型
+  const threeGroupRef = useRef<ThreeGroup>(new ThreeGroup()); //整体模型
+  const timerRef = useRef<number>(); // 双击事件禁止单击事件触发定时器
+  const isDBClickRef = useRef<boolean>(false);//是否是双击
+  const dbClickTweenGroupRef =useRef<Group>(new Group()); // 双击后的动画组
+
 
   const [curClickCardItemObject, setCurClickCardItemObject] = useState<CSS3DObject>(null);
 
   const render = useCallback(() => {
+    console.log(cameraRef.current);
     cameraHelperRef.current.update();
     rendererRef.current.render(sceneRef.current, cameraRef.current);
   }, []);
@@ -102,42 +118,42 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       return pre;
     }, { in: new Set<string>(), out: new Set<string>() });
 
-    css3DObjects.map(v => {
-      if (v === curCss3DObject) {
-        new Tween(curCss3DObject.position, tweenGroupRef.current)
-          .to(newPosition, 200)
-          .easing(Easing.Linear.None)
-          .start();
-        new Tween(curCss3DObject.rotation, tweenGroupRef.current)
-          .to(newRotation, 200)
-          .easing(Easing.Linear.None)
-          .start();
-        new Tween({}, tweenGroupRef.current)
-          .to({}, 200)
-          .onUpdate(render)
-          .start();
-        v.element.classList.add("large");
-      } else {
-        const { appData: relatedAppData, object3D: relatedObject3D } = v.userData as UserData;
-        const relatedVector = new Vector3(relatedObject3D.position.x, relatedObject3D.position.y, relatedObject3D.position.z);
-
-        if (filteredRelations.in.has(relatedAppData.key)) {
-          const lineId = `${appData.key}-${relatedAppData.key}`;
-          const line = createRelationLine(newVector, relatedVector, "purple");
-          line.name = lineId;
-          lineCiCodes.add(lineId);
-          sceneRef.current.add(line);
-        } else if (filteredRelations.out.has(relatedAppData.key)) {
-          const lineId = `${relatedAppData.key}-${appData.key}`;
-          const line = createRelationLine(relatedVector, newVector, "blue");
-          line.name = lineId;
-          lineCiCodes.add(lineId);
-          sceneRef.current.add(line);
-        } else {
-          v.element.classList.add("dark");
-        }
-      }
-    });
+    // css3DObjects.map(v => {
+    //   if (v === curCss3DObject) {
+    //     new Tween(curCss3DObject.position, tweenGroupRef.current)
+    //       .to(newPosition, 200)
+    //       .easing(Easing.Linear.None)
+    //       .start();
+    //     new Tween(curCss3DObject.rotation, tweenGroupRef.current)
+    //       .to(newRotation, 200)
+    //       .easing(Easing.Linear.None)
+    //       .start();
+    //     new Tween({}, tweenGroupRef.current)
+    //       .to({}, 200)
+    //       .onUpdate(render)
+    //       .start();
+    //     v.element.classList.add("large");
+    //   } else {
+    //     const { appData: relatedAppData, object3D: relatedObject3D } = v.userData as UserData;
+    //     const relatedVector = new Vector3(relatedObject3D.position.x, relatedObject3D.position.y, relatedObject3D.position.z);
+    //
+    //     if (filteredRelations.in.has(relatedAppData.key)) {
+    //       const lineId = `${appData.key}-${relatedAppData.key}`;
+    //       const line = createRelationLine(newVector, relatedVector, "purple");
+    //       line.name = lineId;
+    //       lineCiCodes.add(lineId);
+    //       sceneRef.current.add(line);
+    //     } else if (filteredRelations.out.has(relatedAppData.key)) {
+    //       const lineId = `${relatedAppData.key}-${appData.key}`;
+    //       const line = createRelationLine(relatedVector, newVector, "blue");
+    //       line.name = lineId;
+    //       lineCiCodes.add(lineId);
+    //       sceneRef.current.add(line);
+    //     } else {
+    //       v.element.classList.add("dark");
+    //     }
+    //   }
+    // });
   }, []);
 
   const onElementMouseLeave = useCallback((curCss3DObject: CSS3DObject, css3DObjects: CSS3DObject[]) => {
@@ -252,6 +268,9 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       new Tween(object.position, tweenGroupRef.current)
         .to({ x: flatObject3D.position.x, y: flatObject3D.position.y, z: flatObject3D.position.z }, 1000)
         .easing(Easing.Exponential.InOut)
+          // .chain(new Tween( threeGroupRef.current.position, dbClickTweenGroupRef.current).to(new Vector3(0 ,0,0)).easing(Easing.Exponential.InOut))
+          // .to({},1000)
+          .easing(Easing.Exponential.InOut)
         .start();
 
       new Tween(object.rotation, tweenGroupRef.current)
@@ -264,6 +283,23 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       .to({}, 1000)
       .onUpdate(render)
       .start();
+
+    trapezoidalRef.current = createTrapezoidalObject({
+      objectData: {
+        width: curCss3DObject.userData.elementStyle.width,
+        height: curCss3DObject.userData.elementStyle.height,
+        point: curCss3DObject.userData.flatObject3D.position
+      },
+      trapezoidalTweenRef,
+      leftBtnName: "应用健康监控大屏",
+      rightBtnName: "应用部署架构"
+    })
+    threeGroupRef.current.add(trapezoidalRef.current);
+    new Tween(threeGroupRef.current.position, dbClickTweenGroupRef.current)
+        .to(new Vector3(0 ,-2176.3738498440684,743.8130418371526))
+        .easing(Easing.Exponential.InOut)
+        .start()
+
   }, []);
 
   const onElementMouseClick = useCallback((curCss3DObject: CSS3DObject, css3DObjects: CSS3DObject[]) => {
@@ -438,16 +474,47 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
             onElementMouseLeave(object, css3DObjects);
           }, false)
           // 鼠标点击
-          element.addEventListener('mousedown', (e) => {
-            console.log("click");
-            onElementMouseClick(object, css3DObjects);
-          }, false);
-          // 鼠标双击
+          // element.addEventListener('click', (e) => {
+          //   isDBClickRef.current = false;
+          //   timerRef.current = window.setTimeout(() =>
+          //   {
+          //     if(!isDBClickRef.current){
+          //       onElementMouseClick(object, css3DObjects);
+          //     }
+          //   }
+          //      ,500 );
+          // }, false);
+          // // 鼠标双击
           // element.addEventListener('dblclick', (e) => {
+          //   isDBClickRef.current = true;
+          //   window.clearTimeout(timerRef.current);
           //   onElementDblclick(object, css3DObjects);
           // }, false)
         })
       });
+
+    let clicks: number = 0;
+    containerRef.current.addEventListener('click', (e) => {
+      const customEle = document.elementFromPoint(e.clientX, e.clientY)
+      const target = customEle?.shadowRoot.elementFromPoint(e.clientX, e.clientY);
+      console.log(target, target.tagName);
+      if (target?.tagName === 'DATA-VIEW.APP-WALL-CARD-ITEM') {
+        const object = (target as any)._css3DObject;
+        clicks++;
+        if (clicks === 1) {
+          setTimeout(() => {
+            if (clicks == 1) {
+              console.log('单击')
+              onElementMouseClick(object, css3DObjects);
+            } else {
+              console.log('双击')
+              onElementDblclick(object, css3DObjects);
+            }
+            clicks = 0;
+          }, 200);
+        }
+      }
+    }, false)
   }, [])
 
   useEffect(() => {
@@ -459,6 +526,8 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
     const animate = () => {
       cancel = requestAnimationFrame(animate);
       tweenGroup.update();
+      trapezoidalTweenRef.current.update();
+      dbClickTweenGroupRef.current.update();
       controlsRef.current.update();
     }
 
@@ -470,6 +539,8 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       controlsRef.current.dispose();
       cameraRef.current.clear();
       tweenGroup.removeAll();
+      trapezoidalTweenRef.current.removeAll();
+      dbClickTweenGroupRef.current.removeAll();
       sceneRef.current.clear();
       cancelAnimationFrame(cancel);
     }
@@ -478,8 +549,8 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
   useEffect(() => {
     const helpers = createHelper();
     const { css3DObjects } = createCardItems(dataSource);
-
-    sceneRef.current.add(...css3DObjects, ...helpers);
+    threeGroupRef.current.add(...css3DObjects);
+    sceneRef.current.add(threeGroupRef.current, ...helpers);
     render();
     entranceAnimation(css3DObjects);
 

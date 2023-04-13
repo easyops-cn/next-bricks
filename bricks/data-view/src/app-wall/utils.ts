@@ -1,4 +1,4 @@
-import { MathUtils, EllipseCurve, LineCurve, Vector2, Vector3, Object3D, Quaternion } from "three";
+import {MathUtils, EllipseCurve, LineCurve, Vector2, Vector3, Object3D, Quaternion, Euler} from "three";
 import { CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
 import "./card-item/index.js";
 import "./relation-line/index.js";
@@ -6,6 +6,8 @@ import "./system-card/index.js";
 import type { AppWallCardItem, AppWallCardItemProps } from "./card-item/index.js";
 import type { AppWallRelationLine, AppWallRelationLineProps } from "./relation-line/index.js";
 import type { SystemCard, SystemCardProps } from "./system-card/index.js";
+import {TrapezoidalObjectProps} from "./interface.js";
+import {Easing, Tween} from "@tweenjs/tween.js";
 
 export interface AppData {
   key: string;
@@ -80,10 +82,15 @@ export const getCoordinates = (columnNum: number, rowNum: number) => {
 
       const flatObject3D = new Object3D();
       const flatColumnPoint = flatColumnPoints[2 * ci + 1];
-      const flatPosition = new Vector3(flatColumnPoint.x, rowPoint.y, -xRadius);
-      const flatLookAt = new Vector3(flatColumnPoint.x, rowPoint.y, 0);
+      // const flatPosition = new Vector3(flatColumnPoint.x, rowPoint.y, -xRadius);
+        const flatPosition = new Vector3(flatColumnPoint.x, rowPoint.y, -xRadius +1000);
+      // const flatLookAt = new Vector3(flatColumnPoint.x, rowPoint.y, 0);
+        const flatLookAt = new Vector3(flatColumnPoint.x, rowPoint.y, 0);
+      // const _rotateAngleX = new Euler( 0, 0, 0, 'XYZ' );
+
       flatObject3D.position.copy(flatPosition);
       flatObject3D.lookAt(flatLookAt);
+      // flatObject3D.position.applyEuler(_rotateAngleX);
 
       coordinates.push({ object3D, flatObject3D });
     }
@@ -96,7 +103,7 @@ export const createCardItems = (dataSource: AppData[]) => {
   const css3DObjects: CSS3DObject[] = [];
 
   // const coordinates = computeCoordinate(dataSource.length);
-  const { elementWidth, elementHeight, coordinates, leftControlPoint, rightControlPoint } = getCoordinates(17, 7);
+  const { elementWidth, elementHeight, coordinates, leftControlPoint, rightControlPoint } = getCoordinates(18, 10);
 
   dataSource.map((item, index) => {
     // .card-item-container.large1231312 {
@@ -122,7 +129,7 @@ export const createCardItems = (dataSource: AppData[]) => {
 
     const userData: UserData = {
       object3D,
-      flatObject3D,
+      flatObject3D, // 展平之后该元素所在的坐标
       appData: item,
       elementStyle: {
         width: elementWidth,
@@ -132,7 +139,7 @@ export const createCardItems = (dataSource: AppData[]) => {
     }
 
     css3DObject.userData = userData;
-
+    (element as any)._css3DObject = css3DObject
     css3DObjects.push(css3DObject);
   })
 
@@ -179,3 +186,168 @@ export const createSystemCard = (props: AppData) => {
 
   return object;
 }
+export const getCenterPointOrSubPoint = (start:[number,number,number],end:[number,number,number]) => {
+  const pointA = new Vector3(start[0], start[1],start[2]);
+  const pointB = new Vector3(end[0], end[1],end[2]);
+  return {
+    centerVector: new Vector3().lerpVectors(pointA, pointB, 0.5), //中心点坐标
+    subVector: new Vector3().subVectors(pointA, pointB) // a-b向量
+  }
+}
+export const createTrapezoidalObject = (props:TrapezoidalObjectProps)=>{
+   const {objectData,leftBtnName,leftOnClick,rightBtnName,trapezoidalTweenRef, rightOnClick } = props;
+    const d = 230;
+    const container = document.createElement('div');
+    const objectContainer = new CSS3DObject(container);
+    objectContainer.position.set(...objectData.point);
+    // 模型为梯形 , 底部和顶部的宽高成一定的比例计算，  bw: tw = 1:11; bh:th= 1:4.5
+    const BW = objectData.width, BH = objectData.height, TW = BW * 8, TH = BH *  3 ;
+    // 底部
+    const bottomCard = document.createElement('div');
+    bottomCard.style.cssText = `
+                   width: ${BW}px;
+                   height: ${BH}px;
+   
+                   box-shadow: inset 0px 1px 2px 0px rgba(255,255,255,0.45);
+                   border: 1px solid rgba(118,255,255,0.58);
+                   `
+    const objectBottomModel = new CSS3DObject(bottomCard);
+    objectBottomModel.position.z = 0;
+    objectContainer.add(objectBottomModel);
+
+    // 顶部
+    const topCard = document.createElement('div');
+    topCard.style.cssText = `
+                   width: ${TW}px;
+                   height:${TH}px;
+                   background: linear-gradient(180deg, #0D36B3 0%, #4A6C9C 100%);
+                   padding: 2% 10%;
+                   `;
+    const topoCard = document.createElement("div");
+    topoCard.style.cssText = `
+                background: linear-gradient(180deg, #6598FF 0%, #063EE8 100%);
+                opacity: 0.59;
+                width: 100%;
+                height: 100%;
+            `;
+    topoCard.innerText = "应用部署架构";
+    topCard.appendChild(topoCard);
+    const objectTopModel = new CSS3DObject(topCard);
+    objectTopModel.position.set(0, 0, d);
+    objectContainer.add(objectTopModel);
+
+
+    //斜面左边
+    const height = Math.sqrt(Math.pow((TW / 2 - BW / 2), 2) + Math.pow(d, 2)); //斜边
+    const cantLeftOrRightCardCss = `
+                   width: ${height}px;
+                   height:${TH}px;
+                   background: linear-gradient(180deg, rgba(51,102,255,0.4) 0%, #99CCFF 100%);
+                   clip-path: polygon(0 0, ${height}px ${(TH / 2 - BH / 2)}px, ${height}px ${(TH / 2 - BH / 2) + BH}px, 0 ${TH}px);
+                   opacity: 0.2;
+                   `;
+    const cantLeftCard = document.createElement("div");
+    cantLeftCard.style.cssText = cantLeftOrRightCardCss;
+    const objectCantLeftModel = new CSS3DObject(cantLeftCard);
+    const {centerVector, subVector} = getCenterPointOrSubPoint([-BW / 2, 0, 0], [-TW / 2, 0, d]);
+    objectCantLeftModel.position.copy(centerVector);
+    const quaternion = new Quaternion().setFromUnitVectors(new Vector3(1, 0, 0).normalize(), subVector.clone().normalize());
+    objectCantLeftModel.setRotationFromQuaternion(quaternion);
+    objectContainer.add(objectCantLeftModel);
+    //斜面右边
+    const cantRightCard = document.createElement("div");
+    cantRightCard.style.cssText = cantLeftOrRightCardCss;
+    const objectCantRightModel = new CSS3DObject(cantRightCard);
+    const {
+      centerVector: _centerVector,
+      subVector: _subVector
+    } = getCenterPointOrSubPoint([BW / 2, 0, 0], [TW / 2, 0, d]);
+    objectCantRightModel.position.copy(_centerVector)
+    const _quaternion = new Quaternion().setFromUnitVectors(new Vector3(1, 0, 0).normalize(), _subVector.clone().normalize());
+    objectCantRightModel.setRotationFromQuaternion(_quaternion);
+    objectContainer.add(objectCantRightModel);
+    //斜面前面
+    const h1 = Math.sqrt(Math.pow((TH / 2 - BH / 2), 2) + Math.pow(d, 2)); //斜边
+    const cantTopOrBottomCardCss = `
+                   width: ${TW}px;
+                   height:${h1}px;
+                   background: linear-gradient(180deg, rgba(51,102,255,0.4) 0%, #99CCFF 100%);
+                   clip-path: polygon(0 0, ${TW}px 0, ${(TW / 2 - BW / 2) + BW}px ${h1}px, ${TW / 2 - BW / 2}px ${h1}px);
+                   opacity: 0.2;
+                   `;
+    const cantTopCard = document.createElement("div");
+    cantTopCard.style.cssText = cantTopOrBottomCardCss;
+    const objectCantTopModel = new CSS3DObject(cantTopCard);
+    const {
+      centerVector: _topCenterVector,
+      subVector: _topSubVector
+    } = getCenterPointOrSubPoint([0, -BH / 2, 0], [0, -TH / 2, d]);
+    objectCantTopModel.position.copy(_topCenterVector)
+    const _topQuaternion = new Quaternion().setFromUnitVectors(new Vector3(0, -1, 0).normalize(), _topSubVector.clone().normalize());
+    objectCantTopModel.setRotationFromQuaternion(_topQuaternion);
+    objectContainer.add(objectCantTopModel);
+
+    const cantBottomCard = document.createElement("div");
+    cantBottomCard.style.cssText = cantTopOrBottomCardCss;
+    const objectCantBottomModel = new CSS3DObject(cantBottomCard);
+    const {
+      centerVector: _bottomCenterVector,
+      subVector: _bottomSubVector
+    } = getCenterPointOrSubPoint([0, BH / 2, 0], [0, TH / 2, d]);
+    objectCantBottomModel.position.copy(_bottomCenterVector)
+    const _bottomQuaternion = new Quaternion().setFromUnitVectors(new Vector3(0, -1, 0).normalize(), _bottomSubVector.clone().normalize());
+    objectCantBottomModel.setRotationFromQuaternion(_bottomQuaternion);
+    objectContainer.add(objectCantBottomModel);
+    // 文字按钮
+    if (leftBtnName) {
+      const btnLeft = document.createElement("div");
+      btnLeft.style.cssText = `
+                 color: #6BE0FA;
+                 font-size: 16px;
+                 font-weight: 500;
+                 width: ${TW / 2}px;
+
+                 line-height: 16px;
+                 `;
+      const wordNode = document.createElement("span");
+      wordNode.style.cursor = "pointer";
+      wordNode.innerText = leftBtnName;
+      btnLeft.appendChild(wordNode);
+      const btnLeftObject = new CSS3DObject(btnLeft);
+      btnLeftObject.position.set(-TW / 4 + 10, -TH / 2, d + 14);
+      btnLeftObject.rotateX(Math.PI / 2);
+      objectContainer.add(btnLeftObject);
+      wordNode.onclick = leftOnClick;
+    }
+    if (rightBtnName) {
+      const btnRight = document.createElement("div");
+      btnRight.style.cssText = `
+                 color: #FFFFFF;
+                 font-size: 20px;
+                 font-weight: 500;
+                 width: ${TW / 2}px;
+                 text-shadow: 0px 1px 4px #3366FF;
+                 text-align: right;
+                 `;
+      const textNode = document.createElement("span");
+      textNode.style.cursor = "pointer";
+      textNode.innerText = rightBtnName;
+      btnRight.appendChild(textNode);
+      const btnRightObject = new CSS3DObject(btnRight);
+      btnRightObject.position.set(TW / 4 - 10, -TH / 2, d + 14);
+      btnRightObject.rotateX(Math.PI / 2);
+      objectContainer.add(btnRightObject);
+      textNode.onclick = rightOnClick
+    }
+    new Tween({}, trapezoidalTweenRef.current)
+        .to({}, 500).onUpdate(console.log)
+        .easing(Easing.Linear.None)
+        .chain(new Tween({}, trapezoidalTweenRef.current)
+            .to({}, 60)
+            .onUpdate((e) => {
+              objectContainer.add(objectTopModel)
+            }).easing(Easing.Linear.None))
+        .start();
+    return objectContainer;
+}
+
