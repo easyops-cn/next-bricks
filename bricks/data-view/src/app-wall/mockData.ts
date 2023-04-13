@@ -262,10 +262,12 @@ const dataSource = _dataSource.map(v => {
     key: v.instanceId,
     status: v.isError ? "warning" : "normal",
     cardItemProps: {
+      status: v.isError ? "warning" : "normal",
       cardTitle: v.key,
       description: v.name,
     },
     systemCardProps: {
+      status: v.isError ? "warning" : "normal",
       cardTitle: v.name,
       itemList: [
         {
