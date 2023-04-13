@@ -1,0 +1,37 @@
+{
+  "name": "@next-bricks/shoelace",
+  "version": "0.1.0",
+  "homepage": "https://github.com/easyops-cn/next-core/tree/master/bricks/shoelace",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:easyops-cn/next-core.git"
+  },
+  "license": "GPL-3.0",
+  "type": "module",
+  "sideEffects": true,
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "start": "cross-env NODE_ENV=development NODE_OPTIONS='--experimental-import-meta-resolve' build-next-bricks --watch",
+    "build": "cross-env NODE_ENV=production NODE_OPTIONS='--experimental-import-meta-resolve' build-next-bricks",
+    "test": "cross-env NODE_ENV='test' test-next",
+    "test:ci": "cross-env NODE_ENV='test' CI=true test-next"
+  },
+  "dependencies": {
+    "@next-core/i18n": "^1.0.8",
+    "@next-core/react-element": "^1.0.4",
+    "@next-core/utils": "^1.2.3",
+    "@shoelace-style/shoelace": "^2.3.0",
+    "react": "0.0.0-experimental-ee8509801-20230117",
+    "react-dom": "0.0.0-experimental-ee8509801-20230117"
+  },
+  "devDependencies": {
+    "@next-core/build-next-bricks": "^1.4.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "@next-core/test-next": "^1.0.4"
+  }
+}

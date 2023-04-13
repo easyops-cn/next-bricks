@@ -41,6 +41,7 @@ export interface ModalProps {
   maskClosable?: boolean;
   confirmText?: string;
   cancelText?: string;
+  hideCancelButton?: boolean;
   fullscreen?: boolean;
   confirmDisabled?: boolean;
   closeWhenConfirm?: boolean;
@@ -168,6 +169,13 @@ class Modal extends ReactNextElement implements ModalProps {
   @property() accessor cancelText: string | undefined;
 
   /**
+   * @kind boolean
+   * @description 是否隐藏取消按钮
+   * @group basic
+   */
+  @property({ type: Boolean }) accessor hideCancelButton: boolean | undefined;
+
+  /**
    * @detail
    * @description 打开弹窗事件
    */
@@ -243,6 +251,7 @@ class Modal extends ReactNextElement implements ModalProps {
         visible={this.visible}
         confirmText={this.confirmText}
         cancelText={this.cancelText}
+        hideCancelButton={this.hideCancelButton}
         fullscreen={this.fullscreen}
         confirmDisabled={this.confirmDisabled}
         closeWhenConfirm={this.closeWhenConfirm}
@@ -268,6 +277,7 @@ function ModalComponent({
   maskClosable,
   confirmText = "确定",
   cancelText = "取消",
+  hideCancelButton,
   visible: open = false,
   fullscreen,
   confirmDisabled,
@@ -330,9 +340,11 @@ function ModalComponent({
   const footer = useMemo(
     () => (
       <div className="modal-footer">
-        <WrappedButton type="text" onClick={handleCancelClick}>
-          {cancelText}
-        </WrappedButton>
+        {!hideCancelButton && (
+          <WrappedButton type="text" onClick={handleCancelClick}>
+            {cancelText}
+          </WrappedButton>
+        )}
         <WrappedButton
           type="primary"
           disabled={confirmDisabled}
@@ -343,6 +355,7 @@ function ModalComponent({
       </div>
     ),
     [
+      hideCancelButton,
       cancelText,
       confirmText,
       confirmDisabled,
