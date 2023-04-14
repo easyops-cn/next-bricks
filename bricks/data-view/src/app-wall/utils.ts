@@ -26,6 +26,10 @@ export interface UserData {
     width: number,
     height: number,
   },
+  turningStyle: {
+    width: number,
+    height: number,
+  },
   cardItemObject3D: {
     curve: Object3D,
     flat: Object3D,
@@ -171,6 +175,7 @@ export const createCardItems = (dataSource: AppData[]) => {
         width: elementWidth,
         height: elementHeight,
       },
+      turningStyle: { width: elementWidth * 1.2, height: elementHeight * 1.2 },
       cardItemObject3D: {
         curve: object3D,
         flat: flatObject3D,

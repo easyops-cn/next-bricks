@@ -18,6 +18,10 @@
   position: relative;
 }
 
+.container.loading .card-item {
+  pointer-events: none !important;
+}
+
 .mask {
   position: absolute;
   top: 0;
@@ -25,18 +29,13 @@
   left: 0;
   right: 0;
   z-index: 100;
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.4);
 }
 
-.mask.transparent {
-  opacity: 0;
-}
-
-.mask.show {
-  display: flex;
+.mask.hidden {
+  display: none;
 }
 
 .card-item {

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { wrapBrick } from "@next-core/react-element";
-import { Vector3, PerspectiveCamera, Scene, MathUtils, Group as ThreeGroup, Raycaster } from "three";
+import { Vector3, PerspectiveCamera, Scene, MathUtils, Group as ThreeGroup } from "three";
 import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
 import { CSS3DObject, CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js';
 import { Tween, Easing, Group } from "@tweenjs/tween.js";
@@ -35,6 +35,8 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
   const timerRef = useRef<number>(); // 双击事件禁止单击事件触发定时器
   const isDBClickRef = useRef<boolean>(false);//是否是双击
   const dbClickTweenGroupRef = useRef<Group>(new Group()); // 双击后的动画组
+
+  const clickAnimationRunning = useRef(false);
 
 
   const [curClickCardItemObject, setCurClickCardItemObject] = useState<CSS3DObject>(null);
@@ -88,10 +90,10 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
     controlsRef.current = controls;
   }, []);
 
-  const onElementMouseEnter = useCallback((curCss3DObject: CSS3DObject, css3DObjects: CSS3DObject[]) => {
+  const onElementMouseEnter = (curCss3DObject: CSS3DObject, css3DObjects: CSS3DObject[]) => {
     const { appData, cardItemObject3D } = curCss3DObject.userData as UserData;
 
-    // // Todo: map first
+    // Todo: map first
     const filteredRelations = relations.reduce((pre, cur) => {
       if (cur.source === appData.key) {
         pre.out.add(cur.target);
@@ -136,12 +138,14 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
         }
       }
     });
-  }, []);
+  };
 
-  const onElementMouseLeave = useCallback((curCss3DObject: CSS3DObject, css3DObjects: CSS3DObject[]) => {
+  const onElementMouseLeave = (curCss3DObject: CSS3DObject, css3DObjects: CSS3DObject[]) => {
     const { appData, cardItemObject3D } = curCss3DObject.userData as UserData;
-
+    console.log(clickAnimationRunning.current);
     css3DObjects.map(v => {
+      if (clickAnimationRunning.current) return;
+
       v.element.classList.remove("dark", "large");
 
       if (v === curCss3DObject) {
@@ -165,23 +169,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       sceneRef.current.remove(currentLine);
       lineCiCodes.delete(item);
     });
-  }, []);
-
-  const onMaskClick = useCallback((curCss3DObject: CSS3DObject, css3DObjects: CSS3DObject[], systemCardObject: CSS3DObject) => {
-    // const newPosition = { x: [60, -position.x / 2, v.position.x], y: v.position.y, z: v.position.z }
-    // new Tween(position)
-    //   .to({ ...newPosition }, 1000)
-    //   .easing(Easing.Linear.None)
-    //   .start()
-    // new Tween(rotation)
-    //   .to({ x: v.rotation.x, y: [-(180 * Math.PI / 180), -(90 * Math.PI / 180), v.rotation.y], z: v.rotation.z }, 1000)
-    //   .easing(Easing.Linear.None)
-    //   .start()
-    // new Tween({})
-    //   .to({}, 1000)
-    //   .onUpdate(render)
-    //   .start()
-  }, []);
+  };
 
   const onElementDblclick = useCallback((curCss3DObject: CSS3DObject, css3DObjects: CSS3DObject[]) => {
     css3DObjects.map(object => {
@@ -190,14 +178,14 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       new Tween(object.position, tweenGroupRef.current)
         .to(cardItemObject3D.flat.position, 1000)
         .easing(Easing.Exponential.InOut)
-          // .chain(new Tween(object.position, tweenGroupRef.current).to(cardItemObject3D.curve.position, 1000).easing(Easing.Exponential.InOut))
+        // .chain(new Tween(object.position, tweenGroupRef.current).to(cardItemObject3D.curve.position, 1000).easing(Easing.Exponential.InOut))
         .start();
 
       new Tween(object.rotation, tweenGroupRef.current)
         .to(eulerToXYZ(cardItemObject3D.flat.rotation), 1000)
         .easing(Easing.Exponential.InOut)
-          // .chain(new Tween(object.rotation, tweenGroupRef.current).to(eulerToXYZ(cardItemObject3D.curve.rotation), 1000).easing(Easing.Exponential.InOut))
-          .start();
+        // .chain(new Tween(object.rotation, tweenGroupRef.current).to(eulerToXYZ(cardItemObject3D.curve.rotation), 1000).easing(Easing.Exponential.InOut))
+        .start();
 
     })
 
@@ -209,12 +197,12 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
     // 由于展示台用于都要在target位置，但是我们需要整个模型都去移动,
     // 所以是 展示台 source - target 向量 归一 的平行向量 是模型中心 移动 到最终目的的位置；
     const sourceVector = curCss3DObject.position.clone();
-    const targetVector = new Vector3(0,threeGroupRef.current.position.y, threeGroupRef.current.position.z).clone();
+    const targetVector = new Vector3(0, threeGroupRef.current.position.y, threeGroupRef.current.position.z).clone();
     const subVector = new Vector3().subVectors(sourceVector, targetVector).normalize();
     const moveVector = new Vector3().addVectors(subVector, threeGroupRef.current.position);
 
     const { elementStyle, cardItemObject3D } = curCss3DObject.userData as UserData;
-    const {objectContainer, objectTopModel,objectCantModel}= createTrapezoidalObject({
+    const { objectContainer, objectTopModel, objectCantModel } = createTrapezoidalObject({
       objectData: {
         width: elementStyle.width,
         height: elementStyle.height,
@@ -224,12 +212,12 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       rightBtnName: "应用部署架构"
     });
     const centerTween = new Tween(threeGroupRef.current.position, tweenGroupRef.current)
-        .to(moveVector, 1000)
-        .easing(Easing.Linear.None).onUpdate(render)
+      .to(moveVector, 1000)
+      .easing(Easing.Linear.None).onUpdate(render)
     new Tween(threeGroupRef.current.rotation, tweenGroupRef.current)
       .to({ x: -Math.PI / 4, y: 0, z: 0 }, 1000).easing(Easing.Exponential.InOut)
       .start().onComplete(() => {
-        trapezoidalRef.current= objectContainer;
+        trapezoidalRef.current = objectContainer;
         objectContainer.add(objectCantModel);
         objectContainer.add(objectTopModel);
         threeGroupRef.current.add(trapezoidalRef.current);
@@ -281,25 +269,26 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
 
   }
 
-  const onElementMouseClick = useCallback((curCss3DObject: CSS3DObject, css3DObjects: CSS3DObject[]) => {
-    controlsRef.current.reset();
-    maskRef.current.classList.add("show");
-    maskRef.current.classList.remove("transparent");
-    systemCardRef.current.hidden = true;
+  const onElementMouseClick = (curCss3DObject: CSS3DObject, css3DObjects: CSS3DObject[]) => {
+    if (clickAnimationRunning.current) return;
+    clickAnimationRunning.current = true;
     tweenGroupRef.current.removeAll();
+    controlsRef.current.reset();
 
-    setCurClickCardItemObject(curCss3DObject);
-    const { appData, elementStyle, systemCardObject, cardItemObject3D, systemCardObject3D } = curCss3DObject.userData as UserData;
-
-    const turningStyle = { width: elementStyle.width * 1.2, height: elementStyle.height * 1.2 };
+    const { appData, elementStyle, turningStyle, systemCardObject, cardItemObject3D, systemCardObject3D } = curCss3DObject.userData as UserData;
 
     const systemCardElement = systemCardObject.element as SystemCard;
     systemCardObject.position.copy(systemCardObject3D.clickTurn.position);
     systemCardObject.rotation.copy(systemCardObject3D.clickTurn.rotation);
     systemCardElement.containerStyle = turningStyle;
+
+    maskRef.current.classList.remove("hidden");
+    systemCardRef.current.hidden = true;
     systemCardObject.visible = false;
 
     sceneRef.current.add(systemCardObject);
+
+    setCurClickCardItemObject(curCss3DObject);
 
     new Tween(curCss3DObject.position, tweenGroupRef.current)
       .to(cardItemObject3D.clickTurn.position, 500)
@@ -347,42 +336,24 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
         systemCardRef.current.hidden = false;
         systemCardObject.visible = false;
         render();
+        clickAnimationRunning.current = false;
       })
       .start();
-
-    // systemCardElement.addEventListener('pointerdown', (e: PointerEvent) => {
-    //   e.preventDefault();
-    //   onMaskClick(curCss3DObject, css3DObjects, systemCardObject)
-    // }, false);
-  }, []);
+  };
 
   const handleMaskClick = () => {
-    maskRef.current.classList.add("transparent");
-    systemCardRef.current.hidden = true;
+    if (clickAnimationRunning.current) return;
+    clickAnimationRunning.current = true;
+    tweenGroupRef.current.removeAll();
+    controlsRef.current.reset();
 
-    const { appData, elementStyle, cardItemObject3D, systemCardObject3D, systemCardObject } = curClickCardItemObject.userData as UserData;
+    const { appData, elementStyle,turningStyle, cardItemObject3D, systemCardObject3D, systemCardObject } = curClickCardItemObject.userData as UserData;
 
     const systemCardElement = systemCardObject.element as SystemCard;
+
+    systemCardRef.current.hidden = true;
     systemCardObject.visible = true;
 
-    const turningStyle = { width: elementStyle.width * 1.2, height: elementStyle.height * 1.2 };
-
-    new Tween({ ...systemCardStyle }, tweenGroupRef.current)
-      .to(turningStyle, 500)
-      .onUpdate((e) => {
-        systemCardElement.containerStyle = { ...e };
-      })
-      .easing(Easing.Linear.None)
-      .chain(
-        new Tween({ ...turningStyle }, tweenGroupRef.current)
-          .to(elementStyle, 500)
-          .onUpdate((e) => {
-            curClickCardItemObject.element.style.width = e.width + 'px';
-            curClickCardItemObject.element.style.height = e.height + 'px';
-          })
-          .easing(Easing.Linear.None)
-      )
-      .start();
     new Tween(systemCardObject.position, tweenGroupRef.current)
       .to(systemCardObject3D.clickTurn.position, 500)
       .easing(Easing.Linear.None)
@@ -405,19 +376,37 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
           .to(eulerToXYZ(cardItemObject3D.curve.rotation), 500)
           .easing(Easing.Linear.None)
       )
+    new Tween({ ...systemCardStyle }, tweenGroupRef.current)
+      .to(turningStyle, 500)
+      .onUpdate((e) => {
+        systemCardElement.containerStyle = { ...e };
+      })
+      .easing(Easing.Linear.None)
+      .chain(
+        new Tween({ ...turningStyle }, tweenGroupRef.current)
+          .to(elementStyle, 500)
+          .onUpdate((e) => {
+            curClickCardItemObject.element.style.width = e.width + 'px';
+            curClickCardItemObject.element.style.height = e.height + 'px';
+          })
+          .easing(Easing.Linear.None)
+      )
+      .start();
 
     new Tween({}, tweenGroupRef.current)
       .to({}, 1000)
       .onUpdate(render)
       .start()
       .onComplete(() => {
-        maskRef.current.classList.remove("show");
+        maskRef.current.classList.add("hidden");
         sceneRef.current.remove(systemCardObject);
         setCurClickCardItemObject(null);
+        clickAnimationRunning.current = false;
       })
   };
 
   const entranceAnimation = useCallback((css3DObjects: CSS3DObject[]) => {
+    containerRef.current.classList.add("loading");
     const duration = 2000;
 
     css3DObjects.map(object => {
@@ -447,13 +436,13 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
           element.addEventListener('mouseenter', (e) => {
             controlsRef.current.enabled = false;
             console.log(object.userData.appData.key, "mouseenter");
-            // onElementMouseEnter(object, css3DObjects);
+            onElementMouseEnter(object, css3DObjects);
           }, false);
           // 鼠标移出
           element.addEventListener('mouseleave', (e) => {
             controlsRef.current.enabled = true;
             console.log(object.userData.appData.key, "mouseleave");
-            // onElementMouseLeave(object, css3DObjects);
+            onElementMouseLeave(object, css3DObjects);
           }, false)
           // 鼠标点击
           // element.addEventListener('click', (e) => {
@@ -471,7 +460,9 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
           //   window.clearTimeout(timerRef.current);
           //   onElementDblclick(object, css3DObjects);
           // }, false)
-        })
+        });
+
+        containerRef.current.classList.remove("loading");
       });
 
     let clicks = 0;
@@ -548,7 +539,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
   return (
     <>
       <div className="container" ref={containerRef} ></div>
-      <div className="mask" ref={maskRef} onClick={handleMaskClick} >
+      <div className="mask hidden" ref={maskRef} onClick={handleMaskClick} >
         <WrappedSystemCard {...(curClickCardItemObject?.userData as UserData)?.appData?.systemCardProps}
           onClick={(e) => e.stopPropagation()}
           ref={systemCardRef}
