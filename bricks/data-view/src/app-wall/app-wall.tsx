@@ -19,7 +19,7 @@ const WrappedSystemCard = wrapBrick<SystemCard, SystemCardProps>(
 );
 
 export function AppWallElement(props: AppWallProps): React.ReactElement {
-  const { relations, dataSource, onSystemCardButtonClick, rightBtnOnClick,leftBtnOnClick } = props;
+  const { relations, dataSource, onSystemCardButtonClick, rightBtnOnClick, leftBtnOnClick } = props;
 
   const containerRef = useRef<HTMLDivElement>();
   const maskRef = useRef<HTMLDivElement>();
@@ -117,6 +117,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
           .to({}, 200)
           .onUpdate(render)
           .start();
+        v.element.classList.remove("dark");
         v.element.classList.add("large");
       } else {
         const { appData: relatedAppData, cardItemObject3D: relatedCardItemObject3D } = v.userData as UserData;
@@ -135,6 +136,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
           sceneRef.current.add(line);
         } else {
           v.element.classList.add("dark");
+          v.element.classList.remove("large");
         }
       }
     });
@@ -195,7 +197,14 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       .onUpdate(render)
       .start();
 
-    const { appData,elementStyle, cardItemObject3D } = curCss3DObject.userData as UserData;
+    // 由于展示台用于都要在target位置，但是我们需要整个模型都去移动,
+    // 所以是 展示台 source - target 向量 归一 的平行向量 是模型中心 移动 到最终目的的位置；
+    const sourceVector = curCss3DObject.position.clone();
+    const targetVector = new Vector3(0, threeGroupRef.current.position.y, threeGroupRef.current.position.z).clone();
+    const subVector = new Vector3().subVectors(sourceVector, targetVector).normalize();
+    const moveVector = new Vector3().addVectors(subVector, threeGroupRef.current.position);
+
+    const { appData, elementStyle, cardItemObject3D } = curCss3DObject.userData as UserData;
     const { objectContainer, objectTopModel, objectCantModel } = createTrapezoidalObject({
       objectData: {
         width: elementStyle.width,
@@ -204,7 +213,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       },
       leftBtnName: appData.trapezoidalProps?.leftBtnName,
       rightBtnName: appData.trapezoidalProps?.rightBtnName,
-      rightOnClick: () =>rightBtnOnClick(appData),
+      rightOnClick: () => rightBtnOnClick(appData),
       leftOnClick: () => leftBtnOnClick(appData)
     });
 
@@ -339,7 +348,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
     tweenGroupRef.current.removeAll();
     controlsRef.current.reset();
 
-    const { appData, elementStyle, turningStyle, systemCardStyle, cardItemObject3D, systemCardObject3D, systemCardObject } = curClickCardItemObject.userData as UserData;
+    const { css3DObjects, elementStyle, turningStyle, systemCardStyle, cardItemObject3D, systemCardObject3D, systemCardObject } = curClickCardItemObject.userData as UserData;
 
     const systemCardElement = systemCardObject.element as SystemCard;
 
@@ -392,6 +401,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       .onComplete(() => {
         maskRef.current.hidden = true;
         sceneRef.current.remove(systemCardObject);
+        css3DObjects.map(v => v.element.classList.remove("dark"));
         setCurClickCardItemObject(null);
         clickAnimationRunning.current = false;
       })

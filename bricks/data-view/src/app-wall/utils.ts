@@ -6,7 +6,7 @@ import "./system-card/index.js";
 import type { AppWallCardItem, AppWallCardItemProps } from "./card-item/index.js";
 import type { AppWallRelationLine, AppWallRelationLineProps } from "./relation-line/index.js";
 import type { SystemCard, SystemCardProps } from "./system-card/index.js";
-import {TrapezoidalObjectProps, TrapezoidalProps} from "./interface.js";
+import { TrapezoidalObjectProps, TrapezoidalProps } from "./interface.js";
 
 export interface AppData {
   key: string;
@@ -46,6 +46,7 @@ export interface UserData {
     front: Object3D,
   }
   systemCardObject: CSS3DObject,
+  css3DObjects: CSS3DObject[],
 }
 
 export const vector3ToXYZ = (vector: Vector3) => {
@@ -58,6 +59,12 @@ export const eulerToXYZ = (euler: Euler) => {
 
 export const xyzToVector3 = (xyz: { x: number, y: number, z: number }) => {
   return new Vector3(xyz.x, xyz.y, xyz.z);
+}
+
+const getRowsAndColumnsNum = (total: number) => {
+  const row = Math.ceil(Math.sqrt(total / 3));
+  const column = Math.ceil(total / row);
+  return { row, column };
 }
 
 export const getCoordinates = (columnNum: number, rowNum: number) => {
@@ -104,6 +111,8 @@ export const getCoordinates = (columnNum: number, rowNum: number) => {
       const object3D = new Object3D();
       const columnPoint = columnPoints[2 * ci + 1];
       const position = new Vector3(columnPoint.x, rowPoint.y, columnPoint.y);
+      // console.log(ellipseCurve.getTangentAt(0));
+      // const lookAt = new Vector3(0, rowPoint.y, ellipseCurve.getTangentAt(0).y);
       const lookAt = new Vector3().multiplyVectors(position, new Vector3(-2, 1, -2));
       object3D.position.copy(position);
       object3D.lookAt(lookAt);
@@ -143,11 +152,21 @@ const createSystemCard = (props: AppData) => {
 
 export const createCardItems = (dataSource: AppData[]) => {
   const css3DObjects: CSS3DObject[] = [];
+  const totalRowNum = 9;
+  const totalColumnNum = 24;
 
   // const coordinates = computeCoordinate(dataSource.length);
-  const { elementWidth, elementHeight, coordinates, leftControlPoint, rightControlPoint } = getCoordinates(25, 16);
+  const { elementWidth, elementHeight, coordinates, leftControlPoint, rightControlPoint } = getCoordinates(totalColumnNum, totalRowNum);
+  const { row, column } = getRowsAndColumnsNum(dataSource.length);
+
+  const columnStart = Math.floor((totalColumnNum - column) / 2);
+  const rowStart = Math.floor((totalRowNum - row) / 2);
+
+  const startIndex = rowStart * totalColumnNum + columnStart;
 
   dataSource.map((item, index) => {
+    const _index = startIndex + index % column + totalColumnNum * Math.floor(index / column);
+
     // .card-item-container.large1231312 {
     //   /* Todo: 百丽1.5? */
     //   width: 120%;
@@ -168,11 +187,13 @@ export const createCardItems = (dataSource: AppData[]) => {
     css3DObject.name = `card-item-${item.key}`;
     css3DObject.position.set(MathUtils.randFloatSpread(4000), MathUtils.randFloatSpread(4000), 0);
 
-    const { object3D, flatObject3D } = coordinates[index];
+    if (!coordinates[_index]) return;
+    const { object3D, flatObject3D } = coordinates[_index];
 
     const turnObject3D = object3D.position.x < 0 ? rightControlPoint : leftControlPoint
 
     const userData: UserData = {
+      css3DObjects,
       appData: item,
       elementStyle: {
         width: elementWidth,
