@@ -8,7 +8,4 @@ export interface SlButtonProps {
   variant?: string;
 }
 
-const SlButtonConstructor = customElements.get("sl-button") as any;
-SlButtonConstructor.__tagName = "sl-button";
-
-export const WrappedSlButton = wrapLocalBrick<any, SlButtonProps>(SlButtonConstructor);
+export const WrappedSlButton = wrapLocalBrick<HTMLElement, SlButtonProps>("sl-button");

@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useRef } from "react";
 import { createProviderClass } from "@next-core/utils/storyboard";
 import { i18n, initializeI18n } from "@next-core/i18n";
 import { createRoot } from "react-dom/client";
-import { WrappedSlDialog } from "../../sl-dialog/index.js";
+import { SlDialogElement, WrappedSlDialog } from "../../sl-dialog/index.js";
 import { WrappedSlIcon } from "../../sl-icon/index.js";
 import { WrappedSlButton } from "../../sl-button/index.js";
 import { K, NS, locales } from "../i18n.js";
@@ -46,16 +46,16 @@ export function DialogComponent({
   type,
   title,
   content,
+  contentStyle,
   onOk,
   onCancel,
-  contentStyle,
   onHide,
 }: DialogProps & {
   onOk?(): void;
   onCancel?(): void;
   onHide?(): void;
 }) {
-  const ref = useRef<{ hide: Function }>();
+  const ref = useRef<SlDialogElement | null>(null);
   const icon = useMemo(() => {
     switch (type) {
       case "success":

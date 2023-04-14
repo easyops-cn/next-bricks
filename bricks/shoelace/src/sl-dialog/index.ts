@@ -20,10 +20,12 @@ export interface SlDialogMapEvents {
   onSlRequestClose: "sl-request-close";
 }
 
-const SlDialogConstructor = customElements.get("sl-dialog") as any;
-SlDialogConstructor.__tagName = "sl-dialog";
+export interface SlDialogElement extends HTMLElement {
+  show(): void;
+  hide(): void;
+}
 
-export const WrappedSlDialog = wrapLocalBrick<any, SlDialogProps, SlDialogEvents, SlDialogMapEvents>(SlDialogConstructor, {
+export const WrappedSlDialog = wrapLocalBrick<SlDialogElement, SlDialogProps, SlDialogEvents, SlDialogMapEvents>("sl-dialog", {
   onSlHide: "sl-hide",
   onSlRequestClose: "sl-request-close",
 });

@@ -8,7 +8,4 @@ export interface SlIconProps {
   name: string;
 }
 
-const SlIconConstructor = customElements.get("sl-icon") as any;
-SlIconConstructor.__tagName = "sl-icon";
-
-export const WrappedSlIcon = wrapLocalBrick<any, SlIconProps>(SlIconConstructor);
+export const WrappedSlIcon = wrapLocalBrick<HTMLElement, SlIconProps>("sl-icon");
