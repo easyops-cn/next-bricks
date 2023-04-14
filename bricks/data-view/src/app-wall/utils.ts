@@ -30,6 +30,10 @@ export interface UserData {
     width: number,
     height: number,
   },
+  systemCardStyle: {
+    width: number,
+    height: number,
+  },
   cardItemObject3D: {
     curve: Object3D,
     flat: Object3D,
@@ -120,8 +124,6 @@ export const getCoordinates = (columnNum: number, rowNum: number) => {
   return { elementWidth, elementHeight, coordinates, leftControlPoint, rightControlPoint };
 }
 
-export const systemCardStyle = { width: 280, height: 382 };
-
 const createSystemCard = (props: AppData) => {
   const { key, status, systemCardProps } = props;
   const systemCardElement = document.createElement("data-view.app-wall-system-card") as SystemCard;
@@ -176,6 +178,7 @@ export const createCardItems = (dataSource: AppData[]) => {
         height: elementHeight,
       },
       turningStyle: { width: elementWidth * 1.2, height: elementHeight * 1.2 },
+      systemCardStyle: { width: 280, height: 382 },
       cardItemObject3D: {
         curve: object3D,
         flat: flatObject3D,

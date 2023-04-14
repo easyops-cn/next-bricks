@@ -99,7 +99,7 @@ class SystemCard extends ReactNextElement implements SystemCardProps {
      * @detail
      * @description 按钮点击
      */
-    @event({ type: "click" })
+    @event({ type: "button-click" })
     accessor #onClickEvent!: EventEmitter<void>;
 
     handleClick = ()=>{

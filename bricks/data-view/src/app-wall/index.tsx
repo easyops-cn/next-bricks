@@ -1,5 +1,5 @@
 import React from "react";
-import { createDecorators } from "@next-core/element";
+import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import variablesStyleText from "../data-view-variables.shadow.css";
 import styleText from "./app-wall.shadow.css";
@@ -7,11 +7,12 @@ import { AppWallElement } from "./app-wall.js";
 import type { AppData, Relation } from "./utils.js";
 import { dataSource, relations } from "./mockData.js";
 
-const { defineElement, property } = createDecorators();
+const { defineElement, property, event } = createDecorators();
 
 export interface AppWallProps {
   dataSource: AppData[];
   relations: Relation[];
+  onSystemCardButtonClick?: (data: AppData) => void;
 }
 
 /**
@@ -48,11 +49,23 @@ class AppWall
   })
   accessor relations: Relation[] = relations;
 
+  /**
+  * @detail AppData
+  * @description 详情卡片点击事件
+  */
+  @event({ type: "system.card.button.click" })
+  accessor #systemCardButtonClickEvent!: EventEmitter<AppData>;
+
+  #handleSystemCardButtonClick = (data: AppData): void => {
+    this.#systemCardButtonClickEvent.emit(data);
+  };
+
   render() {
     return (
       <AppWallElement
         dataSource={this.dataSource}
         relations={this.relations}
+        onSystemCardButtonClick={this.#handleSystemCardButtonClick}
       />
     );
   }

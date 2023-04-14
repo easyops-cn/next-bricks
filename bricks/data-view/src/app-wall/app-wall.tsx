@@ -6,7 +6,7 @@ import { CSS3DObject, CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer
 import { Tween, Easing, Group } from "@tweenjs/tween.js";
 
 import { createHelper } from "./helpers.js";
-import { createCardItems, createRelationLine, type UserData, systemCardStyle, createTrapezoidalObject, eulerToXYZ } from "./utils.js";
+import { createCardItems, createRelationLine, type UserData, createTrapezoidalObject, eulerToXYZ } from "./utils.js";
 import type { AppWallProps } from "./index.jsx";
 import type { SystemCard, SystemCardProps } from "./system-card/index.js";
 
@@ -18,7 +18,7 @@ const WrappedSystemCard = wrapBrick<SystemCard, SystemCardProps>(
 );
 
 export function AppWallElement(props: AppWallProps): React.ReactElement {
-  const { relations, dataSource } = props;
+  const { relations, dataSource, onSystemCardButtonClick } = props;
 
   const containerRef = useRef<HTMLDivElement>();
   const maskRef = useRef<HTMLDivElement>();
@@ -142,7 +142,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
 
   const onElementMouseLeave = (curCss3DObject: CSS3DObject, css3DObjects: CSS3DObject[]) => {
     const { appData, cardItemObject3D } = curCss3DObject.userData as UserData;
-    console.log(clickAnimationRunning.current);
+
     css3DObjects.map(v => {
       if (clickAnimationRunning.current) return;
 
@@ -245,27 +245,27 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
     // `;
     // document.body.appendChild(closeBtn);
     closeBtnRef.current.style.visibility = "visible";
-    closeBtnRef.current.onclick = () =>handleDBClickEventClose(css3DObjects)
+    closeBtnRef.current.onclick = () => handleDBClickEventClose(css3DObjects)
 
   }, []);
-  const handleDBClickEventClose = (css3DObjects: CSS3DObject[])=>{
+  const handleDBClickEventClose = (css3DObjects: CSS3DObject[]) => {
     threeGroupRef.current.remove(trapezoidalRef.current);
     closeBtnRef.current.style.visibility = "hidden";
     new Tween(threeGroupRef.current.rotation, tweenGroupRef.current)
-        .to({ x: 0, y: 0, z: 0 }, 1000).easing(Easing.Exponential.InOut)
-        .start().onComplete(() => {
-      css3DObjects.map(object => {
-        const { cardItemObject3D } = object.userData as UserData;
-        new Tween(object.position, tweenGroupRef.current)
+      .to({ x: 0, y: 0, z: 0 }, 1000).easing(Easing.Exponential.InOut)
+      .start().onComplete(() => {
+        css3DObjects.map(object => {
+          const { cardItemObject3D } = object.userData as UserData;
+          new Tween(object.position, tweenGroupRef.current)
             .to(cardItemObject3D.curve.position, 1000)
             .easing(Easing.Exponential.InOut)
             .start();
-        new Tween(object.rotation, tweenGroupRef.current)
+          new Tween(object.rotation, tweenGroupRef.current)
             .to(eulerToXYZ(cardItemObject3D.curve.rotation), 1000)
             .easing(Easing.Exponential.InOut)
             .start();
-      })
-    });
+        })
+      });
 
   }
 
@@ -275,14 +275,14 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
     tweenGroupRef.current.removeAll();
     controlsRef.current.reset();
 
-    const { appData, elementStyle, turningStyle, systemCardObject, cardItemObject3D, systemCardObject3D } = curCss3DObject.userData as UserData;
+    const { appData, elementStyle, turningStyle, systemCardStyle, systemCardObject, cardItemObject3D, systemCardObject3D } = curCss3DObject.userData as UserData;
 
     const systemCardElement = systemCardObject.element as SystemCard;
     systemCardObject.position.copy(systemCardObject3D.clickTurn.position);
     systemCardObject.rotation.copy(systemCardObject3D.clickTurn.rotation);
     systemCardElement.containerStyle = turningStyle;
 
-    maskRef.current.classList.remove("hidden");
+    maskRef.current.hidden = false;
     systemCardRef.current.hidden = true;
     systemCardObject.visible = false;
 
@@ -347,7 +347,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
     tweenGroupRef.current.removeAll();
     controlsRef.current.reset();
 
-    const { appData, elementStyle,turningStyle, cardItemObject3D, systemCardObject3D, systemCardObject } = curClickCardItemObject.userData as UserData;
+    const { appData, elementStyle, turningStyle, systemCardStyle, cardItemObject3D, systemCardObject3D, systemCardObject } = curClickCardItemObject.userData as UserData;
 
     const systemCardElement = systemCardObject.element as SystemCard;
 
@@ -398,7 +398,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       .onUpdate(render)
       .start()
       .onComplete(() => {
-        maskRef.current.classList.add("hidden");
+        maskRef.current.hidden = true;
         sceneRef.current.remove(systemCardObject);
         setCurClickCardItemObject(null);
         clickAnimationRunning.current = false;
@@ -477,7 +477,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
           setTimeout(() => {
             if (clicks == 1) {
               console.log('单击')
-              // onElementMouseClick(object, css3DObjects);
+              onElementMouseClick(object, css3DObjects);
             } else {
               console.log('双击')
               onElementDblclick(object, css3DObjects);
@@ -539,9 +539,10 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
   return (
     <>
       <div className="container" ref={containerRef} ></div>
-      <div className="mask hidden" ref={maskRef} onClick={handleMaskClick} >
+      <div className="mask" ref={maskRef} onClick={handleMaskClick} hidden={true} >
         <WrappedSystemCard {...(curClickCardItemObject?.userData as UserData)?.appData?.systemCardProps}
           onClick={(e) => e.stopPropagation()}
+          handleClick={() => onSystemCardButtonClick((curClickCardItemObject.userData as UserData)?.appData)}
           ref={systemCardRef}
         />
       </div>
