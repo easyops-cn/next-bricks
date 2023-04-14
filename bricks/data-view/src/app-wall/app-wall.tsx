@@ -35,6 +35,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
   const timerRef = useRef<number>(); // 双击事件禁止单击事件触发定时器
   const isDBClickRef = useRef<boolean>(false);//是否是双击
   const dbClickTweenGroupRef = useRef<Group>(new Group()); // 双击后的动画组
+  const threeGroupPositionRef = useRef<Vector3>();
 
   const clickAnimationRunning = useRef(false);
 
@@ -192,13 +193,6 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       .onUpdate(render)
       .start();
 
-    // 由于展示台用于都要在target位置，但是我们需要整个模型都去移动,
-    // 所以是 展示台 source - target 向量 归一 的平行向量 是模型中心 移动 到最终目的的位置；
-    const sourceVector = curCss3DObject.position.clone();
-    const targetVector = new Vector3(0, threeGroupRef.current.position.y, threeGroupRef.current.position.z).clone();
-    const subVector = new Vector3().subVectors(sourceVector, targetVector).normalize();
-    const moveVector = new Vector3().addVectors(subVector, threeGroupRef.current.position);
-
     const { appData,elementStyle, cardItemObject3D } = curCss3DObject.userData as UserData;
     const { objectContainer, objectTopModel, objectCantModel } = createTrapezoidalObject({
       objectData: {
@@ -211,8 +205,9 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       rightOnClick: () =>rightBtnOnClick(appData),
       leftOnClick: () => leftBtnOnClick(appData)
     });
+
     const centerTween = new Tween(threeGroupRef.current.position, tweenGroupRef.current)
-      .to(moveVector, 1000)
+      .to({x: -objectContainer.position.x, z: 500}, 1000)
       .easing(Easing.Linear.None).onUpdate(render)
     new Tween(threeGroupRef.current.rotation, tweenGroupRef.current)
       .to({ x: -Math.PI / 4, y: 0, z: 0 }, 1000).easing(Easing.Exponential.InOut)
@@ -221,9 +216,11 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
         objectContainer.add(objectCantModel);
         objectContainer.add(objectTopModel);
         threeGroupRef.current.add(trapezoidalRef.current);
+        threeGroupPositionRef.current =  threeGroupRef.current.position.clone();
         centerTween.start()
         render()
       });
+
 
     // 双击后的遮罩层
 
@@ -234,21 +231,30 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
   const handleDBClickEventClose = (css3DObjects: CSS3DObject[]) => {
     threeGroupRef.current.remove(trapezoidalRef.current);
     closeBtnRef.current.style.visibility = "hidden";
-    new Tween(threeGroupRef.current.rotation, tweenGroupRef.current)
-      .to({ x: 0, y: 0, z: 0 }, 1000).easing(Easing.Exponential.InOut)
-      .start().onComplete(() => {
-        css3DObjects.map(object => {
-          const { cardItemObject3D } = object.userData as UserData;
-          new Tween(object.position, tweenGroupRef.current)
-            .to(cardItemObject3D.curve.position, 1000)
-            .easing(Easing.Exponential.InOut)
-            .start();
-          new Tween(object.rotation, tweenGroupRef.current)
-            .to(eulerToXYZ(cardItemObject3D.curve.rotation), 1000)
-            .easing(Easing.Exponential.InOut)
-            .start();
-        })
-      });
+    console.log(threeGroupRef.current.position, threeGroupPositionRef.current)
+     new Tween(threeGroupRef.current.position, tweenGroupRef.current)
+        .to(threeGroupPositionRef.current, 1000)
+        .easing(Easing.Linear.None).onUpdate(render)
+         .chain(new Tween(threeGroupRef.current.rotation, tweenGroupRef.current)
+             .to({ x: 0, y: 0, z: 0 }, 1000).easing(Easing.Exponential.InOut).onComplete(() => {
+               css3DObjects.map(object => {
+                 const { cardItemObject3D } = object.userData as UserData;
+                 new Tween(object.position, tweenGroupRef.current)
+                     .to(cardItemObject3D.curve.position, 1000)
+                     .easing(Easing.Exponential.InOut)
+                     .start();
+                 new Tween(object.rotation, tweenGroupRef.current)
+                     .to(eulerToXYZ(cardItemObject3D.curve.rotation), 1000)
+                     .easing(Easing.Exponential.InOut)
+                     .start();
+               })
+             })
+         )
+         .start()
+    new Tween({}, tweenGroupRef.current)
+        .to({}, 6000)
+        .onUpdate(render)
+        .start();
 
   }
 
@@ -419,7 +425,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
           element.addEventListener('mouseenter', (e) => {
             controlsRef.current.enabled = false;
             console.log(object.userData.appData.key, "mouseenter");
-            onElementMouseEnter(object, css3DObjects);
+            // onElementMouseEnter(object, css3DObjects);
           }, false);
           // 鼠标移出
           element.addEventListener('mouseleave', (e) => {
