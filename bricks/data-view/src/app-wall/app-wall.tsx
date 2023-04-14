@@ -18,7 +18,7 @@ const WrappedSystemCard = wrapBrick<SystemCard, SystemCardProps>(
 );
 
 export function AppWallElement(props: AppWallProps): React.ReactElement {
-  const { relations, dataSource, onSystemCardButtonClick } = props;
+  const { relations, dataSource, onSystemCardButtonClick, rightBtnOnClick,leftBtnOnClick } = props;
 
   const containerRef = useRef<HTMLDivElement>();
   const maskRef = useRef<HTMLDivElement>();
@@ -178,13 +178,11 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       new Tween(object.position, tweenGroupRef.current)
         .to(cardItemObject3D.flat.position, 1000)
         .easing(Easing.Exponential.InOut)
-        // .chain(new Tween(object.position, tweenGroupRef.current).to(cardItemObject3D.curve.position, 1000).easing(Easing.Exponential.InOut))
         .start();
 
       new Tween(object.rotation, tweenGroupRef.current)
         .to(eulerToXYZ(cardItemObject3D.flat.rotation), 1000)
         .easing(Easing.Exponential.InOut)
-        // .chain(new Tween(object.rotation, tweenGroupRef.current).to(eulerToXYZ(cardItemObject3D.curve.rotation), 1000).easing(Easing.Exponential.InOut))
         .start();
 
     })
@@ -201,15 +199,17 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
     const subVector = new Vector3().subVectors(sourceVector, targetVector).normalize();
     const moveVector = new Vector3().addVectors(subVector, threeGroupRef.current.position);
 
-    const { elementStyle, cardItemObject3D } = curCss3DObject.userData as UserData;
+    const { appData,elementStyle, cardItemObject3D } = curCss3DObject.userData as UserData;
     const { objectContainer, objectTopModel, objectCantModel } = createTrapezoidalObject({
       objectData: {
         width: elementStyle.width,
         height: elementStyle.height,
         point: [cardItemObject3D.flat.position.x, cardItemObject3D.flat.position.y, cardItemObject3D.flat.position.z]
       },
-      leftBtnName: "应用健康监控大屏",
-      rightBtnName: "应用部署架构"
+      leftBtnName: appData.trapezoidalProps?.leftBtnName,
+      rightBtnName: appData.trapezoidalProps?.rightBtnName,
+      rightOnClick: () =>rightBtnOnClick(appData),
+      leftOnClick: () => leftBtnOnClick(appData)
     });
     const centerTween = new Tween(threeGroupRef.current.position, tweenGroupRef.current)
       .to(moveVector, 1000)
@@ -227,23 +227,6 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
 
     // 双击后的遮罩层
 
-    // const closeBtn = document.createElement("div");
-    // closeBtn.style.cssText = `
-    //    position: fixed;
-    //    top: 50px;
-    //    right: 50px;
-    //    width: 46px;
-    //    height: 46px;
-    //    text-align: center;
-    //    border: 1px solid;
-    //    color: #8ABDFF21;
-    //    font-size: 20px;
-    //    line-height: 46px;
-    //    cursor: pointer;
-    //    background: rgba(138,189,255,0.13);
-    //    border-image: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.33)) 1 1;
-    // `;
-    // document.body.appendChild(closeBtn);
     closeBtnRef.current.style.visibility = "visible";
     closeBtnRef.current.onclick = () => handleDBClickEventClose(css3DObjects)
 
@@ -442,7 +425,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
           element.addEventListener('mouseleave', (e) => {
             controlsRef.current.enabled = true;
             console.log(object.userData.appData.key, "mouseleave");
-            onElementMouseLeave(object, css3DObjects);
+            // onElementMouseLeave(object, css3DObjects);
           }, false)
           // 鼠标点击
           // element.addEventListener('click', (e) => {
@@ -546,7 +529,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
           ref={systemCardRef}
         />
       </div>
-      <div className="closeBtn" ref={closeBtnRef} >X</div>
+      <div className="closeBtn" ref={closeBtnRef} />
     </>
   );
 }

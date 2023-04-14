@@ -13,6 +13,8 @@ export interface AppWallProps {
   dataSource: AppData[];
   relations: Relation[];
   onSystemCardButtonClick?: (data: AppData) => void;
+  leftBtnOnClick?: (data: AppData) => void;
+  rightBtnOnClick?: (data: AppData) => void;
 }
 
 /**
@@ -59,6 +61,27 @@ class AppWall
   #handleSystemCardButtonClick = (data: AppData): void => {
     this.#systemCardButtonClickEvent.emit(data);
   };
+  /**
+   * @detail
+   * @description 展示台左边按钮点击
+   */
+  @event({ type: "left.btn.click" })
+  accessor #onLeftClickEvent!: EventEmitter<AppData>;
+
+  /**
+   * @detail
+   * @description 展示台左边按钮点击
+   */
+  @event({ type: "right.btn.click" })
+  accessor #onRightClickEvent!: EventEmitter<AppData>;
+
+  handleLeftClick = (data: AppData)=>{
+    this.#onLeftClickEvent.emit(data);
+  }
+  handleRightClick = (data: AppData)=>{
+    this.#onRightClickEvent.emit(data);
+  }
+
 
   render() {
     return (
@@ -66,6 +89,8 @@ class AppWall
         dataSource={this.dataSource}
         relations={this.relations}
         onSystemCardButtonClick={this.#handleSystemCardButtonClick}
+        leftBtnOnClick={this.handleLeftClick}
+        rightBtnOnClick={this.handleRightClick}
       />
     );
   }

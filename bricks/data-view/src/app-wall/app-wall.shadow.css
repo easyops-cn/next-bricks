@@ -66,10 +66,29 @@
   cursor: pointer;
   background: rgba(138, 189, 255, 0.13);
   border-image: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.33)) 1 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.closeBtn:hover {
-  color: var(--color-normal-text);
+.closeBtn:before ,
+.closeBtn:after {
+  content: "";
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(180deg, #3467FF 0%, #98CBFF 100%);
+  position: absolute;
+
+}
+.closeBtn:before {
+  transform: rotateZ(45deg);
+
+}
+.closeBtn:after {
+  transform: rotateZ(-45deg);
+}
+.closeBtn:hover:after, .closeBtn:hover:before  {
+  background: var(--color-normal-text);
 }
 
 

@@ -307,6 +307,10 @@ const dataSource = _dataSource.map(v => {
       // handleClick?: ()=>void;
       // containerStyle?: React.CSSProperties;
     },
+    trapezoidalProps: {
+      leftBtnName: "应用健康监控大屏",
+      rightBtnName: "应用部署架构"
+    }
   }
 })
 

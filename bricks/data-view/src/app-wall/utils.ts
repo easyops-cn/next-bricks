@@ -6,13 +6,14 @@ import "./system-card/index.js";
 import type { AppWallCardItem, AppWallCardItemProps } from "./card-item/index.js";
 import type { AppWallRelationLine, AppWallRelationLineProps } from "./relation-line/index.js";
 import type { SystemCard, SystemCardProps } from "./system-card/index.js";
-import { TrapezoidalObjectProps } from "./interface.js";
+import {TrapezoidalObjectProps, TrapezoidalProps} from "./interface.js";
 
 export interface AppData {
   key: string;
   status: "normal" | "warning";
   cardItemProps: AppWallCardItemProps,
   systemCardProps: SystemCardProps,
+  trapezoidalProps: TrapezoidalProps;
 }
 
 export interface Relation {
