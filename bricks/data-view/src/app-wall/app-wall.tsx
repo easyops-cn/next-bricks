@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { wrapBrick } from "@next-core/react-element";
-import { Vector3, PerspectiveCamera, Scene, MathUtils, CameraHelper, Group as ThreeGroup } from "three";
+import { Vector3, PerspectiveCamera, Scene, MathUtils, Group as ThreeGroup, Raycaster } from "three";
 import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
 import { CSS3DObject, CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js';
 import { Tween, Easing, Group } from "@tweenjs/tween.js";
@@ -26,7 +26,6 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
   const rendererRef = useRef<CSS3DRenderer>();
   const sceneRef = useRef<Scene>();
   const cameraRef = useRef<PerspectiveCamera>();
-  const cameraHelperRef = useRef<CameraHelper>();
   const controlsRef = useRef<TrackballControls>();
   const tweenGroupRef = useRef<Group>(new Group());
   const trapezoidalTweenRef = useRef<Group>(new Group()); //梯形内部的动画组
@@ -41,7 +40,6 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
   const systemCardRef = useRef<SystemCard>();
 
   const render = useCallback(() => {
-    cameraHelperRef.current.update();
     rendererRef.current.render(sceneRef.current, cameraRef.current);
   }, []);
 
@@ -69,14 +67,12 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
     // camera.lookAt(new Vector3(0, -100, 0));
 
 
-
-    const cameraHelper = new CameraHelper(camera);
-    scene.add(cameraHelper);
-    cameraHelperRef.current = cameraHelper;
+    // containerRef.current.innerHTML = null;
+    containerRef.current.appendChild(renderer.domElement);
 
     // controls
-    // const controls = new TrackballControls(camera, renderer.domElement);
-    const controls = new TrackballControls(camera, containerRef.current);
+    const controls = new TrackballControls(camera, renderer.domElement);
+    // const controls = new TrackballControls(camera, containerRef.current);
     controls.zoomSpeed = 10;
     controls.rotateSpeed = 10;
     controls.staticMoving = true;
@@ -84,8 +80,6 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
     controls.maxDistance = 6000;  // 摄像机向外最多能移动多少;
     // controls.target.set(0, 0, -originZ);
 
-    // containerRef.current.innerHTML = null;
-    containerRef.current.appendChild(renderer.domElement);
 
     rendererRef.current = renderer;
     sceneRef.current = scene;
@@ -399,24 +393,26 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
 
           // 鼠标移入
           element.addEventListener('mouseenter', (e) => {
-            console.log("mouseenter");
-            onElementMouseEnter(object, css3DObjects);
+            controlsRef.current.enabled = false;
+            console.log(object.userData.appData.key, "mouseenter");
+            // onElementMouseEnter(object, css3DObjects);
           }, false);
           // 鼠标移出
           element.addEventListener('mouseleave', (e) => {
-            console.log("mouseleave");
-            onElementMouseLeave(object, css3DObjects);
+            controlsRef.current.enabled = true;
+            console.log(object.userData.appData.key, "mouseleave");
+            // onElementMouseLeave(object, css3DObjects);
           }, false)
           // 鼠标点击
-          element.addEventListener('click', (e) => {
-            isDBClickRef.current = false;
-            timerRef.current = window.setTimeout(() => {
-              if (!isDBClickRef.current) {
-                // onElementMouseClick(object, css3DObjects);
-              }
-            }
-              , 500);
-          }, false);
+          // element.addEventListener('click', (e) => {
+          //   isDBClickRef.current = false;
+          //   timerRef.current = window.setTimeout(() => {
+          //     if (!isDBClickRef.current) {
+          //       // onElementMouseClick(object, css3DObjects);
+          //     }
+          //   }
+          //     , 500);
+          // }, false);
           // // 鼠标双击
           // element.addEventListener('dblclick', (e) => {
           //   isDBClickRef.current = true;
@@ -437,11 +433,11 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
         if (clicks === 1) {
           setTimeout(() => {
             if (clicks == 1) {
-              // console.log('单击')
-              // onElementMouseClick(object, css3DObjects);
+              console.log('单击')
+              onElementMouseClick(object, css3DObjects);
             } else {
-              // console.log('双击')
-              onElementDblclick(object, css3DObjects);
+              console.log('双击')
+              // onElementDblclick(object, css3DObjects);
             }
             clicks = 0;
           }, 200);
