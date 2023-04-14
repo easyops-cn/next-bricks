@@ -14,3 +14,4 @@ export interface TrapezoidalObjectProps extends TrapezoidalProps{
      rightOnClick?: () => void;
 
  }
+export  type AnimationEventType = "click"|"dbClick"|"mouseenter"|"mouseleave"|"other"

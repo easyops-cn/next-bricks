@@ -4,6 +4,7 @@ import { Vector3, PerspectiveCamera, Scene, MathUtils, Group as ThreeGroup } fro
 import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
 import { CSS3DObject, CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js';
 import { Tween, Easing, Group } from "@tweenjs/tween.js";
+import {AnimationEventType} from "./interface.js";
 
 import { createHelper } from "./helpers.js";
 import { createCardItems, createRelationLine, type UserData, createTrapezoidalObject, eulerToXYZ } from "./utils.js";
@@ -32,12 +33,9 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
   const trapezoidalTweenRef = useRef<Group>(new Group()); //梯形内部的动画组
   const trapezoidalRef = useRef<CSS3DObject>(); // 梯形模型
   const threeGroupRef = useRef<ThreeGroup>(new ThreeGroup()); //整体模型
-  const timerRef = useRef<number>(); // 双击事件禁止单击事件触发定时器
-  const isDBClickRef = useRef<boolean>(false);//是否是双击
-  const dbClickTweenGroupRef = useRef<Group>(new Group()); // 双击后的动画组
   const threeGroupPositionRef = useRef<Vector3>();
 
-  const clickAnimationRunning = useRef(false);
+  const clickAnimationRunning = useRef<AnimationEventType>();
 
 
   const [curClickCardItemObject, setCurClickCardItemObject] = useState<CSS3DObject>(null);
@@ -92,6 +90,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
   }, []);
 
   const onElementMouseEnter = (curCss3DObject: CSS3DObject, css3DObjects: CSS3DObject[]) => {
+    if(clickAnimationRunning.current ==="dbClick") return;
     const { appData, cardItemObject3D } = curCss3DObject.userData as UserData;
 
     // Todo: map first
@@ -145,7 +144,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
     const { appData, cardItemObject3D } = curCss3DObject.userData as UserData;
 
     css3DObjects.map(v => {
-      if (clickAnimationRunning.current) return;
+      if (["click", "dbClick"].includes(clickAnimationRunning.current)) return;
 
       v.element.classList.remove("dark", "large");
 
@@ -173,6 +172,8 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
   };
 
   const onElementDblclick = useCallback((curCss3DObject: CSS3DObject, css3DObjects: CSS3DObject[]) => {
+    if(clickAnimationRunning.current ==="dbClick") return;
+    clickAnimationRunning.current = "dbClick";
     css3DObjects.map(object => {
       const { cardItemObject3D } = object.userData as UserData;
 
@@ -185,6 +186,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
         .to(eulerToXYZ(cardItemObject3D.flat.rotation), 1000)
         .easing(Easing.Exponential.InOut)
         .start();
+      object.element.classList.add("dark");
 
     })
 
@@ -231,7 +233,6 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
   const handleDBClickEventClose = (css3DObjects: CSS3DObject[]) => {
     threeGroupRef.current.remove(trapezoidalRef.current);
     closeBtnRef.current.style.visibility = "hidden";
-    console.log(threeGroupRef.current.position, threeGroupPositionRef.current)
      new Tween(threeGroupRef.current.position, tweenGroupRef.current)
         .to(threeGroupPositionRef.current, 1000)
         .easing(Easing.Linear.None).onUpdate(render)
@@ -247,20 +248,22 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
                      .to(eulerToXYZ(cardItemObject3D.curve.rotation), 1000)
                      .easing(Easing.Exponential.InOut)
                      .start();
+                 clickAnimationRunning.current = "other";
+                 object.element.classList.remove("dark");
                })
              })
          )
          .start()
     new Tween({}, tweenGroupRef.current)
-        .to({}, 6000)
+        .to({}, 4000)
         .onUpdate(render)
         .start();
 
   }
 
   const onElementMouseClick = (curCss3DObject: CSS3DObject, css3DObjects: CSS3DObject[]) => {
-    if (clickAnimationRunning.current) return;
-    clickAnimationRunning.current = true;
+    if (["click", "dbClick"].includes(clickAnimationRunning.current)) return;
+    clickAnimationRunning.current = "click";
     tweenGroupRef.current.removeAll();
     controlsRef.current.reset();
 
@@ -325,14 +328,14 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
         systemCardRef.current.hidden = false;
         systemCardObject.visible = false;
         render();
-        clickAnimationRunning.current = false;
+        clickAnimationRunning.current = "other";
       })
       .start();
   };
 
   const handleMaskClick = () => {
-    if (clickAnimationRunning.current) return;
-    clickAnimationRunning.current = true;
+    if (clickAnimationRunning.current ==="click") return;
+    clickAnimationRunning.current = "click";
     tweenGroupRef.current.removeAll();
     controlsRef.current.reset();
 
@@ -423,32 +426,18 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
 
           // 鼠标移入
           element.addEventListener('mouseenter', (e) => {
+            if(clickAnimationRunning.current ==="dbClick")return;
             controlsRef.current.enabled = false;
             console.log(object.userData.appData.key, "mouseenter");
-            // onElementMouseEnter(object, css3DObjects);
+            onElementMouseEnter(object, css3DObjects);
           }, false);
           // 鼠标移出
           element.addEventListener('mouseleave', (e) => {
             controlsRef.current.enabled = true;
             console.log(object.userData.appData.key, "mouseleave");
-            // onElementMouseLeave(object, css3DObjects);
+            onElementMouseLeave(object, css3DObjects);
           }, false)
-          // 鼠标点击
-          // element.addEventListener('click', (e) => {
-          //   isDBClickRef.current = false;
-          //   timerRef.current = window.setTimeout(() => {
-          //     if (!isDBClickRef.current) {
-          //       // onElementMouseClick(object, css3DObjects);
-          //     }
-          //   }
-          //     , 500);
-          // }, false);
-          // // 鼠标双击
-          // element.addEventListener('dblclick', (e) => {
-          //   isDBClickRef.current = true;
-          //   window.clearTimeout(timerRef.current);
-          //   onElementDblclick(object, css3DObjects);
-          // }, false)
+
         });
 
         containerRef.current.classList.remove("loading");
@@ -488,7 +477,6 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       cancel = requestAnimationFrame(animate);
       tweenGroup.update();
       trapezoidalTweenRef.current.update();
-      dbClickTweenGroupRef.current.update();
       controlsRef.current.update();
     }
 
@@ -501,7 +489,6 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       cameraRef.current.clear();
       tweenGroup.removeAll();
       trapezoidalTweenRef.current.removeAll();
-      dbClickTweenGroupRef.current.removeAll();
       sceneRef.current.clear();
       cancelAnimationFrame(cancel);
     }
