@@ -1,0 +1,12 @@
+brick: sl-alert
+properties:
+  closable: true
+  open: true
+children:
+- brick: sl-icon
+  slot: icon
+  properties:
+    name: info-circle
+- brick: span
+  properties:
+    textContent: This is a standard alert. You can customize its content and even the icon.
