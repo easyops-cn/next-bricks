@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@next-core/i18n": "^1.0.8",
-    "@next-core/react-element": "^1.0.4",
+    "@next-core/react-element": "^1.0.5",
     "@next-core/utils": "^1.2.3",
     "@shoelace-style/shoelace": "^2.3.0",
     "react": "0.0.0-experimental-ee8509801-20230117",

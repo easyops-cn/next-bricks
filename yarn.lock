@@ -1929,10 +1929,10 @@
     lodash "^4.17.21"
     moment "^2.29.4"
 
-"@next-core/react-element@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@next-core/react-element/-/react-element-1.0.4.tgz#43ea2f08362f1d92d1338a8ce81c61a8515bc0c9"
-  integrity sha512-rwvwIrvASpiupCGXWUOzY3u9c4unQAweYa/gWhbH/YVAPHebe5GkQ5504hd+mAR9OPNjOUHEU+QF4eT5o/BpAg==
+"@next-core/react-element@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@next-core/react-element/-/react-element-1.0.5.tgz#b28ced075ec3867d2b4d1b87dc70413f5feea0a4"
+  integrity sha512-mtu3o64AdWka1dLHN9kOiqnxTot3h8ugfg+WL1xGcVw2+9POgnDKBls3+PB5GxV7gkanS6GJPr7cTjeCNknjqA==
   dependencies:
     "@next-core/element" "^1.0.4"
     react "0.0.0-experimental-ee8509801-20230117"
