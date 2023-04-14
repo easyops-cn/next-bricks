@@ -138,7 +138,7 @@ export const createCardItems = (dataSource: AppData[]) => {
   const css3DObjects: CSS3DObject[] = [];
 
   // const coordinates = computeCoordinate(dataSource.length);
-  const { elementWidth, elementHeight, coordinates, leftControlPoint, rightControlPoint } = getCoordinates(18, 10);
+  const { elementWidth, elementHeight, coordinates, leftControlPoint, rightControlPoint } = getCoordinates(25, 16);
 
   dataSource.map((item, index) => {
     // .card-item-container.large1231312 {
@@ -229,7 +229,7 @@ export const getCenterPointOrSubPoint = (start: [number, number, number], end: [
   }
 }
 export const createTrapezoidalObject = (props: TrapezoidalObjectProps) => {
-  const { objectData, leftBtnName, leftOnClick, rightBtnName, trapezoidalTweenRef, rightOnClick } = props;
+  const { objectData, leftBtnName, leftOnClick, rightBtnName, rightOnClick } = props;
   const d = 230;
   const container = document.createElement('div');
   const objectContainer = new CSS3DObject(container);
@@ -253,9 +253,8 @@ export const createTrapezoidalObject = (props: TrapezoidalObjectProps) => {
   topCard.style.cssText = `
                    width: ${TW}px;
                    height:${TH}px;
-                   background: linear-gradient(180deg, #0D36B3 0%, #4A6C9C76 100%);
+                   background: linear-gradient(rgb(13, 54, 179,0.6) 0%, rgb(74, 108, 156,0.6) 100%);
                    padding: 2% 10%;
-                   filter: blur(0.5px);
                    `;
   const topoCard = document.createElement("div");
   topoCard.style.cssText = `
@@ -268,8 +267,9 @@ export const createTrapezoidalObject = (props: TrapezoidalObjectProps) => {
   topCard.appendChild(topoCard);
   const objectTopModel = new CSS3DObject(topCard);
   objectTopModel.position.set(0, 0, d);
-  objectContainer.add(objectTopModel);
-
+  // objectContainer.add(objectTopModel);
+  const cantModelContainer = document.createElement('div'); //斜边模型外层
+  const objectCantModel = new CSS3DObject(cantModelContainer);
 
   //斜面左边
   const height = Math.sqrt(Math.pow((TW / 2 - BW / 2), 2) + Math.pow(d, 2)); //斜边
@@ -287,7 +287,7 @@ export const createTrapezoidalObject = (props: TrapezoidalObjectProps) => {
   objectCantLeftModel.position.copy(centerVector);
   const quaternion = new Quaternion().setFromUnitVectors(new Vector3(1, 0, 0).normalize(), subVector.clone().normalize());
   objectCantLeftModel.setRotationFromQuaternion(quaternion);
-  objectContainer.add(objectCantLeftModel);
+  objectCantModel.add(objectCantLeftModel);
   //斜面右边
   const cantRightCard = document.createElement("div");
   cantRightCard.style.cssText = cantLeftOrRightCardCss;
@@ -299,7 +299,7 @@ export const createTrapezoidalObject = (props: TrapezoidalObjectProps) => {
   objectCantRightModel.position.copy(_centerVector)
   const _quaternion = new Quaternion().setFromUnitVectors(new Vector3(1, 0, 0).normalize(), _subVector.clone().normalize());
   objectCantRightModel.setRotationFromQuaternion(_quaternion);
-  objectContainer.add(objectCantRightModel);
+  objectCantModel.add(objectCantRightModel);
   //斜面前面
   const h1 = Math.sqrt(Math.pow((TH / 2 - BH / 2), 2) + Math.pow(d, 2)); //斜边
   const cantTopOrBottomCardCss = `
@@ -319,8 +319,9 @@ export const createTrapezoidalObject = (props: TrapezoidalObjectProps) => {
   objectCantTopModel.position.copy(_topCenterVector)
   const _topQuaternion = new Quaternion().setFromUnitVectors(new Vector3(0, -1, 0).normalize(), _topSubVector.clone().normalize());
   objectCantTopModel.setRotationFromQuaternion(_topQuaternion);
-  objectContainer.add(objectCantTopModel);
+  objectCantModel.add(objectCantTopModel);
 
+  //斜面后面
   const cantBottomCard = document.createElement("div");
   cantBottomCard.style.cssText = cantTopOrBottomCardCss;
   const objectCantBottomModel = new CSS3DObject(cantBottomCard);
@@ -331,7 +332,7 @@ export const createTrapezoidalObject = (props: TrapezoidalObjectProps) => {
   objectCantBottomModel.position.copy(_bottomCenterVector)
   const _bottomQuaternion = new Quaternion().setFromUnitVectors(new Vector3(0, -1, 0).normalize(), _bottomSubVector.clone().normalize());
   objectCantBottomModel.setRotationFromQuaternion(_bottomQuaternion);
-  objectContainer.add(objectCantBottomModel);
+  objectCantModel.add(objectCantBottomModel);
   // 文字按钮
   if (leftBtnName) {
     const btnLeft = document.createElement("div");
@@ -347,9 +348,9 @@ export const createTrapezoidalObject = (props: TrapezoidalObjectProps) => {
     wordNode.innerText = leftBtnName;
     btnLeft.appendChild(wordNode);
     const btnLeftObject = new CSS3DObject(btnLeft);
-    btnLeftObject.position.set(-TW / 4 + 10, -TH / 2, d + 14);
+    btnLeftObject.position.set(-TW / 4 + 10, -TH / 2, 14);
     btnLeftObject.rotateX(Math.PI / 2);
-    objectContainer.add(btnLeftObject);
+    objectTopModel.add(btnLeftObject);
     wordNode.onclick = leftOnClick;
   }
   if (rightBtnName) {
@@ -367,10 +368,14 @@ export const createTrapezoidalObject = (props: TrapezoidalObjectProps) => {
     textNode.innerText = rightBtnName;
     btnRight.appendChild(textNode);
     const btnRightObject = new CSS3DObject(btnRight);
-    btnRightObject.position.set(TW / 4 - 10, -TH / 2, d + 14);
+    btnRightObject.position.set(TW / 4 - 10, -TH / 2, 14);
     btnRightObject.rotateX(Math.PI / 2);
-    objectContainer.add(btnRightObject);
+    objectTopModel.add(btnRightObject);
     textNode.onclick = rightOnClick
   }
-  return objectContainer;
+  return {
+    objectContainer,
+    objectTopModel,
+    objectCantModel
+  };
 }

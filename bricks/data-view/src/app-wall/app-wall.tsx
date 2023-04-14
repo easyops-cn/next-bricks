@@ -189,44 +189,57 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       new Tween(object.position, tweenGroupRef.current)
         .to(cardItemObject3D.flat.position, 1000)
         .easing(Easing.Exponential.InOut)
-        // .chain(new Tween( threeGroupRef.current.position, dbClickTweenGroupRef.current).to(new Vector3(0 ,0,0)).easing(Easing.Exponential.InOut))
-        // .to({},1000)
-        .easing(Easing.Exponential.InOut)
+          // .chain(new Tween(object.position, tweenGroupRef.current).to(cardItemObject3D.curve.position, 1000).easing(Easing.Exponential.InOut))
         .start();
 
       new Tween(object.rotation, tweenGroupRef.current)
         .to(eulerToXYZ(cardItemObject3D.flat.rotation), 1000)
         .easing(Easing.Exponential.InOut)
-        .start();
+          // .chain(new Tween(object.rotation, tweenGroupRef.current).to(eulerToXYZ(cardItemObject3D.curve.rotation), 1000).easing(Easing.Exponential.InOut))
+          .start();
+
     })
 
     new Tween({}, tweenGroupRef.current)
-      .to({}, 1000)
+      .to({}, 4000)
       .onUpdate(render)
       .start();
 
-    // threeGroupRef.current.rotateX(-Math.PI/2);
-    // threeGroupRef.current.add(trapezoidalRef.current);
+    // 由于展示台用于都要在target位置，但是我们需要整个模型都去移动,
+    // 所以是 展示台 source - target 向量 归一 的平行向量 是模型中心 移动 到最终目的的位置；
+    const sourceVector = curCss3DObject.position.clone();
+    const targetVector = new Vector3(0,threeGroupRef.current.position.y, threeGroupRef.current.position.z).clone();
+    const subVector = new Vector3().subVectors(sourceVector, targetVector).normalize();
+    const moveVector = new Vector3().addVectors(subVector, threeGroupRef.current.position);
+
     const { elementStyle, cardItemObject3D } = curCss3DObject.userData as UserData;
-
-
-    new Tween(threeGroupRef.current.rotation, dbClickTweenGroupRef.current)
+    const {objectContainer, objectTopModel,objectCantModel}= createTrapezoidalObject({
+      objectData: {
+        width: elementStyle.width,
+        height: elementStyle.height,
+        point: [cardItemObject3D.flat.position.x, cardItemObject3D.flat.position.y, cardItemObject3D.flat.position.z]
+      },
+      leftBtnName: "应用健康监控大屏",
+      rightBtnName: "应用部署架构"
+    });
+    const centerTween = new Tween(threeGroupRef.current.position, tweenGroupRef.current)
+        .to(moveVector, 1000)
+        .easing(Easing.Linear.None).onUpdate(render)
+    new Tween(threeGroupRef.current.rotation, tweenGroupRef.current)
       .to({ x: -Math.PI / 4, y: 0, z: 0 }, 1000).easing(Easing.Exponential.InOut)
       .start().onComplete(() => {
-        trapezoidalRef.current = createTrapezoidalObject({
-          objectData: {
-            width: elementStyle.width,
-            height: elementStyle.height,
-            point: [cardItemObject3D.flat.position.x, cardItemObject3D.flat.position.y, cardItemObject3D.flat.position.z]
-          },
-          trapezoidalTweenRef,
-          leftBtnName: "应用健康监控大屏",
-          rightBtnName: "应用部署架构"
-        })
+        trapezoidalRef.current= objectContainer;
+        objectContainer.add(objectCantModel);
+        objectContainer.add(objectTopModel);
         threeGroupRef.current.add(trapezoidalRef.current);
+        console.log(threeGroupRef.current.position, targetVector, moveVector);
+        centerTween.start()
         render()
-        maskRef.current.classList.remove("show");
-      })
+      });
+
+
+
+
   }, []);
 
   const onElementMouseClick = useCallback((curCss3DObject: CSS3DObject, css3DObjects: CSS3DObject[]) => {
@@ -437,7 +450,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
               onElementMouseClick(object, css3DObjects);
             } else {
               console.log('双击')
-              // onElementDblclick(object, css3DObjects);
+              onElementDblclick(object, css3DObjects);
             }
             clicks = 0;
           }, 200);
