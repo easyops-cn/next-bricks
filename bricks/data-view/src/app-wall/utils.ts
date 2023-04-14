@@ -71,9 +71,9 @@ export const getCoordinates = (columnNum: number, rowNum: number) => {
   const padding = 10
   const deg = 55;
   const rad = MathUtils.degToRad(deg);
-  const xRadius = 1800;
+  const xRadius = 2400;
   const yRadius = 1800;
-  const ellipseHeight = 2400;
+  const ellipseHeight = 1800;
 
   const ellipseCurve = new EllipseCurve(
     0, 0,

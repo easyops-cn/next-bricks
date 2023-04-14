@@ -180,12 +180,12 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       const { cardItemObject3D } = object.userData as UserData;
 
       new Tween(object.position, tweenGroupRef.current)
-        .to(cardItemObject3D.flat.position, 1000)
+        .to(cardItemObject3D.flat.position, 500)
         .easing(Easing.Exponential.InOut)
         .start();
 
       new Tween(object.rotation, tweenGroupRef.current)
-        .to(eulerToXYZ(cardItemObject3D.flat.rotation), 1000)
+        .to(eulerToXYZ(cardItemObject3D.flat.rotation), 500)
         .easing(Easing.Exponential.InOut)
         .start();
       object.element.classList.add("dark");
@@ -193,17 +193,10 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
     })
 
     new Tween({}, tweenGroupRef.current)
-      .to({}, 6000)
+      .to({}, 4000)
       .onUpdate(render)
       .start();
-
-    // 由于展示台用于都要在target位置，但是我们需要整个模型都去移动,
-    // 所以是 展示台 source - target 向量 归一 的平行向量 是模型中心 移动 到最终目的的位置；
-    const sourceVector = curCss3DObject.position.clone();
-    const targetVector = new Vector3(0, threeGroupRef.current.position.y, threeGroupRef.current.position.z).clone();
-    const subVector = new Vector3().subVectors(sourceVector, targetVector).normalize();
-    const moveVector = new Vector3().addVectors(subVector, threeGroupRef.current.position);
-
+   // 需要确定目标位置
     const { appData, elementStyle, cardItemObject3D } = curCss3DObject.userData as UserData;
     const { objectContainer, objectTopModel, objectCantModel } = createTrapezoidalObject({
       objectData: {
@@ -218,10 +211,10 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
     });
 
     const centerTween = new Tween(threeGroupRef.current.position, tweenGroupRef.current)
-      .to({x: -objectContainer.position.x, z: 500}, 1000)
+      .to({x: -objectContainer.position.x, z: 500}, 500)
       .easing(Easing.Linear.None).onUpdate(render)
     new Tween(threeGroupRef.current.rotation, tweenGroupRef.current)
-      .to({ x: -Math.PI / 4, y: 0, z: 0 }, 1000).easing(Easing.Exponential.InOut)
+      .to({ x: -Math.PI / 6, y: 0, z: 0 }, 500).easing(Easing.Exponential.InOut)
       .start().onComplete(() => {
         trapezoidalRef.current = objectContainer;
         objectContainer.add(objectCantModel);
@@ -243,18 +236,18 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
     threeGroupRef.current.remove(trapezoidalRef.current);
     closeBtnRef.current.style.visibility = "hidden";
      new Tween(threeGroupRef.current.position, tweenGroupRef.current)
-        .to(threeGroupPositionRef.current, 1000)
+        .to(threeGroupPositionRef.current, 500)
         .easing(Easing.Linear.None).onUpdate(render)
          .chain(new Tween(threeGroupRef.current.rotation, tweenGroupRef.current)
-             .to({ x: 0, y: 0, z: 0 }, 1000).easing(Easing.Exponential.InOut).onComplete(() => {
+             .to({ x: 0, y: 0, z: 0 }, 500).easing(Easing.Exponential.InOut).onComplete(() => {
                css3DObjects.map(object => {
                  const { cardItemObject3D } = object.userData as UserData;
                  new Tween(object.position, tweenGroupRef.current)
-                     .to(cardItemObject3D.curve.position, 1000)
+                     .to(cardItemObject3D.curve.position, 500)
                      .easing(Easing.Exponential.InOut)
                      .start();
                  new Tween(object.rotation, tweenGroupRef.current)
-                     .to(eulerToXYZ(cardItemObject3D.curve.rotation), 1000)
+                     .to(eulerToXYZ(cardItemObject3D.curve.rotation), 500)
                      .easing(Easing.Exponential.InOut)
                      .start();
                  clickAnimationRunning.current = "other";
@@ -403,7 +396,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
         sceneRef.current.remove(systemCardObject);
         css3DObjects.map(v => v.element.classList.remove("dark"));
         setCurClickCardItemObject(null);
-        clickAnimationRunning.current = false;
+        clickAnimationRunning.current = "ohter";
       })
   };
 
