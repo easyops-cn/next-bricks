@@ -51,6 +51,25 @@
 .relation-line {
   pointer-events: none !important;
 }
+.closeBtn {
+  visibility: hidden;
+  position: fixed;
+  top: 50px;
+  right: 50px;
+  width: 46px;
+  height: 46px;
+  text-align: center;
+  border: 1px solid;
+  color: rgb(138 189 255 / 84%);
+  font-size: 20px;
+  line-height: 46px;
+  cursor: pointer;
+  background: rgba(138,189,255,0.13);
+  border-image: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.33)) 1 1;
+}
+.closeBtn:hover {
+  color: var(--color-normal-text);
+}
 
 
 

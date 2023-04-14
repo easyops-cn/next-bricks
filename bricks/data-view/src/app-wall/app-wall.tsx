@@ -22,6 +22,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
 
   const containerRef = useRef<HTMLDivElement>();
   const maskRef = useRef<HTMLDivElement>();
+  const closeBtnRef = useRef<HTMLDivElement>()
 
   const rendererRef = useRef<CSS3DRenderer>();
   const sceneRef = useRef<Scene>();
@@ -201,7 +202,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
     })
 
     new Tween({}, tweenGroupRef.current)
-      .to({}, 4000)
+      .to({}, 6000)
       .onUpdate(render)
       .start();
 
@@ -232,15 +233,53 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
         objectContainer.add(objectCantModel);
         objectContainer.add(objectTopModel);
         threeGroupRef.current.add(trapezoidalRef.current);
-        console.log(threeGroupRef.current.position, targetVector, moveVector);
         centerTween.start()
         render()
       });
 
+    // 双击后的遮罩层
 
-
+    // const closeBtn = document.createElement("div");
+    // closeBtn.style.cssText = `
+    //    position: fixed;
+    //    top: 50px;
+    //    right: 50px;
+    //    width: 46px;
+    //    height: 46px;
+    //    text-align: center;
+    //    border: 1px solid;
+    //    color: #8ABDFF21;
+    //    font-size: 20px;
+    //    line-height: 46px;
+    //    cursor: pointer;
+    //    background: rgba(138,189,255,0.13);
+    //    border-image: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.33)) 1 1;
+    // `;
+    // document.body.appendChild(closeBtn);
+    closeBtnRef.current.style.visibility = "visible";
+    closeBtnRef.current.onclick = () =>handleDBClickEventClose(css3DObjects)
 
   }, []);
+  const handleDBClickEventClose = (css3DObjects: CSS3DObject[])=>{
+    threeGroupRef.current.remove(trapezoidalRef.current);
+    closeBtnRef.current.style.visibility = "hidden";
+    new Tween(threeGroupRef.current.rotation, tweenGroupRef.current)
+        .to({ x: 0, y: 0, z: 0 }, 1000).easing(Easing.Exponential.InOut)
+        .start().onComplete(() => {
+      css3DObjects.map(object => {
+        const { cardItemObject3D } = object.userData as UserData;
+        new Tween(object.position, tweenGroupRef.current)
+            .to(cardItemObject3D.curve.position, 1000)
+            .easing(Easing.Exponential.InOut)
+            .start();
+        new Tween(object.rotation, tweenGroupRef.current)
+            .to(eulerToXYZ(cardItemObject3D.curve.rotation), 1000)
+            .easing(Easing.Exponential.InOut)
+            .start();
+      })
+    });
+
+  }
 
   const onElementMouseClick = useCallback((curCss3DObject: CSS3DObject, css3DObjects: CSS3DObject[]) => {
     controlsRef.current.reset();
@@ -447,7 +486,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
           setTimeout(() => {
             if (clicks == 1) {
               console.log('单击')
-              onElementMouseClick(object, css3DObjects);
+              // onElementMouseClick(object, css3DObjects);
             } else {
               console.log('双击')
               onElementDblclick(object, css3DObjects);
@@ -515,6 +554,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
           ref={systemCardRef}
         />
       </div>
+      <div className="closeBtn" ref={closeBtnRef} >X</div>
     </>
   );
 }
