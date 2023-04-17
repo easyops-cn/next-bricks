@@ -260,15 +260,15 @@ export const getCenterPointOrSubPoint = (start: [number, number, number], end: [
     subVector: new Vector3().subVectors(pointA, pointB) // a-b向量
   }
 }
-export const createTrapezoidalRightOrLeftElement = (props:{
-  BW:number;
+export const createTrapezoidalRightOrLeftElement = (props: {
+  BW: number;
   TW: number;
   d: number;
   TH: number;
   BH: number;
   isLeft: boolean
-}):CSS3DObject =>{
-  const {BW, TW, d, TH,BH, isLeft}= props;
+}): CSS3DObject => {
+  const { BW, TW, d, TH, BH, isLeft } = props;
   const height = Math.sqrt(Math.pow((TW / 2 - BW / 2), 2) + Math.pow(d, 2)); //斜边
   const wrapper = document.createElement("div");
   wrapper.style.cssText = `
@@ -280,8 +280,8 @@ export const createTrapezoidalRightOrLeftElement = (props:{
   const cantCard = document.createElement("div");
   cantCard.className = "trapezoidalLeftOrRightAnimation";
   wrapper.appendChild(cantCard);
-  const start  = isLeft ? [-BW / 2, 0, 0] :[BW / 2, 0, 0] ;
-  const end = isLeft ? [-TW / 2, 0, d]: [TW / 2, 0, d];
+  const start: [number, number, number] = isLeft ? [-BW / 2, 0, 0] : [BW / 2, 0, 0];
+  const end: [number, number, number] = isLeft ? [-TW / 2, 0, d] : [TW / 2, 0, d];
   const objectCantModel = new CSS3DObject(wrapper);
   const { centerVector, subVector } = getCenterPointOrSubPoint(start, end);
   objectCantModel.position.copy(centerVector);
@@ -290,15 +290,15 @@ export const createTrapezoidalRightOrLeftElement = (props:{
   return objectCantModel;
 }
 
-export const createTrapezoidalTopOrBottomElement = (props:{
-  BW:number;
+export const createTrapezoidalTopOrBottomElement = (props: {
+  BW: number;
   TW: number;
   d: number;
   TH: number;
   BH: number;
   isTop: boolean
-}):CSS3DObject =>{
-  const {BW, TW, d, TH,BH, isTop}= props;
+}): CSS3DObject => {
+  const { BW, TW, d, TH, BH, isTop } = props;
   const height = Math.sqrt(Math.pow((TH / 2 - BH / 2), 2) + Math.pow(d, 2)); //斜边
   const wrapper = document.createElement("div");
   wrapper.style.cssText = `
@@ -308,11 +308,11 @@ export const createTrapezoidalTopOrBottomElement = (props:{
                    clip-path: polygon(0 0, ${TW}px 0, ${(TW / 2 - BW / 2) + BW}px ${height}px, ${TW / 2 - BW / 2}px ${height}px);
                    `;
   const cantCard = document.createElement("div");
-  cantCard.className ="trapezoidalTopOrBottomAnimation";
+  cantCard.className = "trapezoidalTopOrBottomAnimation";
   wrapper.appendChild(cantCard);
   const objectCantModel = new CSS3DObject(wrapper);
-  const start  = isTop ?  [0, -BH / 2, 0]:[0, BH / 2, 0] ;
-  const end = isTop ? [0, -TH / 2, d]: [0, TH / 2, d];
+  const start: [number, number, number] = isTop ? [0, -BH / 2, 0] : [0, BH / 2, 0];
+  const end: [number, number, number] = isTop ? [0, -TH / 2, d] : [0, TH / 2, d];
   const {
     centerVector,
     subVector
@@ -325,12 +325,12 @@ export const createTrapezoidalTopOrBottomElement = (props:{
 
 export const createTrapezoidalObject = (props: TrapezoidalObjectProps) => {
   const { objectData, leftBtnName, leftOnClick, rightBtnName, rightOnClick } = props;
-  const d:number = 230;
+  const d = 230;
   const container = document.createElement('div');
   const objectContainer = new CSS3DObject(container);
   objectContainer.position.set(...objectData.point);
   // 模型为梯形 , 底部和顶部的宽高成一定的比例计算，  bw: tw = 1:11; bh:th= 1:4.5
-  const BW:number = objectData.width, BH:number = objectData.height, TW:number = BW * 8, TH:number = BH * 3;
+  const BW: number = objectData.width, BH: number = objectData.height, TW: number = BW * 8, TH: number = BH * 3;
   // 底部
   const bottomCard = document.createElement('div');
   bottomCard.style.cssText = `
@@ -360,24 +360,24 @@ export const createTrapezoidalObject = (props: TrapezoidalObjectProps) => {
                 height: 100%;
             `;
   topoCard.innerText = "应用部署架构";
-  topCard.className ="visibilityAnimate";
+  topCard.className = "visibilityAnimate";
   topCard.appendChild(topoCard);
   const objectTopModel = new CSS3DObject(topCard);
   objectTopModel.position.set(0, 0, d);
 
   const objectCantLeftModel = createTrapezoidalRightOrLeftElement({
-    BW, TW, BH,TH,d, isLeft: true
+    BW, TW, BH, TH, d, isLeft: true
   });   //斜面右边
-  const  objectCantRightModel = createTrapezoidalRightOrLeftElement({
-    BW, TW, BH,TH,d, isLeft: false
+  const objectCantRightModel = createTrapezoidalRightOrLeftElement({
+    BW, TW, BH, TH, d, isLeft: false
   });   //斜面右边
-  const  objectCantTopModel = createTrapezoidalTopOrBottomElement({
-    BW, TW, BH,TH,d, isTop: true
+  const objectCantTopModel = createTrapezoidalTopOrBottomElement({
+    BW, TW, BH, TH, d, isTop: true
   }); //斜面前边
-  const  objectCantBottomModel = createTrapezoidalTopOrBottomElement({
-    BW, TW, BH,TH,d, isTop: false
+  const objectCantBottomModel = createTrapezoidalTopOrBottomElement({
+    BW, TW, BH, TH, d, isTop: false
   }); //斜面后面
-  objectContainer.add(objectCantLeftModel,objectCantRightModel,objectCantBottomModel,objectCantTopModel)
+  objectContainer.add(objectCantLeftModel, objectCantRightModel, objectCantBottomModel, objectCantTopModel)
   if (leftBtnName) {
     const btnLeft = document.createElement("div");
     btnLeft.style.cssText = `
@@ -408,7 +408,7 @@ export const createTrapezoidalObject = (props: TrapezoidalObjectProps) => {
                  text-shadow: 0px 1px 4px #3366FF;
                  text-align: right;
                  `;
-    btnRight.className= "visibilityAnimate";
+    btnRight.className = "visibilityAnimate";
     const textNode = document.createElement("span");
     textNode.style.cursor = "pointer";
     textNode.innerText = rightBtnName;

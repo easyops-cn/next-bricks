@@ -5,7 +5,6 @@ import variablesStyleText from "../data-view-variables.shadow.css";
 import styleText from "./app-wall.shadow.css";
 import { AppWallElement } from "./app-wall.js";
 import type { AppData, Relation } from "./utils.js";
-import { dataSource, relations } from "./mockData.js";
 
 const { defineElement, property, event } = createDecorators();
 
@@ -39,7 +38,7 @@ class AppWall
   @property({
     attribute: false,
   })
-  accessor dataSource: AppData[] = dataSource as AppData[];
+  accessor dataSource: AppData[];
 
   /**
    * @default
@@ -49,7 +48,7 @@ class AppWall
   @property({
     attribute: false,
   })
-  accessor relations: Relation[] = relations;
+  accessor relations: Relation[];
 
   /**
   * @detail AppData
@@ -75,10 +74,10 @@ class AppWall
   @event({ type: "right.btn.click" })
   accessor #onRightClickEvent!: EventEmitter<AppData>;
 
-  handleLeftClick = (data: AppData)=>{
+  handleLeftClick = (data: AppData) => {
     this.#onLeftClickEvent.emit(data);
   }
-  handleRightClick = (data: AppData)=>{
+  handleRightClick = (data: AppData) => {
     this.#onRightClickEvent.emit(data);
   }
 

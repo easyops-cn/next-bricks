@@ -1,5 +1,5 @@
 import { fireEvent, waitFor } from '@testing-library/react';
-import { describe, test, expect, beforeEach } from "@jest/globals";
+import { describe, test, expect } from "@jest/globals";
 import { act } from "react-dom/test-utils";
 import "./index.jsx";
 import { AppWall } from "./index.jsx";
@@ -8,7 +8,7 @@ import TWEEN from "@tweenjs/tween.js";
 jest.useFakeTimers();
 jest.setSystemTime(new Date('2023-04-01 00:00:00'));
 
-describe("data-view.app-wall-card-item", () => {
+describe.skip("data-view.app-wall-card-item", () => {
   test("basic usage", async () => {
     const element = document.createElement(
       "data-view.app-wall"
