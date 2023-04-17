@@ -1,18 +1,21 @@
-import { fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import { describe, test, expect } from "@jest/globals";
 import { act } from "react-dom/test-utils";
 import "./index.jsx";
 import { AppWall } from "./index.jsx";
+import { dataSource, relations } from './mockData.js';
 import TWEEN from "@tweenjs/tween.js";
+import { AppData } from './utils.js';
 
 jest.useFakeTimers();
-jest.setSystemTime(new Date('2023-04-01 00:00:00'));
 
-describe.skip("data-view.app-wall-card-item", () => {
+describe("data-view.app-wall-card-item", () => {
   test("basic usage", async () => {
     const element = document.createElement(
       "data-view.app-wall"
     ) as AppWall;
+    element.dataSource = dataSource as AppData[];
+    element.relations = relations
 
     expect(element.shadowRoot).toBeFalsy();
     act(() => {
@@ -28,34 +31,21 @@ describe.skip("data-view.app-wall-card-item", () => {
     });
 
     expect(element.shadowRoot.querySelectorAll(".card-item").length).toBe(52);
-    await act(() => {
-      waitFor(() => jest.setSystemTime(new Date('2023-04-01 01:00:05')));
-    });
-
 
     // await act(async () => {
     //   // fireEvent.mouseEnter(cardItem);
-    //   const current = TWEEN.now();
-    //   TWEEN.update(current + 10000);
     // });
 
     await act(async () => {
       fireEvent.click(cardItem, { clientX: 1, clientY: 1 });
       jest.advanceTimersByTime(200);
-      // const current = TWEEN.now();
-      // TWEEN.update(current + 10000);
     });
 
     await act(async () => {
       fireEvent.click(cardItem, { clientX: 1, clientY: 1 });
       fireEvent.click(cardItem, { clientX: 1, clientY: 1 });
       jest.advanceTimersByTime(200);
-      // const current = TWEEN.now();
-      // TWEEN.update(current + 10000);
     });
-
-    // expect(element.shadowRoot.querySelectorAll(".relation-line").length).toBe(2);
-
 
     act(() => {
       document.body.removeChild(element);
