@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.0.5...@next-bricks/v2-adapter@0.0.6) (2023-04-17)
+
+
+### Bug Fixes
+
+* add bricks.json in exports ([b00513f](https://github.com/easyops-cn/next-bricks/commit/b00513fba328f0317c4bd3beed3fd089028c72a0))
+* update react-element ([a45b8d6](https://github.com/easyops-cn/next-bricks/commit/a45b8d6849b0be61586c7bb38f09a723f958474b))
+* use createRoot ([9691a1a](https://github.com/easyops-cn/next-bricks/commit/9691a1aca13a0f1247023c5c43a716b870532176))
+
+
+
+
+
 ## [0.0.5](https://github.com/easyops-cn/next-core/compare/@next-bricks/v2-adapter@0.0.4...@next-bricks/v2-adapter@0.0.5) (2023-04-10)
 
 

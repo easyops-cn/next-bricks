@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.0.6...@next-bricks/advanced@0.0.7) (2023-04-17)
+
+
+### Bug Fixes
+
+* add bricks.json in exports ([b00513f](https://github.com/easyops-cn/next-bricks/commit/b00513fba328f0317c4bd3beed3fd089028c72a0))
+* update react-element ([a45b8d6](https://github.com/easyops-cn/next-bricks/commit/a45b8d6849b0be61586c7bb38f09a723f958474b))
+
+
+
+
+
 ## [0.0.6](https://github.com/easyops-cn/next-core/compare/@next-bricks/advanced@0.0.5...@next-bricks/advanced@0.0.6) (2023-04-10)
 
 **Note:** Version bump only for package @next-bricks/advanced
