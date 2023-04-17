@@ -1,7 +1,7 @@
 :host {
   display: block;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 }
 
 :host([hidden]) {
@@ -71,7 +71,7 @@
   align-items: center;
 }
 
-.closeBtn:before ,
+.closeBtn:before,
 .closeBtn:after {
   content: "";
   width: 2px;
@@ -80,95 +80,77 @@
   position: absolute;
 
 }
+
 .closeBtn:before {
   transform: rotateZ(45deg);
 
 }
+
 .closeBtn:after {
   transform: rotateZ(-45deg);
 }
-.closeBtn:hover:after, .closeBtn:hover:before  {
+
+.closeBtn:hover:after,
+.closeBtn:hover:before {
   background: var(--color-normal-text);
 }
 
-
-
-
-
-
-
-.circle {
-  width: 10px;
-  height: 10px;
-  background-color: red;
-  border-radius: 50%;
-}
-
-.circle2 {
-  width: 10px;
-  height: 10px;
-  background-color: blue;
-  border-radius: 50%;
-}
-
-.test {
-  width: 100px;
-  height: 100px;
-  background-color: red;
-}
-
-.line {
-  width: 10px;
-  height: 1000px;
-}
 .visibilityAnimate {
   visibility: hidden;
   animation: visibility 0.5s both 1s;
 }
-.trapezoidalLeftOrRightAnimation , .trapezoidalTopOrBottomAnimation{
-  background: linear-gradient(180deg, rgba(51,102,255,0.4) 0%, #99CCFF 100%);
+
+.trapezoidalLeftOrRightAnimation,
+.trapezoidalTopOrBottomAnimation {
+  background: linear-gradient(180deg, rgba(51, 102, 255, 0.4) 0%, #99CCFF 100%);
   opacity: 0.2;
   position: absolute;
 }
+
 .trapezoidalTopOrBottomAnimation {
   bottom: 0;
   width: 100%;
   left: 0;
   animation: animateTop 1s both;
 }
-.trapezoidalLeftOrRightAnimation  {
+
+.trapezoidalLeftOrRightAnimation {
   top: 0;
   right: 0;
   height: 100%;
   animation: animateLeft 1s both;
 }
+
 @keyframes animateTop {
   0% {
     height: 0;
 
   }
+
   100% {
     height: 100%;
   }
 
 }
+
 @keyframes animateLeft {
   0% {
     width: 0;
   }
+
   100% {
     width: 100%;
   }
 
 }
+
 @keyframes visibility {
   0% {
     visibility: hidden;
   }
+
   100% {
     visibility: visible;
   }
 
 }
-
-

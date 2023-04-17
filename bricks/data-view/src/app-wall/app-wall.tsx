@@ -5,8 +5,6 @@ import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
 import { CSS3DObject, CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js';
 import { Tween, Easing, Group } from "@tweenjs/tween.js";
 import { AnimationEventType } from "./interface.js";
-
-import { createHelper } from "./helpers.js";
 import { createCardItems, createRelationLine, type UserData, createTrapezoidalObject, eulerToXYZ } from "./utils.js";
 import type { AppWallProps } from "./index.jsx";
 import type { SystemCard, SystemCardProps } from "./system-card/index.js";
@@ -444,13 +442,11 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
           element.addEventListener('mouseenter', (e) => {
             if (clickAnimationRunning.current === "dbClick") return;
             controlsRef.current.enabled = false;
-            console.log(object.userData.appData.key, "mouseenter");
             onElementMouseEnter(object, css3DObjects);
           }, false);
           // 鼠标移出
           element.addEventListener('mouseleave', (e) => {
             controlsRef.current.enabled = true;
-            console.log(object.userData.appData.key, "mouseleave");
             onElementMouseLeave(object, css3DObjects);
           }, false)
 
@@ -470,10 +466,8 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
         if (clicks === 1) {
           setTimeout(() => {
             if (clicks == 1) {
-              console.log('单击')
               onElementMouseClick(object, css3DObjects);
             } else {
-              console.log('双击')
               onElementDblclick(object, css3DObjects);
             }
             clicks = 0;
@@ -511,15 +505,14 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
   }, [])
 
   useEffect(() => {
-    const helpers = createHelper();
     const { css3DObjects } = createCardItems(dataSource);
     threeGroupRef.current.add(...css3DObjects);
-    sceneRef.current.add(threeGroupRef.current, ...helpers);
+    sceneRef.current.add(threeGroupRef.current);
     render();
     entranceAnimation(css3DObjects);
 
     return () => {
-      sceneRef.current.remove(...css3DObjects, ...helpers);
+      sceneRef.current.remove(...css3DObjects);
       lineCiCodes.forEach((item) => {
         const currentLine = sceneRef.current.getObjectByName(item);
         sceneRef.current.remove(currentLine);
