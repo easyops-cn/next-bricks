@@ -4,4 +4,5 @@ export default {
   moduleNameMapper: {
     'd3-hierarchy': '<rootDir>/../../node_modules/d3-hierarchy/dist/d3-hierarchy.min.js',
   },
+  transformModulePatterns: ["three/examples/jsm/"],
 };
