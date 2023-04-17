@@ -41,7 +41,9 @@
     "build:main": "cross-env NODE_ENV=production build-next-bricks",
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist-types --project tsconfig.json",
     "test": "cross-env NODE_ENV='test' test-next",
-    "test:ci": "cross-env NODE_ENV='test' CI=true test-next"
+    "test:ci": "cross-env NODE_ENV='test' CI=true test-next",
+    "prepublishOnly": "cp package.json package.json.bak && npm pkg delete dependencies",
+    "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
     "@ant-design/icons-svg": "^4.2.1",
