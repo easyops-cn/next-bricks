@@ -213,7 +213,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       .start();
     // 需要确定目标位置
     const { appData, elementStyle, cardItemObject3D } = curCss3DObject.userData as UserData;
-    const { objectContainer, objectTopModel, objectCantModel } = createTrapezoidalObject({
+    const objectContainer = createTrapezoidalObject({
       objectData: {
         width: elementStyle.width,
         height: elementStyle.height,
@@ -232,8 +232,6 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       .to({ x: -Math.PI / 6, y: 0, z: 0 }, 500).easing(Easing.Exponential.InOut)
       .start().onComplete(() => {
         trapezoidalRef.current = objectContainer;
-        objectContainer.add(objectCantModel);
-        objectContainer.add(objectTopModel);
         threeGroupRef.current.add(trapezoidalRef.current);
         threeGroupPositionRef.current = threeGroupRef.current.position.clone();
         centerTween.start()
