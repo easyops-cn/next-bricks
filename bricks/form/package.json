@@ -1,10 +1,10 @@
 {
   "name": "@next-bricks/form",
   "version": "0.2.0",
-  "homepage": "https://github.com/easyops-cn/next-core/tree/master/bricks/form",
+  "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/form",
   "repository": {
     "type": "git",
-    "url": "git@github.com:easyops-cn/next-core.git"
+    "url": "git@github.com:easyops-cn/next-bricks.git"
   },
   "license": "GPL-3.0",
   "type": "module",

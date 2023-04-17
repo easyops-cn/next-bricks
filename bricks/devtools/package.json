@@ -1,10 +1,10 @@
 {
   "name": "@next-bricks/devtools",
   "version": "0.1.0",
-  "homepage": "https://github.com/easyops-cn/next-core/tree/master/bricks/devtools",
+  "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/devtools",
   "repository": {
     "type": "git",
-    "url": "git@github.com:easyops-cn/next-core.git"
+    "url": "git@github.com:easyops-cn/next-bricks.git"
   },
   "license": "GPL-3.0",
   "type": "module",
