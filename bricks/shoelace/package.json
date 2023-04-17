@@ -1,10 +1,10 @@
 {
   "name": "@next-bricks/shoelace",
   "version": "0.1.0",
-  "homepage": "https://github.com/easyops-cn/next-core/tree/master/bricks/shoelace",
+  "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/shoelace",
   "repository": {
     "type": "git",
-    "url": "git@github.com:easyops-cn/next-core.git"
+    "url": "git@github.com:easyops-cn/next-bricks.git"
   },
   "license": "GPL-3.0",
   "type": "module",
@@ -13,10 +13,13 @@
     "dist"
   ],
   "exports": {
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./dist/bricks.json": "./dist/bricks.json"
   },
   "scripts": {
+    "prestart": "node ./scripts/pre-build.js",
     "start": "cross-env NODE_ENV=development NODE_OPTIONS='--experimental-import-meta-resolve' build-next-bricks --watch",
+    "prebuild": "node ./scripts/pre-build.js",
     "build": "cross-env NODE_ENV=production NODE_OPTIONS='--experimental-import-meta-resolve' build-next-bricks",
     "test": "cross-env NODE_ENV='test' test-next",
     "test:ci": "cross-env NODE_ENV='test' CI=true test-next"

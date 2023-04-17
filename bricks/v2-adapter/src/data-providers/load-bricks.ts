@@ -17,6 +17,7 @@ import {
   checkIfByTransform,
   checkIfOfComputed,
   StoryboardFunctionRegistryFactory,
+  unstable_createRoot,
   __secret_internals,
 } from "@next-core/runtime";
 import { i18n, i18nText } from "@next-core/i18n";
@@ -310,14 +311,16 @@ async function loadMainDll(adapterPkgFilePath: string) {
 
     ...getLegacyUseRecentApps(LegacyReact),
 
-    developHelper: lodash.pick(__secret_internals, [
-      "renderPreviewBricks",
-      "updateStoryboardByRoute",
-      "updateStoryboardByTemplate",
-      "updateTemplatePreviewSettings",
-      "updateStoryboardBySnippet",
-      "updateSnippetPreviewSettings",
-    ]),
+    developHelper: {
+      ...lodash.pick(__secret_internals, [
+        "updateStoryboardByRoute",
+        "updateStoryboardByTemplate",
+        "updateTemplatePreviewSettings",
+        "updateStoryboardBySnippet",
+        "updateSnippetPreviewSettings",
+      ]),
+      createRoot: unstable_createRoot,
+    },
   });
 }
 

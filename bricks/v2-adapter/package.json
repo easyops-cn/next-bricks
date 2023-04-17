@@ -1,10 +1,10 @@
 {
   "name": "@next-bricks/v2-adapter",
   "version": "0.0.5",
-  "homepage": "https://github.com/easyops-cn/next-core/tree/master/bricks/v2-adapter",
+  "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/v2-adapter",
   "repository": {
     "type": "git",
-    "url": "git@github.com:easyops-cn/next-core.git"
+    "url": "git@github.com:easyops-cn/next-bricks.git"
   },
   "license": "GPL-3.0",
   "type": "module",
@@ -25,6 +25,7 @@
   },
   "exports": {
     "./package.json": "./package.json",
+    "./dist/bricks.json": "./dist/bricks.json",
     "./*": {
       "types": "./dist-types/*/index.d.ts"
     }
