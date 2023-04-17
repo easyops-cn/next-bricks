@@ -1,0 +1,34 @@
+.dialog::part(header-actions) {
+  display: none;
+}
+
+.body {
+  display: flex;
+  gap: var(--sl-spacing-large);
+}
+
+.contentTitle {
+  margin-bottom: var(--sl-spacing-medium);
+  font-size: var(--sl-font-size-medium);
+  font-weight: 700;
+}
+
+.icon {
+  font-size: var(--sl-font-size-large);
+}
+
+.primary {
+  color: var(--sl-color-primary-600);
+}
+
+.success {
+  color: var(--sl-color-success-600);
+}
+
+.warning {
+  color: var(--sl-color-warning-600);
+}
+
+.danger {
+  color: var(--sl-color-danger-600);
+}

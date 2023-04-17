@@ -1,0 +1,42 @@
+brick: div
+properties:
+  style:
+    display: flex
+    flexDirection: column
+    gap: 8px
+children:
+- brick: basic.general-button
+  properties:
+    type: primary
+    textContent: Confirm
+  events:
+    click:
+      useProvider: shoelace.show-dialog
+      args:
+      - type: confirm
+        title: Please Confirm
+        content: Are you sure?
+      callback:
+        success:
+          action: message.success
+          args:
+          - You just confirmed!
+        error:
+          action: message.info
+          args:
+          - You just canceled.
+- brick: basic.general-button
+  properties:
+    textContent: Alert
+  events:
+    click:
+      useProvider: shoelace.show-dialog
+      args:
+      - type: error
+        title: Request Failed
+        content: Something went wrong.
+      callback:
+        success:
+          action: message.info
+          args:
+          - That's ok.
