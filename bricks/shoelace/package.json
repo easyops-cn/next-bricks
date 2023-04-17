@@ -13,7 +13,8 @@
     "dist"
   ],
   "exports": {
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./dist/bricks.json": "./dist/bricks.json"
   },
   "scripts": {
     "prestart": "node ./scripts/pre-build.js",

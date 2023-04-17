@@ -12,6 +12,13 @@
   "files": [
     "dist"
   ],
+  "exports": {
+    "./package.json": "./package.json",
+    "./dist/bricks.json": "./dist/bricks.json",
+    "./*": {
+      "types": "./dist-types/*/index.d.ts"
+    }
+  },
   "scripts": {
     "start": "cross-env NODE_ENV=development build-next-bricks --watch",
     "build": "cross-env NODE_ENV=production build-next-bricks",

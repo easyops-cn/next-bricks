@@ -15,6 +15,7 @@
   ],
   "exports": {
     "./package.json": "./package.json",
+    "./dist/bricks.json": "./dist/bricks.json",
     "./data-providers/*": {
       "types": "./dist-types/data-providers/*.d.ts"
     }

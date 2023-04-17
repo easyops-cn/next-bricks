@@ -25,6 +25,7 @@
   },
   "exports": {
     "./package.json": "./package.json",
+    "./dist/bricks.json": "./dist/bricks.json",
     "./*": {
       "types": "./dist-types/*/index.d.ts"
     }
