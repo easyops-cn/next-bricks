@@ -13,7 +13,7 @@ import {
 } from "./utils.js";
 import {describe, test, expect} from "@jest/globals";
 import {dataSource} from "./mockData.js"
-import {Euler, Vector3} from "three";
+import {Euler, Vector3, Vector3Tuple} from "three";
 const trapezoidalParams = {
     BW:50,
     BH: 60,
@@ -39,7 +39,7 @@ describe("utils", () => {
             }
         }
     ])("getCenterPointOrSubPoint", (data) => {
-        expect(getCenterPointOrSubPoint(data.start, data.end)).toStrictEqual(data.result)
+        expect(getCenterPointOrSubPoint(data.start as Vector3Tuple, data.end as Vector3Tuple)).toStrictEqual(data.result)
     })
     test.each([[[0,0,0],{x:0,y:0,z:0}],[[1,1,1],{x:1,y:1,z:1}]])("vector3ToXYZ & xyzToVector3",(a,res)=>{
         expect(vector3ToXYZ(new Vector3(a[0],a[1],a[2]))).toStrictEqual(res);

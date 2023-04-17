@@ -1,4 +1,4 @@
-import { MathUtils, EllipseCurve, LineCurve, Vector2, Vector3, Object3D, Quaternion, Euler } from "three";
+import { MathUtils, EllipseCurve, LineCurve, Vector2, Vector3, Object3D, Quaternion, Euler,Vector3Tuple } from "three";
 import { CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
 import "./card-item/index.js";
 import "./relation-line/index.js";
@@ -252,7 +252,7 @@ export const createRelationLine = (sourceVector: Vector3, targetVector: Vector3,
   return lineObject;
 };
 
-export const getCenterPointOrSubPoint = (start: [number, number, number], end: [number, number, number]) => {
+export const getCenterPointOrSubPoint = (start: Vector3Tuple, end: Vector3Tuple) => {
   const pointA = new Vector3(start[0], start[1], start[2]);
   const pointB = new Vector3(end[0], end[1], end[2]);
   return {
@@ -280,8 +280,8 @@ export const createTrapezoidalRightOrLeftElement = (props: {
   const cantCard = document.createElement("div");
   cantCard.className = "trapezoidalLeftOrRightAnimation";
   wrapper.appendChild(cantCard);
-  const start: [number, number, number] = isLeft ? [-BW / 2, 0, 0] : [BW / 2, 0, 0];
-  const end: [number, number, number] = isLeft ? [-TW / 2, 0, d] : [TW / 2, 0, d];
+  const start:Vector3Tuple= isLeft ? [-BW / 2, 0, 0] : [BW / 2, 0, 0];
+  const end:Vector3Tuple = isLeft ? [-TW / 2, 0, d] : [TW / 2, 0, d];
   const objectCantModel = new CSS3DObject(wrapper);
   const { centerVector, subVector } = getCenterPointOrSubPoint(start, end);
   objectCantModel.position.copy(centerVector);
@@ -311,8 +311,8 @@ export const createTrapezoidalTopOrBottomElement = (props: {
   cantCard.className = "trapezoidalTopOrBottomAnimation";
   wrapper.appendChild(cantCard);
   const objectCantModel = new CSS3DObject(wrapper);
-  const start: [number, number, number] = isTop ? [0, -BH / 2, 0] : [0, BH / 2, 0];
-  const end: [number, number, number] = isTop ? [0, -TH / 2, d] : [0, TH / 2, d];
+  const start:Vector3Tuple = isTop ? [0, -BH / 2, 0] : [0, BH / 2, 0];
+  const end:Vector3Tuple = isTop ? [0, -TH / 2, d] : [0, TH / 2, d];
   const {
     centerVector,
     subVector
