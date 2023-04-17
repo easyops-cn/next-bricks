@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/advanced",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/basic",
   "repository": {
     "type": "git",
@@ -41,7 +41,7 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-bricks/icons": "^0.1.1",
+    "@next-bricks/icons": "^0.1.2",
     "@next-core/element": "^1.0.4",
     "@next-core/http": "^1.0.4",
     "@next-core/react-element": "^1.0.5",

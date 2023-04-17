@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/devtools@0.1.1...@next-bricks/devtools@0.1.2) (2023-04-17)
+
+
+### Bug Fixes
+
+* remove dependencies before publish ([d22f860](https://github.com/easyops-cn/next-bricks/commit/d22f8604d557d7f4a3c03f9c047c20babd5460bc))
+
+
+
+
+
 ## [0.1.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/devtools@0.1.0...@next-bricks/devtools@0.1.1) (2023-04-17)
 
 

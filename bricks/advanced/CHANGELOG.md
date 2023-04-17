@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.0.7...@next-bricks/advanced@0.0.8) (2023-04-17)
+
+
+### Bug Fixes
+
+* remove dependencies before publish ([d22f860](https://github.com/easyops-cn/next-bricks/commit/d22f8604d557d7f4a3c03f9c047c20babd5460bc))
+
+
+
+
+
 ## [0.0.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.0.6...@next-bricks/advanced@0.0.7) (2023-04-17)
 
 
