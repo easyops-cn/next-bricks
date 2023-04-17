@@ -35,6 +35,10 @@ export interface UserData {
     width: number,
     height: number,
   },
+  hoverStyle: {
+    width: number,
+    height: number,
+  },
   cardItemObject3D: {
     curve: Object3D,
     flat: Object3D,
@@ -74,6 +78,7 @@ export const getCoordinates = (columnNum: number, rowNum: number) => {
   const xRadius = 2400;
   const yRadius = 1800;
   const ellipseHeight = 1800;
+  // const ellipseHeight = 2000;
 
   const ellipseCurve = new EllipseCurve(
     0, 0,
@@ -167,11 +172,6 @@ export const createCardItems = (dataSource: AppData[]) => {
   dataSource.map((item, index) => {
     const _index = startIndex + index % column + totalColumnNum * Math.floor(index / column);
 
-    // .card-item-container.large1231312 {
-    //   /* Todo: 百丽1.5? */
-    //   width: 120%;
-    //   height: 120%;
-    // }
     const element = document.createElement(
       "data-view.app-wall-card-item"
     ) as AppWallCardItem;
@@ -200,6 +200,8 @@ export const createCardItems = (dataSource: AppData[]) => {
         height: elementHeight,
       },
       turningStyle: { width: elementWidth * 1.2, height: elementHeight * 1.2 },
+      /* Todo: 百丽1.5? */
+      hoverStyle: { width: elementWidth * 1.2, height: elementHeight * 1.2 },
       systemCardStyle: { width: 280, height: 382 },
       cardItemObject3D: {
         curve: object3D,
