@@ -19,7 +19,7 @@ interface DescriptionItem {
     value: string;
 
 }
-interface SystemCardProps {
+export interface SystemCardProps {
     status: StatusType;
     cardTitle: string|undefined;
     itemList?: DescriptionItem[];
@@ -99,7 +99,7 @@ class SystemCard extends ReactNextElement implements SystemCardProps {
      * @detail
      * @description 按钮点击
      */
-    @event({ type: "click" })
+    @event({ type: "button-click" })
     accessor #onClickEvent!: EventEmitter<void>;
 
     handleClick = ()=>{

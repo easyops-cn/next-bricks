@@ -1,0 +1,156 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.container {
+  position: relative;
+}
+
+.container.loading .card-item {
+  pointer-events: none !important;
+}
+
+.mask {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mask[hidden] {
+  display: none;
+}
+
+.card-item {
+  opacity: 1;
+  transition: opacity 0.5s ease, width 0.3s, height 0.3s;
+}
+
+.card-item.dark {
+  opacity: 0.3;
+}
+
+.relation-line {
+  pointer-events: none !important;
+}
+
+.closeBtn {
+  visibility: hidden;
+  position: fixed;
+  top: 50px;
+  right: 50px;
+  width: 46px;
+  height: 46px;
+  text-align: center;
+  border: 1px solid;
+  color: rgb(138 189 255 / 84%);
+  font-size: 20px;
+  line-height: 46px;
+  cursor: pointer;
+  background: rgba(138, 189, 255, 0.13);
+  border-image: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.33)) 1 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.closeBtn:before,
+.closeBtn:after {
+  content: "";
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(180deg, #3467FF 0%, #98CBFF 100%);
+  position: absolute;
+
+}
+
+.closeBtn:before {
+  transform: rotateZ(45deg);
+
+}
+
+.closeBtn:after {
+  transform: rotateZ(-45deg);
+}
+
+.closeBtn:hover:after,
+.closeBtn:hover:before {
+  background: var(--color-normal-text);
+}
+
+.visibilityAnimate {
+  visibility: hidden;
+  animation: visibility 0.5s both 1s;
+}
+
+.trapezoidalLeftOrRightAnimation,
+.trapezoidalTopOrBottomAnimation {
+  background: linear-gradient(180deg, rgba(51, 102, 255, 0.4) 0%, #99CCFF 100%);
+  opacity: 0.2;
+  position: absolute;
+}
+
+.trapezoidalTopOrBottomAnimation {
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  animation: animateTop 1s both;
+}
+
+.trapezoidalLeftOrRightAnimation {
+  top: 0;
+  right: 0;
+  height: 100%;
+  animation: animateLeft 1s both;
+}
+
+@keyframes animateTop {
+  0% {
+    height: 0;
+
+  }
+
+  100% {
+    height: 100%;
+  }
+
+}
+
+@keyframes animateLeft {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 100%;
+  }
+
+}
+
+@keyframes visibility {
+  0% {
+    visibility: hidden;
+  }
+
+  100% {
+    visibility: visible;
+  }
+
+}

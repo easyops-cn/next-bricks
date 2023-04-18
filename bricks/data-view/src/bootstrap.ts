@@ -12,3 +12,4 @@ import "./app-wall/card-item/index.js";
 import "./app-wall/system-card/index.js";
 import "./app-wall/relation-line/index.js";
 import "./cabinet/cabinet-button/index.js";
+import "./app-wall/index.js";
