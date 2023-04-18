@@ -154,3 +154,29 @@
   }
 
 }
+
+
+.circle {
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+}
+
+.circle2 {
+  width: 10px;
+  height: 10px;
+  background-color: blue;
+  border-radius: 50%;
+}
+
+.test {
+  width: 100px;
+  height: 100px;
+  background-color: red;
+}
+
+.line {
+  width: 10px;
+  height: 1000px;
+}

@@ -8,6 +8,7 @@ import { AnimationEventType } from "./interface.js";
 import { createCardItems, createRelationLine, type UserData, createTrapezoidalObject, eulerToXYZ } from "./utils.js";
 import type { AppWallProps } from "./index.jsx";
 import type { SystemCard, SystemCardProps } from "./system-card/index.js";
+import { createHelper } from "./helpers.js";
 
 const WrappedSystemCard = wrapBrick<SystemCard, SystemCardProps>(
   "data-view.app-wall-system-card"
@@ -509,7 +510,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
   useEffect(() => {
     const { css3DObjects } = createCardItems(dataSource);
     threeGroupRef.current.add(...css3DObjects);
-    sceneRef.current.add(threeGroupRef.current);
+    sceneRef.current.add(threeGroupRef.current,...createHelper());
     render();
     entranceAnimation(css3DObjects);
 
