@@ -59,7 +59,7 @@
   },
   "devDependencies": {
     "@next-core/brick-icons": "^2.31.34",
-    "@next-core/build-next-bricks": "^1.4.0",
+    "@next-core/build-next-bricks": "^1.4.1",
     "@next-core/test-next": "^1.0.4"
   }
 }
