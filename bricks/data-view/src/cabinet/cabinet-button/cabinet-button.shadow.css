@@ -1,0 +1,42 @@
+.closeBtn {
+    width: 46px;
+    height: 46px;
+    text-align: center;
+    border: 1px solid;
+    font-size: 20px;
+    line-height: 46px;
+    cursor: pointer;
+    border-image: linear-gradient(360deg, rgba(80, 255, 255, 0.2), rgba(80, 255, 255, 1)) 1 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    color: #50FFFFFF;
+}
+
+.closeBtn:before,
+.closeBtn:after {
+    content: "";
+    width: 2px;
+    height: 50%;
+    max-height: 50px;
+    background: currentColor;
+    position: absolute;
+
+}
+
+.closeBtn:before {
+    transform: rotateZ(45deg);
+
+}
+
+.closeBtn:after {
+    transform: rotateZ(-45deg);
+}
+.closeBtn:hover:after,
+.closeBtn:hover:before {
+    background: var(--color-normal-text);
+}
+.closeBtn:hover {
+    border-image: linear-gradient(360deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 1)) 1 1;
+}
