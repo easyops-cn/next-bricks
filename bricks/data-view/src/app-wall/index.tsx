@@ -14,6 +14,7 @@ export interface AppWallProps {
   onSystemCardButtonClick?: (data: AppData) => void;
   leftBtnOnClick?: (data: AppData) => void;
   rightBtnOnClick?: (data: AppData) => void;
+  useHelper?: boolean;
 }
 
 /**
@@ -49,6 +50,10 @@ class AppWall
     attribute: false,
   })
   accessor relations: Relation[]=relations as Relation[];
+
+
+  @property({type: Boolean})
+  accessor useHelper = true;
 
   /**
   * @detail AppData
@@ -90,6 +95,7 @@ class AppWall
         onSystemCardButtonClick={this.#handleSystemCardButtonClick}
         leftBtnOnClick={this.handleLeftClick}
         rightBtnOnClick={this.handleRightClick}
+        useHelper={this.useHelper}
       />
     );
   }

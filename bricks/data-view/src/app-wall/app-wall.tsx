@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { wrapBrick } from "@next-core/react-element";
-import { Vector3, PerspectiveCamera, Scene, MathUtils, Group as ThreeGroup } from "three";
+import { Vector3, PerspectiveCamera, Scene, MathUtils, Group as ThreeGroup, AxesHelper, WebGLRenderer } from "three";
 import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
 import { CSS3DObject, CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js';
 import { Tween, Easing, Group } from "@tweenjs/tween.js";
@@ -14,7 +14,7 @@ const WrappedSystemCard = wrapBrick<SystemCard, SystemCardProps>(
 );
 
 export function AppWallElement(props: AppWallProps): React.ReactElement {
-  const { relations, dataSource, onSystemCardButtonClick, rightBtnOnClick, leftBtnOnClick } = props;
+  const { relations, dataSource, onSystemCardButtonClick, rightBtnOnClick, leftBtnOnClick, useHelper } = props;
 
   const lineCiCodes = useMemo(() => new Set<string>(), []);
 
@@ -23,6 +23,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
   const closeBtnRef = useRef<HTMLDivElement>()
 
   const rendererRef = useRef<CSS3DRenderer>();
+  const helperRef = useRef<WebGLRenderer>();
   const sceneRef = useRef<Scene>();
   const cameraRef = useRef<PerspectiveCamera>();
   const controlsRef = useRef<TrackballControls>();
@@ -40,7 +41,9 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
 
   const render = useCallback(() => {
     rendererRef.current.render(sceneRef.current, cameraRef.current);
-  }, []);
+
+    useHelper && helperRef.current.render(sceneRef.current, cameraRef.current)
+  }, [useHelper]);
 
   const init = useCallback(() => {
     const width = window.innerWidth;
@@ -67,16 +70,29 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
 
 
     // containerRef.current.innerHTML = null;
+
+    if(useHelper) {
+      const helperRenderer = new WebGLRenderer({ antialias: true, alpha: true });
+      helperRenderer.setSize(200, 200);
+      helperRenderer.domElement.style.cssText = "position: absolute; top: 0; left: 0; z-index: 1000;";
+      // 红色代表 X 轴. 绿色代表 Y 轴. 蓝色代表 Z 轴.
+      scene.add(new AxesHelper(500))
+      helperRenderer.render(scene, camera);
+      containerRef.current.appendChild(helperRenderer.domElement);
+      helperRef.current = helperRenderer;
+    }
+
     containerRef.current.appendChild(renderer.domElement);
 
     // controls
     const controls = new TrackballControls(camera, renderer.domElement);
     // const controls = new TrackballControls(camera, containerRef.current);
-    controls.zoomSpeed = 10;
-    controls.rotateSpeed = 10;
+    controls.zoomSpeed = 1.2;
+    controls.rotateSpeed = 1;
+    controls.panSpeed = .3;
     controls.staticMoving = true;
-    controls.minDistance = 500; // 摄像机向内最多能移动多少
-    controls.maxDistance = 6000;  // 摄像机向外最多能移动多少;
+    controls.minDistance = 0; // 摄像机向内最多能移动多少
+    controls.maxDistance = Infinity;  // 摄像机向外最多能移动多少;
     // controls.target.set(0, 0, -originZ);
 
 
