@@ -1,80 +1,83 @@
-brick: div
+brick: sl-card
 properties:
   style:
-    display: grid
-    gridTemplateColumns: repeat(auto-fill, minmax(220px, 1fr))
-    gap: 10px
+    width: 400px
 children:
-- brick: ':forEach'
-  dataSource:
-  - Shenzhen
-  - San Francisco
-  - New York
-  - London
+- brick: div
+  slot: header
+  properties:
+    style:
+      display: flex
+      alignItems: center
+      justifyContent: space-between
   children:
-  - brick: sl-card
+  - brick: sl-select
+    properties:
+      placeholder: Select a city
+      size: small
     children:
-    - brick: div
-      slot: header
-      properties:
-        style:
-          display: flex
-          alignItems: center
-          justifyContent: space-between
+    - brick: ':forEach'
+      dataSource:
+      - Shenzhen
+      - Los Angeles
+      - New York
+      - London
       children:
-      - brick: span
+      - brick: sl-option
         properties:
-          textContent: '<% ITEM %>'
-      - brick: span
-        properties:
-          id: '<% `time-${ITEM.replace(/ /g, "-")}` %>'
-    - brick: div
-      properties:
-        style:
-          display: flex
-          alignItems: center
-      children:
-      - brick: img
-        properties:
-          id: '<% `image-${ITEM.replace(/ /g, "-")}` %>'
-          style:
-            width: 32px
-            height: 32px
-      - brick: span
-        properties:
-          id: '<% `text-${ITEM.replace(/ /g, "-")}` %>'
-          textContent: '...'
-      lifeCycle:
-        onMount:
-          useProvider: basic.http-request
-          args:
-          - |
-            <%
-              `//api.weatherapi.com/v1/current.json?${
-                new URLSearchParams({
-                  key: '9e08e5e99e0c4b4c89023605231804',
-                  q: ITEM,
-                  aqi: 'no',
-                })
-              }`
-            %>
-          callback:
-            success:
-            - target: '<% `#image-${ITEM.replace(/ /g, "-")}` %>'
-              properties:
-                src: '<% String(EVENT.detail.current.condition.icon) %>'
-            - target: '<% `#text-${ITEM.replace(/ /g, "-")}` %>'
-              properties:
-                textContent: |
-                  <%
-                    `${EVENT.detail.current.condition.text}, ${EVENT.detail.current.temp_c}°C`
-                  %>
-            - target: '<% `#time-${ITEM.replace(/ /g, "-")}` %>'
-              properties:
-                textContent: |
-                  <%
-                    moment(
-                      EVENT.detail.location.localtime,
-                      'YYYY-MM-DD HH:mm'
-                    ).format('h:mm A')
-                  %>
+          value: <% ITEM %>
+          textContent: <% ITEM %>
+    events:
+      sl-change:
+        useProvider: basic.http-request
+        args:
+        - |
+          <%
+            `//api.weatherapi.com/v1/current.json?${
+              new URLSearchParams({
+                key: '9e08e5e99e0c4b4c89023605231804',
+                q: EVENT.target.value,
+                aqi: 'no',
+              })
+            }`
+          %>
+        callback:
+          success:
+          - target: '#image'
+            properties:
+              hidden: false
+              src: '<% String(EVENT.detail.current.condition.icon) %>'
+          - target: '#text'
+            properties:
+              textContent: |
+                <%
+                  `${EVENT.detail.current.condition.text}, ${EVENT.detail.current.temp_c}°C`
+                %>
+          - target: '#time'
+            properties:
+              textContent: |
+                <%
+                  moment(
+                    EVENT.detail.location.localtime,
+                    'YYYY-MM-DD HH:mm'
+                  ).format('h:mm A')
+                %>
+- brick: div
+  properties:
+    style:
+      display: flex
+      alignItems: center
+  children:
+  - brick: img
+    properties:
+      id: image
+      hidden: true
+      style:
+        width: 32px
+        height: 32px
+  - brick: span
+    properties:
+      id: text
+- brick: div
+  properties:
+    id: time
