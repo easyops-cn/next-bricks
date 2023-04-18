@@ -55,10 +55,11 @@
     "lodash": "^4.17.21",
     "react": "0.0.0-experimental-ee8509801-20230117",
     "react-dnd": "^16.0.1",
-    "react-dnd-html5-backend": "^16.0.1"
+    "react-dnd-html5-backend": "^16.0.1",
+    "react-dom": "0.0.0-experimental-ee8509801-20230117"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.4.0",
+    "@next-core/build-next-bricks": "^1.4.1",
     "@next-core/test-next": "^1.0.4"
   }
 }
