@@ -1,8 +1,21 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 .wrapper {
    width: 260px;
    height: 354px;
    padding: 30px 24px 35px;
-   margin-right: 20px;
    position: relative;
    border-radius: var(--no-border-radius);
 }
