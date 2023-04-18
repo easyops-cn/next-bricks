@@ -1,4 +1,4 @@
-import { MathUtils, EllipseCurve, LineCurve, Vector2, Vector3, Object3D, Quaternion, Euler,Vector3Tuple } from "three";
+import { MathUtils, EllipseCurve, LineCurve, Vector2, Vector3, Object3D, Quaternion, Euler, Vector3Tuple } from "three";
 import { CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
 import "./card-item/index.js";
 import "./relation-line/index.js";
@@ -71,7 +71,7 @@ const getRowsAndColumnsNum = (total: number) => {
   return { row, column };
 }
 
-export const getCoordinates = (columnNum: number, rowNum: number) => {
+export const getCoordinates = (totalColumnNum: number, totalRowNum: number, curColumnNum: number, curRowNum: number) => {
   const padding = 10
   const deg = 55;
   const rad = MathUtils.degToRad(deg);
@@ -91,11 +91,11 @@ export const getCoordinates = (columnNum: number, rowNum: number) => {
   const verticalLineCurve = new LineCurve(new Vector2(0, ellipseHeight / 2), new Vector2(0, -ellipseHeight / 2));
   const horizontalLineCurve = new LineCurve(new Vector2(-ellipseCurveLength / 2, 0), new Vector2(ellipseCurveLength / 2, 0));
 
-  const elementWidth = ellipseCurve.getLength() / columnNum - padding;
-  const elementHeight = ellipseHeight / rowNum - padding;
-  const columnPoints = ellipseCurve.getSpacedPoints(2 * columnNum);
-  const rowPoints = verticalLineCurve.getSpacedPoints(2 * rowNum);
-  const flatColumnPoints = horizontalLineCurve.getSpacedPoints(2 * columnNum);
+  const elementWidth = ellipseCurve.getLength() / totalColumnNum - padding;
+  const elementHeight = verticalLineCurve.getLength() / totalRowNum - padding;
+  const columnPoints = ellipseCurve.getSpacedPoints(2 * totalColumnNum);
+  const rowPoints = verticalLineCurve.getSpacedPoints(2 * totalRowNum);
+  const flatColumnPoints = horizontalLineCurve.getSpacedPoints(2 * totalColumnNum);
 
   const leftControlVector3 = new Vector3(ellipseCurve.getPoint(0.3).x, verticalLineCurve.getPoint(0.5).y, -yRadius / 2);
   const leftControlPoint = new Object3D();
@@ -109,12 +109,15 @@ export const getCoordinates = (columnNum: number, rowNum: number) => {
 
   const coordinates: { object3D: Object3D, flatObject3D: Object3D }[] = [];
 
-  for (let ri = 0; ri < rowNum; ri++) {
-    const rowPoint = rowPoints[2 * ri + 1];
+  const rowStart = totalRowNum - curRowNum;
+  const columnStart = totalColumnNum - curColumnNum;
 
-    for (let ci = 0; ci < columnNum; ci++) {
+  for (let ri = 0; ri < curRowNum; ri++) {
+    const rowPoint = rowPoints[rowStart + 2 * ri + 1];
+
+    for (let ci = 0; ci < curColumnNum; ci++) {
+      const columnPoint = columnPoints[columnStart + 2 * ci + 1];
       const object3D = new Object3D();
-      const columnPoint = columnPoints[2 * ci + 1];
       const position = new Vector3(columnPoint.x, rowPoint.y, columnPoint.y);
       // console.log(ellipseCurve.getTangentAt(0));
       // const lookAt = new Vector3(0, rowPoint.y, ellipseCurve.getTangentAt(0).y);
@@ -123,7 +126,7 @@ export const getCoordinates = (columnNum: number, rowNum: number) => {
       object3D.lookAt(lookAt);
 
       const flatObject3D = new Object3D();
-      const flatColumnPoint = flatColumnPoints[2 * ci + 1];
+      const flatColumnPoint = flatColumnPoints[columnStart + 2 * ci + 1];
       const flatPosition = new Vector3(flatColumnPoint.x, rowPoint.y, -xRadius);
       const flatLookAt = new Vector3(flatColumnPoint.x, rowPoint.y, 0);
       // const _rotateAngleX = new Euler( 0, 0, 0, 'XYZ' );
@@ -161,17 +164,10 @@ export const createCardItems = (dataSource: AppData[]) => {
   const totalColumnNum = 24;
 
   // const coordinates = computeCoordinate(dataSource.length);
-  const { elementWidth, elementHeight, coordinates, leftControlPoint, rightControlPoint } = getCoordinates(totalColumnNum, totalRowNum);
   const { row, column } = getRowsAndColumnsNum(dataSource.length);
-
-  const columnStart = Math.floor((totalColumnNum - column) / 2);
-  const rowStart = Math.floor((totalRowNum - row) / 2);
-
-  const startIndex = rowStart * totalColumnNum + columnStart;
+  const { elementWidth, elementHeight, coordinates, leftControlPoint, rightControlPoint } = getCoordinates(totalColumnNum, totalRowNum, column > totalColumnNum ? totalColumnNum : column, row > totalRowNum ? totalRowNum : row);
 
   dataSource.map((item, index) => {
-    const _index = startIndex + index % column + totalColumnNum * Math.floor(index / column);
-
     const element = document.createElement(
       "data-view.app-wall-card-item"
     ) as AppWallCardItem;
@@ -187,8 +183,8 @@ export const createCardItems = (dataSource: AppData[]) => {
     css3DObject.name = `card-item-${item.key}`;
     css3DObject.position.set(MathUtils.randFloatSpread(4000), MathUtils.randFloatSpread(4000), 0);
 
-    if (!coordinates[_index]) return;
-    const { object3D, flatObject3D } = coordinates[_index];
+    if (!coordinates[index]) return;
+    const { object3D, flatObject3D } = coordinates[index];
 
     const turnObject3D = object3D.position.x < 0 ? rightControlPoint : leftControlPoint
 
@@ -280,8 +276,8 @@ export const createTrapezoidalRightOrLeftElement = (props: {
   const cantCard = document.createElement("div");
   cantCard.className = "trapezoidalLeftOrRightAnimation";
   wrapper.appendChild(cantCard);
-  const start:Vector3Tuple= isLeft ? [-BW / 2, 0, 0] : [BW / 2, 0, 0];
-  const end:Vector3Tuple = isLeft ? [-TW / 2, 0, d] : [TW / 2, 0, d];
+  const start: Vector3Tuple = isLeft ? [-BW / 2, 0, 0] : [BW / 2, 0, 0];
+  const end: Vector3Tuple = isLeft ? [-TW / 2, 0, d] : [TW / 2, 0, d];
   const objectCantModel = new CSS3DObject(wrapper);
   const { centerVector, subVector } = getCenterPointOrSubPoint(start, end);
   objectCantModel.position.copy(centerVector);
@@ -311,8 +307,8 @@ export const createTrapezoidalTopOrBottomElement = (props: {
   cantCard.className = "trapezoidalTopOrBottomAnimation";
   wrapper.appendChild(cantCard);
   const objectCantModel = new CSS3DObject(wrapper);
-  const start:Vector3Tuple = isTop ? [0, -BH / 2, 0] : [0, BH / 2, 0];
-  const end:Vector3Tuple = isTop ? [0, -TH / 2, d] : [0, TH / 2, d];
+  const start: Vector3Tuple = isTop ? [0, -BH / 2, 0] : [0, BH / 2, 0];
+  const end: Vector3Tuple = isTop ? [0, -TH / 2, d] : [0, TH / 2, d];
   const {
     centerVector,
     subVector

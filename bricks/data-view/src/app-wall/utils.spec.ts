@@ -64,7 +64,7 @@ describe("utils", () => {
         );
      })
     test("getCoordinates", () =>{
-        const  result = getCoordinates(4, 2);
+        const  result = getCoordinates(4, 2, 4, 2);
         expect(result).toHaveProperty("elementWidth",1074.1909650384132);
         expect(result).toHaveProperty("elementHeight",890);
        })
@@ -72,7 +72,7 @@ describe("utils", () => {
       const {css3DObjects} = createCardItems(dataSource as AppData[]);
       expect(css3DObjects.length).toBe(52);
       const {css3DObjects:_css3DObjects} = createCardItems([...dataSource,...dataSource,...dataSource,...dataSource,...dataSource] as AppData[]);
-        expect(_css3DObjects.length).toBe(233); //测试超出数量不显示
+        expect(_css3DObjects.length).toBe(216); //测试超出数量不显示
 
     })
     test("createRelationLine",()=>{
