@@ -206,7 +206,7 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
     })
 
     new Tween({}, tweenGroupRef.current)
-      .to({}, 4000)
+      .to({}, 6000)
       .onUpdate(render)
       .start();
     // 需要确定目标位置
@@ -222,17 +222,17 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
       rightOnClick: () => rightBtnOnClick(appData),
       leftOnClick: () => leftBtnOnClick(appData)
     });
-
-    const centerTween = new Tween(threeGroupRef.current.position, tweenGroupRef.current)
-      .to({ x: -objectContainer.position.x, z: 500 }, 500)
-      .easing(Easing.Linear.None).onUpdate(render)
-    new Tween(threeGroupRef.current.rotation, tweenGroupRef.current)
-      .to({ x: -Math.PI / 6, y: 0, z: 0 }, 500).easing(Easing.Exponential.InOut)
+    threeGroupPositionRef.current = threeGroupRef.current.position.clone();
+    new Tween({rotation:threeGroupRef.current.rotation, position: threeGroupRef.current.position}, tweenGroupRef.current)
+      .to({rotation:{ x: -Math.PI / 4, y: 0, z: 0 }, position: {x: -objectContainer.position.x,y: 1600}}, 1500).easing(Easing.Exponential.InOut).onUpdate((object, elapsed)=>{
+      threeGroupRef.current.position.x = object.position.x;
+      threeGroupRef.current.position.y = object.position.y;
+      threeGroupRef.current.rotation.copy(object.rotation);
+    })
       .start().onComplete(() => {
         trapezoidalRef.current = objectContainer;
         threeGroupRef.current.add(trapezoidalRef.current);
-        threeGroupPositionRef.current = threeGroupRef.current.position.clone();
-        centerTween.start()
+        // threeGroupPositionRef.current = threeGroupRef.current.position.clone();
         render()
       });
 
@@ -246,27 +246,29 @@ export function AppWallElement(props: AppWallProps): React.ReactElement {
   const handleDBClickEventClose = (css3DObjects: CSS3DObject[]) => {
     threeGroupRef.current.remove(trapezoidalRef.current);
     closeBtnRef.current.style.visibility = "hidden";
-    new Tween(threeGroupRef.current.position, tweenGroupRef.current)
-      .to(threeGroupPositionRef.current, 500)
-      .easing(Easing.Linear.None).onUpdate(render)
-      .chain(new Tween(threeGroupRef.current.rotation, tweenGroupRef.current)
-        .to({ x: 0, y: 0, z: 0 }, 500).easing(Easing.Exponential.InOut).onComplete(() => {
-          css3DObjects.map(object => {
-            const { cardItemObject3D } = object.userData as UserData;
-            new Tween(object.position, tweenGroupRef.current)
-              .to(cardItemObject3D.curve.position, 500)
-              .easing(Easing.Exponential.InOut)
-              .start();
-            new Tween(object.rotation, tweenGroupRef.current)
-              .to(eulerToXYZ(cardItemObject3D.curve.rotation), 500)
-              .easing(Easing.Exponential.InOut)
-              .start();
-            clickAnimationRunning.current = "other";
-            object.element.classList.remove("dark");
-          })
+    new Tween({rotation:threeGroupRef.current.rotation, position: threeGroupRef.current.position}, tweenGroupRef.current)
+        .to({rotation:{x:0,y:0,z:0}, position: threeGroupPositionRef.current}, 1500)
+        .easing(Easing.Exponential.InOut)
+        .onUpdate((object)=>{
+          threeGroupRef.current.position.copy(object.position);
+          threeGroupRef.current.rotation.copy(object.rotation);
         })
-      )
-      .start()
+        .onComplete(() => {
+      css3DObjects.map(object => {
+        const { cardItemObject3D } = object.userData as UserData;
+        new Tween(object.position, tweenGroupRef.current)
+            .to(cardItemObject3D.curve.position, 500)
+            .easing(Easing.Exponential.InOut)
+            .start();
+        new Tween(object.rotation, tweenGroupRef.current)
+            .to(eulerToXYZ(cardItemObject3D.curve.rotation), 500)
+            .easing(Easing.Exponential.InOut)
+            .start();
+        clickAnimationRunning.current = "other";
+        object.element.classList.remove("dark");
+      })
+    }).start()
+
     new Tween({}, tweenGroupRef.current)
       .to({}, 4000)
       .onUpdate(render)

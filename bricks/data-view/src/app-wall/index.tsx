@@ -5,7 +5,7 @@ import variablesStyleText from "../data-view-variables.shadow.css";
 import styleText from "./app-wall.shadow.css";
 import { AppWallElement } from "./app-wall.js";
 import type { AppData, Relation } from "./utils.js";
-
+import {dataSource,relations} from  "./mockData.js"
 const { defineElement, property, event } = createDecorators();
 
 export interface AppWallProps {
@@ -38,7 +38,7 @@ class AppWall
   @property({
     attribute: false,
   })
-  accessor dataSource: AppData[];
+  accessor dataSource: AppData[] = dataSource as AppData[];
 
   /**
    * @default
@@ -48,7 +48,7 @@ class AppWall
   @property({
     attribute: false,
   })
-  accessor relations: Relation[];
+  accessor relations: Relation[]=relations as Relation[];
 
   /**
   * @detail AppData
