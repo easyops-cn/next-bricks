@@ -5,7 +5,6 @@
   "rangeStrategy": "bump",
   "semanticCommits": "enabled",
   "commitMessagePrefix": "chore(deps):",
-  "assignees": ["weareoutman"],
   "ignorePresets": [":ignoreModulesAndTests"],
   "packageRules": [
     {
@@ -18,7 +17,8 @@
         "@next-core/brick-icons",
         "@next-core/illustrations"
       ],
-      "groupName": "next-core packages"
+      "groupName": "next-core packages",
+      "assignees": ["weareoutman"]
     },
     {
       "matchPackageNames": [
@@ -29,7 +29,8 @@
       ],
       "matchPackagePatterns": ["^@next-dll/"],
       "enabled": true,
-      "groupName": "legacy v2 packages"
+      "groupName": "legacy v2 packages",
+      "assignees": ["weareoutman"]
     },
     {
       "matchPackageNames": ["history", "js-yaml", "node", "react", "react-dom"],
@@ -43,7 +44,8 @@
     },
     {
       "groupName": "type packages",
-      "matchPackagePatterns": ["^@types/"]
+      "matchPackagePatterns": ["^@types/"],
+      "assignees": ["weareoutman"]
     }
   ],
   "postUpdateOptions": ["yarnDedupeHighest"]
