@@ -1,0 +1,6 @@
+- brick: data-view.cabinet-node
+  properties:
+    type: container-group
+    nodeTitle: 容器组
+    style:
+      width: 100px
