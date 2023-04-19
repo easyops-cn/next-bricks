@@ -1,0 +1,6 @@
+- brick: data-view.cabinet-app-layer
+  properties:
+    appTitle: inventory-api
+    style:
+      width: 600px
+
