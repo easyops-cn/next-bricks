@@ -22,7 +22,7 @@
 }
 
 .app-title {
-  font-size: 32px;
+  font-size: var(--title-font-size-larger);
   font-weight: var(--font-weight-500);
   color: var(--palette-rgba-white-10);
   line-height: 45px;
