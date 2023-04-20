@@ -26,6 +26,7 @@ export interface AppWallProps {
  */
 @defineElement("data-view.app-wall", {
   styleTexts: [variablesStyleText, styleText],
+  dependencies: ["data-view.app-wall-card-item", "data-view.app-wall-relation-line", "data-view.app-wall-system-card"],
 })
 class AppWall
   extends ReactNextElement
