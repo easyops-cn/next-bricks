@@ -1,8 +1,5 @@
 import { MathUtils, EllipseCurve, LineCurve, Vector2, Vector3, Object3D, Quaternion, Euler,Vector3Tuple } from "three";
 import { CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
-import "./card-item/index.js";
-import "./relation-line/index.js";
-import "./system-card/index.js";
 import type { AppWallCardItem, AppWallCardItemProps } from "./card-item/index.js";
 import type { AppWallRelationLine, AppWallRelationLineProps } from "./relation-line/index.js";
 import type { SystemCard, SystemCardProps } from "./system-card/index.js";
