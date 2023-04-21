@@ -1,4 +1,4 @@
-import {describe, test, expect,jest,beforeEach,afterEach} from "@jest/globals";
+import {describe, test, expect,jest,afterEach} from "@jest/globals";
 import {act} from "react-dom/test-utils";
 import "./index.jsx";
 
@@ -13,21 +13,16 @@ const data: CabinetNodeProps[] = [{
     nodeTitle: "255.255.200"
 }
 ];
-
+jest.mock("../../hooks/index.js", () => {
+    return {
+        useResizeObserver: jest.fn().mockReturnValue([{ current: null }, { clientWidth: 462, clientHeight: 500 }])
+        // 最大 12 ，最小42;
+    }
+})
 
 describe("data-view.cabinet-container", () => {
-    const originalGetBoundingClientRect = Element.prototype.getBoundingClientRect;
-    beforeEach(() => {
-        Element.prototype.getBoundingClientRect = jest.fn(() => ({
-            width: 462,
-            height: 500,
-        }) as DOMRect);
-    });
-    // 最大 12 ，最小48;
-
     afterEach(() => {
         jest.clearAllMocks();
-        Element.prototype.getBoundingClientRect = originalGetBoundingClientRect;
     });
     test("basic usage and maxSize", async () => {
         const element = document.createElement("data-view.cabinet-container") as CabinetContainer;
