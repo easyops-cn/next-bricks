@@ -6,7 +6,7 @@ import variablesStyleText from "../../data-view-variables.shadow.css";
 
 const {defineElement, property} = createDecorators();
 
-interface CabinetButtonProps {
+export interface CabinetButtonProps {
     buttonStyle?: React.CSSProperties
 }
 

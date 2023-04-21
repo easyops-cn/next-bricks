@@ -14,5 +14,6 @@ import "./app-wall/relation-line/index.js";
 import "./cabinet/cabinet-button/index.js";
 import "./cabinet/cabinet-node/index.js";
 import "./cabinet/cabinet-app-layer/index.js";
+import "./cabinet/cabinet-container/index.js";
+import "./cabinet/index.js";
 import "./app-wall/index.js";
-import  "./cabinet/cabinet-container/index.js";
