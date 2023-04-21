@@ -38,12 +38,12 @@
   display: none;
 }
 
-.card-item {
+.card-item-wrap {
   opacity: 1;
   transition: opacity 0.5s ease, width 0.3s, height 0.3s;
 }
 
-.card-item.dark {
+.card-item-wrap.dark {
   opacity: 0.3;
 }
 
@@ -154,3 +154,4 @@
   }
 
 }
+
