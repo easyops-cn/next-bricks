@@ -1,10 +1,11 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useMemo} from "react";
 import {ReactNextElement, wrapBrick} from "@next-core/react-element";
 import {createDecorators} from "@next-core/element";
 import variablesText from "../../data-view-variables.shadow.css";
 import styleText from "./cabinet-container.shadow.css";
 import classNames from "classnames";
 import {CabinetNodeProps, CabinetNode} from "../cabinet-node/index.js";
+import {useResizeObserver} from "../../hooks/index.js";
 
 
 const {defineElement, property} = createDecorators();
@@ -16,7 +17,7 @@ const WrappedNode = wrapBrick<CabinetNode, CabinetNodeProps>(
 interface CabinetContainerProps {
     data: CabinetNodeProps[];
     type?: ContainerType;
-    customTitle?: string |undefined;
+    customTitle?: string | undefined;
     status?: "active" | "faded";
 
 }
@@ -49,7 +50,7 @@ class CabinetContainer extends ReactNextElement implements CabinetContainerProps
      * @description 数据
      */
     @property({attribute: false})
-    accessor data: CabinetNodeProps[];
+    accessor data: CabinetNodeProps[] = [];
 
     /**
      * @kind "active" | "faded"
@@ -80,14 +81,9 @@ class CabinetContainer extends ReactNextElement implements CabinetContainerProps
 }
 
 export function CabinetContainerComponent(props: CabinetContainerProps): React.ReactElement {
-    const {type ,data=[],status, customTitle} = props;
-    const containerRef = useRef<HTMLDivElement>();
-    const [layoutWidth, setLayoutWidth] = useState<Record<string, number>>({
-        width: 0,
-        itemWidth: 0
-    });
-
-    const binarySearch = (maxSizeCol:number, minSizeCol:number, maxSizeRow:number, minSizeRow:number):{col:number, row:number} => {
+    const {type, data, status, customTitle} = props;
+    const [containerRef, {clientWidth, clientHeight}] = useResizeObserver<HTMLDivElement>();
+    const binarySearch = (maxSizeCol: number, minSizeCol: number, maxSizeRow: number, minSizeRow: number): { col: number, row: number } => {
         // 利用二分法，去找到一个合适大小；
         // maxSizeCol < minSizeCol  maxSizeRow< minSizeRow
         const centerCol = Math.floor((maxSizeCol+minSizeCol)/2);
@@ -110,48 +106,45 @@ export function CabinetContainerComponent(props: CabinetContainerProps): React.R
             return  binarySearch(maxSizeCol,minSizeCol,maxRow, minRow)
         }
     }
-
-    useEffect(() => {
-        if(!data.length) {
+    const layoutWidth = useMemo(() => {
+        if (!data.length) {
             return
         }
-        if (containerRef.current) {
-            //数据总量： A， 整个屏幕最大尺寸可以放 B, 整个屏幕最小尺寸可以放C,
-            // B>=A,用 最大尺寸
-            // C>=A: 用最小尺寸
-            // B< A <C: 反推尺寸,
-            const maxWidth = 92, minWidth = 56, maxHeight = 105, minHeight = 63;
-            const {width, height} = containerRef.current.getBoundingClientRect();
-            const realWidth = width - 26;
-            const realHeight = height - 83;
-            const maxSizeCol = Math.floor(realWidth / maxWidth),
-                maxSizeRow = Math.floor(realHeight / maxHeight),
-                minSizeCol = Math.floor(realWidth / minWidth),
-                minSizeRow = Math.floor(realHeight / minHeight);
-            const maxSizeNum = maxSizeCol * maxSizeRow,
-                minSizeNum = minSizeCol * minSizeRow;
-            const allNum = data.length;
-            if (allNum <= maxSizeNum) {
-                setLayoutWidth( {
-                    width:  realWidth/maxSizeCol,
-                    itemWidth:  maxWidth
-                });
-            } else if (allNum >= minSizeNum) {
-                setLayoutWidth( {
-                    width: realWidth/minSizeCol,
-                    itemWidth:  minWidth
-                });
-            } else {
-                // 在区间内， 希望撑满整个屏幕, 尺寸肯定在最大和最小之间
-             const {col} =  binarySearch(maxSizeCol, minSizeCol, maxSizeRow, minSizeRow);
-                setLayoutWidth( {
-                    width: realWidth/col,
-                    itemWidth:  Math.max(realWidth/col - 10,minWidth),
-                });
-            }
 
+        //数据总量： A， 整个屏幕最大尺寸可以放 B, 整个屏幕最小尺寸可以放C,
+        // B>=A,用 最大尺寸
+        // C>=A: 用最小尺寸
+        // B< A <C: 反推尺寸,
+        const maxWidth = 92, minWidth = 56, maxHeight = 105, minHeight = 63;
+        const realWidth = clientWidth - 26;
+        const realHeight = clientHeight - 83;
+        const maxSizeCol = Math.floor(realWidth / maxWidth),
+            maxSizeRow = Math.floor(realHeight / maxHeight),
+            minSizeCol = Math.floor(realWidth / minWidth),
+            minSizeRow = Math.floor(realHeight / minHeight);
+        const maxSizeNum = maxSizeCol * maxSizeRow,
+            minSizeNum = minSizeCol * minSizeRow;
+        const allNum = data.length;
+        if (allNum <= maxSizeNum) {
+            return {
+                width: realWidth / maxSizeCol,
+                itemWidth: maxWidth
+            };
+        } else if (allNum >= minSizeNum) {
+            return {
+                width: realWidth / minSizeCol,
+                itemWidth: minWidth
+            };
+        } else {
+            // 在区间内， 希望撑满整个屏幕, 尺寸肯定在最大和最小之间
+            const {col} = binarySearch(maxSizeCol, minSizeCol, maxSizeRow, minSizeRow);
+            return {
+                width: realWidth / col,
+                itemWidth: Math.max(realWidth / col - 10, minWidth),
+            };
         }
-    }, [data.length])
+
+    }, [data.length, clientHeight, clientWidth])
 
     return <div className="wrapper" ref={containerRef}>
         <div className={classNames("container", {
