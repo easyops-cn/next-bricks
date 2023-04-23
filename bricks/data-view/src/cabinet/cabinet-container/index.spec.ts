@@ -1,5 +1,6 @@
 import {describe, test, expect,jest,afterEach} from "@jest/globals";
 import {act} from "react-dom/test-utils";
+import {fireEvent } from "@testing-library/react";
 import "./index.jsx";
 
 import {CabinetContainer} from "./index.jsx";
@@ -41,9 +42,13 @@ describe("data-view.cabinet-container", () => {
             document.body.appendChild(element);
         })
         expect(element.shadowRoot).toBeTruthy();
+        const nodeElement = element.shadowRoot.querySelector(".item");
         expect(element.shadowRoot.querySelector(".footer").textContent).toBe("集群容器");
         expect(element.shadowRoot.querySelector(".itemContent").getAttribute("style")).toBe("width: 108px;")
-        expect(element.shadowRoot.querySelector(".item").getAttribute("style")).toBe("width: 92px;");
+        expect(nodeElement.getAttribute("style")).toBe("width: 92px;");
+        const wrapperElement = element.shadowRoot.querySelector(".wrapper");
+        fireEvent.click(wrapperElement);
+        fireEvent.click(nodeElement);
         act(() => {
             document.body.removeChild(element);
         });
