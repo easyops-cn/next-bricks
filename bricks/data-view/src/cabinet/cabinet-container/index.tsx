@@ -1,6 +1,6 @@
 import React, {useMemo} from "react";
 import {ReactNextElement, wrapBrick} from "@next-core/react-element";
-import {createDecorators} from "@next-core/element";
+import {createDecorators, EventEmitter} from "@next-core/element";
 import variablesText from "../../data-view-variables.shadow.css";
 import styleText from "./cabinet-container.shadow.css";
 import classNames from "classnames";
@@ -8,17 +8,22 @@ import {CabinetNodeProps, CabinetNode} from "../cabinet-node/index.js";
 import {useResizeObserver} from "../../hooks/index.js";
 
 
-const {defineElement, property} = createDecorators();
+const {defineElement, property, event} = createDecorators();
 type ContainerType = "host" | "k8s";
 const WrappedNode = wrapBrick<CabinetNode, CabinetNodeProps>(
     "data-view.cabinet-node"
 );
+export interface  ClickEventDataType {
+    type: "node"|"container",
+    data: CabinetNodeProps|undefined
+}
 
-interface CabinetContainerProps {
+export interface CabinetContainerProps {
     data: CabinetNodeProps[];
     type?: ContainerType;
     customTitle?: string | undefined;
     status?: "active" | "faded";
+    handleClick?: (params:ClickEventDataType)=> void
 
 }
 
@@ -70,18 +75,31 @@ class CabinetContainer extends ReactNextElement implements CabinetContainerProps
     @property()
     accessor customTitle: string|undefined
 
+    /**
+     * @detail
+     * @description 节点或者container 点击事件
+     */
+    @event({type: "container.click"})
+    accessor #onHandleClick!: EventEmitter<ClickEventDataType>;
+
+    handleClick =(params:ClickEventDataType) =>{
+       this.#onHandleClick.emit(params)
+    }
+
+
     render(): React.ReactNode {
         return <CabinetContainerComponent
             type={this.type}
             data={this.data}
             status={this.status}
             customTitle={this.customTitle}
+            handleClick={this.handleClick}
         />;
     }
 }
 
 export function CabinetContainerComponent(props: CabinetContainerProps): React.ReactElement {
-    const {type, data, status, customTitle} = props;
+    const {type, data, status, customTitle, handleClick} = props;
     const [containerRef, {clientWidth, clientHeight}] = useResizeObserver<HTMLDivElement>();
     const binarySearch = (maxSizeCol: number, minSizeCol: number, maxSizeRow: number, minSizeRow: number): { col: number, row: number } => {
         // 利用二分法，去找到一个合适大小；
@@ -155,11 +173,27 @@ export function CabinetContainerComponent(props: CabinetContainerProps): React.R
         }
 
     }, [data.length, clientHeight, clientWidth])
+    const handleNodeClick = (e: React.MouseEvent<HTMLDivElement>, item: CabinetNodeProps) =>{
+        e.stopPropagation();
+        handleClick?.({
+            type: "node",
+            data: item
+        })
+
+    }
+    const handleContainerClick = (e:React.MouseEvent<HTMLDivElement>)=>{
+        e.stopPropagation();
+        handleClick?.({
+            type: "container",
+            data: undefined
+        })
+    }
+
 
     return <div className={classNames("wrapper",{
         hostWrapper: type === "host",
         k8sWrapper: type === "k8s",
-    },status && `wrapper-${status}`)} ref={containerRef}>
+    },status && `wrapper-${status}`)} ref={containerRef} onClick={handleContainerClick}>
         <div className={classNames("container", {
             hostContainer: type === "host",
             k8sContainer: type === "k8s",
@@ -170,8 +204,8 @@ export function CabinetContainerComponent(props: CabinetContainerProps): React.R
                     {
                         data.map((item, index) => (
                             <div key={index} className="itemContent" style={{width:layoutWidth?.width}}>
-                                <div className="item" style={{width:layoutWidth?.itemWidth}}>
-                                    <WrappedNode type={item.type} nodeTitle={item.nodeTitle} status={item.status} />
+                                <div className="item" style={{width:layoutWidth?.itemWidth}} onClick={(e)=>handleNodeClick(e, item)}>
+                                    <WrappedNode type={item.type} nodeTitle={item.nodeTitle} status={item.status}  />
                                 </div>
                             </div>))
                     }
