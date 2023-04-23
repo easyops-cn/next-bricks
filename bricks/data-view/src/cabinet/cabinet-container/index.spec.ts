@@ -15,7 +15,15 @@ const data: CabinetNodeProps[] = [{
 ];
 jest.mock("../../hooks/index.js", () => {
     return {
-        useResizeObserver: jest.fn().mockReturnValue([{ current: null }, { clientWidth: 462, clientHeight: 500 }])
+        useResizeObserver: jest.fn()
+            .mockReturnValueOnce([{ current: null }, { clientWidth: 462, clientHeight: 500 }])
+            .mockReturnValueOnce([{ current: null }, { clientWidth: 462, clientHeight: 500 }])
+            .mockReturnValueOnce([{ current: null }, { clientWidth: 462, clientHeight: 500 }])
+            .mockReturnValueOnce([{ current: null }, { clientWidth: 462, clientHeight: 500 }])
+            .mockReturnValueOnce([{ current: null }, { clientWidth: 462, clientHeight: 500 }])
+            .mockReturnValueOnce([{ current: null }, { clientWidth: 100, clientHeight: 280 }])
+            .mockReturnValueOnce([{ current: null }, { clientWidth: 20, clientHeight: 80 }])
+
         // 最大 12 ，最小42;
     }
 })
@@ -34,7 +42,7 @@ describe("data-view.cabinet-container", () => {
         })
         expect(element.shadowRoot).toBeTruthy();
         expect(element.shadowRoot.querySelector(".footer").textContent).toBe("集群容器");
-        expect(element.shadowRoot.querySelector(".itemContent").getAttribute("style")).toBe("width: 109px;")
+        expect(element.shadowRoot.querySelector(".itemContent").getAttribute("style")).toBe("width: 108px;")
         expect(element.shadowRoot.querySelector(".item").getAttribute("style")).toBe("width: 92px;");
         act(() => {
             document.body.removeChild(element);
@@ -53,8 +61,9 @@ describe("data-view.cabinet-container", () => {
         })
         expect(element.shadowRoot).toBeTruthy();
         expect(element.shadowRoot.querySelector(".footer").textContent).toBe("k8s容器");
-        expect(element.shadowRoot.querySelector(".container").classList.contains("container-active"))
-        expect(element.shadowRoot.querySelector(".itemContent").getAttribute("style")).toBe("width: 62.285714285714285px;");
+        expect(element.shadowRoot.querySelector(".container").classList.contains("container-active"));
+        expect(element.shadowRoot.querySelector(".wrapper").classList.contains("wrapper-active"));
+        expect(element.shadowRoot.querySelector(".itemContent").getAttribute("style")).toBe("width: 62px;");
         expect(element.shadowRoot.querySelector(".item").getAttribute("style")).toBe("width: 56px;");
         act(() => {
             document.body.removeChild(element);
@@ -73,8 +82,9 @@ describe("data-view.cabinet-container", () => {
         })
         expect(element.shadowRoot).toBeTruthy();
         expect(element.shadowRoot.querySelector(".footer").textContent).toBe("淡化");
-        expect(element.shadowRoot.querySelector(".container").classList.contains("container-faded"))
-        expect(element.shadowRoot.querySelector(".content").innerHTML).toBeFalsy();
+        expect(element.shadowRoot.querySelector(".container").classList.contains("container-faded"));
+        expect(element.shadowRoot.querySelector(".wrapper").classList.contains("wrapper-faded"));
+        expect(element.shadowRoot.querySelector(".contentLayout").innerHTML).toBeFalsy();
         act(() => {
             document.body.removeChild(element);
         });
@@ -89,8 +99,8 @@ describe("data-view.cabinet-container", () => {
             element.status ="faded";
             document.body.appendChild(element);
         })
-        expect(element.shadowRoot.querySelector(".itemContent").getAttribute("style")).toBe("width: 72.66666666666667px;");
-        expect(element.shadowRoot.querySelector(".item").getAttribute("style")).toBe("width: 62.66666666666667px;");
+        expect(element.shadowRoot.querySelector(".itemContent").getAttribute("style")).toBe("width: 87px;");
+        expect(element.shadowRoot.querySelector(".item").getAttribute("style")).toBe("width: 77px;");
         expect(element.shadowRoot).toBeTruthy();
         act(() => {
             document.body.removeChild(element);
@@ -104,13 +114,42 @@ describe("data-view.cabinet-container", () => {
             element.data = new Array(20).fill(data[0]);
             document.body.appendChild(element);
         })
-        expect(element.shadowRoot.querySelector(".itemContent").getAttribute("style")).toBe("width: 87.2px;");
-        expect(element.shadowRoot.querySelector(".item").getAttribute("style")).toBe("width: 77.2px;");
+        expect(element.shadowRoot.querySelector(".itemContent").getAttribute("style")).toBe("width: 108px;");
+        expect(element.shadowRoot.querySelector(".item").getAttribute("style")).toBe("width: 98.75px;");
         expect(element.shadowRoot).toBeTruthy();
         act(() => {
             document.body.removeChild(element);
         });
         expect(document.body.contains(element)).toBeFalsy();
     })
-
+    test("render middleSize and middleSize eq 1", async () => {
+        const element = document.createElement("data-view.cabinet-container") as CabinetContainer;
+        expect(element.shadowRoot).toBeFalsy();
+        act(() => {
+            element.data = data;
+            document.body.appendChild(element);
+        })
+        expect(element.shadowRoot.querySelector(".itemContent").getAttribute("style")).toBe("width: 73px;");
+        expect(element.shadowRoot.querySelector(".item").getAttribute("style")).toBe("width: 63px;");
+        expect(element.shadowRoot).toBeTruthy();
+        act(() => {
+            document.body.removeChild(element);
+        });
+        expect(document.body.contains(element)).toBeFalsy();
+    })
+    test("render clientWidth", async () => {
+        const element = document.createElement("data-view.cabinet-container") as CabinetContainer;
+        expect(element.shadowRoot).toBeFalsy();
+        act(() => {
+            element.data = data;
+            document.body.appendChild(element);
+        })
+        expect(element.shadowRoot.querySelector(".itemContent").getAttribute("style")).toBeNull();
+        expect(element.shadowRoot.querySelector(".item").getAttribute("style")).toBeNull();
+        expect(element.shadowRoot).toBeTruthy();
+        act(() => {
+            document.body.removeChild(element);
+        });
+        expect(document.body.contains(element)).toBeFalsy();
+    })
 })
