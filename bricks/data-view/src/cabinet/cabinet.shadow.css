@@ -13,6 +13,36 @@
   box-sizing: border-box;
 }
 
-.cluster-container{
+.wrapper {
+  transform-style: preserve-3d;
+  perspective-origin: 50% 50%;
+  perspective: 4000px;
+  height: 100%;
+}
+
+.container {
   display: flex;
+  position: relative;
+  height: 100%;
+  flex-direction: column;
+  transform-origin: 50% 50%;
+  transform: rotateX(45deg);
+}
+
+.app-layer {
+  width: 40%;
+  margin-bottom: 28px;
+  align-self: center;
+}
+
+.cluster-container {
+  flex: 1;
+  display: grid;
+  grid-gap: 17px;
+}
+
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
 }

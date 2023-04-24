@@ -1,5 +1,5 @@
-import React from "react";
-import { createDecorators } from "@next-core/element";
+import React, { Ref, createRef, forwardRef, useImperativeHandle, useState } from "react";
+import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import variablesStyleText from "../data-view-variables.shadow.css";
 import styleText from "./cabinet.shadow.css";
@@ -22,7 +22,7 @@ const WrappedCabinetContainer = wrapBrick<CabinetContainer, CabinetContainerProp
   "data-view.cabinet-container"
 );
 
-const { defineElement, property } = createDecorators();
+const { defineElement, property, method, event } = createDecorators();
 
 interface Node {
   nodeTitle: string,
@@ -43,9 +43,116 @@ interface AppData {
   clusters: Clusters[],
 }
 
+interface ActiveData { type?: "layer" | "cluster" | "node", keys?: { layer?: string, cluster?: string, node?: string } }
+
 export interface CabinetGraphProps {
   dataSource: AppData,
+  onCloseBtnClick?: () => void;
 }
+
+export interface CabinetGraphElementRef {
+  setActiveData: (data?: ActiveData) => void;
+}
+
+const CabinetGraphElement = forwardRef(
+  function LegacyCabinetGraphElement(props: CabinetGraphProps, ref: Ref<CabinetGraphElementRef>): React.ReactElement {
+    const { dataSource, onCloseBtnClick } = props;
+    const [active, setActive] = useState<ActiveData>({});
+
+    useImperativeHandle(ref, () => ({
+      setActiveData: setActive,
+    }));
+
+    return (
+      <div className="wrapper" onClick={(e) => {
+        setActive({});
+      }}>
+        <div className="container">
+          <WrappedCabinetAppLayer className="app-layer" appTitle={dataSource.appName}
+            onClick={(e) => {
+              e.stopPropagation();
+              setActive({
+                type: "layer",
+                keys: {
+                  layer: dataSource.key,
+                }
+              });
+            }}
+            status={active.type === "layer" && active.keys.layer == dataSource.key ? "active" : undefined}
+          />
+          <div className="cluster-container" style={{ gridTemplateColumns: `repeat(${dataSource.clusters.length}, 1fr)` }}>
+            {dataSource.clusters.map(clu => {
+              return <WrappedCabinetContainer key={clu.key} type={clu.type} customTitle={clu.clusterName}
+                data={clu.nodes.map(node => ({
+                  nodeTitle: node.nodeTitle, type: node.type, key: node.key,
+                  status: (() => {
+                    switch (active.type) {
+                      case "layer": {
+                        return undefined;
+                      }
+                      case "cluster": {
+                        return active.keys.cluster === clu.key ? undefined : "faded";
+                      }
+                      case "node": {
+                        return active.keys.node === node.key ? "active" : "faded";
+                      }
+                      default:
+                        return undefined;
+                    }
+                  })()
+                }))}
+                handleClick={({ type, data }) => {
+                  switch (type) {
+                    case "container": {
+                      setActive({
+                        type: "cluster",
+                        keys: {
+                          layer: dataSource.key,
+                          cluster: clu.key
+                        }
+                      });
+                      break;
+                    }
+                    case "node": {
+                      setActive({
+                        type: "node",
+                        keys: {
+                          layer: dataSource.key,
+                          cluster: clu.key,
+                          node: (data as any).key,
+                        }
+                      });
+                      break;
+                    }
+                  }
+                }}
+                status={(() => {
+                  switch (active.type) {
+                    case "layer": {
+                      return undefined;
+                    }
+                    case "cluster": {
+                      return active.keys.cluster === clu.key ? "active" : "faded";
+                    }
+                    case "node": {
+                      return active.keys.cluster === clu.key ? undefined : "faded";
+                    }
+                    default:
+                      return undefined;
+                  }
+                })()}
+              />
+            })}
+          </div>
+          <WrappedCabinetButton className="close-button" onClick={(e) => {
+            e.stopPropagation();
+            onCloseBtnClick?.();
+          }} />
+        </div>
+      </div>
+    );
+  }
+);
 
 /**
  * @id data-view.cabinet-graph
@@ -59,6 +166,7 @@ export interface CabinetGraphProps {
   styleTexts: [variablesStyleText, styleText],
 })
 class CabinetGraph extends ReactNextElement implements CabinetGraphProps {
+  #cabinetGraphRef = createRef<CabinetGraphElementRef>();
   /**
   * @kind AppData
   * @required true
@@ -70,31 +178,34 @@ class CabinetGraph extends ReactNextElement implements CabinetGraphProps {
   })
   accessor dataSource: AppData;
 
+  /**
+  * @detail
+  * @description 关闭按钮点击事件
+  */
+  @event({ type: "close.button.click" })
+  accessor #closeBtnClickEvent!: EventEmitter<void>;
+
+  #handleCloseBtnClick = (): void => {
+    this.#closeBtnClickEvent.emit();
+  };
+
+  /**
+   * @description 修改选中数据
+   */
+  @method()
+  setActiveData(data?: ActiveData) {
+    this.#cabinetGraphRef.current?.setActiveData(data);
+  }
+
   render() {
     return (
       <CabinetGraphElement
+        ref={this.#cabinetGraphRef}
         dataSource={this.dataSource}
+        onCloseBtnClick={this.#handleCloseBtnClick}
       />
     );
   }
-}
-
-function CabinetGraphElement(props: CabinetGraphProps): React.ReactElement {
-  const { dataSource } = props;
-
-  return (
-    <div >
-      <WrappedCabinetAppLayer appTitle={dataSource.appName} />
-      <div className="cluster-container">
-        {dataSource.clusters.map(v => {
-          return <WrappedCabinetContainer key={v.key}
-            type={v.type} customTitle={v.clusterName}
-            data={v.nodes.map(v => ({ nodeTitle: v.nodeTitle, type: v.type }))}
-          />
-        })}
-      </div>
-    </div>
-  );
 }
 
 export { CabinetGraph };
