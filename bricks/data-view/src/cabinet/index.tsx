@@ -87,9 +87,6 @@ const CabinetGraphElement = forwardRef(
                   nodeTitle: node.nodeTitle, type: node.type, key: node.key,
                   status: (() => {
                     switch (active.type) {
-                      case "layer": {
-                        return undefined;
-                      }
                       case "cluster": {
                         return active.keys.cluster === clu.key ? undefined : "faded";
                       }
@@ -128,9 +125,6 @@ const CabinetGraphElement = forwardRef(
                 }}
                 status={(() => {
                   switch (active.type) {
-                    case "layer": {
-                      return undefined;
-                    }
                     case "cluster": {
                       return active.keys.cluster === clu.key ? "active" : "faded";
                     }
