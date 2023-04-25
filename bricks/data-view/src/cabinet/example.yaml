@@ -67,12 +67,12 @@
           key: inventory-api##bbbbb
           type: host
           nodes:
-            - nodeTitle: 244.244.244.244
-              key: 244.244.244.244
+            - nodeTitle: 244.244.244.211
+              key: 244.244.244.211
               type: physical-machine
-            - nodeTitle: 144.144.144.144
-              key: 144.144.144.144
+            - nodeTitle: 144.144.144.155
+              key: 144.144.144.155
               type: virtual-machine
-            - nodeTitle: 241.241.241.241
-              key: 241.241.241.241
+            - nodeTitle: 241.241.241.200
+              key: 241.241.241.200
               type: physical-machine

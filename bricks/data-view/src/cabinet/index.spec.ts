@@ -70,29 +70,29 @@ describe("data-view.cabinet-graph", () => {
     });
     expect(element.shadowRoot).toBeTruthy();
 
-    act(() => {
+    await act(async () => {
       fireEvent.click(element.shadowRoot.querySelector(".app-layer"));
     });
-    expect((element.shadowRoot.querySelector(".app-layer") as CabinetAppLayer).status).toBe("active");
+    expect((element.shadowRoot.querySelector(".app-layer") as CabinetAppLayer).status).toBe("active")
 
-    act(() => {
-      element.setActiveData({});
+    await act(async () => {
+      element.activeKey = null;
     });
     expect((element.shadowRoot.querySelector(".app-layer") as CabinetAppLayer).status).toBe(null);
 
-    act(() => {
+    await act(async () => {
       const cluster = element.shadowRoot.querySelector(".cluster-container").children[0].shadowRoot.querySelector(".wrapper");
       fireEvent.click(cluster);
     });
     expect((element.shadowRoot.querySelector(".cluster-container").children[0] as CabinetContainer).status).toBe("active");
     expect((element.shadowRoot.querySelector(".cluster-container").children[1] as CabinetContainer).status).toBe("faded");
 
-    act(() => {
+    await act(async () => {
       const node = element.shadowRoot.querySelector(".cluster-container").children[0].shadowRoot.querySelector(".item");
       fireEvent.click(node);
     });
 
-    act(() => {
+    await act(async () => {
       fireEvent.click(element.shadowRoot.querySelector(".close-button"));
     });
     expect(onCloseBtnClick).lastCalledWith(expect.objectContaining({
@@ -100,7 +100,7 @@ describe("data-view.cabinet-graph", () => {
       detail: null,
     }));
 
-    act(() => {
+    await act(async () => {
       fireEvent.click(element.shadowRoot.querySelector(".wrapper"));
     });
     expect((element.shadowRoot.querySelector(".app-layer") as CabinetAppLayer).status).toBe(null);
