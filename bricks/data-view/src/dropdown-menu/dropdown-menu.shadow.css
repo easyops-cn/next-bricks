@@ -39,7 +39,7 @@
   color: var(--color-disabled-text);
 }
 
-.select:hover .select-selector-item~.select-arrow {
+.select.select-allow-clear:hover .select-selector-item~.select-arrow {
   opacity: 0;
 }
 
