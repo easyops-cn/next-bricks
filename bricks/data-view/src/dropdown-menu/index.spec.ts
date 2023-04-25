@@ -22,18 +22,18 @@ describe("data-view.dropdown-menu", () => {
     });
     expect(element.shadowRoot).toBeTruthy();
 
-    expect(window.getComputedStyle(element.shadowRoot.querySelector(".select-dropdown")).display).toBe("none");
+    expect((element.shadowRoot.querySelector(".select-dropdown") as HTMLElement).style.display).toBe("none");
     act(() => {
       fireEvent.click(element.shadowRoot.querySelector(".select-selector"));
     });
-    expect(window.getComputedStyle(element.shadowRoot.querySelector(".select-dropdown")).display).not.toBe("none");
+    expect((element.shadowRoot.querySelector(".select-dropdown") as HTMLElement).style.display).not.toBe("none");
     expect(element.shadowRoot.querySelectorAll(".select-item").length).toBe(3);
 
     act(() => {
       fireEvent.click(element.shadowRoot.querySelectorAll(".select-item")[1]);
       fireEvent.click(document);
     });
-    expect(window.getComputedStyle(element.shadowRoot.querySelector(".select-dropdown")).display).toBe("none");
+    expect((element.shadowRoot.querySelector(".select-dropdown") as HTMLElement).style.display).toBe("none");
     expect(element.shadowRoot.querySelector(".select-selector-item").textContent).toBe("label-b");
     expect(onChange).lastCalledWith(expect.objectContaining({
       type: "value.change",
