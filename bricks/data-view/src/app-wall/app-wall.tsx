@@ -1,30 +1,56 @@
-import React, { ReactElement, useCallback, useEffect, useRef } from "react";
+import React, { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Object3D, PerspectiveCamera, Scene } from "three";
 import { CSS3DObject, CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js';
 import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
-import { Tween, Easing, update, removeAll } from "@tweenjs/tween.js";
+import TWEEN, { Tween, Easing } from "@tweenjs/tween.js";
 import type { AppWallProps } from "./index.jsx";
-import { BaseConfig, CardSize, DistanceConfig, Target, Targets } from "./interface.js";
-import { computeCameraDistance, createCurveTarget, createTableTarget, createTrapezoidalObject, setAppPosition } from "./utils.js";
+import { BaseConfig, CardSize, DistanceConfig, Position, Target, Targets } from "./interface.js";
+import { AppData, computeCameraDistance, createCurveTarget, createTableTarget, createTrapezoidalObject, setAppPosition, createRelationLine, getAppRelations, findElementByEvent } from "./utils.js";
 import { AppWallCardItem } from "./card-item/index.jsx";
 import "./card-item/index.js";
+import { SystemCard, SystemCardProps } from "./system-card/index.jsx";
+import { wrapBrick } from "@next-core/react-element";
+import classNames from "classnames";
 
 
 const table = Array.from({
     length: 262
 }).map((v, i) => ({
+    key: `${i}`,
     shortName: `shortName-${i}`,
     status: i % 5 ? 'normal' : 'warning',
-    cardTitle: 'cardTitle',
-    description: 'description'
+    cardItemProps: {
+        cardTitle: 'cardTitle',
+        description: 'description'
+    },
+    systemCardProps: {
+        cardTitle: 'cardTitle',
+        description: 'description'
+    },
+    trapezoidalProps: {
+        leftBtnName: 'leftBtnName',
+        rightBtnName: 'rightBtnName',
+        clusters: Array.from({
+            length: 3
+        }).map((c,j) => ({
+            title: `${j}集群容器`,
+            type: j % 2 ? 'host' : 'k8s',
+            data:Array.from({
+                length: 100
+            }).map(p=>({
+                type: 'physical-machine',
+                nodeTitle: '255.255.255',
+            })) 
+        }))
+    }
 }));
 const cardSize: CardSize = {
-    width: 120,
-    height: 160,
-    outerWidth: 140,
-    outerHeight: 180,
-    lgWidth: 180,
-    lgHeight: 240
+    width: 160,
+    height: 200,
+    outerWidth: 180,
+    outerHeight: 220,
+    lgWidth: 220,
+    lgHeight: 280
 };
 const distanceConfig: DistanceConfig[] = [{
     numRange: [0, 40],
@@ -48,17 +74,38 @@ const distanceConfig: DistanceConfig[] = [{
 const fov = 45;
 const angle = 100;
 const panelSpace = 300;
-let currentEle
+
+
+const WrappedSystemCard = wrapBrick<SystemCard, SystemCardProps>(
+    "data-view.app-wall-system-card"
+);
 
 export function AppWallElement(props: AppWallProps): ReactElement {
+    const { relations, onSystemCardButtonClick, useDblclick, handleCardDbClick, rightBtnOnClick, leftBtnOnClick } = props;
+    props.dataSource = table as any as AppData[];
+    console.log(props.dataSource)
+    const [curClickCardItemAppData, setCurClickCardItemAppData] = useState<AppData>(null);
+
+
     const containerRef = useRef<HTMLDivElement>();
+    const appwallRef = useRef<HTMLDivElement>();
     const closeBtnRef = useRef<HTMLDivElement>()
+    const maskRef = useRef<HTMLDivElement>();
+    const systemCardRef = useRef<SystemCard>();
+
 
     const rendererRef = useRef<CSS3DRenderer>();
     const sceneRef = useRef<Scene>();
     const cameraRef = useRef<PerspectiveCamera>();
     const controlsRef = useRef<TrackballControls>();
     const graph3DViewRef = useRef<CSS3DObject>(); // 梯形模型
+    const targetsRef = useRef<Targets>({
+        table: [],
+        curve: []
+    });
+    const objectsRef = useRef<CSS3DObject[]>([]);
+    const lineCiCodesRef = useRef<CSS3DObject[]>([]);
+
     const configRef = useRef<BaseConfig>({
         maxX: 0,
         maxY: 0,
@@ -70,24 +117,28 @@ export function AppWallElement(props: AppWallProps): ReactElement {
             z: 0
         }
     });
-    const targetsRef = useRef<Targets>({
-        table: [],
-        curve: []
-    });
-    const objectsRef = useRef<CSS3DObject[]>([]);
+    const registerEvents = useRef({
+        element: null,
+        mouseoverTimer: null,
+        mouseoutTimer: null,
+        clickTimer: null,
+        dblClickTimer: null,
+        enable: true, //是否可以触发事件
+        enableShowRelations: true
+    })
 
-    const render = useCallback(() => {
+    const render = () => {
         rendererRef.current.render(sceneRef.current, cameraRef.current);
-    }, []);
+    };
 
-    const onWindowResize = useCallback(() => {
+    const onWindowResize = () => {
         cameraRef.current.aspect = window.innerWidth / window.innerHeight;
         cameraRef.current.updateProjectionMatrix();
         rendererRef.current.setSize(window.innerWidth, window.innerHeight);
         render();
-    }, [render]);
+    };
 
-    const initViewBounds = useCallback((length: number) => {
+    const initViewBounds = (length: number) => {
         const maxX = Math.ceil(Math.sqrt(length * cardSize.outerHeight / (.4 * cardSize.outerWidth)));
         const maxY = Math.ceil(length / maxX);
         const radius = parseInt(`${maxX * cardSize.outerWidth * 180}`) / (angle * Math.PI);
@@ -105,16 +156,16 @@ export function AppWallElement(props: AppWallProps): ReactElement {
                 z
             }
         }
-    }, [])
+    };
 
-    const init = useCallback((length: number) => {
+    const init = (length: number) => {
         const width = window.innerWidth;
         const height = window.innerHeight;
         const aspect = width / height;
 
         const renderer = new CSS3DRenderer();
         renderer.setSize(width, height);
-        containerRef.current.appendChild(renderer.domElement);
+        appwallRef.current.replaceChildren(renderer.domElement)
 
         const camera = new PerspectiveCamera(fov, aspect, .1, 10000);
         camera.position.z = computeCameraDistance(camera, configRef.current.bounds, distanceConfig, length);
@@ -130,91 +181,21 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         controlsRef.current = controls;
         rendererRef.current = renderer
 
-    }, []);
+    };
 
-    const createView = useCallback((table: Target[]) => {
+    const createView = (table: Target[]) => {
         table.forEach((data, i) => {
             const element = document.createElement(
                 "data-view.app-wall-card-item"
             ) as AppWallCardItem;
             element.status = data.status;
-            //element.cardTitle = data.cardItemProps?.cardTitle;
-            element.cardTitle = `${i}`;
+            element.cardTitle = data.cardItemProps?.cardTitle;
             element.description = data.cardItemProps?.description;
             const statusClass = `status-${data?.status || 'normal'}`
             element.className = `card-item-container  ${statusClass}`;
             element.style.width = `${cardSize.width}px`
             element.style.height = `${cardSize.height}px`
             element.classList.add("card-item-wrap");
-            element.addEventListener('pointerdown', (e) => {
-                controlsRef.current.reset();
-                controlsRef.current.enabled = false;
-                currentEle = e.target;
-
-                const basePosition = {
-                    opacity: 0,
-                    scale: 0,
-                    borderLeftWidth: 0,
-                    borderRightWidth: 0,
-                    borderTopWidth: 0,
-                    borderBottomWidth: 0
-                }
-                const u = {
-                    x: objectCSS.position.x,
-                    y: 860 + cardSize.height * (configRef.current.maxY - data.y)
-                }
-                const n = new Tween(cameraRef.current.position);
-                const a = new Tween(basePosition);
-                const i = new Tween({
-                    z: 0
-                })
-                const r = new Tween(cameraRef.current.position);
-                const o = new Tween(controlsRef.current.target);
-                const s = new Tween({
-                    blur: 12,
-                    spread: 0
-                });
-                transform(targetsRef.current.table, 600)
-                n.to({
-                    x: 0,
-                    y: -3600,
-                    z: 1600
-                }, 1e3).chain(s, a, i);
-                a.to({
-                    opacity: 1
-                }, 700).onStart(() => {
-                    const objectContainer = createTrapezoidalObject({
-                        objectData: {
-                            width: cardSize.width,
-                            height: cardSize.height,
-                            point: [objectCSS.position.x, objectCSS.position.y, objectCSS.position.z]
-                        },
-                        leftBtnName: '左边',
-                        rightBtnName: 'right',
-                        rightOnClick: () => { },
-                        leftOnClick: () => { }
-                    });
-                    graph3DViewRef.current = objectContainer;
-                    sceneRef.current.add(objectContainer)
-                })
-                i.to({
-                    z: panelSpace
-                }, 1e3).delay(230).chain(r, o);
-
-                r.to({
-                    x: u.x,
-                    y: -3600 + u.y
-                }, 1e3),
-                    o.to({
-                        x: u.x,
-                        y: u.y
-                    }, 1e3).onComplete(function () {
-                        controlsRef.current.enabled = true;
-                        closeBtnRef.current.style.visibility = "visible";
-                    })
-                n.start()
-            })
-
             // 随机进入
             const objectCSS = new CSS3DObject(element);
             objectCSS.position.set(4e3 * Math.random() - 2e3, 4e3 * Math.random() - 2e3, 4e3 * Math.random() - 2e3);
@@ -225,11 +206,101 @@ export function AppWallElement(props: AppWallProps): ReactElement {
             const table = createTableTarget(data, cardSize, configRef.current.maxX, configRef.current.maxY);
             targetsRef.current.table.push(table)
             const curve = createCurveTarget(data, cardSize, configRef.current.maxX, configRef.current.maxY, angle, configRef.current.radius)
-            targetsRef.current.curve.push(curve)
-        })
-    }, [])
+            targetsRef.current.curve.push(curve);
 
-    const transform = useCallback((targets: Object3D[], duration: number) => {
+            objectCSS.userData = data;
+            (element as any).__objectCSS = objectCSS;
+            (element as any).__userData = data;
+            (element as any).__curve = curve;
+        })
+    }
+
+    const createRelationLines = (object: CSS3DObject) => {
+        const curRelations = getAppRelations(object, relations);
+        const userData = object.userData;
+        let lineObject: CSS3DObject, lineTarget: CSS3DObject;
+        curRelations?.map(relation => {
+            if (relation.source === userData.key) {
+                //获取目标target CSS3DObject
+                lineTarget = objectsRef.current.find(o => o.userData.key === relation.target);
+                lineObject = createRelationLine(object.position, lineTarget.position, "blue");
+            } else {
+                lineTarget = objectsRef.current.find(o => o.userData.key === relation.source);
+                lineObject = createRelationLine(lineTarget.position, object.position, "purple");
+            }
+            lineCiCodesRef.current.push(lineObject);
+            sceneRef.current.add(lineObject);
+        });
+        objectsRef.current?.forEach(item => {
+            if (object != item && curRelations.every(r => r.source != item.userData.key && r.target != item.userData.key)) {
+                item.element.style.opacity = '0.2'
+            }
+        })
+    }
+
+    const showElementBetweenRelation = (target: Element) => {
+        const { __objectCSS, __userData } = (target as any)
+        const position: Position = {
+            x: __objectCSS.position.x + 50 * Math.sin(__objectCSS.rotation.y),
+            y: __objectCSS.position.y,
+            z: __objectCSS.position.z + 100 * Math.cos(__objectCSS.rotation.y)
+        }
+        const scale = 1.2;
+        new Tween(__objectCSS.rotation).to({
+            x: 0,
+            y: 0,
+            z: 0
+        }, 300).onStart(() => {
+            __objectCSS.element.classList.add(`status-${__userData.status || 'normal'}-card`);
+        }).start();
+        new Tween(__objectCSS.scale).to({
+            x: scale,
+            y: scale,
+            z: scale
+        }, 300).start();
+        new Tween(__objectCSS.position).to(position, 300).onUpdate(render)
+            .onComplete(function () {
+                //创建连线
+                createRelationLines(__objectCSS);
+                render()
+            }).start()
+    }
+
+    const restoreElementState = () => {
+        if (!registerEvents.current?.element) return false;
+        const { __objectCSS, __curve: object3d, __userData } = (registerEvents.current?.element as any)
+        new Tween(__objectCSS.rotation).to({
+            x: object3d.rotation.x,
+            y: object3d.rotation.y,
+            z: object3d.rotation.z
+        }, 300).start();
+        new Tween(__objectCSS.scale).to({
+            x: 1,
+            y: 1,
+            z: 1
+        }, 300).start();
+        new Tween(__objectCSS.position).to({
+            x: object3d.position.x,
+            y: object3d.position.y,
+            z: object3d.position.z
+        }, 300).onUpdate(render).onStart(() => {
+            __objectCSS.element.classList.remove(`status-${__userData.status || 'normal'}-card`);
+            objectsRef.current?.forEach(item => {
+                item.element.style.opacity = '1';
+            })
+            lineCiCodesRef.current.forEach((lineObject) => {
+                sceneRef.current.remove(lineObject);
+            });
+            lineCiCodesRef.current = []
+            render()
+        }).start()
+    }
+
+    const transform = (targets: Object3D[], duration: number) => {
+        const preEnable = registerEvents.current.enable;
+        const preEnableShowRelations = registerEvents.current.enableShowRelations;
+        registerEvents.current.enable = false;
+        registerEvents.current.enableShowRelations = false;
         for (let i = 0; i < objectsRef.current.length; i++) {
             const object = objectsRef.current[i];
             const target = targets[i];
@@ -257,14 +328,16 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         new Tween({})
             .to({}, duration * 2)
             .onUpdate(render)
-            .start();
+            .start().onComplete(() => {
+                registerEvents.current.enable = preEnable;
+                registerEvents.current.enableShowRelations = preEnableShowRelations;
+            });
 
-    }, [render]);
+    }
 
-    const handeReset = useCallback(() => {
-        removeAll();
-        controlsRef.current.enabled = false;
-        var o = {
+    const handeReset = () => {
+        TWEEN.removeAll();
+        const o = {
             opacity: 1
         },
             e = new Tween({
@@ -282,16 +355,19 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         }, 1e3).chain(a, i, r);
         n.to({
             opacity: 0
-        }, 1e3).onStart(()=>{
+        }, 1e3).onStart(() => {
             sceneRef.current.remove(graph3DViewRef.current);
             closeBtnRef.current.style.visibility = "hidden";
+
         }).delay(300);
 
         a.to(controlsRef.current.position0, 1e3)
             .onComplete(function () {
-                transform(targetsRef.current.curve, 600)
                 controlsRef.current.reset();
-                controlsRef.current.enabled = true;
+                appwallRef.current.classList.remove('mask-container')
+                registerEvents.current.enable = true;
+                registerEvents.current.enableShowRelations = true;
+                transform(targetsRef.current.curve, 600)
             });
         i.to({
             x: 0,
@@ -304,24 +380,105 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         }, 1e3)
         e.start()
         n.start()
-    }, [])
+    }
+    const showAppInfoAnimate = (toggle: boolean) => {
+        controlsRef.current.reset();
+        const object = registerEvents.current.element.__objectCSS;
+        const target = registerEvents.current.element.__curve;
+        registerEvents.current.enable = false
+        //定义四个位置
+        const c = {
+            x: target.position.x > 0 ? 2 * -cardSize.width : 2 * cardSize.width,
+            y: 0,
+            z: (cameraRef.current.position.z - 500) / 1.5
+        };
+        const p = {
+            x: 0,
+            y: 0,
+            z: cameraRef.current.position.z - 500
+        }
+        const h = {
+            x: 0,
+            y: target.rotation.y > 0 ? -Math.PI * 90 / 180 : Math.PI * 90 / 180,
+            z: 0
+        }
+        const d = {
+            x: 0,
+            y: target.rotation.y > 0 ? -Math.PI * 180 / 180 : Math.PI * 180 / 180,
+            z: 0
+        };
+        const i = new Tween(object.position);
+        const r = new Tween(object.rotation);
+        const o = new Tween(object.position);
+        const s = new Tween(object.rotation);
+        if (toggle) {
+            //收
+            i.to(c, 500).easing().onStart(function () {
 
+            }).onComplete(() => {
+                systemCardRef.current.hidden = true
+                registerEvents.current.element.style.opacity = 1;
+            });
+            r.to(h, 500).easing()
+            o.to({
+                x: target.position.x,
+                y: target.position.y,
+                z: target.position.z
+            }, 700).easing();
+            s.to({
+                x: target.rotation.x,
+                y: target.rotation.y,
+                z: target.rotation.z
+            }, 700).easing().onComplete(function () {
+                maskRef.current.hidden = true
+            });
+        } else {
+            //出
+            i.to(c, 700).easing().onStart(() => {
+                //为了飞出去的途中，不能在点击其他的卡片飞出来
+                maskRef.current.hidden = false,
+                    systemCardRef.current.hidden = true;
+            });
+            r.to(h, 700).easing();
+            o.to(p, 500).easing().onStart(function () {
+                registerEvents.current.element.style.opacity = 0;
+                systemCardRef.current.style.transition = 'transition: all .3s ease';
+                systemCardRef.current.hidden = false;
+            }).onComplete(function () {
+                console.log('出【o】=>onComplete');
+            });
+            s.to(d, 500).easing()
+        }
+        i.chain(o).start();
+        r.chain(s).start();
+        new Tween({}).to({}, 1400).onUpdate(() => {
+            render()
+            if (Math.abs(object.rotation.y) >= Math.PI / 2) {
+                const rect = registerEvents.current.element.getBoundingClientRect();
+                systemCardRef.current.style.width = `${rect.width}px`
+                systemCardRef.current.style.height = `${rect.height}px`;
+                systemCardRef.current.style.top = `${rect.top}px`;
+                systemCardRef.current.style.left = `${rect.left}px`;
+            }
+        }).start().onComplete(function () {
+            registerEvents.current.enableShowRelations = true;
+            registerEvents.current.enable = true;
+        })
+    }
     useEffect(() => {
-        initViewBounds(table.length);
-        init(table.length);
+        const length = props.dataSource?.length ?? 0;
+        console.log(props.dataSource);
+        initViewBounds(length);
+        init(length);
         const configBound = configRef.current
-        // const appData = setAppPosition(table as any, configBound.maxX, configBound.maxY);
-        const appData = setAppPosition(props.dataSource, configBound.maxX, configBound.maxY);
-        createView(appData);
-        console.log(targetsRef.current)
+        const appDatas = setAppPosition(props.dataSource, configBound.maxX, configBound.maxY);
+        createView(appDatas);
         transform(targetsRef.current.curve, 2000);
-    }, [props.dataSource,])
 
-    useEffect(() => {
         let cancel: number;
         const animate = () => {
             cancel = requestAnimationFrame(animate);
-            update()
+            TWEEN.update()
             controlsRef.current.update();
         }
         animate()
@@ -332,14 +489,154 @@ export function AppWallElement(props: AppWallProps): ReactElement {
             window.removeEventListener('resize', onWindowResize);
             cancelAnimationFrame(cancel);
         }
-    }, [render, onWindowResize])
+    }, [props.dataSource])
+
+    useEffect(() => {
+        const handleMouseover = (e: MouseEvent) => {
+            if ((!registerEvents.current.enable && !registerEvents.current.enableShowRelations)) return false;
+            const target = findElementByEvent(e);
+            restoreElementState()
+            if (target) {
+                registerEvents.current.element = target;
+                registerEvents.current.mouseoverTimer && clearTimeout(registerEvents.current.mouseoverTimer)
+                registerEvents.current.mouseoverTimer = window.setTimeout(() => {
+                    showElementBetweenRelation(target);
+                }, 500);
+            } else {
+                registerEvents.current?.mouseoverTimer && clearInterval(registerEvents.current.mouseoverTimer);
+                restoreElementState()
+            }
+        }
+        const handleClick = (e: MouseEvent) => {
+            if (!registerEvents.current.enable) return false;
+            (registerEvents.current.clickTimer && clearTimeout(registerEvents.current.clickTimer), registerEvents.current.mouseoverTimer && clearTimeout(registerEvents.current.mouseoverTimer));
+            registerEvents.current.clickTimer = setTimeout(function () {
+                const target = findElementByEvent(e) as any;
+                if (target) {
+                    (registerEvents.current.mouseoverTimer && clearTimeout(registerEvents.current.mouseoverTimer))
+                    e.stopPropagation();
+                    registerEvents.current.element = target;
+                    setCurClickCardItemAppData(target.__userData)
+                    showAppInfoAnimate(false)
+                }
+            }, 300)
+        }
+        const handleDbClick = (e: MouseEvent) => {
+            if (!registerEvents.current.enable) return false;
+            const target = findElementByEvent(e) as any;
+            const { __objectCSS, __userData } = target
+            if (useDblclick) {
+                handleCardDbClick(__userData)
+            } else {
+                (registerEvents.current.clickTimer && clearTimeout(registerEvents.current.clickTimer), registerEvents.current.mouseoverTimer && clearTimeout(registerEvents.current.mouseoverTimer), registerEvents.current.dblClickTimer && clearTimeout(registerEvents.current.dblClickTimer));
+                registerEvents.current.dblClickTimer = window.setTimeout(function () {
+
+                    if (target) {
+                        registerEvents.current.enable = false;
+                        registerEvents.current.enableShowRelations = false;
+                        (registerEvents.current.mouseoverTimer && clearTimeout(registerEvents.current.mouseoverTimer), registerEvents.current.clickTimer && clearTimeout(registerEvents.current.clickTimer));
+                        restoreElementState();
+
+                        appwallRef.current.classList.add('mask-container')
+                        controlsRef.current.reset();
+                        const basePosition = {
+                            opacity: 0,
+                            scale: 0,
+                            borderLeftWidth: 0,
+                            borderRightWidth: 0,
+                            borderTopWidth: 0,
+                            borderBottomWidth: 0
+                        }
+                        const u = {
+                            x: __objectCSS.position.x,
+                            y: 860 + cardSize.height * (configRef.current.maxY - __userData.y)
+                        }
+                        const n = new Tween(cameraRef.current.position);
+                        const a = new Tween(basePosition);
+                        const i = new Tween({
+                            z: 0
+                        })
+                        const r = new Tween(cameraRef.current.position);
+                        const o = new Tween(controlsRef.current.target);
+                        const s = new Tween({
+                            blur: 12,
+                            spread: 0
+                        });
+                        transform(targetsRef.current.table, 600)
+                        n.to({
+                            x: 0,
+                            y: -3600,
+                            z: 1600
+                        }, 1e3).chain(s, a, i);
+                        a.to({
+                            opacity: 1
+                        }, 700).onStart(() => {
+                            const objectContainer = createTrapezoidalObject({
+                                objectData: {
+                                    width: cardSize.width,
+                                    height: cardSize.height,
+                                    point: [__objectCSS.position.x, __objectCSS.position.y, __objectCSS.position.z]
+                                },
+                                appData: __userData,
+                                leftBtnName: __userData.trapezoidalProps?.leftBtnName,
+                                rightBtnName: __userData.trapezoidalProps?.rightBtnName,
+                                rightOnClick: () => rightBtnOnClick(__userData),
+                                leftOnClick: () => leftBtnOnClick(__userData)
+                            });
+                            graph3DViewRef.current = objectContainer;
+                            sceneRef.current.add(objectContainer)
+                        })
+                        i.to({
+                            z: panelSpace
+                        }, 1e3).delay(230).chain(r, o);
+
+                        r.to({
+                            x: u.x,
+                            y: -3600 + u.y
+                        }, 1e3),
+                            o.to({
+                                x: u.x,
+                                y: u.y
+                            }, 1e3).onComplete(function () {
+                                closeBtnRef.current.style.visibility = "visible";
+                            })
+                        n.start()
+                    }
+                }, 300)
+            }
+
+        }
+
+        containerRef.current.addEventListener('dblclick', handleDbClick)
+        containerRef.current.addEventListener('click', handleClick)
+        containerRef.current.addEventListener('mouseover', handleMouseover)
+        return () => {
+            containerRef.current.removeEventListener('mouseover', handleMouseover)
+            containerRef.current.removeEventListener('click', handleClick)
+            containerRef.current.removeEventListener('dblclick', handleDbClick)
+        }
+    }, [useDblclick, handleCardDbClick, props.dataSource])
 
     return (
-        <>
-            <div className="container" ref={containerRef} ></div>
+        <div className="appwall-container" ref={containerRef} >
+            <div className="appwall" ref={appwallRef} ></div>
+            <div className="mask" ref={maskRef} onClick={() => {
+                registerEvents.current.enable && showAppInfoAnimate(true)
+            }} hidden={true} >
+                <WrappedSystemCard
+                    {...curClickCardItemAppData?.systemCardProps}
+                    onClick={(e) => e.stopPropagation()}
+                    handleClick={() => onSystemCardButtonClick(curClickCardItemAppData)}
+                    ref={systemCardRef}
+                    className={classNames({
+                        infoWrapper: curClickCardItemAppData?.status === "normal",
+                        warningWrapper: curClickCardItemAppData?.status === "warning"
+                    })}
+                />
+            </div>
             <div className="closeBtn" ref={closeBtnRef} onClick={() => {
                 handeReset()
             }} />
-        </>
+        </div>
     );
 }

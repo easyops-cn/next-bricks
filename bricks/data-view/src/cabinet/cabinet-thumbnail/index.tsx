@@ -3,24 +3,24 @@ import {ReactNextElement, wrapBrick} from "@next-core/react-element";
 import {createDecorators} from "@next-core/element";
 import classNames from "classnames";
 import {CabinetNode, CabinetNodeProps} from "../cabinet-node/index.js";
-import {CabinetContainerProps} from "../cabinet-container/index.js";
+import {CabinetContainerProps, ContainerType} from "../cabinet-container/index.js";
 import variablesText from "../../data-view-variables.shadow.css";
 import styleText from "./cabinet-thumbnail.shadow.css";
 import {usePrevious} from "../../hooks/index.js";
-import {CabinetAppLayer, CabinetAppLayerProps} from "../cabinet-app-layer/index.js";
 
 const {defineElement, property} = createDecorators();
 
 const WrappedNode = wrapBrick<CabinetNode, CabinetNodeProps>(
     "data-view.cabinet-node"
 );
-const WrappedCabinetAppLayer = wrapBrick<CabinetAppLayer, CabinetAppLayerProps>(
-    "data-view.cabinet-app-layer"
-);
+export interface Clusters {
+    data: CabinetNodeProps[];
+    type?: ContainerType;
+    title?: string | undefined;
+}
 
 interface CabinetThumbnailProps {
-    appName: string;
-    clusters: CabinetContainerProps[];
+    clusters: Clusters[];
     width?: number;
     height?: number
 }
@@ -47,14 +47,6 @@ class CabinetThumbnail extends ReactNextElement implements CabinetThumbnailProps
   accessor clusters: CabinetContainerProps[] = [];
 
     /**
-     * @kind string|undefined
-     * @required false
-     * @default -
-     * @description 应用层容器标题
-     */
-    @property()
-    accessor appName: string|undefined;
-    /**
      * @kind number
      * @required
      * @default
@@ -73,7 +65,6 @@ class CabinetThumbnail extends ReactNextElement implements CabinetThumbnailProps
     accessor height:number;
   render(): React.ReactNode {
     return <CabinetThumbnailComponent
-        appName={this.appName}
         clusters={this.clusters}
         width={this.width}
         height={this.height}
@@ -82,7 +73,7 @@ class CabinetThumbnail extends ReactNextElement implements CabinetThumbnailProps
 }
 
 export function CabinetThumbnailComponent(props:CabinetThumbnailProps): React.ReactElement {
-    const {clusters, appName, width,height} = props;
+    const {clusters, width,height,} = props;
     const containerRef = useRef<HTMLDivElement>();
     const thumbnailRef = useRef<HTMLDivElement>();
     const layoutRef = useRef<HTMLDivElement>();
@@ -105,10 +96,6 @@ export function CabinetThumbnailComponent(props:CabinetThumbnailProps): React.Re
              style={{
            ...(scale?{transform: `scale(${scale})`}: {})
         }}>
-
-            <div className="appLayer" >
-                <WrappedCabinetAppLayer  appTitle={appName} />
-            </div>
             <div className="layout" ref={layoutRef}>
                 {
                     clusters.map((item,index) => (
@@ -128,7 +115,7 @@ export function CabinetThumbnailComponent(props:CabinetThumbnailProps): React.Re
                                         }
                                     </div>
                                 </div>
-                                <div className="clusterTitle">{item.customTitle}</div>
+                                <div className="clusterTitle">{item.title}</div>
                             </div>
                         </div>))
                 }
