@@ -84,12 +84,12 @@ describe("data-view.modern-style-treemap", () => {
         .visibility
     ).toBe("visible");
 
-    act(()=>{
-      fireEvent.mouseMove(element.shadowRoot.querySelector("[data-leaf-id='c']"));
+    act(() => {
+      fireEvent.mouseMove(element.shadowRoot.querySelector("[data-leaf-id='c']"), { clientX: 12, clientY: 12 });
       jest.runAllTimers();
     })
     expect(element.shadowRoot.querySelector(".tooltip").innerHTML).toBe("<div>c</div>");
-    act(()=>{
+    act(() => {
       fireEvent.mouseMove(element.shadowRoot.querySelector(".treemap"));
       jest.runAllTimers();
     })
