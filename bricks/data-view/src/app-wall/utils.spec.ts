@@ -64,7 +64,8 @@ describe("utils", () => {
                 point: [0,0,0]
             },
             leftBtnName: "应用部署架构",
-            rightBtnName: "监控目标"
+            rightBtnName: "监控目标",
+
         } );
         expect(object).toHaveProperty("position", new Vector3(0,0,0));
         expect(object.children.length).toBe(6);

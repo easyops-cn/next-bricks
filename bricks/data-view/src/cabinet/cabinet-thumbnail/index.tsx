@@ -3,7 +3,7 @@ import {ReactNextElement, wrapBrick} from "@next-core/react-element";
 import {createDecorators} from "@next-core/element";
 import classNames from "classnames";
 import {CabinetNode, CabinetNodeProps} from "../cabinet-node/index.js";
-import {CabinetContainerProps, ContainerType} from "../cabinet-container/index.js";
+import {ContainerType} from "../cabinet-container/index.js";
 import variablesText from "../../data-view-variables.shadow.css";
 import styleText from "./cabinet-thumbnail.shadow.css";
 import {usePrevious} from "../../hooks/index.js";
@@ -44,7 +44,7 @@ class CabinetThumbnail extends ReactNextElement implements CabinetThumbnailProps
    * @description 集群数据
    */
   @property({attribute: false})
-  accessor clusters: CabinetContainerProps[] = [];
+  accessor clusters: Clusters[] = [];
 
     /**
      * @kind number
@@ -73,7 +73,7 @@ class CabinetThumbnail extends ReactNextElement implements CabinetThumbnailProps
 }
 
 export function CabinetThumbnailComponent(props:CabinetThumbnailProps): React.ReactElement {
-    const {clusters, width,height,} = props;
+    const {clusters, width,height} = props;
     const containerRef = useRef<HTMLDivElement>();
     const thumbnailRef = useRef<HTMLDivElement>();
     const layoutRef = useRef<HTMLDivElement>();

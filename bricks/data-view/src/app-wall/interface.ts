@@ -16,7 +16,6 @@ export interface TrapezoidalProps {
 }
 export interface TrapezoidalObjectProps extends TrapezoidalProps{
      objectData: TrapezoidalObjectData;
-     appData: AppData;
      leftOnClick?: () => void;
      rightOnClick?: () => void;
 

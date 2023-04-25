@@ -20,7 +20,7 @@ describe("data-view.cabinet-thumbnail", () => {
         expect(element.shadowRoot).toBeFalsy();
         await act(() => {
             element.clusters = [{
-                customTitle: "k8s容器",
+                title: "k8s容器",
                 type: "k8s",
                 data: [{
                     nodeTitle: "1.1.0",
@@ -28,14 +28,13 @@ describe("data-view.cabinet-thumbnail", () => {
                 }]
             },
                 {
-                    customTitle: "集群容器",
+                    title: "集群容器",
                     type: "host",
                     data: [{
                         nodeTitle: "1.1.0",
                         type: "virtual-machine"
                     }]
                 }];
-            element.appName ="xxx应用"
             document.body.appendChild(element)
         })
         expect(element.shadowRoot).toBeTruthy();
@@ -48,13 +47,13 @@ describe("data-view.cabinet-thumbnail", () => {
     })
     test("should work and  width & height", ()=>{
         const {container} = render(<CabinetThumbnailComponent  clusters={[{
-            customTitle: "主机容器",
+            title: "主机容器",
             type: "host",
             data: [{
                 nodeTitle: "255.255.0",
                 type: "virtual-machine"
             }]
-        }]} appName="xx应用" height={200} width={100} />);
+        }]} height={200} width={100} />);
         expect(container.querySelector(".clusterTitle").textContent).toBe("主机容器");
         expect(container.querySelector(".thumbnailLayout").getAttribute("style")).toBe("transform: scale(0.33);")
     })

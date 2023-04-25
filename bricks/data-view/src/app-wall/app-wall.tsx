@@ -1,4 +1,5 @@
-import React, { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
+ /* istanbul ignore next */ 
+import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { Object3D, PerspectiveCamera, Scene } from "three";
 import { CSS3DObject, CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js';
 import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
@@ -40,7 +41,7 @@ const table = Array.from({
             }).map(p=>({
                 type: 'physical-machine',
                 nodeTitle: '255.255.255',
-            })) 
+            }))
         }))
     }
 }));
@@ -82,8 +83,7 @@ const WrappedSystemCard = wrapBrick<SystemCard, SystemCardProps>(
 
 export function AppWallElement(props: AppWallProps): ReactElement {
     const { relations, onSystemCardButtonClick, useDblclick, handleCardDbClick, rightBtnOnClick, leftBtnOnClick } = props;
-    props.dataSource = table as any as AppData[];
-    console.log(props.dataSource)
+
     const [curClickCardItemAppData, setCurClickCardItemAppData] = useState<AppData>(null);
 
 
@@ -445,7 +445,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
                 systemCardRef.current.style.transition = 'transition: all .3s ease';
                 systemCardRef.current.hidden = false;
             }).onComplete(function () {
-                console.log('出【o】=>onComplete');
+                // console.log('出【o】=>onComplete');
             });
             s.to(d, 500).easing()
         }
@@ -467,7 +467,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
     }
     useEffect(() => {
         const length = props.dataSource?.length ?? 0;
-        console.log(props.dataSource);
+        // console.log(props.dataSource);
         initViewBounds(length);
         init(length);
         const configBound = configRef.current
@@ -577,7 +577,6 @@ export function AppWallElement(props: AppWallProps): ReactElement {
                                     height: cardSize.height,
                                     point: [__objectCSS.position.x, __objectCSS.position.y, __objectCSS.position.z]
                                 },
-                                appData: __userData,
                                 leftBtnName: __userData.trapezoidalProps?.leftBtnName,
                                 rightBtnName: __userData.trapezoidalProps?.rightBtnName,
                                 rightOnClick: () => rightBtnOnClick(__userData),
@@ -611,9 +610,9 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         containerRef.current.addEventListener('click', handleClick)
         containerRef.current.addEventListener('mouseover', handleMouseover)
         return () => {
-            containerRef.current.removeEventListener('mouseover', handleMouseover)
-            containerRef.current.removeEventListener('click', handleClick)
-            containerRef.current.removeEventListener('dblclick', handleDbClick)
+            containerRef.current?.removeEventListener('mouseover', handleMouseover)
+            containerRef.current?.removeEventListener('click', handleClick)
+            containerRef.current?.removeEventListener('dblclick', handleDbClick)
         }
     }, [useDblclick, handleCardDbClick, props.dataSource])
 

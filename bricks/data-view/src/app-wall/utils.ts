@@ -149,7 +149,7 @@ export const createTrapezoidalTopOrBottomElement = (props: {
  * @returns 
  */
 export const createTrapezoidalObject = (props: TrapezoidalObjectProps) => {
-  const { objectData, leftBtnName,appData, leftOnClick, rightBtnName, rightOnClick } = props;
+  const { objectData, leftBtnName,clusters, leftOnClick, rightBtnName, rightOnClick } = props;
   const d = 450;
   const container = document.createElement('div');
   const objectContainer = new CSS3DObject(container);
@@ -179,7 +179,7 @@ export const createTrapezoidalObject = (props: TrapezoidalObjectProps) => {
   const thumbnailEle = document.createElement("data-view.cabinet-thumbnail")as CabinetThumbnail;
   thumbnailEle.width=TW;
   thumbnailEle.height=TH;
-  thumbnailEle.clusters=appData?.trapezoidalProps?.clusters??[];
+  thumbnailEle.clusters= clusters??[];
 
   topCard.className = "visibilityAnimate";
   topCard.appendChild(thumbnailEle);
