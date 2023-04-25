@@ -9,7 +9,7 @@ import {useResizeObserver} from "../../hooks/index.js";
 
 
 const {defineElement, property, event} = createDecorators();
-type ContainerType = "host" | "k8s";
+export type ContainerType = "host" | "k8s";
 const WrappedNode = wrapBrick<CabinetNode, CabinetNodeProps>(
     "data-view.cabinet-node"
 );
@@ -211,7 +211,9 @@ export function CabinetContainerComponent(props: CabinetContainerProps): React.R
                     }
                 </div>
             </div>
-            {customTitle && <div className="footer">{customTitle}</div>}
+            {customTitle && <div className="footer">
+                <div className="footerTitle">{customTitle}</div>
+            </div>}
         </div>
     </div>
 
