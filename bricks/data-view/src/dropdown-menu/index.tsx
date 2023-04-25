@@ -9,6 +9,7 @@ import type {
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
 import classNames from "classnames";
+import { keyBy } from "lodash";
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
   "icons.general-icon"
@@ -22,6 +23,7 @@ interface DropdownMenuProps {
   value?: string;
   placeholder?: string;
   onChange?: (value: string) => void;
+  allowClear?: boolean;
 }
 
 /**
@@ -68,6 +70,15 @@ class DropdownMenu
   accessor placeholder: string;
 
   /**
+  * @kind boolean
+  * @required false
+  * @default
+  * @description 是否允许清除
+  */
+  @property()
+  accessor allowClear: boolean;
+
+  /**
    * @detail
    * @description 值改变
    */
@@ -86,6 +97,7 @@ class DropdownMenu
         value={this.value}
         placeholder={this.placeholder}
         onChange={this.#handleValueChange}
+        allowClear={this.allowClear}
       />
     );
   }
@@ -99,6 +111,7 @@ function DropdownMenuElement(
     options,
     placeholder,
     onChange,
+    allowClear,
   } = props;
 
   const [isDropHidden, setIsDropHidden] = React.useState(true);
@@ -108,6 +121,9 @@ function DropdownMenuElement(
   const [isInputFocused, setIsInputFocused] = React.useState(false);
 
   const [value, setValue] = useState(props.value);
+  const optionsMap = useMemo(() => {
+    return keyBy(options, "value");
+  }, [options]);
 
   useEffect(() => {
     setValue(props.value);
@@ -140,6 +156,7 @@ function DropdownMenuElement(
   return (<div className="container">
     <div className={classNames("select", {
       "select-focused": isInputFocused,
+      "select-allow-clear": !!allowClear,
     })}>
       <div className="select-selector" onClick={() => {
         setIsDropHidden(false);
@@ -161,7 +178,7 @@ function DropdownMenuElement(
           />
         </div>
         {value
-          ? <div className="select-selector-item" style={{ visibility: inputValue ? "hidden" : "visible" }}>{value}</div>
+          ? <div className="select-selector-item" style={{ visibility: inputValue ? "hidden" : "visible" }}>{optionsMap[value] ? optionsMap[value].label : value}</div>
           : <div className="select-selection-placeholder" style={{ visibility: inputValue ? "hidden" : "visible" }}>{placeholder}</div>
         }
         <div className="select-arrow" >
@@ -169,7 +186,7 @@ function DropdownMenuElement(
             ? <WrappedIcon className="ant-select-suffix search-icon" lib="antd" theme="outlined" icon="search" />
             : <WrappedIcon className="ant-select-suffix down-icon" lib="antd" theme="outlined" icon="down" />}
         </div>
-        <div className="select-clear" style={{ visibility: !value ? "hidden" : "visible" }}
+        {allowClear && <div className="select-clear" style={{ visibility: !value ? "hidden" : "visible" }}
           onMouseDown={(e) => {
             // 使用onMouseDown使输入框保持聚焦
             e.preventDefault();
@@ -180,7 +197,7 @@ function DropdownMenuElement(
           }}
         >
           <WrappedIcon className="ant-select-suffix clear-icon" lib="antd" theme="filled" icon="close-circle" />
-        </div>
+        </div>}
       </div>
     </div>
     <div className="select-dropdown"
