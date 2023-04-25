@@ -153,6 +153,23 @@ function ModernStyleTreemapElement(
     <{ clientX: number, clientY: number, name?: string }>
     ({ clientX: 0, clientY: 0 });
 
+  const tooltipTransform = useMemo(() => {
+    if (!wrapperRef.current) return undefined;
+    const wrapperClientRect = wrapperRef.current.getBoundingClientRect();
+    // 缩放比例
+    const widthScale = wrapperClientRect.width / wrapperRef.current.clientWidth;
+    const heightScale = wrapperClientRect.height / wrapperRef.current.clientHeight;
+
+    // 缩放后的偏移
+    const scaledLeft = mouseData.clientX - wrapperClientRect.left;
+    const scaledTop = mouseData.clientY - wrapperClientRect.top;
+
+    // 实际偏移
+    return `translate(
+      ${scaledLeft / widthScale + 16}px,
+      ${scaledTop / heightScale - tooltipHeight / 2}px)`
+  }, [mouseData.clientX, mouseData.clientY, tooltipHeight]);
+
   const hierarchyNode = useMemo(() => {
     return hierarchy(data).sum(d => d.value).sort((a, b) => b.value - a.value);
   }, [data]);
@@ -233,9 +250,7 @@ function ModernStyleTreemapElement(
       <div className="tooltip"
         style={{
           ...tooltipStyle,
-          transform: `translate(
-            ${mouseData.clientX - wrapperRef.current?.getBoundingClientRect().left + 16}px,
-            ${mouseData.clientY - wrapperRef.current?.getBoundingClientRect().top - tooltipHeight / 2}px)`
+          transform: tooltipTransform,
         }}
         ref={tooltipRef}>
         {tooltipUseBrick?.useBrick && <ReactUseMultipleBricks useBrick={tooltipUseBrick.useBrick} data={curTooltipData} />}
