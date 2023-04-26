@@ -18,6 +18,8 @@
   height: 100%;
   padding: 30px 24px 35px;
   left: 0;
+  display: flex;
+  flex-direction: column;
   border-radius: var(--no-border-radius);
 }
 
@@ -29,10 +31,17 @@
   color: var(--color-normal-text);
   text-shadow: 0 1px 4px rgba(51, 102, 255, 0.5);
   margin-bottom: 35px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .descriptions {
-  max-height: calc(100% - 70px);
+  flex:1;
+  margin-bottom: 20px;
   font-size: var(--auxiliary-font-size-small);
   overflow: auto;
   font-weight: var(--font-weight-400);
