@@ -19,10 +19,9 @@ export interface Clusters {
     title?: string | undefined;
 }
 
-interface CabinetThumbnailProps {
+export interface CabinetThumbnailProps {
     clusters: Clusters[];
-    width?: number;
-    height?: number
+    columns?: number;
 }
 
 /**
@@ -49,50 +48,40 @@ class CabinetThumbnail extends ReactNextElement implements CabinetThumbnailProps
     /**
      * @kind number
      * @required
-     * @default
-     * @description 容器宽度，用于缩略比例
+     * @default 4
+     * @description 单个容器列数
      */
     @property({type: Number})
-    accessor width:number;
+    accessor columns:number = 4;
 
-    /**
-     * @kind number
-     * @required
-     * @default
-     * @description 容器高度，用于缩略比例
-     */
-    @property({type: Number})
-    accessor height:number;
   render(): React.ReactNode {
     return <CabinetThumbnailComponent
         clusters={this.clusters}
-        width={this.width}
-        height={this.height}
+        columns={this.columns}
     />;
   }
 }
 
 export function CabinetThumbnailComponent(props:CabinetThumbnailProps): React.ReactElement {
-    const {clusters, width,height} = props;
+    const {clusters, columns} = props;
     const containerRef = useRef<HTMLDivElement>();
-    const thumbnailRef = useRef<HTMLDivElement>();
     const layoutRef = useRef<HTMLDivElement>();
     const [scale, setScale] = useState<number>();
     const preScale = usePrevious(scale);
 
     useLayoutEffect(()=>{
-        if(width && height && !!clusters.length) {
-            const {width:realWidth} = layoutRef.current.getBoundingClientRect();
-            const {height: realHeight} = thumbnailRef.current.getBoundingClientRect();
+        const {width ,height}  = containerRef.current.getBoundingClientRect();
+        if(!!clusters.length && columns>0) {
+            const {width:realWidth,height: realHeight} = layoutRef.current.getBoundingClientRect();
             // 计算缩放比例
             const wScale = width/(realWidth / (preScale??1));
             const hScale =  height/(realHeight * (preScale??1));
            setScale(Math.min(Math.floor(Math.min(wScale,hScale) *100) / 100, 1));
         }
-    },[clusters,width, height,preScale])
+    },[clusters,preScale,columns])
 
-    return  <div ref={containerRef} className="wrapper" style={{width:`${width}px`,height:`${height}px`}}>
-        <div className="thumbnailLayout" ref={thumbnailRef}
+    return  <div ref={containerRef} className="wrapper">
+        <div className="thumbnailLayout"
              style={{
            ...(scale?{transform: `scale(${scale})`}: {})
         }}>
@@ -106,7 +95,7 @@ export function CabinetThumbnailComponent(props:CabinetThumbnailProps): React.Re
                             })}
                             >
                                 <div className="clusterContent">
-                                    <div className="clusterContentLayout">
+                                    <div className="clusterContentLayout" style={{gridTemplateColumns: `repeat(${columns},1fr)`}}>
                                         {
                                             item.data.map((node, index) => (
                                                 <div key={index} className="itemContent" >
@@ -115,7 +104,9 @@ export function CabinetThumbnailComponent(props:CabinetThumbnailProps): React.Re
                                         }
                                     </div>
                                 </div>
-                                <div className="clusterTitle">{item.title}</div>
+                                <div className="clusterTitle">
+                                    <div className="title">{item.title}</div>
+                                   </div>
                             </div>
                         </div>))
                 }

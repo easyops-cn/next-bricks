@@ -1,5 +1,5 @@
  /* istanbul ignore next */ 
-import React, { ReactElement, useEffect, useRef, useState } from "react";
+import React, {ReactElement, useEffect, useRef, useState} from "react";
 import { Object3D, PerspectiveCamera, Scene } from "three";
 import { CSS3DObject, CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js';
 import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
@@ -45,14 +45,14 @@ const table = Array.from({
         }))
     }
 }));
-const cardSize: CardSize = {
-    width: 160,
-    height: 200,
-    outerWidth: 180,
-    outerHeight: 220,
-    lgWidth: 220,
-    lgHeight: 280
-};
+ const cardSize: CardSize = {
+     width: 140,
+     height: 180,
+     outerWidth: 160,
+     outerHeight: 200,
+     lgWidth: 200,
+     lgHeight: 260
+ };
 const distanceConfig: DistanceConfig[] = [{
     numRange: [0, 40],
     distance: 3000
@@ -83,7 +83,7 @@ const WrappedSystemCard = wrapBrick<SystemCard, SystemCardProps>(
 
 export function AppWallElement(props: AppWallProps): ReactElement {
     const { relations, onSystemCardButtonClick, useDblclick, handleCardDbClick, rightBtnOnClick, leftBtnOnClick } = props;
-
+    // props.dataSource = table as AppData[];
     const [curClickCardItemAppData, setCurClickCardItemAppData] = useState<AppData>(null);
 
 
@@ -577,8 +577,11 @@ export function AppWallElement(props: AppWallProps): ReactElement {
                                     height: cardSize.height,
                                     point: [__objectCSS.position.x, __objectCSS.position.y, __objectCSS.position.z]
                                 },
-                                leftBtnName: __userData.trapezoidalProps?.leftBtnName,
-                                rightBtnName: __userData.trapezoidalProps?.rightBtnName,
+                               ...(__userData.trapezoidalProps?__userData.trapezoidalProps:{}),
+                                // clusters: __userData.trapezoidalProps?.clusters,
+                                // columns: __userData.trapezoidalProps?.columns,
+                                // leftBtnName: __userData.trapezoidalProps?.leftBtnName,
+                                // rightBtnName: __userData.trapezoidalProps?.rightBtnName,
                                 rightOnClick: () => rightBtnOnClick(__userData),
                                 leftOnClick: () => leftBtnOnClick(__userData)
                             });
