@@ -5,4 +5,12 @@ export default {
     'd3-hierarchy': '<rootDir>/../../node_modules/d3-hierarchy/dist/d3-hierarchy.min.js',
   },
   transformModulePatterns: ["three/examples/jsm/"],
+  testPathIgnorePatterns: [
+    "src/app-wall",
+    "<rootDir>/src/app-wall/*"
+  ],
+  coveragePathIgnorePatterns: [
+    "src/app-wall",
+    "<rootDir>/src/app-wall/*"
+  ]
 };
