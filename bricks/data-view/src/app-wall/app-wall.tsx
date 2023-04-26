@@ -1,6 +1,6 @@
 /* istanbul ignore next */
-import React, { ReactElement, useEffect, useRef, useState } from "react";
-import { Object3D, PerspectiveCamera, Scene } from "three";
+import React, { ReactElement, useCallback, useEffect, useRef, useState } from "react";
+import { MathUtils, Object3D, PerspectiveCamera, Scene } from "three";
 import { CSS3DObject, CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer.js';
 import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
 import TWEEN, { Tween, Easing } from "@tweenjs/tween.js";
@@ -76,6 +76,26 @@ const fov = 45;
 const angle = 100;
 const panelSpace = 300;
 
+const getViewBounds = (length: number) => {
+    const maxX = Math.ceil(Math.sqrt(length * cardSize.outerHeight / (.4 * cardSize.outerWidth)));
+    const maxY = Math.ceil(length / maxX);
+    const radius = parseInt(`${maxX * cardSize.outerWidth * 180}`) / (angle * Math.PI);
+    const width = 2 * radius * Math.sin(Math.PI * (angle / 2) / 180) + cardSize.outerWidth;
+    const height = maxY * cardSize.outerHeight;
+    const z = radius - radius * Math.cos(Math.PI * (angle / 2) / 180);
+    return {
+        maxX,
+        maxY,
+        radius,
+        bounds: {
+            width,
+            height,
+            margin: 100,
+            z
+        }
+    };
+};
+
 
 const WrappedSystemCard = wrapBrick<SystemCard, SystemCardProps>(
     "data-view.app-wall-system-card"
@@ -84,7 +104,7 @@ const WrappedSystemCard = wrapBrick<SystemCard, SystemCardProps>(
 export function AppWallElement(props: AppWallProps): ReactElement {
     const { relations, onSystemCardButtonClick, useDblclick, handleCardDbClick, rightBtnOnClick, leftBtnOnClick } = props;
     const [curClickCardItemAppData, setCurClickCardItemAppData] = useState<AppData>(null);
-
+    // props.dataSource=table;
 
     const containerRef = useRef<HTMLDivElement>();
     const appwallRef = useRef<HTMLDivElement>();
@@ -122,42 +142,21 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         mouseoutTimer: null,
         clickTimer: null,
         dblClickTimer: null,
+        isShowGraph3D: false,
+        isShowAppInfo: false,
         enable: true, //是否可以触发事件
-        enableShowRelations: true
+        // enableShowRelations: true
     })
 
-    const render = () => {
+    const render = useCallback(() => {
         rendererRef.current.render(sceneRef.current, cameraRef.current);
+    }, []);
+
+    const updateViewBounds = (length: number) => {
+        configRef.current = getViewBounds(length)
     };
 
-    const onWindowResize = () => {
-        cameraRef.current.aspect = window.innerWidth / window.innerHeight;
-        cameraRef.current.updateProjectionMatrix();
-        rendererRef.current.setSize(window.innerWidth, window.innerHeight);
-        render();
-    };
-
-    const initViewBounds = (length: number) => {
-        const maxX = Math.ceil(Math.sqrt(length * cardSize.outerHeight / (.4 * cardSize.outerWidth)));
-        const maxY = Math.ceil(length / maxX);
-        const radius = parseInt(`${maxX * cardSize.outerWidth * 180}`) / (angle * Math.PI);
-        const width = 2 * radius * Math.sin(Math.PI * (angle / 2) / 180) + cardSize.outerWidth;
-        const height = maxY * cardSize.outerHeight;
-        const z = radius - radius * Math.cos(Math.PI * (angle / 2) / 180);
-        configRef.current = {
-            maxX,
-            maxY,
-            radius,
-            bounds: {
-                width,
-                height,
-                margin: 100,
-                z
-            }
-        }
-    };
-
-    const init = (length: number) => {
+    const init = () => {
         const width = window.innerWidth;
         const height = window.innerHeight;
         const aspect = width / height;
@@ -167,7 +166,6 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         appwallRef.current.replaceChildren(renderer.domElement)
 
         const camera = new PerspectiveCamera(fov, aspect, .1, 10000);
-        camera.position.z = computeCameraDistance(camera, configRef.current.bounds, distanceConfig, length);
 
         const controls = new TrackballControls(camera, renderer.domElement);
         controls.rotateSpeed = .5;
@@ -179,7 +177,6 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         cameraRef.current = camera;
         controlsRef.current = controls;
         rendererRef.current = renderer
-
     };
 
     const createView = (table: Target[]) => {
@@ -222,12 +219,12 @@ export function AppWallElement(props: AppWallProps): ReactElement {
             if (relation.source === userData.key) {
                 //获取目标target CSS3DObject
                 lineTarget = objectsRef.current.find(o => o.userData.key === relation.target);
-                lineObject = lineTarget&&createRelationLine(object.position, lineTarget.position, "blue");
+                lineObject = lineTarget && createRelationLine(object.position, lineTarget.position, "blue");
             } else {
                 lineTarget = objectsRef.current.find(o => o.userData.key === relation.source);
-                lineObject = lineTarget&&createRelationLine(lineTarget.position, object.position, "purple");
+                lineObject = lineTarget && createRelationLine(lineTarget.position, object.position, "purple");
             }
-            if(!lineObject)return;
+            if (!lineObject) return;
             lineCiCodesRef.current.push(lineObject);
             sceneRef.current.add(lineObject);
         });
@@ -297,10 +294,8 @@ export function AppWallElement(props: AppWallProps): ReactElement {
     }
 
     const transform = (targets: Object3D[], duration: number) => {
-        // const preEnable = registerEvents.current.enable;
-        // const preEnableShowRelations = registerEvents.current.enableShowRelations;
+        // const preEnable=registerEvents.current.enable
         registerEvents.current.enable = false;
-        registerEvents.current.enableShowRelations = false;
         for (let i = 0; i < objectsRef.current.length; i++) {
             const object = objectsRef.current[i];
             const target = targets[i];
@@ -310,7 +305,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
                     x: target.position.x,
                     y: target.position.y,
                     z: target.position.z
-                }, Math.random() * duration + duration)
+                }, MathUtils.randFloat(duration, duration * 2))
                 .easing(Easing.Exponential.InOut)
                 .start();
 
@@ -319,10 +314,9 @@ export function AppWallElement(props: AppWallProps): ReactElement {
                     x: target.rotation.x,
                     y: target.rotation.y,
                     z: target.rotation.z
-                }, Math.random() * duration + duration)
+                }, MathUtils.randFloat(duration, duration * 2))
                 .easing(Easing.Exponential.InOut)
                 .start();
-
         }
 
         new Tween({})
@@ -330,9 +324,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
             .onUpdate(render)
             .start().onComplete(() => {
                 registerEvents.current.enable = true;
-                registerEvents.current.enableShowRelations = true;
             });
-
     }
 
     const handeReset = () => {
@@ -366,6 +358,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
                 controlsRef.current.reset();
                 appwallRef.current.classList.remove('mask-container')
                 transform(targetsRef.current.curve, 600)
+                registerEvents.current.isShowGraph3D = false;
             });
         i.to({
             x: 0,
@@ -384,6 +377,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         const object = registerEvents.current.element.__objectCSS;
         const target = registerEvents.current.element.__curve;
         registerEvents.current.enable = false
+        registerEvents.current.isShowAppInfo = true
         //定义四个位置
         const c = {
             x: target.position.x > 0 ? 2 * -cardSize.width : 2 * cardSize.width,
@@ -459,17 +453,24 @@ export function AppWallElement(props: AppWallProps): ReactElement {
                 systemCardRef.current.style.left = `${rect.left}px`;
             }
         }).start().onComplete(function () {
-            registerEvents.current.enableShowRelations = true;
+            //   registerEvents.current.enableShowRelations = true;
             registerEvents.current.enable = true;
+            registerEvents.current.isShowAppInfo = !toggle;
+
         })
     }
-    useEffect(() => {
-        const length = props.dataSource?.length ?? 0;
-        initViewBounds(length);
-        init(length);
-        const configBound = configRef.current
-        const appDatas = setAppPosition(props.dataSource, configBound.maxX, configBound.maxY);
-        createView(appDatas);
+
+    const resetView = () => {
+        controlsRef.current.reset();
+        TWEEN.removeAll();
+        objectsRef.current.map(o => {
+            sceneRef.current.remove(o);
+        });
+        objectsRef.current = [];
+        targetsRef.current = {
+            table: [],
+            curve: []
+        };
         //重置交互状态
         registerEvents.current = {
             element: null,
@@ -478,50 +479,82 @@ export function AppWallElement(props: AppWallProps): ReactElement {
             clickTimer: null,
             dblClickTimer: null,
             enable: true,
-            enableShowRelations: true
+            isShowAppInfo: false,
+            isShowGraph3D: false
         }
-        transform(targetsRef.current.curve, 2000);
+    }
 
+    useEffect(() => {
+        init();
         let cancel: number;
         const animate = () => {
             cancel = requestAnimationFrame(animate);
-            TWEEN.update()
+            TWEEN.update();
             controlsRef.current.update();
         }
-        animate()
+        animate();
+
+        const onWindowResize = () => {
+            cameraRef.current.aspect = window.innerWidth / window.innerHeight;
+            cameraRef.current.updateProjectionMatrix();
+            rendererRef.current.setSize(window.innerWidth, window.innerHeight);
+            render();
+        };
+
         controlsRef.current.addEventListener('change', render);
         window.addEventListener('resize', onWindowResize);
+
         return () => {
-            controlsRef.current.removeEventListener('change', render);
             window.removeEventListener('resize', onWindowResize);
+            controlsRef.current.removeEventListener('change', render);
+            controlsRef.current.dispose();
+            TWEEN.removeAll();
+            cameraRef.current.clear();
+            sceneRef.current.clear();
             cancelAnimationFrame(cancel);
         }
-    }, [props.dataSource,useDblclick])
+    }, [])
 
     useEffect(() => {
+        const length = props.dataSource?.length || 0;
+        updateViewBounds(length);
+        cameraRef.current.position.z = computeCameraDistance(cameraRef.current, configRef.current.bounds, distanceConfig, length);
+        cameraRef.current.updateProjectionMatrix();
+        controlsRef.current.position0.copy(cameraRef.current.position);
+
+        const appData = setAppPosition(props.dataSource, configRef.current.maxX, configRef.current.maxY);
+        createView(appData);
+        transform(targetsRef.current.curve, 2000);
+
+        return () => {
+            resetView();
+        }
+    }, [props.dataSource]);
+
+    useEffect(() => {
+        const container = containerRef.current;
         const handleMouseover = (e: MouseEvent) => {
-            console.log(registerEvents.current)
-            if ((!registerEvents.current.enable && !registerEvents.current.enableShowRelations)) return false;
+            if ( registerEvents.current.isShowAppInfo || registerEvents.current.isShowGraph3D||!registerEvents.current.enable ) return false;
             const target = findElementByEvent(e);
             restoreElementState()
             if (target) {
                 registerEvents.current.element = target;
-                registerEvents.current.mouseoverTimer && clearTimeout(registerEvents.current.mouseoverTimer)
+                clearTimeout(registerEvents.current.mouseoverTimer)
                 registerEvents.current.mouseoverTimer = window.setTimeout(() => {
                     showElementBetweenRelation(target);
                 }, 500);
             } else {
-                registerEvents.current?.mouseoverTimer && clearInterval(registerEvents.current.mouseoverTimer);
+                clearTimeout(registerEvents.current.mouseoverTimer);
                 restoreElementState()
             }
         }
         const handleClick = (e: MouseEvent) => {
-            if (!registerEvents.current.enable) return false;
-            (registerEvents.current.clickTimer && clearTimeout(registerEvents.current.clickTimer), registerEvents.current.mouseoverTimer && clearTimeout(registerEvents.current.mouseoverTimer));
+            if (registerEvents.current.isShowAppInfo || registerEvents.current.isShowGraph3D ||!registerEvents.current.enable) return false;
+            (clearTimeout(registerEvents.current.clickTimer), clearTimeout(registerEvents.current.mouseoverTimer));
             registerEvents.current.clickTimer = setTimeout(function () {
                 const target = findElementByEvent(e) as any;
                 if (target) {
-                    (registerEvents.current.mouseoverTimer && clearTimeout(registerEvents.current.mouseoverTimer))
+                    (clearTimeout(registerEvents.current.mouseoverTimer))
                     e.stopPropagation();
                     registerEvents.current.element = target;
                     setCurClickCardItemAppData(target.__userData)
@@ -530,23 +563,20 @@ export function AppWallElement(props: AppWallProps): ReactElement {
             }, 300)
         }
         const handleDbClick = (e: MouseEvent) => {
-            if (!registerEvents.current.enable) return false;
+            if (registerEvents.current.isShowAppInfo || registerEvents.current.isShowGraph3D ||!registerEvents.current.enable) return false;
             const target = findElementByEvent(e) as any;
             const __userData = target.__userData as Target;
             const __objectCSS = target.__objectCSS as CSS3DObject;
-            (registerEvents.current.clickTimer && clearTimeout(registerEvents.current.clickTimer), registerEvents.current.mouseoverTimer && clearTimeout(registerEvents.current.mouseoverTimer), registerEvents.current.dblClickTimer && clearTimeout(registerEvents.current.dblClickTimer));
-
+            (clearTimeout(registerEvents.current.clickTimer), clearTimeout(registerEvents.current.mouseoverTimer), clearTimeout(registerEvents.current.dblClickTimer));
             if (useDblclick) {
                 registerEvents.current.dblClickTimer = window.setTimeout(function () {
                     handleCardDbClick(__userData)
                 }, 300)
             } else {
+                registerEvents.current.isShowGraph3D = true;
                 registerEvents.current.dblClickTimer = window.setTimeout(function () {
-
                     if (target) {
-                        registerEvents.current.enable = false;
-                        registerEvents.current.enableShowRelations = false;
-                        (registerEvents.current.mouseoverTimer && clearTimeout(registerEvents.current.mouseoverTimer), registerEvents.current.clickTimer && clearTimeout(registerEvents.current.clickTimer));
+                        (clearTimeout(registerEvents.current.mouseoverTimer), clearTimeout(registerEvents.current.clickTimer));
                         restoreElementState();
 
                         appwallRef.current.classList.add('mask-container')
@@ -594,7 +624,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
                                 leftBtnName: __userData.trapezoidalProps?.leftBtnName,
                                 rightBtnName: __userData.trapezoidalProps?.rightBtnName,
                                 rightOnClick: () => rightBtnOnClick(__userData),
-                                leftOnClick: () =>leftBtnOnClick(__userData)
+                                leftOnClick: () => leftBtnOnClick(__userData)
                             });
                             graph3DViewRef.current = objectContainer;
                             sceneRef.current.add(objectContainer)
@@ -617,18 +647,17 @@ export function AppWallElement(props: AppWallProps): ReactElement {
                     }
                 }, 300)
             }
-
         }
 
-        containerRef.current.addEventListener('dblclick', handleDbClick)
-        containerRef.current.addEventListener('click', handleClick)
-        containerRef.current.addEventListener('mouseover', handleMouseover)
+        container.addEventListener('dblclick', handleDbClick)
+        container.addEventListener('click', handleClick)
+        container.addEventListener('mouseover', handleMouseover)
         return () => {
-            containerRef.current?.removeEventListener('mouseover', handleMouseover)
-            containerRef.current?.removeEventListener('click', handleClick)
-            containerRef.current?.removeEventListener('dblclick', handleDbClick)
+            container.removeEventListener('mouseover', handleMouseover)
+            container.removeEventListener('click', handleClick)
+            container.removeEventListener('dblclick', handleDbClick)
         }
-    }, [props.dataSource, useDblclick])
+    }, [])
 
     return (
         <div className="appwall-container" ref={containerRef} >
