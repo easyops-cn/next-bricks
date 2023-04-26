@@ -1,11 +1,11 @@
-import { Vector3, Object3D, Quaternion,Vector3Tuple, PerspectiveCamera } from "three";
+import { Vector3, Object3D, Quaternion, Vector3Tuple, PerspectiveCamera } from "three";
 import { CSS3DObject } from 'three/addons/renderers/CSS3DRenderer.js';
 import "./card-item/index.js";
 import "./relation-line/index.js";
 import "./system-card/index.js";
-import type {  AppWallCardItemProps } from "./card-item/index.js";
+import type { AppWallCardItemProps } from "./card-item/index.js";
 import type { AppWallRelationLine, AppWallRelationLineProps } from "./relation-line/index.js";
-import type {SystemCardProps } from "./system-card/index.js";
+import type { SystemCardProps } from "./system-card/index.js";
 import { TrapezoidalObjectProps, TrapezoidalProps, bounds, CardSize, DistanceConfig, Position, Target } from "./interface.js";
 import { CabinetThumbnail } from "../cabinet/cabinet-thumbnail/index.jsx";
 
@@ -145,11 +145,11 @@ export const createTrapezoidalTopOrBottomElement = (props: {
 }
 /**
  * 创建梯台模型
- * @param props 
- * @returns 
+ * @param props
+ * @returns
  */
 export const createTrapezoidalObject = (props: TrapezoidalObjectProps) => {
-  const { objectData, leftBtnName,clusters,columns, leftOnClick, rightBtnName, rightOnClick } = props;
+  const { objectData, leftBtnName, clusters, columns, leftOnClick, rightBtnName, rightOnClick } = props;
   const d = 450;
   const container = document.createElement('div');
   const objectContainer = new CSS3DObject(container);
@@ -178,8 +178,8 @@ export const createTrapezoidalObject = (props: TrapezoidalObjectProps) => {
                    box-sizing: border-box;
                    padding: 16px;
                    `;
-  const thumbnailEle = document.createElement("data-view.cabinet-thumbnail")as CabinetThumbnail;
-  thumbnailEle.clusters= clusters??[];
+  const thumbnailEle = document.createElement("data-view.cabinet-thumbnail") as CabinetThumbnail;
+  thumbnailEle.clusters = clusters ?? [];
   thumbnailEle.columns = columns ?? 4;
   topCard.className = "visibilityAnimate";
   topCard.appendChild(thumbnailEle);
@@ -247,10 +247,10 @@ export const createTrapezoidalObject = (props: TrapezoidalObjectProps) => {
 }
 /**
  *  布局计算
- * @param dataSource 
- * @param maxX 
- * @param maxY 
- * @returns 
+ * @param dataSource
+ * @param maxX
+ * @param maxY
+ * @returns
  */
 export const setAppPosition = (dataSource: AppData[], maxX: number, maxY: number) => {
   if (!dataSource?.length) return [];
@@ -323,7 +323,7 @@ export const computeCameraDistance = (camera: PerspectiveCamera, bounds: bounds,
       .distance)
   })
   if (o > 0) return Math.max(o, i);
-  var s = 200 * Math.ceil((length - 160) / 40) + 3200;
+  const s = 200 * Math.ceil((length - 160) / 40) + 3200;
   return Math.max(s, i)
 
 }
@@ -335,11 +335,11 @@ export const getAppRelations = (object: CSS3DObject, relationsData: Relation[]) 
   });
   return relations
 }
-export const findElementByEvent=(e:MouseEvent)=>{
-  const path =( e.composedPath()as Element[]).find(node => node?.shadowRoot);
+export const findElementByEvent = (e: MouseEvent) => {
+  const path = (e.composedPath() as Element[]).find(node => node?.shadowRoot);
   if (path?.tagName === 'DATA-VIEW.APP-WALL-CARD-ITEM') return path
   const customEle = document.elementFromPoint(e.clientX, e.clientY)
-  const target = customEle?.shadowRoot.elementFromPoint(e.clientX, e.clientY); 
+  const target = customEle?.shadowRoot.elementFromPoint(e.clientX, e.clientY);
   if (target?.tagName === 'DATA-VIEW.APP-WALL-CARD-ITEM') return target
   return null
 }
