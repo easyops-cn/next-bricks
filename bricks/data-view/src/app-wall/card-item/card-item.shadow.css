@@ -20,7 +20,7 @@
   height: 100%;
 }
 
-.card-item-container::before {
+/* .card-item-container::before {
   content: "";
   position: absolute;
   left: calc((188% - 100%) / -2);
@@ -34,7 +34,7 @@
 
 .card-item-container:hover::before {
   opacity: 1;
-}
+} */
 
 .card-item {
   position: relative;
@@ -47,19 +47,22 @@
   border-radius: var(--no-border-radius);
   border-color: transparent;
   transition: border-color 0.5s;
-  /* Todo: 中间部分才能看到 这个带颜色的border */
-  border22: 1px solid;
-  border-image22: radial-gradient(circle, rgba(50, 130, 253, 0.5), rgba(50, 130, 253, 0)) 1 1;
 }
 
+.status-normal:hover {
+  box-shadow: 0 0 100px rgba(80, 255, 255, 0.58);
+  border: 1px solid rgba(80, 255, 255, 0.58);
+  background:-webkit-gradient(liner,left top,left bottom, from(#002c8d),to(#00123e));
+  background: linear-gradient(to bottom,rgba(80, 255, 255, 1) 0%,rgba(80, 255, 255, 0) 100%);
+}
+.status-warning:hover {
+  box-shadow: 0 0 100px #CC0066;
+  background:-webkit-gradient(liner,left top,left bottom, from(#CC0066),to(rgba(204, 0, 102, 0.2)));
+  background: linear-gradient(to bottom,#CC0066 0%,rgba(204, 0, 102, 0.2) 100%);
+}
 .card-item-container.status-normal .card-item {
   background: var(--color-fill-bg-base-4);
   box-shadow: inset 0px 1px 2px 0px rgba(255, 255, 255, 0.45);
-}
-
-.card-item-container.status-normal::before {
-  background: radial-gradient(ellipse 50% 50%, rgba(80, 255, 255, 1) 0%, rgba(80, 255, 255, 0) 100%);
-  filter: blur(19px);
 }
 
 .card-item-container.status-normal:hover .card-item {
@@ -69,11 +72,6 @@
 .card-item-container.status-warning .card-item {
   background: linear-gradient(180deg, #CC0066 0%, rgba(204, 0, 102, 0.2) 100%);
   box-shadow: inset 0px 2px 6px 0px rgba(255, 255, 255, 0.65);
-}
-
-.card-item-container.status-warning::before {
-  background: radial-gradient(ellipse 50% 50%, rgba(204, 0, 102, 1) 0%, rgba(204, 0, 102, 0) 100%);
-  filter: blur(19px);
 }
 
 .card-item-container.status-warning:hover .card-item {

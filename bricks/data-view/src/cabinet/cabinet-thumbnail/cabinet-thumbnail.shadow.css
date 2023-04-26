@@ -12,10 +12,6 @@
 .thumbnailLayout {
     flex-direction: column;
 }
-.appLayer {
-    width: 40%;
-    pointer-events: none;
-}
 .layout {
     display: flex;
     gap: 17px;

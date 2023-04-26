@@ -11,9 +11,11 @@ const { defineElement, property, event } = createDecorators();
 export interface AppWallProps {
   dataSource: AppData[];
   relations: Relation[];
+  useDblclick?:boolean;
   onSystemCardButtonClick?: (data: AppData) => void;
   leftBtnOnClick?: (data: AppData) => void;
   rightBtnOnClick?: (data: AppData) => void;
+  handleCardDbClick?: (data: AppData) => void;
 }
 
 /**
@@ -26,6 +28,8 @@ export interface AppWallProps {
  */
 @defineElement("data-view.app-wall", {
   styleTexts: [variablesStyleText, styleText],
+  dependencies:["data-view.app-wall-card-item",
+  "data-view.cabinet-thumbnail"]
 })
 class AppWall
   extends ReactNextElement
@@ -51,6 +55,16 @@ class AppWall
   accessor relations: Relation[];
 
   /**
+   * @default
+   * @required
+   * @description 是否使用双击事件，开启之后卡片不会触发内部dblclick事件展示梯台
+   */
+   @property({
+    attribute: false,
+  })
+  accessor useDblclick: boolean;
+
+  /**
   * @detail AppData
   * @description 详情卡片点击事件
   */
@@ -74,13 +88,22 @@ class AppWall
   @event({ type: "right.btn.click" })
   accessor #onRightClickEvent!: EventEmitter<AppData>;
 
+   /**
+     * @detail
+     * @description 卡片双击事件
+     */
+  @event({ type: "on.card.dbclick" })
+  accessor #onDbClickEvent!: EventEmitter<AppData>;
+
   handleLeftClick = (data: AppData) => {
     this.#onLeftClickEvent.emit(data);
   }
   handleRightClick = (data: AppData) => {
     this.#onRightClickEvent.emit(data);
   }
-
+  handleCardDbClick = (data: AppData) => {
+    this.#onDbClickEvent.emit(data);
+  }
 
   render() {
     return (
@@ -88,8 +111,10 @@ class AppWall
         dataSource={this.dataSource}
         relations={this.relations}
         onSystemCardButtonClick={this.#handleSystemCardButtonClick}
+        useDblclick={this.useDblclick}
         leftBtnOnClick={this.handleLeftClick}
         rightBtnOnClick={this.handleRightClick}
+        handleCardDbClick={this.handleCardDbClick}
       />
     );
   }

@@ -128,10 +128,7 @@ export function SystemCardComponent(props: SystemCardProps): React.ReactElement 
   }, [itemList]);
 
   return (
-    <div className={classNames("wrapper", {
-      infoWrapper: status === "normal",
-      warningWrapper: status === "warning"
-    })} style={containerStyle}>
+<div className="wrapper" style={containerStyle}>
       <div className="cardName" title={cardTitle}>{cardTitle}</div>
       {
         itemList?.length && (<div className="descriptions" ref={descriptionRef}>

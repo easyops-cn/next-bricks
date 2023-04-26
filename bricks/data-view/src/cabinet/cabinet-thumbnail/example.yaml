@@ -1,8 +1,7 @@
 - brick: data-view.cabinet-thumbnail
   properties:
-    appName: xxx应用
     clusters:
-      - customTitle: xxx集群容器
+      - title: xxx集群容器
         data:
           - type: physical-machine
             nodeTitle: 255.255.255
@@ -19,7 +18,7 @@
           - type: physical-machine
             nodeTitle: 255.255.255
         type: host
-      - customTitle: xxx k8s 容器
+      - title: xxx k8s 容器
         data:
           - type: container-group
             nodeTitle: 255.255.255
@@ -36,7 +35,7 @@
           - type: container-group
             nodeTitle: 255.255.255
         type: k8s
-      - customTitle: xxx集群容器
+      - title: xxx集群容器
         type: host
         data:
           - type: virtual-machine
