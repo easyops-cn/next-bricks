@@ -45,7 +45,7 @@ describe("data-view.cabinet-thumbnail", () => {
         })
         expect(document.body.contains(element)).toBeFalsy();
     })
-    test("should work and  width & height", ()=>{
+    test("should work and columns", ()=>{
         const {container} = render(<CabinetThumbnailComponent  clusters={[{
             title: "主机容器",
             type: "host",
@@ -53,8 +53,14 @@ describe("data-view.cabinet-thumbnail", () => {
                 nodeTitle: "255.255.0",
                 type: "virtual-machine"
             }]
-        }]} height={200} width={100} />);
+        }]}  columns={5} />);
+        expect(container.querySelector(".clusterContentLayout").getAttribute("style")).toBe("grid-template-columns: repeat(5,1fr);");
         expect(container.querySelector(".clusterTitle").textContent).toBe("主机容器");
-        expect(container.querySelector(".thumbnailLayout").getAttribute("style")).toBe("transform: scale(0.33);")
+        expect(container.querySelector(".thumbnailLayout").getAttribute("style")).toBe("transform: scale(1);")
+    })
+    test("should work and  columns is  0", ()=>{
+        const {container} = render(<CabinetThumbnailComponent  clusters={[]}  columns={0} />);
+        expect(container.contains(container.querySelector(".clusterTitle"))).toBeFalsy()
+        expect(container.querySelector(".thumbnailLayout").getAttribute("style")).toBeNull();
     })
 })

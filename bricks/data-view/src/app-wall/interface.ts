@@ -1,6 +1,5 @@
 import { Vector3Tuple,Object3D } from "three";
-import { CabinetContainerProps } from "../cabinet/cabinet-container/index.jsx";
-import { Clusters } from "../cabinet/cabinet-thumbnail/index.jsx";
+import { CabinetThumbnailProps } from "../cabinet/cabinet-thumbnail/index.jsx";
 import { AppData } from "./utils.js";
 
 interface TrapezoidalObjectData {
@@ -8,10 +7,9 @@ interface TrapezoidalObjectData {
      height: number;
      point: Vector3Tuple
 }
-export interface TrapezoidalProps {
+export interface TrapezoidalProps extends CabinetThumbnailProps {
      leftBtnName?: string | undefined;
      rightBtnName?: string | undefined;
-     clusters?: Clusters[];
 
 }
 export interface TrapezoidalObjectProps extends TrapezoidalProps{

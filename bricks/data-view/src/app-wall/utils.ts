@@ -149,7 +149,7 @@ export const createTrapezoidalTopOrBottomElement = (props: {
  * @returns 
  */
 export const createTrapezoidalObject = (props: TrapezoidalObjectProps) => {
-  const { objectData, leftBtnName,clusters, leftOnClick, rightBtnName, rightOnClick } = props;
+  const { objectData, leftBtnName,clusters,columns, leftOnClick, rightBtnName, rightOnClick } = props;
   const d = 450;
   const container = document.createElement('div');
   const objectContainer = new CSS3DObject(container);
@@ -163,6 +163,7 @@ export const createTrapezoidalObject = (props: TrapezoidalObjectProps) => {
                    height: ${BH}px;
                    box-shadow: inset 0px 1px 2px 0px rgba(255,255,255,0.45);
                    border: 1px solid rgba(118,255,255,0.58);
+                   padding: 16px;
                    `
   const objectBottomModel = new CSS3DObject(bottomCard);
   objectBottomModel.position.z = 0;
@@ -175,12 +176,11 @@ export const createTrapezoidalObject = (props: TrapezoidalObjectProps) => {
                    height:${TH}px;
                    background: linear-gradient(rgb(13, 54, 179,0.6) 0%, rgb(74, 108, 156,0.6) 100%);
                    box-sizing: border-box;
+                   padding: 16px;
                    `;
   const thumbnailEle = document.createElement("data-view.cabinet-thumbnail")as CabinetThumbnail;
-  thumbnailEle.width=TW;
-  thumbnailEle.height=TH;
   thumbnailEle.clusters= clusters??[];
-
+  thumbnailEle.columns = columns ?? 4;
   topCard.className = "visibilityAnimate";
   topCard.appendChild(thumbnailEle);
   const objectTopModel = new CSS3DObject(topCard);
