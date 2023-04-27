@@ -7,7 +7,10 @@ import {ContainerType} from "../cabinet-container/index.js";
 import variablesText from "../../data-view-variables.shadow.css";
 import styleText from "./cabinet-thumbnail.shadow.css";
 import {usePrevious} from "../../hooks/index.js";
-
+import {CabinetAppLayer, CabinetAppLayerProps} from "../cabinet-app-layer/index.js";
+const WrappedCabinetAppLayer = wrapBrick<CabinetAppLayer, CabinetAppLayerProps>(
+    "data-view.cabinet-app-layer"
+);
 const {defineElement, property} = createDecorators();
 
 const WrappedNode = wrapBrick<CabinetNode, CabinetNodeProps>(
@@ -21,6 +24,7 @@ export interface Clusters {
 
 export interface CabinetThumbnailProps {
     clusters: Clusters[];
+    appName: string;
     columns?: number;
 }
 
@@ -54,16 +58,26 @@ class CabinetThumbnail extends ReactNextElement implements CabinetThumbnailProps
     @property({type: Number})
     accessor columns:number = 4;
 
+    /**
+     * @kind string
+     * @required true
+     * @default
+     * @description 应用名称
+     */
+    @property()
+    accessor appName:string;
+
   render(): React.ReactNode {
     return <CabinetThumbnailComponent
         clusters={this.clusters}
         columns={this.columns}
+        appName={this.appName}
     />;
   }
 }
 
 export function CabinetThumbnailComponent(props:CabinetThumbnailProps): React.ReactElement {
-    const {clusters, columns} = props;
+    const {clusters, columns, appName} = props;
     const containerRef = useRef<HTMLDivElement>();
     const layoutRef = useRef<HTMLDivElement>();
     const [scale, setScale] = useState<number>();
@@ -82,10 +96,12 @@ export function CabinetThumbnailComponent(props:CabinetThumbnailProps): React.Re
 
     return  <div ref={containerRef} className="wrapper">
         <div className="thumbnailLayout"
+             ref={layoutRef}
              style={{
            ...(scale?{transform: `scale(${scale})`}: {})
         }}>
-            <div className="layout" ref={layoutRef}>
+            <WrappedCabinetAppLayer className="appLayer" appTitle={appName} />
+            <div className="layout">
                 {
                     clusters.map((item,index) => (
                         <div className="clusterWrapper" key={index}>

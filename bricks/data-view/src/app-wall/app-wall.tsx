@@ -621,6 +621,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
                                 },
                                 clusters: __userData.trapezoidalProps?.clusters,
                                 columns: __userData.trapezoidalProps?.columns,
+                                appName: __userData.trapezoidalProps?.appName,
                                 leftBtnName: __userData.trapezoidalProps?.leftBtnName,
                                 rightBtnName: __userData.trapezoidalProps?.rightBtnName,
                                 rightOnClick: () => rightBtnOnClick(__userData),
