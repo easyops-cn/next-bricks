@@ -1,20 +1,23 @@
+import { fireEvent } from '@testing-library/react';
 import { describe, test, expect } from "@jest/globals";
 import { act } from "react-dom/test-utils";
 import "./index.jsx";
 import { AppWall } from "./index.jsx";
 import { dataSource, relations } from './mockData.js';
 import TWEEN from "@tweenjs/tween.js";
-import { AppData } from './utils.js';
+import * as Utils from "./utils.js";
 
 jest.useFakeTimers();
+
+const mockedFindElementByEvent = jest.spyOn(Utils, "findElementByEvent");
 
 describe("data-view.app-wall", () => {
   test("basic usage", async () => {
     const element = document.createElement(
       "data-view.app-wall"
     ) as AppWall;
-    element.dataSource = dataSource as AppData[];
-    // element.relations = relations
+    element.dataSource = dataSource as Utils.AppData[];
+    element.relations = relations;
 
     expect(element.shadowRoot).toBeFalsy();
     act(() => {
@@ -22,29 +25,26 @@ describe("data-view.app-wall", () => {
     });
     expect(element.shadowRoot).toBeTruthy();
 
-    // const cardItem = element.shadowRoot.querySelector(".card-item");
-    // document.elementFromPoint = jest.fn().mockReturnValue(element);
-    // element.shadowRoot.elementFromPoint = jest.fn().mockImplementation((clientX, clientY) => {
-    //   if (clientX === 1 && clientY === 1)
-    //     return cardItem;
-    // });
+    await act(async () => {
+      TWEEN.update(5000);
+    })
+    const cardItems = element.shadowRoot.querySelectorAll(".card-item-container");
+    expect(cardItems).toHaveLength(52);
 
-    // expect(element.shadowRoot.querySelectorAll(".card-item").length).toBe(0);
+    mockedFindElementByEvent.mockReturnValue(cardItems[0]);
+    await act(async () => {
+      fireEvent.click(element.shadowRoot.querySelector(".appwall-container"));
+      jest.advanceTimersByTime(300);
+      TWEEN.update(3000);
+    })
+    expect(element.shadowRoot.querySelector(".mask").hasAttribute("hidden")).toBeFalsy();
+    expect(element.shadowRoot.querySelector(".infoWrapper")).toBeTruthy();
 
-    // await act(async () => {
-    //   // fireEvent.mouseEnter(cardItem);
-    // });
-
-    // await act(async () => {
-    //   fireEvent.click(cardItem, { clientX: 1, clientY: 1 });
-    //   jest.advanceTimersByTime(200);
-    // });
-    //
-    // await act(async () => {
-    //   fireEvent.click(cardItem, { clientX: 1, clientY: 1 });
-    //   fireEvent.click(cardItem, { clientX: 1, clientY: 1 });
-    //   jest.advanceTimersByTime(200);
-    // });
+    await act(async () => {
+      fireEvent.click(element.shadowRoot.querySelector(".mask"));
+      TWEEN.update(3000);
+    })
+    expect(element.shadowRoot.querySelector(".mask").hasAttribute("hidden")).toBeTruthy();
 
     act(() => {
       document.body.removeChild(element);
