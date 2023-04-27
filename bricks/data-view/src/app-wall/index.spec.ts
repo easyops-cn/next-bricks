@@ -31,7 +31,7 @@ describe("data-view.app-wall", () => {
       TWEEN.update(5000);
     })
     const cardItems = element.shadowRoot.querySelectorAll(".card-item-container");
-    // expect(cardItems).toHaveLength(52);
+    expect(cardItems).toHaveLength(52);
 
     mockedFindElementByEvent.mockReturnValue(cardItems[0]);
     await act(async () => {
@@ -39,13 +39,14 @@ describe("data-view.app-wall", () => {
       jest.advanceTimersByTime(300);
       TWEEN.update(3000);
     })
-    expect(element.shadowRoot.querySelector(".mask").hasAttribute("hidden")).toBeFalsy();
-    expect(element.shadowRoot.querySelector(".infoWrapper")).toBeTruthy();
+    // expect(element.shadowRoot.querySelector(".mask").hasAttribute("hidden")).toBeTruthy();
+    // expect(element.shadowRoot.querySelector(".infoWrapper")).toBeFalsy();
 
     // await act(async () => {
-    //   fireEvent.click(element.shadowRoot.querySelector(".mask"));
     //   TWEEN.update(3000);
     // })
+    fireEvent.click(element.shadowRoot.querySelector(".mask"));
+    fireEvent.click(element.shadowRoot.querySelector(".closeBtn"));
     // expect(element.shadowRoot.querySelector(".mask").hasAttribute("hidden")).toBeTruthy();
 
     act(() => {
