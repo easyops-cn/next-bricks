@@ -574,7 +574,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
             const __objectCSS = target.__objectCSS as CSS3DObject;
             clearTimeout(registerEvents.current.clickTimer), clearTimeout(registerEvents.current.mouseoverTimer), clearTimeout(registerEvents.current.dblClickTimer);
             restoreElementState();
-            if (useDblclick || __userData.trapezoidalProps?.clusters?.length>0) {
+            if (useDblclick || __userData.trapezoidalProps?.clusters?.length<1) {
                 registerEvents.current.dblClickTimer = window.setTimeout(function () {
                     handleCardDbClick(__userData)
                 }, 300)

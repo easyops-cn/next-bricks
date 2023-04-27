@@ -155,7 +155,7 @@ export const createTrapezoidalObject = (props: TrapezoidalObjectProps) => {
   const objectContainer = new CSS3DObject(container);
   objectContainer.position.set(...objectData.point);
   // 模型为梯形 , 底部和顶部的宽高成一定的比例计算，  bw: tw = 1:11; bh:th= 1:4.5
-  const BW: number = objectData.width, BH: number = objectData.height, TW: number = BW * 11, TH: number = BH * 4.5;
+  const BW: number = objectData.width, BH: number = objectData.height, TW: number = 1000, TH: number = 680;
   // 底部
   const bottomCard = document.createElement('div');
   bottomCard.style.cssText = `
