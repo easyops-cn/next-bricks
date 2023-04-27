@@ -1,4 +1,5 @@
-import { Vector3Tuple,Object3D } from "three";
+import { Vector3Tuple, Object3D } from "three";
+import { CSS3DObject } from "three/examples/jsm/renderers/CSS3DRenderer.js";
 import { CabinetThumbnailProps } from "../cabinet/cabinet-thumbnail/index.jsx";
 import { AppData } from "./utils.js";
 
@@ -12,13 +13,13 @@ export interface TrapezoidalProps extends CabinetThumbnailProps {
      rightBtnName?: string | undefined;
 
 }
-export interface TrapezoidalObjectProps extends TrapezoidalProps{
+export interface TrapezoidalObjectProps extends TrapezoidalProps {
      objectData: TrapezoidalObjectData;
      leftOnClick?: () => void;
      rightOnClick?: () => void;
 
- }
-export  type AnimationEventType = "click"|"dbClick"|"mouseenter"|"mouseleave"|"other"
+}
+export type AnimationEventType = "click" | "dbClick" | "mouseenter" | "mouseleave" | "other"
 
 export type Position = {
      x: number;
@@ -55,4 +56,20 @@ export interface BaseConfig {
      maxY: number;
      radius: number;
      bounds: bounds
+}
+
+export interface Ele extends HTMLElement{
+     __userData:Target;
+     __objectCSS:CSS3DObject;
+     __curve:Object3D
+}
+export interface RegisterEvents {
+     element: Ele,
+     mouseoverTimer: number,
+     mouseoutTimer: number,
+     clickTimer: number,
+     dblClickTimer: number,
+     isShowGraph3D: boolean,
+     isShowAppInfo: boolean,
+     enable: boolean
 }

@@ -5,7 +5,7 @@ import { CSS3DObject, CSS3DRenderer } from 'three/addons/renderers/CSS3DRenderer
 import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
 import TWEEN, { Tween, Easing } from "@tweenjs/tween.js";
 import type { AppWallProps } from "./index.jsx";
-import { BaseConfig, CardSize, DistanceConfig, Position, Target, Targets } from "./interface.js";
+import { BaseConfig, CardSize, DistanceConfig, Ele, Position, RegisterEvents, Target, Targets } from "./interface.js";
 import { AppData, computeCameraDistance, createCurveTarget, createTableTarget, createTrapezoidalObject, setAppPosition, createRelationLine, getAppRelations, findElementByEvent } from "./utils.js";
 import { AppWallCardItem } from "./card-item/index.jsx";
 import "./card-item/index.js";
@@ -136,7 +136,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
             z: 0
         }
     });
-    const registerEvents = useRef({
+    const registerEvents = useRef<RegisterEvents>({
         element: null,
         mouseoverTimer: null,
         mouseoutTimer: null,
@@ -409,7 +409,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
 
             }).onComplete(() => {
                 systemCardRef.current.hidden = true
-                registerEvents.current.element.style.opacity = 1;
+                registerEvents.current.element.style.opacity = '1';
             });
             r.to(h, 500).easing()
             o.to({
@@ -440,7 +440,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
             });
             r.to(h, 700).easing();
             o.to(p, 500).easing().onStart(function () {
-                registerEvents.current.element.style.opacity = 0;
+                registerEvents.current.element.style.opacity = '0';
                 systemCardRef.current.style.transition = 'transition: all .3s ease';
                 systemCardRef.current.hidden = false;
             })
@@ -541,7 +541,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
             if ( registerEvents.current.isShowAppInfo || registerEvents.current.isShowGraph3D||!registerEvents.current.enable ) return false;
             const target = findElementByEvent(e);
             if (target) {
-                registerEvents.current.element = target;
+                registerEvents.current.element = target as Ele;
                 clearTimeout(registerEvents.current.mouseoverTimer)
                 registerEvents.current.mouseoverTimer = window.setTimeout(() => {
                     restoreElementState()
@@ -556,7 +556,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
             if (registerEvents.current.isShowAppInfo || registerEvents.current.isShowGraph3D ||!registerEvents.current.enable) return false;
             restoreElementState();
             clearTimeout(registerEvents.current.clickTimer), clearTimeout(registerEvents.current.mouseoverTimer);
-            registerEvents.current.clickTimer = setTimeout(function () {
+            registerEvents.current.clickTimer = window.setTimeout(function () {
                 const target = findElementByEvent(e) as any;
                 if (target) {
                     (clearTimeout(registerEvents.current.mouseoverTimer))
@@ -574,7 +574,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
             const __objectCSS = target.__objectCSS as CSS3DObject;
             clearTimeout(registerEvents.current.clickTimer), clearTimeout(registerEvents.current.mouseoverTimer), clearTimeout(registerEvents.current.dblClickTimer);
             restoreElementState();
-            if (useDblclick || __userData.trapezoidalProps?.clusters?.length>0) {
+            if (useDblclick || __userData.trapezoidalProps?.clusters?.length<1) {
                 registerEvents.current.dblClickTimer = window.setTimeout(function () {
                     handleCardDbClick(__userData)
                 }, 300)
