@@ -90,7 +90,7 @@ class AppWall
 
    /**
      * @detail
-     * @description 卡片双击事件
+     * @description 卡片双击事件,useDblclick:true 或者当前节点clusters属性无数据的时候也会触发
      */
   @event({ type: "on.card.dbclick" })
   accessor #onDbClickEvent!: EventEmitter<AppData>;

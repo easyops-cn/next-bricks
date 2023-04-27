@@ -421,9 +421,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
                 x: target.rotation.x,
                 y: target.rotation.y,
                 z: target.rotation.z
-            }, 700).easing().onComplete(function () {
-                maskRef.current.hidden = true
-            });
+            }, 700).easing()
         } else {
             //出
             i.to(c, 700).easing().onStart(() => {
@@ -436,9 +434,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
                 registerEvents.current.element.style.opacity = 0;
                 systemCardRef.current.style.transition = 'transition: all .3s ease';
                 systemCardRef.current.hidden = false;
-            }).onComplete(function () {
-                // console.log('出【o】=>onComplete');
-            });
+            })
             s.to(d, 500).easing()
         }
         i.chain(o).start();
@@ -453,10 +449,9 @@ export function AppWallElement(props: AppWallProps): ReactElement {
                 systemCardRef.current.style.left = `${rect.left}px`;
             }
         }).start().onComplete(function () {
-            //   registerEvents.current.enableShowRelations = true;
             registerEvents.current.enable = true;
             registerEvents.current.isShowAppInfo = !toggle;
-
+            maskRef.current.hidden = toggle
         })
     }
 
@@ -536,11 +531,11 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         const handleMouseover = (e: MouseEvent) => {
             if ( registerEvents.current.isShowAppInfo || registerEvents.current.isShowGraph3D||!registerEvents.current.enable ) return false;
             const target = findElementByEvent(e);
-            restoreElementState()
             if (target) {
                 registerEvents.current.element = target;
                 clearTimeout(registerEvents.current.mouseoverTimer)
                 registerEvents.current.mouseoverTimer = window.setTimeout(() => {
+                    restoreElementState()
                     showElementBetweenRelation(target);
                 }, 500);
             } else {
@@ -550,7 +545,8 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         }
         const handleClick = (e: MouseEvent) => {
             if (registerEvents.current.isShowAppInfo || registerEvents.current.isShowGraph3D ||!registerEvents.current.enable) return false;
-            (clearTimeout(registerEvents.current.clickTimer), clearTimeout(registerEvents.current.mouseoverTimer));
+            restoreElementState();
+            clearTimeout(registerEvents.current.clickTimer), clearTimeout(registerEvents.current.mouseoverTimer);
             registerEvents.current.clickTimer = setTimeout(function () {
                 const target = findElementByEvent(e) as any;
                 if (target) {
@@ -567,8 +563,9 @@ export function AppWallElement(props: AppWallProps): ReactElement {
             const target = findElementByEvent(e) as any;
             const __userData = target.__userData as Target;
             const __objectCSS = target.__objectCSS as CSS3DObject;
-            (clearTimeout(registerEvents.current.clickTimer), clearTimeout(registerEvents.current.mouseoverTimer), clearTimeout(registerEvents.current.dblClickTimer));
-            if (useDblclick) {
+            clearTimeout(registerEvents.current.clickTimer), clearTimeout(registerEvents.current.mouseoverTimer), clearTimeout(registerEvents.current.dblClickTimer);
+            restoreElementState();
+            if (useDblclick || __userData.trapezoidalProps?.clusters?.length>0) {
                 registerEvents.current.dblClickTimer = window.setTimeout(function () {
                     handleCardDbClick(__userData)
                 }, 300)
@@ -577,8 +574,6 @@ export function AppWallElement(props: AppWallProps): ReactElement {
                 registerEvents.current.dblClickTimer = window.setTimeout(function () {
                     if (target) {
                         (clearTimeout(registerEvents.current.mouseoverTimer), clearTimeout(registerEvents.current.clickTimer));
-                        restoreElementState();
-
                         appwallRef.current.classList.add('mask-container')
                         controlsRef.current.reset();
                         const basePosition = {
