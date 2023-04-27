@@ -5,17 +5,31 @@ import {
     createTrapezoidalObject,
     createRelationLine,
     getAppRelations,
-    setAppPosition, AppData, findElementByEvent,
+    setAppPosition,
+    AppData,
+    findElementByEvent,
+    createTableTarget,
+    createCurveTarget,
+    computeCurvePosition
 } from "./utils.js";
-import { describe, test, expect } from "@jest/globals";
+import { describe, test, expect,beforeEach } from "@jest/globals";
 import { Vector3, Vector3Tuple } from "three";
 import { CSS3DObject } from "three/addons/renderers/CSS3DRenderer.js";
+import {Target,CardSize} from "./interface.js";
 const trapezoidalParams = {
     BW: 50,
     BH: 60,
     TW: 400,
     TH: 180,
     d: 230,
+}
+const cardSize:CardSize=  {
+    width: 120,
+    height: 160,
+    outerWidth: 140,
+    outerHeight: 180,
+    lgWidth: 180,
+    lgHeight: 240
 }
 describe("utils", () => {
     test.each([{
@@ -76,8 +90,8 @@ describe("utils", () => {
                     type: "virtual-machine"
                 }]
             }],
+            appName: "xx应用",
             columns: 5
-
         });
         expect(object).toHaveProperty("position", new Vector3(0, 0, 0));
         expect(object.children.length).toBe(6);
@@ -96,6 +110,7 @@ describe("utils", () => {
                     type: "virtual-machine"
                 }]
             }],
+            appName: "xx应用"
         });
         expect(_object).toHaveProperty("position", new Vector3(0, 1, 0));
         expect(_object.children.length).toBe(6);
@@ -147,6 +162,19 @@ describe("utils", () => {
             y: i>=2?2:1
         })));
     })
+    test("createTableTarget",()=> {
+        const data = {x: 1,y: 1} as any as Target;
+        const object = createTableTarget( data, cardSize, 10, 10);
+        expect(object).toHaveProperty("position", new Vector3(-630, 810, 0))
+    })
+    test("createCurveTarget & computeCurvePosition", ()=>{
+        const data = {x: 1,y: 1} as any as Target;
+        const position = computeCurvePosition(data, cardSize, 10,10, 10);
+        expect(position).toMatchObject({x: -629.3525069465792, y: 810, z: 24.727327343475736});
+        const object = createCurveTarget(data, cardSize, 10,10,10, 5);
+        expect(object).toHaveProperty("position", position);
+    })
+
 })
 describe('findElementByEvent', () => {
     beforeEach(() => {

@@ -1,101 +1,214 @@
-- brick: data-view.cabinet-thumbnail
+- brick: containers.flex-layout
   properties:
-    clusters:
-      - title: xxx集群容器
-        data:
-          - type: physical-machine
-            nodeTitle: 255.255.255
-          - type: physical-machine
-            nodeTitle: 255.255.255
-          - type: physical-machine
-            nodeTitle: 255.255.255
-          - type: physical-machine
-            nodeTitle: 255.255.255
-          - type: physical-machine
-            nodeTitle: 255.255.255
-          - type: physical-machine
-            nodeTitle: 255.255.255
-          - type: physical-machine
-            nodeTitle: 255.255.255
-        type: host
-      - title: xxx k8s 容器
-        data:
-          - type: container-group
-            nodeTitle: 255.255.255
-          - type: container-group
-            nodeTitle: 255.255.255
-          - type: container-group
-            nodeTitle: 255.255.255
-          - type: container-group
-            nodeTitle: 255.255.255
-          - type: container-group
-            nodeTitle: 255.255.255
-          - type: container-group
-            nodeTitle: 255.255.255
-          - type: container-group
-            nodeTitle: 255.255.255
-        type: k8s
-      - title: xxx集群容器
-        type: host
-        data:
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
-          - type: virtual-machine
-            nodeTitle: 255.255.255
+     gap: 20px
+     style:
+       width: 500px
+       height: 400px
+  slots:
+    "":
+      type: bricks
+      bricks:
+        - brick: data-view.cabinet-thumbnail
+          properties:
+            appName: xxx应用1
+            clusters:
+              - title: xxx集群容器
+                data:
+                  - type: physical-machine
+                    nodeTitle: 255.255.255
+                  - type: physical-machine
+                    nodeTitle: 255.255.255
+                  - type: physical-machine
+                    nodeTitle: 255.255.255
+                  - type: physical-machine
+                    nodeTitle: 255.255.255
+                  - type: physical-machine
+                    nodeTitle: 255.255.255
+                  - type: physical-machine
+                    nodeTitle: 255.255.255
+                  - type: physical-machine
+                    nodeTitle: 255.255.255
+                type: host
+              - title: xxx k8s 容器
+                data:
+                  - type: container-group
+                    nodeTitle: 255.255.255
+                  - type: container-group
+                    nodeTitle: 255.255.255
+                  - type: container-group
+                    nodeTitle: 255.255.255
+                  - type: container-group
+                    nodeTitle: 255.255.255
+                  - type: container-group
+                    nodeTitle: 255.255.255
+                  - type: container-group
+                    nodeTitle: 255.255.255
+                  - type: container-group
+                    nodeTitle: 255.255.255
+                type: k8s
+              - title: xxx集群容器
+                type: host
+                data:
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+        - brick: data-view.cabinet-thumbnail
+          properties:
+            appName: xxx应用2
+            columns: 5
+            clusters:
+              - title: xxx集群容器
+                data:
+                  - type: physical-machine
+                    nodeTitle: 255.255.255
+                  - type: physical-machine
+                    nodeTitle: 255.255.255
+                  - type: physical-machine
+                    nodeTitle: 255.255.255
+                  - type: physical-machine
+                    nodeTitle: 255.255.255
+                  - type: physical-machine
+                    nodeTitle: 255.255.255
+                  - type: physical-machine
+                    nodeTitle: 255.255.255
+                  - type: physical-machine
+                    nodeTitle: 255.255.255
+                type: host
+              - title: xxx k8s 容器
+                data:
+                  - type: container-group
+                    nodeTitle: 255.255.255
+                  - type: container-group
+                    nodeTitle: 255.255.255
+                  - type: container-group
+                    nodeTitle: 255.255.255
+                  - type: container-group
+                    nodeTitle: 255.255.255
+                  - type: container-group
+                    nodeTitle: 255.255.255
+                  - type: container-group
+                    nodeTitle: 255.255.255
+                  - type: container-group
+                    nodeTitle: 255.255.255
+                type: k8s
+              - title: xxx集群容器
+                type: host
+                data:
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
+                  - type: virtual-machine
+                    nodeTitle: 255.255.255
 

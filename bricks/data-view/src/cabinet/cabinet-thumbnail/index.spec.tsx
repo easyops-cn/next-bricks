@@ -35,11 +35,12 @@ describe("data-view.cabinet-thumbnail", () => {
                         type: "virtual-machine"
                     }]
                 }];
+            element.appName = "xxx应用";
             document.body.appendChild(element)
         })
         expect(element.shadowRoot).toBeTruthy();
         expect(element.shadowRoot.querySelector(".clusterContainer").classList.contains("clusterHostContainer"));
-
+        expect(element.shadowRoot.querySelector(".appLayer").getAttribute("appTitle")).toBe("xxx应用");
         act(()=>{
             document.body.removeChild(element)
         })
@@ -53,13 +54,13 @@ describe("data-view.cabinet-thumbnail", () => {
                 nodeTitle: "255.255.0",
                 type: "virtual-machine"
             }]
-        }]}  columns={5} />);
+        }]}  columns={5} appName="应用名称" />);
         expect(container.querySelector(".clusterContentLayout").getAttribute("style")).toBe("grid-template-columns: repeat(5,1fr);");
         expect(container.querySelector(".clusterTitle").textContent).toBe("主机容器");
         expect(container.querySelector(".thumbnailLayout").getAttribute("style")).toBe("transform: scale(1);")
     })
     test("should work and  columns is  0", ()=>{
-        const {container} = render(<CabinetThumbnailComponent  clusters={[]}  columns={0} />);
+        const {container} = render(<CabinetThumbnailComponent  clusters={[]}  columns={0} appName="应用名称" />);
         expect(container.contains(container.querySelector(".clusterTitle"))).toBeFalsy()
         expect(container.querySelector(".thumbnailLayout").getAttribute("style")).toBeNull();
     })
