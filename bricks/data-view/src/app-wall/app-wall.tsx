@@ -421,9 +421,18 @@ export function AppWallElement(props: AppWallProps): ReactElement {
                 x: target.rotation.x,
                 y: target.rotation.y,
                 z: target.rotation.z
-            }, 700).easing()
+            }, 700).easing().onComplete(()=>{
+              objectsRef.current?.forEach(item => {
+                item.element.style.opacity = '1';
+              });
+            })
         } else {
             //出
+            objectsRef.current?.forEach(item => {
+              if (object != item) {
+                  item.element.style.opacity = '0.2';
+              }
+            });
             i.to(c, 700).easing().onStart(() => {
                 //为了飞出去的途中，不能在点击其他的卡片飞出来
                 maskRef.current.hidden = false;
