@@ -150,12 +150,12 @@ export const createTrapezoidalTopOrBottomElement = (props: {
  */
 export const createTrapezoidalObject = (props: TrapezoidalObjectProps) => {
   const { objectData, leftBtnName, clusters, columns, leftOnClick, rightBtnName, rightOnClick,appName } = props;
-  const d = 450;
+  const d = 600;
   const container = document.createElement('div');
   const objectContainer = new CSS3DObject(container);
   objectContainer.position.set(...objectData.point);
   // 模型为梯形 , 底部和顶部的宽高成一定的比例计算，  bw: tw = 1:11; bh:th= 1:4.5
-  const BW: number = objectData.width, BH: number = objectData.height, TW: number = 1000, TH: number = 680;
+  const BW: number = objectData.width, BH: number = objectData.height, TW: number = 1500, TH: number = 1200;
   // 底部
   const bottomCard = document.createElement('div');
   bottomCard.style.cssText = `
