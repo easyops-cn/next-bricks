@@ -534,7 +534,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
 
         const appData = setAppPosition(props.dataSource, configRef.current.maxX, configRef.current.maxY);
         createView(appData);
-        transform(targetsRef.current.curve, 2000);
+        transform(targetsRef.current.curve, 1000);
 
         return () => {
             resetView();
@@ -642,13 +642,13 @@ export function AppWallElement(props: AppWallProps): ReactElement {
                         r.to({
                             x: u.x,
                             y: -3600 + u.y
-                        }, 1e3),
-                            o.to({
-                                x: u.x,
-                                y: u.y
-                            }, 1e3).onComplete(function () {
-                                closeBtnRef.current.style.visibility = "visible";
-                            })
+                        }, 1e3);
+                        o.to({
+                            x: u.x,
+                            y: u.y
+                        }, 1e3).onComplete(function () {
+                            closeBtnRef.current.style.visibility = "visible";
+                        })
                         n.start()
                     }
                 }, 300)
