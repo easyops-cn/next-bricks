@@ -6,6 +6,7 @@ import { AppWall } from "./index.jsx";
 import { dataSource, relations } from './mockData.js';
 import TWEEN from "@tweenjs/tween.js";
 import * as Utils from "./utils.js";
+import { Ele } from './interface.js';
 
 jest.useFakeTimers();
 
@@ -30,7 +31,7 @@ describe("data-view.app-wall", () => {
     await act(async () => {
       TWEEN.update(5000);
     })
-    const cardItems = element.shadowRoot.querySelectorAll(".card-item-container");
+    const cardItems = element.shadowRoot.querySelectorAll(".card-item-container") as any as Ele[];
     // expect(cardItems).toHaveLength(52);
 
     mockedFindElementByEvent.mockReturnValue(cardItems[0]);
@@ -47,6 +48,8 @@ describe("data-view.app-wall", () => {
     // })
     fireEvent.click(element.shadowRoot.querySelector(".mask"));
     fireEvent.click(element.shadowRoot.querySelector(".closeBtn"));
+    fireEvent.click(element.shadowRoot.querySelector(".appwall-container"));
+    fireEvent.resize(window);
     // expect(element.shadowRoot.querySelector(".mask").hasAttribute("hidden")).toBeTruthy();
 
     act(() => {
