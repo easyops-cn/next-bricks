@@ -64,12 +64,13 @@ export interface Ele extends HTMLElement{
      __curve:Object3D
 }
 export interface RegisterEvents {
-     element: Ele,
-     mouseoverTimer: number,
-     mouseoutTimer: number,
-     clickTimer: number,
-     dblClickTimer: number,
-     isShowGraph3D: boolean,
-     isShowAppInfo: boolean,
-     enable: boolean
+     element: Ele;
+     mouseoverTimer: number;
+     mouseoutTimer: number;
+     clickTimer: number;
+     dblClickTimer: number;
+     isShowGraph3D: boolean;
+     isShowAppInfo: boolean;
+     isShowRelations:boolean
+     enable: boolean;
 }

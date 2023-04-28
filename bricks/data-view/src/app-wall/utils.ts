@@ -6,7 +6,7 @@ import "./system-card/index.js";
 import type { AppWallCardItemProps } from "./card-item/index.js";
 import type { AppWallRelationLine, AppWallRelationLineProps } from "./relation-line/index.js";
 import type { SystemCardProps } from "./system-card/index.js";
-import { TrapezoidalObjectProps, TrapezoidalProps, bounds, CardSize, DistanceConfig, Position, Target } from "./interface.js";
+import { TrapezoidalObjectProps, TrapezoidalProps, bounds, CardSize, DistanceConfig, Position, Target,Ele } from "./interface.js";
 import { CabinetThumbnail } from "../cabinet/cabinet-thumbnail/index.jsx";
 
 
@@ -336,11 +336,11 @@ export const getAppRelations = (object: CSS3DObject, relationsData: Relation[]) 
   });
   return relations
 }
-export const findElementByEvent = (e: MouseEvent) => {
-  const path = (e.composedPath() as Element[]).find(node => node?.shadowRoot);
+export const findElementByEvent= (e: MouseEvent) => {
+  const path = (e.composedPath() as Element[]).find(node => node?.shadowRoot)as Ele;
   if (path?.tagName === 'DATA-VIEW.APP-WALL-CARD-ITEM') return path
   const customEle = document.elementFromPoint(e.clientX, e.clientY)
-  const target = customEle?.shadowRoot.elementFromPoint(e.clientX, e.clientY);
+  const target = customEle?.shadowRoot.elementFromPoint(e.clientX, e.clientY) as Ele;
   if (target?.tagName === 'DATA-VIEW.APP-WALL-CARD-ITEM') return target
   return null
 }

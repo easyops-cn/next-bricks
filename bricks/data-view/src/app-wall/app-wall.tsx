@@ -144,8 +144,8 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         dblClickTimer: null,
         isShowGraph3D: false,
         isShowAppInfo: false,
+        isShowRelations: false,
         enable: true, //是否可以触发事件
-        // enableShowRelations: true
     })
 
     const render = useCallback(() => {
@@ -183,7 +183,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         table.forEach((data, i) => {
             const element = document.createElement(
                 "data-view.app-wall-card-item"
-            ) as AppWallCardItem;
+            ) as AppWallCardItem & Ele;
             element.status = data.status;
             element.cardTitle = data.cardItemProps?.cardTitle;
             element.description = data.cardItemProps?.description;
@@ -205,9 +205,9 @@ export function AppWallElement(props: AppWallProps): ReactElement {
             targetsRef.current.curve.push(curve);
 
             objectCSS.userData = data;
-            (element as any).__objectCSS = objectCSS;
-            (element as any).__userData = data;
-            (element as any).__curve = curve;
+            element.__objectCSS = objectCSS;
+            element.__userData = data;
+            element.__curve = curve;
         })
     }
 
@@ -235,8 +235,8 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         })
     }
 
-    const showElementBetweenRelation = (target: Element) => {
-        const { __objectCSS, __userData } = (target as any)
+    const showElementBetweenRelation = (target: Ele) => {
+        const { __objectCSS, __userData } = target
         const position: Position = {
             x: __objectCSS.position.x + 50 * Math.sin(__objectCSS.rotation.y),
             y: __objectCSS.position.y,
@@ -249,6 +249,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
             z: 0
         }, 300).onStart(() => {
             __objectCSS.element.classList.add(`status-${__userData.status || 'normal'}-card`);
+            registerEvents.current.isShowRelations = true;
         }).start();
         new Tween(__objectCSS.scale).to({
             x: scale,
@@ -260,12 +261,13 @@ export function AppWallElement(props: AppWallProps): ReactElement {
                 //创建连线
                 createRelationLines(__objectCSS);
                 render()
+                registerEvents.current.element = target;
             }).start()
     }
 
-    const restoreElementState = () => {
-        if (!registerEvents.current?.element) return false;
-        const { __objectCSS, __curve: object3d, __userData } = (registerEvents.current?.element as any)
+    const restoreElementState = (onComplete?: (ele?: Ele) => void) => {
+        if (!registerEvents.current?.element) return onComplete?.();
+        const { __objectCSS, __curve: object3d, __userData } = registerEvents.current?.element
         new Tween(__objectCSS.rotation).to({
             x: object3d.rotation.x,
             y: object3d.rotation.y,
@@ -290,6 +292,9 @@ export function AppWallElement(props: AppWallProps): ReactElement {
             });
             lineCiCodesRef.current = []
             render()
+        }).onComplete(() => {
+            registerEvents.current.isShowRelations = false;
+            onComplete?.(registerEvents.current?.element)
         }).start()
     }
 
@@ -421,17 +426,17 @@ export function AppWallElement(props: AppWallProps): ReactElement {
                 x: target.rotation.x,
                 y: target.rotation.y,
                 z: target.rotation.z
-            }, 700).easing().onComplete(()=>{
-              objectsRef.current?.forEach(item => {
-                item.element.style.opacity = '1';
-              });
+            }, 700).easing().onComplete(() => {
+                objectsRef.current?.forEach(item => {
+                    item.element.style.opacity = '1';
+                });
             })
         } else {
             //出
             objectsRef.current?.forEach(item => {
-              if (object != item) {
-                  item.element.style.opacity = '0.2';
-              }
+                if (object != item) {
+                    item.element.style.opacity = '0.2';
+                }
             });
             i.to(c, 700).easing().onStart(() => {
                 //为了飞出去的途中，不能在点击其他的卡片飞出来
@@ -484,7 +489,8 @@ export function AppWallElement(props: AppWallProps): ReactElement {
             dblClickTimer: null,
             enable: true,
             isShowAppInfo: false,
-            isShowGraph3D: false
+            isShowGraph3D: false,
+            isShowRelations: false
         }
     }
 
@@ -538,26 +544,21 @@ export function AppWallElement(props: AppWallProps): ReactElement {
     useEffect(() => {
         const container = containerRef.current;
         const handleMouseover = (e: MouseEvent) => {
-            if ( registerEvents.current.isShowAppInfo || registerEvents.current.isShowGraph3D||!registerEvents.current.enable ) return false;
+            if (registerEvents.current.isShowAppInfo || registerEvents.current.isShowGraph3D || !registerEvents.current.enable) return false;
             const target = findElementByEvent(e);
-            if (target) {
-                registerEvents.current.element = target as Ele;
-                clearTimeout(registerEvents.current.mouseoverTimer)
-                registerEvents.current.mouseoverTimer = window.setTimeout(() => {
-                    restoreElementState()
-                    showElementBetweenRelation(target);
-                }, 500);
-            } else {
-                clearTimeout(registerEvents.current.mouseoverTimer);
-                restoreElementState()
-            }
+            clearTimeout(registerEvents.current.mouseoverTimer)
+            registerEvents.current.mouseoverTimer = window.setTimeout(() => {
+                restoreElementState(() => {
+                    target && !registerEvents.current.isShowRelations && showElementBetweenRelation(target);
+                })
+            }, 500);
         }
         const handleClick = (e: MouseEvent) => {
-            if (registerEvents.current.isShowAppInfo || registerEvents.current.isShowGraph3D ||!registerEvents.current.enable) return false;
+            if (registerEvents.current.isShowAppInfo || registerEvents.current.isShowGraph3D || !registerEvents.current.enable) return false;
             restoreElementState();
             clearTimeout(registerEvents.current.clickTimer), clearTimeout(registerEvents.current.mouseoverTimer);
             registerEvents.current.clickTimer = window.setTimeout(function () {
-                const target = findElementByEvent(e) as any;
+                const target = findElementByEvent(e)
                 if (target) {
                     (clearTimeout(registerEvents.current.mouseoverTimer))
                     e.stopPropagation();
@@ -566,15 +567,15 @@ export function AppWallElement(props: AppWallProps): ReactElement {
                     showAppInfoAnimate(false)
                 }
             }, 300)
+
         }
         const handleDbClick = (e: MouseEvent) => {
-            if (registerEvents.current.isShowAppInfo || registerEvents.current.isShowGraph3D ||!registerEvents.current.enable) return false;
-            const target = findElementByEvent(e) as any;
-            const __userData = target.__userData as Target;
-            const __objectCSS = target.__objectCSS as CSS3DObject;
+            if (registerEvents.current.isShowAppInfo || registerEvents.current.isShowGraph3D || !registerEvents.current.enable) return false;
+            const target = findElementByEvent(e);
+            const { __userData, __objectCSS } = target
             clearTimeout(registerEvents.current.clickTimer), clearTimeout(registerEvents.current.mouseoverTimer), clearTimeout(registerEvents.current.dblClickTimer);
             restoreElementState();
-            if (useDblclick || __userData.trapezoidalProps?.clusters?.length<1) {
+            if (useDblclick || __userData.trapezoidalProps?.clusters?.length < 1) {
                 registerEvents.current.dblClickTimer = window.setTimeout(function () {
                     handleCardDbClick(__userData)
                 }, 300)
@@ -652,6 +653,8 @@ export function AppWallElement(props: AppWallProps): ReactElement {
                     }
                 }, 300)
             }
+
+
         }
 
         container.addEventListener('dblclick', handleDbClick)
