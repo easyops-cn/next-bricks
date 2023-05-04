@@ -18,3 +18,4 @@ import "./cabinet/cabinet-container/index.js";
 import "./cabinet/cabinet-thumbnail/index.js";
 import "./cabinet/index.js";
 import "./app-wall/index.js";
+import "./graph/text/index.js";
