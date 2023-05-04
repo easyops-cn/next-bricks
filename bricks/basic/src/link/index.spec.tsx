@@ -82,6 +82,8 @@ describe("basic.general-button", () => {
       "http://localhost/next-page"
     );
 
+    expect(element5.shadowRoot?.querySelector("a")?.href).toBe("");
+
     expect(mockElement1ClickEvent).toBeCalledTimes(0);
     expect(mockElement2ClickEvent).toBeCalledTimes(0);
     expect(mockHistoryPush).toBeCalledTimes(0);

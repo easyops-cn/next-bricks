@@ -151,6 +151,10 @@ class Link extends ReactNextElement implements LinkProps {
   }
 }
 
+function isModifiedEvent(event: MouseEvent | React.MouseEvent): boolean {
+  return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
+}
+
 export function LinkComponent({
   type = "link",
   disabled,
@@ -185,16 +189,20 @@ export function LinkComponent({
 
     if (href) return;
 
-    if (!url) return;
+    if (
+      !e.defaultPrevented && // onClick prevented default
+      e.button === 0 && // ignore everything but left clicks
+      (!target || target === "_self") && // let browser handle "target=_blank" etc.
+      !isModifiedEvent(e) // ignore clicks with modifier keys
+    ) {
+      e.preventDefault();
 
-    if (target === "_blank") {
-      window.open(computedHref);
-      return;
+      if (!url) return;
+
+      const method = replace ? history.replace : history.push;
+
+      method(computedHref);
     }
-
-    const method = replace ? history.replace : history.push;
-
-    method(computedHref);
   };
 
   return (
