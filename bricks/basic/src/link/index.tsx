@@ -10,10 +10,8 @@ import styleText from "./link.shadow.css";
 import classNames from "classnames";
 import "@next-core/theme";
 import { getHistory } from "@next-core/runtime";
-import {
-  createLocation,
-  LocationState,
-} from "history";
+import { createLocation, LocationState } from "history";
+import { isEmpty } from "lodash";
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
   "icons.general-icon"
@@ -22,6 +20,7 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
 export interface LinkProps {
   type?: LinkType;
   disabled?: boolean;
+  url?: string;
   href?: string;
   icon?: GeneralIconProps;
   target?: Target;
@@ -67,10 +66,19 @@ class Link extends ReactNextElement implements LinkProps {
    * @kind string
    * @required false
    * @default -
-   * @description 链接地址
+   * @description 是否使用原生 <a> 标签，通常用于外链的跳转
    * @group basic
    */
   @property() accessor href: string | undefined;
+
+  /**
+   * @kind string
+   * @required false
+   * @default -
+   * @description 链接地址
+   * @group basic
+   */
+  @property() accessor url: string | undefined;
 
   /**
    * @kind Target
@@ -91,7 +99,8 @@ class Link extends ReactNextElement implements LinkProps {
    */
   @property({
     type: Boolean,
-  }) accessor underline: boolean | undefined;
+  })
+  accessor underline: boolean | undefined;
 
   /**
    * @kind boolean
@@ -130,6 +139,7 @@ class Link extends ReactNextElement implements LinkProps {
       <LinkComponent
         type={this.type}
         disabled={this.disabled}
+        url={this.url}
         href={this.href}
         target={this.target}
         icon={this.icon}
@@ -141,9 +151,14 @@ class Link extends ReactNextElement implements LinkProps {
   }
 }
 
+function isModifiedEvent(event: MouseEvent | React.MouseEvent): boolean {
+  return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
+}
+
 export function LinkComponent({
   type = "link",
   disabled,
+  url,
   href,
   target,
   icon,
@@ -154,15 +169,16 @@ export function LinkComponent({
   const history = getHistory();
 
   const computedHref = useMemo(() => {
-    if (!href) return "";
+    if (href) return href;
+    if (!url) return "";
     const loc = createLocation(
-      href,
+      url,
       null,
       undefined,
       history.location
     ) as LocationState;
     return loc ? history.createHref(loc) : "";
-  }, [history, href]);
+  }, [history, url, href]);
 
   const handleClick = (e: React.MouseEvent) => {
     if (disabled) {
@@ -171,14 +187,22 @@ export function LinkComponent({
       return;
     }
 
-    if (target === "_blank") {
-      window.open(computedHref);
-      return;
+    if (href) return;
+
+    if (
+      !e.defaultPrevented && // onClick prevented default
+      e.button === 0 && // ignore everything but left clicks
+      (!target || target === "_self") && // let browser handle "target=_blank" etc.
+      !isModifiedEvent(e) // ignore clicks with modifier keys
+    ) {
+      e.preventDefault();
+
+      if (!url) return;
+
+      const method = replace ? history.replace : history.push;
+
+      method(computedHref);
     }
-
-    const method = replace ? history.replace : history.push;
-
-    method(computedHref);
   };
 
   return (
@@ -189,7 +213,7 @@ export function LinkComponent({
         underline: underline,
       })}
       style={linkStyle}
-      href={computedHref}
+      href={isEmpty(computedHref) ? undefined : computedHref}
       target={target}
       onClick={handleClick}
     >
