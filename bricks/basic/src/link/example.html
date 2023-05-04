@@ -19,18 +19,25 @@
       hello world
     </basic.general-link>
 
+    <div>Url:</div>
+    <basic.general-link url="/abc"> Url link </basic.general-link>
+
     <div>Href:</div>
     <basic.general-link href="https://www.baidu.com">
-      hello world
+      Href link
     </basic.general-link>
+    <div></div>
     <basic.general-link href="https://www.baidu.com" target="_blank">
-      hello world
+      Target _blank link
     </basic.general-link>
 
     <div>Underline:</div>
     <basic.general-link underline="true" id="link3">
       hello world
     </basic.general-link>
+
+    <div>Empty Link:</div>
+    <basic.general-link> hello world </basic.general-link>
   </body>
   <script>
     const link1 = document.getElementById("link1");
@@ -47,7 +54,7 @@
     });
 
     link3.linkStyle = {
-      color: "#fff",
+      color: "gray",
     };
   </script>
 </html>
