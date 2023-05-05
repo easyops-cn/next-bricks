@@ -1801,10 +1801,10 @@
     "@babel/preset-react" "^7.18.6"
     "@babel/preset-typescript" "^7.21.4"
 
-"@next-core/brick-container@^3.1.15":
-  version "3.1.15"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.1.15.tgz#478fc30fb94a1a5090fecf33934ac69955a8854a"
-  integrity sha512-UaZE2SBgzd7Wi6BYNPl3QLZAc86F0h10JG+AJZuc+vk4vWtBIOHpEyPWdi18mi+Vsq+KZX2CShxc5QPSeU71Kg==
+"@next-core/brick-container@^3.1.16":
+  version "3.1.16"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.1.16.tgz#96a3e2b1187c90a6c055417a8eea35942e90f485"
+  integrity sha512-tss+SR1My8W14yUPPWrRoGBeelWD1Fc+ZUf+ootDc5Mjy5POAgoPBOwkz7nl3Zpi0w4RRTVFaEUj0Pl95JzW5Q==
   dependencies:
     "@next-core/serve-helpers" "^1.0.6"
     body-parser "^1.20.1"
@@ -1828,10 +1828,10 @@
   resolved "https://registry.yarnpkg.com/@next-core/brick-icons/-/brick-icons-2.31.34.tgz#fc724f7149a3f2d125efc3f4fa672c49785cb31b"
   integrity sha512-G8e1bnYb+hclOwhNINdc90zZisCWxYXTQXtDzGIhFBuIpgvbyoF2R/VVwpyPA64SRdRUENCkda+BNr2kH+Y5ZA==
 
-"@next-core/brick-playground@^1.8.5":
-  version "1.8.5"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.8.5.tgz#eddff52f15196fd63be4875e8b693676440c59c9"
-  integrity sha512-pUOKOh91U9qcSqVR9+Q7p3BKyMdC7zmeKfbjZciLBdvVuNkkphbmWahosqreiB+W8F931Si6jZ5sJ2tKkorGGw==
+"@next-core/brick-playground@^1.8.6":
+  version "1.8.6"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.8.6.tgz#ae60d0ffc17fb14f5988b457b3efd3c892c93a61"
+  integrity sha512-rh+KUkZf2Z48RQ5EjlHX35da25G06e4llsIH6k0M1mdio5ZKuBb23PBm28amGIQxnj4/ELPtueUPkgEy2LEgxA==
   dependencies:
     "@next-core/serve-helpers" "^1.0.6"
     compression "^1.7.4"
@@ -1843,10 +1843,10 @@
   resolved "https://registry.yarnpkg.com/@next-core/browserslist-config-next/-/browserslist-config-next-1.0.2.tgz#1ad28ef1218e58c94fb9bd4cef9f7cf3666bba19"
   integrity sha512-uIpTKMurc0CxdsGJZaWEnITkh+I8bwZyC1Fpy5dxh6aOxl6xEVTVLngVfAyhk6UGBtWDML83dpXXowpKWBNK7A==
 
-"@next-core/build-next-bricks@^1.4.1":
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@next-core/build-next-bricks/-/build-next-bricks-1.4.1.tgz#bda0ef09dc8794c59ae7379ef5e01515628fd377"
-  integrity sha512-wOf4+nZf50SKPIi/nTJtcNjq9/C5vbWR2VBLwiPAwtJD2O3h0A9VTyw9I+vErLNtCxvRzE5EluZREU33Feeoxw==
+"@next-core/build-next-bricks@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@next-core/build-next-bricks/-/build-next-bricks-1.4.2.tgz#25d23881bd498d5849f9b826fdc7911072d159c7"
+  integrity sha512-Dz1JAlVVcX5WqoPenwTrVkEiRPK6hrfU4ipIvhMpWovIO2j3zRh4JvBHl9N0+X9uidodk8zNOckXcfT9kUK4NA==
   dependencies:
     "@babel/parser" "^7.21.4"
     "@babel/traverse" "^7.21.4"
@@ -1889,13 +1889,13 @@
   resolved "https://registry.yarnpkg.com/@next-core/http/-/http-1.0.4.tgz#045d4e5802fafdb8474bef16e9d5ee3cd6724a67"
   integrity sha512-u/DGs2P8zryKKuBw1Sy4XTJauG8anlcu+QsTDC6PPilu65sxbI/erREQtHbxM08osTAwVCr5wRUpeW1o+ceh2w==
 
-"@next-core/i18n@^1.0.10":
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/@next-core/i18n/-/i18n-1.0.10.tgz#715ba3ff499a6f1dec7e6a2ed17cfd650d3bbb4d"
-  integrity sha512-TEz1s39sYyV7/GEV3Iu7NgUl+iCBF/cDQ0vADxOvd5qUugLQckPpGhQZPZQQCpyKdY0oj86LQ4Wl3zqkhOcSUA==
+"@next-core/i18n@^1.0.11":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@next-core/i18n/-/i18n-1.0.11.tgz#864eff5d6cf671ff819935e61c12760bb7b350af"
+  integrity sha512-Q7zl8YNr3EPoFy84uGuimqXeKyS4Bj620zmjWsSHebTnNq4fN5cjwPw0CinCwMG52zSIfyh12MYoJu3ws4Zi/Q==
   dependencies:
     "@next-core/types" "^1.1.2"
-    "@next-core/utils" "^1.2.5"
+    "@next-core/utils" "^1.3.0"
     i18next "^22.4.14"
     i18next-browser-languagedetector "^7.0.1"
     react-i18next "^12.2.0"
@@ -1938,20 +1938,20 @@
     react "0.0.0-experimental-ee8509801-20230117"
     react-dom "0.0.0-experimental-ee8509801-20230117"
 
-"@next-core/react-runtime@^1.0.25":
-  version "1.0.25"
-  resolved "https://registry.yarnpkg.com/@next-core/react-runtime/-/react-runtime-1.0.25.tgz#390c94e4d00cf8ecd128e86d947fc5aa57041c66"
-  integrity sha512-RlfcUDHCz6JJi0tw8Sd5sOigQjdd17RRh2cJHrJc1u/NCKwZaKksluYZHEG9DTWHhe0q0neOiYWnFcAZVv2dbg==
+"@next-core/react-runtime@^1.0.26":
+  version "1.0.26"
+  resolved "https://registry.yarnpkg.com/@next-core/react-runtime/-/react-runtime-1.0.26.tgz#d47cb548fe32176c6a5bae17d6f256a20b3b34a8"
+  integrity sha512-HR2ugJr7AHdNY7/305y8EQCTa4vueKqF5+Z14ZS4SfGTt8O/n/fg2JFmrN1FqD5aw1oHEZPf2CHGRmY3Dieoqw==
   dependencies:
-    "@next-core/runtime" "^1.5.3"
+    "@next-core/runtime" "^1.5.4"
     "@next-core/types" "^1.1.2"
     react "0.0.0-experimental-ee8509801-20230117"
     react-dom "0.0.0-experimental-ee8509801-20230117"
 
-"@next-core/runtime@^1.5.3":
-  version "1.5.3"
-  resolved "https://registry.yarnpkg.com/@next-core/runtime/-/runtime-1.5.3.tgz#be89b475b6465a4d27ab637788fcbdd52f6aa980"
-  integrity sha512-Tk3JsJzfBwx6M4bazd5/H9H8kbD2ZvdnYnPqH1CfGAQkdFITRRvM4zEWsrRHWGHcXjQieFrdVyGo30VSRNjj8A==
+"@next-core/runtime@^1.5.4":
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/@next-core/runtime/-/runtime-1.5.4.tgz#3d42509ee4a07a129f4b39fe04a604d9be407e23"
+  integrity sha512-LbEpGU+Qdiy3c/Yd3jxmmvg1t2T4hKbvb/KdAmzAzLjlf/RxGIRZUumaXPlDifGPZdp2FRUtQsX40KBcwa+zxw==
   dependencies:
     "@next-api-sdk/api-gateway-sdk" "^1.1.0"
     "@next-api-sdk/cmdb-sdk" "^1.1.0"
@@ -1959,12 +1959,12 @@
     "@next-api-sdk/micro-app-standalone-sdk" "^1.1.0"
     "@next-core/cook" "^2.0.4"
     "@next-core/http" "^1.0.4"
-    "@next-core/i18n" "^1.0.10"
+    "@next-core/i18n" "^1.0.11"
     "@next-core/inject" "^1.0.8"
     "@next-core/loader" "^1.3.0"
     "@next-core/supply" "^2.0.4"
     "@next-core/types" "^1.1.2"
-    "@next-core/utils" "^1.2.5"
+    "@next-core/utils" "^1.3.0"
     "@ungap/event-target" "^0.2.3"
     compare-versions "^5.0.3"
     history "^4.10.1"
@@ -2019,10 +2019,10 @@
   resolved "https://registry.yarnpkg.com/@next-core/types/-/types-1.1.2.tgz#bc2e46080a48672c215bb65651b4fd97347fa934"
   integrity sha512-k/4/jlgtHmi5no+EEs+c5T1N8HZ5pn7Nu9KAHMkqeG0FhYSzpr9jQ+WIjJs+DwuibkQkRdAg0hQCQ/CjrqLJtQ==
 
-"@next-core/utils@^1.2.5":
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/@next-core/utils/-/utils-1.2.5.tgz#6a2019e81799c09069382801bca64093cf8c9b71"
-  integrity sha512-vHzAPLWkOD3Hu/LF0wSpNzpltytIs7TZDSMJdTere1+IoVfFF23AlVRuZO7lvEkHRh2CJYshcMh3dX6RFj7ZTg==
+"@next-core/utils@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@next-core/utils/-/utils-1.3.0.tgz#cabbe7685e9dbd25f2839ff8958cf153acba951b"
+  integrity sha512-837AsM3Vo8pKG3ekzSp6NIZCsqrhwURsI14hBnb+GESAbzehB5XEvLVofGlvqM+tE04eKhxDeb1jI79xJb90lw==
   dependencies:
     "@next-core/cook" "^2.0.4"
     "@next-core/types" "^1.1.2"
