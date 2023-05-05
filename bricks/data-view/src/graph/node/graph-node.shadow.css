@@ -1,0 +1,12 @@
+.wrapper {
+  position: relative;
+}
+.node {
+  position: absolute;
+  bottom: 42%;
+  left: 30%;
+  width: 40%;
+}
+.wrapper img {
+  width: 100%;
+}
