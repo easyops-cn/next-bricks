@@ -28,3 +28,13 @@ textarea:disabled {
 textarea::placeholder {
   color: var(--antd-input-placeholder-color);
 }
+
+textarea.error {
+  border-color: var(--antd-error-color);
+}
+textarea.error:hover {
+  border-color: var(--antd-error-color);
+}
+textarea.error:focus {
+  border-color: var(--antd-error-color);
+}
