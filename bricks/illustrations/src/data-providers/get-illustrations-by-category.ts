@@ -1,5 +1,5 @@
 // istanbul ignore file
-import { createProviderClass } from "@next-core/utils/storyboard";
+import { createProviderClass } from "@next-core/utils/general";
 import illustrationsByCategory from "../generated/illustrationsByCategory.json";
 
 function getIllustrationsByCategory() {

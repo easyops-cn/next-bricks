@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useRef } from "react";
-import { createProviderClass } from "@next-core/utils/storyboard";
+import { createProviderClass } from "@next-core/utils/general";
 import { i18n, initializeI18n } from "@next-core/i18n";
 import { createRoot } from "react-dom/client";
 import { SlDialogElement, WrappedSlDialog } from "../../sl-dialog/index.js";
@@ -36,7 +36,12 @@ export function showDialog(props: DialogProps) {
   };
 
   root.render(
-    <DialogComponent {...props} onOk={onOk} onCancel={onCancel} onHide={onHide} />
+    <DialogComponent
+      {...props}
+      onOk={onOk}
+      onCancel={onCancel}
+      onHide={onHide}
+    />
   );
 
   return promise;
@@ -107,18 +112,14 @@ export function DialogComponent({
       ref={ref}
     >
       <div className={styles.body}>
-        {
-          icon && (
-            <div className={`${styles.icon} ${icon.color}`}>
-              <WrappedSlIcon name={icon.name} />
-            </div>
-          )
-        }
+        {icon && (
+          <div className={`${styles.icon} ${icon.color}`}>
+            <WrappedSlIcon name={icon.name} />
+          </div>
+        )}
         <div>
           {title && <div className={styles.contentTitle}>{title}</div>}
-          <div style={contentStyle}>
-            {content}
-          </div>
+          <div style={contentStyle}>{content}</div>
         </div>
       </div>
       {type === "confirm" && (
@@ -130,10 +131,7 @@ export function DialogComponent({
         {i18n.t(`${NS}:${K.OK}`)}
       </WrappedSlButton>
     </WrappedSlDialog>
-  )
+  );
 }
 
-customElements.define(
-  "shoelace.show-dialog",
-  createProviderClass(showDialog)
-);
+customElements.define("shoelace.show-dialog", createProviderClass(showDialog));

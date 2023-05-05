@@ -1,10 +1,12 @@
-import { createProviderClass } from "@next-core/utils/storyboard";
-import { getHistory, getBasePath, matchPath, __secret_internals, NextLocation } from "@next-core/runtime";
-import type {
-  BrickConf,
-  CustomTemplate,
-  RouteConf,
-} from "@next-core/types";
+import { createProviderClass } from "@next-core/utils/general";
+import {
+  getHistory,
+  getBasePath,
+  matchPath,
+  __secret_internals,
+  NextLocation,
+} from "@next-core/runtime";
+import type { BrickConf, CustomTemplate, RouteConf } from "@next-core/types";
 import type {
   BrickOutline,
   HighLightNode,
@@ -222,7 +224,10 @@ export function previewStart(
               getHistory().reload();
               break;
             }
-            __secret_internals.updateStoryboard(options.appId, data.storyboardPatch);
+            __secret_internals.updateStoryboard(
+              options.appId,
+              data.storyboardPatch
+            );
             if (options.templateId) {
               lastTemplatePreviewSettings = data.settings;
               updateTemplatePreviewSettings();
@@ -438,4 +443,7 @@ function getOutlines(
   });
 }
 
-customElements.define("devtools.preview-start", createProviderClass(previewStart));
+customElements.define(
+  "devtools.preview-start",
+  createProviderClass(previewStart)
+);
