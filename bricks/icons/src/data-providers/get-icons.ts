@@ -1,4 +1,4 @@
-import { createProviderClass } from "@next-core/utils/storyboard";
+import { createProviderClass } from "@next-core/utils/general";
 
 async function getEasyopsIcons(): Promise<Record<string, string[]>> {
   return (await import("../easyops-icon/generated/icons.json")).default;

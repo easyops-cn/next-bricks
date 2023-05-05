@@ -1,4 +1,4 @@
-import { createProviderClass } from "@next-core/utils/storyboard";
+import { createProviderClass } from "@next-core/utils/general";
 import { http } from "@next-core/http";
 
 export function httpRequest(...args: Parameters<typeof http.request>) {

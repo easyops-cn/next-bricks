@@ -1,5 +1,5 @@
 import { loadScript } from "@next-core/loader";
-import { createProviderClass, unwrapProvider } from "@next-core/utils/storyboard";
+import { createProviderClass, unwrapProvider } from "@next-core/utils/general";
 import { wrapBrick } from "@next-core/react-element";
 import {
   authenticate,
@@ -56,7 +56,7 @@ interface LegacyFaIconProps {
     startColor: string;
     endColor: string;
     direction?: string;
-  }
+  };
 }
 
 const MAIN_KEY = "";
@@ -67,7 +67,9 @@ const MAIN_KEY = "";
 const getEasyopsIcons = unwrapProvider("icons.get-easyops-icons");
 const getFaIcons = unwrapProvider("icons.get-fa-icons");
 const getIllustration = unwrapProvider("illustrations.get-illustration");
-const translateIllustrationConfig = unwrapProvider("illustrations.translate-illustration-config");
+const translateIllustrationConfig = unwrapProvider(
+  "illustrations.translate-illustration-config"
+);
 
 export async function loadBricks(
   adapterPkgFilePath: string,
@@ -129,7 +131,7 @@ async function loadMainDll(adapterPkgFilePath: string) {
   const [easyopsIcons, faIcons] = await Promise.all([
     getEasyopsIcons(),
     getFaIcons() as Promise<IconsByCategory>,
-    doLoadDll(adapterPkgFilePath, "")
+    doLoadDll(adapterPkgFilePath, ""),
   ]);
 
   const dll = (window as unknown as { dll: DLL }).dll;
@@ -168,7 +170,7 @@ async function loadMainDll(adapterPkgFilePath: string) {
   const LegacyErrorBoundary = getLegacyErrorBoundary(LegacyReact);
 
   defineModule(LegacyBrickIcons, {
-    BrickIcon({ category, icon }: { category?: string, icon: string }) {
+    BrickIcon({ category, icon }: { category?: string; icon: string }) {
       return LegacyReact.createElement("icons.easyops-icon", {
         category,
         icon,
@@ -179,10 +181,8 @@ async function loadMainDll(adapterPkgFilePath: string) {
 
   defineModule(LegacyReactFontAwesome, {
     FontAwesomeIcon({ icon, gradientColor }: LegacyFaIconProps) {
-      return LegacyReact.createElement(
-        "icons.fa-icon",
-        {
-          ...(Array.isArray(icon)
+      return LegacyReact.createElement("icons.fa-icon", {
+        ...(Array.isArray(icon)
           ? {
               prefix: icon[0],
               icon: icon[1],
@@ -190,16 +190,14 @@ async function loadMainDll(adapterPkgFilePath: string) {
           : {
               icon,
             }),
-          ...(gradientColor
-            ? {
+        ...(gradientColor
+          ? {
               "start-color": gradientColor.startColor,
               "end-color": gradientColor.endColor,
               "gradient-direction": gradientColor.direction,
             }
-            : null
-          )
-        }
-      );
+          : null),
+      });
     },
   });
 
@@ -220,7 +218,7 @@ async function loadMainDll(adapterPkgFilePath: string) {
 
   defineModule(LegacyIllustrations, {
     getIllustration,
-    translateIllustrationConfig
+    translateIllustrationConfig,
   });
 
   defineModule(LegacyBrickKit, {

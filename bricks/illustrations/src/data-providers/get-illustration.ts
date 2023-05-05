@@ -1,4 +1,4 @@
-import { createProviderClass } from "@next-core/utils/storyboard";
+import { createProviderClass } from "@next-core/utils/general";
 import { hasOwnProperty } from "@next-core/utils/general";
 import type { SiteTheme } from "@next-core/types";
 import categories from "../generated/categories.js";
