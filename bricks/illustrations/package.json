@@ -43,8 +43,8 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-core/types": "^1.1.0",
-    "@next-core/utils": "^1.2.3"
+    "@next-core/types": "^1.1.2",
+    "@next-core/utils": "^1.2.5"
   },
   "devDependencies": {
     "@next-core/build-next-bricks": "^1.4.1",
