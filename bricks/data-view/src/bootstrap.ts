@@ -20,3 +20,4 @@ import "./cabinet/index.js";
 import "./app-wall/index.js";
 import "./graph/text/index.js";
 import "./graph/node/index.js";
+import "./graph/layout-grid/index.js";
