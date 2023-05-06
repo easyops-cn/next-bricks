@@ -7,7 +7,7 @@ import styleText from "./graph-node.shadow.css";
 
 const { defineElement, property } = createDecorators();
 
-interface GraphNodeProps {
+export interface GraphNodeProps {
   url: string;
 }
 

@@ -7,7 +7,7 @@ import { K, NS, locales } from "./i18n.js";
 import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
 initializeReactI18n(NS, locales);
 const { defineElement, property } = createDecorators();
-interface GraphTextProps {
+export interface GraphTextProps {
   text: string;
   value: string | number;
 }
