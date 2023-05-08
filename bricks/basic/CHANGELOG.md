@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.3.2...@next-bricks/basic@0.4.0) (2023-05-08)
+
+
+### Bug Fixes
+
+* fix import of createProviderClass ([b2ec139](https://github.com/easyops-cn/next-bricks/commit/b2ec1395c6f2b36e1fde653bd57137b747232ed6))
+
+
+### Features
+
+* general-link support url ([a3c0d01](https://github.com/easyops-cn/next-bricks/commit/a3c0d01783e29e62b8a141a7227456cd1da88de1))
+* general-link support url ([4b3f6a9](https://github.com/easyops-cn/next-bricks/commit/4b3f6a9c2bd1039fbfda7043d34228103cfc318f))
+
+
+
+
+
 ## [0.3.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.3.1...@next-bricks/basic@0.3.2) (2023-04-17)
 
 

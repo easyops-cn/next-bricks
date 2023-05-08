@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@0.1.4...@next-bricks/illustrations@0.1.5) (2023-05-08)
+
+
+### Bug Fixes
+
+* fix import of createProviderClass ([b2ec139](https://github.com/easyops-cn/next-bricks/commit/b2ec1395c6f2b36e1fde653bd57137b747232ed6))
+
+
+
+
+
 ## [0.1.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@0.1.3...@next-bricks/illustrations@0.1.4) (2023-04-17)
 
 

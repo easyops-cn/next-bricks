@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.0.7...@next-bricks/v2-adapter@0.0.8) (2023-05-08)
+
+
+### Bug Fixes
+
+* fix import of createProviderClass ([b2ec139](https://github.com/easyops-cn/next-bricks/commit/b2ec1395c6f2b36e1fde653bd57137b747232ed6))
+
+
+
+
+
 ## [0.0.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.0.6...@next-bricks/v2-adapter@0.0.7) (2023-04-17)
 
 

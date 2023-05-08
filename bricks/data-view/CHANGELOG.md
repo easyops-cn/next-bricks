@@ -3,6 +3,67 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.3.1...@next-bricks/data-view@0.4.0) (2023-05-08)
+
+
+### Bug Fixes
+
+* **app-wall:** 交互事件实现 ([92b1949](https://github.com/easyops-cn/next-bricks/commit/92b194931569e56d6140dcfa5f84c2a064ceb279))
+* **app-wall:** 修改目标位置和角度 ([6f6c3bb](https://github.com/easyops-cn/next-bricks/commit/6f6c3bb6b4231e93411b8cd39c6e40ff49923b91))
+* **app-wall:** 双击后平移到中心位置 ([8546510](https://github.com/easyops-cn/next-bricks/commit/8546510cee1ae28c854f694963d25dee87681690))
+* **app-wall:** 双击禁止其他事件执行 ([99e0664](https://github.com/easyops-cn/next-bricks/commit/99e066417789d3b2a52bf2faadca1d4bc213f057))
+* **app-wall:** 重写排序算法&动画算法&优化代码 ([9f57928](https://github.com/easyops-cn/next-bricks/commit/9f57928a5c2e19bf7e0b8f49377f9314ff0554df))
+* **cabinet-container:** 增加叠层&布局由于clientWidth四舍五入，导致布局不对 ([7cb293b](https://github.com/easyops-cn/next-bricks/commit/7cb293b6d7dc1b76e481147ee632adecc6fdacd7))
+* **cabinet-container:** 增加监听宽高事件 ([a38b757](https://github.com/easyops-cn/next-bricks/commit/a38b7573034d382c892bed441e68026cec0def7f))
+* click should not trigger mouseEnter & mouseLeave event ([97de72a](https://github.com/easyops-cn/next-bricks/commit/97de72a1084ef917083acd1530915687e45efaad))
+* **data-view:** 缩略图遗漏appName ([d4833d2](https://github.com/easyops-cn/next-bricks/commit/d4833d2e81a923d1c34fd40679646a1428fae318))
+* hover style ([5f155d3](https://github.com/easyops-cn/next-bricks/commit/5f155d386913f3a045b344f74dc912bb017fc7c8))
+* layout & remove dark after click ([4f39719](https://github.com/easyops-cn/next-bricks/commit/4f39719a1d1f4b29509a81a046060238ca6e8a94))
+* Only one animation is executed at a time ([b45404b](https://github.com/easyops-cn/next-bricks/commit/b45404b27da0776d9c56bb6b5dbf2a9f759537c9))
+* 修复hover连续触发tween动画导致属性赋值不符合预期 ([59e2e7d](https://github.com/easyops-cn/next-bricks/commit/59e2e7d0ad20e94e8885c67ef22b43b00319bc66))
+* 修复启用缩放会导致tooltip位置不准 ([5fdc864](https://github.com/easyops-cn/next-bricks/commit/5fdc86451277c11d080732f2029e1886020e6d27))
+* 修复启用缩放会导致tooltip位置不准 ([df52a74](https://github.com/easyops-cn/next-bricks/commit/df52a74bcb422af645f53fc020b010694fd25831))
+* 修复点击卡片偶现连线还在的问题 ([b9e15f9](https://github.com/easyops-cn/next-bricks/commit/b9e15f9eaae345e96171f9b3482ba97284d0012b))
+* 单击事件修改透明度 ([0100f1e](https://github.com/easyops-cn/next-bricks/commit/0100f1e3032e53929c956ce132a7a97b3c099689))
+* 系统卡片更新滚动条需重置回顶部 ([6126e63](https://github.com/easyops-cn/next-bricks/commit/6126e63976815c5d7007611bfb736a9a82639d8a))
+
+
+### Features
+
+* add system.card.button.click event ([c931415](https://github.com/easyops-cn/next-bricks/commit/c93141576ed36ed44123a331dcbebfb4183b6aff))
+* **app-wall:** 双击动画后，取消动画 ([6e776bd](https://github.com/easyops-cn/next-bricks/commit/6e776bd8e7afe06c145575db4a7035ad0061c61f))
+* **app-wall:** 双击动画后平移效果 ([c7555cd](https://github.com/easyops-cn/next-bricks/commit/c7555cd9f05ff319b607c841bade37a8914bc6ea))
+* **app-wall:** 双击增加旋转 ([c5038c7](https://github.com/easyops-cn/next-bricks/commit/c5038c768bd2e6adec9c5091f46c36bc17c433e5))
+* **app-wall:** 增加梯形投影动画 ([f2e77e7](https://github.com/easyops-cn/next-bricks/commit/f2e77e7f167b7778e78a189ab4c6e5f0cedfa1dc))
+* **app-wall:** 展示台增加点击事件 ([1a715c1](https://github.com/easyops-cn/next-bricks/commit/1a715c12a0d8af00dbf3312655cb223881ba6d64))
+* brick data-view.app-wall ([51932b1](https://github.com/easyops-cn/next-bricks/commit/51932b132562d1b5a5ca0d8b611746220cf8c090))
+* brick data-view.app-wall ([d5b532d](https://github.com/easyops-cn/next-bricks/commit/d5b532d156753660691fbd71ae00c4f268461eb2))
+* **cabinet-container:** add click event ([150ce14](https://github.com/easyops-cn/next-bricks/commit/150ce14dadaa60d623f84663bed3ec3f691261ba))
+* **cabinet-container:** support cabinet-container component ([1b35a1f](https://github.com/easyops-cn/next-bricks/commit/1b35a1f9aec80d5b3d28d38a4c9e692e7f263456))
+* **cabinet-container:** support cabinet-thumbnail component ([21f6b30](https://github.com/easyops-cn/next-bricks/commit/21f6b3051c55e5fb5bdd9b3ee1644d3d78373043))
+* calc object3D ([5b3cec1](https://github.com/easyops-cn/next-bricks/commit/5b3cec19051f41048b12a7abd3e2b7969b5b6dd3))
+* click event ([adc794e](https://github.com/easyops-cn/next-bricks/commit/adc794e57726b9584089f45b7b24612ab07e24b7))
+* click event ([bf0f616](https://github.com/easyops-cn/next-bricks/commit/bf0f61666e2cccef0c1a15bb8f657b8c6f47cbc6))
+* click event ([a04cc5c](https://github.com/easyops-cn/next-bricks/commit/a04cc5cdefd36df7bdf96318b4d2958414180a14))
+* data-view.cabinet-app-layer ([9dd61b9](https://github.com/easyops-cn/next-bricks/commit/9dd61b936f0db694aff205fd5bc00ce950c61a89))
+* data-view.cabinet-graph ([244c7a5](https://github.com/easyops-cn/next-bricks/commit/244c7a5583f8e614907656762b3f8b4d660b840b))
+* data-view.cabinet-graph ([e68be29](https://github.com/easyops-cn/next-bricks/commit/e68be29688eee5206070c8175e143a52ed17815a))
+* data-view.cabinet-node ([7d09113](https://github.com/easyops-cn/next-bricks/commit/7d09113c6a20a479e76bc823e2bc241e28f349d8))
+* **data-view:** support brick-background component ([b51d06f](https://github.com/easyops-cn/next-bricks/commit/b51d06f402c7ad99c719ea8581c4a30932722257))
+* **data-view:** support cabinet-button component ([dcd8ff8](https://github.com/easyops-cn/next-bricks/commit/dcd8ff86a26797b92abf6cd52f745a0c394394ef))
+* **data-view:** support cabinet.click event ([ddc0e9f](https://github.com/easyops-cn/next-bricks/commit/ddc0e9f4d83ef6b6fb50732b1ada1e69dadc286a))
+* **data-view:** support graph-layout-grid component ([74ea7b6](https://github.com/easyops-cn/next-bricks/commit/74ea7b6d2a995d8a3df57d06652d79d37003021f))
+* **data-view:** support graph-node component ([d4c5d3e](https://github.com/easyops-cn/next-bricks/commit/d4c5d3e34f9fbb0a6581b6ea4150608989236aab))
+* **data-view:** t台缩放问题& 增加columns 配置 ([db505c8](https://github.com/easyops-cn/next-bricks/commit/db505c8d83eaaed38374460a576699147f9dae2c))
+* dropdown-menu support allowClear ([0b58b48](https://github.com/easyops-cn/next-bricks/commit/0b58b48c9be25ca1f74c609face211993aa1759f))
+* dropdown-menu support allowClear ([eaaeae3](https://github.com/easyops-cn/next-bricks/commit/eaaeae3b0fe45d8d73a593318a3164eb0e6d9499))
+* **graph-text:** support graph-text component ([f598a84](https://github.com/easyops-cn/next-bricks/commit/f598a846a09e018181e758e3e10a67a1c4e249d7))
+* 增加梯形 ([37c9133](https://github.com/easyops-cn/next-bricks/commit/37c91338a12dc30eea900f0dbf84bda305b0d780))
+
+
+
+
+
 ## [0.3.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.3.0...@next-bricks/data-view@0.3.1) (2023-04-17)
 
 

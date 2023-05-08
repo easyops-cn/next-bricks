@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.2.2...@next-bricks/form@0.3.0) (2023-05-08)
+
+
+### Features
+
+* update textarea with formItem ([40a740d](https://github.com/easyops-cn/next-bricks/commit/40a740d621a20ba60219ee99a2aacf29f2ecdc6f))
+
+
+
+
+
 ## [0.2.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.2.1...@next-bricks/form@0.2.2) (2023-04-17)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/shoelace@0.2.2...@next-bricks/shoelace@0.2.3) (2023-05-08)
+
+
+### Bug Fixes
+
+* fix import of createProviderClass ([b2ec139](https://github.com/easyops-cn/next-bricks/commit/b2ec1395c6f2b36e1fde653bd57137b747232ed6))
+
+
+
+
+
 ## [0.2.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/shoelace@0.2.1...@next-bricks/shoelace@0.2.2) (2023-04-17)
 
 
