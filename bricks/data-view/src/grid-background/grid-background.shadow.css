@@ -1,0 +1,50 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mask {
+  position: absolute;
+  width: 40%;
+  height: 10%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(41, 109, 255, 0.8);
+  opacity: 0.29;
+  filter: blur(80px);
+}
+
+.animateLine {
+  stroke-dasharray: 500, 1000;
+  stroke-dashoffset: 0; /*表示虚线的起始偏移*/
+  animation: animate 2s linear infinite;
+  animation-fill-mode: both;
+}
+
+.delay {
+  stroke-dasharray: 500, 1000;
+  stroke-dashoffset: 500; /*表示虚线的起始偏移*/
+  animation: delay 2s linear 2s infinite;
+  animation-fill-mode: both;
+}
+
+@keyframes animate {
+  /*999.6577447103518*/
+  to {
+    stroke-dasharray: 500, 1000;
+    stroke-dashoffset: -1500;
+  }
+}
+
+@keyframes delay {
+  /*999.6577447103518*/
+  to {
+    stroke-dasharray: 500, 1000;
+    stroke-dashoffset: -1000;
+  }
+}
