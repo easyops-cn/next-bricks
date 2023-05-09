@@ -25,6 +25,9 @@
       "build": {
         "outputs": [
           "{projectRoot}/dist",
+          "{projectRoot}/dist-types",
+          "{projectRoot}/.pkgbuild",
+          "{projectRoot}/deploy",
           "{projectRoot}/src/generated"
         ]
       }

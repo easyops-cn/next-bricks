@@ -13,16 +13,6 @@
     "dist",
     "dist-types"
   ],
-  "nx": {
-    "targets": {
-      "build": {
-        "outputs": [
-          "{projectRoot}/dist",
-          "{projectRoot}/dist-types"
-        ]
-      }
-    }
-  },
   "exports": {
     "./package.json": "./package.json",
     "./dist/bricks.json": "./dist/bricks.json",

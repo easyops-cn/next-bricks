@@ -19,6 +19,8 @@
         "outputs": [
           "{projectRoot}/dist",
           "{projectRoot}/dist-types",
+          "{projectRoot}/.pkgbuild",
+          "{projectRoot}/deploy",
           "{projectRoot}/src/antd-icon/generated",
           "{projectRoot}/src/easyops-icon/generated",
           "{projectRoot}/src/fa-icon/generated"
