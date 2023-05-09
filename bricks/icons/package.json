@@ -19,6 +19,8 @@
         "outputs": [
           "{projectRoot}/dist",
           "{projectRoot}/dist-types",
+          "{projectRoot}/.pkgbuild",
+          "{projectRoot}/deploy",
           "{projectRoot}/src/antd-icon/generated",
           "{projectRoot}/src/easyops-icon/generated",
           "{projectRoot}/src/fa-icon/generated"
@@ -59,7 +61,7 @@
   },
   "devDependencies": {
     "@next-core/brick-icons": "^2.31.34",
-    "@next-core/build-next-bricks": "^1.4.2",
+    "@next-core/build-next-bricks": "^1.5.0",
     "@next-core/test-next": "^1.0.4"
   }
 }

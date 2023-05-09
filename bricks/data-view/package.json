@@ -13,16 +13,6 @@
     "dist",
     "dist-types"
   ],
-  "nx": {
-    "targets": {
-      "build": {
-        "outputs": [
-          "{projectRoot}/dist",
-          "{projectRoot}/dist-types"
-        ]
-      }
-    }
-  },
   "exports": {
     "./package.json": "./package.json",
     "./dist/bricks.json": "./dist/bricks.json",
@@ -55,7 +45,7 @@
     "three": "^0.150.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.4.2",
+    "@next-core/build-next-bricks": "^1.5.0",
     "@next-core/test-next": "^1.0.4",
     "@types/d3-hierarchy": "^3.1.2",
     "@types/three": "^0.150.1"

@@ -13,16 +13,6 @@
     "dist",
     "dist-types"
   ],
-  "nx": {
-    "targets": {
-      "build": {
-        "outputs": [
-          "{projectRoot}/dist",
-          "{projectRoot}/dist-types"
-        ]
-      }
-    }
-  },
   "exports": {
     "./package.json": "./package.json",
     "./dist/bricks.json": "./dist/bricks.json",
@@ -45,7 +35,7 @@
     "@next-core/element": "^1.0.4",
     "@next-core/http": "^1.0.4",
     "@next-core/react-element": "^1.0.5",
-    "@next-core/react-runtime": "^1.0.26",
+    "@next-core/react-runtime": "^1.0.27",
     "@next-core/theme": "^1.1.1",
     "@next-core/types": "^1.1.2",
     "brace": "^0.11.1",
@@ -56,7 +46,7 @@
     "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.4.2",
+    "@next-core/build-next-bricks": "^1.5.0",
     "@next-core/test-next": "^1.0.4"
   }
 }
