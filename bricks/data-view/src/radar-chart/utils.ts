@@ -93,13 +93,11 @@ export const constructUserConfig = function (
 /**
  * 获取数据点相对于原点的坐标
  * n：多边形边数
- * r: 多边形半径
  * dataRadiusArr: 数据点的坐标数组
  * angleArr: 多边形的角度数组
  */
 export const getDataPointsPos = function (
   n: number,
-  r: number,
   dataRadiusArr: number[],
   angleArr: number[]
 ) {
