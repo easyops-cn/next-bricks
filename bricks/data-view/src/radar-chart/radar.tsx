@@ -37,7 +37,8 @@ export function Radar({
     canvas.width = canvasWidth * ratio;
     canvas.height = canvasHeight * ratio;
 
-    const defaultRadius = Math.min(canvas.width, canvas.height) * 0.5 * 0.6; // 正多边形的默认半径
+    const defaultRadius = Math.min(canvas.width, canvas.height) * 0.25; // 正多边形的默认半径
+
     contextRef.current = context;
     setBaseConfig(constructBaseConfig(dataSource, radius ?? defaultRadius));
   }, [dataSource, radius]);
@@ -78,7 +79,6 @@ export function Radar({
         });
         const dataPointsPosArray = getDataPointsPos(
           baseConfig.n,
-          radius,
           dataRadius,
           baseConfig.angleArr
         );
