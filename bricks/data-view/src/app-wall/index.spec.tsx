@@ -4,13 +4,10 @@ import { act } from "react-dom/test-utils";
 import "./index.jsx";
 import { AppWall } from "./index.jsx";
 import { dataSource, relations } from "./mockData.js";
-import TWEEN from "@tweenjs/tween.js";
 import * as Utils from "./utils.js";
-import { Ele, RegisterEvents } from "./interface.js";
+import { Ele } from "./interface.js";
 import { AppWallElement } from "./app-wall.js";
 import React from "react";
-import { CSS3DObject } from "three/examples/jsm/renderers/CSS3DRenderer.js";
-import { AppWallCardItem } from "./card-item/index.jsx";
 
 jest.useFakeTimers();
 const customGlobal = window as any;

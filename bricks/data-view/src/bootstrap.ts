@@ -23,3 +23,4 @@ import "./graph/node/index.js";
 import "./graph/layout-grid/index.js";
 import "./grid-background/index.js";
 import "./gear-background/index.js";
+import "./radar-chart/index.js";
