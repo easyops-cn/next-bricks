@@ -241,6 +241,7 @@ export function ComplexSearchComponent(
           style={{
             top: positionTop,
             visibility: tooltipVisible ? "visible" : "hidden",
+            opacity: tooltipVisible ? 1 : 0,
           }}
           onMouseEnter={() => setTooltipVisible(true)}
           onMouseLeave={() => setTooltipVisible(false)}
