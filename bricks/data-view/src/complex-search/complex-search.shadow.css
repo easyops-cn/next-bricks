@@ -57,6 +57,7 @@ input:not(:disabled):focus {
   overflow: auto;
   background: var(--color-fill-bg-base-1);
   border-radius: var(--medius-border-radius);
+  backdrop-filter: blur(24px);
 }
 .emptyData {
   width: 100%;
