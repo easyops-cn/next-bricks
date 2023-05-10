@@ -6,7 +6,7 @@ export type UIType = "default" | "dashboard";
 
 export type Shape = "round" | "circle";
 
-export type ComponentSize = "large" | "middle" | "small" | "xs";
+export type ComponentSize = "large" | "medium" | "small" | "xs";
 
 /* ============== Common Type End ============== */
 

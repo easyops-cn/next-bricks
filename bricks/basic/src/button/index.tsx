@@ -155,7 +155,7 @@ class Button extends ReactNextElement implements ButtonProps {
 
 export function ButtonComponent({
   type = "default",
-  size = "middle",
+  size = "medium",
   icon,
   shape,
   danger,

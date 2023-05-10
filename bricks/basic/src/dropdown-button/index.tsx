@@ -92,7 +92,7 @@ class DropdownButton extends ReactNextElement {
    * @description
    */
   @property()
-  accessor size: ComponentSize = "middle";
+  accessor size: ComponentSize = "medium";
 
   /**
    * @kind "circle" | "round"

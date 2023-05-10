@@ -245,7 +245,7 @@ export function InputComponent(props: InputProps) {
     value,
     placeholder,
     type,
-    size = "middle",
+    size = "medium",
     disabled,
     inputStyle,
     minLength,

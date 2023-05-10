@@ -232,7 +232,7 @@ export interface TagComponentProps extends TagProps {
 
 function TagComponent(props: TagComponentProps) {
   const {
-    size = "middle",
+    size = "medium",
     icon,
     color,
     disabled,
