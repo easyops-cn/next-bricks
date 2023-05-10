@@ -52,7 +52,7 @@ class Button extends ReactNextElement implements ButtonProps {
   /**
    * @kind ComponentSize
    * @required false
-   * @default middle
+   * @default medium
    * @description 按钮大小
    * @enums
    * @group basic

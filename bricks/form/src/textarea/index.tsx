@@ -76,7 +76,7 @@ class Textarea extends FormItemElement {
   /**
    * @kind string
    * @required false
-   * @default middle
+   * @default -
    * @description 占位说明
    * @enums
    * @group basic
