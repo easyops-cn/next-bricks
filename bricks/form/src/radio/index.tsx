@@ -49,7 +49,7 @@ export interface RadioProps {
   name?: string;
   disabled?: boolean;
   buttonStyle?: RadioGroupButtonStyle;
-  size?: "large" | "middle" | "small";
+  size?: "large" | "medium" | "small";
   ui?: UIType;
   useBrick?: UseSingleBrickConf;
   customStyle?: React.CSSProperties;
@@ -161,15 +161,15 @@ class Radio extends FormItemElement {
   accessor ui: UIType | undefined;
 
   /**
-   * @kind "large" | "middle" | "small"
+   * @kind "large" | "medium" | "small"
    * @required false
    * @default -
    * @description 大小，只对按钮样式生效
-   * @enums "large"|"middle"|"small"
+   * @enums "large"|"medium"|"small"
    * @group ui
    */
   @property()
-  accessor size: "large" | "middle" | "small" | undefined;
+  accessor size: "large" | "medium" | "small" | undefined;
 
   /**
    * @kind customStyle
@@ -275,7 +275,10 @@ export function RadioComponent(props: RadioProps) {
     optionsChange?.(props.options, name as string);
   }, [props.options]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, option: GeneralComplexOption): void => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    option: GeneralComplexOption
+  ): void => {
     e.stopPropagation();
     setValue((option as GeneralComplexOption)?.value as any);
     props.onChange?.(option?.value);
@@ -321,7 +324,7 @@ export function RadioComponent(props: RadioProps) {
                   "icon-circle",
                 ].includes(type as string),
                 buttonRadio: type === "button",
-                [size || "middle"]: type === "button",
+                [size || "medium"]: type === "button",
               })}
               key={key}
             >

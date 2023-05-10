@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import {
@@ -21,10 +21,11 @@ const WrappedTag = wrapBrick<Tag, TagProps, TagEvents, TagMapEvents>(
   }
 );
 
-type tagListItem = TagProps & { text: string };
+type tagListItem = TagProps & { text: string; key?: string };
 
 interface TagListComponentProps {
   list?: Array<tagListItem | string>;
+  multiple?: boolean;
 }
 
 /**
@@ -53,7 +54,7 @@ class TagList extends ReactNextElement {
   /**
    * @kind ComponentSize
    * @required false
-   * @default middle
+   * @default medium
    * @description 按钮大小
    * @enums
    * @group basic
@@ -105,6 +106,18 @@ class TagList extends ReactNextElement {
     type: Boolean,
   })
   accessor checkable: boolean | undefined;
+
+  /**
+   * @kind boolean
+   * @required false
+   * @default -
+   * @description 是否允许多选
+   * @group basic
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor multiple: boolean | undefined;
 
   /**
    * @kind React.CSSProperties
@@ -167,6 +180,7 @@ class TagList extends ReactNextElement {
         disabled={this.disabled}
         closable={this.closable}
         checkable={this.checkable}
+        multiple={this.multiple}
         tagStyle={this.tagStyle}
         onCheck={this.handleCheck}
         onClose={this.handleClose}
@@ -177,11 +191,12 @@ class TagList extends ReactNextElement {
 
 function TagListComponent({
   list,
-  size = "middle",
+  size = "medium",
   color,
   disabled,
   closable,
   checkable,
+  multiple = true,
   tagStyle,
   onCheck,
   onClose,
@@ -190,27 +205,42 @@ function TagListComponent({
     onCheck: (item: tagListItem, list: tagListItem[]) => void;
     onClose: (item: tagListItem, list: tagListItem[]) => void;
   }) {
+  const [tagList, setTagList] = useState(list ?? []);
   const computedList = useMemo(() => {
     return (
-      list?.map((item) => {
+      tagList?.map((item) => {
         return typeof item === "string"
           ? {
               text: item,
+              key: item,
             }
           : item;
       }) ?? []
     );
-  }, [list]);
+  }, [tagList]);
 
   const handleCheck = useCallback(
     (tag: tagListItem): void => {
-      tag.checked = !tag.checked;
+      if (multiple) {
+        tag.checked = !tag.checked;
+      } else {
+        setTagList(
+          computedList.map((item) => {
+            if (tag.key === item.key) {
+              item.checked = true;
+            } else {
+              item.checked = false;
+            }
+            return item;
+          })
+        );
+      }
       onCheck?.(
         tag,
         computedList?.filter((item) => item.checked && !item.hidden)
       );
     },
-    [computedList, onCheck]
+    [computedList, multiple, onCheck]
   );
 
   const handleClose = useCallback(

@@ -60,7 +60,7 @@ class TabList extends ReactNextElement {
   #computedTabs = (tabs: Array<TabItemProps | string>): TabItemProps[] => {
     if (tabs?.length) {
       return tabs.map((tab) => {
-        if (typeof tab === "string") {
+        if (typeof tab === "string" || typeof tab === "number") {
           return {
             text: tab,
             panel: tab,

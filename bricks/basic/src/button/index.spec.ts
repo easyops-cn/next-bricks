@@ -43,7 +43,7 @@ describe("basic.general-button", () => {
     expect(element.shadowRoot?.childNodes.length).toBe(2);
 
     const button = element.shadowRoot?.querySelector("button");
-    expect(button?.className).toBe("middle default danger");
+    expect(button?.className).toBe("medium default danger");
 
     act(() => {
       document.body.removeChild(element);
@@ -72,8 +72,8 @@ describe("basic.general-button", () => {
     const link1 = element1.shadowRoot?.querySelector("a");
     const link2 = element2.shadowRoot?.querySelector("a");
     expect(button1).toBe(null);
-    expect(link1?.className).toBe("middle");
-    expect(button2?.className).toBe("middle link");
+    expect(link1?.className).toBe("medium");
+    expect(button2?.className).toBe("medium link");
     expect(link2).toBe(null);
 
     act(() => {

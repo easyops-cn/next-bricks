@@ -78,7 +78,7 @@ class Input extends FormItemElement {
   /**
    * @kind string
    * @required false
-   * @default middle
+   * @default -
    * @description 占位说明
    * @enums
    * @group basic
@@ -109,7 +109,7 @@ class Input extends FormItemElement {
   /**
    * @kind ComponentSize
    * @required false
-   * @default middle
+   * @default medium
    * @description 大小
    * @enums
    * @group basic
@@ -245,7 +245,7 @@ export function InputComponent(props: InputProps) {
     value,
     placeholder,
     type,
-    size = "middle",
+    size = "medium",
     disabled,
     inputStyle,
     minLength,

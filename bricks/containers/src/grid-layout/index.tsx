@@ -20,7 +20,7 @@ export interface GridSettings {
   rowSpan?: number;
 }
 
-const mediaSizeList: MediaSize[] = ["large", "middle", "small", "xs"];
+const mediaSizeList: MediaSize[] = ["large", "medium", "small", "xs"];
 
 const mediaQueryMap: Record<MediaSize, string> = {
   large: "(max-width: 1920px)",

@@ -81,7 +81,7 @@ class Tag extends ReactNextElement implements TagProps {
   /**
    * @kind ComponentSize
    * @required false
-   * @default middle
+   * @default medium
    * @description 按钮大小
    * @enums
    * @group basic
@@ -232,7 +232,7 @@ export interface TagComponentProps extends TagProps {
 
 function TagComponent(props: TagComponentProps) {
   const {
-    size = "middle",
+    size = "medium",
     icon,
     color,
     disabled,
