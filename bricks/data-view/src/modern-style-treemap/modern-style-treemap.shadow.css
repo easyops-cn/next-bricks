@@ -57,7 +57,19 @@
   --treemap-backdrop-filter: blur(5px);
   z-index: 0;
 }
-
+.bottom.tooltip,
+.bottomRight.tooltip,
+.bottomLeft.tooltip {
+  padding: 8px 8px 15px 8px;
+}
+.right.tooltip {
+  padding: 8px 15px 8px 8px;
+}
+.top.tooltip,
+.topLeft.tooltip,
+.topRight.tooltip {
+  padding: 15px 8px 8px 8px;
+}
 .tooltip::before,
 .tooltip::after {
   content: "";
