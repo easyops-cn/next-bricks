@@ -1,17 +1,24 @@
-import React, { MouseEvent, CSSProperties, useMemo, useState, useCallback } from "react";
+import React, { MouseEvent, CSSProperties, useMemo, useState } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import type { UseBrickConf } from "@next-core/types";
 import { ReactUseMultipleBricks } from "@next-core/react-runtime";
 import {
-  treemap, hierarchy, stratify,
-  treemapBinary, treemapDice, treemapResquarify, treemapSlice, treemapSliceDice, treemapSquarify,
+  treemap,
+  hierarchy,
+  treemapBinary,
+  treemapDice,
+  treemapResquarify,
+  treemapSlice,
+  treemapSliceDice,
+  treemapSquarify,
 } from "d3-hierarchy";
 import variablesStyleText from "../data-view-variables.shadow.css";
 import styleText from "./modern-style-treemap.shadow.css";
 import { useResizeObserver } from "../hooks/index.js";
 import { debounceByAnimationFrame } from "../utils/debounceByAnimationFrame.js";
 import { keyBy } from "lodash";
+import classNames from "classnames";
 
 const { defineElement, property } = createDecorators();
 
@@ -28,7 +35,7 @@ type TreemapData = {
   name: string;
   value?: number;
   children?: TreemapData[];
-}
+};
 
 interface ModernStyleTreemapProps {
   data: TreemapData;
@@ -52,7 +59,8 @@ interface ModernStyleTreemapProps {
 })
 class ModernStyleTreemap
   extends ReactNextElement
-  implements ModernStyleTreemapProps {
+  implements ModernStyleTreemapProps
+{
   /**
    * @kind TreemapData
    * @required true
@@ -140,38 +148,91 @@ const tailMap = {
   [TailTypes["treemapSlice"]]: treemapSlice,
   [TailTypes["treemapSliceDice"]]: treemapSliceDice,
   [TailTypes["treemapSquarify"]]: treemapSquarify,
-}
+};
 
 function ModernStyleTreemapElement(
   props: ModernStyleTreemapProps
 ): React.ReactElement {
-  const { data, tail, leafUseBrick, leafContainerStyle, tooltipUseBrick, tooltipStyle } = props;
+  const {
+    data,
+    tail,
+    leafUseBrick,
+    leafContainerStyle,
+    tooltipUseBrick,
+    tooltipStyle,
+  } = props;
 
-  const [wrapperRef, { clientWidth: wrapperWidth, clientHeight: wrapperHeight }] = useResizeObserver<HTMLDivElement>();
-  const [tooltipRef, { clientWidth: tooltipWidth, clientHeight: tooltipHeight }] = useResizeObserver<HTMLDivElement>();
-  const [mouseData, setMouseData] = useState
-    <{ clientX: number, clientY: number, name?: string }>
-    ({ clientX: 0, clientY: 0 });
+  const [
+    wrapperRef,
+    { clientWidth: wrapperWidth, clientHeight: wrapperHeight },
+  ] = useResizeObserver<HTMLDivElement>();
+  const [tooltipRef, { clientHeight: tooltipHeight }] =
+    useResizeObserver<HTMLDivElement>();
+  const [mouseData, setMouseData] = useState<{
+    clientX: number;
+    clientY: number;
+    name?: string;
+  }>({ clientX: 0, clientY: 0 });
+  const [tooltipPosition, setTooltipPosition] = useState<string>();
 
   const tooltipTransform = useMemo(() => {
     if (!wrapperRef.current) return undefined;
     const wrapperClientRect = wrapperRef.current.getBoundingClientRect();
     // 缩放比例
     const widthScale = wrapperClientRect.width / wrapperRef.current.clientWidth;
-    const heightScale = wrapperClientRect.height / wrapperRef.current.clientHeight;
-
+    const heightScale =
+      wrapperClientRect.height / wrapperRef.current.clientHeight;
     // 缩放后的偏移
-    const scaledLeft = mouseData.clientX - wrapperClientRect.left;
-    const scaledTop = mouseData.clientY - wrapperClientRect.top;
-
+    let scaledLeft, placement;
+    const left = mouseData.clientX - wrapperClientRect.left;
+    let scaledTop = mouseData.clientY - wrapperClientRect.top;
+    const right = wrapperClientRect.right - mouseData.clientX;
+    const bottom = wrapperClientRect.bottom - mouseData.clientY;
+    // 处理边界问题
+    const { width, height } = tooltipRef.current.getBoundingClientRect();
+    scaledLeft = left + 16;
+    if (right < width) {
+      scaledLeft = left - width - 16;
+      placement = "right";
+    }
+    if (left < width) {
+      placement = "left";
+    }
+    if (bottom < height / 2 || scaledTop < height / 2) {
+      const topOrBottom = bottom < height / 2 ? "bottom" : "top";
+      scaledTop =
+        bottom < height / 2
+          ? scaledTop - height / 2 - 16
+          : scaledTop + height / 2 + 16;
+      if (placement === "left" && left - width / 2 < 0) {
+        placement = `${topOrBottom}-left`;
+        scaledLeft = left;
+      } else if (placement === "right" && right - width / 2 < 0) {
+        placement = `${topOrBottom}-right`;
+        scaledLeft = left - width;
+      } else {
+        placement = topOrBottom;
+        scaledLeft = left - width / 2;
+      }
+    }
+    setTooltipPosition(placement);
     // 实际偏移
-    return `translate(
-      ${scaledLeft / widthScale + 16}px,
-      ${scaledTop / heightScale - tooltipHeight / 2}px)`
-  }, [mouseData.clientX, mouseData.clientY, tooltipHeight]);
+    return {
+      left: `${scaledLeft / widthScale}px`,
+      top: `${scaledTop / heightScale - tooltipHeight / 2}px`,
+    };
+  }, [
+    wrapperRef,
+    mouseData.clientX,
+    mouseData.clientY,
+    tooltipRef,
+    tooltipHeight,
+  ]);
 
   const hierarchyNode = useMemo(() => {
-    return hierarchy(data).sum(d => d.value).sort((a, b) => b.value - a.value);
+    return hierarchy(data)
+      .sum((d) => d.value)
+      .sort((a, b) => b.value - a.value);
   }, [data]);
 
   const tm = useMemo(() => {
@@ -179,40 +240,45 @@ function ModernStyleTreemapElement(
       .tile(tailMap[tail])
       .size([wrapperWidth, wrapperHeight])
       .padding(1)
-      .round(true)
+      .round(true);
   }, [tail, wrapperWidth, wrapperHeight]);
 
   const [leaves, leavesMap] = useMemo(() => {
     // 这里只要hierarchyNode不变化，即使tm更新了，root、leaves还是同一个对象
     const root = tm(hierarchyNode);
     // 这里使用解构让leaves里面每个node变成新对象
-    const _leaves = root.leaves().map(v => ({ ...v }));
+    const _leaves = root.leaves().map((v) => ({ ...v }));
     return [_leaves, keyBy(_leaves, "data.name")];
   }, [tm, hierarchyNode]);
 
   const leavesNode = useMemo(() => {
-    return leaves.map(d => {
-      const
-        top = d.y0,
+    return leaves.map((d) => {
+      const top = d.y0,
         left = d.x0,
         width = d.x1 - d.x0,
         height = d.y1 - d.y0;
 
-      return <div key={d.data.name}
-        className="treemap-leaf"
-        data-leaf-id={d.data.name}
-        style={{
-          ...leafContainerStyle,
-          top: 0,
-          left: 0,
-          transform: `translate(${left}px, ${top}px)`,
-          width,
-          height,
-        }}>
-        {leafUseBrick?.useBrick && <ReactUseMultipleBricks useBrick={leafUseBrick.useBrick} data={d} />}
-      </div>
-    })
-  }, [leafContainerStyle, leafUseBrick?.useBrick, leaves])
+      return (
+        <div
+          key={d.data.name}
+          className="treemap-leaf"
+          data-leaf-id={d.data.name}
+          style={{
+            ...leafContainerStyle,
+            top: 0,
+            left: 0,
+            transform: `translate(${left}px, ${top}px)`,
+            width,
+            height,
+          }}
+        >
+          {leafUseBrick?.useBrick && (
+            <ReactUseMultipleBricks useBrick={leafUseBrick.useBrick} data={d} />
+          )}
+        </div>
+      );
+    });
+  }, [leafContainerStyle, leafUseBrick?.useBrick, leaves]);
 
   const curTooltipData = useMemo(() => {
     return { ...leavesMap[mouseData.name] };
@@ -222,14 +288,14 @@ function ModernStyleTreemapElement(
     return debounceByAnimationFrame((e: MouseEvent<HTMLDivElement>) => {
       const curLeaf = (e.target as HTMLDivElement).closest(".treemap-leaf");
       const curName = curLeaf?.getAttribute("data-leaf-id");
-      setMouseData(pre => {
+      setMouseData((pre) => {
         return {
           clientX: e.clientX,
           clientY: e.clientY,
           name: curLeaf ? curName : pre.name,
         };
       });
-    })
+    });
   }, []);
 
   return (
@@ -247,13 +313,28 @@ function ModernStyleTreemapElement(
       >
         {leavesNode}
       </div>
-      <div className="tooltip"
+      <div
+        className={classNames("tooltip", {
+          bottom: tooltipPosition === "bottom",
+          bottomRight: tooltipPosition === "bottom-right",
+          bottomLeft: tooltipPosition === "bottom-left",
+          topLeft: tooltipPosition === "top-left",
+          topRight: tooltipPosition === "top-right",
+          top: tooltipPosition === "top",
+          right: tooltipPosition === "right",
+        })}
         style={{
           ...tooltipStyle,
-          transform: tooltipTransform,
+          ...tooltipTransform,
         }}
-        ref={tooltipRef}>
-        {tooltipUseBrick?.useBrick && <ReactUseMultipleBricks useBrick={tooltipUseBrick.useBrick} data={curTooltipData} />}
+        ref={tooltipRef}
+      >
+        {tooltipUseBrick?.useBrick && (
+          <ReactUseMultipleBricks
+            useBrick={tooltipUseBrick.useBrick}
+            data={curTooltipData}
+          />
+        )}
       </div>
     </div>
   );

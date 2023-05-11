@@ -32,7 +32,8 @@
   position: absolute;
   overflow: hidden;
   border-radius: var(--no-border-radius);
-  background: var(--color-fill-bg-container-2) radial-gradient(farthest-corner, #0F1014ff 0%, #0F101400 100%);
+  background: var(--color-fill-bg-container-2)
+    radial-gradient(farthest-corner, #0f1014ff 0%, #0f101400 100%);
   box-shadow: inset 5px 5px 8px 1px rgba(51, 102, 255, 0.24);
 }
 
@@ -47,14 +48,19 @@
   line-height: 20px;
   font-weight: var(--font-weight-500);
   color: var(--color-normal-text);
-  --treemap-tooltip-background: rgba(103, 149, 219, 0.12) radial-gradient(100% 100% ellipse at 12px 4px, rgba(var(--palette-tech-blue-6-channel), 0.3), rgba(var(--palette-tech-blue-6-channel), 0));
+  --treemap-tooltip-background: rgba(103, 149, 219, 0.12)
+    radial-gradient(
+      100% 100% ellipse at 12px 4px,
+      rgba(var(--palette-tech-blue-6-channel), 0.3),
+      rgba(var(--palette-tech-blue-6-channel), 0)
+    );
   --treemap-backdrop-filter: blur(5px);
   z-index: 0;
 }
 
 .tooltip::before,
 .tooltip::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   right: 0;
@@ -68,7 +74,58 @@
 .tooltip::before {
   clip-path: inset(0 0 0 7px round var(--medius-border-radius));
 }
-
+.top.tooltip::before,
+.topLeft.tooltip::before,
+.topRight.tooltip::before {
+  clip-path: inset(7px 0 0 0 round var(--medius-border-radius));
+}
+.bottom.tooltip::before,
+.bottomRight.tooltip::before,
+.bottomLeft.tooltip::before {
+  clip-path: inset(0 0 7px 0 round var(--medius-border-radius));
+}
+.right.tooltip::before {
+  clip-path: inset(0 7px 0 0 round var(--medius-border-radius));
+}
 .tooltip::after {
   clip-path: polygon(0 50%, 7px calc(50% - 7px), 7px calc(50% + 7px));
+}
+
+.bottom.tooltip::after {
+  clip-path: polygon(
+    calc(50% - 7px) calc(100% - 7px),
+    50% 100%,
+    calc(50% + 7px) calc(100% - 7px)
+  );
+}
+.bottomLeft.tooltip::after {
+  clip-path: polygon(7px calc(100% - 7px), 14px 100%, 21px calc(100% - 7px));
+}
+.bottomRight.tooltip::after {
+  clip-path: polygon(
+    calc(100% - 7px) calc(100% - 7px),
+    calc(100% - 14px) 100%,
+    calc(100% - 21px) calc(100% - 7px)
+  );
+}
+
+.top.tooltip::after {
+  clip-path: polygon(calc(50% - 7px) 7px, 50% 0, calc(50% + 7px) 7px);
+}
+.topLeft.tooltip::after {
+  clip-path: polygon(7px 7px, 14px 0, 21px 7px);
+}
+.topRight.tooltip::after {
+  clip-path: polygon(
+    calc(100% - 7px) 7px,
+    calc(100% - 14px) 0,
+    calc(100% - 21px) 7px
+  );
+}
+.right.tooltip::after {
+  clip-path: polygon(
+    calc(100% - 7px) calc(50% - 7px),
+    100% 50%,
+    calc(100% - 7px) calc(50% + 7px)
+  );
 }
