@@ -29,7 +29,7 @@
 .delay {
   stroke-dasharray: 500, 1000;
   stroke-dashoffset: 500; /*表示虚线的起始偏移*/
-  animation: delay 2s linear 2s infinite;
+  animation: delay 2s linear 2.5s infinite;
   animation-fill-mode: both;
 }
 
