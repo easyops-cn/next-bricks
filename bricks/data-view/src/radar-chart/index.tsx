@@ -57,6 +57,16 @@ class RadarChart extends ReactNextElement implements RadarProps {
   accessor radius: number;
 
   /**
+   * @default 0.25
+   * @required
+   * @description 取值[0-1]，默认半径的缩放比例,radius不传时生效
+   */
+  @property({
+    attribute: false,
+  })
+  accessor scale: number = 0.25;
+
+  /**
    * @default
    * @required
    * @description 容器高度
@@ -113,6 +123,7 @@ class RadarChart extends ReactNextElement implements RadarProps {
         width={this.width}
         height={this.height}
         radius={this.radius}
+        scale={this.scale}
         value={this.value}
         dataFill={this.dataFill}
         dataCircle={this.dataCircle}

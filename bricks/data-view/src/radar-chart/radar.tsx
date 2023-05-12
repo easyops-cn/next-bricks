@@ -20,6 +20,7 @@ export function Radar({
   dataFill,
   dataCircle,
   dataLine,
+  scale,
   ...props
 }: RadarProps): ReactElement {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -36,12 +37,11 @@ export function Radar({
     // 根据设备像素比调整画布的实际像素大小
     canvas.width = canvasWidth * ratio;
     canvas.height = canvasHeight * ratio;
-
-    const defaultRadius = Math.min(canvas.width, canvas.height) * 0.25; // 正多边形的默认半径
+    const defaultRadius = Math.min(canvas.width, canvas.height) * scale; // 正多边形的默认半径
 
     contextRef.current = context;
     setBaseConfig(constructBaseConfig(dataSource, radius ?? defaultRadius));
-  }, [dataSource, radius]);
+  }, [dataSource, radius, scale]);
   useEffect(() => {
     setUserConfig(constructUserConfig(dataFill, dataCircle, dataLine));
   }, [dataFill, dataCircle, dataLine]);
