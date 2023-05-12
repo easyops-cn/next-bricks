@@ -79,6 +79,7 @@ export interface RadarProps {
   height?: number;
   width?: number;
   radius?: number;
+  scale?: number;
   value?: number | string;
   dataFill?: DataFill;
   dataCircle?: DataCircle;
