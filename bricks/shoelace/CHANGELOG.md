@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/shoelace@0.2.4...@next-bricks/shoelace@0.3.0) (2023-05-12)
+
+
+### Features
+
+* add utilities ([b4f35ec](https://github.com/easyops-cn/next-bricks/commit/b4f35ec6a8d1b8b37ed051a5d7c5bbbce3807c25))
+
+
+
+
+
 ## [0.2.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/shoelace@0.2.3...@next-bricks/shoelace@0.2.4) (2023-05-09)
 
 **Note:** Version bump only for package @next-bricks/shoelace

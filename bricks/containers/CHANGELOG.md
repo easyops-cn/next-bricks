@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.3.3...@next-bricks/containers@0.4.0) (2023-05-12)
+
+
+### Features
+
+* replace size middle to medium ([760262e](https://github.com/easyops-cn/next-bricks/commit/760262e5655c025bd74a4fcae84802c00d7684ca))
+
+
+
+
+
 ## [0.3.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.3.2...@next-bricks/containers@0.3.3) (2023-05-09)
 
 **Note:** Version bump only for package @next-bricks/containers

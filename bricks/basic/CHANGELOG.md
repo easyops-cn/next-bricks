@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.4.1...@next-bricks/basic@0.5.0) (2023-05-12)
+
+
+### Features
+
+* replace size middle to medium ([760262e](https://github.com/easyops-cn/next-bricks/commit/760262e5655c025bd74a4fcae84802c00d7684ca))
+* update style.css ([17738f5](https://github.com/easyops-cn/next-bricks/commit/17738f5b2f74fb7f0a03d6e2bf2f9ef8dcb15c50))
+
+
+
+
+
 ## [0.4.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.4.0...@next-bricks/basic@0.4.1) (2023-05-09)
 
 **Note:** Version bump only for package @next-bricks/basic

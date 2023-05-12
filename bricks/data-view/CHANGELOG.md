@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.4.1...@next-bricks/data-view@0.5.0) (2023-05-12)
+
+
+### Bug Fixes
+
+* **data-view:** treemap tooltip定位的边界问题 ([0f95f17](https://github.com/easyops-cn/next-bricks/commit/0f95f1771f9d0737b88516fbb34d6acb0bf90535))
+* **data-view:** treemap tooltip边界样式修改 ([ca40903](https://github.com/easyops-cn/next-bricks/commit/ca40903a310ed9c4efd649009431c7351218182a))
+* **data-view:** 增加光环动效 ([6d00e87](https://github.com/easyops-cn/next-bricks/commit/6d00e877df72148319bb4e8cf046ceec068fe7fb))
+* **data-view:** 搜索构件、部署架构UI调整 ([6104aed](https://github.com/easyops-cn/next-bricks/commit/6104aede8444b4aeee6fdd7f8547694313e2ea13))
+* **data-view:** 搜索构件tooltip高度展示不对 ([4d0f6c3](https://github.com/easyops-cn/next-bricks/commit/4d0f6c35ca06cc38991d3abeff8e4c1db6c9836d))
+* 雷达图构件适配父元素scale之后的布局 ([19d50ae](https://github.com/easyops-cn/next-bricks/commit/19d50ae40b1724836753dce6b5ec86d1eeef96b2))
+
+
+### Features
+
+* **data-view:** support gear-background component ([335ebab](https://github.com/easyops-cn/next-bricks/commit/335ebabffea4b9ef107b2a024b44852ad182af50))
+* 实现雷达图构件 ([7fb8455](https://github.com/easyops-cn/next-bricks/commit/7fb8455b544625eb72d370682d84b501b736a5b5))
+
+
+
+
+
 ## [0.4.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.4.0...@next-bricks/data-view@0.4.1) (2023-05-09)
 
 **Note:** Version bump only for package @next-bricks/data-view
