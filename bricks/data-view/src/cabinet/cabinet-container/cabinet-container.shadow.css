@@ -81,7 +81,7 @@
 }
 .hostContainer.container-faded,
 .k8sContainer.container-faded {
-  opacity: 0.3;
+  opacity: 0.4;
 }
 .content {
   flex: 1;

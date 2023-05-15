@@ -33,20 +33,20 @@
 .divider {
   width: 100%;
   height: var(--border-width-tribble-base);
-  background-color: #007ACA;
+  background-color: #007aca;
   transition: background-color 0.5s;
 }
 
 .container:hover .app-title,
-.container.status-active .app-title{
+.container.status-active .app-title {
   color: #50ffff;
 }
 
 .container:hover .divider,
-.container.status-active .divider{
-  background-color: #1F7DBD;
+.container.status-active .divider {
+  background-color: #1f7dbd;
 }
 
 .status-faded {
-  opacity: 0.3;
+  opacity: 0.4;
 }
