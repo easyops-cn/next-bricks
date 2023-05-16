@@ -47,6 +47,8 @@ describe("data-view.graph-layout-grid", () => {
     expect(
       element.shadowRoot.querySelector(".item").getAttribute("style")
     ).toBe("grid-area: 1 / 1 /1 / 1;");
+    expect(element.shadowRoot.querySelectorAll(".node").length).toBe(1);
+    expect(element.shadowRoot.querySelectorAll(".text").length).toBe(1);
     expect(
       element.shadowRoot.querySelector(".container").getAttribute("style")
     ).toBe("grid-template-columns: repeat(7, 1fr);");

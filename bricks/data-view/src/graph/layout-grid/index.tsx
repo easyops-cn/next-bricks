@@ -113,8 +113,12 @@ export function GraphLayoutGridComponent(
             >
               {curData && (
                 <React.Fragment>
-                  <WrappedGraphText text={curData.text} value={curData.value} />
-                  <WrappedGraphNode url={curData.url} />
+                  <WrappedGraphText
+                    text={curData.text}
+                    value={curData.value}
+                    className="text"
+                  />
+                  <WrappedGraphNode url={curData.url} className="node" />
                 </React.Fragment>
               )}
             </div>
