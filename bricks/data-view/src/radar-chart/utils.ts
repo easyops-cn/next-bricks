@@ -1,21 +1,22 @@
 import { cloneDeep, merge } from "lodash";
 import {
-  DrawRadarBgOption,
-  DrawPolygonOptions,
-  GradientPolygon,
-  DataLineOptions,
   Axis,
-  Data,
   BaseConfig,
-  DataCircleOptions,
   CircleOptions,
-  DataFillProps,
-  DataPolyProps,
-  DataFill,
+  Data,
   DataCircle,
-  UserConfig,
+  DataCircleOptions,
+  DataFill,
+  DataFillProps,
   DataLine,
+  DataLineOptions,
+  DataPolyProps,
+  DrawPolygonOptions,
+  DrawRadarBgOption,
+  GradientPolygon,
+  UserConfig,
 } from "./interface.js";
+
 export const colorMap = [
   "#5B8FF9",
   "#5AD8A6",
@@ -67,8 +68,7 @@ export const constructBaseConfig = function (
   baseConfig.radius = radius;
   if (dataSource?.length < 1) return baseConfig;
   baseConfig.originDataSource = dataSource;
-  const dataLength = dataSource.length;
-  baseConfig.n = dataLength;
+  baseConfig.n = dataSource.length;
   const disAngle = (Math.PI * 2) / baseConfig.n;
   dataSource.forEach((data, i) => {
     baseConfig.dataRadiusOfPercent[i] = data.value / data.maxValue;
@@ -353,7 +353,7 @@ export const drawLeadLineAndText = function (
       context.fillRect(rectX, rectY, rectSize, rectSize);
 
       context.textAlign = "left";
-      context.font = `${legendSize}px HarmonyOS_Sans_SC_Black`;
+      context.font = `400 ${legendSize}px HarmonyOS_Sans_SC_Black`;
       context.fillStyle = "rgba(255, 255, 255, .4)";
       context.fillText(
         `${dataSource[i].name}`,
@@ -365,7 +365,7 @@ export const drawLeadLineAndText = function (
     if (dataSource[i]?.percentValue) {
       const percentSize = r / 10;
       context.textAlign = "left";
-      context.font = `bold ${percentSize}px HarmonyOS_Sans_SC_Black`;
+      context.font = `500 ${percentSize}px HarmonyOS_Sans_SC_Black`;
       context.fillStyle = "#fff";
       context.fillText(
         `${dataSource[i]?.percentValue}`,
