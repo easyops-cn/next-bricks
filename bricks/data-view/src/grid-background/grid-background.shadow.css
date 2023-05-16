@@ -21,15 +21,15 @@
 
 .animateLine {
   stroke-dasharray: 500, 1000;
-  stroke-dashoffset: 0; /*表示虚线的起始偏移*/
-  animation: animate 2s linear infinite;
+  stroke-dashoffset: 500; /*表示虚线的起始偏移*/
+  animation: animate 2s linear 1.4s infinite;
   animation-fill-mode: both;
 }
 
 .delay {
   stroke-dasharray: 500, 1000;
   stroke-dashoffset: 500; /*表示虚线的起始偏移*/
-  animation: delay 2s linear 2.5s infinite;
+  animation: delay 2s linear 3.9s infinite;
   animation-fill-mode: both;
 }
 
@@ -37,7 +37,7 @@
   /*999.6577447103518*/
   to {
     stroke-dasharray: 500, 1000;
-    stroke-dashoffset: -1500;
+    stroke-dashoffset: -1000;
   }
 }
 
