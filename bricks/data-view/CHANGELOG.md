@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.5.0...@next-bricks/data-view@0.5.1) (2023-05-16)
+
+
+### Bug Fixes
+
+* **data-view:** modify graph node animation ([d0aab51](https://github.com/easyops-cn/next-bricks/commit/d0aab5156b3e4c43f856e514daf143343e35ea91))
+* **data-view:** modify style ([dcd6564](https://github.com/easyops-cn/next-bricks/commit/dcd65640dfd1031c4f0b3816f29b1d5350b5de97))
+* **data-view:** 部署架构拓扑样式修改 ([da675d0](https://github.com/easyops-cn/next-bricks/commit/da675d04801187e6767cf5647255c2f68a1ef394))
+* 调整应用墙构件卡片框大小并修复交互bug ([88aaea7](https://github.com/easyops-cn/next-bricks/commit/88aaea79ab4d13511ff4df2b9bd0cf39d7f067b2))
+
+
+
+
+
 # [0.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.4.1...@next-bricks/data-view@0.5.0) (2023-05-12)
 
 

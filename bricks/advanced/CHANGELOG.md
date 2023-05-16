@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.0.10...@next-bricks/advanced@0.1.0) (2023-05-16)
+
+
+### Features
+
+* support advanced.general-cascader ([9ec469c](https://github.com/easyops-cn/next-bricks/commit/9ec469c0eefb3c31f80e0939f72f7ebe0246b0d1))
+
+
+
+
+
 ## [0.0.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.0.9...@next-bricks/advanced@0.0.10) (2023-05-09)
 
 **Note:** Version bump only for package @next-bricks/advanced
