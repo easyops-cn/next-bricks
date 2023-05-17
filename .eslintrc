@@ -7,6 +7,18 @@
         "bricks/*/scripts/**/*.js"
       ],
       "extends": "@next-core/eslint-config-next/node"
+    },
+    {
+      "files": ["cypress/**/*.js"],
+      "extends": "@next-core/eslint-config-next/node",
+      "globals": {
+        "cy": true,
+        "Cypress": true
+      },
+      "env": {
+        "mocha": true,
+        "jest": false
+      }
     }
   ]
 }

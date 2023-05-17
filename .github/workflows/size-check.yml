@@ -1,0 +1,68 @@
+name: Size check
+
+on: workflow_dispatch
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        registry-url: 'https://registry.npmjs.org'
+        cache: yarn
+
+    - name: Cache nx cache
+      uses: actions/cache@v3
+      with:
+        path: .cache
+        key: ${{ runner.os }}-nx-${{ hashFiles('**/package.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nx-
+
+    - name: Get cypress version
+      id: cypress-version
+      run: echo "::set-output name=ver::$(cat package.json|grep '\"cypress\":'|awk -F '[:,\"]' '{print $5}')"
+
+    - name: Cache for cypress
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/Cypress
+        key: cypress-${{ runner.os }}-cypress-${{ steps.cypress-version.outputs.ver }}
+
+    # Fix `yarn install --frozen-lockfile` not working in monorepo.
+    # https://github.com/yarnpkg/yarn/issues/5840#issuecomment-468782288
+    - name: Get checksum before yarn install
+      id: yarn-lock-check-before
+      run: echo "::set-output name=sum::$(cksum yarn.lock)"
+
+    - run: yarn install --frozen-lockfile
+      env:
+        CYPRESS_INSTALL_BINARY: ''
+        CYPRESS_DOWNLOAD_MIRROR: ''
+
+    - name: Get checksum after yarn install
+      id: yarn-lock-check-after
+      run: echo "::set-output name=sum::$(cksum yarn.lock)"
+
+    - name: Exit if yarn.lock updated
+      run: exit 1
+      if: steps.yarn-lock-check-before.outputs.sum != steps.yarn-lock-check-after.outputs.sum
+
+    - run: yarn build --concurrency 1
+    - run: yarn size-check:ci
+      env:
+        CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+
+    - run: cat size-check.log
