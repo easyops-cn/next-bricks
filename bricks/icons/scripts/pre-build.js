@@ -40,9 +40,6 @@ const tasks = [];
     default: [],
   };
 
-  const newDefaultCategoryDir = path.resolve(newEasyOpsIconsPath, "default");
-  mkdirSync(newDefaultCategoryDir);
-
   tasks.push(
     readdir(legacyEasyOpsIconsPath, { withFileTypes: true })
       .then((list) =>
@@ -53,12 +50,7 @@ const tasks = [];
                 legacyEasyOpsIconsPath,
                 item.name
               );
-              const newCategoryDir = path.resolve(
-                newEasyOpsIconsPath,
-                item.name
-              );
-              if (!existsSync(newCategoryDir)) {
-                mkdirSync(newCategoryDir);
+              if (!allIcons[item.name]) {
                 allIcons[item.name] = [];
               }
               return readdir(categoryDir).then((icons) =>
@@ -68,19 +60,11 @@ const tasks = [];
                     allIcons[item.name].push(
                       icon.substring(0, icon.length - 4)
                     );
-                    return copyFile(
-                      path.resolve(categoryDir, icon),
-                      path.resolve(newCategoryDir, icon)
-                    );
                   })
               );
             } else if (item.name.endsWith(".svg")) {
               allIcons.default.push(
                 item.name.substring(0, item.name.length - 4)
-              );
-              return copyFile(
-                path.resolve(legacyEasyOpsIconsPath, item.name),
-                path.resolve(newDefaultCategoryDir, item.name)
               );
             }
           })

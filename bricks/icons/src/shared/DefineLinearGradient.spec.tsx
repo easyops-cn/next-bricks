@@ -11,7 +11,7 @@ describe("DefineLinearGradient", () => {
     expect(container).toMatchInlineSnapshot(`
       <div>
         <div
-          style="position: absolute; width: 0px; height: 0px;"
+          class="gradients"
         >
           <svg
             aria-hidden="true"
@@ -54,7 +54,7 @@ describe("DefineLinearGradient", () => {
     expect(container).toMatchInlineSnapshot(`
       <div>
         <div
-          style="position: absolute; width: 0px; height: 0px;"
+          class="gradients"
         >
           <svg
             aria-hidden="true"

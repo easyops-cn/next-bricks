@@ -1,6 +1,14 @@
 // @ts-check
+import path from "node:path";
+import { createRequire } from "node:module";
 import { getSvgrLoaders } from "@next-core/build-next-bricks";
 import CopyPlugin from "copy-webpack-plugin";
+
+const require = createRequire(import.meta.url);
+const easyopsIconsDir = path.resolve(
+  require.resolve("@next-core/brick-icons/package.json"),
+  "../src/icons"
+);
 
 /**
  * @param {string} input
@@ -48,8 +56,19 @@ export default {
           info: { minimized: true },
         },
         {
-          from: "src/easyops-icon/generated",
+          context: easyopsIconsDir,
+          from: "*/*.svg",
           to: "chunks/easyops-icons",
+          filter(filePath) {
+            return !filePath.endsWith(".json");
+          },
+          // Terser skip this file for minimization
+          info: { minimized: true },
+        },
+        {
+          context: easyopsIconsDir,
+          from: "*.svg",
+          to: "chunks/easyops-icons/default",
           filter(filePath) {
             return !filePath.endsWith(".json");
           },
