@@ -65,4 +65,4 @@ jobs:
       env:
         CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
-    - run: cat size-check.log
+    - run: cat size-check.log.yml

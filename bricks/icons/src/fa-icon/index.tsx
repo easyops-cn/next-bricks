@@ -4,7 +4,11 @@ import { ReactNextElement, wrapLocalBrick } from "@next-core/react-element";
 import { hasOwnProperty } from "@next-core/utils/general";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type IconDefinition, config } from "@fortawesome/fontawesome-svg-core";
-import { DefineLinearGradient, DefineLinearGradientProps, GradientDirection } from "../shared/DefineLinearGradient.js";
+import {
+  DefineLinearGradient,
+  DefineLinearGradientProps,
+  GradientDirection,
+} from "../shared/DefineLinearGradient.js";
 import styleText from "./generated/fa-icon.shadow.css";
 import linearGradientStyleText from "../shared/DefineLinearGradient.shadow.css";
 import alias from "./generated/alias.json";
@@ -34,12 +38,26 @@ class FaIcon extends ReactNextElement implements FaIconProps {
 
   render() {
     return (
-      <FaIconComponent prefix={this.prefix} icon={this.icon} spin={this.spin} startColor={this.startColor} endColor={this.endColor} gradientDirection={this.gradientDirection} />
+      <FaIconComponent
+        prefix={this.prefix}
+        icon={this.icon}
+        spin={this.spin}
+        startColor={this.startColor}
+        endColor={this.endColor}
+        gradientDirection={this.gradientDirection}
+      />
     );
   }
 }
 
-function FaIconComponent({ prefix: _prefix, icon, spin, startColor, endColor, gradientDirection }: FaIconProps) {
+function FaIconComponent({
+  prefix: _prefix,
+  icon,
+  spin,
+  startColor,
+  endColor,
+  gradientDirection,
+}: FaIconProps) {
   const prefix = _prefix ?? "fas";
   const [iconDefinition, setIconDefinition] = useState<IconDefinition | null>(
     null
@@ -55,12 +73,12 @@ function FaIconComponent({ prefix: _prefix, icon, spin, startColor, endColor, gr
               ? (alias as Alias)[prefix][icon]
               : icon;
           setIconDefinition(
-            (
-              await import(
-                /* webpackChunkName: "fa-icons/" */
-                `./generated/icons/${prefix}/${actualIcon}.json`
+            await (
+              await fetch(
+                `${__webpack_public_path__}chunks/fa-icons/${prefix}/${actualIcon}.json`,
+                { mode: "cors" }
               )
-            ).default
+            ).json()
           );
         } else {
           setIconDefinition(null);
@@ -80,7 +98,11 @@ function FaIconComponent({ prefix: _prefix, icon, spin, startColor, endColor, gr
   return (
     <>
       <FontAwesomeIcon icon={iconDefinition} spin={spin} />
-      <DefineLinearGradient startColor={startColor} endColor={endColor} gradientDirection={gradientDirection} />
+      <DefineLinearGradient
+        startColor={startColor}
+        endColor={endColor}
+        gradientDirection={gradientDirection}
+      />
     </>
   );
 }

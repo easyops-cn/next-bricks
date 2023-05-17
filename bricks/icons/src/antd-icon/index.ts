@@ -1,0 +1,116 @@
+import {
+  NextElement,
+  createDecorators,
+  supportsAdoptingStyleSheets,
+} from "@next-core/element";
+import { wrapLocalBrick } from "@next-core/react-element";
+import {
+  DefineLinearGradientProps,
+  GradientDirection,
+} from "../shared/DefineLinearGradient.js";
+import linearGradientStyleText from "../shared/DefineLinearGradient.shadow.css";
+import { getIcon } from "../shared/SvgCache.js";
+
+const { defineElement, property } = createDecorators();
+
+export interface AntdIconProps extends DefineLinearGradientProps {
+  /** Defaults to "outlined" */
+  theme?: string;
+  icon?: string;
+}
+
+const styleText = linearGradientStyleText;
+
+@defineElement("icons.antd-icon")
+class AntdIcon extends NextElement implements AntdIconProps {
+  @property() accessor theme: string | undefined;
+  @property() accessor icon: string | undefined;
+  @property() accessor startColor: string | undefined;
+  @property() accessor endColor: string | undefined;
+  @property() accessor gradientDirection: GradientDirection | undefined;
+
+  #createShadowRoot(): void {
+    if (this.shadowRoot) {
+      return;
+    }
+    const shadowRoot = this.attachShadow({ mode: "open" });
+    if (supportsAdoptingStyleSheets()) {
+      const styleSheet = new CSSStyleSheet();
+      styleSheet.replaceSync(styleText);
+      shadowRoot.adoptedStyleSheets = [styleSheet];
+    }
+  }
+
+  connectedCallback() {
+    super._markConnectedCallbackCalled();
+    this.#createShadowRoot();
+    this._render();
+  }
+
+  protected async _render() {
+    if (!this.isConnected || !this.shadowRoot) {
+      return;
+    }
+    const { theme, icon } = this;
+    const url = icon
+      ? `${__webpack_public_path__}chunks/antd-icons/${theme}/${icon}.svg`
+      : undefined;
+    const svg = await getIcon(
+      url,
+      theme === "twotone"
+        ? {
+            replaceSource: replaceColors,
+          }
+        : { currentColor: true }
+    );
+    if (theme !== this.theme || icon !== this.icon) {
+      // The icon has changed
+      return;
+    }
+    const nodes: Node[] = [];
+    if (!supportsAdoptingStyleSheets()) {
+      const style = document.createElement("style");
+      style.textContent = styleText;
+      nodes.push(style);
+    }
+    if (svg) {
+      nodes.push(svg);
+      if (this.startColor && this.endColor) {
+        const gradients = document.createElement("div");
+        gradients.className = "gradients";
+        const coords =
+          this.gradientDirection === "left-to-right"
+            ? 'x1="0" y1="0" x2="1" y2="0"'
+            : 'x1="0" y1="0" x2="0" y2="1"';
+        gradients.innerHTML = `<svg width="0" height="0" aria-hidden="true" focusable="false"><defs><linearGradient id="linear-gradient" ${coords}><stop offset="0%" stop-color="${escapeAttr(
+          this.startColor
+        )}"></stop><stop offset="100%" stop-color="${escapeAttr(
+          this.endColor
+        )}"></stop></linearGradient></defs></svg>`;
+        nodes.push(gradients);
+      }
+    }
+
+    this.shadowRoot.replaceChildren(...nodes);
+  }
+}
+
+function escapeAttr(unsafe: string) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function replaceColors(source: string) {
+  return source.replace(/"#E6E6E6"/gi, "#e6f7ff").replace(/"#333"/g, "#1890ff");
+}
+
+export const WrappedAntdIcon = wrapLocalBrick<AntdIcon, AntdIconProps>(
+  AntdIcon
+);
+
+// Prettier reports error if place `export` before decorators.
+// https://github.com/prettier/prettier/issues/14240
+export { AntdIcon };

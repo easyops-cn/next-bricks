@@ -1,3 +1,9 @@
 :host([start-color][end-color]) path {
   fill: url("#linear-gradient");
 }
+
+.gradients {
+  position: absolute;
+  width: 0;
+  height: 0;
+}

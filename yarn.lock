@@ -1863,10 +1863,10 @@
     "@babel/preset-react" "^7.18.6"
     "@babel/preset-typescript" "^7.21.4"
 
-"@next-core/brick-container@^3.1.25":
-  version "3.1.25"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.1.25.tgz#94b00274ee5d153067b03f36090dbca7edf810e4"
-  integrity sha512-FHKxig7mJQa0s/aT/+CAeWvY+oKzLElxYyprpaFzfj9LhP1CV/H4jpDz2XHyZ+ZCcGRo2ZZRbo/rQqTEErua7Q==
+"@next-core/brick-container@^3.1.26":
+  version "3.1.26"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.1.26.tgz#8fc69c6c6cebe2543bd405faf1abd27c02fc8fdf"
+  integrity sha512-wToK7VnFRBffGaINE5ulUJPRyxottJboY2KDgKWbYwwS0yoPEWH1YvskSpW76f7X93R3QA0WfJE5hoARfmqO5g==
   dependencies:
     "@next-core/serve-helpers" "^1.0.7"
     body-parser "^1.20.1"
