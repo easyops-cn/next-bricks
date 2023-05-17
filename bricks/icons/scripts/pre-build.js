@@ -188,6 +188,10 @@ const tasks = [];
       }
       const svg = renderIconDefinitionToSVGElement(icon, {
         extraSVGAttrs: { fill: "currentColor" },
+        placeholders: {
+          primaryColor: "#1890ff",
+          secondaryColor: "#e6f7ff",
+        },
       });
       return writeFile(
         path.resolve(generatedDir, icon.theme, `${icon.name}.svg`),

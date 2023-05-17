@@ -55,14 +55,7 @@ class AntdIcon extends NextElement implements AntdIconProps {
     const url = icon
       ? `${__webpack_public_path__}chunks/antd-icons/${theme}/${icon}.svg`
       : undefined;
-    const svg = await getIcon(
-      url,
-      theme === "twotone"
-        ? {
-            replaceSource: replaceColors,
-          }
-        : { currentColor: true }
-    );
+    const svg = await getIcon(url, { currentColor: theme !== "twotone" });
     if (theme !== this.theme || icon !== this.icon) {
       // The icon has changed
       return;
@@ -101,10 +94,6 @@ function escapeAttr(unsafe: string) {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
-}
-
-function replaceColors(source: string) {
-  return source.replace(/"#E6E6E6"/gi, "#e6f7ff").replace(/"#333"/g, "#1890ff");
 }
 
 export const WrappedAntdIcon = wrapLocalBrick<AntdIcon, AntdIconProps>(
