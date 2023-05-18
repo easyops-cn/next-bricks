@@ -77,8 +77,12 @@ describe("data-view.cabinet-container", () => {
     ).toBe("width: 145px;");
     expect(nodeElement.getAttribute("style")).toBe("width: 118px;");
     const wrapperElement = element.shadowRoot.querySelector(".wrapper");
+    jest.useFakeTimers();
     fireEvent.click(wrapperElement);
     fireEvent.click(nodeElement);
+    jest.advanceTimersByTime(400);
+    fireEvent.doubleClick(nodeElement);
+    fireEvent.doubleClick(wrapperElement);
     act(() => {
       document.body.removeChild(element);
     });

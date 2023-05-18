@@ -3,7 +3,6 @@ import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import variablesStyleText from "../data-view-variables.shadow.css";
 import styleText from "./cabinet.shadow.css";
-import classNames from "classnames";
 import type {
   CabinetAppLayer,
   CabinetAppLayerProps,
@@ -12,7 +11,6 @@ import type {
   CabinetButton,
   CabinetButtonProps,
 } from "./cabinet-button/index.jsx";
-import type { CabinetNode, CabinetNodeProps } from "./cabinet-node/index.jsx";
 import type {
   CabinetContainer,
   CabinetContainerProps,
@@ -23,9 +21,6 @@ const WrappedCabinetAppLayer = wrapBrick<CabinetAppLayer, CabinetAppLayerProps>(
 );
 const WrappedCabinetButton = wrapBrick<CabinetButton, CabinetButtonProps>(
   "data-view.cabinet-button"
-);
-const WrappedCabinetNode = wrapBrick<CabinetNode, CabinetNodeProps>(
-  "data-view.cabinet-node"
 );
 const WrappedCabinetContainer = wrapBrick<
   CabinetContainer,
@@ -59,6 +54,11 @@ export interface CabinetGraphProps {
   activeKey?: string;
   onCloseBtnClick?: () => void;
   onActiveKeyChange?: (
+    key: string,
+    type?: ChangeType,
+    data?: Record<string, any>
+  ) => void;
+  handleDbClick?: (
     key: string,
     type?: ChangeType,
     data?: Record<string, any>
@@ -114,8 +114,31 @@ class CabinetGraph extends ReactNextElement implements CabinetGraphProps {
     data: Record<string, any>;
   }>;
 
+  /**
+   * @detail
+   * @description 节点或者外层的双击的事件，目前不支持应用层
+   */
+  @event({ type: "cabinet.dbclick" })
+  accessor #cabinetDbClickEvent!: EventEmitter<{
+    type: ChangeType;
+    data: Record<string, any>;
+  }>;
+
   #handleCloseBtnClick = (): void => {
     this.#closeBtnClickEvent.emit();
+  };
+  #handleDbClick = (
+    newKey: string,
+    type: ChangeType,
+    data?: Record<string, any>
+  ): void => {
+    this.activeKey = newKey;
+    if (newKey) {
+      this.#cabinetDbClickEvent.emit({
+        type,
+        data,
+      });
+    }
   };
 
   #handleActiveKeyChange = (
@@ -139,13 +162,20 @@ class CabinetGraph extends ReactNextElement implements CabinetGraphProps {
         dataSource={this.dataSource}
         onCloseBtnClick={this.#handleCloseBtnClick}
         onActiveKeyChange={this.#handleActiveKeyChange}
+        handleDbClick={this.#handleDbClick}
       />
     );
   }
 }
 
 function CabinetGraphElement(props: CabinetGraphProps): React.ReactElement {
-  const { dataSource, activeKey, onCloseBtnClick, onActiveKeyChange } = props;
+  const {
+    dataSource,
+    activeKey,
+    onCloseBtnClick,
+    onActiveKeyChange,
+    handleDbClick,
+  } = props;
 
   const dataSourceMap = useMemo(() => {
     const map: Record<string, any> = {
@@ -184,7 +214,7 @@ function CabinetGraphElement(props: CabinetGraphProps): React.ReactElement {
   return (
     <div
       className="wrapper"
-      onClick={(e) => {
+      onClick={() => {
         onActiveKeyChange(null);
       }}
     >
@@ -263,6 +293,18 @@ function CabinetGraphElement(props: CabinetGraphProps): React.ReactElement {
                       return undefined;
                   }
                 })()}
+                handleDbClick={({ type, data }) => {
+                  switch (type) {
+                    case "container": {
+                      handleDbClick(clu.key, "cluster", clu);
+                      break;
+                    }
+                    case "node": {
+                      handleDbClick((data as any).key, "node", data);
+                      break;
+                    }
+                  }
+                }}
               />
             );
           })}

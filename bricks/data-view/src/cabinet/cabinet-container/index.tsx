@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import { createDecorators, EventEmitter } from "@next-core/element";
 import variablesText from "../../data-view-variables.shadow.css";
@@ -23,6 +23,7 @@ export interface CabinetContainerProps {
   customTitle?: string | undefined;
   status?: "active" | "faded";
   handleClick?: (params: ClickEventDataType) => void;
+  handleDbClick?: (params: ClickEventDataType) => void;
 }
 
 /**
@@ -83,8 +84,18 @@ class CabinetContainer
   @event({ type: "container.click" })
   accessor #onHandleClick!: EventEmitter<ClickEventDataType>;
 
+  /**
+   * @detail
+   * @description 节点或者container 双击击事件
+   */
+  @event({ type: "container.dbclick" })
+  accessor #onHandleDbClick!: EventEmitter<ClickEventDataType>;
+
   handleClick = (params: ClickEventDataType) => {
     this.#onHandleClick.emit(params);
+  };
+  handleDbClick = (params: ClickEventDataType) => {
+    this.#onHandleDbClick.emit(params);
   };
 
   render(): React.ReactNode {
@@ -95,6 +106,7 @@ class CabinetContainer
         status={this.status}
         customTitle={this.customTitle}
         handleClick={this.handleClick}
+        handleDbClick={this.handleDbClick}
       />
     );
   }
@@ -103,44 +115,50 @@ class CabinetContainer
 export function CabinetContainerComponent(
   props: CabinetContainerProps
 ): React.ReactElement {
-  const { type, data, status, customTitle, handleClick } = props;
+  const { type, data, status, customTitle, handleClick, handleDbClick } = props;
+  const isDbClick = useRef<boolean>(false);
+  const timerRef = useRef<number>();
+
   const [containerRef, { clientWidth, clientHeight }] =
     useResizeObserver<HTMLDivElement>();
-  const binarySearch = (
-    maxSizeCol: number,
-    minSizeCol: number,
-    maxSizeRow: number,
-    minSizeRow: number
-  ): { col: number; row: number } => {
-    // 利用二分法，去找到一个合适大小；
-    const maxRow = Math.max(minSizeRow, maxSizeRow),
-      minRow = Math.min(minSizeRow, minSizeRow),
-      minCol = Math.min(minSizeCol, maxSizeCol),
-      maxCol = Math.max(minSizeCol, maxSizeCol);
-    const centerCol = Math.floor((maxSizeCol + minSizeCol) / 2);
-    const centerRow = Math.ceil((maxSizeRow + minSizeRow) / 2);
-    const needRow = Math.ceil(data.length / centerCol);
-    if (centerCol <= 1) {
-      return {
-        col: 1,
-        row: data.length,
-      };
-    }
-    if (needRow === centerRow) {
-      return {
-        col: centerCol,
-        row: needRow,
-      };
-    }
-    if (needRow > centerRow) {
-      // 那么col要放大，row减少
-      return binarySearch(centerCol, maxCol, needRow, minRow);
-    }
-    if (needRow < centerRow) {
-      // 那么col要缩小，row增加
-      return binarySearch(minCol, centerCol, maxRow, needRow);
-    }
-  };
+  const binarySearch = useCallback(
+    (
+      maxSizeCol: number,
+      minSizeCol: number,
+      maxSizeRow: number,
+      minSizeRow: number
+    ): { col: number; row: number } => {
+      // 利用二分法，去找到一个合适大小；
+      const maxRow = Math.max(minSizeRow, maxSizeRow),
+        minRow = Math.min(minSizeRow, minSizeRow),
+        minCol = Math.min(minSizeCol, maxSizeCol),
+        maxCol = Math.max(minSizeCol, maxSizeCol);
+      const centerCol = Math.floor((maxSizeCol + minSizeCol) / 2);
+      const centerRow = Math.ceil((maxSizeRow + minSizeRow) / 2);
+      const needRow = Math.ceil(data.length / centerCol);
+      if (centerCol <= 1) {
+        return {
+          col: 1,
+          row: data.length,
+        };
+      }
+      if (needRow === centerRow) {
+        return {
+          col: centerCol,
+          row: needRow,
+        };
+      }
+      if (needRow > centerRow) {
+        // 那么col要放大，row减少
+        return binarySearch(centerCol, maxCol, needRow, minRow);
+      }
+      if (needRow < centerRow) {
+        // 那么col要缩小，row增加
+        return binarySearch(minCol, centerCol, maxRow, needRow);
+      }
+    },
+    [data.length]
+  );
   const layoutWidth = useMemo(() => {
     if (!data.length) {
       return;
@@ -189,22 +207,36 @@ export function CabinetContainerComponent(
         itemWidth: Math.max(realWidth / col - 10, minWidth),
       };
     }
-  }, [data.length, clientHeight, clientWidth]);
-  const handleNodeClick = (
+  }, [data.length, clientWidth, clientHeight, binarySearch]);
+
+  const handleOnClick = (
     e: React.MouseEvent<HTMLDivElement>,
-    item: CabinetNodeProps
+    data: CabinetNodeProps | undefined,
+    type: "node" | "container"
   ) => {
     e.stopPropagation();
-    handleClick?.({
-      type: "node",
-      data: item,
-    });
+    window.clearTimeout(timerRef.current);
+    isDbClick.current = false;
+    timerRef.current = window.setTimeout(function () {
+      if (!isDbClick.current) {
+        handleClick?.({
+          data,
+          type,
+        });
+      }
+    }, 200);
   };
-  const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleOnDBClick = (
+    e: React.MouseEvent<HTMLDivElement>,
+    data: CabinetNodeProps | undefined,
+    type: "node" | "container"
+  ) => {
+    window.clearTimeout(timerRef.current);
+    isDbClick.current = true;
     e.stopPropagation();
-    handleClick?.({
-      type: "container",
-      data: undefined,
+    handleDbClick?.({
+      data,
+      type,
     });
   };
 
@@ -219,7 +251,8 @@ export function CabinetContainerComponent(
         status && `wrapper-${status}`
       )}
       ref={containerRef}
-      onClick={handleContainerClick}
+      onClick={(e) => handleOnClick(e, undefined, "container")}
+      onDoubleClick={(e) => handleOnDBClick(e, undefined, "container")}
     >
       <div
         className={classNames(
@@ -242,7 +275,8 @@ export function CabinetContainerComponent(
                 <div
                   className="item"
                   style={{ width: layoutWidth?.itemWidth }}
-                  onClick={(e) => handleNodeClick(e, item)}
+                  onClick={(e) => handleOnClick(e, item, "node")}
+                  onDoubleClick={(e) => handleOnDBClick(e, item, "node")}
                 >
                   <WrappedNode
                     type={item.type}
