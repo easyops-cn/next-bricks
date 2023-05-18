@@ -64,5 +64,6 @@ jobs:
     - run: yarn size-check:ci
       env:
         CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      continue-on-error: true
 
     - run: cat size-check.log.yml

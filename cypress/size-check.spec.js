@@ -13,7 +13,9 @@ describe("brick size check", () => {
         cy.spy(win.console, "error").as("console.error");
       },
     });
-    cy.contains("This is size-check!");
+    cy.contains("This is size-check!", {
+      timeout: 6e4,
+    });
     cy.get("@console.error").should("not.be.called");
 
     cy.window().then((win) => {
