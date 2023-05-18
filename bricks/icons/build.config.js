@@ -1,7 +1,6 @@
 // @ts-check
 import path from "node:path";
 import { createRequire } from "node:module";
-import { getSvgrLoaders } from "@next-core/build-next-bricks";
 import CopyPlugin from "copy-webpack-plugin";
 
 const require = createRequire(import.meta.url);
@@ -10,36 +9,8 @@ const easyopsIconsDir = path.resolve(
   "../src/icons"
 );
 
-/**
- * @param {string} input
- * @returns {boolean}
- */
-function issuer(input) {
-  // The issuer is null (or an empty string) for dynamic import
-  return !input || /\.[jt]sx?$/.test(input);
-}
-
 /** @type {import("@next-core/build-next-bricks").BuildNextBricksConfig} */
 export default {
-  svgRules: [
-    {
-      resource: {
-        and: [
-          /\.svg$/i,
-          {
-            not: /\/(?:twotone|colored-(?:pseudo-3d|common|big-screen))\/[^/]+\.svg$/i,
-          },
-        ],
-      },
-      issuer,
-      use: getSvgrLoaders({ convertCurrentColor: true }),
-    },
-    {
-      test: /\/(?:twotone|colored-(?:pseudo-3d|common|big-screen))\/[^/]+\.svg$/i,
-      issuer,
-      use: getSvgrLoaders({ convertCurrentColor: false }),
-    },
-  ],
   plugins: [
     new CopyPlugin({
       patterns: [
@@ -59,9 +30,6 @@ export default {
           context: easyopsIconsDir,
           from: "*/*.svg",
           to: "chunks/easyops-icons",
-          filter(filePath) {
-            return !filePath.endsWith(".json");
-          },
           // Terser skip this file for minimization
           info: { minimized: true },
         },
@@ -69,9 +37,6 @@ export default {
           context: easyopsIconsDir,
           from: "*.svg",
           to: "chunks/easyops-icons/default",
-          filter(filePath) {
-            return !filePath.endsWith(".json");
-          },
           // Terser skip this file for minimization
           info: { minimized: true },
         },
