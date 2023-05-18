@@ -24,6 +24,7 @@ export interface FaIconProps extends DefineLinearGradientProps {
   spin?: boolean;
 }
 
+export
 @defineElement("icons.fa-icon", {
   styleTexts: [styleText, linearGradientStyleText],
 })
@@ -75,7 +76,10 @@ function FaIconComponent({
           setIconDefinition(
             await (
               await fetch(
-                `${__webpack_public_path__}chunks/fa-icons/${prefix}/${actualIcon}.json`,
+                `${
+                  // istanbul ignore next
+                  process.env.NODE_ENV === "test" ? "" : __webpack_public_path__
+                }chunks/fa-icons/${prefix}/${actualIcon}.json`,
                 { mode: "cors" }
               )
             ).json()
@@ -114,7 +118,3 @@ interface Alias {
 }
 
 export const WrappedFaIcon = wrapLocalBrick<FaIcon, FaIconProps>(FaIcon);
-
-// Prettier reports error if place `export` before decorators.
-// https://github.com/prettier/prettier/issues/14240
-export { FaIcon };

@@ -17,7 +17,7 @@ interface ResolveIconOptions {
 /** Given a URL, this function returns the resulting SVG element or an appropriate error symbol. */
 async function resolveIcon(
   url: string,
-  options: ResolveIconOptions = {}
+  options?: ResolveIconOptions
 ): Promise<SVGResult> {
   let fileData: Response;
   try {
@@ -30,10 +30,7 @@ async function resolveIcon(
 
   try {
     const div = document.createElement("div");
-    const svgSource = await fileData.text();
-    div.innerHTML = options.replaceSource
-      ? options.replaceSource(svgSource)
-      : svgSource;
+    div.innerHTML = await fileData.text();
 
     const svg = div.firstElementChild;
     if (svg?.tagName?.toLowerCase() !== "svg") return CACHEABLE_ERROR;
@@ -44,7 +41,7 @@ async function resolveIcon(
     const svgEl = doc.body.querySelector("svg");
     if (!svgEl) return CACHEABLE_ERROR;
 
-    if (options.currentColor) {
+    if (options?.currentColor) {
       const colorProps = [
         "color",
         "fill",

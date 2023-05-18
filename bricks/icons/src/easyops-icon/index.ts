@@ -10,6 +10,7 @@ export interface EasyOpsIconProps {
   icon?: string;
 }
 
+export
 @defineElement("icons.easyops-icon")
 class EasyOpsIcon extends NextElement implements EasyOpsIconProps {
   @property() accessor category: string | undefined;
@@ -28,20 +29,26 @@ class EasyOpsIcon extends NextElement implements EasyOpsIconProps {
     this._render();
   }
 
+  disconnectedCallback() {
+    this.shadowRoot?.replaceChildren();
+  }
+
   protected async _render() {
     if (!this.isConnected || !this.shadowRoot) {
       return;
     }
-    const { category, icon } = this;
+    const { category: _category, icon } = this;
+    const category = _category ?? "default";
     const url = icon
-      ? `${__webpack_public_path__}chunks/easyops-icons/${
-          category ?? "default"
-        }/${icon}.svg`
+      ? `${
+          // istanbul ignore next
+          process.env.NODE_ENV === "test" ? "" : __webpack_public_path__
+        }chunks/easyops-icons/${category}/${icon}.svg`
       : undefined;
     const svg = await getIcon(url, {
-      currentColor: !category?.startsWith("colored-"),
+      currentColor: !category.startsWith("colored-"),
     });
-    if (category !== this.category || icon !== this.icon) {
+    if (category !== (this.category ?? "default") || icon !== this.icon) {
       // The icon has changed
       return;
     }
@@ -52,7 +59,3 @@ class EasyOpsIcon extends NextElement implements EasyOpsIconProps {
 export const WrappedEasyOpsIcon = wrapLocalBrick<EasyOpsIcon, EasyOpsIconProps>(
   EasyOpsIcon
 );
-
-// Prettier reports error if place `export` before decorators.
-// https://github.com/prettier/prettier/issues/14240
-export { EasyOpsIcon };

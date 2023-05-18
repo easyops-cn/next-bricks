@@ -21,6 +21,7 @@ export interface AntdIconProps extends DefineLinearGradientProps {
 
 const styleText = linearGradientStyleText;
 
+export
 @defineElement("icons.antd-icon")
 class AntdIcon extends NextElement implements AntdIconProps {
   @property() accessor theme: string | undefined;
@@ -34,6 +35,7 @@ class AntdIcon extends NextElement implements AntdIconProps {
       return;
     }
     const shadowRoot = this.attachShadow({ mode: "open" });
+    // istanbul ignore next: browser only
     if (supportsAdoptingStyleSheets()) {
       const styleSheet = new CSSStyleSheet();
       styleSheet.replaceSync(styleText);
@@ -47,20 +49,31 @@ class AntdIcon extends NextElement implements AntdIconProps {
     this._render();
   }
 
+  disconnectedCallback() {
+    this.shadowRoot?.replaceChildren();
+  }
+
   protected async _render() {
     if (!this.isConnected || !this.shadowRoot) {
       return;
     }
-    const { theme, icon } = this;
+    const { theme: _theme, icon } = this;
+    const theme = _theme ?? "outlined";
     const url = icon
-      ? `${__webpack_public_path__}chunks/antd-icons/${theme}/${icon}.svg`
+      ? `${
+          // istanbul ignore next
+          process.env.NODE_ENV === "test" ? "" : __webpack_public_path__
+        }chunks/antd-icons/${theme}/${icon}.svg`
       : undefined;
     const svg = await getIcon(url, { currentColor: theme !== "twotone" });
-    if (theme !== this.theme || icon !== this.icon) {
+    if (theme !== (this.theme ?? "outlined") || icon !== this.icon) {
       // The icon has changed
       return;
     }
+    // Currently React can't render mixed React Component and DOM nodes which are siblings,
+    // so we manually construct the DOM.
     const nodes: Node[] = [];
+    // istanbul ignore next: browser only
     if (!supportsAdoptingStyleSheets()) {
       const style = document.createElement("style");
       style.textContent = styleText;
@@ -99,7 +112,3 @@ function escapeAttr(unsafe: string) {
 export const WrappedAntdIcon = wrapLocalBrick<AntdIcon, AntdIconProps>(
   AntdIcon
 );
-
-// Prettier reports error if place `export` before decorators.
-// https://github.com/prettier/prettier/issues/14240
-export { AntdIcon };
