@@ -21,38 +21,51 @@ describe("brick size check", () => {
       const resources = performance.getEntriesByType("resource");
       let others = 0;
       let total = 0;
+      let react = 0;
       const deps = new Map();
       resources.map((resource) => {
         if (resource.name.startsWith(resourceUrlPrefix)) {
           total += resource.transferSize;
-          const resourcePkg = resource.name
-            .substring(resourceUrlPrefix.length)
-            .split("/", 1)[0];
-          deps.set(
-            resourcePkg,
-            (deps.get(resourcePkg) ?? 0) + resource.transferSize
-          );
+          if (
+            /\/chunks\/(?:2?784|(?:2?8)?316)\.[0-9a-f]+\.js$/.test(
+              resource.name
+            )
+          ) {
+            react += resource.transferSize;
+          } else {
+            const resourcePkg = resource.name
+              .substring(resourceUrlPrefix.length)
+              .split("/", 1)[0];
+            deps.set(
+              resourcePkg,
+              (deps.get(resourcePkg) ?? 0) + resource.transferSize
+            );
+          }
         } else {
           others += resource.transferSize;
         }
       });
-      cy.exec(`echo "Core: ${getSizeInKB(others)}" >> size-check.log.yml`);
-      cy.exec(`echo "All bricks: ${getSizeInKB(total)}" >> size-check.log.yml`);
-      cy.exec(`echo "Packages:" >> size-check.log.yml`);
+      const lines = [];
+      lines.push(
+        `Core: ${getSizeInKB(others)}`,
+        `All bricks: ${getSizeInKB(total)}`,
+        `Packages:`
+      );
+      if (react > 0) {
+        lines.push(`  <react>: ${getSizeInKB(react)}`);
+      }
       if (deps.size > 0) {
         for (const [pkg, size] of deps.entries()) {
-          cy.exec(
-            `echo "  ${pkg}: ${getSizeInKB(size)}" >> size-check.log.yml`
-          );
+          lines.push(`  ${pkg}: ${getSizeInKB(size)}`);
         }
       }
+      cy.exec(`echo "${lines.join("\n")}" >> size-check.log.yml`);
     });
   });
 
   it("by each package", () => {
-    cy.exec(`echo "" >> size-check.log.yml`);
     cy.exec(
-      `echo "# --- Load bricks by each package --" >> size-check.log.yml`
+      `echo "\n# --- Load bricks by each package --" >> size-check.log.yml`
     );
 
     cy.visit(`${homepage}/packages/-`);
@@ -76,46 +89,54 @@ describe("brick size check", () => {
           const resources = performance.getEntriesByType("resource");
           let total = 0;
           let self = 0;
+          let react = 0;
           const deps = new Map();
           resources.map((resource) => {
             if (resource.name.startsWith(resourceUrlPrefix)) {
               total += resource.transferSize;
-              const resourcePkg = resource.name
-                .substring(resourceUrlPrefix.length)
-                .split("/", 1)[0];
-              if (resourcePkg === pkgName) {
-                self += resource.transferSize;
+              if (
+                /\/chunks\/(?:2?784|(?:2?8)?316)\.[0-9a-f]+\.js$/.test(
+                  resource.name
+                )
+              ) {
+                react += resource.transferSize;
               } else {
-                deps.set(
-                  resourcePkg,
-                  (deps.get(resourcePkg) ?? 0) + resource.transferSize
-                );
+                const resourcePkg = resource.name
+                  .substring(resourceUrlPrefix.length)
+                  .split("/", 1)[0];
+                if (resourcePkg === pkgName) {
+                  self += resource.transferSize;
+                } else {
+                  deps.set(
+                    resourcePkg,
+                    (deps.get(resourcePkg) ?? 0) + resource.transferSize
+                  );
+                }
               }
             }
           });
-          cy.exec(`echo "${pkgName}:" >> size-check.log.yml`);
-          cy.exec(
-            `echo "  total: ${getSizeInKB(total)}" >> size-check.log.yml`
-          );
-          if (deps.size > 0) {
-            cy.exec(`echo "  details:" >> size-check.log.yml`);
-            cy.exec(
-              `echo "    <self>: ${getSizeInKB(self)}" >> size-check.log.yml`
-            );
-            for (const [pkg, size] of deps.entries()) {
-              cy.exec(
-                `echo "    ${pkg}: ${getSizeInKB(size)}" >> size-check.log.yml`
-              );
+
+          const lines = [];
+          lines.push(`${pkgName}:`, `  total: ${getSizeInKB(total)}`);
+          if (deps.size > 0 || react > 0) {
+            lines.push("  details:", `    <self>: ${getSizeInKB(self)}`);
+            if (react > 0) {
+              lines.push(`    <react>: ${getSizeInKB(react)}`);
+            }
+            if (deps.size > 0) {
+              for (const [pkg, size] of deps.entries()) {
+                lines.push(`    ${pkg}: ${getSizeInKB(size)}`);
+              }
             }
           }
+          cy.exec(`echo "${lines.join("\n")}" >> size-check.log.yml`);
         });
       }
     });
   });
 
-  it.skip("by each brick", () => {
-    cy.exec(`echo "" >> size-check.log.yml`);
-    cy.exec(`echo "# --- Load by each brick --" >> size-check.log.yml`);
+  it("by each brick", () => {
+    cy.exec(`echo "\n# --- Load by each brick --" >> size-check.log.yml`);
 
     cy.visit(`${homepage}/-`);
 
@@ -124,8 +145,13 @@ describe("brick size check", () => {
     cy.get("#main-mount-point > ul > li").then((elements) => {
       expect(elements.length).to.be.greaterThan(0);
       const items = elements.map((i, el) => el.textContent).get();
+      const printedPkgs = new Set();
       for (const item of items) {
         const [pkgName, brick] = item.split(":");
+        if (!printedPkgs.has(pkgName)) {
+          printedPkgs.add(pkgName);
+          cy.exec(`echo "\n# Package: ${pkgName}" >> size-check.log.yml`);
+        }
         cy.visit(`${homepage}/${brick}`, {
           onBeforeLoad(win) {
             cy.spy(win.console, "error").as("console.error");
@@ -139,36 +165,47 @@ describe("brick size check", () => {
           const resources = performance.getEntriesByType("resource");
           let total = 0;
           let self = 0;
+          let react = 0;
           const deps = new Map();
           resources.map((resource) => {
             if (resource.name.startsWith(resourceUrlPrefix)) {
               total += resource.transferSize;
-              const resourcePkg = resource.name
-                .substring(resourceUrlPrefix.length)
-                .split("/", 1)[0];
-              if (resourcePkg === pkgName) {
-                self += resource.transferSize;
+              if (
+                /\/chunks\/(?:2?784|(?:2?8)?316)\.[0-9a-f]+\.js$/.test(
+                  resource.name
+                )
+              ) {
+                react += resource.transferSize;
               } else {
-                deps.set(
-                  resourcePkg,
-                  (deps.get(resourcePkg) ?? 0) + resource.transferSize
-                );
+                const resourcePkg = resource.name
+                  .substring(resourceUrlPrefix.length)
+                  .split("/", 1)[0];
+                if (resourcePkg === pkgName) {
+                  self += resource.transferSize;
+                } else {
+                  deps.set(
+                    resourcePkg,
+                    (deps.get(resourcePkg) ?? 0) + resource.transferSize
+                  );
+                }
               }
             }
           });
-          cy.exec(
-            `echo "${brick}: ${getSizeInKB(total)}" >> size-check.log.yml`
-          );
-          if (deps.size > 0) {
-            cy.exec(
-              `echo "  <self>: ${getSizeInKB(self)}" >> size-check.log.yml`
-            );
-            for (const [pkg, size] of deps.entries()) {
-              cy.exec(
-                `echo "  ${pkg}: ${getSizeInKB(size)}" >> size-check.log.yml`
-              );
+
+          const lines = [];
+          lines.push(`${brick}:`, `  total: ${getSizeInKB(total)}`);
+          if (deps.size > 0 || react > 0) {
+            lines.push("  details:", `    <self>: ${getSizeInKB(self)}`);
+            if (react > 0) {
+              lines.push(`    <react>: ${getSizeInKB(react)}`);
+            }
+            if (deps.size > 0) {
+              for (const [pkg, size] of deps.entries()) {
+                lines.push(`    ${pkg}: ${getSizeInKB(size)}`);
+              }
             }
           }
+          cy.exec(`echo "${lines.join("\n")}" >> size-check.log.yml`);
         });
       }
     });
