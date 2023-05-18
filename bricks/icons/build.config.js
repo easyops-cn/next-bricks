@@ -1,31 +1,46 @@
 // @ts-check
-import { getSvgrLoaders } from "@next-core/build-next-bricks";
+import path from "node:path";
+import { createRequire } from "node:module";
+import CopyPlugin from "copy-webpack-plugin";
 
-/**
- * @param {string} input
- * @returns {boolean}
- */
-function issuer(input) {
- // The issuer is null (or an empty string) for dynamic import
- return !input || /\.[jt]sx?$/.test(input);
-}
+const require = createRequire(import.meta.url);
+const easyopsIconsDir = path.resolve(
+  require.resolve("@next-core/brick-icons/package.json"),
+  "../src/icons"
+);
 
 /** @type {import("@next-core/build-next-bricks").BuildNextBricksConfig} */
 export default {
-  svgRules: [{
-    resource: {
-      and: [
-        /\.svg$/i,
+  plugins: [
+    new CopyPlugin({
+      patterns: [
         {
-          not: /\/colored-(?:pseudo-3d|common|big-screen)\/[^/]+\.svg$/i,
-        }
-      ]
-    },
-    issuer,
-    use: getSvgrLoaders({ convertCurrentColor: true}),
-  },{
-    test: /\/colored-(?:pseudo-3d|common|big-screen)\/[^/]+\.svg$/i,
-    issuer,
-    use: getSvgrLoaders({ convertCurrentColor: false }),
-  }]
+          from: "src/fa-icon/generated/icons",
+          to: "chunks/fa-icons",
+          // Terser skip this file for minimization
+          info: { minimized: true },
+        },
+        {
+          from: "src/antd-icon/generated",
+          to: "chunks/antd-icons",
+          // Terser skip this file for minimization
+          info: { minimized: true },
+        },
+        {
+          context: easyopsIconsDir,
+          from: "*/*.svg",
+          to: "chunks/easyops-icons",
+          // Terser skip this file for minimization
+          info: { minimized: true },
+        },
+        {
+          context: easyopsIconsDir,
+          from: "*.svg",
+          to: "chunks/easyops-icons/default",
+          // Terser skip this file for minimization
+          info: { minimized: true },
+        },
+      ],
+    }),
+  ],
 };

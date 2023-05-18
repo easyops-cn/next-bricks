@@ -8,7 +8,11 @@ export interface DefineLinearGradientProps {
   gradientDirection?: GradientDirection;
 }
 
-export function DefineLinearGradient({ startColor, endColor, gradientDirection }: DefineLinearGradientProps) {
+export function DefineLinearGradient({
+  startColor,
+  endColor,
+  gradientDirection,
+}: DefineLinearGradientProps) {
   if (!startColor || !endColor) {
     return null;
   }
@@ -26,7 +30,7 @@ export function DefineLinearGradient({ startColor, endColor, gradientDirection }
       gradientCoords = { x1: 0, y1: 0, x2: 0, y2: 1 };
   }
   return (
-    <div style={{ position: "absolute", width: 0, height: 0 }}>
+    <div className="gradients">
       <svg width={0} height={0} aria-hidden={true} focusable={false}>
         <defs>
           <linearGradient id="linear-gradient" {...gradientCoords}>

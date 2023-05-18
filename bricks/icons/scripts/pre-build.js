@@ -40,30 +40,17 @@ const tasks = [];
     default: [],
   };
 
-  const newDefaultCategoryDir = path.resolve(newEasyOpsIconsPath, "default");
-  mkdirSync(newDefaultCategoryDir);
-
   tasks.push(
     readdir(legacyEasyOpsIconsPath, { withFileTypes: true })
       .then((list) =>
         Promise.all(
           list.map((item) => {
-            // 目前验证阶段先只构建默认分类的图标，以便提升构建速率。
-            if (
-              // process.env.ALL_ICONS &&
-              item.isDirectory() &&
-              /\w/.test(item.name)
-            ) {
+            if (item.isDirectory() && /\w/.test(item.name)) {
               const categoryDir = path.resolve(
                 legacyEasyOpsIconsPath,
                 item.name
               );
-              const newCategoryDir = path.resolve(
-                newEasyOpsIconsPath,
-                item.name
-              );
-              if (!existsSync(newCategoryDir)) {
-                mkdirSync(newCategoryDir);
+              if (!allIcons[item.name]) {
                 allIcons[item.name] = [];
               }
               return readdir(categoryDir).then((icons) =>
@@ -73,19 +60,11 @@ const tasks = [];
                     allIcons[item.name].push(
                       icon.substring(0, icon.length - 4)
                     );
-                    return copyFile(
-                      path.resolve(categoryDir, icon),
-                      path.resolve(newCategoryDir, icon)
-                    );
                   })
               );
             } else if (item.name.endsWith(".svg")) {
               allIcons.default.push(
                 item.name.substring(0, item.name.length - 4)
-              );
-              return copyFile(
-                path.resolve(legacyEasyOpsIconsPath, item.name),
-                path.resolve(newDefaultCategoryDir, item.name)
               );
             }
           })
@@ -124,11 +103,8 @@ const tasks = [];
 
   const iconCategories = {
     far,
-    // 目前验证阶段先只构建 Regular 分类的图标，以便提升构建速率。
-    // ...(process.env.ALL_ICONS && {
     fas,
     fab,
-    // }),
   };
   const aliasMapByCategory = {};
   const allIcons = {};
@@ -183,13 +159,7 @@ const tasks = [];
   }
   mkdirSync(generatedDir);
 
-  const themes = [
-    // 目前验证阶段先不构建 twotone 分类的图标，以便提升构建速率。
-    "outlined",
-    "filled",
-    "twotone",
-    // ...(process.env.ALL_ICONS ? ["twotone"] : []),
-  ];
+  const themes = ["outlined", "filled", "twotone"];
   for (const theme of themes) {
     const themeDir = path.resolve(generatedDir, theme);
     mkdirSync(themeDir);
@@ -202,6 +172,10 @@ const tasks = [];
       }
       const svg = renderIconDefinitionToSVGElement(icon, {
         extraSVGAttrs: { fill: "currentColor" },
+        placeholders: {
+          primaryColor: "#1890ff",
+          secondaryColor: "#e6f7ff",
+        },
       });
       return writeFile(
         path.resolve(generatedDir, icon.theme, `${icon.name}.svg`),

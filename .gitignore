@@ -8,6 +8,7 @@ node_modules
 .schema
 .cache
 *.log
+*.log.yml
 report.*.json
 
 /dev.config.js
