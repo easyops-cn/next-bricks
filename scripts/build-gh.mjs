@@ -32,14 +32,6 @@ await cp(
   }
 );
 
-await cp(
-  path.join(srcPlaygroundDir, "dist-preview"),
-  distPreviewDir,
-  {
-    recursive: true
-  }
-);
-
 const srcBricksDir = path.join(__dirname, "../bricks");
 const distBricksDir = path.join(distPreviewDir, "bricks");
 
