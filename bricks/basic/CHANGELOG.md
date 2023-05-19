@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.5.0...@next-bricks/basic@0.5.1) (2023-05-19)
+
+
+### Bug Fixes
+
+* tab-list multiple error ([74e0095](https://github.com/easyops-cn/next-bricks/commit/74e0095907ce235d653605f7e931003d6f252fc9))
+
+
+
+
+
 # [0.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.4.1...@next-bricks/basic@0.5.0) (2023-05-12)
 
 

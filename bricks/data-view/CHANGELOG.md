@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.5.1...@next-bricks/data-view@0.6.0) (2023-05-19)
+
+
+### Features
+
+* **data-view:** cabinet add dbclick event ([e615417](https://github.com/easyops-cn/next-bricks/commit/e615417e778a489efc1782e90d58c29aec391196))
+
+
+
+
+
 ## [0.5.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.5.0...@next-bricks/data-view@0.5.1) (2023-05-16)
 
 

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.1.4...@next-bricks/icons@0.1.5) (2023-05-19)
+
+
+### Bug Fixes
+
+* decrease icons transfer size ([ef3b422](https://github.com/easyops-cn/next-bricks/commit/ef3b422cc05d2753d4158933323e5bbf4f8f1fc3))
+* fix disconnect ([6975a04](https://github.com/easyops-cn/next-bricks/commit/6975a04f12af38622a56e1f1614b16381b7dda02))
+* refine antd twotone ([1a0f4e1](https://github.com/easyops-cn/next-bricks/commit/1a0f4e19c7363790998d3183058a362a5de8bb86))
+* refine pre-build ([c84039d](https://github.com/easyops-cn/next-bricks/commit/c84039dd4470fe022cfd425eddbc641544382087))
+
+
+
+
+
 ## [0.1.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.1.3...@next-bricks/icons@0.1.4) (2023-05-09)
 
 **Note:** Version bump only for package @next-bricks/icons
