@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import {
@@ -256,6 +256,10 @@ function TagListComponent({
     },
     [computedList, handleCheck, onClose]
   );
+
+  useEffect(() => {
+    list && setTagList(list);
+  }, [list]);
 
   return (
     <div className="tag-list">

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import classNames from "classnames";
@@ -249,6 +249,10 @@ function TagComponent(props: TagComponentProps) {
   const useDefineColor = useMemo(() => {
     return Object.values(TagColor).includes(color as TagColor);
   }, [color]);
+
+  useEffect(() => {
+    setChecked(isChecked);
+  }, [isChecked]);
 
   const handleCheck = () => {
     if (checkable && !disabled) {
