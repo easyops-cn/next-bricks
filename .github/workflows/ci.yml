@@ -91,7 +91,7 @@ jobs:
       uses: codecov/codecov-action@v3
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        directory: bricks
+        files: bricks/*/.coverage/cobertura-coverage.xml,shared/*/.coverage/cobertura-coverage.xml,!.cache/**/*
 
     - uses: easyops-cn/actions-next-publish-from-tags@master
       with:
