@@ -1907,6 +1907,14 @@
     "@milkdown/utils" "7.2.1"
     tslib "^2.5.0"
 
+"@milkdown/theme-nord@7.1.1":
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/@milkdown/theme-nord/-/theme-nord-7.1.1.tgz#a77f4d9fcd47166646e6dad971916ee60f3354e7"
+  integrity sha512-CMSEBxQ+URdbYHlx3aDbRTFz6lU6YocdPGY6ZRzM1LKMaoNiRneRgqnn+SJrBcvK4BPdES3w84KE8p9je7cTxA==
+  dependencies:
+    clsx "^1.2.1"
+    tslib "^2.5.0"
+
 "@milkdown/transformer@^7.1.1":
   version "7.2.1"
   resolved "https://registry.yarnpkg.com/@milkdown/transformer/-/transformer-7.2.1.tgz#08cfd4128ef47a0579fa6181377fa572b9b161af"
@@ -4767,6 +4775,11 @@ clone@^1.0.2:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==
+
+clsx@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.2.1.tgz#0ddc4a20a549b59c93a4116bb26f5294ca17dc12"
+  integrity sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==
 
 cmd-shim@5.0.0, cmd-shim@^5.0.0:
   version "5.0.0"

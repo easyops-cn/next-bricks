@@ -11,9 +11,12 @@ import styleText from "./markdown-editor.shadow.css";
 import { defaultValueCtx, Editor, rootCtx } from "@milkdown/core";
 import { Milkdown, MilkdownProvider, useEditor } from "@milkdown/react";
 import { commonmark } from "@milkdown/preset-commonmark";
+import { nord } from "@milkdown/theme-nord";
 
 const markdown = `# Milkdown React Commonmark
+
 > You're scared of a world where you're needed.
+
 This is a demo for using Milkdown with **React**.`;
 
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>(
@@ -53,6 +56,7 @@ export function MarkdownEditorComponent(props: any) {
         ctx.set(rootCtx, root);
         ctx.set(defaultValueCtx, markdown);
       })
+      .config(nord)
       .use(commonmark);
   }, []);
   return (
