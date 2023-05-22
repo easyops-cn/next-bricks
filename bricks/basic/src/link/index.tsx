@@ -207,6 +207,7 @@ export function LinkComponent({
 
   return (
     <a
+      part="link"
       className={classNames({
         [type]: type,
         disabled: disabled,
