@@ -1,0 +1,47 @@
+{
+  "name": "@next-shared/general",
+  "version": "0.0.0",
+  "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/shared/general",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:easyops-cn/next-bricks.git"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "./menu": {
+      "types": "./dist/types/menu.d.ts",
+      "import": "./dist/esm/menu.js",
+      "require": "./dist/cjs/menu.js"
+    },
+    "./types": {
+      "types": "./dist/types/menu.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "clean": "rimraf dist",
+    "prestart": "npm run clean",
+    "start": "concurrently -k -n types,main \"npm run start:types\" \"npm run start:main\"",
+    "start:main": "cross-env NODE_ENV=development build-next-libs --watch",
+    "start:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types --project tsconfig.build.json --watch",
+    "prebuild": "npm run clean",
+    "build": "npm run build:types && npm run build:main",
+    "build:main": "cross-env NODE_ENV=production build-next-libs",
+    "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types --project tsconfig.build.json",
+    "test": "cross-env NODE_ENV='test' test-next",
+    "test:ci": "cross-env NODE_ENV='test' CI=true test-next"
+  },
+  "dependencies": {
+    "@next-core/runtime": "^1.9.0",
+    "history": "^4.7.11"
+  },
+  "devDependencies": {
+    "@next-core/build-next-libs": "^1.0.4",
+    "@next-core/test-next": "^1.0.5"
+  }
+}

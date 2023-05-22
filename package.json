@@ -58,7 +58,8 @@
     "typescript": "^5.0.2"
   },
   "workspaces": [
-    "bricks/*"
+    "bricks/*",
+    "shared/*"
   ],
   "resolutions": {
     "@types/react": "^18.0.28",
