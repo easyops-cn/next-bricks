@@ -19,7 +19,7 @@
       "require": "./dist/cjs/menu.js"
     },
     "./types": {
-      "types": "./dist/types/menu.d.ts"
+      "types": "./dist/types/types.d.ts"
     },
     "./package.json": "./package.json"
   },

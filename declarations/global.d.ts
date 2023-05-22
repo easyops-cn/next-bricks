@@ -46,7 +46,7 @@ declare module "*.gif" {
   export = value;
 }
 
-declare module '*.json' {
+declare module "*.json" {
   const value: any;
   export default value;
 }
@@ -112,3 +112,9 @@ declare const __webpack_public_path__: string;
 type RecursivePartial<T> = {
   [P in keyof T]?: RecursivePartial<T[P]>;
 };
+
+declare namespace React {
+  interface HTMLAttributes {
+    part?: string;
+  }
+}
