@@ -42,7 +42,7 @@ interface Clusters {
   nodes: Node[];
 }
 
-interface AppData {
+export interface AppData {
   appName: string;
   key: string;
   clusters: Clusters[];
@@ -51,7 +51,7 @@ type ChangeType = "node" | "cluster" | "layer";
 
 export interface CabinetGraphProps {
   dataSource: AppData;
-  activeKey?: string;
+  activeKey?: string | string[];
   onCloseBtnClick?: () => void;
   onActiveKeyChange?: (
     key: string,
@@ -89,13 +89,13 @@ class CabinetGraph extends ReactNextElement implements CabinetGraphProps {
   accessor dataSource: AppData;
 
   /**
-   * @kind string
+   * @kind string |string[]
    * @required false
    * @default
-   * @description 选中项
+   * @description 选中项， 支持数组
    */
-  @property()
-  accessor activeKey: string;
+  @property({ attribute: false })
+  accessor activeKey: string | string[];
 
   /**
    * @detail
@@ -176,40 +176,24 @@ function CabinetGraphElement(props: CabinetGraphProps): React.ReactElement {
     onActiveKeyChange,
     handleDbClick,
   } = props;
-
-  const dataSourceMap = useMemo(() => {
-    const map: Record<string, any> = {
-      [dataSource.key]: {
-        type: "layer",
-        layer: dataSource.key,
-        data: dataSource,
-      },
-    };
-
+  const activeKeys = useMemo(() => {
+    return [].concat(activeKey);
+  }, [activeKey]);
+  //过滤 activeKey 有效数据 & 已经去除layer层的高亮数据，由于layer 高亮，所有都需要展示
+  const filterKeys = useMemo(() => {
+    const keys: string[] = [];
     dataSource.clusters.map((clu) => {
-      map[clu.key] = {
-        type: "cluster",
-        layer: dataSource.key,
-        cluster: clu.key,
-        data: clu,
-      };
+      if (activeKeys.includes(clu.key)) {
+        keys.push(clu.key);
+      }
       clu.nodes.map((node) => {
-        map[node.key] = {
-          type: "node",
-          layer: dataSource.key,
-          cluster: clu.key,
-          node: node.key,
-          data: node,
-        };
+        if (activeKeys.includes(node.key)) {
+          keys.push(node.key);
+        }
       });
     });
-
-    return map;
-  }, [dataSource]);
-
-  const activeData = useMemo(() => {
-    return dataSourceMap[activeKey] || {};
-  }, [dataSourceMap, activeKey]);
+    return keys;
+  }, [dataSource, activeKeys]);
 
   return (
     <div
@@ -226,11 +210,7 @@ function CabinetGraphElement(props: CabinetGraphProps): React.ReactElement {
             e.stopPropagation();
             onActiveKeyChange(dataSource.key, "layer");
           }}
-          status={
-            activeData.type === "layer" && activeData.layer == dataSource.key
-              ? "active"
-              : undefined
-          }
+          status={activeKeys.includes(dataSource.key) ? "active" : undefined}
         />
         <div
           className="cluster-container"
@@ -239,32 +219,28 @@ function CabinetGraphElement(props: CabinetGraphProps): React.ReactElement {
           }}
         >
           {dataSource.clusters.map((clu) => {
+            const includeClu = filterKeys.includes(clu.key);
             return (
               <WrappedCabinetContainer
                 key={clu.key}
                 type={clu.type}
                 customTitle={clu.clusterName}
-                data={clu.nodes.map((node) => ({
-                  nodeTitle: node.nodeTitle,
-                  type: node.type,
-                  key: node.key,
-                  status: (() => {
-                    switch (activeData.type) {
-                      case "cluster": {
-                        return activeData.cluster === clu.key
+                data={clu.nodes.map((node) => {
+                  const includeNode = filterKeys.includes(node.key);
+                  return {
+                    nodeTitle: node.nodeTitle,
+                    type: node.type,
+                    key: node.key,
+                    status:
+                      includeNode || includeClu
+                        ? includeClu
                           ? undefined
-                          : "faded";
-                      }
-                      case "node": {
-                        return activeData.node === node.key
-                          ? "active"
-                          : "faded";
-                      }
-                      default:
-                        return undefined;
-                    }
-                  })(),
-                }))}
+                          : "active"
+                        : filterKeys.length
+                        ? "faded"
+                        : undefined,
+                  };
+                })}
                 handleClick={({ type, data }) => {
                   switch (type) {
                     case "container": {
@@ -278,20 +254,16 @@ function CabinetGraphElement(props: CabinetGraphProps): React.ReactElement {
                   }
                 }}
                 status={(() => {
-                  switch (activeData.type) {
-                    case "cluster": {
-                      return activeData.cluster === clu.key
-                        ? "active"
-                        : "faded";
-                    }
-                    case "node": {
-                      return activeData.cluster === clu.key
-                        ? undefined
-                        : "faded";
-                    }
-                    default:
-                      return undefined;
-                  }
+                  const includeNode = clu.nodes.some((node) =>
+                    filterKeys.includes(node.key)
+                  );
+                  return includeNode || includeClu
+                    ? includeClu
+                      ? "active"
+                      : undefined
+                    : filterKeys.length
+                    ? "faded"
+                    : undefined;
                 })()}
                 handleDbClick={({ type, data }) => {
                   switch (type) {
