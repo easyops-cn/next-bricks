@@ -13,18 +13,9 @@
   border-radius: 6px;
 }
 
-.card-head-title {
-  display: inline-block;
-  flex: 1;
-  padding: 12px 0;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
 .card-head {
-  min-height: 48px;
   margin-bottom: -1px;
-  padding: 0 20px;
+  padding: 12px 20px;
   color: var(--antd-heading-color);
   font-weight: 500;
   font-size: 16px;
@@ -37,6 +28,15 @@
   display: flex;
   align-items: center;
 }
+
+.card-head-title {
+  display: inline-block;
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .ant-card-extra {
   float: right;
   margin-left: auto;

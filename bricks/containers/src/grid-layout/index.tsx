@@ -8,7 +8,7 @@ const { defineElement, property } = createDecorators();
 
 export interface ResponsiveSettings {
   large?: GridSettings;
-  middle?: GridSettings;
+  medium?: GridSettings;
   small?: GridSettings;
   xs?: GridSettings;
 }
@@ -20,11 +20,28 @@ export interface GridSettings {
   rowSpan?: number;
 }
 
+export interface GridProps {
+  columns?: number;
+  rows?: number;
+  rowSpan?: number;
+  columnSpan?: number;
+  templateColumns?: string;
+  alignItems?: CSSProperties["alignItems"];
+  alignContent?: CSSProperties["alignContent"];
+  justifyItems?: CSSProperties["justifyItems"];
+  justifyContent?: CSSProperties["justifyContent"];
+  autoFlow?: CSSProperties["gridAutoFlow"];
+  responsive?: ResponsiveSettings;
+  gap?: string;
+  showGridBorder?: boolean;
+  gridBorderColor?: string;
+}
+
 const mediaSizeList: MediaSize[] = ["large", "medium", "small", "xs"];
 
 const mediaQueryMap: Record<MediaSize, string> = {
   large: "(max-width: 1920px)",
-  middle: "(max-width: 1600px)",
+  medium: "(max-width: 1600px)",
   small: "(max-width: 1280px)",
   xs: "(max-width: 1024px)",
 };
@@ -40,7 +57,7 @@ const mediaQueryMap: Record<MediaSize, string> = {
 @defineElement("containers.grid-layout", {
   styleTexts: [styleText],
 })
-class GridLayout extends ReactNextElement {
+class GridLayout extends ReactNextElement implements GridProps {
   #sizeMatch: Partial<Record<MediaSize, boolean>> = {};
   // eslint-disable-next-line @typescript-eslint/ban-types
   #mediaMatchListeners: Function[] = [];

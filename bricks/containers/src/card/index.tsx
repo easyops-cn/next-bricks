@@ -22,6 +22,8 @@ export interface CardProps {
   hasExtraSlot?: boolean;
   isFixedFooter?: boolean;
   operationButtons?: OperationButton[];
+  headerStyle?: React.CSSProperties;
+  showCard?: boolean;
 }
 const WrappedButton = wrapBrick<Button, ButtonProps>("basic.general-button");
 
@@ -106,6 +108,26 @@ class Card extends ReactNextElement implements CardProps {
   @property({ attribute: false })
   accessor operationButtons: OperationButton[] = [];
 
+  /**
+   * @default -
+   * @required false
+   * @description
+   */
+  @property({
+    attribute: false,
+  })
+  accessor headerStyle: React.CSSProperties | undefined;
+
+  /**
+   * @default
+   * @required
+   * @description
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor showCard: boolean | undefined;
+
   render() {
     return (
       <CardComponent
@@ -115,6 +137,8 @@ class Card extends ReactNextElement implements CardProps {
         hasExtraSlot={this.hasExtraSlot}
         isFixedFooter={this.isFixedFooter}
         operationButtons={this.operationButtons}
+        headerStyle={this.headerStyle}
+        showCard={this.showCard}
       />
     );
   }
@@ -127,6 +151,8 @@ export function CardComponent({
   hasExtraSlot,
   isFixedFooter,
   operationButtons,
+  headerStyle,
+  showCard = true,
 }: CardProps) {
   const [paddingBottom, setPaddingBottom] = useState(0);
   const [fixedStyle, setFixedStyle] = useState({});
@@ -134,7 +160,7 @@ export function CardComponent({
 
   const renderButtons = useMemo(
     () =>
-      operationButtons?.map((button, index) => {
+      operationButtons?.map((button) => {
         return (
           <WrappedButton {...button.configProps} id={button.id} key={button.id}>
             {button.text}
@@ -146,7 +172,7 @@ export function CardComponent({
 
   const header = useMemo(
     () => (
-      <div className="card-head">
+      <div className="card-head" style={headerStyle}>
         <div className="card-head-wrapper">
           {cardTitle && (
             <div className="card-head-title">
@@ -163,7 +189,7 @@ export function CardComponent({
         </div>
       </div>
     ),
-    [cardTitle, hasExtraSlot, operationButtons]
+    [headerStyle, cardTitle, hasExtraSlot, operationButtons, renderButtons]
   );
 
   const handleFooter = () => {
@@ -210,7 +236,7 @@ export function CardComponent({
         }
       };
     }
-  }, [isFixedFooter]);
+  }, [isFixedFooter, paddingBottom]);
 
   return (
     <div
@@ -221,6 +247,7 @@ export function CardComponent({
           ? { display: "grid", gridTemplate: "50px auto/auto" }
           : {}),
         paddingBottom,
+        ...(showCard ? {} : { background: "none" }),
       }}
     >
       {(cardTitle || hasExtraSlot) && header}
