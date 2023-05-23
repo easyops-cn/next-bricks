@@ -31,6 +31,7 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
+    "@next-bricks/basic": "^0.5.2",
     "@next-core/element": "^1.0.5",
     "@next-core/i18n": "^1.0.14",
     "@next-core/react-element": "^1.0.6",
