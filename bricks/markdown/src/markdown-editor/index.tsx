@@ -12,6 +12,7 @@ import { defaultValueCtx, Editor, rootCtx } from "@milkdown/core";
 import { Milkdown, MilkdownProvider, useEditor } from "@milkdown/react";
 import { commonmark } from "@milkdown/preset-commonmark";
 import { nord } from "@milkdown/theme-nord";
+import { history } from "@milkdown/plugin-history";
 
 const markdown = `# Milkdown React Commonmark
 
@@ -57,7 +58,8 @@ export function MarkdownEditorComponent(props: any) {
         ctx.set(defaultValueCtx, markdown);
       })
       .config(nord)
-      .use(commonmark);
+      .use(commonmark)
+      .use(history);
   }, []);
   return (
     <WrappedFormItem {...props}>

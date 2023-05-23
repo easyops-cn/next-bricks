@@ -1866,6 +1866,14 @@
   dependencies:
     tslib "^2.5.0"
 
+"@milkdown/plugin-history@^7.1.1":
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/@milkdown/plugin-history/-/plugin-history-7.2.1.tgz#272e578717f8a11c734a48b3c8c0021007bd4bd0"
+  integrity sha512-xtoqLBzBNfB5cSaRV3eRc2Lra9YqeXpO8MZJeo/HQzaMts/wjhaoAf01T6XqXYsKLQCpUsS5ZbknSUCdr57LhQ==
+  dependencies:
+    "@milkdown/utils" "7.2.1"
+    tslib "^2.5.0"
+
 "@milkdown/preset-commonmark@^7.1.1":
   version "7.2.1"
   resolved "https://registry.yarnpkg.com/@milkdown/preset-commonmark/-/preset-commonmark-7.2.1.tgz#c42c036c91239ec1d3998212a1aa08f14037babc"
@@ -1907,10 +1915,10 @@
     "@milkdown/utils" "7.2.1"
     tslib "^2.5.0"
 
-"@milkdown/theme-nord@7.1.1":
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/@milkdown/theme-nord/-/theme-nord-7.1.1.tgz#a77f4d9fcd47166646e6dad971916ee60f3354e7"
-  integrity sha512-CMSEBxQ+URdbYHlx3aDbRTFz6lU6YocdPGY6ZRzM1LKMaoNiRneRgqnn+SJrBcvK4BPdES3w84KE8p9je7cTxA==
+"@milkdown/theme-nord@^7.1.1":
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/@milkdown/theme-nord/-/theme-nord-7.2.1.tgz#5f121a5620387aba77915b44a22ea660dbb87bd8"
+  integrity sha512-f5IECUKLEqZSYZQp0LVN0mnbutRtXM4CbxDxo0Xyh28hGxVLayFVsNNvzKjgVNp4ut5R0knoPO46ZaDhZEAySA==
   dependencies:
     clsx "^1.2.1"
     tslib "^2.5.0"
