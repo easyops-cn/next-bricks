@@ -1840,58 +1840,67 @@
   dependencies:
     "@lit-labs/ssr-dom-shim" "^1.0.0"
 
-"@milkdown/core@^7.1.1":
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/@milkdown/core/-/core-7.2.1.tgz#089ac5c826d1922266d24c6035d793ab1ffdc9f3"
-  integrity sha512-NmyarMh11fHDAGZHPDpXk4CsgcqgLQeUTyiGnN+ivE+OL2L23n4B6tx4wpTcCiBr39TdjPrAFU0TJy4Mq2HmtA==
+"@milkdown/core@7.1.1":
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/@milkdown/core/-/core-7.1.1.tgz#102d5a86f9425fb618a2d133b9c1d438a42ad713"
+  integrity sha512-Fc1/Zy6N5Qm8D29NlKH2FvrdMiwDhXzfE+AMMi3L8WQuUMY3hEs/OzXsihH4RUtprp8bIw7UUNh2HjyLWI1akg==
   dependencies:
-    "@milkdown/exception" "7.2.1"
+    "@milkdown/exception" "7.1.1"
     remark-parse "^10.0.1"
     remark-stringify "^10.0.2"
     tslib "^2.5.0"
     unified "^10.1.0"
 
-"@milkdown/ctx@^7.1.1":
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/@milkdown/ctx/-/ctx-7.2.1.tgz#0f5348f7e623062a0cac8ed2f72560764d590dfa"
-  integrity sha512-TlTLV3c8BemKJ3/t0Dfy82ZZstYR7arbKk40olsZ02h5cfFd1xTcfyCJgeC2ytICdGUADVlixrdU0h9dzFR0nQ==
+"@milkdown/ctx@7.1.1":
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/@milkdown/ctx/-/ctx-7.1.1.tgz#05e5ec7b5e82a78a45bb531e9842a3e8cbdd375d"
+  integrity sha512-vbGx2jnBfjapkea3Kn4fIOTnxRzht+opTpn0KcZDvprpRzM+33EOuUPwPOPT+8EIFevLHppxLVyBBjlCHUdSjw==
   dependencies:
-    "@milkdown/exception" "7.2.1"
+    "@milkdown/exception" "7.1.1"
     tslib "^2.5.0"
 
-"@milkdown/exception@7.2.1":
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/@milkdown/exception/-/exception-7.2.1.tgz#3e77510eca3405f60f773701f26d59f6f0054d91"
-  integrity sha512-xHdCfaM587+jT5kbt6+6vgZ+P5gn8oKfTpRxcSQ8g9y9W9UMgclRxEfPOYmv7xlstTuOJr+1B1n4WMwiavwv2A==
+"@milkdown/exception@7.1.1":
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/@milkdown/exception/-/exception-7.1.1.tgz#101260da28caef6b0bd9ab060b07b829136dffd5"
+  integrity sha512-8oxWE4VbVuc+/D9zQlJUV2Yq7bwgClIHY22CQDHxl5Ck8UbKx2Oy+2XGacSiU2lXFQBmlh7/1wf3QyelCy7iUw==
   dependencies:
     tslib "^2.5.0"
 
-"@milkdown/plugin-history@^7.1.1":
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/@milkdown/plugin-history/-/plugin-history-7.2.1.tgz#272e578717f8a11c734a48b3c8c0021007bd4bd0"
-  integrity sha512-xtoqLBzBNfB5cSaRV3eRc2Lra9YqeXpO8MZJeo/HQzaMts/wjhaoAf01T6XqXYsKLQCpUsS5ZbknSUCdr57LhQ==
+"@milkdown/plugin-history@7.1.1":
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/@milkdown/plugin-history/-/plugin-history-7.1.1.tgz#ec307994ec9c75cf77dedab20b117cfd592203f6"
+  integrity sha512-SV2y/btzXeYoF38xIM93hMkkVFtNyTo29KVdcQveIOdXKKwqEVI3N19o+bR0lNcnArLYIWht+3o+fr+PVdmsvQ==
   dependencies:
-    "@milkdown/utils" "7.2.1"
+    "@milkdown/utils" "7.1.1"
     tslib "^2.5.0"
 
-"@milkdown/preset-commonmark@^7.1.1":
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/@milkdown/preset-commonmark/-/preset-commonmark-7.2.1.tgz#c42c036c91239ec1d3998212a1aa08f14037babc"
-  integrity sha512-u5fwpT92pKF3KkO/XkPUX9jC2oEyec2rI9Vrp1wNHkMYZgVznkueO73VUEeeBGobe4QVgZB7P7E//p/r+w5Exw==
+"@milkdown/plugin-upload@7.1.1":
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/@milkdown/plugin-upload/-/plugin-upload-7.1.1.tgz#622335010017734bfe10ef184e215e55e973b28e"
+  integrity sha512-8YGhsvreh6ZkpSG/u6knO2z+sKuAOp6wQycFMbGcbXZDNqN9XVblj1GCTDsIRb6sYYAOArf2BCaUx+TUcqqaAg==
   dependencies:
-    "@milkdown/exception" "7.2.1"
-    "@milkdown/utils" "7.2.1"
+    "@milkdown/exception" "7.1.1"
+    "@milkdown/utils" "7.1.1"
+    tslib "^2.5.0"
+
+"@milkdown/preset-commonmark@7.1.1":
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/@milkdown/preset-commonmark/-/preset-commonmark-7.1.1.tgz#758d0ae743915957f2bd9597700517aac2f7126e"
+  integrity sha512-bEE4mCNK1HhuZ6sKAp43FD2j0upNKbIgPfQhxt46zobk+8/R0x8Rk3brqV+QdwKUKOgMcP6f0ewrYwtNLEd93w==
+  dependencies:
+    "@milkdown/exception" "7.1.1"
+    "@milkdown/utils" "7.1.1"
     "@sindresorhus/slugify" "^2.2.0"
     remark-inline-links "^6.0.0"
     tslib "^2.5.0"
     unist-util-visit "^4.0.0"
 
-"@milkdown/prose@^7.1.1":
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/@milkdown/prose/-/prose-7.2.1.tgz#145c234407a59563e7e9ef9e5eecb766c2480b0b"
-  integrity sha512-Z27FIoodWNU/34o62sDURB3heLSqyoxI8apRjGee/7FpwDr5RlCoQ+Iy+n+ENesFUhyhlzFu4QUO12mSdvwpog==
+"@milkdown/prose@7.1.1":
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/@milkdown/prose/-/prose-7.1.1.tgz#7bae4e8c4b86c6058a7693909b0fc94a5f9cffd5"
+  integrity sha512-btm3BAKLqNXJ+TariikT4xBFWnOoylzyIgom3t0q6b5VThEidWd4mDeSlNssNHTGzalCAFxJTkL8uf00zBXWQQ==
   dependencies:
-    "@milkdown/exception" "7.2.1"
+    "@milkdown/exception" "7.1.1"
     prosemirror-changeset "^2.2.0"
     prosemirror-commands "^1.5.0"
     prosemirror-dropcursor "^1.7.0"
@@ -1907,28 +1916,28 @@
     prosemirror-view "^1.30.1"
     tslib "^2.5.0"
 
-"@milkdown/react@^7.1.1":
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/@milkdown/react/-/react-7.2.1.tgz#554a663c92ea654cb7d36290e93e9fb7c210548c"
-  integrity sha512-DWlwCyXyDy3pkH2t7JjP2EGknCIbUh+Y1FAFbxsahzbdD9cTlzXx+dg6Ej2lJWv876UqrzXClgB/TQuA397hTg==
+"@milkdown/react@7.1.1":
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/@milkdown/react/-/react-7.1.1.tgz#02de098afac986aa362e561f601a52d396bcbd63"
+  integrity sha512-Lm36yL21WJbZKJEwj5kmfMJiDVpbXCTzglzQRnxeRMP2O761baI7V3zuHtT13OBINK5b7+g8Ujqgz5e8CAL+ew==
   dependencies:
-    "@milkdown/utils" "7.2.1"
+    "@milkdown/utils" "7.1.1"
     tslib "^2.5.0"
 
-"@milkdown/theme-nord@^7.1.1":
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/@milkdown/theme-nord/-/theme-nord-7.2.1.tgz#5f121a5620387aba77915b44a22ea660dbb87bd8"
-  integrity sha512-f5IECUKLEqZSYZQp0LVN0mnbutRtXM4CbxDxo0Xyh28hGxVLayFVsNNvzKjgVNp4ut5R0knoPO46ZaDhZEAySA==
+"@milkdown/theme-nord@7.1.1":
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/@milkdown/theme-nord/-/theme-nord-7.1.1.tgz#a77f4d9fcd47166646e6dad971916ee60f3354e7"
+  integrity sha512-CMSEBxQ+URdbYHlx3aDbRTFz6lU6YocdPGY6ZRzM1LKMaoNiRneRgqnn+SJrBcvK4BPdES3w84KE8p9je7cTxA==
   dependencies:
     clsx "^1.2.1"
     tslib "^2.5.0"
 
-"@milkdown/transformer@^7.1.1":
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/@milkdown/transformer/-/transformer-7.2.1.tgz#08cfd4128ef47a0579fa6181377fa572b9b161af"
-  integrity sha512-xC581lre5JnNVPvdybkzF7tUoHZF7DGV7ZaugHgBe1TX/Lz+txV/Xk8p5zd3vVroCYCFOTAHivt3xrPf6jshKA==
+"@milkdown/transformer@7.1.1":
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/@milkdown/transformer/-/transformer-7.1.1.tgz#d4d540b37235272f0ce6ad8c1eac94bf4f54c021"
+  integrity sha512-4jZIgzxHNCrR6ntQmfWNmQ/Gjw1NDNrxx70DL+A3wE1iH3Bi71SRgCE3wSXryyiWaVcfSQ9jOsdiQZAseKt86w==
   dependencies:
-    "@milkdown/exception" "7.2.1"
+    "@milkdown/exception" "7.1.1"
     "@types/mdast" "^3.0.10"
     "@types/unist" "^2.0.6"
     remark "^14.0.1"
@@ -1937,12 +1946,12 @@
     tslib "^2.5.0"
     unified "^10.1.0"
 
-"@milkdown/utils@7.2.1":
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/@milkdown/utils/-/utils-7.2.1.tgz#4502ba257825bb797ca7cb5dea0bc79f13ebeb1d"
-  integrity sha512-X1PioEtMYLExh5q3u+gD+9axHUbce76IDbr0fC8q02LnJIxfI6MGUdajcXAB3Ny2aZEDzkd7w+O7Q5Eo7DMHng==
+"@milkdown/utils@7.1.1":
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/@milkdown/utils/-/utils-7.1.1.tgz#2dc407f64a8d3b2e5eed965c9e7d079f5bf7fb8a"
+  integrity sha512-JtHlPGcTRUHLNyvqMI2H20LnXSFkXWSXFNum1n4U2aL3XC5q+K3WH1CUEKyH7mL35DF8QHRz+zQpk9sNCQdkvQ==
   dependencies:
-    "@milkdown/exception" "7.2.1"
+    "@milkdown/exception" "7.1.1"
     nanoid "^4.0.0"
     tslib "^2.5.0"
 
@@ -2006,6 +2015,11 @@
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/@next-core/brick-dll-v3/-/brick-dll-v3-0.5.3.tgz#d02c387f35c1290966213fa4ec72a9fccd47a3bd"
   integrity sha512-zchO1U+Q3viTAztALRhloX7FrRSicMSwgmAlz7Bb6ChloqUkeYpNwRhSmzaYZUzupXbJjqon8Q306As9ruriGw==
+
+"@next-core/brick-http@^2.8.1":
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-http/-/brick-http-2.8.1.tgz#6576ec74bbda708f047f924a9c4ac5ab516de410"
+  integrity sha512-5vnTeghr/35aQC3D/bgMmfCwuPKTkvFq+0W1gDZCI02OX629x2NGTV/ZYMR+bhAIWdYFGjXm/uA03flXr0ltiA==
 
 "@next-core/brick-icons@^2.31.34":
   version "2.31.34"
@@ -2245,6 +2259,11 @@
   version "0.1.550"
   resolved "https://registry.yarnpkg.com/@next-dll/react-dnd/-/react-dnd-0.1.550.tgz#88c363db3132aa6a656f7ebbdf3aff0fcd06d99f"
   integrity sha512-zwFFREnP0lr2PwiwaQFHBLYs8/KNEEuhn+RnuBhpvXrzgEohCAOxr1NrIKQzdtsvHwsEwpmeFWmsoXnvW0SbDQ==
+
+"@next-sdk/object-store-sdk@^2.1.2":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@next-sdk/object-store-sdk/-/object-store-sdk-2.2.0.tgz#1e2d2db668c9a64ab122b3f08e8f1bf4e9258822"
+  integrity sha512-8ltMk7TKXQQCPrG6vdPKZ5TF4PX3oBydtnIjTEtEA0Onx6XT7LI0HyaBbezhI3HrQ/hfI1b2vb9uLgBZWzxZOA==
 
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3":
   version "2.1.8-no-fsevents.3"
