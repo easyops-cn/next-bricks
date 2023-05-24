@@ -9,4 +9,3 @@ import "./menu/index.js";
 import "./menu-item/index.js";
 import "./tag/index.js";
 import "./tag-list/index.js";
-import "./descriptions/index.js";

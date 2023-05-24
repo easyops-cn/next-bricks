@@ -12,10 +12,10 @@ jest.mock("@next-core/react-runtime", () => ({
   },
 }));
 
-describe("basic.general-descriptions", () => {
+describe("presentational.general-descriptions", () => {
   test("basic usage", async () => {
     const element = document.createElement(
-      "basic.general-descriptions"
+      "presentational.general-descriptions"
     ) as Descriptions;
 
     element.descriptionTitle = "hello world";

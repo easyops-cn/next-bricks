@@ -44,14 +44,14 @@ export interface DescriptionsProps {
 const { defineElement, property } = createDecorators();
 
 /**
- * @id basic.general-descriptions
- * @name basic.general-descriptions
+ * @id presentational.general-descriptions
+ * @name presentational.general-descriptions
  * @docKind brick
  * @description 通用描述列表构件
  * @author sailor
  * @noInheritDoc
  */
-@defineElement("basic.general-descriptions", {
+@defineElement("presentational.general-descriptions", {
   styleTexts: [styleText],
 })
 class Descriptions extends ReactNextElement {
@@ -188,7 +188,7 @@ export function DescriptionsComponent(props: DescriptionsProps) {
         border: "none",
         padding: "12px 12px 0 12px",
       }}
-      showCard={showCard}
+      background={showCard}
     >
       <WrappedGridLayout
         gap={layout === "vertical" || bordered ? "0" : "10px"}

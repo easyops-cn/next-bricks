@@ -23,7 +23,7 @@ export interface CardProps {
   isFixedFooter?: boolean;
   operationButtons?: OperationButton[];
   headerStyle?: React.CSSProperties;
-  showCard?: boolean;
+  background?: boolean | string;
 }
 const WrappedButton = wrapBrick<Button, ButtonProps>("basic.general-button");
 
@@ -119,14 +119,14 @@ class Card extends ReactNextElement implements CardProps {
   accessor headerStyle: React.CSSProperties | undefined;
 
   /**
-   * @default
+   * @default true
    * @required
    * @description
    */
   @property({
     type: Boolean,
   })
-  accessor showCard: boolean | undefined;
+  accessor background: boolean | string | undefined;
 
   render() {
     return (
@@ -138,7 +138,7 @@ class Card extends ReactNextElement implements CardProps {
         isFixedFooter={this.isFixedFooter}
         operationButtons={this.operationButtons}
         headerStyle={this.headerStyle}
-        showCard={this.showCard}
+        background={this.background}
       />
     );
   }
@@ -152,7 +152,7 @@ export function CardComponent({
   isFixedFooter,
   operationButtons,
   headerStyle,
-  showCard = true,
+  background = true,
 }: CardProps) {
   const [paddingBottom, setPaddingBottom] = useState(0);
   const [fixedStyle, setFixedStyle] = useState({});
@@ -247,7 +247,9 @@ export function CardComponent({
           ? { display: "grid", gridTemplate: "50px auto/auto" }
           : {}),
         paddingBottom,
-        ...(showCard ? {} : { background: "none" }),
+        ...(background
+          ? { background: typeof background === "string" ? background : "" }
+          : { background: "none" }),
       }}
     >
       {(cardTitle || hasExtraSlot) && header}
