@@ -124,7 +124,7 @@ class Card extends ReactNextElement implements CardProps {
    * @description
    */
   @property({
-    type: Boolean,
+    attribute: false,
   })
   accessor background: boolean | string | undefined;
 

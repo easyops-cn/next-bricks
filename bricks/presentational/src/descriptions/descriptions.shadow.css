@@ -52,5 +52,5 @@
 }
 
 .description-item.bordered > span:first-child {
-  background-color: #fafafa;
+  background-color: var(--palette-gray-3);
 }
