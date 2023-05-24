@@ -15,6 +15,7 @@ import { nord } from "@milkdown/theme-nord";
 import { history } from "@milkdown/plugin-history";
 import { upload, uploadConfig, Uploader } from "@milkdown/plugin-upload";
 import type { Node } from "@milkdown/prose/model";
+import { listener, listenerCtx } from "@milkdown/plugin-listener";
 import { ObjectStoreApi_putObject } from "@next-sdk/object-store-sdk";
 
 export interface MarkdownEditorProps {
@@ -22,6 +23,7 @@ export interface MarkdownEditorProps {
   supportUploadImg?: boolean;
   bucketName?: string;
   onUploadImage?: (value: ImageInfo) => void;
+  onMarkdownValueChange?: (value: string) => void;
 }
 
 export interface ImageInfo {
@@ -77,6 +79,17 @@ class MarkdownEditor extends FormItemElement {
     this.#uploadImage.emit(value);
   };
 
+  /**
+   * @detail
+   * @description 编辑markdown触发的变化事件
+   */
+  @event({ type: "markdown.value.change" })
+  accessor #markdownValueChange!: EventEmitter<string>;
+
+  private handleMarkdownValueChange = (value: string): void => {
+    this.#markdownValueChange.emit(value);
+  };
+
   render() {
     return (
       <MilkdownProvider>
@@ -85,6 +98,7 @@ class MarkdownEditor extends FormItemElement {
           supportUploadImg={this.supportUploadImg}
           bucketName={this.bucketName}
           onUploadImage={this.handleUploadImage}
+          onMarkdownValueChange={this.handleMarkdownValueChange}
         />
       </MilkdownProvider>
     );
@@ -94,7 +108,8 @@ class MarkdownEditor extends FormItemElement {
 export { MarkdownEditor };
 
 export function MarkdownEditorComponent(props: MarkdownEditorProps) {
-  const { supportUploadImg, bucketName, onUploadImage } = props;
+  const { supportUploadImg, bucketName, onUploadImage, onMarkdownValueChange } =
+    props;
 
   const transformResponseToUrl = (objectName: string): string => {
     return `/next/api/gateway/object_store.object_store.GetObject/api/v1/objectStore/bucket/${props.bucketName}/object/${objectName}`;
@@ -151,9 +166,13 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
     return Editor.make()
       .config((ctx: any) => {
         ctx.set(rootCtx, root);
-      })
-      .config(nord)
-      .config((ctx: any) => {
+        ctx
+          .get(listenerCtx)
+          .markdownUpdated(
+            (ctx: any, markdown: string, prevMarkdown: string) => {
+              onMarkdownValueChange && onMarkdownValueChange(markdown);
+            }
+          );
         supportUploadImg &&
           bucketName &&
           ctx.update(uploadConfig.key, (prev: any) => ({
@@ -161,6 +180,8 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
             uploader,
           }));
       })
+      .config(nord)
+      .use(listener)
       .use(commonmark)
       .use(history)
       .use(upload);
