@@ -275,6 +275,29 @@ async function loadMainDll(adapterPkgFilePath: string) {
       );
     },
 
+    EasyopsEmpty(props: any) {
+      const illustration = LegacyReact.useMemo(
+        () => props.illustration && getIllustration(props.illustration),
+        [props.illustration]
+      );
+      // Todo(steve): empty svg
+      const image = props.noImage
+        ? null
+        : props.illustration
+        ? illustration
+        : null;
+      const imageStyle =
+        props.imageStyle ??
+        (props.useBigEmptyImage ? undefined : { height: "60px" });
+
+      return LegacyReact.createElement(LegacyAntd.Empty, {
+        image,
+        imageStyle,
+        description: props.description,
+        style: { color: "var(--text-color-secondary)" },
+      });
+    },
+
     // Feature flags helpers
     useFeatureFlags,
     FeatureFlagsProvider,
