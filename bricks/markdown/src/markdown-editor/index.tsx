@@ -16,6 +16,7 @@ import { history } from "@milkdown/plugin-history";
 import { upload, uploadConfig, Uploader } from "@milkdown/plugin-upload";
 import type { Node } from "@milkdown/prose/model";
 import { listener, listenerCtx } from "@milkdown/plugin-listener";
+import { gfm } from "@milkdown/preset-gfm";
 import { ObjectStoreApi_putObject } from "@next-sdk/object-store-sdk";
 
 export interface MarkdownEditorProps {
@@ -190,7 +191,8 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
       .use(listener)
       .use(commonmark)
       .use(history)
-      .use(upload);
+      .use(upload)
+      .use(gfm);
   }, []);
 
   return (
