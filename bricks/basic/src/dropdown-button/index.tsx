@@ -4,14 +4,14 @@ import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import type { ButtonProps, Button } from "../button/index.jsx";
 import type { GeneralIconProps } from "@next-bricks/icons/general-icon";
 import { ButtonType, ComponentSize, Shape } from "../interface.js";
-import type { Dropdown } from "../dropdown/index.js";
+import type { Popover } from "../popover/index.jsx";
 import type { Menu } from "../menu/index.js";
 import type { MenuItem } from "../menu-item/index.js";
 
 const { defineElement, property } = createDecorators();
 
 const WrappedButton = wrapBrick<Button, ButtonProps>("basic.general-button");
-const WrappedDropdown = wrapBrick<Dropdown, any>("basic.general-dropdown");
+const WrappedDropdown = wrapBrick<Popover, any>("basic.general-popover");
 const WrappedMenu = wrapBrick<Menu, any>("basic.general-menu");
 const WrappedMenuItem = wrapBrick<MenuItem, any>("basic.general-menu-item");
 interface DropButtonProps {
@@ -151,7 +151,8 @@ function DropdownButtonComponent({
               <WrappedMenuItem
                 key={index}
                 {...action}
-                onClick={() => {
+                onClick={(e: React.MouseEvent) => {
+                  e.stopPropagation();
                   !action.disabled && action.event && handleClick(action.event);
                 }}
               >

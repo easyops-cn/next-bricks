@@ -4,7 +4,7 @@ import "./link/index.js";
 import "./text/index.js";
 import "./image/index.js";
 import "./dropdown-button/index.js";
-import "./dropdown/index.js";
+import "./popover/index.js";
 import "./menu/index.js";
 import "./menu-item/index.js";
 import "./tag/index.js";

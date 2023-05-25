@@ -27,3 +27,9 @@ export type ComponentSize = "large" | "medium" | "small" | "xs";
 export type LinkType = "link" | "text";
 
 /* ============== Link Type End ============== */
+
+/** ============= Popover Type Start ============== */
+export type TriggerEvent = "click" | "hover";
+
+export type PlaceMent = "top" | "left" | "right" | "bottom";
+/** ============= Popover Type End ============== */
