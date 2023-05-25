@@ -8,6 +8,7 @@ import { getLegacyReact } from "../dll.js";
 export interface ReactUseBrickProps {
   useBrick: UseSingleBrickConf;
   data?: unknown;
+  refCallback?: (element: HTMLElement | null) => void;
 }
 
 // Note: always synchronize code in LegacyUseBrick:
@@ -15,6 +16,7 @@ export interface ReactUseBrickProps {
 export function ReactUseBrick({
   useBrick,
   data,
+  refCallback,
 }: ReactUseBrickProps): React.ReactElement | null {
   const LegacyReact = getLegacyReact();
   const [renderResult, setRenderResult] =
@@ -40,7 +42,7 @@ export function ReactUseBrick({
     init();
   }, [data, useBrick]);
 
-  const refCallback = LegacyReact.useCallback(
+  const _refCallback = LegacyReact.useCallback(
     (element: HTMLElement | null) => {
       if (element) {
         mountResult.current = __secret_internals.mountUseBrick(
@@ -53,6 +55,7 @@ export function ReactUseBrick({
         __secret_internals.unmountUseBrick(renderResult!, mountResult.current!);
         mountResult.current = undefined;
       }
+      refCallback?.(element);
     },
     [renderResult]
   );
@@ -69,7 +72,7 @@ export function ReactUseBrick({
   }
 
   const WebComponent = tagName as any;
-  return <WebComponent key={renderKey} ref={refCallback} />;
+  return <WebComponent key={renderKey} ref={_refCallback} />;
 }
 
 function getUniqueId(ref: React.MutableRefObject<number>): number {
