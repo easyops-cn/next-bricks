@@ -52,7 +52,6 @@
     "@milkdown/plugin-upload": "7.2.0",
     "@milkdown/utils": "7.2.0",
     "@milkdown/plugin-listener": "7.2.0",
-    "@milkdown/preset-gfm": "7.2.0",
     "@type-config/strict": "^1.2.1",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
