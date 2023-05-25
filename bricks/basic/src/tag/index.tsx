@@ -201,9 +201,6 @@ class Tag extends ReactNextElement implements TagProps {
   handleClose = (detail: TagProps): void => {
     this.hidden = true;
     this.#closeEvent.emit(detail);
-    setTimeout(() => {
-      this.parentNode?.removeChild(this);
-    });
   };
 
   render() {
