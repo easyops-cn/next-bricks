@@ -29,7 +29,7 @@ export interface MarkdownEditorProps {
 
 export interface ImageInfo {
   name: string;
-  url: string;
+  src: string;
 }
 
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>(
@@ -68,7 +68,7 @@ class MarkdownEditor extends FormItemElement {
    * @description 支持上传图片，为 `true` 时需要设置 `bucketName`。对接平台统一资源存储。
    * @group advanced
    */
-  @property() accessor supportUploadImg: boolean | undefined;
+  @property({ type: Boolean }) accessor supportUploadImg: boolean | undefined;
 
   /**
    * @kind string
@@ -155,7 +155,7 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
     try {
       nodes = await Promise.all(
         images.map(async (image) => {
-          const response = await ObjectStoreApi_putObject(
+          const response: any = await ObjectStoreApi_putObject(
             bucketName as string,
             {
               file: image,
@@ -163,11 +163,13 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
               height: 800,
             }
           );
-          const url = transformResponseToUrl(response.objectName as string);
+          const src = transformResponseToUrl(
+            response?.data?.objectName as string
+          );
           const alt = image.name;
-          onUploadImage && onUploadImage({ name: alt, url });
+          onUploadImage && onUploadImage({ name: alt, src });
           return schema.nodes.image.createAndFill({
-            url,
+            src,
             alt,
           }) as Node;
         })
