@@ -1,3 +1,5 @@
+/** @jsx LegacyReact.createElement */
+/** @jsxFrag LegacyReact.Fragment */
 import type React from "react";
 import { httpErrorToString } from "@next-core/runtime";
 
@@ -32,22 +34,12 @@ export function getLegacyErrorBoundary(LegacyReact: typeof React) {
     render(): React.ReactNode {
       if (this.state.error) {
         // You can render any custom fallback UI
-        return LegacyReact.createElement(
-          "div",
-          {
-            "data-testid": "error-boundaray",
-          },
-          LegacyReact.createElement(
-            "h3",
-            null,
-            "Something went wrong"
-            // this.props.t(K.SOMETHING_WENT_WRONG)
-          ),
-          LegacyReact.createElement(
-            "p",
-            null,
-            httpErrorToString(this.state.error)
-          )
+        return (
+          <div data-testid="error-boundaray">
+            {/* this.props.t(K.SOMETHING_WENT_WRONG) */}
+            <h3>Something went wrong</h3>
+            <p>{httpErrorToString(this.state.error)}</p>
+          </div>
         );
       }
 

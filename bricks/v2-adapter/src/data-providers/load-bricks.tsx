@@ -1,3 +1,5 @@
+/** @jsx LegacyReact.createElement */
+/** @jsxFrag LegacyReact.Fragment */
 import { loadScript } from "@next-core/loader";
 import { createProviderClass, unwrapProvider } from "@next-core/utils/general";
 import { wrapBrick } from "@next-core/react-element";
@@ -22,29 +24,30 @@ import {
 } from "@next-core/runtime";
 import { i18n, i18nText } from "@next-core/i18n";
 import * as Http from "@next-core/http";
-import type { SiteTheme } from "@next-core/types";
 import * as History from "history";
 import * as JsYaml from "js-yaml";
 import lodash from "lodash";
 import moment from "moment";
 import "@next-core/theme";
-import { getLegacyUseBrick } from "./legacy-brick-kit/getLegacyUseBrick.js";
+import {
+  ReactUseBrick,
+  ReactUseMultipleBricks,
+} from "./legacy-brick-kit/LegacyUseBrick.js";
 import { getLegacyRuntime } from "./legacy-brick-kit/getLegacyRuntime.js";
 import { loadLazyBricks } from "./legacy-brick-kit/LazyBrickRegistry.js";
 import { getLegacyUseFeatureFlags } from "./legacy-brick-kit/getLegacyUseFeatureFlags.js";
 import { getLegacyErrorBoundary } from "./legacy-brick-kit/getLegacyErrorBoundary.js";
 import { getLegacyUseRecentApps } from "./legacy-brick-kit/getLegacyUseRecentApps.js";
 import { getLegacyUseProvider } from "./legacy-brick-kit/getLegacyUseProvider.js";
+import { EmptySvg } from "./legacy-brick-kit/EmptySvg.js";
+import { useCurrentTheme } from "./legacy-brick-kit/useCurrentTheme.js";
+import { getDll } from "./dll.js";
 
 // eslint-disable-next-line
 // @ts-ignore
 window.DLL_PATH = DLL_PATH;
 
 const dllPromises = new Map<string, Promise<void>>();
-
-interface DLL {
-  (moduleId: string): any;
-}
 
 interface IconsByCategory {
   [category: string]: string[];
@@ -134,7 +137,7 @@ async function loadMainDll(adapterPkgFilePath: string) {
     doLoadDll(adapterPkgFilePath, ""),
   ]);
 
-  const dll = (window as unknown as { dll: DLL }).dll;
+  const dll = getDll();
 
   const LegacyBrickKit = dll("tYg3");
   const LegacyReact = dll("q1tI");
@@ -169,35 +172,63 @@ async function loadMainDll(adapterPkgFilePath: string) {
     getLegacyUseFeatureFlags(LegacyReact);
   const LegacyErrorBoundary = getLegacyErrorBoundary(LegacyReact);
 
+  const EasyopsEmpty = (props: any) => {
+    const illustration = LegacyReact.useMemo(
+      () => props.illustration && getIllustration(props.illustration),
+      [props.illustration]
+    );
+    // Todo(steve): empty svg
+    const image = props.noImage ? null : props.illustration ? (
+      illustration
+    ) : (
+      <EmptySvg isBig={props.useBigEmptyImage}></EmptySvg>
+    );
+    const imageStyle =
+      props.imageStyle ??
+      (props.useBigEmptyImage ? undefined : { height: "60px" });
+    return (
+      <LegacyAntd.Empty
+        image={image}
+        imageStyle={imageStyle}
+        description={props.description}
+        style={{ color: "var(--text-color-secondary)" }}
+      />
+    );
+  };
+
   defineModule(LegacyBrickIcons, {
     BrickIcon({ category, icon }: { category?: string; icon: string }) {
-      return LegacyReact.createElement("icons.easyops-icon", {
-        category,
-        icon,
-      });
+      const EasyOpsIcon = "icons.easyops-icon" as any;
+      return <EasyOpsIcon category={category} icon={icon} />;
     },
     iconsByCategory: easyopsIcons,
   });
 
   defineModule(LegacyReactFontAwesome, {
     FontAwesomeIcon({ icon, gradientColor }: LegacyFaIconProps) {
-      return LegacyReact.createElement("icons.fa-icon", {
-        ...(Array.isArray(icon)
-          ? {
-              prefix: icon[0],
-              icon: icon[1],
-            }
-          : {
-              icon,
-            }),
-        ...(gradientColor
-          ? {
-              "start-color": gradientColor.startColor,
-              "end-color": gradientColor.endColor,
-              "gradient-direction": gradientColor.direction,
-            }
-          : null),
-      });
+      const FaIcon = "icons.fa-icon" as any;
+      return (
+        <FaIcon
+          {...{
+            ...(Array.isArray(icon)
+              ? {
+                  prefix: icon[0],
+                  icon: icon[1],
+                }
+              : {
+                  icon,
+                }),
+            ...(gradientColor
+              ? {
+                  // Need to be keybab-case here, since fa-icon is a web component
+                  "start-color": gradientColor.startColor,
+                  "end-color": gradientColor.endColor,
+                  "gradient-direction": gradientColor.direction,
+                }
+              : null),
+          }}
+        />
+      );
     },
   });
 
@@ -246,57 +277,39 @@ async function loadMainDll(adapterPkgFilePath: string) {
 
     doTransform: __secret_internals.legacyDoTransform,
 
-    BrickWrapper(props: { children: unknown }) {
+    BrickWrapper(props: {
+      wrapperConfig?: {
+        empty?: any;
+      };
+      children: unknown;
+    }) {
       // istanbul ignore next
       const featureFlags =
         process.env.NODE_ENV === "test"
           ? {}
           : getLegacyRuntime().getFeatureFlags();
-      return LegacyReact.createElement(
-        LegacyErrorBoundary,
-        null,
-        LegacyReact.createElement(
-          FeatureFlagsProvider,
-          {
-            value: featureFlags,
-          },
-          LegacyReact.createElement(
-            LegacyAntd.ConfigProvider,
-            {
-              locale:
-                i18n.language && i18n.language.split("-")[0] === "en"
-                  ? antdLocaleEnUS
-                  : antdLocaleZhCN,
-              autoInsertSpaceInButton: false,
-            },
-            ...([] as unknown[]).concat(props.children)
-          )
-        )
+      const locale =
+        i18n.language && i18n.language.split("-")[0] === "en"
+          ? antdLocaleEnUS
+          : antdLocaleZhCN;
+      return (
+        <LegacyErrorBoundary>
+          <FeatureFlagsProvider value={featureFlags}>
+            <LegacyAntd.ConfigProvider
+              locale={locale}
+              autoInsertSpaceInButton={false}
+              renderEmpty={() => (
+                <EasyopsEmpty {...props.wrapperConfig?.empty} />
+              )}
+            >
+              {props.children}
+            </LegacyAntd.ConfigProvider>
+          </FeatureFlagsProvider>
+        </LegacyErrorBoundary>
       );
     },
 
-    EasyopsEmpty(props: any) {
-      const illustration = LegacyReact.useMemo(
-        () => props.illustration && getIllustration(props.illustration),
-        [props.illustration]
-      );
-      // Todo(steve): empty svg
-      const image = props.noImage
-        ? null
-        : props.illustration
-        ? illustration
-        : null;
-      const imageStyle =
-        props.imageStyle ??
-        (props.useBigEmptyImage ? undefined : { height: "60px" });
-
-      return LegacyReact.createElement(LegacyAntd.Empty, {
-        image,
-        imageStyle,
-        description: props.description,
-        style: { color: "var(--text-color-secondary)" },
-      });
-    },
+    EasyopsEmpty,
 
     // Feature flags helpers
     useFeatureFlags,
@@ -305,30 +318,15 @@ async function loadMainDll(adapterPkgFilePath: string) {
 
     useProvider: getLegacyUseProvider(LegacyReact),
 
-    useCurrentTheme() {
-      const [currentTheme, setCurrentTheme] = LegacyReact.useState(
-        getCurrentTheme()
-      );
-
-      LegacyReact.useEffect(() => {
-        const listenToThemeChange = (event: Event): void => {
-          setCurrentTheme((event as CustomEvent<SiteTheme>).detail);
-        };
-        window.addEventListener("theme.change", listenToThemeChange);
-        return () => {
-          window.removeEventListener("theme.change", listenToThemeChange);
-        };
-      }, []);
-
-      return currentTheme;
-    },
+    useCurrentTheme,
     useApplyPageTitle(pageTitle: string) {
       LegacyReact.useEffect(() => {
         getLegacyRuntime().applyPageTitle(pageTitle);
       }, [pageTitle]);
     },
 
-    ...getLegacyUseBrick(LegacyReact),
+    SingleBrickAsComponent: ReactUseBrick,
+    BrickAsComponent: ReactUseMultipleBricks,
 
     ...getLegacyUseRecentApps(LegacyReact),
 
