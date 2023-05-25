@@ -182,8 +182,11 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
   useEditor((root: any) => {
     return Editor.make()
       .config((ctx: any) => {
+        // 设置root
         ctx.set(rootCtx, root);
-        ctx.set(defaultValueCtx, value);
+        // 设置默认值
+        value && ctx.set(defaultValueCtx, value);
+        // 设置事件监听
         ctx
           .get(listenerCtx)
           .markdownUpdated(
@@ -191,6 +194,7 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
               onMarkdownValueChange && onMarkdownValueChange(markdown);
             }
           );
+        // 设置文件上传
         supportUploadImg &&
           bucketName &&
           ctx.update(uploadConfig.key, (prev: any) => ({
