@@ -49,10 +49,6 @@ window.DLL_PATH = DLL_PATH;
 
 const dllPromises = new Map<string, Promise<void>>();
 
-interface DLL {
-  (moduleId: string): any;
-}
-
 interface IconsByCategory {
   [category: string]: string[];
 }
