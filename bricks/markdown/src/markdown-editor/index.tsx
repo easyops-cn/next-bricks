@@ -21,7 +21,6 @@ import { ObjectStoreApi_putObject } from "@next-sdk/object-store-sdk";
 export interface MarkdownEditorProps {
   curElement: HTMLElement;
   value?: string;
-  supportUploadImg?: boolean;
   bucketName?: string;
   onUploadImage?: (value: ImageInfo) => void;
   onMarkdownValueChange?: (value: string) => void;
@@ -62,19 +61,10 @@ class MarkdownEditor extends FormItemElement {
   @property() accessor value: string | undefined;
 
   /**
-   * @kind boolean
-   * @required -
-   * @default false
-   * @description 支持上传图片，为 `true` 时需要设置 `bucketName`。对接平台统一资源存储。
-   * @group advanced
-   */
-  @property({ type: Boolean }) accessor supportUploadImg: boolean | undefined;
-
-  /**
    * @kind string
    * @required -
    * @default -
-   * @description 对象存储桶名字，请在业务编排的时候与后台同学商量创建，一般一个业务需求对应一个存储桶名称，相当于 namespace。需要上传图片的功能（`supportUploadImg:true`)时可用。
+   * @description 对象存储桶名字，请在业务编排的时候与后台同学商量创建，一般一个业务需求对应一个存储桶名称。如不传则默认以base64格式转换图片。
    * @group advanced
    */
   @property() accessor bucketName: string | undefined;
@@ -106,7 +96,6 @@ class MarkdownEditor extends FormItemElement {
       <MilkdownProvider>
         <MarkdownEditorComponent
           curElement={this}
-          supportUploadImg={this.supportUploadImg}
           bucketName={this.bucketName}
           value={this.value}
           onUploadImage={this.handleUploadImage}
@@ -120,13 +109,7 @@ class MarkdownEditor extends FormItemElement {
 export { MarkdownEditor };
 
 export function MarkdownEditorComponent(props: MarkdownEditorProps) {
-  const {
-    supportUploadImg,
-    bucketName,
-    value,
-    onUploadImage,
-    onMarkdownValueChange,
-  } = props;
+  const { bucketName, value, onUploadImage, onMarkdownValueChange } = props;
 
   const transformResponseToUrl = (objectName: string): string => {
     return `/next/api/gateway/object_store.object_store.GetObject/api/v1/objectStore/bucket/${props.bucketName}/object/${objectName}`;
@@ -184,11 +167,11 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
   useEditor((root: any) => {
     return Editor.make()
       .config((ctx: any) => {
-        // 设置root
+        // 配置root
         ctx.set(rootCtx, root);
-        // 设置默认值
+        // 配置默认值
         value && ctx.set(defaultValueCtx, value);
-        // 设置事件监听
+        // 配置事件监听
         ctx
           .get(listenerCtx)
           .markdownUpdated(
@@ -196,9 +179,8 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
               onMarkdownValueChange && onMarkdownValueChange(markdown);
             }
           );
-        // 设置文件上传
-        supportUploadImg &&
-          bucketName &&
+        // 配置文件上传,不传bucketName则默认把图片转为base64格式
+        bucketName &&
           ctx.update(uploadConfig.key, (prev: any) => ({
             ...prev,
             uploader,
