@@ -129,7 +129,6 @@ class ComplexSearch extends ReactNextElement implements ComplexSearchProps {
   accessor #onBlurEvent!: EventEmitter<void>;
 
   handleInputChange = (value: string) => {
-    this.value = value;
     this.#inputChangeEvent.emit(value);
   };
   handleSearch = (value: string) => {
@@ -142,7 +141,6 @@ class ComplexSearch extends ReactNextElement implements ComplexSearchProps {
     this.#onBlurEvent.emit();
   };
   handleSelect = (data: OptionItem) => {
-    this.value = data.name;
     this.#onSelectEvent.emit(data);
   };
 
@@ -167,7 +165,6 @@ export function ComplexSearchComponent(
   props: ComplexSearchProps
 ): React.ReactElement {
   const {
-    value,
     onInputChange,
     onSearch,
     onBlur,
@@ -184,6 +181,7 @@ export function ComplexSearchComponent(
   const [currentData, setCurrentData] = useState<OptionItem>();
   const [positionTop, setPositionTop] = useState<number>(0);
   const [tooltipVisible, setTooltipVisible] = useState<boolean>(false);
+  const [value, setValue] = useState(props.value);
   const handleFocus = () => {
     //聚焦， 下拉框出现
     setVisible(true);
@@ -192,17 +190,19 @@ export function ComplexSearchComponent(
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       setVisible(false);
+      setValue((e.target as HTMLInputElement).value);
       onSearch((e.target as HTMLInputElement).value);
     }
   };
   const handleSelect = (data: OptionItem) => {
+    setValue(data.name);
     onSelect(data);
     setVisible(false);
-    // setTooltipVisible(false);
   };
   useEffect(() => {
-    setAllowClear(!!value);
-  }, [value]);
+    setValue(props.value);
+    setAllowClear(!!props.value);
+  }, [props.value]);
 
   const handleClick = (event: MouseEvent) => {
     const targetElement = event
@@ -223,8 +223,9 @@ export function ComplexSearchComponent(
       contentRef.current.getBoundingClientRect().top;
     setPositionTop(top);
   };
-  const handleValueChange = (value: string) => {
-    onInputChange(value);
+  const handleValueChange = (val: string) => {
+    setValue(val);
+    onInputChange(val);
     setVisible(true);
   };
   const onClearValue = () => {
@@ -267,6 +268,7 @@ export function ComplexSearchComponent(
         <input
           placeholder={placeholder}
           value={value ?? ""}
+          type="text"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             handleValueChange(e.target.value)
           }
