@@ -8,7 +8,7 @@ import type {
   FormItemProps,
 } from "../../../form/src/form-item/index.jsx";
 import styleText from "./markdown-editor.shadow.css";
-import { Editor, rootCtx } from "@milkdown/core";
+import { defaultValueCtx, Editor, rootCtx } from "@milkdown/core";
 import { Milkdown, MilkdownProvider, useEditor } from "@milkdown/react";
 import { commonmark } from "@milkdown/preset-commonmark";
 import { nord } from "@milkdown/theme-nord";
@@ -20,6 +20,7 @@ import { ObjectStoreApi_putObject } from "@next-sdk/object-store-sdk";
 
 export interface MarkdownEditorProps {
   curElement: HTMLElement;
+  value?: string;
   supportUploadImg?: boolean;
   bucketName?: string;
   onUploadImage?: (value: ImageInfo) => void;
@@ -50,6 +51,16 @@ const { defineElement, property, event } = createDecorators();
  * @noInheritDoc
  */
 class MarkdownEditor extends FormItemElement {
+  /**
+   * @kind string
+   * @required false
+   * @default default
+   * @description 初始值
+   * @enums
+   * @group basic
+   */
+  @property() accessor value: string | undefined;
+
   /**
    * @kind boolean
    * @required -
@@ -97,6 +108,7 @@ class MarkdownEditor extends FormItemElement {
           curElement={this}
           supportUploadImg={this.supportUploadImg}
           bucketName={this.bucketName}
+          value={this.value}
           onUploadImage={this.handleUploadImage}
           onMarkdownValueChange={this.handleMarkdownValueChange}
         />
@@ -108,8 +120,13 @@ class MarkdownEditor extends FormItemElement {
 export { MarkdownEditor };
 
 export function MarkdownEditorComponent(props: MarkdownEditorProps) {
-  const { supportUploadImg, bucketName, onUploadImage, onMarkdownValueChange } =
-    props;
+  const {
+    supportUploadImg,
+    bucketName,
+    value,
+    onUploadImage,
+    onMarkdownValueChange,
+  } = props;
 
   const transformResponseToUrl = (objectName: string): string => {
     return `/next/api/gateway/object_store.object_store.GetObject/api/v1/objectStore/bucket/${props.bucketName}/object/${objectName}`;
@@ -166,6 +183,7 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
     return Editor.make()
       .config((ctx: any) => {
         ctx.set(rootCtx, root);
+        ctx.set(defaultValueCtx, value);
         ctx
           .get(listenerCtx)
           .markdownUpdated(
