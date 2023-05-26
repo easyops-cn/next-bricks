@@ -29,6 +29,7 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
+    "@next-core/easyops-runtime": "^0.3.0",
     "@next-core/element": "^1.0.5",
     "@next-core/http": "^1.0.5",
     "@next-core/i18n": "^1.0.18",
