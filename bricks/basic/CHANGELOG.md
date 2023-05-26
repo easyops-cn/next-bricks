@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.5.2...@next-bricks/basic@0.6.0) (2023-05-26)
+
+
+### Bug Fixes
+
+* tag removed error ([d0c3371](https://github.com/easyops-cn/next-bricks/commit/d0c3371751fc8af3f5197f51fa028f0b38ab1d70))
+
+
+### Features
+
+* support workbench-aciton-list ([933cc19](https://github.com/easyops-cn/next-bricks/commit/933cc19ae9588fbc6785653276f520ea9dc84324))
+
+
+
+
+
 ## [0.5.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.5.1...@next-bricks/basic@0.5.2) (2023-05-22)
 
 **Note:** Version bump only for package @next-bricks/basic

@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.6.1...@next-bricks/data-view@0.7.0) (2023-05-26)
+
+
+### Bug Fixes
+
+* **data-view:** 文本过长换行 ([ce49804](https://github.com/easyops-cn/next-bricks/commit/ce4980477c2db919172b617a339a0955efd2a29c))
+* input无法输入中文 ([6fe9679](https://github.com/easyops-cn/next-bricks/commit/6fe96799a21698baa286469570fef37f671bd2c0))
+
+
+### Features
+
+* **cabinet:** activeKey support array ([f460a55](https://github.com/easyops-cn/next-bricks/commit/f460a553201e027367a1c5680afd52c7bab1a000))
+* **data-view:** treemap support click event ([520bde6](https://github.com/easyops-cn/next-bricks/commit/520bde6b543f9aaeb4b52f95e84596fd9164c369))
+
+
+
+
+
 ## [0.6.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.6.0...@next-bricks/data-view@0.6.1) (2023-05-22)
 
 **Note:** Version bump only for package @next-bricks/data-view
