@@ -97,15 +97,14 @@ describe("data-view.modern-style-treemap", () => {
         right: 0,
       } as DOMRect;
     });
-
+    const mockClickFn = jest.fn();
+    element.addEventListener("click", mockClickFn);
     expect(element.shadowRoot.querySelectorAll(".treemap-leaf").length).toBe(6);
-    expect(
-      element.shadowRoot.querySelectorAll(".treemap-leaf")[0].innerHTML
-    ).toBe("<div>a</div>");
-    expect(
-      (element.shadowRoot.querySelector(".treemap-leaf") as HTMLDivElement)
-        .style.color
-    ).toBe("red");
+    const leafEle = element.shadowRoot.querySelectorAll(".treemap-leaf")[0];
+    expect(leafEle.innerHTML).toBe("<div>a</div>");
+    expect((leafEle as HTMLDivElement).style.color).toBe("red");
+    fireEvent.click(leafEle);
+    expect(mockClickFn).toBeCalledTimes(1);
     expect(tooltipElement.style.color).toBe("green");
     expect(tooltipElement.style.visibility).toBe("");
 

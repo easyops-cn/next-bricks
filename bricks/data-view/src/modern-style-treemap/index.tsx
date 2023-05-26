@@ -1,5 +1,5 @@
 import React, { MouseEvent, CSSProperties, useMemo, useState } from "react";
-import { createDecorators } from "@next-core/element";
+import { createDecorators, EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import type { UseBrickConf } from "@next-core/types";
 import { ReactUseMultipleBricks } from "@next-core/react-runtime";
@@ -20,7 +20,7 @@ import { debounceByAnimationFrame } from "../utils/debounceByAnimationFrame.js";
 import { keyBy } from "lodash";
 import classNames from "classnames";
 
-const { defineElement, property } = createDecorators();
+const { defineElement, property, event } = createDecorators();
 
 enum TailTypes {
   treemapBinary = "treemapBinary",
@@ -44,6 +44,7 @@ interface ModernStyleTreemapProps {
   leafContainerStyle?: CSSProperties;
   tooltipUseBrick?: { useBrick: UseBrickConf };
   tooltipStyle?: CSSProperties;
+  handleClick?: (value: TreemapData) => void;
 }
 
 /**
@@ -127,6 +128,17 @@ class ModernStyleTreemap
   })
   accessor tooltipStyle: CSSProperties;
 
+  /**
+   * @detail
+   * @description 点击事件
+   */
+  @event({ type: "treemap.click" })
+  accessor #onClickEvent!: EventEmitter<TreemapData>;
+
+  #handleClick = (value: TreemapData) => {
+    this.#onClickEvent.emit(value);
+  };
+
   render() {
     return (
       <ModernStyleTreemapElement
@@ -136,6 +148,7 @@ class ModernStyleTreemap
         leafContainerStyle={this.leafContainerStyle}
         tooltipUseBrick={this.tooltipUseBrick}
         tooltipStyle={this.tooltipStyle}
+        handleClick={this.#handleClick}
       />
     );
   }
@@ -160,6 +173,7 @@ function ModernStyleTreemapElement(
     leafContainerStyle,
     tooltipUseBrick,
     tooltipStyle,
+    handleClick,
   } = props;
 
   const [
@@ -247,7 +261,7 @@ function ModernStyleTreemapElement(
     // 这里只要hierarchyNode不变化，即使tm更新了，root、leaves还是同一个对象
     const root = tm(hierarchyNode);
     // 这里使用解构让leaves里面每个node变成新对象
-    const _leaves = root.leaves().map((v) => ({ ...v }));
+    const _leaves = root.leaves().map((v: any) => ({ ...v }));
     return [_leaves, keyBy(_leaves, "data.name")];
   }, [tm, hierarchyNode]);
 
@@ -271,6 +285,7 @@ function ModernStyleTreemapElement(
             width,
             height,
           }}
+          onClick={() => handleClick?.(d.data)}
         >
           {leafUseBrick?.useBrick && (
             <ReactUseMultipleBricks useBrick={leafUseBrick.useBrick} data={d} />
@@ -278,7 +293,7 @@ function ModernStyleTreemapElement(
         </div>
       );
     });
-  }, [leafContainerStyle, leafUseBrick?.useBrick, leaves]);
+  }, [handleClick, leafContainerStyle, leafUseBrick.useBrick, leaves]);
 
   const curTooltipData = useMemo(() => {
     return { ...leavesMap[mouseData.name] };
