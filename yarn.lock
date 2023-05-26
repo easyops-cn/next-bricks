@@ -1993,6 +1993,13 @@
   dependencies:
     "@next-core/http" "^1.0.0"
 
+"@next-api-sdk/object-store-sdk@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@next-api-sdk/object-store-sdk/-/object-store-sdk-1.1.0.tgz#c1e1750ff6248dea69579d1935c641fbda85ab09"
+  integrity sha512-XRjIU5rgbMFhUlXZi6OsSQPLsTE0BzlCwvnFUMUPbkNIMLWdhXH23DxZPr9eV3jqsEb5nVM/R0ukBgnH364X6Q==
+  dependencies:
+    "@next-core/http" "^1.0.0"
+
 "@next-core/babel-preset-next@^1.0.4":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@next-core/babel-preset-next/-/babel-preset-next-1.0.4.tgz#c527f488e1389786e29d060045ce0dd57ea8e885"
@@ -2269,11 +2276,6 @@
   version "0.1.550"
   resolved "https://registry.yarnpkg.com/@next-dll/react-dnd/-/react-dnd-0.1.550.tgz#88c363db3132aa6a656f7ebbdf3aff0fcd06d99f"
   integrity sha512-zwFFREnP0lr2PwiwaQFHBLYs8/KNEEuhn+RnuBhpvXrzgEohCAOxr1NrIKQzdtsvHwsEwpmeFWmsoXnvW0SbDQ==
-
-"@next-sdk/object-store-sdk@^2.1.2":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@next-sdk/object-store-sdk/-/object-store-sdk-2.2.0.tgz#1e2d2db668c9a64ab122b3f08e8f1bf4e9258822"
-  integrity sha512-8ltMk7TKXQQCPrG6vdPKZ5TF4PX3oBydtnIjTEtEA0Onx6XT7LI0HyaBbezhI3HrQ/hfI1b2vb9uLgBZWzxZOA==
 
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3":
   version "2.1.8-no-fsevents.3"

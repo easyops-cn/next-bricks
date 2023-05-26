@@ -16,7 +16,7 @@ import { history } from "@milkdown/plugin-history";
 import { upload, uploadConfig, Uploader } from "@milkdown/plugin-upload";
 import type { Node } from "@milkdown/prose/model";
 import { listener, listenerCtx } from "@milkdown/plugin-listener";
-import { ObjectStoreApi_putObject } from "@next-sdk/object-store-sdk";
+import { ObjectStoreApi_putObject } from "@next-api-sdk/object-store-sdk";
 
 export interface MarkdownEditorProps {
   curElement: HTMLElement;
@@ -146,9 +146,7 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
               height: 800,
             }
           );
-          const src = transformResponseToUrl(
-            response?.data?.objectName as string
-          );
+          const src = transformResponseToUrl(response?.objectName as string);
           const alt = image.name;
           onUploadImage && onUploadImage({ name: alt, src });
           return schema.nodes.image.createAndFill({
