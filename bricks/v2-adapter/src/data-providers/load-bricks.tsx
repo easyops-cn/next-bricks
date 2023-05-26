@@ -4,10 +4,6 @@ import { loadScript } from "@next-core/loader";
 import { createProviderClass, unwrapProvider } from "@next-core/utils/general";
 import { wrapBrick } from "@next-core/react-element";
 import {
-  authenticate,
-  getAuth,
-  isLoggedIn,
-  logout,
   getCssPropertyValue,
   getCurrentTheme,
   getCurrentMode,
@@ -22,6 +18,7 @@ import {
   unstable_createRoot,
   __secret_internals,
 } from "@next-core/runtime";
+import { auth } from "@next-core/easyops-runtime";
 import { i18n, i18nText } from "@next-core/i18n";
 import * as Http from "@next-core/http";
 import * as History from "history";
@@ -263,10 +260,7 @@ async function loadMainDll(adapterPkgFilePath: string) {
     StoryboardFunctionRegistryFactory,
 
     // Auth
-    getAuth,
-    authenticate,
-    logout,
-    isLoggedIn,
+    ...lodash.pick(auth, ["getAuth", "authenticate", "logout", "isLoggedIn"]),
 
     // Theme and mode
     getCssPropertyValue,
