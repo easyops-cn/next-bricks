@@ -1879,12 +1879,12 @@
     "@babel/preset-react" "^7.18.6"
     "@babel/preset-typescript" "^7.21.4"
 
-"@next-core/brick-container@^3.2.0":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.2.0.tgz#4e637f15b366e16e0aa61e61dadcc859055fd078"
-  integrity sha512-7dqX/fJel9mUmeCxnQt2FDBk4QM6yKieGBM9Mv4OqHowmZ65+iyrUTFZA6qZJAW/dx3yv4NhqpbBeby5Oy1g3g==
+"@next-core/brick-container@^3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.2.1.tgz#b8129c273f002d3683c031531d1d85d73424b337"
+  integrity sha512-SPvL2Qz7O12tCisiwFytijyWDVsCcNEBxPmazv4yc1JYjAGOHGcok+PwyGnFulgd5iaHMaEs7SG06KryzEBVWA==
   dependencies:
-    "@next-core/serve-helpers" "^1.0.7"
+    "@next-core/serve-helpers" "^1.0.8"
     body-parser "^1.20.1"
     chalk "^4.1.2"
     compression "^1.7.4"
@@ -1906,12 +1906,12 @@
   resolved "https://registry.yarnpkg.com/@next-core/brick-icons/-/brick-icons-2.31.46.tgz#0f25f4017e2558570cf0f5400f9bfd0623d51541"
   integrity sha512-JHP7xMsZPUSN5dODDe4I8V/Y93jBavqzpaDNuymRfswBoyWbn9ilsw5U5IBh3RmqzfPPxDEehSKgrPMAxBHVuQ==
 
-"@next-core/brick-playground@^1.9.4":
-  version "1.9.4"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.9.4.tgz#3e3dda4629fc05b0b42451736af53ec146a57898"
-  integrity sha512-YIWRK+fLnzOxHP3OPUSXjD1YzlCvUmuLhi6nq17xl/GTxkUrVCHHo59knibQlPMmWBsR37Gzkh6estDLfl6V0w==
+"@next-core/brick-playground@^1.9.5":
+  version "1.9.5"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.9.5.tgz#6cb4b9d9146257cc9d2879b9b2ba0cd3729dd471"
+  integrity sha512-TkyKSadNGnzF5epaCZq+ML/ry49SRcdY3PZ6w7aiJuXPWU7W/AS4wnb6ryPtQ6RmDziU9ynG8NlJ/T+XsMhSfg==
   dependencies:
-    "@next-core/serve-helpers" "^1.0.7"
+    "@next-core/serve-helpers" "^1.0.8"
     compression "^1.7.4"
     express "^4.18.2"
 
@@ -2071,10 +2071,10 @@
     moment "^2.29.4"
     path-to-regexp "^6.2.1"
 
-"@next-core/serve-helpers@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@next-core/serve-helpers/-/serve-helpers-1.0.7.tgz#1f5cc3e79842547684c55173917ad642bb664314"
-  integrity sha512-9qM7/QUpmHmXIuxqqQUzGy+6Zc0K//SLMaAjd9WoUaak2WxMYeYFsjU16PHGz2swGi6Mvedv1ihR24Da0WD2aw==
+"@next-core/serve-helpers@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@next-core/serve-helpers/-/serve-helpers-1.0.8.tgz#2ab8bd2fefceb371a92887d3273c83a0d8b8ab71"
+  integrity sha512-FVrHAAOh24AEbBiT2+QPFAHoDqHK1TiVdBL89dZ0mgT0vS0QfhyuU5/jRqB7Op3Accine6mH30fSdLYEbVLHqw==
 
 "@next-core/styles-v3@^0.2.14", "@next-core/styles-v3@^0.2.19":
   version "0.2.19"
