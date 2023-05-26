@@ -46,11 +46,11 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-core/types": "^1.2.0",
-    "@next-core/utils": "^1.4.2"
+    "@next-core/types": "^1.3.0",
+    "@next-core/utils": "^1.5.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.5.1",
+    "@next-core/build-next-bricks": "^1.5.2",
     "@next-core/illustrations": "^0.11.13",
     "@next-core/test-next": "^1.0.5",
     "lodash": "^4.17.21"
