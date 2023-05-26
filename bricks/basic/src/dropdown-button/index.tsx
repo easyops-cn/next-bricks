@@ -4,14 +4,16 @@ import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import type { ButtonProps, Button } from "../button/index.jsx";
 import type { GeneralIconProps } from "@next-bricks/icons/general-icon";
 import { ButtonType, ComponentSize, Shape } from "../interface.js";
-import type { Popover } from "../popover/index.jsx";
+import type { Popover, PopoverProps } from "../popover/index.jsx";
 import type { Menu } from "../menu/index.js";
 import type { MenuItem } from "../menu-item/index.js";
 
 const { defineElement, property } = createDecorators();
 
 const WrappedButton = wrapBrick<Button, ButtonProps>("basic.general-button");
-const WrappedDropdown = wrapBrick<Popover, any>("basic.general-popover");
+const WrappedPopover = wrapBrick<Popover, PopoverProps>(
+  "basic.general-popover"
+);
 const WrappedMenu = wrapBrick<Menu, any>("basic.general-menu");
 const WrappedMenuItem = wrapBrick<MenuItem, any>("basic.general-menu-item");
 interface DropButtonProps {
@@ -134,7 +136,7 @@ function DropdownButtonComponent({
   handleClick,
 }: DropButtonProps & ButtonProps) {
   return (
-    <WrappedDropdown>
+    <WrappedPopover placement="bottom">
       <WrappedButton
         slot="trigger"
         size={size}
@@ -162,7 +164,7 @@ function DropdownButtonComponent({
           })}
         </WrappedMenu>
       )}
-    </WrappedDropdown>
+    </WrappedPopover>
   );
 }
 

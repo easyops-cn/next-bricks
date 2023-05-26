@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import { createDecorators } from "@next-core/element";
+import { createDecorators, EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import styleText from "./popover.shadow.css";
-import classNames from "classnames";
-import { PlaceMent, TriggerEvent } from "../interface.js";
+import { TriggerEvent } from "../interface.js";
+import { Placement, SlPopupProps, WrappedSlPopup } from "./popup.js";
 
-const { defineElement, property } = createDecorators();
+const { defineElement, property, event } = createDecorators();
 
-export interface DropdownProps {
-  curElement: HTMLElement;
+export interface PopoverProps extends SlPopupProps {
+  curElement?: HTMLElement;
   trigger?: TriggerEvent;
-  placement?: PlaceMent;
+  onVisibleChange?: (visible: boolean) => void;
 }
 /**
  * @id basic.general-popover
@@ -23,14 +23,14 @@ export interface DropdownProps {
 @defineElement("basic.general-popover", {
   styleTexts: [styleText],
 })
-class Popover extends ReactNextElement {
+class Popover extends ReactNextElement implements PopoverProps {
   /**
    * @default
    * @required
    * @description
    */
   @property()
-  accessor placement: PlaceMent | undefined;
+  accessor placement: Placement | undefined;
 
   /**
    * @default click
@@ -40,39 +40,88 @@ class Popover extends ReactNextElement {
   @property()
   accessor trigger: TriggerEvent | undefined;
 
+  /**
+   * @default
+   * @required
+   * @description
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor active: boolean | undefined;
+
+  /**
+   * @default
+   * @required
+   * @description
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor arrow: boolean | undefined;
+
+  /**
+   * @default
+   * @required
+   * @description
+   */
+  @property()
+  accessor strategy: "absolute" | "fixed" | undefined;
+
+  /**
+   * @detail
+   * @description
+   */
+  @event({ type: "visible.change" })
+  accessor #visibleChangeEvent!: EventEmitter<boolean>;
+
+  handleVisibleChange = (visible: boolean): void => {
+    this.#visibleChangeEvent.emit(visible);
+  };
+
   render() {
     return (
       <PopoverComponent
         curElement={this}
         trigger={this.trigger}
         placement={this.placement}
+        arrow={this.arrow}
+        strategy={this.strategy}
+        active={this.active}
+        onVisibleChange={this.handleVisibleChange}
       />
     );
   }
 }
 
-function PopoverComponent({
-  curElement,
-  trigger = "click",
-  placement = "bottom",
-}: DropdownProps) {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+function PopoverComponent(props: PopoverProps) {
+  const {
+    curElement,
+    active = false,
+    trigger = "click",
+    onVisibleChange,
+  } = props;
   const defaultRef = useRef<HTMLSlotElement>(null);
   const triggerRef = useRef<HTMLSlotElement>(null);
-  const [visible, setVisible] = useState(false);
-  const [contentStyle, setContentStyle] = useState<React.CSSProperties>({});
+  const [visible, setVisible] = useState(active);
+  const handleVisibleChange = useCallback(
+    (visible: boolean): void => {
+      setVisible(visible);
+      onVisibleChange?.(visible);
+    },
+    [onVisibleChange]
+  );
 
   const handleAutoDropdownClose = useCallback(
     (e: MouseEvent) => {
-      if (visible) {
+      if (visible && curElement) {
         const path = e.composedPath();
         if (!path.includes(curElement)) {
-          setVisible(false);
+          handleVisibleChange(false);
         }
       }
     },
-    [curElement, visible]
+    [curElement, visible, handleVisibleChange]
   );
 
   const handleTriggerClick = useCallback(() => {
@@ -102,12 +151,10 @@ function PopoverComponent({
     } else if (trigger === "hover") {
       triggerSlot?.addEventListener("mouseover", handlePopoverOpen);
       document?.addEventListener("mouseover", handleAutoDropdownClose);
-      document.addEventListener("click", handleAutoDropdownClose);
 
       return () => {
         triggerSlot?.removeEventListener("mouseover", handlePopoverOpen);
         document?.removeEventListener("mouseover", handleAutoDropdownClose);
-        document.removeEventListener("click", handleAutoDropdownClose);
       };
     }
   }, [
@@ -118,62 +165,16 @@ function PopoverComponent({
     visible,
   ]);
 
-  useEffect(() => {
-    const wrapperDOM = wrapperRef.current;
-    const contentDOM = contentRef.current;
-
-    const wrapper = wrapperDOM?.getBoundingClientRect();
-    const content = contentDOM?.getBoundingClientRect();
-
-    if (visible && wrapper && content) {
-      const {
-        width: wrapperWidth,
-        height: wrapperHeight,
-        x: wrapperX,
-        y: wrapperY,
-      } = wrapper;
-      const { width: contentWidth, height: contentHeight } = content;
-      const defaultMargin = 4;
-
-      let x = 0,
-        y = 0;
-      switch (placement) {
-        case "top": {
-          (x = wrapperX), (y = wrapperY - contentHeight - defaultMargin);
-          break;
-        }
-        case "bottom": {
-          (x = wrapperX), (y = wrapperY + wrapperHeight + defaultMargin);
-          break;
-        }
-        case "right": {
-          (x = wrapperX + wrapperWidth + defaultMargin), (y = wrapperY);
-          break;
-        }
-        case "left": {
-          (x = wrapperX - contentWidth - defaultMargin), (y = wrapperY);
-          break;
-        }
-      }
-
-      setContentStyle({
-        top: y,
-        left: x,
-      });
-    }
-  }, [placement, visible]);
-
   return (
-    <div className="popover-wrapper" ref={wrapperRef}>
-      <slot name="trigger" ref={triggerRef}></slot>
-      <div
-        ref={contentRef}
-        className={classNames("popover-content", visible ? "open" : "close")}
-        style={contentStyle}
-      >
-        <slot className="default-slot" ref={defaultRef}></slot>
-      </div>
-    </div>
+    <WrappedSlPopup
+      placement="bottom"
+      trigger="click"
+      {...props}
+      active={visible}
+    >
+      <slot name="trigger" slot="anchor" ref={triggerRef}></slot>
+      <slot ref={defaultRef}></slot>
+    </WrappedSlPopup>
   );
 }
 

@@ -30,6 +30,4 @@ export type LinkType = "link" | "text";
 
 /** ============= Popover Type Start ============== */
 export type TriggerEvent = "click" | "hover";
-
-export type PlaceMent = "top" | "left" | "right" | "bottom";
 /** ============= Popover Type End ============== */

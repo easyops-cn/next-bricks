@@ -37,7 +37,7 @@ describe("basic.dropdown-button", () => {
     element.addEventListener("b.click", mockBClick);
 
     expect(element.shadowRoot?.innerHTML).toMatchInlineSnapshot(
-      `"<basic.general-dropdown><basic.general-button slot="trigger" size="large" icon="[object Object]">Hello world</basic.general-button><basic.general-menu><basic.general-menu-item text="a" event="a.click">a</basic.general-menu-item><basic.general-menu-item text="b" event="b.click" disabled="">b</basic.general-menu-item></basic.general-menu></basic.general-dropdown>"`
+      `"<basic.general-popover><basic.general-button slot="trigger" size="large" icon="[object Object]">Hello world</basic.general-button><basic.general-menu><basic.general-menu-item text="a" event="a.click">a</basic.general-menu-item><basic.general-menu-item text="b" event="b.click" disabled="">b</basic.general-menu-item></basic.general-menu></basic.general-popover>"`
     );
 
     act(() => {
