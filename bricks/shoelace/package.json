@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/shoelace",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/shoelace",
   "repository": {
     "type": "git",
@@ -27,16 +27,16 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-core/i18n": "^1.0.14",
-    "@next-core/react-element": "^1.0.6",
-    "@next-core/utils": "^1.4.2",
+    "@next-core/i18n": "^1.0.19",
+    "@next-core/react-element": "^1.0.7",
+    "@next-core/utils": "^1.5.2",
     "@shoelace-style/shoelace": "^2.4.0",
     "react": "0.0.0-experimental-ee8509801-20230117",
     "react-dom": "0.0.0-experimental-ee8509801-20230117"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.5.1",
-    "@next-core/test-next": "^1.0.5",
+    "@next-core/build-next-bricks": "^1.5.3",
+    "@next-core/test-next": "^1.0.6",
     "copy-webpack-plugin": "^11.0.0"
   }
 }

@@ -1,0 +1,47 @@
+{
+  "name": "@next-bricks/presentational",
+  "version": "0.1.0",
+  "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/presentational",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:easyops-cn/next-bricks.git"
+  },
+  "license": "GPL-3.0",
+  "type": "module",
+  "sideEffects": true,
+  "files": [
+    "dist",
+    "dist-types"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    "./dist/bricks.json": "./dist/bricks.json",
+    "./*": {
+      "types": "./dist-types/*/index.d.ts"
+    }
+  },
+  "scripts": {
+    "start": "cross-env NODE_ENV=development build-next-bricks --watch",
+    "build": "npm run build:main && npm run build:types",
+    "build:main": "cross-env NODE_ENV=production build-next-bricks",
+    "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist-types --project tsconfig.json",
+    "test": "cross-env NODE_ENV='test' test-next",
+    "test:ci": "cross-env NODE_ENV='test' CI=true test-next",
+    "prepublishOnly": "cp package.json package.json.bak && npm pkg delete dependencies",
+    "postpublish": "mv package.json.bak package.json"
+  },
+  "dependencies": {
+    "@next-bricks/containers": "^0.5.0",
+    "@next-core/element": "^1.0.6",
+    "@next-core/i18n": "^1.0.19",
+    "@next-core/react-element": "^1.0.7",
+    "@next-core/types": "^1.3.0",
+    "@next-core/utils": "^1.5.2",
+    "classnames": "^2.3.2",
+    "react": "0.0.0-experimental-ee8509801-20230117"
+  },
+  "devDependencies": {
+    "@next-core/build-next-bricks": "^1.5.3",
+    "@next-core/test-next": "^1.0.6"
+  }
+}

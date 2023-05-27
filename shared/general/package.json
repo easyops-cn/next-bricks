@@ -1,6 +1,6 @@
 {
   "name": "@next-shared/general",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/shared/general",
   "license": "GPL-3.0",
   "repository": {
@@ -19,7 +19,7 @@
       "require": "./dist/cjs/menu.js"
     },
     "./types": {
-      "types": "./dist/types/menu.d.ts"
+      "types": "./dist/types/types.d.ts"
     },
     "./package.json": "./package.json"
   },
@@ -37,11 +37,11 @@
     "test:ci": "cross-env NODE_ENV='test' CI=true test-next"
   },
   "dependencies": {
-    "@next-core/runtime": "^1.9.0",
+    "@next-core/runtime": "^1.12.1",
     "history": "^4.7.11"
   },
   "devDependencies": {
-    "@next-core/build-next-libs": "^1.0.4",
-    "@next-core/test-next": "^1.0.5"
+    "@next-core/build-next-libs": "^1.0.5",
+    "@next-core/test-next": "^1.0.6"
   }
 }

@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.0.10...@next-bricks/v2-adapter@0.0.11) (2023-05-26)
+
+
+### Bug Fixes
+
+* add depedencies of icons-NB and illustrations-NB ([98e9443](https://github.com/easyops-cn/next-bricks/commit/98e9443e0f191a587eed5e816203a98adf3e3013))
+* **EasyopsEmpty:** show empty svg ([1976936](https://github.com/easyops-cn/next-bricks/commit/1976936c33bbf95ac93cfeccf0721de191135087))
+* fix v2 useBrick missing refCallback ([0cef6fa](https://github.com/easyops-cn/next-bricks/commit/0cef6fac7b7c3048587417c204fb1db581160527))
+* support EasyopsEmpty in brick-kit ([351f761](https://github.com/easyops-cn/next-bricks/commit/351f76137525652f410a5910cd2ab204da54badd))
+* use @next-core/easyops-runtime ([ed7dce5](https://github.com/easyops-cn/next-bricks/commit/ed7dce5bd6c737389ca4298cc20d1dc4cd01e8e7))
+
+
+
+
+
 ## [0.0.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.0.9...@next-bricks/v2-adapter@0.0.10) (2023-05-19)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter

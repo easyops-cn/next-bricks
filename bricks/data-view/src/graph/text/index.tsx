@@ -51,10 +51,8 @@ export function GraphTextComponent(props: GraphTextProps): React.ReactElement {
   const { t } = useTranslation(NS);
   return (
     <div className="content">
-      <span className="text">
-        {props.text}
-        {t(K.SYMBOL)}
-      </span>
+      <span className="text">{props.text}</span>
+      <span className="symbol">{t(K.SYMBOL)}</span>
       <span className="value">{props.value}</span>
     </div>
   );
