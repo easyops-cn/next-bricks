@@ -1,12 +1,7 @@
 import React from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
-import { wrapBrick } from "@next-core/react-element";
+import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
-import { FormItemElement } from "../../../form/src/form-item/FormItemElement.js";
-import type {
-  FormItem,
-  FormItemProps,
-} from "../../../form/src/form-item/index.jsx";
 import styleText from "./markdown-editor.shadow.css";
 import { defaultValueCtx, Editor, rootCtx } from "@milkdown/core";
 import { Milkdown, MilkdownProvider, useEditor } from "@milkdown/react";
@@ -31,10 +26,6 @@ export interface ImageInfo {
   src: string;
 }
 
-const WrappedFormItem = wrapBrick<FormItem, FormItemProps>(
-  "form.general-form-item"
-);
-
 const { defineElement, property, event } = createDecorators();
 
 @defineElement("markdown.markdown-editor", {
@@ -49,13 +40,12 @@ const { defineElement, property, event } = createDecorators();
  * @author kehua
  * @noInheritDoc
  */
-class MarkdownEditor extends FormItemElement {
+class MarkdownEditor extends ReactNextElement {
   /**
    * @kind string
    * @required false
    * @default default
    * @description 初始值
-   * @enums
    * @group basic
    */
   @property() accessor value: string | undefined;
@@ -191,9 +181,5 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
       .use(upload);
   }, []);
 
-  return (
-    <WrappedFormItem {...props}>
-      <Milkdown />
-    </WrappedFormItem>
-  );
+  return <Milkdown />;
 }
