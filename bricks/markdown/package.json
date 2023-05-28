@@ -31,15 +31,7 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-bricks/icons": "^0.1.6",
-    "@next-core/element": "^1.0.5",
-    "@next-core/http": "^1.0.5",
-    "@next-core/react-element": "^1.0.6",
-    "@next-core/react-runtime": "^1.0.34",
     "@next-core/theme": "^1.1.1",
-    "@next-core/types": "^1.2.0",
-    "classnames": "^2.3.2",
-    "lodash": "^4.17.21",
     "react": "0.0.0-experimental-ee8509801-20230117",
     "@milkdown/core": "7.2.0",
     "@milkdown/ctx": "7.2.0",
@@ -53,12 +45,7 @@
     "@milkdown/utils": "7.2.0",
     "@milkdown/plugin-listener": "7.2.0",
     "@type-config/strict": "^1.2.1",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
-    "react-dom": "0.0.0-experimental-ee8509801-20230117",
-    "tslib": "^2.4.1",
-    "@next-api-sdk/object-store-sdk": "1.1.0",
-    "@next-core/brick-http": "^2.8.1"
+    "@next-api-sdk/object-store-sdk": "1.1.0"
   },
   "devDependencies": {
     "@next-core/build-next-bricks": "^1.5.1",
