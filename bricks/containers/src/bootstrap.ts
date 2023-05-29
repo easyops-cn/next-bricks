@@ -6,3 +6,4 @@ import "./card/index.js";
 import "./drawer/index.js";
 import "./grid-layout/index.js";
 import "./flex-layout/index.js";
+import "./easy-view/index.js";

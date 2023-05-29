@@ -1,0 +1,86 @@
+<div>
+  <style>
+    .box {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      text-align: center;
+      font-size: 24px;
+    }
+
+    .a {
+      background: rgb(228, 119, 119);
+    }
+    .b {
+      background: rgb(180, 242, 180);
+    }
+    .c {
+      background: rgb(61, 145, 225);
+    }
+    .d {
+      background: rgb(238, 238, 78);
+    }
+  </style>
+
+  <containers.easy-view id="view-1">
+    <div class="box a" slot="a">A</div>
+    <div class="box b" slot="b">B</div>
+    <div class="box c" slot="c">C</div>
+  </containers.easy-view>
+
+  <containers.easy-view id="view-2">
+    <div class="box a" slot="a">A</div>
+    <div class="box b" slot="b">B</div>
+    <div class="box c" slot="c">C</div>
+  </containers.easy-view>
+
+  <containers.easy-view id="view-3">
+    <div class="box a" slot="a">A</div>
+    <div class="box b" slot="b">B</div>
+    <div class="box c" slot="c">C</div>
+    <div class="box d" slot="d">C</div>
+  </containers.easy-view>
+</div>
+
+<script>
+  const view1 = document.getElementById("view-1");
+  const view2 = document.getElementById("view-2");
+  const view3 = document.getElementById("view-3");
+
+  view1.gridAreas = {
+    a: [1, 1, 2, 13],
+    b: [2, 1, 3, 5],
+    c: [2, 5, 3, 13],
+  };
+  view1.gridTemplateColumns = "repeat(12, 1fr)";
+  view1.gridTemplateRows = "100px 200px";
+  view1.containerStyle = {
+    height: "100%",
+    gap: "10px",
+  };
+
+  view2.gridAreas = {
+    a: [1, 1, 4, 4],
+    b: [1, 4, 3, 13],
+    c: [3, 4, 3, 13],
+  };
+  view2.gridTemplateColumns = "repeat(12, 1fr)";
+  view2.containerStyle = {
+    marginTop: 30,
+    height: "200px",
+  };
+
+  view3.gridTemplateAreas = [
+    ["a", "a", "a"],
+    ["b", ".", "d"],
+    ["b", "c", "d"],
+  ];
+  view3.containerStyle = {
+    marginTop: 30,
+    height: "300px",
+  };
+  view3.gridTemplateRows = "100px 100px";
+</script>
