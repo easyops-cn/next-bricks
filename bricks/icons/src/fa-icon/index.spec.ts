@@ -1,35 +1,60 @@
 import { act } from "react-dom/test-utils";
-import "./index.js";
-import { FaIcon } from "./index.js";
+import type { FaIcon } from "./index.js";
 
-window.fetch = jest.fn((url) =>
-  url.endsWith("/oops.json")
-    ? Promise.reject(new Error("oops"))
-    : Promise.resolve({
-        json: () =>
-          Promise.resolve(
-            url.endsWith("/trash-can.json")
-              ? {
-                  prefix: "fas",
-                  iconName: "trash-can",
-                  icon: [
-                    512,
-                    512,
-                    [],
-                    "f00c",
-                    "M467.9 67.1c-12.5-12.5-32.8-12.5-45.3 0L192 281.6l-83.6-83.7c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l96 96c6.2 6.2 14.4 9.4 22.6 9.4s16.4-3.1 22.6-9.4l256-256c12.5-12.5 12.5-32.8 0-45.3z",
-                  ],
-                }
-              : {}
-          ),
-      })
+window.fetch = jest.fn(
+  (url) =>
+    new Promise((resolve, reject) => {
+      setTimeout(
+        () => {
+          if (url.endsWith("/oops.json")) {
+            reject(new Error("oops"));
+          } else {
+            resolve({
+              json: () =>
+                Promise.resolve(
+                  url.endsWith("/trash-can.json")
+                    ? {
+                        prefix: "fas",
+                        iconName: "trash-can",
+                        icon: [
+                          512,
+                          512,
+                          [],
+                          "f00c",
+                          "M467.9 67.1c-12.5-12.5-32.8-12.5-45.3 0L192 281.6l-83.6-83.7c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l96 96c6.2 6.2 14.4 9.4 22.6 9.4s16.4-3.1 22.6-9.4l256-256c12.5-12.5 12.5-32.8 0-45.3z",
+                        ],
+                      }
+                    : {}
+                ),
+            });
+          }
+        },
+        url.endsWith("/will-ignore.json") ? 200 : 100
+      );
+    })
 ) as any;
 
 const consoleError = jest.spyOn(console, "error").mockReturnValue();
 
 describe("FaIcon", () => {
+  beforeEach(async () => {
+    await jest.isolateModulesAsync(async () => {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      await import("./index.js");
+    });
+  });
+
+  beforeAll(() => {
+    jest.useFakeTimers();
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
   it("renders the icon with the correct prefix and icon name", async () => {
     const icon = document.createElement("icons.fa-icon") as FaIcon;
+    // expect(icon.constructor).toBe(FaIconClass);
     icon.prefix = "fas";
     icon.icon = "trash-can";
     act(() => {
@@ -37,6 +62,7 @@ describe("FaIcon", () => {
     });
     await act(async () => {
       await (global as any).flushPromises();
+      jest.advanceTimersByTime(100);
     });
     expect(icon.shadowRoot?.childNodes).toMatchInlineSnapshot(`
       NodeList [
@@ -70,12 +96,18 @@ describe("FaIcon", () => {
 
   it("renders the icon with the unset prefix and an alias icon", async () => {
     const icon = document.createElement("icons.fa-icon") as FaIcon;
-    icon.icon = "trash-alt";
+    icon.icon = "will-ignore";
     act(() => {
       document.body.appendChild(icon);
     });
     await act(async () => {
       await (global as any).flushPromises();
+    });
+    // Set icon again, but will be resolved earlier than the previous one.
+    icon.icon = "trash-alt";
+    await act(async () => {
+      await (global as any).flushPromises();
+      jest.advanceTimersByTime(200);
     });
     expect(icon.shadowRoot?.childNodes).toMatchInlineSnapshot(`
       NodeList [
@@ -115,6 +147,7 @@ describe("FaIcon", () => {
     });
     await act(async () => {
       await (global as any).flushPromises();
+      jest.advanceTimersByTime(100);
     });
     expect(icon.shadowRoot?.childNodes).toMatchInlineSnapshot(`
       NodeList [
@@ -139,6 +172,7 @@ describe("FaIcon", () => {
     });
     await act(async () => {
       await (global as any).flushPromises();
+      jest.advanceTimersByTime(100);
     });
     expect(icon.shadowRoot?.childNodes).toMatchInlineSnapshot(`
       NodeList [
