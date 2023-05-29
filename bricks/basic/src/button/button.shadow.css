@@ -2,6 +2,10 @@
   display: inline-block;
 }
 
+:host([hidden]) {
+  display: none;
+}
+
 button {
   border-radius: 3px;
   outline: none;

@@ -138,7 +138,7 @@ function DropdownButtonComponent({
   return (
     <WrappedPopover placement="bottom">
       <WrappedButton
-        slot="trigger"
+        slot="anchor"
         size={size}
         shape={shape}
         type={type}

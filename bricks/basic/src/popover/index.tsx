@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { createDecorators, EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
-import styleText from "./popover.shadow.css";
 import { TriggerEvent } from "../interface.js";
 import { Placement, SlPopupProps, WrappedSlPopup } from "./popup.js";
 
@@ -21,7 +20,7 @@ export interface PopoverProps extends SlPopupProps {
  *
  */
 @defineElement("basic.general-popover", {
-  styleTexts: [styleText],
+  styleTexts: [],
 })
 class Popover extends ReactNextElement implements PopoverProps {
   /**
@@ -172,7 +171,7 @@ function PopoverComponent(props: PopoverProps) {
       {...props}
       active={visible}
     >
-      <slot name="trigger" slot="anchor" ref={triggerRef}></slot>
+      <slot name="anchor" slot="anchor" ref={triggerRef}></slot>
       <slot ref={defaultRef}></slot>
     </WrappedSlPopup>
   );
