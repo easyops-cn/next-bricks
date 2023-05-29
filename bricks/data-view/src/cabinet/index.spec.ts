@@ -158,10 +158,12 @@ describe("data-view.cabinet-graph", () => {
     element.dataSource = dataSource;
     element.activeKey = ["inventory-api##aaaaa", "k8s-cluster", "test-11111"];
     expect(element.shadowRoot).toBeFalsy();
+    element.hiddenCloseBtn = true;
     act(() => {
       document.body.appendChild(element);
     });
     expect(element.shadowRoot).toBeTruthy();
+    expect(element.shadowRoot.querySelector(".close-button")).toBeFalsy();
     const clusterContainerEle =
       element.shadowRoot.querySelector(".cluster-container");
     expect((clusterContainerEle.children[0] as CabinetContainer).status).toBe(
@@ -185,6 +187,7 @@ describe("data-view.cabinet-graph", () => {
     expect((clusterContainerEle.children[0] as CabinetContainer).status).toBe(
       "faded"
     );
+
     act(() => {
       document.body.removeChild(element);
     });

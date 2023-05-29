@@ -52,6 +52,7 @@ type ChangeType = "node" | "cluster" | "layer";
 export interface CabinetGraphProps {
   dataSource: AppData;
   activeKey?: string | string[];
+  hiddenCloseBtn?: boolean;
   onCloseBtnClick?: () => void;
   onActiveKeyChange?: (
     key: string,
@@ -96,6 +97,15 @@ class CabinetGraph extends ReactNextElement implements CabinetGraphProps {
    */
   @property({ attribute: false })
   accessor activeKey: string | string[];
+
+  /**
+   * @kind boolean
+   * @required false
+   * @default true
+   * @description 取消按钮是否需要展示
+   */
+  @property({ type: Boolean })
+  accessor hiddenCloseBtn: boolean;
 
   /**
    * @detail
@@ -163,6 +173,7 @@ class CabinetGraph extends ReactNextElement implements CabinetGraphProps {
         onCloseBtnClick={this.#handleCloseBtnClick}
         onActiveKeyChange={this.#handleActiveKeyChange}
         handleDbClick={this.#handleDbClick}
+        hiddenCloseBtn={this.hiddenCloseBtn}
       />
     );
   }
@@ -175,6 +186,7 @@ function CabinetGraphElement(props: CabinetGraphProps): React.ReactElement {
     onCloseBtnClick,
     onActiveKeyChange,
     handleDbClick,
+    hiddenCloseBtn,
   } = props;
   const activeKeys = useMemo(() => {
     return [].concat(activeKey);
@@ -281,13 +293,15 @@ function CabinetGraphElement(props: CabinetGraphProps): React.ReactElement {
             );
           })}
         </div>
-        <WrappedCabinetButton
-          className="close-button"
-          onClick={(e) => {
-            e.stopPropagation();
-            onCloseBtnClick?.();
-          }}
-        />
+        {!hiddenCloseBtn && (
+          <WrappedCabinetButton
+            className="close-button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onCloseBtnClick?.();
+            }}
+          />
+        )}
       </div>
     </div>
   );
