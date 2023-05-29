@@ -15,6 +15,43 @@ import alias from "./generated/alias.json";
 
 config.autoAddCss = false;
 
+const iconCache = new Map<string, Promise<IconDefinition | null>>();
+
+async function resolveIconDefinition(
+  url: string
+): Promise<IconDefinition | null> {
+  try {
+    return await (await fetch(url, { mode: "cors" })).json();
+  } catch {
+    return null;
+  }
+}
+
+async function getIconDefinition(
+  prefix: string,
+  icon: string | undefined
+): Promise<IconDefinition | null> {
+  if (icon) {
+    const actualIcon =
+      hasOwnProperty(alias, prefix) &&
+      hasOwnProperty((alias as Alias)[prefix], icon)
+        ? (alias as Alias)[prefix][icon]
+        : icon;
+    const url = `${
+      // istanbul ignore next
+      process.env.NODE_ENV === "test" ? "" : __webpack_public_path__
+    }chunks/fa-icons/${prefix}/${actualIcon}.json`;
+    let iconResolver = iconCache.get(url);
+    if (!iconResolver) {
+      iconResolver = resolveIconDefinition(url);
+      iconCache.set(url, iconResolver);
+    }
+    return await iconResolver;
+  } else {
+    return null;
+  }
+}
+
 const { defineElement, property } = createDecorators();
 
 export interface FaIconProps extends DefineLinearGradientProps {
@@ -65,34 +102,19 @@ function FaIconComponent({
   );
 
   useEffect(() => {
-    async function init() {
-      try {
-        if (icon) {
-          const actualIcon =
-            hasOwnProperty(alias, prefix) &&
-            hasOwnProperty((alias as Alias)[prefix], icon)
-              ? (alias as Alias)[prefix][icon]
-              : icon;
-          setIconDefinition(
-            await (
-              await fetch(
-                `${
-                  // istanbul ignore next
-                  process.env.NODE_ENV === "test" ? "" : __webpack_public_path__
-                }chunks/fa-icons/${prefix}/${actualIcon}.json`,
-                { mode: "cors" }
-              )
-            ).json()
-          );
-        } else {
-          setIconDefinition(null);
+    let ignore = false;
+    getIconDefinition(prefix, icon).then((result) => {
+      if (!ignore) {
+        if (!result && icon) {
+          // eslint-disable-next-line no-console
+          console.error("FontAwesome Icon not found:", prefix, icon);
         }
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error("FontAwesome Icon not found:", prefix, icon);
+        setIconDefinition(result);
       }
-    }
-    init();
+    });
+    return () => {
+      ignore = true;
+    };
   }, [icon, prefix]);
 
   if (!iconDefinition) {
