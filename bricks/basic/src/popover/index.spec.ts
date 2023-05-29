@@ -30,9 +30,7 @@ describe("basic.general-popover", () => {
 
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
-      <sl-popup
-        curelement="[object HTMLElement]"
-      >
+      <sl-popup>
         <slot
           name="anchor"
           slot="anchor"
@@ -49,7 +47,6 @@ describe("basic.general-popover", () => {
       .toMatchInlineSnapshot(`
       <sl-popup
         active=""
-        curelement="[object HTMLElement]"
       >
         <slot
           name="anchor"
@@ -65,9 +62,7 @@ describe("basic.general-popover", () => {
 
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
-      <sl-popup
-        curelement="[object HTMLElement]"
-      >
+      <sl-popup>
         <slot
           name="anchor"
           slot="anchor"
@@ -109,7 +104,6 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
       <sl-popup
-        curelement="[object HTMLElement]"
         strategy="fixed"
         trigger="hover"
       >
@@ -129,7 +123,6 @@ describe("basic.general-popover", () => {
       .toMatchInlineSnapshot(`
       <sl-popup
         active=""
-        curelement="[object HTMLElement]"
         strategy="fixed"
         trigger="hover"
       >
@@ -148,7 +141,6 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
       <sl-popup
-        curelement="[object HTMLElement]"
         strategy="fixed"
         trigger="hover"
       >

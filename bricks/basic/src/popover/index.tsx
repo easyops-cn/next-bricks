@@ -3,6 +3,7 @@ import { createDecorators, EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import { TriggerEvent } from "../interface.js";
 import { Placement, SlPopupProps, WrappedSlPopup } from "./popup.js";
+import { omit } from "lodash";
 
 const { defineElement, property, event } = createDecorators();
 
@@ -168,7 +169,7 @@ function PopoverComponent(props: PopoverProps) {
     <WrappedSlPopup
       placement="bottom"
       trigger="click"
-      {...props}
+      {...omit(props, ["curElement", "onVisibleChange"])}
       active={visible}
     >
       <slot name="anchor" slot="anchor" ref={triggerRef}></slot>
