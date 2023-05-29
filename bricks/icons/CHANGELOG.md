@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.1.8...@next-bricks/icons@0.1.9) (2023-05-29)
+
+
+### Bug Fixes
+
+* **fa-icon:** cache for fetching icons ([2c38d65](https://github.com/easyops-cn/next-bricks/commit/2c38d65f248e3c6a2c395c8d3f152de78c3d5a8e))
+
+
+
+
+
 ## [0.1.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.1.7...@next-bricks/icons@0.1.8) (2023-05-29)
 
 **Note:** Version bump only for package @next-bricks/icons
