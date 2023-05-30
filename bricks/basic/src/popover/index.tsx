@@ -177,7 +177,6 @@ function PopoverComponent(props: PopoverProps) {
 
   return (
     <WrappedSlPopup
-      className="popup"
       placement="bottom"
       trigger="click"
       {...omit(props, ["curElement", "onVisibleChange"])}

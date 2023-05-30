@@ -1,8 +1,8 @@
 import { createProviderClass } from "@next-core/utils/general";
 import { i18n } from "@next-core/i18n";
 
-export function changeLanguage(lang: string): boolean {
-  i18n.changeLanguage(lang);
+export async function changeLanguage(lang: string): Promise<boolean> {
+  await i18n.changeLanguage(lang);
   return true;
 }
 
