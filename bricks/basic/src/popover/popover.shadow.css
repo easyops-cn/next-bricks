@@ -1,0 +1,3 @@
+.popover::part(popup) {
+  z-index: 1000;
+}

@@ -26,7 +26,7 @@ describe("basic.general-popover", () => {
     });
 
     expect(element.shadowRoot).toBeTruthy();
-    expect(element.shadowRoot?.childNodes.length).toBe(1);
+    expect(element.shadowRoot?.childNodes.length).toBe(2);
 
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
@@ -99,7 +99,7 @@ describe("basic.general-popover", () => {
     });
 
     expect(element.shadowRoot).toBeTruthy();
-    expect(element.shadowRoot?.childNodes.length).toBe(1);
+    expect(element.shadowRoot?.childNodes.length).toBe(2);
 
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`

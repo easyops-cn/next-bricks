@@ -1,4 +1,5 @@
 import "./data-providers/httpRequest.js";
+import "./data-providers/getI18n.js";
 import "./button/index.js";
 import "./link/index.js";
 import "./text/index.js";

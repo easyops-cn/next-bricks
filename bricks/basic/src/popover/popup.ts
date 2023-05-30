@@ -14,7 +14,7 @@ export type Placement =
   | "left-start"
   | "left-end";
 
-export type ArrpwPlacement = "start" | "end" | "center" | "anchor";
+export type ArrowPlacement = "start" | "end" | "center" | "anchor";
 
 export type AutoSize = "horizontal" | "vertical" | "both";
 
@@ -29,7 +29,7 @@ export interface SlPopupProps {
   distance?: number;
   skidding?: number;
   arrow?: boolean;
-  arrowPlacement?: ArrpwPlacement;
+  arrowPlacement?: ArrowPlacement;
   arrowPadding?: number;
   flip?: boolean;
   flipFallbackPlacements?: string;

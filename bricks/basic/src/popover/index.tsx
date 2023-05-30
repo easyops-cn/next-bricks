@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import { createDecorators, EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import { TriggerEvent } from "../interface.js";
-import { Placement, SlPopupProps, WrappedSlPopup } from "./popup.js";
+import { Placement, SlPopupProps, Sync, WrappedSlPopup } from "./popup.js";
 import { omit } from "lodash";
+import styleText from "./popover.shadow.css";
 
 const { defineElement, property, event } = createDecorators();
 
@@ -21,7 +22,7 @@ export interface PopoverProps extends SlPopupProps {
  *
  */
 @defineElement("basic.general-popover", {
-  styleTexts: [],
+  styleTexts: [styleText],
 })
 class Popover extends ReactNextElement implements PopoverProps {
   /**
@@ -69,6 +70,14 @@ class Popover extends ReactNextElement implements PopoverProps {
   accessor strategy: "absolute" | "fixed" | undefined;
 
   /**
+   * @default
+   * @required
+   * @description
+   */
+  @property()
+  accessor sync: Sync | undefined;
+
+  /**
    * @detail
    * @description
    */
@@ -87,6 +96,7 @@ class Popover extends ReactNextElement implements PopoverProps {
         placement={this.placement}
         arrow={this.arrow}
         strategy={this.strategy}
+        sync={this.sync}
         active={this.active}
         onVisibleChange={this.handleVisibleChange}
       />
@@ -167,6 +177,7 @@ function PopoverComponent(props: PopoverProps) {
 
   return (
     <WrappedSlPopup
+      className="popover"
       placement="bottom"
       trigger="click"
       {...omit(props, ["curElement", "onVisibleChange"])}
