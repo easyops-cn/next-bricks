@@ -3,8 +3,8 @@ import { changeLanguage } from "./changeLanguage.js";
 
 jest.mock("@next-core/i18n", () => ({
   i18n: {
-    changeLanguage: (_: string): boolean => {
-      return Promise.resolve(jest.fn());
+    changeLanguage: (_: string): Promise<boolean> => {
+      return Promise.resolve(true);
     },
   },
 }));
