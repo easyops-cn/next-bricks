@@ -1,3 +1,4 @@
+import React from "react";
 import { describe, test, expect } from "@jest/globals";
 import { act } from "react-dom/test-utils";
 import "./index.jsx";
@@ -5,6 +6,49 @@ import { Popover } from "./index.jsx";
 import { fireEvent } from "@testing-library/react";
 
 jest.mock("@next-core/theme", () => ({}));
+type Animate = {
+  (
+    keyframes: Keyframe[] | PropertyIndexedKeyframes | null,
+    options?: number | KeyframeAnimationOptions | undefined
+  ): Animation;
+  (
+    keyframes: Keyframe[] | PropertyIndexedKeyframes | null,
+    options?: number | KeyframeAnimationOptions | undefined
+  ): Animation;
+};
+
+let originalAnimateFunction: Animate;
+
+// Mock native animate function
+beforeAll(() => {
+  originalAnimateFunction = HTMLElement.prototype.animate;
+
+  const obj = {
+    onfinish: () => {
+      //
+    },
+  };
+
+  const animationFunction = function (this: any) {
+    Promise.resolve().then(async () => {
+      act(() => obj.onfinish());
+    });
+
+    return obj as unknown as Animation;
+  };
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  HTMLElement.prototype.popup = {
+    animate: () => ({
+      addEventListener: (_: string, resolve: () => void) => resolve(),
+    }),
+  };
+});
+
+afterAll(() => {
+  HTMLElement.prototype.animate = originalAnimateFunction;
+});
 
 describe("basic.general-popover", () => {
   test("trigger is click should work", async () => {
@@ -17,8 +61,10 @@ describe("basic.general-popover", () => {
     const content = document.createElement("div");
     content.textContent = "hello world";
 
+    const mockListener = jest.fn();
     element.append(button);
     element.append(content);
+    element.addEventListener("visible.change", mockListener);
 
     expect(element.shadowRoot).toBeFalsy();
     act(() => {
@@ -50,6 +96,15 @@ describe("basic.general-popover", () => {
       element.querySelector("button")?.click();
     });
 
+    await (global as any).flushPromises();
+
+    expect(mockListener).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        detail: true,
+      })
+    );
+
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
       <sl-popup
@@ -67,9 +122,17 @@ describe("basic.general-popover", () => {
       </sl-popup>
     `);
 
-    act(() => {
-      document.body?.click();
+    await act(async () => {
+      await document.body?.click();
     });
+    await (global as any).flushPromises();
+
+    expect(mockListener).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({
+        detail: false,
+      })
+    );
 
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
@@ -160,9 +223,10 @@ describe("basic.general-popover", () => {
       </sl-popup>
     `);
 
-    act(() => {
-      fireEvent.mouseOver(document.body);
+    await act(async () => {
+      await fireEvent.mouseOver(document.body);
     });
+    await (global as any).flushPromises();
 
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`

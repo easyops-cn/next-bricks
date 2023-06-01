@@ -190,11 +190,11 @@ function PopoverComponent(props: PopoverProps) {
 
   const handleTriggerClick = useCallback(() => {
     handleVisibleChange(!visible);
-  }, [visible]);
+  }, [visible, handleVisibleChange]);
 
   const handlePopoverOpen = useCallback(
     () => !visible && handleVisibleChange(true),
-    [visible]
+    [visible, handleVisibleChange]
   );
   const handlePopoverClose = () => handleVisibleChange(false);
 
@@ -227,6 +227,7 @@ function PopoverComponent(props: PopoverProps) {
     }
   }, [
     handleAutoDropdownClose,
+    handlePopoverClose,
     handlePopoverOpen,
     handleTriggerClick,
     trigger,
