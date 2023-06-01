@@ -7,6 +7,7 @@ import { ButtonType, ComponentSize, Shape } from "../interface.js";
 import type { Popover, PopoverProps } from "../popover/index.jsx";
 import type { Menu } from "../menu/index.js";
 import type { MenuItem } from "../menu-item/index.js";
+import styleText from "./dropdown-button.shadow.css";
 
 const { defineElement, property } = createDecorators();
 
@@ -47,7 +48,7 @@ const defaultIcon: GeneralIconProps = {
  *
  */
 @defineElement("basic.dropdown-button", {
-  styleTexts: [],
+  styleTexts: [styleText],
 })
 class DropdownButton extends ReactNextElement {
   /**
@@ -151,6 +152,7 @@ function DropdownButtonComponent({
           {actions?.map((action, index) => {
             return (
               <WrappedMenuItem
+                className="wrapped-menu-item"
                 key={index}
                 {...action}
                 onClick={(e: React.MouseEvent) => {

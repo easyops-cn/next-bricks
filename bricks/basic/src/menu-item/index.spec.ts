@@ -16,6 +16,7 @@ describe("basic.general-menu", () => {
       theme: "outlined",
       icon: "close",
     };
+    element.active = true;
 
     expect(element.shadowRoot).toBeFalsy();
     act(() => {
@@ -24,6 +25,7 @@ describe("basic.general-menu", () => {
     expect(element.shadowRoot).toBeTruthy();
     expect(element.shadowRoot?.childNodes.length).toBe(2);
 
+    expect(element.shadowRoot?.querySelector(".menu-item.active")).toBeTruthy();
     expect(
       element.shadowRoot?.querySelector(".menu-item.disabled")
     ).toBeFalsy();

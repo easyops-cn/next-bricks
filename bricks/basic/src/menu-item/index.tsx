@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import styleText from "./menuItem.shadow.css";
@@ -14,8 +14,9 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
   "icons.general-icon"
 );
 
-interface MenuComponentProps {
+export interface MenuComponentProps {
   icon?: GeneralIconProps;
+  active?: boolean;
   disabled?: boolean;
 }
 
@@ -47,6 +48,18 @@ class MenuItem extends ReactNextElement {
    * @kind boolean
    * @required false
    * @default false
+   * @description 是否选中
+   * @group basic
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor active: boolean | undefined;
+
+  /**
+   * @kind boolean
+   * @required false
+   * @default false
    * @description 是否禁用
    * @group basic
    */
@@ -56,15 +69,23 @@ class MenuItem extends ReactNextElement {
   accessor disabled: boolean | undefined;
 
   render() {
-    return <MenuItemComponent icon={this.icon} disabled={this.disabled} />;
+    return (
+      <MenuItemComponent
+        icon={this.icon}
+        active={this.active}
+        disabled={this.disabled}
+      />
+    );
   }
 }
 
-function MenuItemComponent({ icon, disabled }: MenuComponentProps) {
+function MenuItemComponent({ icon, disabled, active }: MenuComponentProps) {
   return (
     <div
+      part="menu-item"
       className={classNames("menu-item", {
         disabled: disabled,
+        active: active,
       })}
       onClick={(e) => {
         if (disabled) {

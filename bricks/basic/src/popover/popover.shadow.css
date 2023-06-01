@@ -1,3 +1,67 @@
 sl-popup::part(popup) {
   z-index: 700;
 }
+
+sl-popup[data-current-placement^="top"]::part(popup) {
+  transform-origin: bottom;
+}
+
+sl-popup[data-current-placement^="bottom"]::part(popup) {
+  transform-origin: top;
+}
+
+sl-popup[data-current-placement^="left"]::part(popup) {
+  transform-origin: right;
+}
+
+sl-popup[data-current-placement^="right"]::part(popup) {
+  transform-origin: left;
+}
+
+sl-popup::part(anchor) {
+  display: block;
+}
+
+sl-popup::part(panel) {
+  font-family: var(--sl-font-sans);
+  font-size: var(--sl-font-size-medium);
+  font-weight: var(--sl-font-weight-normal);
+  box-shadow: var(--sl-shadow-large);
+  border-radius: var(--sl-border-radius-medium);
+  pointer-events: none;
+}
+
+sl-popup:active::part(panel) {
+  display: block;
+  pointer-events: all;
+}
+
+sl-popup:active::part(popup) {
+  animation: 1s linear 0s infinite alternate popoverShow;
+}
+
+sl-popup:not([active=""])::part(popup) {
+  animation: 1s linear 0s infinite alternate popoverHide;
+}
+
+@keyframes popoverShow {
+  0% {
+    opacity: 0;
+    scale: 0.9;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes popoverHide {
+  0% {
+    opacity: 1;
+    scale: 1;
+  }
+  100% {
+    opacity: 0;
+    scale: 0.9;
+  }
+}

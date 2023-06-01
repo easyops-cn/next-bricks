@@ -30,12 +30,19 @@ describe("basic.general-popover", () => {
 
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
-      <sl-popup>
+      <sl-popup
+        placement="bottom"
+        trigger="click"
+      >
         <slot
           name="anchor"
+          part="anchor"
           slot="anchor"
         />
-        <slot />
+        <slot
+          hidden=""
+          part="panel"
+        />
       </sl-popup>
     `);
 
@@ -46,13 +53,17 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
       <sl-popup
-        active=""
+        placement="bottom"
+        trigger="click"
       >
         <slot
           name="anchor"
+          part="anchor"
           slot="anchor"
         />
-        <slot />
+        <slot
+          part="panel"
+        />
       </sl-popup>
     `);
 
@@ -62,12 +73,19 @@ describe("basic.general-popover", () => {
 
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
-      <sl-popup>
+      <sl-popup
+        placement="bottom"
+        trigger="click"
+      >
         <slot
           name="anchor"
+          part="anchor"
           slot="anchor"
         />
-        <slot />
+        <slot
+          hidden=""
+          part="panel"
+        />
       </sl-popup>
     `);
 
@@ -104,14 +122,19 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
       <sl-popup
+        placement="bottom"
         strategy="fixed"
         trigger="hover"
       >
         <slot
           name="anchor"
+          part="anchor"
           slot="anchor"
         />
-        <slot />
+        <slot
+          hidden=""
+          part="panel"
+        />
       </sl-popup>
     `);
 
@@ -122,15 +145,18 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
       <sl-popup
-        active=""
+        placement="bottom"
         strategy="fixed"
         trigger="hover"
       >
         <slot
           name="anchor"
+          part="anchor"
           slot="anchor"
         />
-        <slot />
+        <slot
+          part="panel"
+        />
       </sl-popup>
     `);
 
@@ -141,14 +167,19 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
       <sl-popup
+        placement="bottom"
         strategy="fixed"
         trigger="hover"
       >
         <slot
           name="anchor"
+          part="anchor"
           slot="anchor"
         />
-        <slot />
+        <slot
+          hidden=""
+          part="panel"
+        />
       </sl-popup>
     `);
 

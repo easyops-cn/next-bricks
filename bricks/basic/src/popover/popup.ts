@@ -55,6 +55,8 @@ export interface SlPopupMapEvents {
 
 export interface SlPopupElement extends HTMLElement {
   reposition(): void;
+  popup?: HTMLElement;
+  active?: boolean;
 }
 
 export const WrappedSlPopup = wrapBrick<
