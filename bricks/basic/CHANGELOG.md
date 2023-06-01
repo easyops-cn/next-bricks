@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.6.2...@next-bricks/basic@0.7.0) (2023-06-01)
+
+
+### Features
+
+* support getI18n provider and update code ([6c4c991](https://github.com/easyops-cn/next-bricks/commit/6c4c991720144932c71a7c1eacd1e73c0592682f))
+* support popover brick ([4987e6d](https://github.com/easyops-cn/next-bricks/commit/4987e6ddbcc850465342cda009fac2eaca0ce16c))
+* update code ([f4f2ba9](https://github.com/easyops-cn/next-bricks/commit/f4f2ba96810cb0963599c1602e2cf0e8c3edd9d0))
+* update code ([d1ed5a5](https://github.com/easyops-cn/next-bricks/commit/d1ed5a548b1bd092d58b8318a454ed17b838fbd3))
+* update code ([8c8ec3e](https://github.com/easyops-cn/next-bricks/commit/8c8ec3e973ebce76b0a67295dcb2eb73661c6b1d))
+* update code ([1b94b3e](https://github.com/easyops-cn/next-bricks/commit/1b94b3ef6b930fdee7015363ce6fd4ee620458da))
+* update code ([206afc3](https://github.com/easyops-cn/next-bricks/commit/206afc35ed6881ef2eed7e9763c80f4c783cfcb7))
+* update unit test ([1a96c8d](https://github.com/easyops-cn/next-bricks/commit/1a96c8d751d9a7f2d00996518333829d5635da26))
+* update unit test ([de5b81b](https://github.com/easyops-cn/next-bricks/commit/de5b81ba85b699a0cbd589728aef893373853e99))
+* update unit test ([0ba535f](https://github.com/easyops-cn/next-bricks/commit/0ba535f3d6b650e66132f19cfc45d9d99cc2c69a))
+
+
+
+
+
 ## [0.6.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.6.1...@next-bricks/basic@0.6.2) (2023-05-29)
 
 **Note:** Version bump only for package @next-bricks/basic

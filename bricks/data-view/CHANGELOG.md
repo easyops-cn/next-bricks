@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.8.0...@next-bricks/data-view@0.8.1) (2023-06-01)
+
+
+### Bug Fixes
+
+* **data-view:** 搜索框无法清除值 ([ec3ba79](https://github.com/easyops-cn/next-bricks/commit/ec3ba79763f71ef4f5bfe99ce3599b937c9fdba5))
+
+
+
+
+
 # [0.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.7.1...@next-bricks/data-view@0.8.0) (2023-05-29)
 
 

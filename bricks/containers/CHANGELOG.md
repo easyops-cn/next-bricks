@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.5.2...@next-bricks/containers@0.6.0) (2023-06-01)
+
+
+### Features
+
+* support easy-view in v3 ([acd6a33](https://github.com/easyops-cn/next-bricks/commit/acd6a3378b54ecd5589d79341aec5d81c34763c9))
+
+
+
+
+
 ## [0.5.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.5.1...@next-bricks/containers@0.5.2) (2023-05-29)
 
 **Note:** Version bump only for package @next-bricks/containers
