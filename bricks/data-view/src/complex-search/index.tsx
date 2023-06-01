@@ -201,8 +201,10 @@ export function ComplexSearchComponent(
   };
   useEffect(() => {
     setValue(props.value);
-    setAllowClear(!!props.value);
   }, [props.value]);
+  useEffect(() => {
+    setAllowClear(!!value);
+  }, [value]);
 
   const handleClick = (event: MouseEvent) => {
     const targetElement = event
@@ -229,6 +231,7 @@ export function ComplexSearchComponent(
     setVisible(true);
   };
   const onClearValue = () => {
+    setValue(null);
     onInputChange("");
     setVisible(false);
   };
