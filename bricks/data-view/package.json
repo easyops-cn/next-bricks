@@ -11,11 +11,13 @@
   "sideEffects": true,
   "files": [
     "dist",
-    "dist-types"
+    "dist-types",
+    "docs"
   ],
   "exports": {
     "./package.json": "./package.json",
     "./dist/bricks.json": "./dist/bricks.json",
+    "./dist/manifest.json": "./dist/manifest.json",
     "./*": {
       "types": "./dist-types/*/index.d.ts"
     }
@@ -45,7 +47,7 @@
     "three": "^0.150.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.5.3",
+    "@next-core/build-next-bricks": "^1.6.0",
     "@next-core/test-next": "^1.0.6",
     "@types/d3-hierarchy": "^3.1.2",
     "@types/three": "^0.150.1"
