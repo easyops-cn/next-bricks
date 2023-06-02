@@ -32,34 +32,3 @@ export type LinkType = "link" | "text";
 /** ============= Popover Type Start ============== */
 export type TriggerEvent = "click" | "hover";
 /** ============= Popover Type End ============== */
-
-/** ============= Nav Menu Type Start ============== */
-export type MenuItem = MenuSimpleItem | MenuGroup;
-
-export type MenuItemType = "default" | "group" | "subMenu" | "subMenu";
-
-export interface MenuSimpleItem {
-  activeExcludes?: string[];
-  activeIncludes?: string[];
-  activeMatchSearch?: boolean;
-  exact?: boolean;
-  href?: string;
-  icon?: GeneralIconProps;
-  // @internal (undocumented)
-  key?: string;
-  target?: Target;
-  text: string;
-  to?: string;
-  // (undocumented)
-  type?: "default";
-}
-
-export interface MenuGroup {
-  defaultExpanded?: boolean;
-  icon?: GeneralIconProps;
-  items: MenuItem[];
-  key?: string;
-  title: string;
-  type: "group" | "subMenu";
-}
-/** ============= Nav Menu Type End ============== */

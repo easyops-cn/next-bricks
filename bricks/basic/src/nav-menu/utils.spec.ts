@@ -1,11 +1,5 @@
 import { describe, test, expect } from "@jest/globals";
-import {
-  isGroup,
-  isSubMenu,
-  isSimple,
-  initMenuItemAndMatchCurrentPathKeys,
-} from "./utils.js";
-import type { MenuItem, MenuGroup } from "../interface.js";
+import { isGroup, isSubMenu, isSimple } from "./utils.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
@@ -52,8 +46,9 @@ describe("isSubmenu", () => {
 
     expect(
       isSubMenu({
-        text: "a",
-        type: "default",
+        title: "a",
+        items: [],
+        type: "group",
       })
     ).toBeFalsy();
   });
@@ -75,63 +70,5 @@ describe("isGroup", () => {
         type: "group",
       })
     ).toBeFalsy();
-  });
-});
-
-describe("initMenuItemAndMatchCurrentPathKeys", () => {
-  test("should work", async () => {
-    const menuItems: MenuItem[] = [
-      {
-        text: "for-good",
-        to: "/for/good",
-        activeIncludes: ["/for/good"],
-      },
-      {
-        type: "group",
-        title: "grouped",
-        items: [
-          {
-            text: "for-perfect",
-            to: "/for/perfect",
-            activeExcludes: ["/for/perfect/aaa"],
-          },
-          {
-            type: "subMenu",
-            title: "subMenu",
-            items: [
-              {
-                text: "for-submenu",
-                to: "/for/submenu",
-              },
-            ],
-          },
-        ],
-      },
-    ];
-    const { selectedKeys, openedKeys } = initMenuItemAndMatchCurrentPathKeys(
-      menuItems,
-      "/for/submenu",
-      "",
-      ""
-    );
-    expect(menuItems[0].key).toBe("0");
-    expect(menuItems[1].key).toBe("1");
-    expect((menuItems[1] as MenuGroup).items[0].key).toBe("1.0");
-    expect(
-      ((menuItems[1] as MenuGroup).items[1] as MenuGroup).items[0].key
-    ).toBe("1.1.0");
-    expect(selectedKeys).toEqual(["1.1.0"]);
-    expect(openedKeys).toContain("1");
-    expect(openedKeys).toContain("1.1");
-    const { selectedKeys: selectedKeys2, openedKeys: openedKeys2 } =
-      initMenuItemAndMatchCurrentPathKeys(
-        menuItems,
-        "/for/perfect",
-        "",
-        "prefix"
-      );
-    expect(selectedKeys2).toEqual(["prefix.1.0"]);
-    expect(openedKeys2).toContain("prefix.1");
-    expect(openedKeys2).not.toContain("prefix.1.1");
   });
 });

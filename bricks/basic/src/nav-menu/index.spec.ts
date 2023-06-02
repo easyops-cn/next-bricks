@@ -16,9 +16,9 @@ jest.mock("@next-core/runtime", () => ({
   matchPath: () => true,
 }));
 
-describe("basic.dropdown-button", () => {
+describe("basic.nav-menu", () => {
   test("basic usage", async () => {
-    const element = document.createElement("basic.general-nav-menu") as NavMenu;
+    const element = document.createElement("basic.nav-menu") as NavMenu;
 
     expect(element.shadowRoot).toBeFalsy();
     act(() => {

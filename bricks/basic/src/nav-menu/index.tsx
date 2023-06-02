@@ -15,10 +15,14 @@ import {
   isGroup,
   renderLinkCom,
   renderSpanCom,
-  initMenuItemAndMatchCurrentPathKeys,
 } from "./utils.js";
+import { initMenuItemAndMatchCurrentPathKeys } from "@next-shared/general/menu";
+import type {
+  SidebarMenuGroup,
+  SidebarMenuItem,
+  SidebarMenuSimpleItem,
+} from "@next-shared/general/types";
 import type { Popover, PopoverProps } from "../popover/index.js";
-import type { MenuItem, MenuSimpleItem, MenuGroup } from "../interface.js";
 import "@next-core/theme";
 
 const { defineElement, property } = createDecorators();
@@ -35,7 +39,7 @@ export interface MenuConf {
   defaultCollapsedBreakpoint?: number;
   icon?: GeneralIconProps;
   link?: LocationDescriptor;
-  menuItems: MenuItem[];
+  menuItems: SidebarMenuItem[];
   title: string;
 }
 
@@ -45,14 +49,14 @@ interface NavMenuProps {
 }
 
 /**
- * @id basic.general-nav-menu
- * @name basic.general-nav-menu
+ * @id basic.nav-menu
+ * @name basic.nav-menu
  * @docKind brick
  * @description 菜单构件
  * @author sailor
  *
  */
-@defineElement("basic.general-nav-menu", {
+@defineElement("basic.nav-menu", {
   styleTexts: [styleText],
 })
 class NavMenu extends ReactNextElement {
@@ -86,16 +90,13 @@ function NavMenuComponent(props: NavMenuProps) {
 
   const history = getHistory();
   const [location, setLocation] = useState(history.location);
-  const unListen: UnregisterCallback = history.listen((location) => {
-    setLocation(location);
-  });
   const { pathname, search } = location;
 
   const [selectedKey, setSelectedKey] = useState<string[]>([]);
 
   const setSelected = async (): Promise<void> => {
     const { selectedKeys } = initMenuItemAndMatchCurrentPathKeys(
-      menu?.menuItems ?? ([] as MenuItem[]),
+      menu?.menuItems ?? [],
       pathname,
       search,
       ""
@@ -104,11 +105,14 @@ function NavMenuComponent(props: NavMenuProps) {
   };
 
   useEffect(() => {
+    const unListen: UnregisterCallback = history.listen((location) => {
+      setLocation(location);
+    });
     setSelected();
     return unListen;
   }, []);
 
-  const renderSimpleMenuItem = (item: MenuSimpleItem) => {
+  const renderSimpleMenuItem = (item: SidebarMenuSimpleItem) => {
     return (
       <WrappedMenuItem
         key={item.key}
@@ -120,7 +124,7 @@ function NavMenuComponent(props: NavMenuProps) {
     );
   };
 
-  const renderSubMenuItem = (item: MenuGroup) => {
+  const renderSubMenuItem = (item: SidebarMenuGroup) => {
     if (item.items?.length > 0) {
       return (
         <WrappedPopover
@@ -144,7 +148,7 @@ function NavMenuComponent(props: NavMenuProps) {
     }
   };
 
-  const renderGroupMenuItem = (item: MenuGroup) => {
+  const renderGroupMenuItem = (item: SidebarMenuGroup) => {
     if (item.items?.length > 0) {
       return (
         <>
@@ -157,7 +161,7 @@ function NavMenuComponent(props: NavMenuProps) {
     }
   };
 
-  function renderMenuItem(item: MenuItem) {
+  function renderMenuItem(item: SidebarMenuItem) {
     return isSimple(item)
       ? renderSimpleMenuItem(item)
       : isSubMenu(item)
