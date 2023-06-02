@@ -13,6 +13,8 @@ button {
   background: none;
   cursor: pointer;
   padding: 0px 15px;
+  height: 32px;
+  font-size: 14px;
 }
 
 button:disabled {
@@ -29,7 +31,7 @@ button:disabled {
   vertical-align: middle;
 }
 
-.shape {
+.round {
   border-radius: 32px;
 }
 
@@ -191,12 +193,19 @@ a.danger:active {
   font-size: 13px;
 }
 
-.medium {
-  height: 32px;
-  font-size: 14px;
-}
-
 .large {
   height: 40px;
   font-size: 18px;
+}
+
+.xs.round {
+  border-radius: 22px;
+}
+
+.small.round {
+  border-radius: 26px;
+}
+
+.large.round {
+  border-radius: 40px;
 }
