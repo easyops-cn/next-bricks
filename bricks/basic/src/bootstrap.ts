@@ -9,5 +9,6 @@ import "./dropdown-button/index.js";
 import "./popover/index.js";
 import "./menu/index.js";
 import "./menu-item/index.js";
+import "./nav-menu/index.js";
 import "./tag/index.js";
 import "./tag-list/index.js";

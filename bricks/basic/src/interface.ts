@@ -1,3 +1,4 @@
+import type { GeneralIconProps } from "@next-bricks/icons/general-icon";
 /* ============== Common Type Start ============== */
 
 export type Target = "_self" | "_blank" | "_parent" | "_top";
