@@ -35,33 +35,3 @@ sl-popup:active::part(panel) {
   display: block;
   pointer-events: all;
 }
-
-sl-popup:active::part(popup) {
-  animation: 1s linear 0s infinite alternate popoverShow;
-}
-
-sl-popup:not([active=""])::part(popup) {
-  animation: 1s linear 0s infinite alternate popoverHide;
-}
-
-@keyframes popoverShow {
-  0% {
-    opacity: 0;
-    scale: 0.9;
-  }
-  100% {
-    opacity: 1;
-    scale: 1;
-  }
-}
-
-@keyframes popoverHide {
-  0% {
-    opacity: 1;
-    scale: 1;
-  }
-  100% {
-    opacity: 0;
-    scale: 0.9;
-  }
-}
