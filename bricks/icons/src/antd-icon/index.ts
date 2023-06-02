@@ -24,10 +24,22 @@ const styleText = linearGradientStyleText;
 export
 @defineElement("icons.antd-icon")
 class AntdIcon extends NextElement implements AntdIconProps {
+  /**
+   * 图标主题
+   * @default "outlined"
+   */
   @property() accessor theme: string | undefined;
+
+  /** 图标名 */
   @property() accessor icon: string | undefined;
+
+  /** 渐变色起始颜色 */
   @property() accessor startColor: string | undefined;
+
+  /** 渐变色终止颜色 */
   @property() accessor endColor: string | undefined;
+
+  /** 渐变色方向 */
   @property() accessor gradientDirection: GradientDirection | undefined;
 
   #createShadowRoot(): void {

@@ -32,70 +32,43 @@ export interface LinkProps {
 const { defineElement, property } = createDecorators();
 
 /**
- * @id basic.general-link
- * @name basic.general-link
- * @docKind brick
- * @description 通用链接构件
+ * 通用链接构件
  * @author sailor
- * @noInheritDoc
+ * @slot - 链接内容
  */
 @defineElement("basic.general-link", {
   styleTexts: [styleText],
 })
 class Link extends ReactNextElement implements LinkProps {
   /**
-   * @kind LinkType
-   * @required false
-   * @default default
-   * @description 链接类型
-   * @enums
-   * @group basic
+   * 链接类型
+   * @default "link"
    */
   @property() accessor type: LinkType | undefined;
 
   /**
-   * @kind boolean
-   * @required false
+   * 是否禁用
    * @default false
-   * @description 是否禁用
-   * @group basic
    */
-  @property() accessor disabled: boolean | undefined;
+  @property({ type: Boolean }) accessor disabled: boolean | undefined;
 
   /**
-   * @kind string
-   * @required false
-   * @default -
-   * @description 是否使用原生 <a> 标签，通常用于外链的跳转
-   * @group basic
+   * 设置 `href` 时将使用原生 `<a>` 标签，通常用于外链的跳转
    */
   @property() accessor href: string | undefined;
 
   /**
-   * @kind string
-   * @required false
-   * @default -
-   * @description 链接地址
-   * @group basic
+   * 链接地址
    */
   @property() accessor url: string | undefined;
 
   /**
-   * @kind Target
-   * @required false
-   * @default -
-   * @description 链接跳转类型
-   * @enums
-   * @group basic
+   * 链接跳转目标
    */
   @property() accessor target: Target | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default false
-   * @description 下划线
-   * @group basic
+   * 是否显示下划线
    */
   @property({
     type: Boolean,
@@ -103,20 +76,14 @@ class Link extends ReactNextElement implements LinkProps {
   accessor underline: boolean | undefined;
 
   /**
-   * @kind boolean
-   * @required false
+   * 是否使用 `history.replace` 而不是默认的 `history.push`
    * @default false
-   * @description 是否替换当前url
-   * @group basic
    */
   @property() accessor replace: boolean | undefined;
 
   /**
-   * @kind GeneralIconProps
-   * @required false
-   * @default -
-   * @description 图标
-   * @group basic
+   * 图标
+   * @group io
    */
   @property({
     attribute: false,
@@ -124,10 +91,7 @@ class Link extends ReactNextElement implements LinkProps {
   accessor icon: GeneralIconProps | undefined;
 
   /**
-   * @kind React.CSSProperties
-   * @required false
-   * @default -
-   * @description 链接样式
+   * 链接样式
    * @group other
    */
   @property({ attribute: false }) accessor linkStyle:

@@ -19,38 +19,34 @@ export interface PopoverProps extends SlPopupProps {
   trigger?: TriggerEvent;
   onVisibleChange?: (visible: boolean) => void;
 }
+
 /**
- * @id basic.general-popover
- * @name basic.general-popover
- * @docKind brick
- * @description 弹出层构件
+ * 通用弹出层构件
  * @author sailor
  *
+ * @slot - 弹出层内容
+ * @slot anchor - 触发弹出层的元素
  */
 @defineElement("basic.general-popover", {
   styleTexts: [styleText],
 })
 class Popover extends ReactNextElement implements PopoverProps {
   /**
-   * @default
-   * @required
-   * @description
+   * 弹出层放置位置
    */
   @property()
   accessor placement: Placement | undefined;
 
   /**
-   * @default click
-   * @required false
-   * @description 触发方式
+   * 弹出触发方式
+   * @default "click"
    */
   @property()
   accessor trigger: TriggerEvent | undefined;
 
   /**
-   * @default
-   * @required
-   * @description
+   * 弹出层是否已激活
+   * @default false
    */
   @property({
     type: Boolean,
@@ -58,9 +54,8 @@ class Popover extends ReactNextElement implements PopoverProps {
   accessor active: boolean | undefined;
 
   /**
-   * @default
-   * @required
-   * @description
+   * 弹出层是否显示箭头
+   * @default false
    */
   @property({
     type: Boolean,
@@ -68,29 +63,26 @@ class Popover extends ReactNextElement implements PopoverProps {
   accessor arrow: boolean | undefined;
 
   /**
-   * @default
-   * @required
-   * @description
+   * 弹出层如何定位
+   * @default "absolute"
    */
   @property()
   accessor strategy: "absolute" | "fixed" | undefined;
 
   /**
-   * @default
-   * @required
-   * @description
+   * 将弹出层的宽高与 anchor 元素同步
    */
   @property()
   accessor sync: Sync | undefined;
 
   /**
-   * @detail
-   * @description
+   * 当弹出层可见性变化时触发
+   * @detail 当前是否可见
    */
   @event({ type: "visible.change" })
   accessor #visibleChangeEvent!: EventEmitter<boolean>;
 
-  handleVisibleChange = (visible: boolean): void => {
+  #handleVisibleChange = (visible: boolean): void => {
     this.#visibleChangeEvent.emit(visible);
   };
 
@@ -104,7 +96,7 @@ class Popover extends ReactNextElement implements PopoverProps {
         strategy={this.strategy}
         sync={this.sync}
         active={this.active}
-        onVisibleChange={this.handleVisibleChange}
+        onVisibleChange={this.#handleVisibleChange}
       />
     );
   }

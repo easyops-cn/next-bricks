@@ -28,108 +28,62 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
 );
 
 /**
- * @id basic.general-button
- * @name basic.general-button
- * @docKind brick
- * @description 通用按钮构件
+ * 通用按钮构件
  * @author sailor
- * @noInheritDoc
+ * @slot - 按钮内容
  */
 @defineElement("basic.general-button", {
   styleTexts: [styleText],
 })
 class Button extends ReactNextElement implements ButtonProps {
-  /**
-   * @kind ButtonType
-   * @required false
-   * @default default
-   * @description 按钮类型
-   * @enums
-   * @group basic
-   */
+  /** 按钮类型 */
   @property() accessor type: ButtonType | undefined;
 
   /**
-   * @kind ComponentSize
-   * @required false
-   * @default medium
-   * @description 按钮大小
-   * @enums
-   * @group basic
+   * 按钮大小
+   * @default "medium"
    */
   @property() accessor size: ComponentSize | undefined;
 
   /**
-   * @kind boolean
-   * @required false
+   * 是否开启危险状态
    * @default false
-   * @description 是否开启危险状态
-   * @group basic
    */
   @property({
     type: Boolean,
   })
   accessor danger: boolean | undefined;
 
-  /**
-   * @kind GeneralIconProps
-   * @required false
-   * @default -
-   * @description 图标
-   * @group basic
-   */
+  /** 图标 */
   @property({
     attribute: false,
   })
   accessor icon: GeneralIconProps | undefined;
 
   /**
-   * @kind Shape
-   * @required false
-   * @default -
-   * @description 按钮形状，支持圆形、椭圆形，不设置为默认方形
-   * @enums "circle"|"round"
+   * 按钮形状，支持圆形、椭圆形，不设置为默认方形
    * @group ui
    */
   @property()
   accessor shape: Shape | undefined;
 
   /**
-   * @kind boolean
-   * @required false
+   * 是否禁用
    * @default false
-   * @description 是否禁用
-   * @group basic
    */
   @property({
     type: Boolean,
   })
   accessor disabled: boolean | undefined;
 
-  /**
-   * @kind string
-   * @required false
-   * @default -
-   * @description 链接地址
-   * @group basic
-   */
+  /** 链接地址 */
   @property() accessor href: string | undefined;
 
-  /**
-   * @kind Target
-   * @required false
-   * @default -
-   * @description 链接类型
-   * @enums
-   * @group basic
-   */
+  /** 链接类型 */
   @property() accessor target: string | undefined;
 
   /**
-   * @kind React.CSSProperties
-   * @required false
-   * @default -
-   * @description 按钮样式
+   * 按钮样式
    * @group other
    */
   @property({ attribute: false }) accessor buttonStyle:

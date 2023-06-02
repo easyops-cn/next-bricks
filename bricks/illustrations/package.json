@@ -11,11 +11,13 @@
   "sideEffects": true,
   "files": [
     "dist",
-    "dist-types"
+    "dist-types",
+    "docs"
   ],
   "exports": {
     "./package.json": "./package.json",
     "./dist/bricks.json": "./dist/bricks.json",
+    "./dist/manifest.json": "./dist/manifest.json",
     "./data-providers/*": {
       "types": "./dist-types/data-providers/*.d.ts"
     }
@@ -50,7 +52,7 @@
     "@next-core/utils": "^1.5.2"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.5.3",
+    "@next-core/build-next-bricks": "^1.6.0",
     "@next-core/illustrations": "^0.11.13",
     "@next-core/test-next": "^1.0.6",
     "lodash": "^4.17.21"
