@@ -23,20 +23,6 @@ let originalAnimateFunction: Animate;
 beforeAll(() => {
   originalAnimateFunction = HTMLElement.prototype.animate;
 
-  const obj = {
-    onfinish: () => {
-      //
-    },
-  };
-
-  const animationFunction = function (this: any) {
-    Promise.resolve().then(async () => {
-      act(() => obj.onfinish());
-    });
-
-    return obj as unknown as Animation;
-  };
-
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   HTMLElement.prototype.popup = {
@@ -82,12 +68,10 @@ describe("basic.general-popover", () => {
       >
         <slot
           name="anchor"
-          part="anchor"
           slot="anchor"
         />
         <slot
           hidden=""
-          part="panel"
         />
       </sl-popup>
     `);
@@ -113,12 +97,9 @@ describe("basic.general-popover", () => {
       >
         <slot
           name="anchor"
-          part="anchor"
           slot="anchor"
         />
-        <slot
-          part="panel"
-        />
+        <slot />
       </sl-popup>
     `);
 
@@ -142,12 +123,10 @@ describe("basic.general-popover", () => {
       >
         <slot
           name="anchor"
-          part="anchor"
           slot="anchor"
         />
         <slot
           hidden=""
-          part="panel"
         />
       </sl-popup>
     `);
@@ -191,12 +170,10 @@ describe("basic.general-popover", () => {
       >
         <slot
           name="anchor"
-          part="anchor"
           slot="anchor"
         />
         <slot
           hidden=""
-          part="panel"
         />
       </sl-popup>
     `);
@@ -214,12 +191,9 @@ describe("basic.general-popover", () => {
       >
         <slot
           name="anchor"
-          part="anchor"
           slot="anchor"
         />
-        <slot
-          part="panel"
-        />
+        <slot />
       </sl-popup>
     `);
 
@@ -237,12 +211,10 @@ describe("basic.general-popover", () => {
       >
         <slot
           name="anchor"
-          part="anchor"
           slot="anchor"
         />
         <slot
           hidden=""
-          part="panel"
         />
       </sl-popup>
     `);

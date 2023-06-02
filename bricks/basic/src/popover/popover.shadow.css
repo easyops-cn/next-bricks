@@ -17,21 +17,3 @@ sl-popup[data-current-placement^="left"]::part(popup) {
 sl-popup[data-current-placement^="right"]::part(popup) {
   transform-origin: left;
 }
-
-sl-popup::part(anchor) {
-  display: block;
-}
-
-sl-popup::part(panel) {
-  font-family: var(--sl-font-sans);
-  font-size: var(--sl-font-size-medium);
-  font-weight: var(--sl-font-weight-normal);
-  box-shadow: var(--sl-shadow-large);
-  border-radius: var(--sl-border-radius-medium);
-  pointer-events: none;
-}
-
-sl-popup:active::part(panel) {
-  display: block;
-  pointer-events: all;
-}
