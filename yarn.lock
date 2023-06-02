@@ -2057,10 +2057,10 @@
   resolved "https://registry.yarnpkg.com/@next-core/browserslist-config-next/-/browserslist-config-next-1.0.3.tgz#bb4784d1a815b68635c581436c1de0f4676acc64"
   integrity sha512-zRwACYDXcL8YAA6WRh04eBzf8fCt3W+TdyMdkzM9UvqGG4ii2tsfwnS4Ve/d6nnvuITB/3vMOWNiqMj+218jDA==
 
-"@next-core/build-next-bricks@^1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@next-core/build-next-bricks/-/build-next-bricks-1.6.0.tgz#ddeb2bfa4ddd27258dae03ab60ccb98b931dc1fa"
-  integrity sha512-DWz3snu/4ZzXsTUiICebK8paCyflS/SiXH+ZOrj2HItY9FrlvSHdnwzeZ/8pWFhHdjKWGR/m/eRiNDi9z97MLQ==
+"@next-core/build-next-bricks@^1.7.1":
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/@next-core/build-next-bricks/-/build-next-bricks-1.7.1.tgz#c165b2256011d4c022857fffcd2a33bfbce51478"
+  integrity sha512-bMMB3ZRrlhq4+wlAfcHyJdyxhKBH1oHRw7bidJ2Y34nedxXJQl8+QBbcxCiVs6qc/rPXZqd3lNR2xdNlf4FxIQ==
   dependencies:
     "@babel/parser" "^7.21.9"
     "@babel/traverse" "^7.21.5"
