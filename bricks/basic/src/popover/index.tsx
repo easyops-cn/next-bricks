@@ -239,8 +239,8 @@ function PopoverComponent(props: PopoverProps) {
       ref={popoverRef}
       {...omit(props, ["curElement", "onVisibleChange"])}
     >
-      <slot part="anchor" name="anchor" slot="anchor" ref={triggerRef}></slot>
-      <slot part="panel" ref={defaultRef} hidden={!visible}></slot>
+      <slot name="anchor" slot="anchor" ref={triggerRef}></slot>
+      <slot ref={defaultRef} hidden={!visible}></slot>
     </WrappedSlPopup>
   );
 }
