@@ -67,11 +67,25 @@ export
 })
 class FaIcon extends ReactNextElement implements FaIconProps {
   // Note: `prefix` is a native prop on Element, but it's only used in XML documents.
+  /**
+   * 图标前缀
+   * @default "fas"
+   */
   @property() accessor prefix!: string;
+
+  /** 图标名 */
   @property() accessor icon: string | undefined;
+
+  /** 是否自动旋转 */
   @property({ type: Boolean }) accessor spin: boolean | undefined;
+
+  /** 渐变色起始颜色 */
   @property() accessor startColor: string | undefined;
+
+  /** 渐变色终止颜色 */
   @property() accessor endColor: string | undefined;
+
+  /** 渐变色方向 */
   @property() accessor gradientDirection: GradientDirection | undefined;
 
   render() {

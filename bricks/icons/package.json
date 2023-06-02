@@ -11,7 +11,8 @@
   "sideEffects": true,
   "files": [
     "dist",
-    "dist-types"
+    "dist-types",
+    "docs"
   ],
   "nx": {
     "targets": {
@@ -31,6 +32,7 @@
   "exports": {
     "./package.json": "./package.json",
     "./dist/bricks.json": "./dist/bricks.json",
+    "./dist/manifest.json": "./dist/manifest.json",
     "./*": {
       "types": "./dist-types/*/index.d.ts"
     }
@@ -61,7 +63,7 @@
   },
   "devDependencies": {
     "@next-core/brick-icons": "^2.31.46",
-    "@next-core/build-next-bricks": "^1.5.3",
+    "@next-core/build-next-bricks": "^1.6.0",
     "@next-core/test-next": "^1.0.6",
     "copy-webpack-plugin": "^11.0.0"
   }

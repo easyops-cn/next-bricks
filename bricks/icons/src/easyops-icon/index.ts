@@ -13,7 +13,13 @@ export interface EasyOpsIconProps {
 export
 @defineElement("icons.easyops-icon")
 class EasyOpsIcon extends NextElement implements EasyOpsIconProps {
+  /**
+   * 图标分类
+   * @default "default"
+   */
   @property() accessor category: string | undefined;
+
+  /** 图标名 */
   @property() accessor icon: string | undefined;
 
   #createShadowRoot(): void {

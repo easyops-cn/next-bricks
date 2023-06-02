@@ -4,7 +4,10 @@ import { ReactNextElement } from "@next-core/react-element";
 import { AntdIconProps, WrappedAntdIcon } from "../antd-icon/index.js";
 import { EasyOpsIconProps, WrappedEasyOpsIcon } from "../easyops-icon/index.js";
 import { FaIconProps, WrappedFaIcon } from "../fa-icon/index.js";
-import type { DefineLinearGradientProps, GradientDirection } from "../shared/DefineLinearGradient.js";
+import type {
+  DefineLinearGradientProps,
+  GradientDirection,
+} from "../shared/DefineLinearGradient.js";
 
 const { defineElement, property } = createDecorators();
 
@@ -30,15 +33,42 @@ export interface GeneralIconEvents {
 }
 
 @defineElement("icons.general-icon")
-class GeneralIcon extends ReactNextElement implements DefineLinearGradientProps {
+class GeneralIcon
+  extends ReactNextElement
+  implements DefineLinearGradientProps
+{
+  /** 图标库 */
   @property() accessor lib: "antd" | "easyops" | "fa" | undefined;
+
+  /**
+   * Ant Design 图标主题
+   * @default "outlined"
+   */
   @property() accessor theme: string | undefined;
+
+  /** 图标名 */
   @property() accessor icon: string | undefined;
+
+  /**
+   * EasyOps 图标分类
+   * @default "default"
+   */
   @property() accessor category: string | undefined;
+
   // Note: `prefix` is a native prop on Element, but it's only used in XML documents.
+  /**
+   * FontAwesome 图标前缀
+   * @default "fas"
+   */
   @property() accessor prefix!: string;
+
+  /** 渐变色起始颜色（不适用于 EasyOps 图标） */
   @property() accessor startColor: string | undefined;
+
+  /** 渐变色终止颜色（不适用于 EasyOps 图标） */
   @property() accessor endColor: string | undefined;
+
+  /** 渐变色方向（不适用于 EasyOps 图标） */
   @property() accessor gradientDirection: GradientDirection | undefined;
 
   render() {
