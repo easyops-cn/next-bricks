@@ -29,7 +29,7 @@ describe("basic.dropdown-button", () => {
       document.body.appendChild(element);
     });
     expect(element.shadowRoot).toBeTruthy();
-    expect(element.shadowRoot?.childNodes.length).toBe(1);
+    expect(element.shadowRoot?.childNodes.length).toBe(2);
 
     const mockAClick = jest.fn();
     const mockBClick = jest.fn();
@@ -37,12 +37,12 @@ describe("basic.dropdown-button", () => {
     element.addEventListener("b.click", mockBClick);
 
     expect(element.shadowRoot?.innerHTML).toMatchInlineSnapshot(
-      `"<basic.general-popover placement="bottom"><basic.general-button slot="anchor" size="large" icon="[object Object]">Hello world</basic.general-button><basic.general-menu><basic.general-menu-item text="a" event="a.click">a</basic.general-menu-item><basic.general-menu-item text="b" event="b.click" disabled="">b</basic.general-menu-item></basic.general-menu></basic.general-popover>"`
+      `"<style>dropdown-button.shadow.css</style><basic.general-popover placement="bottom"><basic.general-button slot="anchor" size="large" icon="[object Object]">Hello world</basic.general-button><basic.general-menu><basic.general-menu-item class="wrapped-menu-item" text="a" event="a.click">a</basic.general-menu-item><basic.general-menu-item class="wrapped-menu-item" text="b" event="b.click" disabled="">b</basic.general-menu-item></basic.general-menu></basic.general-popover>"`
     );
 
     act(() => {
       (
-        element.shadowRoot?.children[0]?.children[1]?.children[0] as HTMLElement
+        element.shadowRoot?.children[1]?.children[1]?.children[0] as HTMLElement
       ).click();
     });
 
@@ -50,7 +50,7 @@ describe("basic.dropdown-button", () => {
 
     act(() => {
       (
-        element.shadowRoot?.children[0]?.children[1]?.children[0] as HTMLElement
+        element.shadowRoot?.children[1]?.children[1]?.children[0] as HTMLElement
       ).click();
     });
 

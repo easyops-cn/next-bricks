@@ -2,7 +2,13 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import { createDecorators, EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import { TriggerEvent } from "../interface.js";
-import { Placement, SlPopupProps, Sync, WrappedSlPopup } from "./popup.js";
+import {
+  Placement,
+  SlPopupElement,
+  SlPopupProps,
+  Sync,
+  WrappedSlPopup,
+} from "./popup.js";
 import { omit } from "lodash";
 import styleText from "./popover.shadow.css";
 
@@ -92,8 +98,8 @@ class Popover extends ReactNextElement implements PopoverProps {
     return (
       <PopoverComponent
         curElement={this}
-        trigger={this.trigger}
-        placement={this.placement}
+        trigger={this.trigger ?? "click"}
+        placement={this.placement ?? "bottom"}
         arrow={this.arrow}
         strategy={this.strategy}
         sync={this.sync}
@@ -105,18 +111,66 @@ class Popover extends ReactNextElement implements PopoverProps {
 }
 
 function PopoverComponent(props: PopoverProps) {
-  const {
-    curElement,
-    active = false,
-    trigger = "click",
-    onVisibleChange,
-  } = props;
+  const { curElement, active = false, trigger, onVisibleChange } = props;
+  const popoverRef = useRef<SlPopupElement>(null);
   const defaultRef = useRef<HTMLSlotElement>(null);
   const triggerRef = useRef<HTMLSlotElement>(null);
   const [visible, setVisible] = useState(active);
+
+  const runAnimate = async (
+    element: HTMLElement,
+    keyframes: Keyframe[],
+    options?: KeyframeAnimationOptions
+  ) => {
+    return new Promise((resolve) => {
+      const animation = element.animate(keyframes, {
+        ...options,
+        duration: options!.duration,
+      });
+
+      animation.addEventListener("cancel", resolve, { once: true });
+      animation.addEventListener("finish", resolve, { once: true });
+    });
+  };
+
   const handleVisibleChange = useCallback(
-    (visible: boolean): void => {
-      setVisible(visible);
+    async (visible: boolean): Promise<void> => {
+      const popover = popoverRef.current;
+      if (popover) {
+        visible && setVisible(visible);
+        visible && (popover.active = visible);
+
+        popover.popup &&
+          (await runAnimate(
+            popover.popup,
+            visible
+              ? [
+                  {
+                    opacity: 0,
+                    scale: 0.9,
+                  },
+                  {
+                    opacity: 1,
+                    scale: 1,
+                  },
+                ]
+              : [
+                  {
+                    opacity: 1,
+                    scale: 1,
+                  },
+                  {
+                    opacity: 0,
+                    scale: 0.9,
+                  },
+                ],
+            { duration: 300, easing: "ease" }
+          ));
+
+        !visible && (popover.active = visible);
+        !visible && setVisible(visible);
+      }
+
       onVisibleChange?.(visible);
     },
     [onVisibleChange]
@@ -135,14 +189,14 @@ function PopoverComponent(props: PopoverProps) {
   );
 
   const handleTriggerClick = useCallback(() => {
-    setVisible(!visible);
-  }, [visible]);
+    handleVisibleChange(!visible);
+  }, [visible, handleVisibleChange]);
 
   const handlePopoverOpen = useCallback(
-    () => !visible && setVisible(true),
-    [visible]
+    () => !visible && handleVisibleChange(true),
+    [visible, handleVisibleChange]
   );
-  const handlePopoverClose = () => setVisible(false);
+  const handlePopoverClose = () => handleVisibleChange(false);
 
   useEffect(() => {
     const triggerSlot = triggerRef.current;
@@ -160,15 +214,20 @@ function PopoverComponent(props: PopoverProps) {
       };
     } else if (trigger === "hover") {
       triggerSlot?.addEventListener("mouseover", handlePopoverOpen);
+      triggerSlot?.addEventListener("mouseleave", handleAutoDropdownClose);
       document?.addEventListener("mouseover", handleAutoDropdownClose);
+      document?.addEventListener("click", handlePopoverClose);
 
       return () => {
         triggerSlot?.removeEventListener("mouseover", handlePopoverOpen);
+        triggerSlot?.removeEventListener("mouseleave", handleAutoDropdownClose);
         document?.removeEventListener("mouseover", handleAutoDropdownClose);
+        document?.removeEventListener("click", handlePopoverClose);
       };
     }
   }, [
     handleAutoDropdownClose,
+    handlePopoverClose,
     handlePopoverOpen,
     handleTriggerClick,
     trigger,
@@ -177,13 +236,11 @@ function PopoverComponent(props: PopoverProps) {
 
   return (
     <WrappedSlPopup
-      placement="bottom"
-      trigger="click"
+      ref={popoverRef}
       {...omit(props, ["curElement", "onVisibleChange"])}
-      active={visible}
     >
       <slot name="anchor" slot="anchor" ref={triggerRef}></slot>
-      <slot ref={defaultRef}></slot>
+      <slot ref={defaultRef} hidden={!visible}></slot>
     </WrappedSlPopup>
   );
 }

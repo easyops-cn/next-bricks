@@ -1,3 +1,19 @@
 sl-popup::part(popup) {
   z-index: 700;
 }
+
+sl-popup[data-current-placement^="top"]::part(popup) {
+  transform-origin: bottom;
+}
+
+sl-popup[data-current-placement^="bottom"]::part(popup) {
+  transform-origin: top;
+}
+
+sl-popup[data-current-placement^="left"]::part(popup) {
+  transform-origin: right;
+}
+
+sl-popup[data-current-placement^="right"]::part(popup) {
+  transform-origin: left;
+}

@@ -1,27 +1,9 @@
 :host {
   display: block;
-  position: relative;
-  background: var(--antd-dropdown-menu-bg);
-  border-radius: 6px;
-  overflow: auto;
 }
 
-.menu-item {
-  position: relative;
-  display: flex;
-  align-items: stretch;
-  line-height: 1;
-  letter-spacing: normal;
-  color: var(--text-color-default);
-  padding: 8px 12px;
-  transition: 150ms fill;
-  user-select: none;
-  white-space: nowrap;
-  cursor: pointer;
-}
-
-.menu-item:not(.disabled):hover {
-  background-color: var(--antd-item-hover-bg);
+:host([hidden]) {
+  display: none;
 }
 
 .menu-item.disabled {
@@ -31,4 +13,5 @@
 
 .menu-item-icon {
   margin-right: 4px;
+  vertical-align: middle;
 }
