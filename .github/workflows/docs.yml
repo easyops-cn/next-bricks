@@ -81,6 +81,46 @@ jobs:
     - run: |
         echo "Deploy url: ${{ steps.netlify-deploy.outputs.deploy-url }}"
 
+    - uses: actions/github-script@v6
+      with:
+        github-token: ${{ secrets.GH_TOKEN_EVE }}
+        script: |
+          const comments = (await github.rest.issues.listComments({
+            owner: context.issue.owner,
+            repo: context.issue.repo,
+            issue_number: context.issue.number
+          })).data;
+
+          let commentId;
+          const mark = "<!-- DOCS PREVIEW -->";
+          for (const comment of comments) {
+            if (comment.body.includes(mark)) {
+              commentId = comment.id;
+              break;
+            }
+          }
+
+          const markdownComment = `${mark}\nDocs deployed on ${steps.netlify-deploy.outputs.deploy-url}`;
+
+          if (commentId) {
+            // Comment the deploy URL
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: markdownComment
+            });
+          } else {
+            // Update comment of the deploy URL
+            await github.rest.issues.updateComment({
+              owner: context.issue.owner,
+              repo: context.issue.repo,
+              comment_id: commentId,
+              body: markdownComment
+            });
+          }
+      if: github.event_name == 'pull_request'
+
     # - name: Deploy
     #   uses: peaceiris/actions-gh-pages@v3
     #   with:
