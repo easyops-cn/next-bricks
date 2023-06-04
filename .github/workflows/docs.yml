@@ -100,7 +100,7 @@ jobs:
             }
           }
 
-          const markdownComment = `${mark}\nDocs deployed on ${steps.netlify-deploy.outputs.deploy-url}`;
+          const markdownComment = `${mark}\nDocs deployed on ${{steps.netlify-deploy.outputs.deploy-url}}`;
 
           if (commentId) {
             // Comment the deploy URL
