@@ -1,0 +1,85 @@
+name: Docs
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        repository: easyops-cn/brick-docs
+        ref: refs/heads/master
+        token: ${{ secrets.GH_TOKEN_EVE }}
+
+    - run: mkdir ci-bricks
+
+    - uses: actions/checkout@v3
+      with:
+        path: ci-bricks
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        registry-url: 'https://registry.npmjs.org'
+
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+
+    - name: Cache for yarn
+      uses: actions/cache@v3
+      with:
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: docs-node-cache-${{ runner.os }}-yarn-v3-${{ hashFiles('yarn.lock') }}
+        restore-keys: |
+          docs-node-cache-${{ runner.os }}-yarn-v3-
+
+    - name: Install dependencies (Bricks)
+      run: yarn install --frozen-lockfile
+      working-directory: ./ci-bricks
+
+    - name: Build:manifest (Bricks)
+      run: npx lerna run build:manifest
+      working-directory: ./ci-bricks
+
+    - name: Install dependencies (docs)
+      run: yarn install --frozen-lockfile
+
+    - name: Build (docs)
+      run: yarn build
+
+    - name: Deploy to Netlify
+      uses: nwtgck/actions-netlify@v2.0
+      with:
+        publish-dir: './build'
+        production-branch: master
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        deploy-message: ${{ github.event.pull_request.title }}
+        alias: docs-deploy-preview-${{ github.event.number }}
+        netlify-config-path: ./ci-bricks/netlify.toml
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      timeout-minutes: 2
+      if: github.event_name == 'pull_request'
+
+    # - name: Deploy
+    #   uses: peaceiris/actions-gh-pages@v3
+    #   with:
+    #     github_token: ${{ secrets.GITHUB_TOKEN }}
+    #     publish_dir: ./dist
+    #     publish_branch: gh-pages
+    #     force_orphan: true
+    #   if: github.event_name == 'push'
