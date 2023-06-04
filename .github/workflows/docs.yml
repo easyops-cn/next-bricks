@@ -61,19 +61,25 @@ jobs:
       run: yarn build
 
     - name: Deploy to Netlify
+      id: netlify-deploy
       uses: nwtgck/actions-netlify@v2.0
       with:
         publish-dir: './build'
         production-branch: master
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        deploy-message: ${{ github.event.pull_request.title }}
-        alias: docs-deploy-preview-${{ github.event.number }}
+        deploy-message: "Docs - ${{ github.event.pull_request.title }}"
+        alias: docs-preview-${{ github.event.number }}
         netlify-config-path: ./ci-bricks/netlify.toml
+        enable-pull-request-comment: false
+        enable-github-deployment: false
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
       timeout-minutes: 2
       if: github.event_name == 'pull_request'
+
+    - run: |
+        echo "Deploy url: ${{ steps.netlify-deploy.outputs.deploy-url }}"
 
     # - name: Deploy
     #   uses: peaceiris/actions-gh-pages@v3
