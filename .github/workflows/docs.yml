@@ -1,13 +1,49 @@
 name: Docs
 
 on:
-  push:
-    branches: [ master ]
+  # push:
+  #   branches: [ master ]
   pull_request:
     branches: [ master ]
 
 jobs:
-  build:
+  build_brick_manifests:
+    name: Build brick manifests
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        registry-url: 'https://registry.npmjs.org'
+        cache: yarn
+
+    - name: Install dependencies (Bricks)
+      run: yarn install --frozen-lockfile
+
+    - name: Build:manifest (Bricks)
+      run: npx lerna run build:manifest
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: brick-manifests
+        path: |
+          bricks/*/dist/manifest.json
+          bricks/*/dist/package.json
+          bricks/*/docs/*.md
+          netlify.toml
+
+  build_docs:
+    name: Build docs
+    needs: build_brick_manifests
 
     runs-on: ubuntu-latest
 
@@ -22,17 +58,10 @@ jobs:
         ref: refs/heads/master
         token: ${{ secrets.GH_TOKEN_EVE }}
 
-    - run: mkdir ci-bricks
-
-    - uses: actions/checkout@v3
+    - uses: actions/download-artifact@v3
       with:
+        name: brick-manifests
         path: ci-bricks
-
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        registry-url: 'https://registry.npmjs.org'
 
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path
@@ -45,14 +74,6 @@ jobs:
         key: docs-node-cache-${{ runner.os }}-yarn-v3-${{ hashFiles('yarn.lock') }}
         restore-keys: |
           docs-node-cache-${{ runner.os }}-yarn-v3-
-
-    - name: Install dependencies (Bricks)
-      run: yarn install --frozen-lockfile
-      working-directory: ./ci-bricks
-
-    - name: Build:manifest (Bricks)
-      run: npx lerna run build:manifest
-      working-directory: ./ci-bricks
 
     - name: Install dependencies (docs)
       run: yarn install --frozen-lockfile
