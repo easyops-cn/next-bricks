@@ -4,6 +4,13 @@ import { act } from "@testing-library/react";
 import { LaunchpadButton } from "./index.js";
 jest.mock("@next-core/theme", () => ({}));
 
+jest.mock("@next-core/i18n", () => ({
+  i18n: {
+    addResourceBundle: jest.fn(),
+    t: (name: string) => name,
+  },
+}));
+
 import { getRuntime, getHistory } from "@next-core/runtime";
 
 jest.mock("@next-core/runtime");

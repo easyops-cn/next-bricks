@@ -81,7 +81,7 @@ const spyOnGetLaunchpadInfo = LaunchpadApi_getLaunchpadInfo as jest.Mock;
 jest.mock("@next-core/runtime", () => {
   return {
     getRuntime: () => ({
-      getMicroApp: (): MicroApp => ({
+      getCurrentApp: (): MicroApp => ({
         id: "a",
         name: "a",
         homepage: "/a",
@@ -265,8 +265,8 @@ describe("LaunchpadService", () => {
         name: "DevOps持续交付",
         id: "DevOpsContinuousDelivery",
         apps: [
-          { id: "c", sort: 1, name: "c", homepage: "/c" },
-          { id: "d", sort: 2, name: "d", homepage: "/d" },
+          { id: "c", sort: 1 },
+          { id: "d", sort: 2 },
         ],
       },
       {

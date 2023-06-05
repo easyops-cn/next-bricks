@@ -4,6 +4,13 @@ import { getRuntime, getHistory } from "@next-core/runtime";
 import { LaunchpadButton } from "./LaunchpadButton.js";
 jest.mock("@next-core/runtime");
 
+jest.mock("@next-core/i18n", () => ({
+  i18n: {
+    addResourceBundle: jest.fn(),
+    t: (name: string) => name,
+  },
+}));
+
 type ListenerFn = () => void;
 
 const listeners = new Set<ListenerFn>();
@@ -56,7 +63,7 @@ describe("LaunchpadButton", () => {
   it("should work", async () => {
     const { container } = render(<LaunchpadButton />);
     expect(document.body.innerHTML).toEqual(
-      '<div><a role="button" class="launchpadLink"><svg class="launchpadIcon" width="16" height="16">launchpad.svg</svg></a></div><div></div>'
+      '<div><a role="button" class="launchpadLink"><svg>launchpad.svg</svg></a></div><div></div>'
     );
 
     expect(document.querySelector(".launchpadContainer")).toBeFalsy();
