@@ -1,0 +1,71 @@
+.dirLink {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  width: 80px;
+  height: 80px;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  font-size: 21px;
+  padding: 7px;
+  /* overflow: hidden; */
+
+  &.small {
+    width: 56px;
+    height: 56px;
+  }
+
+  .appIcon,
+  :global(.anticon) {
+    width: 33px;
+    height: 33px;
+  }
+
+  :global(.anticon) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+.dirName {
+  display: block;
+  font-size: 16px;
+  line-height: 1.5;
+  height: 24px;
+  text-align: center;
+}
+
+@media (max-height: 860px), (max-width: 1280px) {
+  .dirLink {
+    transform: scale(0.75);
+  }
+  .dirName {
+    font-size: 14px;
+    height: 21px;
+  }
+}
+
+@media (max-height: 700px), (max-width: 1024px) {
+  .dirLink {
+    transform: scale(0.6);
+  }
+  .dirName {
+    font-size: 12px;
+    height: 18px;
+  }
+}
+
+@media (max-height: 640px), (max-width: 900px) {
+  .dirLink {
+    transform: scale(0.5);
+  }
+}

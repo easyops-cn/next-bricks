@@ -1,0 +1,74 @@
+.searchBar {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 10%;
+
+  .inputAffixWrapper {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    padding: 4px 11px;
+    color: var(--antd-input-color);
+    font-size: 14px;
+    line-height: 1.5715;
+    background-image: none;
+    display: inline-flex;
+    height: 42px;
+    border-radius: 21px;
+    padding-left: 54px;
+    padding-right: 4px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.06);
+    transition: padding-left 150ms ease-out;
+    box-sizing: border-box;
+
+    &:hover {
+      border-color: #0071eb;
+      border-right-width: 2px !important;
+    }
+
+    .antInputPrefix {
+      width: 30px;
+      margin-left: 0;
+      margin-right: 6px;
+      display: flex;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.65);
+      flex: none;
+      align-items: center;
+      box-sizing: border-box;
+    }
+  }
+
+  .inputAffixWrapper::before {
+    width: 0;
+    visibility: hidden;
+    content: "\a0";
+  }
+
+  &.focus .inputAffixWrapper,
+  .inputAffixWrapperFocused {
+    padding-left: 4px;
+    border-color: #2893f7;
+    border-right-width: 2px !important;
+  }
+}
+
+.inputContainer {
+  width: 300px;
+}
+
+input {
+  padding: 0;
+  border: none;
+  outline: none;
+  color: #fff;
+  background-color: transparent;
+  text-overflow: ellipsis;
+  border-radius: 3px;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.25);
+  }
+}
