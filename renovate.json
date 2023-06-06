@@ -8,9 +8,11 @@
   "ignorePresets": [":ignoreModulesAndTests"],
   "packageRules": [
     {
-      "matchPackagePatterns": [
-        "^@next-core/"
-      ],
+      "excludePackagePatterns": ["^@next-core/", "^@next-dll/"],
+      "enabled": false
+    },
+    {
+      "matchPackagePatterns": ["^@next-core/"],
       "excludePackageNames": [
         "@next-core/brick-dll-v3",
         "@next-core/styles-v3",
@@ -30,21 +32,6 @@
       "matchPackagePatterns": ["^@next-dll/"],
       "enabled": true,
       "groupName": "legacy v2 packages",
-      "assignees": ["weareoutman"]
-    },
-    {
-      "matchPackageNames": ["history", "js-yaml", "node", "react", "react-dom"],
-      "matchPackagePatterns": ["^@types/"],
-      "matchUpdateTypes": ["major"],
-      "enabled": false
-    },
-    {
-      "depTypeList": ["engines"],
-      "enabled": false
-    },
-    {
-      "groupName": "type packages",
-      "matchPackagePatterns": ["^@types/"],
       "assignees": ["weareoutman"]
     }
   ],
