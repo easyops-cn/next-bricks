@@ -134,7 +134,7 @@ function WorkbenchPaneComponent({
         onScroll={handleScroll}
         ref={scrollBodyRef}
       >
-        <slot name="content">
+        <slot>
           <div
             style={{
               padding: "10px 20px",

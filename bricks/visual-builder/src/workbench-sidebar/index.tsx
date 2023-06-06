@@ -21,7 +21,7 @@ class WorkbenchSidebar extends ReactNextElement {
   @property() accessor titleLabel: string | undefined;
 
   #getPaneSlot = (): HTMLSlotElement => {
-    return this.shadowRoot?.querySelector("slot[name='panes']");
+    return this.shadowRoot?.querySelector("slot:not([name])");
   };
 
   #reflowPanes = (): void => {
@@ -75,7 +75,7 @@ function WorkbenchSidebarComponent({
         <slot name="titleToolbar" />
       </div>
       <div className="pane-container">
-        <slot name="panes" />
+        <slot />
       </div>
     </div>
   );
