@@ -70,8 +70,17 @@ jobs:
       if: github.event_name == 'push'
 
     - name: Compress artifacts
-      run: |
-        tar --exclude='*.map' --exclude='bricks/devtools' --exclude='bricks/v2-adapter' -cvf bricks.tar bricks/*/dist bricks/*/docs netlify.toml
+      run: >-
+        tar
+        --exclude='*.map'
+        --exclude='bricks/devtools'
+        --exclude='bricks/v2-adapter'
+        -cvf bricks.tar
+        bricks/*/dist
+        bricks/*/docs
+        bricks/*/src/**/example.yaml
+        bricks/*/src/**/example.html
+        netlify.toml
 
     - uses: actions/upload-artifact@v3
       with:
