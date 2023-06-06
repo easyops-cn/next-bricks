@@ -4,7 +4,7 @@
 Bricks for Brick Next V3
 
 - [Docs](https://bricks.js.org)
-- [Playground](https://easyops-cn.github.io/next-bricks/playground/?example=basic%2Fgeneral-button%2Ftypes)
+- [Playground](https://bricks.js.org/playground)
 
 ## Contributing
 
