@@ -3,8 +3,7 @@ properties:
   style:
     height: 500px
 children:
-  - slot: panes
-    brick: visual-builder.workbench-pane
+  - brick: visual-builder.workbench-pane
     properties:
       id: route-pane
       titleLabel: ROUTES
@@ -12,13 +11,11 @@ children:
     events:
       active.change:
         - action: console.log
-  - slot: panes
-    brick: visual-builder.workbench-pane
+  - brick: visual-builder.workbench-pane
     properties:
       titleLabel: BRICK TREE
       activeFlex: 1 1 180px
-  - slot: panes
-    brick: visual-builder.workbench-pane
+  - brick: visual-builder.workbench-pane
     properties:
       titleLabel: DATA
       activeFlex: 2 2 360px

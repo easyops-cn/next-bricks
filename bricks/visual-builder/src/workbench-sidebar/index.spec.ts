@@ -13,11 +13,11 @@ describe("visual-builder.workbench-sidebar", () => {
     ) as WorkbenchSidebar;
 
     const span1 = document.createElement("span");
-    span1.setAttribute("slot", "panes");
+    span1.setAttribute("slot", "");
     (span1 as any).active = true;
 
     const span2 = document.createElement("span");
-    span2.setAttribute("slot", "panes");
+    span2.setAttribute("slot", "");
 
     element.appendChild(span1);
     element.appendChild(span2);
