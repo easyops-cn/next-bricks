@@ -1,0 +1,15 @@
+{
+  "id": "bricks/presentational",
+  "bricks": [
+    "presentational.general-descriptions"
+  ],
+  "elements": [],
+  "processors": [],
+  "dependencies": {
+    "presentational.general-descriptions": [
+      "containers.general-card",
+      "containers.grid-layout"
+    ]
+  },
+  "filePath": "bricks/presentational/dist/index.3239e967.js"
+}

@@ -1,0 +1,68 @@
+{
+  "id": "bricks/data-view",
+  "bricks": [
+    "data-view.gauge-chart",
+    "data-view.modern-style-component-title",
+    "data-view.modern-style-page-title",
+    "data-view.tabs-drawer",
+    "data-view.modern-style-treemap",
+    "data-view.battery-chart",
+    "data-view.dropdown-menu",
+    "data-view.complex-search",
+    "data-view.loading-panel",
+    "data-view.particle-animation",
+    "data-view.app-wall-card-item",
+    "data-view.app-wall-system-card",
+    "data-view.app-wall-relation-line",
+    "data-view.cabinet-button",
+    "data-view.cabinet-node",
+    "data-view.cabinet-app-layer",
+    "data-view.cabinet-container",
+    "data-view.cabinet-thumbnail",
+    "data-view.cabinet-graph",
+    "data-view.app-wall",
+    "data-view.graph-text",
+    "data-view.graph-node",
+    "data-view.graph-layout-grid",
+    "data-view.radar-chart",
+    "data-view.grid-background",
+    "data-view.gear-background"
+  ],
+  "elements": [],
+  "processors": [],
+  "dependencies": {
+    "data-view.tabs-drawer": [
+      "icons.general-icon"
+    ],
+    "data-view.dropdown-menu": [
+      "icons.general-icon"
+    ],
+    "data-view.complex-search": [
+      "icons.general-icon"
+    ],
+    "data-view.app-wall-system-card": [
+      "icons.general-icon"
+    ],
+    "data-view.cabinet-container": [
+      "data-view.cabinet-node"
+    ],
+    "data-view.cabinet-thumbnail": [
+      "data-view.cabinet-app-layer",
+      "data-view.cabinet-node"
+    ],
+    "data-view.cabinet-graph": [
+      "data-view.cabinet-app-layer",
+      "data-view.cabinet-button",
+      "data-view.cabinet-container"
+    ],
+    "data-view.app-wall": [
+      "data-view.app-wall-card-item",
+      "data-view.cabinet-thumbnail"
+    ],
+    "data-view.graph-layout-grid": [
+      "data-view.graph-node",
+      "data-view.graph-text"
+    ]
+  },
+  "filePath": "bricks/data-view/dist/index.888aa6bc.js"
+}

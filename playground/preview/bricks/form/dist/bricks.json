@@ -1,0 +1,52 @@
+{
+  "id": "bricks/form",
+  "bricks": [
+    "form.general-input",
+    "form.general-textarea",
+    "form.general-radio",
+    "form.general-form",
+    "form.general-select",
+    "form.submit-buttons",
+    "form.general-form-item",
+    "form.general-checkbox",
+    "form.code-editor",
+    "form.dynamic-form-item"
+  ],
+  "elements": [],
+  "processors": [],
+  "dependencies": {
+    "form.general-input": [
+      "form.general-form-item"
+    ],
+    "form.general-textarea": [
+      "form.general-form-item"
+    ],
+    "form.general-radio": [
+      "icons.general-icon",
+      "form.general-form-item"
+    ],
+    "form.general-select": [
+      "form.general-form-item",
+      "basic.general-tag",
+      "icons.general-icon"
+    ],
+    "form.submit-buttons": [
+      "form.general-form-item",
+      "basic.general-button"
+    ],
+    "form.general-checkbox": [
+      "form.general-form-item",
+      "icons.general-icon"
+    ],
+    "form.code-editor": [
+      "form.general-form-item"
+    ],
+    "form.dynamic-form-item": [
+      "icons.general-icon",
+      "basic.general-button",
+      "form.general-form",
+      "form.general-form-item"
+    ]
+  },
+  "filePath": "bricks/form/dist/index.63197efd.js"
+}

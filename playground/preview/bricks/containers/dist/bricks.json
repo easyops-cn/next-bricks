@@ -1,0 +1,38 @@
+{
+  "id": "bricks/containers",
+  "bricks": [
+    "containers.micro-view",
+    "containers.general-category",
+    "containers.general-modal",
+    "containers.general-card",
+    "containers.general-drawer",
+    "containers.grid-layout",
+    "containers.flex-layout",
+    "containers.easy-view",
+    "containers.tab-group",
+    "containers.tab-item",
+    "containers.tab-list"
+  ],
+  "elements": [],
+  "processors": [],
+  "dependencies": {
+    "containers.general-modal": [
+      "basic.general-button",
+      "icons.general-icon"
+    ],
+    "containers.general-card": [
+      "basic.general-button"
+    ],
+    "containers.general-drawer": [
+      "icons.general-icon"
+    ],
+    "containers.tab-item": [
+      "icons.general-icon"
+    ],
+    "containers.tab-list": [
+      "containers.tab-group",
+      "containers.tab-item"
+    ]
+  },
+  "filePath": "bricks/containers/dist/index.86908549.js"
+}

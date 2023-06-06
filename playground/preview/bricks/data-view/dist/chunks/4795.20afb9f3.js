@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk_next_bricks_data_view=self.webpackChunk_next_bricks_data_view||[]).push([[4795],{4795:(n,e,t)=>{function r(n,e,t,r,i,u,c){try{var o=n[u](c),a=o.value}catch(n){return void t(n)}o.done?e(a):Promise.resolve(a).then(r,i)}function i(n){return function(){var e=this,t=arguments;return new Promise((function(i,u){var c=n.apply(e,t);function o(n){r(c,i,u,o,a,"next",n)}function a(n){r(c,i,u,o,a,"throw",n)}o(void 0)}))}}t.d(e,{Z:()=>i})}}]);
+//# sourceMappingURL=4795.20afb9f3.js.map

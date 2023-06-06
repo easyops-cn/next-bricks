@@ -1,0 +1,506 @@
+{
+  "manifest_version": 1,
+  "package": "@next-bricks/advanced",
+  "name": "advanced",
+  "bricks": [
+    {
+      "name": "advanced.general-table",
+      "properties": [
+        {
+          "name": "showCard",
+          "description": "",
+          "required": true,
+          "default": "true"
+        },
+        {
+          "name": "rowSelection",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "attribute": false,
+          "type": "false | TableRowSelection<any>"
+        },
+        {
+          "name": "rowKey",
+          "description": "",
+          "required": true,
+          "default": "\"key\"",
+          "type": "string"
+        },
+        {
+          "name": "hiddenColumns",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "attribute": false,
+          "type": "Array<string | number>"
+        },
+        {
+          "name": "showSelectInfo",
+          "description": "",
+          "required": true,
+          "default": "false"
+        },
+        {
+          "name": "filters",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "attribute": false,
+          "type": "Record<string, string[]>"
+        },
+        {
+          "name": "configProps",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "attribute": false,
+          "type": "any"
+        },
+        {
+          "name": "sort",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "type": "string | null"
+        },
+        {
+          "name": "order",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "attribute": false,
+          "type": "string | number | null"
+        },
+        {
+          "name": "rowDisabledConfig",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "attribute": false,
+          "type": "RowDisabledProps | RowDisabledProps[]"
+        },
+        {
+          "name": "expandedRowBrick",
+          "description": "",
+          "attribute": false,
+          "type": "{\n        useBrick?: UseSingleBrickConf;\n      }"
+        },
+        {
+          "name": "expandIcon",
+          "description": "",
+          "attribute": false,
+          "type": "{\n        collapsedIcon: GeneralIconProps;\n        expandedIcon: GeneralIconProps;\n      }"
+        },
+        {
+          "name": "expandIconAsCell",
+          "description": "",
+          "required": true,
+          "default": "true",
+          "attribute": false
+        },
+        {
+          "name": "expandIconColumnIndex",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "type": "number"
+        },
+        {
+          "name": "expandRowByClick",
+          "description": "",
+          "required": true,
+          "default": "false",
+          "type": "boolean"
+        },
+        {
+          "name": "optimizedColumns",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "attribute": false,
+          "type": "Array<string | number>"
+        },
+        {
+          "name": "stripEmptyExpandableChildren",
+          "description": "",
+          "required": true,
+          "default": "false",
+          "attribute": false
+        },
+        {
+          "name": "defaultExpandAllRows",
+          "description": "",
+          "required": true,
+          "default": "false",
+          "type": "boolean"
+        },
+        {
+          "name": "ellipsisInfo",
+          "description": "",
+          "required": true,
+          "default": "false",
+          "type": "boolean"
+        },
+        {
+          "name": "expandedRowKeys",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "attribute": false,
+          "type": "string[]"
+        },
+        {
+          "name": "selectAllChildren",
+          "description": "",
+          "required": true,
+          "default": "false",
+          "type": "boolean"
+        },
+        {
+          "name": "defaultSelectAll",
+          "description": "",
+          "required": true,
+          "default": "false",
+          "type": "boolean"
+        },
+        {
+          "name": "childrenColumnName",
+          "description": "",
+          "required": true,
+          "default": "children",
+          "attribute": false
+        },
+        {
+          "name": "sortable",
+          "description": "",
+          "required": true,
+          "default": "true",
+          "attribute": false
+        },
+        {
+          "name": "frontSearch",
+          "description": "",
+          "required": true,
+          "default": "false",
+          "type": "boolean"
+        },
+        {
+          "name": "frontSearchQuery",
+          "description": "",
+          "required": true,
+          "default": "-"
+        },
+        {
+          "name": "exactSearch",
+          "description": "",
+          "required": true,
+          "default": "false",
+          "type": "boolean"
+        },
+        {
+          "name": "frontSearchFilterKeys",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "attribute": false,
+          "type": "string[]"
+        },
+        {
+          "name": "page",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "type": "number"
+        },
+        {
+          "name": "pageSize",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "type": "number"
+        },
+        {
+          "name": "scrollConfigs",
+          "description": "",
+          "default": "{ x: true }",
+          "attribute": false,
+          "type": "TableProps<unknown>[\"scroll\"]"
+        },
+        {
+          "name": "qField",
+          "description": "",
+          "required": true,
+          "default": "\"q\""
+        },
+        {
+          "name": "tableDraggable",
+          "description": "",
+          "required": true,
+          "default": "false",
+          "type": "boolean"
+        },
+        {
+          "name": "zebraPattern",
+          "description": "",
+          "required": true,
+          "default": "false",
+          "type": "boolean"
+        },
+        {
+          "name": "storeCheckedByUrl",
+          "description": "",
+          "required": true,
+          "default": "false",
+          "type": "boolean"
+        },
+        {
+          "name": "extraRows",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "attribute": false,
+          "type": "Record<string, unknown>[]"
+        },
+        {
+          "name": "autoSelectParentWhenAllChildrenSelected",
+          "description": "",
+          "required": true,
+          "default": "false",
+          "type": "boolean"
+        },
+        {
+          "name": "thTransparent",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "type": "boolean"
+        },
+        {
+          "name": "showHeader",
+          "description": "",
+          "required": true,
+          "default": "true"
+        },
+        {
+          "name": "pagination",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "attribute": false,
+          "type": "false | TablePaginationConfig"
+        },
+        {
+          "name": "size",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "type": "SizeType"
+        },
+        {
+          "name": "type",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "attribute": false,
+          "type": "RowSelectionType"
+        },
+        {
+          "name": "shouldUpdateUrlParams",
+          "description": "",
+          "required": true,
+          "default": "true"
+        },
+        {
+          "name": "shouldRenderWhenUrlParamsUpdate",
+          "description": "",
+          "required": true,
+          "default": "true"
+        },
+        {
+          "name": "selectedRowKeys",
+          "description": "",
+          "required": true,
+          "default": "[]",
+          "attribute": false,
+          "type": "React.Key[]"
+        }
+      ],
+      "events": [
+        {
+          "name": "page.update",
+          "description": "",
+          "detail": {
+            "description": "{[pagePath]: xxx}",
+            "type": "Record<string, number>"
+          }
+        },
+        {
+          "name": "filter.update",
+          "description": "",
+          "detail": {
+            "description": "{[pagePath]:1,[pageSizePath]:xxx}",
+            "type": "Record<string, number>"
+          }
+        },
+        {
+          "name": "select.update",
+          "description": "",
+          "detail": {
+            "description": "Record<string,any>[]",
+            "type": "Record<string, any>[]"
+          }
+        },
+        {
+          "name": "select.row.keys.update",
+          "description": "",
+          "detail": {
+            "description": "Record<string,any>[]",
+            "type": "string[]"
+          }
+        },
+        {
+          "name": "sort.update",
+          "description": "",
+          "detail": {
+            "description": "{sort:string;order:string|number}",
+            "type": "{\n    sort: string;\n    order: string | number;\n  }"
+          }
+        },
+        {
+          "name": "row.expand",
+          "description": "",
+          "detail": {
+            "description": "{expanded:boolean;record:Record<string,any>}",
+            "type": "{\n    expanded: boolean;\n    record: Record<string, any>;\n  }"
+          }
+        },
+        {
+          "name": "expand.rows.change",
+          "description": "",
+          "detail": {
+            "description": "{expandedRows:string[]| number[]}",
+            "type": "{\n    expandedRows: React.Key[];\n  }"
+          }
+        },
+        {
+          "name": "row.drag",
+          "description": "",
+          "detail": {
+            "description": "{data:Record<string,any>[]}",
+            "type": "{\n    data: Record<string, any>[];\n  }"
+          }
+        }
+      ],
+      "slots": [],
+      "methods": [
+        {
+          "name": "filterSourceData",
+          "params": [
+            "event: CustomEvent"
+          ],
+          "description": "",
+          "return": {
+            "type": "void"
+          }
+        },
+        {
+          "name": "expandAll",
+          "params": [],
+          "description": ""
+        }
+      ],
+      "description": ""
+    },
+    {
+      "name": "advanced.general-cascader",
+      "properties": [
+        {
+          "name": "options",
+          "attribute": false,
+          "type": "AntdCascaderProps[\"options\"]"
+        },
+        {
+          "name": "fieldNames",
+          "attribute": false,
+          "type": "AntdCascaderProps[\"fieldNames\"]",
+          "default": "{\n    label: \"label\",\n    value: \"value\",\n    children: \"children\",\n  }"
+        },
+        {
+          "name": "value",
+          "attribute": false,
+          "type": "AntdCascaderProps[\"value\"]"
+        },
+        {
+          "name": "placeholder",
+          "type": "string"
+        },
+        {
+          "name": "multiple",
+          "type": "boolean"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean"
+        },
+        {
+          "name": "allowClear",
+          "type": "boolean",
+          "default": "true"
+        },
+        {
+          "name": "showSearch",
+          "type": "boolean",
+          "default": "true"
+        },
+        {
+          "name": "suffixIcon",
+          "attribute": false,
+          "type": "GeneralIconProps"
+        },
+        {
+          "name": "expandTrigger",
+          "type": "AntdCascaderProps[\"expandTrigger\"]",
+          "default": "\"click\""
+        },
+        {
+          "name": "popupPlacement",
+          "type": "AntdCascaderProps[\"placement\"]",
+          "default": "\"bottomLeft\""
+        },
+        {
+          "name": "size",
+          "type": "AntdCascaderProps[\"size\"]"
+        },
+        {
+          "name": "limit",
+          "type": "number",
+          "default": "50"
+        },
+        {
+          "name": "maxTagCount",
+          "attribute": false,
+          "type": "number | \"responsive\""
+        },
+        {
+          "name": "cascaderStyle",
+          "attribute": false,
+          "type": "CSSProperties"
+        }
+      ],
+      "events": [
+        {
+          "name": "cascader.change",
+          "description": "",
+          "detail": {
+            "description": "{ value: AntdCascaderProps[\"value\"], selectedOptions: DefaultOptionType[] | DefaultOptionType[][] }",
+            "type": "{\n    value: AntdCascaderProps[\"value\"];\n    selectedOptions: DefaultOptionType[] | DefaultOptionType[][];\n  }"
+          }
+        }
+      ],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    }
+  ]
+}

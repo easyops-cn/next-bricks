@@ -1,0 +1,150 @@
+{
+  "manifest_version": 1,
+  "package": "@next-bricks/icons",
+  "name": "icons",
+  "bricks": [
+    {
+      "name": "icons.antd-icon",
+      "properties": [
+        {
+          "name": "theme",
+          "description": "图标主题",
+          "default": "\"outlined\"",
+          "type": "string"
+        },
+        {
+          "name": "icon",
+          "description": "图标名",
+          "type": "string"
+        },
+        {
+          "name": "startColor",
+          "description": "渐变色起始颜色",
+          "type": "string"
+        },
+        {
+          "name": "endColor",
+          "description": "渐变色终止颜色",
+          "type": "string"
+        },
+        {
+          "name": "gradientDirection",
+          "description": "渐变色方向",
+          "type": "GradientDirection"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "methods": []
+    },
+    {
+      "name": "icons.easyops-icon",
+      "properties": [
+        {
+          "name": "category",
+          "description": "图标分类",
+          "default": "\"default\"",
+          "type": "string"
+        },
+        {
+          "name": "icon",
+          "description": "图标名",
+          "type": "string"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "methods": []
+    },
+    {
+      "name": "icons.fa-icon",
+      "properties": [
+        {
+          "name": "prefix",
+          "description": "图标前缀",
+          "default": "\"fas\"",
+          "type": "string"
+        },
+        {
+          "name": "icon",
+          "description": "图标名",
+          "type": "string"
+        },
+        {
+          "name": "spin",
+          "description": "是否自动旋转",
+          "type": "boolean"
+        },
+        {
+          "name": "startColor",
+          "description": "渐变色起始颜色",
+          "type": "string"
+        },
+        {
+          "name": "endColor",
+          "description": "渐变色终止颜色",
+          "type": "string"
+        },
+        {
+          "name": "gradientDirection",
+          "description": "渐变色方向",
+          "type": "GradientDirection"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "methods": []
+    },
+    {
+      "name": "icons.general-icon",
+      "properties": [
+        {
+          "name": "lib",
+          "description": "图标库",
+          "type": "\"antd\" | \"easyops\" | \"fa\""
+        },
+        {
+          "name": "theme",
+          "description": "Ant Design 图标主题",
+          "default": "\"outlined\"",
+          "type": "string"
+        },
+        {
+          "name": "icon",
+          "description": "图标名",
+          "type": "string"
+        },
+        {
+          "name": "category",
+          "description": "EasyOps 图标分类",
+          "default": "\"default\"",
+          "type": "string"
+        },
+        {
+          "name": "prefix",
+          "description": "FontAwesome 图标前缀",
+          "default": "\"fas\"",
+          "type": "string"
+        },
+        {
+          "name": "startColor",
+          "description": "渐变色起始颜色（不适用于 EasyOps 图标）",
+          "type": "string"
+        },
+        {
+          "name": "endColor",
+          "description": "渐变色终止颜色（不适用于 EasyOps 图标）",
+          "type": "string"
+        },
+        {
+          "name": "gradientDirection",
+          "description": "渐变色方向（不适用于 EasyOps 图标）",
+          "type": "GradientDirection"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "methods": []
+    }
+  ]
+}

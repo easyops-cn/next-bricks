@@ -1,0 +1,42 @@
+{
+  "manifest_version": 1,
+  "package": "@next-bricks/markdown",
+  "name": "markdown",
+  "bricks": [
+    {
+      "name": "markdown.markdown-editor",
+      "properties": [
+        {
+          "name": "value",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "bucketName",
+          "description": "",
+          "type": "string"
+        }
+      ],
+      "events": [
+        {
+          "name": "image.upload",
+          "description": "",
+          "detail": {
+            "description": null,
+            "type": "ImageInfo"
+          }
+        },
+        {
+          "name": "markdown.value.change",
+          "description": "",
+          "detail": {
+            "description": null,
+            "type": "string"
+          }
+        }
+      ],
+      "slots": [],
+      "methods": []
+    }
+  ]
+}

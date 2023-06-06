@@ -1,0 +1,18 @@
+{
+  "id": "bricks/advanced",
+  "bricks": [
+    "advanced.general-table",
+    "advanced.general-cascader"
+  ],
+  "elements": [],
+  "processors": [],
+  "dependencies": {
+    "advanced.general-table": [
+      "icons.general-icon"
+    ],
+    "advanced.general-cascader": [
+      "icons.general-icon"
+    ]
+  },
+  "filePath": "bricks/advanced/dist/index.808daae4.js"
+}

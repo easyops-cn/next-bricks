@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_next_bricks_v2_adapter=self.webpackChunk_next_bricks_v2_adapter||[]).push([[4303],{4303:(e,_,s)=>{s.r(_)}}]);

@@ -1,0 +1,562 @@
+{
+  "manifest_version": 1,
+  "package": "@next-bricks/containers",
+  "name": "containers",
+  "bricks": [
+    {
+      "name": "containers.micro-view",
+      "properties": [
+        {
+          "name": "pageTitle",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "type": "string"
+        },
+        {
+          "name": "hasToolbar",
+          "type": "boolean"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    },
+    {
+      "name": "containers.general-category",
+      "properties": [
+        {
+          "name": "categories",
+          "description": "",
+          "attribute": false,
+          "type": "categoryProps[]"
+        },
+        {
+          "name": "contentStyle",
+          "description": "",
+          "attribute": false,
+          "type": "React.CSSProperties"
+        },
+        {
+          "name": "headerStyle",
+          "description": "",
+          "attribute": false,
+          "type": "React.CSSProperties"
+        },
+        {
+          "name": "containerStyle",
+          "description": "",
+          "attribute": false,
+          "type": "React.CSSProperties"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    },
+    {
+      "name": "containers.general-modal",
+      "properties": [
+        {
+          "name": "modalTitle",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "width",
+          "description": "",
+          "type": "string | number"
+        },
+        {
+          "name": "maskClosable",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "fullscreen",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "closeWhenConfirm",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "confirmDisabled",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "visible",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "confirmText",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "cancelText",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "hideCancelButton",
+          "description": "",
+          "type": "boolean"
+        }
+      ],
+      "events": [
+        {
+          "name": "open",
+          "description": "",
+          "detail": {
+            "description": null,
+            "type": "void"
+          }
+        },
+        {
+          "name": "close",
+          "description": "",
+          "detail": {
+            "description": null,
+            "type": "void"
+          }
+        },
+        {
+          "name": "confirm",
+          "description": "",
+          "detail": {
+            "description": null,
+            "type": "void"
+          }
+        },
+        {
+          "name": "cancel",
+          "description": "",
+          "detail": {
+            "description": null,
+            "type": "void"
+          }
+        }
+      ],
+      "slots": [],
+      "methods": [
+        {
+          "name": "open",
+          "params": [],
+          "description": ""
+        },
+        {
+          "name": "close",
+          "params": [],
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "containers.general-card",
+      "properties": [
+        {
+          "name": "cardTitle",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "fillVertical",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "verticalCenter",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "hasExtraSlot",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "isFixedFooter",
+          "description": "",
+          "default": "true",
+          "attribute": false
+        },
+        {
+          "name": "operationButtons",
+          "description": "",
+          "default": "[]",
+          "attribute": false,
+          "type": "OperationButton[]"
+        },
+        {
+          "name": "headerStyle",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "attribute": false,
+          "type": "React.CSSProperties"
+        },
+        {
+          "name": "background",
+          "description": "",
+          "required": true,
+          "default": "true",
+          "attribute": false,
+          "type": "boolean | string"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    },
+    {
+      "name": "containers.general-drawer",
+      "properties": [
+        {
+          "name": "customTitle",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "width",
+          "description": "",
+          "type": "number"
+        },
+        {
+          "name": "height",
+          "description": "",
+          "type": "number"
+        },
+        {
+          "name": "closeable",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "mask",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "maskCloseable",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "visible",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "footerSlot",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "placement",
+          "description": "",
+          "type": "Placement"
+        }
+      ],
+      "events": [
+        {
+          "name": "open",
+          "description": "",
+          "detail": {
+            "description": null,
+            "type": "void"
+          }
+        },
+        {
+          "name": "close",
+          "description": "",
+          "detail": {
+            "description": null,
+            "type": "void"
+          }
+        }
+      ],
+      "slots": [],
+      "methods": [
+        {
+          "name": "open",
+          "params": [],
+          "description": ""
+        },
+        {
+          "name": "close",
+          "params": []
+        }
+      ],
+      "description": ""
+    },
+    {
+      "name": "containers.grid-layout",
+      "properties": [
+        {
+          "name": "columns",
+          "description": "",
+          "type": "number"
+        },
+        {
+          "name": "rows",
+          "description": "",
+          "default": "1"
+        },
+        {
+          "name": "rowSpan",
+          "description": "",
+          "default": "1"
+        },
+        {
+          "name": "columnSpan",
+          "description": "",
+          "default": "1"
+        },
+        {
+          "name": "templateColumns",
+          "description": "",
+          "required": true,
+          "default": null,
+          "type": "string"
+        },
+        {
+          "name": "alignItems",
+          "description": "",
+          "required": true,
+          "default": null,
+          "type": "CSSProperties[\"alignItems\"]"
+        },
+        {
+          "name": "alignContent",
+          "description": "",
+          "required": true,
+          "default": null,
+          "type": "CSSProperties[\"alignContent\"]"
+        },
+        {
+          "name": "justifyItems",
+          "description": "",
+          "required": true,
+          "default": null,
+          "type": "CSSProperties[\"justifyItems\"]"
+        },
+        {
+          "name": "justifyContent",
+          "description": "",
+          "required": true,
+          "default": null,
+          "type": "CSSProperties[\"justifyContent\"]"
+        },
+        {
+          "name": "autoFlow",
+          "description": "",
+          "required": true,
+          "default": null,
+          "type": "CSSProperties[\"gridAutoFlow\"]"
+        },
+        {
+          "name": "responsive",
+          "description": "",
+          "attribute": false,
+          "type": "ResponsiveSettings"
+        },
+        {
+          "name": "gap",
+          "description": "",
+          "default": "\"var(--page-card-gap)\""
+        },
+        {
+          "name": "showGridBorder",
+          "description": "",
+          "default": "false"
+        },
+        {
+          "name": "gridBorderColor",
+          "description": "",
+          "type": "string"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    },
+    {
+      "name": "containers.flex-layout",
+      "properties": [
+        {
+          "name": "flexDirection",
+          "type": "CSSProperties[\"flexDirection\"]"
+        },
+        {
+          "name": "justifyContent",
+          "type": "CSSProperties[\"justifyContent\"]"
+        },
+        {
+          "name": "alignItems",
+          "type": "CSSProperties[\"alignItems\"]"
+        },
+        {
+          "name": "alignContent",
+          "type": "CSSProperties[\"alignContent\"]"
+        },
+        {
+          "name": "flexWrap",
+          "type": "CSSProperties[\"flexWrap\"]"
+        },
+        {
+          "name": "gap",
+          "type": "string"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "methods": []
+    },
+    {
+      "name": "containers.easy-view",
+      "properties": [
+        {
+          "name": "gridAreas",
+          "description": "",
+          "attribute": false,
+          "type": "Record<string, (string | number)[]>"
+        },
+        {
+          "name": "gridTemplateAreas",
+          "description": "",
+          "attribute": false,
+          "type": "string[][]"
+        },
+        {
+          "name": "gridTemplateColumns",
+          "description": "",
+          "attribute": false,
+          "type": "string | string[]"
+        },
+        {
+          "name": "gridTemplateRows",
+          "description": "",
+          "attribute": false,
+          "type": "string | string[]"
+        },
+        {
+          "name": "containerStyle",
+          "description": "",
+          "attribute": false,
+          "type": "React.CSSProperties"
+        },
+        {
+          "name": "styleByAreas",
+          "description": "",
+          "attribute": false,
+          "type": "Record<string, React.CSSProperties>"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    },
+    {
+      "name": "containers.tab-group",
+      "properties": [
+        {
+          "name": "activePanel",
+          "description": "",
+          "required": true,
+          "default": "true",
+          "type": "string"
+        },
+        {
+          "name": "showCard",
+          "description": "",
+          "required": true,
+          "default": "true",
+          "type": "boolean"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    },
+    {
+      "name": "containers.tab-item",
+      "properties": [
+        {
+          "name": "panel",
+          "description": "",
+          "required": true,
+          "default": null,
+          "type": "string"
+        },
+        {
+          "name": "icon",
+          "description": "",
+          "required": true,
+          "default": null,
+          "attribute": false,
+          "type": "GeneralIconProps"
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "required": true,
+          "default": null,
+          "type": "boolean"
+        },
+        {
+          "name": "active",
+          "description": "",
+          "required": true,
+          "default": null,
+          "type": "boolean"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    },
+    {
+      "name": "containers.tab-list",
+      "properties": [
+        {
+          "name": "tabs",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "attribute": false,
+          "type": "Array<TabItemProps | string>"
+        },
+        {
+          "name": "activePanel",
+          "description": "",
+          "required": true,
+          "default": "默认第一个",
+          "type": "string"
+        },
+        {
+          "name": "showCard",
+          "description": "",
+          "required": true,
+          "default": "true",
+          "type": "boolean"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    }
+  ]
+}

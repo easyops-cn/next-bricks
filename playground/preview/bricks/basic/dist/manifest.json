@@ -1,0 +1,545 @@
+{
+  "manifest_version": 1,
+  "package": "@next-bricks/basic",
+  "name": "basic",
+  "bricks": [
+    {
+      "name": "basic.general-button",
+      "properties": [
+        {
+          "name": "type",
+          "description": "按钮类型",
+          "type": "ButtonType"
+        },
+        {
+          "name": "size",
+          "description": "按钮大小",
+          "default": "\"medium\"",
+          "type": "ComponentSize"
+        },
+        {
+          "name": "danger",
+          "description": "是否开启危险状态",
+          "default": "false",
+          "type": "boolean"
+        },
+        {
+          "name": "icon",
+          "description": "图标",
+          "attribute": false,
+          "type": "GeneralIconProps"
+        },
+        {
+          "name": "shape",
+          "description": "按钮形状，支持圆形、椭圆形，不设置为默认方形",
+          "type": "Shape"
+        },
+        {
+          "name": "disabled",
+          "description": "是否禁用",
+          "default": "false",
+          "type": "boolean"
+        },
+        {
+          "name": "href",
+          "description": "链接地址",
+          "type": "string"
+        },
+        {
+          "name": "target",
+          "description": "链接类型",
+          "type": "string"
+        },
+        {
+          "name": "buttonStyle",
+          "description": "按钮样式",
+          "attribute": false,
+          "type": "React.CSSProperties"
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": null,
+          "description": "按钮内容"
+        }
+      ],
+      "methods": [],
+      "description": "通用按钮构件"
+    },
+    {
+      "name": "basic.general-link",
+      "properties": [
+        {
+          "name": "type",
+          "description": "链接类型",
+          "default": "\"link\"",
+          "type": "LinkType"
+        },
+        {
+          "name": "disabled",
+          "description": "是否禁用",
+          "default": "false",
+          "type": "boolean"
+        },
+        {
+          "name": "href",
+          "description": "设置 `href` 时将使用原生 `<a>` 标签，通常用于外链的跳转",
+          "type": "string"
+        },
+        {
+          "name": "url",
+          "description": "链接地址",
+          "type": "string"
+        },
+        {
+          "name": "target",
+          "description": "链接跳转目标",
+          "type": "Target"
+        },
+        {
+          "name": "underline",
+          "description": "是否显示下划线",
+          "type": "boolean"
+        },
+        {
+          "name": "replace",
+          "description": "是否使用 `history.replace` 而不是默认的 `history.push`",
+          "default": "false",
+          "type": "boolean"
+        },
+        {
+          "name": "icon",
+          "description": "图标",
+          "attribute": false,
+          "type": "GeneralIconProps"
+        },
+        {
+          "name": "linkStyle",
+          "description": "链接样式",
+          "attribute": false,
+          "type": "React.CSSProperties"
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": null,
+          "description": "链接内容"
+        }
+      ],
+      "methods": [],
+      "description": "通用链接构件"
+    },
+    {
+      "name": "basic.general-text",
+      "properties": [
+        {
+          "name": "fontSize",
+          "description": "",
+          "required": true,
+          "default": "14px",
+          "type": "CSSProperties[\"fontSize\"]"
+        },
+        {
+          "name": "fontWeight",
+          "description": "",
+          "required": true,
+          "default": "normal",
+          "type": "CSSProperties[\"fontWeight\"]"
+        },
+        {
+          "name": "color",
+          "description": "",
+          "required": true,
+          "default": "black",
+          "type": "CSSProperties[\"color\"]"
+        },
+        {
+          "name": "lineHeight",
+          "description": "",
+          "required": true,
+          "default": "14px",
+          "type": "CSSProperties[\"lineHeight\"]"
+        },
+        {
+          "name": "textAlign",
+          "description": "",
+          "required": true,
+          "default": "left",
+          "type": "CSSProperties[\"textAlign\"]"
+        },
+        {
+          "name": "display",
+          "description": "",
+          "required": true,
+          "default": "inline",
+          "type": "CSSProperties[\"display\"]"
+        },
+        {
+          "name": "customStyle",
+          "description": "",
+          "attribute": false,
+          "type": "CSSProperties"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    },
+    {
+      "name": "basic.general-image",
+      "properties": [
+        {
+          "name": "imgList",
+          "description": "",
+          "attribute": false,
+          "type": "ImageConfig[]"
+        }
+      ],
+      "events": [
+        {
+          "name": "visibleChange",
+          "description": "",
+          "detail": {
+            "description": "boolean",
+            "type": "boolean"
+          }
+        }
+      ],
+      "slots": [],
+      "methods": [
+        {
+          "name": "open",
+          "params": [
+            "index?: number"
+          ],
+          "description": ""
+        },
+        {
+          "name": "close",
+          "params": [],
+          "description": ""
+        }
+      ],
+      "description": ""
+    },
+    {
+      "name": "basic.dropdown-button",
+      "properties": [
+        {
+          "name": "type",
+          "description": "",
+          "type": "ButtonType"
+        },
+        {
+          "name": "actions",
+          "description": "",
+          "required": true,
+          "default": null,
+          "attribute": false,
+          "type": "DropButtonItemProps[]"
+        },
+        {
+          "name": "btnText",
+          "description": "",
+          "required": true,
+          "default": "管理",
+          "type": "string"
+        },
+        {
+          "name": "icon",
+          "description": "",
+          "required": true,
+          "default": "{ lib: \"antd\", icon: \"setting\", theme: \"filled\" }",
+          "attribute": false,
+          "type": "GeneralIconProps"
+        },
+        {
+          "name": "size",
+          "description": "",
+          "required": true,
+          "default": "\"medium\"",
+          "type": "ComponentSize"
+        },
+        {
+          "name": "shape",
+          "description": "",
+          "type": "Shape"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    },
+    {
+      "name": "basic.general-popover",
+      "properties": [
+        {
+          "name": "placement",
+          "description": "弹出层放置位置",
+          "type": "Placement"
+        },
+        {
+          "name": "trigger",
+          "description": "弹出触发方式",
+          "default": "\"click\"",
+          "type": "TriggerEvent"
+        },
+        {
+          "name": "active",
+          "description": "弹出层是否已激活",
+          "default": "false",
+          "type": "boolean"
+        },
+        {
+          "name": "arrow",
+          "description": "弹出层是否显示箭头",
+          "default": "false",
+          "type": "boolean"
+        },
+        {
+          "name": "strategy",
+          "description": "弹出层如何定位",
+          "default": "\"absolute\"",
+          "type": "\"absolute\" | \"fixed\""
+        },
+        {
+          "name": "sync",
+          "description": "将弹出层的宽高与 anchor 元素同步",
+          "type": "Sync"
+        }
+      ],
+      "events": [
+        {
+          "name": "visible.change",
+          "description": "当弹出层可见性变化时触发",
+          "detail": {
+            "description": "当前是否可见",
+            "type": "boolean"
+          }
+        }
+      ],
+      "slots": [
+        {
+          "name": null,
+          "description": "弹出层内容"
+        },
+        {
+          "name": "anchor",
+          "description": "触发弹出层的元素"
+        }
+      ],
+      "methods": [],
+      "description": "通用弹出层构件"
+    },
+    {
+      "name": "basic.general-menu",
+      "properties": [],
+      "events": [],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    },
+    {
+      "name": "basic.general-menu-item",
+      "properties": [
+        {
+          "name": "icon",
+          "description": "",
+          "attribute": false,
+          "type": "GeneralIconProps"
+        },
+        {
+          "name": "active",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "type": "boolean"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    },
+    {
+      "name": "basic.nav-menu",
+      "properties": [
+        {
+          "name": "menu",
+          "description": "",
+          "required": true,
+          "default": null,
+          "attribute": false,
+          "type": "MenuConf"
+        },
+        {
+          "name": "showTooltip",
+          "description": "",
+          "required": true,
+          "default": null,
+          "type": "boolean"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    },
+    {
+      "name": "basic.general-tag",
+      "properties": [
+        {
+          "name": "size",
+          "description": "",
+          "type": "ComponentSize"
+        },
+        {
+          "name": "icon",
+          "description": "",
+          "attribute": false,
+          "type": "GeneralIconProps"
+        },
+        {
+          "name": "color",
+          "description": "",
+          "type": "TagColor | string"
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "closable",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "ellipsisWidth",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "checkable",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "checked",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "tagStyle",
+          "description": "",
+          "attribute": false,
+          "type": "React.CSSProperties"
+        }
+      ],
+      "events": [
+        {
+          "name": "check",
+          "description": "",
+          "detail": {
+            "description": null,
+            "type": "TagProps"
+          }
+        },
+        {
+          "name": "close",
+          "description": "",
+          "detail": {
+            "description": null,
+            "type": "TagProps"
+          }
+        }
+      ],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    },
+    {
+      "name": "basic.general-tag-list",
+      "properties": [
+        {
+          "name": "list",
+          "description": "",
+          "attribute": false,
+          "type": "Array<tagListItem | string>"
+        },
+        {
+          "name": "size",
+          "description": "",
+          "type": "ComponentSize"
+        },
+        {
+          "name": "color",
+          "description": "",
+          "type": "TagColor | string"
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "closable",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "checkable",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "multiple",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "tagStyle",
+          "description": "",
+          "attribute": false,
+          "type": "React.CSSProperties"
+        }
+      ],
+      "events": [
+        {
+          "name": "check",
+          "description": "",
+          "detail": {
+            "description": null,
+            "type": "{\n    item: tagListItem | string | undefined;\n    list: tagListItem[];\n  }"
+          }
+        },
+        {
+          "name": "close",
+          "description": "",
+          "detail": {
+            "description": null,
+            "type": "{\n    item: tagListItem | string | undefined;\n    list: tagListItem[];\n  }"
+          }
+        }
+      ],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    },
+    {
+      "name": "basic.launchpad-button",
+      "properties": [],
+      "events": [],
+      "slots": [],
+      "methods": [],
+      "description": "launchpad按钮构件"
+    }
+  ]
+}

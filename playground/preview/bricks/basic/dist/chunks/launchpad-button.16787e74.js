@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunk_next_bricks_basic=self.webpackChunk_next_bricks_basic||[]).push([[5605],{6364:(e,t,n)=>{n.r(t),n.d(t,{LaunchpadButton:()=>h});var a,c,s=n(5303),r=n(8657),i=n.n(r),l=n(18),u=n(196),b=n(7049),k=n(481),d=n(6141),_=n(2152);n(5254),(0,d.initializeReactI18n)(k.NS,k.k);var h,{defineElement:p}=(0,l.createDecorators)();c=p("basic.launchpad-button",{styleTexts:[_.Z]});class x extends u.ReactNextElement{render(){return i().createElement(b.L,null)}}[h,a]=(0,s.Z)(x,[],[c]).c,a()}}]);
+//# sourceMappingURL=launchpad-button.16787e74.js.map

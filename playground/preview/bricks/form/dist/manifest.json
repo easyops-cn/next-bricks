@@ -1,0 +1,920 @@
+{
+  "manifest_version": 1,
+  "package": "@next-bricks/form",
+  "name": "form",
+  "bricks": [
+    {
+      "name": "form.general-input",
+      "properties": [
+        {
+          "name": "name",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "label",
+          "description": "",
+          "required": true,
+          "default": null,
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "placeholder",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "type",
+          "description": "",
+          "type": "InputType"
+        },
+        {
+          "name": "size",
+          "description": "",
+          "type": "ComponentSize"
+        },
+        {
+          "name": "minLength",
+          "description": "",
+          "type": "number"
+        },
+        {
+          "name": "maxLength",
+          "description": "",
+          "type": "number"
+        },
+        {
+          "name": "required",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "pattern",
+          "description": "",
+          "required": true,
+          "default": null,
+          "type": "string"
+        },
+        {
+          "name": "max",
+          "description": "",
+          "required": true,
+          "default": null,
+          "type": "number"
+        },
+        {
+          "name": "min",
+          "description": "",
+          "required": true,
+          "default": null,
+          "type": "number"
+        },
+        {
+          "name": "message",
+          "description": "",
+          "required": true,
+          "default": null,
+          "attribute": true,
+          "type": "Record<string, string>"
+        },
+        {
+          "name": "inputStyle",
+          "description": "",
+          "attribute": false,
+          "type": "React.CSSProperties"
+        }
+      ],
+      "events": [
+        {
+          "name": "change",
+          "description": "",
+          "detail": {
+            "description": null,
+            "type": "string"
+          }
+        }
+      ],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    },
+    {
+      "name": "form.general-textarea",
+      "properties": [
+        {
+          "name": "name",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "label",
+          "description": "",
+          "required": true,
+          "default": null,
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "placeholder",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "minLength",
+          "description": "",
+          "type": "number"
+        },
+        {
+          "name": "maxLength",
+          "description": "",
+          "type": "number"
+        },
+        {
+          "name": "autoSize",
+          "description": "",
+          "attribute": false,
+          "type": "AutoSize"
+        },
+        {
+          "name": "required",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "textareaStyle",
+          "description": "",
+          "attribute": false,
+          "type": "React.CSSProperties"
+        }
+      ],
+      "events": [
+        {
+          "name": "change",
+          "description": "",
+          "detail": {
+            "description": null,
+            "type": "string"
+          }
+        }
+      ],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    },
+    {
+      "name": "form.general-radio",
+      "properties": [
+        {
+          "name": "name",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "label",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "options",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "attribute": false,
+          "type": "GeneralOption[]"
+        },
+        {
+          "name": "value",
+          "description": "",
+          "type": "any"
+        },
+        {
+          "name": "required",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "message",
+          "description": "",
+          "attribute": false,
+          "type": "Record<string, string>"
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "type",
+          "description": "",
+          "type": "RadioType"
+        },
+        {
+          "name": "ui",
+          "description": "",
+          "type": "UIType"
+        },
+        {
+          "name": "size",
+          "description": "",
+          "type": "\"large\" | \"medium\" | \"small\""
+        },
+        {
+          "name": "customStyle",
+          "description": "",
+          "attribute": false,
+          "type": "React.CSSProperties"
+        },
+        {
+          "name": "useBrick",
+          "description": "",
+          "attribute": false,
+          "type": "UseSingleBrickConf"
+        }
+      ],
+      "events": [
+        {
+          "name": "change",
+          "description": "",
+          "detail": {
+            "description": "`{label: string, value: any, [key: string]: any}\t`",
+            "type": "{\n    label: string;\n    value: any;\n    [key: string]: any;\n  }"
+          }
+        },
+        {
+          "name": "optionsChange",
+          "description": "",
+          "detail": {
+            "description": "`{options:{label: string, value: any, [key: string]: any},name:string}\t`",
+            "type": "{\n    options: {\n      label: string;\n      value: any;\n      [key: string]: any;\n    };\n    name: string;\n  }"
+          }
+        }
+      ],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    },
+    {
+      "name": "form.general-form",
+      "properties": [
+        {
+          "name": "layout",
+          "type": "Layout"
+        },
+        {
+          "name": "size",
+          "type": "ComponentSize"
+        }
+      ],
+      "events": [
+        {
+          "name": "values.change",
+          "description": "",
+          "detail": {
+            "description": null,
+            "type": "Record<string, unknown>"
+          }
+        },
+        {
+          "name": "validate.success",
+          "description": "",
+          "detail": {
+            "type": "Record<string, unknown>"
+          }
+        },
+        {
+          "name": "validate.error",
+          "description": "",
+          "detail": {
+            "type": "MessageBody[]"
+          }
+        }
+      ],
+      "slots": [],
+      "methods": [
+        {
+          "name": "validate",
+          "params": [],
+          "description": "",
+          "return": {
+            "type": "boolean | Record<string, unknown>"
+          }
+        },
+        {
+          "name": "setInitValue",
+          "params": [
+            "values: Record<string, unknown>"
+          ],
+          "description": ""
+        },
+        {
+          "name": "resetFields",
+          "params": [
+            "name?: string"
+          ],
+          "description": ""
+        },
+        {
+          "name": "getFieldsValue",
+          "params": [
+            "name: string"
+          ],
+          "description": ""
+        },
+        {
+          "name": "validateField",
+          "params": [
+            "name: string"
+          ],
+          "description": ""
+        },
+        {
+          "name": "resetValidateState",
+          "params": [],
+          "description": ""
+        }
+      ],
+      "description": ""
+    },
+    {
+      "name": "form.general-select",
+      "properties": [
+        {
+          "name": "name",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "placeholder",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "label",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "options",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "attribute": false,
+          "type": "GeneralComplexOption[]"
+        },
+        {
+          "name": "value",
+          "description": "",
+          "attribute": false,
+          "type": "any"
+        },
+        {
+          "name": "required",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "message",
+          "description": "",
+          "attribute": false,
+          "type": "Record<string, string>"
+        },
+        {
+          "name": "disabled",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "multiple",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "clearable",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "inputStyle",
+          "description": "",
+          "attribute": false,
+          "type": "React.CSSProperties"
+        },
+        {
+          "name": "dropdownStyle",
+          "description": "",
+          "type": "React.CSSProperties"
+        }
+      ],
+      "events": [
+        {
+          "name": "change",
+          "description": "",
+          "detail": {
+            "description": "`{label: string, value: any, [key: string]: any}\t`",
+            "type": "{\n    value: string | string[];\n    options: GeneralComplexOption[];\n  }"
+          }
+        },
+        {
+          "name": "options.change",
+          "description": "",
+          "detail": {
+            "description": "`{options:{label: string, value: any, [key: string]: any},name:string}\t`",
+            "type": "{\n    options: {\n      label: string;\n      value: any;\n      [key: string]: any;\n    };\n    name: string;\n  }"
+          }
+        }
+      ],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    },
+    {
+      "name": "form.submit-buttons",
+      "properties": [
+        {
+          "name": "submitText",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "showCancelButton",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "cancelText",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "disableAfterClick",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "submitDisabled",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "submitType",
+          "description": "",
+          "type": "ButtonType"
+        },
+        {
+          "name": "cancelType",
+          "description": "",
+          "type": "ButtonType"
+        }
+      ],
+      "events": [
+        {
+          "name": "submit",
+          "description": "",
+          "detail": {
+            "description": "-",
+            "type": "void"
+          }
+        },
+        {
+          "name": "cancel",
+          "description": "",
+          "detail": {
+            "description": "-",
+            "type": "void"
+          }
+        }
+      ],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    },
+    {
+      "name": "form.general-form-item",
+      "properties": [
+        {
+          "name": "formElement",
+          "description": "",
+          "required": true,
+          "default": null,
+          "attribute": false,
+          "type": "Form"
+        },
+        {
+          "name": "curElement",
+          "description": "",
+          "required": true,
+          "default": null,
+          "attribute": false,
+          "type": "HTMLElement"
+        },
+        {
+          "name": "name",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "label",
+          "description": "",
+          "required": true,
+          "default": null,
+          "type": "string"
+        },
+        {
+          "name": "pattern",
+          "description": "",
+          "required": true,
+          "default": null,
+          "type": "string"
+        },
+        {
+          "name": "message",
+          "description": "",
+          "required": true,
+          "default": null,
+          "attribute": true,
+          "type": "Record<string, string>"
+        },
+        {
+          "name": "max",
+          "description": "",
+          "required": true,
+          "default": null,
+          "type": "number"
+        },
+        {
+          "name": "min",
+          "description": "",
+          "required": true,
+          "default": null,
+          "type": "number"
+        },
+        {
+          "name": "required",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "value",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "labelCol",
+          "description": "",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "wrapperCol",
+          "description": "",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "valuePropsName",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "layout",
+          "type": "Layout",
+          "default": "\"horizontal\""
+        },
+        {
+          "name": "size",
+          "description": "",
+          "type": "ComponentSize"
+        },
+        {
+          "name": "trim",
+          "description": "",
+          "default": "true"
+        },
+        {
+          "name": "trigger",
+          "description": "",
+          "default": "false",
+          "type": "string"
+        },
+        {
+          "name": "validator",
+          "description": "",
+          "default": "false",
+          "attribute": false,
+          "type": "((value: any) => MessageBody)"
+        },
+        {
+          "name": "needValidate",
+          "description": "",
+          "required": true,
+          "default": null,
+          "type": "boolean"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    },
+    {
+      "name": "form.general-checkbox",
+      "properties": [
+        {
+          "name": "value",
+          "description": "",
+          "attribute": false,
+          "type": "string[]"
+        },
+        {
+          "name": "options",
+          "description": "",
+          "required": true,
+          "default": "-",
+          "attribute": false,
+          "type": "CheckboxOptionType[]"
+        },
+        {
+          "name": "name",
+          "description": "",
+          "attribute": false,
+          "type": "string"
+        },
+        {
+          "name": "label",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "type",
+          "description": "",
+          "default": "\"default\"",
+          "attribute": false,
+          "type": "CheckboxType"
+        },
+        {
+          "name": "isCustom",
+          "description": "",
+          "default": "false",
+          "attribute": false,
+          "type": "boolean"
+        }
+      ],
+      "events": [
+        {
+          "name": "change",
+          "description": "",
+          "detail": {
+            "description": null,
+            "type": "CheckboxOptionType[]"
+          }
+        }
+      ],
+      "slots": [],
+      "methods": []
+    },
+    {
+      "name": "form.code-editor",
+      "properties": [
+        {
+          "name": "name",
+          "description": "",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "label",
+          "description": "",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "",
+          "default": "\"\"",
+          "attribute": false
+        },
+        {
+          "name": "placeholder",
+          "description": "",
+          "required": true,
+          "type": "string"
+        },
+        {
+          "name": "theme",
+          "description": "",
+          "default": "\"monokai\"",
+          "type": "string"
+        },
+        {
+          "name": "mode",
+          "description": "",
+          "default": "\"text\"",
+          "type": "string"
+        },
+        {
+          "name": "required",
+          "description": "",
+          "default": "false",
+          "type": "boolean"
+        },
+        {
+          "name": "readOnly",
+          "description": "",
+          "default": "false",
+          "type": "boolean"
+        },
+        {
+          "name": "showLineNumbers",
+          "description": "",
+          "default": "true"
+        },
+        {
+          "name": "maxLines",
+          "description": "",
+          "attribute": false,
+          "type": "number | \"Infinity\""
+        },
+        {
+          "name": "minLines",
+          "description": "",
+          "default": "3"
+        },
+        {
+          "name": "tabSize",
+          "description": "",
+          "default": "2"
+        },
+        {
+          "name": "printMargin",
+          "description": "",
+          "required": true,
+          "type": "boolean"
+        },
+        {
+          "name": "highlightActiveLine",
+          "description": "",
+          "default": "true"
+        },
+        {
+          "name": "showExportButton",
+          "description": "",
+          "default": "false",
+          "type": "boolean"
+        },
+        {
+          "name": "showCopyButton",
+          "description": "",
+          "default": "true"
+        },
+        {
+          "name": "showExpandButton",
+          "description": "",
+          "type": "boolean"
+        },
+        {
+          "name": "exportFileName",
+          "description": "",
+          "default": "\"download.txt\"",
+          "type": "string"
+        },
+        {
+          "name": "jsonSchema",
+          "description": "",
+          "attribute": false,
+          "type": "Record<string, any>"
+        },
+        {
+          "name": "validateJsonSchemaMode",
+          "description": "",
+          "default": "\"warning\"",
+          "type": "\"warning\" | \"error\""
+        },
+        {
+          "name": "schemaRef",
+          "description": "",
+          "type": "string"
+        },
+        {
+          "name": "enableLiveAutocompletion",
+          "description": "",
+          "default": "false",
+          "type": "boolean"
+        },
+        {
+          "name": "customCompleters",
+          "description": "",
+          "attribute": false,
+          "type": "string[] | {\n        caption?: string;\n        value: string;\n        meta?: string;\n        score?: number;\n      }[]"
+        },
+        {
+          "name": "loadYamlInJsonMode",
+          "description": "",
+          "default": "true"
+        },
+        {
+          "name": "highlightTokens",
+          "description": "",
+          "attribute": false,
+          "type": "HighlightTokenSettings[]"
+        }
+      ],
+      "events": [
+        {
+          "name": "code.change",
+          "description": "",
+          "detail": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "editor.blur",
+          "description": "",
+          "detail": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "error.change",
+          "description": "",
+          "detail": {
+            "description": "`{err:Record<string,any>[],hasError:boolean}`",
+            "type": "Error"
+          }
+        },
+        {
+          "name": "highlightToken.click",
+          "description": "",
+          "detail": {
+            "type": "{\n    type: string;\n    value: string;\n  }"
+          }
+        }
+      ],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    },
+    {
+      "name": "form.dynamic-form-item",
+      "properties": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "label",
+          "type": "string"
+        },
+        {
+          "name": "required",
+          "description": "",
+          "required": true,
+          "default": null,
+          "type": "boolean"
+        },
+        {
+          "name": "value",
+          "attribute": false,
+          "type": "DynamicFormValuesItem[]"
+        },
+        {
+          "name": "useBrick",
+          "description": "",
+          "required": true,
+          "default": null,
+          "attribute": false,
+          "type": "UseBrickConf"
+        }
+      ],
+      "events": [
+        {
+          "name": "change",
+          "detail": {
+            "type": "DynamicFormValuesItem[]"
+          }
+        }
+      ],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    }
+  ]
+}

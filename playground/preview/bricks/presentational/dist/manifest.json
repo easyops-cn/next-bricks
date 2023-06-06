@@ -1,0 +1,76 @@
+{
+  "manifest_version": 1,
+  "package": "@next-bricks/presentational",
+  "name": "presentational",
+  "bricks": [
+    {
+      "name": "presentational.general-descriptions",
+      "properties": [
+        {
+          "name": "descriptionTitle",
+          "description": "",
+          "required": true,
+          "default": null,
+          "type": "string"
+        },
+        {
+          "name": "list",
+          "description": "",
+          "required": true,
+          "default": null,
+          "attribute": false,
+          "type": "DescriptionItem[]"
+        },
+        {
+          "name": "showCard",
+          "description": "",
+          "required": true,
+          "default": null,
+          "type": "boolean"
+        },
+        {
+          "name": "column",
+          "description": "",
+          "required": true,
+          "default": null,
+          "attribute": true,
+          "type": "number"
+        },
+        {
+          "name": "layout",
+          "description": "",
+          "required": true,
+          "default": "horizontal",
+          "type": "Layout"
+        },
+        {
+          "name": "bordered",
+          "description": "",
+          "required": true,
+          "default": "false",
+          "type": "boolean"
+        },
+        {
+          "name": "hideGroups",
+          "description": "",
+          "required": true,
+          "default": null,
+          "attribute": false,
+          "type": "string | string[]"
+        },
+        {
+          "name": "dataSource",
+          "description": "",
+          "required": true,
+          "default": null,
+          "attribute": false,
+          "type": "Record<string, unknown>"
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "methods": [],
+      "description": ""
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "id": "bricks/basic",
+  "bricks": [
+    "basic.change-language",
+    "basic.get-language",
+    "basic.http-request",
+    "basic.general-button",
+    "basic.general-link",
+    "basic.general-text",
+    "basic.general-image",
+    "basic.dropdown-button",
+    "basic.general-popover",
+    "basic.general-menu",
+    "basic.general-menu-item",
+    "basic.nav-menu",
+    "basic.general-tag",
+    "basic.general-tag-list",
+    "basic.launchpad-button"
+  ],
+  "elements": [],
+  "processors": [],
+  "dependencies": {
+    "basic.general-button": [
+      "icons.general-icon"
+    ],
+    "basic.general-link": [
+      "icons.general-icon"
+    ],
+    "basic.general-image": [
+      "icons.general-icon"
+    ],
+    "basic.dropdown-button": [
+      "basic.general-button",
+      "basic.general-popover",
+      "basic.general-menu",
+      "basic.general-menu-item"
+    ],
+    "basic.general-popover": [
+      "sl-popup"
+    ],
+    "basic.general-menu-item": [
+      "icons.general-icon"
+    ],
+    "basic.nav-menu": [
+      "basic.general-menu-item",
+      "basic.general-popover",
+      "basic.general-link"
+    ],
+    "basic.general-tag": [
+      "icons.general-icon"
+    ],
+    "basic.general-tag-list": [
+      "basic.general-tag",
+      "icons.general-icon"
+    ],
+    "basic.launchpad-button": [
+      "icons.general-icon",
+      "basic.general-link"
+    ]
+  },
+  "filePath": "bricks/basic/dist/index.c9c45bb0.js"
+}

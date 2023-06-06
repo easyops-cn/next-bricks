@@ -1,0 +1,10 @@
+{
+  "id": "bricks/markdown",
+  "bricks": [
+    "markdown.markdown-editor"
+  ],
+  "elements": [],
+  "processors": [],
+  "dependencies": {},
+  "filePath": "bricks/markdown/dist/index.f166f9a6.js"
+}

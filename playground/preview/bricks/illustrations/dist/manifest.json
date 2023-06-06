@@ -1,0 +1,6 @@
+{
+  "manifest_version": 1,
+  "package": "@next-bricks/illustrations",
+  "name": "illustrations",
+  "bricks": []
+}

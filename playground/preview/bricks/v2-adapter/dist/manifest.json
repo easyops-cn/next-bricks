@@ -1,0 +1,6 @@
+{
+  "manifest_version": 1,
+  "package": "@next-bricks/v2-adapter",
+  "name": "v2-adapter",
+  "bricks": []
+}

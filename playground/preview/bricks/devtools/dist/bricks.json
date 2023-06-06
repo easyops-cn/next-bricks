@@ -1,0 +1,10 @@
+{
+  "id": "bricks/devtools",
+  "bricks": [
+    "devtools.preview-start"
+  ],
+  "elements": [],
+  "processors": [],
+  "dependencies": {},
+  "filePath": "bricks/devtools/dist/index.b7f1afb5.js"
+}

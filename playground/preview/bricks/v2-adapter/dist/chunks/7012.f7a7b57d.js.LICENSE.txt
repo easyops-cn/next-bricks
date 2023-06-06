@@ -1,0 +1,9 @@
+/**! @contract easyops.api.api_gateway.contract.SearchSingleContract@1.0.0 */
+
+/**! @contract easyops.api.cmdb.instance.GetDetail@1.0.0 */
+
+/**! @contract easyops.api.cmdb.instance.PostSearch@1.1.0 */
+
+/**! @contract easyops.api.micro_app.permission.ValidatePermissions@1.0.0 */
+
+/**! @contract easyops.api.micro_app_standalone.runtime.SearchMicroAppStandalone@1.0.1 */

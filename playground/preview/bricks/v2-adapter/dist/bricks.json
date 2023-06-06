@@ -1,0 +1,19 @@
+{
+  "id": "bricks/v2-adapter",
+  "bricks": [
+    "v2-adapter.load-bricks"
+  ],
+  "elements": [],
+  "processors": [],
+  "dependencies": {
+    "v2-adapter.load-bricks": [
+      "icons.easyops-icon",
+      "icons.fa-icon",
+      "icons.get-easyops-icons",
+      "icons.get-fa-icons",
+      "illustrations.get-illustration",
+      "illustrations.translate-illustration-config"
+    ]
+  },
+  "filePath": "bricks/v2-adapter/dist/index.b49c17fa.js"
+}
