@@ -22,8 +22,9 @@ interface SvgrComponent
   extends React.FunctionComponent<React.SVGAttributes<SVGElement>> {}
 
 declare module "*.svg" {
-  const svgValue: SvgrComponent;
-  export default svgValue;
+  const url: string;
+  export default url;
+  export const ReactComponent: SvgrComponent;
 }
 
 declare module "*.png" {

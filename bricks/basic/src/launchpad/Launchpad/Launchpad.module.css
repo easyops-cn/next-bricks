@@ -1,0 +1,53 @@
+.launchpad {
+  background: rgba(36, 41, 51, 0.93);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 5000;
+  overflow: hidden;
+  overflow-y: auto;
+  color: #fff;
+  backdrop-filter: blur(15px);
+}
+
+.launchpadContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.fadeEnter {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.fadeEnterActive {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 100ms ease-out, transform 100ms ease-out;
+}
+
+.fadeExit {
+  opacity: 1;
+}
+
+.fadeExitActive {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 100ms ease-out, transform 100ms ease-out;
+}
+
+.fadeExitDone {
+  display: none;
+}
+
+.loadingWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}

@@ -18,6 +18,11 @@
       "import": "./dist/esm/menu.js",
       "require": "./dist/cjs/menu.js"
     },
+    "./JsonStorage": {
+      "types": "./dist/types/JsonStorage.d.ts",
+      "import": "./dist/esm/JsonStorage.js",
+      "require": "./dist/cjs/JsonStorage.js"
+    },
     "./types": {
       "types": "./dist/types/types.d.ts"
     },
