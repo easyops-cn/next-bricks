@@ -1,17 +1,11 @@
 import React from "react";
 import { render, act, fireEvent, createEvent } from "@testing-library/react";
-import { Input } from "antd";
 import { SearchBar } from "./SearchBar.js";
 
 describe("SearchBar", () => {
   it("should trigger input onChange", () => {
     const onChange = jest.fn();
     const { container } = render(<SearchBar onChange={onChange} />);
-    // wrapper.find(Input).invoke("onChange")({
-    //   target: {
-    //     value: "hello",
-    //   },
-    // } as any);
     act(() => {
       fireEvent.change(container.querySelector("input") as HTMLElement, {
         target: {

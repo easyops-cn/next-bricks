@@ -4,7 +4,6 @@ import LaunchpadSvg from "../../images/launchpad.svg";
 import { LaunchpadPortal } from "../LaunchpadPortal/LaunchpadPortal.js";
 import hotkeys from "hotkeys-js";
 import { launchpadService } from "../LaunchpadService.js";
-import "../../i18n/index.js";
 
 export function LaunchpadButton(): React.ReactElement {
   const [visible, setVisible] = useState(false);

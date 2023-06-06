@@ -2005,12 +2005,26 @@
   dependencies:
     "@next-core/http" "^1.0.0"
 
+"@next-api-sdk/micro-app-standalone-sdk@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@next-api-sdk/micro-app-standalone-sdk/-/micro-app-standalone-sdk-1.1.1.tgz#c1cfeb194d4f5126e471ef1c748072af8ace1754"
+  integrity sha512-8hAAOynH8FoNRWY97AC2A9e62ZgfA3ZGv5cngFoxnnau/wW6ImKXoebHpM7uARtDAA+kwhDq11zNPpNjLhzFMA==
+  dependencies:
+    "@next-core/http" "^1.0.6"
+
 "@next-api-sdk/object-store-sdk@1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@next-api-sdk/object-store-sdk/-/object-store-sdk-1.1.0.tgz#c1e1750ff6248dea69579d1935c641fbda85ab09"
   integrity sha512-XRjIU5rgbMFhUlXZi6OsSQPLsTE0BzlCwvnFUMUPbkNIMLWdhXH23DxZPr9eV3jqsEb5nVM/R0ukBgnH364X6Q==
   dependencies:
     "@next-core/http" "^1.0.0"
+
+"@next-api-sdk/user-service-sdk@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@next-api-sdk/user-service-sdk/-/user-service-sdk-1.1.1.tgz#2db7d0b3c8ae2f1a9cb67b89af24e6d9357bacd2"
+  integrity sha512-IwJB37K8W5MDDFIXb/okfbQ7O+0Zt87ejlJRZMr+mMUa2D9GnHRR02SuISMrdkiJJmVgvxSN5KAjCRR1kLza+g==
+  dependencies:
+    "@next-core/http" "^1.0.6"
 
 "@next-core/babel-preset-next@^1.0.5":
   version "1.0.5"
@@ -2044,11 +2058,6 @@
   version "0.6.6"
   resolved "https://registry.yarnpkg.com/@next-core/brick-dll-v3/-/brick-dll-v3-0.6.6.tgz#fa6b6c907a982c27f1b839de3c81a7af24a85e0e"
   integrity sha512-ylzJWr7MdPPEMf90ORs+wJ3qqIugM2SG6DECMwlVhQ8k76gI0+x2OQUTG5H4eoB8XKKy/qMkvSKHJygJeNNXbg==
-
-"@next-core/brick-http@^2.8.1":
-  version "2.8.1"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-http/-/brick-http-2.8.1.tgz#6576ec74bbda708f047f924a9c4ac5ab516de410"
-  integrity sha512-5vnTeghr/35aQC3D/bgMmfCwuPKTkvFq+0W1gDZCI02OX629x2NGTV/ZYMR+bhAIWdYFGjXm/uA03flXr0ltiA==
 
 "@next-core/brick-icons@^2.31.46":
   version "2.31.46"
@@ -2301,21 +2310,6 @@
   version "0.1.571"
   resolved "https://registry.yarnpkg.com/@next-dll/react-dnd/-/react-dnd-0.1.571.tgz#6e6d302795d5d976d4d00941748ac186109714a6"
   integrity sha512-cfhCXpxc1oEDPa1UPg8SnZFZcr+lyY/xt0bdQwq4XFLzo1mH9et4nA4DOLYPMhHXOTbLfMnEfeUC+JnRbXVVSw==
-
-"@next-libs/storage@^2.0.4":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@next-libs/storage/-/storage-2.0.4.tgz#2f323ef1ae569940962c3f1561140f7b588f859f"
-  integrity sha512-skYLp9ZEWd6zDyv7PZ0L+4Z0ANaoAOtbkQPlPQMoZeSbciyMzKIAPtrNLL6PWc47OQGKKsPgcwCX7w20k9JKHg==
-
-"@next-sdk/micro-app-standalone-sdk@^1.1.1":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@next-sdk/micro-app-standalone-sdk/-/micro-app-standalone-sdk-1.2.0.tgz#06f9a3a6d4508fb0716b00be232b6dd5259e00b5"
-  integrity sha512-vu9lWLxikgL7qvP0GgS0IBG2/IgLHXI1ypyhBHgwTAF/GSB9EhrbFuIp5x/yuGQ/G8lJwseZ+ImP9IzpsPIQXQ==
-
-"@next-sdk/user-service-sdk@^2.2.2":
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/@next-sdk/user-service-sdk/-/user-service-sdk-2.2.2.tgz#3024e52e7d9686b425e1482279cd6a71cc9ba376"
-  integrity sha512-5q/SzIqwep3zjYyT8KvjYqSW7VPc42bKVXy+Lm8ct+Zt01dAyPagDvD9SEkdVwjwmE8fVqMcvnkky/xHlpWzUQ==
 
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3":
   version "2.1.8-no-fsevents.3"

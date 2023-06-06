@@ -4,12 +4,12 @@ import {
   LaunchpadApi_listCollection,
   LaunchpadApi_createCollection,
   LaunchpadApi_deleteCollection,
-} from "@next-sdk/user-service-sdk";
-import { LaunchpadApi_getLaunchpadInfo } from "@next-sdk/micro-app-standalone-sdk";
+} from "@next-api-sdk/user-service-sdk";
+import { LaunchpadApi_getLaunchpadInfo } from "@next-api-sdk/micro-app-standalone-sdk";
 import { DesktopData, DesktopItemCustom } from "./interfaces.js";
 
-jest.mock("@next-sdk/user-service-sdk");
-jest.mock("@next-sdk/micro-app-standalone-sdk");
+jest.mock("@next-api-sdk/user-service-sdk");
+jest.mock("@next-api-sdk/micro-app-standalone-sdk");
 
 const listCollectionData = [
   {
@@ -123,7 +123,6 @@ jest.mock("@next-core/runtime", () => {
     getAuth: jest.fn().mockReturnValue({ org: "8888" }),
   };
 });
-jest.mock("@next-sdk/user-service-sdk");
 
 const visitorHelper = (app: MicroApp) => {
   return {

@@ -1,14 +1,15 @@
 import React from "react";
 import classNames from "classnames";
 import styles from "./SearchBar.module.css";
-import { i18n } from "@next-core/i18n";
-import { NS_BASIC, K } from "../../i18n/constants.js";
 import { WrappedGeneralIcon } from "../common/wrapBrick.js";
+import { K, NS } from "../i18n.js";
+import { useTranslation } from "@next-core/i18n/react";
 export interface SearchBarProps {
   onChange: (value: string) => void;
 }
 
 export function SearchBar(props: SearchBarProps): React.ReactElement {
+  const { t } = useTranslation(NS);
   const [focus, setFocus] = React.useState(false);
 
   const searchInputRef = React.useCallback((element: HTMLInputElement) => {
@@ -65,10 +66,6 @@ export function SearchBar(props: SearchBarProps): React.ReactElement {
     setFocus(false);
   };
 
-  const placeholder = i18n.t(
-    `${NS_BASIC}:${K.SEARCH_BY_NAME_KEYWORD}`
-  ) as string;
-
   return (
     <div
       className={classNames(styles.searchBar, {
@@ -86,7 +83,7 @@ export function SearchBar(props: SearchBarProps): React.ReactElement {
           </span>
           <input
             className=""
-            placeholder={placeholder}
+            placeholder={t(K.SEARCH_BY_NAME_KEYWORD) as string}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             onFocus={handleFocus}

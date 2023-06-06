@@ -4,13 +4,6 @@ import { getRuntime, getHistory } from "@next-core/runtime";
 import { LaunchpadButton } from "./LaunchpadButton.js";
 jest.mock("@next-core/runtime");
 
-jest.mock("@next-core/i18n", () => ({
-  i18n: {
-    addResourceBundle: jest.fn(),
-    t: (name: string) => name,
-  },
-}));
-
 type ListenerFn = () => void;
 
 const listeners = new Set<ListenerFn>();

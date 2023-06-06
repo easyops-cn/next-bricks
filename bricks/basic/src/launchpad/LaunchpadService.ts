@@ -1,4 +1,4 @@
-import { JsonStorage } from "@next-libs/storage";
+import { JsonStorage } from "@next-shared/general/JsonStorage";
 import { MicroApp, Storyboard } from "@next-core/types";
 import {
   LaunchpadApi_ListCollectionResponseItem,
@@ -6,8 +6,8 @@ import {
   LaunchpadApi_CreateCollectionRequestBody,
   LaunchpadApi_createCollection,
   LaunchpadApi_deleteCollection,
-} from "@next-sdk/user-service-sdk";
-import { LaunchpadApi_getLaunchpadInfo } from "@next-sdk/micro-app-standalone-sdk";
+} from "@next-api-sdk/user-service-sdk";
+import { LaunchpadApi_getLaunchpadInfo } from "@next-api-sdk/micro-app-standalone-sdk";
 import { getRuntime, getAuth } from "@next-core/runtime";
 import { pick } from "lodash";
 import { i18n } from "@next-core/i18n";

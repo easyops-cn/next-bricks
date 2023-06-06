@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import classNames from "classnames";
 import styles from "./FavoriteDesktopCell.module.css";
-import { LaunchpadApi_ListCollectionResponseItem } from "@next-sdk/user-service-sdk";
+import { LaunchpadApi_ListCollectionResponseItem } from "@next-api-sdk/user-service-sdk";
 import { launchpadService } from "../LaunchpadService.js";
 import { WrappedGeneralIcon, WrappedLink } from "../common/wrapBrick.js";
 import { omit } from "lodash";
