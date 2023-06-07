@@ -63,7 +63,7 @@
     "react": "0.0.0-experimental-ee8509801-20230117"
   },
   "devDependencies": {
-    "@next-core/brick-icons": "^2.31.46",
+    "@next-core/brick-icons": "^2.31.54",
     "@next-core/build-next-bricks": "^1.7.2",
     "@next-core/test-next": "^1.0.6",
     "copy-webpack-plugin": "^11.0.0"
