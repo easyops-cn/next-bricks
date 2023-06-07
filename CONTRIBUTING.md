@@ -64,7 +64,7 @@ src/bootstrap.ts
 
 第二部分是场景化示例列表，示例应进行分类，每个分类的标题使用第三级标题，例如 `### Types`。如有需要，分类中可以有附带描述说明性内容，每个分类也可以有多个示例。
 
-示例可以用 HTML 或 YAML 编写。通常来说，如果可以只使用简单属性（可以使用 HTML attributes）完成的编排，应使用 HTML；而如果涉及复合类型属性（需要使用 properties）或配置事件等编排，应使用 YAML（虽然在 HTML 中也可以添加 `<script>` 来实现复合属性的设置和事件的编排）。
+示例可以用 HTML 或 YAML 编写。通常来说，如果可以只使用简单属性（可以使用 HTML attributes）完成的编排，应使用 HTML；而如果涉及复合类型属性（需要使用 properties）或配置事件等编排，应使用 YAML。
 
 使用 ` ```html preview ` 或 ` ```yaml preview `标注的代码块，可以在文档中实时预览、并在 playground 中作为示例。例如：
 
@@ -73,6 +73,26 @@ src/bootstrap.ts
 <basic.general-button type="primary">I'm a button</basic.general-button>
 ```
 ````
+
+我们提供了示例 HTML 与 YAML 之间的自动的相互转译，开发者可以只编写其中一种，文档站点上用户可以自由切换示例语言。
+
+为了使 HTML 与 YAML 的自动转译正常工作，示例的编写有一些规则需要遵守：
+
+- 不要在 HTML 中使用 `<script>`，涉及复合属性和事件的编排请使用 YAML；
+- 事件配置中尽量只使用 `console.*`、`message.*` 或调用构件方法、设置构件属性；
+- 不要使用表达式，除了在事件中简单引用 `<% EVENT %>` 或 `<% EVENT.detail %>` 或 `<% EVENT.target %>`。
+
+提示：如果一个示例中需要平铺多个行内（inline or inline-block）构件，如果使用 YAML 渲染，由于元素之间不像一般的 HTML 那样有一个间隔的空白，这些元素可能会挤在一起，为避免这种问题，可以为代码块再添加一个 meta 字段 `gap`，例如：
+
+````md
+```yaml preview gap
+- brick: basic.general-button
+- brick: basic.general-button
+- brick: basic.general-button
+```
+````
+
+如果使用 HTML 格式编排这种场景，仍然建议标注 `gap`，这样可以避免用户切换至自动转译的 YAML 时出现问题。
 
 ### 源代码注释
 
