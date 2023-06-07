@@ -8,7 +8,7 @@
 
 ### Types
 
-```html preview
+```html preview gap
 <basic.general-button type="primary">Primary</basic.general-button>
 
 <basic.general-button>Default</basic.general-button>
@@ -24,7 +24,7 @@
 
 ### Sizes
 
-```html preview
+```html preview gap
 <basic.general-button size="large">Large</basic.general-button>
 
 <basic.general-button>Medium</basic.general-button>
@@ -36,7 +36,7 @@
 
 ### Shapes
 
-```html preview
+```html preview gap
 <basic.general-button>Square</basic.general-button>
 
 <basic.general-button shape="round">Round</basic.general-button>
@@ -46,7 +46,7 @@
 
 ### Danger
 
-```html preview
+```html preview gap
 <basic.general-button danger type="primary">Primary</basic.general-button>
 
 <basic.general-button danger>Default</basic.general-button>
@@ -62,7 +62,7 @@
 
 ### Disabled
 
-```html preview
+```html preview gap
 <basic.general-button disabled type="primary">Primary</basic.general-button>
 
 <basic.general-button disabled>Default</basic.general-button>
