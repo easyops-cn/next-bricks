@@ -34,8 +34,8 @@
   "devDependencies": {
     "@cypress/browserify-preprocessor": "^3.0.2",
     "@next-core/babel-preset-next": "^1.0.5",
-    "@next-core/brick-container": "^3.2.4",
-    "@next-core/brick-playground": "^1.9.10",
+    "@next-core/brick-container": "^3.2.8",
+    "@next-core/brick-playground": "^1.10.1",
     "@next-core/browserslist-config-next": "^1.0.3",
     "@next-core/eslint-config-next": "^2.0.5",
     "@next-core/test-next": "^1.0.6",

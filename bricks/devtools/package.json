@@ -25,12 +25,12 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-core/runtime": "^1.12.1",
+    "@next-core/runtime": "^1.14.0",
     "@next-core/utils": "^1.5.2",
     "html2canvas": "^1.4.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.7.1",
+    "@next-core/build-next-bricks": "^1.7.2",
     "@next-core/test-next": "^1.0.6"
   }
 }
