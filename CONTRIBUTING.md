@@ -21,21 +21,11 @@ Playground 中的示例列表来自约定的示例文件和文档文件。
 
 ### 新构件
 
-初始化生成新构件的脚手架正在开发中，目前先参考 [`bricks/basic/`](bricks/basic/) 实现。
+运行 `yarn yo`，按提示输入，可以快速创建新构件（或新的构件包、provider）。
 
-可以先拷贝以下文件：
+![Screen shot for yarn yo](assets/yo.png)
 
-```bash
-build.config.js
-package.json
-tsconfig.json
-src/index.ts
-src/bootstrap.ts
-```
-
-然后运行 `yarn`。
-
-新构件参考 [`bricks/basic/src/button/index.tsx`](bricks/basic/src/button/index.tsx) 实现。
+更多细节可以参考 [`bricks/basic/src/button/index.tsx`](bricks/basic/src/button/index.tsx) 实现。
 
 > **注意：**
 >
