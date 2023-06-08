@@ -21,7 +21,8 @@
     "cypress:run:no-record": "cypress run",
     "size-check": "npx start-server-and-test serve:size-check http://localhost:8081/ cypress:run:no-record",
     "size-check:ci": "npx start-server-and-test serve:size-check http://localhost:8081/ cypress:run",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "yo": "yo"
   },
   "browserslist": {
     "development": [
@@ -39,6 +40,7 @@
     "@next-core/browserslist-config-next": "^1.0.3",
     "@next-core/eslint-config-next": "^2.0.5",
     "@next-core/test-next": "^1.0.6",
+    "@next-core/yo": "^1.1.0",
     "@types/history": "^4.7.11",
     "@types/js-yaml": "^3.12.7",
     "@types/lodash": "^4.14.191",
