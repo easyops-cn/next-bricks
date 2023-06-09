@@ -236,6 +236,7 @@ function CabinetGraphElement(props: CabinetGraphProps): React.ReactElement {
               <WrappedCabinetContainer
                 key={clu.key}
                 type={clu.type}
+                className="cluster-content"
                 customTitle={clu.clusterName}
                 data={clu.nodes.map((node) => {
                   const includeNode = filterKeys.includes(node.key);

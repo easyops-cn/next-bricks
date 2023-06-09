@@ -39,6 +39,12 @@
   flex: 1;
   display: grid;
   grid-gap: 17px;
+  height: calc(100% - 60px);
+}
+.cluster-content {
+  display: block;
+  height: 100%;
+  overflow: hidden;
 }
 
 .close-button {

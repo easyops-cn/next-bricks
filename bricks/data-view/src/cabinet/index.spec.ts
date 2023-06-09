@@ -166,6 +166,9 @@ describe("data-view.cabinet-graph", () => {
     expect(element.shadowRoot.querySelector(".close-button")).toBeFalsy();
     const clusterContainerEle =
       element.shadowRoot.querySelector(".cluster-container");
+    expect(element.shadowRoot.querySelectorAll(".cluster-content").length).toBe(
+      3
+    );
     expect((clusterContainerEle.children[0] as CabinetContainer).status).toBe(
       "active"
     );

@@ -172,10 +172,10 @@ describe("data-view.cabinet-container", () => {
     });
     expect(
       element.shadowRoot.querySelector(".itemContent").getAttribute("style")
-    ).toBe("width: 87px;");
+    ).toBe("width: 72px;");
     expect(
       element.shadowRoot.querySelector(".item").getAttribute("style")
-    ).toBe("width: 77px;");
+    ).toBe("width: 62.5px;");
     expect(element.shadowRoot).toBeTruthy();
     act(() => {
       document.body.removeChild(element);
