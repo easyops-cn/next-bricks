@@ -129,11 +129,11 @@ export function CabinetContainerComponent(
       minSizeRow: number
     ): { col: number; row: number } => {
       // 利用二分法，去找到一个合适大小；
-      const maxRow = Math.max(minSizeRow, maxSizeRow),
-        minRow = Math.min(minSizeRow, minSizeRow),
+      const maxRow = Math.max(minSizeRow, maxSizeRow), // 2
+        minRow = Math.min(minSizeRow, maxSizeRow), // 1
         minCol = Math.min(minSizeCol, maxSizeCol),
         maxCol = Math.max(minSizeCol, maxSizeCol);
-      const centerCol = Math.floor((maxSizeCol + minSizeCol) / 2);
+      const centerCol = Math.ceil((maxSizeCol + minSizeCol) / 2); // 希望col多一些
       const centerRow = Math.ceil((maxSizeRow + minSizeRow) / 2);
       const needRow = Math.ceil(data.length / centerCol);
       if (centerCol <= 1) {
@@ -142,7 +142,7 @@ export function CabinetContainerComponent(
           row: data.length,
         };
       }
-      if (needRow === centerRow) {
+      if (needRow === centerRow || minCol === maxCol) {
         return {
           col: centerCol,
           row: needRow,
