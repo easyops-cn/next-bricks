@@ -40,11 +40,7 @@ interface TagListComponentProps {
 })
 class TagList extends ReactNextElement {
   /**
-   * @kind TagComponentProps[]
-   * @required false
-   * @default -
-   * @description 标签列表
-   * @group basic
+   * 标签列表
    */
   @property({
     attribute: false,
@@ -52,31 +48,19 @@ class TagList extends ReactNextElement {
   accessor list: Array<tagListItem | string> | undefined;
 
   /**
-   * @kind ComponentSize
-   * @required false
+   * 按钮大小
    * @default medium
-   * @description 按钮大小
-   * @enums
-   * @group basic
    */
   @property() accessor size: ComponentSize | undefined;
 
   /**
-   * @kind TagColor | string
-   * @required false
-   * @default -
-   * @description 颜色
-   * @group basic
+   * 颜色
    */
   @property()
   accessor color: TagColor | string | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default -
-   * @description 是否禁用
-   * @group basic
+   * 是否禁用
    */
   @property({
     type: Boolean,
@@ -84,11 +68,7 @@ class TagList extends ReactNextElement {
   accessor disabled: boolean | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default -
-   * @description 是否允许关闭
-   * @group basic
+   * 是否允许关闭
    */
   @property({
     type: Boolean,
@@ -96,11 +76,7 @@ class TagList extends ReactNextElement {
   accessor closable: boolean | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default -
-   * @description 是否允许选择
-   * @group basic
+   * 是否允许选择
    */
   @property({
     type: Boolean,
@@ -108,11 +84,7 @@ class TagList extends ReactNextElement {
   accessor checkable: boolean | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default -
-   * @description 是否允许多选
-   * @group basic
+   * 是否允许多选
    */
   @property({
     type: Boolean,
@@ -120,11 +92,7 @@ class TagList extends ReactNextElement {
   accessor multiple: boolean | undefined;
 
   /**
-   * @kind React.CSSProperties
-   * @required false
-   * @default -
-   * @description 标签自定义样式
-   * @group basic
+   * 标签自定义样式
    */
   @property({
     attribute: false,
@@ -138,8 +106,7 @@ class TagList extends ReactNextElement {
   }
 
   /**
-   * @detail
-   * @description 选择标签事件
+   * 选择标签事件
    */
   @event({ type: "check" })
   accessor #checkEvent!: EventEmitter<{
@@ -155,8 +122,7 @@ class TagList extends ReactNextElement {
   };
 
   /**
-   * @detail
-   * @description 关闭标签事件
+   * 关闭标签事件
    */
   @event({ type: "close" })
   accessor #closeEvent!: EventEmitter<{

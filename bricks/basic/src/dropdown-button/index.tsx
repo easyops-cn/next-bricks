@@ -23,6 +23,7 @@ interface DropButtonProps {
   size?: ComponentSize;
   shape?: Shape;
   icon?: GeneralIconProps;
+  disabled?: boolean;
   handleClick: (event: string) => void;
 }
 
@@ -40,31 +41,21 @@ const defaultIcon: GeneralIconProps = {
 };
 
 /**
- * @id basic.dropdown-button
- * @name basic.dropdown-button
- * @docKind brick
- * @description 下拉按钮
+ * 下拉按钮
  * @author sailor
- *
  */
 @defineElement("basic.dropdown-button", {
   styleTexts: [styleText],
 })
 class DropdownButton extends ReactNextElement {
   /**
-   * @kind ButtonType
-   * @required false
-   * @default default
-   * @description 按钮类型
-   * @enums
+   * 按钮类型
    * @group basic
    */
   @property() accessor type: ButtonType | undefined;
 
   /**
-   * @default
-   * @required
-   * @description
+   * 下拉按钮菜单
    */
   @property({
     attribute: false,
@@ -72,17 +63,15 @@ class DropdownButton extends ReactNextElement {
   accessor actions: DropButtonItemProps[] | undefined;
 
   /**
+   * 按钮默认文字
    * @default 管理
-   * @required false
-   * @description 按钮默认文字
    */
   @property()
   accessor btnText: string | undefined;
 
   /**
+   * 按钮默认图标
    * @default { lib: "antd", icon: "setting", theme: "filled" }
-   * @required false
-   * @description 按钮默认图标
    */
   @property({
     attribute: false,
@@ -90,19 +79,22 @@ class DropdownButton extends ReactNextElement {
   accessor icon: GeneralIconProps | undefined;
 
   /**
-   * @default
-   * @required
-   * @description
+   * 按钮大小
+   * @default medium
    */
   @property()
   accessor size: ComponentSize = "medium";
 
   /**
-   * @kind "circle" | "round"
-   * @required false
-   * @default -
-   * @description 按钮形状，支持圆形、椭圆形，不设置为默认方形
-   * @enums "circle"|"round"
+   * 是否禁用
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor disabled: boolean | undefined;
+
+  /**
+   * 按钮形状
    * @group ui
    */
   @property()
@@ -121,6 +113,7 @@ class DropdownButton extends ReactNextElement {
         icon={this.icon}
         shape={this.shape}
         type={this.type}
+        disabled={this.disabled}
         handleClick={this.#handleClick}
       />
     );
@@ -134,6 +127,7 @@ function DropdownButtonComponent({
   icon,
   shape,
   type,
+  disabled,
   handleClick,
 }: DropButtonProps & ButtonProps) {
   return (
@@ -143,11 +137,12 @@ function DropdownButtonComponent({
         size={size}
         shape={shape}
         type={type}
+        disabled={disabled}
         icon={icon ?? defaultIcon}
       >
         {btnText}
       </WrappedButton>
-      {actions && (
+      {actions && !disabled && (
         <WrappedMenu>
           {actions?.map((action, index) => {
             return (

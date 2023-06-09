@@ -1,14 +1,17 @@
 import React, { useMemo } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
-import type { ButtonType, ComponentSize, Shape } from "../interface.js";
+import type { ButtonType, ComponentSize, Shape, Target } from "../interface.js";
 import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
+import type { Link, LinkProps } from "../link/index.js";
 import classNames from "classnames";
 import styleText from "./button.shadow.css";
 import "@next-core/theme";
+
+export const WrappedLink = wrapBrick<Link, LinkProps>("basic.general-link");
 export interface ButtonProps {
   type?: ButtonType;
   size?: ComponentSize;
@@ -16,6 +19,7 @@ export interface ButtonProps {
   shape?: Shape;
   danger?: boolean;
   disabled?: boolean;
+  url?: string;
   href?: string;
   target?: string;
   buttonStyle?: React.CSSProperties;
@@ -77,6 +81,9 @@ class Button extends ReactNextElement implements ButtonProps {
   accessor disabled: boolean | undefined;
 
   /** 链接地址 */
+  @property() accessor url: string | undefined;
+
+  /** 跳转外链地址 */
   @property() accessor href: string | undefined;
 
   /** 链接类型 */
@@ -99,6 +106,7 @@ class Button extends ReactNextElement implements ButtonProps {
         disabled={this.disabled}
         icon={this.icon}
         shape={this.shape}
+        url={this.url}
         href={this.href}
         target={this.target}
         buttonStyle={this.buttonStyle}
@@ -114,32 +122,35 @@ export function ButtonComponent({
   shape,
   danger,
   disabled,
+  url,
   href,
   target,
   buttonStyle,
 }: ButtonProps) {
   const link = useMemo(
     () => (
-      <a
+      <WrappedLink
         className={classNames(size, {
           danger: danger,
         })}
-        style={buttonStyle}
         href={href}
-        target={target}
+        target={target as Target}
+        url={url}
+        disabled={disabled}
+        danger={danger}
+        icon={icon}
       >
-        {icon && <WrappedIcon className="icon" {...icon} />}
         <slot />
-      </a>
+      </WrappedLink>
     ),
-    [size, danger, buttonStyle, href, target, icon]
+    [size, danger, href, target, url, disabled, icon]
   );
 
   const button = useMemo(
     () => (
       <button
         className={classNames(size, shape, {
-          [type]: !disabled,
+          [type]: !disabled || type === "text",
           danger: danger,
         })}
         style={buttonStyle}
@@ -152,7 +163,7 @@ export function ButtonComponent({
     [size, shape, type, disabled, danger, buttonStyle, icon]
   );
 
-  return type === "link" && href ? link : button;
+  return type === "link" ? link : button;
 }
 
 export { Button };

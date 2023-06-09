@@ -14,12 +14,8 @@ import {
 const { defineElement, property, method, event } = createDecorators();
 
 /**
- * @id basic.general-image
- * @name basic.general-image
- * @docKind brick
- * @description 通用图片构件
+ * 通用图片构件
  * @author nlicro
- * @noInheritDoc
  */
 @defineElement("basic.general-image", {
   styleTexts: [imageComponentStyleText, previewStyleText],
@@ -28,16 +24,12 @@ class Image extends ReactNextElement implements ImageListProps {
   private _ImageListRef = createRef<ImageListRef>();
 
   /**
-   * @kind ImageConfig[]
-   * @required false
-   * @default -
-   * @description 图片列表
-   * @group basic
+   * 图片列表
    */
   @property({ attribute: false }) accessor imgList: ImageConfig[] | undefined;
 
   /**
-   * @description 打开预览框
+   * 打开预览框
    */
   @method()
   open(index?: number) {
@@ -45,7 +37,7 @@ class Image extends ReactNextElement implements ImageListProps {
   }
 
   /**
-   * @description 关闭预览框
+   * 关闭预览框
    */
   @method()
   close() {
@@ -53,8 +45,8 @@ class Image extends ReactNextElement implements ImageListProps {
   }
 
   /**
+   * 预览改变事件
    * @detail boolean
-   * @description 预览改变事件
    */
   @event({ type: "visibleChange" })
   accessor #visibleChange!: EventEmitter<boolean>;

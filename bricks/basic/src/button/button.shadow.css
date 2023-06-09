@@ -12,22 +12,25 @@ button {
   border: none;
   background: none;
   cursor: pointer;
-  padding: 0px 15px;
+  padding: 4px 15px;
   height: 32px;
   font-size: 14px;
 }
 
+basic\.general-link {
+  padding: 4px 15px;
+}
+
 button:disabled {
   cursor: not-allowed;
+  border-radius: 4px;
   color: var(--antd-btn-special-icon-type-disabled-color);
   background: var(--antd-btn-special-icon-type-disabled-bg);
-  border-radius: 3px;
   border: 1px solid var(--antd-btn-default-border);
   box-shadow: none;
 }
 
 .icon {
-  margin-right: 4px;
   vertical-align: middle;
 }
 
@@ -36,7 +39,9 @@ button:disabled {
 }
 
 .circle {
+  padding: 4px 8px;
   border-radius: 50%;
+  min-width: 32px;
 }
 
 /* type */
@@ -72,28 +77,21 @@ button:disabled {
   color: var(--antd-btn-danger-color);
 }
 
-button:not(.primary).danger {
+button:not(.primary, :disabled, .text).danger {
   background: var(--antd-btn-default-bg);
   border-color: var(--antd-btn-default-border);
   color: var(--antd-btn-danger-bg-image);
 }
 
-.link:not(.primary).danger {
+button.text {
   background: none;
-}
-
-.link,
-a {
-  text-decoration: none;
-  color: var(--antd-btn-link-color);
-  background: none;
-}
-
-.link.danger,
-a.danger {
-  color: var(--antd-btn-danger-bg-image);
   border: none;
-  box-shadow: none;
+}
+
+button:disabled.text {
+  background-color: none;
+  border: none;
+  color: var(--antd-btn-special-icon-type-disabled-color);
 }
 
 /* type hover */
@@ -113,22 +111,16 @@ a.danger {
   color: var(--antd-btn-text-hover-color);
 }
 
+.text:disabled:hover {
+  color: var(--antd-btn-special-icon-type-disabled-color);
+}
+
 .primary.danger:hover {
   background: var(--antd-btn-danger-hover-bg);
 }
 
-button:not(.primary).danger:hover {
+button:not(.primary, :disabled).danger:hover {
   border-color: var(--antd-btn-danger-hover-bg);
-  color: var(--antd-btn-danger-hover-bg);
-}
-
-.link:hover,
-a:hover {
-  color: var(--antd-btn-link-hover-color);
-}
-
-.link.danger:hover,
-a.danger:hover {
   color: var(--antd-btn-danger-hover-bg);
 }
 
@@ -155,30 +147,32 @@ a.danger:hover {
   color: var(--antd-btn-text-active-color);
 }
 
+button.text:active {
+  background: none;
+}
+
+button.text:disabled:active {
+  color: var(--antd-btn-special-icon-type-disabled-color);
+  background: none;
+}
+
 .primary.danger:active {
   background: var(--antd-btn-danger-active-bg);
 }
 
-button:not(.primary).danger:active {
+button:not(.primary, :disabled).danger:active {
   border-color: var(--antd-btn-danger-active-bg);
   color: var(--antd-btn-danger-active-bg);
   box-shadow: 0px 0px 0px 3px rgba(242, 76, 37, 0.3);
 }
 
-.link:not(.primary).danger:active {
-  color: var(--antd-btn-danger-active-bg);
-  border: none;
+button:disabled.danger:active {
   box-shadow: none;
 }
 
-.link:active,
-a:active {
-  color: var(--antd-btn-link-active-color);
-}
-
-.link.danger:active,
-a.danger:active {
-  color: var(--antd-btn-danger-active-bg);
+button.text.danger:active {
+  background-color: none;
+  border-color: none;
   box-shadow: none;
 }
 
@@ -191,6 +185,11 @@ a.danger:active {
 .small {
   height: 26px;
   font-size: 13px;
+  line-height: 18px;
+}
+
+.medium {
+  line-height: 22px;
 }
 
 .large {
