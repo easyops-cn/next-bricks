@@ -50,7 +50,6 @@ const defaultIcon: GeneralIconProps = {
 class DropdownButton extends ReactNextElement {
   /**
    * 按钮类型
-   * @group basic
    */
   @property() accessor type: ButtonType | undefined;
 
@@ -64,7 +63,7 @@ class DropdownButton extends ReactNextElement {
 
   /**
    * 按钮默认文字
-   * @default 管理
+   * @default "管理"
    */
   @property()
   accessor btnText: string | undefined;
@@ -80,7 +79,7 @@ class DropdownButton extends ReactNextElement {
 
   /**
    * 按钮大小
-   * @default medium
+   * @default "medium"
    */
   @property()
   accessor size: ComponentSize = "medium";

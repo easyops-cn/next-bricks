@@ -160,7 +160,7 @@
     textContent: " 紫色 "
 ```
 
-### tagStyle
+### TagStyle
 
 ```yaml preview
 - brick: basic.general-tag

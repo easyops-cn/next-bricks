@@ -24,44 +24,44 @@ const { defineElement, property } = createDecorators();
 class Text extends ReactNextElement implements TextProps {
   /**
    * 字体大小
-   * @default 14px
+   * @default "14px"
    */
-  @property({ type: String })
+  @property()
   accessor fontSize: CSSProperties["fontSize"];
 
   /**
    * 字体粗细
-   * @default normal
+   * @default "normal"
    */
-  @property({ type: String })
+  @property()
   accessor fontWeight: CSSProperties["fontWeight"];
 
   /**
    * 字体颜色
-   * @default black
+   * @default "black"
    */
-  @property({ type: String })
+  @property()
   accessor color: CSSProperties["color"];
 
   /**
    * 字体行高
-   * @default 14px
+   * @default "14px"
    */
-  @property({ type: String })
+  @property()
   accessor lineHeight: CSSProperties["lineHeight"];
 
   /**
    * 字体对齐方式
-   * @default left
+   * @default "left"
    */
-  @property({ type: String })
+  @property()
   accessor textAlign: CSSProperties["textAlign"];
 
   /**
    * 显示类型
-   * @default inline
+   * @default "inline"
    */
-  @property({ type: String })
+  @property()
   accessor display: CSSProperties["display"];
 
   /**

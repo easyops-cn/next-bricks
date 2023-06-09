@@ -80,7 +80,7 @@ export interface TagMapEvents {
 class Tag extends ReactNextElement implements TagProps {
   /**
    * 按钮大小
-   * @default medium
+   * @default "medium"
    */
   @property() accessor size: ComponentSize | undefined;
 

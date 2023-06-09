@@ -69,12 +69,12 @@ describe("basic.general-button", () => {
 
     const button1 = element1.shadowRoot?.querySelector("button");
     const button2 = element2.shadowRoot?.querySelector("button");
-    const link1 = element1.shadowRoot?.querySelector("a");
-    const link2 = element2.shadowRoot?.querySelector("a");
+    const link1 = element1.shadowRoot?.querySelector("basic\\.general-link");
+    const link2 = element2.shadowRoot?.querySelector("basic\\.general-link");
     expect(button1).toBe(null);
     expect(link1?.className).toBe("medium");
-    expect(button2?.className).toBe("medium link");
-    expect(link2).toBe(null);
+    expect(button2).toBe(null);
+    expect(link2?.className).toBe("medium");
 
     act(() => {
       document.body.removeChild(element1);

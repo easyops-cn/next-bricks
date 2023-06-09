@@ -27,7 +27,7 @@
         preview: false
 ```
 
-### fallback
+### Fallback
 
 ```yaml preview
 - brick: basic.general-image

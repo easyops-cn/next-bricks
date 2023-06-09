@@ -153,7 +153,7 @@
         color: "#abc"
 ```
 
-### tagStyle
+### TagStyle
 
 ```yaml preview
 - brick: basic.general-tag-list

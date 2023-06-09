@@ -49,7 +49,7 @@ class TagList extends ReactNextElement {
 
   /**
    * 按钮大小
-   * @default medium
+   * @default "medium"
    */
   @property() accessor size: ComponentSize | undefined;
 

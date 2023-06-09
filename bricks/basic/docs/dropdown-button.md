@@ -39,7 +39,7 @@
       - text: Item 2
 ```
 
-### BtnText & Icon
+### Button Text & Icon
 
 ```yaml preview
 - brick: basic.dropdown-button
