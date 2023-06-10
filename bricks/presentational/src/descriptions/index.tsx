@@ -44,29 +44,21 @@ export interface DescriptionsProps {
 const { defineElement, property } = createDecorators();
 
 /**
- * @id presentational.general-descriptions
- * @name presentational.general-descriptions
- * @docKind brick
- * @description 通用描述列表构件
+ * 通用描述列表构件
  * @author sailor
- * @noInheritDoc
  */
 @defineElement("presentational.general-descriptions", {
   styleTexts: [styleText],
 })
 class Descriptions extends ReactNextElement {
   /**
-   * @default
-   * @required
-   * @description
+   * 描述标题
    */
   @property()
   accessor descriptionTitle: string | undefined;
 
   /**
-   * @default
-   * @required
-   * @description
+   * 描述列表
    */
   @property({
     attribute: false,
@@ -74,9 +66,8 @@ class Descriptions extends ReactNextElement {
   accessor list: DescriptionItem[] | undefined;
 
   /**
-   * @default
-   * @required
-   * @description
+   * 是否展示卡片背景
+   * @default true
    */
   @property({
     type: Boolean,
@@ -84,9 +75,7 @@ class Descriptions extends ReactNextElement {
   accessor showCard: boolean | undefined;
 
   /**
-   * @default
-   * @required
-   * @description
+   * 列数
    */
   @property({
     attribute: true,
@@ -94,17 +83,15 @@ class Descriptions extends ReactNextElement {
   accessor column: number | undefined;
 
   /**
-   * @default horizontal
-   * @required
-   * @description
+   * 布局模式
+   * @default "horizontal"
    */
   @property()
   accessor layout: Layout | undefined;
 
   /**
+   * 是否展示边框
    * @default false
-   * @required
-   * @description
    */
   @property({
     type: Boolean,
@@ -112,9 +99,7 @@ class Descriptions extends ReactNextElement {
   accessor bordered: boolean | undefined;
 
   /**
-   * @default
-   * @required
-   * @description
+   * 隐藏的描述列表项
    */
   @property({
     attribute: false,
@@ -122,9 +107,7 @@ class Descriptions extends ReactNextElement {
   accessor hideGroups: string | string[] | undefined;
 
   /**
-   * @default
-   * @required
-   * @description
+   * 数据源
    */
   @property({
     attribute: false,
