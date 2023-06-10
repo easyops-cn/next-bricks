@@ -8,10 +8,10 @@ import type {
 import type { LinkType, Target } from "../interface.js";
 import styleText from "./link.shadow.css";
 import classNames from "classnames";
-import "@next-core/theme";
 import { getHistory } from "@next-core/runtime";
 import { createLocation, LocationState } from "history";
 import { isEmpty } from "lodash";
+import "@next-core/theme";
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
   "icons.general-icon"
@@ -26,6 +26,7 @@ export interface LinkProps {
   target?: Target;
   underline?: boolean;
   replace?: boolean;
+  danger?: boolean;
   linkStyle?: React.CSSProperties;
 }
 
@@ -91,6 +92,14 @@ class Link extends ReactNextElement implements LinkProps {
   accessor icon: GeneralIconProps | undefined;
 
   /**
+   * 是否开启危险状态
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor danger: boolean | undefined;
+
+  /**
    * 链接样式
    * @group other
    */
@@ -108,6 +117,7 @@ class Link extends ReactNextElement implements LinkProps {
         target={this.target}
         icon={this.icon}
         underline={this.underline}
+        danger={this.danger}
         linkStyle={this.linkStyle}
         replace={this.replace}
       />
@@ -127,6 +137,7 @@ export function LinkComponent({
   target,
   icon,
   underline,
+  danger,
   replace,
   linkStyle,
 }: LinkProps) {
@@ -174,6 +185,7 @@ export function LinkComponent({
       part="link"
       className={classNames({
         [type]: type,
+        danger: danger,
         disabled: disabled,
         underline: underline,
       })}

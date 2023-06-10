@@ -4,11 +4,11 @@ a {
   cursor: pointer;
 }
 
-a:not(.disabled):hover {
+a:not(.disabled, .danger):hover {
   color: var(--antd-btn-link-hover-color);
 }
 
-a:not(.disabled):active {
+a:not(.disabled, .danger):active {
   color: var(--antd-btn-link-active-color);
 }
 
@@ -21,14 +21,30 @@ a:not(.disabled):active {
   text-decoration: underline;
 }
 
+.danger {
+  color: var(--antd-btn-danger-bg-image);
+}
+
 .text {
   color: var(--antd-btn-fade-text-color);
 }
 
-.text:hover {
+.text:not(.disabled):hover {
   color: var(--antd-btn-text-hover-color);
 }
 
-.text:active {
+.text:not(.disabled):active {
   color: var(--antd-btn-text-active-color);
+}
+
+.danger:not(.disabled):hover {
+  color: var(--antd-btn-danger-hover-bg);
+}
+
+.danger:not(.disabled):hover {
+  color: var(--antd-btn-danger-active-bg);
+}
+
+icons\.general-icon {
+  vertical-align: middle;
 }

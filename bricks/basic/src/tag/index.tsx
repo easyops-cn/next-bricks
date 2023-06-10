@@ -79,21 +79,13 @@ export interface TagMapEvents {
 })
 class Tag extends ReactNextElement implements TagProps {
   /**
-   * @kind ComponentSize
-   * @required false
-   * @default medium
-   * @description 按钮大小
-   * @enums
-   * @group basic
+   * 按钮大小
+   * @default "medium"
    */
   @property() accessor size: ComponentSize | undefined;
 
   /**
-   * @kind GeneralIconProps
-   * @required false
-   * @default -
-   * @description 图标
-   * @group basic
+   * 图标
    */
   @property({
     attribute: false,
@@ -101,21 +93,13 @@ class Tag extends ReactNextElement implements TagProps {
   accessor icon: GeneralIconProps | undefined;
 
   /**
-   * @kind TagColor | string
-   * @required false
-   * @default -
-   * @description 颜色
-   * @group basic
+   * 颜色
    */
   @property()
   accessor color: TagColor | string | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default -
-   * @description 是否禁用
-   * @group basic
+   * 是否禁用
    */
   @property({
     type: Boolean,
@@ -123,11 +107,7 @@ class Tag extends ReactNextElement implements TagProps {
   accessor disabled: boolean | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default -
-   * @description 是否允许关闭
-   * @group basic
+   * 是否允许关闭
    */
   @property({
     type: Boolean,
@@ -135,21 +115,13 @@ class Tag extends ReactNextElement implements TagProps {
   accessor closable: boolean | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default -
-   * @description 超过宽度文本隐藏宽度
-   * @group basic
+   * 超过宽度文本隐藏宽度
    */
   @property()
   accessor ellipsisWidth: string | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default -
-   * @description 是否允许选择
-   * @group basic
+   * 是否允许选择
    */
   @property({
     type: Boolean,
@@ -157,11 +129,7 @@ class Tag extends ReactNextElement implements TagProps {
   accessor checkable: boolean | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default -
-   * @description 是否选择
-   * @group basic
+   * 是否选择
    */
   @property({
     type: Boolean,
@@ -169,11 +137,7 @@ class Tag extends ReactNextElement implements TagProps {
   accessor checked: boolean | undefined;
 
   /**
-   * @kind React.CSSProperties
-   * @required false
-   * @default -
-   * @description 标签自定义样式
-   * @group basic
+   * 标签自定义样式
    */
   @property({
     attribute: false,

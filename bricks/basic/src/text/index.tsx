@@ -23,65 +23,49 @@ const { defineElement, property } = createDecorators();
 @defineElement("basic.general-text")
 class Text extends ReactNextElement implements TextProps {
   /**
-   * @default 14px
-   * @required false
-   * @description 字体大小
-   * @group basic
+   * 字体大小
+   * @default "14px"
    */
-  @property({ type: String })
+  @property()
   accessor fontSize: CSSProperties["fontSize"];
 
   /**
-   * @default normal
-   * @required false
-   * @description 字体粗细
-   * @group basic
+   * 字体粗细
+   * @default "normal"
    */
-  @property({ type: String })
+  @property()
   accessor fontWeight: CSSProperties["fontWeight"];
 
   /**
-   * @default black
-   * @required false
-   * @description 字体颜色
-   * @group basic
+   * 字体颜色
+   * @default "black"
    */
-  @property({ type: String })
+  @property()
   accessor color: CSSProperties["color"];
 
   /**
-   * @default 14px
-   * @required false
-   * @description 字体行高
-   * @group basic
+   * 字体行高
+   * @default "14px"
    */
-  @property({ type: String })
+  @property()
   accessor lineHeight: CSSProperties["lineHeight"];
 
   /**
-   * @default left
-   * @required false
-   * @description 字体对齐方式
-   * @group basic
+   * 字体对齐方式
+   * @default "left"
    */
-  @property({ type: String })
+  @property()
   accessor textAlign: CSSProperties["textAlign"];
 
   /**
-   * @default inline
-   * @required false
-   * @description 显示类型, 在文字构件中常用inline inline-block block,其余类型请查看[相关文档](https://developer.mozilla.org/zh-CN/docs/Web/CSS/display)
-   * @group basic
+   * 显示类型
+   * @default "inline"
    */
-  @property({ type: String })
+  @property()
   accessor display: CSSProperties["display"];
 
   /**
-   * @kind React.CSSProperties
-   * @default 使用自定义样式,将会覆盖默认样式
-   * @required false
-   * @description 自定义样式
-   * @group ui
+   * 自定义样式
    */
   @property({ attribute: false }) accessor customStyle:
     | CSSProperties
