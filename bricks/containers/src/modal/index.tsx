@@ -73,29 +73,17 @@ const { defineElement, property, event, method } = createDecorators();
 })
 class Modal extends ReactNextElement implements ModalProps {
   /**
-   * @kind string
-   * @required false
-   * @default -
-   * @description 标题
-   * @group basic
+   * 标题
    */
   @property() accessor modalTitle: string | undefined;
 
   /**
-   * @kind string
-   * @required false
-   * @default -
-   * @description 宽度
-   * @group basic
+   * 宽度
    */
   @property() accessor width: string | number | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default -
-   * @description 点击遮罩层是否关闭模态框
-   * @group basic
+   * 点击遮罩层是否关闭模态框
    */
   @property({
     type: Boolean,
@@ -103,11 +91,7 @@ class Modal extends ReactNextElement implements ModalProps {
   accessor maskClosable: boolean | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default -
-   * @description 全屏模式
-   * @group basic
+   * 全屏模式
    */
   @property({
     type: Boolean,
@@ -115,11 +99,7 @@ class Modal extends ReactNextElement implements ModalProps {
   accessor fullscreen: boolean | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default -
-   * @description 点击确定按钮时自动关闭弹窗
-   * @group basic
+   * 点击确定按钮时自动关闭弹窗
    */
   @property({
     type: Boolean,
@@ -127,11 +107,7 @@ class Modal extends ReactNextElement implements ModalProps {
   accessor closeWhenConfirm: boolean | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default -
-   * @description 确认按钮是否禁用
-   * @group basic
+   * 确认按钮是否禁用
    */
   @property({
     type: Boolean,
@@ -139,11 +115,7 @@ class Modal extends ReactNextElement implements ModalProps {
   accessor confirmDisabled: boolean | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default -
-   * @description 点击遮罩层是否关闭模态框
-   * @group basic
+   * 点击遮罩层是否关闭模态框
    */
   @property({
     type: Boolean,
@@ -151,33 +123,22 @@ class Modal extends ReactNextElement implements ModalProps {
   accessor visible: boolean | undefined;
 
   /**
-   * @kind string
-   * @required false
-   * @default -
-   * @description 宽度
-   * @group basic
+   * 确认按钮文本
    */
   @property() accessor confirmText: string | undefined;
 
   /**
-   * @kind string
-   * @required false
-   * @default -
-   * @description 宽度
-   * @group basic
+   * 取消按钮文本
    */
   @property() accessor cancelText: string | undefined;
 
   /**
-   * @kind boolean
-   * @description 是否隐藏取消按钮
-   * @group basic
+   * 是否隐藏取消按钮
    */
   @property({ type: Boolean }) accessor hideCancelButton: boolean | undefined;
 
   /**
-   * @detail
-   * @description 打开弹窗事件
+   * 打开弹窗事件
    */
   @event({ type: "open" }) accessor #modalOpen!: EventEmitter<void>;
   #handleModelOpen() {
@@ -185,8 +146,7 @@ class Modal extends ReactNextElement implements ModalProps {
   }
 
   /**
-   * @detail
-   * @description 关闭弹窗事件
+   * 关闭弹窗事件
    */
   @event({ type: "close" })
   accessor #modalClose!: EventEmitter<void>;
@@ -195,8 +155,7 @@ class Modal extends ReactNextElement implements ModalProps {
   }
 
   /**
-   * @detail
-   * @description 确认按钮事件
+   * 确认按钮事件
    */
   @event({ type: "confirm" })
   accessor #modalConfirm!: EventEmitter<void>;
@@ -209,8 +168,7 @@ class Modal extends ReactNextElement implements ModalProps {
   };
 
   /**
-   * @detail
-   * @description 取消按钮事件
+   * 取消按钮事件
    */
   @event({ type: "cancel" })
   accessor #modalCancel!: EventEmitter<void>;
@@ -220,7 +178,7 @@ class Modal extends ReactNextElement implements ModalProps {
   };
 
   /**
-   * @description 打开模态款
+   * 打开模态框方法
    */
   @method()
   open() {
@@ -229,7 +187,7 @@ class Modal extends ReactNextElement implements ModalProps {
   }
 
   /**
-   * @description 关闭弹窗
+   * 关闭模态框方法
    */
   @method({ bound: true })
   close() {

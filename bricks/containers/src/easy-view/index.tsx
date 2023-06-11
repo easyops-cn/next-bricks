@@ -6,54 +6,45 @@ import styleText from "./easy-view.shadow.css";
 const { defineElement, property } = createDecorators();
 
 /**
- * @id containers.easy-view
+ * 基于网格的简易布局容器
  * @author steve
- * @description 基于网格的简易布局容器，可以根据 grid-area 名称自动生成对应的插槽
- * @docKind brick
- * @noInheritDoc
  */
 @defineElement("containers.easy-view", {
   styleTexts: [styleText],
 })
 class EasyViewElement extends ReactNextElement {
   /**
-   * @description 以键值对形式定义多个 [grid-area](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-area)
-   * @group basic
+   * 以键值对形式定义多个 [grid-area](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-area)
    */
   @property({ attribute: false })
   accessor gridAreas: Record<string, (string | number)[]>;
 
   /**
-   * @description 定义 [grid-template-areas](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas)
-   * @group basic
+   * 定义 [grid-template-areas](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas)
    */
   @property({ attribute: false })
   accessor gridTemplateAreas: string[][];
 
   /**
-   * @description 定义 [grid-template-columns](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-columns)
-   * @group basic
+   * 定义 [grid-template-columns](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-columns)
    */
   @property({ attribute: false })
   accessor gridTemplateColumns: string | string[];
 
   /**
-   * @description 定义 [grid-template-rows](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-rows)
-   * @group basic
+   * 定义 [grid-template-rows](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-rows)
    */
   @property({ attribute: false })
   accessor gridTemplateRows: string | string[];
 
   /**
-   * @description 定义网格容器的样式
-   * @group basic
+   * 定义网格容器的样式
    */
   @property({ attribute: false })
   accessor containerStyle: React.CSSProperties;
 
   /**
-   * @description 定义网格内各区域的样式
-   * @group basic
+   * 定义网格内各区域的样式
    */
   @property({ attribute: false })
   accessor styleByAreas: Record<string, React.CSSProperties>;

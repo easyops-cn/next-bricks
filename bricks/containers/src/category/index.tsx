@@ -30,10 +30,7 @@ export interface CategoryContainerProps {
 })
 class Category extends ReactNextElement implements CategoryContainerProps {
   /**
-   * @kind categoryProps[]
-   * @required true
-   * @default -
-   * @description 分类信息
+   * 分类信息
    */
   @property({
     attribute: false,
@@ -41,10 +38,7 @@ class Category extends ReactNextElement implements CategoryContainerProps {
   accessor categories: categoryProps[];
 
   /**
-   * @kind React.CSSProperties
-   * @required false
-   * @default -
-   * @description 内容样式
+   * 内容样式
    */
   @property({
     attribute: false,
@@ -52,10 +46,7 @@ class Category extends ReactNextElement implements CategoryContainerProps {
   accessor contentStyle: React.CSSProperties;
 
   /**
-   * @kind React.CSSProperties
-   * @required false
-   * @default -
-   * @description 头部样式
+   * 头部样式
    */
   @property({
     attribute: false,
@@ -63,10 +54,7 @@ class Category extends ReactNextElement implements CategoryContainerProps {
   accessor headerStyle: React.CSSProperties;
 
   /**
-   * @kind React.CSSProperties
-   * @required false
-   * @default -
-   * @description 容器样式
+   * 容器样式
    */
   @property({
     attribute: false,

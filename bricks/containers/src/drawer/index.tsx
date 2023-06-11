@@ -24,10 +24,10 @@ interface DrawerProps {
   customTitle?: string;
   width?: number;
   height?: number;
-  closeable?: boolean;
+  closable?: boolean;
   placement?: Placement;
   mask?: boolean;
-  maskCloseable?: boolean;
+  maskClosable?: boolean;
   visible?: boolean;
   footerSlot?: boolean;
 }
@@ -37,32 +37,22 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
 );
 
 /**
- * @id containers.general-drawer
- * @name containers.general-drawer
- * @docKind brick
- * @description 通用抽屉构件
+ * 通用抽屉构件
  * @author sailor
- * @noInheritDoc
+ * @slot - 抽屉内容插槽
+ * @slot footer - 抽屉底部插槽
  */
 @defineElement("containers.general-drawer", {
   styleTexts: [styleText],
 })
 class Drawer extends ReactNextElement implements DrawerProps {
   /**
-   * @kind string
-   * @required false
-   * @default default
-   * @description 标题
-   * @group basic
+   * 标题
    */
   @property() accessor customTitle: string | undefined;
 
   /**
-   * @kind number
-   * @required false
-   * @default default
-   * @description 宽度(placement为left，right)
-   * @group basic
+   * 宽度(placement为left，right时生效)
    */
   @property({
     type: Number,
@@ -70,11 +60,7 @@ class Drawer extends ReactNextElement implements DrawerProps {
   accessor width: number | undefined;
 
   /**
-   * @kind number
-   * @required false
-   * @default default
-   * @description 高度(placement为top，bottom)
-   * @group basic
+   * 高度(placement为top，bottom时生效)
    */
   @property({
     type: Number,
@@ -82,41 +68,32 @@ class Drawer extends ReactNextElement implements DrawerProps {
   accessor height: number | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default default
-   * @description 是否显示右上角的关闭按钮
-   * @group basic
-   */
-  @property() accessor closeable: boolean | undefined;
-
-  /**
-   * @kind boolean
-   * @required false
-   * @default default
-   * @description 是否展示遮罩层
-   * @group basic
-   */
-  @property() accessor mask: boolean | undefined;
-
-  /**
-   * @kind boolean
-   * @required false
-   * @default default
-   * @description 点击遮罩层是否关闭抽屉
-   * @group basic
+   * 是否显示右上角的关闭按钮
    */
   @property({
     type: Boolean,
   })
-  accessor maskCloseable: boolean | undefined;
+  accessor closable: boolean | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default default
-   * @description 遮罩层是否显示
-   * @group basic
+   * 是否展示遮罩层
+   * @default true
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor mask: boolean | undefined;
+
+  /**
+   * 点击遮罩层是否关闭抽屉
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor maskClosable: boolean | undefined;
+
+  /**
+   * 抽屉是否显示
    */
   @property({
     type: Boolean,
@@ -124,11 +101,7 @@ class Drawer extends ReactNextElement implements DrawerProps {
   accessor visible: boolean | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default default
-   * @description 是否存在底层插槽
-   * @group basic
+   * 是否存在底层插槽
    */
   @property({
     type: Boolean,
@@ -136,17 +109,12 @@ class Drawer extends ReactNextElement implements DrawerProps {
   accessor footerSlot: boolean | undefined;
 
   /**
-   * @kind Placement
-   * @required false
-   * @default default
-   * @description 抽屉方向
-   * @group basic
+   * 抽屉方向
    */
   @property() accessor placement: Placement | undefined;
 
   /**
-   * @detail
-   * @description 抽屉事件
+   * 抽屉开启事件
    */
   @event({ type: "open" })
   accessor #drawerOpenEvent!: EventEmitter<void>;
@@ -157,8 +125,7 @@ class Drawer extends ReactNextElement implements DrawerProps {
   };
 
   /**
-   * @detail
-   * @description 抽屉事件
+   * 抽屉关闭事件
    */
   @event({ type: "close" })
   accessor #drawerCloseEvent!: EventEmitter<void>;
@@ -169,13 +136,16 @@ class Drawer extends ReactNextElement implements DrawerProps {
   };
 
   /**
-   * @description
+   * 抽屉开启方法
    */
   @method()
   open() {
     this.#handleDrawerOpen();
   }
 
+  /**
+   * 抽屉关闭方法
+   */
   @method()
   close() {
     this.#handleDrawerClose();
@@ -187,10 +157,10 @@ class Drawer extends ReactNextElement implements DrawerProps {
         customTitle={this.customTitle}
         width={this.width}
         height={this.height}
-        closeable={this.closeable}
+        closable={this.closable}
         visible={this.visible}
         mask={this.mask}
-        maskCloseable={this.maskCloseable}
+        maskClosable={this.maskClosable}
         placement={this.placement}
         footerSlot={this.footerSlot}
         onDrawerClose={this.#handleDrawerClose}
@@ -207,9 +177,9 @@ export function DrawerComponent({
   customTitle,
   width = 500,
   height = 378,
-  closeable = true,
+  closable = true,
   mask = true,
-  maskCloseable = true,
+  maskClosable = true,
   placement = "right",
   visible: open = false,
   footerSlot = false,
@@ -221,7 +191,7 @@ export function DrawerComponent({
         <span className="drawer-title">{customTitle}</span>
         <div className="drawer-operator">
           <slot name="extra"></slot>
-          {closeable && (
+          {closable && (
             <WrappedIcon
               className="close-btn"
               lib="antd"
@@ -233,7 +203,7 @@ export function DrawerComponent({
         </div>
       </div>
     ),
-    [closeable, customTitle, onDrawerClose]
+    [closable, customTitle, onDrawerClose]
   );
 
   return (
@@ -243,10 +213,7 @@ export function DrawerComponent({
       })}
     >
       {mask && (
-        <div
-          className="mask"
-          onClick={() => maskCloseable && onDrawerClose()}
-        />
+        <div className="mask" onClick={() => maskClosable && onDrawerClose()} />
       )}
       <div
         className={classNames("drawer-wrapper", `drawer-wrapper-${placement}`)}

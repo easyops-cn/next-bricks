@@ -18,12 +18,9 @@ interface TabListProps {
   showCard?: boolean;
 }
 /**
- * @id containers.tab-list
- * @name containers.tab-list
- * @docKind brick
- * @description tab列表
+ * tab列表
  * @author sailorshe
- *
+ * @slot extra - 头部插槽
  */
 @defineElement("containers.tab-list", {
   styleTexts: [],
@@ -40,17 +37,13 @@ class TabList extends ReactNextElement {
   accessor tabs: Array<TabItemProps | string> | undefined;
 
   /**
-   * @default 默认第一个
-   * @required -
-   * @description 激活状态 tab 的 panel
+   * 激活状态 tab 的 panel
    */
   @property()
   accessor activePanel: string | undefined;
 
   /**
-   * @default true
-   * @required false
-   * @description 是否展示背景
+   * 是否展示背景
    */
   @property({
     type: Boolean,

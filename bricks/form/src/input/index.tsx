@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ComponentSize, InputType } from "../interface.js";
 import classNames from "classnames";
@@ -242,7 +242,6 @@ class Input extends FormItemElement {
 export function InputComponent(props: InputProps) {
   const {
     name,
-    value,
     placeholder,
     type,
     size = "medium",
@@ -253,11 +252,21 @@ export function InputComponent(props: InputProps) {
     validateState,
     onInputChange,
   } = props;
+  // const [value, setValue] = useState(props.value);
+
+  // useEffect(() => {
+  //   setValue(value);
+  // }, [value])
+
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setValue(e.target.value);
+  //   onInputChange(e.target.value);
+  // }
 
   return (
     <WrappedFormItem {...props}>
       <input
-        value={value ?? ""}
+        value={props.value ?? ""}
         name={name}
         className={classNames(size, {
           error: validateState === "error",
