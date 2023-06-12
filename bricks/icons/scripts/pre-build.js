@@ -159,10 +159,12 @@ const tasks = [];
   }
   mkdirSync(generatedDir);
 
+  const allIcons = {};
   const themes = ["outlined", "filled", "twotone"];
   for (const theme of themes) {
     const themeDir = path.resolve(generatedDir, theme);
     mkdirSync(themeDir);
+    allIcons[theme] = [];
   }
 
   const generateIcons = Promise.all(
@@ -170,6 +172,7 @@ const tasks = [];
       if (!themes.includes(icon.theme)) {
         return;
       }
+      allIcons[icon.theme].push(icon.name);
       const svg = renderIconDefinitionToSVGElement(icon, {
         extraSVGAttrs: { fill: "currentColor" },
         placeholders: {
@@ -184,6 +187,13 @@ const tasks = [];
     })
   );
   tasks.push(generateIcons);
+
+  tasks.push(
+    writeFile(
+      path.resolve(generatedDir, "icons.json"),
+      JSON.stringify(allIcons)
+    )
+  );
 }
 
 Promise.all(tasks).then(
