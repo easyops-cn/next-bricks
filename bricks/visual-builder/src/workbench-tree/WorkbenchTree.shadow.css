@@ -16,24 +16,6 @@
   --node-background-focus: #1a7aff;
   --node-icon-background-hover: rgba(90, 93, 94, 0.31);
 }
-/* .tree,
-[data-override-theme="light"] .tree {
-  --search-box-background: #fff;
-  --node-color: #595959;
-  --node-color-focus: #595959;
-  --node-background-active: #e0eeff;
-  --node-background-focus: #e0eeff;
-  --node-icon-background-hover: #fff;
-}
-:host-context(html[data-theme="dark-v2"]) .tree,
-:host-context([data-override-theme="dark-v2"]) .tree {
-  --search-box-background: #181818;
-  --node-color: #c5c5c5;
-  --node-color-focus: #fff;
-  --node-background-active: rgba(255, 255, 255, 0.08);
-  --node-background-focus: #1a7aff;
-  --node-icon-background-hover: rgba(90, 93, 94, 0.31);
-} */
 
 .searchBox {
   position: sticky;

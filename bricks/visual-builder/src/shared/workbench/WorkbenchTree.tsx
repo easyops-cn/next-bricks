@@ -632,12 +632,13 @@ function TreeNode({
           onClick={onLinkClick}
           {...(skipNotify
             ? {
+                // TODO: link should support
                 url: {
                   pathname: get(node.link, "url", "href"),
                   state: {
                     notify: false,
                   },
-                },
+                } as any,
               }
             : { ...pick(node.link, ["url", "href"]) })}
         >

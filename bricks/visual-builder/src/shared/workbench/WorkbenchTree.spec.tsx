@@ -218,7 +218,7 @@ test("WorkbenchTree with text-icon", () => {
               lib: "text",
               icon: "TS",
               color: "blue",
-            },
+            } as any,
           },
         ]}
       />

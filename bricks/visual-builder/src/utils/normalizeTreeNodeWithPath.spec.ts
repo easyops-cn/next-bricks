@@ -36,39 +36,39 @@ describe("normalizeTreeNodeWithPath", () => {
       },
     ] as WorkbenchNodeData[];
     expect(getNodeTreeByPath(mockData, "$key")).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "children": Array [
-            Object {
-              "children": Array [
-                Object {
+      [
+        {
+          "children": [
+            {
+              "children": [
+                {
                   "name": "a-child-1",
                 },
-                Object {
+                {
                   "name": "a-child-2",
                 },
               ],
               "name": "a",
               "path": "a",
             },
-            Object {
-              "children": Array [
-                Object {
+            {
+              "children": [
+                {
                   "name": "b",
                   "path": "a/b",
                 },
-                Object {
-                  "children": Array [
-                    Object {
+                {
+                  "children": [
+                    {
                       "name": "c",
                       "path": "a/b/c",
                     },
                   ],
-                  "data": Object {
+                  "data": {
                     "$key": "a/b/c",
                     "isContainer": true,
                   },
-                  "icon": Object {
+                  "icon": {
                     "color": "orange",
                     "icon": "folder",
                     "lib": "antd",
@@ -80,16 +80,16 @@ describe("normalizeTreeNodeWithPath", () => {
                   "originKey": undefined,
                   "parentPath": "a/b",
                 },
-                Object {
+                {
                   "name": "e",
                   "path": "a/b",
                 },
               ],
-              "data": Object {
+              "data": {
                 "$key": "a/b",
                 "isContainer": true,
               },
-              "icon": Object {
+              "icon": {
                 "color": "orange",
                 "icon": "folder",
                 "lib": "antd",
@@ -102,11 +102,11 @@ describe("normalizeTreeNodeWithPath", () => {
               "parentPath": "a",
             },
           ],
-          "data": Object {
+          "data": {
             "$key": "a",
             "isContainer": true,
           },
-          "icon": Object {
+          "icon": {
             "color": "orange",
             "icon": "folder",
             "lib": "antd",
@@ -118,7 +118,7 @@ describe("normalizeTreeNodeWithPath", () => {
           "originKey": undefined,
           "parentPath": "",
         },
-        Object {
+        {
           "name": "d",
         },
       ]
