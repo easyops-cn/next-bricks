@@ -11,7 +11,6 @@ import {
 } from "../shared/DefineLinearGradient.js";
 import styleText from "./generated/fa-icon.shadow.css";
 import linearGradientStyleText from "../shared/DefineLinearGradient.shadow.css";
-import alias from "./generated/alias.json";
 
 config.autoAddCss = false;
 
@@ -32,6 +31,7 @@ async function getIconDefinition(
   icon: string | undefined
 ): Promise<IconDefinition | null> {
   if (icon) {
+    const alias = (await import("./generated/alias.json")).default;
     const actualIcon =
       hasOwnProperty(alias, prefix) &&
       hasOwnProperty((alias as Alias)[prefix], icon)
