@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.8.1...@next-bricks/data-view@0.8.2) (2023-06-12)
+
+
+### Bug Fixes
+
+* **data-view:** cabinet某些临界值未考虑 ([60236af](https://github.com/easyops-cn/next-bricks/commit/60236afe37405e49db9cce265ea06cd0145bf1d6))
+
+
+
+
+
 ## [0.8.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.8.0...@next-bricks/data-view@0.8.1) (2023-06-01)
 
 

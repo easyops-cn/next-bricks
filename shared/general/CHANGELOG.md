@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.2.1...@next-shared/general@0.3.0) (2023-06-12)
+
+
+### Features
+
+* update code ([8d447aa](https://github.com/easyops-cn/next-bricks/commit/8d447aa9daae46c1c67e4abb39661f52f4e97aee))
+
+
+
+
+
 ## [0.2.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.2.0...@next-shared/general@0.2.1) (2023-05-29)
 
 **Note:** Version bump only for package @next-shared/general

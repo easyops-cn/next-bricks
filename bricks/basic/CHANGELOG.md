@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.7.0...@next-bricks/basic@0.8.0) (2023-06-12)
+
+
+### Bug Fixes
+
+* **button:** fix button shape round ([504ba38](https://github.com/easyops-cn/next-bricks/commit/504ba38de5cac66ddbbeb72af6ee01f4133762ee))
+* refine brick annotations, add some docs ([e9ee217](https://github.com/easyops-cn/next-bricks/commit/e9ee2173b2de0fe0db9d14272a1c5ac7a5a497dd))
+
+
+### Features
+
+* add animate in popover brick ([7195601](https://github.com/easyops-cn/next-bricks/commit/71956016909df86e6d0b866330d92a218e6a451d))
+* delete unused code ([0214d65](https://github.com/easyops-cn/next-bricks/commit/0214d6520bfb1e7791104c4d7024c1522a4ccd84))
+* delete unused code ([91a6a16](https://github.com/easyops-cn/next-bricks/commit/91a6a1624ed1fbc4ea2d259d5a9522ad1a319040))
+* delete unused code ([0e14fac](https://github.com/easyops-cn/next-bricks/commit/0e14fac0b44e5ecf7f4edabed093ce5c8183a19f))
+* support launchpad ([d8d418a](https://github.com/easyops-cn/next-bricks/commit/d8d418a24ffae1920486d751f172fe2cd408b44d))
+* support nav menu ([399c49b](https://github.com/easyops-cn/next-bricks/commit/399c49b451b80ffe18a6c50dc0a95a5870308138))
+* update basic docs ([3298627](https://github.com/easyops-cn/next-bricks/commit/329862703503519afdaa68bcc005dffdd7282648))
+* update code ([8d447aa](https://github.com/easyops-cn/next-bricks/commit/8d447aa9daae46c1c67e4abb39661f52f4e97aee))
+* update code ([11adb27](https://github.com/easyops-cn/next-bricks/commit/11adb27610be7f40b7f41c0eb5bfe8468d02e790))
+* update docs ([41f854f](https://github.com/easyops-cn/next-bricks/commit/41f854f4514f4127b2215516efad1a264858016b))
+* update package.json ([21f1da4](https://github.com/easyops-cn/next-bricks/commit/21f1da429ac815a24f7a142c6f711e7705c4580b))
+* update unit test ([0a4cd08](https://github.com/easyops-cn/next-bricks/commit/0a4cd0804cf9b2c721f09559dae3dafc280eb582))
+* update unit test ([7413ff8](https://github.com/easyops-cn/next-bricks/commit/7413ff8500b2bf0bf6358ba87199ecbcc590a875))
+
+
+
+
+
 # [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.6.2...@next-bricks/basic@0.7.0) (2023-06-01)
 
 
