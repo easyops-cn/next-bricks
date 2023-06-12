@@ -47,12 +47,8 @@ const mediaQueryMap: Record<MediaSize, string> = {
 };
 
 /**
- * @id containers.grid-layout
- * @name containers.grid-layout
- * @docKind brick
- * @description 提供多行多列的响应式网格布局
+ * 多行多列的响应式网格布局
  * @author abert
- *
  */
 @defineElement("containers.grid-layout", {
   styleTexts: [styleText],
@@ -62,20 +58,15 @@ class GridLayout extends ReactNextElement implements GridProps {
   // eslint-disable-next-line @typescript-eslint/ban-types
   #mediaMatchListeners: Function[] = [];
   /**
-   * @kind number
-   * @default -
-   * @description 	网格布局列数（各列等宽）
-   * @group basic
+   * 网格布局列数（各列等宽）
    */
   @property({
     type: Number,
   })
   accessor columns: number | undefined;
   /**
-   * @kind number
+   * 网格布局行数
    * @default 1
-   * @description 	网格布局行数，通常不需设置，各行高度由内容决定。设置为 > 1 时，各行高度相同。
-   * @group basic
    */
   @property({
     type: Number,
@@ -83,10 +74,8 @@ class GridLayout extends ReactNextElement implements GridProps {
   accessor rows = 1;
 
   /**
-   * @kind number
+   * 在父级网格中所占行数
    * @default 1
-   * @description 自己在父级网格中所占行数
-   * @group basic
    */
   @property({
     type: Number,
@@ -94,10 +83,8 @@ class GridLayout extends ReactNextElement implements GridProps {
   accessor rowSpan = 1;
 
   /**
-   * @kind number
+   * 在父级网格中所占列数
    * @default 1
-   * @description 自己在父级网格中所占列数
-   * @group basic
    */
   @property({
     type: Number,
@@ -105,9 +92,7 @@ class GridLayout extends ReactNextElement implements GridProps {
   accessor columnSpan = 1;
 
   /**
-   * @default
-   * @required false
-   * @description 网格布局模板列，即 CSS 的 gridTemplateColumns，优先于 `columns`。
+   * 网格布局模板列
    */
   @property({
     type: String,
@@ -115,36 +100,28 @@ class GridLayout extends ReactNextElement implements GridProps {
   accessor templateColumns: string | undefined;
 
   /**
-   * @default
-   * @required false
-   * @description  设置单元格的垂直位置
+   * 设置单元格的垂直位置
    */
   @property({
     type: String,
   })
   accessor alignItems: CSSProperties["alignItems"] | undefined;
   /**
-   * @default
-   * @required false
-   * @description 设置整个内容区域的垂直位置
+   * 设置整个内容区域的垂直位置
    */
   @property({
     type: String,
   })
   accessor alignContent: CSSProperties["alignContent"] | undefined;
   /**
-   * @default
-   * @required false
-   * @description 设置单元格内容的水平位置
+   * 设置单元格内容的水平位置
    */
   @property({
     type: String,
   })
   accessor justifyItems: CSSProperties["justifyItems"] | undefined;
   /**
-   * @default
-   * @required false
-   * @description 设置整个内容区域在容器里面的水平位置
+   * 设置整个内容区域在容器里面的水平位置
    */
   @property({
     type: String,
@@ -152,9 +129,7 @@ class GridLayout extends ReactNextElement implements GridProps {
   accessor justifyContent: CSSProperties["justifyContent"] | undefined;
 
   /**
-   * @default
-   * @required false
-   * @description  子元素自动排布顺序
+   * 子元素自动排布顺序
    */
   @property({
     type: String,
@@ -162,10 +137,8 @@ class GridLayout extends ReactNextElement implements GridProps {
   accessor autoFlow: CSSProperties["gridAutoFlow"] | undefined;
 
   /**
-   * @kind ResponsiveSettings
-   * @default 1
-   * @description 响应式布局设置
-   * @group basic
+   * 响应式布局设置
+   * @defaukt 1
    */
   @property({
     attribute: false,
@@ -173,10 +146,8 @@ class GridLayout extends ReactNextElement implements GridProps {
   accessor responsive: ResponsiveSettings | undefined;
 
   /**
-   * @kind string
+   * 子元素之间的间距
    * @default "var(--page-card-gap)"
-   * @description 子元素之间的间距
-   * @group basic
    */
   @property({
     type: String,
@@ -184,10 +155,7 @@ class GridLayout extends ReactNextElement implements GridProps {
   accessor gap = "var(--page-card-gap)";
 
   /**
-   * @kind Boolean
-   * @default false
-   * @description 是否展示网格布局边框
-   * @group basic
+   * 是否展示网格布局边框
    */
   @property({
     type: Boolean,
@@ -195,9 +163,7 @@ class GridLayout extends ReactNextElement implements GridProps {
   accessor showGridBorder = false;
 
   /**
-   * @kind string
-   * @default #454547
-   * @description 网格布局边框颜色
+   * 网格布局边框颜色
    */
   @property({
     type: String,

@@ -12,10 +12,7 @@ interface MicroViewProps {
 }
 
 /**
- * @id containers.micro-view
- * @name containers.micro-view
- * @docKind brick
- * @description 基础页面布局
+ * 基础页面布局
  * @author sailorshe
  *
  */
@@ -24,13 +21,14 @@ interface MicroViewProps {
 })
 class MicroView extends ReactNextElement {
   /**
-   * @default -
-   * @required false
-   * @description 页面标题
+   * 页面标题
    */
   @property()
   accessor pageTitle: string | undefined;
 
+  /**
+   * 是否有 toolbar 插槽
+   */
   @property()
   accessor hasToolbar: boolean | undefined;
 

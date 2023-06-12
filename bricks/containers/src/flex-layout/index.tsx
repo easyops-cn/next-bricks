@@ -5,24 +5,44 @@ import styleText from "./flex-layout.shadow.css";
 
 const { defineElement, property } = createDecorators();
 
+/**
+ * flex 布局容器
+ * @author sailor
+ */
 @defineElement("containers.flex-layout", {
   styleTexts: [styleText],
 })
 class FlexLayout extends ReactNextElement {
-  @property() accessor flexDirection:
-    | CSSProperties["flexDirection"]
-    | undefined;
+  /**
+   * 定义 [flex-direction](https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex-direction)
+   */
+  @property()
+  accessor flexDirection: CSSProperties["flexDirection"] | undefined;
 
-  @property() accessor justifyContent:
-    | CSSProperties["justifyContent"]
-    | undefined;
+  /**
+   * 定义 [justify-content](https://developer.mozilla.org/zh-CN/docs/Web/CSS/justify-content)
+   */
+  @property()
+  accessor justifyContent: CSSProperties["justifyContent"] | undefined;
 
+  /**
+   * 定义 [align-items](https://developer.mozilla.org/en-US/docs/Web/CSS/align-items)
+   */
   @property() accessor alignItems: CSSProperties["alignItems"] | undefined;
 
+  /**
+   * 定义 [align-content](https://developer.mozilla.org/en-US/docs/Web/CSS/align-content)
+   */
   @property() accessor alignContent: CSSProperties["alignContent"] | undefined;
 
+  /**
+   * 定义 [flex-wrap](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-wrap)
+   */
   @property() accessor flexWrap: CSSProperties["flexWrap"] | undefined;
 
+  /**
+   * 定义 [gap](https://developer.mozilla.org/en-US/docs/Web/CSS/gap)
+   */
   @property() accessor gap: string | undefined;
 
   render() {

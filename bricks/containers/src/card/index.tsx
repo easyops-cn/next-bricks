@@ -29,33 +29,22 @@ const WrappedButton = wrapBrick<Button, ButtonProps>("basic.general-button");
 
 const { defineElement, property } = createDecorators();
 /**
- * @id containers.general-card
- * @name containers.general-card
- * @docKind brick
- * @description 通用卡片构件
+ * 通用卡片构件
  * @author julielai
- * @noInheritDoc
+ * @slot extra - 头部右侧拓展元素
+ * @slot footer - 底部拓展元素
  */
-
 @defineElement("containers.general-card", {
   styleTexts: [styleText],
 })
 class Card extends ReactNextElement implements CardProps {
   /**
-   * @kind string
-   * @required false
-   * @default -
-   * @description 标题
-   * @group basic
+   * 标题
    */
   @property() accessor cardTitle: string | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default false
-   * @description 设置该属性后，设置卡片高度为 100%，卡片高度会自动撑满父容器
-   * @group ui
+   * 自动撑满父容器
    */
   @property({
     type: Boolean,
@@ -63,11 +52,7 @@ class Card extends ReactNextElement implements CardProps {
   accessor fillVertical: boolean | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default false
-   * @description 设置该属性后，卡片内容区的元素自动垂直居中
-   * @group ui
+   * 垂直居中
    */
   @property({
     type: Boolean,
@@ -75,11 +60,7 @@ class Card extends ReactNextElement implements CardProps {
   accessor verticalCenter: boolean | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default false
-   * @description 是否右上角有操作区 slot
-   * @group advanced
+   * 是否右上角有操作区 slot
    */
   @property({
     type: Boolean,
@@ -87,11 +68,7 @@ class Card extends ReactNextElement implements CardProps {
   accessor hasExtraSlot: boolean | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default true
-   * @description footer滚动到窗口外时，是否需要将footer固定在窗口底部
-   * @group advanced
+   * footer 插槽固定在窗口底部
    */
   @property({
     attribute: false,
@@ -99,19 +76,13 @@ class Card extends ReactNextElement implements CardProps {
   accessor isFixedFooter = true;
 
   /**
-   * @kind OperationButton[]
-   * @required false
-   * @default -
-   * @description 右上角的操作按钮列表，可自定义指定该按钮的名字，按钮点击后发出的事件等
-   * @group advanced
+   * 右上角的操作按钮列表
    */
   @property({ attribute: false })
   accessor operationButtons: OperationButton[] = [];
 
   /**
-   * @default -
-   * @required false
-   * @description
+   * 头部样式
    */
   @property({
     attribute: false,
@@ -119,9 +90,7 @@ class Card extends ReactNextElement implements CardProps {
   accessor headerStyle: React.CSSProperties | undefined;
 
   /**
-   * @default true
-   * @required
-   * @description
+   * 背景
    */
   @property({
     attribute: false,
