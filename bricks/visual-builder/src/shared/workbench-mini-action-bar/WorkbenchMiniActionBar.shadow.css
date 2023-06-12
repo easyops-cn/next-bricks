@@ -1,0 +1,30 @@
+.actionsBar {
+  display: flex;
+  align-items: center;
+  padding: 0 3px;
+}
+
+.action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+}
+
+.action:hover {
+  color: #fff;
+  background-color: rgba(90, 93, 94, 0.31);
+}
+
+.action {
+  color: #c5c5c5;
+}
+
+.disabled,
+.disabled:hover {
+  color: var(--color-disabled-text);
+  cursor: not-allowed;
+  background-color: initial;
+}
