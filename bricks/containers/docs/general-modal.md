@@ -4,7 +4,7 @@
 <containers.general-modal modal-title="Modal Title" visible="true">Content</containers.general-card>
 ```
 
-## Example
+## Examples
 
 ### Width & Height
 

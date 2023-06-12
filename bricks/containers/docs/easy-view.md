@@ -1,6 +1,6 @@
 基于网格的简易布局容器。
 
-## Example
+## Examples
 
 ### GridAreas & GridTemplateRows
 

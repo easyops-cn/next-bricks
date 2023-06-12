@@ -1,6 +1,8 @@
 通用 Tab 容器。
 
-## Example
+## Examples
+
+### Tabs
 
 ```yaml preview
 - brick: containers.tab-list

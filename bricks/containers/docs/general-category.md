@@ -21,7 +21,7 @@
             textContent: Item 2 Content
 ```
 
-## Example
+## Examples
 
 ### Content Style
 

@@ -1,7 +1,5 @@
 多行多列的响应式网格布局。
 
-### Example
-
 ```html preview
 <containers.grid-layout
   columns="2"

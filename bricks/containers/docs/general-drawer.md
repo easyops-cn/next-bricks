@@ -4,7 +4,7 @@
 <containers.general-drawer custom-title="Drawer Title" visible="true">Content</containers.general-card>
 ```
 
-## Example
+## Examples
 
 ### Placement
 
