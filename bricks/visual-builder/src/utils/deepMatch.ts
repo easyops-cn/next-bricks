@@ -23,30 +23,3 @@ export function deepMatch(data: unknown, lowerTrimmedQuery: string): boolean {
       return false;
   }
 }
-
-[
-  {
-    icon: {
-      icon: "landmark",
-      lib: "fa",
-      prefix: "fas",
-    },
-    key: "summary",
-    link: {
-      to: "/visual-builder/project/5fdac3c4bb811/app/workflow-demo/project_settings/summary",
-    },
-    name: "概要",
-  },
-  {
-    icon: {
-      category: "app",
-      icon: "cmdb-user-permission",
-      lib: "easyops",
-    },
-    key: "permissions",
-    link: {
-      to: "/visual-builder/project/5fdac3c4bb811/app/workflow-demo/project_settings/permission",
-    },
-    name: "访问控制",
-  },
-];

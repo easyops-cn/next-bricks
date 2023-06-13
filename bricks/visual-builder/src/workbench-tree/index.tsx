@@ -93,37 +93,36 @@ class WorkbenchTreeElement extends ReactNextElement {
   @event({ type: "action.click" })
   accessor #actionClickEvent!: EventEmitter<ActionClickDetail>;
 
-  private _handleActionClick = (detail: ActionClickDetail): void => {
+  #handleActionClick = (detail: ActionClickDetail): void => {
     this.#actionClickEvent.emit(detail);
   };
 
   @event({ type: "node.click" })
   accessor #nodeClickEvent: EventEmitter<unknown>;
 
-  private _nodeClickFactory = (node: WorkbenchNodeData) => () => {
+  #nodeClickFactory = (node: WorkbenchNodeData) => () => {
     this.#nodeClickEvent.emit(node.data);
   };
 
   @event({ type: "node.drop" })
   accessor #nodeDropEvent: EventEmitter<any>;
 
-  private _handleNodeDrop = (detail: dropEmitProps): void => {
+  #handleNodeDrop = (detail: dropEmitProps): void => {
     this.#nodeDropEvent.emit(detail);
   };
 
   @event({ type: "context.menu" })
   accessor #nodeContextMenuEvent: EventEmitter<unknown>;
 
-  private _contextMenuFactory =
-    (node: WorkbenchNodeData) => (e: React.MouseEvent) => {
-      e.preventDefault();
-      this.#nodeContextMenuEvent.emit({
-        active: true,
-        node: node?.data,
-        x: e.clientX,
-        y: e.clientY,
-      });
-    };
+  #contextMenuFactory = (node: WorkbenchNodeData) => (e: React.MouseEvent) => {
+    e.preventDefault();
+    this.#nodeContextMenuEvent.emit({
+      active: true,
+      node: node?.data,
+      x: e.clientX,
+      y: e.clientY,
+    });
+  };
 
   @event({ type: "node.toggle" })
   accessor #nodeToggleEvent: EventEmitter<{
@@ -131,7 +130,7 @@ class WorkbenchTreeElement extends ReactNextElement {
     collapsed: boolean;
   }>;
 
-  private _handleNodeToggle = (nodeId: string, collapsed: boolean): void => {
+  #handleNodeToggle = (nodeId: string, collapsed: boolean): void => {
     this.#nodeToggleEvent.emit({ nodeId, collapsed });
   };
 
@@ -141,7 +140,7 @@ class WorkbenchTreeElement extends ReactNextElement {
         value={{
           actions: this.actions,
           actionsHidden: this.actionsHidden,
-          onActionClick: this._handleActionClick,
+          onActionClick: this.#handleActionClick,
         }}
       >
         <WorkbenchTreeContext.Provider
@@ -155,10 +154,10 @@ class WorkbenchTreeElement extends ReactNextElement {
             collapsible: this.collapsible,
             collapsedNodes: this.collapsedNodes,
             getCollapsedId: defaultGetCollapsedId,
-            onNodeToggle: this._handleNodeToggle,
+            onNodeToggle: this.#handleNodeToggle,
             skipNotify: this.skipNotify,
-            clickFactory: this._nodeClickFactory,
-            contextMenuFactory: this._contextMenuFactory,
+            clickFactory: this.#nodeClickFactory,
+            contextMenuFactory: this.#contextMenuFactory,
             matchNode: (node, lowerTrimmedQuery) =>
               deepMatch(node.name, lowerTrimmedQuery) ||
               (!!this.matchNodeDataFields?.length &&
@@ -175,7 +174,7 @@ class WorkbenchTreeElement extends ReactNextElement {
             placeholder={this.placeholder}
             searchPlaceholder={this.searchPlaceholder}
             noSearch={this.noSearch}
-            dropEmit={this._handleNodeDrop}
+            dropEmit={this.#handleNodeDrop}
             allowDrag={this.allowDrag}
             allowDragToInside={this.allowDragToInside}
             allowDragToRoot={this.allowDragToRoot}
