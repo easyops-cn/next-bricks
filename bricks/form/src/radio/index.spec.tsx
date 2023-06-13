@@ -15,12 +15,12 @@ describe("form.general-button", () => {
       },
       {
         label: "b",
-        value: "b"
-      }
-    ]
+        value: "b",
+      },
+    ];
 
     const mockChangeEvent = jest.fn();
-    element.addEventListener("change", mockChangeEvent)
+    element.addEventListener("change", mockChangeEvent);
 
     expect(element.shadowRoot).toBeFalsy();
     act(() => {
@@ -29,17 +29,26 @@ describe("form.general-button", () => {
     expect(element.shadowRoot).toBeTruthy();
     expect(element.shadowRoot?.childNodes.length).toBe(2);
 
-    expect(element.shadowRoot?.querySelector(".radioGruop")?.childNodes.length).toBe(2);
+    expect(
+      element.shadowRoot?.querySelector(".radioGruop")?.childNodes.length
+    ).toBe(2);
     expect(element.value).toBe(undefined);
 
     expect(mockChangeEvent).toBeCalledTimes(0);
     act(() => {
-      (element.shadowRoot?.querySelector("input[type='radio']") as HTMLElement).click()
-    })
+      (
+        element.shadowRoot?.querySelector("input[type='radio']") as HTMLElement
+      ).click();
+    });
 
-    expect(mockChangeEvent).toBeCalledWith(expect.objectContaining({
-      detail: "a"
-    }));
+    expect(mockChangeEvent).toBeCalledWith(
+      expect.objectContaining({
+        detail: {
+          label: "a",
+          value: "a",
+        },
+      })
+    );
     expect(element.value).toBe("a");
 
     act(() => {

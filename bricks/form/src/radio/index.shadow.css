@@ -3,7 +3,8 @@
 }
 .defaultRadio {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   margin-right: 12px;
   text-align: center;
   cursor: pointer;
@@ -31,9 +32,7 @@
   border-color: var(--color-brand);
   color: var(--color-brand);
 }
-.defaultRadio .content {
-  padding: 0px 8px 0px 8px;
-}
+
 .iconRadio .content {
   position: absolute;
   width: 100%;
@@ -49,7 +48,8 @@
   border: var(--border-width-base) solid var(--color-border-divider-line);
 }
 .defaultRadio .content {
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
 }
 .iconRadio:not(.disabledIconRadio):hover .content {
   border-color: var(--color-brand-hover);
@@ -150,17 +150,21 @@
   width: 94px;
   height: 94px;
   font-size: 46px;
+  box-sizing: border-box;
 }
 .disabledButtonRadio,
 .disabledCustomRadio {
   cursor: not-allowed;
+}
+
+.disabledButtonRadio {
   background-color: var(--antd-input-disabled-bg);
 }
+
 .disabledIconRadio .content,
 .disabledIconRadio .iconContent {
   color: var(--color-disabled-text);
 }
-.disabledIconRadio .content,
 .disabledIconRadio .iconContent .circleIcon,
 .disabledIconRadio .iconContent .squareIcon {
   background: var(--color-fill-bg-base-1);
@@ -199,7 +203,7 @@
 .buttonRadio:has(.buttonRadioCheck):after {
   position: absolute;
   top: 50%;
-  left: -4px;
+  left: 0px;
   display: block;
   box-sizing: content-box;
   width: 1px;

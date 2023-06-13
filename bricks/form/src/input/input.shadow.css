@@ -1,46 +1,95 @@
-input {
-  width: 100%;
-  padding: 0px 11px;
-  color: var(--antd-input-color);
-  background: var(--antd-input-bg);
-  box-sizing: border-box;
-  border-radius: 6px;
+.input-wrapper {
+  position: relative;
+  display: inline-flex;
+  border-radius: 3px;
   border: 1px solid var(--antd-input-border-color);
+  width: 100%;
+  min-width: 0;
+  color: var(--antd-input-color);
+  line-height: 1.5715;
+  background-color: var(--antd-input-bg);
+  box-sizing: border-box;
+  padding: 0px 4px;
 }
 
-input:not(:disabled):hover {
+.input-wrapper:not(.disabled):hover {
   border: 1px solid var(--antd-input-hover-border-color);
 }
 
-input:not(:disabled):focus {
+.input-wrapper.focus {
   border: 1px solid var(--antd-input-focus-border-color);
   outline: 0;
   box-shadow: 0 0 0 2px rgb(0 113 235 / 20%);
 }
 
-input:disabled {
+input {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  color: var(--antd-text-color);
+  width: 100%;
+  padding: 4px 8px;
+  line-height: 1.5715;
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.prefix,
+.suffix {
+  display: flex;
+  flex: none;
+  align-items: center;
+}
+
+.prefix {
+  margin-right: 4px;
+}
+
+.suffix {
+  margin-left: 4px;
+}
+
+.input-wrapper.disabled {
   cursor: not-allowed;
-  color: var(--text-color-disabled);
   background: var(--antd-input-disabled-bg);
 }
 
-input.error {
+.input-wrapper.disabled input {
+  cursor: not-allowed;
+  color: var(--text-color-disabled);
+}
+
+.input-wrapper.error {
   border-color: var(--antd-error-color);
 }
-input.error:hover {
+.input-wrapper.error:hover {
   border-color: var(--antd-error-color);
 }
-input.error:focus {
+.input-wrapper.error:focus {
   border-color: var(--antd-error-color);
 }
 
-input::placeholder {
+.input-wrapper::placeholder {
   color: var(--antd-input-placeholder-color);
 }
 
+.clear-button {
+  color: #bbb;
+  font-size: 12px;
+  line-height: 12px;
+  cursor: pointer;
+}
+
+/* Size */
 .large {
   height: 38px;
   line-height: 38px;
+  font-size: 16px;
 }
 
 .medium {
@@ -51,4 +100,5 @@ input::placeholder {
 .small {
   height: 22px;
   line-height: 22px;
+  font-size: 12px;
 }

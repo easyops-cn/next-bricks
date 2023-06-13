@@ -8,6 +8,7 @@ import type {
   GeneralComplexOption,
   UIType,
   RadioGroupButtonStyle,
+  ComponentSize,
 } from "../interface.js";
 import styleText from "./index.shadow.css";
 import classNames from "classnames";
@@ -20,8 +21,7 @@ import type {
 } from "@next-bricks/icons/general-icon";
 import { formatOptions } from "../utils/formatOptions.js";
 import { FormItemElement } from "../form-item/FormItemElement.js";
-import { isBoolean } from "lodash";
-import type { Form } from "../form/index.jsx";
+import { isBoolean, isEqual } from "lodash";
 
 const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
   "icons.general-icon"
@@ -40,143 +40,95 @@ interface CustomOptions {
   [propName: string]: any;
 }
 
-export interface RadioProps {
+export interface RadioProps extends FormItemProps {
   type?: RadioType;
-  curElement: HTMLElement;
-  formElement: Form;
   options: GeneralOption[] | CustomOptions[] | undefined;
   value?: any;
-  name?: string;
   disabled?: boolean;
   buttonStyle?: RadioGroupButtonStyle;
-  size?: "large" | "medium" | "small";
+  size?: ComponentSize;
   ui?: UIType;
   useBrick?: UseSingleBrickConf;
   customStyle?: React.CSSProperties;
-  label?: string;
-  trigger?: string;
   onChange?: (value: any) => void;
   optionsChange?: (options: any, name: string) => void;
 }
 const { defineElement, property, event } = createDecorators();
 
 /**
- * @id form.general-radio
- * @name form.general-radio
- * @docKind brick
- * @description 通用单选构件
+ * 通用单选构件
  * @author sailor
- * @noInheritDoc
  */
 @defineElement("form.general-radio", {
   styleTexts: [styleText],
 })
 class Radio extends FormItemElement {
   /**
-   * @kind string
-   * @required true
-   * @default -
-   * @description 下拉框字段名
-   * @group basicFormItem
+   * 下拉框字段名
    */
   @property() accessor name: string | undefined;
 
   /**
-   * @kind string
-   * @required false
-   * @default -
-   * @description 单选框字段说明
-   * @group basic
+   * 单选框字段说明
    */
   @property() accessor label: string | undefined;
 
   /**
-   * @required true
-   * @default -
-   * @description 单选框选项表，RadioType为default时，如果设置了tooltip值,可以设置tooltipIcon图标（MenuIcon 类型）,tooltipIcon颜色默认为--color-secondary-text。
-   * @group basic
+   * 单选框选项表
+   * @required
    */
   @property({ attribute: false })
   accessor options: GeneralOption[] | undefined;
 
   /**
-   * @kind string
-   * @required true
-   * @default -
-   * @description 单选框当前选中始值
-   * @group basic
+   * 单选框当前选中始值
    */
-  @property()
+  @property({
+    attribute: false,
+  })
   accessor value: any | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default -
-   * @description 是否必填项
-   * @group basicFormItem
+   * 是否必填
    */
   @property({ type: Boolean }) accessor required: boolean | undefined;
 
   /**
-   * @kind Record<string,string>
-   * @required false
-   * @default -
-   * @description 校验文本信息
-   * @group basicFormItem
+   * 校验文本信息
    */
   @property({ attribute: false }) accessor message:
     | Record<string, string>
     | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default  false
-   * @description 是否禁用
-   * @group basic
+   * 是否禁用
    */
   @property({ type: Boolean })
   accessor disabled: boolean | undefined;
 
   /**
-   * @kind RadioType
-   * @required false
-   * @default default
-   * @description 	单选框样式类型
-   * @enums "button"|"default"|"icon"|"icon-circle"|"icon-square"|"custom"
-   * @group basic
+   * 单选框样式类型
+   * @default "default"
    */
   @property()
   accessor type: RadioType | undefined;
 
   /**
-   * @kind UIType
-   * @required false
-   * @default default
-   * @description Ui样式，可选择 `dashboard` 样式，默认`default`
-   * @group ui
+   * UI样式
+   * @default "default"
    */
   @property()
   accessor ui: UIType | undefined;
 
   /**
-   * @kind "large" | "medium" | "small"
-   * @required false
-   * @default -
-   * @description 大小，只对按钮样式生效
-   * @enums "large"|"medium"|"small"
-   * @group ui
+   * 大小，只对按钮样式生效
+   * @default "medium"
    */
   @property()
-  accessor size: "large" | "medium" | "small" | undefined;
+  accessor size: ComponentSize | undefined;
 
   /**
-   * @kind customStyle
-   * @required false
-   * @default -
-   * @description 	自定义radio的外层样式
-   * @group ui
+   * 自定义radio的外层样式
    */
   @property({
     attribute: false,
@@ -184,11 +136,7 @@ class Radio extends FormItemElement {
   accessor customStyle: React.CSSProperties | undefined;
 
   /**
-   * @kind `{useBrick: UseSingleBrickConf }`
-   * @required false
-   * @default
-   * @description 自定义radio的内容
-   * @group advancedFormItem
+   * 自定义radio的内容
    */
   @property({
     attribute: false,
@@ -196,8 +144,8 @@ class Radio extends FormItemElement {
   accessor useBrick: UseSingleBrickConf | undefined;
 
   /**
+   * 值变化事件
    * @detail `{label: string, value: any, [key: string]: any}	`
-   * @description 单选框变化时被触发，`event.detail` 为当前整个选择项包含其他字段值
    */
   @event({ type: "change" }) accessor #changeEvent!: EventEmitter<{
     label: string;
@@ -206,10 +154,10 @@ class Radio extends FormItemElement {
   }>;
 
   /**
+   * 选项列表变化事件
    * @detail `{options:{label: string, value: any, [key: string]: any},name:string}	`
-   * @description 单选框选项列表变化时被触发
    */
-  @event({ type: "optionsChange" }) accessor #optionsChange!: EventEmitter<{
+  @event({ type: "options.change" }) accessor #optionsChange!: EventEmitter<{
     options: {
       label: string;
       value: any;
@@ -218,16 +166,16 @@ class Radio extends FormItemElement {
     name: string;
   }>;
 
-  private _handleChange = (value: {
+  handleChange = (item: {
     label: string;
     value: any;
     [key: string]: any;
   }): void => {
-    this.value = value;
-    this.#changeEvent.emit(value);
+    this.value = item.value;
+    this.#changeEvent.emit(item);
   };
 
-  private _handleOptionsChange = (
+  #handleOptionsChange = (
     options: {
       label: string;
       value: any;
@@ -235,9 +183,7 @@ class Radio extends FormItemElement {
     },
     name: string
   ): void => {
-    Promise.resolve().then(() => {
-      this.#optionsChange.emit({ options, name });
-    });
+    this.#optionsChange.emit({ options, name });
   };
 
   render() {
@@ -245,6 +191,8 @@ class Radio extends FormItemElement {
       <RadioComponent
         curElement={this}
         formElement={this.getFormElement()}
+        name={this.name}
+        label={this.label}
         useBrick={this.useBrick}
         ui={this.ui}
         disabled={this.disabled}
@@ -252,36 +200,40 @@ class Radio extends FormItemElement {
         options={formatOptions(this.options)}
         type={this.type}
         value={this.value}
-        onChange={this._handleChange}
-        trigger="_handleChange"
-        optionsChange={this._handleOptionsChange}
-        name={this.name}
-        label={this.label}
+        required={this.required}
+        message={this.message}
+        onChange={this.handleChange}
+        trigger="handleChange"
+        optionsChange={this.#handleOptionsChange}
+        customStyle={this.customStyle}
       />
     );
   }
 }
 
 export function RadioComponent(props: RadioProps) {
-  const { options, name, disabled, type, customStyle, optionsChange, size } =
-    props;
-  const [value, setValue] = React.useState();
+  const { name, disabled, type, customStyle, optionsChange, size } = props;
+  const [value, setValue] = React.useState(props.value);
+  const [options, setOptions] = React.useState(props.options);
 
   React.useEffect(() => {
     setValue(props.value);
   }, [props.value]);
 
   React.useEffect(() => {
-    optionsChange?.(props.options, name as string);
-  }, [props.options]);
+    if (!isEqual(options, props.options)) {
+      setOptions(props.options);
+      optionsChange?.(props.options, name as string);
+    }
+  }, [name, options, optionsChange, props.options]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: React.ChangeEvent | React.MouseEvent,
     option: GeneralComplexOption
   ): void => {
     e.stopPropagation();
     setValue((option as GeneralComplexOption)?.value as any);
-    props.onChange?.(option?.value);
+    props.onChange?.(option);
   };
 
   return (
@@ -299,19 +251,14 @@ export function RadioComponent(props: RadioProps) {
           const key = isBoolean(item.value)
             ? item.value.toString()
             : item.value;
+          const isDisabled = item.disabled || disabled;
           return (
             <label
               htmlFor={key}
               style={customStyle}
               className={classNames({
-                disabledIconRadio:
-                  (["icon", "custom", "icon-square", "icon-circle"].includes(
-                    type as string
-                  ) &&
-                    disabled) ||
-                  item.disabled,
-                disabledCustomRadio:
-                  ("custom" === type && disabled) || item.disabled,
+                disabledIconRadio: isDisabled,
+                disabledCustomRadio: isDisabled,
                 iconRadio: type === "icon",
                 customRadio: type === "custom",
                 specialIconRadio:
@@ -327,14 +274,14 @@ export function RadioComponent(props: RadioProps) {
                 [size || "medium"]: type === "button",
               })}
               key={key}
+              onClick={(e) => !isDisabled && handleChange(e, item)}
             >
               <input
                 type="radio"
                 name={name}
-                disabled={disabled || item.disabled}
-                id={key}
-                onChange={(e) => handleChange(e, item)}
+                disabled={isDisabled}
                 checked={value === item.value}
+                onChange={(e) => !isDisabled && handleChange(e, item)}
               />
               {type === "icon" ? (
                 <div className={classNames({ content: true })}>
@@ -389,7 +336,7 @@ export function RadioComponent(props: RadioProps) {
                 <div
                   className={classNames("buttonContent", {
                     buttonRadioCheck: value === item.value,
-                    disabledButtonRadio: disabled || item.disabled,
+                    disabledButtonRadio: isDisabled,
                   })}
                 >
                   <span>
@@ -399,7 +346,7 @@ export function RadioComponent(props: RadioProps) {
                         lib={iconLib}
                         style={{
                           fontSize: "22px",
-                          marginRight: "8px",
+                          marginRight: "4px",
                           verticalAlign: "-0.25em",
                           ...iconStyle,
                         }}
