@@ -1,4 +1,10 @@
 import { createProviderClass } from "@next-core/utils/general";
+import { wrapBrick } from "@next-core/react-element";
+import styles from "./notification.module.css";
+
+// Specify brick dependencies:
+/*#__PURE__*/ wrapBrick("sl-alert");
+/*#__PURE__*/ wrapBrick("sl-icon");
 
 export function showNotification({
   type,
@@ -13,27 +19,28 @@ export function showNotification({
   switch (type) {
     case "success":
       notification.variant = "success";
-      icon.name = "check2-circle";
+      icon.name = "check-circle-fill";
       break;
     case "error":
       notification.variant = "danger";
-      icon.name = "exclamation-octagon";
+      icon.name = "x-circle-fill";
       break;
     case "warn":
       notification.variant = "warning";
-      icon.name = "exclamation-triangle";
+      icon.name = "exclamation-circle-fill";
       break;
     default:
       notification.variant = "primary";
-      icon.name = "info-circle";
+      icon.name = "info-circle-fill";
   }
   notification.duration = 3000;
+  notification.className = styles.notification;
   const text = document.createTextNode(message);
   notification.append(icon, text);
   notification.toast();
 }
 
 customElements.define(
-  "shoelace.show-notification",
+  "basic.show-notification",
   createProviderClass(showNotification)
 );

@@ -1,7 +1,8 @@
-// Merge bricks
-import "./sl-alert/index.js";
-import "./sl-icon/index.js";
-import "./sl-dialog/index.js";
-import "./sl-button/index.js";
-import "./data-providers/show-dialog/show-dialog.js";
-import "./data-providers/show-notification/show-notification.js";
+// Define brick: sl-alert, sl-button, sl-dialog, sl-icon, sl-icon-button
+// istanbul ignore file
+import "@shoelace-style/shoelace/dist/components/alert/alert.js";
+import "@shoelace-style/shoelace/dist/components/button/button.js";
+import "@shoelace-style/shoelace/dist/components/dialog/dialog.js";
+import "@shoelace-style/shoelace/dist/components/icon/icon.js";
+import "@shoelace-style/shoelace/dist/components/icon-button/icon-button.js";
+import "./shared/common.js";

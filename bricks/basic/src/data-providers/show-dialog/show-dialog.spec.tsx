@@ -9,6 +9,37 @@ Element.prototype.animate = jest.fn().mockReturnValue({
   addEventListener: jest.fn(),
 });
 
+customElements.define(
+  "sl-dialog",
+  class HTMLSlDialog extends HTMLElement {
+    label: string | undefined;
+    noHeader: boolean | undefined;
+    open: boolean | undefined;
+    hide() {
+      this.dispatchEvent(new Event("sl-hide"));
+    }
+    connectedCallback() {
+      const shadow = this.attachShadow({ mode: "open" });
+      const slot = document.createElement("slot");
+      shadow.append(slot);
+    }
+  }
+);
+
+customElements.define(
+  "sl-button",
+  class HTMLSlButton extends HTMLElement {
+    variant: string | undefined;
+  }
+);
+
+customElements.define(
+  "sl-icon",
+  class HTMLSlIcon extends HTMLElement {
+    name: string | undefined;
+  }
+);
+
 describe("showDialog", () => {
   test("general", async () => {
     let promise: Promise<void> | undefined;
@@ -22,7 +53,7 @@ describe("showDialog", () => {
     );
     expect(document.body.childNodes.length).toBe(1);
     await act(async () => {
-      document.querySelector("sl-button")?.click();
+      (document.querySelector("sl-button") as HTMLElement)?.click();
     });
     await promise;
     expect(document.body.childNodes.length).toBe(0);
@@ -79,7 +110,11 @@ describe("DialogComponent", () => {
   test("type confirm", () => {
     const onCancel = jest.fn();
     const { asFragment, container, unmount } = render(
-      <DialogComponent type="confirm" content="Are you sure?" onCancel={onCancel} />
+      <DialogComponent
+        type="confirm"
+        content="Are you sure?"
+        onCancel={onCancel}
+      />
     );
     expect(asFragment()).toMatchInlineSnapshot(`
       <DocumentFragment>
@@ -177,7 +212,11 @@ describe("DialogComponent", () => {
       "name",
       "info-circle"
     );
-    expect((container.querySelector("sl-icon") as any).parentElement.classList.contains("primary")).toBe(true);
+    expect(
+      (
+        container.querySelector("sl-icon") as any
+      ).parentElement.classList.contains("primary")
+    ).toBe(true);
     unmount();
   });
 
@@ -189,7 +228,11 @@ describe("DialogComponent", () => {
       "name",
       "exclamation-triangle"
     );
-    expect((container.querySelector("sl-icon") as any).parentElement.classList.contains("warning")).toBe(true);
+    expect(
+      (
+        container.querySelector("sl-icon") as any
+      ).parentElement.classList.contains("warning")
+    ).toBe(true);
     unmount();
   });
 });

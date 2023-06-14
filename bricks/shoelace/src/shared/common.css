@@ -6,3 +6,15 @@
   --sl-z-index-toast: 1000;
   --sl-z-index-tooltip: 1070;
 }
+
+.sl-toast-stack {
+  width: 100%;
+  left: 0;
+  right: auto;
+  overflow: initial;
+  pointer-events: none;
+}
+
+.sl-toast-stack > sl-alert {
+  pointer-events: all;
+}
