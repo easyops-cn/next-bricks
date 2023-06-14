@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.2.4...@next-bricks/visual-builder@0.3.0) (2023-06-14)
+
+
+### Features
+
+* support workbench tree in v3 ([102c729](https://github.com/easyops-cn/next-bricks/commit/102c7294152b8a351dfb4f01b16890a63f0a5ed2))
+* update code ([c11d2d3](https://github.com/easyops-cn/next-bricks/commit/c11d2d39d4ec181315369dff9532b9430ed682da))
+* update code ([22508e4](https://github.com/easyops-cn/next-bricks/commit/22508e4da9ad92dca94e12712506921c1109a45c))
+
+
+
+
+
 ## [0.2.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.2.3...@next-bricks/visual-builder@0.2.4) (2023-06-12)
 
 

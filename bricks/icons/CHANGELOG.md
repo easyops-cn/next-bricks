@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.1.10...@next-bricks/icons@0.2.0) (2023-06-14)
+
+
+### Features
+
+* support icons.get-libs & icons.search-icons ([b756fc8](https://github.com/easyops-cn/next-bricks/commit/b756fc8e09fb255222688a145c4e6184844ec68a))
+
+
+
+
+
 ## [0.1.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.1.9...@next-bricks/icons@0.1.10) (2023-06-12)
 
 

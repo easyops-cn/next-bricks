@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.4.6...@next-bricks/form@0.5.0) (2023-06-14)
+
+
+### Features
+
+* general-search构件 ([d234bcc](https://github.com/easyops-cn/next-bricks/commit/d234bccd8838b6fa71197d548a792903f3d31cbb))
+* general-search构件 ([eb99158](https://github.com/easyops-cn/next-bricks/commit/eb9915834d7a3570d924c0edf2d5fa44883538d1))
+
+
+
+
+
 ## [0.4.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.4.5...@next-bricks/form@0.4.6) (2023-06-12)
 
 **Note:** Version bump only for package @next-bricks/form

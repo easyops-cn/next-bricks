@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.8.2...@next-bricks/data-view@0.8.3) (2023-06-14)
+
+
+### Bug Fixes
+
+* 修复应用墙hover双击效果不对的问题 ([79dde60](https://github.com/easyops-cn/next-bricks/commit/79dde609f8207fe681bbfc0b3178ae2ac222c457))
+
+
+
+
+
 ## [0.8.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.8.1...@next-bricks/data-view@0.8.2) (2023-06-12)
 
 
