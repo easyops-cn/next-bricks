@@ -9,6 +9,37 @@ Element.prototype.animate = jest.fn().mockReturnValue({
   addEventListener: jest.fn(),
 });
 
+customElements.define(
+  "sl-dialog",
+  class HTMLSlDialog extends HTMLElement {
+    label: string | undefined;
+    noHeader: boolean | undefined;
+    open: boolean | undefined;
+    hide() {
+      this.dispatchEvent(new Event("sl-hide"));
+    }
+    connectedCallback() {
+      const shadow = this.attachShadow({ mode: "open" });
+      const slot = document.createElement("slot");
+      shadow.append(slot);
+    }
+  }
+);
+
+customElements.define(
+  "sl-button",
+  class HTMLSlButton extends HTMLElement {
+    variant: string | undefined;
+  }
+);
+
+customElements.define(
+  "sl-icon",
+  class HTMLSlIcon extends HTMLElement {
+    name: string | undefined;
+  }
+);
+
 describe("showDialog", () => {
   test("general", async () => {
     let promise: Promise<void> | undefined;
