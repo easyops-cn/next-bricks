@@ -153,7 +153,6 @@ class Input extends FormItemElement {
 
   /**
    * 值改变事件
-   * @detail string
    */
   @event({ type: "change" })
   accessor #inputChangeEvent!: EventEmitter<string>;

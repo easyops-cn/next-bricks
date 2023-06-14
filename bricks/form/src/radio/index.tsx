@@ -145,7 +145,6 @@ class Radio extends FormItemElement {
 
   /**
    * 值变化事件
-   * @detail `{label: string, value: any, [key: string]: any}	`
    */
   @event({ type: "change" }) accessor #changeEvent!: EventEmitter<{
     label: string;
@@ -155,7 +154,6 @@ class Radio extends FormItemElement {
 
   /**
    * 选项列表变化事件
-   * @detail `{options:{label: string, value: any, [key: string]: any},name:string}	`
    */
   @event({ type: "options.change" }) accessor #optionsChange!: EventEmitter<{
     options: {

@@ -122,7 +122,6 @@ class Checkbox extends FormItemElement {
 
   /**
    * 复选框变化事件
-   * @detail
    */
   @event({ type: "change" })
   accessor #checkboxChangeEvent!: EventEmitter<CheckboxOptionType[]>;
@@ -134,7 +133,6 @@ class Checkbox extends FormItemElement {
 
   /**
    * 复选框变化事件
-   * @detail
    */
   @event({ type: "options.change" })
   accessor #optionsChangeEvent!: EventEmitter<{
