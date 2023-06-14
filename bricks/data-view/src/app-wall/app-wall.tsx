@@ -278,12 +278,13 @@ export function AppWallElement(props: AppWallProps): ReactElement {
 
   const showElementBetweenRelation = (target: Ele) => {
     const { __objectCSS, __userData } = target;
+    const rotationY = __objectCSS.rotation.y;
     const position: Position = {
-      x: __objectCSS.position.x + 50 * Math.sin(__objectCSS.rotation.y),
-      y: __objectCSS.position.y,
-      z: __objectCSS.position.z + 100 * Math.cos(__objectCSS.rotation.y),
+      x: __objectCSS.position.x + 50 * Math.sin(rotationY),
+      y: __objectCSS.position.y + 15,
+      z: __objectCSS.position.z + 100 * Math.cos(rotationY),
     };
-    const scale = 1.2;
+    const scale = 1.25;
     registerEvents.current.isShowRelations = true;
     new Tween(__objectCSS.rotation)
       .to(
@@ -650,23 +651,25 @@ export function AppWallElement(props: AppWallProps): ReactElement {
 
   useEffect(() => {
     const length = props.dataSource?.length || 0;
-    updateViewBounds(length);
-    cameraRef.current.position.z = computeCameraDistance(
-      cameraRef.current,
-      configRef.current.bounds,
-      distanceConfig,
-      length
-    );
-    cameraRef.current.updateProjectionMatrix();
-    controlsRef.current.position0.copy(cameraRef.current.position);
+    if (length > 0) {
+      updateViewBounds(length);
+      cameraRef.current.position.z = computeCameraDistance(
+        cameraRef.current,
+        configRef.current.bounds,
+        distanceConfig,
+        length
+      );
+      cameraRef.current.updateProjectionMatrix();
+      controlsRef.current.position0.copy(cameraRef.current.position);
 
-    const appData = setAppPosition(
-      props.dataSource,
-      configRef.current.maxX,
-      configRef.current.maxY
-    );
-    createView(appData);
-    transform(targetsRef.current.curve, 1000);
+      const appData = setAppPosition(
+        props.dataSource,
+        configRef.current.maxX,
+        configRef.current.maxY
+      );
+      createView(appData);
+      transform(targetsRef.current.curve, 1500);
+    }
 
     return () => {
       resetView();
@@ -676,6 +679,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
   useEffect(() => {
     const container = containerRef.current;
     const handleMouseover = (e: MouseEvent) => {
+      clearTimeout(registerEvents.current.mouseoverTimer);
       if (
         registerEvents.current.isShowAppInfo ||
         registerEvents.current.isShowGraph3D ||
@@ -683,29 +687,31 @@ export function AppWallElement(props: AppWallProps): ReactElement {
       )
         return false;
       const target = findElementByEvent(e);
-      clearTimeout(registerEvents.current.mouseoverTimer);
       registerEvents.current.mouseoverTimer = window.setTimeout(() => {
         restoreElementState(() => {
           target &&
-            !registerEvents.current.isShowRelations &&
             !registerEvents.current.isShowAppInfo &&
             showElementBetweenRelation(target);
+          clearTimeout(registerEvents.current.mouseoverTimer);
         });
       }, 500);
     };
     const handleClick = (e: MouseEvent) => {
+      clearTimeout(registerEvents.current.clickTimer);
+      clearTimeout(registerEvents.current.mouseoverTimer);
       if (
         registerEvents.current.isShowAppInfo ||
         registerEvents.current.isShowGraph3D ||
         !registerEvents.current.enable
       )
         return false;
-      clearTimeout(registerEvents.current.clickTimer),
-        clearTimeout(registerEvents.current.mouseoverTimer);
+
       const target = findElementByEvent(e);
       registerEvents.current.clickTimer = window.setTimeout(function () {
+        clearTimeout(registerEvents.current.mouseoverTimer);
         restoreElementState(() => {
           if (target) {
+            clearTimeout(registerEvents.current.clickTimer);
             clearTimeout(registerEvents.current.mouseoverTimer);
             e.stopPropagation();
             registerEvents.current.element = target;
@@ -716,28 +722,31 @@ export function AppWallElement(props: AppWallProps): ReactElement {
       }, 300);
     };
     const handleDbClick = (e: MouseEvent) => {
+      clearTimeout(registerEvents.current.clickTimer);
+      clearTimeout(registerEvents.current.mouseoverTimer);
+      clearTimeout(registerEvents.current.dblClickTimer);
       if (
         registerEvents.current.isShowAppInfo ||
         registerEvents.current.isShowGraph3D ||
         !registerEvents.current.enable
       )
         return false;
-      clearTimeout(registerEvents.current.clickTimer),
-        clearTimeout(registerEvents.current.mouseoverTimer),
-        clearTimeout(registerEvents.current.dblClickTimer);
+
       const target = findElementByEvent(e);
       const { __userData, __objectCSS } = target;
-      restoreElementState(() => {
-        if (useDblclick || __userData.trapezoidalProps?.clusters?.length < 1) {
-          registerEvents.current.dblClickTimer = window.setTimeout(function () {
+      registerEvents.current.isShowGraph3D = true;
+      registerEvents.current.dblClickTimer = window.setTimeout(function () {
+        restoreElementState(() => {
+          if (
+            useDblclick ||
+            __userData.trapezoidalProps?.clusters?.length < 1
+          ) {
             handleCardDbClick(__userData);
-          }, 300);
-        } else {
-          registerEvents.current.isShowGraph3D = true;
-          registerEvents.current.dblClickTimer = window.setTimeout(function () {
+            registerEvents.current.isShowGraph3D = false;
+          } else {
             if (target) {
-              clearTimeout(registerEvents.current.mouseoverTimer),
-                clearTimeout(registerEvents.current.clickTimer);
+              clearTimeout(registerEvents.current.mouseoverTimer);
+              clearTimeout(registerEvents.current.clickTimer);
               appwallRef.current.classList.add("mask-container");
               controlsRef.current.reset();
               const basePosition = {
@@ -828,9 +837,9 @@ export function AppWallElement(props: AppWallProps): ReactElement {
               });
               n.start();
             }
-          }, 300);
-        }
-      });
+          }
+        });
+      }, 300);
     };
 
     container.addEventListener("dblclick", handleDbClick);
