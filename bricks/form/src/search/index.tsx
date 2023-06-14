@@ -27,7 +27,7 @@ export interface SearchProps {
   value: string;
   placeholder?: string;
   autoFocus?: boolean;
-  allowClear?: boolean;
+  clearable?: boolean;
   trim?: boolean;
   debounceTime?: number;
 }
@@ -78,7 +78,7 @@ class GeneralSearch extends ReactNextElement implements SearchProps {
   @property({
     type: Boolean,
   })
-  accessor allowClear: boolean | undefined;
+  accessor clearable: boolean | undefined;
 
   /**
    * 是否剔除前后空格
@@ -132,7 +132,7 @@ class GeneralSearch extends ReactNextElement implements SearchProps {
         value={this.value}
         placeholder={this.placeholder}
         autoFocus={this.autoFocus}
-        allowClear={this.allowClear}
+        clearable={this.clearable}
         debounceTime={this.debounceTime}
         onBlur={this.#handleBlur}
         onChange={this.#handleChange}
@@ -154,7 +154,7 @@ export function GeneralSearchComponent(props: SearchComponentProps) {
   const {
     placeholder,
     autoFocus,
-    allowClear,
+    clearable,
     debounceTime,
     onDebouncedChange,
     onChange,
@@ -209,7 +209,7 @@ export function GeneralSearchComponent(props: SearchComponentProps) {
     <>
       <div
         className={classNames("search-input-wrapper", {
-          "allow-clear": allowClear,
+          "allow-clear": clearable,
           "search-input-wrapper-focused": inputFocused,
         })}
         onClick={() => inputRef.current?.focus()}
@@ -228,7 +228,7 @@ export function GeneralSearchComponent(props: SearchComponentProps) {
             onBlur?.(value);
           }}
         />
-        {allowClear && value && (
+        {clearable && value && (
           <WrappedIcon
             className="clear-button"
             lib="antd"

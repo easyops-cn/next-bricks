@@ -8,7 +8,7 @@
 - brick: form.general-search
   properties:
     placeholder: 请输入
-    allowClear: true
+    clearable: true
     trim: true
   events:
     change:

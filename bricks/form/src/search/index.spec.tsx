@@ -17,7 +17,7 @@ describe("form.general-search", () => {
       "form.general-search"
     ) as GeneralSearch;
     element.value = "basic";
-    element.allowClear = true;
+    element.clearable = true;
     element.addEventListener("search", onSearch);
     element.addEventListener("blur", onBlur);
     element.addEventListener("change", onChange);
