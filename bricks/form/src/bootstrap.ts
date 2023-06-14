@@ -8,3 +8,4 @@ import "./submit-buttons/index.js";
 import "./checkbox/index.js";
 import "./code-editor/index.js";
 import "./dynamic-form-item/index.js";
+import "./search/index.js";
