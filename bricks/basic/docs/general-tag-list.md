@@ -60,7 +60,23 @@
 ```yaml preview
 - brick: basic.general-tag-list
   properties:
-    mulitple: true
+    multiple: true
+    checkable: true
+    list:
+      - text: Item A
+        key: Item A
+      - text: Item B
+        key: Item B
+      - text: Item C
+        key: Item C
+- brick: div
+  properties:
+    style:
+      height: 20px
+- brick: basic.general-tag-list
+  properties:
+    multiple: false
+    checkable: true
     list:
       - text: Item A
         key: Item A

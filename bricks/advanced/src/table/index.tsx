@@ -23,7 +23,7 @@ import {
   flatten,
   keyBy,
 } from "lodash";
-import { createHistory, getHistory } from "@next-core/runtime";
+import { getHistory } from "@next-core/runtime";
 import { BrickTable } from "./BrickTable.js";
 import {
   TableRowSelection,
@@ -127,54 +127,43 @@ export interface CustomColumn extends ColumnProps<Record<string, any>> {
   };
 }
 
-createHistory();
-
 /**
- * @id advanced.general-table
- * @name advanced.general-table
- * @docKind brick
- * @description 通用表格构件
+ * 通用表格构件
  * @author sailor
- * @noInheritDoc
  */
 @defineElement("advanced.general-table", {
   styleTexts: [styleText],
 })
 class TableComponent extends ReactNextElement {
   /**
-   * @detail {[pagePath]: xxx}
-   * @description 页码变化,pagePath 可在 fields.page 中设置，默认为 page
+   * 页码变化,pagePath 可在 fields.page 中设置，默认为 page
    */
   @event({ type: "page.update" }) accessor #pageUpdate!: EventEmitter<
     Record<string, number>
   >;
 
   /**
-   * @detail {[pagePath]:1,[pageSizePath]:xxx}
-   * @description 每页条数变化 ,pagePath 可在 fields.page 中设置,pageSizePath 可在 fields.pageSize 中设置，默认为 pageSize
+   * 每页条数变化 ,pagePath 可在 fields.page 中设置,pageSizePath 可在 fields.pageSize 中设置，默认为 pageSize
    */
   @event({ type: "filter.update" }) accessor #filterUpdate!: EventEmitter<
     Record<string, number>
   >;
 
   /**
-   * @detail Record<string,any>[]
-   * @description 勾选框变化，detail 中为所选的行数据
+   * 勾选框变化，detail 中为所选的行数据
    */
   @event({ type: "select.update" }) accessor #selectUpdate!: EventEmitter<
     Record<string, any>[]
   >;
 
   /**
-   * @detail Record<string,any>[]
-   * @description 勾选框变化，detail 中为所选的行key集合
+   * 勾选框变化，detail 中为所选的行key集合
    */
   @event({ type: "select.row.keys.update" })
   accessor #selectRowKeysUpdate!: EventEmitter<string[]>;
 
   /**
-   * @detail {sort:string;order:string|number}
-   * @description 排序变化，detail 中的 sort 为对应排序列的 key/dataIndex，order 为升序/降序
+   * 排序变化，detail 中的 sort 为对应排序列的 key/dataIndex，order 为升序/降序
    */
   @event({ type: "sort.update", cancelable: true })
   accessor #sortUpdate!: EventEmitter<{
@@ -183,8 +172,7 @@ class TableComponent extends ReactNextElement {
   }>;
 
   /**
-   * @detail {expanded:boolean;record:Record<string,any>}
-   * @description 点击展开图标时触发的事件，事件详情中`expanded`为是否展开，`record`被点击的行信息
+   * 点击展开图标时触发的事件，事件详情中`expanded`为是否展开，`record`被点击的行信息
    */
   @event({ type: "row.expand" }) accessor #rowExpand!: EventEmitter<{
     expanded: boolean;
@@ -192,8 +180,7 @@ class TableComponent extends ReactNextElement {
   }>;
 
   /**
-   * @detail {expandedRows:string[]| number[]}
-   * @description 展开的行变化时触发的事件，事件详情为当前展开的所有行的`rowKey`集合
+   * 展开的行变化时触发的事件，事件详情为当前展开的所有行的`rowKey`集合
    */
   @event({ type: "expand.rows.change" })
   accessor #expandRowsChange!: EventEmitter<{
@@ -201,19 +188,14 @@ class TableComponent extends ReactNextElement {
   }>;
 
   /**
-   * @detail {data:Record<string,any>[]}
-   * @description 表格行拖拽结束发生的事件，事件详情为拖拽后重新排序的所有行数据
+   * 表格行拖拽结束发生的事件，事件详情为拖拽后重新排序的所有行数据
    */
   @event({ type: "row.drag" }) accessor #rowDrag!: EventEmitter<{
     data: Record<string, any>[];
   }>;
 
   /**
-   * @kind CustomColumn[]
-   * @required false
-   * @default -
-   * @description 扩展自 ant-design 的 Column 相关配置项,具体查阅：[Column](https://ant.design/components/table-cn/#Column)
-   * @group basic
+   * 扩展自 ant-design 的 Column 相关配置项,具体查阅：[Column](https://ant.design/components/table-cn/#Column)
    */
   set columns(value: CustomColumn[]) {
     this._columns = value;
@@ -224,11 +206,7 @@ class TableComponent extends ReactNextElement {
   }
 
   /**
-   * @kind any[]
-   * @required false
-   * @default -
-   * @description 数据源，通过 useResolves 从后台接口获取或者直接在 storyboard 中配置
-   * @group basic
+   * 数据源，通过 useResolves 从后台接口获取或者直接在 storyboard 中配置
    */
   set dataSource(value: Record<string, any>[]) {
     this._isInSelect = false;
@@ -251,10 +229,7 @@ class TableComponent extends ReactNextElement {
   }
 
   /**
-   * @required false
-   * @default true
-   * @description 是否显示外层卡片
-   * @group basic
+   * 是否显示外层卡片
    */
   @property({
     type: Boolean,
@@ -262,10 +237,7 @@ class TableComponent extends ReactNextElement {
   accessor showCard = true;
 
   /**
-   * @required false
-   * @default -
-   * @description 表格行是否可选择，具体查阅：[rowSelection](https://ant.design/components/table-cn/#rowSelection)
-   * @group basic
+   * 表格行是否可选择，具体查阅：[rowSelection](https://ant.design/components/table-cn/#rowSelection)
    */
   @property({
     attribute: false,
@@ -273,19 +245,13 @@ class TableComponent extends ReactNextElement {
   accessor rowSelection: false | TableRowSelection<any> | undefined;
 
   /**
-   * @required false
-   * @default "key"
-   * @description 指定每一行的 key，不指定则默认为索引 index。强烈建议设置该属性，否则在某些情况下可能行为不如预期。
-   * @group basic
+   * 指定每一行的 key，不指定则默认为索引 index。强烈建议设置该属性，否则在某些情况下可能行为不如预期。
    */
   @property()
   accessor rowKey: string | undefined;
 
   /**
-   * @required false
-   * @default -
-   * @description 隐藏相应列（输入对应的 dataIndex 或者 key 即可）
-   * @group basic
+   * 隐藏相应列（输入对应的 dataIndex 或者 key 即可）
    */
   @property({
     attribute: false,
@@ -293,9 +259,7 @@ class TableComponent extends ReactNextElement {
   accessor hiddenColumns: Array<string | number> | undefined;
 
   /**
-   * @required false
-   * @default false
-   * @description 是否显示已选择信息和清除按钮。仅在设置了`rowSelection`时有效。默认不显示
+   * 是否显示已选择信息和清除按钮。仅在设置了`rowSelection`时有效。默认不显示
    * @group rowSelection
    */
   @property({
@@ -305,9 +269,7 @@ class TableComponent extends ReactNextElement {
 
   // 表头过滤的 filters
   /**
-   * @required false
-   * @default -
-   * @description 表头过滤的过滤项，key 为 column 的 dataIndex，value 为过滤值集合。
+   * 表头过滤的过滤项，key 为 column 的 dataIndex，value 为过滤值集合。
    * @group paginationAndFilter
    */
   @property({
@@ -316,9 +278,7 @@ class TableComponent extends ReactNextElement {
   accessor filters: Record<string, string[]> | undefined;
 
   /**
-   * @required false
-   * @default -
-   * @description ant-design 的 Table 相关配置项,具体查阅：[Table](https://ant.design/components/table-cn/#Table)，其中分页配置和行选择配值在构件中设置了常用的默认配置，也可自行覆盖，具体描述见下表
+   * ant-design 的 Table 相关配置项,具体查阅：[Table](https://ant.design/components/table-cn/#Table)，其中分页配置和行选择配值在构件中设置了常用的默认配置，也可自行覆盖，具体描述见下表
    * @group other
    */
   @property({
@@ -327,18 +287,14 @@ class TableComponent extends ReactNextElement {
   accessor configProps: any;
 
   /**
-   * @required false
-   * @default -
-   * @description 被排序列的 dataIndex。通常来自于 url 参数，可以设置成 ${QUERY.sort}。
+   * 被排序列的 dataIndex。通常来自于 url 参数，可以设置成 ${QUERY.sort}。
    * @group paginationAndFilter
    */
   @property()
   accessor sort: string | undefined | null;
 
   /**
-   * @required false
-   * @default -
-   * @description 升序/降序，可以设置成 ${QUERY.order}。
+   * 升序/降序，可以设置成 ${QUERY.order}。
    * @group paginationAndFilter
    */
   @property({
@@ -347,9 +303,7 @@ class TableComponent extends ReactNextElement {
   accessor order: string | number | undefined | null;
 
   /**
-   * @required false
-   * @default -
-   * @description 配置每一行是否禁用，其中 `field` 表示数据源中的字段路径， `value` 表示与其字段比较的值， `operator` 表示两者比较的方法，结果为 `true` 时会禁用当前行, 需要注意的是该配置需要在 `rowSelection: true` 的前提下使用，并且设置 `rowKey` 属性赋予每行唯一的 key，防止顺序变化时造成的错误勾选（如上 demo 所示）
+   * 配置每一行是否禁用，其中 `field` 表示数据源中的字段路径， `value` 表示与其字段比较的值， `operator` 表示两者比较的方法，结果为 `true` 时会禁用当前行, 需要注意的是该配置需要在 `rowSelection: true` 的前提下使用，并且设置 `rowKey` 属性赋予每行唯一的 key，防止顺序变化时造成的错误勾选（如上 demo 所示）
    * @group rowSelection
    */
   @property({
@@ -359,10 +313,7 @@ class TableComponent extends ReactNextElement {
 
   // start -- 行展开相关属性
   /**
-   * @kind {useBrick:UseBrickConf}
-   * @required false
-   * @default -
-   * @description 自定义行展开的构件 [UseBrickConf](/next-docs/docs/api-reference/brick-types.usesinglebrickconf)
+   * 自定义行展开的构件 [UseBrickConf](/next-docs/docs/api-reference/brick-types.usesinglebrickconf)
    * @group expand
    */
   @property({
@@ -375,10 +326,8 @@ class TableComponent extends ReactNextElement {
     | undefined;
 
   /**
-   * @kind { collapsedIcon: MenuIcon,expandedIcon: MenuIcon}
-   * @required false
+   * 自定义展开图标。
    * @default {collapsedIcon:{lib:'antd',icon:'down',theme:'outlined'},expandedIcon:{lib:'antd',icon:'right',theme:'outlined'}}
-   * @description 自定义展开图标。
    * @group expand
    */
   @property({
@@ -392,9 +341,8 @@ class TableComponent extends ReactNextElement {
     | undefined;
 
   /**
-   * @required false
+   * 展开的图标是否为一个单元格，默认显示在第一列；设置为 false 的时候，可以通过`expandIconColumnIndex`属性设置展开的图标在哪一列
    * @default true
-   * @description 展开的图标是否为一个单元格，默认显示在第一列；设置为 false 的时候，可以通过`expandIconColumnIndex`属性设置展开的图标在哪一列
    * @group expand
    */
   @property({
@@ -403,9 +351,7 @@ class TableComponent extends ReactNextElement {
   accessor expandIconAsCell = true;
 
   /**
-   * @required false
-   * @default -
-   * @description 展开的图标显示在哪一列，如果没有 rowSelection，默认显示在第一列，否则显示在选择框后面。当`expandIconAsCell`为 false 时，该属性生效。
+   * 展开的图标显示在哪一列，如果没有 rowSelection，默认显示在第一列，否则显示在选择框后面。当`expandIconAsCell`为 false 时，该属性生效。
    * @group expand
    */
   @property({
@@ -414,9 +360,7 @@ class TableComponent extends ReactNextElement {
   accessor expandIconColumnIndex: number | undefined;
 
   /**
-   * @required false
-   * @default false
-   * @description 通过点击行来展开子行
+   * 通过点击行来展开子行
    * @group expand
    */
   @property({
@@ -425,9 +369,7 @@ class TableComponent extends ReactNextElement {
   accessor expandRowByClick: boolean | undefined;
 
   /**
-   * @required false
-   * @default -
-   * @description 优化渲染的列（输入对应的 dataIndex），针对配置了 useBrick 的列。当前 antd 在更新 state 的时候，会全量渲染单元格，如果确定某一列在后续操作中不需要重新渲染，例如仅作为展示的单元格，可通过该属性设置以优化性能。注意，在树形表格中，当某一列内包含展开/收起按钮，则不应该设置该列。
+   * 优化渲染的列（输入对应的 dataIndex），针对配置了 useBrick 的列。当前 antd 在更新 state 的时候，会全量渲染单元格，如果确定某一列在后续操作中不需要重新渲染，例如仅作为展示的单元格，可通过该属性设置以优化性能。注意，在树形表格中，当某一列内包含展开/收起按钮，则不应该设置该列。
    * @group advanced
    */
   @property({
@@ -436,9 +378,7 @@ class TableComponent extends ReactNextElement {
   accessor optimizedColumns: Array<string | number> | undefined;
 
   /**
-   * @required false
-   * @default false
-   * @description 树形数据展示时是否需要去除空数组
+   * 树形数据展示时是否需要去除空数组
    * @group expand
    */
   @property({
@@ -447,9 +387,7 @@ class TableComponent extends ReactNextElement {
   accessor stripEmptyExpandableChildren = false;
 
   /**
-   * @required false
-   * @default false
-   * @description 初始时，是否展开所有行
+   * 初始时，是否展开所有行
    * @group expand
    */
   @property({
@@ -458,18 +396,14 @@ class TableComponent extends ReactNextElement {
   accessor defaultExpandAllRows: boolean | undefined;
 
   /**
-   * @required false
-   * @default false
-   * @description 是否显示省略信息
+   * 是否显示省略信息
    * @group basic
    */
   @property({ type: Boolean })
   accessor ellipsisInfo: boolean | undefined;
 
   /**
-   * @required false
-   * @default -
-   * @description 展开的行的 rowKey
+   * 展开的行的 rowKey
    * @group expand
    */
   @property({
@@ -480,9 +414,7 @@ class TableComponent extends ReactNextElement {
   // end -- 行展开相关属性
 
   /**
-   * @required false
-   * @default false
-   * @description 表格树形数据展示的时候，行选择父节点的时候是否同步勾选/取消勾选所有子节点，并且被同步勾选的子节点不能单独取消。注意，该属性必须设置 `rowKey` 属性。
+   * 表格树形数据展示的时候，行选择父节点的时候是否同步勾选/取消勾选所有子节点，并且被同步勾选的子节点不能单独取消。注意，该属性必须设置 `rowKey` 属性。
    * @group expand
    */
   @property({
@@ -491,9 +423,7 @@ class TableComponent extends ReactNextElement {
   accessor selectAllChildren: boolean | undefined;
 
   /**
-   * @required false
-   * @default false
-   * @description 是否默认选择所有行。注意，该属性必须设置 `rowKey` 属性。
+   * 是否默认选择所有行。注意，该属性必须设置 `rowKey` 属性。
    * @group expand
    */
   @property({
@@ -504,9 +434,8 @@ class TableComponent extends ReactNextElement {
   private _disabledChildrenKeys: React.Key[] = [];
 
   /**
-   * @required false
+   * 指定树形结构的列名
    * @default children
-   * @description 指定树形结构的列名
    * @group expand
    */
   @property({
@@ -515,9 +444,8 @@ class TableComponent extends ReactNextElement {
   accessor childrenColumnName = "children";
 
   /**
-   * @required false
+   * 是否支持排序。默认开启，当对应列的sorter设置成true时则可排序。sortable为false时则排序都不生效。
    * @default true
-   * @description 是否支持排序。默认开启，当对应列的sorter设置成true时则可排序。sortable为false时则排序都不生效。
    * @group paginationAndFilter
    */
   @property({
@@ -526,10 +454,7 @@ class TableComponent extends ReactNextElement {
   accessor sortable = true;
 
   /**
-   * @kind object
-   * @required false
-   * @default -
-   * @description 设置相关字段取自哪里，具体描述见下表
+   * 设置相关字段取自哪里，具体描述见下表
    * @group advanced
    */
   set fields(value: any) {
@@ -538,9 +463,7 @@ class TableComponent extends ReactNextElement {
   }
 
   /**
-   * @required false
-   * @default false
-   * @description 是否前端进行搜索，配合`presentational-bricks.brick-input`使用
+   * 是否前端进行搜索，配合`presentational-bricks.brick-input`使用
    * @group paginationAndFilter
    */
   @property({
@@ -549,18 +472,14 @@ class TableComponent extends ReactNextElement {
   accessor frontSearch: boolean | undefined;
 
   /**
-   * @required false
-   * @default -
-   * @description 前端搜索参数
+   * 前端搜索参数
    * @group paginationAndFilter
    */
   @property()
   accessor frontSearchQuery = "";
 
   /**
-   * @required false
-   * @default false
-   * @description 是否精确搜索
+   * 是否精确搜索
    * @group paginationAndFilter
    */
   @property({
@@ -569,9 +488,7 @@ class TableComponent extends ReactNextElement {
   accessor exactSearch: boolean | undefined;
 
   /**
-   * @required false
-   * @default -
-   * @description 进行前端搜索的字段，支持嵌套的写法如["name","value.a"]，不配置的时候默认为对所有 columns 的 dataIndex[]进行前端搜索
+   * 进行前端搜索的字段，支持嵌套的写法如["name","value.a"]，不配置的时候默认为对所有 columns 的 dataIndex[]进行前端搜索
    * @group paginationAndFilter
    */
   @property({
@@ -580,9 +497,7 @@ class TableComponent extends ReactNextElement {
   accessor frontSearchFilterKeys: string[] | undefined;
 
   /**
-   * @required false
-   * @default -
-   * @description 页码。后台搜索的时候一般不需要配置，列表接口返回格式通常为{list:[],page:1,pageSize:10,total:20}，即默认取自 page；前台搜索的时候，一般配置成 "${query.page=1|number}"
+   * 页码。后台搜索的时候一般不需要配置，列表接口返回格式通常为{list:[],page:1,pageSize:10,total:20}，即默认取自 page；前台搜索的时候，一般配置成 "${query.page=1|number}"
    * @group paginationAndFilter
    */
   @property({
@@ -591,9 +506,7 @@ class TableComponent extends ReactNextElement {
   accessor page: number | undefined;
 
   /**
-   * @required false
-   * @default -
-   * @description 页码条数。后台搜索的时候一般不需要配置，列表接口返回格式通常为{list:[],page:1,pageSize:10,total:20}，即默认取自 pageSize/page_size；前台搜索的时候，一般配置成 "${query.pageSize=10|number}"
+   * 页码条数。后台搜索的时候一般不需要配置，列表接口返回格式通常为{list:[],page:1,pageSize:10,total:20}，即默认取自 pageSize/page_size；前台搜索的时候，一般配置成 "${query.pageSize=10|number}"
    * @group paginationAndFilter
    */
   @property({
@@ -608,9 +521,9 @@ class TableComponent extends ReactNextElement {
    * } & {
    *   scrollToFirstRowOnChange?: boolean;
    * }
+   * 表格是否可滚动，也可以指定滚动区域的宽、高，配置项。详见 [scroll](https://ant.design/components/table-cn/#scroll)
    * @required false
    * @default { x: true }
-   * @description 表格是否可滚动，也可以指定滚动区域的宽、高，配置项。详见 [scroll](https://ant.design/components/table-cn/#scroll)
    * @group other
    */
   @property({
@@ -619,18 +532,15 @@ class TableComponent extends ReactNextElement {
   accessor scrollConfigs: TableProps<unknown>["scroll"] = { x: true };
 
   /**
-   * @required false
+   * 把过滤条件更新到 url 时的字段名
    * @default "q"
-   * @description 把过滤条件更新到 url 时的字段名
    * @group paginationAndFilter
    */
   @property()
   accessor qField = "q";
 
   /**
-   * @required false
-   * @default false
-   * @description 表格行是否可拖拽，注意，树形数据的表格不支持该功能
+   * 表格行是否可拖拽，注意，树形数据的表格不支持该功能
    * @group basic
    */
   @property({
@@ -639,9 +549,7 @@ class TableComponent extends ReactNextElement {
   accessor tableDraggable: boolean | undefined;
 
   /**
-   * @required false
-   * @default false
-   * @description 是否展示斑马纹
+   * 是否展示斑马纹
    * @group ui
    */
   @property({
@@ -650,45 +558,36 @@ class TableComponent extends ReactNextElement {
   accessor zebraPattern: boolean | undefined;
 
   /**
-   * @required false
-   * @default false
-   * @description 翻页时是否记住之前选中的项。注意，选中项的rowKey将保存在url中，如果不设置rowKey，该设置不生效。如果选择太多可能会造成url过长，请谨慎使用
+   * 翻页时是否记住之前选中的项。注意，选中项的rowKey将保存在url中，如果不设置rowKey，该设置不生效。如果选择太多可能会造成url过长，请谨慎使用
    * @group other
    */
   @property({ type: Boolean })
   accessor storeCheckedByUrl: boolean | undefined;
 
   /**
-   * @required false
-   * @default -
-   * @description 额外的行，通常为跨页勾选时，不在当前页的行
+   * 额外的行，通常为跨页勾选时，不在当前页的行
    * @group other
    */
   @property({ attribute: false })
   accessor extraRows: Record<string, unknown>[] = [];
 
   /**
-   * @required false
-   * @default false
-   * @description 当所有子节点选中时，自动选中父节点
+   * 当所有子节点选中时，自动选中父节点
    * @group expand
    */
   @property({ type: Boolean })
   accessor autoSelectParentWhenAllChildrenSelected: boolean | undefined;
 
   /**
-   * @required -
-   * @default -
-   * @description 表格表头是否透明
+   * 表格表头是否透明
    * @group ui
    */
   @property({ type: Boolean })
   accessor thTransparent: boolean | undefined;
 
   /**
-   * @required false
+   * 是否显示表头
    * @default true
-   * @description 是否显示表头
    * @group ui
    */
   @property({
@@ -697,9 +596,7 @@ class TableComponent extends ReactNextElement {
   accessor showHeader = true;
 
   /**
-   * @required false
-   * @default -
-   * @description 是否显示分页
+   * 是否显示分页
    * @group paginationAndFilter
    */
   @property({
@@ -708,18 +605,14 @@ class TableComponent extends ReactNextElement {
   accessor pagination: false | TablePaginationConfig | undefined;
 
   /**
-   * @required false
-   * @default -
-   * @description 表格大小（antd原生size）
+   * 表格大小（antd原生size）
    * @group ui
    */
   @property()
   accessor size: SizeType;
 
   /**
-   * @required false
-   * @default -
-   * @description 选框类型（单选/多选）
+   * 选框类型（单选/多选）
    * @group rowSelection
    */
   @property({
@@ -728,18 +621,16 @@ class TableComponent extends ReactNextElement {
   accessor type: RowSelectionType | undefined;
 
   /**
-   * @required false
+   * 是否更新 url 参数。设置为否之后，如果是后台进行分页/排序等功能，则需要结合事件进行编排。如果是前台进行分页/排序，则不需要。
    * @default true
-   * @description 是否更新 url 参数。设置为否之后，如果是后台进行分页/排序等功能，则需要结合事件进行编排。如果是前台进行分页/排序，则不需要。
    * @group other
    */
   @property({ type: Boolean })
   accessor shouldUpdateUrlParams = true;
 
   /**
-   * @required false
+   * 更新 url 参数时是否触发页面重新渲染。仅在`shouldUpdateUrlParams`为true时有效。
    * @default true
-   * @description 更新 url 参数时是否触发页面重新渲染。仅在`shouldUpdateUrlParams`为true时有效。
    * @group other
    */
   @property({
@@ -798,9 +689,8 @@ class TableComponent extends ReactNextElement {
   };
 
   /**
+   * 指定选中项的 key 数组
    * @default []
-   * @required false
-   * @description 指定选中项的 key 数组
    * @group rowSelection
    */
   @property({
@@ -814,7 +704,7 @@ class TableComponent extends ReactNextElement {
   private _allChildren: Record<string, any>[] = [];
   private _isInSelect = false;
   /**
-   * @description 搜索过滤
+   * 搜索过滤
    */
   @method()
   filterSourceData(event: CustomEvent): void {
@@ -1396,7 +1286,7 @@ class TableComponent extends ReactNextElement {
   };
 
   /**
-   * @description 展开所有行
+   * 展开所有行
    */
   @method()
   expandAll() {
