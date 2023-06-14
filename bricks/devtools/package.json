@@ -25,8 +25,8 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-core/runtime": "^1.14.0",
-    "@next-core/utils": "^1.5.2",
+    "@next-core/runtime": "^1.16.0",
+    "@next-core/utils": "^1.5.3",
     "html2canvas": "^1.4.1"
   },
   "devDependencies": {
