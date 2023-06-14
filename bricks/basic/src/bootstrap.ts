@@ -13,3 +13,4 @@ import "./nav-menu/index.js";
 import "./tag/index.js";
 import "./tag-list/index.js";
 import "./launchpad/index.js";
+import "./notification.js";

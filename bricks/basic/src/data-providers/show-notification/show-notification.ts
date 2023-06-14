@@ -1,5 +1,10 @@
 import { createProviderClass } from "@next-core/utils/general";
-import styles from "./styles.module.css";
+import { wrapBrick } from "@next-core/react-element";
+import styles from "./notification.module.css";
+
+// Specify brick dependencies:
+/*#__PURE__*/ wrapBrick("sl-alert");
+/*#__PURE__*/ wrapBrick("sl-icon");
 
 export function showNotification({
   type,
@@ -36,6 +41,6 @@ export function showNotification({
 }
 
 customElements.define(
-  "shoelace.show-notification",
+  "basic.show-notification",
   createProviderClass(showNotification)
 );

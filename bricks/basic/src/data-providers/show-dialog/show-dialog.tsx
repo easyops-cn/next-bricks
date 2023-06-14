@@ -2,10 +2,13 @@ import React, { useCallback, useMemo, useRef } from "react";
 import { createProviderClass } from "@next-core/utils/general";
 import { i18n, initializeI18n } from "@next-core/i18n";
 import { createRoot } from "react-dom/client";
-import { SlDialogElement, WrappedSlDialog } from "../../sl-dialog/index.js";
-import { WrappedSlIcon } from "../../sl-icon/index.js";
-import { WrappedSlButton } from "../../sl-button/index.js";
-import { K, NS, locales } from "../i18n.js";
+import { K, NS, locales } from "./i18n.js";
+import {
+  SlDialogElement,
+  WrappedSlButton,
+  WrappedSlDialog,
+  WrappedSlIcon,
+} from "./sl-dialog.js";
 import styles from "./dialog.module.css";
 
 initializeI18n(NS, locales);
@@ -134,4 +137,4 @@ export function DialogComponent({
   );
 }
 
-customElements.define("shoelace.show-dialog", createProviderClass(showDialog));
+customElements.define("basic.show-dialog", createProviderClass(showDialog));

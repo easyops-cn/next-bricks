@@ -8,10 +8,10 @@ children:
 - brick: basic.general-button
   properties:
     type: primary
-    textContent: shoelace.show-notification
+    textContent: basic.show-notification
   events:
     click:
-      useProvider: shoelace.show-notification
+      useProvider: basic.show-notification
       args:
       - message: Cool, it works!
 - brick: basic.general-button

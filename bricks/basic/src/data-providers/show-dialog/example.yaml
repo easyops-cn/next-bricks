@@ -11,7 +11,7 @@ children:
     textContent: Confirm
   events:
     click:
-      useProvider: shoelace.show-dialog
+      useProvider: basic.show-dialog
       args:
       - type: confirm
         title: Please Confirm
@@ -30,7 +30,7 @@ children:
     textContent: Alert
   events:
     click:
-      useProvider: shoelace.show-dialog
+      useProvider: basic.show-dialog
       args:
       - type: error
         title: Request Failed
