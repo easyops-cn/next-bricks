@@ -1,5 +1,5 @@
 import { describe, test, expect } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "@testing-library/react";
 import "./";
 import { Radio } from "./index.js";
 
@@ -20,7 +20,9 @@ describe("form.general-button", () => {
     ];
 
     const mockChangeEvent = jest.fn();
+    const mockOptionsChangeEvent = jest.fn();
     element.addEventListener("change", mockChangeEvent);
+    element.addEventListener("options.change", mockOptionsChangeEvent);
 
     expect(element.shadowRoot).toBeFalsy();
     act(() => {
@@ -50,6 +52,59 @@ describe("form.general-button", () => {
       })
     );
     expect(element.value).toBe("a");
+    expect(
+      (
+        element.shadowRoot?.querySelectorAll(
+          "input[type='radio']"
+        )[0] as HTMLInputElement
+      ).checked
+    ).toBeTruthy();
+    expect(mockOptionsChangeEvent).toBeCalledTimes(0);
+
+    await act(async () => {
+      await (element.options = ["a", "b", "c"]);
+    });
+
+    expect(mockOptionsChangeEvent).toBeCalledWith(
+      expect.objectContaining({
+        detail: {
+          options: [
+            {
+              label: "a",
+              value: "a",
+            },
+            {
+              label: "b",
+              value: "b",
+            },
+            {
+              label: "c",
+              value: "c",
+            },
+          ],
+        },
+      })
+    );
+
+    await act(async () => {
+      await (element.value = "c");
+    });
+
+    expect(
+      (
+        element.shadowRoot?.querySelectorAll(
+          "input[type='radio']"
+        )[0] as HTMLInputElement
+      ).checked
+    ).toBeFalsy();
+
+    expect(
+      (
+        element.shadowRoot?.querySelectorAll(
+          "input[type='radio']"
+        )[2] as HTMLInputElement
+      ).checked
+    ).toBe(true);
 
     act(() => {
       document.body.removeChild(element);
