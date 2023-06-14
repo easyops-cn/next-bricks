@@ -21,8 +21,6 @@
     "start": "cross-env NODE_ENV=development NODE_OPTIONS='--experimental-import-meta-resolve' build-next-bricks --watch",
     "prebuild": "node ./scripts/pre-build.js",
     "build": "cross-env NODE_ENV=production NODE_OPTIONS='--experimental-import-meta-resolve' build-next-bricks",
-    "test": "cross-env NODE_ENV='test' test-next",
-    "test:ci": "cross-env NODE_ENV='test' CI=true test-next",
     "prepublishOnly": "cp package.json package.json.bak && npm pkg delete dependencies",
     "postpublish": "mv package.json.bak package.json"
   },
@@ -31,7 +29,6 @@
   },
   "devDependencies": {
     "@next-core/build-next-bricks": "^1.7.2",
-    "@next-core/test-next": "^1.0.6",
     "copy-webpack-plugin": "^11.0.0"
   }
 }
