@@ -6,6 +6,8 @@ import "@next-core/theme";
 import styleText from "./checkbox.shadow.css";
 import { FormItemElement } from "../form-item/FormItemElement.js";
 import type { FormItem, FormItemProps } from "../form-item/index.js";
+import { formatOptions } from "../utils/formatOptions.js";
+import { isEqual } from "lodash";
 import type {
   GeneralIcon,
   GeneralIconProps,
@@ -43,126 +45,157 @@ export interface OptionGroup {
   options: CheckboxOptionType[];
 }
 
-export interface CheckboxProps {
+export interface CheckboxProps extends FormItemProps {
   options?: CheckboxOptionType[];
   label?: string;
   value?: CheckboxValueType[];
-  onChange?: (value: CheckboxOptionType[]) => void;
-  text?: string;
+  disabled?: boolean;
   type?: CheckboxType;
   isCustom?: boolean;
-  name?: string;
-  [propName: string]: any;
+  onChange?: (value: CheckboxOptionType[]) => void;
+  optionsChange?: (options: CheckboxOptionType[], name: string) => void;
 }
 
+/**
+ * 表单复选框构件
+ * @author derrickma
+ */
 @defineElement("form.general-checkbox", {
   styleTexts: [styleText],
 })
 class Checkbox extends FormItemElement {
   /**
-   * @kind string
-   * @required true
-   * @default -
-   * @description 多选框当前选中初始值
-   * @group basic
+   * 字段名称
    */
-  @property({ attribute: false })
-  accessor value: string[] | undefined;
+  @property()
+  accessor name: string | undefined;
 
   /**
-   * @required true
-   * @default -
-   * @description 多选框选项表
-   * @group basic
+   * 字段说明
+   */
+  @property()
+  accessor label: string | undefined;
+  /**
+   * 值
+   */
+  @property({ attribute: false })
+  accessor value: CheckboxValueType[] | undefined;
+
+  /**
+   * 多选框选项表
+   * @required
    */
   @property({ attribute: false })
   accessor options: CheckboxOptionType[] = [];
 
   /**
-   * @kind string
-   * @required true
-   * @default -
-   * @description 多选框字段名
-   * @group basicFormItem
-   */
-  @property({ attribute: false })
-  accessor name: string | undefined;
-
-  /**
-   * @kind string
-   * @required false
-   * @default -
-   * @description 多选框字段说明
-   * @group basic
+   * 类型
+   * @default "default"
    */
   @property()
-  accessor label: string | undefined;
-
-  /**
-   * @kind string
-   * @required false
-   * @default -
-   * @description 多选框类型
-   * @group basic
-   */
-  @property({ attribute: false })
   accessor type: CheckboxType = "default";
 
   /**
-   * @kind boolean
-   * @required false
-   * @default -
-   * @description 多选框字段说明
-   * @group basic
+   * 是否禁用
    */
-  @property({ attribute: false })
+  @property({ type: Boolean })
+  accessor disabled: boolean | undefined;
+
+  /**
+   * 是否为自定义
+   * @default false
+   */
+  @property({ type: Boolean })
   accessor isCustom: boolean = false;
 
   /**
+   * 是否必填
+   */
+  @property({ type: Boolean })
+  accessor required: boolean | undefined;
+
+  /**
+   * 校验文本
+   */
+  @property({ attribute: false })
+  accessor message: Record<string, string> | undefined;
+
+  /**
+   * 复选框变化事件
    * @detail
-   * @description 复选框变化事件
    */
   @event({ type: "change" })
   accessor #checkboxChangeEvent!: EventEmitter<CheckboxOptionType[]>;
 
-  #handleCheckboxChange = (detail: CheckboxOptionType[]) => {
+  handleCheckboxChange = (detail: CheckboxOptionType[]) => {
+    this.value = detail.map((item) => item.value);
     this.#checkboxChangeEvent.emit(detail);
+  };
+
+  /**
+   * 复选框变化事件
+   * @detail
+   */
+  @event({ type: "options.change" })
+  accessor #optionsChangeEvent!: EventEmitter<{
+    options: CheckboxOptionType[];
+    name: string;
+  }>;
+
+  #handleOptionsChange = (options: CheckboxOptionType[], name: string) => {
+    this.#optionsChangeEvent.emit({
+      options,
+      name,
+    });
   };
 
   render() {
     return (
       <CheckboxComponent
         curElement={this}
-        options={this.options}
+        formElement={this.getFormElement()}
+        options={formatOptions(this.options)}
         label={this.label}
         name={this.name}
         value={this.value}
         type={this.type}
+        disabled={this.disabled}
         isCustom={this.isCustom}
-        onChange={this.#handleCheckboxChange}
+        required={this.required}
+        message={this.message}
+        trigger="handleCheckboxChange"
+        onChange={this.handleCheckboxChange}
+        optionsChange={this.#handleOptionsChange}
       />
     );
   }
 }
 
-export { Checkbox };
-
 function CheckboxComponent(props: CheckboxProps) {
-  let newValue: CheckboxValueType[] = (props?.value && [...props.value]) || [];
+  const [values, setValues] = useState<CheckboxValueType[]>(props?.value ?? []);
   const [options, setOptions] = useState<CheckboxOptionType[]>(
     props.options || []
   );
+
   useEffect(() => {
-    setOptions(props.options || []);
-  }, [props.options]);
+    if (!isEqual(options, props.options)) {
+      setOptions(props.options || []);
+      props.optionsChange?.(props.options ?? [], props.name as string);
+    }
+  }, [options, props, props.options]);
+
+  useEffect(() => {
+    setValues(props?.value || []);
+  }, [props.value]);
 
   const handleInputClick = (
     e: React.ChangeEvent<HTMLInputElement>,
     item: CheckboxOptionType
   ) => {
     e.stopPropagation();
+    let newValue: CheckboxValueType[] = [];
     if (e.target.checked) {
-      newValue = [...newValue, item.value];
+      newValue = [...values, item.value];
     }
     if (!e.target.checked && newValue?.includes(item.value)) {
       const index = newValue.findIndex((i) => i == item.value);
@@ -171,6 +204,7 @@ function CheckboxComponent(props: CheckboxProps) {
     const currentSelectOption = options.filter((item) =>
       newValue.includes(item.value)
     );
+    setValues(newValue);
     props.onChange?.(currentSelectOption);
   };
 
@@ -213,7 +247,6 @@ function CheckboxComponent(props: CheckboxProps) {
       <>
         {options.map((item: any) => (
           <label
-            htmlFor={item.value}
             key={item.value}
             className={
               disabled || item?.disabled
@@ -232,7 +265,7 @@ function CheckboxComponent(props: CheckboxProps) {
                 type="checkbox"
                 value={item.value}
                 name={name}
-                defaultChecked={props?.value?.includes(item.value)}
+                defaultChecked={values?.includes(item.value)}
                 disabled={disabled || item?.disabled}
                 onChange={(e) => handleInputClick(e, item)}
               />
@@ -272,29 +305,30 @@ function CheckboxComponent(props: CheckboxProps) {
           })}
         >
           {options?.map((item: CheckboxOptionType) => {
+            const disabled = item.disabled || props.disabled;
             return (
               <label
                 key={item.value}
                 className={classNames({
                   checkboxLabel: true,
-                  checkboxLabelDisabled: item.disabled,
+                  checkboxLabelDisabled: disabled,
                 })}
               >
                 <span
-                  style={{ cursor: "not-allowed", color: item.checkboxColor }}
+                  style={{ color: item.checkboxColor }}
                   className={classNames({
                     checkboxInputWrapper: true,
-                    checkboxInputWrapperDisabled: item.disabled,
-                    checkboxInputCheck: newValue.includes(item.value),
+                    checkboxInputWrapperDisabled: disabled,
+                    checkboxInputCheck: values.includes(item.value),
                   })}
                 >
                   <input
-                    onChange={(e) => handleInputClick(e, item)}
-                    disabled={item.disabled}
-                    defaultChecked={props?.value?.includes(item.value)}
+                    onChange={(e) => !disabled && handleInputClick(e, item)}
+                    disabled={disabled}
+                    defaultChecked={values?.includes(item.value)}
                     className={classNames({
                       checkboxInput: true,
-                      checkboxInputDisabled: item.disabled,
+                      checkboxInputDisabled: disabled,
                     })}
                     type="checkbox"
                     id={item.value}
@@ -326,3 +360,5 @@ function CheckboxComponent(props: CheckboxProps) {
     </WrappedFormItem>
   );
 }
+
+export { Checkbox };

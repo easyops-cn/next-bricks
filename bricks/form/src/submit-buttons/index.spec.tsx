@@ -14,7 +14,6 @@ describe("form.submit-buttons", () => {
     act(() => {
       document.body.appendChild(element);
       element.submitText = "提交";
-      element.showCancelButton = true;
       (element.cancelText = "取消"), (element.disableAfterClick = true);
     });
 
@@ -25,7 +24,6 @@ describe("form.submit-buttons", () => {
     const { container } = render(
       <ButtonsComponent
         submitText="提交"
-        showCancelButton={true}
         curElement={{} as any}
         onSubmitClick={submitMockFn}
         onCancelClick={cancelMockFn}

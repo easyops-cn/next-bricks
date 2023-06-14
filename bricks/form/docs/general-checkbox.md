@@ -1,7 +1,7 @@
-表单单选构件。
+表单复选框构件。
 
 ```yaml preview
-- brick: form.general-radio
+- brick: form.general-checkbox
   properties:
     options:
       - Beijing
@@ -15,7 +15,7 @@
 ### Label
 
 ```yaml preview
-- brick: form.general-radio
+- brick: form.general-checkbox
   properties:
     label: city
     options:
@@ -28,28 +28,31 @@
 ### Value
 
 ```yaml preview
-- brick: form.general-radio
+- brick: form.general-checkbox
   properties:
+    value:
+      - Beijing
+      - Guangzhou
     options:
       - Beijing
       - Shanghai
       - Guangzhou
       - Shenzhen
-    value: Guangzhou
 ```
 
 ### Options
 
 ```yaml preview
-- brick: form.general-radio
+- brick: form.general-checkbox
   properties:
     options:
       - Beijing
       - Shanghai
       - Guangzhou
       - Shenzhen
-    value: Guangzhou
-- brick: form.general-radio
+    value:
+      - Guangzhou
+- brick: form.general-checkbox
   properties:
     options:
       - label: Beijing
@@ -63,18 +66,22 @@
         value: 2
       - label: Shenzhen
         value: 3
-    value: 2
-- brick: form.general-radio
+    value:
+      - 2
+      - 3
+- brick: form.general-checkbox
   properties:
     options:
       - true
       - false
+    value:
+      - true
 ```
 
 ### Disabled
 
 ```yaml preview
-- brick: form.general-radio
+- brick: form.general-checkbox
   properties:
     options:
       - label: Beijing
@@ -90,7 +97,7 @@
   properties:
     style:
       height: 20px
-- brick: form.general-radio
+- brick: form.general-checkbox
   properties:
     disabled: true
     options:
@@ -104,143 +111,71 @@
         value: 3
 ```
 
-### Size(Only use when type was button)
-
-```yaml preview
-- brick: form.general-radio
-  properties:
-    label: large
-    size: large
-    type: button
-    options:
-      - Beijing
-      - Shanghai
-      - Guangzhou
-      - Shenzhen
-- brick: div
-  properties:
-    style:
-      height: 20px
-- brick: form.general-radio
-  properties:
-    label: medium
-    size: medium
-    type: button
-    options:
-      - Beijing
-      - Shanghai
-      - Guangzhou
-      - Shenzhen
-- brick: div
-  properties:
-    style:
-      height: 20px
-- brick: form.general-radio
-  properties:
-    label: small
-    size: small
-    type: button
-    options:
-      - Beijing
-      - Shanghai
-      - Guangzhou
-      - Shenzhen
-```
-
 ### Type
 
 ```yaml preview
-- brick: form.general-radio
+- brick: form.general-checkbox
   properties:
     label: Default
     type: default
-    value: Beijing
     options:
-      - Beijing
-      - Shanghai
-      - Guangzhou
-      - Shenzhen
-- brick: form.general-radio
+      - label: Beijing
+        value: 0
+        icon:
+          icon: "search"
+          lib: "antd"
+      - label: Shanghai
+        value: 1
+        icon:
+          icon: "plus"
+          lib: "antd"
+      - label: Guangzhou
+        value: 2
+        icon:
+          icon: "edit"
+          lib: "antd"
+      - label: Shenzhen
+        value: 3
+        icon:
+          icon: "delete"
+          lib: "antd"
+- brick: div
   properties:
-    label: Button
-    type: button
-    value: Shanghai
-    options:
-      - Beijing
-      - Shanghai
-      - Guangzhou
-      - Shenzhen
-- brick: form.general-radio
+    style:
+      height: 20px
+- brick: form.general-checkbox
   properties:
     label: Icon
     type: icon
-    value: 1
     options:
       - label: Beijing
         value: 0
         icon:
-          icon: "area-chart"
+          icon: "search"
           lib: "antd"
       - label: Shanghai
         value: 1
         icon:
-          icon: "bar-chart"
+          icon: "plus"
           lib: "antd"
       - label: Guangzhou
         value: 2
         icon:
-          icon: "area-chart"
+          icon: "edit"
           lib: "antd"
-- brick: form.general-radio
-  properties:
-    label: Icon Cricle
-    type: icon-circle
-    value: 0
-    options:
-      - label: Beijing
-        value: 0
+      - label: Shenzhen
+        value: 3
         icon:
-          icon: "area-chart"
-          lib: "antd"
-      - label: Shanghai
-        value: 1
-        icon:
-          icon: "bar-chart"
-          lib: "antd"
-      - label: Guangzhou
-        value: 2
-        icon:
-          icon: "area-chart"
-          lib: "antd"
-- brick: form.general-radio
-  properties:
-    label: Icon Square
-    type: icon-square
-    value: 2
-    options:
-      - label: Beijing
-        value: 0
-        icon:
-          icon: "area-chart"
-          lib: "antd"
-      - label: Shanghai
-        value: 1
-        icon:
-          icon: "bar-chart"
-          lib: "antd"
-      - label: Guangzhou
-        value: 2
-        icon:
-          icon: "area-chart"
+          icon: "delete"
           lib: "antd"
 ```
 
 ### Event
 
 ```yaml preview
-- brick: form.general-radio
+- brick: form.general-checkbox
   properties:
-    id: option-radio
+    id: option-checkbox
     options:
       - label: Beijing
         value: 0
@@ -267,7 +202,7 @@
     textContent: Click to Change Radio Option
   events:
     click:
-      - target: "#option-radio"
+      - target: "#option-checkbox"
         properties:
           options:
             - label: Beijing

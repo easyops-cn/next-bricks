@@ -1,8 +1,7 @@
-import React, { CSSProperties } from "react";
+import React from "react";
 import { createDecorators, EventEmitter } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
 import styleText from "./index.shadow.css";
-// import "@next-core/theme";
 import type { FormItem, FormItemProps } from "../form-item/index.js";
 import type { Button, ButtonProps } from "@next-bricks/basic/button";
 import type { ButtonType } from "../interface.js";
@@ -22,102 +21,58 @@ interface SubmitButtonsProps {
   cancelType?: ButtonType;
   onSubmitClick?: (event: React.MouseEvent) => void;
   onCancelClick?: (event: React.MouseEvent) => void;
-  showCancelButton?: boolean;
 }
 
 const { defineElement, property, event } = createDecorators();
 
 /**
- * @id form.submit-buttons
- * @name form.submit-buttons
- * @docKind brick
- * @description 用于general-forms的通用按钮，可以配置submit按钮和cancel按钮
+ * 用于general-forms的通用按钮
  * @author zhendong
- * @noInheritDoc
  */
 @defineElement("form.submit-buttons", {
   styleTexts: [styleText],
 })
 class SubmitButtons extends FormItemElement {
   /**
-   * @kind string
-   * @required false
-   * @default -
-   * @description 提交按钮的文字，不设置则不显示提交按钮
-   * @group basic
+   * 提交按钮的文字
+   * @default "提交"
    */
-  @property() accessor submitText: string | undefined;
+  @property() accessor submitText: string = "提交";
 
   /**
-   * @kind boolean
-   * @required false
-   * @default `false`
-   * @description 显示取消按钮
-   * @group basic
-   */
-  @property({
-    type: Boolean,
-  })
-  accessor showCancelButton: boolean | undefined;
-
-  /**
-   * @kind string
-   * @required false
-   * @default -
-   * @description 取消按钮的文字，不设置则不显示取消按钮
-   * @group basic
+   * 取消按钮的文字，不设置则不显示取消按钮
    */
   @property()
   accessor cancelText: string | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default `false`
-   * @description 点击确定按钮后自动禁用
-   * @group advanced
+   * 点击确定按钮后自动禁用
    */
   @property({ type: Boolean })
   accessor disableAfterClick: boolean | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default `false`
-   * @description 禁用提交按钮
-   * @group advanced
+   * 禁用提交按钮
    */
   @property({ type: Boolean }) accessor submitDisabled: boolean | undefined;
 
   /**
-   * @kind ButtonType
-   * @required false
-   * @default default
-   * @description 按钮类型
-   * @enums
-   * @group basic
+   * 提交按钮类型
    */
   @property() accessor submitType: ButtonType | undefined;
 
   /**
-   * @kind ButtonType
-   * @required false
-   * @default default
-   * @description 按钮类型
-   * @enums
-   * @group basic
+   * 取消按钮类型
    */
   @property() accessor cancelType: ButtonType | undefined;
 
   /**
-   * @description 点击提交按钮触发的事件
-   * @detail -
+   * 点击提交按钮触发的事件
    */
   @event({ type: "submit" }) accessor #submitEvent!: EventEmitter<void>;
 
   /**
-   * @description 点击取消按钮触发的事件
-   * @detail -
+   * 点击取消按钮触发的事件
    */
   @event({ type: "cancel" }) accessor #cancelEvent!: EventEmitter<void>;
 
@@ -150,7 +105,6 @@ class SubmitButtons extends FormItemElement {
         cancelType={this.cancelType}
         onCancelClick={this._handleCancelClick}
         onSubmitClick={this._handleSubmitClick}
-        showCancelButton={this.showCancelButton}
       />
     );
   }
@@ -169,7 +123,7 @@ export function ButtonsComponent(props: SubmitButtonsProps) {
           {props.submitText}
         </WrappedButton>
       )}
-      {props.showCancelButton && props.cancelText && (
+      {props.cancelText && (
         <WrappedButton
           data-test-id="cancelBtn"
           type={props.cancelType || "text"}

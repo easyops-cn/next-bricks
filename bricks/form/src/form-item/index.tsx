@@ -287,12 +287,17 @@ export function FormItemComponent(props: FormItemProps) {
     });
     formInstance.subscribe(`${name}.init.value`, (_, v) => {
       curElement[valuePropsName] = v;
+      curElement.validateState = "";
+      setValidateState({
+        message: "",
+        type: "normal",
+      });
     });
     formInstance.subscribe(`${name}.reset.fields`, () => {
-      curElement[valuePropsName] = "";
+      curElement[valuePropsName] = undefined;
     });
     formInstance.subscribe("reset.fields", () => {
-      curElement[valuePropsName] = "";
+      curElement[valuePropsName] = undefined;
     });
     formInstance.subscribe("reset.validate", () => {
       setValidateState(defaultValidateState.current);
