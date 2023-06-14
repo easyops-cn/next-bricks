@@ -36,6 +36,8 @@ const { defineElement, property, event } = createDecorators();
 /**
  * 通用输入框构件
  * @author sailor
+ * @slot prefix - 输入框前置插槽
+ * @slot suffix - 输入框后置插槽
  */
 @defineElement("form.general-input", {
   styleTexts: [styleText],
@@ -204,11 +206,11 @@ export function InputComponent(props: InputProps) {
     validateState,
     onInputChange,
   } = props;
-  const [value, setValue] = useState(props.value);
+  const [value, setValue] = useState(props.value ?? "");
   const [focus, setFocus] = useState(false);
 
   useEffect(() => {
-    setValue(props.value);
+    setValue(props.value ?? "");
   }, [props.value]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -134,3 +134,30 @@
       args:
         - blur
 ```
+
+### Slot
+
+```yaml preview
+- brick: form.general-input
+  properties:
+    placeholder: prefix slot
+  slots:
+    prefix:
+      bricks:
+        - brick: icons.general-icon
+          properties:
+            icon: search
+            lib: antd
+            theme: outlined
+- brick: form.general-input
+  properties:
+    placeholder: suffix slot
+  slots:
+    suffix:
+      bricks:
+        - brick: icons.general-icon
+          properties:
+            icon: search
+            lib: antd
+            theme: outlined
+```
