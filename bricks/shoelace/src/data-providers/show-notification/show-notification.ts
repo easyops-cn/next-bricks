@@ -1,4 +1,5 @@
 import { createProviderClass } from "@next-core/utils/general";
+import styles from "./styles.module.css";
 
 export function showNotification({
   type,
@@ -13,21 +14,22 @@ export function showNotification({
   switch (type) {
     case "success":
       notification.variant = "success";
-      icon.name = "check2-circle";
+      icon.name = "check-circle-fill";
       break;
     case "error":
       notification.variant = "danger";
-      icon.name = "exclamation-octagon";
+      icon.name = "x-circle-fill";
       break;
     case "warn":
       notification.variant = "warning";
-      icon.name = "exclamation-triangle";
+      icon.name = "exclamation-circle-fill";
       break;
     default:
       notification.variant = "primary";
-      icon.name = "info-circle";
+      icon.name = "info-circle-fill";
   }
   notification.duration = 3000;
+  notification.className = styles.notification;
   const text = document.createTextNode(message);
   notification.append(icon, text);
   notification.toast();
