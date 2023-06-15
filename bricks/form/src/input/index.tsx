@@ -5,31 +5,28 @@ import classNames from "classnames";
 import { wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
 import { FormItemElement } from "../form-item/FormItemElement.js";
-import { Form } from "../form/index.js";
 import type { FormItem, FormItemProps } from "../form-item/index.jsx";
 import styleText from "./input.shadow.css";
+import { GeneralIcon, GeneralIconProps } from "@next-bricks/icons/general-icon";
 
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>(
   "form.general-form-item"
 );
 
-interface InputProps {
-  formElement?: Form;
-  curElement: HTMLElement;
-  name?: string;
-  label?: string;
+const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
+  "icons.general-icon"
+);
+
+interface InputProps extends FormItemProps {
   value?: string;
   placeholder?: string;
   disabled?: boolean;
+  clearable?: boolean;
   type?: InputType;
   size?: ComponentSize;
   inputStyle?: React.CSSProperties;
   minLength?: number;
   maxLength?: number;
-  required?: boolean;
-  pattern?: string;
-  min?: number;
-  max?: number;
   validateState?: string;
   trigger?: string;
   onInputChange: (value: string) => void;
@@ -37,60 +34,37 @@ interface InputProps {
 const { defineElement, property, event } = createDecorators();
 
 /**
- * @id form.general-input
- * @name form.general-input
- * @docKind brick
- * @description 通用输入框构件
+ * 通用输入框构件
  * @author sailor
- * @noInheritDoc
+ * @slot prefix - 输入框前置插槽
+ * @slot suffix - 输入框后置插槽
  */
 @defineElement("form.general-input", {
   styleTexts: [styleText],
 })
 class Input extends FormItemElement {
   /**
-   * @kind string
-   * @required false
-   * @default default
-   * @description 字段名称
-   * @enums
-   * @group basic
+   * 字段名称
    */
   @property() accessor name: string | undefined;
 
   /**
-   * @default
-   * @required
-   * @description
+   * 标签文字
    */
   @property() accessor label: string | undefined;
 
   /**
-   * @kind string
-   * @required false
-   * @default default
-   * @description 初始值
-   * @enums
-   * @group basic
+   * 输入框值
    */
   @property() accessor value: string | undefined;
 
   /**
-   * @kind string
-   * @required false
-   * @default -
-   * @description 占位说明
-   * @enums
-   * @group basic
+   * 占位说明
    */
   @property() accessor placeholder: string | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default false
-   * @description 是否禁用
-   * @group basic
+   * 是否禁用
    */
   @property({
     type: Boolean,
@@ -98,30 +72,27 @@ class Input extends FormItemElement {
   accessor disabled: boolean | undefined;
 
   /**
-   * @kind InputType
-   * @required false
-   * @default false
-   * @description 类型
-   * @group basic
+   * 是否显示清除按钮
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor clearable: boolean | undefined;
+
+  /**
+   * 类型
+   * @default "text"
    */
   @property() accessor type: InputType | undefined;
 
   /**
-   * @kind ComponentSize
-   * @required false
-   * @default medium
-   * @description 大小
-   * @enums
-   * @group basic
+   * 大小
+   * @default "medium"
    */
   @property() accessor size: ComponentSize | undefined;
 
   /**
-   * @kind number
-   * @required false
-   * @default -
-   * @description 最小长度
-   * @group basicFormItem
+   * 最小长度
    */
   @property({
     type: Number,
@@ -129,11 +100,7 @@ class Input extends FormItemElement {
   accessor minLength: number | undefined;
 
   /**
-   * @kind number
-   * @required false
-   * @default -
-   * @description 最大长度
-   * @group basicFormItem
+   * 最大长度
    */
   @property({
     type: Number,
@@ -141,11 +108,7 @@ class Input extends FormItemElement {
   accessor maxLength: number | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default -
-   * @description 表单项是否必填
-   * @group basicFormItem
+   * 是否必填
    */
   @property({
     type: Boolean,
@@ -153,16 +116,12 @@ class Input extends FormItemElement {
   accessor required: boolean | undefined;
 
   /**
-   * @default
-   * @required
-   * @description
+   * 正则校验规则
    */
   @property() accessor pattern: string | undefined;
 
   /**
-   * @default
-   * @required
-   * @description
+   * 表单校验最大长度
    */
   @property({
     type: Number,
@@ -170,9 +129,7 @@ class Input extends FormItemElement {
   accessor max: number | undefined;
 
   /**
-   * @default
-   * @required
-   * @description
+   * 表单校验最小长度
    */
   @property({
     type: Number,
@@ -180,29 +137,22 @@ class Input extends FormItemElement {
   accessor min: number | undefined;
 
   /**
-   * @default
-   * @required
-   * @description
+   * 错误时显示消息
    */
   @property({
-    attribute: true,
+    attribute: false,
   })
   accessor message: Record<string, string> | undefined;
 
   /**
-   * @kind React.CSSProperties
-   * @required false
-   * @default -
-   * @description 样式
-   * @group other
+   * 输入框样式
    */
   @property({ attribute: false }) accessor inputStyle:
     | React.CSSProperties
     | undefined;
 
   /**
-   * @detail
-   * @description 值改变事件
+   * 值改变事件
    */
   @event({ type: "change" })
   accessor #inputChangeEvent!: EventEmitter<string>;
@@ -223,10 +173,12 @@ class Input extends FormItemElement {
         pattern={this.pattern}
         min={this.min}
         max={this.max}
+        message={this.message}
         value={this.value}
         placeholder={this.placeholder}
         type={this.type}
         size={this.size}
+        clearable={this.clearable}
         disabled={this.disabled}
         minLength={this.minLength}
         maxLength={this.maxLength}
@@ -246,39 +198,79 @@ export function InputComponent(props: InputProps) {
     type,
     size = "medium",
     disabled,
+    clearable,
     inputStyle,
     minLength,
     maxLength,
     validateState,
     onInputChange,
   } = props;
-  // const [value, setValue] = useState(props.value);
+  const [value, setValue] = useState(props.value ?? "");
+  const [focus, setFocus] = useState(false);
 
-  // useEffect(() => {
-  //   setValue(value);
-  // }, [value])
+  useEffect(() => {
+    setValue(props.value ?? "");
+  }, [props.value]);
 
-  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setValue(e.target.value);
-  //   onInputChange(e.target.value);
-  // }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+    onInputChange(e.target.value);
+  };
+
+  const handleFocus = () => {
+    setFocus(true);
+  };
+
+  const handleBlur = () => {
+    setFocus(false);
+  };
+
+  const handleClear = () => {
+    setValue("");
+    onInputChange("");
+  };
 
   return (
     <WrappedFormItem {...props}>
-      <input
-        value={props.value ?? ""}
-        name={name}
-        className={classNames(size, {
+      <div
+        className={classNames("input-wrapper", {
+          focus,
+          disabled,
           error: validateState === "error",
         })}
-        type={type}
-        disabled={disabled}
         style={inputStyle}
-        placeholder={placeholder}
-        minLength={minLength}
-        maxLength={maxLength}
-        onChange={(e) => onInputChange(e.target.value)}
-      />
+      >
+        <span className="prefix">
+          <slot name="prefix"></slot>
+        </span>
+        <input
+          className={size}
+          value={value}
+          name={name}
+          type={type}
+          disabled={disabled}
+          placeholder={placeholder}
+          minLength={minLength}
+          maxLength={maxLength}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onChange={handleChange}
+        />
+        <span className="suffix">
+          {value && clearable && !disabled && (
+            <WrappedGeneralIcon
+              className="clear-button"
+              icon="close-circle"
+              lib="antd"
+              theme="filled"
+              onClick={handleClear}
+            />
+          )}
+          <slot name="suffix"></slot>
+        </span>
+      </div>
     </WrappedFormItem>
   );
 }
+
+export { Input };

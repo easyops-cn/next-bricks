@@ -38,10 +38,11 @@
 
 .form-item-wrapper {
   flex: 1 1 0;
+  line-height: 32px;
 }
 
 .form-item-control {
-  line-height: 32px;
+  flex: 1;
 }
 
 .message {

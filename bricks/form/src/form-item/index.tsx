@@ -99,7 +99,7 @@ class FormItem extends FormItemElement implements FormItemProps {
    * @description
    */
   @property({
-    attribute: true,
+    attribute: false,
   })
   accessor message: Record<string, string> | undefined;
 
@@ -204,8 +204,8 @@ class FormItem extends FormItemElement implements FormItemProps {
    * @default false
    * @description 表单项校验方法
    */
-   @property({
-    attribute: false
+  @property({
+    attribute: false,
   })
   accessor validator: ((value: any) => MessageBody) | undefined;
 
@@ -215,7 +215,7 @@ class FormItem extends FormItemElement implements FormItemProps {
    * @description 值变化时是否主动出发校验
    */
   @property({
-    type: Boolean
+    type: Boolean,
   })
   accessor needValidate: boolean | undefined;
 
@@ -268,7 +268,9 @@ export function FormItemComponent(props: FormItemProps) {
     message: "",
     type: "normal",
   });
-  const [validateState, setValidateState] = useState<MessageBody>(defaultValidateState.current);
+  const [validateState, setValidateState] = useState<MessageBody>(
+    defaultValidateState.current
+  );
 
   useEffect(() => {
     if (!formInstance || !name || curElement.$bindFormItem) return;
@@ -285,17 +287,22 @@ export function FormItemComponent(props: FormItemProps) {
     });
     formInstance.subscribe(`${name}.init.value`, (_, v) => {
       curElement[valuePropsName] = v;
+      curElement.validateState = "";
+      setValidateState({
+        message: "",
+        type: "normal",
+      });
     });
     formInstance.subscribe(`${name}.reset.fields`, () => {
-      curElement[valuePropsName] = "";
+      curElement[valuePropsName] = undefined;
     });
     formInstance.subscribe("reset.fields", () => {
-      curElement[valuePropsName] = "";
+      curElement[valuePropsName] = undefined;
     });
     formInstance.subscribe("reset.validate", () => {
       setValidateState(defaultValidateState.current);
       curElement.validateState = defaultValidateState.current.type;
-    })
+    });
 
     return () => {
       formInstance.unsubscribe(`${name}.validate`);
@@ -353,13 +360,15 @@ export function FormItemComponent(props: FormItemProps) {
         <div className="form-item-control">
           <slot></slot>
         </div>
-        <div
-          className={classNames("message", {
-            error: validateState.type === "error",
-          })}
-        >
-          {validateState?.type !== "normal" && validateState.message}
-        </div>
+        {formElement ? (
+          <div
+            className={classNames("message", {
+              error: validateState.type === "error",
+            })}
+          >
+            {validateState?.type !== "normal" && validateState.message}
+          </div>
+        ) : null}
       </div>
     </div>
   );

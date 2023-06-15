@@ -35,60 +35,35 @@ interface TextareaProps extends FormItemProps {
 const { defineElement, property, event } = createDecorators();
 
 /**
- * @id form.general-textarea
- * @name form.general-textarea
- * @docKind brick
- * @description 通用多行文本输入框构件
+ * 通用多行文本输入框构件
  * @author sailor
- * @noInheritDoc
  */
 @defineElement("form.general-textarea", {
   styleTexts: [styleText],
 })
 class Textarea extends FormItemElement {
   /**
-   * @kind string
-   * @required false
-   * @default default
-   * @description 字段名称
-   * @enums
-   * @group basic
+   * 字段名称
    */
   @property() accessor name: string | undefined;
 
   /**
-   * @default
-   * @required
-   * @description
+   * 标签文字
    */
   @property() accessor label: string | undefined;
 
   /**
-   * @kind string
-   * @required false
-   * @default default
-   * @description 初始值
-   * @enums
-   * @group basic
+   * 值
    */
   @property() accessor value: string | undefined;
 
   /**
-   * @kind string
-   * @required false
-   * @default -
-   * @description 占位说明
-   * @enums
-   * @group basic
+   * 占位说明
    */
   @property() accessor placeholder: string | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default false
-   * @description 是否禁用
-   * @group basic
+   * 是否禁用
    */
   @property({
     type: Boolean,
@@ -96,11 +71,7 @@ class Textarea extends FormItemElement {
   accessor disabled: boolean | undefined;
 
   /**
-   * @kind number
-   * @required false
-   * @default -
-   * @description 最小长度
-   * @group basicFormItem
+   * 最小长度
    */
   @property({
     type: Number,
@@ -108,11 +79,7 @@ class Textarea extends FormItemElement {
   accessor minLength: number | undefined;
 
   /**
-   * @kind number
-   * @required false
-   * @default -
-   * @description 最大长度
-   * @group basicFormItem
+   * 最大长度
    */
   @property({
     type: Number,
@@ -120,11 +87,7 @@ class Textarea extends FormItemElement {
   accessor maxLength: number | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default -
-   * @description 大小子摄影
-   * @group basicFormItem
+   * 大小自适应
    */
   @property({
     attribute: false,
@@ -132,11 +95,7 @@ class Textarea extends FormItemElement {
   accessor autoSize: AutoSize | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default -
-   * @description 表单项是否必填
-   * @group basicFormItem
+   * 是否必填
    */
   @property({
     type: Boolean,
@@ -144,11 +103,31 @@ class Textarea extends FormItemElement {
   accessor required: boolean | undefined;
 
   /**
-   * @kind React.CSSProperties
-   * @required false
-   * @default -
-   * @description 样式
-   * @group other
+   * 表单校验最大长度
+   */
+  @property({
+    type: Number,
+  })
+  accessor max: number | undefined;
+
+  /**
+   * 表单校验最小长度
+   */
+  @property({
+    type: Number,
+  })
+  accessor min: number | undefined;
+
+  /**
+   * 校验信息
+   */
+  @property({
+    attribute: false,
+  })
+  accessor message: Record<string, string> | undefined;
+
+  /**
+   * 自定义样式
    */
   @property({ attribute: false }) accessor textareaStyle:
     | React.CSSProperties
@@ -182,6 +161,9 @@ class Textarea extends FormItemElement {
         autoSize={this.autoSize}
         textareaStyle={this.textareaStyle}
         validateState={this.validateState}
+        max={this.max}
+        min={this.min}
+        message={this.message}
         trigger="handleInputChange"
         onInputChange={this.handleInputChange}
       />
@@ -192,7 +174,6 @@ class Textarea extends FormItemElement {
 export function TextareaComponent(props: TextareaProps) {
   const {
     name,
-    value,
     placeholder,
     disabled,
     textareaStyle,
@@ -202,6 +183,7 @@ export function TextareaComponent(props: TextareaProps) {
     validateState,
     onInputChange,
   } = props;
+  const [value, setValue] = useState(props.value);
   const [autoSizeStyle, setAutoSizeStyle] = useState<React.CSSProperties>();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -229,9 +211,14 @@ export function TextareaComponent(props: TextareaProps) {
   const handleInputChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>
   ): void => {
+    setValue(e.target.value);
     onInputChange(e.target.value);
     setAutoSize();
   };
+
+  useEffect(() => {
+    setValue(props.value);
+  }, [props.value]);
 
   useEffect(() => {
     setAutoSize();
@@ -245,7 +232,7 @@ export function TextareaComponent(props: TextareaProps) {
           error: validateState === "error",
         })}
         name={name}
-        value={value ?? ""}
+        value={value}
         disabled={disabled}
         style={{
           height: 94,

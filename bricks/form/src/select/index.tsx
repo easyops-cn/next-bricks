@@ -14,13 +14,17 @@ import "@next-core/theme";
 import type { FormItem, FormItemProps } from "../form-item/index.jsx";
 import { formatOptions } from "../utils/formatOptions.js";
 import { FormItemElement } from "../form-item/FormItemElement.js";
-import type { Form } from "../form/index.js";
-import type { Tag, TagProps, TagMapEvents, TagEvents } from "@next-bricks/basic/tag";
+import type {
+  Tag,
+  TagProps,
+  TagMapEvents,
+  TagEvents,
+} from "@next-bricks/basic/tag";
 import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
-import { isEmpty } from "lodash";
+import { isEmpty, isEqual } from "lodash";
 
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>(
   "form.general-form-item"
@@ -38,21 +42,14 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
   "icons.general-icon"
 );
 
-export interface SelectProps {
-  curElement: HTMLElement;
-  formElement: Form;
-  trigger?: string;
+export interface SelectProps extends FormItemProps {
   value?: any;
-  name?: string;
-  label?: string;
   options: GeneralComplexOption[];
   placeholder?: string;
   multiple?: boolean;
   clearable?: boolean;
   disabled?: boolean;
-  required?: boolean;
   inputStyle?: React.CSSProperties;
-  dropdownStyle?: React.CSSProperties;
   validateState?: string;
   onChange?: (value: any) => void;
   optionsChange?: (options: any, name: string) => void;
@@ -61,59 +58,37 @@ export interface SelectProps {
 const { defineElement, property, event } = createDecorators();
 
 /**
- * @id form.general-select
- * @name form.general-select
- * @docKind brick
- * @description 通用下拉构件
+ * 通用下拉选择构件
  * @author julielai
- * @noInheritDoc
  */
 @defineElement("form.general-select", {
   styleTexts: [styleText],
 })
 class Select extends FormItemElement {
   /**
-   * @kind string
-   * @required true
-   * @default -
-   * @description 选择框字段名
-   * @group basicFormItem
+   * 字段名称
    */
   @property() accessor name: string | undefined;
 
   /**
-   * @kind string
-   * @required true
-   * @default -
-   * @description 选择框占位说明
-   * @group basic
+   * 占位说明
    */
   @property() accessor placeholder: string | undefined;
 
   /**
-   * @kind string
-   * @required false
-   * @default -
-   * @description 选择框字段说明
-   * @group basic
+   * 字段文本
    */
   @property() accessor label: string | undefined;
 
   /**
-   * @required true
-   * @default -
-   * @description 候选项列表
-   * @group basic
+   * 选项列表
+   * @required
    */
   @property({ attribute: false })
   accessor options: GeneralComplexOption[] | undefined;
 
   /**
-   * @kind string
-   * @required true
-   * @default -
-   * @description 选择框初始值
-   * @group basic
+   * 值
    */
   @property({
     attribute: false,
@@ -121,61 +96,38 @@ class Select extends FormItemElement {
   accessor value: any | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default -
-   * @description 是否必填项
-   * @group basicFormItem
+   * 是否必填
    */
   @property({ type: Boolean }) accessor required: boolean | undefined;
 
   /**
-   * @kind Record<string,string>
-   * @required false
-   * @default -
-   * @description 校验文本信息
-   * @group basicFormItem
+   * 校验文本信息
    */
   @property({ attribute: false }) accessor message:
     | Record<string, string>
     | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default  false
-   * @description 是否禁用
-   * @group basic
+   * 是否禁用
    */
   @property({ type: Boolean })
   accessor disabled: boolean | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default  false
-   * @description 是否支持多选
-   * @group basic
+   * 是否支持多选
    */
   @property({ type: Boolean })
   accessor multiple: boolean | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default  false
-   * @description 是否支持清除
-   * @group basic
+   * 是否支持清除
+   * @default true
    */
   @property({ type: Boolean })
   accessor clearable: boolean | undefined;
 
   /**
-   * @kind React.CSSProperties
-   * @required false
-   * @default -
-   * @description 输入框样式
-   * @group ui
+   * 输入框样式
    */
   @property({
     attribute: false,
@@ -183,18 +135,7 @@ class Select extends FormItemElement {
   accessor inputStyle: React.CSSProperties | undefined;
 
   /**
-   * @kind React.CSSProperties
-   * @required false
-   * @default -
-   * @description 下拉框样式
-   * @group ui
-   */
-  @property()
-  accessor dropdownStyle: React.CSSProperties | undefined;
-
-  /**
-   * @detail `{label: string, value: any, [key: string]: any}	`
-   * @description 下拉变化时被触发，`event.detail` 为当前整个选择项包含其他字段值
+   * 下拉选择事件
    */
   @event({ type: "change" }) accessor #changeEvent!: EventEmitter<{
     value: string | string[];
@@ -202,8 +143,7 @@ class Select extends FormItemElement {
   }>;
 
   /**
-   * @detail `{options:{label: string, value: any, [key: string]: any},name:string}	`
-   * @description 下拉框选项列表变化时被触发
+   * 选项列表变化事件
    */
   @event({ type: "options.change" }) accessor #optionsChange!: EventEmitter<{
     options: {
@@ -214,10 +154,10 @@ class Select extends FormItemElement {
     name: string;
   }>;
 
-  private _handleChange = (value: string | string[]): void => {
+  handleChange = (value: string | string[]): void => {
     this.value = value;
     const findOption = (value: any) =>
-      (this.options ?? []).find(
+      (formatOptions(this.options) ?? []).find(
         (option) => option.value === value
       ) as GeneralComplexOption;
     const selectedOptions = Array.isArray(value)
@@ -256,12 +196,11 @@ class Select extends FormItemElement {
         required={this.required}
         multiple={this.multiple}
         clearable={this.clearable}
-        trigger="_handleChange"
+        trigger="handleChange"
         inputStyle={this.inputStyle}
-        dropdownStyle={this.dropdownStyle}
         validateState={this.validateState}
         options={formatOptions(this.options)}
-        onChange={this._handleChange}
+        onChange={this.handleChange}
         optionsChange={this._handleOptionsChange}
       />
     );
@@ -270,7 +209,6 @@ class Select extends FormItemElement {
 
 export function SelectComponent(props: SelectProps) {
   const {
-    options = [],
     name,
     disabled,
     multiple,
@@ -285,6 +223,7 @@ export function SelectComponent(props: SelectProps) {
   const [selectValue, setSelectValue] = useState<any>(
     multiple ? [] : undefined
   );
+  const [options, setOptions] = useState(props.options ?? []);
   const [isDropHidden, setIsDropHidden] = useState<boolean>(true);
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [customSelectvalue, setCustomSelectValue] = useState<string[]>([]);
@@ -306,8 +245,11 @@ export function SelectComponent(props: SelectProps) {
   }, [props.value]);
 
   useEffect(() => {
-    optionsChange?.(props.options, name as string);
-  }, [props.options]);
+    if (!isEqual(options, props.options)) {
+      setOptions(props.options);
+      optionsChange?.(props.options, name as string);
+    }
+  }, [name, options, optionsChange, props.options]);
 
   const handleChange = useCallback(
     (option: GeneralComplexOption): void => {
@@ -359,22 +301,37 @@ export function SelectComponent(props: SelectProps) {
     );
   }, [options, customSelectvalue]);
 
-  const handleKeydown = useCallback((e: KeyboardEvent): void => {
-    if (e.code === "Enter" && inputValue) {
-      if (!computedOptions.find(item => item.value === inputValue)) {
-        setCustomSelectValue(customSelectvalue.concat(inputValue));
+  const handleKeydown = useCallback(
+    (e: KeyboardEvent): void => {
+      if (e.code === "Enter" && inputValue) {
+        if (!computedOptions.find((item) => item.value === inputValue)) {
+          setCustomSelectValue(customSelectvalue.concat(inputValue));
+        }
+        handleChange({
+          value: inputValue,
+          label: inputValue,
+        });
+        setInputValue("");
       }
-      handleChange({
-        value: inputValue,
-        label: inputValue,
-      });
-      setInputValue("");
-    }
-    if (e.code === "Backspace" && multiple && inputValue === "" && selectValue?.length) {
-      selectValue.pop();
-      setSelectValue([...selectValue]);
-    }
-  }, [computedOptions, customSelectvalue, handleChange, inputValue, multiple, selectValue]);
+      if (
+        e.code === "Backspace" &&
+        multiple &&
+        inputValue === "" &&
+        selectValue?.length
+      ) {
+        selectValue.pop();
+        setSelectValue([...selectValue]);
+      }
+    },
+    [
+      computedOptions,
+      customSelectvalue,
+      handleChange,
+      inputValue,
+      multiple,
+      selectValue,
+    ]
+  );
 
   const renderTag = useCallback(
     (list: Array<number | string | boolean>) => {
@@ -421,7 +378,7 @@ export function SelectComponent(props: SelectProps) {
 
   const getLabel = useCallback(
     (value: any) => {
-      if (value) {
+      if (value !== undefined) {
         return (
           (Array.isArray(value)
             ? renderTag(value)
@@ -440,7 +397,7 @@ export function SelectComponent(props: SelectProps) {
   const isEmptyValue = useMemo(() => {
     return typeof selectValue === "object"
       ? isEmpty(selectValue)
-      : !selectValue;
+      : selectValue === undefined;
   }, [selectValue]);
 
   useEffect(() => {
@@ -460,7 +417,9 @@ export function SelectComponent(props: SelectProps) {
           "select-multiple": multiple,
         })}
         style={inputStyle}
-        onClick={(e) => {e.stopPropagation()}}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
       >
         <div
           className={classNames("select-selector", {
@@ -486,18 +445,20 @@ export function SelectComponent(props: SelectProps) {
             >
               <span className="label">{renderLabel}</span>
             </div>
-            { multiple && <div className="selected-item">
-              <div className="select-selection-search">
-                <input
-                  type="text"
-                  readOnly={!multiple}
-                  value={inputValue}
-                  ref={inputRef}
-                  className="select-selection-search-input"
-                  onChange={handleInputChange}
-                />
+            {multiple && (
+              <div className="selected-item">
+                <div className="select-selection-search">
+                  <input
+                    type="text"
+                    readOnly={!multiple}
+                    value={inputValue}
+                    ref={inputRef}
+                    className="select-selection-search-input"
+                    onChange={handleInputChange}
+                  />
+                </div>
               </div>
-            </div> }
+            )}
           </div>
           <span className="select-arrow">
             {!isEmptyValue && isFocused && clearable ? (
@@ -539,13 +500,14 @@ export function SelectComponent(props: SelectProps) {
                           "select-item",
                           "select-item-option",
                           {
+                            disabled: item.disabled,
                             "select-option-selected":
                               typeof selectValue !== "object"
                                 ? selectValue === item.value
                                 : (selectValue as any[]).includes(item.value),
                           }
                         )}
-                        onClick={() => handleChange(item)}
+                        onClick={() => !item.disabled && handleChange(item)}
                       >
                         <div className="select-item-option-content">
                           <div className="option">
@@ -567,7 +529,12 @@ export function SelectComponent(props: SelectProps) {
                 ) : (
                   <div className="empty-tips">
                     <WrappedIcon
-                      {...{ lib: "antd", icon: "warning", theme: "filled", color: "yellow" }}
+                      {...{
+                        lib: "antd",
+                        icon: "warning",
+                        theme: "filled",
+                        color: "yellow",
+                      }}
                       style={{
                         fontSize: 16,
                         marginRight: 12,

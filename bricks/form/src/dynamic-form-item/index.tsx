@@ -18,6 +18,7 @@ import { ReactUseMultipleBricks } from "@next-core/react-runtime";
 import { UseBrickConf } from "@next-core/types";
 import styleText from "./dynamic-form-item.shadow.css";
 import "@next-core/theme";
+import { isEqual } from "lodash";
 
 const { defineElement, property, event } = createDecorators();
 
@@ -64,27 +65,32 @@ interface DynamicFormItemProps extends FormItemProps {
   styleTexts: [styleText],
 })
 class DynamicFormItem extends FormItemElement {
+  /**
+   * 字段名称
+   */
   @property() accessor name: string | undefined;
+  /**
+   * 字段说明
+   */
   @property() accessor label: string | undefined;
   /**
-   * @default
-   * @required
-   * @description
+   * 是否必填
    */
   @property({
     type: Boolean,
   })
   accessor required: boolean | undefined;
 
+  /**
+   * 值
+   */
   @property({
     attribute: false,
   })
   accessor value: DynamicFormValuesItem[] | undefined;
 
   /**
-   * @default
-   * @required
-   * @description
+   * 动态表单子项构件列表
    */
   @property({
     attribute: false,
@@ -131,7 +137,9 @@ function DynamicFormItemComponent(props: DynamicFormItemProps) {
   };
 
   useEffect(() => {
-    setValues(props.value ?? []);
+    if (!isEqual(props.value, values)) {
+      setValues(props.value ?? []);
+    }
   }, [props.value]);
 
   const validate = () => {
@@ -150,18 +158,23 @@ function DynamicFormItemComponent(props: DynamicFormItemProps) {
 
   const handleValuesChange = useCallback(
     (value: CustomEvent<DynamicFormValuesItem>, index: number) => {
-      values.splice(index, 1, value.detail.allValues);
-      setValues(values);
-      props.onChange?.(values);
+      props.onChange?.(
+        values.map((item, i) => {
+          if (i === index) {
+            return value.detail.allValues;
+          }
+          return item;
+        })
+      );
     },
     [props, values]
   );
 
   const handleRemoveItem = useCallback(
     (index: number) => {
-      values.splice(index, 1);
-      setValues(values);
-      props.onChange?.(values);
+      const newValues = values.filter((_, i) => i !== index);
+      setValues(newValues);
+      props.onChange?.(newValues);
     },
     [props, values]
   );
@@ -184,6 +197,7 @@ function DynamicFormItemComponent(props: DynamicFormItemProps) {
                 >
                   <ReactUseMultipleBricks
                     useBrick={props.useBrick}
+                    data={value}
                   />
                   <WrappedIcon
                     lib="easyops"

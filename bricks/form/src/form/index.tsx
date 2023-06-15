@@ -25,12 +25,9 @@ export interface FormMapEvents {
 }
 
 /**
- * @id form.general-form
- * @name form.general-form
- * @docKind brick
- * @description 通用输入框构件
+ * 表单构件
  * @author sailor
- * @noInheritDoc
+ * @slot - 表单内容
  */
 @defineElement("form.general-form", {
   styleTexts: [],
@@ -61,13 +58,19 @@ class Form extends ReactNextElement implements FormProps {
     this.formStore.setInitValue(values, this.defaultEmitValuesChange);
   }
 
+  /**
+   * 布局方式
+   */
   @property() accessor layout: Layout | undefined;
 
+  /**
+   * 表单组件尺寸
+   */
   @property() accessor size: ComponentSize | undefined;
 
   /**
+   * 表单值变更事件
    * @detail
-   * @description
    */
   @event({ type: "values.change" }) accessor #valuesChangeEvent!: EventEmitter<
     Record<string, unknown>
@@ -77,20 +80,20 @@ class Form extends ReactNextElement implements FormProps {
   };
 
   /**
-   * @description 表单验证成功时触发
+   * 表单验证成功时触发事件
    */
   @event({ type: "validate.success" }) accessor #successEvent!: EventEmitter<
     Record<string, unknown>
   >;
   /**
-   * @description 表单验证报错时触发
+   * 表单验证报错时触发事件
    */
   @event({ type: "validate.error" }) accessor #errorEvent!: EventEmitter<
     MessageBody[]
   >;
 
   /**
-   * @description
+   * 表单校验方法
    */
   @method()
   validate(): boolean | Record<string, unknown> {
@@ -104,7 +107,7 @@ class Form extends ReactNextElement implements FormProps {
   }
 
   /**
-   * @description
+   * 表单设置值方法
    */
   @method()
   setInitValue(values: Record<string, unknown>) {
@@ -112,23 +115,25 @@ class Form extends ReactNextElement implements FormProps {
   }
 
   /**
-   * @description
+   * 表单重置值方法
    */
   @method()
   resetFields(name?: string) {
-    this.formStore.resetFields(name);
+    this.formStore.resetFields(typeof name === "string" ? name : undefined);
   }
 
   /**
-   * @description
+   * 获取表单值方法
    */
   @method()
-  getFieldsValue(name: string) {
-    return this.formStore.getFieldsValue(name);
+  getFieldsValue(name?: string) {
+    return this.formStore.getFieldsValue(
+      typeof name === "string" ? name : undefined
+    );
   }
 
   /**
-   * @description
+   * 校验表单字段方法
    */
   @method()
   validateField(name: string) {
@@ -136,11 +141,11 @@ class Form extends ReactNextElement implements FormProps {
   }
 
   /**
-   * @description
+   * 重置表单校验状态方法
    */
   @method()
   resetValidateState() {
-    this.formStore.resetValidateState()
+    this.formStore.resetValidateState();
   }
 
   render() {
@@ -154,14 +159,15 @@ interface FormComponentProps extends FormProps {
   onValidateError?: () => void;
 }
 
-export function FormComponent({
-  layout = "horizontal"
-}: FormComponentProps) {
+export function FormComponent({ layout = "horizontal" }: FormComponentProps) {
   return (
     <form>
-      <slot style={{
-        display: layout === "inline" ? "flex" : "",
-      }} />
+      <slot
+        style={{
+          display: layout === "inline" ? "flex" : "",
+          gap: layout === "inline" ? "10px" : "",
+        }}
+      />
     </form>
   );
 }

@@ -1,5 +1,5 @@
 import { PubSub } from "../utils/PubSub.js";
-import { isEmpty } from 'lodash';
+import { isEmpty } from "lodash";
 
 interface FormStoreOptions {
   onValuesChanged?: (data: any) => void;
@@ -126,14 +126,16 @@ export class FormStore extends PubSub {
     }
   }
 
-  getFieldsValue(name: string) {
+  getFieldsValue(name?: string) {
     if (name) {
       return this.#formData[name];
     }
     return this.getAllValues();
   }
 
-  validateFields(callback: (err: boolean, value: any) => void): boolean | Record<string, unknown> {
+  validateFields(
+    callback: (err: boolean, value: any) => void
+  ): boolean | Record<string, unknown> {
     const allFields = this.#getAllFields();
     const results: Array<MessageBody | undefined> = [];
     allFields.forEach((name) => {
@@ -153,7 +155,8 @@ export class FormStore extends PubSub {
   }
 
   validateField(field: string | FieldDetail) {
-    const fieldDetail = typeof field === "string" ? this.#fields.get(field)?.detail : field;
+    const fieldDetail =
+      typeof field === "string" ? this.#fields.get(field)?.detail : field;
     if (!fieldDetail) return;
     const { name, label, validate } = fieldDetail;
     const validateValue = this.#formData[name];
@@ -171,7 +174,14 @@ export class FormStore extends PubSub {
       const { required, pattern, message, min, max, validator } = validate;
       const label = getName();
 
-      if (required && (typeof value === "object" ? isEmpty(value) : !value)) {
+      if (
+        required &&
+        (typeof value === "object"
+          ? isEmpty(value)
+          : typeof value === "number"
+          ? false
+          : !value)
+      ) {
         return messageBody(message?.required || `${label}为必填项`);
       }
 
@@ -194,7 +204,10 @@ export class FormStore extends PubSub {
 
       if (validator) {
         const result = validator(value);
-        if (result) return typeof result === "string" ? messageBody(result, result ? "error" : "normal") : result as MessageBody;
+        if (result)
+          return typeof result === "string"
+            ? messageBody(result, result ? "error" : "normal")
+            : (result as MessageBody);
       }
 
       return messageBody("", "normal");
