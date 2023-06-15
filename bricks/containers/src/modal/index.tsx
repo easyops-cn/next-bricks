@@ -49,12 +49,14 @@ export interface ModalProps {
 }
 
 export interface ModalEvents {
+  open?: Event;
   close?: Event;
   confirm?: Event;
   cancel?: Event;
 }
 
 export interface ModalMapEvents {
+  onOpen: "open";
   onClose: "close";
   onConfirm: "confirm";
   onCancel: "cancel";

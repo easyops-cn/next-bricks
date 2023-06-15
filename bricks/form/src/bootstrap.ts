@@ -9,3 +9,4 @@ import "./checkbox/index.js";
 import "./code-editor/index.js";
 import "./dynamic-form-item/index.js";
 import "./search/index.js";
+import "./icon-select/index.js";

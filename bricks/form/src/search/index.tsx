@@ -24,7 +24,7 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
 );
 
 export interface SearchProps {
-  value: string;
+  value?: string;
   placeholder?: string;
   autoFocus?: boolean;
   clearable?: boolean;
@@ -33,9 +33,9 @@ export interface SearchProps {
 }
 
 export interface SearchEvents {
-  blur: Event;
-  change: Event;
-  search: Event;
+  blur: CustomEvent<string>;
+  change: CustomEvent<string>;
+  search: CustomEvent<string>;
 }
 
 export interface SearchEventsMap {
@@ -164,7 +164,7 @@ export function GeneralSearchComponent(props: SearchComponentProps) {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [value, setValue] = useState<string>(props.value);
+  const [value, setValue] = useState<string>();
   const [inputFocused, setInputFocused] = useState<boolean>();
 
   useEffect(() => {
@@ -182,7 +182,7 @@ export function GeneralSearchComponent(props: SearchComponentProps) {
   }, [debounceTime]);
 
   const handleSearch = () => {
-    onSearch?.(value);
+    onSearch?.(value!);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -225,7 +225,7 @@ export function GeneralSearchComponent(props: SearchComponentProps) {
           onFocus={() => setInputFocused(true)}
           onBlur={() => {
             setInputFocused(false);
-            onBlur?.(value);
+            onBlur?.(value!);
           }}
         />
         {clearable && value && (

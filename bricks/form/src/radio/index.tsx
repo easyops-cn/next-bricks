@@ -40,7 +40,7 @@ interface CustomOptions {
   [propName: string]: any;
 }
 
-export interface RadioProps extends FormItemProps {
+export interface RadioProps {
   type?: RadioType;
   options: GeneralOption[] | CustomOptions[] | undefined;
   value?: any;
@@ -50,9 +50,19 @@ export interface RadioProps extends FormItemProps {
   ui?: UIType;
   useBrick?: UseSingleBrickConf;
   customStyle?: React.CSSProperties;
-  onChange?: (value: any) => void;
-  optionsChange?: (options: any, name: string) => void;
 }
+export interface RadioEvents {
+  change: CustomEvent<GeneralComplexOption["value"]>;
+  optionsChange: CustomEvent<{
+    options: GeneralComplexOption[];
+    name: string;
+  }>;
+}
+export interface RadioEventsMapping {
+  onValueChange: "change";
+  onOptionsChange: "optionsChange";
+}
+
 const { defineElement, property, event } = createDecorators();
 
 /**
@@ -209,7 +219,12 @@ class Radio extends FormItemElement {
   }
 }
 
-export function RadioComponent(props: RadioProps) {
+interface RadioComponentProps extends RadioProps, FormItemProps {
+  onChange?: (value: any) => void;
+  optionsChange?: (options: any, name: string) => void;
+}
+
+export function RadioComponent(props: RadioComponentProps) {
   const { name, disabled, type, customStyle, optionsChange, size } = props;
   const [value, setValue] = React.useState(props.value);
   const [options, setOptions] = React.useState(props.options);
