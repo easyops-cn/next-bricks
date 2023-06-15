@@ -93,7 +93,7 @@ export interface IconSelectProps {
 }
 
 /**
- * 构件 icon-select
+ * 图标选择构件
  */
 export
 @defineElement("form.icon-select", {
