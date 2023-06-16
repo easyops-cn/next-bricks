@@ -33,6 +33,9 @@ describe("icons.easyops-icon", () => {
     await (global as any).flushPromises();
     expect(element.shadowRoot?.childNodes).toMatchInlineSnapshot(`
       NodeList [
+        <style>
+          icons.shadow.css
+        </style>,
         <svg
           height="1em"
           version="1.1"
@@ -75,7 +78,7 @@ describe("icons.easyops-icon", () => {
     // Re-connect
     document.body.appendChild(element);
     await (global as any).flushPromises();
-    expect(element.shadowRoot?.childNodes.length).toBe(1);
+    expect(element.shadowRoot?.childNodes.length).toBe(2);
     document.body.removeChild(element);
     expect(element.shadowRoot?.childNodes.length).toBe(0);
   });
@@ -91,6 +94,9 @@ describe("icons.easyops-icon", () => {
     await (global as any).flushPromises();
     expect(element.shadowRoot?.childNodes).toMatchInlineSnapshot(`
       NodeList [
+        <style>
+          icons.shadow.css
+        </style>,
         <svg
           height="1em"
           version="1.1"
@@ -135,7 +141,7 @@ describe("icons.easyops-icon", () => {
 
     document.body.appendChild(element);
     await (global as any).flushPromises();
-    expect(element.shadowRoot?.childNodes.length).toBe(0);
+    expect(element.shadowRoot?.childNodes.length).toBe(1);
     document.body.removeChild(element);
   });
 });

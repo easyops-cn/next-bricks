@@ -8,6 +8,7 @@ import type {
   DefineLinearGradientProps,
   GradientDirection,
 } from "../shared/DefineLinearGradient.js";
+import styleText from "./styles.shadow.css";
 
 const { defineElement, property } = createDecorators();
 
@@ -32,7 +33,10 @@ export interface GeneralIconEvents {
   "icon.click": CustomEvent<{ icon: string }>;
 }
 
-@defineElement("icons.general-icon")
+export
+@defineElement("icons.general-icon", {
+  styleTexts: [styleText],
+})
 class GeneralIcon
   extends ReactNextElement
   implements DefineLinearGradientProps
@@ -90,7 +94,3 @@ class GeneralIcon
     ) : null;
   }
 }
-
-// Prettier reports error if place `export` before decorators.
-// https://github.com/prettier/prettier/issues/14240
-export { GeneralIcon };

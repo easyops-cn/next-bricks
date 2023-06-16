@@ -12,17 +12,10 @@ customElements.define(
       toast({
         variant: this.variant,
         duration: this.duration,
-        icon: (this.querySelector("sl-icon") as any)?.name,
+        icon: (this.querySelector("icons\\.antd-icon") as any)?.icon,
         text: this.textContent,
       });
     }
-  }
-);
-
-customElements.define(
-  "sl-icon",
-  class extends HTMLElement {
-    name: string | undefined;
   }
 );
 
@@ -38,7 +31,7 @@ describe("showNotification", () => {
       {
         variant: "success",
         duration: 3000,
-        icon: "check-circle-fill",
+        icon: "check-circle",
         text: "Done!",
       },
     ],
@@ -47,7 +40,7 @@ describe("showNotification", () => {
       {
         variant: "danger",
         duration: 3000,
-        icon: "x-circle-fill",
+        icon: "close-circle",
         text: "Oops!",
       },
     ],
@@ -56,7 +49,7 @@ describe("showNotification", () => {
       {
         variant: "warning",
         duration: 3000,
-        icon: "exclamation-circle-fill",
+        icon: "exclamation-circle",
         text: "Um",
       },
     ],
@@ -65,7 +58,7 @@ describe("showNotification", () => {
       {
         variant: "primary",
         duration: 3000,
-        icon: "info-circle-fill",
+        icon: "info-circle",
         text: "OK",
       },
     ],

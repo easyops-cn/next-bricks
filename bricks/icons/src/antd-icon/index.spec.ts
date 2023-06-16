@@ -27,6 +27,7 @@ describe("icons.antd-icon", () => {
       NodeList [
         <style>
           DefineLinearGradient.shadow.css
+      icons.shadow.css
         </style>,
         <svg
           fill="currentColor"
@@ -68,6 +69,7 @@ describe("icons.antd-icon", () => {
       NodeList [
         <style>
           DefineLinearGradient.shadow.css
+      icons.shadow.css
         </style>,
         <svg
           fill="currentColor"
@@ -124,6 +126,7 @@ describe("icons.antd-icon", () => {
       NodeList [
         <style>
           DefineLinearGradient.shadow.css
+      icons.shadow.css
         </style>,
         <svg
           fill="currentColor"
@@ -185,6 +188,7 @@ describe("icons.antd-icon", () => {
       NodeList [
         <style>
           DefineLinearGradient.shadow.css
+      icons.shadow.css
         </style>,
       ]
     `);

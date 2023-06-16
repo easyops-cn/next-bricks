@@ -1,10 +1,11 @@
 import { createProviderClass } from "@next-core/utils/general";
 import { wrapBrick } from "@next-core/react-element";
 import styles from "./notification.module.css";
+import type { AntdIcon } from "@next-bricks/icons/antd-icon";
 
 // Specify brick dependencies:
 /*#__PURE__*/ wrapBrick("sl-alert");
-/*#__PURE__*/ wrapBrick("sl-icon");
+/*#__PURE__*/ wrapBrick("icons.antd-icon");
 
 export function showNotification({
   type,
@@ -14,24 +15,25 @@ export function showNotification({
   message: string;
 }) {
   const notification = document.createElement("sl-alert") as any;
-  const icon = document.createElement("sl-icon") as any;
+  const icon = document.createElement("icons.antd-icon") as AntdIcon;
   icon.slot = "icon";
+  icon.theme = "filled";
   switch (type) {
     case "success":
       notification.variant = "success";
-      icon.name = "check-circle-fill";
+      icon.icon = "check-circle";
       break;
     case "error":
       notification.variant = "danger";
-      icon.name = "x-circle-fill";
+      icon.icon = "close-circle";
       break;
     case "warn":
       notification.variant = "warning";
-      icon.name = "exclamation-circle-fill";
+      icon.icon = "exclamation-circle";
       break;
     default:
       notification.variant = "primary";
-      icon.name = "info-circle-fill";
+      icon.icon = "info-circle";
   }
   notification.duration = 3000;
   notification.className = styles.notification;

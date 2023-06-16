@@ -27,16 +27,17 @@ customElements.define(
 );
 
 customElements.define(
-  "sl-button",
-  class HTMLSlButton extends HTMLElement {
-    variant: string | undefined;
+  "basic.general-button",
+  class HTMLGeneralButtonElement extends HTMLElement {
+    type: string | undefined;
   }
 );
 
 customElements.define(
-  "sl-icon",
-  class HTMLSlIcon extends HTMLElement {
-    name: string | undefined;
+  "icons.antd-icon",
+  class HTMLAntdIconElement extends HTMLElement {
+    icon: string | undefined;
+    theme: string | undefined;
   }
 );
 
@@ -49,11 +50,13 @@ describe("showDialog", () => {
       });
     });
     await waitFor(() =>
-      expect(document.querySelector("sl-button")).not.toBeNull()
+      expect(document.querySelector("basic\\.general-button")).not.toBeNull()
     );
     expect(document.body.childNodes.length).toBe(1);
     await act(async () => {
-      (document.querySelector("sl-button") as HTMLElement)?.click();
+      (
+        document.querySelector("basic\\.general-button") as HTMLElement
+      )?.click();
     });
     await promise;
     expect(document.body.childNodes.length).toBe(0);
@@ -76,7 +79,7 @@ describe("DialogComponent", () => {
             <div
               class="icon success"
             >
-              <sl-icon />
+              <icons.antd-icon />
             </div>
             <div>
               <div>
@@ -84,11 +87,11 @@ describe("DialogComponent", () => {
               </div>
             </div>
           </div>
-          <sl-button
+          <basic.general-button
             slot="footer"
           >
             Ok
-          </sl-button>
+          </basic.general-button>
         </sl-dialog>
       </DocumentFragment>
     `);
@@ -96,9 +99,9 @@ describe("DialogComponent", () => {
       "label",
       "Dialog"
     );
-    expect(container.querySelector("sl-icon")).toHaveProperty(
-      "name",
-      "check2-circle"
+    expect(container.querySelector("icons\\.antd-icon")).toHaveProperty(
+      "icon",
+      "check-circle"
     );
     const event = new Event("sl-request-close");
     const preventDefault = jest.spyOn(event, "preventDefault");
@@ -127,7 +130,7 @@ describe("DialogComponent", () => {
             <div
               class="icon warning"
             >
-              <sl-icon />
+              <icons.antd-icon />
             </div>
             <div>
               <div>
@@ -135,24 +138,24 @@ describe("DialogComponent", () => {
               </div>
             </div>
           </div>
-          <sl-button
+          <basic.general-button
             slot="footer"
           >
             Cancel
-          </sl-button>
-          <sl-button
+          </basic.general-button>
+          <basic.general-button
             slot="footer"
           >
             Ok
-          </sl-button>
+          </basic.general-button>
         </sl-dialog>
       </DocumentFragment>
     `);
-    expect(container.querySelector("sl-icon")).toHaveProperty(
-      "name",
-      "exclamation-triangle"
+    expect(container.querySelector("icons\\.antd-icon")).toHaveProperty(
+      "icon",
+      "exclamation-circle"
     );
-    fireEvent.click(container.querySelector("sl-button") as any);
+    fireEvent.click(container.querySelector("basic\\.general-button") as any);
     expect(onCancel).toBeCalled();
     unmount();
   });
@@ -172,7 +175,7 @@ describe("DialogComponent", () => {
             <div
               class="icon danger"
             >
-              <sl-icon />
+              <icons.antd-icon />
             </div>
             <div>
               <div
@@ -185,11 +188,11 @@ describe("DialogComponent", () => {
               </div>
             </div>
           </div>
-          <sl-button
+          <basic.general-button
             slot="footer"
           >
             Ok
-          </sl-button>
+          </basic.general-button>
         </sl-dialog>
       </DocumentFragment>
     `);
@@ -197,9 +200,9 @@ describe("DialogComponent", () => {
       "label",
       "Error"
     );
-    expect(container.querySelector("sl-icon")).toHaveProperty(
-      "name",
-      "exclamation-octagon"
+    expect(container.querySelector("icons\\.antd-icon")).toHaveProperty(
+      "icon",
+      "close-circle"
     );
     unmount();
   });
@@ -208,13 +211,13 @@ describe("DialogComponent", () => {
     const { container, unmount } = render(
       <DialogComponent type="info" content="Hi!" />
     );
-    expect(container.querySelector("sl-icon")).toHaveProperty(
-      "name",
+    expect(container.querySelector("icons\\.antd-icon")).toHaveProperty(
+      "icon",
       "info-circle"
     );
     expect(
       (
-        container.querySelector("sl-icon") as any
+        container.querySelector("icons\\.antd-icon") as any
       ).parentElement.classList.contains("primary")
     ).toBe(true);
     unmount();
@@ -224,13 +227,13 @@ describe("DialogComponent", () => {
     const { container, unmount } = render(
       <DialogComponent type="warn" content="Ouch!" />
     );
-    expect(container.querySelector("sl-icon")).toHaveProperty(
-      "name",
-      "exclamation-triangle"
+    expect(container.querySelector("icons\\.antd-icon")).toHaveProperty(
+      "icon",
+      "exclamation-circle"
     );
     expect(
       (
-        container.querySelector("sl-icon") as any
+        container.querySelector("icons\\.antd-icon") as any
       ).parentElement.classList.contains("warning")
     ).toBe(true);
     unmount();

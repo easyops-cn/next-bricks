@@ -69,6 +69,8 @@ jobs:
         npm-token: ${{ secrets.NPM_TOKEN }}
       if: github.event_name == 'push'
 
+    - run: shopt -s globstar
+
     - name: Compress artifacts
       run: >-
         tar

@@ -5,7 +5,7 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { existsSync, mkdirSync, rmSync } from "node:fs";
-import { copyFile, readdir, writeFile } from "node:fs/promises";
+import { readdir, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -89,17 +89,6 @@ const tasks = [];
 
   const iconsDir = path.resolve(generatedDir, "icons");
   mkdirSync(iconsDir);
-
-  const faSvgCorePackageJsonPath = require.resolve(
-    "@fortawesome/fontawesome-svg-core/package.json"
-  );
-
-  tasks.push(
-    copyFile(
-      path.resolve(faSvgCorePackageJsonPath, "../styles.css"),
-      path.resolve(generatedDir, "fa-icon.shadow.css")
-    )
-  );
 
   const iconCategories = {
     far,
