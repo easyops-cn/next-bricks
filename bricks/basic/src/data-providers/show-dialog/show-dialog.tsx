@@ -2,16 +2,17 @@ import React, { useCallback, useMemo, useRef } from "react";
 import { createProviderClass } from "@next-core/utils/general";
 import { i18n, initializeI18n } from "@next-core/i18n";
 import { createRoot } from "react-dom/client";
+import { wrapBrick } from "@next-core/react-element";
+import type { AntdIcon, AntdIconProps } from "@next-bricks/icons/antd-icon";
 import { K, NS, locales } from "./i18n.js";
-import {
-  SlDialogElement,
-  WrappedSlButton,
-  WrappedSlDialog,
-  WrappedSlIcon,
-} from "./sl-dialog.js";
+import { SlDialogElement, WrappedSlDialog } from "./sl-dialog.js";
+import { Button, ButtonProps } from "../../button/index.js";
 import styles from "./dialog.module.css";
 
 initializeI18n(NS, locales);
+
+const WrappedButton = wrapBrick<Button, ButtonProps>("basic.general-button");
+const WrappedAntdIcon = wrapBrick<AntdIcon, AntdIconProps>("icons.antd-icon");
 
 export interface DialogProps {
   type?: "success" | "error" | "warn" | "info" | "confirm";
@@ -68,23 +69,23 @@ export function DialogComponent({
     switch (type) {
       case "success":
         return {
-          name: "check2-circle",
+          icon: "check-circle",
           color: styles.success,
         };
       case "error":
         return {
-          name: "exclamation-octagon",
+          icon: "close-circle",
           color: styles.danger,
         };
       case "warn":
       case "confirm":
         return {
-          name: "exclamation-triangle",
+          icon: "exclamation-circle",
           color: styles.warning,
         };
       case "info":
         return {
-          name: "info-circle",
+          icon: "info-circle",
           color: styles.primary,
         };
     }
@@ -117,7 +118,7 @@ export function DialogComponent({
       <div className={styles.body}>
         {icon && (
           <div className={`${styles.icon} ${icon.color}`}>
-            <WrappedSlIcon name={icon.name} />
+            <WrappedAntdIcon icon={icon.icon} />
           </div>
         )}
         <div>
@@ -126,13 +127,13 @@ export function DialogComponent({
         </div>
       </div>
       {type === "confirm" && (
-        <WrappedSlButton slot="footer" onClick={onCancelClick}>
+        <WrappedButton slot="footer" onClick={onCancelClick}>
           {i18n.t(`${NS}:${K.CANCEL}`)}
-        </WrappedSlButton>
+        </WrappedButton>
       )}
-      <WrappedSlButton slot="footer" variant="primary" onClick={onOkClick}>
+      <WrappedButton slot="footer" type="primary" onClick={onOkClick}>
         {i18n.t(`${NS}:${K.OK}`)}
-      </WrappedSlButton>
+      </WrappedButton>
     </WrappedSlDialog>
   );
 }

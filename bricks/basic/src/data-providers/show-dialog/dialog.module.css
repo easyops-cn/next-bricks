@@ -2,6 +2,15 @@
   display: none;
 }
 
+.dialog::part(base) {
+  align-items: flex-start;
+}
+
+.dialog::part(panel) {
+  position: relative;
+  top: 100px;
+}
+
 .body {
   display: flex;
   gap: var(--sl-spacing-large);
@@ -14,7 +23,7 @@
 }
 
 .icon {
-  font-size: var(--sl-font-size-large);
+  font-size: 22px;
 }
 
 .primary {
@@ -31,4 +40,8 @@
 
 .danger {
   color: var(--sl-color-danger-600);
+}
+
+sl-dialog > basic\.general-button[slot="footer"]:not(:first-of-type) {
+  margin-inline-start: 0.5rem;
 }

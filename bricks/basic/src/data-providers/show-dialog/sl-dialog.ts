@@ -9,10 +9,6 @@ export const WrappedSlDialog = wrapBrick<
   onSlHide: "sl-hide",
   onSlRequestClose: "sl-request-close",
 });
-export const WrappedSlButton = wrapBrick<HTMLElement, SlButtonProps>(
-  "sl-button"
-);
-export const WrappedSlIcon = wrapBrick<HTMLElement, SlIconProps>("sl-icon");
 
 export interface SlDialogProps {
   label?: string;
@@ -33,12 +29,4 @@ export interface SlDialogMapEvents {
 export interface SlDialogElement extends HTMLElement {
   show(): void;
   hide(): void;
-}
-
-export interface SlButtonProps {
-  variant?: string;
-}
-
-export interface SlIconProps {
-  name: string;
 }
