@@ -2,17 +2,14 @@ import React, { useEffect, useState } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapLocalBrick } from "@next-core/react-element";
 import { hasOwnProperty } from "@next-core/utils/general";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { type IconDefinition, config } from "@fortawesome/fontawesome-svg-core";
+import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import {
   DefineLinearGradient,
   DefineLinearGradientProps,
   GradientDirection,
 } from "../shared/DefineLinearGradient.js";
-import styleText from "./generated/fa-icon.shadow.css";
 import linearGradientStyleText from "../shared/DefineLinearGradient.shadow.css";
-
-config.autoAddCss = false;
+import sharedStyleText from "../shared/icons.shadow.css";
 
 const iconCache = new Map<string, Promise<IconDefinition | null>>();
 
@@ -63,7 +60,7 @@ export interface FaIconProps extends DefineLinearGradientProps {
 
 export
 @defineElement("icons.fa-icon", {
-  styleTexts: [styleText, linearGradientStyleText],
+  styleTexts: [linearGradientStyleText, sharedStyleText],
 })
 class FaIcon extends ReactNextElement implements FaIconProps {
   // Note: `prefix` is a native prop on Element, but it's only used in XML documents.
@@ -75,9 +72,6 @@ class FaIcon extends ReactNextElement implements FaIconProps {
 
   /** 图标名 */
   @property() accessor icon: string | undefined;
-
-  /** 是否自动旋转 */
-  @property({ type: Boolean }) accessor spin: boolean | undefined;
 
   /** 渐变色起始颜色 */
   @property() accessor startColor: string | undefined;
@@ -93,7 +87,6 @@ class FaIcon extends ReactNextElement implements FaIconProps {
       <FaIconComponent
         prefix={this.prefix}
         icon={this.icon}
-        spin={this.spin}
         startColor={this.startColor}
         endColor={this.endColor}
         gradientDirection={this.gradientDirection}
@@ -105,7 +98,6 @@ class FaIcon extends ReactNextElement implements FaIconProps {
 function FaIconComponent({
   prefix: _prefix,
   icon,
-  spin,
   startColor,
   endColor,
   gradientDirection,
@@ -135,9 +127,17 @@ function FaIconComponent({
     return null;
   }
 
+  const [width, height, ligatures, symbol, pathData] = iconDefinition.icon;
+
   return (
     <>
-      <FontAwesomeIcon icon={iconDefinition} spin={spin} />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox={`0 0 ${width} ${height}`}
+        fill="currentColor"
+      >
+        <path d={pathData as string} />
+      </svg>
       <DefineLinearGradient
         startColor={startColor}
         endColor={endColor}

@@ -1,0 +1,16 @@
+:host {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  box-sizing: content-box !important;
+}
+
+:host[hidden] {
+  display: none;
+}
+
+:host > icons\.antd-icon,
+:host > icons\.easyops-icon,
+:host > icons\.fa-icon {
+  display: block;
+}

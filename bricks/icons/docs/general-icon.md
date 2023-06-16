@@ -116,6 +116,7 @@ Your favorite icons, including [Ant Design Icons](https://ant.design/components/
       gridTemplateColumns: repeat(3, 1fr)
       justifyItems: center
       fontSize: 32px
+      gap: 0.5em
   children:
     - brick: icons.general-icon
       properties:

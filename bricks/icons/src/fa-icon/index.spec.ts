@@ -67,22 +67,16 @@ describe("FaIcon", () => {
     expect(icon.shadowRoot?.childNodes).toMatchInlineSnapshot(`
       NodeList [
         <style>
-          fa-icon.shadow.css
-      DefineLinearGradient.shadow.css
+          DefineLinearGradient.shadow.css
+      icons.shadow.css
         </style>,
         <svg
-          aria-hidden="true"
-          class="svg-inline--fa fa-trash-can "
-          data-icon="trash-can"
-          data-prefix="fas"
-          focusable="false"
-          role="img"
+          fill="currentColor"
           viewBox="0 0 512 512"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
             d="M467.9 67.1c-12.5-12.5-32.8-12.5-45.3 0L192 281.6l-83.6-83.7c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l96 96c6.2 6.2 14.4 9.4 22.6 9.4s16.4-3.1 22.6-9.4l256-256c12.5-12.5 12.5-32.8 0-45.3z"
-            fill="currentColor"
           />
         </svg>,
       ]
@@ -112,22 +106,16 @@ describe("FaIcon", () => {
     expect(icon.shadowRoot?.childNodes).toMatchInlineSnapshot(`
       NodeList [
         <style>
-          fa-icon.shadow.css
-      DefineLinearGradient.shadow.css
+          DefineLinearGradient.shadow.css
+      icons.shadow.css
         </style>,
         <svg
-          aria-hidden="true"
-          class="svg-inline--fa fa-trash-can "
-          data-icon="trash-can"
-          data-prefix="fas"
-          focusable="false"
-          role="img"
+          fill="currentColor"
           viewBox="0 0 512 512"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
             d="M467.9 67.1c-12.5-12.5-32.8-12.5-45.3 0L192 281.6l-83.6-83.7c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l96 96c6.2 6.2 14.4 9.4 22.6 9.4s16.4-3.1 22.6-9.4l256-256c12.5-12.5 12.5-32.8 0-45.3z"
-            fill="currentColor"
           />
         </svg>,
       ]
@@ -152,8 +140,8 @@ describe("FaIcon", () => {
     expect(icon.shadowRoot?.childNodes).toMatchInlineSnapshot(`
       NodeList [
         <style>
-          fa-icon.shadow.css
-      DefineLinearGradient.shadow.css
+          DefineLinearGradient.shadow.css
+      icons.shadow.css
         </style>,
       ]
     `);
@@ -177,8 +165,8 @@ describe("FaIcon", () => {
     expect(icon.shadowRoot?.childNodes).toMatchInlineSnapshot(`
       NodeList [
         <style>
-          fa-icon.shadow.css
-      DefineLinearGradient.shadow.css
+          DefineLinearGradient.shadow.css
+      icons.shadow.css
         </style>,
       ]
     `);

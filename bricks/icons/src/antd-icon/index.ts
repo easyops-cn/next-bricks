@@ -9,6 +9,7 @@ import {
   GradientDirection,
 } from "../shared/DefineLinearGradient.js";
 import linearGradientStyleText from "../shared/DefineLinearGradient.shadow.css";
+import sharedStyleText from "../shared/icons.shadow.css";
 import { getIcon } from "../shared/SvgCache.js";
 
 const { defineElement, property } = createDecorators();
@@ -19,7 +20,7 @@ export interface AntdIconProps extends DefineLinearGradientProps {
   icon?: string;
 }
 
-const styleText = linearGradientStyleText;
+const styleText = [linearGradientStyleText, sharedStyleText].join("\n");
 
 export
 @defineElement("icons.antd-icon")

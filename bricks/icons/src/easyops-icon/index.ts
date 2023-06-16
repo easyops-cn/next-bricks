@@ -1,6 +1,11 @@
-import { NextElement, createDecorators } from "@next-core/element";
+import {
+  NextElement,
+  createDecorators,
+  supportsAdoptingStyleSheets,
+} from "@next-core/element";
 import { wrapLocalBrick } from "@next-core/react-element";
 import { getIcon } from "../shared/SvgCache.js";
+import sharedStyleText from "../shared/icons.shadow.css";
 
 const { defineElement, property } = createDecorators();
 
@@ -26,7 +31,13 @@ class EasyOpsIcon extends NextElement implements EasyOpsIconProps {
     if (this.shadowRoot) {
       return;
     }
-    this.attachShadow({ mode: "open" });
+    const shadowRoot = this.attachShadow({ mode: "open" });
+    // istanbul ignore next: browser only
+    if (supportsAdoptingStyleSheets()) {
+      const styleSheet = new CSSStyleSheet();
+      styleSheet.replaceSync(sharedStyleText);
+      shadowRoot.adoptedStyleSheets = [styleSheet];
+    }
   }
 
   connectedCallback() {
@@ -58,7 +69,19 @@ class EasyOpsIcon extends NextElement implements EasyOpsIconProps {
       // The icon has changed
       return;
     }
-    this.shadowRoot.replaceChildren(...([svg].filter(Boolean) as Node[]));
+    // Currently React can't render mixed React Component and DOM nodes which are siblings,
+    // so we manually construct the DOM.
+    const nodes: Node[] = [];
+    // istanbul ignore next: browser only
+    if (!supportsAdoptingStyleSheets()) {
+      const style = document.createElement("style");
+      style.textContent = sharedStyleText;
+      nodes.push(style);
+    }
+    if (svg) {
+      nodes.push(svg);
+    }
+    this.shadowRoot.replaceChildren(...nodes);
   }
 }
 
