@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.6.3...@next-bricks/containers@0.7.0) (2023-06-16)
+
+
+### Features
+
+* icon-select构件 ([fad724c](https://github.com/easyops-cn/next-bricks/commit/fad724cb9151ec38b7d63277334e83132c858e26))
+
+
+
+
+
 ## [0.6.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.6.2...@next-bricks/containers@0.6.3) (2023-06-14)
 
 **Note:** Version bump only for package @next-bricks/containers

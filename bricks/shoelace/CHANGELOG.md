@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/shoelace@0.4.0...@next-bricks/shoelace@0.4.1) (2023-06-16)
+
+
+### Bug Fixes
+
+* no merge for former notification bricks ([116d144](https://github.com/easyops-cn/next-bricks/commit/116d1446ca8695e70ed57c1db01edac9cb2f49a3))
+
+
+
+
+
 # [0.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/shoelace@0.3.4...@next-bricks/shoelace@0.4.0) (2023-06-14)
 
 

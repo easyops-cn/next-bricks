@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.5.0...@next-bricks/form@0.6.0) (2023-06-16)
+
+
+### Features
+
+* delete unused code ([b435f42](https://github.com/easyops-cn/next-bricks/commit/b435f42411f1f23173e83cbe5dce08a28899ff93))
+* icon-select构件 ([fad724c](https://github.com/easyops-cn/next-bricks/commit/fad724cb9151ec38b7d63277334e83132c858e26))
+* support form docs ([d2713f3](https://github.com/easyops-cn/next-bricks/commit/d2713f3a6f4748de4de82eb252d7d4f857a504f1))
+* support forms docs ([5acd00c](https://github.com/easyops-cn/next-bricks/commit/5acd00cd7e581118e8497831bdc377282dd9f08b))
+* support forms docs ([01fb4c1](https://github.com/easyops-cn/next-bricks/commit/01fb4c1d12dde1261758e3e0dd276d32973d964d))
+* update unit test ([fb08314](https://github.com/easyops-cn/next-bricks/commit/fb08314fe4e6862f7a173dcfa9a07c41f26b65e3))
+
+
+
+
+
 # [0.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.4.6...@next-bricks/form@0.5.0) (2023-06-14)
 
 

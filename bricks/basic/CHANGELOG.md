@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.9.0...@next-bricks/basic@0.9.1) (2023-06-16)
+
+
+### Bug Fixes
+
+* **notification:** use first-party buttons and icons ([3e1c611](https://github.com/easyops-cn/next-bricks/commit/3e1c6111539e3bc55ec6b6991a72534aed11859c))
+
+
+
+
+
 # [0.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.8.1...@next-bricks/basic@0.9.0) (2023-06-14)
 
 
