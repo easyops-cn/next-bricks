@@ -69,20 +69,10 @@ jobs:
         npm-token: ${{ secrets.NPM_TOKEN }}
       if: github.event_name == 'push'
 
-    - run: shopt -s globstar
-
     - name: Compress artifacts
-      run: >-
-        tar
-        --exclude='*.map'
-        --exclude='bricks/devtools'
-        --exclude='bricks/v2-adapter'
-        -cvf bricks.tar
-        bricks/*/dist
-        bricks/*/docs
-        bricks/*/src/**/example.yaml
-        bricks/*/src/**/example.html
-        netlify.toml
+      run: |
+        shopt -s globstar
+        tar --exclude='*.map' --exclude='bricks/devtools' --exclude='bricks/v2-adapter' -cvf bricks.tar bricks/*/dist bricks/*/docs bricks/*/src/**/example.yaml bricks/*/src/**/example.html netlify.toml
 
     - uses: actions/upload-artifact@v3
       with:
