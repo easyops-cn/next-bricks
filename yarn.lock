@@ -2005,6 +2005,11 @@
   dependencies:
     "@next-core/http" "^1.0.6"
 
+"@next-bricks/shoelace@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@next-bricks/shoelace/-/shoelace-0.4.1.tgz#5d0f6acdf15936d7bd10ae03c30b5afac6d137ff"
+  integrity sha512-vG1hkIUrJjwU9W+VlJgEcXoGHpxq/kB6CprRyLlgsleF4Nd1xWchIHz6UZU14GYR8fxITdXPJpvHFKtzacjSTw==
+
 "@next-core/babel-preset-next@^1.0.5":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@next-core/babel-preset-next/-/babel-preset-next-1.0.5.tgz#e5a366d27538655de7efad7f3a6fdc34ff046b81"
