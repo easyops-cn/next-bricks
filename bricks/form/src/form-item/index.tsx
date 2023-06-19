@@ -353,12 +353,14 @@ export function FormItemComponent(props: FormItemProps) {
 
   return (
     <div className={classNames("form-item", layout)}>
-      <div className="form-item-label">
-        <label>
-          {required && <span className="required">*</span>}
-          {label}
-        </label>
-      </div>
+      {label && (
+        <div className="form-item-label">
+          <label>
+            {required && <span className="required">*</span>}
+            {label}
+          </label>
+        </div>
+      )}
       <div className="form-item-wrapper">
         <div className="form-item-control">
           <slot></slot>

@@ -40,3 +40,21 @@ children:
           action: message.info
           args:
           - That's ok.
+- brick: basic.general-button
+  properties:
+    textContent: Delete
+    danger: true
+    type: primary
+  events:
+    click:
+      useProvider: basic.show-dialog
+      args:
+      - type: delete
+        title: Delete Confirm
+        content: Please enter cat.png to delete the file.
+        expect: cat.png
+      callback:
+        success:
+          action: message.success
+          args:
+          - Deleted successfully!
