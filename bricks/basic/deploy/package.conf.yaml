@@ -4,9 +4,7 @@ dependencies:
   - name: brick_next
     version: ^2.86.3 || ^3.0.0
     local_deploy: true
-  - name: "@next-bricks/shoelace"
+  - name: "shoelace-NB"
     version: ^0.4.1
-    local_deploy: true
-  - name: "@next-bricks/icons"
+  - name: "icons-NB"
     version: ^0.2.1
-    local_deploy: true
