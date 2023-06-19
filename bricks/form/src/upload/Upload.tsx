@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import { unwrapProvider } from "@next-core/utils/general";
 import "@next-core/theme";
-import type { httpRequest } from "@next-bricks/basic/data-providers/httpRequest";
+import { http } from "@next-core/http";
 import {
   getUid,
   type FileData,
@@ -12,8 +11,6 @@ import {
   getUserData,
   UploadStatus,
 } from "./utils.js";
-
-const request = unwrapProvider<typeof httpRequest>("basic.http-request");
 
 export interface UploadActions {
   upload: () => void;
@@ -159,7 +156,7 @@ export function Upload(props: UploadProps) {
     fileData[symbolForAbortController] = abortController;
     formData.append(uploadName, fileData.file!, fileData.file!.name);
 
-    const req = request(action!, {
+    const req = http.request(action!, {
       method,
       body: formData,
       signal: abortController.signal,
@@ -173,6 +170,7 @@ export function Upload(props: UploadProps) {
   };
 
   const handleInputChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    event.stopPropagation();
     const originFiles = [...event.target.files!];
     event.target.value = "";
 

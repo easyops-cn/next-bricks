@@ -1,7 +1,6 @@
 import React from "react";
 import { describe, test, expect } from "@jest/globals";
 import { waitFor, act, render, fireEvent } from "@testing-library/react";
-import { createProviderClass } from "@next-core/utils/general";
 import { ItemActions, Upload, UploadActions } from "./Upload.js";
 import { FileData } from "./utils.js";
 
@@ -21,18 +20,18 @@ Object.defineProperty(global.Image.prototype, "src", {
   },
 });
 
-const mockHttpRequest = jest.fn((url: string, init?: RequestInit) => {
-  const file = (init?.body as FormData).get("file") as File;
-  return new Promise((resolve, reject) => {
-    file.name.endsWith("jpeg")
-      ? reject("fetch error")
-      : resolve("fetch success");
-  });
-});
-customElements.define(
-  "basic.http-request",
-  createProviderClass(mockHttpRequest)
-);
+jest.mock("@next-core/http", () => ({
+  http: {
+    request: jest.fn((url: string, init?: RequestInit) => {
+      const file = (init?.body as FormData).get("file") as File;
+      return new Promise((resolve, reject) => {
+        file.name.endsWith("jpeg")
+          ? reject("fetch error")
+          : resolve("fetch success");
+      });
+    }),
+  },
+}));
 
 jest.useFakeTimers();
 

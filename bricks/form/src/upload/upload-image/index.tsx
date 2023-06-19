@@ -1,6 +1,6 @@
 import React from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
-import { ReactNextElement, wrapBrick } from "@next-core/react-element";
+import { wrapBrick } from "@next-core/react-element";
 import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
 import { K, NS, locales } from "./i18n.js";
 import "@next-core/theme";
@@ -10,6 +10,8 @@ import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
+import { FormItemElementBase } from "@next-shared/form";
+import type { FormItem, FormItemProps } from "../../form-item/index.js";
 import classNames from "classnames";
 import { type FileData } from "../utils.js";
 import { UploadActions, ItemActions, Upload } from "../Upload.js";
@@ -22,8 +24,15 @@ const WrappedButton = wrapBrick<Button, ButtonProps>("basic.general-button");
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
   "icons.general-icon"
 );
+const WrappedFormItem = wrapBrick<FormItem, FormItemProps>(
+  "form.general-form-item"
+);
 
 export interface UploadImageProps {
+  label?: string;
+  name?: string;
+  required?: boolean;
+  message?: Record<string, string>;
   value?: FileData[];
   bucketName: string;
   multiple?: boolean;
@@ -36,7 +45,19 @@ export
 @defineElement("form.upload-image", {
   styleTexts: [styleText],
 })
-class UploadImage extends ReactNextElement implements UploadImageProps {
+class UploadImage extends FormItemElementBase implements UploadImageProps {
+  /**
+   * 字段名称
+   */
+  @property()
+  accessor name: string | undefined;
+
+  /**
+   * 字段说明
+   */
+  @property()
+  accessor label: string | undefined;
+
   /**
    * 值
    */
@@ -60,11 +81,27 @@ class UploadImage extends ReactNextElement implements UploadImageProps {
   accessor multiple: boolean | undefined;
 
   /**
+   * 是否必填
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor required: boolean | undefined;
+
+  /**
+   * 校验文本信息
+   */
+  @property({
+    attribute: false,
+  })
+  accessor message: Record<string, string> | undefined;
+
+  /**
    * 值变化时触发
    */
   @event({ type: "change" })
   accessor #change!: EventEmitter<FileData[]>;
-  #handleChange = (fileDataList: FileData[]) => {
+  handleChange = (fileDataList: FileData[]) => {
     this.value = fileDataList;
     this.#change.emit(fileDataList);
   };
@@ -72,9 +109,17 @@ class UploadImage extends ReactNextElement implements UploadImageProps {
   render() {
     return (
       <UploadImageComponent
+        formElement={this.getFormElement()}
+        curElement={this}
+        name={this.name}
+        label={this.label}
+        value={this.value}
+        required={this.required}
+        message={this.message}
         bucketName={this.bucketName}
         multiple={this.multiple}
-        onChange={this.#handleChange}
+        onChange={this.handleChange}
+        trigger="handleChange"
       />
     );
   }
@@ -98,7 +143,7 @@ const closeIcon = {
   icon: "close",
 } as GeneralIconProps;
 
-interface UploadImageComponentProps extends UploadImageProps {
+interface UploadImageComponentProps extends UploadImageProps, FormItemProps {
   onChange?: (fileDataList: FileData[]) => void;
 }
 
@@ -163,18 +208,27 @@ export function UploadImageComponent(props: UploadImageComponentProps) {
     );
   };
 
+  const validator = (curValue: FileData[]) => {
+    if (curValue?.some((file) => file.status === "uploading")) {
+      return t(K.FILE_UPLOADING);
+    }
+    return "";
+  };
+
   return (
-    <Upload
-      uploadRender={uploadRender}
-      itemRender={itemRender}
-      fileList={value}
-      autoUpload={true}
-      uploadName="file"
-      action={`/next/api/gateway/object_store.object_store.PutObject/api/v1/objectStore/bucket/${bucketName}/object`}
-      method="PUT"
-      accept="image/*"
-      multiple={multiple}
-      onChange={onChange}
-    />
+    <WrappedFormItem {...(props as FormItemProps)} validator={validator}>
+      <Upload
+        uploadRender={uploadRender}
+        itemRender={itemRender}
+        fileList={value}
+        autoUpload={true}
+        uploadName="file"
+        action={`/next/api/gateway/object_store.object_store.PutObject/api/v1/objectStore/bucket/${bucketName}/object`}
+        method="PUT"
+        accept="image/*"
+        multiple={multiple}
+        onChange={onChange}
+      />
+    </WrappedFormItem>
   );
 }
