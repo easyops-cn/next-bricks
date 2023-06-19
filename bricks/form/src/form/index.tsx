@@ -1,7 +1,7 @@
 import React from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
-import { FormStore, MessageBody } from "./formStore.js";
+import { AbstractForm, FormStore, MessageBody } from "@next-shared/form";
 import { ComponentSize, Layout } from "../interface.js";
 
 const { defineElement, property, event, method } = createDecorators();
@@ -32,8 +32,7 @@ export interface FormMapEvents {
 @defineElement("form.general-form", {
   styleTexts: [],
 })
-class Form extends ReactNextElement implements FormProps {
-  readonly isFormElement = true;
+class Form extends ReactNextElement implements FormProps, AbstractForm {
   formStore: FormStore;
   #_values!: Record<string, unknown>;
   defaultEmitValuesChange = true;
@@ -43,6 +42,10 @@ class Form extends ReactNextElement implements FormProps {
     this.formStore = FormStore.getInstance({
       onValuesChanged: this.handleValuesChange,
     });
+  }
+
+  get isFormElement(): true {
+    return true;
   }
 
   set values(value: Record<string, unknown>) {

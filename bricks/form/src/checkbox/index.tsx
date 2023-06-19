@@ -4,7 +4,6 @@ import { wrapBrick } from "@next-core/react-element";
 import classNames from "classnames";
 import "@next-core/theme";
 import styleText from "./checkbox.shadow.css";
-import { FormItemElement } from "../form-item/FormItemElement.js";
 import type { FormItem, FormItemProps } from "../form-item/index.js";
 import { formatOptions } from "../utils/formatOptions.js";
 import { isEqual } from "lodash";
@@ -12,6 +11,7 @@ import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
+import { FormItemElementBase } from "@next-shared/form";
 
 const { defineElement, property, event } = createDecorators();
 
@@ -63,7 +63,7 @@ export interface CheckboxProps extends FormItemProps {
 @defineElement("form.general-checkbox", {
   styleTexts: [styleText],
 })
-class Checkbox extends FormItemElement {
+class Checkbox extends FormItemElementBase {
   /**
    * 字段名称
    */

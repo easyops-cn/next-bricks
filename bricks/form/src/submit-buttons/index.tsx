@@ -1,11 +1,11 @@
 import React from "react";
 import { createDecorators, EventEmitter } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
+import { FormItemElementBase } from "@next-shared/form";
 import styleText from "./index.shadow.css";
 import type { FormItem, FormItemProps } from "../form-item/index.js";
 import type { Button, ButtonProps } from "@next-bricks/basic/button";
 import type { ButtonType } from "../interface.js";
-import { FormItemElement } from "../form-item/FormItemElement.js";
 
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>(
   "form.general-form-item"
@@ -32,7 +32,7 @@ const { defineElement, property, event } = createDecorators();
 @defineElement("form.submit-buttons", {
   styleTexts: [styleText],
 })
-class SubmitButtons extends FormItemElement {
+class SubmitButtons extends FormItemElementBase {
   /**
    * 提交按钮的文字
    * @default "提交"
