@@ -1,14 +1,17 @@
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
-import type { Form } from "../form/index.jsx";
+import type { AbstractForm } from "./Form.js";
 
 const { method } = createDecorators();
 
-export abstract class FormItemElement extends ReactNextElement {
-  accessor isFormItemElement = true;
+export abstract class FormItemElementBase extends ReactNextElement {
   accessor #_notRender = false;
   accessor #validate = "normal";
   accessor #bindFormItem = false;
+
+  get isFormItemElement(): true {
+    return true;
+  }
 
   set validateState(value: string) {
     this.#validate = value;
@@ -19,9 +22,8 @@ export abstract class FormItemElement extends ReactNextElement {
   }
 
   /**
-   * @required false
+   * 控制该表单项是否隐藏
    * @default false
-   * @description 控制该表单项是否隐藏
    * @group ui
    */
   set notRender(value: boolean) {
@@ -38,21 +40,18 @@ export abstract class FormItemElement extends ReactNextElement {
   }
   set $bindFormItem(value: boolean) {
     this.#bindFormItem = value;
-    this._render()
+    this._render();
   }
 
-  /**
-   * @description
-   */
   @method()
-  getFormElement(): Form {
+  getFormElement(): AbstractForm | null {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
-    let element: HTMLElement & { isFormElement?: boolean } = this;
-    while ((element = element.parentNode as HTMLElement)) {
+    let element: AbstractForm | null = this as unknown as AbstractForm;
+    while ((element = element.parentNode as AbstractForm | null)) {
       if (!element || element.isFormElement) {
         break;
       }
     }
-    return element as Form;
+    return element as AbstractForm | null;
   }
 }

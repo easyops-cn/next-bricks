@@ -6,7 +6,6 @@ import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
-import { FormItemElement } from "../form-item/FormItemElement.js";
 import type {
   Form,
   FormEvents,
@@ -19,6 +18,7 @@ import { UseBrickConf } from "@next-core/types";
 import styleText from "./dynamic-form-item.shadow.css";
 import "@next-core/theme";
 import { isEqual } from "lodash";
+import { FormItemElementBase } from "@next-shared/form";
 
 const { defineElement, property, event } = createDecorators();
 
@@ -64,7 +64,7 @@ interface DynamicFormItemProps extends FormItemProps {
 @defineElement("form.dynamic-form-item", {
   styleTexts: [styleText],
 })
-class DynamicFormItem extends FormItemElement {
+class DynamicFormItem extends FormItemElementBase {
   /**
    * 字段名称
    */

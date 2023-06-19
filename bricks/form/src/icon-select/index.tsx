@@ -2,13 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
 import { unwrapProvider } from "@next-core/utils/general";
-import { FormItemElement } from "../form-item/FormItemElement.js";
 import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
+import { FormItemElementBase } from "@next-shared/form";
 import { K, NS, locales } from "./i18n.js";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import classNames from "classnames";
-import type { MenuIcon } from "@next-shared/general/types";
 import type { FormItem, FormItemProps } from "../form-item/index.js";
 import type {
   GeneralIcon,
@@ -99,7 +98,7 @@ export
 @defineElement("form.icon-select", {
   styleTexts: [styleText],
 })
-class IconSelect extends FormItemElement implements IconSelectProps {
+class IconSelect extends FormItemElementBase implements IconSelectProps {
   /**
    * 字段名称
    */

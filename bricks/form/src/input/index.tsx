@@ -3,8 +3,8 @@ import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ComponentSize, InputType } from "../interface.js";
 import classNames from "classnames";
 import { wrapBrick } from "@next-core/react-element";
+import { FormItemElementBase } from "@next-shared/form";
 import "@next-core/theme";
-import { FormItemElement } from "../form-item/FormItemElement.js";
 import type { FormItem, FormItemProps } from "../form-item/index.jsx";
 import styleText from "./input.shadow.css";
 import { GeneralIcon, GeneralIconProps } from "@next-bricks/icons/general-icon";
@@ -42,7 +42,7 @@ const { defineElement, property, event } = createDecorators();
 @defineElement("form.general-input", {
   styleTexts: [styleText],
 })
-class Input extends FormItemElement {
+class Input extends FormItemElementBase {
   /**
    * 字段名称
    */

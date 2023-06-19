@@ -7,13 +7,13 @@ import React, {
 } from "react";
 import { createDecorators, EventEmitter } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
+import { FormItemElementBase } from "@next-shared/form";
 import type { GeneralComplexOption } from "../interface.js";
 import styleText from "./index.shadow.css";
 import classNames from "classnames";
 import "@next-core/theme";
 import type { FormItem, FormItemProps } from "../form-item/index.jsx";
 import { formatOptions } from "../utils/formatOptions.js";
-import { FormItemElement } from "../form-item/FormItemElement.js";
 import type {
   Tag,
   TagProps,
@@ -64,7 +64,7 @@ const { defineElement, property, event } = createDecorators();
 @defineElement("form.general-select", {
   styleTexts: [styleText],
 })
-class Select extends FormItemElement {
+class Select extends FormItemElementBase {
   /**
    * 字段名称
    */

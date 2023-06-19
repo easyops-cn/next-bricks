@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
+import { FormItemElementBase } from "@next-shared/form";
 import calculateAutoSizeStyle from "./calculateAutoSizeStyle.js";
 import styleText from "./textarea.shadow.css";
 import { wrapBrick } from "@next-core/react-element";
 import classNames from "classnames";
-import { FormItemElement } from "../form-item/FormItemElement.js";
 import type { FormItem, FormItemProps } from "../form-item/index.jsx";
 import "@next-core/theme";
 
@@ -41,7 +41,7 @@ const { defineElement, property, event } = createDecorators();
 @defineElement("form.general-textarea", {
   styleTexts: [styleText],
 })
-class Textarea extends FormItemElement {
+class Textarea extends FormItemElementBase {
   /**
    * 字段名称
    */
