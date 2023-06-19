@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.6.0...@next-bricks/form@0.7.0) (2023-06-19)
+
+
+### Features
+
+* show-dialog 支持 delete 类型 ([b14e6f4](https://github.com/easyops-cn/next-bricks/commit/b14e6f44af846c3db726c081f83ce68afc2912cf))
+
+
+
+
+
 # [0.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.5.0...@next-bricks/form@0.6.0) (2023-06-16)
 
 
