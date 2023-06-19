@@ -1,0 +1,7 @@
+install_path: /usr/local/easyops/bricks/basic-NB
+user: "easyops:easyops"
+dependencies:
+  - name: "shoelace-NB"
+    version: ^0.4.1
+  - name: "icons-NB"
+    version: ^0.2.1
