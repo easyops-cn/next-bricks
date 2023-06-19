@@ -22,6 +22,11 @@
   font-weight: 700;
 }
 
+.expectInput {
+  margin-top: 15px;
+  width: 100%;
+}
+
 .icon {
   font-size: 22px;
 }

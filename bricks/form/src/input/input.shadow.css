@@ -1,3 +1,11 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
 .input-wrapper {
   position: relative;
   display: inline-flex;
