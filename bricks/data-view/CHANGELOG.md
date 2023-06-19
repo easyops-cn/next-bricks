@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.8.4...@next-bricks/data-view@0.9.0) (2023-06-19)
+
+
+### Features
+
+* tabs-drawer点击非自身元素收起 ([ea9efb4](https://github.com/easyops-cn/next-bricks/commit/ea9efb4f2c3c3c07ce0e80e49bf7197e18ad5cc2))
+
+
+
+
+
 ## [0.8.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.8.3...@next-bricks/data-view@0.8.4) (2023-06-16)
 
 **Note:** Version bump only for package @next-bricks/data-view
