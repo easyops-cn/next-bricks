@@ -81,7 +81,9 @@ describe("DialogComponent", () => {
             >
               <icons.antd-icon />
             </div>
-            <div>
+            <div
+              style="flex: 1;"
+            >
               <div>
                 Done!
               </div>
@@ -132,7 +134,9 @@ describe("DialogComponent", () => {
             >
               <icons.antd-icon />
             </div>
-            <div>
+            <div
+              style="flex: 1;"
+            >
               <div>
                 Are you sure?
               </div>
@@ -160,6 +164,81 @@ describe("DialogComponent", () => {
     unmount();
   });
 
+  test("type delete", () => {
+    const onCancel = jest.fn();
+    const onOk = jest.fn();
+    const { asFragment, container, unmount } = render(
+      <DialogComponent
+        type="delete"
+        content="Are you sure?"
+        onCancel={onCancel}
+        onOk={onOk}
+        expect="confirm delete"
+      />
+    );
+    expect(asFragment()).toMatchInlineSnapshot(`
+      <DocumentFragment>
+        <sl-dialog
+          class="dialog"
+        >
+          <div
+            class="body"
+          >
+            <div
+              class="icon warning"
+            >
+              <icons.antd-icon />
+            </div>
+            <div
+              style="flex: 1;"
+            >
+              <div>
+                Are you sure?
+              </div>
+              <form.general-input
+                class="expectInput"
+              />
+            </div>
+          </div>
+          <basic.general-button
+            slot="footer"
+          >
+            Cancel
+          </basic.general-button>
+          <basic.general-button
+            danger=""
+            disabled=""
+            slot="footer"
+          >
+            Delete
+          </basic.general-button>
+        </sl-dialog>
+      </DocumentFragment>
+    `);
+    expect(container.querySelector("icons\\.antd-icon")).toHaveProperty(
+      "icon",
+      "exclamation-circle"
+    );
+    fireEvent.click(container.querySelectorAll("basic\\.general-button")[0]);
+    expect(onCancel).toBeCalled();
+
+    fireEvent.click(container.querySelectorAll("basic\\.general-button")[1]);
+    expect(onOk).not.toBeCalled();
+
+    act(() => {
+      fireEvent(
+        container.querySelector("form\\.general-input") as HTMLElement,
+        new CustomEvent("change", { detail: "confirm delete" })
+      );
+    });
+    act(() => {
+      fireEvent.click(container.querySelectorAll("basic\\.general-button")[1]);
+    });
+    expect(onOk).toBeCalled();
+
+    unmount();
+  });
+
   test("type error", () => {
     const { asFragment, container, unmount } = render(
       <DialogComponent type="error" title="Error" content="Oops!" />
@@ -177,7 +256,9 @@ describe("DialogComponent", () => {
             >
               <icons.antd-icon />
             </div>
-            <div>
+            <div
+              style="flex: 1;"
+            >
               <div
                 class="contentTitle"
               >

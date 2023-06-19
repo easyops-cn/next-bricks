@@ -1,30 +1,22 @@
 {
-  "name": "@next-shared/general",
-  "version": "0.3.1",
-  "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/shared/general",
-  "license": "GPL-3.0",
+  "name": "@next-shared/form",
+  "version": "0.0.0",
+  "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/shared/form",
   "repository": {
     "type": "git",
     "url": "git@github.com:easyops-cn/next-bricks.git"
   },
+  "license": "GPL-3.0",
   "sideEffects": false,
   "type": "module",
   "files": [
     "dist"
   ],
   "exports": {
-    "./menu": {
-      "types": "./dist/types/menu.d.ts",
-      "import": "./dist/esm/menu.js",
-      "require": "./dist/cjs/menu.js"
-    },
-    "./JsonStorage": {
-      "types": "./dist/types/JsonStorage.d.ts",
-      "import": "./dist/esm/JsonStorage.js",
-      "require": "./dist/cjs/JsonStorage.js"
-    },
-    "./types": {
-      "types": "./dist/types/types.d.ts"
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
     },
     "./package.json": "./package.json"
   },
@@ -37,13 +29,12 @@
     "prebuild": "npm run clean",
     "build": "npm run build:types && npm run build:main",
     "build:main": "cross-env NODE_ENV=production build-next-libs",
-    "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types --project tsconfig.build.json",
-    "test": "cross-env NODE_ENV='test' test-next",
-    "test:ci": "cross-env NODE_ENV='test' CI=true test-next"
+    "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types --project tsconfig.build.json"
   },
   "dependencies": {
-    "@next-core/runtime": "^1.16.0",
-    "history": "^4.7.11"
+    "@next-core/element": "^1.0.6",
+    "@next-core/react-element": "^1.0.7",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@next-core/build-next-libs": "^1.0.5",

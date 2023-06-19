@@ -2,6 +2,7 @@ import React, { CSSProperties } from "react";
 import { createDecorators, EventEmitter } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
 import { ReactUseBrick } from "@next-core/react-runtime";
+import { FormItemElementBase } from "@next-shared/form";
 import type {
   RadioType,
   GeneralOption,
@@ -20,7 +21,6 @@ import type {
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
 import { formatOptions } from "../utils/formatOptions.js";
-import { FormItemElement } from "../form-item/FormItemElement.js";
 import { isBoolean, isEqual } from "lodash";
 
 const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
@@ -72,7 +72,7 @@ const { defineElement, property, event } = createDecorators();
 @defineElement("form.general-radio", {
   styleTexts: [styleText],
 })
-class Radio extends FormItemElement {
+class Radio extends FormItemElementBase {
   /**
    * 下拉框字段名
    */

@@ -1,18 +1,22 @@
 import React, { useCallback, useRef } from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
-import { CodeEditorItemWrapper } from './codeEditor.js';
-import { CodeEditorProps, HighlightTokenSettings, Annotation } from "./interfaces.js";
+import { CodeEditorItemWrapper } from "./codeEditor.js";
+import {
+  CodeEditorProps,
+  HighlightTokenSettings,
+  Annotation,
+} from "./interfaces.js";
 import { isEqual, some } from "lodash";
 import styleText from "./index.shadow.css";
-import { FormItemElement } from "../form-item/FormItemElement.js";
 import type { FormItem, FormItemProps } from "../form-item/index.js";
+import { FormItemElementBase } from "@next-shared/form";
 
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>(
   "form.general-form-item"
 );
 
-const { defineElement, property, event, } = createDecorators();
+const { defineElement, property, event } = createDecorators();
 
 export interface Error {
   err: Annotation[];
@@ -30,14 +34,14 @@ export interface Error {
 @defineElement("form.code-editor", {
   styleTexts: [styleText],
 })
-class CodeEditor extends FormItemElement {
+class CodeEditor extends FormItemElementBase {
   /**
    * @description
    * @required -
    * @group basic
    */
-   @property()
-   accessor name: string | undefined;
+  @property()
+  accessor name: string | undefined;
 
   /**
    * @description
@@ -82,7 +86,7 @@ class CodeEditor extends FormItemElement {
    * @description 是否必填
    * @group basic
    */
-   @property({
+  @property({
     type: Boolean,
   })
   accessor required: boolean | undefined;
@@ -240,7 +244,7 @@ class CodeEditor extends FormItemElement {
    * @group other
    */
   @property({
-    type: Boolean
+    type: Boolean,
   })
   accessor loadYamlInJsonMode = true;
 
@@ -265,7 +269,7 @@ class CodeEditor extends FormItemElement {
   accessor #codeChangeEvent!: EventEmitter<string>;
   private _handleChange = (value: string): void => {
     this.value = value;
-    this.#codeChangeEvent.emit(value)
+    this.#codeChangeEvent.emit(value);
   };
   /**
    * @description 编辑器失去焦点的时候发出的事件，detail 为值
@@ -305,40 +309,42 @@ class CodeEditor extends FormItemElement {
   };
 
   render() {
-    return <CodeEditorComponent
-      curElement={this}
-      formElement={this.getFormElement()}
-      name={this.name}
-      label={this.label}
-      placeholder={this.placeholder}
-      value={this.value}
-      required={this.required}
-      onChange={this._handleChange}
-      trigger="_handleChange"
-      onBlur={this._handleBlur}
-      onErrorChange={this._handleErrorChange}
-      theme={this.theme}
-      mode={this.mode}
-      readOnly={this.readOnly}
-      showLineNumbers={this.showLineNumbers}
-      maxLines={this.maxLines}
-      minLines={this.minLines}
-      tabSize={this.tabSize}
-      printMargin={this.printMargin}
-      highlightActiveLine={this.highlightActiveLine}
-      showCopyButton={this.showCopyButton}
-      showExportButton={this.showExportButton}
-      showExpandButton={this.showExpandButton}
-      exportFileName={this.exportFileName}
-      jsonSchema={this.jsonSchema}
-      validateJsonSchemaMode={this.validateJsonSchemaMode}
-      schemaRef={this.schemaRef}
-      enableLiveAutocompletion={this.enableLiveAutocompletion}
-      customCompleters={this.customCompleters}
-      loadYamlInJsonMode={this.loadYamlInJsonMode}
-      highlightTokens={this.highlightTokens}
-      onClickHighlightToken={this._handleHighlightTokenClick}
-    />;
+    return (
+      <CodeEditorComponent
+        curElement={this}
+        formElement={this.getFormElement()}
+        name={this.name}
+        label={this.label}
+        placeholder={this.placeholder}
+        value={this.value}
+        required={this.required}
+        onChange={this._handleChange}
+        trigger="_handleChange"
+        onBlur={this._handleBlur}
+        onErrorChange={this._handleErrorChange}
+        theme={this.theme}
+        mode={this.mode}
+        readOnly={this.readOnly}
+        showLineNumbers={this.showLineNumbers}
+        maxLines={this.maxLines}
+        minLines={this.minLines}
+        tabSize={this.tabSize}
+        printMargin={this.printMargin}
+        highlightActiveLine={this.highlightActiveLine}
+        showCopyButton={this.showCopyButton}
+        showExportButton={this.showExportButton}
+        showExpandButton={this.showExpandButton}
+        exportFileName={this.exportFileName}
+        jsonSchema={this.jsonSchema}
+        validateJsonSchemaMode={this.validateJsonSchemaMode}
+        schemaRef={this.schemaRef}
+        enableLiveAutocompletion={this.enableLiveAutocompletion}
+        customCompleters={this.customCompleters}
+        loadYamlInJsonMode={this.loadYamlInJsonMode}
+        highlightTokens={this.highlightTokens}
+        onClickHighlightToken={this._handleHighlightTokenClick}
+      />
+    );
   }
 }
 
@@ -347,28 +353,30 @@ export function CodeEditorComponent(props: CodeEditorProps) {
   const hasJsonSchemaError = useRef<boolean>();
 
   const getMessage = useCallback((): string => {
-    return isError.current ? hasJsonSchemaError.current
-          ? "请填写正确的数据结构"
-          : `请填写正确的 ${
-              props.mode === "brick_next"
-                ? "json"
-                : props.mode === "brick_next_yaml" || props.mode === "cel_yaml"
-                ? "yaml"
-                : props.mode
-            } 语法` : "";
-  }, [props.mode])
+    return isError.current
+      ? hasJsonSchemaError.current
+        ? "请填写正确的数据结构"
+        : `请填写正确的 ${
+            props.mode === "brick_next"
+              ? "json"
+              : props.mode === "brick_next_yaml" || props.mode === "cel_yaml"
+              ? "yaml"
+              : props.mode
+          } 语法`
+      : "";
+  }, [props.mode]);
 
   const handleValidator = useCallback(() => {
     if (isError.current) {
       const message = {
         message: getMessage(),
         type: "error",
-      }
+      };
       return message;
     } else {
       return "";
     }
-  }, [getMessage, props.formElement, props.name])
+  }, [getMessage, props.formElement, props.name]);
 
   const onValidate = (err: Annotation[]): void => {
     const error = some(err, ["type", "error"]);
@@ -387,7 +395,7 @@ export function CodeEditorComponent(props: CodeEditorProps) {
   };
 
   return (
-    <WrappedFormItem {...props as FormItemProps} validator={handleValidator}>
+    <WrappedFormItem {...(props as FormItemProps)} validator={handleValidator}>
       <CodeEditorItemWrapper
         {...props}
         onValidate={props.onValidate ? props.onValidate : onValidate}

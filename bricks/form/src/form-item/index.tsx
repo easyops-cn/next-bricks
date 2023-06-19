@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createDecorators } from "@next-core/element";
-import { FormItemElement } from "./FormItemElement.js";
+import {
+  AbstractForm,
+  FormItemElementBase,
+  MessageBody,
+} from "@next-shared/form";
 import type { Form } from "../form/index.jsx";
 import styleText from "./FormItem.shadow.css";
 import classNames from "classnames";
 import type { ComponentSize, Layout } from "../interface.js";
-import type { MessageBody } from "../form/formStore.js";
 import "@next-core/theme";
 
 type CurrentElement = HTMLElement & {
@@ -15,7 +18,7 @@ type CurrentElement = HTMLElement & {
 };
 
 export interface FormItemProps {
-  formElement?: Form;
+  formElement?: AbstractForm | null;
   curElement: CurrentElement;
   name?: string;
   label?: string;
@@ -48,7 +51,7 @@ const { defineElement, property } = createDecorators();
 @defineElement("form.general-form-item", {
   styleTexts: [styleText],
 })
-class FormItem extends FormItemElement implements FormItemProps {
+class FormItem extends FormItemElementBase implements FormItemProps {
   /**
    * @default
    * @required
@@ -350,12 +353,14 @@ export function FormItemComponent(props: FormItemProps) {
 
   return (
     <div className={classNames("form-item", layout)}>
-      <div className="form-item-label">
-        <label>
-          {required && <span className="required">*</span>}
-          {label}
-        </label>
-      </div>
+      {label && (
+        <div className="form-item-label">
+          <label>
+            {required && <span className="required">*</span>}
+            {label}
+          </label>
+        </div>
+      )}
       <div className="form-item-wrapper">
         <div className="form-item-control">
           <slot></slot>
