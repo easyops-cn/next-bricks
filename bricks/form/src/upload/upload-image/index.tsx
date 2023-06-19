@@ -1,6 +1,7 @@
 import React from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
+import { getBasePath } from "@next-core/runtime";
 import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
 import { K, NS, locales } from "./i18n.js";
 import "@next-core/theme";
@@ -223,7 +224,7 @@ export function UploadImageComponent(props: UploadImageComponentProps) {
         fileList={value}
         autoUpload={true}
         uploadName="file"
-        action={`/next/api/gateway/object_store.object_store.PutObject/api/v1/objectStore/bucket/${bucketName}/object`}
+        action={`${getBasePath()}api/gateway/object_store.object_store.PutObject/api/v1/objectStore/bucket/${bucketName}/object`}
         method="PUT"
         accept="image/*"
         multiple={multiple}
