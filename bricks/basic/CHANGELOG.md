@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.9.1...@next-bricks/basic@0.10.0) (2023-06-19)
+
+
+### Features
+
+* update basic package.conf.yaml ([0667edb](https://github.com/easyops-cn/next-bricks/commit/0667edb5a3f75103e22a6f4ebf67cecfe7491338))
+
+
+
+
+
 ## [0.9.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.9.0...@next-bricks/basic@0.9.1) (2023-06-16)
 
 
