@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "@next-bricks/icons": "^0.2.1",
+    "@next-bricks/containers": "^0.7.0",
     "@next-core/element": "^1.0.6",
     "@next-core/http": "^1.0.6",
     "@next-core/react-element": "^1.0.7",
