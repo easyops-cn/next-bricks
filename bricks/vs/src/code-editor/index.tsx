@@ -22,11 +22,6 @@ registerTypeScript();
 registerYaml("brick_next_yaml");
 registerHtml();
 
-// --- NOTE: uncomment these lines below to enable i18n for your brick ---
-// import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
-// import { K, NS, locales } from "./i18n.js";
-// initializeReactI18n(NS, locales);
-
 const { defineElement, property, event } = createDecorators();
 
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>(
@@ -246,10 +241,9 @@ export function CodeEditorComponent({
       return;
     }
     // Manually layout the editor once the container resized.
-    const handleResize = (): void => {
+    const observer = new ResizeObserver((): void => {
       setActualHeight(container.offsetHeight);
-    };
-    const observer = new ResizeObserver(handleResize);
+    });
     observer.observe(container);
     return () => {
       observer.disconnect();
@@ -269,7 +263,7 @@ export function CodeEditorComponent({
     if (editorRef.current || !containerRef.current) {
       return;
     }
-    const model = monaco.editor.createModel(value, language ?? "yaml");
+    const model = monaco.editor.createModel(value, language);
     editorRef.current = monaco.editor.create(containerRef.current, {
       model,
       minimap: {
