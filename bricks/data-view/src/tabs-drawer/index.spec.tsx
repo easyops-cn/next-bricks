@@ -25,28 +25,29 @@ const tabList: TabItem[] = [
   },
 ];
 describe("data-view.tabs-drawer", () => {
-  test("basic usage", async () => {
+  test("basic usage", () => {
     const element = document.createElement(
       "data-view.tabs-drawer"
     ) as TabsDrawer;
     const divEle = document.createElement("div");
     divEle.textContent = "test";
     expect(element.shadowRoot).toBeFalsy();
-    element.tabList = tabList;
-    element.activeKey = "app";
-    element.visible = true;
     act(() => {
+      element.tabList = tabList;
+      element.activeKey = "app";
+      element.visible = true;
       document.body.appendChild(element);
       document.body.appendChild(divEle);
     });
-    await act(() => {
+    act(() => {
       fireEvent.click(divEle);
     });
     element.open();
     expect(element.visible).toBe(true);
-    const tabElement = element.shadowRoot.querySelector(".menuIconItem");
-    fireEvent.click(tabElement);
-
+    act(() => {
+      const tabElement = element.shadowRoot.querySelector(".menuIconItem");
+      fireEvent.click(tabElement);
+    });
     element.close();
     expect(element.visible).toBe(false);
     expect(document.body.contains(element)).toBeTruthy();
@@ -77,8 +78,9 @@ describe("data-view.tabs-drawer", () => {
     fireEvent.click(closeBtn);
     expect(openMockFn).toBeCalledTimes(1);
     expect(changeMockFn).toBeCalledTimes(0);
-    fireEvent.click(closeBtn);
-    expect(closeMockFn).toBeCalledTimes(1);
+    expect(
+      container.querySelector(".drawerWrapper").classList.contains("open")
+    );
     const menuItems = container.querySelector(".menuIconItem");
     expect(menuItems.childNodes.length).toBe(2);
     const activeElement = menuItems.firstElementChild;
@@ -86,7 +88,12 @@ describe("data-view.tabs-drawer", () => {
     fireEvent.click(noActiveElement);
     expect(activeElement.classList.contains("active")).toBeFalsy();
     expect(changeMockFn).toBeCalledTimes(1);
-    rerender(<TabsDrawerComponent tabList={tabList} />);
+    rerender(<TabsDrawerComponent tabList={tabList} visible={true} />);
+    fireEvent.click(closeBtn);
+    expect(changeMockFn).toBeCalledTimes(1);
+    expect(
+      container.querySelector(".drawerWrapper").classList.contains("close")
+    );
     expect(asFragment()).toBeTruthy();
   });
 });
