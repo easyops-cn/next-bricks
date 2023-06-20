@@ -152,10 +152,12 @@ class TabsDrawer extends ReactNextElement implements TabsDrawerProps {
     this.#tabChangeEvent.emit(key);
   };
   #handleDrawerOpen = () => {
+    this.visible = true;
     this.#drawerOpenEvent.emit();
   };
 
   #handleDrawerClose = () => {
+    this.visible = false;
     this.#drawerCloseEvent.emit();
   };
 
@@ -164,7 +166,6 @@ class TabsDrawer extends ReactNextElement implements TabsDrawerProps {
    */
   @method()
   open() {
-    this.visible = true;
     this.#handleDrawerOpen();
   }
   /**
@@ -172,7 +173,6 @@ class TabsDrawer extends ReactNextElement implements TabsDrawerProps {
    */
   @method()
   close() {
-    this.visible = false;
     this.#handleDrawerClose();
   }
   render(): React.ReactNode {
@@ -204,11 +204,11 @@ export function TabsDrawerComponent(
     onClose,
     onOpen,
     onTabChange,
+    visible,
   } = props;
   const contentRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeKey, setActiveKey] = useState(props.activeKey);
-  const [visible, setVisible] = useState<boolean>(props.visible);
   const setActiveItem = (key: string): void => {
     const _contentSlot = contentRef.current;
     if (_contentSlot) {
@@ -219,10 +219,6 @@ export function TabsDrawerComponent(
       setActiveKey(key);
     }
   };
-  const handleCloseClick = () => {
-    visible ? onClose() : onOpen();
-    setVisible(!visible);
-  };
   const handleClick = useCallback(
     (event: MouseEvent) => {
       const targetElement = event
@@ -232,7 +228,6 @@ export function TabsDrawerComponent(
         if (visible) {
           onClose();
         }
-        setVisible(false);
       }
     },
     [visible, onClose]
@@ -242,9 +237,6 @@ export function TabsDrawerComponent(
       setActiveItem(props.activeKey ?? tabList[0].key);
     }
   }, [props.activeKey, tabList]);
-  useEffect(() => {
-    setVisible(props.visible);
-  }, [props.visible]);
 
   useEffect(() => {
     document.addEventListener("click", handleClick);
@@ -286,7 +278,10 @@ export function TabsDrawerComponent(
       }}
       ref={containerRef}
     >
-      <span className="closeIconBtn" onClick={handleCloseClick}>
+      <span
+        className="closeIconBtn"
+        onClick={() => (visible ? onClose?.() : onOpen?.())}
+      >
         <span className="closeIcon" />
       </span>
       <div
