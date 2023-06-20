@@ -1,0 +1,167 @@
+/* Todo(nlicro): 颜色变量 */
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+icons\.general-icon {
+  line-height: 0.25em;
+}
+
+.image-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.image-item {
+  width: 686px;
+
+  padding: 12px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.image-item-inner {
+  position: relative;
+  display: flex;
+  gap: 12px;
+}
+
+.image {
+  width: 38px;
+  height: 38px;
+}
+
+.infos {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.file-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #595959;
+  line-height: 20px;
+  margin-bottom: 4px;
+}
+
+.progress {
+  width: 100%;
+  height: 4px;
+  background: #ffffff;
+  border-radius: 2px;
+  margin: 8px 0;
+}
+
+.more-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.image-size {
+  font-size: 12px;
+  font-weight: 400;
+  color: #595959;
+  line-height: 18px;
+}
+
+.file-size {
+  font-size: 12px;
+  font-weight: 500;
+  color: #bfbfbf;
+  line-height: 17px;
+}
+
+.progress-info {
+  font-size: 12px;
+  font-weight: 500;
+  color: #bfbfbf;
+  line-height: 17px;
+}
+
+.error-info {
+  font-size: 12px;
+  font-weight: 400;
+  color: #f24c25;
+  line-height: 18px;
+}
+
+.operators {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.delete-icon {
+  opacity: 0;
+  font-size: 16px;
+}
+
+/* done */
+.image-item-done {
+  background: #f8f9fc;
+  border: 1px solid #eceef3;
+}
+
+.image-item-done:hover {
+  background: #f0f6ff;
+  border-color: #f0f6ff;
+}
+
+.image-item-done:hover .delete-icon {
+  opacity: 1;
+}
+
+.image-item-done .delete-icon {
+  color: #bfbfbf;
+}
+
+.image-item-done .delete-icon:hover {
+  color: #f24c25;
+}
+
+/* uploading */
+.image-item-uploading {
+  background: #f8f9fc;
+  border: 1px dashed #eceef3;
+}
+
+.image-item-uploading:hover {
+  background: #ebf3fd;
+  border-color: #ebf3fd;
+}
+
+.image-item-uploading:hover .delete-icon {
+  opacity: 1;
+}
+
+.image-item-uploading .delete-icon {
+  color: #bfbfbf;
+}
+
+.image-item-uploading .delete-icon:hover {
+  color: #595959;
+}
+
+/* error */
+.image-item-error {
+  background: #ffede9;
+  border: 1px solid #f3917a;
+}
+
+.image-item-error .delete-icon {
+  opacity: 1;
+  color: #f24c25;
+}
