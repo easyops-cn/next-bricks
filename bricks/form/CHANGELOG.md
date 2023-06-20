@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.7.0...@next-bricks/form@0.8.0) (2023-06-20)
+
+
+### Features
+
+* upload-image ([89cb556](https://github.com/easyops-cn/next-bricks/commit/89cb55633995a50fd97f0aac227b21ac9486877e))
+* upload-image support form ([0b37b94](https://github.com/easyops-cn/next-bricks/commit/0b37b94a4c54aea780120660f25e4fb6ea7a90bf))
+* upload-image support form ([4ae8bb9](https://github.com/easyops-cn/next-bricks/commit/4ae8bb98a5fbb257b3ae4ee68bad7a323acea814))
+
+
+
+
+
 # [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.6.0...@next-bricks/form@0.7.0) (2023-06-19)
 
 
