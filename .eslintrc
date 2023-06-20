@@ -19,6 +19,12 @@
         "mocha": true,
         "jest": false
       }
+    },
+    {
+      "files": ["jest/__mocks__/**/*.{js,ts,jsx,tsx}"],
+      "env": {
+        "jest": true
+      }
     }
   ]
 }
