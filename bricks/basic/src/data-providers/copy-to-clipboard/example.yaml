@@ -1,0 +1,18 @@
+brick: basic.general-button
+properties:
+  type: primary
+  textContent: Click
+events:
+  click:
+    useProvider: basic.copy-to-clipboard
+    args:
+      - something...
+    callback:
+      success:
+        action: message.success
+        args:
+          - Copy successfully
+      error:
+        action: message.info
+        args:
+          - Copy failed
