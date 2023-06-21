@@ -51,7 +51,7 @@ children:
       args:
       - type: delete
         title: Delete Confirm
-        content: Please enter cat.png to delete the file.
+        content: Please enter {{ expect }} to delete the file.
         expect: cat.png
       callback:
         success:
