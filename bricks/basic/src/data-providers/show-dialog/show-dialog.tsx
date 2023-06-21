@@ -8,6 +8,7 @@ import { K, NS, locales } from "./i18n.js";
 import { SlDialogElement, WrappedSlDialog } from "./sl-dialog.js";
 import { Button, ButtonProps } from "../../button/index.js";
 import type { ReactNextElement } from "@next-core/react-element";
+import { get } from "lodash";
 import styles from "./dialog.module.css";
 
 initializeI18n(NS, locales);
@@ -40,6 +41,45 @@ export interface DialogProps {
   expect?: string;
   contentStyle?: React.CSSProperties;
 }
+
+const parseTemplate = (template: string, context: Record<string, any>) => {
+  const unMatched: string[] = [];
+  const matched: string[] = [];
+
+  let restTemplate = template;
+  let lastMatchInfo;
+
+  while ((lastMatchInfo = restTemplate.match(/{{(.*?)}}/)) !== null) {
+    const match = lastMatchInfo[0];
+    const matchIndex = lastMatchInfo.index!;
+    const key = lastMatchInfo[1].trim();
+    const value = get(context, key);
+
+    unMatched.push(restTemplate.slice(0, matchIndex));
+    matched.push(value);
+    restTemplate = restTemplate.slice(
+      matchIndex + match.length,
+      restTemplate.length
+    );
+  }
+
+  unMatched.push(restTemplate);
+
+  return (
+    <>
+      {unMatched.map((str, index) => {
+        return (
+          <React.Fragment key={index}>
+            {str}
+            {matched[index] ? (
+              <strong className={styles.strong}>{matched[index]}</strong>
+            ) : null}
+          </React.Fragment>
+        );
+      })}
+    </>
+  );
+};
 
 export function showDialog(props: DialogProps) {
   const container = document.createElement("div");
@@ -147,7 +187,7 @@ export function DialogComponent({
         )}
         <div style={{ flex: 1 }}>
           {title && <div className={styles.contentTitle}>{title}</div>}
-          <div style={contentStyle}>{content}</div>
+          <div style={contentStyle}>{parseTemplate(content, { expect })}</div>
           {expect && (
             <WrappedInput
               className={styles.expectInput}

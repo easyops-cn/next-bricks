@@ -319,4 +319,171 @@ describe("DialogComponent", () => {
     ).toBe(true);
     unmount();
   });
+
+  test("content template", () => {
+    const { asFragment, unmount, rerender } = render(
+      <DialogComponent
+        type="delete"
+        content="Please enter {{ expect }} to delete the file."
+        expect="cat.png"
+      />
+    );
+    expect(asFragment()).toMatchInlineSnapshot(`
+      <DocumentFragment>
+        <sl-dialog
+          class="dialog"
+        >
+          <div
+            class="body"
+          >
+            <div
+              class="icon warning"
+            >
+              <icons.antd-icon />
+            </div>
+            <div
+              style="flex: 1;"
+            >
+              <div>
+                Please enter 
+                <strong
+                  class="strong"
+                >
+                  cat.png
+                </strong>
+                 to delete the file.
+              </div>
+              <form.general-input
+                class="expectInput"
+              />
+            </div>
+          </div>
+          <basic.general-button
+            slot="footer"
+          >
+            Cancel
+          </basic.general-button>
+          <basic.general-button
+            danger=""
+            disabled=""
+            slot="footer"
+          >
+            Delete
+          </basic.general-button>
+        </sl-dialog>
+      </DocumentFragment>
+    `);
+
+    rerender(
+      <DialogComponent
+        type="delete"
+        content="{{ expect }} Please enter {{ expect }} to delete the file. {{ expect }}"
+        expect="cat.png"
+      />
+    );
+    expect(asFragment()).toMatchInlineSnapshot(`
+      <DocumentFragment>
+        <sl-dialog
+          class="dialog"
+        >
+          <div
+            class="body"
+          >
+            <div
+              class="icon warning"
+            >
+              <icons.antd-icon />
+            </div>
+            <div
+              style="flex: 1;"
+            >
+              <div>
+                <strong
+                  class="strong"
+                >
+                  cat.png
+                </strong>
+                 Please enter 
+                <strong
+                  class="strong"
+                >
+                  cat.png
+                </strong>
+                 to delete the file. 
+                <strong
+                  class="strong"
+                >
+                  cat.png
+                </strong>
+              </div>
+              <form.general-input
+                class="expectInput"
+              />
+            </div>
+          </div>
+          <basic.general-button
+            slot="footer"
+          >
+            Cancel
+          </basic.general-button>
+          <basic.general-button
+            danger=""
+            disabled=""
+            slot="footer"
+          >
+            Delete
+          </basic.general-button>
+        </sl-dialog>
+      </DocumentFragment>
+    `);
+
+    rerender(
+      <DialogComponent
+        type="delete"
+        content="Please enter {{ unknown }} to delete the file."
+        expect="cat.png"
+      />
+    );
+    expect(asFragment()).toMatchInlineSnapshot(`
+      <DocumentFragment>
+        <sl-dialog
+          class="dialog"
+        >
+          <div
+            class="body"
+          >
+            <div
+              class="icon warning"
+            >
+              <icons.antd-icon />
+            </div>
+            <div
+              style="flex: 1;"
+            >
+              <div>
+                Please enter  to delete the file.
+              </div>
+              <form.general-input
+                class="expectInput"
+              />
+            </div>
+          </div>
+          <basic.general-button
+            slot="footer"
+          >
+            Cancel
+          </basic.general-button>
+          <basic.general-button
+            danger=""
+            disabled=""
+            slot="footer"
+          >
+            Delete
+          </basic.general-button>
+        </sl-dialog>
+      </DocumentFragment>
+    `);
+
+    unmount();
+  });
 });

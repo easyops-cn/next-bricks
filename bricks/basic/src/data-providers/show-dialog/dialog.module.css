@@ -50,3 +50,10 @@
 sl-dialog > basic\.general-button[slot="footer"]:not(:first-of-type) {
   margin-inline-start: 0.5rem;
 }
+
+.strong {
+  padding: 0 3px;
+  color: var(--palette-red-6);
+  background-color: var(--palette-red-1);
+  border-radius: 2px;
+}
