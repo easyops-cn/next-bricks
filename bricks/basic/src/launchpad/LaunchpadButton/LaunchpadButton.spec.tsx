@@ -2,6 +2,9 @@ import React from "react";
 import { render, fireEvent, waitFor } from "@testing-library/react";
 import { getRuntime, getHistory } from "@next-core/runtime";
 import { LaunchpadButton } from "./LaunchpadButton.js";
+import { initializeReactI18n } from "@next-core/i18n/react";
+initializeReactI18n();
+
 jest.mock("@next-core/runtime");
 
 type ListenerFn = () => void;

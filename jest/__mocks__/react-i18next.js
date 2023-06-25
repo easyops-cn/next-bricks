@@ -17,5 +17,3 @@ export const initReactI18next = {
     initialized = true;
   },
 };
-
-initReactI18next.init();

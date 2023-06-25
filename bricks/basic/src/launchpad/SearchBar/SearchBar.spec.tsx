@@ -8,6 +8,8 @@ import {
   screen,
 } from "@testing-library/react";
 import { SearchBar } from "./SearchBar.js";
+import { initializeReactI18n } from "@next-core/i18n/react";
+initializeReactI18n();
 
 describe("SearchBar", () => {
   it("should trigger input onChange", async () => {
