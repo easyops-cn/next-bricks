@@ -9,13 +9,6 @@ import {
 } from "@testing-library/react";
 import { SearchBar } from "./SearchBar.js";
 
-jest.mock("@next-core/i18n/react", () => ({
-  initializeReactI18n: jest.fn(),
-  useTranslation: jest.fn(() => ({
-    t: () => "",
-  })),
-}));
-
 describe("SearchBar", () => {
   it("should trigger input onChange", async () => {
     const onChange = jest.fn();

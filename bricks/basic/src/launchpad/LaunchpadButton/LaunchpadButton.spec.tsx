@@ -52,13 +52,6 @@ jest.mock("../LaunchpadService.js", () => {
   };
 });
 
-jest.mock("@next-core/i18n/react", () => ({
-  initializeReactI18n: jest.fn(),
-  useTranslation: jest.fn(() => ({
-    t: () => "",
-  })),
-}));
-
 describe("LaunchpadButton", () => {
   it("should work", async () => {
     const { container } = render(<LaunchpadButton />);
