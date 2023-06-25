@@ -1,18 +1,23 @@
+拷贝文本内容到粘贴板。
+
+## Examples
+
+```yaml preview
 brick: basic.general-button
 properties:
-  type: primary
-  textContent: Click
+  textContent: Copy
 events:
   click:
     useProvider: basic.copy-to-clipboard
     args:
-      - something...
+      - Some text to copy...
     callback:
       success:
         action: message.success
         args:
-          - Copy successfully
+          - Copied!
       error:
-        action: message.info
+        action: message.error
         args:
-          - Copy failed
+          - Copy failed!
+```
