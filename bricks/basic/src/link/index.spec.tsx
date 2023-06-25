@@ -3,6 +3,8 @@ import { act } from "react-dom/test-utils";
 import "./";
 import { Link } from "./index.js";
 import { GeneralIconProps } from "@next-bricks/icons/general-icon";
+import { NextHistoryState } from "@next-core/runtime";
+import { LocationDescriptorObject } from "history";
 
 const mockHistoryPush = jest.fn();
 const mockHistoryReplace = jest.fn();
@@ -32,6 +34,7 @@ describe("basic.general-button", () => {
     const element3 = document.createElement("basic.general-link") as Link;
     const element4 = document.createElement("basic.general-link") as Link;
     const element5 = document.createElement("basic.general-link") as Link;
+    const element6 = document.createElement("basic.general-link") as Link;
     element1.href = "http://www.xx.com";
     element1.textContent = "hello world";
     element1.icon = {} as GeneralIconProps;
@@ -49,6 +52,14 @@ describe("basic.general-button", () => {
 
     element5.textContent = "empty link";
 
+    const url: LocationDescriptorObject<NextHistoryState> = {
+      pathname: "for-complex",
+      search: "?even-more",
+      hash: "#and-more",
+    };
+
+    element6.url = url;
+
     const mockElement1ClickEvent = jest.fn();
     const mockElement2ClickEvent = jest.fn();
     element1.addEventListener("click", mockElement1ClickEvent);
@@ -61,6 +72,7 @@ describe("basic.general-button", () => {
       document.body.appendChild(element3);
       document.body.appendChild(element4);
       document.body.appendChild(element5);
+      document.body.appendChild(element6);
     });
     expect(element1.shadowRoot).toBeTruthy();
     expect(element1.shadowRoot?.childNodes.length).toBe(2);
@@ -73,9 +85,7 @@ describe("basic.general-button", () => {
 
     expect(element2.innerHTML).toBe("disabled link");
     expect(element2.shadowRoot?.querySelector("a")?.childNodes.length).toBe(1);
-    expect(element2.shadowRoot?.querySelector("a")?.href).toBe(
-      "http://localhost/www.xx.com"
-    );
+    expect(element2.shadowRoot?.querySelector("a")?.href).toBe("");
 
     expect(element4.innerHTML).toBe("current-page");
     expect(element4.shadowRoot?.querySelector("a")?.href).toBe(
@@ -83,6 +93,10 @@ describe("basic.general-button", () => {
     );
 
     expect(element5.shadowRoot?.querySelector("a")?.href).toBe("");
+
+    expect(element6.shadowRoot?.querySelector("a")?.href).toBe(
+      "http://localhost/for-complex#and-more?even-more"
+    );
 
     expect(mockElement1ClickEvent).toBeCalledTimes(0);
     expect(mockElement2ClickEvent).toBeCalledTimes(0);
@@ -118,11 +132,13 @@ describe("basic.general-button", () => {
       document.body.removeChild(element3);
       document.body.removeChild(element4);
       document.body.removeChild(element5);
+      document.body.removeChild(element6);
     });
     expect(element1.shadowRoot?.childNodes.length).toBe(0);
     expect(element2.shadowRoot?.childNodes.length).toBe(0);
     expect(element3.shadowRoot?.childNodes.length).toBe(0);
     expect(element4.shadowRoot?.childNodes.length).toBe(0);
-    expect(element4.shadowRoot?.childNodes.length).toBe(0);
+    expect(element5.shadowRoot?.childNodes.length).toBe(0);
+    expect(element6.shadowRoot?.childNodes.length).toBe(0);
   });
 });
