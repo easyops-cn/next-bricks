@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, waitFor } from "@testing-library/react";
 import { getRuntime, getHistory } from "@next-core/runtime";
 import { LaunchpadButton } from "./LaunchpadButton.js";
 jest.mock("@next-core/runtime");
@@ -52,6 +52,13 @@ jest.mock("../LaunchpadService.js", () => {
   };
 });
 
+jest.mock("@next-core/i18n/react", () => ({
+  initializeReactI18n: jest.fn(),
+  useTranslation: jest.fn(() => ({
+    t: () => "",
+  })),
+}));
+
 describe("LaunchpadButton", () => {
   it("should work", async () => {
     const { container } = render(<LaunchpadButton />);
@@ -60,7 +67,9 @@ describe("LaunchpadButton", () => {
     );
 
     expect(document.querySelector(".launchpadContainer")).toBeFalsy();
-    fireEvent.click(container.querySelector("a") as HTMLElement);
+    await waitFor(() => {
+      fireEvent.click(container.querySelector("a") as HTMLElement);
+    });
     expect(document.querySelector(".launchpadContainer")).toBeTruthy();
   });
 });

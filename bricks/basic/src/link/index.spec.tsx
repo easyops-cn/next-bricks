@@ -145,6 +145,7 @@ describe("basic.general-button", () => {
       document.body.removeChild(element4);
       document.body.removeChild(element5);
       document.body.removeChild(element6);
+      document.body.removeChild(element7);
     });
     expect(element1.shadowRoot?.childNodes.length).toBe(0);
     expect(element2.shadowRoot?.childNodes.length).toBe(0);
@@ -152,5 +153,6 @@ describe("basic.general-button", () => {
     expect(element4.shadowRoot?.childNodes.length).toBe(0);
     expect(element5.shadowRoot?.childNodes.length).toBe(0);
     expect(element6.shadowRoot?.childNodes.length).toBe(0);
+    expect(element7.shadowRoot?.childNodes.length).toBe(0);
   });
 });

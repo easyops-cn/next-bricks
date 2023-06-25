@@ -1,13 +1,29 @@
 import React from "react";
-import { render, act, fireEvent, createEvent } from "@testing-library/react";
+import {
+  render,
+  act,
+  fireEvent,
+  createEvent,
+  waitFor,
+  screen,
+} from "@testing-library/react";
 import { SearchBar } from "./SearchBar.js";
 
+jest.mock("@next-core/i18n/react", () => ({
+  initializeReactI18n: jest.fn(),
+  useTranslation: jest.fn(() => ({
+    t: () => "",
+  })),
+}));
+
 describe("SearchBar", () => {
-  it("should trigger input onChange", () => {
+  it("should trigger input onChange", async () => {
     const onChange = jest.fn();
-    const { container } = render(<SearchBar onChange={onChange} />);
     act(() => {
-      fireEvent.change(container.querySelector("input") as HTMLElement, {
+      render(<SearchBar onChange={onChange} />);
+    });
+    await waitFor(async () => {
+      fireEvent.change(await screen.findByRole("input"), {
         target: {
           value: "hello",
         },
@@ -16,52 +32,54 @@ describe("SearchBar", () => {
     expect(onChange).toBeCalledWith("hello");
   });
 
-  it("should stop propagation when click input", () => {
+  it("should stop propagation when click input", async () => {
     const stopPropagation = jest.fn();
-    const { container } = render(<SearchBar onChange={jest.fn()} />);
+    render(<SearchBar onChange={jest.fn()} />);
 
     const mockEvent = createEvent.click(
-      container.querySelector(".inputContainer") as HTMLElement
+      await screen.findByRole("inputContainer")
     );
     mockEvent.stopPropagation = stopPropagation;
-    act(() => {
-      fireEvent(
-        container.querySelector(".inputContainer") as HTMLElement,
-        mockEvent
-      );
+    await waitFor(async () => {
+      fireEvent(await screen.findByRole("inputContainer"), mockEvent);
     });
     expect(stopPropagation).toBeCalled();
   });
 
-  it("should prevent default when certain keydown", () => {
-    const { container } = render(<SearchBar onChange={jest.fn()} />);
+  it("should prevent default when certain keydown", async () => {
+    render(<SearchBar onChange={jest.fn()} />);
     const mockEvent1 = createEvent.keyDown(
-      container.querySelector("input") as HTMLElement,
+      (await screen.findByRole("input")) as HTMLElement,
       {
         key: "a",
       }
     );
-    fireEvent(container.querySelector("input") as HTMLElement, mockEvent1);
+    await waitFor(async () => {
+      fireEvent(await screen.findByRole("input"), mockEvent1);
+    });
 
     expect(mockEvent1.defaultPrevented).toBeFalsy();
 
-    const mockEvent2 = createEvent.keyDown(
-      container.querySelector("input") as HTMLElement,
-      {
-        key: "ArrowLeft",
-      }
-    );
-    fireEvent(container.querySelector("input") as HTMLElement, mockEvent2);
+    const mockEvent2 = createEvent.keyDown(await screen.findByRole("input"), {
+      key: "ArrowLeft",
+    });
+    await waitFor(async () => {
+      fireEvent(await screen.findByRole("input"), mockEvent2);
+    });
 
     expect(mockEvent2.defaultPrevented).toBeTruthy();
   });
 
-  it("should handle focus and blur", () => {
+  it("should handle focus and blur", async () => {
     const { container } = render(<SearchBar onChange={jest.fn()} />);
     expect(container.querySelector(".focus")).toBeFalsy();
-    fireEvent.focus(container.querySelector("input") as HTMLElement);
+    await waitFor(async () => {
+      await fireEvent.focus(container.querySelector("input") as HTMLElement);
+    });
     expect(container.querySelector(".focus")).toBeTruthy();
-    fireEvent.blur(container.querySelector("input") as HTMLElement);
+    await waitFor(async () => {
+      await fireEvent.blur(container.querySelector("input") as HTMLElement);
+    });
     expect(container.querySelector(".focus")).toBeFalsy();
   });
 });

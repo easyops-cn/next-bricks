@@ -141,7 +141,11 @@ function NavMenuComponent(props: NavMenuProps) {
             {renderSpanCom(item)}
           </WrappedMenuItem>
           <div className="sub-menu-wrapper">
-            {item.items.map((innerItem) => renderMenuItem(innerItem))}
+            {item.items.map((innerItem) => (
+              <React.Fragment key={innerItem.key}>
+                {renderMenuItem(innerItem)}
+              </React.Fragment>
+            ))}
           </div>
         </WrappedPopover>
       );
@@ -154,7 +158,13 @@ function NavMenuComponent(props: NavMenuProps) {
         <>
           <div className="group-label">{item.title}</div>
           <div className="group-wrapper">
-            {item.items.map((innerItem) => renderMenuItem(innerItem))}
+            {item.items.map((innerItem) => {
+              return (
+                <React.Fragment key={innerItem.key}>
+                  {renderMenuItem(innerItem)}
+                </React.Fragment>
+              );
+            })}
           </div>
         </>
       );
@@ -172,7 +182,9 @@ function NavMenuComponent(props: NavMenuProps) {
   return (
     <div className="nav-menu-wrapper">
       {menu?.menuItems.map((item) => {
-        return renderMenuItem(item);
+        return (
+          <React.Fragment key={item.key}>{renderMenuItem(item)}</React.Fragment>
+        );
       })}
     </div>
   );

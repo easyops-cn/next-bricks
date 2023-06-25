@@ -72,7 +72,11 @@ export function SearchBar(props: SearchBarProps): React.ReactElement {
         [styles.focus]: focus,
       })}
     >
-      <div className={styles.inputContainer} onClick={handleClick}>
+      <div
+        className={styles.inputContainer}
+        role="inputContainer"
+        onClick={handleClick}
+      >
         <span
           className={classNames(styles.inputAffixWrapper, {
             [styles.inputAffixWrapperFocused]: focus,
@@ -82,6 +86,7 @@ export function SearchBar(props: SearchBarProps): React.ReactElement {
             <WrappedGeneralIcon icon="search" lib="antd" theme="outlined" />
           </span>
           <input
+            role="input"
             className=""
             placeholder={t(K.SEARCH_BY_NAME_KEYWORD) as string}
             onChange={handleChange}
