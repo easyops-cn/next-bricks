@@ -18,7 +18,8 @@
       "{workspaceRoot}/babel.config.js",
       "{workspaceRoot}/tsconfig.json",
       "{workspaceRoot}/tsconfig.module.json"
-    ]
+    ],
+    "jest": ["{workspaceRoot}/__jest__/**/*", "{workspaceRoot}/jest/**/*"]
   },
   "targetDefaults": {
     "build": {
@@ -32,11 +33,11 @@
       ]
     },
     "test": {
-      "inputs": ["default", "^prod", "global"],
+      "inputs": ["default", "^prod", "global", "jest"],
       "outputs": ["{projectRoot}/.coverage"]
     },
     "test:ci": {
-      "inputs": ["default", "^prod", "global"],
+      "inputs": ["default", "^prod", "global", "jest"],
       "outputs": ["{projectRoot}/.coverage"]
     }
   }
