@@ -202,6 +202,10 @@ const data = [
 describe("LaunchpadService", () => {
   beforeEach(() => {
     window.STANDALONE_MICRO_APPS = undefined;
+    jest.useFakeTimers();
+  });
+  afterEach(() => {
+    jest.useRealTimers();
   });
   it("should work", async () => {
     //const service = launchpadService;

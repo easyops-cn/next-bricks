@@ -33,6 +33,7 @@ export const renderLinkCom = (
 ): React.ReactElement => {
   return (
     <WrappedLinkItem
+      key={item.key}
       url={item.to as string}
       href={item.href}
       target={item.target as Target}
@@ -44,5 +45,9 @@ export const renderLinkCom = (
 };
 
 export const renderSpanCom = (item: SidebarMenuGroup): React.ReactElement => {
-  return <span className="menu-item-label">{item.title}</span>;
+  return (
+    <span key={item.key} className="menu-item-label">
+      {item.title}
+    </span>
+  );
 };

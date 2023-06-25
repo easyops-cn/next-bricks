@@ -1,7 +1,10 @@
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, waitFor } from "@testing-library/react";
 import { getRuntime, getHistory } from "@next-core/runtime";
 import { LaunchpadButton } from "./LaunchpadButton.js";
+import { initializeReactI18n } from "@next-core/i18n/react";
+initializeReactI18n();
+
 jest.mock("@next-core/runtime");
 
 type ListenerFn = () => void;
@@ -60,7 +63,9 @@ describe("LaunchpadButton", () => {
     );
 
     expect(document.querySelector(".launchpadContainer")).toBeFalsy();
-    fireEvent.click(container.querySelector("a") as HTMLElement);
+    await waitFor(() => {
+      fireEvent.click(container.querySelector("a") as HTMLElement);
+    });
     expect(document.querySelector(".launchpadContainer")).toBeTruthy();
   });
 });

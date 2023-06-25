@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import type {
@@ -8,10 +8,14 @@ import type {
 import type { LinkType, Target } from "../interface.js";
 import styleText from "./link.shadow.css";
 import classNames from "classnames";
-import { getHistory } from "@next-core/runtime";
-import { createLocation, LocationState } from "history";
+import { getHistory, NextHistoryState } from "@next-core/runtime";
+import { createLocation, LocationDescriptorObject } from "history";
 import { isEmpty } from "lodash";
 import "@next-core/theme";
+import {
+  ExtendedLocationDescriptor,
+  getExtendedLocationDescriptor,
+} from "./getExtendedLocationDescriptor.js";
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
   "icons.general-icon"
@@ -20,7 +24,7 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
 export interface LinkProps {
   type?: LinkType;
   disabled?: boolean;
-  url?: string;
+  url?: ExtendedLocationDescriptor;
   href?: string;
   icon?: GeneralIconProps;
   target?: Target;
@@ -61,7 +65,10 @@ class Link extends ReactNextElement implements LinkProps {
   /**
    * 链接地址
    */
-  @property() accessor url: string | undefined;
+  @property({
+    attribute: false,
+  })
+  accessor url: ExtendedLocationDescriptor | undefined;
 
   /**
    * 链接跳转目标
@@ -142,18 +149,20 @@ export function LinkComponent({
   linkStyle,
 }: LinkProps) {
   const history = getHistory();
+  const [currentLocation, setCurrentLocation] = useState(history.location);
 
   const computedHref = useMemo(() => {
+    if (disabled) return;
     if (href) return href;
     if (!url) return "";
-    const loc = createLocation(
-      url,
-      null,
-      undefined,
-      history.location
-    ) as LocationState;
-    return loc ? history.createHref(loc) : "";
-  }, [history, url, href]);
+    const loc =
+      typeof url === "string"
+        ? createLocation(url, null, undefined, currentLocation)
+        : getExtendedLocationDescriptor(url, currentLocation);
+    return loc
+      ? history.createHref(loc as LocationDescriptorObject<NextHistoryState>)
+      : "";
+  }, [disabled, href, url, currentLocation, history]);
 
   const handleClick = (e: React.MouseEvent) => {
     if (disabled) {
@@ -176,9 +185,22 @@ export function LinkComponent({
 
       const method = replace ? history.replace : history.push;
 
-      method(computedHref);
+      method(
+        typeof url === "string"
+          ? url
+          : getExtendedLocationDescriptor(url, currentLocation)
+      );
     }
   };
+
+  useEffect(() => {
+    // Listen history change only when necessary.
+    if (typeof url !== "string" && url?.keepCurrentSearch) {
+      return history.listen((loc) => {
+        setCurrentLocation(loc);
+      });
+    }
+  }, [history, url]);
 
   return (
     <a

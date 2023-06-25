@@ -1,6 +1,5 @@
 import React from "react";
-import { act } from "react-dom/test-utils";
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, waitFor } from "@testing-library/react";
 import { MyDesktop } from "./MyDesktop.js";
 import { launchpadService } from "../LaunchpadService.js";
 
@@ -96,7 +95,7 @@ describe("MyDesktop", () => {
     const { container } = render(
       <MyDesktop desktopCount={2} arrowWidthPercent={9} />
     );
-    await act(async () => {
+    await waitFor(async () => {
       fireEvent.click(container.querySelector(".modeIcon") as HTMLElement);
       await (global as any).flushPromises();
     });
@@ -107,7 +106,7 @@ describe("MyDesktop", () => {
       `"<div class="cellItem small"><basic.general-link class="appLink small square" url="/search"><img class="appIcon" src="micro-apps/search/icons/large.png"></basic.general-link><span class="appName">搜索中心</span></div>"`
     );
 
-    await act(async () => {
+    await waitFor(async () => {
       await (global as any).flushPromises();
     });
 
@@ -115,7 +114,7 @@ describe("MyDesktop", () => {
       container.querySelectorAll(".favoriteContainer .cellWrapper").length
     ).toBe(1);
 
-    act(() => {
+    await waitFor(() => {
       fireEvent.click(container.querySelector(".modeIcon") as HTMLElement);
     });
     expect(container.querySelector(".header .title")?.textContent).toEqual(
@@ -134,7 +133,7 @@ describe("MyDesktop", () => {
     const { container } = render(
       <MyDesktop desktopCount={2} arrowWidthPercent={9} />
     );
-    await act(async () => {
+    await waitFor(async () => {
       fireEvent.click(container.querySelector(".modeIcon") as HTMLElement);
       await (global as any).flushPromises();
     });

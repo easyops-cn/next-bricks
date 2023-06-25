@@ -81,7 +81,10 @@ class Button extends ReactNextElement implements ButtonProps {
   accessor disabled: boolean | undefined;
 
   /** 链接地址 */
-  @property() accessor url: string | undefined;
+  @property({
+    attribute: false,
+  })
+  accessor url: string | undefined;
 
   /** 跳转外链地址 */
   @property() accessor href: string | undefined;

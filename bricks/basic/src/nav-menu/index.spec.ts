@@ -28,27 +28,33 @@ describe("basic.nav-menu", () => {
           {
             text: "菜单一",
             type: "default",
+            key: "menu 1",
           },
           {
             title: "菜单二",
             type: "subMenu",
+            key: "menu 2",
             items: [
               {
                 text: "菜单二-1",
                 type: "default",
+                key: "menu 3",
               },
               {
                 title: "分组",
                 type: "group",
+                key: "menu 4",
                 items: [
                   {
                     text: "分组1",
                     to: "/oops",
                     type: "default",
+                    key: "menu 5",
                   },
                   {
                     text: "分组2",
                     type: "default",
+                    key: "menu 6",
                   },
                 ],
               },
