@@ -20,6 +20,7 @@ jest.mock("@next-core/runtime", () => ({
     createHref: (path: Location) => {
       return path.pathname + path.hash + path.search;
     },
+    listen: jest.fn(),
   }),
 }));
 
@@ -35,11 +36,12 @@ describe("basic.general-button", () => {
     const element4 = document.createElement("basic.general-link") as Link;
     const element5 = document.createElement("basic.general-link") as Link;
     const element6 = document.createElement("basic.general-link") as Link;
+    const element7 = document.createElement("basic.general-link") as Link;
     element1.href = "http://www.xx.com";
     element1.textContent = "hello world";
     element1.icon = {} as GeneralIconProps;
 
-    element2.href = "www.xx.com";
+    element2.url = "www.xx.com";
     element2.textContent = "disabled link";
     element2.disabled = true;
 
@@ -60,6 +62,11 @@ describe("basic.general-button", () => {
 
     element6.url = url;
 
+    element7.url = {
+      ...url,
+      keepCurrentSearch: true,
+    };
+
     const mockElement1ClickEvent = jest.fn();
     const mockElement2ClickEvent = jest.fn();
     element1.addEventListener("click", mockElement1ClickEvent);
@@ -73,6 +80,7 @@ describe("basic.general-button", () => {
       document.body.appendChild(element4);
       document.body.appendChild(element5);
       document.body.appendChild(element6);
+      document.body.appendChild(element7);
     });
     expect(element1.shadowRoot).toBeTruthy();
     expect(element1.shadowRoot?.childNodes.length).toBe(2);
@@ -96,6 +104,10 @@ describe("basic.general-button", () => {
 
     expect(element6.shadowRoot?.querySelector("a")?.href).toBe(
       "http://localhost/for-complex#and-more?even-more"
+    );
+
+    expect(element7.shadowRoot?.querySelector("a")?.href).toEqual(
+      "http://localhost/for-complex#and-more?even-more="
     );
 
     expect(mockElement1ClickEvent).toBeCalledTimes(0);
