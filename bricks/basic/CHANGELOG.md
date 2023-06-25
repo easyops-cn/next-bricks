@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.11.0...@next-bricks/basic@0.12.0) (2023-06-25)
+
+
+### Features
+
+* add mock react-i18next.js ([2797199](https://github.com/easyops-cn/next-bricks/commit/2797199bc550641a72e41dfa9c5909932eea5dbf))
+* basic.copy-to-clipboard ([7521387](https://github.com/easyops-cn/next-bricks/commit/7521387507447995c4f2f652fbc2bbd3ada84bac))
+* link url support location descriptor ([7f59d09](https://github.com/easyops-cn/next-bricks/commit/7f59d09f50fc6d646ef33bc69f9ce07355bf7f77))
+* show-dialog support highlight expect ([2befdf9](https://github.com/easyops-cn/next-bricks/commit/2befdf93e4f324f874d0c5e8e22de90fae316281))
+* update mock i18n code ([2d3bd90](https://github.com/easyops-cn/next-bricks/commit/2d3bd901515e2b57c2fb088129544447d2aee001))
+* update unit test ([65859a1](https://github.com/easyops-cn/next-bricks/commit/65859a1238036b11c06f811f1ffd0fb2e56df986))
+* update unit test ([50b37cf](https://github.com/easyops-cn/next-bricks/commit/50b37cf4ff1747367990a4e684afcace555dd334))
+
+
+
+
+
 # [0.11.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.10.0...@next-bricks/basic@0.11.0) (2023-06-19)
 
 

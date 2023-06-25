@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.9.1...@next-bricks/data-view@0.9.2) (2023-06-25)
+
+
+### Bug Fixes
+
+* i18n unit test ([a3eb0e6](https://github.com/easyops-cn/next-bricks/commit/a3eb0e6f8cce26e1f0dc4a45e91d37932a4151c6))
+
+
+
+
+
 ## [0.9.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.9.0...@next-bricks/data-view@0.9.1) (2023-06-20)
 
 **Note:** Version bump only for package @next-bricks/data-view

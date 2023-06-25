@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.8.0...@next-bricks/form@0.9.0) (2023-06-25)
+
+
+### Features
+
+* general-switch ([4a5265d](https://github.com/easyops-cn/next-bricks/commit/4a5265d1cf78e1c18b21d2b09821a3019cfe9b66))
+
+
+
+
+
 # [0.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.7.0...@next-bricks/form@0.8.0) (2023-06-20)
 
 
