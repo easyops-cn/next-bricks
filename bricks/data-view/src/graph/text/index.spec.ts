@@ -15,7 +15,9 @@ describe("data-view.graph-text", () => {
     expect(element.shadowRoot.querySelector(".text").textContent).toBe(
       "负载均衡数"
     );
-    expect(element.shadowRoot.querySelector(".symbol").textContent).toBe(":");
+    expect(element.shadowRoot.querySelector(".symbol").textContent).toBe(
+      "SYMBOL"
+    );
     expect(element.shadowRoot.querySelector(".value").textContent).toBe("234");
 
     act(() => {
