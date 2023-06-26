@@ -11,6 +11,7 @@
             - nodeTitle: 244.244.244.244
               key: 244.244.244.244
               type: physical-machine
+              isAlert: true
             - nodeTitle: 244.244.244.245
               key: 244.244.244.245
               type: virtual-machine
@@ -35,6 +36,7 @@
             - nodeTitle: 241.241.241.241
               key: 241.241.241.241
               type: virtual-machine
+              isAlert: true
         - clusterName: K8S集群
           key: k8s-cluster
           type: k8s
@@ -42,6 +44,7 @@
             - nodeTitle: a容器组
               key: aa
               type: container-group
+              isAlert: true
             - nodeTitle: b容器组
               key: bb
               type: container-group
