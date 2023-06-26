@@ -33,6 +33,7 @@ interface Node {
   nodeTitle: string;
   key: string;
   type: "container-group" | "physical-machine" | "virtual-machine";
+  isAlert?: boolean;
 }
 
 interface Clusters {
@@ -244,6 +245,7 @@ function CabinetGraphElement(props: CabinetGraphProps): React.ReactElement {
                     nodeTitle: node.nodeTitle,
                     type: node.type,
                     key: node.key,
+                    isAlert: node.isAlert,
                     status:
                       includeNode || includeClu
                         ? includeClu

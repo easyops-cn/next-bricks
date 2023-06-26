@@ -282,6 +282,7 @@ export function CabinetContainerComponent(
                     type={item.type}
                     nodeTitle={item.nodeTitle}
                     status={item.status}
+                    isAlert={item.isAlert}
                   />
                 </div>
               </div>

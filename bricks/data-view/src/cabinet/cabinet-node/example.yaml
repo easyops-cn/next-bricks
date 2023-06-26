@@ -4,3 +4,10 @@
     nodeTitle: 容器组
     style:
       width: 100px
+- brick: data-view.cabinet-node
+  properties:
+    type: container-group
+    nodeTitle: 容器组告警态
+    isAlert: true
+    style:
+      width: 100px
