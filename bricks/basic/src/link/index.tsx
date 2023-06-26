@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import type {
@@ -149,6 +149,7 @@ export function LinkComponent({
   linkStyle,
 }: LinkProps) {
   const history = getHistory();
+  const linkRef = useRef<HTMLAnchorElement>(null);
   const [currentLocation, setCurrentLocation] = useState(history.location);
 
   const computedHref = useMemo(() => {
@@ -164,7 +165,7 @@ export function LinkComponent({
       : "";
   }, [disabled, href, url, currentLocation, history]);
 
-  const handleClick = (e: React.MouseEvent) => {
+  const handleClick = (e: MouseEvent) => {
     if (disabled) {
       e.preventDefault();
       e.stopPropagation();
@@ -202,6 +203,15 @@ export function LinkComponent({
     }
   }, [history, url]);
 
+  useEffect(() => {
+    const link = linkRef.current;
+    if (!link) return;
+    link.addEventListener("click", handleClick);
+    return () => {
+      link.removeEventListener("click", handleClick);
+    };
+  });
+
   return (
     <a
       part="link"
@@ -214,7 +224,7 @@ export function LinkComponent({
       style={linkStyle}
       href={isEmpty(computedHref) ? undefined : computedHref}
       target={target}
-      onClick={handleClick}
+      ref={linkRef}
     >
       {icon && <WrappedIcon {...icon} />}
       <slot />
