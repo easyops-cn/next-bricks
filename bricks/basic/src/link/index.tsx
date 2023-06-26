@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import type {
@@ -165,34 +171,37 @@ export function LinkComponent({
       : "";
   }, [disabled, href, url, currentLocation, history]);
 
-  const handleClick = (e: MouseEvent) => {
-    if (disabled) {
-      e.preventDefault();
-      e.stopPropagation();
-      return;
-    }
+  const handleClick = useCallback(
+    (e: MouseEvent) => {
+      if (disabled) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
 
-    if (href) return;
+      if (href) return;
 
-    if (
-      !e.defaultPrevented && // onClick prevented default
-      e.button === 0 && // ignore everything but left clicks
-      (!target || target === "_self") && // let browser handle "target=_blank" etc.
-      !isModifiedEvent(e) // ignore clicks with modifier keys
-    ) {
-      e.preventDefault();
+      if (
+        !e.defaultPrevented && // onClick prevented default
+        e.button === 0 && // ignore everything but left clicks
+        (!target || target === "_self") && // let browser handle "target=_blank" etc.
+        !isModifiedEvent(e) // ignore clicks with modifier keys
+      ) {
+        e.preventDefault();
 
-      if (!url) return;
+        if (!url) return;
 
-      const method = replace ? history.replace : history.push;
+        const method = replace ? history.replace : history.push;
 
-      method(
-        typeof url === "string"
-          ? url
-          : getExtendedLocationDescriptor(url, currentLocation)
-      );
-    }
-  };
+        method(
+          typeof url === "string"
+            ? url
+            : getExtendedLocationDescriptor(url, currentLocation)
+        );
+      }
+    },
+    [currentLocation, disabled, history, href, replace, target, url]
+  );
 
   useEffect(() => {
     // Listen history change only when necessary.
