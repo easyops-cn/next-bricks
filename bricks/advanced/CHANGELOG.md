@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.1.9...@next-bricks/advanced@0.1.10) (2023-06-26)
+
+
+### Bug Fixes
+
+* refine artifact deps ([7acd498](https://github.com/easyops-cn/next-bricks/commit/7acd49838628f1b82cf49ecf292849d8c98f6a8e))
+
+
+
+
+
 ## [0.1.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.1.8...@next-bricks/advanced@0.1.9) (2023-06-25)
 
 **Note:** Version bump only for package @next-bricks/advanced

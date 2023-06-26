@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.12.0...@next-bricks/basic@0.13.0) (2023-06-26)
+
+
+### Bug Fixes
+
+* fix link error in shadow dom ([4a3ccec](https://github.com/easyops-cn/next-bricks/commit/4a3ccecf403563bda8462afe2f3636260fde33b5))
+
+
+### Features
+
+* update code ([a6d7dfe](https://github.com/easyops-cn/next-bricks/commit/a6d7dfef2416b538e00d125683eb557ac6e0603c))
+
+
+
+
+
 # [0.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.11.0...@next-bricks/basic@0.12.0) (2023-06-25)
 
 

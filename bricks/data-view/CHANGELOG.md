@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.9.2...@next-bricks/data-view@0.9.3) (2023-06-26)
+
+
+### Bug Fixes
+
+* refine artifact deps ([7acd498](https://github.com/easyops-cn/next-bricks/commit/7acd49838628f1b82cf49ecf292849d8c98f6a8e))
+
+
+
+
+
 ## [0.9.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.9.1...@next-bricks/data-view@0.9.2) (2023-06-25)
 
 
