@@ -1,0 +1,110 @@
+import { describe, test, expect, jest } from "@jest/globals";
+import { act } from "react-dom/test-utils";
+import { fireEvent } from "@testing-library/react";
+import ResizeObserver from "resize-observer-polyfill";
+import fileSaver from "file-saver";
+import "./";
+import { CodeDisplay } from "./index.js";
+
+jest.mock("@next-core/theme", () => ({}));
+
+const spyOnSaveAs = jest.spyOn(fileSaver, "saveAs").mockImplementation(() => {
+  // do nothing
+});
+
+const copyToClipboard = jest.fn().mockResolvedValue(1 as never);
+const showNotification = jest.fn();
+
+customElements.define(
+  "basic.copy-to-clipboard",
+  class extends HTMLElement {
+    resolve = copyToClipboard;
+  }
+);
+customElements.define(
+  "basic.show-notification",
+  class extends HTMLElement {
+    resolve = showNotification;
+  }
+);
+global.ResizeObserver = ResizeObserver as any;
+
+describe("presentational.code-display", () => {
+  test("basic usage", async () => {
+    const element = document.createElement(
+      "presentational.code-display"
+    ) as CodeDisplay;
+    element.language = "javascript";
+    element.value = "const a = 1;";
+    element.showCopyButton = true;
+    element.showExportButton = true;
+    element.maxLines = 10;
+    element.minLines = 3;
+    element.exportFileName = "export.js";
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+
+    expect(element.shadowRoot?.querySelector(".code")).toMatchInlineSnapshot(`
+      <code
+        class="code language-javascript"
+      >
+        <span
+          class="token keyword"
+        >
+          const
+        </span>
+         a 
+        <span
+          class="token operator"
+        >
+          =
+        </span>
+         
+        <span
+          class="token number"
+        >
+          1
+        </span>
+        <span
+          class="token punctuation"
+        >
+          ;
+        </span>
+        <span
+          aria-hidden="true"
+          class="line-numbers-rows"
+        >
+          <span />
+        </span>
+      </code>
+    `);
+    const pre = element.shadowRoot?.querySelector(".pre") as HTMLPreElement;
+    expect(pre.classList.contains("line-numbers")).toBeTruthy();
+    expect(pre.style.getPropertyValue("--min-lines")).toBe("3");
+    expect(pre.style.getPropertyValue("--max-lines")).toBe("10");
+
+    act(() => {
+      fireEvent.click(element.shadowRoot?.querySelector(".copy-icon"));
+    });
+    await (global as any).flushPromises();
+    expect(copyToClipboard).lastCalledWith("const a = 1;");
+    expect(showNotification).lastCalledWith(
+      expect.objectContaining({ type: "success" })
+    );
+
+    act(() => {
+      fireEvent.click(element.shadowRoot?.querySelector(".export-icon"));
+    });
+    expect(spyOnSaveAs).lastCalledWith(expect.any(Blob), "export.js");
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
+});

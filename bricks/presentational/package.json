@@ -34,6 +34,7 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
+    "@next-bricks/basic": "^0.13.0",
     "@next-bricks/containers": "^0.7.4",
     "@next-bricks/icons": "^0.2.3",
     "@next-core/element": "^1.0.6",
@@ -43,7 +44,10 @@
     "@next-core/utils": "^1.5.4",
     "@next-shared/general": "^0.3.3",
     "classnames": "^2.3.2",
-    "react": "0.0.0-experimental-ee8509801-20230117"
+    "file-saver": "^2.0.5",
+    "prismjs": "^1.29.0",
+    "react": "0.0.0-experimental-ee8509801-20230117",
+    "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {
     "@next-core/build-next-bricks": "^1.10.0",

@@ -1,0 +1,75 @@
+@import "~prismjs/themes/prism-tomorrow.css";
+@import "~prismjs/plugins/line-numbers/prism-line-numbers.css";
+
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+icons\.general-icon {
+  line-height: 0.25em;
+}
+
+.code-wrapper {
+  position: relative;
+}
+
+.code-wrapper .pre {
+  padding-top: 0;
+  padding-bottom: 0;
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  white-space: pre-wrap;
+  min-height: calc(var(--min-lines) * 16px);
+  max-height: calc(var(--max-lines) * 16px);
+  border-radius: var(--medius-border-radius);
+}
+
+.code-wrapper .code {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.code-wrapper .line-numbers .line-numbers-rows {
+  width: 40px;
+  background: #3b3b3b;
+  border-right: 0;
+}
+
+.tool-bar {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: 10px;
+  transition: all 0.3s;
+  z-index: 1;
+  opacity: 0;
+}
+
+.code-wrapper:hover .tool-bar {
+  opacity: 1;
+}
+
+.copy-icon,
+.export-icon {
+  color: var(--color-white);
+  cursor: pointer;
+  font-size: 16px;
+  opacity: 0.5;
+}
+
+.copy-icon:hover,
+.export-icon:hover {
+  opacity: 1;
+}
