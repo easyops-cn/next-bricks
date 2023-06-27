@@ -9,7 +9,7 @@ const en: Locale = {
 };
 
 const zh: Locale = {
-  COPY_SUCCESS: "已成功！",
+  COPY_SUCCESS: "已复制！",
   COPY_FAILED: "复制失败！",
 };
 
