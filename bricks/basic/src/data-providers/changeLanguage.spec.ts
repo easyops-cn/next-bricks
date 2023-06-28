@@ -11,6 +11,6 @@ jest.mock("@next-core/i18n", () => ({
 
 describe("changeLanguage", () => {
   test("should work", async () => {
-    expect(await changeLanguage("zh")).toBe(true);
+    expect(await changeLanguage("zh")).toBe(undefined);
   });
 });

@@ -7,13 +7,20 @@ import type { AntdIcon } from "@next-bricks/icons/antd-icon";
 /*#__PURE__*/ wrapBrick("sl-alert");
 /*#__PURE__*/ wrapBrick("icons.antd-icon");
 
+/**
+ * 显示通知消息。
+ *
+ * @param options 选项
+ */
 export function showNotification({
   type,
   message,
 }: {
+  /** 通知类型 */
   type?: "success" | "error" | "warn" | "info";
+  /** 通知内容 */
   message: string;
-}) {
+}): void {
   const notification = document.createElement("sl-alert") as any;
   const icon = document.createElement("icons.antd-icon") as AntdIcon;
   icon.slot = "icon";

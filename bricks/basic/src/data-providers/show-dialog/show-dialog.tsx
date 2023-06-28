@@ -34,7 +34,8 @@ const WrappedInput = wrapBrick<
   onValueChange: "change",
 });
 
-export interface DialogProps {
+export interface DialogOptions {
+  /** 对话框类型 */
   type?: "success" | "error" | "warn" | "info" | "confirm" | "delete";
   title?: string;
   content: string;
@@ -81,7 +82,12 @@ const parseTemplate = (template: string, context: Record<string, any>) => {
   );
 };
 
-export function showDialog(props: DialogProps) {
+/**
+ * 显示对话框。
+ *
+ * @param options 选项
+ */
+export function showDialog(options: DialogOptions): Promise<void> {
   const container = document.createElement("div");
   document.body.append(container);
   const root = createRoot(container);
@@ -101,7 +107,7 @@ export function showDialog(props: DialogProps) {
 
   root.render(
     <DialogComponent
-      {...props}
+      {...options}
       onOk={onOk}
       onCancel={onCancel}
       onHide={onHide}
@@ -120,7 +126,7 @@ export function DialogComponent({
   onOk,
   onCancel,
   onHide,
-}: DialogProps & {
+}: DialogOptions & {
   onOk?(): void;
   onCancel?(): void;
   onHide?(): void;

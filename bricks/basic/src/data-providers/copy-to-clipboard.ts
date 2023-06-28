@@ -1,6 +1,11 @@
 import { createProviderClass } from "@next-core/utils/general";
 
-export async function copyToClipboard(text: string): Promise<unknown> {
+/**
+ * 复制文本内容到粘贴板。
+ *
+ *  @param text 文本内容
+ */
+export async function copyToClipboard(text: string): Promise<void> {
   return new Promise((resolve, reject) => {
     if (!navigator.clipboard) {
       const textArea = document.createElement("textarea");
@@ -16,7 +21,7 @@ export async function copyToClipboard(text: string): Promise<unknown> {
 
       try {
         document.execCommand("copy");
-        resolve(void 0);
+        resolve();
       } catch (err) {
         reject(err);
       } finally {
