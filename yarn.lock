@@ -2016,10 +2016,10 @@
     "@babel/preset-react" "^7.18.6"
     "@babel/preset-typescript" "^7.21.5"
 
-"@next-core/brick-container@^3.4.4":
-  version "3.4.4"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.4.4.tgz#5103a5aa3be3825e785a7a5e25ada18d097fe410"
-  integrity sha512-bas+jV7+HvLAplya2uxZ+WzLpRwun+S1oIs955RZc4cp1JS1yBBuiDy8TkNWCtpfUfqwgPPVN5rtLzQgfCRV+w==
+"@next-core/brick-container@^3.4.5":
+  version "3.4.5"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.4.5.tgz#f99150369d67c540353d9e4a692a146ccb00d831"
+  integrity sha512-BRehCeexTXV9UkwdLXTfEgFWzVuwrlFO0cE23IAvoZ7NoB2mRqQfrEJlf6vR5QLXd6UrPAQVkljj+0YOWc8iHQ==
   dependencies:
     "@next-core/serve-helpers" "^1.1.0"
     body-parser "^1.20.1"
@@ -2043,17 +2043,17 @@
   resolved "https://registry.yarnpkg.com/@next-core/brick-icons/-/brick-icons-2.31.54.tgz#de885b8a5c6c6614110572d7480658b41b4cb6bf"
   integrity sha512-XjfeND85q5R+oDceWhNG8ksUAnsYc2Nwh9KKSwZJ7jug2A3W6oS/QHqy55/J+mU9EIGcNFNhM2Ck6DiaoQJnYw==
 
-"@next-core/brick-manifest@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-manifest/-/brick-manifest-0.3.0.tgz#e111bed4040e80865e373cbd4eb4024e5670a3a4"
-  integrity sha512-CuNT50Z+4bMQKZ9e4HyDA+qebOeeAHwuldubx6G9WcKQDdiO05TbooBdCnEeyHMhz5/aycxjCpwuc+HsQJcZDQ==
+"@next-core/brick-manifest@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-manifest/-/brick-manifest-0.4.0.tgz#909c03ca1e47583617553f9a09f2bb9c37777be8"
+  integrity sha512-6+7LYrKdp+asOjlzAb6p2ky8VcX0wzmzKKDmPdWLOSCX2EOcuohRdD7L2f5IUjZLBcyyUBkm6J8z0WfEq8zqQg==
 
-"@next-core/brick-playground@^1.10.10":
-  version "1.10.10"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.10.10.tgz#516849549f08aa6c6f4c29450d578a95dc76eed8"
-  integrity sha512-FIiO05+AvZaIsT0J34oQHFEem3LU2PkqHs5yS/lmz1MNf88JpEhuh/rsWyMMBvaScUyVmL/vqd7Kw84RNhF0qA==
+"@next-core/brick-playground@^1.10.11":
+  version "1.10.11"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.10.11.tgz#9826ee36dcb635771bd53eecd94e9f1f5f088fe5"
+  integrity sha512-Hqkf35w7bWCtvAg0F67yZAzS4HZGTaSNsj0ekuc5AfTOKz+hN/2/iQySF68wpavoj2m5FMeARqwe79BkbLyLow==
   dependencies:
-    "@next-core/doc-helpers" "^0.1.5"
+    "@next-core/doc-helpers" "^0.1.6"
     "@next-core/serve-helpers" "^1.1.0"
     compression "^1.7.4"
     express "^4.18.2"
@@ -2063,10 +2063,10 @@
   resolved "https://registry.yarnpkg.com/@next-core/browserslist-config-next/-/browserslist-config-next-1.0.3.tgz#bb4784d1a815b68635c581436c1de0f4676acc64"
   integrity sha512-zRwACYDXcL8YAA6WRh04eBzf8fCt3W+TdyMdkzM9UvqGG4ii2tsfwnS4Ve/d6nnvuITB/3vMOWNiqMj+218jDA==
 
-"@next-core/build-next-bricks@^1.10.0":
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/@next-core/build-next-bricks/-/build-next-bricks-1.10.0.tgz#4e694ac963fd263698e3322473a038b6d64991e4"
-  integrity sha512-ug/K5Cu9vgRSyYbKuTZFWjy8UNuQiCBObDAeyE8qxKprPdMlBAES6S+BSc7TwMNEmiExAgtC9wOkEV5gmPzqSg==
+"@next-core/build-next-bricks@^1.11.0":
+  version "1.11.0"
+  resolved "https://registry.yarnpkg.com/@next-core/build-next-bricks/-/build-next-bricks-1.11.0.tgz#ccc6e5bde1fa11479e73ced80f8975f99bb26834"
+  integrity sha512-5KkRNTHzsv8o7h9h3MApPu4/rFRxPPoNH0vyAKdiUaZ1y0zRfLvX9NRoDaYXoKaPBt2mDSPNI31vzRTvKx+eeg==
   dependencies:
     "@babel/parser" "^7.21.9"
     "@babel/traverse" "^7.21.5"
@@ -2102,12 +2102,12 @@
   dependencies:
     "@babel/parser" "^7.21.9"
 
-"@next-core/doc-helpers@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@next-core/doc-helpers/-/doc-helpers-0.1.5.tgz#53e9d76b331e3b29e7c69483da9bab3b4ae5c0f5"
-  integrity sha512-r5LyrKOYpLkx4dDr5yEi3W/s1il877QbaWhltTtOUkvGrw2oBI2WtfpcBfWb1PA2aRs1tA3Y0N2GgG/gIxd3wQ==
+"@next-core/doc-helpers@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@next-core/doc-helpers/-/doc-helpers-0.1.6.tgz#16b4f6e02ce50b6fa5d1f0da525922226ffecff8"
+  integrity sha512-DSmtgJfI2DND7hx8IjNwC5xtBMTrkkM9d8CfpBWG5/JLY/doflSFpsCiP5s85i8CFN2Yd/SStFfrM2ak3mI1pQ==
   dependencies:
-    "@next-core/brick-manifest" "^0.3.0"
+    "@next-core/brick-manifest" "^0.4.0"
     fast-xml-parser "^4.2.4"
     js-yaml "^3.14.1"
 
@@ -2287,10 +2287,10 @@
     "@next-core/types" "^1.5.0"
     lodash "^4.17.21"
 
-"@next-core/yo@^1.2.5":
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/@next-core/yo/-/yo-1.2.5.tgz#14d1c7d4ef569887cbda923f4a804cec7d51c135"
-  integrity sha512-en1peWuP4jWNz+AdYofONzrjWcFys8fS4dQ7S3zxjOA5AX3unWUdKUNJQksURtlwn4TkZrOT3bAXfipGfBvxDw==
+"@next-core/yo@^1.2.6":
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/@next-core/yo/-/yo-1.2.6.tgz#d2ec6614d1956149bf7eee1057a9f6aa794855ee"
+  integrity sha512-BUVFqQa635+FhgZxUGaVqRNUeDB67ln34NsrzzPDr0MclDbfHKe+fGobBfdGxBgLD2Xo6qDHDFOBGC6jetgKVA==
   dependencies:
     minimist "^1.2.8"
     plop "^3.1.2"
