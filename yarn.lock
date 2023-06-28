@@ -2048,10 +2048,10 @@
   resolved "https://registry.yarnpkg.com/@next-core/brick-manifest/-/brick-manifest-0.4.1.tgz#bb1c86c1fdb03cc44ac652853555b1366f2835b5"
   integrity sha512-ZaaAyU+tZKyotU9xdtjRalNfoSBZES5+3KdVytYIHQ9MIruFAIvTEwgwPX4mS3DLRdYyAt8lgiOBIMJoguOYUQ==
 
-"@next-core/brick-playground@^1.10.12":
-  version "1.10.12"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.10.12.tgz#f520078c55a3c47d3c09aa3b6c66835190d7966a"
-  integrity sha512-NkNWcNcpcotbwNFsh1YIQaa5pv4asgVFvUT/qV5dEstp0t5ZxLkDHm0Mx7pqVNiS+0p9zJuGQ8f7nhNVglyysw==
+"@next-core/brick-playground@^1.10.13":
+  version "1.10.13"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.10.13.tgz#72976b23f6f07c535bba28cc6979a45ce380ac55"
+  integrity sha512-atVvKeB5cAQQXA0bOj+wMJxZTHhtVZeKGD3ve+1+SxUtt7s7LacYuNhPktR+/ucdS6fKqqm3mXjEqkU1K98Lag==
   dependencies:
     "@next-core/doc-helpers" "^0.1.7"
     "@next-core/serve-helpers" "^1.1.0"
