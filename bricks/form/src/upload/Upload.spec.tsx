@@ -6,20 +6,6 @@ import { FileData } from "./utils.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
-URL.createObjectURL = jest.fn().mockImplementation((file: File) => file.name);
-URL.revokeObjectURL = jest.fn();
-
-const LOAD_FAILURE_FLAG = ":LOAD_FAILURE_FLAG";
-Object.defineProperty(global.Image.prototype, "src", {
-  set(src) {
-    if (src.endsWith(LOAD_FAILURE_FLAG)) {
-      setTimeout(() => this.onerror(new Error("image load error")), 100);
-    } else {
-      setTimeout(() => this.onload(), 100);
-    }
-  },
-});
-
 jest.mock("@next-core/http", () => ({
   http: {
     request: jest.fn((url: string, init?: RequestInit) => {

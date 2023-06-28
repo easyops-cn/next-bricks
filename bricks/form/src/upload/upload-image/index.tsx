@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
 import { getBasePath } from "@next-core/runtime";
@@ -14,8 +14,8 @@ import type {
 import { FormItemElementBase } from "@next-shared/form";
 import type { FormItem, FormItemProps } from "../../form-item/index.js";
 import classNames from "classnames";
-import { type FileData } from "../utils.js";
 import { UploadActions, ItemActions, Upload } from "../Upload.js";
+import { userDataProcessor, imageValidator, type ImageData } from "./utils.js";
 
 initializeReactI18n(NS, locales);
 
@@ -34,7 +34,7 @@ export interface UploadImageProps {
   name?: string;
   required?: boolean;
   message?: Record<string, string>;
-  value?: FileData[];
+  value?: ImageData[];
   bucketName: string;
   multiple?: boolean;
 }
@@ -65,7 +65,7 @@ class UploadImage extends FormItemElementBase implements UploadImageProps {
   @property({
     attribute: false,
   })
-  accessor value: FileData[] | undefined;
+  accessor value: ImageData[] | undefined;
 
   /**
    * 对象存储桶名字
@@ -101,10 +101,10 @@ class UploadImage extends FormItemElementBase implements UploadImageProps {
    * 值变化时触发
    */
   @event({ type: "change" })
-  accessor #change!: EventEmitter<FileData[]>;
-  handleChange = (fileDataList: FileData[]) => {
-    this.value = fileDataList;
-    this.#change.emit(fileDataList);
+  accessor #change!: EventEmitter<ImageData[]>;
+  handleChange = (imageList: ImageData[]) => {
+    this.value = imageList;
+    this.#change.emit(imageList);
   };
 
   render() {
@@ -145,14 +145,31 @@ const closeIcon = {
 } as GeneralIconProps;
 
 interface UploadImageComponentProps extends UploadImageProps, FormItemProps {
-  onChange?: (fileDataList: FileData[]) => void;
+  onChange?: (imageList: ImageData[]) => void;
 }
 
 export function UploadImageComponent(props: UploadImageComponentProps) {
   const { value, bucketName, multiple, onChange } = props;
   const { t } = useTranslation(NS);
 
-  const uploadRender = (fileDataList: FileData[], actions: UploadActions) => {
+  const handleChange = (images: ImageData[]) => {
+    const processedImages = images?.map((image) => {
+      const url =
+        image.url ??
+        (image.response
+          ? `${getBasePath()}api/gateway/object_store.object_store.GetObject/api/v1/objectStore/bucket/${bucketName}/object/${
+              image.response.data.objectName
+            }`
+          : undefined);
+      return {
+        ...image,
+        url,
+      };
+    });
+    onChange?.(processedImages);
+  };
+
+  const uploadRender = (fileDataList: ImageData[], actions: UploadActions) => {
     return (
       <WrappedButton icon={defaultUploadIcon} onClick={actions.upload}>
         {t(K.UPLOAD)}
@@ -161,11 +178,20 @@ export function UploadImageComponent(props: UploadImageComponentProps) {
   };
 
   const itemRender = (
-    fileData: FileData,
-    fileDataList: FileData[],
+    fileData: ImageData,
+    fileDataList: ImageData[],
     actions: ItemActions
   ) => {
-    const { uid, file, userData, status, errors } = fileData;
+    const {
+      uid,
+      file,
+      url,
+      name,
+      userData,
+      status = "done",
+      errors,
+    } = fileData;
+
     return (
       <div
         key={uid}
@@ -176,12 +202,12 @@ export function UploadImageComponent(props: UploadImageComponentProps) {
         })}
       >
         <div className="image-item-inner">
-          <img className="image" src={userData.url} />
+          <img className="image" src={userData?.url || url} />
           <div className="infos">
-            <div className="file-name">{file!.name}</div>
+            <div className="file-name">{name}</div>
             {status === "uploading" && <div className="progress"></div>}
             <div className="more-info">
-              {status === "done" && (
+              {status === "done" && userData && (
                 <div className="image-size">
                   {`LeaderBoard ${userData?.naturalWidth}*${userData?.naturalHeight}`}
                 </div>
@@ -194,6 +220,9 @@ export function UploadImageComponent(props: UploadImageComponentProps) {
                     })
                     .join(" ")}
                 </div>
+              )}
+              {(status === "done" || status === "error") && userData?.size && (
+                <div className="file-size">{userData.size}</div>
               )}
             </div>
           </div>
@@ -209,7 +238,7 @@ export function UploadImageComponent(props: UploadImageComponentProps) {
     );
   };
 
-  const validator = (curValue: FileData[]) => {
+  const validator = (curValue: ImageData[]) => {
     if (curValue?.some((file) => file.status === "uploading")) {
       return t(K.FILE_UPLOADING);
     }
@@ -228,7 +257,9 @@ export function UploadImageComponent(props: UploadImageComponentProps) {
         method="PUT"
         accept="image/*"
         multiple={multiple}
-        onChange={onChange}
+        beforeUploadValidators={[(file) => imageValidator(file)]}
+        beforeUploadUserDataProcessor={userDataProcessor}
+        onChange={handleChange}
       />
     </WrappedFormItem>
   );
