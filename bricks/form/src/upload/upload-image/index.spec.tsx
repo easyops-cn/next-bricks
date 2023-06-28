@@ -29,7 +29,11 @@ jest.mock("@next-core/http", () => ({
       return new Promise((resolve, reject) => {
         file.name.endsWith("jpeg")
           ? reject("fetch error")
-          : resolve("fetch success");
+          : resolve({
+              data: {
+                objectName: file.name,
+              },
+            });
       });
     }),
   },

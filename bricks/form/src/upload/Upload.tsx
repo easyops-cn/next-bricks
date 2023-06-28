@@ -7,8 +7,6 @@ import {
   symbolForAbortController,
   acceptValidator,
   sizeValidator,
-  imageValidator,
-  getUserData,
   UploadStatus,
 } from "./utils.js";
 
@@ -37,6 +35,11 @@ export interface UploadProps {
   method?: string;
   accept?: string;
   multiple?: boolean;
+  beforeUploadValidators?: ((file: File, files: File[]) => Promise<unknown>)[];
+  beforeUploadUserDataProcessor?: (
+    file: File,
+    fileDataList: { file: File; errors: Error[] }[]
+  ) => Promise<any>;
   onChange?: (fileDataList: FileData[]) => void;
 }
 
@@ -50,6 +53,8 @@ export function Upload(props: UploadProps) {
     action,
     method,
     accept,
+    beforeUploadValidators = [],
+    beforeUploadUserDataProcessor,
     multiple,
   } = props;
 
@@ -70,7 +75,11 @@ export function Upload(props: UploadProps) {
   const beforeLoadValidator = async (files: File[]) => {
     const results = await Promise.all(
       files.map((file) =>
-        Promise.allSettled([file, sizeValidator(file), imageValidator(file)])
+        Promise.allSettled([
+          file,
+          sizeValidator(file),
+          ...beforeUploadValidators.map((validator) => validator(file, files)),
+        ])
       )
     );
     return results.map(([_file, ...validatorResult]) => {
@@ -99,6 +108,7 @@ export function Upload(props: UploadProps) {
         }) => {
           const uid = getUid();
           file.uid = uid;
+          const name = file.name;
 
           const status: UploadStatus = errors.length
             ? "error"
@@ -106,28 +116,43 @@ export function Upload(props: UploadProps) {
             ? "uploading"
             : "done";
 
-          const userData = await getUserData(file);
-          return { uid, file, status, userData, errors };
+          const userData = await beforeUploadUserDataProcessor?.(
+            file,
+            fileDataList
+          );
+          return { uid, file, name, status, userData, errors };
         }
       )
     );
   };
 
   const handleUploadSuccess = (fileData: FileData, response: unknown) => {
-    fileData.response = response;
-    fileData.status = "done";
     setInternalFileDataList((fileDataList) => {
-      const newFileDataList = [...fileDataList];
+      const newFileDataList = fileDataList.map((_fileData) => {
+        return _fileData.uid === fileData.uid
+          ? {
+              ..._fileData,
+              response,
+              status: "done" as UploadStatus,
+            }
+          : _fileData;
+      });
       onChange?.(newFileDataList);
       return newFileDataList;
     });
   };
 
   const handleUploadError = (fileData: FileData, error: Error) => {
-    fileData.errors!.push(error);
-    fileData.status = "error";
     setInternalFileDataList((fileDataList) => {
-      const newFileDataList = [...fileDataList];
+      const newFileDataList = fileDataList.map((_fileData) => {
+        return _fileData.uid === fileData.uid
+          ? {
+              ..._fileData,
+              errors: _fileData.errors?.concat(error),
+              status: "error" as UploadStatus,
+            }
+          : _fileData;
+      });
       onChange?.(newFileDataList);
       return newFileDataList;
     });
@@ -198,20 +223,22 @@ export function Upload(props: UploadProps) {
         hidden
         onChange={handleInputChange}
       />
-      {uploadRender(internalFileDataList, {
-        upload: () => inputRef.current?.click(),
-      })}
-      <div className="image-list">
-        {internalFileDataList.map((fileData) => {
-          const actions = {
-            remove: () => handleRemove(fileData),
-          };
-          return (
-            <React.Fragment key={fileData.uid}>
-              {itemRender(fileData, internalFileDataList, actions)}
-            </React.Fragment>
-          );
+      <div className="upload-wrapper">
+        {uploadRender(internalFileDataList, {
+          upload: () => inputRef.current?.click(),
         })}
+        <div className="file-list">
+          {internalFileDataList.map((fileData) => {
+            const actions = {
+              remove: () => handleRemove(fileData),
+            };
+            return (
+              <React.Fragment key={fileData.uid}>
+                {itemRender(fileData, internalFileDataList, actions)}
+              </React.Fragment>
+            );
+          })}
+        </div>
       </div>
     </>
   );
