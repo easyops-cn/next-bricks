@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.9.1...@next-bricks/form@0.9.2) (2023-06-29)
+
+
+### Bug Fixes
+
+* style update && update data structure ([b3307ae](https://github.com/easyops-cn/next-bricks/commit/b3307ae59a58ffa581de618772126e5b1fe0f898))
+
+
+
+
+
 ## [0.9.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.9.0...@next-bricks/form@0.9.1) (2023-06-26)
 
 

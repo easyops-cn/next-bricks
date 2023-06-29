@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.17](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.0.16...@next-bricks/v2-adapter@0.0.17) (2023-06-29)
+
+
+### Bug Fixes
+
+* handle useBrick ignored ([372efdb](https://github.com/easyops-cn/next-bricks/commit/372efdba791c953332823ffc055f5134b6c6d6e3))
+
+
+
+
+
 ## [0.0.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.0.15...@next-bricks/v2-adapter@0.0.16) (2023-06-26)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
