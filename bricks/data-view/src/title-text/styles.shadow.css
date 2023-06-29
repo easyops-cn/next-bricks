@@ -1,0 +1,46 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+.content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.title {
+  letter-spacing: 17px;
+  font-weight: var(--font-weight-500);
+  font-size: 42px;
+}
+.stroke-filter {
+  position: absolute;
+  color: #cbcaf3;
+}
+.stroke-shadow {
+  position: absolute;
+  color: rgba(0, 255, 255, 0.5);
+  text-shadow: 0 4px 10px #04183e, 0 1px 3px rgba(0, 255, 255, 0.5);
+}
+.stroke-text {
+  position: relative;
+  background: linear-gradient(180deg, #ffffff 0%, #cbcaf3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  background-clip: text;
+}
+.normal-text {
+  color: var(--color-normal-text);
+}
+.gradient-text {
+  position: relative;
+  background: linear-gradient(180deg, #ffffff 0%, #a1c5ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #ffffff;
+  background-clip: text;
+}
