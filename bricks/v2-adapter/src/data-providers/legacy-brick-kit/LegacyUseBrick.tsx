@@ -9,6 +9,7 @@ export interface ReactUseBrickProps {
   useBrick: UseSingleBrickConf;
   data?: unknown;
   refCallback?: (element: HTMLElement | null) => void;
+  ignoredCallback?: () => void;
 }
 
 // Note: always synchronize code in LegacyUseBrick:
@@ -17,6 +18,7 @@ export function ReactUseBrick({
   useBrick,
   data,
   refCallback,
+  ignoredCallback,
 }: ReactUseBrickProps): React.ReactElement | null {
   const LegacyReact = getLegacyReact();
   const [renderResult, setRenderResult] =
@@ -61,6 +63,7 @@ export function ReactUseBrick({
   );
 
   if (!renderResult) {
+    ignoredCallback?.();
     // Fallback when loading/
     return null;
     // return <span>🌀 Loading...</span>;
@@ -68,6 +71,7 @@ export function ReactUseBrick({
 
   const { tagName } = renderResult;
   if (tagName === null) {
+    ignoredCallback?.();
     return null;
   }
 
