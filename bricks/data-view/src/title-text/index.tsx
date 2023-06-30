@@ -15,58 +15,44 @@ interface TitleTextProps {
 }
 
 /**
- * @id data-view.title-text
- * @name data-view.title-text
- * @docKind brick
- * @description 大屏标题文本构件
+ * 大屏标题文本构件
  * @author astrid
- * @noInheritDoc
  */
 @defineElement("data-view.title-text", {
   styleTexts: [variablesStyleText, styleText],
 })
-class TitleText extends ReactNextElement {
+class TitleText extends ReactNextElement implements TitleTextProps {
   /**
-   * @kind TitleType
-   * @required  false
+   * 文本样式，`normal` 纯白， `stroke` 渐变加描边， `gradient` 渐变
    * @default "normal"
-   * @description 文本样式，`normal` 纯白， `stroke` 渐变加描边， `gradient` 渐变
    */
   @property({ attribute: false })
   accessor type: TitleType = "normal";
 
   /**
-   * @kind string
-   * @required true
+   * 标题文本
    * @default -
-   * @description 标题文本
    */
   @property()
   accessor text: string;
 
   /**
-   * @kind  CSSProperties["fontSize"]
-   * @required false
+   * 字体大小
    * @default  42px
-   * @description 字体大小
    */
   @property()
   accessor fontSize: CSSProperties["fontSize"];
 
   /**
-   * @kind  CSSProperties["fontWeight"]
-   * @required false
+   * 字体粗细
    * @default   500
-   * @description 字体粗细
    */
   @property()
   accessor fontWeight: CSSProperties["fontWeight"];
 
   /**
-   * @kind  CSSProperties["letterSpacing"]
-   * @required false
+   * 字体间距
    * @default  17px
-   * @description 字体间距
    */
   @property()
   accessor letterSpacing: CSSProperties["letterSpacing"];
