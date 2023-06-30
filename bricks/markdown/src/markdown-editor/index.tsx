@@ -12,6 +12,7 @@ import { upload, uploadConfig, Uploader } from "@milkdown/plugin-upload";
 import type { Node } from "@milkdown/prose/model";
 import { listener, listenerCtx } from "@milkdown/plugin-listener";
 import { ObjectStoreApi_putObject } from "@next-api-sdk/object-store-sdk";
+import { gfm } from "@milkdown/preset-gfm";
 
 export interface MarkdownEditorProps {
   curElement: HTMLElement;
@@ -178,6 +179,7 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
       .use(listener)
       .use(commonmark)
       .use(history)
+      .use(gfm)
       .use(upload);
   }, []);
 
