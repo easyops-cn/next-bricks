@@ -1,0 +1,19 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+.container {
+  display: flex;
+  font-size: var(--auxiliary-font-size);
+  align-items: center;
+  gap: 10px;
+}
+.icon {
+  color: #3259ce;
+}
+.message {
+  color: var(--palette-rgba-white-7);
+}

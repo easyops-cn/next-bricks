@@ -25,3 +25,4 @@ import "./grid-background/index.js";
 import "./gear-background/index.js";
 import "./radar-chart/index.js";
 import "./title-text/index.js";
+import "./brick-notification/index.js";
