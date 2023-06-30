@@ -32,6 +32,7 @@ type DropButtonItemProps = {
   event?: string;
   icon?: GeneralIconProps;
   disabled?: boolean;
+  hidden?: boolean;
 };
 
 const defaultIcon: GeneralIconProps = {
@@ -142,22 +143,26 @@ function DropdownButtonComponent({
         {btnText}
       </WrappedButton>
       {actions && !disabled && (
-        <WrappedMenu>
-          {actions?.map((action, index) => {
-            return (
-              <WrappedMenuItem
-                className="wrapped-menu-item"
-                key={index}
-                {...action}
-                onClick={(e: React.MouseEvent) => {
-                  e.stopPropagation();
-                  !action.disabled && action.event && handleClick(action.event);
-                }}
-              >
-                {action.text}
-              </WrappedMenuItem>
-            );
-          })}
+        <WrappedMenu style={{ width: "max-content" }}>
+          {actions
+            ?.filter((action) => !action.hidden)
+            .map((action, index) => {
+              return (
+                <WrappedMenuItem
+                  className="wrapped-menu-item"
+                  key={index}
+                  {...action}
+                  onClick={(e: React.MouseEvent) => {
+                    e.stopPropagation();
+                    !action.disabled &&
+                      action.event &&
+                      handleClick(action.event);
+                  }}
+                >
+                  {action.text}
+                </WrappedMenuItem>
+              );
+            })}
         </WrappedMenu>
       )}
     </WrappedPopover>
