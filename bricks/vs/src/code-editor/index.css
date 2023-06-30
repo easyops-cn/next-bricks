@@ -1,0 +1,7 @@
+.highelight {
+  color: rgb(74 170 189) !important;
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: bold;
+  font-style: oblique;
+}
