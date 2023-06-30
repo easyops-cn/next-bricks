@@ -25,6 +25,11 @@ describe("basic.dropdown-button", () => {
           event: "b.click",
           disabled: true,
         },
+        {
+          text: "c",
+          event: "c.click",
+          hidden: true,
+        },
       ];
       document.body.appendChild(element);
     });

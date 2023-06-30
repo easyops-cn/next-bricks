@@ -1,5 +1,5 @@
 :host {
-  display: inline-block;
+  display: block;
 }
 
 :host([hidden]) {
@@ -28,8 +28,6 @@ icons\.general-icon {
 }
 
 .image-item {
-  width: 686px;
-
   padding: 12px 20px;
   border-radius: var(--larger-border-radius);
   cursor: pointer;

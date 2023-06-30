@@ -298,7 +298,7 @@ export function RadioComponent(props: RadioComponentProps) {
               />
               {type === "icon" ? (
                 <div className={classNames({ content: true })}>
-                  {
+                  {icon && (
                     <WrappedGeneralIcon
                       icon={iconName}
                       lib={iconLib}
@@ -307,7 +307,7 @@ export function RadioComponent(props: RadioComponentProps) {
                         ...iconStyle,
                       }}
                     />
-                  }
+                  )}
                   <div>{item.label}</div>
                 </div>
               ) : type === "custom" ? (
@@ -353,7 +353,7 @@ export function RadioComponent(props: RadioComponentProps) {
                   })}
                 >
                   <span>
-                    {
+                    {icon && (
                       <WrappedGeneralIcon
                         icon={iconName}
                         lib={iconLib}
@@ -364,13 +364,13 @@ export function RadioComponent(props: RadioComponentProps) {
                           ...iconStyle,
                         }}
                       />
-                    }
+                    )}
                     {item.label}
                   </span>
                 </div>
               ) : (
                 <span className={classNames({ content: true })}>
-                  {
+                  {icon && (
                     <WrappedGeneralIcon
                       icon={iconName}
                       lib={iconLib}
@@ -381,7 +381,7 @@ export function RadioComponent(props: RadioComponentProps) {
                         ...iconStyle,
                       }}
                     />
-                  }
+                  )}
                   {item.label}
                 </span>
               )}
