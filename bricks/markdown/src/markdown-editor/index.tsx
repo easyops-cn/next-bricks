@@ -13,6 +13,7 @@ import type { Node } from "@milkdown/prose/model";
 import { listener, listenerCtx } from "@milkdown/plugin-listener";
 import { ObjectStoreApi_putObject } from "@next-api-sdk/object-store-sdk";
 import { gfm } from "@milkdown/preset-gfm";
+import { indent } from "@milkdown/plugin-indent";
 
 export interface MarkdownEditorProps {
   curElement: HTMLElement;
@@ -34,35 +35,28 @@ const { defineElement, property, event } = createDecorators();
 })
 
 /**
- * @id markdown.markdown-editor
- * @name markdown.markdown-editor
+ * markdown编辑器
  * @docKind brick
- * @description markdown编辑器
  * @author kehua
  * @noInheritDoc
  */
 class MarkdownEditor extends ReactNextElement {
   /**
-   * @kind string
-   * @required false
+   * 初始值
    * @default default
-   * @description 初始值
    * @group basic
    */
   @property() accessor value: string | undefined;
 
   /**
-   * @kind string
-   * @required -
-   * @default -
-   * @description 对象存储桶名字，请在业务编排的时候与后台同学商量创建，一般一个业务需求对应一个存储桶名称。如不传则默认以base64格式转换图片。
+   * 对象存储桶名字，请在业务编排的时候与后台同学商量创建，一般一个业务需求对应一个存储桶名称。如不传则默认以base64格式转换图片
    * @group advanced
    */
   @property() accessor bucketName: string | undefined;
 
   /**
+   * 上传图片时触发的事件
    * @detail
-   * @description 上传图片时触发的事件
    */
   @event({ type: "image.upload" })
   accessor #uploadImage!: EventEmitter<ImageInfo>;
@@ -72,8 +66,8 @@ class MarkdownEditor extends ReactNextElement {
   };
 
   /**
+   * 编辑markdown触发的变化事件
    * @detail
-   * @description 编辑markdown触发的变化事件
    */
   @event({ type: "markdown.value.change" })
   accessor #markdownValueChange!: EventEmitter<string>;
@@ -180,6 +174,7 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
       .use(commonmark)
       .use(history)
       .use(gfm)
+      .use(indent)
       .use(upload);
   }, []);
 
