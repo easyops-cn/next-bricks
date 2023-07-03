@@ -63,7 +63,9 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
       <sl-popup
+        distance="4"
         placement="bottom"
+        shift=""
         trigger="click"
       >
         <slot
@@ -92,7 +94,9 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
       <sl-popup
+        distance="4"
         placement="bottom"
+        shift=""
         trigger="click"
       >
         <slot
@@ -118,7 +122,9 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
       <sl-popup
+        distance="4"
         placement="bottom"
+        shift=""
         trigger="click"
       >
         <slot
@@ -164,7 +170,9 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
       <sl-popup
+        distance="4"
         placement="bottom"
+        shift=""
         strategy="fixed"
         trigger="hover"
       >
@@ -185,7 +193,9 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
       <sl-popup
+        distance="4"
         placement="bottom"
+        shift=""
         strategy="fixed"
         trigger="hover"
       >
@@ -205,7 +215,9 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
       <sl-popup
+        distance="4"
         placement="bottom"
+        shift=""
         strategy="fixed"
         trigger="hover"
       >

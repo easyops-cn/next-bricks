@@ -3,6 +3,8 @@ import { createDecorators, EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import { TriggerEvent } from "../interface.js";
 import {
+  ARROW_SIZE,
+  POPUP_DISTANCE,
   Placement,
   SlPopupElement,
   SlPopupProps,
@@ -230,6 +232,8 @@ function PopoverComponent(props: PopoverProps) {
     <WrappedSlPopup
       ref={popoverRef}
       {...omit(props, ["curElement", "onVisibleChange"])}
+      shift
+      distance={props.arrow ? POPUP_DISTANCE + ARROW_SIZE : POPUP_DISTANCE}
     >
       <slot name="anchor" slot="anchor" ref={triggerRef}></slot>
       <slot ref={defaultRef} hidden={!visible}></slot>
