@@ -1,19 +1,58 @@
-import React from "react";
+import React, { FC } from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
+import { wrapBrick } from "@next-core/react-element";
+import type { CmdKey } from "@milkdown/core";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import styleText from "./markdown-editor.shadow.css";
 import { defaultValueCtx, Editor, rootCtx } from "@milkdown/core";
 import { Milkdown, MilkdownProvider, useEditor } from "@milkdown/react";
-import { commonmark } from "@milkdown/preset-commonmark";
+import {
+  commonmark,
+  toggleStrongCommand,
+  toggleEmphasisCommand,
+  wrapInBulletListCommand,
+  wrapInOrderedListCommand,
+  wrapInBlockquoteCommand,
+} from "@milkdown/preset-commonmark";
 import { nord } from "@milkdown/theme-nord";
-import { history } from "@milkdown/plugin-history";
+import { history, redoCommand, undoCommand } from "@milkdown/plugin-history";
 import { upload, uploadConfig, Uploader } from "@milkdown/plugin-upload";
+import { callCommand } from "@milkdown/utils";
 import type { Node } from "@milkdown/prose/model";
 import { listener, listenerCtx } from "@milkdown/plugin-listener";
 import { ObjectStoreApi_putObject } from "@next-api-sdk/object-store-sdk";
-import { gfm } from "@milkdown/preset-gfm";
+import {
+  gfm,
+  toggleStrikethroughCommand,
+  insertTableCommand,
+} from "@milkdown/preset-gfm";
 import { indent } from "@milkdown/plugin-indent";
+import type {
+  GeneralIcon,
+  GeneralIconProps,
+} from "@next-bricks/icons/general-icon";
+
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
+  "icons.general-icon"
+);
+
+const Button: FC<{ icon: GeneralIconProps; onClick?: () => void }> = ({
+  icon,
+  onClick,
+}) => {
+  return (
+    <div
+      className="menu-btn-box"
+      onMouseDown={(e) => {
+        onClick?.();
+        e.preventDefault();
+      }}
+    >
+      <WrappedIcon style={{ verticalAlign: "middle" }} {...icon} />
+    </div>
+  );
+};
 
 export interface MarkdownEditorProps {
   curElement: HTMLElement;
@@ -146,7 +185,7 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
     return nodes;
   };
 
-  useEditor((root: any) => {
+  const { get } = useEditor((root: any) => {
     return Editor.make()
       .config((ctx: any) => {
         // 配置root
@@ -177,5 +216,55 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
       .use(upload);
   }, []);
 
-  return <Milkdown />;
+  function call<T>(command: CmdKey<T>, payload?: T) {
+    return get()?.action(callCommand(command, payload));
+  }
+
+  return (
+    <div className="markdown-container">
+      <div className="menu-container-outter">
+        <div className="menu-container-inner prose">
+          <Button
+            icon={{ lib: "antd", icon: "undo" }}
+            onClick={() => call(undoCommand.key)}
+          />
+          <Button
+            icon={{ lib: "antd", icon: "redo" }}
+            onClick={() => call(redoCommand.key)}
+          />
+          <Button
+            icon={{ lib: "antd", icon: "bold" }}
+            onClick={() => call(toggleStrongCommand.key)}
+          />
+          <Button
+            icon={{ lib: "antd", icon: "italic" }}
+            onClick={() => call(toggleEmphasisCommand.key)}
+          />
+          <Button
+            icon={{ lib: "antd", icon: "strikethrough" }}
+            onClick={() => call(toggleStrikethroughCommand.key)}
+          />
+          <Button
+            icon={{ lib: "antd", icon: "table" }}
+            onClick={() => call(insertTableCommand.key)}
+          />
+          <Button
+            icon={{ lib: "antd", icon: "unordered-list" }}
+            onClick={() => call(wrapInBulletListCommand.key)}
+          />
+          <Button
+            icon={{ lib: "antd", icon: "ordered-list" }}
+            onClick={() => call(wrapInOrderedListCommand.key)}
+          />
+          <Button
+            icon={{ lib: "fa", icon: "quote-right" }}
+            onClick={() => call(wrapInBlockquoteCommand.key)}
+          />
+        </div>
+      </div>
+      <div className="editor-container">
+        <Milkdown />
+      </div>
+    </div>
+  );
 }
