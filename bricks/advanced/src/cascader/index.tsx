@@ -14,9 +14,7 @@ import { StyleProvider, createCache } from "@ant-design/cssinjs";
 
 const { defineElement, property, event } = createDecorators();
 
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 export interface CascaderProps
   extends Pick<
@@ -41,15 +39,11 @@ export interface CascaderProps
 }
 
 /**
- * @id advanced.general-cascader
- * @name advanced.general-cascader
- * @docKind brick
- * @description 级联选择器
+ * 级联选择器
  * @author nlicroshan
- * @noInheritDoc
  */
-@defineElement("advanced.general-cascader", {
-  styleTexts: [],
+@defineElement("eo-cascader", {
+  alias: ["advanced.general-cascader"],
 })
 class CascaderBrick extends ReactNextElement implements CascaderProps {
   @property({

@@ -10,7 +10,7 @@ import { CustomColumn } from "./index.js";
 import { ReactUseMultipleBricks } from "@next-core/react-runtime";
 import type { UseSingleBrickConf } from "@next-core/types";
 import { wrapBrick } from "@next-core/react-element";
-import { StyleProvider, createCache } from '@ant-design/cssinjs';
+import { StyleProvider, createCache } from "@ant-design/cssinjs";
 import type {
   GeneralIcon,
   GeneralIconProps,
@@ -29,9 +29,7 @@ const rightMenuIcon: GeneralIconProps = {
   theme: "outlined",
 };
 
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 export interface BrickTableProps {
   shadowRoot: ShadowRoot | null;
@@ -497,12 +495,12 @@ export function BrickTable(props: BrickTableProps): React.ReactElement {
   }
 
   const cahce = useMemo(() => {
-    return createCache()
-  }, [])
+    return createCache();
+  }, []);
 
   return (
     <StyleProvider container={props.shadowRoot as ShadowRoot} cache={cahce}>
-       { table }
+      {table}
     </StyleProvider>
   );
 }

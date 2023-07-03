@@ -36,9 +36,7 @@ registerHtml();
 
 const { defineElement, property, event } = createDecorators();
 
-const WrappedFormItem = wrapBrick<FormItem, FormItemProps>(
-  "form.general-form-item"
-);
+const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 
 export type Completers = Record<
   string,

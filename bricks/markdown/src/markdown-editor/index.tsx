@@ -33,9 +33,7 @@ import type {
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
 
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 const Button: FC<{
   icon: GeneralIconProps;
@@ -71,8 +69,9 @@ export interface ImageInfo {
 
 const { defineElement, property, event } = createDecorators();
 
-@defineElement("markdown.markdown-editor", {
+@defineElement("eo-markdown-editor", {
   styleTexts: [styleText],
+  alias: ["markdown.markdown-editor"],
 })
 
 /**

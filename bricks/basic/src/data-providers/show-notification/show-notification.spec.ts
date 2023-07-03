@@ -12,7 +12,7 @@ customElements.define(
       toast({
         variant: this.variant,
         duration: this.duration,
-        icon: (this.querySelector("icons\\.antd-icon") as any)?.icon,
+        icon: (this.querySelector("eo-antd-icon") as any)?.icon,
         text: this.textContent,
       });
     }

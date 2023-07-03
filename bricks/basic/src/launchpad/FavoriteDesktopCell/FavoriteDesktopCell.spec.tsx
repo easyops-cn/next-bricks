@@ -36,23 +36,21 @@ describe("FavoriteDesktopCell", () => {
     };
     const { container, rerender } = render(<FavoriteDesktopCell item={item} />);
 
-    expect(
-      container.querySelector("icons\\.general-icon")?.getAttribute("icon")
-    ).toEqual("default-app");
+    expect(container.querySelector("eo-icon")?.getAttribute("icon")).toEqual(
+      "default-app"
+    );
     expect(container.querySelector(".name")?.innerHTML).toBe("world");
 
     const mockEvent = createEvent.click(
-      container.querySelector("basic\\.general-link") as HTMLElement
+      container.querySelector("eo-link") as HTMLElement
     );
 
     fireEvent.click(
-      container.querySelector("basic\\.general-link") as HTMLElement,
+      container.querySelector("eo-link") as HTMLElement,
       mockEvent
     );
     expect(
-      (container.querySelector("basic\\.general-link") as Link).getAttribute(
-        "url"
-      )
+      (container.querySelector("eo-link") as Link).getAttribute("url")
     ).toBe("/home");
     expect(mockEvent.defaultPrevented).toBeFalsy();
 
@@ -76,18 +74,13 @@ describe("FavoriteDesktopCell", () => {
 
     rerender(<FavoriteDesktopCell item={newItem} />);
     expect(
-      (container.querySelector("basic\\.general-link") as Link).getAttribute(
-        "url"
-      )
+      (container.querySelector("eo-link") as Link).getAttribute("url")
     ).toBe("https://www.baidu.com");
     const newMockEvent = createEvent.click(
-      container.querySelector("basic\\.general-link") as HTMLElement
+      container.querySelector("eo-link") as HTMLElement
     );
 
-    fireEvent(
-      container.querySelector("basic\\.general-link") as HTMLElement,
-      newMockEvent
-    );
+    fireEvent(container.querySelector("eo-link") as HTMLElement, newMockEvent);
 
     expect(newMockEvent.defaultPrevented).toBeTruthy();
     expect(spyOnWindowOpen).toHaveBeenCalledWith(

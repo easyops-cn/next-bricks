@@ -23,13 +23,9 @@ import type {
 import { formatOptions } from "../utils/formatOptions.js";
 import { isBoolean, isEqual } from "lodash";
 
-const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
-const WrappedFormItem = wrapBrick<FormItem, FormItemProps>(
-  "form.general-form-item"
-);
+const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 
 interface CustomOptions {
   url: string;
@@ -69,8 +65,9 @@ const { defineElement, property, event } = createDecorators();
  * 通用单选构件
  * @author sailor
  */
-@defineElement("form.general-radio", {
+@defineElement("eo-radio", {
   styleTexts: [styleText],
+  alias: ["form.general-radio"],
 })
 class Radio extends FormItemElementBase {
   /**

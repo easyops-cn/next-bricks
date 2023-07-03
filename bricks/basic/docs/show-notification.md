@@ -9,7 +9,7 @@ properties:
     display: grid
     gap: 1em
 children:
-  - brick: basic.general-button
+  - brick: eo-button
     properties:
       textContent: Info
     events:
@@ -17,7 +17,7 @@ children:
         useProvider: basic.show-notification
         args:
           - message: It works!
-  - brick: basic.general-button
+  - brick: eo-button
     properties:
       textContent: Success
     events:
@@ -26,7 +26,7 @@ children:
         args:
           - message: Success!
             type: success
-  - brick: basic.general-button
+  - brick: eo-button
     properties:
       textContent: Error
     events:
@@ -35,7 +35,7 @@ children:
         args:
           - message: Error!
             type: error
-  - brick: basic.general-button
+  - brick: eo-button
     properties:
       textContent: Warn
     events:

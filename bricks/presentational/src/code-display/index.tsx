@@ -23,9 +23,7 @@ initializeReactI18n(NS, locales);
 
 const { defineElement, property } = createDecorators();
 
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 const copyToClipboard = unwrapProvider<typeof _copyToClipboard>(
   "basic.copy-to-clipboard"
 );
@@ -48,8 +46,9 @@ export interface CodeDisplayProps {
  * 代码展示
  */
 export
-@defineElement("presentational.code-display", {
+@defineElement("eo-code-display", {
   styleTexts: [styleText],
+  alias: ["presentational.code-display"],
 })
 class CodeDisplay extends ReactNextElement implements CodeDisplayProps {
   /**

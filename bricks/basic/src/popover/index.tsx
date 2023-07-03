@@ -29,8 +29,9 @@ export interface PopoverProps extends SlPopupProps {
  * @slot - 弹出层内容
  * @slot anchor - 触发弹出层的元素
  */
-@defineElement("basic.general-popover", {
+@defineElement("eo-popover", {
   styleTexts: [styleText],
+  alias: ["basic.general-popover"],
 })
 class Popover extends ReactNextElement implements PopoverProps {
   /**

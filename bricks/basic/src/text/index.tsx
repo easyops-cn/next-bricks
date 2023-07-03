@@ -12,15 +12,14 @@ export interface TextProps {
   customStyle?: CSSProperties | undefined;
 }
 const { defineElement, property } = createDecorators();
+
 /**
- * @id basic.general-text
- * @name basic.general-text
- * @docKind brick
- * @description 通用文本构件
+ * 通用文本构件
  * @author astrid
- * @noInheritDoc
  */
-@defineElement("basic.general-text")
+@defineElement("eo-text", {
+  alias: ["basic.general-text"],
+})
 class Text extends ReactNextElement implements TextProps {
   /**
    * 字体大小

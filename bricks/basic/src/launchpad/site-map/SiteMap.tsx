@@ -5,7 +5,7 @@ import { launchpadService } from "../LaunchpadService.js";
 import { wrapBrick } from "@next-core/react-element";
 import { Link, LinkProps } from "../../link/index.js";
 
-const WrappedLink = wrapBrick<Link, LinkProps>("basic.general-link");
+const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 
 interface SiteCategory {
   name: string;

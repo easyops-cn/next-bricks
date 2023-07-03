@@ -68,12 +68,12 @@ describe("Desktop", () => {
     expect(
       container.querySelectorAll(".cellWrapper")[0]?.innerHTML
     ).toMatchInlineSnapshot(
-      `"<div class="cellItem undefined"><basic.general-link class="appLink undefined square"><img class="appIcon" src="default-app-icon.png"></basic.general-link><span class="appName">world</span></div>"`
+      `"<div class="cellItem undefined"><eo-link class="appLink undefined square"><img class="appIcon" src="default-app-icon.png"></eo-link><span class="appName">world</span></div>"`
     );
     expect(
       container.querySelectorAll(".cellWrapper")[1]?.innerHTML
     ).toMatchInlineSnapshot(
-      `"<div class="cellItem undefined active"><basic.general-link class="appLink undefined square"><img class="appIcon" src="default-app-icon.png"></basic.general-link><span class="appName">shijie</span></div>"`
+      `"<div class="cellItem undefined active"><eo-link class="appLink undefined square"><img class="appIcon" src="default-app-icon.png"></eo-link><span class="appName">shijie</span></div>"`
     );
   });
 });

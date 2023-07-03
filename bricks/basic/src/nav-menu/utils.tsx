@@ -8,7 +8,7 @@ import type {
 import type { Link, LinkProps } from "../link/index.js";
 import { Target } from "../interface.js";
 
-const WrappedLinkItem = wrapBrick<Link, LinkProps>("basic.general-link");
+const WrappedLinkItem = wrapBrick<Link, LinkProps>("eo-link");
 
 export function isGroup(item: SidebarMenuItem): item is SidebarMenuGroup {
   return item.type === "group";

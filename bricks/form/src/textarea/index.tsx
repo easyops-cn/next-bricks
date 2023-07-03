@@ -8,9 +8,7 @@ import classNames from "classnames";
 import type { FormItem, FormItemProps } from "../form-item/index.jsx";
 import "@next-core/theme";
 
-const WrappedFormItem = wrapBrick<FormItem, FormItemProps>(
-  "form.general-form-item"
-);
+const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 
 type AutoSize =
   | boolean
@@ -38,8 +36,9 @@ const { defineElement, property, event } = createDecorators();
  * 通用多行文本输入框构件
  * @author sailor
  */
-@defineElement("form.general-textarea", {
+@defineElement("eo-textarea", {
   styleTexts: [styleText],
+  alias: ["form.general-textarea"],
 })
 class Textarea extends FormItemElementBase {
   /**

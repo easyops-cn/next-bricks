@@ -19,20 +19,16 @@ export interface TabItemProps {
   active?: boolean;
 }
 
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 /**
- * @id containers.tab-item
- * @name containers.tab-item
- * @docKind brick
- * @description tab子项构件
+ * Tab 子项构件
  * @author sailorshe
  *
  */
-@defineElement("containers.tab-item", {
+@defineElement("eo-tab-item", {
   styleTexts: [styleText],
+  alias: ["containers.tab-item"],
 })
 class TabItem extends ReactNextElement {
   /**

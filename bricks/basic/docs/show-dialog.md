@@ -10,7 +10,7 @@ properties:
   style:
     height: 320px
 children:
-  - brick: basic.general-button
+  - brick: eo-button
     properties:
       type: primary
       textContent: Confirm
@@ -41,7 +41,7 @@ properties:
     height: 320px
     display: grid
 children:
-  - brick: basic.general-button
+  - brick: eo-button
     properties:
       textContent: Success
     events:
@@ -56,7 +56,7 @@ children:
             action: message.info
             args:
               - That's ok.
-  - brick: basic.general-button
+  - brick: eo-button
     properties:
       textContent: Error
     events:
@@ -66,7 +66,7 @@ children:
           - type: error
             title: Error
             content: Something went wrong.
-  - brick: basic.general-button
+  - brick: eo-button
     properties:
       textContent: Info
     events:
@@ -76,7 +76,7 @@ children:
           - type: info
             title: Info
             content: Something happened.
-  - brick: basic.general-button
+  - brick: eo-button
     properties:
       textContent: Warn
     events:
@@ -96,7 +96,7 @@ properties:
   style:
     height: 320px
 children:
-  - brick: basic.general-button
+  - brick: eo-button
     properties:
       textContent: Delete
       danger: true

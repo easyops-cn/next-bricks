@@ -25,14 +25,11 @@ describe("DesktopCustom", () => {
     );
 
     const mockEvent = createEvent.click(
-      container.querySelector("basic\\.general-link") as HTMLElement
+      container.querySelector("eo-link") as HTMLElement
     );
     mockEvent.stopPropagation = stopPropagation;
     act(() => {
-      fireEvent(
-        container.querySelector("basic\\.general-link") as HTMLElement,
-        mockEvent
-      );
+      fireEvent(container.querySelector("eo-link") as HTMLElement, mockEvent);
     });
 
     expect(stopPropagation).toBeCalled();
@@ -46,10 +43,7 @@ describe("DesktopCustom", () => {
     expect(handleAddClick).toBeCalledTimes(1);
 
     act(() => {
-      fireEvent(
-        container.querySelector("basic\\.general-link") as HTMLElement,
-        mockEvent
-      );
+      fireEvent(container.querySelector("eo-link") as HTMLElement, mockEvent);
     });
 
     expect(stopPropagation).toBeCalledTimes(2);

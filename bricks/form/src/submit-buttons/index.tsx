@@ -7,10 +7,8 @@ import type { FormItem, FormItemProps } from "../form-item/index.js";
 import type { Button, ButtonProps } from "@next-bricks/basic/button";
 import type { ButtonType } from "../interface.js";
 
-const WrappedFormItem = wrapBrick<FormItem, FormItemProps>(
-  "form.general-form-item"
-);
-const WrappedButton = wrapBrick<Button, ButtonProps>("basic.general-button");
+const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
+const WrappedButton = wrapBrick<Button, ButtonProps>("eo-button");
 
 interface SubmitButtonsProps {
   curElement: HTMLElement;
@@ -29,8 +27,9 @@ const { defineElement, property, event } = createDecorators();
  * 用于general-forms的通用按钮
  * @author zhendong
  */
-@defineElement("form.submit-buttons", {
+@defineElement("eo-submit-buttons", {
   styleTexts: [styleText],
+  alias: ["form.submit-buttons"],
 })
 class SubmitButtons extends FormItemElementBase {
   /**

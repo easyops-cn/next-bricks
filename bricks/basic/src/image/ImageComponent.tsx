@@ -28,9 +28,7 @@ export interface ImageComponentProps {
   onClick?: (uuid: number, preview: boolean) => void;
 }
 
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 export function ImageComponent({
   index,

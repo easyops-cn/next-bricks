@@ -21,13 +21,9 @@ initializeReactI18n(NS, locales);
 
 const { defineElement, property, event } = createDecorators();
 
-const WrappedButton = wrapBrick<Button, ButtonProps>("basic.general-button");
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
-const WrappedFormItem = wrapBrick<FormItem, FormItemProps>(
-  "form.general-form-item"
-);
+const WrappedButton = wrapBrick<Button, ButtonProps>("eo-button");
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
+const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 
 export interface UploadImageProps {
   label?: string;
@@ -43,8 +39,9 @@ export interface UploadImageProps {
  * 上传图片构件
  */
 export
-@defineElement("form.upload-image", {
+@defineElement("eo-upload-image", {
   styleTexts: [styleText],
+  alias: ["form.upload-image"],
 })
 class UploadImage extends FormItemElementBase implements UploadImageProps {
   /**

@@ -16,7 +16,9 @@ export interface EasyOpsIconProps {
 }
 
 export
-@defineElement("icons.easyops-icon")
+@defineElement("eo-easyops-icon", {
+  alias: ["icons.easyops-icon"],
+})
 class EasyOpsIcon extends NextElement implements EasyOpsIconProps {
   /**
    * 图标分类

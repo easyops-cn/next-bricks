@@ -26,21 +26,14 @@ import type {
 } from "@next-bricks/icons/general-icon";
 import { isEmpty, isEqual } from "lodash";
 
-const WrappedFormItem = wrapBrick<FormItem, FormItemProps>(
-  "form.general-form-item"
-);
+const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 
-const WrappedTag = wrapBrick<Tag, TagProps, TagEvents, TagMapEvents>(
-  "basic.general-tag",
-  {
-    onCheck: "check",
-    onClose: "close",
-  }
-);
+const WrappedTag = wrapBrick<Tag, TagProps, TagEvents, TagMapEvents>("eo-tag", {
+  onCheck: "check",
+  onClose: "close",
+});
 
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 export interface SelectProps extends FormItemProps {
   value?: any;
@@ -61,8 +54,9 @@ const { defineElement, property, event } = createDecorators();
  * 通用下拉选择构件
  * @author julielai
  */
-@defineElement("form.general-select", {
+@defineElement("eo-select", {
   styleTexts: [styleText],
+  alias: ["form.general-select"],
 })
 class Select extends FormItemElementBase {
   /**

@@ -11,31 +11,29 @@ jest.mock("./BrickTable.js", () => ({
 }));
 jest.mock("@next-core/theme", () => ({}));
 
-describe("advanced.general-table", () => {
+describe("eo-table", () => {
   test("basic usage", () => {
-    const element = document.createElement(
-      "advanced.general-table"
-    ) as TableComponent;
+    const element = document.createElement("eo-table") as TableComponent;
 
     element.columns = [
       {
         title: "name",
         key: "name",
-        dataIndex: "name"
+        dataIndex: "name",
       },
       {
         title: "age",
         key: "age",
-        dataIndex: "age"
-      }
-    ]
+        dataIndex: "age",
+      },
+    ];
 
     element.dataSource = [
       {
         name: "sailor",
-        age: "18"
-      }
-    ]
+        age: "18",
+      },
+    ];
 
     expect(element.shadowRoot).toBeFalsy();
     act(() => {

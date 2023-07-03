@@ -25,17 +25,20 @@ export interface CardProps {
   headerStyle?: React.CSSProperties;
   background?: boolean | string;
 }
-const WrappedButton = wrapBrick<Button, ButtonProps>("basic.general-button");
+const WrappedButton = wrapBrick<Button, ButtonProps>("eo-button");
 
 const { defineElement, property } = createDecorators();
+
 /**
  * 通用卡片构件
  * @author julielai
- * @slot extra - 头部右侧拓展元素
- * @slot footer - 底部拓展元素
+ * @slot - 卡片内容
+ * @slot extra 头部右侧拓展元素
+ * @slot footer 底部拓展元素
  */
-@defineElement("containers.general-card", {
+@defineElement("eo-card", {
   styleTexts: [styleText],
+  alias: ["containers.general-card"],
 })
 class Card extends ReactNextElement implements CardProps {
   /**

@@ -11,10 +11,8 @@ import { SiteMap } from "../site-map/SiteMap.js";
 import { Link, LinkProps } from "../../link/index.js";
 import { GeneralIcon, GeneralIconProps } from "@next-bricks/icons/general-icon";
 
-const WrappedLink = wrapBrick<Link, LinkProps>("basic.general-link");
-const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
+const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 interface MyDesktopProps {
   desktopCount: number;

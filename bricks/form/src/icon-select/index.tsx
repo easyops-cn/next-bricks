@@ -50,15 +50,13 @@ const WrappedGeneralRadio = wrapBrick<
   RadioProps,
   RadioEvents,
   RadioEventsMapping
->("form.general-radio", {
+>("eo-radio", {
   onValueChange: "change",
   onOptionsChange: "optionsChange",
 });
-const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 const WrappedModal = wrapBrick<Modal, ModalProps, ModalEvents, ModalMapEvents>(
-  "containers.general-modal",
+  "eo-modal",
   {
     onClose: "close",
     onConfirm: "confirm",
@@ -71,14 +69,12 @@ const WrappedSearch = wrapBrick<
   SearchProps,
   SearchEvents,
   SearchEventsMap
->("form.general-search", {
+>("eo-search", {
   onBlur: "blur",
   onChange: "change",
   onSearch: "search",
 });
-const WrappedFormItem = wrapBrick<FormItem, FormItemProps>(
-  "form.general-form-item"
-);
+const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 
 type Icon = GeneralIconProps & { color?: string };
 
@@ -95,8 +91,9 @@ export interface IconSelectProps {
  * 图标选择构件
  */
 export
-@defineElement("form.icon-select", {
+@defineElement("eo-icon-select", {
   styleTexts: [styleText],
+  alias: ["form.icon-select"],
 })
 class IconSelect extends FormItemElementBase implements IconSelectProps {
   /**

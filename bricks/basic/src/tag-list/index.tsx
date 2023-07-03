@@ -13,13 +13,10 @@ import "@next-core/theme";
 
 const { defineElement, property, event } = createDecorators();
 
-const WrappedTag = wrapBrick<Tag, TagProps, TagEvents, TagMapEvents>(
-  "basic.general-tag",
-  {
-    onCheck: "check",
-    onClose: "close",
-  }
-);
+const WrappedTag = wrapBrick<Tag, TagProps, TagEvents, TagMapEvents>("eo-tag", {
+  onCheck: "check",
+  onClose: "close",
+});
 
 type tagListItem = TagProps & { text: string; key?: string };
 
@@ -29,14 +26,11 @@ interface TagListComponentProps {
 }
 
 /**
- * @id basic.general-tag-list
- * @name basic.general-tag-list
- * @docKind brick
- * @description 标签列表构件
+ * 标签列表构件
  * @author sailor
  */
-@defineElement("basic.general-tag-list", {
-  styleTexts: [],
+@defineElement("eo-tag-list", {
+  alias: ["basic.general-tag-list"],
 })
 class TagList extends ReactNextElement {
   /**

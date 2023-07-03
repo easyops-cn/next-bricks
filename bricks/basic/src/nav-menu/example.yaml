@@ -1,4 +1,4 @@
-- brick: basic.nav-menu
+- brick: eo-nav-menu
   properties:
     menu:
       title: mock aa

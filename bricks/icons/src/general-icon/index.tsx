@@ -34,8 +34,9 @@ export interface GeneralIconEvents {
 }
 
 export
-@defineElement("icons.general-icon", {
+@defineElement("eo-icon", {
   styleTexts: [styleText],
+  alias: ["icons.general-icon"],
 })
 class GeneralIcon
   extends ReactNextElement

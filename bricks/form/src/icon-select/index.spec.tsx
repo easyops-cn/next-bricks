@@ -75,10 +75,10 @@ jest.mock("@next-core/utils/general", () => {
 
 jest.mock("@next-core/theme", () => ({}));
 
-describe("form.icon-select", () => {
+describe("eo-icon-select", () => {
   test("basic usage", async () => {
     const onChange = jest.fn();
-    const element = document.createElement("form.icon-select") as IconSelect;
+    const element = document.createElement("eo-icon-select") as IconSelect;
     element.addEventListener("change", onChange);
 
     expect(element.shadowRoot).toBeFalsy();
@@ -88,9 +88,7 @@ describe("form.icon-select", () => {
     });
     expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
 
-    const modal = element.shadowRoot?.querySelector(
-      "containers\\.general-modal"
-    ) as HTMLElement;
+    const modal = element.shadowRoot?.querySelector("eo-modal") as HTMLElement;
     (modal as any).open = jest.fn();
     (modal as any).close = jest.fn();
 

@@ -12,11 +12,12 @@ initializeReactI18n(NS, locales);
 const { defineElement } = createDecorators();
 
 /**
- * launchpad按钮构件
+ * Launchpad 按钮构件
  * @author sailor
  */
-@defineElement("basic.launchpad-button", {
+@defineElement("eo-launchpad-button", {
   styleTexts: [styleText],
+  alias: ["basic.launchpad-button"],
 })
 class LaunchpadButton extends ReactNextElement {
   render() {

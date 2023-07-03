@@ -9,8 +9,9 @@ const { defineElement, property } = createDecorators();
  * 基于网格的简易布局容器
  * @author steve
  */
-@defineElement("containers.easy-view", {
+@defineElement("eo-easy-view", {
   styleTexts: [styleText],
+  alias: ["containers.easy-view"],
 })
 class EasyViewElement extends ReactNextElement {
   /**

@@ -11,7 +11,7 @@ import classNames from "classnames";
 import styleText from "./button.shadow.css";
 import "@next-core/theme";
 
-export const WrappedLink = wrapBrick<Link, LinkProps>("basic.general-link");
+export const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 export interface ButtonProps {
   type?: ButtonType;
   size?: ComponentSize;
@@ -27,17 +27,16 @@ export interface ButtonProps {
 
 const { defineElement, property } = createDecorators();
 
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 /**
  * 通用按钮构件
  * @author sailor
  * @slot - 按钮内容
  */
-@defineElement("basic.general-button", {
+@defineElement("eo-button", {
   styleTexts: [styleText],
+  alias: ["basic.general-button"],
 })
 class Button extends ReactNextElement implements ButtonProps {
   /** 按钮类型 */
