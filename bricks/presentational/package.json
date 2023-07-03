@@ -37,9 +37,9 @@
     "@next-bricks/basic": "^0.13.1",
     "@next-bricks/containers": "^0.7.5",
     "@next-bricks/icons": "^0.2.4",
-    "@next-core/element": "^1.0.6",
+    "@next-core/element": "^1.1.0",
     "@next-core/i18n": "^1.0.21",
-    "@next-core/react-element": "^1.0.7",
+    "@next-core/react-element": "^1.0.8",
     "@next-core/types": "^1.5.0",
     "@next-core/utils": "^1.5.4",
     "@next-shared/general": "^0.3.4",
@@ -50,7 +50,7 @@
     "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.11.1",
+    "@next-core/build-next-bricks": "^1.12.0",
     "@next-core/test-next": "^1.0.6"
   }
 }
