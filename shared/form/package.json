@@ -32,8 +32,8 @@
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types --project tsconfig.build.json"
   },
   "dependencies": {
-    "@next-core/element": "^1.0.6",
-    "@next-core/react-element": "^1.0.7",
+    "@next-core/element": "^1.1.0",
+    "@next-core/react-element": "^1.0.8",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
