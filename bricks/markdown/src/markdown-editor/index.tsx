@@ -37,10 +37,11 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
   "icons.general-icon"
 );
 
-const Button: FC<{ icon: GeneralIconProps; onClick?: () => void }> = ({
-  icon,
-  onClick,
-}) => {
+const Button: FC<{
+  icon: GeneralIconProps;
+  onClick?: () => void;
+  tooltip?: string;
+}> = ({ icon, onClick, tooltip }) => {
   return (
     <div
       className="menu-btn-box"
@@ -50,6 +51,7 @@ const Button: FC<{ icon: GeneralIconProps; onClick?: () => void }> = ({
       }}
     >
       <WrappedIcon style={{ verticalAlign: "middle" }} {...icon} />
+      {tooltip && <div className="menuIconTooltip">{tooltip}</div>}
     </div>
   );
 };
@@ -227,38 +229,47 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
           <Button
             icon={{ lib: "antd", icon: "undo" }}
             onClick={() => call(undoCommand.key)}
+            tooltip="撤销"
           />
           <Button
             icon={{ lib: "antd", icon: "redo" }}
             onClick={() => call(redoCommand.key)}
+            tooltip="重做"
           />
           <Button
             icon={{ lib: "antd", icon: "bold" }}
             onClick={() => call(toggleStrongCommand.key)}
+            tooltip="粗体"
           />
           <Button
             icon={{ lib: "antd", icon: "italic" }}
             onClick={() => call(toggleEmphasisCommand.key)}
+            tooltip="斜体"
           />
           <Button
             icon={{ lib: "antd", icon: "strikethrough" }}
             onClick={() => call(toggleStrikethroughCommand.key)}
+            tooltip="删除线"
           />
           <Button
             icon={{ lib: "antd", icon: "table" }}
             onClick={() => call(insertTableCommand.key)}
+            tooltip="表格"
           />
           <Button
             icon={{ lib: "antd", icon: "unordered-list" }}
             onClick={() => call(wrapInBulletListCommand.key)}
+            tooltip="无序列表"
           />
           <Button
             icon={{ lib: "antd", icon: "ordered-list" }}
             onClick={() => call(wrapInOrderedListCommand.key)}
+            tooltip="有序列表"
           />
           <Button
             icon={{ lib: "fa", icon: "quote-right" }}
             onClick={() => call(wrapInBlockquoteCommand.key)}
+            tooltip="块引用"
           />
         </div>
       </div>

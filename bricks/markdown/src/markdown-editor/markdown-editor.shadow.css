@@ -1697,4 +1697,40 @@ video {
   justify-content: center;
   align-items: center;
   border-radius: 0.25rem;
+  position: relative;
+}
+
+/* Tooltip text */
+.menu-btn-box .menuIconTooltip {
+  visibility: hidden;
+  font-size: 0.9rem;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 3px 8px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 2;
+  top: 2.4rem;
+  white-space: nowrap;
+}
+
+.menu-btn-box:hover {
+  background-color: #e8e8e8;
+}
+
+.menu-btn-box:hover .menuIconTooltip {
+  visibility: visible;
+}
+
+.menu-btn-box:hover::after {
+  position: absolute;
+  bottom: 0.15rem;
+  left: 1rem;
+  border-width: 0.3rem;
+  border-color: transparent transparent black transparent;
+  border-style: solid;
+  width: 0px;
+  height: 0px;
+  content: "";
 }
