@@ -21,7 +21,9 @@ describe("data-view.title-text", () => {
     expect(element.shadowRoot.querySelectorAll(".title").length).toBe(1);
     expect(
       element.shadowRoot.querySelector(".normal-text").getAttribute("style")
-    ).toBe("font-size: 36px; letter-spacing: 9px; font-weight: bold;");
+    ).toBe(
+      "font-size: 36px; letter-spacing: 9px; font-weight: bold; line-height: 36px;"
+    );
     act(() => {
       document.body.removeChild(element);
     });

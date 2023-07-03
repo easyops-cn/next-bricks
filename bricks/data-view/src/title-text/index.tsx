@@ -6,7 +6,7 @@ import styleText from "./styles.shadow.css";
 
 const { defineElement, property } = createDecorators();
 type TitleType = "normal" | "stroke" | "gradient";
-interface TitleTextProps {
+export interface TitleTextProps {
   text: string;
   type?: TitleType;
   fontSize?: CSSProperties["fontSize"];
@@ -78,13 +78,23 @@ export function TitleTextComponent(props: TitleTextProps) {
         <React.Fragment>
           <div
             className={`title ${type}-filter`}
-            style={{ fontSize, letterSpacing, fontWeight }}
+            style={{
+              fontSize,
+              letterSpacing,
+              fontWeight,
+              lineHeight: fontSize,
+            }}
           >
             {text}
           </div>
           <div
             className={`title ${type}-shadow`}
-            style={{ fontSize, letterSpacing, fontWeight }}
+            style={{
+              fontSize,
+              letterSpacing,
+              fontWeight,
+              lineHeight: fontSize,
+            }}
           >
             {text}
           </div>
@@ -92,7 +102,7 @@ export function TitleTextComponent(props: TitleTextProps) {
       )}
       <div
         className={`title ${type}-text`}
-        style={{ fontSize, letterSpacing, fontWeight }}
+        style={{ fontSize, letterSpacing, fontWeight, lineHeight: fontSize }}
       >
         {text}
       </div>

@@ -1,0 +1,90 @@
+.header {
+  height: 180px;
+  position: relative;
+  /*display: flex;*/
+  /*flex-direction: column;*/
+  width: 100%;
+}
+.svg {
+  position: absolute;
+  z-index: 0;
+}
+.toolbar {
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 10px;
+  position: relative;
+}
+.toolbar,
+.titleWrapper,
+.tabWrapper,
+.text-container {
+  position: relative;
+  z-index: 1;
+}
+.titleWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tabWrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.tabLeft,
+.tabRight {
+  padding-top: 16px;
+  height: 36px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+.tabRight {
+  padding-left: 10%;
+}
+.tabLeft {
+  padding-right: 10%;
+}
+
+.tabItem {
+  flex: 1;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.text {
+  font-size: var(--auxiliary-font-size);
+  color: var(--color-disabled-text);
+  padding: 0 20px;
+  cursor: pointer;
+}
+.text.active {
+  color: #ffffffd9;
+  position: relative;
+}
+.text.active:after {
+  content: "";
+  width: 100%;
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  border-top: 2px solid;
+  border-image: linear-gradient(
+      90deg,
+      rgba(14, 95, 255, 0),
+      rgba(14, 95, 255, 1),
+      rgba(14, 95, 255, 1),
+      rgba(14, 95, 255, 0)
+    )
+    2 2;
+}
+.content {
+  margin-top: -36px;
+}
