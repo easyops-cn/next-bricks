@@ -43,7 +43,6 @@ const { defineElement, property, event } = createDecorators();
 class MarkdownEditor extends ReactNextElement {
   /**
    * 初始值
-   * @default default
    * @group basic
    */
   @property() accessor value: string | undefined;
