@@ -131,7 +131,7 @@ function DropdownButtonComponent({
   handleClick,
 }: DropButtonProps & ButtonProps) {
   return (
-    <WrappedPopover placement="bottom">
+    <WrappedPopover placement="bottom" sync="width">
       <WrappedButton
         slot="anchor"
         size={size}
@@ -143,7 +143,7 @@ function DropdownButtonComponent({
         {btnText}
       </WrappedButton>
       {actions && !disabled && (
-        <WrappedMenu style={{ width: "max-content" }}>
+        <WrappedMenu style={{ minWidth: "max-content" }}>
           {actions
             ?.filter((action) => !action.hidden)
             .map((action, index) => {

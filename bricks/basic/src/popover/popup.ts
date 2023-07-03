@@ -1,5 +1,8 @@
 import { wrapBrick } from "@next-core/react-element";
 
+export const ARROW_SIZE = 6;
+export const POPUP_DISTANCE = 4;
+
 export type Placement =
   | "top"
   | "top-start"
@@ -36,7 +39,7 @@ export interface SlPopupProps {
   flipFallbackStrategy?: "best-fit" | "initial";
   flipBoundary?: Element | Element[];
   flipPadding?: number;
-  shift?: number;
+  shift?: boolean;
   shiftBoundary?: Element | Element[];
   shiftPadding?: number;
   autoSize?: number;
