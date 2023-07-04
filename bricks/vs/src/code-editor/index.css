@@ -1,0 +1,10 @@
+.highlight {
+  color: rgb(74 170 189) !important;
+  text-decoration: underline;
+  font-weight: bold;
+  font-style: oblique;
+}
+
+.pointer {
+  cursor: pointer;
+}

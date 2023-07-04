@@ -1,4 +1,10 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
 import { useCurrentTheme } from "@next-core/react-runtime";
@@ -10,12 +16,18 @@ import { register as registerTypeScript } from "@next-core/monaco-contributions/
 import { register as registerYaml } from "@next-core/monaco-contributions/yaml";
 import { register as registerHtml } from "@next-core/monaco-contributions/html";
 import "@next-core/theme";
+import { isEqual } from "lodash";
 import {
   EDITOR_SCROLLBAR_SIZE,
   EDITOR_PADDING_VERTICAL,
   EDITOR_LINE_HEIGHT,
   EDITOR_FONT_SIZE,
 } from "./constants.js";
+import {
+  brickNextYAMLProvideCompletionItems,
+  setDecoractions,
+} from "./utils/brickNextYaml.js";
+import "./index.css";
 
 registerJavaScript();
 registerTypeScript();
@@ -28,6 +40,11 @@ const WrappedFormItem = wrapBrick<FormItem, FormItemProps>(
   "form.general-form-item"
 );
 
+export type Completers = Record<
+  string,
+  | monaco.languages.CompletionItem[]
+  | { triggerCharacter: string; list: monaco.languages.CompletionItem[] }
+>;
 export interface CodeEditorProps {
   name?: string;
   label?: string;
@@ -40,6 +57,7 @@ export interface CodeEditorProps {
   minLines?: number;
   maxLines?: number;
   height?: string | number;
+  completers?: Completers;
 }
 
 /**
@@ -99,6 +117,10 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
   @property({ type: Number })
   accessor minLines: number | undefined;
 
+  @property({
+    attribute: false,
+  })
+  accessor completers: Completers | undefined;
   /**
    * @default Infinity
    */
@@ -115,10 +137,19 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
   accessor #userInput!: EventEmitter<string>;
 
   #handleChange = (value: string, isFlush: boolean) => {
+    this.getFormElement()?.formStore.onChange(this.name!, value);
+    this.value = value;
     this.#codeChange.emit(value);
     if (!isFlush) {
       this.#userInput.emit(value);
     }
+  };
+
+  @event({ type: "highlight.click" })
+  accessor #highlighClickEvent!: EventEmitter<string>;
+
+  #handleHighlightClick = (word: string) => {
+    this.#highlighClickEvent.emit(word);
   };
 
   connectedCallback(): void {
@@ -147,7 +178,9 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
           minLines={this.minLines}
           maxLines={this.maxLines}
           height={this.height}
+          completers={this.completers}
           onChange={this.#handleChange}
+          onHighlightClick={this.#handleHighlightClick}
         />
       </WrappedFormItem>
     );
@@ -162,8 +195,13 @@ export function CodeEditorComponent({
   maxLines: _maxLines,
   height: _height,
   automaticLayout,
+  completers,
   onChange,
-}: CodeEditorProps & { onChange(value: string, isFlush: boolean): void }) {
+  onHighlightClick,
+}: CodeEditorProps & {
+  onChange(value: string, isFlush: boolean): void;
+  onHighlightClick(word: string): void;
+}) {
   const value = _value ?? "";
   const language = _language ?? "plaintext";
   const theme = _theme ?? "auto";
@@ -172,6 +210,8 @@ export function CodeEditorComponent({
   const height = _height ?? 500;
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const decorationsCollection =
+    useRef<monaco.editor.IEditorDecorationsCollection>();
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor>();
   const size = useRef<monaco.editor.IDimension>({
     width: 300,
@@ -198,9 +238,39 @@ export function CodeEditorComponent({
     if (editorRef.current) {
       const currentModel = editorRef.current.getModel()!;
       monaco.editor.setModelLanguage(currentModel, language);
-      currentModel.setValue(value);
+      if (!isEqual(currentModel.getValue(), value)) {
+        currentModel.setValue(value);
+      }
     }
   }, [value, language]);
+
+  useEffect(() => {
+    if (language === "brick_next_yaml") {
+      const provideCompletionItems =
+        brickNextYAMLProvideCompletionItems(completers);
+      const monacoProviderRef = monaco.languages.registerCompletionItemProvider(
+        "brick_next_yaml",
+        {
+          provideCompletionItems,
+          triggerCharacters: [".", ":", "<"],
+        }
+      );
+      return () => {
+        monacoProviderRef.dispose();
+      };
+    }
+  }, [completers, language]);
+
+  useEffect(() => {
+    if (
+      language === "brick_next_yaml" &&
+      editorRef.current &&
+      decorationsCollection.current
+    ) {
+      const editor = editorRef.current;
+      setDecoractions(editor, decorationsCollection.current, completers);
+    }
+  }, [completers, language, value]);
 
   useLayoutEffect(() => {
     if (automaticLayoutRef.current !== "fit-content" || !containerRef.current) {
@@ -293,8 +363,85 @@ export function CodeEditorComponent({
       },
       overviewRulerBorder: false,
       mouseWheelScrollSensitivity: 0.5,
+      suggest: {
+        insertMode: "insert",
+        preview: true,
+      },
+      quickSuggestions: { strings: true, other: true, comments: true },
     });
-  }, [value, language]);
+
+    decorationsCollection.current =
+      editorRef.current.createDecorationsCollection();
+
+    if (language === "brick_next_yaml") {
+      setDecoractions(
+        editorRef.current,
+        decorationsCollection.current,
+        completers
+      );
+    }
+  }, [value, language, completers]);
+
+  useEffect(() => {
+    const editor = editorRef.current;
+    if (language === "brick_next_yaml" && editor) {
+      const model = editor.getModel()!;
+      const editorMouseDownEvent = editor.onMouseDown(function (e) {
+        const decorations = decorationsCollection.current;
+        (decorations?.getRanges?.() ?? []).forEach((range) => {
+          const modKey = /Mac|iPod|iPhone|iPad/.test(navigator.platform)
+            ? "metaKey"
+            : "ctrlKey";
+          if (
+            range &&
+            e.target.position &&
+            e.event[modKey] &&
+            range.containsPosition(e.target.position)
+          ) {
+            onHighlightClick(model.getValueInRange(range));
+          }
+        });
+      });
+
+      const mouseOverEvent = editor.onMouseMove(function (e) {
+        const decorations = decorationsCollection.current;
+        if (!decorations) return;
+        decorations.getRanges().forEach((range) => {
+          const modKey = /Mac|iPod|iPhone|iPad/.test(navigator.platform)
+            ? "metaKey"
+            : "ctrlKey";
+          if (
+            range &&
+            e.target.position &&
+            e.event[modKey] &&
+            range.containsPosition(e.target.position)
+          ) {
+            const newDecorations = decorations.getRanges().map((item) => ({
+              range: item,
+              options: {
+                inlineClassName: range.equalsRange(item)
+                  ? "highlight pointer"
+                  : "highlight",
+              },
+            }));
+            decorations.set(newDecorations);
+          } else if (!e.event[modKey]) {
+            const newDecorations = decorations.getRanges().map((item) => ({
+              range: item,
+              options: {
+                inlineClassName: "highlight",
+              },
+            }));
+            decorations.set(newDecorations);
+          }
+        });
+      });
+      return () => {
+        mouseOverEvent?.dispose();
+        editorMouseDownEvent?.dispose();
+      };
+    }
+  }, [language, onHighlightClick]);
 
   useEffect(() => {
     const editor = editorRef.current;

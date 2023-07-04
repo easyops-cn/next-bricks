@@ -251,4 +251,24 @@ export class FormStore extends PubSub {
       callback?.(value);
     }
   }
+
+  onChange(
+    name: string,
+    value: any,
+    callback?: (v: string) => void,
+    options?: WatchOptions
+  ) {
+    const field = this.#fields.get(name);
+
+    if (field) {
+      this.setFieldsValue({
+        [name]: value,
+      });
+
+      if (options?.needValidate ?? true) {
+        this.validateField(field.detail);
+      }
+      callback?.(value);
+    }
+  }
 }
