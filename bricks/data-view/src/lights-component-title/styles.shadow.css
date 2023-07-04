@@ -1,0 +1,28 @@
+:host([hidden]) {
+  display: none;
+}
+.wrapper {
+  position: relative;
+  height: 38px;
+}
+.backgroundSvg {
+  position: absolute;
+}
+.content {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  padding: 0 12px;
+}
+.title {
+  font-size: 20px;
+  color: #fffdfc;
+  letter-spacing: 4px;
+  line-height: 1em;
+  font-weight: 500;
+  text-shadow: 3px 0 8px #178afe;
+  flex: 1;
+}
