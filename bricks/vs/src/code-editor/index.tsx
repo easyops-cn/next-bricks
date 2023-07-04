@@ -261,26 +261,6 @@ export function CodeEditorComponent({
     }
   }, [completers, language]);
 
-  const bindHighlightClick = useCallback(
-    (editor: monaco.editor.IStandaloneCodeEditor) => {
-      const model = editor.getModel()!;
-      (decorationsCollection.current?.getRanges?.() ?? []).forEach(
-        (range: monaco.Range) => {
-          editor.onMouseDown(function (e) {
-            if (
-              range &&
-              e.target.position &&
-              range.containsPosition(e.target.position)
-            ) {
-              onHighlightClick(model.getValueInRange(range));
-            }
-          });
-        }
-      );
-    },
-    [onHighlightClick]
-  );
-
   useEffect(() => {
     if (
       language === "brick_next_yaml" &&
@@ -288,11 +268,9 @@ export function CodeEditorComponent({
       decorationsCollection.current
     ) {
       const editor = editorRef.current;
-      setDecoractions(editor, decorationsCollection.current);
-      bindHighlightClick(editor);
+      setDecoractions(editor, decorationsCollection.current, completers);
     }
-  }),
-    [value];
+  }, [completers, language, value]);
 
   useLayoutEffect(() => {
     if (automaticLayoutRef.current !== "fit-content" || !containerRef.current) {
@@ -389,18 +367,81 @@ export function CodeEditorComponent({
         insertMode: "insert",
         preview: true,
       },
-      smartSelect: {
-        selectLeadingAndTrailingWhitespace: true,
-      },
       quickSuggestions: { strings: true, other: true, comments: true },
     });
 
     decorationsCollection.current =
       editorRef.current.createDecorationsCollection();
 
-    setDecoractions(editorRef.current, decorationsCollection.current);
-    bindHighlightClick(editorRef.current);
-  }, [value, language, bindHighlightClick]);
+    if (language === "brick_next_yaml") {
+      setDecoractions(
+        editorRef.current,
+        decorationsCollection.current,
+        completers
+      );
+    }
+  }, [value, language, completers]);
+
+  useEffect(() => {
+    const editor = editorRef.current;
+    if (language === "brick_next_yaml" && editor) {
+      const model = editor.getModel()!;
+      const editorMouseDownEvent = editor.onMouseDown(function (e) {
+        const decorations = decorationsCollection.current;
+        (decorations?.getRanges?.() ?? []).forEach((range) => {
+          const modKey = /Mac|iPod|iPhone|iPad/.test(navigator.platform)
+            ? "metaKey"
+            : "ctrlKey";
+          if (
+            range &&
+            e.target.position &&
+            e.event[modKey] &&
+            range.containsPosition(e.target.position)
+          ) {
+            onHighlightClick(model.getValueInRange(range));
+          }
+        });
+      });
+
+      const mouseOverEvent = editor.onMouseMove(function (e) {
+        const decorations = decorationsCollection.current;
+        if (!decorations) return;
+        decorations.getRanges().forEach((range) => {
+          const modKey = /Mac|iPod|iPhone|iPad/.test(navigator.platform)
+            ? "metaKey"
+            : "ctrlKey";
+          if (
+            range &&
+            e.target.position &&
+            e.event[modKey] &&
+            range.containsPosition(e.target.position)
+          ) {
+            const newDecorations = decorations.getRanges().map((item) => ({
+              range: item,
+              options: {
+                inlineClassName: range.equalsRange(item)
+                  ? "highlight pointer"
+                  : "highlight",
+              },
+            }));
+            decorations.set(newDecorations);
+          } else if (!e.event[modKey]) {
+            const newDecorations = decorations.getRanges().map((item) => ({
+              range: item,
+              options: {
+                inlineClassName: "highlight",
+              },
+            }));
+            decorations.set(newDecorations);
+          }
+        });
+      });
+      return () => {
+        mouseOverEvent?.dispose();
+        editorMouseDownEvent?.dispose();
+      };
+    }
+  }, [language, onHighlightClick]);
 
   useEffect(() => {
     const editor = editorRef.current;

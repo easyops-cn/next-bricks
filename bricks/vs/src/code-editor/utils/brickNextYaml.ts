@@ -188,20 +188,22 @@ export const brickNextYAMLProvideCompletionItems = (
         )
           .filter((item) => !curLevelKeys.includes(item.label as string))
           .map((item) => ({
+            ...item,
             label: item.label,
-            insertText: item.label as string,
+            insertText: item.insertText || (item.label as string),
             kind: monaco.languages.CompletionItemKind.Keyword,
             range,
           })),
       };
     }
 
-    if (context.triggerCharacter === ":" || context.triggerCharacter === ".") {
-      const fullWord = model.getWordAtPosition({
-        lineNumber: position.lineNumber,
-        column: position.column - 1,
-      });
-      if (fullWord?.word === "action" && context.triggerCharacter === ":") {
+    if (
+      context.triggerCharacter === ":" ||
+      (context.triggerCharacter === "." &&
+        prefixWord &&
+        !["CTX", "STATE", "FN"].includes(prefixWord))
+    ) {
+      if (prefixWord === "action" && context.triggerCharacter === ":") {
         const actions = get(
           storyboardJsonSchema,
           "definitions.BuiltinBrickEventHandler.properties.action.enum"
@@ -218,7 +220,7 @@ export const brickNextYAMLProvideCompletionItems = (
           ),
         };
       }
-      const matchCompletion = completers?.[fullWord?.word as string];
+      const matchCompletion = completers?.[prefixWord as string];
       let matchTriggerCharacter = "";
       let list: monaco.languages.CompletionItem[] | undefined;
       if (matchCompletion && !Array.isArray(matchCompletion)) {
@@ -233,19 +235,19 @@ export const brickNextYAMLProvideCompletionItems = (
           : list
       ) {
         return {
-          suggestions: (list ?? []).map((item) => ({
-            ...item,
-            label:
+          suggestions: (list ?? []).map((item) => {
+            const label =
               matchTriggerCharacter === ":"
                 ? ` ${item.label}`
-                : (item.label as string),
-            kind: monaco.languages.CompletionItemKind.Value,
-            insertText:
-              matchTriggerCharacter === ":"
-                ? ` ${item.label}`
-                : (item.label as string),
-            range,
-          })),
+                : (item.label as string);
+            return {
+              ...item,
+              label: label,
+              kind: monaco.languages.CompletionItemKind.Value,
+              insertText: item.insertText || label,
+              range,
+            };
+          }),
         };
       }
     }
@@ -345,34 +347,43 @@ export const brickNextYAMLProvideCompletionItems = (
 
 export const setDecoractions = (
   editor: monaco.editor.IStandaloneCodeEditor,
-  decorationsCollection: monaco.editor.IEditorDecorationsCollection
+  decorationsCollection: monaco.editor.IEditorDecorationsCollection,
+  completers: Completers = {}
 ) => {
   const model = editor.getModel();
   if (model) {
+    decorationsCollection.clear();
     const searchTexts = ["CTX", "STATE", "FN"];
     // 找到匹配的文本范围
     const decorations: monaco.editor.IModelDeltaDecoration[] = [];
     searchTexts.forEach(function (searchText) {
+      if (!completers[searchText]) return;
       const matches = model.findMatches?.(
-        `[^\\w]${searchText}\\.\\w+`,
+        `(?<=^|\\s)${searchText}\\.\\w+`,
         false,
         true,
         false,
         null,
         false
       );
-      if (matches) {
+      if (matches && matches.length) {
         matches.forEach(function (match) {
-          const range = match.range;
-          decorations.push({
-            range: {
-              ...range,
-              startColumn: range.startColumn + 1,
-            },
-            options: {
-              inlineClassName: "highelight",
-            },
-          });
+          if (
+            isInEvaluateBody(
+              model,
+              new monaco.Position(
+                match.range.startLineNumber,
+                match.range.startColumn
+              )
+            )
+          ) {
+            decorations.push({
+              range: match.range,
+              options: {
+                inlineClassName: "highlight",
+              },
+            });
+          }
         });
       }
     });
