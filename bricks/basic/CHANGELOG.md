@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.13.1...@next-bricks/basic@0.14.0) (2023-07-04)
+
+
+### Bug Fixes
+
+* keep popup in view && default distance && dropdown sync width ([4e4c934](https://github.com/easyops-cn/next-bricks/commit/4e4c934b32d24dd2a12e231e964d3c220e39ba33))
+
+
+### Features
+
+* 构件样式调整 & dropdown actions 支持 hidden ([f11425c](https://github.com/easyops-cn/next-bricks/commit/f11425cc309b068d5ac132910b37ae42c5895ebd))
+
+
+
+
+
 ## [0.13.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.13.0...@next-bricks/basic@0.13.1) (2023-06-29)
 
 

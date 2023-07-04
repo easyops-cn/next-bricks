@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.9.5...@next-bricks/data-view@0.10.0) (2023-07-04)
+
+
+### Features
+
+* **data-view:** support tabs-page-title component ([7ca3b73](https://github.com/easyops-cn/next-bricks/commit/7ca3b738eeac0b5d690abe2b0c5b88763610764f))
+
+
+
+
+
 ## [0.9.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.9.4...@next-bricks/data-view@0.9.5) (2023-06-29)
 
 **Note:** Version bump only for package @next-bricks/data-view
