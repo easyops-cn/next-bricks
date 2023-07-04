@@ -1625,9 +1625,9 @@ video {
 .milkdown {
   margin: 1.25rem;
   border-radius: 0.25rem;
-  border-width: 1px;
+  /* border-width: 1px;
   --tw-bg-opacity: 1;
-  background-color: rgb(248 250 252 / var(--tw-bg-opacity));
+  background-color: rgb(248 250 252 / var(--tw-bg-opacity)); */
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   padding-top: 1rem;
@@ -1656,4 +1656,81 @@ video {
   --tw-prose-pre-bg: var(--tw-prose-invert-pre-bg);
   --tw-prose-th-borders: var(--tw-prose-invert-th-borders);
   --tw-prose-td-borders: var(--tw-prose-invert-td-borders);
+}
+
+/* other */
+.markdown-container {
+  position: relative;
+  height: 100%;
+  padding-top: 2.5rem;
+  background-color: rgb(248 250 252 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 1;
+}
+
+.menu-container-outter {
+  position: absolute;
+  top: 0;
+  height: 2.5rem;
+  width: 100%;
+  border-bottom-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: rgb(75 85 99 / var(--tw-border-opacity));
+}
+
+.menu-container-inner {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.editor-container {
+  height: 100%;
+  overflow: auto;
+  overscroll-behavior: none;
+}
+
+.menu-btn-box {
+  display: flex;
+  height: 2.5rem;
+  width: 2.5rem;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.25rem;
+  position: relative;
+}
+
+/* Tooltip text */
+.menu-btn-box .menuIconTooltip {
+  visibility: hidden;
+  font-size: 0.9rem;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 3px 8px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 2;
+  top: 2.4rem;
+  white-space: nowrap;
+}
+
+.menu-btn-box:hover {
+  background-color: #e8e8e8;
+}
+
+.menu-btn-box:hover .menuIconTooltip {
+  visibility: visible;
+}
+
+.menu-btn-box:hover::after {
+  position: absolute;
+  bottom: 0.15rem;
+  left: 1rem;
+  border-width: 0.3rem;
+  border-color: transparent transparent black transparent;
+  border-style: solid;
+  width: 0px;
+  height: 0px;
+  content: "";
 }
