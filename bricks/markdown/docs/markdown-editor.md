@@ -1,3 +1,10 @@
+markdown 编辑器
+
+## Examples
+
+### Basic
+
+```yaml preview
 - brick: markdown.markdown-editor
   properties:
     value: |-
@@ -17,3 +24,4 @@
       args:
         - upload
         - <% EVENT.detail %>
+```
