@@ -1,6 +1,3 @@
-@import "~prismjs/themes/prism-tomorrow.css";
-@import "~prismjs/plugins/line-numbers/prism-line-numbers.css";
-
 :host {
   display: block;
 }
@@ -23,27 +20,42 @@ eo-icon {
   position: relative;
 }
 
-.code-wrapper .pre {
-  padding-top: 0;
-  padding-bottom: 0;
+.code-wrapper .prism-code {
   margin: 0;
+  padding: 0 12px 0 0;
   font-size: 12px;
   line-height: 16px;
+  overflow: auto;
   white-space: pre-wrap;
+  border-radius: var(--medius-border-radius);
   min-height: calc(var(--min-lines) * 16px);
   max-height: calc(var(--max-lines) * 16px);
-  border-radius: var(--medius-border-radius);
 }
 
-.code-wrapper .code {
-  font-size: 12px;
-  line-height: 16px;
+.no-line-numbers.prism-code {
+  padding-left: 12px;
 }
 
-.code-wrapper .line-numbers .line-numbers-rows {
-  width: 40px;
+.no-line-numbers .line-number {
+  display: none;
+}
+
+.token-line {
+  display: flex;
+  gap: 0.5em;
+}
+
+.line-number {
+  flex-shrink: 0;
+  display: inline-block;
+  width: 3.8em;
+  padding-right: 0.8em;
+  text-align: right;
+  color: #999;
   background: #3b3b3b;
-  border-right: 0;
+  letter-spacing: -1px;
+  pointer-events: none;
+  user-select: none;
 }
 
 .tool-bar {
