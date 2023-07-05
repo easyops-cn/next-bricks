@@ -63,7 +63,7 @@ const MAIN_KEY = "";
 
 // Specify brick dependencies:
 /*#__PURE__*/ wrapBrick("eo-easyops-icon");
-/*#__PURE__*/ wrapBrick("ea-fa-icon");
+/*#__PURE__*/ wrapBrick("eo-fa-icon");
 const getEasyopsIcons = unwrapProvider("icons.get-easyops-icons");
 const getFaIcons = unwrapProvider("icons.get-fa-icons");
 const getIllustration = unwrapProvider("illustrations.get-illustration");
@@ -195,7 +195,7 @@ async function loadMainDll(adapterPkgFilePath: string) {
 
   defineModule(LegacyBrickIcons, {
     BrickIcon({ category, icon }: { category?: string; icon: string }) {
-      const EasyOpsIcon = "ea-easyops-icon" as any;
+      const EasyOpsIcon = "eo-easyops-icon" as any;
       return <EasyOpsIcon category={category} icon={icon} />;
     },
     iconsByCategory: easyopsIcons,
@@ -203,7 +203,7 @@ async function loadMainDll(adapterPkgFilePath: string) {
 
   defineModule(LegacyReactFontAwesome, {
     FontAwesomeIcon({ icon, gradientColor }: LegacyFaIconProps) {
-      const FaIcon = "ea-fa-icon" as any;
+      const FaIcon = "eo-fa-icon" as any;
       return (
         <FaIcon
           {...{
