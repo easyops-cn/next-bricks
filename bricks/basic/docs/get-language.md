@@ -3,7 +3,7 @@
 ## Examples
 
 ```yaml preview
-brick: basic.general-button
+brick: eo-button
 properties:
   textContent: '<% I18N_TEXT({ zh: "语言", "en": "Language" }) %>'
 events:

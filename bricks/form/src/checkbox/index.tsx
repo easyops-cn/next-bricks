@@ -15,12 +15,8 @@ import { FormItemElementBase } from "@next-shared/form";
 
 const { defineElement, property, event } = createDecorators();
 
-const WrappedFormItem = wrapBrick<FormItem, FormItemProps>(
-  "form.general-form-item"
-);
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 export type CheckboxType = "default" | "icon";
 
@@ -60,8 +56,9 @@ export interface CheckboxProps extends FormItemProps {
  * 表单复选框构件
  * @author derrickma
  */
-@defineElement("form.general-checkbox", {
+@defineElement("eo-checkbox", {
   styleTexts: [styleText],
+  alias: ["form.general-checkbox"],
 })
 class Checkbox extends FormItemElementBase {
   /**

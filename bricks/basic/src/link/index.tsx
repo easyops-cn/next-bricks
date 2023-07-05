@@ -23,9 +23,7 @@ import {
   getExtendedLocationDescriptor,
 } from "./getExtendedLocationDescriptor.js";
 
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 export interface LinkProps {
   type?: LinkType;
@@ -47,8 +45,9 @@ const { defineElement, property } = createDecorators();
  * @author sailor
  * @slot - 链接内容
  */
-@defineElement("basic.general-link", {
+@defineElement("eo-link", {
   styleTexts: [styleText],
+  alias: ["basic.general-link"],
 })
 class Link extends ReactNextElement implements LinkProps {
   /**

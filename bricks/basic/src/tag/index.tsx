@@ -13,9 +13,7 @@ import { omit } from "lodash";
 
 const { defineElement, property, event } = createDecorators();
 
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 const closeIcon: GeneralIconProps = {
   lib: "antd",
@@ -68,14 +66,12 @@ export interface TagMapEvents {
 }
 
 /**
- * @id basic.general-tag
- * @name basic.general-tag
- * @docKind brick
- * @description 标签构件
+ * 标签构件
  * @author sailor
  */
-@defineElement("basic.general-tag", {
+@defineElement("eo-tag", {
   styleTexts: [styleText],
+  alias: ["basic.general-tag"],
 })
 class Tag extends ReactNextElement implements TagProps {
   /**

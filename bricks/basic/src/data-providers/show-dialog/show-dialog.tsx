@@ -13,8 +13,8 @@ import styles from "./dialog.module.css";
 
 initializeI18n(NS, locales);
 
-const WrappedButton = wrapBrick<Button, ButtonProps>("basic.general-button");
-const WrappedAntdIcon = wrapBrick<AntdIcon, AntdIconProps>("icons.antd-icon");
+const WrappedButton = wrapBrick<Button, ButtonProps>("eo-button");
+const WrappedAntdIcon = wrapBrick<AntdIcon, AntdIconProps>("eo-antd-icon");
 
 interface InputProps {
   value?: string;
@@ -30,7 +30,7 @@ const WrappedInput = wrapBrick<
   InputProps,
   InputEvents,
   InputEventsMap
->("form.general-input", {
+>("eo-input", {
   onValueChange: "change",
 });
 

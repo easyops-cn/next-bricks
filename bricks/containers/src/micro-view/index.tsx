@@ -16,8 +16,9 @@ interface MicroViewProps {
  * @author sailorshe
  *
  */
-@defineElement("containers.micro-view", {
+@defineElement("eo-micro-view", {
   styleTexts: [styleText],
+  alias: ["containers.micro-view"],
 })
 class MicroView extends ReactNextElement {
   /**

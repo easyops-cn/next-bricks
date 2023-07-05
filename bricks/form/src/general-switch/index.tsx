@@ -11,12 +11,9 @@ import type {
 } from "@next-bricks/icons/general-icon";
 import type { ComponentSize } from "../interface.js";
 import classNames from "classnames";
-const WrappedFormItem = wrapBrick<FormItem, FormItemProps>(
-  "form.general-form-item"
-);
-const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+
+const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
+const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 interface SwitchProps extends FormItemProps {
   curElement: HTMLElement;
@@ -33,12 +30,13 @@ interface SwitchProps extends FormItemProps {
 const { defineElement, property, event } = createDecorators();
 
 /**
- * 构件 general-switch
+ * 构件 eo-switch
  * @author zhendonghuang
  */
 export
-@defineElement("form.general-switch", {
+@defineElement("eo-switch", {
   styleTexts: [styleText],
+  alias: ["form.general-switch"],
 })
 class GeneralSwitch extends FormItemElementBase {
   /**

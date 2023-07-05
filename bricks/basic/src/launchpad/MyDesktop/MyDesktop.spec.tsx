@@ -103,7 +103,7 @@ describe("MyDesktop", () => {
     expect(
       container.querySelector(".cellWrapper")?.innerHTML
     ).toMatchInlineSnapshot(
-      `"<div class="cellItem small"><basic.general-link class="appLink small square" url="/search"><img class="appIcon" src="micro-apps/search/icons/large.png"></basic.general-link><span class="appName">搜索中心</span></div>"`
+      `"<div class="cellItem small"><eo-link class="appLink small square" url="/search"><img class="appIcon" src="micro-apps/search/icons/large.png"></eo-link><span class="appName">搜索中心</span></div>"`
     );
 
     await waitFor(async () => {

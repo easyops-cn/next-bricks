@@ -22,7 +22,7 @@ import styleText from "./modal.shadow.css";
  * ```ts
  * import type { Modal, ModalProps, ModalEvents, ModalMapEvents } from "@next-bricks/basic/modal";
  *
- * const WrappedModal = wrapBrick<Modal, ModalProps, ModalEvents, ModalMapEvents>("containers.general-modal", {
+ * const WrappedModal = wrapBrick<Modal, ModalProps, ModalEvents, ModalMapEvents>("eo-modal", {
  *   onClose: "close",
  *   onConfirm: "confirm",
  *   onCancel: "cancel",
@@ -63,15 +63,14 @@ export interface ModalMapEvents {
 }
 
 // 使用弱关联来引用其他构件，以便按需加载构件，并避免打包可能包含重复文件的问题。
-const WrappedButton = wrapBrick<Button, ButtonProps>("basic.general-button");
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedButton = wrapBrick<Button, ButtonProps>("eo-button");
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 const { defineElement, property, event, method } = createDecorators();
 
-@defineElement("containers.general-modal", {
+@defineElement("eo-modal", {
   styleTexts: [styleText],
+  alias: ["containers.general-modal"],
 })
 class Modal extends ReactNextElement implements ModalProps {
   /**

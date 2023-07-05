@@ -10,9 +10,7 @@ import classNames from "classnames";
 
 const { defineElement, property } = createDecorators();
 
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 export interface MenuComponentProps {
   icon?: GeneralIconProps;
@@ -21,23 +19,17 @@ export interface MenuComponentProps {
 }
 
 /**
- * @id basic.general-menu
- * @name basic.general-menu
- * @docKind brick
- * @description 菜单构件
+ * 菜单构件
  * @author sailor
  *
  */
-@defineElement("basic.general-menu-item", {
+@defineElement("eo-menu-item", {
   styleTexts: [styleText],
+  alias: ["basic.general-menu-item"],
 })
 class MenuItem extends ReactNextElement {
   /**
-   * @kind GeneralIconProps
-   * @required false
-   * @default -
-   * @description 图标
-   * @group basic
+   * 图标
    */
   @property({
     attribute: false,
@@ -45,11 +37,7 @@ class MenuItem extends ReactNextElement {
   accessor icon: GeneralIconProps | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default false
-   * @description 是否选中
-   * @group basic
+   * 是否选中
    */
   @property({
     type: Boolean,
@@ -57,11 +45,7 @@ class MenuItem extends ReactNextElement {
   accessor active: boolean | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default false
-   * @description 是否禁用
-   * @group basic
+   * 是否禁用
    */
   @property({
     type: Boolean,

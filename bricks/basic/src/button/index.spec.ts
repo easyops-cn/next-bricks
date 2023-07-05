@@ -5,9 +5,9 @@ import { Button } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
-describe("basic.general-button", () => {
+describe("eo-button", () => {
   test("basic usage", async () => {
-    const element = document.createElement("basic.general-button") as Button;
+    const element = document.createElement("eo-button") as Button;
 
     expect(element.shadowRoot).toBeFalsy();
     act(() => {
@@ -31,7 +31,7 @@ describe("basic.general-button", () => {
   });
 
   test("danger button", async () => {
-    const element = document.createElement("basic.general-button") as Button;
+    const element = document.createElement("eo-button") as Button;
 
     expect(element.shadowRoot).toBeFalsy();
     act(() => {
@@ -52,8 +52,8 @@ describe("basic.general-button", () => {
   });
 
   test("link button", async () => {
-    const element1 = document.createElement("basic.general-button") as Button;
-    const element2 = document.createElement("basic.general-button") as Button;
+    const element1 = document.createElement("eo-button") as Button;
+    const element2 = document.createElement("eo-button") as Button;
 
     expect(element1.shadowRoot).toBeFalsy();
     act(() => {
@@ -69,8 +69,8 @@ describe("basic.general-button", () => {
 
     const button1 = element1.shadowRoot?.querySelector("button");
     const button2 = element2.shadowRoot?.querySelector("button");
-    const link1 = element1.shadowRoot?.querySelector("basic\\.general-link");
-    const link2 = element2.shadowRoot?.querySelector("basic\\.general-link");
+    const link1 = element1.shadowRoot?.querySelector("eo-link");
+    const link2 = element2.shadowRoot?.querySelector("eo-link");
     expect(button1).toBe(null);
     expect(link1?.className).toBe("medium");
     expect(button2).toBe(null);
@@ -85,7 +85,7 @@ describe("basic.general-button", () => {
   });
 
   test("button with icon", async () => {
-    const element = document.createElement("basic.general-button") as Button;
+    const element = document.createElement("eo-button") as Button;
 
     expect(element.shadowRoot).toBeFalsy();
     act(() => {
@@ -101,7 +101,7 @@ describe("basic.general-button", () => {
     expect(element.shadowRoot?.childNodes.length).toBe(2);
 
     const icon = element.shadowRoot?.querySelector(".icon");
-    expect(icon?.tagName).toBe("ICONS.GENERAL-ICON");
+    expect(icon?.tagName).toBe("EO-ICON");
 
     act(() => {
       document.body.removeChild(element);

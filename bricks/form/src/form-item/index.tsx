@@ -41,96 +41,50 @@ export interface FormItemProps {
 const { defineElement, property } = createDecorators();
 
 /**
- * @id form.general-form
- * @name form.general-form
- * @docKind brick
- * @description 通用输入框构件
+ * 通用输入框构件
  * @author sailor
- * @noInheritDoc
  */
-@defineElement("form.general-form-item", {
+@defineElement("eo-form-item", {
   styleTexts: [styleText],
+  alias: ["form.general-form-item"],
 })
 class FormItem extends FormItemElementBase implements FormItemProps {
-  /**
-   * @default
-   * @required
-   * @description
-   */
   @property({
     attribute: false,
   })
   accessor formElement: Form | undefined;
 
-  /**
-   * @default
-   * @required
-   * @description
-   */
   @property({
     attribute: false,
   })
   accessor curElement!: HTMLElement;
 
   /**
-   * @kind string
-   * @required false
-   * @default default
-   * @description 字段名称
-   * @enums
-   * @group basic
+   * 字段名称
    */
   @property() accessor name: string | undefined;
 
-  /**
-   * @default
-   * @required
-   * @description
-   */
   @property() accessor label: string | undefined;
 
-  /**
-   * @default
-   * @required
-   * @description
-   */
   @property() accessor pattern: string | undefined;
 
-  /**
-   * @default
-   * @required
-   * @description
-   */
   @property({
     attribute: false,
   })
   accessor message: Record<string, string> | undefined;
 
-  /**
-   * @default
-   * @required
-   * @description
-   */
   @property({
     type: Number,
   })
   accessor max: number | undefined;
 
-  /**
-   * @default
-   * @required
-   * @description
-   */
   @property({
     type: Number,
   })
   accessor min: number | undefined;
 
   /**
-   * @kind boolean
-   * @required false
-   * @default -
-   * @description 表单项是否必填
+   * 表单项是否必填
    * @group basicFormItem
    */
   @property({
@@ -139,56 +93,33 @@ class FormItem extends FormItemElementBase implements FormItemProps {
   accessor required: boolean | undefined;
 
   /**
-   * @kind string
-   * @required false
-   * @default default
-   * @description 初始值
-   * @enums
-   * @group basic
+   * 初始值
    */
   @property() accessor value: string | undefined;
 
   /**
-   * @required false
-   * @description 表单项 label 标签布局
+   * 表单项 label 标签布局
    * @group ui
    */
   @property()
   accessor labelCol: string | undefined;
 
   /**
-   * @required false
-   * @description 表单项控件布局
+   * 表单项控件布局
    * @group ui
    */
   @property()
   accessor wrapperCol: string | undefined;
 
-  /**
-   * @kind string
-   * @required false
-   * @default default
-   * @description 初始值
-   * @enums
-   * @group basic
-   */
   @property() accessor valuePropsName: string | undefined;
 
   @property() accessor layout: Layout = "horizontal";
 
-  /**
-   * @kind string
-   * @required false
-   * @default default
-   * @description 初始值
-   * @enums
-   * @group basic
-   */
   @property() accessor size: ComponentSize | undefined;
 
   /**
+   * 是否自动去除前后的空白字符
    * @default true
-   * @description 是否自动去除前后的空白字符
    * @group advancedFormItem
    */
   @property({
@@ -197,15 +128,13 @@ class FormItem extends FormItemElementBase implements FormItemProps {
   accessor trim = true;
 
   /**
-   * @default false
-   * @description 事件触发方法名
+   * 事件触发方法名
    */
   @property()
   accessor trigger!: string;
 
   /**
-   * @default false
-   * @description 表单项校验方法
+   * 表单项校验方法
    */
   @property({
     attribute: false,
@@ -213,9 +142,7 @@ class FormItem extends FormItemElementBase implements FormItemProps {
   accessor validator: ((value: any) => MessageBody) | undefined;
 
   /**
-   * @default
-   * @required
-   * @description 值变化时是否主动出发校验
+   * 值变化时是否主动出发校验
    */
   @property({
     type: Boolean,

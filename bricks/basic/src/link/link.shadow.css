@@ -45,6 +45,6 @@ a:not(.disabled, .danger):active {
   color: var(--antd-btn-danger-active-bg);
 }
 
-icons\.general-icon {
+eo-icon {
   vertical-align: middle;
 }

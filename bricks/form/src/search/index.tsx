@@ -19,9 +19,7 @@ import { debounce } from "lodash";
 
 const { defineElement, property, event } = createDecorators();
 
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 export interface SearchProps {
   value?: string;
@@ -48,8 +46,9 @@ export interface SearchEventsMap {
  * 搜索框
  */
 export
-@defineElement("form.general-search", {
+@defineElement("eo-search", {
   styleTexts: [styleText],
+  alias: ["form.general-search"],
 })
 class GeneralSearch extends ReactNextElement implements SearchProps {
   /**

@@ -39,12 +39,8 @@ describe("DesktopCell", () => {
     ).toBe(false);
 
     act(() => {
-      fireEvent.click(
-        container.querySelector("basic\\.general-link") as HTMLElement
-      );
-      fireEvent.click(
-        container.querySelector("icons\\.general-icon") as HTMLElement
-      );
+      fireEvent.click(container.querySelector("eo-link") as HTMLElement);
+      fireEvent.click(container.querySelector("eo-icon") as HTMLElement);
     });
     expect(launchpadService.pushVisitor).toHaveBeenCalledWith("app", item.app);
     expect(launchpadService.setAsFavorite).toHaveBeenCalledWith({
@@ -100,12 +96,8 @@ describe("DesktopCell", () => {
     ).toBe(false);
 
     act(() => {
-      fireEvent.click(
-        container.querySelector("basic\\.general-link") as HTMLElement
-      );
-      fireEvent.click(
-        container.querySelector("icons\\.general-icon") as HTMLElement
-      );
+      fireEvent.click(container.querySelector("eo-link") as HTMLElement);
+      fireEvent.click(container.querySelector("eo-icon") as HTMLElement);
     });
     expect(launchpadService.pushVisitor).toHaveBeenCalledWith("custom", item);
     expect(launchpadService.setAsFavorite).toHaveBeenCalledWith({

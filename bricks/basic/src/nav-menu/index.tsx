@@ -28,11 +28,9 @@ import "@next-core/theme";
 const { defineElement, property } = createDecorators();
 
 const WrappedMenuItem = wrapBrick<MenuItemComponent, MenuComponentProps>(
-  "basic.general-menu-item"
+  "eo-menu-item"
 );
-const WrappedPopover = wrapBrick<Popover, PopoverProps>(
-  "basic.general-popover"
-);
+const WrappedPopover = wrapBrick<Popover, PopoverProps>("eo-popover");
 
 export interface MenuConf {
   defaultCollapsed?: boolean;
@@ -49,21 +47,17 @@ interface NavMenuProps {
 }
 
 /**
- * @id basic.nav-menu
- * @name basic.nav-menu
- * @docKind brick
- * @description 菜单构件
+ * 菜单构件
  * @author sailor
  *
  */
-@defineElement("basic.nav-menu", {
+@defineElement("eo-nav-menu", {
   styleTexts: [styleText],
+  alias: ["basic.nav-menu"],
 })
 class NavMenu extends ReactNextElement {
   /**
-   * @default
-   * @required false
-   * @description 菜单项
+   * 菜单项
    */
   @property({
     attribute: false,
@@ -71,9 +65,7 @@ class NavMenu extends ReactNextElement {
   accessor menu: MenuConf | undefined;
 
   /**
-   * @default
-   * @required false
-   * @description 菜单项
+   * 是否显示 tooltip
    */
   @property({
     type: Boolean,

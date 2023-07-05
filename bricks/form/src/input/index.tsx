@@ -9,13 +9,9 @@ import type { FormItem, FormItemProps } from "../form-item/index.jsx";
 import styleText from "./input.shadow.css";
 import { GeneralIcon, GeneralIconProps } from "@next-bricks/icons/general-icon";
 
-const WrappedFormItem = wrapBrick<FormItem, FormItemProps>(
-  "form.general-form-item"
-);
+const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 
-const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 interface InputProps extends FormItemProps {
   value?: string;
@@ -36,11 +32,12 @@ const { defineElement, property, event } = createDecorators();
 /**
  * 通用输入框构件
  * @author sailor
- * @slot prefix - 输入框前置插槽
- * @slot suffix - 输入框后置插槽
+ * @slot prefix 输入框前置插槽
+ * @slot suffix 输入框后置插槽
  */
-@defineElement("form.general-input", {
+@defineElement("eo-input", {
   styleTexts: [styleText],
+  alias: ["form.general-input"],
 })
 class Input extends FormItemElementBase {
   /**

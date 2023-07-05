@@ -14,15 +14,13 @@ export interface TabGroupProps {
 }
 
 /**
- * @id containers.tab-group
- * @name containers.tab-group
- * @docKind brick
- * @description tab容器组
+ * Tab 容器组
  * @author sailorshe
  *
  */
-@defineElement("containers.tab-group", {
+@defineElement("eo-tab-group", {
   styleTexts: [styleText],
+  alias: ["containers.tab-group"],
 })
 class TabGroup extends ReactNextElement {
   /**

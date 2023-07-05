@@ -6,15 +6,14 @@ import styleText from "./menu.shadow.css";
 const { defineElement } = createDecorators();
 
 /**
- * @id basic.general-menu
- * @name basic.general-menu
- * @docKind brick
- * @description 菜单构件
+ * 菜单构件
  * @author sailor
  *
+ * @slot - 菜单内容
  */
-@defineElement("basic.general-menu", {
+@defineElement("eo-menu", {
   styleTexts: [styleText],
+  alias: ["basic.general-menu"],
 })
 class Menu extends ReactNextElement {
   render() {

@@ -59,8 +59,9 @@ export interface FaIconProps extends DefineLinearGradientProps {
 }
 
 export
-@defineElement("icons.fa-icon", {
+@defineElement("eo-fa-icon", {
   styleTexts: [linearGradientStyleText, sharedStyleText],
+  alias: ["icons.fa-icon"],
 })
 class FaIcon extends ReactNextElement implements FaIconProps {
   // Note: `prefix` is a native prop on Element, but it's only used in XML documents.

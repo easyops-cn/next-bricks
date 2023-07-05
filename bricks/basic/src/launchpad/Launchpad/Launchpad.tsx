@@ -12,9 +12,7 @@ import { launchpadService } from "../LaunchpadService.js";
 import { GeneralIcon, GeneralIconProps } from "@next-bricks/icons/general-icon";
 import styles from "./Launchpad.module.css";
 
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 export interface LaunchpadProps {
   onWillClose?: () => void;

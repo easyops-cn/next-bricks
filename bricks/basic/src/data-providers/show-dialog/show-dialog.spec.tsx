@@ -27,14 +27,14 @@ customElements.define(
 );
 
 customElements.define(
-  "basic.general-button",
+  "eo-button",
   class HTMLGeneralButtonElement extends HTMLElement {
     type: string | undefined;
   }
 );
 
 customElements.define(
-  "icons.antd-icon",
+  "eo-antd-icon",
   class HTMLAntdIconElement extends HTMLElement {
     icon: string | undefined;
     theme: string | undefined;
@@ -50,13 +50,11 @@ describe("showDialog", () => {
       });
     });
     await waitFor(() =>
-      expect(document.querySelector("basic\\.general-button")).not.toBeNull()
+      expect(document.querySelector("eo-button")).not.toBeNull()
     );
     expect(document.body.childNodes.length).toBe(1);
     await act(async () => {
-      (
-        document.querySelector("basic\\.general-button") as HTMLElement
-      )?.click();
+      (document.querySelector("eo-button") as HTMLElement)?.click();
     });
     await promise;
     expect(document.body.childNodes.length).toBe(0);
@@ -79,7 +77,7 @@ describe("DialogComponent", () => {
             <div
               class="icon success"
             >
-              <icons.antd-icon />
+              <eo-antd-icon />
             </div>
             <div
               style="flex: 1;"
@@ -89,11 +87,11 @@ describe("DialogComponent", () => {
               </div>
             </div>
           </div>
-          <basic.general-button
+          <eo-button
             slot="footer"
           >
             Ok
-          </basic.general-button>
+          </eo-button>
         </sl-dialog>
       </DocumentFragment>
     `);
@@ -101,7 +99,7 @@ describe("DialogComponent", () => {
       "label",
       "Dialog"
     );
-    expect(container.querySelector("icons\\.antd-icon")).toHaveProperty(
+    expect(container.querySelector("eo-antd-icon")).toHaveProperty(
       "icon",
       "check-circle"
     );
@@ -132,7 +130,7 @@ describe("DialogComponent", () => {
             <div
               class="icon warning"
             >
-              <icons.antd-icon />
+              <eo-antd-icon />
             </div>
             <div
               style="flex: 1;"
@@ -142,24 +140,24 @@ describe("DialogComponent", () => {
               </div>
             </div>
           </div>
-          <basic.general-button
+          <eo-button
             slot="footer"
           >
             Cancel
-          </basic.general-button>
-          <basic.general-button
+          </eo-button>
+          <eo-button
             slot="footer"
           >
             Ok
-          </basic.general-button>
+          </eo-button>
         </sl-dialog>
       </DocumentFragment>
     `);
-    expect(container.querySelector("icons\\.antd-icon")).toHaveProperty(
+    expect(container.querySelector("eo-antd-icon")).toHaveProperty(
       "icon",
       "exclamation-circle"
     );
-    fireEvent.click(container.querySelector("basic\\.general-button") as any);
+    fireEvent.click(container.querySelector("eo-button") as any);
     expect(onCancel).toBeCalled();
     unmount();
   });
@@ -187,7 +185,7 @@ describe("DialogComponent", () => {
             <div
               class="icon warning"
             >
-              <icons.antd-icon />
+              <eo-antd-icon />
             </div>
             <div
               style="flex: 1;"
@@ -195,44 +193,44 @@ describe("DialogComponent", () => {
               <div>
                 Are you sure?
               </div>
-              <form.general-input
+              <eo-input
                 class="expectInput"
               />
             </div>
           </div>
-          <basic.general-button
+          <eo-button
             slot="footer"
           >
             Cancel
-          </basic.general-button>
-          <basic.general-button
+          </eo-button>
+          <eo-button
             danger=""
             disabled=""
             slot="footer"
           >
             Delete
-          </basic.general-button>
+          </eo-button>
         </sl-dialog>
       </DocumentFragment>
     `);
-    expect(container.querySelector("icons\\.antd-icon")).toHaveProperty(
+    expect(container.querySelector("eo-antd-icon")).toHaveProperty(
       "icon",
       "exclamation-circle"
     );
-    fireEvent.click(container.querySelectorAll("basic\\.general-button")[0]);
+    fireEvent.click(container.querySelectorAll("eo-button")[0]);
     expect(onCancel).toBeCalled();
 
-    fireEvent.click(container.querySelectorAll("basic\\.general-button")[1]);
+    fireEvent.click(container.querySelectorAll("eo-button")[1]);
     expect(onOk).not.toBeCalled();
 
     act(() => {
       fireEvent(
-        container.querySelector("form\\.general-input") as HTMLElement,
+        container.querySelector("eo-input") as HTMLElement,
         new CustomEvent("change", { detail: "confirm delete" })
       );
     });
     act(() => {
-      fireEvent.click(container.querySelectorAll("basic\\.general-button")[1]);
+      fireEvent.click(container.querySelectorAll("eo-button")[1]);
     });
     expect(onOk).toBeCalled();
 
@@ -254,7 +252,7 @@ describe("DialogComponent", () => {
             <div
               class="icon danger"
             >
-              <icons.antd-icon />
+              <eo-antd-icon />
             </div>
             <div
               style="flex: 1;"
@@ -269,11 +267,11 @@ describe("DialogComponent", () => {
               </div>
             </div>
           </div>
-          <basic.general-button
+          <eo-button
             slot="footer"
           >
             Ok
-          </basic.general-button>
+          </eo-button>
         </sl-dialog>
       </DocumentFragment>
     `);
@@ -281,7 +279,7 @@ describe("DialogComponent", () => {
       "label",
       "Error"
     );
-    expect(container.querySelector("icons\\.antd-icon")).toHaveProperty(
+    expect(container.querySelector("eo-antd-icon")).toHaveProperty(
       "icon",
       "close-circle"
     );
@@ -292,13 +290,13 @@ describe("DialogComponent", () => {
     const { container, unmount } = render(
       <DialogComponent type="info" content="Hi!" />
     );
-    expect(container.querySelector("icons\\.antd-icon")).toHaveProperty(
+    expect(container.querySelector("eo-antd-icon")).toHaveProperty(
       "icon",
       "info-circle"
     );
     expect(
       (
-        container.querySelector("icons\\.antd-icon") as any
+        container.querySelector("eo-antd-icon") as any
       ).parentElement.classList.contains("primary")
     ).toBe(true);
     unmount();
@@ -308,13 +306,13 @@ describe("DialogComponent", () => {
     const { container, unmount } = render(
       <DialogComponent type="warn" content="Ouch!" />
     );
-    expect(container.querySelector("icons\\.antd-icon")).toHaveProperty(
+    expect(container.querySelector("eo-antd-icon")).toHaveProperty(
       "icon",
       "exclamation-circle"
     );
     expect(
       (
-        container.querySelector("icons\\.antd-icon") as any
+        container.querySelector("eo-antd-icon") as any
       ).parentElement.classList.contains("warning")
     ).toBe(true);
     unmount();
@@ -339,7 +337,7 @@ describe("DialogComponent", () => {
             <div
               class="icon warning"
             >
-              <icons.antd-icon />
+              <eo-antd-icon />
             </div>
             <div
               style="flex: 1;"
@@ -353,23 +351,23 @@ describe("DialogComponent", () => {
                 </strong>
                  to delete the file.
               </div>
-              <form.general-input
+              <eo-input
                 class="expectInput"
               />
             </div>
           </div>
-          <basic.general-button
+          <eo-button
             slot="footer"
           >
             Cancel
-          </basic.general-button>
-          <basic.general-button
+          </eo-button>
+          <eo-button
             danger=""
             disabled=""
             slot="footer"
           >
             Delete
-          </basic.general-button>
+          </eo-button>
         </sl-dialog>
       </DocumentFragment>
     `);
@@ -392,7 +390,7 @@ describe("DialogComponent", () => {
             <div
               class="icon warning"
             >
-              <icons.antd-icon />
+              <eo-antd-icon />
             </div>
             <div
               style="flex: 1;"
@@ -416,23 +414,23 @@ describe("DialogComponent", () => {
                   cat.png
                 </strong>
               </div>
-              <form.general-input
+              <eo-input
                 class="expectInput"
               />
             </div>
           </div>
-          <basic.general-button
+          <eo-button
             slot="footer"
           >
             Cancel
-          </basic.general-button>
-          <basic.general-button
+          </eo-button>
+          <eo-button
             danger=""
             disabled=""
             slot="footer"
           >
             Delete
-          </basic.general-button>
+          </eo-button>
         </sl-dialog>
       </DocumentFragment>
     `);
@@ -455,7 +453,7 @@ describe("DialogComponent", () => {
             <div
               class="icon warning"
             >
-              <icons.antd-icon />
+              <eo-antd-icon />
             </div>
             <div
               style="flex: 1;"
@@ -463,23 +461,23 @@ describe("DialogComponent", () => {
               <div>
                 Please enter  to delete the file.
               </div>
-              <form.general-input
+              <eo-input
                 class="expectInput"
               />
             </div>
           </div>
-          <basic.general-button
+          <eo-button
             slot="footer"
           >
             Cancel
-          </basic.general-button>
-          <basic.general-button
+          </eo-button>
+          <eo-button
             danger=""
             disabled=""
             slot="footer"
           >
             Delete
-          </basic.general-button>
+          </eo-button>
         </sl-dialog>
       </DocumentFragment>
     `);

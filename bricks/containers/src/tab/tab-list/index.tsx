@@ -6,11 +6,9 @@ import type { TabItem, TabItemProps } from "../tab-item/index.js";
 
 const { defineElement, property } = createDecorators();
 
-const WrappedTabGroup = wrapBrick<TabGroup, TabGroupProps>(
-  "containers.tab-group"
-);
+const WrappedTabGroup = wrapBrick<TabGroup, TabGroupProps>("eo-tab-group");
 
-const WrappedTabItem = wrapBrick<TabItem, TabGroupProps>("containers.tab-item");
+const WrappedTabItem = wrapBrick<TabItem, TabGroupProps>("eo-tab-item");
 
 interface TabListProps {
   tabs?: TabItemProps[];
@@ -18,12 +16,12 @@ interface TabListProps {
   showCard?: boolean;
 }
 /**
- * tab列表
+ * Tab 列表
  * @author sailorshe
- * @slot extra - 头部插槽
+ * @slot extra 头部插槽
  */
-@defineElement("containers.tab-list", {
-  styleTexts: [],
+@defineElement("eo-tab-list", {
+  alias: ["containers.tab-list"],
 })
 class TabList extends ReactNextElement {
   /**

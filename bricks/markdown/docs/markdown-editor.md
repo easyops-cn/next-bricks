@@ -5,7 +5,7 @@ markdown 编辑器
 ### Basic
 
 ```yaml preview
-- brick: markdown.markdown-editor
+- brick: eo-markdown-editor
   properties:
     value: |-
       # Markdown

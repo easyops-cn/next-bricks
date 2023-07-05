@@ -18,15 +18,13 @@ export interface CategoryContainerProps {
 }
 
 /**
- * @id containers.general-category
- * @name containers.general-category
- * @docKind brick
- * @description 通用分类容器
+ * 通用分类容器
  * @author sailorshe
  *
  */
-@defineElement("containers.general-category", {
+@defineElement("eo-category", {
   styleTexts: [styleText],
+  alias: ["containers.general-category"],
 })
 class Category extends ReactNextElement implements CategoryContainerProps {
   /**

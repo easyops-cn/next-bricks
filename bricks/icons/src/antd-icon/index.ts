@@ -23,7 +23,9 @@ export interface AntdIconProps extends DefineLinearGradientProps {
 const styleText = [linearGradientStyleText, sharedStyleText].join("\n");
 
 export
-@defineElement("icons.antd-icon")
+@defineElement("eo-antd-icon", {
+  alias: ["icons.antd-icon"],
+})
 class AntdIcon extends NextElement implements AntdIconProps {
   /**
    * 图标主题

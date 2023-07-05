@@ -42,14 +42,11 @@ describe("DesktopApp", () => {
       "default-app-icon.png"
     );
     const mockEvent = createEvent.click(
-      container.querySelector("basic\\.general-link") as HTMLElement
+      container.querySelector("eo-link") as HTMLElement
     );
     mockEvent.stopPropagation = stopPropagation;
     act(() => {
-      fireEvent(
-        container.querySelector("basic\\.general-link") as HTMLElement,
-        mockEvent
-      );
+      fireEvent(container.querySelector("eo-link") as HTMLElement, mockEvent);
     });
 
     expect(stopPropagation).toBeCalled();
@@ -75,17 +72,14 @@ describe("DesktopApp", () => {
       />
     );
     act(() => {
-      fireEvent(
-        container.querySelector("basic\\.general-link") as HTMLElement,
-        mockEvent
-      );
+      fireEvent(container.querySelector("eo-link") as HTMLElement, mockEvent);
     });
 
     expect(stopPropagation).toBeCalledTimes(2);
     expect(mockEvent.defaultPrevented).toBeTruthy();
-    expect(
-      container.querySelectorAll("icons\\.general-icon")[1].getAttribute("icon")
-    ).toBe("loading-3-quarters");
+    expect(container.querySelectorAll("eo-icon")[1].getAttribute("icon")).toBe(
+      "loading-3-quarters"
+    );
   });
 
   it("should render icon", () => {

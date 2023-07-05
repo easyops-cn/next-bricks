@@ -47,8 +47,9 @@ const { defineElement, property } = createDecorators();
  * 通用描述列表构件
  * @author sailor
  */
-@defineElement("presentational.general-descriptions", {
+@defineElement("eo-descriptions", {
   styleTexts: [styleText],
+  alias: ["presentational.general-descriptions"],
 })
 class Descriptions extends ReactNextElement {
   /**

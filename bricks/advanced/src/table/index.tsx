@@ -131,8 +131,9 @@ export interface CustomColumn extends ColumnProps<Record<string, any>> {
  * 通用表格构件
  * @author sailor
  */
-@defineElement("advanced.general-table", {
+@defineElement("eo-table", {
   styleTexts: [styleText],
+  alias: ["advanced.general-table"],
 })
 class TableComponent extends ReactNextElement {
   /**

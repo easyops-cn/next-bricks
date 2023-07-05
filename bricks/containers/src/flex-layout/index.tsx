@@ -9,8 +9,9 @@ const { defineElement, property } = createDecorators();
  * flex 布局容器
  * @author sailor
  */
-@defineElement("containers.flex-layout", {
+@defineElement("eo-flex-layout", {
   styleTexts: [styleText],
+  alias: ["containers.flex-layout"],
 })
 class FlexLayout extends ReactNextElement {
   /**

@@ -29,8 +29,8 @@ export interface FormMapEvents {
  * @author sailor
  * @slot - 表单内容
  */
-@defineElement("form.general-form", {
-  styleTexts: [],
+@defineElement("eo-form", {
+  alias: ["form.general-form"],
 })
 class Form extends ReactNextElement implements FormProps, AbstractForm {
   formStore: FormStore;

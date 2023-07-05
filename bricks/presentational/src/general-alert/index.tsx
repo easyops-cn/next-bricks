@@ -14,9 +14,7 @@ import classNames from "classnames";
 
 const { defineElement, property } = createDecorators();
 
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 export interface GeneralAlertProps {
   type: AlertType;
@@ -28,12 +26,13 @@ export interface GeneralAlertProps {
 
 /**
  * 告警提示
- * @slot 内容区
- * @slot title - 标题
+ * @slot - 内容区
+ * @slot title 标题
  */
 export
-@defineElement("presentational.general-alert", {
+@defineElement("eo-alert", {
   styleTexts: [styleText],
+  alias: ["presentational.general-alert"],
 })
 class GeneralAlert extends ReactNextElement implements GeneralAlertProps {
   /**

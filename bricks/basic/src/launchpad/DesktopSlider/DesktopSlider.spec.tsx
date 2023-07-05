@@ -196,7 +196,7 @@ describe("Shallow FavoriteDesktopCell", () => {
         <div
           class="cellItem undefined active"
         >
-          <basic.general-link
+          <eo-link
             class="appLink undefined square"
             url="/xixi"
           >
@@ -204,7 +204,7 @@ describe("Shallow FavoriteDesktopCell", () => {
               class="appIcon"
               src="default-app-icon.png"
             />
-          </basic.general-link>
+          </eo-link>
           <span
             class="appName"
           >
@@ -461,7 +461,7 @@ describe("Mount DesktopSlider", () => {
         <div
           class="cellItem undefined"
         >
-          <basic.general-link
+          <eo-link
             class="appLink undefined square"
             url="/rest"
           >
@@ -469,7 +469,7 @@ describe("Mount DesktopSlider", () => {
               class="appIcon"
               src="default-app-icon.png"
             />
-          </basic.general-link>
+          </eo-link>
           <span
             class="appName"
           >

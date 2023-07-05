@@ -9,7 +9,7 @@ properties:
     display: grid
     gap: 1em
 children:
-  - brick: basic.general-button
+  - brick: eo-button
     properties:
       textContent: 中文
     events:
@@ -22,7 +22,7 @@ children:
             action: message.success
             args:
               - '<% I18N_TEXT({ zh: "你好", "en": "Hello" }) %>'
-  - brick: basic.general-button
+  - brick: eo-button
     properties:
       textContent: English
     events:

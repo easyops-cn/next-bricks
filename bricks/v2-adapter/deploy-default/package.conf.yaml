@@ -5,6 +5,6 @@ dependencies:
     version: ^3.0.0
     local_deploy: true
   - name: icons-NB
-    version: "*"
+    version: ">= 0.3.0"
   - name: illustrations-NB
     version: "*"

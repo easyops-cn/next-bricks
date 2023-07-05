@@ -17,8 +17,9 @@ const { defineElement, property, method, event } = createDecorators();
  * 通用图片构件
  * @author nlicro
  */
-@defineElement("basic.general-image", {
+@defineElement("eo-image", {
   styleTexts: [imageComponentStyleText, previewStyleText],
+  alias: ["basic.general-image"],
 })
 class Image extends ReactNextElement implements ImageListProps {
   private _ImageListRef = createRef<ImageListRef>();

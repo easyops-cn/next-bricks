@@ -22,14 +22,12 @@ import { FormItemElementBase } from "@next-shared/form";
 
 const { defineElement, property, event } = createDecorators();
 
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
-const WrappedButton = wrapBrick<Button, ButtonProps>("basic.general-button");
+const WrappedButton = wrapBrick<Button, ButtonProps>("eo-button");
 
 const WrappedForm = wrapBrick<Form, FormProps, FormEvents, FormMapEvents>(
-  "form.general-form",
+  "eo-form",
   {
     onValuesChange: "values.change",
     onValidateSuccess: "validate.success",
@@ -37,9 +35,7 @@ const WrappedForm = wrapBrick<Form, FormProps, FormEvents, FormMapEvents>(
   }
 );
 
-const WrappedFormItem = wrapBrick<FormItem, FormItemProps>(
-  "form.general-form-item"
-);
+const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 
 type DynamicFormValuesItem = Record<string, any>;
 
@@ -54,15 +50,12 @@ interface DynamicFormItemProps extends FormItemProps {
 }
 
 /**
- * @id form.dynamic-form-item
- * @name form.dynamic-form-item
- * @docKind brick
- * @description 动态表单
+ * 动态表单
  * @author sailor
- * @noInheritDoc
  */
-@defineElement("form.dynamic-form-item", {
+@defineElement("eo-dynamic-form-item", {
   styleTexts: [styleText],
+  alias: ["form.dynamic-form-item"],
 })
 class DynamicFormItem extends FormItemElementBase {
   /**

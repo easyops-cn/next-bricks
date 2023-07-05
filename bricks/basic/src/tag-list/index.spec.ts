@@ -25,7 +25,7 @@ describe("basic.general-tag-list", () => {
     expect(element.shadowRoot?.childNodes.length).toBe(1);
 
     expect(element.shadowRoot?.innerHTML).toMatchInlineSnapshot(
-      `"<div class="tag-list"><basic.general-tag size="large" color="yellow" closable="" checkable="" text="Item 1">Item 1</basic.general-tag><basic.general-tag size="large" color="yellow" checkable="" text="Item 2">Item 2</basic.general-tag><basic.general-tag size="large" color="yellow" disabled="" closable="" checkable="" text="Item 3">Item 3</basic.general-tag></div>"`
+      `"<div class="tag-list"><eo-tag size="large" color="yellow" closable="" checkable="" text="Item 1">Item 1</eo-tag><eo-tag size="large" color="yellow" checkable="" text="Item 2">Item 2</eo-tag><eo-tag size="large" color="yellow" disabled="" closable="" checkable="" text="Item 3">Item 3</eo-tag></div>"`
     );
 
     act(() => {

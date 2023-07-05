@@ -11,12 +11,10 @@ import styleText from "./dropdown-button.shadow.css";
 
 const { defineElement, property } = createDecorators();
 
-const WrappedButton = wrapBrick<Button, ButtonProps>("basic.general-button");
-const WrappedPopover = wrapBrick<Popover, PopoverProps>(
-  "basic.general-popover"
-);
-const WrappedMenu = wrapBrick<Menu, any>("basic.general-menu");
-const WrappedMenuItem = wrapBrick<MenuItem, any>("basic.general-menu-item");
+const WrappedButton = wrapBrick<Button, ButtonProps>("eo-button");
+const WrappedPopover = wrapBrick<Popover, PopoverProps>("eo-popover");
+const WrappedMenu = wrapBrick<Menu, any>("eo-menu");
+const WrappedMenuItem = wrapBrick<MenuItem, any>("eo-menu-item");
 interface DropButtonProps {
   actions?: DropButtonItemProps[];
   btnText?: string;
@@ -45,8 +43,9 @@ const defaultIcon: GeneralIconProps = {
  * 下拉按钮
  * @author sailor
  */
-@defineElement("basic.dropdown-button", {
+@defineElement("eo-dropdown-button", {
   styleTexts: [styleText],
+  alias: ["basic.dropdown-button"],
 })
 class DropdownButton extends ReactNextElement {
   /**

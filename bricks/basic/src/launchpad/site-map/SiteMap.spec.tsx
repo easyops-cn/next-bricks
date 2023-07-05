@@ -63,9 +63,7 @@ describe("SiteMap", () => {
 
     expect(onLoadFn).toHaveBeenCalled();
 
-    fireEvent.click(
-      container.querySelector("basic\\.general-link") as HTMLElement
-    );
+    fireEvent.click(container.querySelector("eo-link") as HTMLElement);
 
     expect(launchpadService.pushVisitor).toHaveBeenCalledWith("app", {
       id: "cmdb-mode",

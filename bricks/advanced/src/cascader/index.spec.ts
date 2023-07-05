@@ -4,11 +4,9 @@ import { act } from "react-dom/test-utils";
 import "./index.jsx";
 import { CascaderBrick } from "./index.jsx";
 
-describe("advanced.general-cascader", () => {
+describe("eo-cascader", () => {
   test("basic usage", async () => {
-    const element = document.createElement(
-      "advanced.general-cascader"
-    ) as CascaderBrick;
+    const element = document.createElement("eo-cascader") as CascaderBrick;
     const onChange = jest.fn();
 
     element.options = [
@@ -59,9 +57,7 @@ describe("advanced.general-cascader", () => {
     });
     expect(element.shadowRoot).toBeTruthy();
 
-    expect(
-      element.shadowRoot?.querySelector("icons\\.general-icon")
-    ).toBeTruthy();
+    expect(element.shadowRoot?.querySelector("eo-icon")).toBeTruthy();
     act(() => {
       fireEvent.mouseDown(
         element.shadowRoot?.querySelector(".ant-select-selector") as HTMLElement
@@ -101,7 +97,9 @@ describe("advanced.general-cascader", () => {
         )
       );
     });
-    await (global as any).flushPromises();
+    await act(async () => {
+      await (global as any).flushPromises();
+    });
     expect(onChange).lastCalledWith(
       expect.objectContaining({
         type: "cascader.change",

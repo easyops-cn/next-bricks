@@ -5,7 +5,7 @@ import type { AntdIcon } from "@next-bricks/icons/antd-icon";
 
 // Specify brick dependencies:
 /*#__PURE__*/ wrapBrick("sl-alert");
-/*#__PURE__*/ wrapBrick("icons.antd-icon");
+/*#__PURE__*/ wrapBrick("eo-antd-icon");
 
 /**
  * 显示通知消息。
@@ -22,7 +22,7 @@ export function showNotification({
   message: string;
 }): void {
   const notification = document.createElement("sl-alert") as any;
-  const icon = document.createElement("icons.antd-icon") as AntdIcon;
+  const icon = document.createElement("eo-antd-icon") as AntdIcon;
   icon.slot = "icon";
   icon.theme = "filled";
   switch (type) {

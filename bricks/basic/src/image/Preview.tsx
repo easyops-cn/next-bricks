@@ -9,9 +9,7 @@ import useTransform from "./hooks/useTransform.js";
 import { BASE_SCALE_RATIO, MAX_SCALE, MIN_SCALE } from "./previewConfig.js";
 import { ImageListContext } from "./ImageListContext.js";
 
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 interface PreviewProps {
   onClose?: () => void;

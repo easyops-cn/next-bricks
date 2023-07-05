@@ -32,18 +32,17 @@ interface DrawerProps {
   footerSlot?: boolean;
 }
 const { defineElement, property, event, method } = createDecorators();
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 /**
  * 通用抽屉构件
  * @author sailor
  * @slot - 抽屉内容插槽
- * @slot footer - 抽屉底部插槽
+ * @slot footer 抽屉底部插槽
  */
-@defineElement("containers.general-drawer", {
+@defineElement("eo-drawer", {
   styleTexts: [styleText],
+  alias: ["containers.general-drawer"],
 })
 class Drawer extends ReactNextElement implements DrawerProps {
   /**
