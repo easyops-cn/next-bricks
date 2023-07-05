@@ -1,0 +1,20 @@
+{
+  "name": "@next-shared/common-bricks",
+  "version": "0.0.0",
+  "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/shared/common-bricks",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:easyops-cn/next-bricks.git"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "files": [
+    "common-bricks.json"
+  ],
+  "exports": {
+    ".": "./common-bricks.json",
+    "./common-bricks.json": "./common-bricks.json",
+    "./package.json": "./package.json"
+  }
+}
