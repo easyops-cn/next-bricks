@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect, useRef } from "react";
+import React, { CSSProperties, useEffect, useState } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import { unwrapProvider } from "@next-core/utils/general";
@@ -13,10 +13,11 @@ import { K, NS, locales } from "./i18n.js";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import classNames from "classnames";
-
 import { saveAs } from "file-saver";
 import Prism from "prismjs";
-import "prismjs/plugins/line-numbers/prism-line-numbers.js";
+import { Highlight } from "prism-react-renderer";
+import { preStyle, theme } from "./themes/tomorrow.js";
+import { loadLanguage } from "./utils.js";
 
 Prism.manual = true;
 initializeReactI18n(NS, locales);
@@ -55,7 +56,7 @@ class CodeDisplay extends ReactNextElement implements CodeDisplayProps {
    * 代码内容
    */
   @property()
-  accessor value: string | undefined;
+  accessor value: string = "";
 
   /**
    * 语言，具体查阅 [Supported languages](https://prismjs.com/#supported-languages)
@@ -139,24 +140,7 @@ export function CodeDisplayComponent(props: CodeDisplayProps) {
   } = props;
   const { t } = useTranslation(NS);
 
-  const codeRef = useRef<HTMLElement>(null);
-  const preRef = useRef<HTMLPreElement>(null);
-
-  useEffect(() => {
-    Prism.highlightElement(codeRef.current);
-  }, [value, language, hideLineNumber]);
-
-  useEffect(() => {
-    const handleResize = (): void => {
-      !hideLineNumber && Prism.plugins.lineNumbers.resize(preRef.current);
-    };
-    const resizeObserver = new ResizeObserver(handleResize);
-    resizeObserver.observe(preRef.current);
-
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, []);
+  const [, forceUpdate] = useState();
 
   const handleCopyIconClick = () => {
     copyToClipboard(value)
@@ -172,28 +156,57 @@ export function CodeDisplayComponent(props: CodeDisplayProps) {
     saveAs(new Blob([value]), exportFileName);
   };
 
+  useEffect(() => {
+    loadLanguage(language).then(
+      () => {
+        forceUpdate(null);
+      },
+      () => {
+        // do nothing
+      }
+    );
+  }, [language]);
+
   return (
     <div className="code-wrapper">
-      <pre
-        ref={preRef}
-        className={classNames(
-          "pre",
-          hideLineNumber ? "no-line-numbers" : "line-numbers"
-        )}
-        style={
-          {
-            "--max-lines": maxLines - 0 > 0 ? maxLines : null,
-            "--min-lines": minLines - 0 > 0 ? minLines : null,
-          } as CSSProperties
-        }
-      >
-        <code
-          className={classNames("code", `language-${language}`)}
-          ref={codeRef}
-        >
-          {value}
-        </code>
-      </pre>
+      <Highlight theme={theme} code={value} language={language} prism={Prism}>
+        {({
+          className: preClassName,
+          style,
+          tokens,
+          getLineProps,
+          getTokenProps,
+        }) => {
+          return (
+            <pre
+              style={
+                {
+                  ...preStyle,
+                  "--max-lines": maxLines - 0 > 0 ? maxLines : null,
+                  "--min-lines": minLines - 0 > 0 ? minLines : null,
+                } as CSSProperties
+              }
+              className={classNames(
+                preClassName,
+                hideLineNumber ? "no-line-numbers" : "line-numbers"
+              )}
+            >
+              {tokens.map((line, i) => {
+                return (
+                  <div key={i} {...getLineProps({ line })}>
+                    <span className="line-number">{i + 1}</span>
+                    <span>
+                      {line.map((token, key) => {
+                        return <span key={key} {...getTokenProps({ token })} />;
+                      })}
+                    </span>
+                  </div>
+                );
+              })}
+            </pre>
+          );
+        }}
+      </Highlight>
       <div className="tool-bar">
         {showCopyButton && (
           <WrappedIcon
