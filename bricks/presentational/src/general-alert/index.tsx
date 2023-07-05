@@ -27,7 +27,7 @@ export interface GeneralAlertProps {
 /**
  * 告警提示
  * @slot - 内容区
- * @slot title 标题
+ * @slot title - 标题
  */
 export
 @defineElement("eo-alert", {

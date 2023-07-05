@@ -24,9 +24,14 @@ events:
 
 ```jsx
 import { unwrapProvider } from "@next-core/utils/general";
+import type {
+  getIllustration as _getIllustration
+} from "@next-bricks/illustrations/data-providers/get-illustration";
 
 // Use `unwrapProvider` to get the original function of a provider
-const getIllustration = unwrapProvider("illustrations.get-illustration");
+const getIllustration = unwrapProvider<typeof _getIllustration>(
+  "illustrations.get-illustration"
+);
 
 function MyComponent() {
   const src = getIllustration({ category: "feedback", name: "fail" });

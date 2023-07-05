@@ -32,8 +32,8 @@ const { defineElement, property, event } = createDecorators();
 /**
  * 通用输入框构件
  * @author sailor
- * @slot prefix 输入框前置插槽
- * @slot suffix 输入框后置插槽
+ * @slot prefix - 输入框前置插槽
+ * @slot suffix - 输入框后置插槽
  */
 @defineElement("eo-input", {
   styleTexts: [styleText],

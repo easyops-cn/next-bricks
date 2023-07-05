@@ -45,3 +45,24 @@ children:
           - message: Warn!
             type: warn
 ```
+
+## Usage in pro-code
+
+```jsx
+import { unwrapProvider } from "@next-core/utils/general";
+import type { showNotification as _showNotification } from "@next-bricks/basic/data-providers/show-notification/show-notification";
+
+// Use `unwrapProvider` to get the original function of a provider
+const showNotification =
+  unwrapProvider < typeof _showNotification > "basic.show-notification";
+
+function MyComponent() {
+  const handleClick = useCallback(() => {
+    showNotification({
+      type: "success",
+      message: "Done!",
+    });
+  }, []);
+  return <button onClick={handleClick} />;
+}
+```
