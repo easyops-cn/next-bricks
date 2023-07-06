@@ -63,7 +63,6 @@ export function ReactUseBrick({
   );
 
   if (!renderResult) {
-    ignoredCallback?.();
     // Fallback when loading/
     return null;
     // return <span>🌀 Loading...</span>;
