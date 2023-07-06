@@ -30,7 +30,7 @@
     "html2canvas": "^1.4.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.12.0",
+    "@next-core/build-next-bricks": "^1.13.0",
     "@next-core/test-next": "^1.0.6"
   }
 }
