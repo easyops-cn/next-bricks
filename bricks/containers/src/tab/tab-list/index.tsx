@@ -18,7 +18,8 @@ interface TabListProps {
 /**
  * Tab 列表
  * @author sailorshe
- * @slot extra 头部插槽
+ * @slot extra - 头部插槽
+ * @slot [panel] - Tab 页插槽
  */
 @defineElement("eo-tab-list", {
   alias: ["containers.tab-list"],

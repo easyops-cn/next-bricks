@@ -60,7 +60,7 @@ Playground 中的示例列表来自约定的示例文件和文档文件。
 
 ````md
 ```html preview
-<basic.general-button type="primary">I'm a button</basic.general-button>
+<eo-button type="primary">I'm a button</eo-button>
 ```
 ````
 
@@ -76,9 +76,9 @@ Playground 中的示例列表来自约定的示例文件和文档文件。
 
 ````md
 ```yaml preview gap
-- brick: basic.general-button
-- brick: basic.general-button
-- brick: basic.general-button
+- brick: eo-button
+- brick: eo-button
+- brick: eo-button
 ```
 ````
 
@@ -97,7 +97,7 @@ Playground 中的示例列表来自约定的示例文件和文档文件。
  * @slot - 弹出层内容
  * @slot anchor - 触发弹出层的元素
  */
-@defineElement("basic.general-popover")
+@defineElement("eo-popover")
 class Popover extends ReactNextElement {}
 ```
 

@@ -29,10 +29,10 @@ import {
 } from "./utils/brickNextYaml.js";
 import "./index.css";
 
-registerJavaScript();
-registerTypeScript();
-registerYaml("brick_next_yaml");
-registerHtml();
+registerJavaScript(monaco);
+registerTypeScript(monaco);
+registerYaml(monaco, "brick_next_yaml");
+registerHtml(monaco);
 
 const { defineElement, property, event } = createDecorators();
 

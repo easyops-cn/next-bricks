@@ -33,8 +33,8 @@ const { defineElement, property } = createDecorators();
  * 通用卡片构件
  * @author julielai
  * @slot - 卡片内容
- * @slot extra 头部右侧拓展元素
- * @slot footer 底部拓展元素
+ * @slot extra - 头部右侧拓展元素
+ * @slot footer - 底部拓展元素
  */
 @defineElement("eo-card", {
   styleTexts: [styleText],

@@ -38,7 +38,7 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
  * 通用抽屉构件
  * @author sailor
  * @slot - 抽屉内容插槽
- * @slot footer 抽屉底部插槽
+ * @slot footer - 抽屉底部插槽
  */
 @defineElement("eo-drawer", {
   styleTexts: [styleText],
