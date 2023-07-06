@@ -8,16 +8,22 @@
 .backgroundSvg {
   position: absolute;
 }
-.content {
+.darkBgSvg {
+  position: absolute;
+  top: 13px;
+  left: 30px;
+}
+.lightContent {
   display: flex;
-  gap: 9px;
+  gap: 16px;
   align-items: center;
   position: relative;
   z-index: 1;
   height: 100%;
   padding: 0 12px;
+  background: url(../asset/images/lightBg.svg) no-repeat;
 }
-.title {
+.lightTitle {
   font-size: 20px;
   color: #fffdfc;
   letter-spacing: 4px;
@@ -25,4 +31,32 @@
   font-weight: 500;
   text-shadow: 3px 0 8px #178afe;
   flex: 1;
+}
+.darkContent {
+  display: flex;
+  gap: 30px;
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  background: url(../asset/images/darkBg.svg) no-repeat 30px 13px;
+}
+.darkTitle {
+  font-size: 21px;
+  color: #F8F4DF;
+  letter-spacing: 4px;
+  font-weight: 500;
+  text-shadow: 3px 0 8px #178afe;
+  flex: 1;
+}
+.darkIcon {
+  width: 30px;
+  height: 23px;
+  margin-top: 8px;
+  margin-left: 2px;
+  background: url(../asset/images/darkIcon.svg) no-repeat center;
+}
+.lightIcon {
+  width: 24px;
+  height: 24px;
+  background: url(../asset/images/lightIcon.svg) no-repeat center;
 }
