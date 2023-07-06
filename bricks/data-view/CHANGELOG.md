@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.10.0...@next-bricks/data-view@0.11.0) (2023-07-06)
+
+
+### Features
+
+* **data-view:** support lights-component-title component ([31fdaff](https://github.com/easyops-cn/next-bricks/commit/31fdaff80ce846d47e7d44b096e1e8d1a289f49d))
+
+
+
+
+
 # [0.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.9.5...@next-bricks/data-view@0.10.0) (2023-07-04)
 
 

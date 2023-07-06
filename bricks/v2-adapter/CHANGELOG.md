@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.0.18...@next-bricks/v2-adapter@0.1.0) (2023-07-06)
+
+
+### Bug Fixes
+
+* fix typo: `ea-` => `eo-` ([b445938](https://github.com/easyops-cn/next-bricks/commit/b4459385dd2c115e73fd0ec42155f5b839dd09d1))
+* **useBrick:** do not call ignoredCallback at initial ([0bb57dd](https://github.com/easyops-cn/next-bricks/commit/0bb57dd646db62f6f7c73f9c16c90dc8f741f445))
+
+
+### Features
+
+* rename common bricks to `eo-*` ([90cd2c8](https://github.com/easyops-cn/next-bricks/commit/90cd2c8af0a8f0165ede1a4ae25119c479b32dc0))
+
+
+
+
+
 ## [0.0.18](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.0.17...@next-bricks/v2-adapter@0.0.18) (2023-07-04)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter

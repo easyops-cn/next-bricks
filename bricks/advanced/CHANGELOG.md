@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.1.12...@next-bricks/advanced@0.2.0) (2023-07-06)
+
+
+### Features
+
+* rename common bricks to `eo-*` ([90cd2c8](https://github.com/easyops-cn/next-bricks/commit/90cd2c8af0a8f0165ede1a4ae25119c479b32dc0))
+
+
+
+
+
 ## [0.1.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.1.11...@next-bricks/advanced@0.1.12) (2023-07-04)
 
 **Note:** Version bump only for package @next-bricks/advanced

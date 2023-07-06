@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.1.4...@next-bricks/vs@0.2.0) (2023-07-06)
+
+
+### Bug Fixes
+
+* fix monaco-contribution usage ([37e0d4e](https://github.com/easyops-cn/next-bricks/commit/37e0d4e6d5c13a9172d29466e09a5c2bad9a3d84))
+
+
+### Features
+
+* code editor support brickNextYAML ([1aca0b2](https://github.com/easyops-cn/next-bricks/commit/1aca0b263879d5ffc5d9157d9bbe3574a6192595))
+* rename common bricks to `eo-*` ([90cd2c8](https://github.com/easyops-cn/next-bricks/commit/90cd2c8af0a8f0165ede1a4ae25119c479b32dc0))
+* update code ([668cb7c](https://github.com/easyops-cn/next-bricks/commit/668cb7ccd0cf968911d816f5a5ae29edc4f50ab3))
+
+
+
+
+
 ## [0.1.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.1.3...@next-bricks/vs@0.1.4) (2023-07-04)
 
 **Note:** Version bump only for package @next-bricks/vs

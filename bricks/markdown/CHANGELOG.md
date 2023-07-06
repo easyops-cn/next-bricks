@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.1.0...@next-bricks/markdown@1.2.0) (2023-07-06)
+
+
+### Features
+
+* rename common bricks to `eo-*` ([90cd2c8](https://github.com/easyops-cn/next-bricks/commit/90cd2c8af0a8f0165ede1a4ae25119c479b32dc0))
+
+
+
+
+
 # [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.0.5...@next-bricks/markdown@1.1.0) (2023-07-04)
 
 
