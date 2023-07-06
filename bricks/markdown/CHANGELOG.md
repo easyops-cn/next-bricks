@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.2.0...@next-bricks/markdown@1.3.0) (2023-07-06)
+
+
+### Features
+
+* rename general-icons to eo-icon ([87b71c8](https://github.com/easyops-cn/next-bricks/commit/87b71c812c058e8763a449a3417032a33616a400))
+* update menu-bar button style ([6e74e35](https://github.com/easyops-cn/next-bricks/commit/6e74e354a21e6609af24fc8dbe067601c4d4f814))
+* v3 markdown构件table支持tooltip显示操作选项 ([eda6cff](https://github.com/easyops-cn/next-bricks/commit/eda6cffb3bd618ede70dc9c6bc003f92175c4030))
+
+
+
+
+
 # [1.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.1.0...@next-bricks/markdown@1.2.0) (2023-07-06)
 
 
