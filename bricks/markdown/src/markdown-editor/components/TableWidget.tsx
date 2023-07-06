@@ -57,7 +57,7 @@ const TableTooltipButton: FC<{
         e.preventDefault();
       }}
     >
-      <WrappedIcon style={{ verticalAlign: "middle" }} {...icon} />
+      <WrappedIcon {...icon} />
     </button>
   );
 };
