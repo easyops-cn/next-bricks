@@ -12,8 +12,8 @@ Playground 左侧可以编写 HTML 或 YAML 代码，右侧显示实时预览。
 
 Playground 中的示例列表来自约定的示例文件和文档文件。
 
-- 示例文件：`src/**/*/example.html` 或 `src/**/*/example.yaml`
 - 文档文件：`docs/*.md`
+- 示例文件：`src/**/*/example.html` 或 `src/**/*/example.yaml`
 
 **不再推荐使用单独的示例文件，建议迁移至文档文件。**
 
@@ -48,7 +48,7 @@ Playground 中的示例列表来自约定的示例文件和文档文件。
 
 ### Markdown 文档
 
-手工编写的文档统一放在各个构件包内的 `docs` 目录中，以构件名（不带点号前的 namespace）作为文件名编写 markdown，可参考 [bricks/basic/docs/general-button.md](bricks/basic/docs/general-button.md)。
+手工编写的文档统一放在各个构件包内的 `docs` 目录中，以构件名（不带点号前的 namespace）作为文件名编写 markdown，可参考 [bricks/basic/docs/eo-button.md](bricks/basic/docs/eo-button.md)。
 
 该 markdown 文档的第一部分内容主要描述构件的用途，可以附上基本的示例。
 
