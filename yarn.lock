@@ -1890,6 +1890,18 @@
     lodash.debounce "^4.0.8"
     tslib "^2.5.0"
 
+"@milkdown/plugin-tooltip@7.2.0":
+  version "7.2.0"
+  resolved "https://registry.npmmirror.com/@milkdown/plugin-tooltip/-/plugin-tooltip-7.2.0.tgz#5e5dd424fcdaff40c483280689a0b3c45ae1fea1"
+  integrity sha512-OmtxxQwxfT+wH4qKJZz7A3CAVxQ82zUrim+dy7Cg51yZeZQUwiZn0GMLop47kPsmBZV0Cuz95HVobY4NY4Zkyg==
+  dependencies:
+    "@milkdown/exception" "7.2.0"
+    "@milkdown/utils" "7.2.0"
+    "@types/lodash.debounce" "^4.0.7"
+    lodash.debounce "^4.0.8"
+    tippy.js "^6.3.7"
+    tslib "^2.5.0"
+
 "@milkdown/plugin-upload@7.2.0":
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/@milkdown/plugin-upload/-/plugin-upload-7.2.0.tgz#c3388cfb575618e3806a3154f7ebdc36703892ee"
@@ -2724,6 +2736,27 @@
   integrity sha512-jjMmK1tnZbm1Jq5a7fBliM4gQwjxMU7TFoRNwIyzwlO+eHPRCFv/Nv+H/Gi1jc3WR7QURG8D5d0Tn12YGrUqBQ==
   dependencies:
     esquery "^1.0.1"
+
+"@popperjs/core@^2.9.0":
+  version "2.11.8"
+  resolved "https://registry.npmmirror.com/@popperjs/core/-/core-2.11.8.tgz#6b79032e760a0899cd4204710beede972a3a185f"
+  integrity sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==
+
+"@prosemirror-adapter/core@0.2.5":
+  version "0.2.5"
+  resolved "https://registry.npmmirror.com/@prosemirror-adapter/core/-/core-0.2.5.tgz#fefd55ac89ace164bffa9cbee218a4f15da50dc3"
+  integrity sha512-oeSamDlVr4WMhRlWW6BQp6sekcYa5yvndzwGXTg6Me1e0KMPMAdwOIoTyChqhj4HCTy3SZKu1cSSaYAY9eptKQ==
+  dependencies:
+    tslib "^2.5.0"
+
+"@prosemirror-adapter/react@^0.2.2":
+  version "0.2.5"
+  resolved "https://registry.npmmirror.com/@prosemirror-adapter/react/-/react-0.2.5.tgz#236aafb606160b61e7f3d210b4a2e05aa90d7a44"
+  integrity sha512-AMUoNV9vjkSb2doD+SthOsFDunAo+YIgL1XVFv+EFkKXEarvaJyqE8Y0G0zY4MQvfvFC+n9xG9WSCFc6g36ieQ==
+  dependencies:
+    "@prosemirror-adapter/core" "0.2.5"
+    nanoid "^4.0.2"
+    tslib "^2.5.0"
 
 "@rc-component/context@^1.3.0":
   version "1.3.0"
@@ -10146,7 +10179,7 @@ nanoid@^3.3.6:
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.6.tgz#443380c856d6e9f9824267d960b4236ad583ea4c"
   integrity sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==
 
-nanoid@^4.0.0:
+nanoid@^4.0.0, nanoid@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-4.0.2.tgz#140b3c5003959adbebf521c170f282c5e7f9fb9e"
   integrity sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==
@@ -13788,6 +13821,13 @@ tiny-warning@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/tiny-warning/-/tiny-warning-1.0.3.tgz#94a30db453df4c643d0fd566060d60a875d84754"
   integrity sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==
+
+tippy.js@^6.3.7:
+  version "6.3.7"
+  resolved "https://registry.npmmirror.com/tippy.js/-/tippy.js-6.3.7.tgz#8ccfb651d642010ed9a32ff29b0e9e19c5b8c61c"
+  integrity sha512-E1d3oP2emgJ9dRQZdf3Kkn0qJgI6ZLpyS5z6ZkY1DF3kaQaBsGZsndEpHwx+eC+tYM41HaSNvNtLx8tU57FzTQ==
+  dependencies:
+    "@popperjs/core" "^2.9.0"
 
 title-case@^3.0.3:
   version "3.0.3"

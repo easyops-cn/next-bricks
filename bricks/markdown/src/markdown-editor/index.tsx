@@ -1,10 +1,15 @@
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
-import type { CmdKey } from "@milkdown/core";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import styleText from "./markdown-editor.shadow.css";
+import { ObjectStoreApi_putObject } from "@next-api-sdk/object-store-sdk";
+import type {
+  GeneralIcon,
+  GeneralIconProps,
+} from "@next-bricks/icons/general-icon";
+import type { CmdKey } from "@milkdown/core";
 import { defaultValueCtx, Editor, rootCtx } from "@milkdown/core";
 import { Milkdown, MilkdownProvider, useEditor } from "@milkdown/react";
 import {
@@ -21,21 +26,28 @@ import { upload, uploadConfig, Uploader } from "@milkdown/plugin-upload";
 import { callCommand } from "@milkdown/utils";
 import type { Node } from "@milkdown/prose/model";
 import { listener, listenerCtx } from "@milkdown/plugin-listener";
-import { ObjectStoreApi_putObject } from "@next-api-sdk/object-store-sdk";
 import {
   gfm,
   toggleStrikethroughCommand,
   insertTableCommand,
 } from "@milkdown/preset-gfm";
 import { indent } from "@milkdown/plugin-indent";
-import type {
-  GeneralIcon,
-  GeneralIconProps,
-} from "@next-bricks/icons/general-icon";
+import { Ctx, MilkdownPlugin } from "@milkdown/ctx";
+import {
+  usePluginViewFactory,
+  ProsemirrorAdapterProvider,
+  useWidgetViewFactory,
+} from "@prosemirror-adapter/react";
+import {
+  tableSelectorPlugin,
+  TableTooltip,
+  tableTooltip,
+  tableTooltipCtx,
+} from "./components/TableWidget.tsx";
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
-const Button: FC<{
+const MenuButton: FC<{
   icon: GeneralIconProps;
   onClick?: () => void;
   tooltip?: string;
@@ -118,13 +130,15 @@ class MarkdownEditor extends ReactNextElement {
   render() {
     return (
       <MilkdownProvider>
-        <MarkdownEditorComponent
-          curElement={this}
-          bucketName={this.bucketName}
-          value={this.value}
-          onUploadImage={this.handleUploadImage}
-          onMarkdownValueChange={this.handleMarkdownValueChange}
-        />
+        <ProsemirrorAdapterProvider>
+          <MarkdownEditorComponent
+            curElement={this}
+            bucketName={this.bucketName}
+            value={this.value}
+            onUploadImage={this.handleUploadImage}
+            onMarkdownValueChange={this.handleMarkdownValueChange}
+          />
+        </ProsemirrorAdapterProvider>
       </MilkdownProvider>
     );
   }
@@ -186,6 +200,25 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
     return nodes;
   };
 
+  const pluginViewFactory = usePluginViewFactory();
+  const widgetViewFactory = useWidgetViewFactory();
+
+  const gfmPlugins: MilkdownPlugin[] = useMemo(() => {
+    return [
+      gfm,
+      tableTooltip,
+      tableTooltipCtx,
+      (ctx: Ctx) => async () => {
+        ctx.set(tableTooltip.key, {
+          view: pluginViewFactory({
+            component: TableTooltip,
+          }),
+        });
+      },
+      tableSelectorPlugin(widgetViewFactory),
+    ].flat();
+  }, [pluginViewFactory, widgetViewFactory]);
+
   const { get } = useEditor((root: any) => {
     return Editor.make()
       .config((ctx: any) => {
@@ -214,7 +247,8 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
       .use(history)
       .use(gfm)
       .use(indent)
-      .use(upload);
+      .use(upload)
+      .use(gfmPlugins);
   }, []);
 
   function call<T>(command: CmdKey<T>, payload?: T) {
@@ -225,47 +259,47 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
     <div className="markdown-container">
       <div className="menu-container-outter">
         <div className="menu-container-inner prose">
-          <Button
+          <MenuButton
             icon={{ lib: "antd", icon: "undo" }}
             onClick={() => call(undoCommand.key)}
             tooltip="撤销"
           />
-          <Button
+          <MenuButton
             icon={{ lib: "antd", icon: "redo" }}
             onClick={() => call(redoCommand.key)}
             tooltip="重做"
           />
-          <Button
+          <MenuButton
             icon={{ lib: "antd", icon: "bold" }}
             onClick={() => call(toggleStrongCommand.key)}
             tooltip="粗体"
           />
-          <Button
+          <MenuButton
             icon={{ lib: "antd", icon: "italic" }}
             onClick={() => call(toggleEmphasisCommand.key)}
             tooltip="斜体"
           />
-          <Button
+          <MenuButton
             icon={{ lib: "antd", icon: "strikethrough" }}
             onClick={() => call(toggleStrikethroughCommand.key)}
             tooltip="删除线"
           />
-          <Button
+          <MenuButton
             icon={{ lib: "antd", icon: "table" }}
             onClick={() => call(insertTableCommand.key)}
             tooltip="表格"
           />
-          <Button
+          <MenuButton
             icon={{ lib: "antd", icon: "unordered-list" }}
             onClick={() => call(wrapInBulletListCommand.key)}
             tooltip="无序列表"
           />
-          <Button
+          <MenuButton
             icon={{ lib: "antd", icon: "ordered-list" }}
             onClick={() => call(wrapInOrderedListCommand.key)}
             tooltip="有序列表"
           />
-          <Button
+          <MenuButton
             icon={{ lib: "fa", icon: "quote-right" }}
             onClick={() => call(wrapInBlockquoteCommand.key)}
             tooltip="块引用"

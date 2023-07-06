@@ -45,10 +45,12 @@
     "@milkdown/theme-nord": "7.2.0",
     "@milkdown/transformer": "7.2.0",
     "@milkdown/utils": "7.2.0",
+    "@milkdown/plugin-tooltip": "7.2.0",
     "@next-api-sdk/object-store-sdk": "1.1.0",
     "@next-core/theme": "^1.1.1",
     "@type-config/strict": "^1.2.1",
-    "react": "0.0.0-experimental-ee8509801-20230117"
+    "react": "0.0.0-experimental-ee8509801-20230117",
+    "@prosemirror-adapter/react": "^0.2.2"
   },
   "devDependencies": {
     "@next-core/build-next-bricks": "^1.13.0",
