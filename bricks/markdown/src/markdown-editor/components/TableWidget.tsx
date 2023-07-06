@@ -41,9 +41,7 @@ export const tableTooltipCtx = $ctx<TooltipProvider | null, "tableTooltip">(
   "tableTooltip"
 );
 
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 const TableTooltipButton: FC<{
   icon: GeneralIconProps;
