@@ -161,4 +161,7 @@
   --paragraph-width-base: 1px;
 
   /* ============== 线框 End ============== */
+
+  /* 按钮 */
+  --button-text-color: #40d0db;
 }

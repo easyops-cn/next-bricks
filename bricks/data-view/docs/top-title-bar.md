@@ -7,7 +7,7 @@
 ```yaml preview
 - brick: data-view.top-title-bar
   properties:
-    text: 实时数据可视化大屏
+    text: 标题
 ```
 
 ### Smaple
@@ -15,7 +15,7 @@
 ```yaml preview
 - brick: data-view.top-title-bar
   properties:
-    text: 实时数据可视化大屏
+    text: 标题
     type: sample
 ```
 
@@ -24,6 +24,6 @@
 ```yaml preview
 - brick: data-view.top-title-bar
   properties:
-    text: 实时数据可视化大屏
+    text: 标题
     type: square
 ```

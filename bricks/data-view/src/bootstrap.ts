@@ -29,3 +29,4 @@ import "./brick-notification/index.js";
 import "./tabs-page-title/index.js";
 import "./top-title-bar/index.js";
 import "./lights-component-title/index.js";
+import "./hi-tech-button/index.js";
