@@ -8,23 +8,17 @@ declare module "*.css" {
   export default css;
 }
 
-declare module "*.css?shadow" {
-  const css: string;
-  export default css;
-}
-
-declare module "*.less" {
-  const lessValue: string;
-  export default lessValue;
-}
-
 interface SvgrComponent
   extends React.FunctionComponent<React.SVGAttributes<SVGElement>> {}
 
 declare module "*.svg" {
+  const ReactComponent: SvgrComponent;
+  export default ReactComponent;
+}
+
+declare module "*.svg?url" {
   const url: string;
   export default url;
-  export const ReactComponent: SvgrComponent;
 }
 
 declare module "*.png" {

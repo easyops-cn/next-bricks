@@ -42,6 +42,57 @@ Playground 中的示例列表来自约定的示例文件和文档文件。
 
 先启动构件的实时打包 `npx lerna run start --scope @next-bricks/basic`，然后参考前一章节启动 playground。
 
+### SVG
+
+在构件 JS/TS 代码中引入 SVG 文件时，默认会像 PNG/JPEG 一样打包成图片资源文件，例如：
+
+```jsx
+import MySvg from "./my.svg";
+
+// MySvg 是图片地址
+<img src={MySvg} />;
+```
+
+有时候我们希望同时控制这些 SVG 内部的一些元素的样式，这时可以在 `build.config.js` 中启用 `svgAsReactComponent`，将 SVG 转换为 React 组件，例如：
+
+```js
+// File: build.config.js
+// @ts-check
+/** @type {import("@next-core/build-next-bricks").BuildNextBricksConfig} */
+export default {
+  svgAsReactComponent: true,
+};
+```
+
+```tsx
+// File: src/my-brick/index.tsx
+import MySvg from "./image.svg";
+
+// MySvg 是 React 组件
+<MySvg className="my-icon" />;
+```
+
+```css
+/* File: src/my-brick/styles.shadow.css */
+.my-icon path {
+  fill: green;
+}
+```
+
+当一个构件包启用 `svgAsReactComponent` 后，如果希望某些指定 SVG 仍按原图片资源处理的，可以添加 [resource query](https://webpack.js.org/configuration/module/#ruleresourcequery)，例如：
+
+```tsx
+// 末尾添加 `?url`
+import MySvgUrl from "./image.svg?url";
+import MySvgComp from "./icon.svg";
+
+// MySvgUrl 是图片地址
+<img src={MySvgUrl} />
+
+// MySvgComp 是 React 组件
+<MySvgComp />
+```
+
 ## 构件文档
 
 构件文档由手工编写的 markdown 文档和写在源代码中的注释共同组成。手工编写的文档主要提供场景化的示例，而源代码中的注释主要提供构件的属性、插槽、事件和方法等 API 的说明。
