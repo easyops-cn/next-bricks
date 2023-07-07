@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import styleText from "./styles.shadow.css";
-import SVGFile from "./component.js";
 import variablesStyleText from "../data-view-variables.shadow.css";
 
 export type buttonType =
@@ -72,11 +71,6 @@ export function HiTechButtonComponent({
         className={`buttonWrapper ${type}`}
         style={buttonStyle}
       >
-        {type === "default" && SVGFile.normalButtonSvg()}
-        {type === "parallelogram" && SVGFile.parallelogramButtonSvg()}
-        {type === "stereoscopic" && SVGFile.stereoscopicButtonSvg()}
-        {type === "shading" && SVGFile.shadingButtonSvg()}
-        {type === "round" && SVGFile.roundButtonSvg()}
         <div className="button-container">
           <slot />
         </div>
