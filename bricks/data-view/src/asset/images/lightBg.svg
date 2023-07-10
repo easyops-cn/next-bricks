@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="568px" height="38.5075px" viewBox="0 0 568 38.5075" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>容器标题背景备份 2</title>
+    <defs>
+        <polygon id="path-1" points="-4.83397465e-13 0 568 0 568 38 -4.83397465e-13 38"></polygon>
+        <radialGradient cx="5.49951298%" cy="142.661675%" fx="5.49951298%" fy="142.661675%" r="10572.0343%" gradientTransform="translate(0.055, 1.4266), scale(0.0021, 1), rotate(87.6881), scale(1, 2.6857), translate(-0.055, -1.4266)" id="radialGradient-3">
+            <stop stop-color="#99B3CF" offset="0%"></stop>
+            <stop stop-color="#8CB3F8" stop-opacity="0" offset="100%"></stop>
+        </radialGradient>
+        <linearGradient x1="8.25189688%" y1="100%" x2="0.341667393%" y2="100%" id="linearGradient-4">
+            <stop stop-color="#8197B3" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#226CBF" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-5" points="-4.79142205e-13 37 483.30127 37 483.30127 38 -4.79142205e-13 38"></polygon>
+        <linearGradient x1="26.2355307%" y1="100%" x2="100%" y2="100%" id="linearGradient-6">
+            <stop stop-color="#BCFFFC" stop-opacity="0.05" offset="0%"></stop>
+            <stop stop-color="#BCFFFC" offset="40.2671547%"></stop>
+            <stop stop-color="#D2FFFD" stop-opacity="0.928149407" offset="48.3528191%"></stop>
+            <stop stop-color="#BCFFFC" stop-opacity="0.860654311" offset="56.7498907%"></stop>
+            <stop stop-color="#BCFFFC" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+        <polyline id="path-7" points="9 37.51 22.3877726 37.510053 357 38.01"></polyline>
+        <filter x="-3.4%" y="-3300.0%" width="106.9%" height="5500.0%" filterUnits="objectBoundingBox" id="filter-8">
+            <feMorphology radius="1.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="-3" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feMorphology radius="1.5" operator="erode" in="SourceAlpha" result="shadowInner"></feMorphology>
+            <feOffset dx="0" dy="-3" in="shadowInner" result="shadowInner"></feOffset>
+            <feComposite in="shadowOffsetOuter1" in2="shadowInner" operator="out" result="shadowOffsetOuter1"></feComposite>
+            <feGaussianBlur stdDeviation="3.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.276   0 0 0 0 0.4182   0 0 0 0 0.69  0 0 0 0.31 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="47.7970217%" y1="50.000399%" x2="76.3017589%" y2="50.0002374%" id="linearGradient-9">
+            <stop stop-color="#BCFFFC" stop-opacity="0.05" offset="0%"></stop>
+            <stop stop-color="#BCFFFC" offset="40.2671547%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0.928149407" offset="48.3528191%"></stop>
+            <stop stop-color="#BCFFFC" stop-opacity="0.860654311" offset="56.7498907%"></stop>
+            <stop stop-color="#BCFFFC" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+        <polyline id="path-10" points="8.5 38.5 17.1919999 38.5 362.5 37.515"></polyline>
+        <filter x="-3.4%" y="-1649.2%" width="106.8%" height="2798.5%" filterUnits="objectBoundingBox" id="filter-11">
+            <feMorphology radius="1.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="-3" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feMorphology radius="1.5" operator="erode" in="SourceAlpha" result="shadowInner"></feMorphology>
+            <feOffset dx="0" dy="-3" in="shadowInner" result="shadowInner"></feOffset>
+            <feComposite in="shadowOffsetOuter1" in2="shadowInner" operator="out" result="shadowOffsetOuter1"></feComposite>
+            <feGaussianBlur stdDeviation="3.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.276   0 0 0 0 0.4182   0 0 0 0 0.69  0 0 0 0.31 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="26.2355307%" y1="100%" x2="100%" y2="100%" id="linearGradient-12">
+            <stop stop-color="#1F87FF" stop-opacity="0.05" offset="0%"></stop>
+            <stop stop-color="#1F87FF" offset="51.2723483%"></stop>
+            <stop stop-color="#1F87FF" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+        <polyline id="path-13" points="9 38 22.0085017 34.51 377.639473 34.51"></polyline>
+        <filter x="-5.3%" y="-673.4%" width="110.4%" height="1273.3%" filterUnits="objectBoundingBox" id="filter-14">
+            <feGaussianBlur stdDeviation="4" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <filter x="-6.6%" y="-816.6%" width="113.1%" height="1559.9%" filterUnits="objectBoundingBox" id="filter-15">
+            <feMorphology radius="1.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="-3" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feMorphology radius="1.5" operator="erode" in="SourceAlpha" result="shadowInner"></feMorphology>
+            <feOffset dx="0" dy="-3" in="shadowInner" result="shadowInner"></feOffset>
+            <feComposite in="shadowOffsetOuter1" in2="shadowInner" operator="out" result="shadowOffsetOuter1"></feComposite>
+            <feGaussianBlur stdDeviation="3.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.276   0 0 0 0 0.4182   0 0 0 0 0.69  0 0 0 0.31 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="组件标题背景" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="组件标题背景切图" transform="translate(-166, -692)">
+            <g id="容器标题背景备份-2" transform="translate(166, 692)">
+                <g id="容器标题背景备份">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="蒙版" fill-opacity="0.28" fill="#062E77" xlink:href="#path-1"></use>
+                    <g id="编组-2" mask="url(#mask-2)">
+                        <g id="矩形备份-19">
+                            <use fill="url(#radialGradient-3)" xlink:href="#path-5"></use>
+                            <use fill="url(#linearGradient-4)" xlink:href="#path-5"></use>
+                        </g>
+                        <polygon id="矩形备份-26" fill="#0D2B6C" points="12 0 563 0 563 1 12 1"></polygon>
+                        <polygon id="矩形备份-28" fill="#388BDB" points="-1.58623115e-14 0 16 0 16 1 -1.58623115e-14 1"></polygon>
+                        <rect id="矩形备份-29" fill="#388BDB" x="552" y="0" width="16" height="1"></rect>
+                    </g>
+                </g>
+                <g id="路径-14备份-5" opacity="0.827566964" transform="translate(183, 37.76) scale(-1, 1) translate(-183, -37.76)">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-8)" xlink:href="#path-7"></use>
+                    <use stroke="url(#linearGradient-6)" stroke-width="3" xlink:href="#path-7"></use>
+                </g>
+                <g id="路径-14备份-5" opacity="0.324614025" transform="translate(185.5, 38.0075) scale(-1, -1) translate(-185.5, -38.0075)">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-11)" xlink:href="#path-10"></use>
+                    <use stroke="url(#linearGradient-9)" stroke-width="3" xlink:href="#path-10"></use>
+                </g>
+                <g id="路径-14备份-6" filter="url(#filter-14)" transform="translate(193.3197, 36.255) scale(-1, 1) translate(-193.3197, -36.255)">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-15)" xlink:href="#path-13"></use>
+                    <use stroke="url(#linearGradient-12)" stroke-width="3" xlink:href="#path-13"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
