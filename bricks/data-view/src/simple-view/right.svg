@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="610px" height="1104px" viewBox="0 0 610 1104" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>框架-右边</title>
+    <defs>
+        <radialGradient cx="1.51547782%" cy="43.6720012%" fx="1.51547782%" fy="43.6720012%" r="9.13822703%" gradientTransform="translate(0.0152, 0.4367), scale(1, 0.5426), scale(1, 10.5833), translate(-0.0152, -0.4367)" id="radialGradient-1">
+            <stop stop-color="#BFD4EF" offset="0%"></stop>
+            <stop stop-color="#BFD4EF" stop-opacity="0" offset="100%"></stop>
+        </radialGradient>
+        <linearGradient x1="116.564714%" y1="38.4452941%" x2="3.49564118%" y2="38.4452941%" id="linearGradient-2">
+            <stop stop-color="#1C3A75" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#0D43BE" stop-opacity="0.1" offset="63.4361501%"></stop>
+            <stop stop-color="#306DFF" stop-opacity="0.3" offset="100%"></stop>
+        </linearGradient>
+        <radialGradient cx="1.51547782%" cy="43.6720012%" fx="1.51547782%" fy="43.6720012%" r="9.13822703%" gradientTransform="translate(0.0152, 0.4367), scale(1, 0.5511), scale(1, 10.5833), translate(-0.0152, -0.4367)" id="radialGradient-3">
+            <stop stop-color="#9AC2F4" offset="0%"></stop>
+            <stop stop-color="#BFD4EF" stop-opacity="0" offset="100%"></stop>
+        </radialGradient>
+        <radialGradient cx="1.10095718%" cy="45.2005177%" fx="1.10095718%" fy="45.2005177%" r="25.87039%" gradientTransform="translate(0.011, 0.452), scale(1, 0.5511), rotate(92.4391), translate(-0.011, -0.452)" id="radialGradient-4">
+            <stop stop-color="#9CF1FF" offset="0%"></stop>
+            <stop stop-color="#9CF1FF" stop-opacity="0" offset="100%"></stop>
+        </radialGradient>
+        <path d="M61,4 L610,4 L610,4 L610,1091 L61,1091 C33.3857625,1091 11,1068.61424 11,1041 L11,54 C11,26.3857625 33.3857625,4 61,4 Z" id="path-5"></path>
+        <polygon id="path-6" points="21.1841135 500.184114 29.4782011 505.669828 37.1841135 500.184114"></polygon>
+        <filter x="-162.3%" y="-282.6%" width="419.0%" height="682.6%" filterUnits="objectBoundingBox" id="filter-7">
+            <feMorphology radius="4.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="0" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feMorphology radius="4.5" operator="erode" in="SourceAlpha" result="shadowInner"></feMorphology>
+            <feOffset dx="0" dy="0" in="shadowInner" result="shadowInner"></feOffset>
+            <feComposite in="shadowOffsetOuter1" in2="shadowInner" operator="out" result="shadowOffsetOuter1"></feComposite>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.0431372549   0 0 0 0 0.976470588   0 0 0 0 0.996078431  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <polygon id="path-8" points="8.18411354 498.184114 20.6252448 506.412685 32.1841135 498.184114"></polygon>
+        <filter x="-108.2%" y="-188.4%" width="312.7%" height="488.4%" filterUnits="objectBoundingBox" id="filter-9">
+            <feMorphology radius="4.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="0" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feMorphology radius="4.5" operator="erode" in="SourceAlpha" result="shadowInner"></feMorphology>
+            <feOffset dx="0" dy="0" in="shadowInner" result="shadowInner"></feOffset>
+            <feComposite in="shadowOffsetOuter1" in2="shadowInner" operator="out" result="shadowOffsetOuter1"></feComposite>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.0431372549   0 0 0 0 0.976470588   0 0 0 0 0.996078431  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="设计规范" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="框架样式二切图" transform="translate(-2165, -86)">
+            <g id="框架-右边" transform="translate(2470, 638) scale(-1, 1) translate(-2470, -638)translate(2165, 86)">
+                <path d="M598,1 L598,1103 L50,1103 C36.4690236,1103 24.2190236,1097.51549 15.3517677,1088.64823 C6.48451181,1079.78098 1,1067.53098 1,1054 L1,50 C1,36.4690236 6.48451181,24.2190236 15.3517677,15.3517677 C24.2190236,6.48451181 36.4690236,1 50,1 L598,1 Z" id="矩形" stroke="url(#radialGradient-1)" stroke-width="2" opacity="0.773755755"></path>
+                <g id="矩形" stroke-linejoin="square" stroke-width="3">
+                    <path stroke="url(#radialGradient-3)" d="M608.5,5.5 L608.5,1089.5 L61,1089.5 C47.6070948,1089.5 35.4820948,1084.07145 26.7053211,1075.29468 C17.9285474,1066.51791 12.5,1054.39291 12.5,1041 L12.5,54 C12.5,40.6070948 17.9285474,28.4820948 26.7053211,19.7053211 C35.4820948,10.9285474 47.6070948,5.5 61,5.5 L608.5,5.5 Z" fill-opacity="0.22" fill="url(#linearGradient-2)" fill-rule="evenodd"></path>
+                    <path stroke="url(#radialGradient-4)" d="M608.5,5.5 L608.5,1089.5 L61,1089.5 C47.6070948,1089.5 35.4820948,1084.07145 26.7053211,1075.29468 C17.9285474,1066.51791 12.5,1054.39291 12.5,1041 L12.5,54 C12.5,40.6070948 17.9285474,28.4820948 26.7053211,19.7053211 C35.4820948,10.9285474 47.6070948,5.5 61,5.5 L608.5,5.5 Z"></path>
+                </g>
+                <g id="路径-5" transform="translate(29.1841, 502.927) rotate(-90) translate(-29.1841, -502.927)">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-7)" xlink:href="#path-6"></use>
+                    <use stroke="#DAF9FF" stroke-width="5" xlink:href="#path-6"></use>
+                </g>
+                <g id="路径-5" transform="translate(20.1841, 502.2984) rotate(-90) translate(-20.1841, -502.2984)">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-9)" xlink:href="#path-8"></use>
+                    <use stroke="#DAF9FF" stroke-width="5" xlink:href="#path-8"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -31,3 +31,5 @@ import "./top-title-bar/index.js";
 import "./lights-component-title/index.js";
 import "./hi-tech-button/index.js";
 import "./tech-mesh-base-view/index.js";
+import "./simple-view/index.js";
+import "./dot-view/index.js";
