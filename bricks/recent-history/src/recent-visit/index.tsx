@@ -120,7 +120,7 @@ export function RecentVisitComponent(props: RecentVisitProps) {
     };
   }, []);
 
-  return (
+  return recentVisits.length ? (
     <div className="recent-visit-wrapper">
       <span className="recent-visit-label">{t(K.RECENT_VISIT) + ": "}</span>
       {recentVisits.map((data) => {
@@ -131,5 +131,5 @@ export function RecentVisitComponent(props: RecentVisitProps) {
         );
       })}
     </div>
-  );
+  ) : null;
 }
