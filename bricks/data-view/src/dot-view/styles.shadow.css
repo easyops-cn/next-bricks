@@ -1,0 +1,28 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+.wrapper {
+  width: calc( 100vw - 10px );
+  height: calc( 100vh - 6px );
+  background-image: url(./images/background.png);
+  background-position: center;
+  background-size: contain;
+}
+.bgDotWrapper {
+  width: 100%;
+  height: 100%;
+  background-image: url(./images/dot-bg.png);
+  background-position: center;
+}
+.borderWrapper {
+  width: 100%;
+  height:100%;
+  background-image: url(./images/left.svg),url(./images/bottom-left.svg),url(./images/bottom-center.svg),url(./images/bottom-right.svg),url(./images/right.svg);
+  background-position: left 148px, 2.9% calc( 100vh - 34px ), center calc( 100vh - 50px ), 97.5% calc( 100vh - 34px ),right 148px;
+  background-repeat: no-repeat;
+  background-size: auto calc(100vh - 168px), 33.85% auto, 22.3% auto, 33.85% auto, auto calc(100vh - 168px)
+} 

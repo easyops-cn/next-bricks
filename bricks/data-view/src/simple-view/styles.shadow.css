@@ -1,0 +1,18 @@
+:host {
+    display: inline-block;
+  }
+  
+  :host([hidden]) {
+    display: none;
+  }
+  .wrapper {
+    width: calc( 100vw - 10px );
+    height: calc( 100vh - 6px );
+    /* background-color: #151718; */
+    background-image: url("./left.svg"), url("./right.svg"), url("./bottom.svg");
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: 0 0,  calc( 100vw - 625px) 0, 0 calc( 100vh - 198px );
+  
+  }
+  
+  
