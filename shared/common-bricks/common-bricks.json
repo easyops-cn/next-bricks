@@ -42,7 +42,12 @@
     "eo-switch",
     "eo-form-item"
   ],
-  "presentational": ["eo-code-display", "eo-alert", "eo-descriptions"],
+  "presentational": [
+    "eo-code-display",
+    "eo-alert",
+    "eo-descriptions",
+    "eo-pagination"
+  ],
   "advanced": ["eo-cascader", "eo-table"],
   "markdown": ["eo-markdown-editor"],
   "shoelace": [

@@ -1,0 +1,121 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+eo-icon {
+  line-height: 0.25em;
+}
+
+.pagination-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* pagination-total */
+.pagination-total {
+  margin-right: auto;
+  font-size: 14px;
+  color: var(--text-color-disabled);
+  line-height: 20px;
+}
+
+.pagination-total .pagination-total-number {
+  color: var(--text-color-default);
+}
+
+/* pagination-size-changer */
+.pagination-size-changer {
+  margin-right: 20px;
+  color: var(--text-color-default);
+}
+
+.pagination-size-selection {
+  font-size: 14px;
+  line-height: 16px;
+  cursor: pointer;
+}
+
+.pagination-size-selector-item {
+  padding: 6px;
+  border-radius: var(--medius-border-radius);
+  cursor: pointer;
+}
+
+.pagination-size-selector-active {
+  background-color: var(--v8-top-menu-item-selected-bg) !important;
+}
+
+.pagination-size-selector-item:hover {
+  background-color: var(--antd-item-hover-bg);
+}
+
+/* pagination-page */
+.pagination-page {
+  display: flex;
+  gap: 10px;
+  color: var(--text-color-default);
+  user-select: none;
+}
+
+.pagination-page-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 12px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pagination-page-item-number {
+  border: 1px solid transparent;
+}
+
+.pagination-page-item:not(.pagination-page-item-disabled):hover {
+  color: var(--theme-doderblue-color);
+}
+
+.pagination-page-item-active {
+  color: var(--theme-doderblue-color);
+  border-color: var(--theme-doderblue-color);
+}
+
+.pagination-page-item-disabled {
+  color: var(--text-color-disabled);
+  border-color: var(--text-color-disabled);
+  cursor: not-allowed;
+}
+
+.pagination-page-item-jump {
+  position: relative;
+}
+
+.pagination-page-item-jump:hover .pagination-page-item-jump-arrow {
+  opacity: 1;
+}
+
+.pagination-page-item-jump:hover .pagination-page-item-jump-ellipsis {
+  opacity: 0;
+}
+
+.pagination-page-item-jump-arrow {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.pagination-page-item-jump-ellipsis {
+  opacity: 1;
+  transition: opacity 0.2s;
+}
