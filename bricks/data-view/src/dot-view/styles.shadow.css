@@ -1,0 +1,45 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+.wrapper {
+  width: calc(100vw - 10px);
+  height: calc(100vh - 6px);
+  background-image: url(./images/background.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  position: absolute;
+}
+.bgDotWrapper {
+  width: 100%;
+  height: 100%;
+  background-image: url(./images/dot-bg.png);
+  background-position: center;
+}
+.borderWrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+}
+.titleBar {
+  height: 30px;
+}
+.content {
+  height: calc(100% - 30px);
+  width: 100%;
+  background-image: url(./images/left.svg), url(./images/bottom-left.svg),
+    url(./images/bottom-center.svg), url(./images/bottom-right.svg),
+    url(./images/right.svg);
+  background-position: left top, left bottom, center bottom, bottom right,
+    right top;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
