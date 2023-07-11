@@ -52,11 +52,7 @@ import { CodeBlock } from "./components/CodeBlock.tsx";
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
-const MenuButton: FC<{
-  icon: GeneralIconProps;
-  onClick?: () => void;
-  tooltip?: string;
-}> = ({ icon, onClick, tooltip }) => {
+const MenuButton: FC<MenuButtonProps> = ({ icon, onClick, tooltip }) => {
   return (
     <div
       className="menu-btn-box"
@@ -70,6 +66,12 @@ const MenuButton: FC<{
     </div>
   );
 };
+
+export interface MenuButtonProps {
+  icon: GeneralIconProps;
+  onClick?: () => void;
+  tooltip?: string;
+}
 
 export interface MarkdownEditorProps {
   curElement: HTMLElement;
@@ -271,55 +273,61 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
     return get()?.action(callCommand(command, payload));
   }
 
+  const MenuBtnData: MenuButtonProps[] = [
+    {
+      icon: { lib: "antd", icon: "undo" },
+      onClick: () => call(undoCommand.key),
+      tooltip: "撤销",
+    },
+    {
+      icon: { lib: "antd", icon: "redo" },
+      onClick: () => call(redoCommand.key),
+      tooltip: "重做",
+    },
+    {
+      icon: { lib: "antd", icon: "bold" },
+      onClick: () => call(toggleStrongCommand.key),
+      tooltip: "粗体",
+    },
+    {
+      icon: { lib: "antd", icon: "italic" },
+      onClick: () => call(toggleEmphasisCommand.key),
+      tooltip: "斜体",
+    },
+    {
+      icon: { lib: "antd", icon: "strikethrough" },
+      onClick: () => call(toggleStrikethroughCommand.key),
+      tooltip: "删除线",
+    },
+    {
+      icon: { lib: "antd", icon: "table" },
+      onClick: () => call(insertTableCommand.key),
+      tooltip: "表格",
+    },
+    {
+      icon: { lib: "antd", icon: "unordered-list" },
+      onClick: () => call(wrapInBulletListCommand.key),
+      tooltip: "无序列表",
+    },
+    {
+      icon: { lib: "antd", icon: "ordered-list" },
+      onClick: () => call(wrapInOrderedListCommand.key),
+      tooltip: "有序列表",
+    },
+    {
+      icon: { lib: "fa", icon: "quote-right" },
+      onClick: () => call(wrapInBlockquoteCommand.key),
+      tooltip: "块引用",
+    },
+  ];
+
   return (
     <div className="markdown-container">
       <div className="menu-container-outter">
         <div className="menu-container-inner prose">
-          <MenuButton
-            icon={{ lib: "antd", icon: "undo" }}
-            onClick={() => call(undoCommand.key)}
-            tooltip="撤销"
-          />
-          <MenuButton
-            icon={{ lib: "antd", icon: "redo" }}
-            onClick={() => call(redoCommand.key)}
-            tooltip="重做"
-          />
-          <MenuButton
-            icon={{ lib: "antd", icon: "bold" }}
-            onClick={() => call(toggleStrongCommand.key)}
-            tooltip="粗体"
-          />
-          <MenuButton
-            icon={{ lib: "antd", icon: "italic" }}
-            onClick={() => call(toggleEmphasisCommand.key)}
-            tooltip="斜体"
-          />
-          <MenuButton
-            icon={{ lib: "antd", icon: "strikethrough" }}
-            onClick={() => call(toggleStrikethroughCommand.key)}
-            tooltip="删除线"
-          />
-          <MenuButton
-            icon={{ lib: "antd", icon: "table" }}
-            onClick={() => call(insertTableCommand.key)}
-            tooltip="表格"
-          />
-          <MenuButton
-            icon={{ lib: "antd", icon: "unordered-list" }}
-            onClick={() => call(wrapInBulletListCommand.key)}
-            tooltip="无序列表"
-          />
-          <MenuButton
-            icon={{ lib: "antd", icon: "ordered-list" }}
-            onClick={() => call(wrapInOrderedListCommand.key)}
-            tooltip="有序列表"
-          />
-          <MenuButton
-            icon={{ lib: "fa", icon: "quote-right" }}
-            onClick={() => call(wrapInBlockquoteCommand.key)}
-            tooltip="块引用"
-          />
+          {MenuBtnData.map((item) => (
+            <MenuButton {...item} key={JSON.stringify(item.icon)} />
+          ))}
         </div>
       </div>
       <div className="editor-container">
