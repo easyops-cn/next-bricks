@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="2800px" height="192px" viewBox="0 0 2800 192" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>框架-下边</title>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#0A3C79" offset="0%"></stop>
+            <stop stop-color="#154FAF" offset="62.8683329%"></stop>
+            <stop stop-color="#002877" offset="100%"></stop>
+        </linearGradient>
+        <filter x="-5.7%" y="-124.0%" width="111.4%" height="347.9%" filterUnits="objectBoundingBox" id="filter-2">
+            <feGaussianBlur stdDeviation="50" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <radialGradient cx="50%" cy="0%" fx="50%" fy="0%" r="403.441705%" gradientTransform="translate(0.5, 0), scale(0.076, 1), rotate(26.3109), scale(1, 18.0517), translate(-0.5, -0)" id="radialGradient-3">
+            <stop stop-color="#D0E5FF" offset="0%"></stop>
+            <stop stop-color="#BED9FF" offset="40.9778461%"></stop>
+            <stop stop-color="#A3C7FF" stop-opacity="0.19" offset="100%"></stop>
+        </radialGradient>
+        <radialGradient cx="50%" cy="0%" fx="50%" fy="0%" r="50%" gradientTransform="translate(0.5, 0), scale(0.2963, 1), rotate(90), scale(1, 18.0517), translate(-0.5, -0)" id="radialGradient-4">
+            <stop stop-color="#D0E5FF" offset="0%"></stop>
+            <stop stop-color="#C2DCFF" stop-opacity="0" offset="28.8497433%"></stop>
+            <stop stop-color="#A3C7FF" stop-opacity="0.45" offset="100%"></stop>
+        </radialGradient>
+        <radialGradient cx="50%" cy="0%" fx="50%" fy="0%" r="57.7956989%" gradientTransform="translate(0.5, 0), scale(1, 0.8651), rotate(90), scale(1, 18.0517), translate(-0.5, -0)" id="radialGradient-5">
+            <stop stop-color="#D0E5FF" offset="0%"></stop>
+            <stop stop-color="#BDD8FF" stop-opacity="0" offset="22.0997125%"></stop>
+            <stop stop-color="#A3C7FF" stop-opacity="0.45" offset="100%"></stop>
+        </radialGradient>
+        <linearGradient x1="-59.4061141%" y1="39.5842185%" x2="169.804266%" y2="39.8211925%" id="linearGradient-6">
+            <stop stop-color="#0E5FFF" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#0E5FFF" stop-opacity="0.1" offset="25.830702%"></stop>
+            <stop stop-color="#0E5FFF" offset="60.4246107%"></stop>
+            <stop stop-color="#0E5FFF" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="设计规范" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="框架样式二切图" transform="translate(0, -1008)">
+            <g id="框架-下边" transform="translate(76, 1158)">
+                <ellipse id="椭圆形备份-2" fill="url(#linearGradient-1)" opacity="0.724148705" filter="url(#filter-2)" cx="1321.5" cy="60.5" rx="1321.5" ry="60.5"></ellipse>
+                <ellipse id="椭圆形" stroke="url(#radialGradient-3)" stroke-width="3" cx="1324.5" cy="60.5" rx="795" ry="59"></ellipse>
+                <ellipse id="椭圆形备份-3" stroke="url(#radialGradient-4)" stroke-width="3" opacity="0.399999976" cx="1324.5" cy="236" rx="795" ry="234.5"></ellipse>
+                <ellipse id="椭圆形备份" stroke="url(#radialGradient-5)" stroke-width="3" opacity="0.199999988" cx="1324.5" cy="215.804384" rx="184.5" ry="213.5"></ellipse>
+                <path d="M1325.82815,3.64275792 C1325.82815,3.64275792 1324.93613,6.20657836 1321.93304,9.28231908 C1321.10901,10.1262841 1319.46466,11.2952924 1317,12.7893441 L1333.76497,12.7893441 C1332.27043,12.034428 1330.82208,10.8654197 1329.41991,9.28231908 C1326.69569,6.20657836 1325.82815,3.64275792 1325.82815,3.64275792 Z" id="路径-28" fill="url(#linearGradient-6)" transform="translate(1325.3825, 8.2161) scale(1, -1) translate(-1325.3825, -8.2161)"></path>
+                <path d="M1333.82815,3.64275792 C1333.82815,3.64275792 1332.93613,6.20657836 1329.93304,9.28231908 C1329.10901,10.1262841 1327.46466,11.2952924 1325,12.7893441 L1341.76497,12.7893441 C1340.27043,12.034428 1338.82208,10.8654197 1337.41991,9.28231908 C1334.69569,6.20657836 1333.82815,3.64275792 1333.82815,3.64275792 Z" id="路径-28备份" fill="url(#linearGradient-6)" opacity="0.5" transform="translate(1333.3825, 8.2161) scale(1, -1) translate(-1333.3825, -8.2161)"></path>
+                <path d="M1318.82815,3.64275792 C1318.82815,3.64275792 1317.93613,6.20657836 1314.93304,9.28231908 C1314.10901,10.1262841 1312.46466,11.2952924 1310,12.7893441 L1326.76497,12.7893441 C1325.27043,12.034428 1323.82208,10.8654197 1322.41991,9.28231908 C1319.69569,6.20657836 1318.82815,3.64275792 1318.82815,3.64275792 Z" id="路径-28备份-2" fill="url(#linearGradient-6)" opacity="0.5" transform="translate(1318.3825, 8.2161) scale(1, -1) translate(-1318.3825, -8.2161)"></path>
+            </g>
+        </g>
+    </g>
+</svg>
