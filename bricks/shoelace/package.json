@@ -25,7 +25,7 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@shoelace-style/shoelace": "^2.4.0"
+    "@shoelace-style/shoelace": "^2.5.2"
   },
   "devDependencies": {
     "@next-core/build-next-bricks": "^1.13.1",
