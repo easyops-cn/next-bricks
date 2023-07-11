@@ -30,3 +30,4 @@ import "./tabs-page-title/index.js";
 import "./top-title-bar/index.js";
 import "./lights-component-title/index.js";
 import "./hi-tech-button/index.js";
+import "./tech-mesh-base-view/index.js";
