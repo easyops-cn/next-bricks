@@ -19,11 +19,12 @@ import {
   wrapInBulletListCommand,
   wrapInOrderedListCommand,
   wrapInBlockquoteCommand,
+  codeBlockSchema,
 } from "@milkdown/preset-commonmark";
 import { nord } from "@milkdown/theme-nord";
 import { history, redoCommand, undoCommand } from "@milkdown/plugin-history";
 import { upload, uploadConfig, Uploader } from "@milkdown/plugin-upload";
-import { callCommand } from "@milkdown/utils";
+import { callCommand, $view } from "@milkdown/utils";
 import type { Node } from "@milkdown/prose/model";
 import { listener, listenerCtx } from "@milkdown/plugin-listener";
 import {
@@ -33,17 +34,21 @@ import {
 } from "@milkdown/preset-gfm";
 import { indent } from "@milkdown/plugin-indent";
 import { Ctx, MilkdownPlugin } from "@milkdown/ctx";
+import { prism, prismConfig } from "@milkdown/plugin-prism";
 import {
   usePluginViewFactory,
   ProsemirrorAdapterProvider,
   useWidgetViewFactory,
+  useNodeViewFactory,
 } from "@prosemirror-adapter/react";
+import { refractor } from "refractor/lib/common";
 import {
   tableSelectorPlugin,
   TableTooltip,
   tableTooltip,
   tableTooltipCtx,
 } from "./components/TableWidget.tsx";
+import { CodeBlock } from "./components/CodeBlock.tsx";
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
@@ -202,6 +207,7 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
 
   const pluginViewFactory = usePluginViewFactory();
   const widgetViewFactory = useWidgetViewFactory();
+  const nodeViewFactory = useNodeViewFactory();
 
   const gfmPlugins: MilkdownPlugin[] = useMemo(() => {
     return [
@@ -240,6 +246,10 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
             ...prev,
             uploader,
           }));
+        ctx.update(prismConfig.key, (prev: any) => ({
+          ...prev,
+          configureRefractor: () => refractor,
+        }));
       })
       .config(nord)
       .use(listener)
@@ -248,7 +258,13 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
       .use(gfm)
       .use(indent)
       .use(upload)
-      .use(gfmPlugins);
+      .use(gfmPlugins)
+      .use(prism)
+      .use(
+        $view(codeBlockSchema.node, () =>
+          nodeViewFactory({ component: CodeBlock })
+        )
+      );
   }, []);
 
   function call<T>(command: CmdKey<T>, payload?: T) {
