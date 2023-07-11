@@ -25,7 +25,8 @@
     "eo-easy-view",
     "eo-tab-list",
     "eo-tab-item",
-    "eo-tab-group"
+    "eo-tab-group",
+    "eo-spin"
   ],
   "form": [
     "eo-textarea",
