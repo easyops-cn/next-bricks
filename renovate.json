@@ -9,6 +9,7 @@
   "packageRules": [
     {
       "excludePackagePatterns": ["^@next-core/", "^@next-dll/"],
+      "excludePackageNames": ["@shoelace-style/shoelace"],
       "enabled": false
     },
     {
