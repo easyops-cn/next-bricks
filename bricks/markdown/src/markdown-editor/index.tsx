@@ -19,11 +19,12 @@ import {
   wrapInBulletListCommand,
   wrapInOrderedListCommand,
   wrapInBlockquoteCommand,
+  codeBlockSchema,
 } from "@milkdown/preset-commonmark";
 import { nord } from "@milkdown/theme-nord";
 import { history, redoCommand, undoCommand } from "@milkdown/plugin-history";
 import { upload, uploadConfig, Uploader } from "@milkdown/plugin-upload";
-import { callCommand } from "@milkdown/utils";
+import { callCommand, $view } from "@milkdown/utils";
 import type { Node } from "@milkdown/prose/model";
 import { listener, listenerCtx } from "@milkdown/plugin-listener";
 import {
@@ -33,25 +34,25 @@ import {
 } from "@milkdown/preset-gfm";
 import { indent } from "@milkdown/plugin-indent";
 import { Ctx, MilkdownPlugin } from "@milkdown/ctx";
+import { prism, prismConfig } from "@milkdown/plugin-prism";
 import {
   usePluginViewFactory,
   ProsemirrorAdapterProvider,
   useWidgetViewFactory,
+  useNodeViewFactory,
 } from "@prosemirror-adapter/react";
+import { refractor } from "refractor/lib/common";
 import {
   tableSelectorPlugin,
   TableTooltip,
   tableTooltip,
   tableTooltipCtx,
 } from "./components/TableWidget.tsx";
+import { CodeBlock } from "./components/CodeBlock.tsx";
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
-const MenuButton: FC<{
-  icon: GeneralIconProps;
-  onClick?: () => void;
-  tooltip?: string;
-}> = ({ icon, onClick, tooltip }) => {
+const MenuButton: FC<MenuButtonProps> = ({ icon, onClick, tooltip }) => {
   return (
     <div
       className="menu-btn-box"
@@ -65,6 +66,12 @@ const MenuButton: FC<{
     </div>
   );
 };
+
+export interface MenuButtonProps {
+  icon: GeneralIconProps;
+  onClick?: () => void;
+  tooltip?: string;
+}
 
 export interface MarkdownEditorProps {
   curElement: HTMLElement;
@@ -202,6 +209,7 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
 
   const pluginViewFactory = usePluginViewFactory();
   const widgetViewFactory = useWidgetViewFactory();
+  const nodeViewFactory = useNodeViewFactory();
 
   const gfmPlugins: MilkdownPlugin[] = useMemo(() => {
     return [
@@ -240,6 +248,10 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
             ...prev,
             uploader,
           }));
+        ctx.update(prismConfig.key, (prev: any) => ({
+          ...prev,
+          configureRefractor: () => refractor,
+        }));
       })
       .config(nord)
       .use(listener)
@@ -248,62 +260,74 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
       .use(gfm)
       .use(indent)
       .use(upload)
-      .use(gfmPlugins);
+      .use(gfmPlugins)
+      .use(prism)
+      .use(
+        $view(codeBlockSchema.node, () =>
+          nodeViewFactory({ component: CodeBlock })
+        )
+      );
   }, []);
 
   function call<T>(command: CmdKey<T>, payload?: T) {
     return get()?.action(callCommand(command, payload));
   }
 
+  const MenuBtnData: MenuButtonProps[] = [
+    {
+      icon: { lib: "antd", icon: "undo" },
+      onClick: () => call(undoCommand.key),
+      tooltip: "撤销",
+    },
+    {
+      icon: { lib: "antd", icon: "redo" },
+      onClick: () => call(redoCommand.key),
+      tooltip: "重做",
+    },
+    {
+      icon: { lib: "antd", icon: "bold" },
+      onClick: () => call(toggleStrongCommand.key),
+      tooltip: "粗体",
+    },
+    {
+      icon: { lib: "antd", icon: "italic" },
+      onClick: () => call(toggleEmphasisCommand.key),
+      tooltip: "斜体",
+    },
+    {
+      icon: { lib: "antd", icon: "strikethrough" },
+      onClick: () => call(toggleStrikethroughCommand.key),
+      tooltip: "删除线",
+    },
+    {
+      icon: { lib: "antd", icon: "table" },
+      onClick: () => call(insertTableCommand.key),
+      tooltip: "表格",
+    },
+    {
+      icon: { lib: "antd", icon: "unordered-list" },
+      onClick: () => call(wrapInBulletListCommand.key),
+      tooltip: "无序列表",
+    },
+    {
+      icon: { lib: "antd", icon: "ordered-list" },
+      onClick: () => call(wrapInOrderedListCommand.key),
+      tooltip: "有序列表",
+    },
+    {
+      icon: { lib: "fa", icon: "quote-right" },
+      onClick: () => call(wrapInBlockquoteCommand.key),
+      tooltip: "块引用",
+    },
+  ];
+
   return (
     <div className="markdown-container">
       <div className="menu-container-outter">
         <div className="menu-container-inner prose">
-          <MenuButton
-            icon={{ lib: "antd", icon: "undo" }}
-            onClick={() => call(undoCommand.key)}
-            tooltip="撤销"
-          />
-          <MenuButton
-            icon={{ lib: "antd", icon: "redo" }}
-            onClick={() => call(redoCommand.key)}
-            tooltip="重做"
-          />
-          <MenuButton
-            icon={{ lib: "antd", icon: "bold" }}
-            onClick={() => call(toggleStrongCommand.key)}
-            tooltip="粗体"
-          />
-          <MenuButton
-            icon={{ lib: "antd", icon: "italic" }}
-            onClick={() => call(toggleEmphasisCommand.key)}
-            tooltip="斜体"
-          />
-          <MenuButton
-            icon={{ lib: "antd", icon: "strikethrough" }}
-            onClick={() => call(toggleStrikethroughCommand.key)}
-            tooltip="删除线"
-          />
-          <MenuButton
-            icon={{ lib: "antd", icon: "table" }}
-            onClick={() => call(insertTableCommand.key)}
-            tooltip="表格"
-          />
-          <MenuButton
-            icon={{ lib: "antd", icon: "unordered-list" }}
-            onClick={() => call(wrapInBulletListCommand.key)}
-            tooltip="无序列表"
-          />
-          <MenuButton
-            icon={{ lib: "antd", icon: "ordered-list" }}
-            onClick={() => call(wrapInOrderedListCommand.key)}
-            tooltip="有序列表"
-          />
-          <MenuButton
-            icon={{ lib: "fa", icon: "quote-right" }}
-            onClick={() => call(wrapInBlockquoteCommand.key)}
-            tooltip="块引用"
-          />
+          {MenuBtnData.map((item) => (
+            <MenuButton {...item} key={JSON.stringify(item.icon)} />
+          ))}
         </div>
       </div>
       <div className="editor-container">
