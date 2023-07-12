@@ -25,7 +25,7 @@ export type ComponentSize = "large" | "medium" | "small" | "xs";
 
 /* ============== Link Type Start ============== */
 
-export type LinkType = "link" | "text";
+export type LinkType = "link" | "text" | "plain";
 
 /* ============== Link Type End ============== */
 

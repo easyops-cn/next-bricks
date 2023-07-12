@@ -57,3 +57,13 @@
   that is hidden in the normal text.
 </p>
 ```
+
+### Plain
+
+设置 `type="plain"` 链接不会拥有额外样式，适合搭配其他构件使用。
+
+```html preview
+<eo-link href="https://baidu.com/" target="_blank" type="plain">
+  <eo-tag color="blue">Link to Baidu</eo-tag>
+</eo-link>
+```

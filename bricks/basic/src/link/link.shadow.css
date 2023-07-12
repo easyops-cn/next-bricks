@@ -1,14 +1,22 @@
 a {
   text-decoration: none;
-  color: var(--antd-btn-link-color);
   cursor: pointer;
 }
 
-a:not(.disabled, .danger):hover {
+.plain {
+  cursor: inherit !important;
+  color: inherit !important;
+}
+
+.link {
+  color: var(--antd-btn-link-color);
+}
+
+.link:not(.disabled, .danger):hover {
   color: var(--antd-btn-link-hover-color);
 }
 
-a:not(.disabled, .danger):active {
+.link:not(.disabled, .danger):active {
   color: var(--antd-btn-link-active-color);
 }
 
