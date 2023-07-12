@@ -19,7 +19,15 @@ const { defineElement, property, event } = createDecorators();
 export interface PopoverProps extends SlPopupProps {
   curElement?: HTMLElement;
   trigger?: TriggerEvent;
-  onVisibleChange?: (visible: boolean) => void;
+}
+
+export interface PopoverEvents {
+  "visible.change": CustomEvent<boolean>;
+  "before.visible.change": CustomEvent<boolean>;
+}
+export interface PopoverEventsMapping {
+  onVisibleChange: "visible.change";
+  beforeVisibleChange: "before.visible.change";
 }
 
 /**
@@ -79,7 +87,7 @@ class Popover extends ReactNextElement implements PopoverProps {
   accessor sync: Sync | undefined;
 
   /**
-   * 当弹出层可见性变化时触发
+   * 当弹出层可见性变化之后触发
    * @detail 当前是否可见
    */
   @event({ type: "visible.change" })
@@ -87,6 +95,16 @@ class Popover extends ReactNextElement implements PopoverProps {
 
   #handleVisibleChange = (visible: boolean): void => {
     this.#visibleChangeEvent.emit(visible);
+  };
+
+  /**
+   * 当弹出层可见性变化时触发
+   * @detail 当前是否可见
+   */
+  @event({ type: "before.visible.change" })
+  accessor #beforeVisibleChangeEvent!: EventEmitter<boolean>;
+  #handleBeforeVisibleChange = (visible: boolean): void => {
+    this.#beforeVisibleChangeEvent.emit(visible);
   };
 
   render() {
@@ -100,13 +118,25 @@ class Popover extends ReactNextElement implements PopoverProps {
         sync={this.sync}
         active={this.active}
         onVisibleChange={this.#handleVisibleChange}
+        beforeVisibleChange={this.#handleBeforeVisibleChange}
       />
     );
   }
 }
 
-function PopoverComponent(props: PopoverProps) {
-  const { curElement, active = false, trigger, onVisibleChange } = props;
+interface PopoverComponentProps extends PopoverProps {
+  onVisibleChange?: (visible: boolean) => void;
+  beforeVisibleChange?: (visible: boolean) => void;
+}
+
+function PopoverComponent(props: PopoverComponentProps) {
+  const {
+    curElement,
+    active = false,
+    trigger,
+    onVisibleChange,
+    beforeVisibleChange,
+  } = props;
   const popoverRef = useRef<SlPopupElement>(null);
   const defaultRef = useRef<HTMLSlotElement>(null);
   const triggerRef = useRef<HTMLSlotElement>(null);
@@ -130,6 +160,7 @@ function PopoverComponent(props: PopoverProps) {
 
   const handleVisibleChange = useCallback(
     async (visible: boolean): Promise<void> => {
+      beforeVisibleChange?.(visible);
       const popover = popoverRef.current;
       if (popover) {
         visible && setVisible(visible);
