@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useEffect, useMemo } from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
 import { ReactNextElement } from "@next-core/react-element";
@@ -24,7 +24,7 @@ import {
 import { nord } from "@milkdown/theme-nord";
 import { history, redoCommand, undoCommand } from "@milkdown/plugin-history";
 import { upload, uploadConfig, Uploader } from "@milkdown/plugin-upload";
-import { callCommand, $view } from "@milkdown/utils";
+import { callCommand, $view, replaceAll } from "@milkdown/utils";
 import type { Node } from "@milkdown/prose/model";
 import { listener, listenerCtx } from "@milkdown/plugin-listener";
 import {
@@ -268,6 +268,10 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
         )
       );
   }, []);
+
+  useEffect(() => {
+    get()?.action(replaceAll(value));
+  }, [value]);
 
   function call<T>(command: CmdKey<T>, payload?: T) {
     return get()?.action(callCommand(command, payload));
