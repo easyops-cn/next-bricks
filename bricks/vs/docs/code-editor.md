@@ -78,40 +78,113 @@ children:
   properties:
     language: brick_next_yaml
     value: |
-      # Enhanced yaml for Brick Next with completers
-      brick: button
-      properties:
-        buttonName: test
-        textContent: '<% CTX.error ? "CTX.error": "Hello" %>'
-        a: CTX.test
-        b: <% CTX.b %>
-        c: <% STATE.e %>
-        d: <% PATH.instanceId %>
-        e:
-          action: console.log
-          args:
-            - <% FN.getPageDetail(APP.id, CTX.pageTitle) %>
-            - <% `${ CTX.name }` %>
+      basicUsige:
+        keyword:
+         Expression:
+          expression1: <% CTX.work %>
+          expression2: <% `${CTX.work}` %>
+          expression3: |
+            <% 
+              CTX.a ? CTX.b : CTX.c 
+            %>
+          expression4: "<% CTX.a ? CTX.b : CTX.c %>"
+          expression7: <% CTX.list.map(item => FN.getDetail(item, CTX.name)) %>
+          expression8: <% CTX.list.map(FN.getDetail) %>
+          expression9: |
+            <% 
+              [
+                CTX.work,
+                CTX.work.a,
+                ACTX,
+                CTXA,
+                ACTX.noWork,
+                CTXA.noWork,
+                a.CTX.noWork,
+              ]
+            %>
+          expression10: |
+            <% 
+              "TPL is warn", 
+              TPL.id 
+            %>
+          expression11: |
+            <%
+              FN.getDetail(CTX.abc, CTX.efg) %>
+          expression12:
+            test1:
+              test2:          <%  CTX.name %>
+              test3: |
+                              <% 
+                                CTX.name
+                              %>
+          expression13: <%= CTX.b + CTX.c %>
+          expression14: |
+            <%=
+              APP.id + CTX.name
+            %>
+        tokenConf:
+          hit:
+            PATH: <% PATH.instanceId %>
+          info:
+            QUERY: <% QUERY.info %>
+          warn:
+            ANCHOR: <% ANCHOR.id %>
+          error:
+            STATE: <% STATE.name %>
+        stringAndNoWork:
+          string1: CTX.noWork
+          string2: FN.getTest
+          string3: <% "FN.getTest(CTX.test)" %>
     automaticLayout: fit-content
+    tokenConf:
+      - token: CTX
+        highlight: true
+      - token: FN
+        highlight: true
+      - token: PATH
+        message: “这是 PATH”
+        level: hit
+      - token: QUERY
+        message: “这是 QUERY”
+        level: info
+      - token: ANCHOR
+        message: “这是 ANCHOR“
+        level: warn
+      - token: STATE
+        message: "这里不能写 STATE"
+        level: error
+        code:
+          value: "详情地址"
+          target: https://brick-next.js.org/docs/concepts/context
+      - token: TPL
+        level: warn
+        message: 不允许写入TPL
     completers:
-      custom:
-        - label: buttonName
-          detail: string
-        - label: buttonType
-          detail: "primary|default|link|danger"
-        - label: buttonSize
-          insertText: size
+      - label: buttonName
+        detail: string
+      - label: buttonType
+        detail: "primary|default|link|danger"
+      - label: buttonSize
+        insertText: size
+    advancdCompleters:
       target:
         triggerCharacter: ":"
-        list:
+        completers:
           - label: a
           - label: b
       CTX:
-        - label: pageTitle
-        - label: name
+        triggerCharacter: "."
+        completers:
+          - label: pageTitle
+          - label: name
       FN:
-        - label: getPageDetail
-        - label: getInstance
+        triggerCharacter: "."
+        completers:
+          - label: getPageDetail
+          - label: getInstance
       PATH:
-        - label: instanceId
+        triggerCharacter: "."
+        completers:
+          - label: instanceId
+          - label: name
 ```
