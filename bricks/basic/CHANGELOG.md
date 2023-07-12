@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.16.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.15.0...@next-bricks/basic@0.16.0) (2023-07-12)
+
+
+### Bug Fixes
+
+* refine svg configuration ([1299663](https://github.com/easyops-cn/next-bricks/commit/1299663d7ed105641536d942a3736231ab27afb5))
+
+
+### Features
+
+* link support plain type ([0186c6f](https://github.com/easyops-cn/next-bricks/commit/0186c6f7e51276c91df6c4ecb336fda873537034))
+
+
+
+
+
 # [0.15.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.14.0...@next-bricks/basic@0.15.0) (2023-07-06)
 
 

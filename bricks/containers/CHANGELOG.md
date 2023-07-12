@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.8.0...@next-bricks/containers@0.9.0) (2023-07-12)
+
+
+### Features
+
+* eo-spin ([462da0f](https://github.com/easyops-cn/next-bricks/commit/462da0fe8a3818cb20dc57422689018c3a0c06dc))
+
+
+
+
+
 # [0.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.7.6...@next-bricks/containers@0.8.0) (2023-07-06)
 
 

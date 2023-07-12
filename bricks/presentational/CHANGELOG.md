@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.4.0...@next-bricks/presentational@0.5.0) (2023-07-12)
+
+
+### Features
+
+* eo-pagination ([4811943](https://github.com/easyops-cn/next-bricks/commit/48119430ab4eaef3bdb290560324829b9e476854))
+
+
+
+
+
 # [0.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.3.1...@next-bricks/presentational@0.4.0) (2023-07-06)
 
 

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.11.0...@next-bricks/data-view@0.12.0) (2023-07-12)
+
+
+### Bug Fixes
+
+* refine svg configuration ([1299663](https://github.com/easyops-cn/next-bricks/commit/1299663d7ed105641536d942a3736231ab27afb5))
+
+
+### Features
+
+* **data-view:** 标题构件增加dark样式 ([8462348](https://github.com/easyops-cn/next-bricks/commit/8462348bd3946b17291e36139722167fffe6fa25))
+
+
+
+
+
 # [0.11.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.10.0...@next-bricks/data-view@0.11.0) (2023-07-06)
 
 
