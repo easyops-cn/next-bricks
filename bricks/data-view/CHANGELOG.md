@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.12.0...@next-bricks/data-view@0.13.0) (2023-07-12)
+
+
+### Features
+
+* **data-view:** add type ([8c666f5](https://github.com/easyops-cn/next-bricks/commit/8c666f5c798fd8a2af5d3146fc0f82801e63c1e3))
+
+
+
+
+
 # [0.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.11.0...@next-bricks/data-view@0.12.0) (2023-07-12)
 
 
