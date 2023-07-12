@@ -166,7 +166,7 @@ describe("data-view.cabinet-container", () => {
     expect(element.shadowRoot).toBeFalsy();
     act(() => {
       element.data = new Array(30).fill(data[0]);
-      element.type = "k8s";
+      element.type = "k8s-blue";
       element.status = "faded";
       document.body.appendChild(element);
     });

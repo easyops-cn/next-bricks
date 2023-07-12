@@ -46,7 +46,9 @@
 .type-physical-machine:hover .image,
 .type-virtual-machine:hover .image,
 .type-physical-machine.status-active .image,
-.type-virtual-machine.status-active .image {
+.type-virtual-machine.status-active .image,
+.type-pod:hover .image,
+.type-type-pod.status-active .image {
   box-shadow: inset 0 0 16px 0 #50ffff;
   border-color: #50ffff;
 }

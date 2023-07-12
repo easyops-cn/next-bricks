@@ -39,7 +39,7 @@ interface Node {
 interface Clusters {
   clusterName: string;
   key: string;
-  type: "host" | "k8s";
+  type: "host" | "k8s" | "k8s-blue";
   nodes: Node[];
 }
 
