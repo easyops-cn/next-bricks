@@ -1,8 +1,7 @@
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api.js";
 import storyboardJsonSchema from "@next-core/types/storyboard.json";
-import { EVALUATE_KEYWORD, brickNextKeywords } from "./constants.js";
+import { EVALUATE_KEYWORD, brickNextKeywords, Level } from "./constants.js";
 import { get } from "lodash";
-import { Completers } from "../index.jsx";
 
 const findKeys = (
   model: monaco.editor.ITextModel,
@@ -116,7 +115,11 @@ export const isInEvaluateBody = (
 };
 
 export const brickNextYAMLProvideCompletionItems = (
-  completers?: Completers
+  completers?: monaco.languages.CompletionItem[],
+  advancdCompleters?: Record<
+    string,
+    { triggerCharacter: string; completers: monaco.languages.CompletionItem[] }
+  >
 ) => {
   return (
     model: monaco.editor.ITextModel,
@@ -183,9 +186,7 @@ export const brickNextYAMLProvideCompletionItems = (
 
     if (isFirstLevelProperty) {
       return {
-        suggestions: (
-          (completers?.custom as monaco.languages.CompletionItem[]) ?? []
-        )
+        suggestions: (completers ?? [])
           .filter((item) => !curLevelKeys.includes(item.label as string))
           .map((item) => ({
             ...item,
@@ -220,11 +221,11 @@ export const brickNextYAMLProvideCompletionItems = (
           ),
         };
       }
-      const matchCompletion = completers?.[prefixWord as string];
+      const matchCompletion = advancdCompleters?.[prefixWord as string];
       let matchTriggerCharacter = "";
       let list: monaco.languages.CompletionItem[] | undefined;
       if (matchCompletion && !Array.isArray(matchCompletion)) {
-        list = matchCompletion.list;
+        list = matchCompletion.completers;
         matchTriggerCharacter = matchCompletion.triggerCharacter;
       } else {
         list = matchCompletion;
@@ -253,30 +254,37 @@ export const brickNextYAMLProvideCompletionItems = (
     }
 
     if (isInEvaluateBody(model, position)) {
-      if (prefixWord && ["CTX", "STATE"].includes(prefixWord)) {
+      if (
+        prefixWord &&
+        ["CTX", "STATE"].includes(prefixWord) &&
+        advancdCompleters
+      ) {
         return {
-          suggestions: (
-            (completers?.[prefixWord] as monaco.languages.CompletionItem[]) ??
-            []
-          ).map((item) => ({
-            label: item.label,
-            insertText: item.label as string,
-            kind: monaco.languages.CompletionItemKind.Value,
-            range,
-          })),
+          suggestions: (advancdCompleters[prefixWord]?.completers ?? []).map(
+            (item) => ({
+              label: item.label,
+              insertText: item.label as string,
+              kind: monaco.languages.CompletionItemKind.Value,
+              range,
+            })
+          ),
         };
       }
 
-      if (prefixWord === "FN" && context.triggerCharacter === ".") {
+      if (
+        prefixWord === "FN" &&
+        context.triggerCharacter === "." &&
+        advancdCompleters
+      ) {
         return {
-          suggestions: (
-            (completers?.FN as monaco.languages.CompletionItem[]) ?? []
-          ).map((item) => ({
-            label: item.label,
-            insertText: item.label as string,
-            kind: monaco.languages.CompletionItemKind.Value,
-            range,
-          })),
+          suggestions: (advancdCompleters["FN"]?.completers ?? []).map(
+            (item) => ({
+              label: item.label,
+              insertText: item.label as string,
+              kind: monaco.languages.CompletionItemKind.Value,
+              range,
+            })
+          ),
         };
       }
 
@@ -343,50 +351,4 @@ export const brickNextYAMLProvideCompletionItems = (
       suggestions: [],
     };
   };
-};
-
-export const setDecoractions = (
-  editor: monaco.editor.IStandaloneCodeEditor,
-  decorationsCollection: monaco.editor.IEditorDecorationsCollection,
-  completers: Completers = {}
-) => {
-  const model = editor.getModel();
-  if (model) {
-    decorationsCollection.clear();
-    const searchTexts = ["CTX", "STATE", "FN"];
-    // 找到匹配的文本范围
-    const decorations: monaco.editor.IModelDeltaDecoration[] = [];
-    searchTexts.forEach(function (searchText) {
-      if (!completers[searchText]) return;
-      const matches = model.findMatches?.(
-        `(?<=^|\\s)${searchText}\\.\\w+`,
-        false,
-        true,
-        false,
-        null,
-        false
-      );
-      if (matches && matches.length) {
-        matches.forEach(function (match) {
-          if (
-            isInEvaluateBody(
-              model,
-              new monaco.Position(
-                match.range.startLineNumber,
-                match.range.startColumn
-              )
-            )
-          ) {
-            decorations.push({
-              range: match.range,
-              options: {
-                inlineClassName: "highlight",
-              },
-            });
-          }
-        });
-      }
-    });
-    decorationsCollection?.set(decorations);
-  }
 };

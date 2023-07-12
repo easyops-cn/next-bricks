@@ -15,6 +15,8 @@ import { register as registerJavaScript } from "@next-core/monaco-contributions/
 import { register as registerTypeScript } from "@next-core/monaco-contributions/typescript";
 import { register as registerYaml } from "@next-core/monaco-contributions/yaml";
 import { register as registerHtml } from "@next-core/monaco-contributions/html";
+import yaml from "js-yaml";
+import BrickNextYamlSourceMap, { Token } from "./utils/brickNextSourceMap.js";
 import "@next-core/theme";
 import { isEqual } from "lodash";
 import {
@@ -23,11 +25,11 @@ import {
   EDITOR_LINE_HEIGHT,
   EDITOR_FONT_SIZE,
 } from "./constants.js";
-import {
-  brickNextYAMLProvideCompletionItems,
-  setDecoractions,
-} from "./utils/brickNextYaml.js";
+import { brickNextYAMLProvideCompletionItems } from "./utils/brickNextYaml.js";
 import "./index.css";
+import { EVALUATE_KEYWORD, Level } from "./utils/constants.js";
+import type { MemberExpression, Identifier } from "@babel/types";
+import { preevaluate } from "@next-core/cook";
 
 registerJavaScript(monaco);
 registerTypeScript(monaco);
@@ -38,11 +40,6 @@ const { defineElement, property, event } = createDecorators();
 
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 
-export type Completers = Record<
-  string,
-  | monaco.languages.CompletionItem[]
-  | { triggerCharacter: string; list: monaco.languages.CompletionItem[] }
->;
 export interface CodeEditorProps {
   name?: string;
   label?: string;
@@ -55,7 +52,23 @@ export interface CodeEditorProps {
   minLines?: number;
   maxLines?: number;
   height?: string | number;
-  completers?: Completers;
+  completers?: monaco.languages.CompletionItem[];
+  advancdCompleters?: Record<
+    string,
+    { triggerCharacter: string; completers: monaco.languages.CompletionItem[] }
+  >;
+  tokenConf?: TokenConf[];
+}
+
+export interface TokenConf {
+  token: string;
+  level: keyof typeof Level;
+  highlight: boolean;
+  message: string;
+  code?: {
+    value: string;
+    target: string;
+  };
 }
 
 /**
@@ -118,7 +131,24 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
   @property({
     attribute: false,
   })
-  accessor completers: Completers | undefined;
+  accessor completers: monaco.languages.CompletionItem[] | undefined;
+
+  @property({
+    attribute: false,
+  })
+  accessor advancdCompleters:
+    | Record<
+        string,
+        {
+          triggerCharacter: string;
+          completers: monaco.languages.CompletionItem[];
+        }
+      >
+    | undefined;
+
+  @property({ attribute: false })
+  accessor tokenConf: TokenConf[] | undefined;
+
   /**
    * @default Infinity
    */
@@ -177,6 +207,8 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
           maxLines={this.maxLines}
           height={this.height}
           completers={this.completers}
+          advancdCompleters={this.advancdCompleters}
+          tokenConf={this.tokenConf}
           onChange={this.#handleChange}
           onHighlightClick={this.#handleHighlightClick}
         />
@@ -194,6 +226,8 @@ export function CodeEditorComponent({
   height: _height,
   automaticLayout,
   completers,
+  advancdCompleters,
+  tokenConf,
   onChange,
   onHighlightClick,
 }: CodeEditorProps & {
@@ -219,6 +253,7 @@ export function CodeEditorComponent({
   // `automaticLayout` should never change
   const automaticLayoutRef = useRef(automaticLayout);
   const systemTheme = useCurrentTheme();
+  const map = new BrickNextYamlSourceMap();
 
   useEffect(() => {
     // Currently theme is configured globally.
@@ -244,8 +279,10 @@ export function CodeEditorComponent({
 
   useEffect(() => {
     if (language === "brick_next_yaml") {
-      const provideCompletionItems =
-        brickNextYAMLProvideCompletionItems(completers);
+      const provideCompletionItems = brickNextYAMLProvideCompletionItems(
+        completers,
+        advancdCompleters
+      );
       const monacoProviderRef = monaco.languages.registerCompletionItemProvider(
         "brick_next_yaml",
         {
@@ -257,18 +294,136 @@ export function CodeEditorComponent({
         monacoProviderRef.dispose();
       };
     }
-  }, [completers, language]);
+  }, [completers, advancdCompleters, language]);
+
+  const parseYaml = useCallback(() => {
+    try {
+      yaml.load(value, {
+        listener: map.listen(),
+      });
+
+      if (tokenConf && editorRef.current) {
+        const tokens: Omit<Token & { token: string }, "source">[] = [];
+        map.getTokens().forEach((item) => {
+          const { startLineNumber, endLineNumber, startColumn } = item;
+          const globalNodes: MemberExpression[] = [];
+          const result = preevaluate(
+            item.source.replace(/<%([\s\S]*?)\n/g, (_, p1) => {
+              return `<%${p1.replace(/\s+/g, "")}\n`;
+            }),
+            {
+              hooks: {
+                beforeVisit(node) {
+                  if (
+                    node.type === "MemberExpression" &&
+                    node.object.type === "Identifier" &&
+                    EVALUATE_KEYWORD.includes(node.object.name) &&
+                    node.property.type === "Identifier"
+                  ) {
+                    globalNodes.push(node);
+                  }
+                },
+              },
+            }
+          );
+
+          globalNodes.forEach((node) => {
+            const { start, end, loc } = node;
+            if (item.startLineNumber !== item.endLineNumber) {
+              tokens.push({
+                token: (node.object as Identifier)?.name,
+                startLineNumber:
+                  item.startLineNumber + (loc?.start?.line as number),
+                endLineNumber:
+                  item.startLineNumber + (loc?.end?.line as number),
+                startColumn: (loc?.start?.column as number) + 1,
+                endColumn: (loc?.end?.column as number) + 1,
+              });
+            } else {
+              tokens.push({
+                token: (node.object as Identifier)?.name,
+                startLineNumber,
+                endLineNumber,
+                startColumn:
+                  startColumn +
+                  (start as number) +
+                  result.prefix?.length +
+                  Number(!item.isString),
+                endColumn:
+                  startColumn +
+                  (end as number) +
+                  result.prefix?.length +
+                  Number(!item.isString),
+              });
+            }
+          });
+        });
+
+        decorationsCollection.current?.set(
+          tokens
+            .filter((token) =>
+              tokenConf.find(
+                (item) => item.token === token.token && item.highlight
+              )
+            )
+            .map((token) => ({
+              range: new monaco.Range(
+                token.startLineNumber,
+                token.startColumn,
+                token.endLineNumber,
+                token.endColumn
+              ),
+              options: {
+                inlineClassName: "highlight",
+              },
+            }))
+        );
+
+        const model = editorRef.current.getModel()!;
+
+        const markters = tokens
+          .map((token) => {
+            const matchTokenConf = tokenConf.find(
+              (item) => item.token === token.token
+            );
+            if (matchTokenConf && matchTokenConf.message) {
+              return {
+                severity: Level[matchTokenConf?.level ?? "warn"],
+                message: matchTokenConf.message,
+                ...(matchTokenConf.code
+                  ? {
+                      code: {
+                        value: matchTokenConf.code.value,
+                        target: monaco.Uri.parse(matchTokenConf.code.target),
+                      },
+                    }
+                  : {}),
+                startLineNumber: token.startLineNumber,
+                endLineNumber: token.endLineNumber,
+                startColumn: token.startColumn,
+                endColumn: token.endColumn,
+              };
+            }
+          })
+          .filter(Boolean);
+
+        model &&
+          monaco.editor.setModelMarkers(
+            model,
+            "brick_next_yaml",
+            markters as monaco.editor.IMarkerData[]
+          );
+      }
+    } catch (e) {
+      // TODO: validate error
+      // eslint-disable-next-line no-console
+      console.log(e);
+    }
+  }, [map, value, tokenConf]);
 
   useEffect(() => {
-    if (
-      language === "brick_next_yaml" &&
-      editorRef.current &&
-      decorationsCollection.current
-    ) {
-      const editor = editorRef.current;
-      setDecoractions(editor, decorationsCollection.current, completers);
-    }
-  }, [completers, language, value]);
+    parseYaml();
+  }, [parseYaml]);
 
   useLayoutEffect(() => {
     if (automaticLayoutRef.current !== "fit-content" || !containerRef.current) {
@@ -370,15 +525,7 @@ export function CodeEditorComponent({
 
     decorationsCollection.current =
       editorRef.current.createDecorationsCollection();
-
-    if (language === "brick_next_yaml") {
-      setDecoractions(
-        editorRef.current,
-        decorationsCollection.current,
-        completers
-      );
-    }
-  }, [value, language, completers]);
+  }, [value, language, tokenConf]);
 
   useEffect(() => {
     const editor = editorRef.current;
@@ -434,12 +581,15 @@ export function CodeEditorComponent({
           }
         });
       });
+
+      parseYaml();
+
       return () => {
         mouseOverEvent?.dispose();
         editorMouseDownEvent?.dispose();
       };
     }
-  }, [language, onHighlightClick]);
+  }, [language, onHighlightClick, systemTheme, theme, parseYaml]);
 
   useEffect(() => {
     const editor = editorRef.current;

@@ -9,7 +9,7 @@ export const EVALUATE_KEYWORD = [
   "HASH",
   "INSTALLED_APPS",
   "ITEM",
-  "LOCAL_STORYAGE",
+  "LOCAL_STORAGE",
   "MEDIA",
   "MISC",
   "PARAMS",
@@ -46,3 +46,10 @@ export const brickNextKeywords = [
   "if",
   "then",
 ];
+
+export const Level = {
+  hit: 1,
+  info: 2,
+  warn: 4,
+  error: 8,
+};
