@@ -10,6 +10,8 @@ import containerGroupImg from "../../asset/images/containerGroup.png";
 import virtualMachineWarningImg from "../../asset/images/virtualMachineWarning.png";
 import physicalMachineWarningImg from "../../asset/images/physicalMachineWarning.png";
 import containerGroupWarningImg from "../../asset/images/containerGroupWarning.png";
+import podImg from "../../asset/images/pod.png";
+import podWarningImg from "../../asset/images/podWarning.png";
 
 const imageMap = {
   "container-group": containerGroupImg,
@@ -18,12 +20,14 @@ const imageMap = {
   "container-group-warning": containerGroupWarningImg,
   "virtual-machine-warning": virtualMachineWarningImg,
   "physical-machine-warning": physicalMachineWarningImg,
+  pod: podImg,
+  "pod-warning": podWarningImg,
 };
 
 const { defineElement, property } = createDecorators();
 
 export interface CabinetNodeProps {
-  type: "container-group" | "physical-machine" | "virtual-machine";
+  type: "container-group" | "physical-machine" | "virtual-machine" | "pod";
   nodeTitle: string;
   status?: "active" | "faded";
   isAlert?: boolean;
@@ -48,7 +52,11 @@ class CabinetNode extends ReactNextElement implements CabinetNodeProps {
    * @description 类型
    */
   @property()
-  accessor type: "container-group" | "physical-machine" | "virtual-machine";
+  accessor type:
+    | "container-group"
+    | "physical-machine"
+    | "virtual-machine"
+    | "pod";
 
   /**
    * @kind string

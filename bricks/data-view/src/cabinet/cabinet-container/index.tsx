@@ -8,7 +8,7 @@ import { CabinetNodeProps, CabinetNode } from "../cabinet-node/index.js";
 import { useResizeObserver } from "../../hooks/index.js";
 
 const { defineElement, property, event } = createDecorators();
-export type ContainerType = "host" | "k8s";
+export type ContainerType = "host" | "k8s" | "k8s-blue";
 const WrappedNode = wrapBrick<CabinetNode, CabinetNodeProps>(
   "data-view.cabinet-node"
 );
@@ -45,7 +45,7 @@ class CabinetContainer
    * @kind ContainerType
    * @required true
    * @default  host
-   * @description 容器类型，有主机集群类型、k8s集群类型
+   * @description 容器类型，host、k8s（主题橙色）、k8s-blue（蓝色主题）
    */
   @property({ attribute: false })
   accessor type: ContainerType = "host";
@@ -245,7 +245,7 @@ export function CabinetContainerComponent(
       className={classNames(
         "wrapper",
         {
-          hostWrapper: type === "host",
+          hostWrapper: type === "host" || type === "k8s-blue",
           k8sWrapper: type === "k8s",
         },
         status && `wrapper-${status}`
@@ -258,7 +258,7 @@ export function CabinetContainerComponent(
         className={classNames(
           "container",
           {
-            hostContainer: type === "host",
+            hostContainer: type === "host" || type === "k8s-blue",
             k8sContainer: type === "k8s",
           },
           status && `container-${status}`
