@@ -69,6 +69,7 @@ export interface Marker {
     value: string;
     target: string;
   };
+  params?: string[];
 }
 
 /**
@@ -311,7 +312,10 @@ export function CodeEditorComponent({
         });
 
         if ((links || markers) && editorRef.current) {
-          const tokens: Omit<Token & { token: string }, "source">[] = [];
+          const tokens: Omit<
+            Token & { token: string; property: string },
+            "source"
+          >[] = [];
           map.getTokens().forEach((item) => {
             const { startLineNumber, endLineNumber, startColumn } = item;
             const globalNodes: MemberExpression[] = [];
@@ -336,6 +340,7 @@ export function CodeEditorComponent({
                 const hadWrap = /<%[ ]+/.test(result.prefix);
                 tokens.push({
                   token: (node.object as Identifier)?.name,
+                  property: (node.property as Identifier).name,
                   startLineNumber:
                     item.startLineNumber +
                     (loc?.start?.line as number) -
@@ -360,6 +365,7 @@ export function CodeEditorComponent({
               } else {
                 tokens.push({
                   token: (node.object as Identifier)?.name,
+                  property: (node.property as Identifier).name,
                   startLineNumber,
                   endLineNumber,
                   startColumn:
@@ -399,6 +405,19 @@ export function CodeEditorComponent({
                 const matchTokenConf = markers.find(
                   (item) => item.token === token.token
                 );
+                const hadProperty = matchTokenConf?.params?.includes(
+                  token.property
+                );
+                if (!hadProperty) {
+                  return {
+                    severity: Level.warn,
+                    message: "Miss Property",
+                    startLineNumber: token.startLineNumber,
+                    endLineNumber: token.endLineNumber,
+                    startColumn: token.startColumn,
+                    endColumn: token.endColumn,
+                  };
+                }
                 if (matchTokenConf && matchTokenConf.message) {
                   return {
                     severity: Level[matchTokenConf?.level ?? "warn"],

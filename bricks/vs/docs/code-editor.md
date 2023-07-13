@@ -183,6 +183,10 @@ children:
       - CTX
       - FN
     markers:
+      - token: CTX
+        params:
+          - a
+          - b
       - token: PATH
         message: “这是 PATH”
         level: hit
