@@ -344,8 +344,18 @@ export function CodeEditorComponent({
                     item.startLineNumber +
                     (loc?.end?.line as number) -
                     Number(hadWrap),
-                  startColumn: (loc?.start?.column as number) + 1,
-                  endColumn: (loc?.end?.column as number) + 1,
+                  startColumn:
+                    (hadWrap && loc?.start.line === 1
+                      ? result.prefix.length
+                      : 0) +
+                    (loc?.start?.column as number) +
+                    1,
+                  endColumn:
+                    (hadWrap && loc?.start.line === 1
+                      ? result.prefix.length
+                      : 0) +
+                    (loc?.end?.column as number) +
+                    1,
                 });
               } else {
                 tokens.push({

@@ -122,9 +122,31 @@ children:
             <%=
               APP.id + CTX.name
             %>
-          expression15: |
-            <% 
-              CTX.name %>
+          expression15: 
+            test1: |
+              <% 
+                CTX.name %>
+            test2: |
+              <% CTX.name
+              %>
+            test3: |
+              <% "track context", CTX.name
+              %>
+            test4: |
+              <%      
+                "track context", CTX.name 
+              %>
+            test5: |
+              <%      
+                "track context", 
+                CTX.name 
+              %>
+            test6: |
+              <% "track context", 
+                CTX.name 
+              %>
+            test7: |
+              <%  "track context",  CTX.name 
           exporession16:
             - <% CTX.a %>     
             - CTX.b
