@@ -53,17 +53,17 @@ export interface CodeEditorProps {
   maxLines?: number;
   height?: string | number;
   completers?: monaco.languages.CompletionItem[];
-  advancdCompleters?: Record<
+  advancedCompleters?: Record<
     string,
     { triggerCharacter: string; completers: monaco.languages.CompletionItem[] }
   >;
-  tokenConf?: TokenConf[];
+  markers?: Marker[];
+  links?: string[];
 }
 
-export interface TokenConf {
+export interface Marker {
   token: string;
   level: keyof typeof Level;
-  highlight: boolean;
   message: string;
   code?: {
     value: string;
@@ -136,7 +136,7 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
   @property({
     attribute: false,
   })
-  accessor advancdCompleters:
+  accessor advancedCompleters:
     | Record<
         string,
         {
@@ -147,7 +147,10 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
     | undefined;
 
   @property({ attribute: false })
-  accessor tokenConf: TokenConf[] | undefined;
+  accessor markers: Marker[] | undefined;
+
+  @property({ attribute: false })
+  accessor links: string[] | undefined;
 
   /**
    * @default Infinity
@@ -173,7 +176,7 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
     }
   };
 
-  @event({ type: "highlight.click" })
+  @event({ type: "token.click" })
   accessor #highlighClickEvent!: EventEmitter<string>;
 
   #handleHighlightClick = (word: string) => {
@@ -207,8 +210,9 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
           maxLines={this.maxLines}
           height={this.height}
           completers={this.completers}
-          advancdCompleters={this.advancdCompleters}
-          tokenConf={this.tokenConf}
+          advancedCompleters={this.advancedCompleters}
+          markers={this.markers}
+          links={this.links}
           onChange={this.#handleChange}
           onHighlightClick={this.#handleHighlightClick}
         />
@@ -226,8 +230,9 @@ export function CodeEditorComponent({
   height: _height,
   automaticLayout,
   completers,
-  advancdCompleters,
-  tokenConf,
+  advancedCompleters,
+  markers,
+  links,
   onChange,
   onHighlightClick,
 }: CodeEditorProps & {
@@ -253,7 +258,6 @@ export function CodeEditorComponent({
   // `automaticLayout` should never change
   const automaticLayoutRef = useRef(automaticLayout);
   const systemTheme = useCurrentTheme();
-  const map = new BrickNextYamlSourceMap();
 
   useEffect(() => {
     // Currently theme is configured globally.
@@ -281,7 +285,7 @@ export function CodeEditorComponent({
     if (language === "brick_next_yaml") {
       const provideCompletionItems = brickNextYAMLProvideCompletionItems(
         completers,
-        advancdCompleters
+        advancedCompleters
       );
       const monacoProviderRef = monaco.languages.registerCompletionItemProvider(
         "brick_next_yaml",
@@ -294,24 +298,24 @@ export function CodeEditorComponent({
         monacoProviderRef.dispose();
       };
     }
-  }, [completers, advancdCompleters, language]);
+  }, [completers, advancedCompleters, language]);
 
   const parseYaml = useCallback(() => {
-    try {
-      yaml.load(value, {
-        listener: map.listen(),
-      });
+    const map = new BrickNextYamlSourceMap();
+    if (editorRef.current) {
+      const model = editorRef.current.getModel()!;
 
-      if (tokenConf && editorRef.current) {
-        const tokens: Omit<Token & { token: string }, "source">[] = [];
-        map.getTokens().forEach((item) => {
-          const { startLineNumber, endLineNumber, startColumn } = item;
-          const globalNodes: MemberExpression[] = [];
-          const result = preevaluate(
-            item.source.replace(/<%([\s\S]*?)\n/g, (_, p1) => {
-              return `<%${p1.replace(/\s+/g, "")}\n`;
-            }),
-            {
+      try {
+        yaml.load(value, {
+          listener: map.listen(),
+        });
+
+        if ((links || markers) && editorRef.current) {
+          const tokens: Omit<Token & { token: string }, "source">[] = [];
+          map.getTokens().forEach((item) => {
+            const { startLineNumber, endLineNumber, startColumn } = item;
+            const globalNodes: MemberExpression[] = [];
+            const result = preevaluate(item.source, {
               hooks: {
                 beforeVisit(node) {
                   if (
@@ -324,102 +328,106 @@ export function CodeEditorComponent({
                   }
                 },
               },
-            }
-          );
+            });
 
-          globalNodes.forEach((node) => {
-            const { start, end, loc } = node;
-            if (item.startLineNumber !== item.endLineNumber) {
-              tokens.push({
-                token: (node.object as Identifier)?.name,
-                startLineNumber:
-                  item.startLineNumber + (loc?.start?.line as number),
-                endLineNumber:
-                  item.startLineNumber + (loc?.end?.line as number),
-                startColumn: (loc?.start?.column as number) + 1,
-                endColumn: (loc?.end?.column as number) + 1,
-              });
-            } else {
-              tokens.push({
-                token: (node.object as Identifier)?.name,
-                startLineNumber,
-                endLineNumber,
-                startColumn:
-                  startColumn +
-                  (start as number) +
-                  result.prefix?.length +
-                  Number(!item.isString),
-                endColumn:
-                  startColumn +
-                  (end as number) +
-                  result.prefix?.length +
-                  Number(!item.isString),
-              });
-            }
+            globalNodes.forEach((node) => {
+              const { start, end, loc } = node;
+              if (item.startLineNumber !== item.endLineNumber) {
+                const hadWrapAfterExpression = /\s*$/.test(result.prefix);
+                tokens.push({
+                  token: (node.object as Identifier)?.name,
+                  startLineNumber:
+                    item.startLineNumber +
+                    ((loc?.start?.line as number) -
+                      Number(hadWrapAfterExpression)),
+                  endLineNumber:
+                    item.startLineNumber +
+                    ((loc?.end?.line as number) -
+                      Number(hadWrapAfterExpression)),
+                  startColumn: (loc?.start?.column as number) + 1,
+                  endColumn: (loc?.end?.column as number) + 1,
+                });
+              } else {
+                tokens.push({
+                  token: (node.object as Identifier)?.name,
+                  startLineNumber,
+                  endLineNumber,
+                  startColumn:
+                    startColumn +
+                    (start as number) +
+                    result.prefix?.length +
+                    Number(!item.isString),
+                  endColumn:
+                    startColumn +
+                    (end as number) +
+                    result.prefix?.length +
+                    Number(!item.isString),
+                });
+              }
+            });
           });
-        });
 
-        decorationsCollection.current?.set(
-          tokens
-            .filter((token) =>
-              tokenConf.find(
-                (item) => item.token === token.token && item.highlight
-              )
-            )
-            .map((token) => ({
-              range: new monaco.Range(
-                token.startLineNumber,
-                token.startColumn,
-                token.endLineNumber,
-                token.endColumn
-              ),
-              options: {
-                inlineClassName: "highlight",
-              },
-            }))
-        );
-
-        const model = editorRef.current.getModel()!;
-
-        const markters = tokens
-          .map((token) => {
-            const matchTokenConf = tokenConf.find(
-              (item) => item.token === token.token
-            );
-            if (matchTokenConf && matchTokenConf.message) {
-              return {
-                severity: Level[matchTokenConf?.level ?? "warn"],
-                message: matchTokenConf.message,
-                ...(matchTokenConf.code
-                  ? {
-                      code: {
-                        value: matchTokenConf.code.value,
-                        target: monaco.Uri.parse(matchTokenConf.code.target),
-                      },
-                    }
-                  : {}),
-                startLineNumber: token.startLineNumber,
-                endLineNumber: token.endLineNumber,
-                startColumn: token.startColumn,
-                endColumn: token.endColumn,
-              };
-            }
-          })
-          .filter(Boolean);
-
-        model &&
-          monaco.editor.setModelMarkers(
-            model,
-            "brick_next_yaml",
-            markters as monaco.editor.IMarkerData[]
+          decorationsCollection.current?.set(
+            tokens
+              .filter((token) => links?.includes(token.token))
+              .map((token) => ({
+                range: new monaco.Range(
+                  token.startLineNumber,
+                  token.startColumn,
+                  token.endLineNumber,
+                  token.endColumn
+                ),
+                options: {
+                  inlineClassName: "highlight",
+                },
+              }))
           );
+
+          if (markers) {
+            const modelMarkers = tokens
+              .map((token) => {
+                const matchTokenConf = markers.find(
+                  (item) => item.token === token.token
+                );
+                if (matchTokenConf && matchTokenConf.message) {
+                  return {
+                    severity: Level[matchTokenConf?.level ?? "warn"],
+                    message: matchTokenConf.message,
+                    ...(matchTokenConf.code
+                      ? {
+                          code: {
+                            value: matchTokenConf.code.value,
+                            target: monaco.Uri.parse(
+                              matchTokenConf.code.target
+                            ),
+                          },
+                        }
+                      : {}),
+                    startLineNumber: token.startLineNumber,
+                    endLineNumber: token.endLineNumber,
+                    startColumn: token.startColumn,
+                    endColumn: token.endColumn,
+                  };
+                }
+              })
+              .filter(Boolean) as monaco.editor.IMarkerData[];
+
+            monaco.editor.setModelMarkers(
+              model,
+              "brick_next_yaml",
+              modelMarkers
+            );
+          }
+        }
+      } catch (e) {
+        monaco.editor.setModelMarkers(model, "brick_next_yaml", []);
+        decorationsCollection?.current?.set([]);
+        // TODO: validate error
+        // eslint-disable-next-line no-console
+        console.log(e);
       }
-    } catch (e) {
-      // TODO: validate error
-      // eslint-disable-next-line no-console
-      console.log(e);
     }
-  }, [map, value, tokenConf]);
+  }, [value, markers, links]);
 
   useEffect(() => {
     parseYaml();
@@ -525,7 +533,7 @@ export function CodeEditorComponent({
 
     decorationsCollection.current =
       editorRef.current.createDecorationsCollection();
-  }, [value, language, tokenConf]);
+  }, [value, language]);
 
   useEffect(() => {
     const editor = editorRef.current;

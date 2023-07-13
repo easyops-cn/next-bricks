@@ -116,7 +116,7 @@ export const isInEvaluateBody = (
 
 export const brickNextYAMLProvideCompletionItems = (
   completers?: monaco.languages.CompletionItem[],
-  advancdCompleters?: Record<
+  advancedCompleters?: Record<
     string,
     { triggerCharacter: string; completers: monaco.languages.CompletionItem[] }
   >
@@ -221,7 +221,7 @@ export const brickNextYAMLProvideCompletionItems = (
           ),
         };
       }
-      const matchCompletion = advancdCompleters?.[prefixWord as string];
+      const matchCompletion = advancedCompleters?.[prefixWord as string];
       let matchTriggerCharacter = "";
       let list: monaco.languages.CompletionItem[] | undefined;
       if (matchCompletion && !Array.isArray(matchCompletion)) {
@@ -257,10 +257,10 @@ export const brickNextYAMLProvideCompletionItems = (
       if (
         prefixWord &&
         ["CTX", "STATE"].includes(prefixWord) &&
-        advancdCompleters
+        advancedCompleters
       ) {
         return {
-          suggestions: (advancdCompleters[prefixWord]?.completers ?? []).map(
+          suggestions: (advancedCompleters[prefixWord]?.completers ?? []).map(
             (item) => ({
               label: item.label,
               insertText: item.label as string,
@@ -274,10 +274,10 @@ export const brickNextYAMLProvideCompletionItems = (
       if (
         prefixWord === "FN" &&
         context.triggerCharacter === "." &&
-        advancdCompleters
+        advancedCompleters
       ) {
         return {
-          suggestions: (advancdCompleters["FN"]?.completers ?? []).map(
+          suggestions: (advancedCompleters["FN"]?.completers ?? []).map(
             (item) => ({
               label: item.label,
               insertText: item.label as string,
