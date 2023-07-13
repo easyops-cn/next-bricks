@@ -122,7 +122,7 @@ children:
             <%=
               APP.id + CTX.name
             %>
-        tokenConf:
+        markers:
           hit:
             PATH: <% PATH.instanceId %>
           info:
@@ -136,11 +136,10 @@ children:
           string2: FN.getTest
           string3: <% "FN.getTest(CTX.test)" %>
     automaticLayout: fit-content
-    tokenConf:
-      - token: CTX
-        highlight: true
-      - token: FN
-        highlight: true
+    links:
+      - CTX
+      - FN
+    markers:
       - token: PATH
         message: “这是 PATH”
         level: hit
@@ -166,7 +165,7 @@ children:
         detail: "primary|default|link|danger"
       - label: buttonSize
         insertText: size
-    advancdCompleters:
+    advancedCompleters:
       target:
         triggerCharacter: ":"
         completers:
