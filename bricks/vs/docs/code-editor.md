@@ -83,10 +83,23 @@ children:
          Expression:
           expression1: <% CTX.work %>
           expression2: <% `${CTX.work}` %>
-          expression3: |
-            <% 
-              CTX.a ? CTX.b : CTX.c 
-            %>
+          expression3:
+            test1: |
+              <%
+                CTX.a ? CTX.b : CTX.c 
+              %>
+            test2: |-
+              <% 
+                CTX.a ? CTX.b : CTX.c 
+              %>
+            test3: >
+              <% 
+                CTX.a ? CTX.b : CTX.c 
+              %>
+            test4: >-
+              <% 
+                CTX.a ? CTX.b : CTX.c 
+              %>
           expression4: "<% CTX.a ? CTX.b : CTX.c %>"
           expression7: <% CTX.list.map(item => FN.getDetail(item, CTX.name)) %>
           expression8: <% CTX.list.map(FN.getDetail) %>

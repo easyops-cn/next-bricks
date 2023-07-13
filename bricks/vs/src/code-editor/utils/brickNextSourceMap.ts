@@ -46,8 +46,12 @@ class BrickNextYamlSourceMap {
               break;
             }
           }
+          const specilStringPrefix = /(\|-|>-)/.test(
+            state.input.substring(this.#prefixPosition, position - 1)
+          );
           source = state.input.substring(nearWrapIndex, position - 1);
-          startLineNumber = state.line - wrapLength + 1;
+          startLineNumber =
+            state.line - wrapLength + 1 - Number(specilStringPrefix);
           endLineNumber = line;
           startColumn = 0;
           endColumn = 0;
