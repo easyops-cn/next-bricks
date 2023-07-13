@@ -48,7 +48,8 @@
     "eo-code-display",
     "eo-alert",
     "eo-descriptions",
-    "eo-pagination"
+    "eo-pagination",
+    "eo-card-item"
   ],
   "advanced": ["eo-cascader", "eo-table"],
   "markdown": ["eo-markdown-editor"],
