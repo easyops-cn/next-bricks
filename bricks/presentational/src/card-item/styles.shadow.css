@@ -65,7 +65,7 @@ eo-icon {
 .card-content {
   display: flex;
   gap: 12px;
-  padding: 0 8px 16px 16px;
+  padding: 0 16px 16px 16px;
 }
 
 .card-avatar {
@@ -125,7 +125,7 @@ eo-icon {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 8px 16px 16px;
+  padding: 0 16px 16px 16px;
 }
 
 /* expanded-area-2 */
@@ -137,5 +137,5 @@ eo-icon {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 8px 10px 16px;
+  padding: 0 16px 10px 16px;
 }
