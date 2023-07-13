@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { createDecorators } from "@next-core/element";
+import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import type {
   GeneralIcon,
@@ -15,7 +15,7 @@ import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import classNames from "classnames";
 
-const { defineElement, property } = createDecorators();
+const { defineElement, property, event } = createDecorators();
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 const WrappedPopover = wrapBrick<
@@ -41,6 +41,14 @@ export interface EoMiniActionsProps {
   actions?: ActionType[];
 }
 
+export interface EoMiniActionsEvents {
+  "action.click": CustomEvent<ActionType>;
+}
+
+export interface EoMiniActionsEventsMapping {
+  onActionClick: "action.click";
+}
+
 /**
  * 小尺寸按钮组
  */
@@ -57,10 +65,18 @@ class EoMiniActions extends ReactNextElement implements EoMiniActionsProps {
   })
   accessor actions: ActionType[] | undefined;
 
+  /**
+   * 点击按钮时触发
+   * @detail 该按钮配置
+   */
+  @event({ type: "action.click" })
+  accessor #actionClickEvent!: EventEmitter<ActionType>;
+
   #handleActionClick = (action: ActionType) => {
-    !action.disabled &&
-      action.event &&
+    if (!action.disabled && action.event) {
       this.dispatchEvent(new CustomEvent(action.event));
+      this.#actionClickEvent.emit(action);
+    }
   };
 
   render() {
