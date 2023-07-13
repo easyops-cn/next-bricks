@@ -333,17 +333,17 @@ export function CodeEditorComponent({
             globalNodes.forEach((node) => {
               const { start, end, loc } = node;
               if (item.startLineNumber !== item.endLineNumber) {
-                const hadWrapAfterExpression = /\s*$/.test(result.prefix);
+                const hadWrap = /<%[ ]+/.test(result.prefix);
                 tokens.push({
                   token: (node.object as Identifier)?.name,
                   startLineNumber:
                     item.startLineNumber +
-                    ((loc?.start?.line as number) -
-                      Number(hadWrapAfterExpression)),
+                    (loc?.start?.line as number) -
+                    Number(hadWrap),
                   endLineNumber:
                     item.startLineNumber +
-                    ((loc?.end?.line as number) -
-                      Number(hadWrapAfterExpression)),
+                    (loc?.end?.line as number) -
+                    Number(hadWrap),
                   startColumn: (loc?.start?.column as number) + 1,
                   endColumn: (loc?.end?.column as number) + 1,
                 });

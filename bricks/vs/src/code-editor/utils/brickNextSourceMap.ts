@@ -13,15 +13,20 @@ export interface Token {
 class BrickNextYamlSourceMap {
   #recordsToken: Token[];
   #prefixPosition: number;
+  #recordLastWord: string;
 
   constructor() {
     this.#recordsToken = [];
     this.#prefixPosition = 0;
+    this.#recordLastWord = "";
   }
 
   private handleState(event: "open" | "close", state: State): void {
     if (event === "close") {
       const { line, position, lineStart, result } = state;
+      const curWord = state.input.substring(lineStart, position);
+      if (curWord.trim() === this.#recordLastWord.trim()) return;
+      this.#recordLastWord = curWord;
       let startLineNumber = line + 1;
       let endLineNumber = line + 1;
       let startColumn = position - lineStart - result.length;

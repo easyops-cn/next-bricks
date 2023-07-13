@@ -122,6 +122,14 @@ children:
             <%=
               APP.id + CTX.name
             %>
+          expression15: |
+            <% 
+              CTX.name %>
+          exporession16:
+            - <% CTX.a %>     
+            - CTX.b
+            -   <% CTX.c %>    
+            - <% "CTX.d" %>
         markers:
           hit:
             PATH: <% PATH.instanceId %>
