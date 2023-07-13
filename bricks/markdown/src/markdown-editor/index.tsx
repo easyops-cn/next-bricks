@@ -74,9 +74,9 @@ export interface MenuButtonProps {
 }
 
 export interface MarkdownEditorProps {
-  curElement: HTMLElement;
   value?: string;
   bucketName?: string;
+  containerStyle?: React.CSSProperties;
   onUploadImage?: (value: ImageInfo) => void;
   onMarkdownValueChange?: (value: string) => void;
 }
@@ -113,6 +113,14 @@ class MarkdownEditor extends ReactNextElement {
   @property() accessor bucketName: string | undefined;
 
   /**
+   * 外层容器样式
+   */
+  @property({
+    attribute: false,
+  })
+  accessor containerStyle: React.CSSProperties | undefined;
+
+  /**
    * 上传图片时触发的事件
    * @detail
    */
@@ -139,9 +147,9 @@ class MarkdownEditor extends ReactNextElement {
       <MilkdownProvider>
         <ProsemirrorAdapterProvider>
           <MarkdownEditorComponent
-            curElement={this}
             bucketName={this.bucketName}
             value={this.value}
+            containerStyle={this.containerStyle}
             onUploadImage={this.handleUploadImage}
             onMarkdownValueChange={this.handleMarkdownValueChange}
           />
@@ -154,7 +162,13 @@ class MarkdownEditor extends ReactNextElement {
 export { MarkdownEditor };
 
 export function MarkdownEditorComponent(props: MarkdownEditorProps) {
-  const { bucketName, value, onUploadImage, onMarkdownValueChange } = props;
+  const {
+    bucketName,
+    value,
+    containerStyle,
+    onUploadImage,
+    onMarkdownValueChange,
+  } = props;
 
   const transformResponseToUrl = (objectName: string): string => {
     return `/next/api/gateway/object_store.object_store.GetObject/api/v1/objectStore/bucket/${props.bucketName}/object/${objectName}`;
@@ -248,6 +262,7 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
             ...prev,
             uploader,
           }));
+        // 支持code代码高亮
         ctx.update(prismConfig.key, (prev: any) => ({
           ...prev,
           configureRefractor: () => refractor,
@@ -326,7 +341,7 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
   ];
 
   return (
-    <div className="markdown-container">
+    <div className="markdown-container" style={containerStyle}>
       <div className="menu-container-outter">
         <div className="menu-container-inner prose">
           {MenuBtnData.map((item) => (
