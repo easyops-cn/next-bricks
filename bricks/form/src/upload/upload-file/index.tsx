@@ -258,57 +258,6 @@ export function EoUploadFileComponent(props: UploadFileComponentProps) {
     onChange?.(fileDataList);
   };
 
-  const uploadRender = (fileDataList: FileData[], actions: UploadActions) => {
-    return uploadDraggable ? (
-      <div
-        className={classNames(
-          "upload-drag-button",
-          isDragOver && "upload-drag-button-drag-over"
-        )}
-        onClick={actions.upload}
-        onDragEnter={(e) => {
-          e.preventDefault();
-          setIsDragOver(true);
-        }}
-        onDragOver={(e) => {
-          e.preventDefault();
-        }}
-        onDragLeave={(e) => {
-          setIsDragOver(false);
-        }}
-        onDrop={(e) => {
-          e.preventDefault();
-          setIsDragOver(false);
-          e.dataTransfer.files?.length &&
-            actions.uploadFiles(e.dataTransfer.files);
-        }}
-      >
-        <div className="upload-drag-button-inner">
-          <WrappedEasyopsIcon
-            className="upload-drag-button-icon"
-            category="colored-common"
-            icon={theme == "dark-v2" ? "upload-dark" : "upload-light"}
-          />
-          <div className="upload-drag-text">
-            <Trans
-              i18nKey={t(K.DRAG_UPLOAD_TEXT)}
-              components={{
-                total: <strong />,
-              }}
-            />
-          </div>
-          {draggableUploadTip && (
-            <div className="upload-drag-tip">{draggableUploadTip}</div>
-          )}
-        </div>
-      </div>
-    ) : (
-      <WrappedButton icon={defaultUploadIcon} onClick={actions.upload}>
-        {t(K.UPLOAD)}
-      </WrappedButton>
-    );
-  };
-
   const itemRender = (
     fileData: FileData,
     fileDataList: FileData[],
@@ -357,7 +306,6 @@ export function EoUploadFileComponent(props: UploadFileComponentProps) {
   return (
     <WrappedFormItem {...(props as FormItemProps)} validator={validator}>
       <Upload
-        uploadRender={uploadRender}
         itemRender={itemRender}
         fileList={value}
         multiple={multiple}
@@ -369,7 +317,61 @@ export function EoUploadFileComponent(props: UploadFileComponentProps) {
         method={method}
         uploadName={uploadName}
         onChange={handleChange}
-      />
+      >
+        {(fileDataList: FileData[], uploadActions: UploadActions) => {
+          return uploadDraggable ? (
+            <div
+              className={classNames(
+                "upload-drag-button",
+                isDragOver && "upload-drag-button-drag-over"
+              )}
+              onClick={uploadActions.upload}
+              onDragEnter={(e) => {
+                e.preventDefault();
+                setIsDragOver(true);
+              }}
+              onDragOver={(e) => {
+                e.preventDefault();
+              }}
+              onDragLeave={(e) => {
+                setIsDragOver(false);
+              }}
+              onDrop={(e) => {
+                e.preventDefault();
+                setIsDragOver(false);
+                e.dataTransfer.files?.length &&
+                  uploadActions.uploadFiles(e.dataTransfer.files);
+              }}
+            >
+              <div className="upload-drag-button-inner">
+                <WrappedEasyopsIcon
+                  className="upload-drag-button-icon"
+                  category="colored-common"
+                  icon={theme == "dark-v2" ? "upload-dark" : "upload-light"}
+                />
+                <div className="upload-drag-text">
+                  <Trans
+                    i18nKey={t(K.DRAG_UPLOAD_TEXT)}
+                    components={{
+                      total: <strong />,
+                    }}
+                  />
+                </div>
+                {draggableUploadTip && (
+                  <div className="upload-drag-tip">{draggableUploadTip}</div>
+                )}
+              </div>
+            </div>
+          ) : (
+            <WrappedButton
+              icon={defaultUploadIcon}
+              onClick={uploadActions.upload}
+            >
+              {t(K.UPLOAD)}
+            </WrappedButton>
+          );
+        }}
+      </Upload>
     </WrappedFormItem>
   );
 }

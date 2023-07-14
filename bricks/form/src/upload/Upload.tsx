@@ -20,9 +20,9 @@ export interface ItemActions {
 }
 
 export interface UploadProps {
-  uploadRender: (
+  children: (
     fileDataList: FileData[],
-    actions: UploadActions
+    uploadActions: UploadActions
   ) => React.ReactElement;
   itemRender: (
     fileData: FileData,
@@ -48,7 +48,7 @@ export interface UploadProps {
 
 export function Upload(props: UploadProps) {
   const {
-    uploadRender,
+    children,
     itemRender,
     autoUpload,
     onChange,
@@ -266,7 +266,7 @@ export function Upload(props: UploadProps) {
         onChange={handleInputChange}
       />
       <div className="upload-wrapper">
-        {uploadRender(internalFileDataList, {
+        {children(internalFileDataList, {
           upload: () => inputRef.current?.click(),
           uploadFiles: (files) => handleFileUpload(files),
         })}

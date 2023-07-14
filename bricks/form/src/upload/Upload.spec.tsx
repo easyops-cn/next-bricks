@@ -43,12 +43,13 @@ describe("Upload", () => {
 
     const { container, unmount } = render(
       <Upload
-        uploadRender={uploadRender}
         itemRender={itemRender}
         onChange={onChange}
         autoUpload={false}
         accept="image/*"
-      />
+      >
+        {uploadRender}
+      </Upload>
     );
     act(() => {
       fireEvent.change(container.querySelector("input") as HTMLInputElement, {
@@ -103,13 +104,14 @@ describe("Upload", () => {
 
     const { container, unmount } = render(
       <Upload
-        uploadRender={uploadRender}
         itemRender={itemRender}
         onChange={onChange}
         autoUpload={true}
         uploadName="file"
         accept="image/*"
-      />
+      >
+        {uploadRender}
+      </Upload>
     );
     act(() => {
       fireEvent.change(container.querySelector("input") as HTMLInputElement, {
@@ -151,13 +153,14 @@ describe("Upload", () => {
     // overMaxCountMode is ignore
     const { container, unmount, rerender } = render(
       <Upload
-        uploadRender={uploadRender}
         itemRender={itemRender}
         onChange={onChange}
         autoUpload={false}
         maxCount={2}
         overMaxCountMode={"ignore"}
-      />
+      >
+        {uploadRender}
+      </Upload>
     );
     act(() => {
       fireEvent.change(container.querySelector("input") as HTMLInputElement, {
@@ -188,13 +191,14 @@ describe("Upload", () => {
     // overMaxCountMode is replace
     rerender(
       <Upload
-        uploadRender={uploadRender}
         itemRender={itemRender}
         onChange={onChange}
         autoUpload={false}
         maxCount={2}
         overMaxCountMode={"replace"}
-      />
+      >
+        {uploadRender}
+      </Upload>
     );
     act(() => {
       fireEvent.change(container.querySelector("input") as HTMLInputElement, {
@@ -225,7 +229,6 @@ describe("Upload", () => {
     // exists files more than maxCount
     rerender(
       <Upload
-        uploadRender={uploadRender}
         itemRender={itemRender}
         onChange={onChange}
         autoUpload={false}
@@ -237,7 +240,9 @@ describe("Upload", () => {
         }))}
         maxCount={2}
         overMaxCountMode={"ignore"}
-      />
+      >
+        {uploadRender}
+      </Upload>
     );
     act(() => {
       fireEvent.change(container.querySelector("input") as HTMLInputElement, {
