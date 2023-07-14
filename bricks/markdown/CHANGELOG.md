@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.4.3...@next-bricks/markdown@1.4.4) (2023-07-14)
+
+
+### Bug Fixes
+
+* update markdown styles ([bcfcc12](https://github.com/easyops-cn/next-bricks/commit/bcfcc12b6b495f09ad657a0534b16150248c1100))
+
+
+
+
+
 ## [1.4.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.4.2...@next-bricks/markdown@1.4.3) (2023-07-14)
 
 
