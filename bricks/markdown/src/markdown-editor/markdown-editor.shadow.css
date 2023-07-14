@@ -783,7 +783,6 @@ video {
 
 .prose {
   color: var(--color-normal-text);
-  max-width: 65ch;
 }
 
 .prose :where(p):not(:where([class~="not-prose"] *)) {
@@ -1813,14 +1812,13 @@ video {
   margin-bottom: 1rem;
   border-radius: 0.25rem;
   background-color: var(--color-fill-bg-base-1);
-  padding: 1.25rem;
+  padding: 1rem 1rem 0.1rem 1rem;
   --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
   --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color),
     0 1px 2px -1px var(--tw-shadow-color);
   background-position: right 0.5rem center;
   background-repeat: no-repeat;
   background-size: 1.5rem 1.5rem;
-  padding-right: 2.5rem;
 }
 
 .codeBlockSelect {
@@ -1831,12 +1829,11 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
   --tw-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
-  padding: 0.5rem 0.75rem;
+  padding: 0rem 1.75rem 0rem 0.5rem;
   background-image: url(../images/down-arrow.svg);
   background-position: right 1rem center;
   background-repeat: no-repeat;
   background-size: 0.7rem 0.7rem;
-  padding-right: 2.5rem;
   appearance: none;
   color: rgb(22, 22, 22);
 }
@@ -1851,7 +1848,7 @@ video {
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 0.5rem;
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.5rem;
@@ -1862,6 +1859,7 @@ video {
 
 .codeBlockCopyBtn:hover {
   border-color: rgb(189 190 192 / var(--tw-border-opacity));
+  color: var(--color-info-hover);
 }
 
 /* code highlight */
