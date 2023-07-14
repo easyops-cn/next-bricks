@@ -12,6 +12,7 @@ import {
 
 export interface UploadActions {
   upload: () => void;
+  uploadFiles: (files: FileList | File[]) => void;
 }
 
 export interface ItemActions {
@@ -19,9 +20,9 @@ export interface ItemActions {
 }
 
 export interface UploadProps {
-  uploadRender: (
+  children: (
     fileDataList: FileData[],
-    actions: UploadActions
+    uploadActions: UploadActions
   ) => React.ReactElement;
   itemRender: (
     fileData: FileData,
@@ -35,6 +36,8 @@ export interface UploadProps {
   method?: string;
   accept?: string;
   multiple?: boolean;
+  maxCount?: number;
+  overMaxCountMode?: "ignore" | "replace";
   beforeUploadValidators?: ((file: File, files: File[]) => Promise<unknown>)[];
   beforeUploadUserDataProcessor?: (
     file: File,
@@ -45,7 +48,7 @@ export interface UploadProps {
 
 export function Upload(props: UploadProps) {
   const {
-    uploadRender,
+    children,
     itemRender,
     autoUpload,
     onChange,
@@ -53,6 +56,8 @@ export function Upload(props: UploadProps) {
     action,
     method,
     accept,
+    maxCount,
+    overMaxCountMode = "replace",
     beforeUploadValidators = [],
     beforeUploadUserDataProcessor,
     multiple,
@@ -194,23 +199,60 @@ export function Upload(props: UploadProps) {
     return req;
   };
 
-  const handleInputChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    event.stopPropagation();
-    const originFiles = [...event.target.files!];
-    event.target.value = "";
+  const handleFileUpload = async (files: FileList | File[]) => {
+    const originFiles = [...files];
+    let filteredFiles: File[] = [];
+    let existsFilesSlice: [number, number] | undefined;
 
-    const filteredFiles = beforeLoadFilter(originFiles);
+    if (maxCount && Number(maxCount) > 0) {
+      const existsLength = internalFileDataList.length;
+      if (existsLength + originFiles.length <= maxCount) {
+        filteredFiles = beforeLoadFilter(originFiles);
+      } else {
+        const overCount = existsLength + originFiles.length - maxCount;
+        const allowCount = originFiles.length - overCount;
+
+        if (overMaxCountMode === "ignore") {
+          filteredFiles = beforeLoadFilter(originFiles).slice(0, allowCount);
+        } else {
+          filteredFiles = beforeLoadFilter(originFiles).slice(
+            -maxCount,
+            Infinity
+          );
+
+          if (filteredFiles.length < maxCount) {
+            existsFilesSlice = [filteredFiles.length - maxCount, Infinity];
+          } else {
+            existsFilesSlice = [0, 0];
+          }
+        }
+      }
+    } else {
+      filteredFiles = beforeLoadFilter(originFiles);
+    }
+
     const validatedFiles = await beforeLoadValidator(filteredFiles);
     const processedFileDataList = await beforeLoadProcessor(validatedFiles);
-    setInternalFileDataList((fileDataList) => {
-      const newFileDataList = fileDataList.concat(processedFileDataList);
-      onChange?.(newFileDataList);
-      return newFileDataList;
-    });
+    (processedFileDataList.length || existsFilesSlice) &&
+      setInternalFileDataList((fileDataList) => {
+        const newFileDataList = (
+          existsFilesSlice
+            ? fileDataList.slice(...existsFilesSlice)
+            : fileDataList
+        ).concat(processedFileDataList);
+        onChange?.(newFileDataList);
+        return newFileDataList;
+      });
 
     processedFileDataList.forEach(
       (fileData) => fileData.status === "uploading" && uploadFile(fileData)
     );
+  };
+
+  const handleInputChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    event.stopPropagation();
+    handleFileUpload([...event.target.files!]);
+    event.target.value = "";
   };
 
   return (
@@ -224,8 +266,9 @@ export function Upload(props: UploadProps) {
         onChange={handleInputChange}
       />
       <div className="upload-wrapper">
-        {uploadRender(internalFileDataList, {
+        {children(internalFileDataList, {
           upload: () => inputRef.current?.click(),
+          uploadFiles: (files) => handleFileUpload(files),
         })}
         <div className="file-list">
           {internalFileDataList.map((fileData) => {

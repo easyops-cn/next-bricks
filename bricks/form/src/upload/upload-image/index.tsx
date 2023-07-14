@@ -166,14 +166,6 @@ export function UploadImageComponent(props: UploadImageComponentProps) {
     onChange?.(processedImages);
   };
 
-  const uploadRender = (fileDataList: ImageData[], actions: UploadActions) => {
-    return (
-      <WrappedButton icon={defaultUploadIcon} onClick={actions.upload}>
-        {t(K.UPLOAD)}
-      </WrappedButton>
-    );
-  };
-
   const itemRender = (
     fileData: ImageData,
     fileDataList: ImageData[],
@@ -245,7 +237,6 @@ export function UploadImageComponent(props: UploadImageComponentProps) {
   return (
     <WrappedFormItem {...(props as FormItemProps)} validator={validator}>
       <Upload
-        uploadRender={uploadRender}
         itemRender={itemRender}
         fileList={value}
         autoUpload={true}
@@ -257,7 +248,18 @@ export function UploadImageComponent(props: UploadImageComponentProps) {
         beforeUploadValidators={[(file) => imageValidator(file)]}
         beforeUploadUserDataProcessor={userDataProcessor}
         onChange={handleChange}
-      />
+      >
+        {(fileDataList: ImageData[], uploadActions: UploadActions) => {
+          return (
+            <WrappedButton
+              icon={defaultUploadIcon}
+              onClick={uploadActions.upload}
+            >
+              {t(K.UPLOAD)}
+            </WrappedButton>
+          );
+        }}
+      </Upload>
     </WrappedFormItem>
   );
 }
