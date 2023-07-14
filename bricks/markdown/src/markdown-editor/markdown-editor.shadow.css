@@ -1812,8 +1812,7 @@ video {
   margin-top: 1rem;
   margin-bottom: 1rem;
   border-radius: 0.25rem;
-  --tw-bg-opacity: 1;
-  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+  background-color: var(--color-fill-bg-base-1);
   padding: 1.25rem;
   --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
   --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color),
@@ -1839,6 +1838,7 @@ video {
   background-size: 0.7rem 0.7rem;
   padding-right: 2.5rem;
   appearance: none;
+  color: rgb(22, 22, 22);
 }
 
 .codeBlockCopyBtn {
@@ -1855,6 +1855,7 @@ video {
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.5rem;
+  color: rgb(22, 22, 22);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
     var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
