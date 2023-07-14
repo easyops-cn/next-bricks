@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.17.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.16.1...@next-bricks/basic@0.17.0) (2023-07-14)
+
+
+### Features
+
+* eo-card-item ([abae34b](https://github.com/easyops-cn/next-bricks/commit/abae34ba398f88a6a97a5c923221d1360666d249))
+* eo-mini-actions ([672c4cd](https://github.com/easyops-cn/next-bricks/commit/672c4cd21b2c0e44b3524ac6ca165cac48b9c0e0))
+
+
+
+
+
 ## [0.16.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.16.0...@next-bricks/basic@0.16.1) (2023-07-12)
 
 **Note:** Version bump only for package @next-bricks/basic

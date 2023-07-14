@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.4.2...@next-bricks/markdown@1.4.3) (2023-07-14)
+
+
+### Bug Fixes
+
+* update code block style in dark mode ([573fdfd](https://github.com/easyops-cn/next-bricks/commit/573fdfd1c5625867fd8a2510b80a6e7c578ed2fc))
+* update styles to be compatible with the dark mode ([a6c7cdf](https://github.com/easyops-cn/next-bricks/commit/a6c7cdf225f715ed5a0984b1b57bd200b042a93c))
+
+
+
+
+
 ## [1.4.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.4.1...@next-bricks/markdown@1.4.2) (2023-07-12)
 
 

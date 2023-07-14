@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.2.2...@next-bricks/vs@0.3.0) (2023-07-14)
+
+
+### Features
+
+* monaco editor support parse yaml&highlight ([5f1846b](https://github.com/easyops-cn/next-bricks/commit/5f1846bc986afaf6cfde2c0e22c1dac57d12cdce))
+* support check miss property in markers ([7997909](https://github.com/easyops-cn/next-bricks/commit/7997909159f6363a48240ebf4b801962551fd5e2))
+* update code ([0932a4a](https://github.com/easyops-cn/next-bricks/commit/0932a4afec8e7bd38371f706105f6ea02b202b52))
+* update code ([10013f0](https://github.com/easyops-cn/next-bricks/commit/10013f07d73f8b4e9830aa82363ee85b1cc79113))
+* update code ([f177ab8](https://github.com/easyops-cn/next-bricks/commit/f177ab862749b18638ba28a5ca55dc1a41459825))
+* update code ([4b803fc](https://github.com/easyops-cn/next-bricks/commit/4b803fcde86f0ec8226e2dff23d82e7314b6e78a))
+* update code-editor.md ([86c9054](https://github.com/easyops-cn/next-bricks/commit/86c90545c0a6111fdb0839e27d45eadaea318af3))
+
+
+
+
+
 ## [0.2.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.2.1...@next-bricks/vs@0.2.2) (2023-07-12)
 
 **Note:** Version bump only for package @next-bricks/vs

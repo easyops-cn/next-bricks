@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.5.1...@next-bricks/presentational@0.6.0) (2023-07-14)
+
+
+### Features
+
+* eo-card-item ([abae34b](https://github.com/easyops-cn/next-bricks/commit/abae34ba398f88a6a97a5c923221d1360666d249))
+
+
+
+
+
 ## [0.5.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.5.0...@next-bricks/presentational@0.5.1) (2023-07-12)
 
 **Note:** Version bump only for package @next-bricks/presentational
