@@ -199,8 +199,7 @@ th {
 }
 
 .milkdown-theme-nord.prose :where(td, th):nth-child(odd) {
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+  background-color: var(--color-fill-bg-base-1);
 }
 
 .dark .milkdown-theme-nord.prose :where(td, th):nth-child(odd) {
@@ -783,7 +782,7 @@ video {
 }
 
 .prose {
-  color: var(--tw-prose-body);
+  color: var(--color-normal-text);
   max-width: 65ch;
 }
 
@@ -807,7 +806,7 @@ video {
 }
 
 .prose :where(strong):not(:where([class~="not-prose"] *)) {
-  color: var(--tw-prose-bold);
+  color: var(--color-strong-text);
   font-weight: 600;
 }
 
@@ -892,7 +891,7 @@ video {
 .prose :where(blockquote):not(:where([class~="not-prose"] *)) {
   font-weight: 500;
   font-style: italic;
-  color: var(--tw-prose-quotes);
+  color: var(--color-auxiliary-text);
   border-left-width: 0.25rem;
   border-left-color: var(--tw-prose-quote-borders);
   quotes: "\201C""\201D""\2018""\2019";
@@ -914,7 +913,7 @@ video {
 }
 
 .prose :where(h1):not(:where([class~="not-prose"] *)) {
-  color: var(--tw-prose-headings);
+  color: var(--color-strong-text);
   font-weight: 800;
   font-size: 2.25em;
   margin-top: 0;
@@ -928,7 +927,7 @@ video {
 }
 
 .prose :where(h2):not(:where([class~="not-prose"] *)) {
-  color: var(--tw-prose-headings);
+  color: var(--color-strong-text);
   font-weight: 700;
   font-size: 1.5em;
   margin-top: 2em;
@@ -942,7 +941,7 @@ video {
 }
 
 .prose :where(h3):not(:where([class~="not-prose"] *)) {
-  color: var(--tw-prose-headings);
+  color: var(--color-strong-text);
   font-weight: 600;
   font-size: 1.25em;
   margin-top: 1.6em;
@@ -956,7 +955,7 @@ video {
 }
 
 .prose :where(h4):not(:where([class~="not-prose"] *)) {
-  color: var(--tw-prose-headings);
+  color: var(--color-strong-text);
   font-weight: 600;
   margin-top: 1.5em;
   margin-bottom: 0.5em;
@@ -1081,7 +1080,7 @@ video {
 }
 
 .prose :where(thead th):not(:where([class~="not-prose"] *)) {
-  color: var(--tw-prose-headings);
+  color: var(--color-strong-text);
   font-weight: 600;
   vertical-align: bottom;
   padding-right: 0.5714286em;
@@ -1663,8 +1662,9 @@ video {
   position: relative;
   height: 100%;
   padding-top: 2.5rem;
-  background-color: rgb(248 250 252 / var(--tw-bg-opacity));
-  --tw-bg-opacity: 1;
+  background-color: var(--antd-input-bg);
+  border: 1px solid var(--color-border-divider-line);
+  border-radius: var(--larger-border-radius);
 }
 
 .menu-container-outter {
@@ -1698,14 +1698,15 @@ video {
   align-items: center;
   border-radius: 0.25rem;
   position: relative;
+  color: var(--color-normal-text);
 }
 
 /* Tooltip text */
 .menu-btn-box .menuIconTooltip {
   visibility: hidden;
   font-size: 0.9rem;
-  background-color: black;
-  color: #fff;
+  background-color: #474747;
+  color: rgb(255, 255, 255);
   text-align: center;
   padding: 3px 8px;
   border-radius: 6px;
@@ -1716,7 +1717,7 @@ video {
 }
 
 .menu-btn-box:hover {
-  background-color: #e8e8e8;
+  color: var(--color-info-hover);
 }
 
 .menu-btn-box:hover .menuIconTooltip {
@@ -1728,7 +1729,7 @@ video {
   bottom: 0.15rem;
   left: 1rem;
   border-width: 0.3rem;
-  border-color: transparent transparent black transparent;
+  border-color: transparent transparent #474747 transparent;
   border-style: solid;
   width: 0px;
   height: 0px;
@@ -1761,8 +1762,7 @@ video {
 .tableBarCommon {
   position: absolute;
   cursor: pointer;
-  --tw-bg-opacity: 1;
-  background-color: rgb(75 85 99 / var(--tw-bg-opacity));
+  background-color: var(--color-border-divider-line);
 }
 
 .tableBarCommon:hover {
@@ -1787,13 +1787,12 @@ video {
   border-width: 1px;
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  background-color: var(--antd-input-bg);
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  color: rgba(0, 0, 0, 0.87);
+  color: var(--color-normal-text);
   font-size: 1rem;
   line-height: 1.5rem;
   font-weight: 500;
@@ -1805,7 +1804,7 @@ video {
 }
 
 .table-tooltip-btn-box:hover {
-  background-color: #e8e8e8;
+  color: var(--color-info-hover);
 }
 
 /* code block */
@@ -1813,8 +1812,7 @@ video {
   margin-top: 1rem;
   margin-bottom: 1rem;
   border-radius: 0.25rem;
-  --tw-bg-opacity: 1;
-  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+  background-color: var(--color-fill-bg-base-1);
   padding: 1.25rem;
   --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
   --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color),
@@ -1840,6 +1838,7 @@ video {
   background-size: 0.7rem 0.7rem;
   padding-right: 2.5rem;
   appearance: none;
+  color: rgb(22, 22, 22);
 }
 
 .codeBlockCopyBtn {
@@ -1856,6 +1855,7 @@ video {
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.5rem;
+  color: rgb(22, 22, 22);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
     var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
