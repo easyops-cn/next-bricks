@@ -42,7 +42,8 @@
     "eo-icon-select",
     "eo-upload-image",
     "eo-switch",
-    "eo-form-item"
+    "eo-form-item",
+    "eo-upload-file"
   ],
   "presentational": [
     "eo-code-display",

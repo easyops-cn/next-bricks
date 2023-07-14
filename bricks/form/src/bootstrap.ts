@@ -12,3 +12,4 @@ import "./search/index.js";
 import "./icon-select/index.js";
 import "./upload/upload-image/index.js";
 import "./general-switch/index.js";
+import "./upload/upload-file/index.js";
