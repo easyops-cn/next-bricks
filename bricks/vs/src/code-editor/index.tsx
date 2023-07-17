@@ -705,7 +705,7 @@ export function CodeEditorComponent({
         height: actualHeight,
         ...(validateState === "error"
           ? {
-              border: "1px solid var(--antd-error-color)",
+              outline: "1px solid var(--antd-error-color)",
             }
           : {}),
       }}
