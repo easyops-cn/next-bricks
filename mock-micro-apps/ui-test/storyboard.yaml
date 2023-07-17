@@ -1,0 +1,13 @@
+app:
+  id: ui-test
+  name: UI Test
+  homepage: /ui-test
+  noAuthGuard: true
+  standaloneMode: true
+routes:
+- path: ${APP.homepage}
+  bricks:
+    - brick: ui-test.preview-container
+      properties:
+        src: http://localhost:8081/e2e/use-brick/1
+        recordEnabled: true
