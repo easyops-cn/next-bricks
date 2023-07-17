@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import { AbstractForm, FormStore, MessageBody } from "@next-shared/form";
@@ -178,12 +178,30 @@ export function FormComponent({
   layout = "horizontal",
   formStyle,
 }: FormComponentProps) {
+  const computedStyle = useMemo((): React.CSSProperties => {
+    switch (layout) {
+      case "vertical": {
+        return {
+          display: "flex",
+          flexDirection: "column",
+        };
+      }
+      case "inline": {
+        return {
+          display: "flex",
+          gap: 10,
+        };
+      }
+      default:
+        return {};
+    }
+  }, [layout]);
+
   return (
     <form>
       <slot
         style={{
-          display: layout === "inline" ? "flex" : "",
-          gap: layout === "inline" ? "10px" : "",
+          ...computedStyle,
           ...(formStyle ? formStyle : {}),
         }}
       />
