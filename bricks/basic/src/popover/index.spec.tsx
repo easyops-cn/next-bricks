@@ -71,6 +71,7 @@ describe("basic.general-popover", () => {
         <slot
           name="anchor"
           slot="anchor"
+          style="padding: 4px; margin: -4px; display: inline-block;"
         />
         <slot
           hidden=""
@@ -102,6 +103,7 @@ describe("basic.general-popover", () => {
         <slot
           name="anchor"
           slot="anchor"
+          style="padding: 4px; margin: -4px; display: inline-block;"
         />
         <slot />
       </sl-popup>
@@ -130,6 +132,7 @@ describe("basic.general-popover", () => {
         <slot
           name="anchor"
           slot="anchor"
+          style="padding: 4px; margin: -4px; display: inline-block;"
         />
         <slot
           hidden=""
@@ -179,6 +182,7 @@ describe("basic.general-popover", () => {
         <slot
           name="anchor"
           slot="anchor"
+          style="padding: 4px; margin: -4px; display: inline-block;"
         />
         <slot
           hidden=""
@@ -202,6 +206,7 @@ describe("basic.general-popover", () => {
         <slot
           name="anchor"
           slot="anchor"
+          style="padding: 4px; margin: -4px; display: inline-block;"
         />
         <slot />
       </sl-popup>
@@ -224,10 +229,9 @@ describe("basic.general-popover", () => {
         <slot
           name="anchor"
           slot="anchor"
+          style="padding: 4px; margin: -4px; display: inline-block;"
         />
-        <slot
-          hidden=""
-        />
+        <slot />
       </sl-popup>
     `);
 

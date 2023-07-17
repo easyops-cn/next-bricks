@@ -6,6 +6,12 @@
   display: none;
 }
 
+.menu-item {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+
 .menu-item.disabled {
   cursor: not-allowed;
   color: var(--text-color-disabled);
@@ -13,5 +19,5 @@
 
 .menu-item-icon {
   margin-right: 4px;
-  vertical-align: middle;
+  line-height: 1em;
 }

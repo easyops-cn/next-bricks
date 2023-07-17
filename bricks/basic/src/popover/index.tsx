@@ -199,7 +199,7 @@ function PopoverComponent(props: PopoverComponentProps) {
 
       onVisibleChange?.(visible);
     },
-    [onVisibleChange]
+    [beforeVisibleChange, onVisibleChange]
   );
 
   const handleAutoDropdownClose = useCallback(
@@ -222,7 +222,9 @@ function PopoverComponent(props: PopoverComponentProps) {
     () => !visible && handleVisibleChange(true),
     [visible, handleVisibleChange]
   );
-  const handlePopoverClose = () => handleVisibleChange(false);
+  const handlePopoverClose = useCallback(() => {
+    handleVisibleChange(false);
+  }, [handleVisibleChange]);
 
   useEffect(() => {
     const triggerSlot = triggerRef.current;
@@ -240,14 +242,12 @@ function PopoverComponent(props: PopoverComponentProps) {
       };
     } else if (trigger === "hover") {
       triggerSlot?.addEventListener("mouseover", handlePopoverOpen);
-      triggerSlot?.addEventListener("mouseleave", handleAutoDropdownClose);
-      document?.addEventListener("mouseover", handleAutoDropdownClose);
+      curElement?.addEventListener("mouseleave", handlePopoverClose);
       document?.addEventListener("click", handlePopoverClose);
 
       return () => {
         triggerSlot?.removeEventListener("mouseover", handlePopoverOpen);
-        triggerSlot?.removeEventListener("mouseleave", handleAutoDropdownClose);
-        document?.removeEventListener("mouseover", handleAutoDropdownClose);
+        curElement?.removeEventListener("mouseleave", handlePopoverClose);
         document?.removeEventListener("click", handlePopoverClose);
       };
     }
@@ -258,6 +258,7 @@ function PopoverComponent(props: PopoverComponentProps) {
     handleTriggerClick,
     trigger,
     visible,
+    curElement,
   ]);
 
   return (
@@ -267,7 +268,16 @@ function PopoverComponent(props: PopoverComponentProps) {
       shift
       distance={props.arrow ? POPUP_DISTANCE + ARROW_SIZE : POPUP_DISTANCE}
     >
-      <slot name="anchor" slot="anchor" ref={triggerRef}></slot>
+      <slot
+        name="anchor"
+        slot="anchor"
+        ref={triggerRef}
+        style={{
+          padding: props.arrow ? POPUP_DISTANCE + ARROW_SIZE : POPUP_DISTANCE,
+          margin: -(props.arrow ? POPUP_DISTANCE + ARROW_SIZE : POPUP_DISTANCE),
+          display: "inline-block",
+        }}
+      ></slot>
       <slot ref={defaultRef} hidden={!visible}></slot>
     </WrappedSlPopup>
   );

@@ -113,7 +113,7 @@ class FormItem extends FormItemElementBase implements FormItemProps {
 
   @property() accessor valuePropsName: string | undefined;
 
-  @property() accessor layout: Layout = "horizontal";
+  @property() accessor layout: Layout | undefined;
 
   @property() accessor size: ComponentSize | undefined;
 
@@ -188,7 +188,7 @@ export function FormItemComponent(props: FormItemProps) {
     valuePropsName = "value",
     size,
     trigger = "onChange",
-    layout,
+    layout = "horizontal",
     needValidate = true,
     validator,
   } = props;
