@@ -421,9 +421,9 @@ export function CodeEditorComponent({
                 const matchTokenConf = markers.find(
                   (item) => item.token === token.token
                 );
-                const hadProperty = matchTokenConf?.params?.includes(
-                  token.property
-                );
+                const hadProperty = matchTokenConf?.params
+                  ? matchTokenConf.params?.includes(token.property)
+                  : true;
                 if (!hadProperty) {
                   return {
                     severity: Level.warn,

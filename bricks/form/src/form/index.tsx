@@ -135,6 +135,11 @@ class Form extends ReactNextElement implements FormProps, AbstractForm {
     );
   }
 
+  @property({
+    attribute: false,
+  })
+  accessor formStyle: React.CSSProperties | undefined;
+
   /**
    * 校验表单字段方法
    */
@@ -152,23 +157,34 @@ class Form extends ReactNextElement implements FormProps, AbstractForm {
   }
 
   render() {
-    return <FormComponent layout={this.layout} size={this.size} />;
+    return (
+      <FormComponent
+        layout={this.layout}
+        size={this.size}
+        formStyle={this.formStyle}
+      />
+    );
   }
 }
 
 interface FormComponentProps extends FormProps {
+  formStyle?: React.CSSProperties;
   onValuesChange?: (value: Record<string, any>) => void;
   onValidateSuccess?: () => void;
   onValidateError?: () => void;
 }
 
-export function FormComponent({ layout = "horizontal" }: FormComponentProps) {
+export function FormComponent({
+  layout = "horizontal",
+  formStyle,
+}: FormComponentProps) {
   return (
     <form>
       <slot
         style={{
           display: layout === "inline" ? "flex" : "",
           gap: layout === "inline" ? "10px" : "",
+          ...(formStyle ? formStyle : {}),
         }}
       />
     </form>
