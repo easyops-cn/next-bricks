@@ -59,6 +59,7 @@ export interface CodeEditorProps {
   >;
   markers?: Marker[];
   links?: string[];
+  validateState?: string;
 }
 
 export interface Marker {
@@ -162,18 +163,20 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
   @property({ attribute: false })
   accessor height: string | number | undefined;
 
+  @property()
+  accessor message: string | undefined;
+
   @event({ type: "code.change" })
   accessor #codeChange!: EventEmitter<string>;
 
   @event({ type: "user.input" })
   accessor #userInput!: EventEmitter<string>;
 
-  #handleChange = (value: string, isFlush: boolean) => {
+  #handleChange = (value: string, parseValue: any, isFlush: boolean) => {
     this.getFormElement()?.formStore.onChange(this.name!, value);
-    this.value = value;
-    this.#codeChange.emit(value);
+    this.#codeChange.emit(parseValue);
     if (!isFlush) {
-      this.#userInput.emit(value);
+      this.#userInput.emit(parseValue);
     }
   };
 
@@ -182,6 +185,15 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
 
   #handleHighlightClick = (word: string) => {
     this.#highlighClickEvent.emit(word);
+  };
+
+  #handleValidtor = (value: string) => {
+    try {
+      yaml.load(value);
+    } catch {
+      return "请填写正确的格式";
+    }
+    return "";
   };
 
   connectedCallback(): void {
@@ -201,6 +213,7 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
         name={this.name}
         label={this.label}
         required={this.required}
+        validator={this.#handleValidtor}
       >
         <CodeEditorComponent
           value={this.value}
@@ -214,6 +227,7 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
           advancedCompleters={this.advancedCompleters}
           markers={this.markers}
           links={this.links}
+          validateState={this.validateState}
           onChange={this.#handleChange}
           onHighlightClick={this.#handleHighlightClick}
         />
@@ -234,10 +248,11 @@ export function CodeEditorComponent({
   advancedCompleters,
   markers,
   links,
+  validateState,
   onChange,
   onHighlightClick,
 }: CodeEditorProps & {
-  onChange(value: string, isFlush: boolean): void;
+  onChange(value: string, parseValue: any, isFlush: boolean): void;
   onHighlightClick(word: string): void;
 }) {
   const value = _value ?? "";
@@ -303,11 +318,12 @@ export function CodeEditorComponent({
 
   const parseYaml = useCallback(() => {
     const map = new BrickNextYamlSourceMap();
+    let parseValue = undefined;
     if (editorRef.current) {
       const model = editorRef.current.getModel()!;
 
       try {
-        yaml.load(value, {
+        parseValue = yaml.load(value, {
           listener: map.listen(),
         });
 
@@ -451,16 +467,10 @@ export function CodeEditorComponent({
       } catch (e) {
         monaco.editor.setModelMarkers(model, "brick_next_yaml", []);
         decorationsCollection?.current?.set([]);
-        // TODO: validate error
-        // eslint-disable-next-line no-console
-        console.log(e);
       }
     }
-  }, [value, markers, links]);
-
-  useEffect(() => {
-    parseYaml();
-  }, [parseYaml]);
+    return parseValue;
+  }, [value, links, markers]);
 
   useLayoutEffect(() => {
     if (automaticLayoutRef.current !== "fit-content" || !containerRef.current) {
@@ -673,12 +683,13 @@ export function CodeEditorComponent({
     }
     const currentModel = editorRef.current.getModel()!;
     const listener = currentModel.onDidChangeContent((e) => {
-      onChange(currentModel.getValue(), e.isFlush);
+      const parseValue = parseYaml();
+      onChange(currentModel.getValue(), parseValue, e.isFlush);
     });
     return () => {
       listener.dispose();
     };
-  }, [onChange]);
+  }, [onChange, parseYaml]);
 
   useEffect(() => {
     return () => {
@@ -687,7 +698,19 @@ export function CodeEditorComponent({
     };
   }, []);
 
-  return <div ref={containerRef} style={{ height: actualHeight }} />;
+  return (
+    <div
+      ref={containerRef}
+      style={{
+        height: actualHeight,
+        ...(validateState === "error"
+          ? {
+              border: "1px solid var(--antd-error-color)",
+            }
+          : {}),
+      }}
+    />
+  );
 }
 
 function getContentHeightByCode(
