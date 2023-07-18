@@ -67,3 +67,14 @@
   <eo-tag color="blue">Link to Baidu</eo-tag>
 </eo-link>
 ```
+
+### Icon
+
+```yaml preview
+- brick: eo-link
+  properties:
+    icon:
+      lib: antd
+      icon: search
+    textContent: Search
+```
