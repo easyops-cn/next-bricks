@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import { AbstractForm, FormStore, MessageBody } from "@next-shared/form";
@@ -135,6 +135,11 @@ class Form extends ReactNextElement implements FormProps, AbstractForm {
     );
   }
 
+  @property({
+    attribute: false,
+  })
+  accessor formStyle: React.CSSProperties | undefined;
+
   /**
    * 校验表单字段方法
    */
@@ -152,23 +157,52 @@ class Form extends ReactNextElement implements FormProps, AbstractForm {
   }
 
   render() {
-    return <FormComponent layout={this.layout} size={this.size} />;
+    return (
+      <FormComponent
+        layout={this.layout}
+        size={this.size}
+        formStyle={this.formStyle}
+      />
+    );
   }
 }
 
 interface FormComponentProps extends FormProps {
+  formStyle?: React.CSSProperties;
   onValuesChange?: (value: Record<string, any>) => void;
   onValidateSuccess?: () => void;
   onValidateError?: () => void;
 }
 
-export function FormComponent({ layout = "horizontal" }: FormComponentProps) {
+export function FormComponent({
+  layout = "horizontal",
+  formStyle,
+}: FormComponentProps) {
+  const computedStyle = useMemo((): React.CSSProperties => {
+    switch (layout) {
+      case "vertical": {
+        return {
+          display: "flex",
+          flexDirection: "column",
+        };
+      }
+      case "inline": {
+        return {
+          display: "flex",
+          gap: 10,
+        };
+      }
+      default:
+        return {};
+    }
+  }, [layout]);
+
   return (
     <form>
       <slot
         style={{
-          display: layout === "inline" ? "flex" : "",
-          gap: layout === "inline" ? "10px" : "",
+          ...computedStyle,
+          ...(formStyle ? formStyle : {}),
         }}
       />
     </form>

@@ -9,6 +9,8 @@ a {
 }
 
 .link {
+  display: flex;
+  align-items: center;
   color: var(--antd-btn-link-color);
 }
 
@@ -54,5 +56,5 @@ a {
 }
 
 eo-icon {
-  vertical-align: middle;
+  line-height: 1em;
 }

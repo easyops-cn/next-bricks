@@ -17,9 +17,33 @@
         - brick: eo-select
           properties:
             label: select
+- brick: div
+  properties:
+    style:
+      height: 1px
+      background: "#abc"
+      margin: "20px 0"
 - brick: eo-form
   properties:
     layout: horizontal
+  slots:
+    "":
+      bricks:
+        - brick: eo-input
+          properties:
+            label: input
+        - brick: eo-select
+          properties:
+            label: select
+- brick: div
+  properties:
+    style:
+      height: 1px
+      background: "#abc"
+      margin: "20px 0"
+- brick: eo-form
+  properties:
+    layout: vertical
   slots:
     "":
       bricks:

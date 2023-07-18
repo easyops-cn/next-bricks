@@ -27,7 +27,6 @@
 
 .form-item-label {
   display: inline-block;
-  overflow: hidden;
   white-space: nowrap;
   line-height: 34px;
   text-align: right;

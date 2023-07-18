@@ -15,10 +15,14 @@ button {
   padding: 4px 15px;
   height: 32px;
   font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 eo-link {
   padding: 4px 15px;
+  display: inline-block;
 }
 
 button:disabled {
@@ -31,7 +35,7 @@ button:disabled {
 }
 
 .icon {
-  vertical-align: middle;
+  line-height: 1em;
 }
 
 .round {
