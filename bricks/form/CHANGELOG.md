@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.12.0...@next-bricks/form@0.12.1) (2023-07-18)
+
+
+### Bug Fixes
+
+* remove form.code-editor ([b605c7d](https://github.com/easyops-cn/next-bricks/commit/b605c7d2d6fc58bd93fa4a2bb36feb39bcf5d2e8))
+
+
+
+
+
 # [0.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.11.3...@next-bricks/form@0.12.0) (2023-07-18)
 
 
