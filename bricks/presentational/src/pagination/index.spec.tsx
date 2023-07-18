@@ -44,6 +44,8 @@ describe("eo-pagination", () => {
         },
       })
     );
+    expect(element.page).toBe(5);
+    expect(element.pageSize).toBe(20);
 
     act(() => {
       fireEvent.click(
@@ -59,6 +61,8 @@ describe("eo-pagination", () => {
         },
       })
     );
+    expect(element.page).toBe(10);
+    expect(element.pageSize).toBe(20);
 
     act(() => {
       fireEvent.click(
@@ -74,6 +78,8 @@ describe("eo-pagination", () => {
         },
       })
     );
+    expect(element.page).toBe(9);
+    expect(element.pageSize).toBe(20);
 
     act(() => {
       fireEvent.click(
@@ -89,6 +95,8 @@ describe("eo-pagination", () => {
         },
       })
     );
+    expect(element.page).toBe(10);
+    expect(element.pageSize).toBe(20);
 
     act(() => {
       fireEvent.click(
@@ -106,6 +114,8 @@ describe("eo-pagination", () => {
         },
       })
     );
+    expect(element.page).toBe(50);
+    expect(element.pageSize).toBe(20);
 
     act(() => {
       fireEvent.click(
@@ -121,6 +131,8 @@ describe("eo-pagination", () => {
         },
       })
     );
+    expect(element.page).toBe(1);
+    expect(element.pageSize).toBe(10);
 
     act(() => {
       document.body.removeChild(element);
