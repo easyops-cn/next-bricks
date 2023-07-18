@@ -111,5 +111,6 @@
     "sl-tab-panel",
     "sl-select",
     "sl-tag"
-  ]
+  ],
+  "form-renderer": ["eo-form-renderer"]
 }
