@@ -218,6 +218,7 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
         <CodeEditorComponent
           value={this.value}
           language={this.language}
+          readOnly={this.readOnly}
           theme={this.theme}
           automaticLayout={this.automaticLayout}
           minLines={this.minLines}
@@ -247,6 +248,7 @@ export function CodeEditorComponent({
   completers,
   advancedCompleters,
   markers,
+  readOnly,
   links,
   validateState,
   onChange,
@@ -530,6 +532,13 @@ export function CodeEditorComponent({
   }, [height]);
 
   useEffect(() => {
+    if (!editorRef.current) return;
+    editorRef.current.updateOptions({
+      readOnly,
+    });
+  }, [readOnly]);
+
+  useEffect(() => {
     if (editorRef.current || !containerRef.current) {
       return;
     }
@@ -567,12 +576,13 @@ export function CodeEditorComponent({
         insertMode: "insert",
         preview: true,
       },
+      readOnly: readOnly,
       quickSuggestions: { strings: true, other: true, comments: true },
     });
 
     decorationsCollection.current =
       editorRef.current.createDecorationsCollection();
-  }, [value, language]);
+  }, [value, language, readOnly]);
 
   useEffect(() => {
     const editor = editorRef.current;
