@@ -96,12 +96,12 @@ class GeneralSearch extends ReactNextElement implements SearchProps {
   accessor debounceTime: number = 0;
 
   /**
-   * 失焦时触发, 而且会传出当前输入框当前值
+   * 失焦时触发，而且会传出当前输入框当前值
    */
   @event({ type: "blur" })
   accessor #blur!: EventEmitter<string>;
   #handleBlur = (value: string) => {
-    this.#blur.emit(this.trim ? value.trim() : value);
+    this.#blur.emit(this.trim ? value?.trim() : value);
   };
 
   /**

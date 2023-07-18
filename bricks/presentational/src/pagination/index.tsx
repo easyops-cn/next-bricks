@@ -78,6 +78,8 @@ class EoPagination extends ReactNextElement {
   @event({ type: "change" })
   accessor #changeEvent!: EventEmitter<{ page: number; pageSize: number }>;
   #handleChange = (data: { page: number; pageSize: number }) => {
+    this.page = data.page;
+    this.pageSize = data.pageSize;
     this.#changeEvent.emit(data);
   };
 
