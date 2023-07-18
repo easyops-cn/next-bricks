@@ -41,11 +41,6 @@
       height: 1px
       background: "#abc"
       margin: "20px 0"
-- brick: div
-  properties:
-    style:
-      height: 1px
-      background: "#ddd"
 - brick: eo-form
   properties:
     layout: vertical
