@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.6.0...@next-bricks/presentational@0.6.1) (2023-07-18)
+
+
+### Bug Fixes
+
+* pagination property is not updated when it changes ([a9045dd](https://github.com/easyops-cn/next-bricks/commit/a9045dd40abeb4649e23009f69d717bfdbee5acb))
+
+
+
+
+
 # [0.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.5.1...@next-bricks/presentational@0.6.0) (2023-07-14)
 
 

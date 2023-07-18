@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.11.3...@next-bricks/form@0.12.0) (2023-07-18)
+
+
+### Bug Fixes
+
+* pagination property is not updated when it changes ([a9045dd](https://github.com/easyops-cn/next-bricks/commit/a9045dd40abeb4649e23009f69d717bfdbee5acb))
+
+
+### Features
+
+* eo-upload-file ([d9437e7](https://github.com/easyops-cn/next-bricks/commit/d9437e7f6b38760d65e57f0f1f5812a67ca5aa36))
+
+
+
+
+
 ## [0.11.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.11.2...@next-bricks/form@0.11.3) (2023-07-14)
 
 **Note:** Version bump only for package @next-bricks/form

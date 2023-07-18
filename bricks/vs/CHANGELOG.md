@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.3.0...@next-bricks/vs@0.4.0) (2023-07-18)
+
+
+### Features
+
+* update code ([5908b49](https://github.com/easyops-cn/next-bricks/commit/5908b49adddd2fa13fe5831f9469203be9ed5f0a))
+* vs-code-editor add form validate ([3144c52](https://github.com/easyops-cn/next-bricks/commit/3144c525f1ab0a99c8736478405fdaccfdb9f13a))
+
+
+
+
+
 # [0.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.2.2...@next-bricks/vs@0.3.0) (2023-07-14)
 
 
