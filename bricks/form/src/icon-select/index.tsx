@@ -340,11 +340,10 @@ export function IconSelectComponent(props: IconSelectComponentProps) {
                   };
                 })}
                 value={searchParams.lib}
-                style={{ marginBottom: "-22px" }}
                 onValueChange={(e) => {
                   const newSearchParams = {
                     ...searchParams,
-                    lib: e.detail as string,
+                    lib: e.detail.value as string,
                   };
                   setSearchParams(newSearchParams);
                   handleSearchIcons(newSearchParams);
