@@ -15,7 +15,7 @@ eo-link {
 
 .nav-menu-wrapper > eo-menu-item,
 .nav-menu-wrapper > eo-popover {
-  padding: 2px 10px;
+  padding: 2px 14px;
 }
 
 .popover .sub-menu-item-label {
@@ -54,7 +54,6 @@ eo-link {
 
 .menu-item-label {
   cursor: pointer;
-  padding: 4px 8px;
   border-radius: 4px;
   color: var(--color-normal-text);
 }
