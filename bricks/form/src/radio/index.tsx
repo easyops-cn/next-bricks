@@ -48,7 +48,7 @@ export interface RadioProps {
   customStyle?: React.CSSProperties;
 }
 export interface RadioEvents {
-  change: CustomEvent<GeneralComplexOption["value"]>;
+  change: CustomEvent<GeneralComplexOption>;
   optionsChange: CustomEvent<{
     options: GeneralComplexOption[];
     name: string;
