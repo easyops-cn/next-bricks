@@ -89,8 +89,10 @@ function catchWithFallback(fn: Function, args: unknown[], fallback: unknown) {
   try {
     return fn(...args);
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.warn(error);
+    if (process.env.NODE_ENV === "development") {
+      // eslint-disable-next-line no-console
+      console.warn(error);
+    }
     return fallback;
   }
 }
