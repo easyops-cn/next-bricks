@@ -35,13 +35,13 @@
   },
   "dependencies": {
     "@next-bricks/icons": "^0.3.2",
-    "@next-core/element": "^1.1.1",
-    "@next-core/http": "^1.0.7",
-    "@next-core/react-element": "^1.0.9",
-    "@next-core/react-runtime": "^1.0.54",
-    "@next-core/runtime": "^1.17.7",
+    "@next-core/element": "^1.1.2",
+    "@next-core/http": "^1.0.8",
+    "@next-core/react-element": "^1.0.10",
+    "@next-core/react-runtime": "^1.0.55",
+    "@next-core/runtime": "^1.17.8",
     "@next-core/theme": "^1.1.1",
-    "@next-core/types": "^1.5.0",
+    "@next-core/types": "^1.5.1",
     "antd": "^5.2.3",
     "classnames": "^2.3.2",
     "immutability-helper": "^3.1.1",
@@ -52,7 +52,7 @@
     "react-dom": "0.0.0-experimental-ee8509801-20230117"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.13.2",
-    "@next-core/test-next": "^1.0.7"
+    "@next-core/build-next-bricks": "^1.13.3",
+    "@next-core/test-next": "^1.0.8"
   }
 }
