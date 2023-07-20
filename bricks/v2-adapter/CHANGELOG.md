@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.1.3...@next-bricks/v2-adapter@0.2.0) (2023-07-20)
+
+
+### Features
+
+* add a new provider `load-container` to support v2 bricks without container ([b737e2a](https://github.com/easyops-cn/next-bricks/commit/b737e2ab6d27c39bf1dab5c0a8a725466ddb7bbc))
+
+
+
+
+
 ## [0.1.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.1.2...@next-bricks/v2-adapter@0.1.3) (2023-07-18)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter

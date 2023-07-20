@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.12.2...@next-bricks/form@0.12.3) (2023-07-20)
+
+
+### Bug Fixes
+
+* icon-select style ([261b8c0](https://github.com/easyops-cn/next-bricks/commit/261b8c0808cf1f97e14688bfb57b6f4c72b408f3))
+
+
+
+
+
 ## [0.12.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.12.1...@next-bricks/form@0.12.2) (2023-07-19)
 
 

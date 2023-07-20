@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.0...@next-bricks/form-renderer@0.1.1) (2023-07-20)
+
+
+### Bug Fixes
+
+* use light DOM ([a97956f](https://github.com/easyops-cn/next-bricks/commit/a97956ff75435030eb45883d500e7654e45f8618))
+
+
+
+
+
 # 0.1.0 (2023-07-18)
 
 
