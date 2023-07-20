@@ -38,9 +38,8 @@ const consoleError = jest.spyOn(console, "error").mockReturnValue();
 
 describe("FaIcon", () => {
   beforeEach(async () => {
-    await jest.isolateModulesAsync(async () => {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      await import("./index.js");
+    jest.isolateModules(() => {
+      import("./index.js");
     });
   });
 
