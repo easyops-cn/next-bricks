@@ -192,6 +192,8 @@ class EoUploadFile extends FormItemElementBase implements UploadFileProps {
         autoUpload={this.autoUpload}
         url={this.url}
         method={this.method}
+        notRender={this.notRender}
+        helpBrick={this.helpBrick}
         uploadName={this.uploadName}
         trigger="handleChange"
         onChange={this.handleChange}

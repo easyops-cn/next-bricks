@@ -208,6 +208,8 @@ class Radio extends FormItemElementBase {
         required={this.required}
         message={this.message}
         onChange={this.handleChange}
+        notRender={this.notRender}
+        helpBrick={this.helpBrick}
         trigger="handleChange"
         optionsChange={this.#handleOptionsChange}
         customStyle={this.customStyle}

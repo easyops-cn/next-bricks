@@ -161,6 +161,8 @@ class IconSelect extends FormItemElementBase implements IconSelectProps {
         required={this.required}
         disabled={this.disabled}
         message={this.message}
+        notRender={this.notRender}
+        helpBrick={this.helpBrick}
         onChange={this.handleChange}
         trigger="handleChange"
       />

@@ -158,6 +158,8 @@ class Checkbox extends FormItemElementBase {
         isCustom={this.isCustom}
         required={this.required}
         message={this.message}
+        notRender={this.notRender}
+        helpBrick={this.helpBrick}
         trigger="handleCheckboxChange"
         onChange={this.handleCheckboxChange}
         optionsChange={this.#handleOptionsChange}

@@ -111,6 +111,8 @@ class DynamicFormItem extends FormItemElementBase {
         value={this.value}
         validateState={this.validateState}
         needValidate={false}
+        notRender={this.notRender}
+        helpBrick={this.helpBrick}
         trigger="handleDynamicFormChange"
         onChange={this.handleDynamicFormChange}
         onValuesChange={this.handleDynamicFormChange}

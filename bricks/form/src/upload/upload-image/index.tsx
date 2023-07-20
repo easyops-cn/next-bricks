@@ -116,6 +116,8 @@ class UploadImage extends FormItemElementBase implements UploadImageProps {
         message={this.message}
         bucketName={this.bucketName}
         multiple={this.multiple}
+        notRender={this.notRender}
+        helpBrick={this.helpBrick}
         onChange={this.handleChange}
         trigger="handleChange"
       />

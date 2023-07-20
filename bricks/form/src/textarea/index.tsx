@@ -158,6 +158,8 @@ class Textarea extends FormItemElementBase {
         minLength={this.minLength}
         maxLength={this.maxLength}
         autoSize={this.autoSize}
+        notRender={this.notRender}
+        helpBrick={this.helpBrick}
         textareaStyle={this.textareaStyle}
         validateState={this.validateState}
         max={this.max}

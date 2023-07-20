@@ -193,6 +193,8 @@ class Select extends FormItemElementBase {
         trigger="handleChange"
         inputStyle={this.inputStyle}
         validateState={this.validateState}
+        notRender={this.notRender}
+        helpBrick={this.helpBrick}
         options={formatOptions(this.options)}
         onChange={this.handleChange}
         optionsChange={this._handleOptionsChange}

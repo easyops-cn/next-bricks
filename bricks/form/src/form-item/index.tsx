@@ -5,11 +5,13 @@ import {
   FormItemElementBase,
   MessageBody,
 } from "@next-shared/form";
+import { ReactUseBrick } from "@next-core/react-runtime";
 import type { Form } from "../form/index.jsx";
 import styleText from "./FormItem.shadow.css";
 import classNames from "classnames";
 import type { ComponentSize, Layout } from "../interface.js";
 import "@next-core/theme";
+import { UseSingleBrickConf } from "@next-core/types";
 
 type CurrentElement = HTMLElement & {
   size?: ComponentSize;
@@ -34,6 +36,8 @@ export interface FormItemProps {
   size?: ComponentSize;
   trigger?: string;
   valuePropsName?: string;
+  notRender?: boolean;
+  helpBrick?: { useBrick: UseSingleBrickConf };
   needValidate?: boolean;
   validator?: (value: any) => MessageBody | string;
 }
@@ -150,6 +154,7 @@ class FormItem extends FormItemElementBase implements FormItemProps {
   accessor needValidate: boolean | undefined;
 
   render() {
+    if (this.notRender) return null;
     return (
       <FormItemComponent
         formElement={this.formElement}
@@ -164,6 +169,8 @@ class FormItem extends FormItemElementBase implements FormItemProps {
         size={this.size || this.formElement?.size}
         layout={this.layout || this.formElement?.layout}
         trigger={this.trigger}
+        notRender={this.notRender}
+        helpBrick={this.helpBrick}
         valuePropsName={this.valuePropsName}
         needValidate={this.needValidate}
         validator={this.validator}
@@ -189,6 +196,7 @@ export function FormItemComponent(props: FormItemProps) {
     size,
     trigger = "onChange",
     layout = "horizontal",
+    helpBrick,
     needValidate = true,
     validator,
   } = props;
@@ -235,6 +243,7 @@ export function FormItemComponent(props: FormItemProps) {
     });
 
     return () => {
+      formInstance.removeField(name);
       formInstance.unsubscribe(`${name}.validate`);
       formInstance.unsubscribe(`${name}.init.value`);
       formInstance.unsubscribe(`${name}.reset.fields`);
@@ -281,11 +290,16 @@ export function FormItemComponent(props: FormItemProps) {
   return (
     <div className={classNames("form-item", layout)}>
       {label && (
-        <div className="form-item-label">
-          <label>
-            {required && <span className="required">*</span>}
-            {label}
-          </label>
+        <div className="form-item-label-wrapper">
+          <div className="form-item-label">
+            <label>
+              {required && <span className="required">*</span>}
+              {label}
+            </label>
+            {helpBrick?.useBrick ? (
+              <ReactUseBrick {...helpBrick}></ReactUseBrick>
+            ) : null}
+          </div>
         </div>
       )}
       <div className="form-item-wrapper">
