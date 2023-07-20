@@ -1,8 +1,9 @@
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import type { AbstractForm } from "./Form.js";
+import { UseSingleBrickConf } from "@next-core/types";
 
-const { method } = createDecorators();
+const { method, property } = createDecorators();
 
 export abstract class FormItemElementBase extends ReactNextElement {
   accessor #_notRender = false;
@@ -41,6 +42,16 @@ export abstract class FormItemElementBase extends ReactNextElement {
   set $bindFormItem(value: boolean) {
     this.#bindFormItem = value;
     this._render();
+  }
+
+  @property({
+    attribute: false,
+  })
+  accessor helpBrick: { useBrick: UseSingleBrickConf } | undefined;
+
+  @method()
+  setNotRender(value: boolean) {
+    this.notRender = value;
   }
 
   @method()

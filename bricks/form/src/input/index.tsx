@@ -179,6 +179,8 @@ class Input extends FormItemElementBase {
         disabled={this.disabled}
         minLength={this.minLength}
         maxLength={this.maxLength}
+        notRender={this.notRender}
+        helpBrick={this.helpBrick}
         inputStyle={this.inputStyle}
         validateState={this.validateState}
         trigger="handleInputChange"

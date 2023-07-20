@@ -133,6 +133,10 @@ export class FormStore extends PubSub {
     return this.getAllValues();
   }
 
+  removeField(name: string) {
+    this.#fields.delete(name);
+  }
+
   validateFields(
     callback: (err: boolean, value: any) => void
   ): boolean | Record<string, unknown> {

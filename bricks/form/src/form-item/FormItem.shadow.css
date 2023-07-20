@@ -14,7 +14,7 @@
   flex-direction: column;
 }
 
-.form-item.vertical > .form-item-label {
+.form-item.vertical > .form-item-label-wrapper {
   text-align: left;
   line-height: 1;
   margin-bottom: 8px;
@@ -25,7 +25,7 @@
   margin-right: 4px;
 }
 
-.form-item-label {
+.form-item-label-wrapper {
   display: inline-block;
   white-space: nowrap;
   line-height: 34px;
@@ -33,6 +33,15 @@
   vertical-align: middle;
   flex-grow: 0;
   padding-right: 8px;
+}
+
+.form-item-label {
+  display: flex;
+  align-items: center;
+}
+
+.form-item-label > label {
+  margin-right: 6px;
 }
 
 .form-item-wrapper {

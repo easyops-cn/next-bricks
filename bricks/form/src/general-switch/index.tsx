@@ -117,6 +117,8 @@ class GeneralSwitch extends FormItemElementBase {
         unCheckedIcon={this.unCheckedIcon}
         name={this.name}
         label={this.label}
+        notRender={this.notRender}
+        helpBrick={this.helpBrick}
         trigger="handleSwitch"
       />
     );
