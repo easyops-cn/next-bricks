@@ -15,11 +15,9 @@ class EoFormRenderer extends NextElement {
   #root: ReturnType<typeof unstable_createRoot> | undefined;
 
   #createRoot(): void {
-    if (this.shadowRoot) {
-      return;
+    if (!this.#root) {
+      this.#root = unstable_createRoot(this);
     }
-    const shadowRoot = this.attachShadow({ mode: "open" });
-    this.#root = unstable_createRoot(shadowRoot);
   }
 
   connectedCallback() {

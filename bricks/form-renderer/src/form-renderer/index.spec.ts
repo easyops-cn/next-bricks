@@ -31,12 +31,12 @@ describe("eo-form-renderer", () => {
       },
     };
 
-    expect(element.shadowRoot).toBeFalsy();
+    expect(element.childNodes.length).toBe(0);
 
     document.body.appendChild(element);
     await (global as any).flushPromises();
 
-    expect(element.shadowRoot?.childNodes).toMatchInlineSnapshot(`
+    expect(element.childNodes).toMatchInlineSnapshot(`
       NodeList [
         <form-renderer.form-renderer />,
       ]
@@ -44,11 +44,11 @@ describe("eo-form-renderer", () => {
 
     document.body.removeChild(element);
     await (global as any).flushPromises();
-    expect(element.shadowRoot?.childNodes.length).toBe(0);
+    expect(element.childNodes.length).toBe(0);
 
     // Append back
     document.body.appendChild(element);
     await (global as any).flushPromises();
-    expect(element.shadowRoot?.childNodes.length).toBe(1);
+    expect(element.childNodes.length).toBe(1);
   });
 });
