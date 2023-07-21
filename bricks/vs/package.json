@@ -39,7 +39,7 @@
     "@next-core/element": "^1.1.2",
     "@next-core/monaco-contributions": "^0.3.1",
     "@next-core/react-element": "^1.0.10",
-    "@next-core/react-runtime": "^1.0.55",
+    "@next-core/react-runtime": "^1.0.57",
     "@next-core/theme": "^1.1.1",
     "@next-shared/form": "^0.1.1",
     "monaco-editor": "^0.39.0",
