@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.12.3...@next-bricks/form@0.13.0) (2023-07-21)
+
+
+### Bug Fixes
+
+* now supports v3 bricks with useBrick used in v2 ([4773211](https://github.com/easyops-cn/next-bricks/commit/47732116cdd362550eaf567e332fabcb3ace41f1))
+
+
+### Features
+
+* formItem support setNotRender & helpBrick ([eb5585e](https://github.com/easyops-cn/next-bricks/commit/eb5585ec0d7a71efb91333e9b99e51be27ef73ce))
+
+
+
+
+
 ## [0.12.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.12.2...@next-bricks/form@0.12.3) (2023-07-20)
 
 

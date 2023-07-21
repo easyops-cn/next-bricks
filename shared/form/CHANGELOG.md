@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/form@0.1.1...@next-shared/form@0.2.0) (2023-07-21)
+
+
+### Features
+
+* formItem support setNotRender & helpBrick ([eb5585e](https://github.com/easyops-cn/next-bricks/commit/eb5585ec0d7a71efb91333e9b99e51be27ef73ce))
+
+
+
+
+
 ## [0.1.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/form@0.1.0...@next-shared/form@0.1.1) (2023-07-12)
 
 **Note:** Version bump only for package @next-shared/form
