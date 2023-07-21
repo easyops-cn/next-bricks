@@ -2284,10 +2284,10 @@
     react "0.0.0-experimental-ee8509801-20230117"
     react-dom "0.0.0-experimental-ee8509801-20230117"
 
-"@next-core/react-runtime@^1.0.55":
-  version "1.0.55"
-  resolved "https://registry.yarnpkg.com/@next-core/react-runtime/-/react-runtime-1.0.55.tgz#917f164f3463e2f8aca190fece486add64dd6ed8"
-  integrity sha512-AKC1A47/pJrnbYEgaKOYiiQMi5VO1mGtfF+TfOK/b0lHrIIqtmmTe9ptnp76pEX7pSt9j+VnkNEX2FTidpBY0g==
+"@next-core/react-runtime@^1.0.57":
+  version "1.0.57"
+  resolved "https://registry.yarnpkg.com/@next-core/react-runtime/-/react-runtime-1.0.57.tgz#30821691a8158f6938e53a3206a6e0b7ce76e553"
+  integrity sha512-ZQDk1RXvPhetzx5pHLyoyvqGwNt004f7VgPqQy7LialsXnqtAez/zToNnE6R5/QUHGkryjBaKx3c/IJ99V0vqQ==
   dependencies:
     "@next-core/runtime" "^1.17.8"
     "@next-core/types" "^1.5.1"
