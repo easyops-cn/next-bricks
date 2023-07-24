@@ -19,6 +19,7 @@ import {
   wrapInOrderedListCommand,
   wrapInBlockquoteCommand,
   codeBlockSchema,
+  listItemSchema,
 } from "@milkdown/preset-commonmark";
 import { nord } from "@milkdown/theme-nord";
 import { history, redoCommand, undoCommand } from "@milkdown/plugin-history";
@@ -48,10 +49,12 @@ import {
   tableTooltipCtx,
 } from "./components/TableWidget.tsx";
 import { CodeBlock } from "./components/CodeBlock.tsx";
+import { ListItem } from "./components/ListItem.tsx";
 import type { FormItem, FormItemProps } from "@next-bricks/form/form-item";
 import { FormItemElementBase } from "@next-shared/form";
 
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
+
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
@@ -315,6 +318,11 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
       .use(
         $view(codeBlockSchema.node, () =>
           nodeViewFactory({ component: CodeBlock })
+        )
+      )
+      .use(
+        $view(listItemSchema.node, () =>
+          nodeViewFactory({ component: ListItem })
         )
       );
   }, []);

@@ -1988,3 +1988,16 @@ pre[class*="language-"] {
 .token.entity {
   cursor: help;
 }
+
+/* checkbox */
+
+.checkboxLi {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+li p {
+  margin: 0 !important;
+  line-height: 1.5rem !important;
+}
