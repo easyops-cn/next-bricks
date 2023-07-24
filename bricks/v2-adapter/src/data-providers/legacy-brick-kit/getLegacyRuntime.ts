@@ -19,6 +19,7 @@ export function getLegacyRuntime(): {
       const key = args[1];
       switch (key) {
         case "getCurrentApp":
+        case "hasInstalledApp":
         case "getDesktops":
         case "getLaunchpadSettings":
         case "getLaunchpadSiteMap":
