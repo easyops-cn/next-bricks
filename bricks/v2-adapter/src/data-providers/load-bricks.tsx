@@ -57,6 +57,7 @@ interface LegacyFaIconProps {
     endColor: string;
     direction?: string;
   };
+  className?: string;
 }
 
 const MAIN_KEY = "";
@@ -202,10 +203,29 @@ async function loadMainDll(adapterPkgFilePath: string) {
   });
 
   defineModule(LegacyReactFontAwesome, {
-    FontAwesomeIcon({ icon, gradientColor }: LegacyFaIconProps) {
+    FontAwesomeIcon({
+      icon,
+      gradientColor,
+      className,
+      ...restProps
+    }: LegacyFaIconProps) {
+      /**
+       * Compatible with the following uses:
+       *
+       * import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+       *
+       * <FontAwesomeIcon
+       *  className={styles.plusIcon}
+       *  style={{ marginRight: 12 }}
+       *  icon="plus-square"
+       *  onClick={onClick}
+       * />
+       */
       const FaIcon = "eo-fa-icon" as any;
       return (
         <FaIcon
+          {...restProps}
+          class={className}
           {...{
             ...(Array.isArray(icon)
               ? {
