@@ -87,7 +87,7 @@ export function SearchBar(props: SearchBarProps): React.ReactElement {
           </span>
           <input
             role="input"
-            className=""
+            className={styles.input}
             placeholder={t(K.SEARCH_BY_NAME_KEYWORD) as string}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
