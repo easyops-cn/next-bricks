@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.2.1...@next-bricks/v2-adapter@0.2.2) (2023-07-24)
+
+
+### Bug Fixes
+
+* FontAwesomeIcon do not work well ([09ca06a](https://github.com/easyops-cn/next-bricks/commit/09ca06ae42cc066ef2429542771b74d8ae8f5216))
+* runtime export hasInstalledApp ([a25b17a](https://github.com/easyops-cn/next-bricks/commit/a25b17afe2908631c2c9f3a87bfa356aab8c224d))
+
+
+
+
+
 ## [0.2.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.2.0...@next-bricks/v2-adapter@0.2.1) (2023-07-21)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
