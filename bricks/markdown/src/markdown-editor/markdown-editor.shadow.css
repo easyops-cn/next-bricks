@@ -799,7 +799,7 @@ video {
 }
 
 .prose :where(a):not(:where([class~="not-prose"] *)) {
-  color: var(--tw-prose-links);
+  color: var(--color-info);
   text-decoration: underline;
   font-weight: 500;
 }
@@ -1849,7 +1849,7 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
   padding: 0.25rem 0.5rem;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 500;
   line-height: 1.5rem;
   color: rgb(22, 22, 22);
