@@ -194,4 +194,36 @@ describe("icons.antd-icon", () => {
     `);
     document.body.removeChild(element);
   });
+
+  test("fix theme", async () => {
+    const element = document.createElement("icons.antd-icon") as AntdIcon;
+    element.icon = "branches";
+    element.theme = "twoTone";
+
+    document.body.appendChild(element);
+    await (global as any).flushPromises();
+    expect(element.shadowRoot?.childNodes).toMatchInlineSnapshot(`
+      NodeList [
+        <style>
+          DefineLinearGradient.shadow.css
+      icons.shadow.css
+        </style>,
+        <svg
+          fill="currentColor"
+          focusable="false"
+          height="1em"
+          viewBox="64 64 896 896"
+          width="1em"
+        >
+          <defs>
+            <style />
+          </defs>
+          <path
+            d="M952 474H829.8z"
+          />
+        </svg>,
+      ]
+    `);
+    document.body.removeChild(element);
+  });
 });

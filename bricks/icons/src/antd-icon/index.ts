@@ -73,7 +73,7 @@ class AntdIcon extends NextElement implements AntdIconProps {
       return;
     }
     const { theme: _theme, icon } = this;
-    const theme = _theme ?? "outlined";
+    const theme = fixTheme(_theme);
     const url = icon
       ? `${
           // istanbul ignore next
@@ -81,7 +81,7 @@ class AntdIcon extends NextElement implements AntdIconProps {
         }chunks/antd-icons/${theme}/${icon}.svg`
       : undefined;
     const svg = await getIcon(url, { currentColor: theme !== "twotone" });
-    if (theme !== (this.theme ?? "outlined") || icon !== this.icon) {
+    if (theme !== fixTheme(this.theme) || icon !== this.icon) {
       // The icon has changed
       return;
     }
@@ -127,3 +127,8 @@ function escapeAttr(unsafe: string) {
 export const WrappedAntdIcon = wrapLocalBrick<AntdIcon, AntdIconProps>(
   AntdIcon
 );
+
+function fixTheme(theme?: string) {
+  // The icon theme for v2 is twoTone
+  return (theme === "twoTone" ? "twotone" : theme) ?? "outlined";
+}
