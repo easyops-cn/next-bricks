@@ -3,6 +3,8 @@ import { createProviderClass } from "@next-core/utils/general";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import * as changeCase from "change-case";
+import { format } from "prettier/standalone.js";
+import parserBabel from "prettier/parser-babel.js";
 
 export interface StoryboardAssemblyResult {
   storyboard: Storyboard;
@@ -10,11 +12,13 @@ export interface StoryboardAssemblyResult {
   projectDetail: {
     appId: string;
     name: string;
-    appSetting: {
-      homepage: string;
+    appSetting: Pick<
+      MicroApp,
+      "homepage" | "theme" | "locales" | "noAuthGuard"
+    > & {
       layoutType?: string;
-      theme?: MicroApp["theme"];
     };
+    brickNextVersion?: number;
   };
 }
 
@@ -52,18 +56,20 @@ export async function exportAsSourceFiles({
     routeNames.add(name);
     const filename = `${name}.js`;
     const content = `export default ${JSON.stringify(route, null, 2)};`;
-    routes.file(filename, content);
+    routes.file(filename, formatJs(content));
   }
 
   routes.file(
     "index.js",
-    [
-      ...[...routeNames].map((name) => `import ${name} from "./${name}";`),
-      "",
-      `export default [
+    formatJs(
+      [
+        ...[...routeNames].map((name) => `import ${name} from "./${name}.js";`),
+        "",
+        `export default [
 ${[...routeNames].map((name) => `  ${name},`).join("\n")}
 ];`,
-    ].join("\n")
+      ].join("\n")
+    )
   );
 
   const app: MicroApp & { layoutType?: string } = {
@@ -72,8 +78,14 @@ ${[...routeNames].map((name) => `  ${name},`).join("\n")}
     homepage: projectDetail.appSetting.homepage,
     layoutType: projectDetail.appSetting.layoutType,
     theme: projectDetail.appSetting.theme,
+    noAuthGuard: projectDetail.appSetting.noAuthGuard,
+    locales: projectDetail.appSetting.locales,
+    standaloneMode: true,
   };
-  src.file("app.js", `export default ${JSON.stringify(app, null, 2)};`);
+  src.file(
+    "app.js",
+    formatJs(`export default ${JSON.stringify(app, null, 2)};`)
+  );
 
   const meta = (storyboard.meta ?? {}) as StoryboardMeta & {
     workflows?: unknown[];
@@ -85,52 +97,156 @@ ${[...routeNames].map((name) => `  ${name},`).join("\n")}
   for (const tpl of customTemplates) {
     const filename = `${tpl.name}.js`;
     const content = `export default ${JSON.stringify(tpl, null, 2)};`;
-    templates.file(filename, content);
+    templates.file(filename, formatJs(content));
   }
 
   templates.file(
     "index.js",
-    [
-      ...[...customTemplates].map(
-        (tpl) =>
-          `import ${changeCase.camelCase(tpl.name)} from "./${tpl.name}";`
-      ),
-      "",
-      `export default [
+    formatJs(
+      [
+        ...[...customTemplates].map(
+          (tpl) =>
+            `import ${changeCase.camelCase(tpl.name)} from "./${tpl.name}.js";`
+        ),
+        "",
+        `export default [
 ${[...customTemplates]
   .map((tpl) => `  ${changeCase.camelCase(tpl.name)},`)
   .join("\n")}
 ];`,
-    ].join("\n")
+      ].join("\n")
+    )
   );
 
   src.file(
     "meta.js",
-    [
-      `import customTemplates from "./templates";`,
-      `const meta = ${JSON.stringify(storyboard.meta, null, 2)};`,
-      `meta.customTemplates = customTemplates;`,
-      `export default meta;`,
-    ].join("\n")
+    formatJs(
+      [
+        `import customTemplates from "./templates/index.js";`,
+        `const meta = ${JSON.stringify(storyboard.meta, null, 2)};`,
+        `meta.customTemplates = customTemplates;`,
+        `export default meta;`,
+      ].join("\n")
+    )
   );
 
   src.file(
     "index.js",
-    [
-      'import app from "./app";',
-      'import routes from "./routes";',
-      'import meta from "./meta";',
-      "",
-      `export default {
+    formatJs(
+      [
+        'import app from "./app.js";',
+        'import routes from "./routes/index.js";',
+        'import meta from "./meta.js";',
+        "",
+        `export default {
   app,
   routes,
   meta,
 };`,
-    ].join("\n")
+      ].join("\n")
+    )
+  );
+
+  const packageJsonContent = JSON.stringify(
+    {
+      name: projectDetail.appId,
+      private: true,
+      type: "module",
+      scripts: {
+        build: "node scripts/build.js",
+        serve: `brick-container-serve --local-micro-apps=${JSON.stringify(
+          projectDetail.appId
+        )}`,
+      },
+      engines: {
+        node: ">=16",
+      },
+      devDependencies: {
+        "@next-core/brick-container": "^3.5.1",
+        "@types/node": "^16.18.14",
+        "js-yaml": "^3.14.1",
+      },
+    },
+    null,
+    2
+  );
+
+  project.file("package.json", packageJsonContent);
+
+  const scripts = project.folder("scripts")!;
+
+  const appRelativeDir = JSON.stringify(
+    `../mock-micro-apps/${projectDetail.appId}`
+  );
+
+  scripts.file(
+    "build.js",
+    `import path from "node:path";
+import { writeFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
+import yaml from "js-yaml";
+import storyboard from "../src/index.js";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const { safeDump, JSON_SCHEMA } = yaml;
+
+await writeFile(
+  path.resolve(__dirname, ${appRelativeDir}, "storyboard.yaml"),
+  safeDump(storyboard, {
+    indent: 2,
+    schema: JSON_SCHEMA,
+    skipInvalid: true,
+    noRefs: true,
+    noCompatMode: true,
+  })
+);
+
+await writeFile(
+  path.resolve(__dirname, ${appRelativeDir}, "storyboard.json"),
+  JSON.stringify(storyboard, null, 2)
+);`
+  );
+
+  const appDir = project
+    .folder("mock-micro-apps")!
+    .folder(projectDetail.appId)!;
+  appDir.file(".gitignore", "*\n!.gitignore");
+
+  project.file(
+    "README.md",
+    `# ${projectDetail.name}
+
+\`\`\`bash
+yarn
+yarn build
+yarn serve
+\`\`\`
+
+提示：运行 \`yarn serve\` 时按需使用 \`--subdir\` 和 \`--server\` 等参数。
+`
   );
 
   const blob = await zip.generateAsync({ type: "blob" });
   saveAs(blob, "project.zip");
+}
+
+export interface FormatJsOptions {
+  typescript?: boolean;
+  semi?: boolean;
+  printWidth?: number;
+}
+
+export function formatJs(
+  source: string,
+  { typescript, semi = true, printWidth }: FormatJsOptions = {}
+): string {
+  return format(source, {
+    parser: typescript ? "babel-ts" : "babel",
+    plugins: [parserBabel],
+    semi,
+    printWidth,
+  });
 }
 
 customElements.define(
