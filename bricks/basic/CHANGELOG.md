@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.17.4...@next-bricks/basic@0.17.5) (2023-07-25)
+
+
+### Bug Fixes
+
+* input 全局样式污染 ([90d6348](https://github.com/easyops-cn/next-bricks/commit/90d6348d5b07110da73ae327ce1ca7d114f6d4af))
+
+
+
+
+
 ## [0.17.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.17.3...@next-bricks/basic@0.17.4) (2023-07-24)
 
 **Note:** Version bump only for package @next-bricks/basic
