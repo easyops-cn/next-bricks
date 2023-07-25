@@ -351,6 +351,7 @@ async function loadMainDll(adapterPkgFilePath: string) {
         "updateTemplatePreviewSettings",
         "updateStoryboardBySnippet",
         "updateSnippetPreviewSettings",
+        "getBrickPackagesById",
       ]),
       createRoot: unstable_createRoot,
     },
