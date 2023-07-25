@@ -8,6 +8,7 @@ import React, {
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
+import { getBasePath, __secret_internals } from "@next-core/runtime";
 import styleText from "./styles.shadow.css";
 
 const { defineElement, property } = createDecorators();
@@ -46,27 +47,48 @@ export function PreviewContainerComponent({
   recordEnabled,
 }: PreviewContainerComponentProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [iframeLoaded, setIframeLoaded] = useState(false);
+  const [initialized, setInitialized] = useState(false);
   const previewOrigin = useMemo(() => {
     const url = new URL(src, location.origin);
     return url.origin;
   }, [src]);
 
   const handleIframeLoad = useCallback(() => {
+    const pkg = __secret_internals.getBrickPackagesById("bricks/ui-test");
+    if (!pkg) {
+      throw new Error("Cannot find preview agent package: bricks/ui-test");
+    }
     iframeRef.current?.contentWindow?.postMessage(
       {
         channel: "ui-test-preview",
         type: "initialize",
+        payload: {
+          agent: {
+            brick: "ui-test.inject-preview-agent",
+            pkg: {
+              ...pkg,
+              filePath: `${location.origin}${getBasePath()}${
+                window.PUBLIC_ROOT ?? ""
+              }${pkg.filePath}`,
+            },
+          },
+        },
       },
       previewOrigin
     );
-    setIframeLoaded(true);
   }, [previewOrigin]);
 
   useEffect(() => {
     const listener = (event: MessageEvent) => {
       // eslint-disable-next-line no-console
       console.log("received message:", event);
+      if (event.data?.channel === "ui-test-preview") {
+        switch (event.data.type) {
+          case "initialized":
+            setInitialized(true);
+            break;
+        }
+      }
     };
     window.addEventListener("message", listener);
     return () => {
@@ -75,7 +97,7 @@ export function PreviewContainerComponent({
   }, []);
 
   useEffect(() => {
-    if (!iframeLoaded) {
+    if (!initialized) {
       return;
     }
     iframeRef.current?.contentWindow?.postMessage(
@@ -88,7 +110,7 @@ export function PreviewContainerComponent({
       },
       previewOrigin
     );
-  }, [iframeLoaded, previewOrigin, recordEnabled]);
+  }, [initialized, previewOrigin, recordEnabled]);
 
   return (
     <div>
