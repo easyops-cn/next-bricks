@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.3.17...@next-bricks/visual-builder@0.4.0) (2023-07-25)
+
+
+### Features
+
+* inject preview agent ([d3ed035](https://github.com/easyops-cn/next-bricks/commit/d3ed035242442cf17425d55f049fcc93f5474426))
+
+
+
+
+
 ## [0.3.17](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.3.16...@next-bricks/visual-builder@0.3.17) (2023-07-25)
 
 **Note:** Version bump only for package @next-bricks/visual-builder
