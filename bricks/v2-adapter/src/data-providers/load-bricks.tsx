@@ -354,6 +354,25 @@ async function loadMainDll(adapterPkgFilePath: string) {
         "getBrickPackagesById",
       ]),
       createRoot: unstable_createRoot,
+      getContextValue(
+        name: string,
+        { tplContextId }: { tplContextId?: string }
+      ) {
+        return __secret_internals.getContextValue(name, {
+          tplStateStoreId: tplContextId,
+        });
+      },
+      getAllContextValues({ tplContextId }: { tplContextId?: string }) {
+        // V3 returns an object of key-value.
+        // While v2 returns a map of ContextItem.
+        const v3Values = __secret_internals.getAllContextValues({
+          tplStateStoreId: tplContextId,
+        });
+        return new Map(
+          // Note, returns `{ value }` for simplicity instead of ContextItem.
+          Object.entries(v3Values).map(([k, value]) => [k, { value }])
+        );
+      },
     },
   });
 }
