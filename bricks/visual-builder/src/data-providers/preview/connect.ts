@@ -1,18 +1,19 @@
 import {
-  getHistory,
+  getHistory as _getHistory,
   getBasePath,
-  matchPath,
-  __secret_internals,
-  NextLocation,
+  matchPath as _matchPath,
+  __secret_internals as _internals,
+  type NextLocation,
 } from "@next-core/runtime";
 import type { BrickConf, CustomTemplate, RouteConf } from "@next-core/types";
-import { throttle } from "lodash";
+import { isEmpty, pick, throttle } from "lodash";
 import type {
   BrickOutline,
   HighLightNode,
   Position,
   PreviewDataOption,
   PreviewMessageFromPreviewer,
+  PreviewMessagePreviewContractUpdate,
   PreviewMessagePreviewDataValueError,
   PreviewMessagePreviewDataValueSuccess,
   PreviewMessagePreviewerCaptureFailed,
@@ -37,6 +38,61 @@ import {
 } from "./inspector.js";
 
 let connected = false;
+
+interface DLL {
+  (moduleId: "tYg3"): {
+    getHistory: typeof _getHistory;
+    developHelper: typeof _internals;
+  };
+  (moduleId: "A+yw"): {
+    matchPath: typeof _matchPath;
+  };
+}
+
+let getHistory = _getHistory;
+let matchPath = _matchPath;
+let __secret_internals = _internals;
+let isV2 = false;
+
+// istanbul ignore next
+// Make v3 bricks compatible with Brick Next v2.
+try {
+  const dll = (window as unknown as { dll?: DLL }).dll;
+  if (
+    dll &&
+    window.BRICK_NEXT_VERSIONS?.["brick-container"]?.startsWith("2.")
+  ) {
+    const { getHistory: getHistoryV2, developHelper: developHelperV2 } =
+      dll("tYg3");
+    const { matchPath: matchPathV2 } = dll("A+yw");
+    getHistory = getHistoryV2;
+    matchPath = matchPathV2;
+    // The `__secret_internals` of v3 has pretty the same API as
+    // `developHelper` of v2, especially those for preview usage.
+    __secret_internals = {
+      ...developHelperV2,
+      getContextValue(name, { tplStateStoreId }) {
+        return developHelperV2.getContextValue(name, {
+          tplContextId: tplStateStoreId,
+        } as any);
+      },
+      getAllContextValues({ tplStateStoreId }) {
+        // V3 returns an object of key-value.
+        // While v2 returns a map of ContextItem.
+        const v2Map = developHelperV2.getAllContextValues({
+          tplContextId: tplStateStoreId,
+        } as any) as unknown as Map<string, { value: unknown }>;
+        return Object.fromEntries(
+          [...v2Map].map(([k, v]) => [k, (v as any).value])
+        );
+      },
+    };
+    isV2 = true;
+  }
+} catch (e) {
+  // eslint-disable-next-line no-console
+  console.error("Try to use v2 runtime APIs failed:", e);
+}
 
 export default async function connect(
   previewFromOrigin: string,
@@ -160,12 +216,14 @@ export default async function connect(
     try {
       const { dataType } = option;
       let tplStateStoreId;
+      const datasetKey = isV2 ? "tplContextId" : "tplStateStoreId";
 
       if (dataType === "state") {
         const mainMountPoint = document.querySelector("#main-mount-point")!;
 
-        tplStateStoreId = (mainMountPoint.firstChild as HTMLElement).dataset
-          .tplStateStoreId;
+        tplStateStoreId = (mainMountPoint.firstChild as HTMLElement).dataset[
+          datasetKey
+        ];
 
         if (!tplStateStoreId) {
           sendMessage<PreviewMessagePreviewDataValueError>({
@@ -190,17 +248,10 @@ export default async function connect(
         });
       } else {
         type = "inspect-all-data-values-success";
-        value = [];
         const data = __secret_internals.getAllContextValues({
           tplStateStoreId,
         });
-
-        for (const k in data) {
-          value.push({
-            name: k,
-            value: data[k],
-          });
-        }
+        value = Object.entries(data).map(([name, value]) => ({ name, value }));
       }
 
       sendMessage<PreviewMessagePreviewDataValueSuccess>({
@@ -289,7 +340,26 @@ export default async function connect(
                   data.storyboardPatch as FormDataProperties
                 );
               } */
-              getHistory().reload();
+
+              const newContracts = (
+                __secret_internals as any
+              ).getAddedContracts?.(data.storyboardPatch, {
+                appId: options.appId,
+                updateStoryboardType: data.options.updateStoryboardType,
+                formId: options.formId,
+              });
+
+              if (!isEmpty(newContracts)) {
+                sendMessage<PreviewMessagePreviewContractUpdate>({
+                  type: "contract-update",
+                  data: {
+                    add: newContracts,
+                  },
+                });
+              } else {
+                getHistory().reload();
+              }
+
               break;
             }
             __secret_internals.updateStoryboard(
