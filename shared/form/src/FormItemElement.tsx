@@ -47,7 +47,16 @@ export abstract class FormItemElementBase extends ReactNextElement {
   @property({
     attribute: false,
   })
-  accessor helpBrick: { useBrick: UseSingleBrickConf } | undefined;
+  accessor helpBrick:
+    | { useBrick: UseSingleBrickConf | UseSingleBrickConf[] }
+    | undefined;
+
+  @property({
+    attribute: false,
+  })
+  accessor labelBrick:
+    | { useBrick: UseSingleBrickConf | UseSingleBrickConf[] }
+    | undefined;
 
   @method()
   setNotRender(value: boolean) {

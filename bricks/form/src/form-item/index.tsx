@@ -5,7 +5,7 @@ import {
   FormItemElementBase,
   MessageBody,
 } from "@next-shared/form";
-import { ReactUseBrick } from "@next-core/react-runtime";
+import { ReactUseMultipleBricks } from "@next-core/react-runtime";
 import type { Form } from "../form/index.jsx";
 import styleText from "./FormItem.shadow.css";
 import classNames from "classnames";
@@ -37,7 +37,8 @@ export interface FormItemProps {
   trigger?: string;
   valuePropsName?: string;
   notRender?: boolean;
-  helpBrick?: { useBrick: UseSingleBrickConf };
+  helpBrick?: { useBrick: UseSingleBrickConf | UseSingleBrickConf[] };
+  labelBrick?: { useBrick: UseSingleBrickConf | UseSingleBrickConf[] };
   needValidate?: boolean;
   validator?: (value: any) => MessageBody | string;
 }
@@ -171,6 +172,7 @@ class FormItem extends FormItemElementBase implements FormItemProps {
         trigger={this.trigger}
         notRender={this.notRender}
         helpBrick={this.helpBrick}
+        labelBrick={this.labelBrick}
         valuePropsName={this.valuePropsName}
         needValidate={this.needValidate}
         validator={this.validator}
@@ -197,6 +199,7 @@ export function FormItemComponent(props: FormItemProps) {
     trigger = "onChange",
     layout = "horizontal",
     helpBrick,
+    labelBrick,
     needValidate = true,
     validator,
   } = props;
@@ -296,8 +299,8 @@ export function FormItemComponent(props: FormItemProps) {
               {required && <span className="required">*</span>}
               {label}
             </label>
-            {helpBrick?.useBrick ? (
-              <ReactUseBrick {...helpBrick}></ReactUseBrick>
+            {labelBrick?.useBrick ? (
+              <ReactUseMultipleBricks {...labelBrick}></ReactUseMultipleBricks>
             ) : null}
           </div>
         </div>
@@ -306,6 +309,9 @@ export function FormItemComponent(props: FormItemProps) {
         <div className="form-item-control">
           <slot></slot>
         </div>
+        {helpBrick?.useBrick ? (
+          <ReactUseMultipleBricks {...helpBrick}></ReactUseMultipleBricks>
+        ) : null}
         {formElement ? (
           <div
             className={classNames("message", {
