@@ -90,7 +90,8 @@ export type PreviewMessageFromPreviewer =
   | PreviewMessagePreviewerCaptureOk
   | PreviewMessagePreviewerCaptureFailed
   | PreviewMessagePreviewDataValueSuccess
-  | PreviewMessagePreviewDataValueError;
+  | PreviewMessagePreviewDataValueError
+  | PreviewMessagePreviewContractUpdate;
 
 export type PreviewMessageToPreviewer =
   | PreviewMessageContainerBuilderHoverOnIframe
@@ -142,7 +143,8 @@ export type PreviewMessageToContainer =
   | PreviewMessagePreviewerCaptureFailed
   | PreviewMessageContainerMatchApiCache
   | PreviewMessagePreviewDataValueSuccess
-  | PreviewMessagePreviewDataValueError;
+  | PreviewMessagePreviewDataValueError
+  | PreviewMessagePreviewContractUpdate;
 
 export type PreviewerMessageToBuilder =
   | PreviewMessageContainerPreviewerHoverOnMain
@@ -253,6 +255,16 @@ export interface PreviewMessagePreviewDataValueError
   sender: "previewer";
   type: "inspect-data-value-error";
   data: unknown;
+}
+
+export interface PreviewMessagePreviewContractUpdateDetail {
+  add?: string[];
+}
+
+export interface PreviewMessagePreviewContractUpdate {
+  sender: "previewer";
+  type: "contract-update";
+  data: PreviewMessagePreviewContractUpdateDetail;
 }
 
 export interface PreviewMessageContainerStartPreview
@@ -400,7 +412,7 @@ export type UpdateStoryboardType = "route" | "template" | "snippet";
 export interface PreviewStartOptions {
   appId: string;
   templateId?: string;
-  // formId?: string;
+  formId?: string;
   // formData?: FormData;
   snippetData?: any;
   routePath?: string;
