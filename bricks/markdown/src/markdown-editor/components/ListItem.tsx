@@ -10,7 +10,7 @@ export const ListItem: FC = () => {
   const isBullet = attrs?.listType === "bullet";
   return (
     <li
-      className={classNames("checkboxLi", {
+      className={classNames("listItem", {
         "ProseMirror-selectednode": selected,
       })}
     >

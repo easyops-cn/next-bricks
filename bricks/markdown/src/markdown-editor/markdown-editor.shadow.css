@@ -1991,7 +1991,7 @@ pre[class*="language-"] {
 
 /* checkbox */
 
-.checkboxLi {
+.listItem {
   display: flex;
   align-items: flex-start;
   gap: 0.5rem;
