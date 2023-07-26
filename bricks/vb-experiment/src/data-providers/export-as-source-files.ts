@@ -154,6 +154,7 @@ ${[...customTemplates]
       type: "module",
       scripts: {
         build: "node scripts/build.js",
+        start: "node --watch scripts/build.js",
         serve: `brick-container-serve --local-micro-apps=${JSON.stringify(
           projectDetail.appId
         )}`,
@@ -162,7 +163,7 @@ ${[...customTemplates]
         node: ">=16",
       },
       devDependencies: {
-        "@next-core/brick-container": "^3.5.1",
+        "@next-core/brick-container": "^3.5.2",
         "@types/node": "^16.18.14",
         "js-yaml": "^3.14.1",
       },
@@ -217,13 +218,26 @@ await writeFile(
     "README.md",
     `# ${projectDetail.name}
 
+## 准备
+
 \`\`\`bash
 yarn
-yarn build
-yarn serve
 \`\`\`
 
-提示：运行 \`yarn serve\` 时按需使用 \`--subdir\` 和 \`--server\` 等参数。
+## 开发
+
+打开两个终端，分别运行 \`yarn start\` 和 \`yarn serve\`。
+
+提示：
+- 使用 \`yarn start\` 需要 node >= 18.11 。
+- 运行 \`yarn serve\` 时按需使用 \`--subdir\` 和 \`--server\` 等参数。
+- 修改文件后，需手动刷新浏览器。
+
+## 构建
+
+\`\`\`bash
+yarn build && yarn serve
+\`\`\`
 `
   );
 
