@@ -1,0 +1,45 @@
+{
+  "name": "@next-bricks/vb-experiment",
+  "version": "0.0.0",
+  "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/vb-experiment",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:easyops-cn/next-bricks.git"
+  },
+  "license": "GPL-3.0",
+  "type": "module",
+  "sideEffects": true,
+  "files": [
+    "dist",
+    "dist-types",
+    "docs"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    "./dist/bricks.json": "./dist/bricks.json",
+    "./dist/manifest.json": "./dist/manifest.json",
+    "./*": {
+      "types": "./dist-types/*/index.d.ts"
+    }
+  },
+  "scripts": {
+    "start": "cross-env NODE_ENV=development build-next-bricks --watch",
+    "build": "npm run build:main && npm run build:types",
+    "build:main": "cross-env NODE_ENV=production build-next-bricks",
+    "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist-types --project tsconfig.json",
+    "build:manifest": "cross-env NODE_ENV=production build-next-bricks --manifest-only",
+    "prepublishOnly": "cp package.json package.json.bak && npm pkg delete dependencies",
+    "postpublish": "mv package.json.bak package.json"
+  },
+  "dependencies": {
+    "@next-core/types": "^1.5.1",
+    "@next-core/utils": "^1.5.6",
+    "change-case": "^4.1.2",
+    "file-saver": "^2.0.5",
+    "jszip": "^3.10.1",
+    "prettier": "^2.8.6"
+  },
+  "devDependencies": {
+    "@next-core/build-next-bricks": "^1.13.3"
+  }
+}
