@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.2.3...@next-bricks/v2-adapter@0.2.4) (2023-07-26)
+
+
+### Bug Fixes
+
+* expose `developHelper.getContextValue` ([088b70f](https://github.com/easyops-cn/next-bricks/commit/088b70f45b060850b40ab197464c6c15920dac4a))
+
+
+
+
+
 ## [0.2.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.2.2...@next-bricks/v2-adapter@0.2.3) (2023-07-25)
 
 

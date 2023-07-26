@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.4.0...@next-bricks/visual-builder@0.4.1) (2023-07-26)
+
+
+### Bug Fixes
+
+* make preview-agent compatible with v2 ([4f943bb](https://github.com/easyops-cn/next-bricks/commit/4f943bb37632aa61a8fdcbbcb4bf52562537475c))
+
+
+
+
+
 # [0.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.3.17...@next-bricks/visual-builder@0.4.0) (2023-07-25)
 
 
