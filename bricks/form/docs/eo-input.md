@@ -137,7 +137,7 @@
 
 ### Slot
 
-```yaml preview
+```yaml preview gap
 - brick: eo-input
   properties:
     placeholder: prefix slot
@@ -146,8 +146,6 @@
       bricks:
         - brick: eo-icon
           properties:
-            style:
-              line-height: 0.25em
             icon: search
             lib: antd
             theme: outlined
@@ -159,9 +157,23 @@
       bricks:
         - brick: eo-icon
           properties:
-            style:
-              line-height: 0.25em
             icon: search
             lib: antd
             theme: outlined
+- brick: eo-input
+  properties:
+    placeholder: addon slot
+  slots:
+    addonBefore:
+      type: bricks
+      bricks:
+        - brick: span
+          properties:
+            textContent: https://
+    addonAfter:
+      type: bricks
+      bricks:
+        - brick: span
+          properties:
+            textContent: .com
 ```
