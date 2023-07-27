@@ -1,45 +1,72 @@
-import React, { useEffect, useState } from "react";
-import { createDecorators, type EventEmitter } from "@next-core/element";
-import { ComponentSize, InputType } from "../interface.js";
-import classNames from "classnames";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  forwardRef,
+  createRef,
+  useImperativeHandle,
+  type ChangeEvent,
+  type MouseEvent,
+  type FocusEvent,
+  type CSSProperties,
+} from "react";
 import { wrapBrick } from "@next-core/react-element";
-import { FormItemElementBase } from "@next-shared/form";
+import { EventEmitter, createDecorators } from "@next-core/element";
+import type {
+  GeneralIcon,
+  GeneralIconProps,
+} from "@next-bricks/icons/general-icon";
 import "@next-core/theme";
-import type { FormItem, FormItemProps } from "../form-item/index.jsx";
+import classNames from "classnames";
+import { isNil } from "lodash";
 import styleText from "./input.shadow.css";
-import { GeneralIcon, GeneralIconProps } from "@next-bricks/icons/general-icon";
+import { FormItemElementBase } from "@next-shared/form";
+import { FormItem, FormItemProps } from "../form-item/index.jsx";
+import { InputType } from "../interface.js";
 
+const { defineElement, property, event, method } = createDecorators();
+
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 
-const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
-
-interface InputProps extends FormItemProps {
+export interface InputProps extends FormItemProps {
   value?: string;
   placeholder?: string;
   disabled?: boolean;
+  readOnly?: boolean;
   clearable?: boolean;
   type?: InputType;
-  size?: ComponentSize;
-  inputStyle?: React.CSSProperties;
-  minLength?: number;
+  size?: "large" | "medium" | "small";
   maxLength?: number;
+  minLength?: number;
   validateState?: string;
-  trigger?: string;
-  onInputChange: (value: string) => void;
+  inputStyle?: CSSProperties;
 }
-const { defineElement, property, event } = createDecorators();
+
+export interface InputEvents {
+  change: CustomEvent<string>;
+}
+
+export interface InputEventsMap {
+  onChange: "change";
+}
 
 /**
  * 通用输入框构件
  * @author sailor
- * @slot prefix - 输入框前置插槽
- * @slot suffix - 输入框后置插槽
+ * @slot addonBefore - 输入框前置标签
+ * @slot addonAfter - 输入框后置标签
+ * @slot prefix - 输入框前缀图标
+ * @slot suffix - 输入框后缀图标
  */
+export
 @defineElement("eo-input", {
   styleTexts: [styleText],
   alias: ["form.general-input"],
 })
 class Input extends FormItemElementBase {
+  #RCInputRef = createRef<RCInputRef>();
+
   /**
    * 字段名称
    */
@@ -51,65 +78,9 @@ class Input extends FormItemElementBase {
   @property() accessor label: string | undefined;
 
   /**
-   * 输入框值
-   */
-  @property() accessor value: string | undefined;
-
-  /**
-   * 占位说明
-   */
-  @property() accessor placeholder: string | undefined;
-
-  /**
-   * 是否禁用
-   */
-  @property({
-    type: Boolean,
-  })
-  accessor disabled: boolean | undefined;
-
-  /**
-   * 是否显示清除按钮
-   */
-  @property({
-    type: Boolean,
-  })
-  accessor clearable: boolean | undefined;
-
-  /**
-   * 类型
-   * @default "text"
-   */
-  @property() accessor type: InputType | undefined;
-
-  /**
-   * 大小
-   * @default "medium"
-   */
-  @property() accessor size: ComponentSize | undefined;
-
-  /**
-   * 最小长度
-   */
-  @property({
-    type: Number,
-  })
-  accessor minLength: number | undefined;
-
-  /**
-   * 最大长度
-   */
-  @property({
-    type: Number,
-  })
-  accessor maxLength: number | undefined;
-
-  /**
    * 是否必填
    */
-  @property({
-    type: Boolean,
-  })
+  @property({ type: Boolean })
   accessor required: boolean | undefined;
 
   /**
@@ -142,6 +113,58 @@ class Input extends FormItemElementBase {
   accessor message: Record<string, string> | undefined;
 
   /**
+   * 输入框值
+   */
+  @property() accessor value: string | undefined;
+
+  /**
+   * 占位说明
+   */
+  @property() accessor placeholder: string | undefined;
+
+  /**
+   * 是否禁用
+   */
+  @property({ type: Boolean })
+  accessor disabled: boolean | undefined;
+
+  /**
+   * 是否只读
+   */
+  @property({ type: Boolean })
+  accessor readonly: boolean | undefined;
+
+  /**
+   * 是否显示清除按钮
+   */
+  @property({ type: Boolean })
+  accessor clearable: boolean | undefined;
+
+  /**
+   * 类型
+   * @default "text"
+   */
+  @property() accessor type: InputType | undefined;
+
+  /**
+   * 大小
+   * @default "medium"
+   */
+  @property() accessor size: "large" | "medium" | "small" | undefined;
+
+  /**
+   * 最小长度
+   */
+  @property({ type: Number })
+  accessor minLength: number | undefined;
+
+  /**
+   * 最大长度
+   */
+  @property({ type: Number })
+  accessor maxLength: number | undefined;
+
+  /**
    * 输入框样式
    */
   @property({ attribute: false }) accessor inputStyle:
@@ -152,18 +175,86 @@ class Input extends FormItemElementBase {
    * 值改变事件
    */
   @event({ type: "change" })
-  accessor #inputChangeEvent!: EventEmitter<string>;
-
+  accessor #changeEvent!: EventEmitter<string>;
   handleInputChange = (value: string) => {
     this.value = value;
-    this.#inputChangeEvent.emit(value);
+    this.#changeEvent.emit(value);
   };
+
+  /**
+   * focus
+   */
+  @method()
+  focusInput() {
+    return this.#RCInputRef.current?.focus();
+  }
+
+  /**
+   * blur
+   */
+  @method()
+  blurInput() {
+    return this.#RCInputRef.current?.blur();
+  }
+
+  /**
+   * 是否有 addonBefore 插槽
+   */
+  @property({ type: Boolean })
+  accessor hasAddonBefore: boolean | undefined;
+
+  /**
+   * 是否有 addonAfter 插槽
+   */
+  @property({ type: Boolean })
+  accessor hasAddonAfter: boolean | undefined;
+
+  /**
+   * 是否有 prefix 插槽
+   */
+  @property({ type: Boolean })
+  accessor hasPrefix: boolean | undefined;
+
+  /**
+   * 是否有 suffix 插槽
+   */
+  @property({ type: Boolean })
+  accessor hasSuffix: boolean | undefined;
+
+  renderCallback = (ref: RCInputRef) => {
+    (this.#RCInputRef as any).current = ref;
+    const addonBefore = this.#getSlotByName("addonBefore");
+    const addonAfter = this.#getSlotByName("addonAfter");
+    const prefix = this.#getSlotByName("prefix");
+    const suffix = this.#getSlotByName("suffix");
+
+    addonBefore?.addEventListener("slotchange", () => {
+      this.hasAddonBefore = addonBefore.assignedElements().length > 0;
+    });
+    addonAfter?.addEventListener("slotchange", () => {
+      this.hasAddonAfter = addonAfter.assignedElements().length > 0;
+    });
+    suffix?.addEventListener("slotchange", () => {
+      this.hasSuffix = suffix.assignedElements().length > 0;
+    });
+    prefix?.addEventListener("slotchange", () => {
+      this.hasPrefix = prefix.assignedElements().length > 0;
+    });
+  };
+
+  #getSlotByName(name: string): HTMLSlotElement {
+    return this.shadowRoot?.querySelector(
+      `slot[name='${name}']`
+    ) as HTMLSlotElement;
+  }
 
   render() {
     return (
-      <InputComponent
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
+      <RCInput
         formElement={this.getFormElement()}
         curElement={this}
+        ref={this.renderCallback}
         name={this.name}
         label={this.label}
         required={this.required}
@@ -171,18 +262,19 @@ class Input extends FormItemElementBase {
         min={this.min}
         max={this.max}
         message={this.message}
-        value={this.value}
-        placeholder={this.placeholder}
-        type={this.type}
-        size={this.size}
-        clearable={this.clearable}
-        disabled={this.disabled}
-        minLength={this.minLength}
-        maxLength={this.maxLength}
         notRender={this.notRender}
         helpBrick={this.helpBrick}
-        inputStyle={this.inputStyle}
         validateState={this.validateState}
+        value={this.value}
+        placeholder={this.placeholder}
+        disabled={this.disabled}
+        readOnly={this.readonly}
+        clearable={this.clearable}
+        type={this.type}
+        size={this.size}
+        minLength={this.minLength}
+        maxLength={this.maxLength}
+        inputStyle={this.inputStyle}
         trigger="handleInputChange"
         onInputChange={this.handleInputChange}
       />
@@ -190,86 +282,148 @@ class Input extends FormItemElementBase {
   }
 }
 
-export function InputComponent(props: InputProps) {
+export interface RCInputProps extends InputProps {
+  onInputChange?: (value: string) => void;
+}
+
+export interface RCInputRef {
+  focus: (options?: FocusOptions) => void;
+  blur: () => void;
+}
+
+// eslint-disable-next-line react/display-name
+export const RCInput = forwardRef<RCInputRef, RCInputProps>((props, ref) => {
   const {
-    name,
     placeholder,
-    type,
-    size = "medium",
-    disabled,
     clearable,
-    inputStyle,
-    minLength,
+    disabled,
+    readOnly,
+    size = "medium",
+    type = "text",
     maxLength,
+    minLength,
     validateState,
     onInputChange,
+    inputStyle,
   } = props;
-  const [value, setValue] = useState(props.value ?? "");
-  const [focus, setFocus] = useState(false);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  const inputAffixWrapperRef = useRef<HTMLInputElement>(null);
+
+  const [value, setValue] = useState<string>();
+  const [focused, setFocused] = useState<boolean>();
 
   useEffect(() => {
-    setValue(props.value ?? "");
+    setValue(props.value);
   }, [props.value]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  useImperativeHandle(ref, () => ({
+    focus: (options?: FocusOptions) => {
+      inputRef.current?.focus(options);
+    },
+    blur: () => {
+      inputRef.current?.blur();
+    },
+  }));
+
+  const handleInputAffixWrapperClick = (e: MouseEvent<HTMLElement>) => {
+    if (inputAffixWrapperRef.current?.contains(e.target as Element)) {
+      inputRef.current?.focus();
+    }
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
-    onInputChange(e.target.value);
+    onInputChange?.(e.target.value);
   };
 
-  const handleFocus = () => {
-    setFocus(true);
+  const handleFocus = (e: FocusEvent<HTMLInputElement>) => {
+    setFocused(true);
   };
 
-  const handleBlur = () => {
-    setFocus(false);
+  const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
+    setFocused(false);
   };
 
-  const handleClear = () => {
+  const handleClear = (e: MouseEvent<HTMLElement>) => {
     setValue("");
-    onInputChange("");
+    onInputChange?.("");
+  };
+
+  const getClearIcon = () => {
+    if (!clearable) return null;
+
+    const hidden = disabled || readOnly || !fixValue(value);
+    return (
+      <WrappedIcon
+        className={classNames("input-clear-icon", {
+          "input-clear-icon-hidden": hidden,
+        })}
+        part="clear-icon"
+        lib="antd"
+        icon="close-circle"
+        theme="filled"
+        onMouseDown={(e) => e.preventDefault()}
+        onClick={handleClear}
+      />
+    );
   };
 
   return (
     <WrappedFormItem {...props}>
       <div
-        className={classNames("input-wrapper", {
-          focus,
-          disabled,
-          error: validateState === "error",
-        })}
+        part="addon-wrapper"
+        className={classNames(
+          "input-addon-wrapper",
+          size && `input-addon-wrapper-size-${size}`,
+          validateState && `input-addon-wrapper-status-${validateState}`
+        )}
         style={inputStyle}
       >
-        <span className="prefix">
-          <slot name="prefix"></slot>
+        <span part="before-addon" className="input-before-addon">
+          <slot name="addonBefore" />
         </span>
-        <input
-          className={size}
-          value={value}
-          name={name}
-          type={type}
-          disabled={disabled}
-          placeholder={placeholder}
-          minLength={minLength}
-          maxLength={maxLength}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onChange={handleChange}
-        />
-        <span className="suffix">
-          {value && clearable && !disabled && (
-            <WrappedGeneralIcon
-              className="clear-button"
-              icon="close-circle"
-              lib="antd"
-              theme="filled"
-              onClick={handleClear}
-            />
-          )}
-          <slot name="suffix"></slot>
+        <span
+          ref={inputAffixWrapperRef}
+          part="affix-wrapper"
+          className={classNames("input-affix-wrapper", {
+            "input-affix-wrapper-focused": focused,
+            "input-affix-wrapper-disabled": disabled,
+            "input-affix-wrapper-readOnly": readOnly,
+          })}
+          onClick={handleInputAffixWrapperClick}
+        >
+          <span part="prefix" className="input-prefix">
+            <slot name="prefix" />
+          </span>
+          <input
+            part="input"
+            placeholder={placeholder}
+            maxLength={maxLength}
+            minLength={minLength}
+            ref={inputRef}
+            className="input"
+            type={type}
+            disabled={disabled}
+            readOnly={readOnly}
+            value={fixValue(value)}
+            onChange={handleChange}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+          />
+          <span part="suffix" className="input-suffix">
+            {getClearIcon()}
+            <slot name="suffix" />
+          </span>
+        </span>
+        <span part="after-addon" className="input-after-addon">
+          <slot name="addonAfter" />
         </span>
       </div>
     </WrappedFormItem>
   );
-}
+});
 
-export { Input };
+function fixValue<T>(value: T) {
+  return isNil(value) ? "" : String(value);
+}

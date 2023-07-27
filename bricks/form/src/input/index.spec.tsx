@@ -5,13 +5,34 @@ import { Input } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
-describe("form.general-button", () => {
-  test("basic usage", async () => {
+describe("form.general-input", () => {
+  it("value is correct", async () => {
     const element = document.createElement("form.general-input") as Input;
-    const prefixElement = document.createElement("div");
-    prefixElement.slot = "prefix";
-    const suffixElement = document.createElement("div");
-    suffixElement.slot = "suffix";
+    element.value = "abc";
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(element.shadowRoot?.querySelector("input")?.value).toBe("abc");
+
+    await act(async () => {
+      element.value = 123 as any;
+    });
+    expect(element.shadowRoot?.querySelector("input")?.value).toBe("123");
+
+    await act(async () => {
+      element.value = null as any;
+    });
+    expect(element.shadowRoot?.querySelector("input")?.value).toBe("");
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("should trigger event correctly", async () => {
+    const element = document.createElement("form.general-input") as Input;
 
     const mockChangeEvent = jest.fn();
     const mockFocusEvent = jest.fn();
@@ -20,34 +41,27 @@ describe("form.general-button", () => {
     element.addEventListener("focus", mockFocusEvent);
     element.addEventListener("blur", mockBlurEvent);
     element.value = "hello world";
+    element.clearable = true;
 
     expect(element.shadowRoot).toBeFalsy();
     act(() => {
       document.body.appendChild(element);
-      element.appendChild(prefixElement);
-      element.appendChild(suffixElement);
     });
     expect(element.shadowRoot).toBeTruthy();
     expect(element.shadowRoot?.childNodes.length).toBe(2);
-
-    expect(element.innerHTML).toBe(
-      '<div slot="prefix"></div><div slot="suffix"></div>'
-    );
+    const inputElement = element.shadowRoot?.querySelector(
+      "input"
+    ) as HTMLInputElement;
 
     act(() => {
-      fireEvent.change(
-        element.shadowRoot?.querySelector("input") as HTMLInputElement,
-        {
-          target: {
-            value: "你好",
-          },
-        }
-      );
+      fireEvent.change(inputElement, {
+        target: {
+          value: "你好",
+        },
+      });
     });
 
-    expect(
-      (element.shadowRoot?.querySelector("input") as HTMLInputElement).value
-    ).toBe("你好");
+    expect(inputElement.value).toBe("你好");
 
     expect(mockChangeEvent).toBeCalledWith(
       expect.objectContaining({
@@ -59,17 +73,13 @@ describe("form.general-button", () => {
     expect(mockBlurEvent).not.toBeCalled();
 
     act(() => {
-      fireEvent.focus(
-        element.shadowRoot?.querySelector("input") as HTMLInputElement
-      );
+      element.focusInput();
     });
 
     expect(mockFocusEvent).toBeCalled();
 
     act(() => {
-      fireEvent.blur(
-        element.shadowRoot?.querySelector("input") as HTMLInputElement
-      );
+      element.blurInput();
     });
 
     expect(mockBlurEvent).toBeCalled();
@@ -78,13 +88,93 @@ describe("form.general-button", () => {
       await (element.value = "change");
     });
 
-    expect(
-      (element.shadowRoot?.querySelector("input") as HTMLInputElement).value
-    ).toBe("change");
+    expect(inputElement.value).toBe("change");
+
+    act(() => {
+      fireEvent.click(
+        element.shadowRoot?.querySelector(".input-clear-icon") as HTMLDivElement
+      );
+    });
+    expect(inputElement.value).toBe("");
+    expect(mockChangeEvent).toBeCalledWith(
+      expect.objectContaining({
+        detail: "",
+      })
+    );
 
     act(() => {
       document.body.removeChild(element);
     });
     expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
+
+  it("should show clear icon correctly", async () => {
+    const element = document.createElement("form.general-input") as Input;
+    element.value = "abc";
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.querySelector(".input-clear-icon")).toBeFalsy();
+
+    await act(async () => {
+      element.value = "";
+      element.clearable = true;
+    });
+    const clearIcon = element.shadowRoot?.querySelector(
+      ".input-clear-icon"
+    ) as HTMLDivElement;
+    const inputElement = element.shadowRoot?.querySelector(
+      "input"
+    ) as HTMLInputElement;
+
+    expect(clearIcon).toBeTruthy();
+    expect(
+      clearIcon.classList.contains("input-clear-icon-hidden")
+    ).toBeTruthy();
+
+    act(() => {
+      fireEvent.change(inputElement, {
+        target: {
+          value: "test",
+        },
+      });
+    });
+    expect(clearIcon.classList.contains("input-clear-icon-hidden")).toBeFalsy();
+
+    act(() => {
+      fireEvent.click(clearIcon);
+    });
+    expect(
+      clearIcon.classList.contains("input-clear-icon-hidden")
+    ).toBeTruthy();
+
+    await act(async () => {
+      element.value = "abc";
+      element.clearable = true;
+      element.disabled = true;
+      element.readonly = false;
+    });
+    expect(
+      (
+        element.shadowRoot?.querySelector(".input-clear-icon") as HTMLDivElement
+      ).classList.contains("input-clear-icon-hidden")
+    ).toBeTruthy();
+
+    await act(async () => {
+      element.value = "abc";
+      element.clearable = true;
+      element.disabled = false;
+      element.readonly = true;
+    });
+    expect(
+      (
+        element.shadowRoot?.querySelector(".input-clear-icon") as HTMLDivElement
+      ).classList.contains("input-clear-icon-hidden")
+    ).toBeTruthy();
+
+    act(() => {
+      document.body.removeChild(element);
+    });
   });
 });
