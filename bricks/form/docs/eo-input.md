@@ -146,6 +146,8 @@
       bricks:
         - brick: eo-icon
           properties:
+            style:
+              line-height: 0.25em
             icon: search
             lib: antd
             theme: outlined
@@ -157,6 +159,8 @@
       bricks:
         - brick: eo-icon
           properties:
+            style:
+              line-height: 0.25em
             icon: search
             lib: antd
             theme: outlined
