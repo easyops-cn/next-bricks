@@ -29,21 +29,15 @@ describe("form.general-search", () => {
     });
     expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
 
-    const input = element.shadowRoot?.querySelector(
-      ".search-input"
-    ) as HTMLElement;
+    const input = element.shadowRoot?.querySelector("eo-input") as HTMLElement;
 
     act(() => {
       fireEvent.blur(input);
     });
-    expect(onBlur).toBeCalledWith(
-      expect.objectContaining({
-        detail: "basic",
-      })
-    );
+    expect(onBlur).toBeCalled();
 
     act(() => {
-      fireEvent.change(input, { target: { value: "query" } });
+      fireEvent(input, new CustomEvent("change", { detail: "query" }));
     });
     expect(onChange).toBeCalledWith(
       expect.objectContaining({
@@ -61,24 +55,13 @@ describe("form.general-search", () => {
     );
 
     act(() => {
-      fireEvent.mouseDown(
-        element.shadowRoot?.querySelector(".clear-button") as HTMLElement
-      );
-    });
-    expect(onChange).toBeCalledWith(
-      expect.objectContaining({
-        detail: "",
-      })
-    );
-
-    act(() => {
       fireEvent.click(
         element.shadowRoot?.querySelector(".search-button") as HTMLElement
       );
     });
     expect(onSearch).toBeCalledWith(
       expect.objectContaining({
-        detail: "",
+        detail: "query",
       })
     );
 
@@ -90,6 +73,7 @@ describe("form.general-search", () => {
 
   test("debounceTime", async () => {
     const onChange = jest.fn();
+    const onSearch = jest.fn();
 
     const element = document.createElement(
       "form.general-search"
@@ -97,22 +81,34 @@ describe("form.general-search", () => {
     element.trim = true;
     element.debounceTime = 1000;
     element.addEventListener("change", onChange);
+    element.addEventListener("search", onSearch);
 
     act(() => {
       document.body.appendChild(element);
     });
 
-    const input = element.shadowRoot?.querySelector(
-      ".search-input"
-    ) as HTMLElement;
-
     act(() => {
-      fireEvent.change(input, { target: { value: "   query   " } });
+      fireEvent(
+        element.shadowRoot?.querySelector("eo-input") as HTMLElement,
+        new CustomEvent("change", { detail: "   query   " })
+      );
     });
     expect(onChange).not.toBeCalled();
 
     jest.advanceTimersByTime(1000);
     expect(onChange).toBeCalledWith(
+      expect.objectContaining({
+        detail: "query",
+      })
+    );
+
+    act(() => {
+      fireEvent.keyDown(
+        element.shadowRoot?.querySelector("eo-input") as HTMLElement,
+        { key: "Enter" }
+      );
+    });
+    expect(onSearch).toBeCalledWith(
       expect.objectContaining({
         detail: "query",
       })

@@ -16,6 +16,7 @@
 .input-addon-wrapper {
   display: table;
   width: 100%;
+  line-height: 22px;
   --input-affix-wrapper-padding: 4px 10px;
 }
 
@@ -157,7 +158,6 @@
 .input-clear-icon {
   margin-left: 4px;
   font-size: 12px;
-  line-height: 0.25em;
   color: var(--text-color-disabled);
   cursor: pointer;
 }

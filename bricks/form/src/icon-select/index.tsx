@@ -70,7 +70,6 @@ const WrappedSearch = wrapBrick<
   SearchEvents,
   SearchEventsMap
 >("eo-search", {
-  onBlur: "blur",
   onChange: "change",
   onSearch: "search",
 });

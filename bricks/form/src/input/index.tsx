@@ -22,7 +22,7 @@ import { isNil } from "lodash";
 import styleText from "./input.shadow.css";
 import { FormItemElementBase } from "@next-shared/form";
 import { FormItem, FormItemProps } from "../form-item/index.jsx";
-import { InputType } from "../interface.js";
+import { ComponentSize, InputType } from "../interface.js";
 
 const { defineElement, property, event, method } = createDecorators();
 
@@ -35,8 +35,9 @@ export interface InputProps extends FormItemProps {
   disabled?: boolean;
   readOnly?: boolean;
   clearable?: boolean;
+  autoFocus?: boolean;
   type?: InputType;
-  size?: "large" | "medium" | "small";
+  size?: ComponentSize;
   maxLength?: number;
   minLength?: number;
   validateState?: string;
@@ -141,6 +142,14 @@ class Input extends FormItemElementBase {
   accessor clearable: boolean | undefined;
 
   /**
+   * 是否自动聚焦
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor autoFocus: boolean | undefined;
+
+  /**
    * 类型
    * @default "text"
    */
@@ -150,7 +159,7 @@ class Input extends FormItemElementBase {
    * 大小
    * @default "medium"
    */
-  @property() accessor size: "large" | "medium" | "small" | undefined;
+  @property() accessor size: ComponentSize | undefined;
 
   /**
    * 最小长度
@@ -270,6 +279,7 @@ class Input extends FormItemElementBase {
         disabled={this.disabled}
         readOnly={this.readonly}
         clearable={this.clearable}
+        autoFocus={this.autoFocus}
         type={this.type}
         size={this.size}
         minLength={this.minLength}
@@ -298,6 +308,7 @@ export const RCInput = forwardRef<RCInputRef, RCInputProps>((props, ref) => {
     clearable,
     disabled,
     readOnly,
+    autoFocus,
     size = "medium",
     type = "text",
     maxLength,
@@ -399,6 +410,7 @@ export const RCInput = forwardRef<RCInputRef, RCInputProps>((props, ref) => {
           <input
             part="input"
             placeholder={placeholder}
+            autoFocus={autoFocus}
             maxLength={maxLength}
             minLength={minLength}
             ref={inputRef}

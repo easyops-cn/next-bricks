@@ -1,11 +1,4 @@
-import React, {
-  ChangeEvent,
-  MouseEvent,
-  useEffect,
-  useState,
-  useRef,
-  useMemo,
-} from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
@@ -14,12 +7,23 @@ import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
-import classNames from "classnames";
 import { debounce } from "lodash";
+import {
+  Input,
+  InputEvents,
+  InputEventsMap,
+  InputProps,
+} from "../input/index.jsx";
 
 const { defineElement, property, event } = createDecorators();
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
+const WrappedInput = wrapBrick<Input, InputProps, InputEvents, InputEventsMap>(
+  "eo-input",
+  {
+    onChange: "change",
+  }
+);
 
 export interface SearchProps {
   value?: string;
@@ -31,13 +35,11 @@ export interface SearchProps {
 }
 
 export interface SearchEvents {
-  blur: CustomEvent<string>;
   change: CustomEvent<string>;
   search: CustomEvent<string>;
 }
 
 export interface SearchEventsMap {
-  onBlur: "blur";
   onChange: "change";
   onSearch: "search";
 }
@@ -96,15 +98,6 @@ class GeneralSearch extends ReactNextElement implements SearchProps {
   accessor debounceTime: number = 0;
 
   /**
-   * 失焦时触发，而且会传出当前输入框当前值
-   */
-  @event({ type: "blur" })
-  accessor #blur!: EventEmitter<string>;
-  #handleBlur = (value: string) => {
-    this.#blur.emit(this.trim ? value?.trim() : value);
-  };
-
-  /**
    * 输入的搜索字符，输入变化时触发
    */
   @event({ type: "change" })
@@ -113,7 +106,7 @@ class GeneralSearch extends ReactNextElement implements SearchProps {
     this.value = value;
   };
   #handleDebouncedChange = (value: string) => {
-    this.#change.emit(this.trim ? value.trim() : value);
+    this.#change.emit(this.trim ? value?.trim() : value);
   };
 
   /**
@@ -122,7 +115,7 @@ class GeneralSearch extends ReactNextElement implements SearchProps {
   @event({ type: "search" })
   accessor #search!: EventEmitter<string>;
   #handleSearch = (value: string) => {
-    this.#search.emit(this.trim ? value.trim() : value);
+    this.#search.emit(this.trim ? value?.trim() : value);
   };
 
   render() {
@@ -133,7 +126,6 @@ class GeneralSearch extends ReactNextElement implements SearchProps {
         autoFocus={this.autoFocus}
         clearable={this.clearable}
         debounceTime={this.debounceTime}
-        onBlur={this.#handleBlur}
         onChange={this.#handleChange}
         onSearch={this.#handleSearch}
         onDebouncedChange={this.#handleDebouncedChange}
@@ -143,7 +135,6 @@ class GeneralSearch extends ReactNextElement implements SearchProps {
 }
 
 interface SearchComponentProps extends SearchProps {
-  onBlur?: (value: string) => void;
   onSearch?: (value: string) => void;
   onChange?: (value: string) => void;
   onDebouncedChange?: (value: string) => void;
@@ -158,21 +149,13 @@ export function GeneralSearchComponent(props: SearchComponentProps) {
     onDebouncedChange,
     onChange,
     onSearch,
-    onBlur,
   } = props;
 
-  const inputRef = useRef<HTMLInputElement>(null);
-
   const [value, setValue] = useState<string>();
-  const [inputFocused, setInputFocused] = useState<boolean>();
 
   useEffect(() => {
     setValue(props.value);
   }, [props.value]);
-
-  useEffect(() => {
-    autoFocus && inputRef.current?.focus();
-  }, [autoFocus]);
 
   const _onDebouncedChange = useMemo(() => {
     return debounceTime
@@ -184,66 +167,31 @@ export function GeneralSearchComponent(props: SearchComponentProps) {
     onSearch?.(value!);
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-    onChange?.(e.target.value);
-    _onDebouncedChange?.(e.target.value);
-  };
-
-  const handleClear = (e: MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setValue("");
-    onChange?.("");
-    _onDebouncedChange?.("");
-  };
-
-  const handleSearchBtnClick = (e: MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    handleSearch();
+  const handleChange = (e: CustomEvent<string>) => {
+    setValue(e.detail);
+    onChange?.(e.detail);
+    _onDebouncedChange?.(e.detail);
   };
 
   return (
-    <>
-      <div
-        className={classNames("search-input-wrapper", {
-          "allow-clear": clearable,
-          "search-input-wrapper-focused": inputFocused,
-        })}
-        onClick={() => inputRef.current?.focus()}
-      >
-        <input
-          ref={inputRef}
-          className="search-input"
-          type="text"
-          placeholder={placeholder}
-          value={value || ""}
-          onChange={handleChange}
-          onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-          onFocus={() => setInputFocused(true)}
-          onBlur={() => {
-            setInputFocused(false);
-            onBlur?.(value!);
-          }}
-        />
-        {clearable && value && (
-          <WrappedIcon
-            className="clear-button"
-            lib="antd"
-            icon="close-circle"
-            theme="filled"
-            onMouseDown={handleClear}
-          />
-        )}
-        <WrappedIcon
-          className="search-button"
-          lib="antd"
-          icon="search"
-          theme="outlined"
-          onClick={handleSearchBtnClick}
-        />
-      </div>
-    </>
+    <WrappedInput
+      type="text"
+      autoFocus={autoFocus}
+      clearable={clearable}
+      placeholder={placeholder}
+      value={value}
+      onChange={handleChange as any}
+      onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+    >
+      <WrappedIcon
+        slot="suffix"
+        className="search-button"
+        lib="antd"
+        icon="search"
+        theme="outlined"
+        onClick={() => handleSearch()}
+        onMouseDown={(e) => e.preventDefault()}
+      />
+    </WrappedInput>
   );
 }
