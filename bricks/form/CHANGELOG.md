@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.15.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.14.0...@next-bricks/form@0.15.0) (2023-07-28)
+
+
+### Features
+
+* eo-input support autoFocus && refactor eo-search ([0391b95](https://github.com/easyops-cn/next-bricks/commit/0391b9513dc94063541f9e71253a5b987fdaecdc))
+
+
+
+
+
 # [0.14.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.13.3...@next-bricks/form@0.14.0) (2023-07-28)
 
 
