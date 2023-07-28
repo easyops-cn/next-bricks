@@ -21,7 +21,7 @@ type CurrentElement = HTMLElement & {
 
 export interface FormItemProps {
   formElement?: AbstractForm | null;
-  curElement: CurrentElement;
+  curElement?: CurrentElement;
   name?: string;
   label?: string;
   current?: HTMLElement;
@@ -62,7 +62,7 @@ class FormItem extends FormItemElementBase implements FormItemProps {
   @property({
     attribute: false,
   })
-  accessor curElement!: HTMLElement;
+  accessor curElement: HTMLElement | undefined;
 
   /**
    * 字段名称
@@ -214,7 +214,8 @@ export function FormItemComponent(props: FormItemProps) {
   );
 
   useEffect(() => {
-    if (!formInstance || !name || curElement.$bindFormItem) return;
+    if (!formInstance || !name || !curElement || curElement.$bindFormItem)
+      return;
     const originTrigger = curElement[trigger];
     curElement[trigger] = (e: React.ChangeEvent) =>
       formInstance.onWatch(name, e, originTrigger, {
@@ -255,7 +256,7 @@ export function FormItemComponent(props: FormItemProps) {
   }, [curElement, formInstance, name, trigger, valuePropsName, needValidate]);
 
   useEffect(() => {
-    if (!formInstance || !name) return;
+    if (!formInstance || !name || !curElement) return;
     formInstance.setField(name, {
       name,
       label,

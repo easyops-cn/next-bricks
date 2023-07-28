@@ -1,8 +1,16 @@
 import { describe, test, expect, jest } from "@jest/globals";
 import { act } from "react-dom/test-utils";
-import { fireEvent, createEvent } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
+import type {
+  getLibs,
+  LibInfo,
+  IconInfo,
+} from "@next-bricks/icons/data-providers/get-libs";
+import type { searchIcons } from "@next-bricks/icons/data-providers/search-icons";
 import "./";
 import { IconSelect } from "./index.js";
+
+jest.mock("@next-core/theme", () => ({}));
 
 const icons = [
   {
@@ -29,51 +37,66 @@ const icons = [
       // "prefix": "fas",
     },
   },
-];
+] as IconInfo[];
 
-jest.mock("@next-core/utils/general", () => {
-  return {
-    unwrapProvider: jest.fn().mockImplementation((providerName) => {
-      switch (providerName) {
-        case "icons.get-libs": {
-          return () =>
-            Promise.resolve([
-              {
-                title: "easyops",
-                lib: "easyops",
-              },
-              {
-                title: "antd design",
-                lib: "antd",
-              },
-              {
-                title: "font awesome",
-                lib: "fa",
-              },
-            ]);
-        }
-        case "icons.search-icons": {
-          return (params: { lib?: string; q?: string }) => {
-            const filteredIcons = icons.filter((icon) => {
-              return (
-                (params.lib ? icon.icon.lib === params.lib : true) &&
-                (params.q ? icon.title.includes(params.q) : true)
-              );
-            });
-            return Promise.resolve({
-              page: 1,
-              pageSize: 20,
-              total: filteredIcons.length,
-              list: filteredIcons,
-            });
-          };
-        }
-      }
-    }),
-  };
-});
+const mockGetLibs = jest.fn<typeof getLibs>().mockResolvedValue([
+  {
+    title: "easyops",
+    lib: "easyops",
+  },
+  {
+    title: "antd design",
+    lib: "antd",
+  },
+  {
+    title: "font awesome",
+    lib: "fa",
+  },
+] as LibInfo[]);
 
-jest.mock("@next-core/theme", () => ({}));
+const mockSearchIcons = jest
+  .fn<typeof searchIcons>()
+  .mockImplementation((params) => {
+    const filteredIcons = icons.filter((icon) => {
+      return (
+        (params?.lib ? icon.icon.lib === params?.lib : true) &&
+        (params?.q ? icon.title.includes(params?.q) : true)
+      );
+    });
+    return Promise.resolve({
+      page: 1,
+      pageSize: 20,
+      total: filteredIcons.length,
+      list: filteredIcons,
+    });
+  });
+
+customElements.define(
+  "icons.get-libs",
+  class extends HTMLElement {
+    resolve = mockGetLibs;
+  }
+);
+
+customElements.define(
+  "icons.search-icons",
+  class extends HTMLElement {
+    resolve = mockSearchIcons;
+  }
+);
+
+class ModalElement extends HTMLElement {
+  open() {
+    this.dispatchEvent(new Event("open"));
+  }
+  close() {
+    this.dispatchEvent(new Event("close"));
+  }
+  confirm() {
+    this.dispatchEvent(new Event("confirm"));
+  }
+}
+customElements.define("eo-modal", ModalElement);
 
 describe("eo-icon-select", () => {
   test("basic usage", async () => {
@@ -88,12 +111,12 @@ describe("eo-icon-select", () => {
     });
     expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
 
-    const modal = element.shadowRoot?.querySelector("eo-modal") as HTMLElement;
-    (modal as any).open = jest.fn();
-    (modal as any).close = jest.fn();
+    const modal = element.shadowRoot?.querySelector("eo-modal") as ModalElement;
 
     await act(async () => {
-      fireEvent(modal, createEvent("open", modal));
+      fireEvent.click(
+        element.shadowRoot?.querySelector(".show-icon") as HTMLSpanElement
+      );
       await (global as any).flushPromises();
     });
 
@@ -112,7 +135,7 @@ describe("eo-icon-select", () => {
       );
     });
     act(() => {
-      fireEvent(modal, createEvent("confirm", modal));
+      modal.confirm();
     });
 
     expect(onChange).toBeCalledWith(
@@ -125,6 +148,32 @@ describe("eo-icon-select", () => {
         },
       })
     );
+
+    act(() => {
+      fireEvent(
+        element.shadowRoot?.querySelector("eo-search") as HTMLElement,
+        new CustomEvent("search", { detail: "query" })
+      );
+    });
+    expect(mockSearchIcons).lastCalledWith({
+      lib: "easyops",
+      page: 1,
+      pageSize: 100,
+      q: "query",
+    });
+
+    act(() => {
+      fireEvent(
+        element.shadowRoot?.querySelector("eo-radio") as HTMLElement,
+        new CustomEvent("change", { detail: { value: "antd" } })
+      );
+    });
+    expect(mockSearchIcons).lastCalledWith({
+      lib: "antd",
+      page: 1,
+      pageSize: 100,
+      q: "query",
+    });
 
     act(() => {
       document.body.removeChild(element);
