@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.3.4...@next-bricks/icons@0.4.0) (2023-07-28)
+
+
+### Features
+
+* doc & eo-icon line-height ([07c5597](https://github.com/easyops-cn/next-bricks/commit/07c5597ce635f94e026a23cfb9f072911dd1745a))
+
+
+
+
+
 ## [0.3.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.3.3...@next-bricks/icons@0.3.4) (2023-07-25)
 
 

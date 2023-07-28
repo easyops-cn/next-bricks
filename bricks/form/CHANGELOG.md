@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.13.3...@next-bricks/form@0.14.0) (2023-07-28)
+
+
+### Features
+
+* doc & eo-icon line-height ([07c5597](https://github.com/easyops-cn/next-bricks/commit/07c5597ce635f94e026a23cfb9f072911dd1745a))
+* form-item support labelBrick ([eaa3842](https://github.com/easyops-cn/next-bricks/commit/eaa3842e52992aaaf06f02bc836ae6394e308c2d))
+* input support addon && refactor ([4028b36](https://github.com/easyops-cn/next-bricks/commit/4028b36dbfcfe50314f7111395b6b1cc821e7819))
+
+
+
+
+
 ## [0.13.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.13.2...@next-bricks/form@0.13.3) (2023-07-25)
 
 **Note:** Version bump only for package @next-bricks/form
