@@ -2131,12 +2131,12 @@
   resolved "https://registry.yarnpkg.com/@next-core/brick-manifest/-/brick-manifest-0.5.0.tgz#563a963fa22d2e91468d666f08f753b36f3e0ba3"
   integrity sha512-D9aFMKg2ZRNGoaMowv0JeFVCCTOQqf4gAxPtdKi31Cag7pzWFWpVNuS781VxTTnHmf25XjWZomtNIh71J93m2Q==
 
-"@next-core/brick-playground@^1.10.26":
-  version "1.10.26"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.10.26.tgz#1d74dacfe0b5e05040af0f8544e2bea25a76fe41"
-  integrity sha512-dQ4AEGjLf2hk/EPwPfxtFyV778P9va2V106NAjKZY2UDqlxjLGn+ZViUIb0MhFwdVqfNEtB9n+LtT3YkM8SPCA==
+"@next-core/brick-playground@^1.10.27":
+  version "1.10.27"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.10.27.tgz#9a441c58a57eb96194d16abe79e829f8efec84a6"
+  integrity sha512-mYalJKa/E1P1ctiQAxX+ICovnU/2DGBwO1Ep0Esgn5GTWmJtrcAl4SkBRhJZexZVOLdMUxVh1BDN3U81xXBIWA==
   dependencies:
-    "@next-core/doc-helpers" "^0.1.8"
+    "@next-core/doc-helpers" "^0.1.9"
     "@next-core/serve-helpers" "^1.1.0"
     compression "^1.7.4"
     express "^4.18.2"
@@ -2185,14 +2185,15 @@
   dependencies:
     "@babel/parser" "^7.22.7"
 
-"@next-core/doc-helpers@^0.1.8":
-  version "0.1.8"
-  resolved "https://registry.yarnpkg.com/@next-core/doc-helpers/-/doc-helpers-0.1.8.tgz#b53c8bfdf73b206ceb1a0ae9622680b36253e52c"
-  integrity sha512-7Qo3WXlaRYdKNxR7Qhy3NXy1raKhAg22+xyZ084htrrGzL67YrcTEDZ/B94BsDyzNd6iPs+6tlP/6rgkkUpzbA==
+"@next-core/doc-helpers@^0.1.9":
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/@next-core/doc-helpers/-/doc-helpers-0.1.9.tgz#12b3847c0c35617e3f393bfd45c7dcc15bb9fc5f"
+  integrity sha512-35R0IZCMzX1H2UayZ7UZTmRll6O9E8KqmmKo0aYExElDV/OAhYMQ1Ir0qckvWrD7GRIxSqdmLUeEtGSU7HMeIw==
   dependencies:
     "@next-core/brick-manifest" "^0.5.0"
     fast-xml-parser "^4.2.4"
     js-yaml "^3.14.1"
+    prettier "^2.8.8"
 
 "@next-core/easyops-runtime@^0.6.10":
   version "0.6.10"
@@ -11867,10 +11868,10 @@ prelude-ls@~1.1.2:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
   integrity sha512-ESF23V4SKG6lVSGZgYNpbsiaAkdab6ZgOxe52p7+Kid3W3u3bxR4Vfd/o21dmN7jSt0IwgZ4v5MUd26FEtXE9w==
 
-prettier@^2.8.6:
-  version "2.8.6"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.6.tgz#5c174b29befd507f14b83e3c19f83fdc0e974b71"
-  integrity sha512-mtuzdiBbHwPEgl7NxWlqOkithPyp4VN93V7VeHVWBF+ad3I5avc0RVDT4oImXQy9H/AqxA2NSQH8pSxHW6FYbQ==
+prettier@^2.8.6, prettier@^2.8.8:
+  version "2.8.8"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.8.tgz#e8c5d7e98a4305ffe3de2e1fc4aca1a71c28b1da"
+  integrity sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==
 
 pretty-bytes@^5.6.0:
   version "5.6.0"
