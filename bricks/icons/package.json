@@ -65,7 +65,7 @@
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
-    "@next-core/brick-icons": "^2.31.64",
+    "@next-core/brick-icons": "^2.31.66",
     "@next-core/build-next-bricks": "^1.13.3",
     "@next-core/test-next": "^1.0.8",
     "copy-webpack-plugin": "^11.0.0"
