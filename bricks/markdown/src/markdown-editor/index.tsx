@@ -48,10 +48,7 @@ import {
   tableTooltipCtx,
 } from "./components/TableWidget.tsx";
 import { CodeBlock } from "./components/CodeBlock.tsx";
-import type {
-  FormItem,
-  FormItemProps,
-} from "../../../form/src/form-item/index.jsx";
+import type { FormItem, FormItemProps } from "@next-bricks/form/form-item";
 import { FormItemElementBase } from "@next-shared/form";
 
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
