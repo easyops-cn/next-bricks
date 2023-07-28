@@ -1,0 +1,19 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+sl-tooltip {
+  --sl-tooltip-background-color: var(--antd-tooltip-bg);
+  --sl-tooltip-padding: 5px 8px;
+  --sl-tooltip-color: var(--antd-tooltip-color);
+  --sl-tooltip-font-size: 14px;
+  --sl-tooltip-line-height: 22px;
+}
+
+sl-tooltip::part(body) {
+  box-shadow: var(--connected-overlay-shadow);
+}

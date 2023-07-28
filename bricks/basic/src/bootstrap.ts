@@ -16,3 +16,4 @@ import "./launchpad/index.js";
 import "./notification.js";
 import "./data-providers/copy-to-clipboard.js";
 import "./mini-actions/index.js";
+import "./tooltip/index.js";
