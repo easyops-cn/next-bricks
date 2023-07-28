@@ -12,10 +12,6 @@
   box-sizing: border-box;
 }
 
-eo-icon {
-  line-height: 0.25em;
-}
-
 .show-icon {
   display: grid;
   justify-items: center;
@@ -166,28 +162,21 @@ eo-icon {
 
 .icon-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  overflow: hidden;
+  color: var(--color-normal-text);
   height: 50px;
 }
 
 .icon-container:hover {
   cursor: pointer;
-}
-
-.icon-container .icon-inner-container {
-  overflow: hidden;
-  color: var(--color-normal-text);
-  display: flex;
-  flex-direction: column;
-}
-
-.icon-container:hover .icon-inner-container {
   color: var(--color-brand);
 }
 
 .icon-container .icon-name {
+  width: 100%;
   text-align: center;
   font-size: 10px;
   text-overflow: ellipsis;

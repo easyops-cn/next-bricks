@@ -362,10 +362,8 @@ export function IconSelectComponent(props: IconSelectComponentProps) {
                       handleIconSelect(iconInfo.icon);
                     }}
                   >
-                    <div className="icon-inner-container">
-                      <WrappedGeneralIcon {...iconInfo.icon} />
-                      <div className="icon-name">{iconInfo.title}</div>
-                    </div>
+                    <WrappedGeneralIcon {...iconInfo.icon} />
+                    <div className="icon-name">{iconInfo.title}</div>
                   </div>
                 );
               })}
