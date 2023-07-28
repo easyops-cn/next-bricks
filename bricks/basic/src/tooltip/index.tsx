@@ -34,7 +34,7 @@ export interface TooltipEventsMapping {
 /**
  * 提示
  *
- * @slot (default) - 提示的目标元素
+ * @slot - 提示的目标元素
  * @slot content - 放置在提示中的元素
  */
 export
