@@ -2,9 +2,19 @@ import type { Storyboard, MicroApp, StoryboardMeta } from "@next-core/types";
 import { createProviderClass } from "@next-core/utils/general";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
-import * as changeCase from "change-case";
 import { format } from "prettier/standalone.js";
 import parserBabel from "prettier/parser-babel.js";
+import {
+  ExtractState,
+  PLACEHOLDER_PREFIX,
+  extractRoutes,
+  extractTemplates,
+} from "./utils/extract.js";
+import {
+  SourceFileOrFolder,
+  buildFileStructure,
+} from "./utils/buildFileStructure.js";
+import { printWithPlaceholders } from "./utils/printWithPlaceholders.js";
 
 export interface StoryboardAssemblyResult {
   storyboard: Storyboard;
@@ -26,51 +36,15 @@ export async function exportAsSourceFiles({
   projectDetail,
   storyboard,
 }: StoryboardAssemblyResult): Promise<void> {
-  const routeNames = new Set<string>();
-
-  let count = 1;
-  const getRouteName = (alias?: string) => {
-    const aliasIsOk =
-      typeof alias === "string" && /^\w+$/.test(alias) && alias !== "index";
-    if (aliasIsOk) {
-      if (!routeNames.has(alias)) {
-        return alias;
-      }
-    }
-    const prefix = aliasIsOk ? alias : "route";
-    let name: string;
-    while (routeNames.has((name = `${prefix}_${count}`))) {
-      count++;
-    }
-    return name;
-  };
-
   const zip = new JSZip();
   const project = zip.folder("project")!;
   const src = project.folder("src")!;
-  const routes = src.folder("routes")!;
-  const templates = src.folder("templates")!;
 
-  for (const route of storyboard.routes) {
-    const name = getRouteName(route.alias);
-    routeNames.add(name);
-    const filename = `${name}.js`;
-    const content = `export default ${JSON.stringify(route, null, 2)};`;
-    routes.file(filename, formatJs(content));
-  }
-
-  routes.file(
-    "index.js",
-    formatJs(
-      [
-        ...[...routeNames].map((name) => `import ${name} from "./${name}.js";`),
-        "",
-        `export default [
-${[...routeNames].map((name) => `  ${name},`).join("\n")}
-];`,
-      ].join("\n")
-    )
-  );
+  const extractState: ExtractState = {
+    extracts: [],
+    namePool: new Map(),
+  };
+  const extractedRoutes = extractRoutes(storyboard.routes, [], extractState);
 
   const app: MicroApp & { layoutType?: string } = {
     id: projectDetail.appId,
@@ -94,58 +68,43 @@ ${[...routeNames].map((name) => `  ${name},`).join("\n")}
   delete meta.customTemplates;
   delete meta.workflows;
   delete meta.mocks;
-  for (const tpl of customTemplates) {
-    const filename = `${tpl.name}.js`;
-    const content = `export default ${JSON.stringify(tpl, null, 2)};`;
-    templates.file(filename, formatJs(content));
-  }
 
-  templates.file(
-    "index.js",
-    formatJs(
-      [
-        ...[...customTemplates].map(
-          (tpl) =>
-            `import ${changeCase.camelCase(tpl.name)} from "./${tpl.name}.js";`
-        ),
-        "",
-        `export default [
-${[...customTemplates]
-  .map((tpl) => `  ${changeCase.camelCase(tpl.name)},`)
-  .join("\n")}
-];`,
-      ].join("\n")
-    )
+  const extractedTemplates = extractTemplates(
+    customTemplates,
+    [],
+    extractState
   );
+
+  const fileStructure = buildFileStructure(extractState.extracts);
 
   src.file(
     "meta.js",
     formatJs(
-      [
-        `import customTemplates from "./templates/index.js";`,
-        `const meta = ${JSON.stringify(storyboard.meta, null, 2)};`,
-        `meta.customTemplates = customTemplates;`,
-        `export default meta;`,
-      ].join("\n")
+      printWithPlaceholders(
+        {
+          ...meta,
+          customTemplates: extractedTemplates,
+        },
+        fileStructure
+      )
     )
   );
 
   src.file(
     "index.js",
     formatJs(
-      [
-        'import app from "./app.js";',
-        'import routes from "./routes/index.js";',
-        'import meta from "./meta.js";',
-        "",
-        `export default {
-  app,
-  routes,
-  meta,
-};`,
-      ].join("\n")
+      printWithPlaceholders(
+        {
+          app: `${PLACEHOLDER_PREFIX}app`,
+          routes: extractedRoutes,
+          meta: `${PLACEHOLDER_PREFIX}meta`,
+        },
+        fileStructure
+      )
     )
   );
+
+  printFileStructure(fileStructure, src);
 
   const packageJsonContent = JSON.stringify(
     {
@@ -154,6 +113,7 @@ ${[...customTemplates]
       type: "module",
       scripts: {
         build: "node scripts/build.js",
+        start: "node --watch scripts/build.js",
         serve: `brick-container-serve --local-micro-apps=${JSON.stringify(
           projectDetail.appId
         )}`,
@@ -162,7 +122,7 @@ ${[...customTemplates]
         node: ">=16",
       },
       devDependencies: {
-        "@next-core/brick-container": "^3.5.1",
+        "@next-core/brick-container": "^3.5.2",
         "@types/node": "^16.18.14",
         "js-yaml": "^3.14.1",
       },
@@ -217,13 +177,26 @@ await writeFile(
     "README.md",
     `# ${projectDetail.name}
 
+## 准备
+
 \`\`\`bash
 yarn
-yarn build
-yarn serve
 \`\`\`
 
-提示：运行 \`yarn serve\` 时按需使用 \`--subdir\` 和 \`--server\` 等参数。
+## 开发模式
+
+打开两个终端，分别运行 \`yarn start\` 和 \`yarn serve\`。
+
+提示：
+- 使用 \`yarn start\` 需要 node >= 18.11 。
+- 运行 \`yarn serve\` 时按需使用 \`--subdir\` 和 \`--server\` 等参数。
+- 修改文件后，需手动刷新浏览器。
+
+## 生产模式
+
+\`\`\`bash
+yarn build && yarn serve
+\`\`\`
 `
   );
 
@@ -231,13 +204,13 @@ yarn serve
   saveAs(blob, "project.zip");
 }
 
-export interface FormatJsOptions {
+interface FormatJsOptions {
   typescript?: boolean;
   semi?: boolean;
   printWidth?: number;
 }
 
-export function formatJs(
+function formatJs(
   source: string,
   { typescript, semi = true, printWidth }: FormatJsOptions = {}
 ): string {
@@ -247,6 +220,20 @@ export function formatJs(
     semi,
     printWidth,
   });
+}
+
+function printFileStructure(items: SourceFileOrFolder[], folder: JSZip) {
+  for (const item of items) {
+    if (item.type === "folder") {
+      const childFolder = folder.folder(item.name)!;
+      printFileStructure(item.items, childFolder);
+    } else {
+      folder.file(
+        `${item.name}.js`,
+        formatJs(printWithPlaceholders(item.node, items))
+      );
+    }
+  }
 }
 
 customElements.define(
