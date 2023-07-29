@@ -1,6 +1,7 @@
-import React, { FC, useEffect, useMemo, useState } from "react";
+import React, { FC, useEffect, useMemo } from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
+import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import styleText from "./markdown-editor.shadow.css";
 import { ObjectStoreApi_putObject } from "@next-api-sdk/object-store-sdk";
@@ -48,10 +49,6 @@ import {
   tableTooltipCtx,
 } from "./components/TableWidget.tsx";
 import { CodeBlock } from "./components/CodeBlock.tsx";
-import type { FormItem, FormItemProps } from "@next-bricks/form/form-item";
-import { FormItemElementBase } from "@next-shared/form";
-
-const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
@@ -76,7 +73,7 @@ export interface MenuButtonProps {
   tooltip?: string;
 }
 
-export interface MarkdownEditorProps extends FormItemProps {
+export interface MarkdownEditorProps {
   value?: string;
   bucketName?: string;
   containerStyle?: React.CSSProperties;
@@ -102,17 +99,7 @@ const { defineElement, property, event } = createDecorators();
  * @author kehua
  * @noInheritDoc
  */
-class MarkdownEditor extends FormItemElementBase {
-  /**
-   * 字段名称
-   */
-  @property() accessor name: string | undefined;
-
-  /**
-   * 标签文字
-   */
-  @property() accessor label: string | undefined;
-
+class MarkdownEditor extends ReactNextElement {
   /**
    * 初始值
    * @group basic
@@ -151,8 +138,7 @@ class MarkdownEditor extends FormItemElementBase {
   @event({ type: "markdown.value.change" })
   accessor #markdownValueChange!: EventEmitter<string>;
 
-  handleMarkdownValueChange = (value: string): void => {
-    this.value = value;
+  private handleMarkdownValueChange = (value: string): void => {
     this.#markdownValueChange.emit(value);
   };
 
@@ -161,16 +147,11 @@ class MarkdownEditor extends FormItemElementBase {
       <MilkdownProvider>
         <ProsemirrorAdapterProvider>
           <MarkdownEditorComponent
-            formElement={this.getFormElement()}
-            name={this.name}
-            label={this.label}
-            curElement={this}
             bucketName={this.bucketName}
             value={this.value}
             containerStyle={this.containerStyle}
             onUploadImage={this.handleUploadImage}
             onMarkdownValueChange={this.handleMarkdownValueChange}
-            trigger="handleMarkdownValueChange"
           />
         </ProsemirrorAdapterProvider>
       </MilkdownProvider>
@@ -181,13 +162,13 @@ class MarkdownEditor extends FormItemElementBase {
 export { MarkdownEditor };
 
 export function MarkdownEditorComponent(props: MarkdownEditorProps) {
-  const { bucketName, containerStyle, onUploadImage, onMarkdownValueChange } =
-    props;
-  const [value, setValue] = useState(props.value ?? "");
-
-  useEffect(() => {
-    setValue(value);
-  }, [props.value]);
+  const {
+    bucketName,
+    value,
+    containerStyle,
+    onUploadImage,
+    onMarkdownValueChange,
+  } = props;
 
   const transformResponseToUrl = (objectName: string): string => {
     return `/next/api/gateway/object_store.object_store.GetObject/api/v1/objectStore/bucket/${props.bucketName}/object/${objectName}`;
@@ -272,7 +253,6 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
           .get(listenerCtx)
           .markdownUpdated(
             (ctx: any, markdown: string, prevMarkdown: string) => {
-              setValue(markdown);
               onMarkdownValueChange && onMarkdownValueChange(markdown);
             }
           );
@@ -361,19 +341,17 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
   ];
 
   return (
-    <WrappedFormItem {...props}>
-      <div className="markdown-container" style={containerStyle}>
-        <div className="menu-container-outter">
-          <div className="menu-container-inner prose">
-            {MenuBtnData.map((item) => (
-              <MenuButton {...item} key={JSON.stringify(item.icon)} />
-            ))}
-          </div>
-        </div>
-        <div className="editor-container">
-          <Milkdown />
+    <div className="markdown-container" style={containerStyle}>
+      <div className="menu-container-outter">
+        <div className="menu-container-inner prose">
+          {MenuBtnData.map((item) => (
+            <MenuButton {...item} key={JSON.stringify(item.icon)} />
+          ))}
         </div>
       </div>
-    </WrappedFormItem>
+      <div className="editor-container">
+        <Milkdown />
+      </div>
+    </div>
   );
 }
