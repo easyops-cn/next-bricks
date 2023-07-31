@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.13.6...@next-bricks/data-view@0.13.7) (2023-07-31)
+
+
+### Bug Fixes
+
+* **cabinet-thumbnail:** 调整适配scale比例 ([175e9fa](https://github.com/easyops-cn/next-bricks/commit/175e9fa136c52b55124b96ade9581b198311be6b))
+
+
+
+
+
 ## [0.13.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.13.5...@next-bricks/data-view@0.13.6) (2023-07-28)
 
 **Note:** Version bump only for package @next-bricks/data-view
