@@ -122,7 +122,7 @@ export async function exportAsSourceFiles({
         node: ">=16",
       },
       devDependencies: {
-        "@next-core/brick-container": "^3.5.2",
+        "@next-core/brick-container": "^3.5.4",
         "@types/node": "^16.18.14",
         "js-yaml": "^3.14.1",
       },
@@ -174,6 +174,18 @@ await writeFile(
   appDir.file(".gitignore", "*\n!.gitignore");
 
   project.file(
+    "dev.config.mjs",
+    `export default {
+  brickFolders: [
+    "node_modules/@next-bricks",
+    "node_modules/@bricks",
+    "next-*/bricks",
+    "brick-next/bricks",
+  ],
+};`
+  );
+
+  project.file(
     "README.md",
     `# ${projectDetail.name}
 
@@ -197,6 +209,17 @@ yarn
 \`\`\`bash
 yarn build && yarn serve
 \`\`\`
+
+
+## 集成构件
+
+演示时，可以使用 \`ln -s\` 创建软链接，将需要的构件仓库目录链接到本项目中，例如：
+
+\`\`\`bash
+ln -s ../next-nw next-nw
+\`\`\`
+
+最终打包时，将这些仓库源文件按相同目录结构打包进本项目。
 `
   );
 
