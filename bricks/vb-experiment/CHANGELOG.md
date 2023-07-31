@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.1.1...@next-bricks/vb-experiment@0.1.2) (2023-07-31)
+
+
+### Bug Fixes
+
+* add dev.config.mjs ([a6a4a24](https://github.com/easyops-cn/next-bricks/commit/a6a4a240a2a34aa94e5804667072173e9aab2633))
+
+
+
+
+
 ## [0.1.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.1.0...@next-bricks/vb-experiment@0.1.1) (2023-07-28)
 
 

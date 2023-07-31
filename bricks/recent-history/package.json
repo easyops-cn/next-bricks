@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/recent-history",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/recent-history",
   "repository": {
     "type": "git",
@@ -34,7 +34,7 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-bricks/basic": "^0.17.7",
+    "@next-bricks/basic": "^0.18.0",
     "@next-core/element": "^1.1.2",
     "@next-core/i18n": "^1.0.23",
     "@next-core/react-element": "^1.0.10",

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.5.0...@next-shared/common-bricks@0.6.0) (2023-07-31)
+
+
+### Features
+
+* eo-tooltip ([81c2544](https://github.com/easyops-cn/next-bricks/commit/81c25441651f6d73496133a3f878e80187ad8627))
+
+
+
+
+
 # [0.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.4.0...@next-shared/common-bricks@0.5.0) (2023-07-18)
 
 
