@@ -94,13 +94,14 @@ export function CabinetThumbnailComponent(
   const preScale = usePrevious(scale);
 
   useLayoutEffect(() => {
-    const { width, height } = containerRef.current.getBoundingClientRect();
     if (!!clusters.length && columns > 0) {
-      const { width: realWidth, height: realHeight } =
-        layoutRef.current.getBoundingClientRect();
       // 计算缩放比例
-      const wScale = width / (realWidth / (preScale ?? 1));
-      const hScale = height / (realHeight * (preScale ?? 1));
+      const wScale =
+        containerRef.current.clientWidth /
+        (layoutRef.current.clientWidth / (preScale ?? 1));
+      const hScale =
+        containerRef.current.clientHeight /
+        (layoutRef.current.clientHeight * (preScale ?? 1));
       setScale(Math.min(Math.floor(Math.min(wScale, hScale) * 100) / 100, 1));
     }
   }, [clusters, preScale, columns]);
