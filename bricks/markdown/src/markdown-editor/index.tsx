@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useState } from "react";
+import React, { FC, useMemo } from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
@@ -23,7 +23,7 @@ import {
 import { nord } from "@milkdown/theme-nord";
 import { history, redoCommand, undoCommand } from "@milkdown/plugin-history";
 import { upload, uploadConfig, Uploader } from "@milkdown/plugin-upload";
-import { callCommand, $view, replaceAll } from "@milkdown/utils";
+import { callCommand, $view } from "@milkdown/utils";
 import type { Node } from "@milkdown/prose/model";
 import { listener, listenerCtx } from "@milkdown/plugin-listener";
 import {
@@ -152,6 +152,7 @@ class MarkdownEditor extends FormItemElementBase {
   accessor #markdownValueChange!: EventEmitter<string>;
 
   handleMarkdownValueChange = (value: string): void => {
+    this.getFormElement()?.formStore.onChange(this.name!, value);
     this.value = value;
     this.#markdownValueChange.emit(value);
   };
@@ -170,7 +171,6 @@ class MarkdownEditor extends FormItemElementBase {
             containerStyle={this.containerStyle}
             onUploadImage={this.handleUploadImage}
             onMarkdownValueChange={this.handleMarkdownValueChange}
-            trigger="handleMarkdownValueChange"
           />
         </ProsemirrorAdapterProvider>
       </MilkdownProvider>
@@ -183,11 +183,6 @@ export { MarkdownEditor };
 export function MarkdownEditorComponent(props: MarkdownEditorProps) {
   const { bucketName, containerStyle, onUploadImage, onMarkdownValueChange } =
     props;
-  const [value, setValue] = useState(props.value ?? "");
-
-  useEffect(() => {
-    setValue(value);
-  }, [props.value]);
 
   const transformResponseToUrl = (objectName: string): string => {
     return `/next/api/gateway/object_store.object_store.GetObject/api/v1/objectStore/bucket/${props.bucketName}/object/${objectName}`;
@@ -266,13 +261,12 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
         // 配置root
         ctx.set(rootCtx, root);
         // 配置默认值
-        value && ctx.set(defaultValueCtx, value);
+        props.value && ctx.set(defaultValueCtx, props.value);
         // 配置事件监听
         ctx
           .get(listenerCtx)
           .markdownUpdated(
             (ctx: any, markdown: string, prevMarkdown: string) => {
-              setValue(markdown);
               onMarkdownValueChange && onMarkdownValueChange(markdown);
             }
           );
@@ -303,10 +297,6 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
         )
       );
   }, []);
-
-  useEffect(() => {
-    get()?.action(replaceAll(value));
-  }, [value]);
 
   function call<T>(command: CmdKey<T>, payload?: T) {
     return get()?.action(callCommand(command, payload));
