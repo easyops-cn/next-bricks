@@ -188,8 +188,14 @@ class MarkdownEditor extends FormItemElementBase {
 export { MarkdownEditor };
 
 export function MarkdownEditorComponent(props: MarkdownEditorProps) {
-  const { bucketName, containerStyle, onUploadImage, onMarkdownValueChange } =
-    props;
+  const {
+    bucketName,
+    containerStyle,
+    value,
+    formElement,
+    onUploadImage,
+    onMarkdownValueChange,
+  } = props;
 
   const transformResponseToUrl = (objectName: string): string => {
     return `/next/api/gateway/object_store.object_store.GetObject/api/v1/objectStore/bucket/${props.bucketName}/object/${objectName}`;
@@ -268,7 +274,7 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
         // 配置root
         ctx.set(rootCtx, root);
         // 配置默认值
-        props.value && ctx.set(defaultValueCtx, props.value);
+        value && ctx.set(defaultValueCtx, value);
         // 配置事件监听
         ctx
           .get(listenerCtx)
@@ -306,7 +312,10 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
   }, []);
 
   useEffect(() => {
-    get()?.action(replaceAll(props.value));
+    // 当编辑器作为表单项时，初始化完成后需要用form values来初始化
+    if (formElement) {
+      get()?.action(replaceAll(value));
+    }
   }, [get()]);
 
   function call<T>(command: CmdKey<T>, payload?: T) {
