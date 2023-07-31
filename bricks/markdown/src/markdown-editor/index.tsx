@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useEffect, useMemo } from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
@@ -23,7 +23,7 @@ import {
 import { nord } from "@milkdown/theme-nord";
 import { history, redoCommand, undoCommand } from "@milkdown/plugin-history";
 import { upload, uploadConfig, Uploader } from "@milkdown/plugin-upload";
-import { callCommand, $view } from "@milkdown/utils";
+import { callCommand, $view, replaceAll } from "@milkdown/utils";
 import type { Node } from "@milkdown/prose/model";
 import { listener, listenerCtx } from "@milkdown/plugin-listener";
 import {
@@ -114,6 +114,12 @@ class MarkdownEditor extends FormItemElementBase {
   @property() accessor label: string | undefined;
 
   /**
+   * 是否必填
+   */
+  @property({ type: Boolean })
+  accessor required: boolean | undefined;
+
+  /**
    * 初始值
    * @group basic
    */
@@ -165,6 +171,7 @@ class MarkdownEditor extends FormItemElementBase {
             formElement={this.getFormElement()}
             name={this.name}
             label={this.label}
+            required={this.required}
             curElement={this}
             bucketName={this.bucketName}
             value={this.value}
@@ -297,6 +304,10 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
         )
       );
   }, []);
+
+  useEffect(() => {
+    get()?.action(replaceAll(props.value));
+  }, [get()]);
 
   function call<T>(command: CmdKey<T>, payload?: T) {
     return get()?.action(callCommand(command, payload));
