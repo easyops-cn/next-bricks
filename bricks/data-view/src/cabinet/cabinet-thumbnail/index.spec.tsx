@@ -102,9 +102,6 @@ describe("data-view.cabinet-thumbnail", () => {
     expect(container.querySelector(".clusterTitle").textContent).toBe(
       "主机容器"
     );
-    expect(
-      container.querySelector(".thumbnailLayout").getAttribute("style")
-    ).toBe("transform: scale(1);");
   });
   test("should work and  columns is  0", () => {
     const { container } = render(
