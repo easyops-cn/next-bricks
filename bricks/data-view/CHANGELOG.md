@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.13.7...@next-bricks/data-view@0.14.0) (2023-08-01)
+
+
+### Features
+
+* **app-wall:** 新增useDistanceConfig属性是否使用内置的distanceConfig配置 ([c279e64](https://github.com/easyops-cn/next-bricks/commit/c279e643262dc50386dbe34cba9ad2fb9a93fc76))
+
+
+
+
+
 ## [0.13.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.13.6...@next-bricks/data-view@0.13.7) (2023-07-31)
 
 
