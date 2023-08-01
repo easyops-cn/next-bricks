@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useMemo } from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
-import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import styleText from "./markdown-editor.shadow.css";
 import { ObjectStoreApi_putObject } from "@next-api-sdk/object-store-sdk";
@@ -49,6 +48,10 @@ import {
   tableTooltipCtx,
 } from "./components/TableWidget.tsx";
 import { CodeBlock } from "./components/CodeBlock.tsx";
+import type { FormItem, FormItemProps } from "@next-bricks/form/form-item";
+import { FormItemElementBase } from "@next-shared/form";
+
+const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
@@ -73,7 +76,7 @@ export interface MenuButtonProps {
   tooltip?: string;
 }
 
-export interface MarkdownEditorProps {
+export interface MarkdownEditorProps extends FormItemProps {
   value?: string;
   bucketName?: string;
   containerStyle?: React.CSSProperties;
@@ -99,7 +102,23 @@ const { defineElement, property, event } = createDecorators();
  * @author kehua
  * @noInheritDoc
  */
-class MarkdownEditor extends ReactNextElement {
+class MarkdownEditor extends FormItemElementBase {
+  /**
+   * 字段名称
+   */
+  @property() accessor name: string | undefined;
+
+  /**
+   * 标签文字
+   */
+  @property() accessor label: string | undefined;
+
+  /**
+   * 是否必填
+   */
+  @property({ type: Boolean })
+  accessor required: boolean | undefined;
+
   /**
    * 初始值
    * @group basic
@@ -138,7 +157,9 @@ class MarkdownEditor extends ReactNextElement {
   @event({ type: "markdown.value.change" })
   accessor #markdownValueChange!: EventEmitter<string>;
 
-  private handleMarkdownValueChange = (value: string): void => {
+  handleMarkdownValueChange = (value: string): void => {
+    this.getFormElement()?.formStore.onChange(this.name!, value);
+    this.value = value;
     this.#markdownValueChange.emit(value);
   };
 
@@ -147,6 +168,11 @@ class MarkdownEditor extends ReactNextElement {
       <MilkdownProvider>
         <ProsemirrorAdapterProvider>
           <MarkdownEditorComponent
+            formElement={this.getFormElement()}
+            name={this.name}
+            label={this.label}
+            required={this.required}
+            curElement={this}
             bucketName={this.bucketName}
             value={this.value}
             containerStyle={this.containerStyle}
@@ -164,8 +190,9 @@ export { MarkdownEditor };
 export function MarkdownEditorComponent(props: MarkdownEditorProps) {
   const {
     bucketName,
-    value,
     containerStyle,
+    value,
+    formElement,
     onUploadImage,
     onMarkdownValueChange,
   } = props;
@@ -285,8 +312,11 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
   }, []);
 
   useEffect(() => {
-    get()?.action(replaceAll(value));
-  }, [value]);
+    // 当编辑器作为表单项时，初始化完成后需要用form values来初始化
+    if (formElement) {
+      get()?.action(replaceAll(value));
+    }
+  }, [get()]);
 
   function call<T>(command: CmdKey<T>, payload?: T) {
     return get()?.action(callCommand(command, payload));
@@ -341,17 +371,19 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
   ];
 
   return (
-    <div className="markdown-container" style={containerStyle}>
-      <div className="menu-container-outter">
-        <div className="menu-container-inner prose">
-          {MenuBtnData.map((item) => (
-            <MenuButton {...item} key={JSON.stringify(item.icon)} />
-          ))}
+    <WrappedFormItem {...props}>
+      <div className="markdown-container" style={containerStyle}>
+        <div className="menu-container-outter">
+          <div className="menu-container-inner prose">
+            {MenuBtnData.map((item) => (
+              <MenuButton {...item} key={JSON.stringify(item.icon)} />
+            ))}
+          </div>
+        </div>
+        <div className="editor-container">
+          <Milkdown />
         </div>
       </div>
-      <div className="editor-container">
-        <Milkdown />
-      </div>
-    </div>
+    </WrappedFormItem>
   );
 }
