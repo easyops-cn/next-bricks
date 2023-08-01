@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.4.6...@next-bricks/markdown@1.5.0) (2023-08-01)
+
+
+### Features
+
+* refactor markdown as a form-component ([2273703](https://github.com/easyops-cn/next-bricks/commit/22737032e13e86ef337ee838efad7d11256749ac))
+* refactor markdown editor as a form component ([19eb41c](https://github.com/easyops-cn/next-bricks/commit/19eb41c8614035ade714e0dd0fac8979a865888e))
+* refactor markdown editor as a form component ([cfcdc70](https://github.com/easyops-cn/next-bricks/commit/cfcdc70569792a6729a64142380b437a5bf5d13e))
+* support form to get the markdown change values ([b492f92](https://github.com/easyops-cn/next-bricks/commit/b492f9267f8615fa298e2eb253540cf9d1833673))
+* support markdown editor property `required` and initial its value from form ([4c35f16](https://github.com/easyops-cn/next-bricks/commit/4c35f164352fd676a2dd4e7e3592c1553fdfaa8b))
+
+
+
+
+
 ## [1.4.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.4.5...@next-bricks/markdown@1.4.6) (2023-07-24)
 
 **Note:** Version bump only for package @next-bricks/markdown
