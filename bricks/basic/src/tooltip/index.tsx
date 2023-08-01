@@ -1,4 +1,4 @@
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, useEffect, useRef, useState } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
@@ -156,11 +156,27 @@ export function EoTooltipComponent(props: ToolTipComponentProps) {
     onAfterOpenChange,
   } = props;
 
+  const contentSlotRef = useRef<HTMLSlotElement>(null);
+  const [hasContentSlot, setHasContentSlot] = useState<boolean>();
+
+  useEffect(() => {
+    const contentSlot = contentSlotRef.current;
+    const handleSlotChange = () => {
+      setHasContentSlot(contentSlot!.assignedElements().length > 0);
+    };
+
+    contentSlot?.addEventListener("slotchange", handleSlotChange);
+
+    return () => {
+      contentSlot?.removeEventListener("slotchange", handleSlotChange);
+    };
+  }, []);
+
   return (
     <WrappedSlTooltip
       content={content}
       placement={placement}
-      disabled={disabled}
+      disabled={!hasContentSlot && !content ? true : disabled}
       open={open}
       trigger={trigger}
       hoist={hoist}
@@ -176,7 +192,7 @@ export function EoTooltipComponent(props: ToolTipComponentProps) {
       onSlAfterShow={() => onAfterOpenChange?.(true)}
       onSlAfterHide={() => onAfterOpenChange?.(false)}
     >
-      <slot name="content" slot="content">
+      <slot ref={contentSlotRef} name="content" slot="content">
         {content}
       </slot>
       <slot />

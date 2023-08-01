@@ -83,4 +83,41 @@ describe("eo-tooltip", () => {
     });
     expect(element.shadowRoot?.childNodes.length).toBe(0);
   });
+
+  test("don't show tooltip when content is empty", async () => {
+    const element = document.createElement("eo-tooltip") as EoTooltip;
+    const contentElement = document.createElement("div");
+    contentElement.slot = "content";
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+
+    expect(
+      element.shadowRoot?.querySelector("sl-tooltip")?.hasAttribute("disabled")
+    ).toBeTruthy();
+
+    await act(async () => {
+      element.content = "test";
+    });
+    expect(
+      element.shadowRoot?.querySelector("sl-tooltip")?.hasAttribute("disabled")
+    ).toBeFalsy();
+
+    await act(async () => {
+      element.content = undefined;
+      element.appendChild(contentElement);
+    });
+    expect(
+      element.shadowRoot?.querySelector("sl-tooltip")?.hasAttribute("disabled")
+    ).toBeFalsy();
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
 });
