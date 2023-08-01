@@ -433,12 +433,10 @@ export const computeCameraDistance = (
   let o = 0;
   distanceConfig.forEach(function (t) {
     length >= Math.min.apply(null, t.numRange) &&
-      length < Math.max.apply(null, t.numRange) &&
+      length <= Math.max.apply(null, t.numRange) &&
       (o = t.distance);
   });
-  if (o > 0) return Math.max(o, i);
-  const s = 200 * Math.ceil((length - 160) / 40) + 3200;
-  return Math.max(s, i);
+  return Math.max(o, i);
 };
 export const getAppRelations = (
   object: CSS3DObject,
