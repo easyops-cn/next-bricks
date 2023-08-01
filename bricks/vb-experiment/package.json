@@ -40,6 +40,6 @@
     "prettier": "^2.8.6"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.13.3"
+    "@next-core/build-next-bricks": "^1.13.4"
   }
 }
