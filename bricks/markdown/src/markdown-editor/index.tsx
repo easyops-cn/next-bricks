@@ -55,7 +55,6 @@ import { FormItemElementBase } from "@next-shared/form";
 
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 
-
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 const MenuButton: FC<MenuButtonProps> = ({ icon, onClick, tooltip }) => {
