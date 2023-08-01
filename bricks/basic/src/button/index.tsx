@@ -129,43 +129,44 @@ export function ButtonComponent({
   target,
   buttonStyle,
 }: ButtonProps) {
-  const link = useMemo(
-    () => (
-      <WrappedLink
-        className={classNames(size, {
-          danger: danger,
-        })}
-        href={href}
-        target={target as Target}
-        url={url}
-        disabled={disabled}
-        danger={danger}
-        icon={icon}
-      >
-        <slot />
-      </WrappedLink>
-    ),
-    [size, danger, href, target, url, disabled, icon]
-  );
-
-  const button = useMemo(
-    () => (
+  const buttonNode = useMemo(() => {
+    const button = (
       <button
-        className={classNames(size, shape, {
-          [type]: !disabled || type === "text",
+        className={classNames(size, shape, type, {
           danger: danger,
         })}
         style={buttonStyle}
         disabled={disabled}
       >
-        {icon && <WrappedIcon className="icon" {...icon} />}
+        {icon && <WrappedIcon {...icon} />}
         <slot />
       </button>
-    ),
-    [size, shape, type, disabled, danger, buttonStyle, icon]
-  );
+    );
 
-  return type === "link" ? link : button;
+    // mouse events don't trigger at disabled button in Chrome, so the tooltip don't work
+    // wrap the disabled button in span to make it work in tooltip
+    return disabled ? (
+      <span style={{ display: "inline-block", cursor: "not-allowed" }}>
+        {button}
+      </span>
+    ) : (
+      button
+    );
+  }, [size, shape, type, disabled, danger, buttonStyle, icon]);
+
+  return url || href ? (
+    <WrappedLink
+      type="plain"
+      href={href}
+      target={target as Target}
+      url={url}
+      disabled={disabled}
+    >
+      {buttonNode}
+    </WrappedLink>
+  ) : (
+    buttonNode
+  );
 }
 
 export { Button };

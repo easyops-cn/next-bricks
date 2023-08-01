@@ -67,14 +67,10 @@ describe("eo-button", () => {
     expect(element1.shadowRoot).toBeTruthy();
     expect(element1.shadowRoot?.childNodes.length).toBe(2);
 
-    const button1 = element1.shadowRoot?.querySelector("button");
-    const button2 = element2.shadowRoot?.querySelector("button");
-    const link1 = element1.shadowRoot?.querySelector("eo-link");
-    const link2 = element2.shadowRoot?.querySelector("eo-link");
-    expect(button1).toBe(null);
-    expect(link1?.className).toBe("medium");
-    expect(button2).toBe(null);
-    expect(link2?.className).toBe("medium");
+    expect(element1.shadowRoot?.querySelector("button")).toBeTruthy();
+    expect(element1.shadowRoot?.querySelector("eo-link")).toBeTruthy();
+    expect(element2.shadowRoot?.querySelector("button")).toBeTruthy();
+    expect(element2.shadowRoot?.querySelector("eo-link")).toBeFalsy();
 
     act(() => {
       document.body.removeChild(element1);
@@ -100,8 +96,29 @@ describe("eo-button", () => {
     expect(element.shadowRoot).toBeTruthy();
     expect(element.shadowRoot?.childNodes.length).toBe(2);
 
-    const icon = element.shadowRoot?.querySelector(".icon");
-    expect(icon?.tagName).toBe("EO-ICON");
+    expect(element.shadowRoot?.querySelector("eo-icon")).toBeTruthy();
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
+
+  test("disabled button", async () => {
+    const element = document.createElement("eo-button") as Button;
+
+    expect(element.shadowRoot).toBeFalsy();
+    act(() => {
+      element.disabled = true;
+      element.textContent = "disabled";
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot).toBeTruthy();
+    expect(element.shadowRoot?.childNodes.length).toBe(2);
+
+    expect(
+      element.shadowRoot?.querySelector("button")?.parentElement?.tagName
+    ).toBe("SPAN");
 
     act(() => {
       document.body.removeChild(element);
