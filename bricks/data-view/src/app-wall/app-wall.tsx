@@ -111,6 +111,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
     relations,
     onSystemCardButtonClick,
     useDblclick,
+    useDistanceConfig,
     handleCardDbClick,
     rightBtnOnClick,
     leftBtnOnClick,
@@ -656,7 +657,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
       cameraRef.current.position.z = computeCameraDistance(
         cameraRef.current,
         configRef.current.bounds,
-        distanceConfig,
+        useDistanceConfig ? distanceConfig : [],
         length
       );
       cameraRef.current.updateProjectionMatrix();
@@ -674,7 +675,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
     return () => {
       resetView();
     };
-  }, [props.dataSource]);
+  }, [props.dataSource, useDistanceConfig]);
 
   useEffect(() => {
     const container = containerRef.current;
