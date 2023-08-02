@@ -313,10 +313,11 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
 
   useEffect(() => {
     // 当编辑器作为表单项时，初始化完成后需要用form values来初始化
+    // 并且useEffect不能依赖value去调用replaceAll，会跟用户输入的内容冲突
     if (formElement && value) {
       get()?.action(replaceAll(value));
     }
-  }, [get(), value]);
+  }, [get()]);
 
   function call<T>(command: CmdKey<T>, payload?: T) {
     return get()?.action(callCommand(command, payload));
