@@ -313,10 +313,10 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
 
   useEffect(() => {
     // 当编辑器作为表单项时，初始化完成后需要用form values来初始化
-    if (formElement) {
+    if (formElement && value) {
       get()?.action(replaceAll(value));
     }
-  }, [get()]);
+  }, [get(), value]);
 
   function call<T>(command: CmdKey<T>, payload?: T) {
     return get()?.action(callCommand(command, payload));
