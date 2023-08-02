@@ -27,6 +27,10 @@ export function ReactUseBrick({
     LegacyReact.useRef<__secret_internals.MountUseBrickResult>();
   const [renderKey, setRenderKey] = LegacyReact.useState<number>();
   const IdCounterRef = LegacyReact.useRef(0);
+  const initialRenderId = LegacyReact.useMemo(
+    () => __secret_internals.getRenderId?.(),
+    []
+  );
 
   LegacyReact.useEffect(() => {
     async function init() {
@@ -36,13 +40,20 @@ export function ReactUseBrick({
         );
         setRenderKey(getUniqueId(IdCounterRef));
       } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error("Render useBrick failed:", useBrick, "with data:", data);
-        handleHttpError(error);
+        if (isTheSameRender(initialRenderId)) {
+          // eslint-disable-next-line no-console
+          console.error(
+            "Render useBrick failed:",
+            useBrick,
+            "with data:",
+            data
+          );
+          handleHttpError(error);
+        }
       }
     }
     init();
-  }, [data, useBrick]);
+  }, [data, useBrick, initialRenderId]);
 
   const _refCallback = LegacyReact.useCallback(
     (element: HTMLElement | null) => {
@@ -80,6 +91,11 @@ export function ReactUseBrick({
 
 function getUniqueId(ref: React.MutableRefObject<number>): number {
   return ++ref.current;
+}
+
+function isTheSameRender(initialRenderId: string | undefined): boolean {
+  const newRenderId = __secret_internals.getRenderId?.();
+  return !initialRenderId || !newRenderId || initialRenderId === newRenderId;
 }
 
 export interface ReactUseMultipleBricksProps {
