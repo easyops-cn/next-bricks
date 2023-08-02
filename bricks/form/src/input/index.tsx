@@ -55,6 +55,16 @@ export interface InputEventsMap {
 /**
  * 通用输入框构件
  * @author sailor
+ *
+ * @part addon-wrapper - 包裹输入组件、前缀、后缀、前置和后置的容器
+ * @part affix-wrapper - 包裹输入组件、前缀和后缀的容器
+ * @part input - 输入组件
+ * @part clear-icon - 清除按钮
+ * @part prefix - 输入框前缀容器
+ * @part suffix - 输入框后缀容器
+ * @part before-addon - 输入框前置容器
+ * @part after-addon - 输入框后置容器
+ *
  * @slot addonBefore - 输入框前置标签
  * @slot addonAfter - 输入框后置标签
  * @slot prefix - 输入框前缀图标
