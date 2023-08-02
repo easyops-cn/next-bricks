@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
@@ -197,6 +197,8 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
     onMarkdownValueChange,
   } = props;
 
+  const [isFocus, setIsFocus] = useState(false);
+
   const transformResponseToUrl = (objectName: string): string => {
     return `/next/api/gateway/object_store.object_store.GetObject/api/v1/objectStore/bucket/${props.bucketName}/object/${objectName}`;
   };
@@ -282,7 +284,13 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
             (ctx: any, markdown: string, prevMarkdown: string) => {
               onMarkdownValueChange && onMarkdownValueChange(markdown);
             }
-          );
+          )
+          .focus((ctx: any) => {
+            setIsFocus(true);
+          })
+          .blur((ctx: any) => {
+            setIsFocus(false);
+          });
         // 配置文件上传,不传bucketName则默认把图片转为base64格式
         bucketName &&
           ctx.update(uploadConfig.key, (prev: any) => ({
@@ -312,12 +320,12 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
   }, []);
 
   useEffect(() => {
-    // 当编辑器作为表单项时，初始化完成后需要用form values来初始化
-    // 并且useEffect不能依赖value去调用replaceAll，会跟用户输入的内容冲突
-    if (formElement && value) {
+    // 当编辑器没有处在focus状态，即初始化或者通过其他构件重置值时，才允许调用replaceAll修改其值
+    // 防止与用户输入动作起冲突
+    if (formElement && value !== undefined && !isFocus) {
       get()?.action(replaceAll(value));
     }
-  }, [get()]);
+  }, [get(), value]);
 
   function call<T>(command: CmdKey<T>, payload?: T) {
     return get()?.action(callCommand(command, payload));
