@@ -42,6 +42,28 @@ Playground 中的示例列表来自约定的示例文件和文档文件。
 
 先启动构件的实时打包 `npx lerna run start --scope @next-bricks/basic`，然后参考前一章节启动 playground。
 
+### 与远端服务联调
+
+使用 `yarn serve` 可以与远端服务联调。默认使用所有本地发现的构件包，使用 `--local-bricks=abc,xyz` 来单独指定要使用的本地构件包。其他选项参数请运行 `yarn serve --help` 查看。
+
+默认情况下，`yarn serve` 会从项目的 `node_modules/@next-bricks` 和 `node_modules/@bricks` 目录中查找本地构件包，因此，如需调试其他仓库的构件包，可以使用 `yarn link` 将其链接到本项目中。
+
+另外，也可以创建 `dev.config.mjs` 文件来按需指定构件包所在目录：
+
+```js
+// File: dev.config.mjs
+export default {
+  brickFolders: [
+    // 默认使用 `node_modules/@next-bricks` 及 `node_modules/@bricks` 作为构件包目录。
+    "node_modules/@next-bricks",
+    "node_modules/@bricks",
+
+    // 引用其他仓库的构件包。注：可使用通配符，详见 https://github.com/isaacs/node-glob
+    "../next-*/bricks",
+  ],
+};
+```
+
 ### SVG
 
 在构件 JS/TS 代码中引入 SVG 文件时，默认会像 PNG/JPEG 一样打包成图片资源文件，例如：
@@ -147,6 +169,8 @@ import MySvgComp from "./icon.svg";
  *
  * @slot - 弹出层内容
  * @slot anchor - 触发弹出层的元素
+ *
+ * @part arrow - 气泡指向箭头
  */
 @defineElement("eo-popover")
 class Popover extends ReactNextElement {}

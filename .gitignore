@@ -11,7 +11,7 @@ node_modules
 *.log.yml
 report.*.json
 
-/dev.config.js
+/dev.config.mjs
 /dev-settings.yaml
 /dev-https.key
 /dev-https.cert
