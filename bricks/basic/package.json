@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/basic",
-  "version": "0.18.1",
+  "version": "0.18.2",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/basic",
   "repository": {
     "type": "git",
@@ -37,14 +37,14 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-bricks/icons": "^0.4.0",
+    "@next-bricks/icons": "^0.4.1",
     "@next-core/element": "^1.1.2",
     "@next-core/http": "^1.0.8",
     "@next-core/i18n": "^1.0.23",
     "@next-core/react-element": "^1.0.10",
     "@next-core/theme": "^1.1.1",
     "@next-core/types": "^1.5.1",
-    "@next-shared/general": "^0.3.11",
+    "@next-shared/general": "^0.3.12",
     "lodash": "^4.17.21",
     "react": "0.0.0-experimental-ee8509801-20230117",
     "react-transition-group": "^4.4.5"

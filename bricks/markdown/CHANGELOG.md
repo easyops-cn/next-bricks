@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.5.0...@next-bricks/markdown@1.5.1) (2023-08-02)
+
+
+### Bug Fixes
+
+* fix initial value bug ([e56b909](https://github.com/easyops-cn/next-bricks/commit/e56b9099c51ab165f859529a49f99e5b483e6f7f))
+* fix initial value bug ([67d26e5](https://github.com/easyops-cn/next-bricks/commit/67d26e543f1e4eaefc88dd4f5d97bc2dc1d688dc))
+
+
+
+
+
 # [1.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.4.6...@next-bricks/markdown@1.5.0) (2023-08-01)
 
 
