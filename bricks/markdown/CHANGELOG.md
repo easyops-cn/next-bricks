@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.5.1...@next-bricks/markdown@1.6.0) (2023-08-02)
+
+
+### Features
+
+* support form method setInitValue and resrtFields ([d561e86](https://github.com/easyops-cn/next-bricks/commit/d561e863afd4009bf6c1888a1622f38418bba3ed))
+
+
+
+
+
 ## [1.5.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.5.0...@next-bricks/markdown@1.5.1) (2023-08-02)
 
 
