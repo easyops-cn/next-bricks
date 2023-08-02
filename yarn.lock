@@ -2142,6 +2142,11 @@
     compression "^1.7.4"
     express "^4.18.2"
 
+"@next-core/brick-types@^2.89.0":
+  version "2.89.0"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-types/-/brick-types-2.89.0.tgz#e212f5acb3c4a2c3cce4cd69aeab11f4c5d4808b"
+  integrity sha512-30HwoWIM4ES62S2GVfx0c4bx8rf7ln97UmkEhHvsVOtegaTgioLrM70RvdsJYf1X+krNjz/LHGuZsoqmAH/6Wg==
+
 "@next-core/browserslist-config-next@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@next-core/browserslist-config-next/-/browserslist-config-next-1.0.3.tgz#bb4784d1a815b68635c581436c1de0f4676acc64"
@@ -2320,6 +2325,13 @@
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@next-core/serve-helpers/-/serve-helpers-1.2.0.tgz#d433239080115745f531236f98d75511dec0bb04"
   integrity sha512-Pk/CXMBJk06Ufs2beY0wJ/O8QynvsQxIxRqSNpKuVlSi3Rk6GNyIpEGY3bIGOj3SrV4rEKhbdSfcYTYEs6cDPg==
+
+"@next-core/storyboard@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@next-core/storyboard/-/storyboard-0.6.0.tgz#0214d0fae2ea704bc7ec48c3a1e0a18b51e190c4"
+  integrity sha512-9XyxdGztyMQc6OPRbJwc3WTK+ffrifWbGlmx4IRfN4x+A5EcfDD0DwMqP61x4g25sPkiRLL+ZjSlLmrUas19VQ==
+  dependencies:
+    "@next-core/brick-types" "^2.89.0"
 
 "@next-core/styles-v3@^0.2.14":
   version "0.2.22"
