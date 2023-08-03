@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
 import type { Button, ButtonProps } from "@next-bricks/basic/button";
@@ -14,11 +20,15 @@ import type {
 } from "../form/index.js";
 import type { FormItem, FormItemProps } from "../form-item/index.jsx";
 import { ReactUseMultipleBricks } from "@next-core/react-runtime";
-import { UseBrickConf } from "@next-core/types";
+import { UseBrickConf, UseSingleBrickConf } from "@next-core/types";
 import styleText from "./dynamic-form-item.shadow.css";
 import "@next-core/theme";
-import { isEqual } from "lodash";
-import { FormItemElementBase } from "@next-shared/form";
+import { isEqual, flatten, omit, isEmpty } from "lodash";
+import { FormItemElementBase, MessageBody } from "@next-shared/form";
+import { K, NS, locales } from "./i18n.js";
+import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
+
+initializeReactI18n(NS, locales);
 
 const { defineElement, property, event } = createDecorators();
 
@@ -36,6 +46,25 @@ const WrappedForm = wrapBrick<Form, FormProps, FormEvents, FormMapEvents>(
 );
 
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
+
+export function uniqueValidatorFN(
+  props: DynamicFormItemProps,
+  properties: any,
+  t: any
+) {
+  return () => {
+    const fieldValue = props?.curElement?.value?.map(
+      (v: any) => v[properties.name as string]
+    );
+    if (new Set(fieldValue).size !== fieldValue.length) {
+      return (
+        (properties.message as any)?.unique ??
+        t(K.UNIQUE, { name: properties.label ?? properties.name })
+      );
+    }
+    return "";
+  };
+}
 
 type DynamicFormValuesItem = Record<string, any>;
 
@@ -121,10 +150,19 @@ class DynamicFormItem extends FormItemElementBase {
   }
 }
 
-function DynamicFormItemComponent(props: DynamicFormItemProps) {
+export function DynamicFormItemComponent(props: DynamicFormItemProps) {
+  const { t } = useTranslation(NS);
+
   const formWrapperRef = useRef<HTMLDivElement>(null);
   const [values, setValues] = useState<DynamicFormValuesItem[]>(
     props.value ?? []
+  );
+
+  const [bricks, setBricks] = useState<UseSingleBrickConf[]>([]);
+
+  const bricksOfNoLabel = useMemo(
+    () => bricks.map((brick: any) => omit(brick, "properties.label")),
+    [bricks]
   );
 
   const handleAddItem = () => {
@@ -136,6 +174,40 @@ function DynamicFormItemComponent(props: DynamicFormItemProps) {
       setValues(props.value ?? []);
     }
   }, [props.value]);
+
+  useEffect(() => {
+    if (props.useBrick) {
+      const parsedUseBrick: UseSingleBrickConf[] = flatten(
+        new Array(props.useBrick)
+      );
+
+      setBricks(
+        parsedUseBrick.map((brick) => {
+          const { properties = {} } = brick;
+          if (properties.unique) {
+            let parsedValidator: any = [
+              uniqueValidatorFN(props, properties, t),
+            ];
+            if (properties.validator) {
+              parsedValidator = [
+                ...flatten(new Array(properties.validator)),
+                ...parsedValidator,
+              ];
+            }
+            return {
+              ...brick,
+              properties: {
+                ...brick.properties,
+                validator: parsedValidator,
+              },
+            };
+          } else {
+            return brick;
+          }
+        })
+      );
+    }
+  }, [props.useBrick, props.curElement]);
 
   const validate = () => {
     const formWrapper = formWrapperRef.current;
@@ -180,9 +252,10 @@ function DynamicFormItemComponent(props: DynamicFormItemProps) {
         {values.map((value, index) => {
           return (
             <div className="dynamic-form-item" key={index}>
-              {props.useBrick && (
+              {!isEmpty(bricks) && (
                 <WrappedForm
-                  layout="inline"
+                  layout="vertical"
+                  formStyle={{ flexDirection: "row", alignItems: "center" }}
                   className="dynamic-form"
                   values={value}
                   defaultEmitValuesChange={false}
@@ -191,7 +264,11 @@ function DynamicFormItemComponent(props: DynamicFormItemProps) {
                   onValuesChange={(value) => handleValuesChange(value, index)}
                 >
                   <ReactUseMultipleBricks
-                    useBrick={props.useBrick}
+                    useBrick={
+                      (index === 0
+                        ? bricks
+                        : bricksOfNoLabel) as UseSingleBrickConf[]
+                    }
                     data={value}
                   />
                   <WrappedIcon

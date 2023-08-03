@@ -20,7 +20,7 @@ import "@next-core/theme";
 import classNames from "classnames";
 import { isNil } from "lodash";
 import styleText from "./input.shadow.css";
-import { FormItemElementBase } from "@next-shared/form";
+import { FormItemElementBase, MessageBody } from "@next-shared/form";
 import { FormItem, FormItemProps } from "../form-item/index.jsx";
 import { ComponentSize, InputType } from "../interface.js";
 
@@ -240,6 +240,14 @@ class Input extends FormItemElementBase {
   @property({ type: Boolean })
   accessor hasSuffix: boolean | undefined;
 
+  /**
+   * 表单项校验方法
+   */
+  @property({
+    attribute: false,
+  })
+  accessor validator: ((value: any) => MessageBody) | undefined;
+
   renderCallback = (ref: RCInputRef) => {
     (this.#RCInputRef as any).current = ref;
     const addonBefore = this.#getSlotByName("addonBefore");
@@ -297,6 +305,7 @@ class Input extends FormItemElementBase {
         inputStyle={this.inputStyle}
         trigger="handleInputChange"
         onInputChange={this.handleInputChange}
+        validator={this.validator}
       />
     );
   }

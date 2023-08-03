@@ -16,7 +16,7 @@
   line-height: 12px;
   padding: 2px;
   margin-left: 8px;
-  margin-top: 4px;
+  margin-bottom: 22px;
 }
 
 .dynamic-form > *:not(.remove-btn) {
@@ -26,4 +26,10 @@
 
 .add-btn {
   width: 100%;
+}
+
+.dynamic-form-item:first-child {
+  .remove-btn {
+    margin-top: 22px;
+  }
 }
