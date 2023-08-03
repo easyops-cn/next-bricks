@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.6.12...@next-bricks/presentational@0.7.0) (2023-08-03)
+
+
+### Features
+
+* NEXT_BUILDER-3787 presentational-bricks.general-badge ref NEXT_BUILDER-3787 ([0517a8a](https://github.com/easyops-cn/next-bricks/commit/0517a8a4ca9ebfba6ba6b6b8efafa590246968bb))
+
+
+
+
+
 ## [0.6.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.6.11...@next-bricks/presentational@0.6.12) (2023-08-02)
 
 **Note:** Version bump only for package @next-bricks/presentational

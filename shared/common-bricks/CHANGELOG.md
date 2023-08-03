@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.6.0...@next-shared/common-bricks@0.7.0) (2023-08-03)
+
+
+### Features
+
+* eo-dropdown-actions ([2844c84](https://github.com/easyops-cn/next-bricks/commit/2844c8466af36a62119b19d01e9a898e8b4386e1))
+* NEXT_BUILDER-3787 presentational-bricks.general-badge ref NEXT_BUILDER-3787 ([0517a8a](https://github.com/easyops-cn/next-bricks/commit/0517a8a4ca9ebfba6ba6b6b8efafa590246968bb))
+
+
+
+
+
 # [0.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.5.0...@next-shared/common-bricks@0.6.0) (2023-07-31)
 
 

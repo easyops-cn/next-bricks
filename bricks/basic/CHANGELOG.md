@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.18.3...@next-bricks/basic@0.19.0) (2023-08-03)
+
+
+### Features
+
+* eo-dropdown-actions ([2844c84](https://github.com/easyops-cn/next-bricks/commit/2844c8466af36a62119b19d01e9a898e8b4386e1))
+
+
+
+
+
 ## [0.18.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.18.2...@next-bricks/basic@0.18.3) (2023-08-02)
 
 **Note:** Version bump only for package @next-bricks/basic
