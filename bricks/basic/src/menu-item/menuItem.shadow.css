@@ -10,6 +10,7 @@
   display: flex;
   justify-items: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .menu-item.disabled {
@@ -19,5 +20,4 @@
 
 .menu-item-icon {
   margin-right: 4px;
-  line-height: 1em;
 }

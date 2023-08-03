@@ -1,0 +1,28 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+eo-menu {
+  padding: 2px;
+  border-radius: var(--larger-border-radius);
+  background: var(--antd-dropdown-menu-bg);
+  box-shadow: var(--antd-box-shadow-base);
+  border: none;
+}
+
+eo-menu-item::part(menu-item) {
+  padding: 5px 12px;
+  border-radius: var(--larger-border-radius);
+}
+
+eo-menu-item:not([disabled]):hover::part(menu-item) {
+  background-color: var(--antd-item-hover-bg);
+}
+
+eo-tooltip {
+  display: block;
+}
