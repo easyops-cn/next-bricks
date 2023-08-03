@@ -51,7 +51,8 @@
     "eo-alert",
     "eo-descriptions",
     "eo-pagination",
-    "eo-card-item"
+    "eo-card-item",
+    "eo-counter-badge"
   ],
   "advanced": ["eo-cascader", "eo-table"],
   "markdown": ["eo-markdown-editor"],
