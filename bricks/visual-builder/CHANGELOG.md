@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.4.6...@next-bricks/visual-builder@0.5.0) (2023-08-03)
+
+
+### Features
+
+* v3 support auto build & push in preivew ([30fe25b](https://github.com/easyops-cn/next-bricks/commit/30fe25b2c018edbb6525738bfbb689f21f02201c))
+
+
+
+
+
 ## [0.4.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.4.5...@next-bricks/visual-builder@0.4.6) (2023-08-02)
 
 **Note:** Version bump only for package @next-bricks/visual-builder
