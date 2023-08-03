@@ -277,7 +277,7 @@ export default async function connect(
 
   window.addEventListener(
     "message",
-    ({ data, origin }: MessageEvent<PreviewMessageToPreviewer>) => {
+    async ({ data, origin }: MessageEvent<PreviewMessageToPreviewer>) => {
       if (
         origin !== previewFromOrigin ||
         !data ||
@@ -341,12 +341,13 @@ export default async function connect(
                 );
               } */
 
-              const newContracts = (
+              const newContracts = await (
                 __secret_internals as any
               ).getAddedContracts?.(data.storyboardPatch, {
                 appId: options.appId,
                 updateStoryboardType: data.options.updateStoryboardType,
                 formId: options.formId,
+                provider: "visual-builder.collect-used-contracts",
               });
 
               if (!isEmpty(newContracts)) {
