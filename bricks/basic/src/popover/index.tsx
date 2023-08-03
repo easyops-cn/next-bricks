@@ -19,6 +19,7 @@ const { defineElement, property, event } = createDecorators();
 export interface PopoverProps extends SlPopupProps {
   curElement?: HTMLElement;
   trigger?: TriggerEvent;
+  disabled?: boolean;
 }
 
 export interface PopoverEvents {
@@ -87,6 +88,14 @@ class Popover extends ReactNextElement implements PopoverProps {
   accessor sync: Sync | undefined;
 
   /**
+   * 是否禁用
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor disabled: boolean | undefined;
+
+  /**
    * 当弹出层可见性变化之后触发
    * @detail 当前是否可见
    */
@@ -117,6 +126,7 @@ class Popover extends ReactNextElement implements PopoverProps {
         strategy={this.strategy}
         sync={this.sync}
         active={this.active}
+        disabled={this.disabled}
         onVisibleChange={this.#handleVisibleChange}
         beforeVisibleChange={this.#handleBeforeVisibleChange}
       />
@@ -133,6 +143,7 @@ function PopoverComponent(props: PopoverComponentProps) {
   const {
     curElement,
     active = false,
+    disabled,
     trigger,
     onVisibleChange,
     beforeVisibleChange,
@@ -227,6 +238,11 @@ function PopoverComponent(props: PopoverComponentProps) {
   }, [handleVisibleChange]);
 
   useEffect(() => {
+    disabled && visible && handleVisibleChange(false);
+  }, [disabled]);
+
+  useEffect(() => {
+    if (disabled) return;
     const triggerSlot = triggerRef.current;
     const defaultSlot = defaultRef.current;
 
@@ -259,6 +275,7 @@ function PopoverComponent(props: PopoverComponentProps) {
     trigger,
     visible,
     curElement,
+    disabled,
   ]);
 
   return (

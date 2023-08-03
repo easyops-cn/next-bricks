@@ -3,35 +3,37 @@ import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import type { ButtonProps, Button } from "../button/index.jsx";
 import type { GeneralIconProps } from "@next-bricks/icons/general-icon";
-import { ButtonType, ComponentSize, Shape } from "../interface.js";
-import type { Popover, PopoverProps } from "../popover/index.jsx";
-import type { Menu } from "../menu/index.js";
-import type { MenuItem } from "../menu-item/index.js";
+import type {
+  DropdownActionsProps,
+  EoDropdownActions,
+  DropdownActionsEvents,
+  DropdownActionsEventsMapping,
+  Action,
+} from "../dropdown-actions/index.jsx";
+import type { ButtonType, ComponentSize, Shape } from "../interface.js";
 import styleText from "./dropdown-button.shadow.css";
 
 const { defineElement, property } = createDecorators();
 
 const WrappedButton = wrapBrick<Button, ButtonProps>("eo-button");
-const WrappedPopover = wrapBrick<Popover, PopoverProps>("eo-popover");
-const WrappedMenu = wrapBrick<Menu, any>("eo-menu");
-const WrappedMenuItem = wrapBrick<MenuItem, any>("eo-menu-item");
+const WrappedDropdownActions = wrapBrick<
+  EoDropdownActions,
+  DropdownActionsProps,
+  DropdownActionsEvents,
+  DropdownActionsEventsMapping
+>("eo-dropdown-actions", {
+  onActionClick: "action.click",
+});
+
 interface DropButtonProps {
-  actions?: DropButtonItemProps[];
+  actions?: Action[];
   btnText?: string;
   size?: ComponentSize;
   shape?: Shape;
   icon?: GeneralIconProps;
   disabled?: boolean;
-  handleClick: (event: string) => void;
+  handleClick: (action: Action) => void;
 }
-
-type DropButtonItemProps = {
-  text: string;
-  event?: string;
-  icon?: GeneralIconProps;
-  disabled?: boolean;
-  hidden?: boolean;
-};
 
 const defaultIcon: GeneralIconProps = {
   lib: "antd",
@@ -59,7 +61,7 @@ class DropdownButton extends ReactNextElement {
   @property({
     attribute: false,
   })
-  accessor actions: DropButtonItemProps[] | undefined;
+  accessor actions: Action[] | undefined;
 
   /**
    * 按钮默认文字
@@ -99,8 +101,8 @@ class DropdownButton extends ReactNextElement {
   @property()
   accessor shape: Shape | undefined;
 
-  #handleClick = (eventName: string): void => {
-    this.dispatchEvent(new CustomEvent(eventName));
+  #handleClick = (action: Action): void => {
+    action.event && this.dispatchEvent(new CustomEvent(action.event));
   };
 
   render() {
@@ -130,9 +132,12 @@ function DropdownButtonComponent({
   handleClick,
 }: DropButtonProps & ButtonProps) {
   return (
-    <WrappedPopover placement="bottom" sync="width">
+    <WrappedDropdownActions
+      actions={actions}
+      disabled={disabled}
+      onActionClick={(e) => handleClick?.(e.detail)}
+    >
       <WrappedButton
-        slot="anchor"
         size={size}
         shape={shape}
         type={type}
@@ -141,30 +146,7 @@ function DropdownButtonComponent({
       >
         {btnText}
       </WrappedButton>
-      {actions && !disabled && (
-        <WrappedMenu style={{ minWidth: "max-content" }}>
-          {actions
-            ?.filter((action) => !action.hidden)
-            .map((action, index) => {
-              return (
-                <WrappedMenuItem
-                  className="wrapped-menu-item"
-                  key={index}
-                  {...action}
-                  onClick={(e: React.MouseEvent) => {
-                    e.stopPropagation();
-                    !action.disabled &&
-                      action.event &&
-                      handleClick(action.event);
-                  }}
-                >
-                  {action.text}
-                </WrappedMenuItem>
-              );
-            })}
-        </WrappedMenu>
-      )}
-    </WrappedPopover>
+    </WrappedDropdownActions>
   );
 }
 

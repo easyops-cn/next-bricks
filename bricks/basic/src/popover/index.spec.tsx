@@ -241,4 +241,44 @@ describe("basic.general-popover", () => {
 
     expect(document.body.contains(element)).toBeFalsy();
   });
+
+  test("disabled should work", async () => {
+    const element = document.createElement("basic.general-popover") as Popover;
+    element.active = true;
+    element.disabled = true;
+
+    const button = document.createElement("button");
+    button.slot = "anchor";
+    button.textContent = "btn";
+
+    const content = document.createElement("div");
+    content.textContent = "hello world";
+
+    const mockListener = jest.fn();
+    element.append(button);
+    element.append(content);
+    element.addEventListener("visible.change", mockListener);
+
+    expect(element.shadowRoot).toBeFalsy();
+    await act(async () => {
+      document.body.appendChild(element);
+    });
+
+    expect(mockListener).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        detail: false,
+      })
+    );
+
+    await act(async () => {
+      button.click();
+    });
+    expect(mockListener).toHaveBeenCalledTimes(1);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(document.body.contains(element)).toBeFalsy();
+  });
 });

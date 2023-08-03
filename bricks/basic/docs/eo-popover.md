@@ -101,3 +101,29 @@
   }
 </style>
 ```
+
+### Disabled
+
+```html preview
+<div class="example">
+  <eo-popover placement="bottom" disabled>
+    <eo-button slot="anchor">Click me</eo-button>
+    <div class="example-panel">I'm popover</div>
+  </eo-popover>
+</div>
+
+<style>
+  .example {
+    height: 132px;
+  }
+  .example-panel {
+    width: 100px;
+    height: 100px;
+    background-color: var(--palette-gray-5);
+    border: 1px solid var(--palette-blue-6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+```

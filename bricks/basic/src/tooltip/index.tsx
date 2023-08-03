@@ -55,7 +55,7 @@ class EoTooltip extends ReactNextElement implements ToolTipProps {
   accessor placement: Placement | undefined;
 
   /**
-   * 弹出位置
+   * 是否禁用
    */
   @property({ type: Boolean })
   accessor disabled: boolean | undefined;

@@ -5,6 +5,13 @@ import { DropdownButton } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
+class EoDropdownActions extends HTMLElement {
+  triggerActionClick(event: string) {
+    this.dispatchEvent(new CustomEvent("action.click", { detail: { event } }));
+  }
+}
+customElements.define("eo-dropdown-actions", EoDropdownActions);
+
 describe("basic.dropdown-button", () => {
   test("basic usage", async () => {
     const element = document.createElement(
@@ -41,25 +48,14 @@ describe("basic.dropdown-button", () => {
     element.addEventListener("a.click", mockAClick);
     element.addEventListener("b.click", mockBClick);
 
-    expect(element.shadowRoot?.innerHTML).toMatchInlineSnapshot(
-      `"<style>dropdown-button.shadow.css</style><eo-popover placement="bottom" sync="width"><eo-button slot="anchor" size="large" icon="[object Object]">Hello world</eo-button><eo-menu style="min-width: max-content;"><eo-menu-item class="wrapped-menu-item" text="a" event="a.click">a</eo-menu-item><eo-menu-item class="wrapped-menu-item" text="b" event="b.click" disabled="">b</eo-menu-item></eo-menu></eo-popover>"`
-    );
-
     act(() => {
       (
-        element.shadowRoot?.children[1]?.children[1]?.children[0] as HTMLElement
-      ).click();
+        element.shadowRoot?.querySelector(
+          "eo-dropdown-actions"
+        ) as EoDropdownActions
+      ).triggerActionClick("a.click");
     });
-
     expect(mockAClick).toBeCalledTimes(1);
-
-    act(() => {
-      (
-        element.shadowRoot?.children[1]?.children[1]?.children[0] as HTMLElement
-      ).click();
-    });
-
-    expect(mockBClick).toBeCalledTimes(0);
 
     act(() => {
       document.body.removeChild(element);

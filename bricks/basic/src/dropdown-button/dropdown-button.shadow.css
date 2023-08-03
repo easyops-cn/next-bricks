@@ -1,9 +1,0 @@
-:host::part(menu-item) {
-  padding: 2px 8px;
-  border-radius: 4px;
-}
-
-.wrapped-menu-item:not([disabled]):hover {
-  cursor: pointer;
-  background-color: var(--antd-item-hover-bg);
-}

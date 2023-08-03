@@ -13,7 +13,8 @@
     "eo-launchpad-button",
     "eo-popover",
     "eo-mini-actions",
-    "eo-tooltip"
+    "eo-tooltip",
+    "eo-dropdown-actions"
   ],
   "icons": ["eo-antd-icon", "eo-easyops-icon", "eo-fa-icon", "eo-icon"],
   "containers": [
