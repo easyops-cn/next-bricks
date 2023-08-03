@@ -22,6 +22,7 @@ export interface MenuComponentProps {
  * 菜单构件
  * @author sailor
  *
+ * @part menu-item - 外层容器
  */
 @defineElement("eo-menu-item", {
   styleTexts: [styleText],

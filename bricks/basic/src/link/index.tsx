@@ -43,6 +43,9 @@ const { defineElement, property } = createDecorators();
 /**
  * 通用链接构件
  * @author sailor
+ *
+ * @part link - 锚元素
+ *
  * @slot - 链接内容
  */
 @defineElement("eo-link", {
