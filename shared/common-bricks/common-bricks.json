@@ -54,7 +54,8 @@
     "eo-descriptions",
     "eo-pagination",
     "eo-card-item",
-    "eo-counter-badge"
+    "eo-counter-badge",
+    "eo-divider"
   ],
   "advanced": ["eo-cascader", "eo-table"],
   "markdown": ["eo-markdown-editor"],
