@@ -14,7 +14,8 @@
     "eo-popover",
     "eo-mini-actions",
     "eo-tooltip",
-    "eo-dropdown-actions"
+    "eo-dropdown-actions",
+    "eo-avatar"
   ],
   "icons": ["eo-antd-icon", "eo-easyops-icon", "eo-fa-icon", "eo-icon"],
   "containers": [

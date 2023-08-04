@@ -1,0 +1,83 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* size */
+.size-large {
+  --avatar-size: 64px;
+  --avatar-icon-font-size: 34px;
+  --avatar-font-size: 22px;
+}
+
+.size-medium {
+  --avatar-size: 40px;
+  --avatar-icon-font-size: 24px;
+  --avatar-font-size: 12px;
+}
+
+.size-small {
+  --avatar-size: 32px;
+  --avatar-icon-font-size: 20px;
+  --avatar-font-size: 12px;
+}
+
+.size-xs {
+  --avatar-size: 24px;
+  --avatar-icon-font-size: 12px;
+  --avatar-font-size: 12px;
+}
+
+/* shape */
+.shape-circle {
+  border-radius: 50%;
+}
+
+.shape-round-square {
+  border-radius: var(--larger-border-radius);
+}
+
+/* type */
+.type-icon {
+  font-size: var(--avatar-icon-font-size);
+  color: var(--antd-avatar-color);
+  background: var(--antd-avatar-bg);
+}
+
+.type-text {
+  font-size: var(--avatar-font-size);
+  color: var(--antd-avatar-color);
+  background: var(--color-brand);
+  padding: 0 4px;
+}
+
+/* avatar */
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  overflow: hidden;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

@@ -18,3 +18,4 @@ import "./data-providers/copy-to-clipboard.js";
 import "./mini-actions/index.js";
 import "./tooltip/index.js";
 import "./dropdown-actions/index.js";
+import "./avatar/index.js";
