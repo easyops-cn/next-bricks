@@ -1,0 +1,14 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.menu-group-title {
+  line-height: 1.5;
+  padding: 8px;
+  font-size: var(--sub-title-font-size);
+  color: var(--antd-text-color-secondary);
+}
