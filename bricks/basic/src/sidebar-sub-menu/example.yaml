@@ -1,10 +1,3 @@
-构件 `eo-sidebar-sub-menu`
-
-## Examples
-
-### Basic
-
-```yaml preview
 - brick: eo-sidebar-sub-menu
   properties:
     style:
@@ -97,4 +90,3 @@
           title: 调用关系
           type: group
           key: "3"
-```

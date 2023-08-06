@@ -9,7 +9,7 @@
 
 .sub-menu-item {
   cursor: pointer;
-  .sub-menu-title {
+  .sub-menu-item-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -22,7 +22,7 @@
     }
   }
 
-  .submenu-arrow {
+  .sub-menu-item-arrow {
     position: relative;
     transform: translate(-8px);
     color: var(--antd-text-color);
@@ -55,11 +55,15 @@
     }
   }
 
+  .sub-menu-item-title:hover .sub-menu-item-arrow {
+    color: var(--antd-link-color);
+  }
+
   &.collapsed .content {
     display: none;
   }
 
-  &.collapsed .submenu-arrow {
+  &.collapsed .sub-menu-item-arrow {
     &::before {
       transform: rotate(45deg) translateX(2.5px);
     }

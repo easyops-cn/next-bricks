@@ -5,6 +5,7 @@ import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import type { GeneralIconProps } from "@next-bricks/icons/general-icon";
 import styleText from "./nav-menu.shadow.css";
 import { LocationDescriptor, UnregisterCallback } from "history";
+import type { SidebarMenu } from "../menu/index.jsx";
 import type {
   MenuItem as MenuItemComponent,
   MenuComponentProps,
@@ -32,17 +33,8 @@ const WrappedMenuItem = wrapBrick<MenuItemComponent, MenuComponentProps>(
 );
 const WrappedPopover = wrapBrick<Popover, PopoverProps>("eo-popover");
 
-export interface MenuConf {
-  defaultCollapsed?: boolean;
-  defaultCollapsedBreakpoint?: number;
-  icon?: GeneralIconProps;
-  link?: LocationDescriptor;
-  menuItems: SidebarMenuItem[];
-  title: string;
-}
-
 interface NavMenuProps {
-  menu?: MenuConf;
+  menu?: SidebarMenu;
   showTooltip?: boolean;
 }
 
@@ -62,7 +54,7 @@ class NavMenu extends ReactNextElement {
   @property({
     attribute: false,
   })
-  accessor menu: MenuConf | undefined;
+  accessor menu: SidebarMenu | undefined;
 
   /**
    * 是否显示 tooltip
@@ -111,7 +103,7 @@ function NavMenuComponent(props: NavMenuProps) {
         title={showTooltip ? item.text : ""}
         active={item.key ? selectedKey.includes(item.key) : false}
       >
-        {renderLinkCom(item)}
+        {renderLinkCom(item, { width: "100%" })}
       </WrappedMenuItem>
     );
   };

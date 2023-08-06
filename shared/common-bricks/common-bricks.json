@@ -15,7 +15,10 @@
     "eo-mini-actions",
     "eo-tooltip",
     "eo-dropdown-actions",
-    "eo-avatar"
+    "eo-avatar",
+    "eo-sidebar-sub-menu",
+    "eo-menu-item-sub-menu",
+    "eo-menu-group"
   ],
   "icons": ["eo-antd-icon", "eo-easyops-icon", "eo-fa-icon", "eo-icon"],
   "containers": [

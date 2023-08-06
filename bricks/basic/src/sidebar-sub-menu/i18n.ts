@@ -9,7 +9,7 @@ const zh: Locale = {
   // HELLO: "你好",
 };
 
-export const NS = "bricks/basic/eo-menu-sub-menu";
+export const NS = "bricks/basic/eo-sidebar-sub-menu";
 
 export const locales = { en, zh };
 

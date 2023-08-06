@@ -22,13 +22,13 @@ export interface EoMenuSubMenuProps {
 }
 
 /**
- * 构件 `eo-menu-sub-menu`
+ * 构件 `eo-menu-item-sub-menu`
  */
 export
-@defineElement("eo-menu-sub-menu", {
+@defineElement("eo-menu-item-sub-menu", {
   styleTexts: [styleText],
 })
-class EoMenuSubMenu extends ReactNextElement {
+class EoMenuItemSubMenu extends ReactNextElement {
   /**
    * 图标
    */
@@ -55,7 +55,7 @@ class EoMenuSubMenu extends ReactNextElement {
 
   render() {
     return (
-      <EoMenuSubMenuComponent
+      <EoMenuItemSubMenuComponent
         icon={this.icon}
         titleStyle={this.titleStyle}
         collapsed={this.collapsed}
@@ -64,7 +64,7 @@ class EoMenuSubMenu extends ReactNextElement {
   }
 }
 
-export function EoMenuSubMenuComponent(props: EoMenuSubMenuProps) {
+export function EoMenuItemSubMenuComponent(props: EoMenuSubMenuProps) {
   const { icon, titleStyle } = props;
   const titleRef = useRef<HTMLDivElement>(null);
   const [collapsed, setCollapsed] = useState(props.collapsed);
@@ -88,7 +88,7 @@ export function EoMenuSubMenuComponent(props: EoMenuSubMenuProps) {
     >
       <div
         part="sub-menu-item-title"
-        className="sub-menu-title"
+        className="sub-menu-item-title"
         style={titleStyle}
         ref={titleRef}
       >
@@ -101,7 +101,7 @@ export function EoMenuSubMenuComponent(props: EoMenuSubMenuProps) {
           )}
           <slot name="title"></slot>
         </span>
-        <i className="submenu-arrow" />
+        <i className="sub-menu-item-arrow" part="sub-menu-item-arrow" />
       </div>
 
       <div className="content">

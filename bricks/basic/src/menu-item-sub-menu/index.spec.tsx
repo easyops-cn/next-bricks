@@ -1,13 +1,15 @@
 import { describe, test, expect, jest } from "@jest/globals";
 import { act } from "react-dom/test-utils";
-import "./";
-import { EoMenuSubMenu } from "./index.js";
+import "./index.jsx";
+import { EoMenuItemSubMenu } from "./index.jsx";
 
 jest.mock("@next-core/theme", () => ({}));
 
-describe("eo-menu-sub-menu", () => {
+describe("eo-menu-item-sub-menu", () => {
   test("basic usage", async () => {
-    const element = document.createElement("eo-menu-sub-menu") as EoMenuSubMenu;
+    const element = document.createElement(
+      "eo-menu-item-sub-menu"
+    ) as EoMenuItemSubMenu;
 
     const span = document.createElement("span");
     span.textContent = "菜单项一";
@@ -32,7 +34,7 @@ describe("eo-menu-sub-menu", () => {
     expect(element.shadowRoot?.querySelector(".collapsed")).toBeTruthy();
 
     (
-      element.shadowRoot?.querySelector(".sub-menu-title") as HTMLElement
+      element.shadowRoot?.querySelector(".sub-menu-item-title") as HTMLElement
     ).click();
 
     expect(element.innerHTML).toEqual("<span>菜单项一</span>");

@@ -19,3 +19,6 @@ import "./mini-actions/index.js";
 import "./tooltip/index.js";
 import "./dropdown-actions/index.js";
 import "./avatar/index.js";
+import "./sidebar-sub-menu/index.js";
+import "./menu-item-sub-menu/index.js";
+import "./menu-group/index.js";
