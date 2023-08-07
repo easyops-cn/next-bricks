@@ -36,7 +36,7 @@
   "dependencies": {
     "@next-bricks/basic": "^0.19.0",
     "@next-core/element": "^1.1.2",
-    "@next-core/i18n": "^1.0.23",
+    "@next-core/i18n": "^1.0.24",
     "@next-core/react-element": "^1.0.10",
     "@next-core/theme": "^1.1.1",
     "@next-shared/general": "^0.3.13",
