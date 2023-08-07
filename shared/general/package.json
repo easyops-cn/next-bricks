@@ -23,6 +23,11 @@
       "import": "./dist/esm/JsonStorage.js",
       "require": "./dist/cjs/JsonStorage.js"
     },
+    "./debounceByAnimationFrame": {
+      "types": "./dist/types/debounceByAnimationFrame.d.ts",
+      "import": "./dist/esm/debounceByAnimationFrame.js",
+      "require": "./dist/cjs/debounceByAnimationFrame.js"
+    },
     "./types": {
       "types": "./dist/types/types.d.ts"
     },
