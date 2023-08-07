@@ -32,8 +32,13 @@
     margin-bottom: 4px;
   }
 
+  .menu-item-link {
+    color: var(--color-secondary-text);
+  }
+
   .menu-item-text,
-  .menu-group-text {
+  .menu-group-text,
+  .menu-item-link {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
