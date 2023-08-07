@@ -11,12 +11,13 @@ import {
 } from "@next-shared/general/types";
 import { initMenuItemAndMatchCurrentPathKeys } from "@next-shared/general/menu";
 import { isGroup, isSubMenu } from "../nav-menu/utils.js";
-import { Menu as MenuComponent, SidebarMenu } from "../menu/index.jsx";
+import { Menu as MenuComponent, SidebarMenu } from "../menu/index.js";
+import { Link, LinkProps } from "../link/index.js";
 import {
   EoMenuItemSubMenu,
   EoMenuSubMenuProps,
-} from "../menu-item-sub-menu/index.jsx";
-import { EoMenuGroup } from "../menu-group/index.jsx";
+} from "../menu-item-sub-menu/index.js";
+import { EoMenuGroup } from "../menu-group/index.js";
 import { MenuComponentProps, MenuItem } from "../menu-item/index.js";
 import { Target } from "../interface.js";
 import styleText from "./styles.shadow.css";
@@ -41,6 +42,8 @@ const WrapperMenuItemSubMenu = wrapBrick<EoMenuItemSubMenu, EoMenuSubMenuProps>(
 );
 
 const WrappedMenuItem = wrapBrick<MenuItem, MenuComponentProps>("eo-menu-item");
+
+const WrappedLinkItem = wrapBrick<Link, LinkProps>("eo-link");
 
 interface SidebarSubMenuProps {
   menu?: SidebarMenu;
@@ -108,21 +111,24 @@ export function EoSidebarSubMenuComponent(props: SidebarSubMenuProps) {
       <WrappedMenuItem
         className="menu-item"
         style={{ paddingLeft: getMenuItemIndent(item) || 16 }}
-        url={item.to as string}
-        href={item.href}
-        target={item.target as Target}
-        title={item.text}
         icon={item.icon}
         active={item.key ? selectedKey.includes(item.key) : false}
-        linkStyle={{ color: "var(--color-secondary-text)" }}
       >
-        <span
-          className={classNames("menu-item-text", {
-            "item-has-icon": item.icon,
-          })}
+        <WrappedLinkItem
+          className="menu-item-link"
+          url={item.to as string}
+          href={item.href}
+          title={item.text}
+          target={item.target as Target}
         >
-          {item.text}
-        </span>
+          <span
+            className={classNames("menu-item-text", {
+              "item-has-icon": item.icon,
+            })}
+          >
+            {item.text}
+          </span>
+        </WrappedLinkItem>
       </WrappedMenuItem>
     );
   };

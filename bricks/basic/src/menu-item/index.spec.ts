@@ -17,7 +17,6 @@ describe("basic.general-menu", () => {
       icon: "close",
     };
     element.active = true;
-    element.url = "/cmdb/test";
 
     expect(element.shadowRoot).toBeFalsy();
     act(() => {
@@ -30,8 +29,7 @@ describe("basic.general-menu", () => {
     expect(
       element.shadowRoot?.querySelector(".menu-item.disabled")
     ).toBeFalsy();
-
-    expect(element.shadowRoot?.querySelector("eo-link")).toBeTruthy();
+    expect(element.shadowRoot?.querySelector(".menu-item-icon")).toBeTruthy();
 
     const mockClickEvent = jest.fn();
     element.addEventListener("click", mockClickEvent);

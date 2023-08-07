@@ -6,24 +6,16 @@ import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
-import type { Link, LinkProps } from "../link/index.jsx";
 import classNames from "classnames";
-import { Target } from "../interface.js";
 
 const { defineElement, property } = createDecorators();
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
-const WrappedLinkItem = wrapBrick<Link, LinkProps>("eo-link");
 
 export interface MenuComponentProps {
   icon?: GeneralIconProps;
   active?: boolean;
   disabled?: boolean;
-  target?: Target;
-  href?: string;
-  url?: string;
-  key?: string;
-  linkStyle?: React.CSSProperties;
 }
 
 /**
@@ -61,53 +53,18 @@ class MenuItem extends ReactNextElement {
   })
   accessor disabled: boolean | undefined;
 
-  /**
-   * 链接跳转目标
-   */
-  @property() accessor target: Target | undefined;
-
-  /**
-   * 设置 `href` 时将使用原生 `<a>` 标签，通常用于外链的跳转
-   */
-  @property() accessor href: string | undefined;
-
-  /**
-   * 链接地址
-   */
-  @property() accessor url: string | undefined;
-
-  /**
-   * 链接样式
-   * @group other
-   */
-  @property({ attribute: false }) accessor linkStyle:
-    | React.CSSProperties
-    | undefined;
-
   render() {
     return (
       <MenuItemComponent
         icon={this.icon}
         active={this.active}
         disabled={this.disabled}
-        target={this.target}
-        href={this.href}
-        url={this.url}
-        linkStyle={this.linkStyle}
       />
     );
   }
 }
 
-function MenuItemComponent({
-  icon,
-  disabled,
-  active,
-  url,
-  href,
-  target,
-  linkStyle,
-}: MenuComponentProps) {
+function MenuItemComponent({ icon, disabled, active }: MenuComponentProps) {
   return (
     <div
       part="menu-item"
@@ -122,16 +79,13 @@ function MenuItemComponent({
         }
       }}
     >
-      <WrappedLinkItem
-        className="menu-item-link"
-        url={url as string}
-        href={href}
-        target={target as Target}
-        icon={icon}
-        linkStyle={linkStyle}
-      >
-        <slot />
-      </WrappedLinkItem>
+      {icon && (
+        <WrappedIcon
+          className="menu-item-icon"
+          {...(icon as GeneralIconProps)}
+        />
+      )}
+      <slot />
     </div>
   );
 }
