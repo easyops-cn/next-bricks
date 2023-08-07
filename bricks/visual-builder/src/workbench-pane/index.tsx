@@ -13,7 +13,7 @@ import type {
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import styleText from "./workbench-pane.shadow.css";
 import sharedStyle from "../shared/scrollbar.shadow.css";
-import { debounceByAnimationFrame } from "../shared/debounceByAnimationFrame.js";
+import { debounceByAnimationFrame } from "@next-shared/general/debounceByAnimationFrame";
 import classNames from "classnames";
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(

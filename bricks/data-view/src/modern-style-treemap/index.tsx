@@ -16,7 +16,7 @@ import {
 import variablesStyleText from "../data-view-variables.shadow.css";
 import styleText from "./modern-style-treemap.shadow.css";
 import { useResizeObserver } from "../hooks/index.js";
-import { debounceByAnimationFrame } from "../utils/debounceByAnimationFrame.js";
+import { debounceByAnimationFrame } from "@next-shared/general/debounceByAnimationFrame";
 import { keyBy } from "lodash";
 import classNames from "classnames";
 
