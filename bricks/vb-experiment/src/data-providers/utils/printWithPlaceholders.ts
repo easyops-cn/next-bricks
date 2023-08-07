@@ -1,38 +1,32 @@
-import type { SourceFileOrFolder, SourceFolder } from "./buildFileStructure.js";
-import { PLACEHOLDER_PREFIX } from "./extract.js";
+import { NodeType, PLACEHOLDER_PREFIX } from "./extract.js";
 
-export function printWithPlaceholders(
-  node: unknown,
-  siblings: SourceFileOrFolder[]
-) {
+export function printWithPlaceholders(node: unknown, nodeType: NodeType) {
   let content = `export default ${JSON.stringify(node, null, 2)}`;
   const regexp = new RegExp(
-    `"${PLACEHOLDER_PREFIX}(?:([-\\w]+)/)?([-\\w]+)"`,
+    `"${PLACEHOLDER_PREFIX}((?:[-\\w]+/)*[-\\w]+)"`,
     "g"
   );
 
+  const usedVarNames = new Set<string>();
   const imports: string[] = [];
-  content = content.replace(regexp, (m, p1: string | undefined, p2: string) => {
-    const varName =
-      p1 === "routes"
-        ? `Route_${p2}`
-        : p1 === "bricks"
-        ? `Brick_${p2}`
-        : p1 === "templates"
-        ? p2.replaceAll("-", "_")
-        : p2;
-    const importFolder =
-      p1 &&
-      (
-        siblings.find((f) => f.type === "folder" && f.name === p1) as
-          | SourceFolder
-          | undefined
-      )?.items.some((f) => f.type === "folder" && f.name === p2);
-    imports.push(
-      `import ${varName} from "./${p1 ? `${p1}/` : ""}${p2}${
-        importFolder ? "/index" : ""
-      }.js";`
-    );
+
+  content = content.replace(regexp, (m, p1: string) => {
+    const path = p1.split("/");
+    const name = path[path.length - 1];
+    const baseName = (
+      nodeType === "routes" && name === "context" && path.length > 1
+        ? `${path[path.length - 2]}_${name}`
+        : name
+    ).replaceAll("-", "_");
+
+    let counter = 2;
+    let varName = baseName;
+    while (usedVarNames.has(varName)) {
+      varName = `${baseName}_${counter++}`;
+    }
+    usedVarNames.add(varName);
+
+    imports.push(`import ${varName} from "./${p1}.js";`);
     return varName;
   });
 

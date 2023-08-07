@@ -6,7 +6,6 @@ import { format } from "prettier/standalone.js";
 import parserBabel from "prettier/parser-babel.js";
 import {
   ExtractState,
-  PLACEHOLDER_PREFIX,
   extractRoutes,
   extractTemplates,
 } from "./utils/extract.js";
@@ -15,6 +14,19 @@ import {
   buildFileStructure,
 } from "./utils/buildFileStructure.js";
 import { printWithPlaceholders } from "./utils/printWithPlaceholders.js";
+import jsxConstantsJs from "./raws/jsx/constants.js.txt";
+import jsxIndexJs from "./raws/jsx/index.js.txt";
+import jsxJsxRuntimeJs from "./raws/jsx/jsx-runtime.js.txt";
+import jsxPackageJson from "./raws/jsx/package.json.txt";
+import jsxStylesJs from "./raws/jsx/Style.js.txt";
+import scriptsBuildJs from "./raws/scripts/build.js.txt";
+import scriptsTranspileJs from "./raws/scripts/transpile.js.txt";
+import srcIndexJs from "./raws/src/index.js.txt";
+import editorConfig from "./raws/.editorconfig.txt";
+import gitIgnore from "./raws/.gitignore.txt";
+import babelConfigJs from "./raws/babel.config.js.txt";
+import packageJson from "./raws/package.json.txt";
+import readmeMd from "./raws/README.md.txt";
 
 export interface StoryboardAssemblyResult {
   storyboard: Storyboard;
@@ -62,165 +74,78 @@ export async function exportAsSourceFiles({
   );
 
   const meta = (storyboard.meta ?? {}) as StoryboardMeta & {
-    workflows?: unknown[];
+    workflows?: unknown;
+    userGroups?: unknown;
   };
   const customTemplates = meta.customTemplates ?? [];
   delete meta.customTemplates;
   delete meta.workflows;
   delete meta.mocks;
+  delete meta.userGroups;
 
   const extractedTemplates = extractTemplates(
     customTemplates,
-    [],
+    ["components"],
     extractState
   );
+  extractState.extracts.push({
+    name: "index",
+    path: ["components"],
+    node: extractedTemplates,
+    nodeType: "templates",
+  });
 
   const fileStructure = buildFileStructure(extractState.extracts);
 
+  src.file("index.js", srcIndexJs);
+
   src.file(
     "meta.js",
-    formatJs(
-      printWithPlaceholders(
-        {
-          ...meta,
-          customTemplates: extractedTemplates,
-        },
-        fileStructure
-      )
-    )
+    formatJs(`export default ${JSON.stringify(meta, null, 2)};`)
   );
 
   src.file(
-    "index.js",
-    formatJs(
-      printWithPlaceholders(
-        {
-          app: `${PLACEHOLDER_PREFIX}app`,
-          routes: extractedRoutes,
-          meta: `${PLACEHOLDER_PREFIX}meta`,
-        },
-        fileStructure
-      )
-    )
+    "routes.js",
+    formatJs(printWithPlaceholders(extractedRoutes, "routes"))
   );
 
   printFileStructure(fileStructure, src);
-
-  const packageJsonContent = JSON.stringify(
-    {
-      name: projectDetail.appId,
-      private: true,
-      type: "module",
-      scripts: {
-        build: "node scripts/build.js",
-        start: "node --watch scripts/build.js",
-        serve: `brick-container-serve --local-micro-apps=${JSON.stringify(
-          projectDetail.appId
-        )}`,
-      },
-      engines: {
-        node: ">=16",
-      },
-      devDependencies: {
-        "@next-core/brick-container": "^3.5.4",
-        "@types/node": "^16.18.14",
-        "js-yaml": "^3.14.1",
-      },
-    },
-    null,
-    2
-  );
-
-  project.file("package.json", packageJsonContent);
-
-  const scripts = project.folder("scripts")!;
 
   const appRelativeDir = JSON.stringify(
     `../mock-micro-apps/${projectDetail.appId}`
   );
 
+  const scripts = project.folder("scripts")!;
   scripts.file(
     "build.js",
-    `import path from "node:path";
-import { writeFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
-import yaml from "js-yaml";
-import storyboard from "../src/index.js";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-const { safeDump, JSON_SCHEMA } = yaml;
-
-await writeFile(
-  path.resolve(__dirname, ${appRelativeDir}, "storyboard.yaml"),
-  safeDump(storyboard, {
-    indent: 2,
-    schema: JSON_SCHEMA,
-    skipInvalid: true,
-    noRefs: true,
-    noCompatMode: true,
-  })
-);
-
-await writeFile(
-  path.resolve(__dirname, ${appRelativeDir}, "storyboard.json"),
-  JSON.stringify(storyboard, null, 2)
-);`
+    scriptsBuildJs.replaceAll("__APP_RELATIVE_DIR__", appRelativeDir)
   );
+  scripts.file("transpile.js", scriptsTranspileJs);
 
   const appDir = project
     .folder("mock-micro-apps")!
     .folder(projectDetail.appId)!;
   appDir.file(".gitignore", "*\n!.gitignore");
 
-  project.file(
-    "dev.config.mjs",
-    `export default {
-  brickFolders: [
-    "node_modules/@next-bricks",
-    "node_modules/@bricks",
-    "next-*/bricks",
-    "brick-next/bricks",
-  ],
-};`
-  );
+  const jsxDir = project.folder("jsx")!;
+  jsxDir.file("constants.js", jsxConstantsJs);
+  jsxDir.file("index.js", jsxIndexJs);
+  jsxDir.file("jsx-runtime.js", jsxJsxRuntimeJs);
+  jsxDir.file("package.json", jsxPackageJson);
+  jsxDir.file("Style.js", jsxStylesJs);
 
+  project.file(".editorconfig", editorConfig);
+  project.file(".gitignore", gitIgnore);
+  project.file("babel.config.js", babelConfigJs);
+  project.file(
+    "package.json",
+    packageJson.replaceAll("__PROJECT_ID__", projectDetail.appId)
+  );
   project.file(
     "README.md",
-    `# ${projectDetail.name}
-
-## 准备
-
-\`\`\`bash
-yarn
-\`\`\`
-
-## 开发模式
-
-打开两个终端，分别运行 \`yarn start\` 和 \`yarn serve\`。
-
-提示：
-- 使用 \`yarn start\` 需要 node >= 18.11 。
-- 运行 \`yarn serve\` 时按需使用 \`--subdir\` 和 \`--server\` 等参数。
-- 修改文件后，需手动刷新浏览器。
-
-## 生产模式
-
-\`\`\`bash
-yarn build && yarn serve
-\`\`\`
-
-
-## 集成构件
-
-演示时，可以使用 \`ln -s\` 创建软链接，将需要的构件仓库目录链接到本项目中，例如：
-
-\`\`\`bash
-ln -s ../next-nw next-nw
-\`\`\`
-
-最终打包时，将这些仓库源文件按相同目录结构打包进本项目。
-`
+    readmeMd
+      .replaceAll("__PROJECT_NAME__", projectDetail.name)
+      .replaceAll("__PROJECT_HOMEPAGE__", projectDetail.appSetting.homepage)
   );
 
   const blob = await zip.generateAsync({ type: "blob" });
@@ -253,7 +178,7 @@ function printFileStructure(items: SourceFileOrFolder[], folder: JSZip) {
     } else {
       folder.file(
         `${item.name}.js`,
-        formatJs(printWithPlaceholders(item.node, items))
+        formatJs(printWithPlaceholders(item.node, item.nodeType))
       );
     }
   }

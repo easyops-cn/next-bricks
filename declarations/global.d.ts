@@ -46,6 +46,11 @@ declare module "*.json" {
   export default value;
 }
 
+declare module "*.txt" {
+  const source: string;
+  export default source;
+}
+
 declare module "@ungap/event-target" {
   export default EventTarget;
 }

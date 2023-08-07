@@ -1,10 +1,10 @@
-import { pull } from "lodash";
-import type { ExtractedItem } from "./extract.js";
+import type { ExtractedItem, NodeType } from "./extract.js";
 
 export interface SourceFile {
   type: "file";
   name: string;
   node: unknown;
+  nodeType: NodeType;
 }
 
 export interface SourceFolder {
@@ -24,19 +24,17 @@ export function buildFileStructure(extracts: ExtractedItem[]) {
 }
 
 function makeFileWithFolders(
-  { name, path, node }: ExtractedItem,
+  { name, path, node, nodeType }: ExtractedItem,
   rootItems: SourceFileOrFolder[]
 ) {
   let items = rootItems;
   for (const dir of path) {
-    const found = items.find((item) => item.name === dir);
+    const found = items.find(
+      (item) => item.name === dir && item.type === "folder"
+    ) as SourceFolder | undefined;
     if (found) {
-      if (found.type === "folder") {
-        items = found.items;
-        continue;
-      } else {
-        pull(items, found);
-      }
+      items = found.items;
+      continue;
     }
 
     const folder: SourceFolder = {
@@ -46,33 +44,13 @@ function makeFileWithFolders(
     };
     items.push(folder);
     items = folder.items;
-
-    if (found) {
-      const index: SourceFile = {
-        type: "file",
-        name: "index",
-        node: found.node,
-      };
-      items.push(index);
-    }
   }
 
-  const foundFolder = items.find(
-    (item) => item.name === name && item.type === "folder"
-  ) as SourceFolder | undefined;
-  if (foundFolder) {
-    const file: SourceFile = {
-      type: "file",
-      name: "index",
-      node,
-    };
-    foundFolder.items.push(file);
-  } else {
-    const file: SourceFile = {
-      type: "file",
-      name,
-      node,
-    };
-    items.push(file);
-  }
+  const file: SourceFile = {
+    type: "file",
+    name,
+    node,
+    nodeType,
+  };
+  items.push(file);
 }

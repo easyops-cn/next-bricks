@@ -1,0 +1,30 @@
+{
+  "name": "__PROJECT_ID__",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "start": "node scripts/transpile.js",
+    "serve": "brick-container-serve --local-micro-apps=\"__PROJECT_ID__\" --no-remote"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.22.9",
+    "@babel/core": "^7.22.9",
+    "@babel/preset-env": "^7.22.9",
+    "@babel/preset-react": "^7.22.5",
+    "@next-bricks/basic": "^0.18.3",
+    "@next-bricks/containers": "^0.9.13",
+    "@next-bricks/form": "^0.15.4",
+    "@next-bricks/icons": "^0.4.1",
+    "@next-bricks/illustrations": "^0.1.20",
+    "@next-bricks/shoelace": "^0.4.10",
+    "@next-core/brick-container": "^3.5.11",
+    "@types/node": "^16.18.14",
+    "execa": "^7.2.0",
+    "js-yaml": "^3.14.1",
+    "jsx": "link:./jsx"
+  }
+}
