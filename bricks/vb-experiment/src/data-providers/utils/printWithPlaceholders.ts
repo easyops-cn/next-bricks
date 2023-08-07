@@ -7,6 +7,10 @@ import {
   PLACEHOLDER_PREFIX_REGEXP,
 } from "./extract.js";
 
+const REVERSED_ROUTE_KEYS: string[] = ["context", "exact", "path", "slot"];
+const REVERSED_BRICK_KEYS: string[] = ["id", "ref", "slot"];
+const REVERSED_TEMPLATE_KEYS: string[] = ["proxy", "state", "name"];
+
 export function printWithPlaceholders(node: any, nodeType: NodeType) {
   switch (nodeType) {
     case "routes":
@@ -31,11 +35,7 @@ function printRoutes(node: any[]) {
   return printJsx(fragment, imports);
 }
 
-function printJsx(
-  expression: t.Expression,
-  imports: Set<string>,
-  isRoutes?: boolean
-) {
+function printJsx(expression: t.Expression, imports: Set<string>) {
   const exportDefault = t.exportDefaultDeclaration(expression);
 
   const { code } = transformFromAst(
@@ -51,7 +51,7 @@ function printJsx(
     const path = p1.split("/");
     const name = path[path.length - 1];
     const baseName = (
-      isRoutes && name === "context" && path.length > 1
+      name === "context" && path.length === 3 && path[0] === "views"
         ? `${path[path.length - 2]}_${name}`
         : name
     ).replaceAll("-", "_");
@@ -81,7 +81,7 @@ function printRoute(node: any, imports: Set<string>) {
   return t.jsxElement(
     t.jsxOpeningElement(
       t.jsxIdentifier("Route"),
-      printJsxAttributes({ ...restNode, slot }),
+      printJsxAttributes({ ...restNode, slot }, REVERSED_ROUTE_KEYS),
       selfClosing
     ),
     selfClosing ? null : t.jsxClosingElement(t.jsxIdentifier("Route")),
@@ -184,20 +184,23 @@ function printBrick(node: any, imports: Set<string>) {
       t.jsxOpeningElement(
         t.jsxIdentifier(tagName),
         [
-          ...printJsxAttributes({
-            ...restProps,
-            slot,
-            events,
-            lifeCycle,
-            if: _if === true ? undefined : _if,
-            portal,
-            ref,
-            ...(isControlNode
-              ? {
-                  value: controlDataSource,
-                }
-              : null),
-          }),
+          ...printJsxAttributes(
+            {
+              ...restProps,
+              slot,
+              events,
+              lifeCycle,
+              if: _if === true ? undefined : _if,
+              portal,
+              ref,
+              ...(isControlNode
+                ? {
+                    value: controlDataSource,
+                  }
+                : null),
+            },
+            REVERSED_BRICK_KEYS
+          ),
           ...printJsxNamespaceAttributes(
             {
               children: prop_children,
@@ -232,12 +235,12 @@ function printBrickOrRoute(node: any, imports: Set<string>) {
 function printTemplate(node: any) {
   const imports = new Set<string>(['import { Component } from "jsx";']);
 
-  const { bricks, ...restTpl } = node;
+  const { bricks, name, state, proxy } = node;
 
   const tpl = t.jsxElement(
     t.jsxOpeningElement(
       t.jsxIdentifier("Component"),
-      printJsxAttributes(restTpl)
+      printJsxAttributes({ name, state, proxy }, REVERSED_TEMPLATE_KEYS)
     ),
     t.jsxClosingElement(t.jsxIdentifier("Component")),
     (bricks ?? []).map((brick: any) => printBrick(brick, imports))
@@ -262,12 +265,15 @@ function printLegacyTemplate(node: any, imports: Set<string>) {
   );
 }
 
-function printJsxAttributes(object: object) {
-  return Object.entries(object)
-    .filter((entry) => entry[1] !== undefined)
-    .map(([k, v]) => {
+function printJsxAttributes(object: object, sortKeys?: string[]) {
+  const entries = Object.entries(object).filter(
+    (entry) => entry[1] !== undefined
+  );
+  return (sortKeys ? entries.sort(getSorterByKeys(sortKeys)) : entries).map(
+    ([k, v]) => {
       return t.jsxAttribute(t.jsxIdentifier(k), parseJsxAttributeValue(v));
-    });
+    }
+  );
 }
 
 function printJsxNamespaceAttributes(object: object, namespace: string) {
@@ -329,4 +335,10 @@ function printOthers(node: unknown) {
   }
 
   return content;
+}
+
+function getSorterByKeys(keys: string[]) {
+  return function sorter(a: [string, unknown], b: [string, unknown]) {
+    return keys.indexOf(b[0]) - keys.indexOf(a[0]);
+  };
 }
