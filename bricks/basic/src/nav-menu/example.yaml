@@ -1,7 +1,7 @@
 - brick: eo-nav-menu
   properties:
     menu:
-      title: mock aa
+      title: mock data
       menuItems:
         - text: 创造
           to: /a
