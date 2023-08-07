@@ -19,12 +19,7 @@ export interface ExtractedItem {
   nodeType: NodeType;
 }
 
-export type NodeType =
-  | "routes"
-  | "templates"
-  | "template"
-  | "bricks"
-  | "others";
+export type NodeType = "routes" | "template" | "bricks" | "others";
 
 export interface ExtractState {
   extracts: ExtractedItem[];
@@ -36,6 +31,11 @@ type WalkPath = Readonly<Array<string>>;
 export const PLACEHOLDER_PREFIX = `--${Math.floor(
   Math.random() * 1e16
 ).toString(36)}--:`;
+
+export const PLACEHOLDER_PREFIX_REGEXP = new RegExp(
+  `"${PLACEHOLDER_PREFIX}((?:[-\\w]+/)*[-\\w]+)"`,
+  "g"
+);
 
 function getPlaceholder(folder: string, name: string): string {
   return `${PLACEHOLDER_PREFIX}${folder}${folder ? "/" : ""}${name}`;
@@ -122,6 +122,9 @@ function extractContext(
   state: ExtractState
 ) {
   if (Array.isArray(context) && context.length > 0) {
+    for (const item of context) {
+      cleanContext(item);
+    }
     const name = getAvailableName(type, type, path, state.namePool);
     state.extracts.push({
       name,
@@ -217,34 +220,38 @@ function extractBrick(
     name = getAvailableName("brick", name, [...path, name], state.namePool, 2);
   }
 
-  let newBrick = brick;
+  const { slots, ...newBrick } = brick;
+  const children = [];
   const childrenPath: WalkPath = [...path, ...(name ? [name] : [])];
 
-  if (isObject(brick.slots)) {
-    newBrick = {
-      ...brick,
-      slots: Object.fromEntries(
-        Object.entries(brick.slots).map(([slot, conf]) => {
-          if (conf.type === "routes") {
-            return [
-              slot,
-              {
-                ...conf,
-                routes: extractRoutes(conf.routes, path, state),
-              },
-            ];
-          }
-          return [
+  if (isObject(slots)) {
+    for (const [slot, conf] of Object.entries(slots)) {
+      if (conf.type === "routes") {
+        const routes = extractRoutes(
+          (conf.routes ?? []).map((route) => ({
+            ...route,
+            _isRoute: true,
             slot,
-            {
-              ...conf,
-              bricks: extractBricks(conf.bricks, childrenPath, state),
-            },
-          ];
-        })
-      ),
-    };
+          })),
+          path,
+          state
+        ) as any[];
+        children.push(...routes);
+      } else {
+        const bricks = extractBricks(
+          (conf.bricks ?? []).map((brick) => ({
+            ...brick,
+            slot,
+          })),
+          childrenPath,
+          state
+        ) as any[];
+        children.push(...bricks);
+      }
+    }
   }
+
+  newBrick.children = children;
 
   if (name) {
     state.extracts.push({
@@ -309,6 +316,10 @@ function cleanRoute(route: RouteConf): void {
 function cleanBrick(brick: BrickConf & { alias?: string }): void {
   delete brick.alias;
   delete brick.iid;
+}
+
+function cleanContext(context: ContextConf & { path?: unknown }): void {
+  delete context.path;
 }
 
 function removeFalsyFields(node: any, fields: string[]): void {

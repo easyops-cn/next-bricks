@@ -92,7 +92,7 @@ export async function exportAsSourceFiles({
     name: "index",
     path: ["components"],
     node: extractedTemplates,
-    nodeType: "templates",
+    nodeType: "others",
   });
 
   const fileStructure = buildFileStructure(extractState.extracts);
@@ -105,7 +105,7 @@ export async function exportAsSourceFiles({
   );
 
   src.file(
-    "routes.js",
+    "routes.jsx",
     formatJs(printWithPlaceholders(extractedRoutes, "routes"))
   );
 
@@ -177,7 +177,7 @@ function printFileStructure(items: SourceFileOrFolder[], folder: JSZip) {
       printFileStructure(item.items, childFolder);
     } else {
       folder.file(
-        `${item.name}.js`,
+        `${item.name}.js${item.nodeType === "others" ? "" : "x"}`,
         formatJs(printWithPlaceholders(item.node, item.nodeType))
       );
     }

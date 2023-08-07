@@ -1,4 +1,4 @@
-import { Component, ForEach, Fragment, If, Route, Switch } from "./constants.js";
+import { Component, ForEach, Fragment, If, Route, Switch, LegacyTemplate } from "./constants.js";
 
 export { Fragment };
 
@@ -45,6 +45,9 @@ export function jsx(type, config) {
       };
     }
 
+    case LegacyTemplate:
+      return config;
+
     case ForEach:
     case If:
     case Switch: {
@@ -84,25 +87,20 @@ export function jsx(type, config) {
     }
   }
 
-  let children = undefined;
   let slots = undefined;
   if (config.children) {
     if (typeof config.children === "string") {
       properties.textContent = config.children;
     } else {
-      children = fixBrickChildren(config.children);
-      if (hasRoutes(children)) {
-        slots = childrenToSlots(children);
-        children = undefined;
-      }
+      const children = fixBrickChildren(config.children);
+      slots = childrenToSlots(children);
       delete properties.textContent;
     }
   }
 
   return {
-    brick: type,
+    brick: typeof type === "string" ? type.replaceAll("_", ".") : type,
     properties,
-    children,
     slot: properties.slot,
     slots,
     ...reservedConfig,
@@ -116,10 +114,6 @@ function fixBrickChildren(children) {
       textContent: child,
     }
   } : child);
-}
-
-function hasRoutes(children) {
-  return children.some(child => child[NodeType] === "route");
 }
 
 function childrenToSlots(children) {

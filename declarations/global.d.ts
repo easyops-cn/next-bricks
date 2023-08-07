@@ -55,6 +55,20 @@ declare module "@ungap/event-target" {
   export default EventTarget;
 }
 
+declare module "@babel/standalone" {
+  interface TransformFromAstFileNode {
+    code: string;
+  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface TransformFromAstOptions {}
+
+  export const transformFromAst: (
+    ast: unknown,
+    sourceCode: string | undefined,
+    options: TransformFromAstOptions
+  ) => TransformFromAstFileNode;
+}
+
 interface Window {
   /** For Google Analytics. */
   dataLayer?: IArguments[];
