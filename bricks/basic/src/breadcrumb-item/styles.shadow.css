@@ -1,0 +1,57 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.breadcrumb-item {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-color-secondary);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+:host(:last-of-type) .breadcrumb-item {
+  color: var(--text-color-default);
+}
+
+eo-link {
+  cursor: pointer;
+}
+
+eo-link:hover {
+  text-decoration: underline;
+}
+
+/* affix */
+.prefix,
+.suffix {
+  display: flex;
+  flex: none;
+  align-items: center;
+}
+
+.prefix {
+  margin-right: 4px;
+}
+
+.suffix {
+  margin-left: 4px;
+}
+
+/* separator */
+.separator {
+  margin: 0 4px;
+  display: flex;
+  flex: none;
+  align-items: center;
+  user-select: none;
+}
+
+:host(:last-of-type) .separator {
+  display: none;
+}
