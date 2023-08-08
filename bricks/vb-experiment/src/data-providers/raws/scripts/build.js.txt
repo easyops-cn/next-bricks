@@ -6,31 +6,39 @@ import yaml from "js-yaml";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const { safeDump, JSON_SCHEMA } = yaml;
 
-async function build() {
+export async function build() {
   const storyboard = (await import("../dist/index.js")).default;
 
-  storyboard.meta.customTemplates = storyboard.components;
+  storyboard.meta = {
+    ...storyboard.resources.meta,
+    customTemplates: storyboard.components,
+    functions: storyboard.resources.functions,
+    menus: storyboard.resources.menus,
+    i18n: storyboard.resources.i18n,
+  };
+  delete storyboard.resources;
   delete storyboard.components;
 
-  await writeFile(
-    path.resolve(__dirname, __APP_RELATIVE_DIR__, "storyboard.yaml"),
-    safeDump(storyboard, {
-      indent: 2,
-      schema: JSON_SCHEMA,
-      skipInvalid: true,
-      noRefs: true,
-      noCompatMode: true,
-    })
-  );
-
-  await writeFile(
-    path.resolve(__dirname, __APP_RELATIVE_DIR__, "storyboard.json"),
-    JSON.stringify(storyboard, null, 2)
-  );
+  await Promise.all([
+    writeFile(
+      path.resolve(__dirname, "../mock-micro-apps/steve-test-nw-v2", "storyboard.yaml"),
+      safeDump(storyboard, {
+        indent: 2,
+        schema: JSON_SCHEMA,
+        skipInvalid: true,
+        noRefs: true,
+        noCompatMode: true,
+      })
+    ),
+    writeFile(
+      path.resolve(__dirname, "../mock-micro-apps/steve-test-nw-v2", "storyboard.json"),
+      JSON.stringify(storyboard, null, 2)
+    )
+  ]);
 }
 
 build().then(() => {
   console.log("Build done!");
 }, (err) => {
   console.error("Build failed:", err);
-})
+});

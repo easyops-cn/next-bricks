@@ -1,9 +1,13 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { Storyboard, MicroApp, StoryboardMeta } from "@next-core/types";
 import { createProviderClass } from "@next-core/utils/general";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import { format } from "prettier/standalone.js";
 import parserBabel from "prettier/parser-babel.js";
+import { parse } from "@babel/parser";
+import * as t from "@babel/types";
+import { transformFromAst } from "@babel/standalone";
 import {
   ExtractState,
   extractRoutes,
@@ -18,14 +22,19 @@ import jsxConstantsJs from "./raws/jsx/constants.js.txt";
 import jsxIndexJs from "./raws/jsx/index.js.txt";
 import jsxJsxRuntimeJs from "./raws/jsx/jsx-runtime.js.txt";
 import jsxPackageJson from "./raws/jsx/package.json.txt";
-import jsxStylesJs from "./raws/jsx/Style.js.txt";
+import jsxStyleJs from "./raws/jsx/Style.js.txt";
+import jsxFunctionJs from "./raws/jsx/Function.js.txt";
+import scriptsBabelJs from "./raws/scripts/babel.js.txt";
 import scriptsBuildJs from "./raws/scripts/build.js.txt";
+import scriptsStartJs from "./raws/scripts/start.js.txt";
 import scriptsTranspileJs from "./raws/scripts/transpile.js.txt";
+import srcResourcesIndexJs from "./raws/src/resources/index.js.txt";
 import srcIndexJs from "./raws/src/index.js.txt";
 import editorConfig from "./raws/.editorconfig.txt";
 import gitIgnore from "./raws/.gitignore.txt";
 import babelConfigJs from "./raws/babel.config.js.txt";
 import packageJson from "./raws/package.json.txt";
+import jsconfigJson from "./raws/jsconfig.json.txt";
 import readmeMd from "./raws/README.md.txt";
 
 export interface StoryboardAssemblyResult {
@@ -78,7 +87,13 @@ export async function exportAsSourceFiles({
     userGroups?: unknown;
   };
   const customTemplates = meta.customTemplates ?? [];
+  const functions = meta.functions ?? [];
+  const menus = meta.menus ?? [];
+  const i18n = meta.i18n ?? {};
   delete meta.customTemplates;
+  delete meta.functions;
+  delete meta.menus;
+  delete meta.i18n;
   delete meta.workflows;
   delete meta.mocks;
   delete meta.userGroups;
@@ -100,14 +115,77 @@ export async function exportAsSourceFiles({
   src.file("index.js", srcIndexJs);
 
   src.file(
-    "meta.js",
-    formatJs(`export default ${JSON.stringify(meta, null, 2)};`)
-  );
-
-  src.file(
     "routes.jsx",
     formatJs(printWithPlaceholders(extractedRoutes, "routes"))
   );
+
+  const resources = src.folder("resources")!;
+
+  // Functions
+  const fnDir = resources.folder("functions")!;
+  const fnNames: string[] = [];
+  const fnImports: string[] = [];
+  for (const fn of functions) {
+    if (fn.name === "index") {
+      throw new Error('Unexpected function name: "index"');
+    }
+
+    // Prepend with `export default` for functions
+    const ast = parse(fn.source, {
+      plugins: fn.typescript ? ["typescript"] : [],
+    });
+    const statements = ast.program.body.map((statement) => {
+      if (statement.type === "FunctionDeclaration") {
+        return t.exportDefaultDeclaration(statement);
+      }
+      return statement;
+    });
+    const { code } = transformFromAst(
+      t.program(statements, undefined, "module"),
+      undefined,
+      {}
+    );
+
+    fnDir.file(`${fn.name}.${fn.typescript ? "ts" : "js"}`, code);
+    fnImports.push(`import ${fn.name} from "./${fn.name}.js";`);
+    fnNames.push(fn.name);
+  }
+  fnDir.file(
+    "index.js",
+    formatJs(`${fnImports.join("\n")}\n\nexport default [${fnNames.join(",")}]`)
+  );
+
+  // Menus
+  const menusDir = resources.folder("menus")!;
+  const menuNames: string[] = [];
+  const menuImports: string[] = [];
+  for (const menu of menus) {
+    if (menu.menuId === "index") {
+      throw new Error('Unexpected menu id: "index"');
+    }
+    menusDir.file(
+      `${menu.menuId}.js`,
+      formatJs(`export default ${JSON.stringify(menu)};`)
+    );
+    const name = menu.menuId.replace(/^\d+|[^\w]+/g, "_");
+    menuImports.push(`import ${name} from "./${menu.menuId}.js";`);
+    menuNames.push(name);
+  }
+  menusDir.file(
+    "index.js",
+    formatJs(
+      `${menuImports.join("\n")}\n\nexport default [${menuNames.join(",")}]`
+    )
+  );
+
+  resources
+    .folder("i18n")!
+    .file("index.js", formatJs(`export default ${JSON.stringify(i18n)};`));
+  resources.file(
+    "meta.js",
+    formatJs(`export default ${JSON.stringify(meta, null, 2)};`)
+  );
+  resources.file("index.js", srcResourcesIndexJs);
 
   printFileStructure(fileStructure, src);
 
@@ -120,6 +198,8 @@ export async function exportAsSourceFiles({
     "build.js",
     scriptsBuildJs.replaceAll("__APP_RELATIVE_DIR__", appRelativeDir)
   );
+  scripts.file("babel.js", scriptsBabelJs);
+  scripts.file("start.js", scriptsStartJs);
   scripts.file("transpile.js", scriptsTranspileJs);
 
   const appDir = project
@@ -132,11 +212,13 @@ export async function exportAsSourceFiles({
   jsxDir.file("index.js", jsxIndexJs);
   jsxDir.file("jsx-runtime.js", jsxJsxRuntimeJs);
   jsxDir.file("package.json", jsxPackageJson);
-  jsxDir.file("Style.js", jsxStylesJs);
+  jsxDir.file("Style.js", jsxStyleJs);
+  jsxDir.file("Function.js", jsxFunctionJs);
 
   project.file(".editorconfig", editorConfig);
   project.file(".gitignore", gitIgnore);
   project.file("babel.config.js", babelConfigJs);
+  project.file("jsconfig.json", jsconfigJson);
   project.file(
     "package.json",
     packageJson.replaceAll("__PROJECT_ID__", projectDetail.appId)

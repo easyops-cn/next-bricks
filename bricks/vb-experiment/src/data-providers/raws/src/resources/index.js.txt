@@ -1,0 +1,11 @@
+import functions from "./functions/index.js";
+import menus from "./menus/index.js";
+import i18n from "./i18n/index.js";
+import meta from "./meta.js";
+
+export default {
+  functions,
+  menus,
+  i18n,
+  meta,
+};

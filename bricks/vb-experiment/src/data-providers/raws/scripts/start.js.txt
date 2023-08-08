@@ -1,0 +1,131 @@
+import path from "node:path";
+import { createRequire } from "node:module";
+import { spawn } from "node:child_process";
+import { rm, readFile, writeFile } from "node:fs/promises";
+import { existsSync } from "node:fs";
+import { parse } from "@babel/parser";
+import babelGenerator from "@babel/generator";
+import * as t from "@babel/types";
+import babelTraverse from "@babel/traverse";
+import { transpile } from "./transpile.js";
+
+const require = createRequire(import.meta.url);
+const babel = getBinPath("@babel/cli", "babel");
+const { default: traverse } = babelTraverse;
+const { default: generate } = babelGenerator;
+
+start();
+
+function start() {
+  const task = spawn(babel, [
+    "src",
+    "--out-dir",
+    "temp",
+    "--ignore",
+    "*",
+    "--copy-files",
+    "--delete-dir-on-start",
+    "--watch"
+  ]);
+
+  task.stdout.on("data", async (data) => {
+    const out = String(data);
+    console.log(out);
+    if (out.includes("Successfully compiled ")) {
+      const functionsIndexJsPath = path.resolve("temp/resources/functions/index.js");
+      if (existsSync(functionsIndexJsPath)) {
+        const content = await readFile(functionsIndexJsPath, "utf-8");
+        const file = parse(content, { sourceType: "module" });
+        const importsMap = new Map();
+        const functions = new Set();
+        traverse(file, {
+          ImportDeclaration({ node }) {
+            for (const specifier of node.specifiers) {
+              if (specifier.type === "ImportDefaultSpecifier") {
+                importsMap.set(specifier.local.name, node.source.value);
+              }
+            }
+          },
+          ExportDefaultDeclaration({ node }) {
+            if (node.declaration.type === "ArrayExpression") {
+              for (const element of node.declaration.elements) {
+                if (element.type === "Identifier") {
+                  functions.add(element.name);
+                }
+              }
+            }
+          }
+        });
+
+        const statements = [
+          t.importDeclaration(
+            [t.importSpecifier(t.identifier("Function"), t.identifier("Function"))],
+            t.stringLiteral("jsx")
+          ),
+
+          t.exportDefaultDeclaration(
+            t.jsxFragment(
+              t.jsxOpeningFragment(),
+              t.jsxClosingFragment(),
+              [...functions].map(fn =>
+                t.jsxElement(
+                  t.jsxOpeningElement(
+                    t.jsxIdentifier("Function"),
+                    [
+                      t.jsxAttribute(
+                        t.jsxIdentifier("url"),
+                        t.stringLiteral(importsMap.get(fn)),
+                      ),
+                      t.jsxAttribute(
+                        t.jsxIdentifier("from"),
+                        t.jsxExpressionContainer(
+                          t.memberExpression(
+                            t.memberExpression(
+                              t.identifier("import"),
+                              t.identifier("meta"),
+                            ),
+                            t.identifier("url"),
+                          )
+                        )
+                      )
+                    ],
+                    true
+                  ),
+                  null,
+                  [],
+                  true
+                )
+              )
+            )
+          )
+        ];
+
+        const { code } = generate(t.program(statements, undefined, "module"));
+
+        await Promise.all([
+          writeFile(path.resolve("temp/resources/functions/index.jsx"), code),
+          rm(functionsIndexJsPath),
+        ]);
+      }
+
+      transpile();
+    }
+  });
+
+  task.stderr.on('data', (data) => {
+    console.error(`${data}`);
+  });
+
+  task.on('close', (code) => {
+    console.log(`Copy exited with code ${code}`);
+  });
+}
+
+function getBinPath(packageName, binName = packageName) {
+  const packageJsonPath = require.resolve(`${packageName}/package.json`);
+  const packageJson = require(packageJsonPath);
+  if (typeof packageJson.bin === "string") {
+    return packageJson.bin;
+  }
+  return path.join(path.dirname(packageJsonPath), packageJson.bin[binName]);
+}

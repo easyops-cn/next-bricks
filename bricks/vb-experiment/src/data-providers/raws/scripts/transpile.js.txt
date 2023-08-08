@@ -1,52 +1,31 @@
-import path from "node:path";
-import { createRequire } from "node:module";
 import { spawn } from "node:child_process";
+import { babel } from "./babel.js";
 
-const require = createRequire(import.meta.url);
-const babel = getBinPath("@babel/cli", "babel");
-
-transpile();
-
-function transpile() {
+export function transpile() {
   const task = spawn(babel, [
-    "src",
+    "temp",
     "--out-dir",
     "dist",
     "--config-file",
     "./babel.config.js",
     "--extensions",
-    ".ts,.tsx,.js,.jsx",
+    ".js,.jsx",
     "--copy-files",
-    "--delete-dir-on-start",
-    "--watch"
-  ]);
+    "--delete-dir-on-start"
+  ], {
+    stdio: "inherit"
+  });
 
-  task.stdout.on("data", (data) => {
-    const out = String(data);
-    console.log(out);
-    if (out.includes("Successfully compiled ")) {
+  task.on('close', (code) => {
+    if (code === 0) {
+      console.log("Transpile done!");
       spawn("node", [
         "scripts/build.js"
       ], {
         stdio: "inherit"
       });
+    } else {
+      console.error(`Transpile failed: ${code}`);
     }
   });
-
-  task.stderr.on('data', (data) => {
-    console.error(`${data}`);
-  });
-
-  task.on('close', (code) => {
-    console.log(`Transpile exited with code ${code}`);
-  });
-}
-
-function getBinPath(packageName, binName = packageName) {
-  const packageJsonPath = require.resolve(`${packageName}/package.json`);
-  const packageJson = require(packageJsonPath);
-  if (typeof packageJson.bin === "string") {
-    return packageJson.bin;
-  }
-  return path.join(path.dirname(packageJsonPath), packageJson.bin[binName]);
 }

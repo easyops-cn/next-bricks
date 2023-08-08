@@ -45,9 +45,6 @@ export function jsx(type, config) {
       };
     }
 
-    case LegacyTemplate:
-      return config;
-
     case ForEach:
     case If:
     case Switch: {
@@ -59,6 +56,9 @@ export function jsx(type, config) {
         children: fixBrickChildren(config.children),
       };
     }
+
+    case LegacyTemplate:
+      return config;
   }
 
   if (typeof type === "function") {
