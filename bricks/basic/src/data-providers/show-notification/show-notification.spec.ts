@@ -12,7 +12,7 @@ customElements.define(
       toast({
         variant: this.variant,
         duration: this.duration,
-        icon: (this.querySelector("eo-antd-icon") as any)?.icon,
+        icon: (this.querySelector("eo-icon") as any)?.icon,
         text: this.textContent,
       });
     }
@@ -60,6 +60,20 @@ describe("showNotification", () => {
         duration: 3000,
         icon: "info-circle",
         text: "OK",
+      },
+    ],
+    [
+      {
+        type: "info",
+        message: "OK",
+        title: "标题",
+        icon: { icon: "api", lib: "easyops" },
+      },
+      {
+        variant: "primary",
+        duration: 3000,
+        icon: "api",
+        text: "标题OK",
       },
     ],
   ])("showNotification(%j) should toast with %j", (input, output) => {

@@ -46,6 +46,74 @@ children:
             type: warn
 ```
 
+### placement
+
+```yaml preview
+brick: div
+properties:
+  style:
+    display: grid
+    gap: 1em
+children:
+  - brick: eo-button
+    properties:
+      textContent: topRight
+    events:
+      click:
+        useProvider: basic.show-notification
+        args:
+          - message: It works!
+            placement: topRight
+            styleType: rectAngle
+```
+
+### icon 、title
+
+```yaml preview
+brick: div
+properties:
+  style:
+    display: grid
+    gap: 1em
+children:
+  - brick: eo-button
+    properties:
+      textContent: icon and title
+    events:
+      click:
+        useProvider: basic.show-notification
+        args:
+          - message: It works!
+            title: 标题
+            placement: topRight
+            styleType: rectAngle
+            icon:
+              icon: star
+              theme: outlined
+              lib: antd
+```
+
+### closable
+
+```yaml preview
+brick: div
+properties:
+  style:
+    display: grid
+    gap: 1em
+children:
+  - brick: eo-button
+    properties:
+      textContent: Closable
+    events:
+      click:
+        useProvider: basic.show-notification
+        args:
+          - message: It works!
+            duration: 20000
+            closable: true
+```
+
 ## Usage in pro-code
 
 ```jsx
