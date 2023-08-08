@@ -207,11 +207,24 @@ export class FormStore extends PubSub {
       }
 
       if (validator) {
-        const result = validator(value);
-        if (result)
-          return typeof result === "string"
-            ? messageBody(result, result ? "error" : "normal")
-            : (result as MessageBody);
+        let result = "";
+        let parsedValidator = [];
+        if (Array.isArray(validator)) {
+          parsedValidator = validator;
+        } else {
+          parsedValidator.push(validator);
+        }
+
+        for (const v of parsedValidator) {
+          result = v(value);
+
+          if (result) {
+            break;
+          }
+        }
+        return typeof result === "string"
+          ? messageBody(result, result ? "error" : "normal")
+          : (result as MessageBody);
       }
 
       return messageBody("", "normal");

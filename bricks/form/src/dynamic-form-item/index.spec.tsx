@@ -2,12 +2,16 @@ import React from "react";
 import { describe, test, expect } from "@jest/globals";
 import { act } from "react-dom/test-utils";
 import "./";
-import { DynamicFormItem } from "./index.js";
+import { DynamicFormItem, uniqueValidatorFN } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 jest.mock("@next-core/react-runtime", () => ({
-  ReactUseMultipleBricks: () => {
-    return <div>mock element</div>;
+  ReactUseMultipleBricks: (props: any) => {
+    return props.useBrick.map((brick: any, index: number) => (
+      <div key={index}>
+        mock element validator {brick.properties?.validator?.length}
+      </div>
+    ));
   },
 }));
 
@@ -114,6 +118,131 @@ describe("form.dynamic-form-item", () => {
     expect(
       element.shadowRoot?.querySelectorAll(".dynamic-form-item").length
     ).toBe(1);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
+
+  test("unique width validator", async () => {
+    const element = document.createElement(
+      "form.dynamic-form-item"
+    ) as DynamicFormItem;
+    element.useBrick = [
+      {
+        brick: "form.general-input",
+        properties: {
+          name: "input",
+          required: true,
+          unique: true,
+          validator: jest.fn(),
+        },
+      },
+      {
+        brick: "form.general-select",
+        properties: {
+          name: "select",
+          required: true,
+          options: ["abc", "efg", "hij"],
+          unique: true,
+        },
+      },
+    ];
+
+    element.value = [
+      {
+        input: "hello",
+        select: "abc",
+      },
+      {
+        input: "hello",
+        select: "efg",
+      },
+    ];
+    const mockValueChangeEvent = jest.fn();
+    element.addEventListener("change", mockValueChangeEvent);
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(
+      element.shadowRoot?.querySelectorAll(".dynamic-form")[0].childNodes[0]
+        .textContent
+    ).toBe("mock element validator 2");
+    expect(
+      element.shadowRoot?.querySelectorAll(".dynamic-form")[0].childNodes[1]
+        .textContent
+    ).toBe("mock element validator 1");
+
+    expect(
+      uniqueValidatorFN(
+        {
+          curElement: {
+            value: [
+              {
+                dimensionId: "one",
+              },
+              {
+                dimensionId: "one",
+              },
+            ],
+          },
+        } as any,
+        {
+          label: "维度id",
+          name: "dimensionId",
+        },
+        () => "dimensionId not repeat"
+      )()
+    ).toBe("dimensionId not repeat");
+
+    expect(
+      uniqueValidatorFN(
+        {
+          curElement: {
+            value: [
+              {
+                dimensionId: "one",
+              },
+              {
+                dimensionId: "two",
+              },
+            ],
+          },
+        } as any,
+        {
+          label: "维度id",
+          name: "dimensionId",
+        },
+        () => "dimensionId not repeat"
+      )()
+    ).toBe("");
+
+    expect(
+      uniqueValidatorFN(
+        {
+          curElement: {
+            value: [
+              {
+                dimensionId: "one",
+              },
+              {
+                dimensionId: "one",
+              },
+            ],
+          },
+        } as any,
+        {
+          label: "维度id",
+          name: "dimensionId",
+          message: {
+            unique: "维度id不能重复",
+          },
+        },
+        () => "dimensionId not repeat"
+      )()
+    ).toBe("维度id不能重复");
 
     act(() => {
       document.body.removeChild(element);
