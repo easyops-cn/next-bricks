@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.21.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.20.0...@next-bricks/basic@0.21.0) (2023-08-08)
+
+
+### Features
+
+* show-notification support title、duration、icon、closable、placement properties ref NEXT_BUILDER-3786 ([d06ffac](https://github.com/easyops-cn/next-bricks/commit/d06ffac5a9a8279f3f16abe5b632e03d9b476b5b))
+
+
+
+
+
 # [0.20.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.19.0...@next-bricks/basic@0.20.0) (2023-08-08)
 
 
