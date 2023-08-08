@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.1.4...@next-bricks/vb-experiment@0.1.5) (2023-08-08)
+
+
+### Bug Fixes
+
+* refine exporting: fix non-ascii attributes, extract contacts, etc. ([59aebfc](https://github.com/easyops-cn/next-bricks/commit/59aebfce73987c1605f9f0e8fbdef7f7136dad14))
+
+
+
+
+
 ## [0.1.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.1.3...@next-bricks/vb-experiment@0.1.4) (2023-08-08)
 
 
