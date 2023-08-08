@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.19.0...@next-bricks/basic@0.20.0) (2023-08-08)
+
+
+### Bug Fixes
+
+* fix style ([5c55c70](https://github.com/easyops-cn/next-bricks/commit/5c55c7071ef1ff7693fd6b54d80b3711570d5a76))
+* restore menu-item previous state ([5ee21fa](https://github.com/easyops-cn/next-bricks/commit/5ee21fa9312cfc5a6ab06abe6fbb2796637b32f8))
+
+
+### Features
+
+* add menu-* brick ([80240a8](https://github.com/easyops-cn/next-bricks/commit/80240a89dbcb6d15bc758e1baed97ea443988d46))
+* eo-avatar ([dccd760](https://github.com/easyops-cn/next-bricks/commit/dccd7606bc8f7891fc785cf62ca91a80bbe122ed))
+* support sidebar sub menu ([8635dc8](https://github.com/easyops-cn/next-bricks/commit/8635dc867928e8ac960b4065398b1fe7c36093a1))
+
+
+
+
+
 # [0.19.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.18.3...@next-bricks/basic@0.19.0) (2023-08-03)
 
 

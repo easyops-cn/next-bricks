@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.7.0...@next-bricks/presentational@0.8.0) (2023-08-08)
+
+
+### Features
+
+* support eo-divider ref NEXT_BUILDER-3786 ([8ad8ebd](https://github.com/easyops-cn/next-bricks/commit/8ad8ebd372d8b55ef9c62f92f896e6dddbe79120))
+
+
+
+
+
 # [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.6.12...@next-bricks/presentational@0.7.0) (2023-08-03)
 
 

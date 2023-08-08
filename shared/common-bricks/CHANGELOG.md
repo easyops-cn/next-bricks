@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.7.0...@next-shared/common-bricks@0.8.0) (2023-08-08)
+
+
+### Features
+
+* eo-avatar ([dccd760](https://github.com/easyops-cn/next-bricks/commit/dccd7606bc8f7891fc785cf62ca91a80bbe122ed))
+* support eo-divider ref NEXT_BUILDER-3786 ([8ad8ebd](https://github.com/easyops-cn/next-bricks/commit/8ad8ebd372d8b55ef9c62f92f896e6dddbe79120))
+* support sidebar sub menu ([8635dc8](https://github.com/easyops-cn/next-bricks/commit/8635dc867928e8ac960b4065398b1fe7c36093a1))
+
+
+
+
+
 # [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.6.0...@next-shared/common-bricks@0.7.0) (2023-08-03)
 
 

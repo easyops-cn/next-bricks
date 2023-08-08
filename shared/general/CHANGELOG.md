@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.3.13...@next-shared/general@0.4.0) (2023-08-08)
+
+
+### Features
+
+* move debounceByAnimationFrame to @next-shared/general ([a711bec](https://github.com/easyops-cn/next-bricks/commit/a711bec131a33b75b4545abbc807f15f6868a382))
+
+
+
+
+
 ## [0.3.13](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.3.12...@next-shared/general@0.3.13) (2023-08-02)
 
 **Note:** Version bump only for package @next-shared/general

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.1.3...@next-bricks/vb-experiment@0.1.4) (2023-08-08)
+
+
+### Bug Fixes
+
+* export as jsx ([0540118](https://github.com/easyops-cn/next-bricks/commit/05401180b978b18a6d96ad0ffd51b0a13c227107))
+* export functions and menus ([2fa3309](https://github.com/easyops-cn/next-bricks/commit/2fa330962e4e583e7051f6d412dd2edd15c048d9))
+* refine exported source file structure ([a081c61](https://github.com/easyops-cn/next-bricks/commit/a081c61d9bbd4b0c4a26e4c4f1c2eb103729afba))
+* sort keys ([16236fe](https://github.com/easyops-cn/next-bricks/commit/16236feeb25a793c3516bc105e31eaeaabe0d4aa))
+
+
+
+
+
 ## [0.1.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.1.2...@next-bricks/vb-experiment@0.1.3) (2023-08-02)
 
 **Note:** Version bump only for package @next-bricks/vb-experiment
