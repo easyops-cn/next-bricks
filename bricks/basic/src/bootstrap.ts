@@ -22,3 +22,6 @@ import "./avatar/index.js";
 import "./sidebar-sub-menu/index.js";
 import "./menu-item-sub-menu/index.js";
 import "./menu-group/index.js";
+import "./breadcrumb-item/index.js";
+import "./breadcrumb/index.js";
+import "./frame-breadcrumb/index.js";

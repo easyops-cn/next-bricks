@@ -18,7 +18,10 @@
     "eo-avatar",
     "eo-sidebar-sub-menu",
     "eo-menu-item-sub-menu",
-    "eo-menu-group"
+    "eo-menu-group",
+    "eo-breadcrumb-item",
+    "eo-breadcrumb",
+    "eo-frame-breadcrumb"
   ],
   "icons": ["eo-antd-icon", "eo-easyops-icon", "eo-fa-icon", "eo-icon"],
   "containers": [

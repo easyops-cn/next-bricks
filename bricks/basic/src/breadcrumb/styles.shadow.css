@@ -1,0 +1,16 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+}
+
+nav slot:not([name])::slotted(eo-breadcrumb-item) {
+  line-height: 0;
+}

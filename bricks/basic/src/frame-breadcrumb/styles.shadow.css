@@ -1,0 +1,11 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.breadcrumb-item-prefix-icon {
+  font-size: 14px;
+}
