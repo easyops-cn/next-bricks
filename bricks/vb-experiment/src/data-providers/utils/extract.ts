@@ -1,11 +1,12 @@
 import type {
   BrickConf,
+  ContextConf,
   CustomTemplate,
+  CustomTemplateProxy,
   RouteConf,
-  RouteConfOfBricks,
-  RouteConfOfRoutes,
 } from "@next-core/types";
 import { isObject } from "@next-core/utils/general";
+import { isEmpty } from "lodash";
 
 interface BrickNode extends BrickConf {
   alias?: string;
@@ -15,7 +16,10 @@ export interface ExtractedItem {
   name: string;
   path: WalkPath;
   node: unknown;
+  nodeType: NodeType;
 }
+
+export type NodeType = "routes" | "template" | "bricks" | "others";
 
 export interface ExtractState {
   extracts: ExtractedItem[];
@@ -28,8 +32,13 @@ export const PLACEHOLDER_PREFIX = `--${Math.floor(
   Math.random() * 1e16
 ).toString(36)}--:`;
 
+export const PLACEHOLDER_PREFIX_REGEXP = new RegExp(
+  `"${PLACEHOLDER_PREFIX}((?:[-\\w]+/)*[-\\w]+)"`,
+  "g"
+);
+
 function getPlaceholder(folder: string, name: string): string {
-  return `${PLACEHOLDER_PREFIX}${folder}/${name}`;
+  return `${PLACEHOLDER_PREFIX}${folder}${folder ? "/" : ""}${name}`;
 }
 
 export function extractRoutes(
@@ -37,9 +46,8 @@ export function extractRoutes(
   path: WalkPath,
   state: ExtractState
 ) {
-  const childrenPath = [...path, "routes"];
   if (Array.isArray(routes)) {
-    return routes.map((route) => extractRoute(route, childrenPath, state));
+    return routes.map((route) => extractRoute(route, path, state));
   }
   return routes;
 }
@@ -49,50 +57,110 @@ export function extractTemplates(
   path: WalkPath,
   state: ExtractState
 ) {
-  const childrenPath = [...path, "templates"];
   if (Array.isArray(templates)) {
-    return templates.map((tpl) => extractTemplate(tpl, childrenPath, state));
+    return templates.map((tpl) => extractTemplate(tpl, path, state));
   }
   return templates;
 }
 
-function extractRoute(route: RouteConf, path: WalkPath, state: ExtractState) {
+function extractRoute(
+  route: RouteConf,
+  path: WalkPath,
+  state: ExtractState
+): any {
   const name = getAvailableName("route", route.alias, path, state.namePool);
+  cleanRoute(route);
 
-  let node: unknown = route;
-  const childrenPath: WalkPath = [...path, name];
+  let node: any;
 
-  if (Array.isArray((route as RouteConfOfBricks).bricks)) {
+  const childrenPath = [...path, "views", name];
+
+  if (route.type === "redirect") {
+    node = route;
+  } else if (route.type === "routes") {
+    const { routes, ...restRoute } = route;
     node = {
-      ...route,
-      bricks: extractBricks(
-        (route as RouteConfOfBricks).bricks,
-        childrenPath,
-        state
-      ),
+      ...restRoute,
+      children: extractRoutes(routes, path, state),
     };
-  } else if (Array.isArray((route as RouteConfOfRoutes).routes)) {
+  } else {
+    const { bricks, ...restRoute } = route;
+    const view = extractBricks(bricks, childrenPath, state);
+
+    state.extracts.push({
+      name,
+      path: childrenPath,
+      node: view,
+      nodeType: "bricks",
+    });
+
     node = {
-      ...route,
-      routes: extractRoutes(
-        (route as RouteConfOfRoutes).routes,
-        childrenPath,
-        state
-      ),
+      ...restRoute,
+      view: getPlaceholder(`views/${name}`, name),
     };
   }
 
-  state.extracts.push({
+  const context = extractContext(
+    "context",
+    route.context,
     name,
-    path,
-    node,
-  });
+    childrenPath,
+    state
+  );
 
-  return getPlaceholder("routes", name);
+  return {
+    ...node,
+    context,
+  };
+}
+
+function extractContext(
+  type: "context" | "state",
+  context: ContextConf[] | undefined,
+  routeName: string,
+  path: WalkPath,
+  state: ExtractState
+) {
+  if (Array.isArray(context) && context.length > 0) {
+    for (const item of context) {
+      cleanContext(item);
+    }
+    const name = getAvailableName(type, type, path, state.namePool);
+    state.extracts.push({
+      name,
+      path,
+      node: context,
+      nodeType: "others",
+    });
+
+    return getPlaceholder(type === "context" ? `views/${routeName}` : "", name);
+  }
+
+  return context;
+}
+
+function extractProxy(
+  proxy: CustomTemplateProxy | undefined,
+  path: WalkPath,
+  state: ExtractState
+) {
+  if (!isEmpty(proxy)) {
+    const name = getAvailableName("proxy", "proxy", path, state.namePool);
+    state.extracts.push({
+      name,
+      path,
+      node: proxy,
+      nodeType: "others",
+    });
+
+    return getPlaceholder("", name);
+  }
+
+  return proxy;
 }
 
 function getAvailableName(
-  type: "route" | "brick",
+  type: "route" | "brick" | "context" | "state" | "proxy",
   name: string | undefined,
   path: WalkPath,
   namePool: Map<string, Set<string>>,
@@ -105,7 +173,7 @@ function getAvailableName(
   }
 
   const aliasIsOk =
-    type === "brick" ||
+    type !== "route" ||
     (typeof name === "string" && /^\w+$/.test(name) && name !== "index");
 
   if (!aliasIsOk || names.has(name as string)) {
@@ -133,8 +201,6 @@ function extractBricks(
   return bricks;
 }
 
-// path: ["routes"]
-// name: "route_1"
 function extractBrick(
   brick: BrickNode,
   path: WalkPath,
@@ -148,49 +214,54 @@ function extractBrick(
   ) {
     name = brick.alias.slice(1, -1);
   }
-  delete brick.alias;
+  cleanBrick(brick);
 
   if (name) {
-    name = getAvailableName("brick", name, path, state.namePool, 2);
+    name = getAvailableName("brick", name, [...path, name], state.namePool, 2);
   }
 
-  let newBrick = brick;
-  const childrenPath: WalkPath = [...path, ...(name ? ["bricks", name] : [])];
+  const { slots, ...newBrick } = brick;
+  const children = [];
+  const childrenPath: WalkPath = [...path, ...(name ? [name] : [])];
 
-  if (isObject(brick.slots)) {
-    newBrick = {
-      ...brick,
-      slots: Object.fromEntries(
-        Object.entries(brick.slots).map(([slot, conf]) => {
-          if (conf.type === "routes") {
-            return [
-              slot,
-              {
-                ...conf,
-                routes: extractRoutes(conf.routes, childrenPath, state),
-              },
-            ];
-          }
-          return [
+  if (isObject(slots)) {
+    for (const [slot, conf] of Object.entries(slots)) {
+      if (conf.type === "routes") {
+        const routes = extractRoutes(
+          (conf.routes ?? []).map((route) => ({
+            ...route,
+            _isRoute: true,
             slot,
-            {
-              ...conf,
-              bricks: extractBricks(conf.bricks, childrenPath, state),
-            },
-          ];
-        })
-      ),
-    };
+          })),
+          path,
+          state
+        ) as any[];
+        children.push(...routes);
+      } else {
+        const bricks = extractBricks(
+          (conf.bricks ?? []).map((brick) => ({
+            ...brick,
+            slot,
+          })),
+          childrenPath,
+          state
+        ) as any[];
+        children.push(...bricks);
+      }
+    }
   }
+
+  newBrick.children = children;
 
   if (name) {
     state.extracts.push({
       name,
       node: newBrick,
-      path: [...path, "bricks"],
+      path: [...path, name],
+      nodeType: "bricks",
     });
 
-    return getPlaceholder("bricks", name);
+    return getPlaceholder(name, name);
   }
 
   return newBrick;
@@ -201,23 +272,60 @@ function extractTemplate(
   path: WalkPath,
   state: ExtractState
 ) {
-  const name = tpl.name;
-  let node = tpl;
+  if (!tpl.name.startsWith("tpl-")) {
+    throw new Error(`Invalid template name: "${tpl.name}"`);
+  }
+  const name = tpl.name.substring(4);
 
   const childrenPath = [...path, name];
 
-  if (Array.isArray(tpl.bricks)) {
-    node = {
-      ...tpl,
-      bricks: extractBricks(tpl.bricks, childrenPath, state),
-    } as CustomTemplate;
-  }
+  const extractedBricks = extractBricks(tpl.bricks, childrenPath, state);
+  const extractedState = extractContext(
+    "state",
+    tpl.state,
+    name,
+    childrenPath,
+    state
+  );
+  const extractedProxy = extractProxy(tpl.proxy, childrenPath, state);
 
   state.extracts.push({
     name,
-    path,
-    node,
+    path: childrenPath,
+    node: {
+      ...tpl,
+      bricks: extractedBricks,
+      state: extractedState,
+      proxy: extractedProxy,
+    },
+    nodeType: "template",
   });
 
-  return getPlaceholder("templates", name);
+  return getPlaceholder(name, name);
+}
+
+function cleanRoute(route: RouteConf): void {
+  delete route.alias;
+  delete route.iid;
+  removeFalsyFields(route, ["redirect", "exact"]);
+  if (route.type === "bricks") {
+    delete route.type;
+  }
+}
+
+function cleanBrick(brick: BrickConf & { alias?: string }): void {
+  delete brick.alias;
+  delete brick.iid;
+}
+
+function cleanContext(context: ContextConf & { path?: unknown }): void {
+  delete context.path;
+}
+
+function removeFalsyFields(node: any, fields: string[]): void {
+  for (const field of fields) {
+    if (!node[field]) {
+      delete node[field];
+    }
+  }
 }

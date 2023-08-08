@@ -1,0 +1,31 @@
+import { spawn } from "node:child_process";
+import { babel } from "./babel.js";
+
+export function transpile() {
+  const task = spawn(babel, [
+    "temp",
+    "--out-dir",
+    "dist",
+    "--config-file",
+    "./babel.config.js",
+    "--extensions",
+    ".js,.jsx",
+    "--copy-files",
+    "--delete-dir-on-start"
+  ], {
+    stdio: "inherit"
+  });
+
+  task.on('close', (code) => {
+    if (code === 0) {
+      console.log("Transpile done!");
+      spawn("node", [
+        "scripts/build.js"
+      ], {
+        stdio: "inherit"
+      });
+    } else {
+      console.error(`Transpile failed: ${code}`);
+    }
+  });
+}

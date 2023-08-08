@@ -1,12 +1,15 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import type { Storyboard, MicroApp, StoryboardMeta } from "@next-core/types";
 import { createProviderClass } from "@next-core/utils/general";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import { format } from "prettier/standalone.js";
 import parserBabel from "prettier/parser-babel.js";
+import { parse } from "@babel/parser";
+import * as t from "@babel/types";
+import { transformFromAst } from "@babel/standalone";
 import {
   ExtractState,
-  PLACEHOLDER_PREFIX,
   extractRoutes,
   extractTemplates,
 } from "./utils/extract.js";
@@ -15,6 +18,24 @@ import {
   buildFileStructure,
 } from "./utils/buildFileStructure.js";
 import { printWithPlaceholders } from "./utils/printWithPlaceholders.js";
+import jsxConstantsJs from "./raws/jsx/constants.js.txt";
+import jsxIndexJs from "./raws/jsx/index.js.txt";
+import jsxJsxRuntimeJs from "./raws/jsx/jsx-runtime.js.txt";
+import jsxPackageJson from "./raws/jsx/package.json.txt";
+import jsxStyleJs from "./raws/jsx/Style.js.txt";
+import jsxFunctionJs from "./raws/jsx/Function.js.txt";
+import scriptsBabelJs from "./raws/scripts/babel.js.txt";
+import scriptsBuildJs from "./raws/scripts/build.js.txt";
+import scriptsStartJs from "./raws/scripts/start.js.txt";
+import scriptsTranspileJs from "./raws/scripts/transpile.js.txt";
+import srcResourcesIndexJs from "./raws/src/resources/index.js.txt";
+import srcIndexJs from "./raws/src/index.js.txt";
+import editorConfig from "./raws/.editorconfig.txt";
+import gitIgnore from "./raws/.gitignore.txt";
+import babelConfigJs from "./raws/babel.config.js.txt";
+import packageJson from "./raws/package.json.txt";
+import jsconfigJson from "./raws/jsconfig.json.txt";
+import readmeMd from "./raws/README.md.txt";
 
 export interface StoryboardAssemblyResult {
   storyboard: Storyboard;
@@ -62,165 +83,151 @@ export async function exportAsSourceFiles({
   );
 
   const meta = (storyboard.meta ?? {}) as StoryboardMeta & {
-    workflows?: unknown[];
+    workflows?: unknown;
+    userGroups?: unknown;
   };
   const customTemplates = meta.customTemplates ?? [];
+  const functions = meta.functions ?? [];
+  const menus = meta.menus ?? [];
+  const i18n = meta.i18n ?? {};
   delete meta.customTemplates;
+  delete meta.functions;
+  delete meta.menus;
+  delete meta.i18n;
   delete meta.workflows;
   delete meta.mocks;
+  delete meta.userGroups;
 
   const extractedTemplates = extractTemplates(
     customTemplates,
-    [],
+    ["components"],
     extractState
   );
+  extractState.extracts.push({
+    name: "index",
+    path: ["components"],
+    node: extractedTemplates,
+    nodeType: "others",
+  });
 
   const fileStructure = buildFileStructure(extractState.extracts);
 
-  src.file(
-    "meta.js",
-    formatJs(
-      printWithPlaceholders(
-        {
-          ...meta,
-          customTemplates: extractedTemplates,
-        },
-        fileStructure
-      )
-    )
-  );
+  src.file("index.js", srcIndexJs);
 
   src.file(
+    "routes.jsx",
+    formatJs(printWithPlaceholders(extractedRoutes, "routes"))
+  );
+
+  const resources = src.folder("resources")!;
+
+  // Functions
+  const fnDir = resources.folder("functions")!;
+  const fnNames: string[] = [];
+  const fnImports: string[] = [];
+  for (const fn of functions) {
+    if (fn.name === "index") {
+      throw new Error('Unexpected function name: "index"');
+    }
+
+    // Prepend with `export default` for functions
+    const ast = parse(fn.source, {
+      plugins: fn.typescript ? ["typescript"] : [],
+    });
+    const statements = ast.program.body.map((statement) => {
+      if (statement.type === "FunctionDeclaration") {
+        return t.exportDefaultDeclaration(statement);
+      }
+      return statement;
+    });
+    const { code } = transformFromAst(
+      t.program(statements, undefined, "module"),
+      undefined,
+      {}
+    );
+
+    fnDir.file(`${fn.name}.${fn.typescript ? "ts" : "js"}`, code);
+    fnImports.push(`import ${fn.name} from "./${fn.name}.js";`);
+    fnNames.push(fn.name);
+  }
+  fnDir.file(
+    "index.js",
+    formatJs(`${fnImports.join("\n")}\n\nexport default [${fnNames.join(",")}]`)
+  );
+
+  // Menus
+  const menusDir = resources.folder("menus")!;
+  const menuNames: string[] = [];
+  const menuImports: string[] = [];
+  for (const menu of menus) {
+    if (menu.menuId === "index") {
+      throw new Error('Unexpected menu id: "index"');
+    }
+    menusDir.file(
+      `${menu.menuId}.js`,
+      formatJs(`export default ${JSON.stringify(menu)};`)
+    );
+    const name = menu.menuId.replace(/^\d+|[^\w]+/g, "_");
+    menuImports.push(`import ${name} from "./${menu.menuId}.js";`);
+    menuNames.push(name);
+  }
+  menusDir.file(
     "index.js",
     formatJs(
-      printWithPlaceholders(
-        {
-          app: `${PLACEHOLDER_PREFIX}app`,
-          routes: extractedRoutes,
-          meta: `${PLACEHOLDER_PREFIX}meta`,
-        },
-        fileStructure
-      )
+      `${menuImports.join("\n")}\n\nexport default [${menuNames.join(",")}]`
     )
   );
 
-  printFileStructure(fileStructure, src);
-
-  const packageJsonContent = JSON.stringify(
-    {
-      name: projectDetail.appId,
-      private: true,
-      type: "module",
-      scripts: {
-        build: "node scripts/build.js",
-        start: "node --watch scripts/build.js",
-        serve: `brick-container-serve --local-micro-apps=${JSON.stringify(
-          projectDetail.appId
-        )}`,
-      },
-      engines: {
-        node: ">=16",
-      },
-      devDependencies: {
-        "@next-core/brick-container": "^3.5.4",
-        "@types/node": "^16.18.14",
-        "js-yaml": "^3.14.1",
-      },
-    },
-    null,
-    2
+  resources
+    .folder("i18n")!
+    .file("index.js", formatJs(`export default ${JSON.stringify(i18n)};`));
+  resources.file(
+    "meta.js",
+    formatJs(`export default ${JSON.stringify(meta, null, 2)};`)
   );
+  resources.file("index.js", srcResourcesIndexJs);
 
-  project.file("package.json", packageJsonContent);
-
-  const scripts = project.folder("scripts")!;
+  printFileStructure(fileStructure, src);
 
   const appRelativeDir = JSON.stringify(
     `../mock-micro-apps/${projectDetail.appId}`
   );
 
+  const scripts = project.folder("scripts")!;
   scripts.file(
     "build.js",
-    `import path from "node:path";
-import { writeFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
-import yaml from "js-yaml";
-import storyboard from "../src/index.js";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-const { safeDump, JSON_SCHEMA } = yaml;
-
-await writeFile(
-  path.resolve(__dirname, ${appRelativeDir}, "storyboard.yaml"),
-  safeDump(storyboard, {
-    indent: 2,
-    schema: JSON_SCHEMA,
-    skipInvalid: true,
-    noRefs: true,
-    noCompatMode: true,
-  })
-);
-
-await writeFile(
-  path.resolve(__dirname, ${appRelativeDir}, "storyboard.json"),
-  JSON.stringify(storyboard, null, 2)
-);`
+    scriptsBuildJs.replaceAll("__APP_RELATIVE_DIR__", appRelativeDir)
   );
+  scripts.file("babel.js", scriptsBabelJs);
+  scripts.file("start.js", scriptsStartJs);
+  scripts.file("transpile.js", scriptsTranspileJs);
 
   const appDir = project
     .folder("mock-micro-apps")!
     .folder(projectDetail.appId)!;
   appDir.file(".gitignore", "*\n!.gitignore");
 
-  project.file(
-    "dev.config.mjs",
-    `export default {
-  brickFolders: [
-    "node_modules/@next-bricks",
-    "node_modules/@bricks",
-    "next-*/bricks",
-    "brick-next/bricks",
-  ],
-};`
-  );
+  const jsxDir = project.folder("jsx")!;
+  jsxDir.file("constants.js", jsxConstantsJs);
+  jsxDir.file("index.js", jsxIndexJs);
+  jsxDir.file("jsx-runtime.js", jsxJsxRuntimeJs);
+  jsxDir.file("package.json", jsxPackageJson);
+  jsxDir.file("Style.js", jsxStyleJs);
+  jsxDir.file("Function.js", jsxFunctionJs);
 
+  project.file(".editorconfig", editorConfig);
+  project.file(".gitignore", gitIgnore);
+  project.file("babel.config.js", babelConfigJs);
+  project.file("jsconfig.json", jsconfigJson);
+  project.file(
+    "package.json",
+    packageJson.replaceAll("__PROJECT_ID__", projectDetail.appId)
+  );
   project.file(
     "README.md",
-    `# ${projectDetail.name}
-
-## 准备
-
-\`\`\`bash
-yarn
-\`\`\`
-
-## 开发模式
-
-打开两个终端，分别运行 \`yarn start\` 和 \`yarn serve\`。
-
-提示：
-- 使用 \`yarn start\` 需要 node >= 18.11 。
-- 运行 \`yarn serve\` 时按需使用 \`--subdir\` 和 \`--server\` 等参数。
-- 修改文件后，需手动刷新浏览器。
-
-## 生产模式
-
-\`\`\`bash
-yarn build && yarn serve
-\`\`\`
-
-
-## 集成构件
-
-演示时，可以使用 \`ln -s\` 创建软链接，将需要的构件仓库目录链接到本项目中，例如：
-
-\`\`\`bash
-ln -s ../next-nw next-nw
-\`\`\`
-
-最终打包时，将这些仓库源文件按相同目录结构打包进本项目。
-`
+    readmeMd
+      .replaceAll("__PROJECT_NAME__", projectDetail.name)
+      .replaceAll("__PROJECT_HOMEPAGE__", projectDetail.appSetting.homepage)
   );
 
   const blob = await zip.generateAsync({ type: "blob" });
@@ -252,8 +259,8 @@ function printFileStructure(items: SourceFileOrFolder[], folder: JSZip) {
       printFileStructure(item.items, childFolder);
     } else {
       folder.file(
-        `${item.name}.js`,
-        formatJs(printWithPlaceholders(item.node, items))
+        `${item.name}.js${item.nodeType === "others" ? "" : "x"}`,
+        formatJs(printWithPlaceholders(item.node, item.nodeType))
       );
     }
   }

@@ -1,0 +1,16 @@
+import path from "node:path";
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+
+/**
+ * @param {{ url: string; from: string }} props
+ */
+export default function Style({url, from}) {
+  const textContent = readFileSync(path.resolve(fileURLToPath(from), "..", url), "utf-8");
+  return {
+    brick: "style",
+    properties: {
+      textContent,
+    }
+  }
+}
