@@ -14,6 +14,7 @@ export async function build() {
     customTemplates: storyboard.components,
     functions: storyboard.resources.functions,
     menus: storyboard.resources.menus,
+    contracts: storyboard.resources.contracts,
     i18n: storyboard.resources.i18n,
   };
   delete storyboard.resources;
@@ -21,7 +22,7 @@ export async function build() {
 
   await Promise.all([
     writeFile(
-      path.resolve(__dirname, "../mock-micro-apps/steve-test-nw-v2", "storyboard.yaml"),
+      path.resolve(__dirname, __APP_RELATIVE_DIR__, "storyboard.yaml"),
       safeDump(storyboard, {
         indent: 2,
         schema: JSON_SCHEMA,
@@ -31,7 +32,7 @@ export async function build() {
       })
     ),
     writeFile(
-      path.resolve(__dirname, "../mock-micro-apps/steve-test-nw-v2", "storyboard.json"),
+      path.resolve(__dirname, __APP_RELATIVE_DIR__, "storyboard.json"),
       JSON.stringify(storyboard, null, 2)
     )
   ]);

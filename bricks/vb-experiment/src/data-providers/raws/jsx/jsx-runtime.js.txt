@@ -76,8 +76,9 @@ export function jsx(type, config) {
       } else if (key.startsWith(ConfNamespace)) {
         const k = key.substring(ConfNamespace.length);
         reservedConfig[k] = value;
+      } else {
+        throw new Error(`Unsupported namespace prop: "${key}"`);
       }
-      throw new Error(`Unsupported namespace prop: "${key}"`);
     } else if (key === "children") {
       // Ignore
     } else if (RESERVED_PROP_KEYS.has(key)) {

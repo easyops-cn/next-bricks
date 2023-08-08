@@ -89,10 +89,12 @@ export async function exportAsSourceFiles({
   const customTemplates = meta.customTemplates ?? [];
   const functions = meta.functions ?? [];
   const menus = meta.menus ?? [];
+  const contracts = meta.contracts ?? [];
   const i18n = meta.i18n ?? {};
   delete meta.customTemplates;
   delete meta.functions;
   delete meta.menus;
+  delete meta.contracts;
   delete meta.i18n;
   delete meta.workflows;
   delete meta.mocks;
@@ -160,6 +162,7 @@ export async function exportAsSourceFiles({
   const menuNames: string[] = [];
   const menuImports: string[] = [];
   for (const menu of menus) {
+    cleanMenu(menu);
     if (menu.menuId === "index") {
       throw new Error('Unexpected menu id: "index"');
     }
@@ -175,6 +178,31 @@ export async function exportAsSourceFiles({
     "index.js",
     formatJs(
       `${menuImports.join("\n")}\n\nexport default [${menuNames.join(",")}]`
+    )
+  );
+
+  // Contracts
+  const contractsDir = resources.folder("contracts")!;
+  const contractNames: string[] = [];
+  const contractImports: string[] = [];
+  for (const contract of contracts) {
+    if (contract.name === "index") {
+      throw new Error('Unexpected contract name: "index"');
+    }
+    contractsDir.file(
+      `${contract.name}.js`,
+      formatJs(`export default ${JSON.stringify(contract)};`)
+    );
+    const name = contract.name.replace(/^\d+|[^\w]+/g, "_");
+    contractImports.push(`import ${name} from "./${contract.name}.js";`);
+    contractNames.push(name);
+  }
+  contractsDir.file(
+    "index.js",
+    formatJs(
+      `${contractImports.join("\n")}\n\nexport default [${contractNames.join(
+        ","
+      )}]`
     )
   );
 
@@ -262,6 +290,60 @@ function printFileStructure(items: SourceFileOrFolder[], folder: JSZip) {
         `${item.name}.js${item.nodeType === "others" ? "" : "x"}`,
         formatJs(printWithPlaceholders(item.node, item.nodeType))
       );
+    }
+  }
+}
+
+function cleanMenu(menu: Record<string, any>) {
+  for (const [key, value] of Object.entries(menu)) {
+    switch (key) {
+      case "items":
+        if (Array.isArray(value)) {
+          for (const item of value) {
+            cleanMenuItem(item);
+          }
+        }
+        break;
+      case "type":
+        if (value === "main") {
+          delete menu[key];
+        }
+        break;
+      case "if":
+        break;
+      case "i18n":
+        if (Object.keys(value).length === 0) {
+          delete menu[key];
+        }
+        break;
+      default:
+        if (value === null || value === false) {
+          delete menu[key];
+        }
+    }
+  }
+}
+
+function cleanMenuItem(menuItem: Record<string, any>) {
+  for (const [key, value] of Object.entries(menuItem)) {
+    switch (key) {
+      case "children":
+        if (Array.isArray(value) && value.length > 0) {
+          cleanMenuItem(value);
+        }
+        break;
+      case "if":
+        break;
+      case "activeExcludes":
+      case "activeIncludes":
+        if (Array.isArray(value) && value.length === 0) {
+          delete menuItem[key];
+        }
+        break;
+      default:
+        if (value === null || value === false) {
+          delete menuItem[key];
+        }
     }
   }
 }
