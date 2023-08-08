@@ -1,10 +1,10 @@
 {
-  "name": "steve-test-nw-v2",
+  "name": "__PROJECT_ID__",
   "private": true,
   "type": "module",
   "scripts": {
     "start": "node scripts/start.js",
-    "serve": "brick-container-serve --local-micro-apps=\"steve-test-nw-v2\""
+    "serve": "brick-container-serve --local-micro-apps=\"__PROJECT_ID__\""
   },
   "engines": {
     "node": ">=16"

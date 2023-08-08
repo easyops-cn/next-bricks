@@ -41,7 +41,13 @@ function printJsx(expression: t.Expression, imports: Set<string>) {
   const { code } = transformFromAst(
     t.program([exportDefault], undefined, "module"),
     undefined,
-    {}
+    {
+      generatorOpts: {
+        jsescOption: {
+          minimal: true,
+        },
+      },
+    }
   );
 
   const usedVarNames = new Set<string>();
@@ -155,7 +161,8 @@ function printBrick(node: any, imports: Set<string>) {
     }
     let controlDataSource: unknown;
     if (isControlNode) {
-      controlDataSource = node.dataSource;
+      controlDataSource = restNode.dataSource;
+      delete restNode.dataSource;
     }
     const slot = _slot === "" ? undefined : _slot;
     const props = properties ?? {};

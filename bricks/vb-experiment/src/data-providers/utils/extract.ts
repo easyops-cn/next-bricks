@@ -28,6 +28,23 @@ export interface ExtractState {
 
 type WalkPath = Readonly<Array<string>>;
 
+const PROXY_KEYS = {
+  properties: [
+    "ref",
+    "refProperty",
+    "extraOneWayRefs",
+    "refTransform",
+    "mergeType",
+    "mergeMethod",
+    "mergeArgs",
+    "mergeProperty",
+    "asVariable",
+  ],
+  slots: ["ref", "refSlot", "refPosition"],
+  events: ["ref", "refEvent"],
+  methods: ["ref", "refMethod"],
+};
+
 export const PLACEHOLDER_PREFIX = `--${Math.floor(
   Math.random() * 1e16
 ).toString(36)}--:`;
@@ -146,6 +163,7 @@ function extractProxy(
 ) {
   if (!isEmpty(proxy)) {
     const name = getAvailableName("proxy", "proxy", path, state.namePool);
+    cleanProxy(proxy);
     state.extracts.push({
       name,
       path,
@@ -304,22 +322,62 @@ function extractTemplate(
   return getPlaceholder(name, name);
 }
 
-function cleanRoute(route: RouteConf): void {
+function cleanRoute(
+  route: RouteConf & {
+    deviceOwner?: unknown;
+    menu?: RouteConf["menu"] | string;
+  }
+): void {
   delete route.alias;
   delete route.iid;
+  delete route.deviceOwner;
+  if (route.menu === "") {
+    delete route.menu;
+  }
   removeFalsyFields(route, ["redirect", "exact"]);
   if (route.type === "bricks") {
     delete route.type;
   }
 }
 
-function cleanBrick(brick: BrickConf & { alias?: string }): void {
+function cleanBrick(
+  brick: BrickConf & { alias?: string; deviceOwner?: unknown }
+): void {
   delete brick.alias;
   delete brick.iid;
+  delete brick.deviceOwner;
 }
 
 function cleanContext(context: ContextConf & { path?: unknown }): void {
   delete context.path;
+}
+
+function cleanProxy(proxy: CustomTemplateProxy & { invalid?: unknown }) {
+  for (const [key, value] of Object.entries(proxy)) {
+    switch (key) {
+      case "properties":
+      case "events":
+      case "slots":
+      case "methods":
+        if (value) {
+          for (const [j, v] of Object.entries(value)) {
+            if (v) {
+              for (const k of Object.keys(v)) {
+                if (!PROXY_KEYS[key].includes(k)) {
+                  delete (v as any)[k];
+                }
+              }
+              if (Object.keys(v).length === 0) {
+                delete value[j];
+              }
+            }
+          }
+        }
+        break;
+      default:
+        delete proxy[key as "invalid"];
+    }
+  }
 }
 
 function removeFalsyFields(node: any, fields: string[]): void {
