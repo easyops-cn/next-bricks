@@ -276,6 +276,14 @@ function extractBrick(
     }
   }
 
+  if (isObject(newBrick.properties) && !Array.isArray(newBrick.properties)) {
+    (newBrick as BrickNode).properties = extractProperties(
+      newBrick.properties,
+      childrenPath,
+      state
+    );
+  }
+
   newBrick.children = children;
 
   if (name) {
@@ -290,6 +298,46 @@ function extractBrick(
   }
 
   return newBrick;
+}
+
+function extractProperties(
+  props: Record<string, unknown>,
+  path: WalkPath,
+  state: ExtractState
+): Record<string, unknown> {
+  return Object.fromEntries(
+    Object.entries(props).map(([k, v]) => [
+      k,
+      extractPropertyValue(v, k, path, state),
+    ])
+  );
+}
+
+function extractPropertyValue(
+  value: unknown,
+  key: string | number,
+  path: WalkPath,
+  state: ExtractState
+): unknown {
+  if (key === "useBrick") {
+    if (Array.isArray(value)) {
+      return extractBricks(value as BrickNode[], path, state);
+    }
+    if (isObject(value)) {
+      return extractBrick(value as unknown as BrickNode, path, state);
+    }
+    return value;
+  }
+
+  if (Array.isArray(value)) {
+    return value.map((v, i) => extractPropertyValue(v, i, path, state));
+  }
+
+  if (isObject(value)) {
+    return extractProperties(value, path, state);
+  }
+
+  return value;
 }
 
 function extractTemplate(

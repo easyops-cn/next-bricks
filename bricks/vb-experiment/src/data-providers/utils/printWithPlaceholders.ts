@@ -161,29 +161,29 @@ function printBricks(node: any, path: string[]) {
   const imports: ImportInfo = new Map();
   let expression: t.Expression;
   if (Array.isArray(node)) {
-    const bricks = node
-      .map((n) => printBrick(n, imports, path))
-      .filter(Boolean) as t.JSXElement[];
-    expression =
-      bricks.length === 1
-        ? bricks[0]
-        : t.jsxFragment(t.jsxOpeningFragment(), t.jsxClosingFragment(), bricks);
+    expression = transformBricks(node, imports, path);
   } else {
-    expression = printBrick(node, imports, path) as t.JSXElement;
-    if (expression.type !== "JSXElement") {
-      expression = t.jsxFragment(
-        t.jsxOpeningFragment(),
-        t.jsxClosingFragment(),
-        [expression]
-      );
-    }
+    expression = transformBrick(node, imports, path);
   }
   return printJsx(expression, imports);
 }
 
-function printBrick(node: any, imports: ImportInfo, path: string[]) {
+function transformBricks(node: any[], imports: ImportInfo, path: string[]) {
+  const bricks = node
+    .map((n) => transformBrick(n, imports, path))
+    .filter(Boolean);
+  return bricks.length === 1
+    ? bricks[0]
+    : t.jsxFragment(
+        t.jsxOpeningFragment(),
+        t.jsxClosingFragment(),
+        bricks.map(transformJsxChild)
+      );
+}
+
+function transformBrick(node: any, imports: ImportInfo, path: string[]) {
   if (typeof node === "string") {
-    return t.jsxExpressionContainer(t.stringLiteral(node));
+    return t.stringLiteral(node);
   }
   if (node.template) {
     return printLegacyTemplate(node, imports, path);
@@ -263,7 +263,9 @@ function printBrick(node: any, imports: ImportInfo, path: string[]) {
             },
             imports,
             path,
-            REVERSED_BRICK_KEYS
+            REVERSED_BRICK_KEYS,
+            undefined,
+            true
           ),
           ...printJsxAttributes(
             {
@@ -286,8 +288,10 @@ function printBrick(node: any, imports: ImportInfo, path: string[]) {
       selfClosing
         ? []
         : children.length > 0
-        ? children.map((child: any) => printBrickOrRoute(child, imports, path))
-        : [parseJsxText(textContent)],
+        ? children.map((child: any) =>
+            transformBrickOrRoute(child, imports, path)
+          )
+        : [parseJsxText(textContent, imports, path)],
       selfClosing
     );
   }
@@ -295,8 +299,11 @@ function printBrick(node: any, imports: ImportInfo, path: string[]) {
   throw new Error(`Unexpected brick node: ${JSON.stringify(node)}`);
 }
 
-function printBrickOrRoute(node: any, imports: ImportInfo, path: string[]) {
-  return (node._isRoute ? printRoute : printBrick)(node, imports, path);
+function transformBrickOrRoute(node: any, imports: ImportInfo, path: string[]) {
+  if (node._isRoute) {
+    return printRoute(node, imports, path);
+  }
+  return transformJsxChild(transformBrick(node, imports, path));
 }
 
 function printTemplate(node: any, path: string[]) {
@@ -316,10 +323,28 @@ function printTemplate(node: any, path: string[]) {
       )
     ),
     t.jsxClosingElement(t.jsxIdentifier("Component")),
-    (bricks ?? []).map((brick: any) => printBrick(brick, imports, path))
+    (bricks ?? []).map((brick: any) =>
+      transformJsxChild(transformBrick(brick, imports, path))
+    )
   );
 
   return printJsx(tpl, imports);
+}
+
+function transformJsxChild(child: t.JSXElement | t.StringLiteral) {
+  if (child.type === "StringLiteral") {
+    return t.jsxExpressionContainer(child);
+  }
+  return child;
+}
+
+function transformJsxValue(
+  value: t.JSXElement | t.JSXFragment | t.StringLiteral
+) {
+  if (value.type !== "StringLiteral") {
+    return t.jsxExpressionContainer(value);
+  }
+  return value;
 }
 
 function printLegacyTemplate(node: any, imports: ImportInfo, path: string[]) {
@@ -343,7 +368,8 @@ function printJsxAttributes(
   imports: ImportInfo,
   path: string[],
   sortKeys?: string[],
-  namespace?: string
+  namespace?: string,
+  transformUseBrick?: boolean
 ) {
   const normalEntries: [string, any][] = [];
   const restProperties: t.ObjectProperty[] = [];
@@ -368,7 +394,12 @@ function printJsxAttributes(
       namespace
         ? t.jsxNamespacedName(t.jsxIdentifier(namespace), t.jsxIdentifier(k))
         : t.jsxIdentifier(k),
-      parseJsxAttributeValue(v, imports, path)
+      parseJsxAttributeValue(
+        v,
+        imports,
+        path,
+        transformUseBrick ? k : undefined
+      )
     );
   });
   if (restProperties.length > 0) {
@@ -380,7 +411,8 @@ function printJsxAttributes(
 function parseJsxAttributeValue(
   value: unknown,
   imports: ImportInfo,
-  path: string[]
+  path: string[],
+  key?: string
 ) {
   if (typeof value === "string") {
     const expr = transformExpressionString(value, imports, path);
@@ -397,12 +429,24 @@ function parseJsxAttributeValue(
   if (value === true) {
     return null;
   }
+  if (key === "useBrick") {
+    if (Array.isArray(value)) {
+      return transformJsxValue(transformBricks(value, imports, path));
+    } else if (isObject(value)) {
+      return transformJsxValue(transformBrick(value, imports, path));
+    }
+  }
   const expr =
-    transformExpressionStringInJson(value, imports, path) ?? t.nullLiteral();
+    transformExpressionStringInJson(value, imports, path, true) ??
+    t.nullLiteral();
   return t.jsxExpressionContainer(expr);
 }
 
-function parseJsxText(text: string) {
+function parseJsxText(text: string, imports: ImportInfo, path: string[]) {
+  const expr = transformExpressionString(text, imports, path);
+  if (expr) {
+    return t.jsxExpressionContainer(expr);
+  }
   if (/>|<|&(?:[a-zA-Z0-9]+|#\d+|#x[\da-fA-F]+);/.test(text)) {
     return t.jsxExpressionContainer(t.stringLiteral(text));
   }
@@ -465,7 +509,9 @@ function printOthers(node: unknown) {
 function transformExpressionStringInJson(
   value: unknown,
   imports: ImportInfo,
-  path: string[]
+  path: string[],
+  transformUseBrick?: boolean,
+  key?: string
 ):
   | t.ArrayExpression
   | t.ObjectExpression
@@ -474,11 +520,21 @@ function transformExpressionStringInJson(
   | t.NumericLiteral
   | t.BooleanLiteral
   | t.NullLiteral
+  | t.JSXElement
+  | t.JSXFragment
   | null {
+  if (transformUseBrick && key === "useBrick") {
+    if (Array.isArray(value)) {
+      return transformBricks(value, imports, path);
+    } else if (isObject(value)) {
+      return transformBrick(value, imports, path);
+    }
+  }
+
   if (Array.isArray(value)) {
     return t.arrayExpression(
       value.map((v: unknown) =>
-        transformExpressionStringInJson(v, imports, path)
+        transformExpressionStringInJson(v, imports, path, transformUseBrick)
       )
     );
   }
@@ -491,7 +547,13 @@ function transformExpressionStringInJson(
     return t.objectExpression(
       Object.entries(value)
         .map(([k, v]) => {
-          const vNode = transformExpressionStringInJson(v, imports, path);
+          const vNode = transformExpressionStringInJson(
+            v,
+            imports,
+            path,
+            transformUseBrick,
+            k
+          );
           if (vNode !== null) {
             return t.objectProperty(t.stringLiteral(k), vNode);
           }
