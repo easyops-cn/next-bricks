@@ -19,7 +19,14 @@ export interface ExtractedItem {
   nodeType: NodeType;
 }
 
-export type NodeType = "routes" | "template" | "bricks" | "others";
+export type NodeType =
+  | "routes"
+  | "template"
+  | "bricks"
+  | "context"
+  | "menu"
+  | "plain"
+  | "others";
 
 export interface ExtractState {
   extracts: ExtractedItem[];
@@ -147,7 +154,7 @@ function extractContext(
       name,
       path,
       node: context,
-      nodeType: "others",
+      nodeType: "context",
     });
 
     return getPlaceholder(type === "context" ? `views/${routeName}` : "", name);
@@ -168,7 +175,7 @@ function extractProxy(
       name,
       path,
       node: proxy,
-      nodeType: "others",
+      nodeType: "plain",
     });
 
     return getPlaceholder("", name);

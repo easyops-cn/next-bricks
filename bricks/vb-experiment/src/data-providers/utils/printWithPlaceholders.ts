@@ -1,6 +1,7 @@
 import * as t from "@babel/types";
 import { transformFromAst } from "@babel/standalone";
 import { parseExpression } from "@babel/parser";
+import { isObject } from "@next-core/utils/general";
 import {
   NodeType,
   PLACEHOLDER_PREFIX,
@@ -11,31 +12,45 @@ const REVERSED_ROUTE_KEYS: string[] = ["context", "exact", "path", "slot"];
 const REVERSED_BRICK_KEYS: string[] = ["id", "ref", "slot"];
 const REVERSED_TEMPLATE_KEYS: string[] = ["proxy", "state", "name"];
 
-export function printWithPlaceholders(node: any, nodeType: NodeType) {
+const IMPORT_DEFAULT_PREFIX = "default:";
+type ImportInfo = Map<string, Set<string>>;
+
+export function printWithPlaceholders(
+  node: any,
+  nodeType: NodeType,
+  path: string[]
+) {
   switch (nodeType) {
     case "routes":
-      return printRoutes(node);
+      return printRoutes(node, path);
     case "bricks":
-      return printBricks(node);
+      return printBricks(node, path);
     case "template":
-      return printTemplate(node);
-    default:
+      return printTemplate(node, path);
+    case "context":
+    case "menu":
+      return printWithExpressions(node, path);
+    case "plain": // Template proxy
+      return printPlain(node);
+    case "others": // Templates index
       return printOthers(node);
+    default:
+      throw new Error(`Unknown node type: ${nodeType}`);
   }
 }
 
-function printRoutes(node: any[]) {
-  const imports = new Set<string>();
+function printRoutes(node: any[], path: string[]) {
+  const imports: ImportInfo = new Map();
   const fragment = t.jsxFragment(
     t.jsxOpeningFragment(),
     t.jsxClosingFragment(),
-    node.map((n) => printRoute(n, imports))
+    node.map((n) => printRoute(n, imports, path))
   );
 
   return printJsx(fragment, imports);
 }
 
-function printJsx(expression: t.Expression, imports: Set<string>) {
+function printJsx(expression: t.Expression, imports: ImportInfo) {
   const exportDefault = t.exportDefaultDeclaration(expression);
 
   const { code } = transformFromAst(
@@ -50,8 +65,8 @@ function printJsx(expression: t.Expression, imports: Set<string>) {
     }
   );
 
-  const usedVarNames = new Set<string>();
-  const allImports = [...imports];
+  const usedVarNames = getVarNamesByImports(imports);
+  const allImports = printImports(imports);
 
   const newCode = code.replace(PLACEHOLDER_PREFIX_REGEXP, (m, p1: string) => {
     const path = p1.split("/");
@@ -80,8 +95,48 @@ function printJsx(expression: t.Expression, imports: Set<string>) {
     : code;
 }
 
-function printRoute(node: any, imports: Set<string>) {
-  imports.add('import { Route } from "jsx";');
+function addImport(imports: ImportInfo, from: string, name: string): void {
+  let imp = imports.get(from);
+  if (!imp) {
+    imp = new Set();
+    imports.set(from, imp);
+  }
+  imp.add(name);
+}
+
+function printImports(imports: ImportInfo): string[] {
+  return [...imports]
+    .sort((a, b) => Number(a[0].startsWith(".")) - Number(b[0].startsWith(".")))
+    .map(([from, names]) => {
+      const importNames = [...names];
+      if (
+        importNames.length === 1 &&
+        importNames[0].startsWith(IMPORT_DEFAULT_PREFIX)
+      ) {
+        return `import ${importNames[0].substring(
+          IMPORT_DEFAULT_PREFIX.length
+        )} from "${from}";`;
+      }
+      return `import { ${importNames.join(", ")} } from "${from}";`;
+    });
+}
+
+function getVarNamesByImports(imports: ImportInfo): Set<string> {
+  const names = new Set<string>();
+  for (const importNames of imports.values()) {
+    for (const name of importNames) {
+      names.add(
+        name.startsWith(IMPORT_DEFAULT_PREFIX)
+          ? name.substring(IMPORT_DEFAULT_PREFIX.length)
+          : name
+      );
+    }
+  }
+  return names;
+}
+
+function printRoute(node: any, imports: ImportInfo, path: string[]) {
+  addImport(imports, "jsx", "Route");
   const { children: _children, slot: _slot, _isRoute, ...restNode } = node;
   const children = _children ?? [];
   const slot = _slot === "" ? undefined : _slot;
@@ -89,28 +144,33 @@ function printRoute(node: any, imports: Set<string>) {
   return t.jsxElement(
     t.jsxOpeningElement(
       t.jsxIdentifier("Route"),
-      printJsxAttributes({ ...restNode, slot }, REVERSED_ROUTE_KEYS),
+      printJsxAttributes(
+        { ...restNode, slot },
+        imports,
+        path,
+        REVERSED_ROUTE_KEYS
+      ),
       selfClosing
     ),
     selfClosing ? null : t.jsxClosingElement(t.jsxIdentifier("Route")),
-    children.map((child: any) => printRoute(child, imports)),
+    children.map((child: any) => printRoute(child, imports, path)),
     selfClosing
   );
 }
 
-function printBricks(node: any) {
-  const imports = new Set<string>();
+function printBricks(node: any, path: string[]) {
+  const imports: ImportInfo = new Map();
   let expression: t.Expression;
   if (Array.isArray(node)) {
     const bricks = node
-      .map((n) => printBrick(n, imports))
+      .map((n) => printBrick(n, imports, path))
       .filter(Boolean) as t.JSXElement[];
     expression =
       bricks.length === 1
         ? bricks[0]
         : t.jsxFragment(t.jsxOpeningFragment(), t.jsxClosingFragment(), bricks);
   } else {
-    expression = printBrick(node, imports) as t.JSXElement;
+    expression = printBrick(node, imports, path) as t.JSXElement;
     if (expression.type !== "JSXElement") {
       expression = t.jsxFragment(
         t.jsxOpeningFragment(),
@@ -122,12 +182,12 @@ function printBricks(node: any) {
   return printJsx(expression, imports);
 }
 
-function printBrick(node: any, imports: Set<string>) {
+function printBrick(node: any, imports: ImportInfo, path: string[]) {
   if (typeof node === "string") {
     return t.jsxExpressionContainer(t.stringLiteral(node));
   }
   if (node.template) {
-    return printLegacyTemplate(node, imports);
+    return printLegacyTemplate(node, imports, path);
   }
   const {
     brick,
@@ -146,16 +206,10 @@ function printBrick(node: any, imports: Set<string>) {
     let isControlNode = true;
     switch (brick) {
       case ":forEach":
-        imports.add(`import { ForEach } from "jsx";`);
-        tagName = "ForEach";
-        break;
       case ":if":
-        imports.add(`import { If } from "jsx";`);
-        tagName = "If";
-        break;
       case ":switch":
-        imports.add(`import { Switch } from "jsx";`);
-        tagName = "Switch";
+        tagName = `${brick[1].toUpperCase()}${brick.substring(2)}`;
+        addImport(imports, "jsx", tagName);
         break;
       default:
         isControlNode = false;
@@ -208,9 +262,11 @@ function printBrick(node: any, imports: Set<string>) {
                   }
                 : null),
             },
+            imports,
+            path,
             REVERSED_BRICK_KEYS
           ),
-          ...printJsxNamespaceAttributes(
+          ...printJsxAttributes(
             {
               children: prop_children,
               events: prop_events,
@@ -218,9 +274,12 @@ function printBrick(node: any, imports: Set<string>) {
               if: prop_if,
               ref: prop_ref,
             },
+            imports,
+            path,
+            undefined,
             "prop"
           ),
-          ...printJsxNamespaceAttributes(restNode, "conf"),
+          ...printJsxAttributes(restNode, imports, path, undefined, "conf"),
         ],
         selfClosing
       ),
@@ -228,7 +287,7 @@ function printBrick(node: any, imports: Set<string>) {
       selfClosing
         ? []
         : children.length > 0
-        ? children.map((child: any) => printBrickOrRoute(child, imports))
+        ? children.map((child: any) => printBrickOrRoute(child, imports, path))
         : [parseJsxText(textContent)],
       selfClosing
     );
@@ -237,35 +296,41 @@ function printBrick(node: any, imports: Set<string>) {
   throw new Error(`Unexpected brick node: ${JSON.stringify(node)}`);
 }
 
-function printBrickOrRoute(node: any, imports: Set<string>) {
-  return node._isRoute ? printRoute(node, imports) : printBrick(node, imports);
+function printBrickOrRoute(node: any, imports: ImportInfo, path: string[]) {
+  return (node._isRoute ? printRoute : printBrick)(node, imports, path);
 }
 
-function printTemplate(node: any) {
-  const imports = new Set<string>(['import { Component } from "jsx";']);
+function printTemplate(node: any, path: string[]) {
+  const imports: ImportInfo = new Map();
+  addImport(imports, "jsx", "Component");
 
   const { bricks, name, state, proxy } = node;
 
   const tpl = t.jsxElement(
     t.jsxOpeningElement(
       t.jsxIdentifier("Component"),
-      printJsxAttributes({ name, state, proxy }, REVERSED_TEMPLATE_KEYS)
+      printJsxAttributes(
+        { name, state, proxy },
+        imports,
+        path,
+        REVERSED_TEMPLATE_KEYS
+      )
     ),
     t.jsxClosingElement(t.jsxIdentifier("Component")),
-    (bricks ?? []).map((brick: any) => printBrick(brick, imports))
+    (bricks ?? []).map((brick: any) => printBrick(brick, imports, path))
   );
 
   return printJsx(tpl, imports);
 }
 
-function printLegacyTemplate(node: any, imports: Set<string>) {
-  imports.add('import { LegacyTemplate } from "jsx";');
+function printLegacyTemplate(node: any, imports: ImportInfo, path: string[]) {
+  addImport(imports, "jsx", "LegacyTemplate");
   const { children, ...restNode } = node;
 
   return t.jsxElement(
     t.jsxOpeningElement(
       t.jsxIdentifier("LegacyTemplate"),
-      printJsxAttributes(restNode),
+      printJsxAttributes(restNode, imports, path),
       true
     ),
     null,
@@ -274,61 +339,67 @@ function printLegacyTemplate(node: any, imports: Set<string>) {
   );
 }
 
-function printJsxAttributes(object: object, sortKeys?: string[]) {
-  const entries = Object.entries(object).filter(
-    (entry) => entry[1] !== undefined
-  );
-  return (sortKeys ? entries.sort(getSorterByKeys(sortKeys)) : entries).map(
-    ([k, v]) => {
-      return t.jsxAttribute(t.jsxIdentifier(k), parseJsxAttributeValue(v));
+function printJsxAttributes(
+  object: object,
+  imports: ImportInfo,
+  path: string[],
+  sortKeys?: string[],
+  namespace?: string
+) {
+  const normalEntries: [string, any][] = [];
+  const restProperties: t.ObjectProperty[] = [];
+  for (const [k, v] of Object.entries(object)) {
+    if (v !== undefined) {
+      if (/^[_$a-zA-Z][$\w]*$/.test(k)) {
+        normalEntries.push([k, v]);
+      } else {
+        restProperties.push(
+          t.objectProperty(
+            t.stringLiteral(namespace ? `${namespace}:${k}` : k),
+            transformExpressionStringInJson(v, imports, path) ?? t.nullLiteral()
+          )
+        );
+      }
     }
-  );
+  }
+  const attrs: (t.JSXAttribute | t.JSXSpreadAttribute)[] = (
+    sortKeys ? normalEntries.sort(getSorterByKeys(sortKeys)) : normalEntries
+  ).map(([k, v]) => {
+    return t.jsxAttribute(
+      namespace
+        ? t.jsxNamespacedName(t.jsxIdentifier(namespace), t.jsxIdentifier(k))
+        : t.jsxIdentifier(k),
+      parseJsxAttributeValue(v, imports, path)
+    );
+  });
+  if (restProperties.length > 0) {
+    attrs.push(t.jsxSpreadAttribute(t.objectExpression(restProperties)));
+  }
+  return attrs;
 }
 
-function printJsxNamespaceAttributes(object: object, namespace: string) {
-  return Object.entries(object)
-    .filter((entry) => entry[1] !== undefined)
-    .map(([k, v]) => {
-      return t.jsxAttribute(
-        t.jsxNamespacedName(t.jsxIdentifier(namespace), t.jsxIdentifier(k)),
-        parseJsxAttributeValue(v)
-      );
-    });
-}
-
-function parseJsxAttributeValue(value: unknown) {
+function parseJsxAttributeValue(
+  value: unknown,
+  imports: ImportInfo,
+  path: string[]
+) {
   if (typeof value === "string") {
-    if (
-      value.includes("\n") &&
-      /^\s*<%[=~]?\s/.test(value) &&
-      /\s%>\s*$/.test(value)
-    ) {
-      // Multiline expressions
-      return t.jsxExpressionContainer(
-        t.templateLiteral(
-          [
-            t.templateElement(
-              {
-                raw: getTemplateElementRaw(value),
-              },
-              true
-            ),
-          ],
-          []
-        )
-      );
-    } else {
-      const stringLiteral = t.stringLiteral(value);
-      return value.includes(PLACEHOLDER_PREFIX) ||
-        JSON.stringify(value).replaceAll('\\"', "").includes("\\")
-        ? t.jsxExpressionContainer(stringLiteral)
-        : stringLiteral;
+    const expr = transformExpressionString(value, imports, path);
+    if (expr) {
+      return t.jsxExpressionContainer(expr);
     }
+
+    const stringLiteral = t.stringLiteral(value);
+    return value.includes(PLACEHOLDER_PREFIX) ||
+      JSON.stringify(value).includes("\\")
+      ? t.jsxExpressionContainer(stringLiteral)
+      : stringLiteral;
   }
   if (value === true) {
     return null;
   }
-  const expr = parseExpression(JSON.stringify(value));
+  const expr =
+    transformExpressionStringInJson(value, imports, path) ?? t.nullLiteral();
   return t.jsxExpressionContainer(expr);
 }
 
@@ -339,27 +410,27 @@ function parseJsxText(text: string) {
   return t.jsxText(text);
 }
 
-function getTemplateElementRaw(cooked: string): string {
-  const chunks: string[] = [];
-  const cookedChars = [...cooked];
-  let i = 0;
-  for (const char of cookedChars) {
-    if (
-      char === "`" ||
-      char === "\\" ||
-      (char === "$" && cookedChars[i + 1] === "{")
-    ) {
-      chunks.push(`\\${char}`);
-    } else {
-      chunks.push(char);
-    }
-    i++;
+function printWithExpressions(node: unknown, path: string[]) {
+  const imports: ImportInfo = new Map();
+  const exportDefault = t.exportDefaultDeclaration(
+    transformExpressionStringInJson(node, imports, path) ?? t.nullLiteral()
+  );
+  const ast = t.program([exportDefault], undefined, "module");
+  const allImports = printImports(imports);
+  const content = transformFromAst(ast, undefined, {}).code;
+  if (allImports.length > 0) {
+    return `${allImports.join("\n")}\n\n${content}`;
   }
-  return chunks.join("");
+  return content;
+}
+
+function printPlain(node: unknown) {
+  return `export default ${JSON.stringify(node)};`;
 }
 
 function printOthers(node: unknown) {
-  let content = `export default ${JSON.stringify(node, null, 2)}`;
+  let content = printPlain(node);
+
   const usedVarNames = new Set<string>();
   const imports: string[] = [];
 
@@ -384,6 +455,131 @@ function printOthers(node: unknown) {
   }
 
   return content;
+}
+
+function transformExpressionStringInJson(
+  value: unknown,
+  imports: ImportInfo,
+  path: string[]
+):
+  | t.ArrayExpression
+  | t.ObjectExpression
+  | t.TaggedTemplateExpression
+  | t.StringLiteral
+  | t.NumericLiteral
+  | t.BooleanLiteral
+  | t.NullLiteral
+  | null {
+  if (Array.isArray(value)) {
+    return t.arrayExpression(
+      value.map((v: unknown) =>
+        transformExpressionStringInJson(v, imports, path)
+      )
+    );
+  }
+
+  if (typeof value === "function") {
+    return null;
+  }
+
+  if (isObject(value)) {
+    return t.objectExpression(
+      Object.entries(value)
+        .map(([k, v]) => {
+          const vNode = transformExpressionStringInJson(v, imports, path);
+          if (vNode !== null) {
+            return t.objectProperty(t.stringLiteral(k), vNode);
+          }
+          return null;
+        })
+        .filter(Boolean) as t.ObjectProperty[]
+    );
+  }
+
+  if (typeof value === "string") {
+    const node = transformExpressionString(value, imports, path);
+    return node ?? t.stringLiteral(value);
+  }
+
+  if (typeof value === "number") {
+    return t.numericLiteral(value);
+  }
+
+  if (typeof value === "boolean") {
+    return t.booleanLiteral(value);
+  }
+
+  if (value === null) {
+    return t.nullLiteral();
+  }
+
+  return null;
+}
+
+function transformExpressionString(
+  value: string,
+  imports: ImportInfo,
+  path: string[]
+) {
+  if (/^\s*<%[~=]?\s/.test(value) && /\s%>\s*$/.test(value)) {
+    // Turn “<% CTX.abc %>” into “E`${ abc }`”
+    let flag = "";
+    const source = value.replace(
+      /^\s*<%([~=])?\s|\s%>\s*$/g,
+      (m, p1: string) => {
+        if (p1) {
+          flag = p1;
+        }
+        return "";
+      }
+    );
+
+    try {
+      const ast = parseExpression(source);
+      const node = t.taggedTemplateExpression(
+        t.identifier("E"),
+        t.templateLiteral(
+          [
+            t.templateElement({
+              raw: flag,
+            }),
+            t.templateElement(
+              {
+                raw: "",
+              },
+              true
+            ),
+          ],
+          [ast]
+        )
+      );
+      if (/\bFN\b/.test(source)) {
+        const targetPath = ["resources", "functions", "index.js"];
+        let relative = 0;
+        for (let i = 0; i < targetPath.length && i < path.length; i++) {
+          relative = i;
+          if (path[i] !== targetPath[i]) {
+            break;
+          }
+        }
+        addImport(
+          imports,
+          `${
+            path.length === 1
+              ? "."
+              : new Array(path.length - 1 - relative).fill("..").join("/")
+          }/${targetPath.slice(relative).join("/")}`,
+          "default:FN"
+        );
+      }
+      addImport(imports, "jsx", "E");
+      return node;
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.warn("Parse expression failed:", value, e);
+    }
+  }
+  return null;
 }
 
 function getSorterByKeys(keys: string[]) {

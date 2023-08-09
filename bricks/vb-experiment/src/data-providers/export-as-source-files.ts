@@ -118,7 +118,7 @@ export async function exportAsSourceFiles({
 
   src.file(
     "routes.jsx",
-    formatJs(printWithPlaceholders(extractedRoutes, "routes"))
+    formatJs(printWithPlaceholders(extractedRoutes, "routes", ["routes.jsx"]))
   );
 
   const resources = src.folder("resources")!;
@@ -138,7 +138,12 @@ export async function exportAsSourceFiles({
     });
     const statements = ast.program.body.map((statement) => {
       if (statement.type === "FunctionDeclaration") {
-        return t.exportDefaultDeclaration(statement);
+        const exportDefault = t.exportDefaultDeclaration(statement);
+        if (statement.leadingComments) {
+          exportDefault.leadingComments = statement.leadingComments;
+          delete statement.leadingComments;
+        }
+        return exportDefault;
       }
       return statement;
     });
@@ -154,7 +159,9 @@ export async function exportAsSourceFiles({
   }
   fnDir.file(
     "index.js",
-    formatJs(`${fnImports.join("\n")}\n\nexport default [${fnNames.join(",")}]`)
+    formatJs(
+      `${fnImports.join("\n")}\n\nexport default { ${fnNames.join(",")} };`
+    )
   );
 
   // Menus
@@ -166,12 +173,15 @@ export async function exportAsSourceFiles({
     if (menu.menuId === "index") {
       throw new Error('Unexpected menu id: "index"');
     }
+    const filename = `${menu.menuId}.js`;
     menusDir.file(
-      `${menu.menuId}.js`,
-      formatJs(`export default ${JSON.stringify(menu)};`)
+      filename,
+      formatJs(
+        printWithPlaceholders(menu, "menu", ["resources", "menus", filename])
+      )
     );
     const name = menu.menuId.replace(/^\d+|[^\w]+/g, "_");
-    menuImports.push(`import ${name} from "./${menu.menuId}.js";`);
+    menuImports.push(`import ${name} from "./${filename}";`);
     menuNames.push(name);
   }
   menusDir.file(
@@ -215,7 +225,7 @@ export async function exportAsSourceFiles({
   );
   resources.file("index.js", srcResourcesIndexJs);
 
-  printFileStructure(fileStructure, src);
+  printFileStructure(fileStructure, src, []);
 
   const appRelativeDir = JSON.stringify(
     `../mock-micro-apps/${projectDetail.appId}`
@@ -280,15 +290,22 @@ function formatJs(
   });
 }
 
-function printFileStructure(items: SourceFileOrFolder[], folder: JSZip) {
+function printFileStructure(
+  items: SourceFileOrFolder[],
+  folder: JSZip,
+  path: string[]
+) {
   for (const item of items) {
+    const childPath = [...path, item.name];
     if (item.type === "folder") {
       const childFolder = folder.folder(item.name)!;
-      printFileStructure(item.items, childFolder);
+      printFileStructure(item.items, childFolder, childPath);
     } else {
       folder.file(
-        `${item.name}.js${item.nodeType === "others" ? "" : "x"}`,
-        formatJs(printWithPlaceholders(item.node, item.nodeType))
+        `${item.name}.js${
+          item.nodeType === "others" || item.nodeType === "context" ? "" : "x"
+        }`,
+        formatJs(printWithPlaceholders(item.node, item.nodeType, childPath))
       );
     }
   }
