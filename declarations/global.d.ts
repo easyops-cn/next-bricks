@@ -68,7 +68,13 @@ declare module "@babel/standalone" {
     ast?: boolean;
   }
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface TransformFromAstOptions {}
+  interface TransformFromAstOptions {
+    generatorOpts?: {
+      jsescOption?: {
+        minimal?: boolean;
+      };
+    };
+  }
 
   export const transformFromAst: (
     ast: unknown,

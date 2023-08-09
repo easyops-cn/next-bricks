@@ -141,25 +141,34 @@ function processExpressions() {
 async function processExpressionsInFile(filePath) {
   const plugins = filePath.endsWith(".jsx") ? ["jsx"] : [];
   const content = await readFile(filePath, "utf-8");
-  if (/\bE\s*`/.test(content)) {
+  if (/\bExpr\s*\(/.test(content)) {
     const ast = parse(content, { plugins, sourceType: "module" });
     let transformed = false;
+    let imported = false;
     traverse(ast, {
-      TaggedTemplateExpression(path) {
-        if (path.node.tag.type === "Identifier" && path.node.tag.name === "E") {
-          const { quasi } = path.node;
-          const flag = quasi.quasis[0].value.raw;
-          if (flag !== "" && flag !== "=" && flag !== "~") {
-            throw new Error(`Unexpected dynamic expression flag: "${flag}"`);
+      ImportDeclaration({ node }) {
+        if (node.source.value === "jsx") {
+          for (const specifier of node.specifiers) {
+            if (specifier.type === "ImportSpecifier") {
+              if (specifier.local.name === "Expr" && specifier.imported.type === "Identifier" && specifier.imported.name === "Expr") {
+                imported = true;
+              }
+            }
           }
-          if (quasi.expressions.length !== 1) {
-            throw new Error(`Expect dynamic expression with one and only one expression, received ${quasi.expressions.length}`);
+        }
+      },
+      CallExpression(path) {
+        if (imported && path.node.callee.type === "Identifier" && path.node.callee.name === "Expr") {
+          const { arguments: args} = path.node;
+          if (args.length === 0) {
+            throw new Error("`Expr()` should always have at least one argument");
           }
-          if (quasi.quasis.length > 2 || quasi.quasis[1]?.value.raw !== "") {
-            throw new Error(`Expect dynamic expression following no extra content, received: "${quasi.quasis[1]?.value.raw}"`);
+          let flag = "";
+          if (args.length > 1 && args[0].type === "StringLiteral" && (args[0].value === "=" || args[0].value === "~")) {
+            flag = args[0].value;
+            args.splice(0, 1);
           }
-          const expr = quasi.expressions[0];
-          const exprSource = `<%${flag} ${content.substring(expr.start, expr.end)} %>`;
+          const exprSource =  `<%${flag} ${content.substring(args[0].start, args[args.length - 1].end)} %>`;
           path.container[path.key] = t.stringLiteral(exprSource);
           transformed = true;
         }

@@ -7,10 +7,11 @@ export * from "./constants.js";
 
 /**
  * Expression
- * @param {TemplateStringsArray} strings
- * @param {any} expr
- * @returns {any}
+ * @type {{
+ * (expr: any): any;
+ * (flag: "=" | "~" | "track context" | "track state", expr: any): any;
+ * }}
  */
-export function E(strings, expr) {
-  throw new Error("Error: expression not transpiled!")
+export const Expr = () => {
+ throw new Error("Error: expression not transpiled!");
 }

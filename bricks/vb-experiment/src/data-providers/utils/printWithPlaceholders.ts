@@ -416,7 +416,13 @@ function printWithExpressions(node: unknown, path: string[]) {
   );
   const ast = t.program([exportDefault], undefined, "module");
   const allImports = printImports(imports);
-  const content = transformFromAst(ast, undefined, {}).code;
+  const content = transformFromAst(ast, undefined, {
+    generatorOpts: {
+      jsescOption: {
+        minimal: true,
+      },
+    },
+  }).code;
   if (allImports.length > 0) {
     return `${allImports.join("\n")}\n\n${content}`;
   }
@@ -463,7 +469,7 @@ function transformExpressionStringInJson(
 ):
   | t.ArrayExpression
   | t.ObjectExpression
-  | t.TaggedTemplateExpression
+  | t.CallExpression
   | t.StringLiteral
   | t.NumericLiteral
   | t.BooleanLiteral
@@ -536,23 +542,10 @@ function transformExpressionString(
     try {
       const file = transform(`(${source})`, { ast: true }).ast;
       const ast = (file.program.body[0] as t.ExpressionStatement).expression;
-      const node = t.taggedTemplateExpression(
-        t.identifier("E"),
-        t.templateLiteral(
-          [
-            t.templateElement({
-              raw: flag,
-            }),
-            t.templateElement(
-              {
-                raw: "",
-              },
-              true
-            ),
-          ],
-          [ast]
-        )
-      );
+      const node = t.callExpression(t.identifier("Expr"), [
+        ...(flag ? [t.stringLiteral(flag)] : []),
+        ...(ast.type === "SequenceExpression" ? ast.expressions : [ast]),
+      ]);
       if (/\bFN\b/.test(source)) {
         const targetPath = ["resources", "functions", "index.js"];
         let relative = 0;
@@ -572,7 +565,7 @@ function transformExpressionString(
           "default:FN"
         );
       }
-      addImport(imports, "jsx", "E");
+      addImport(imports, "jsx", "Expr");
       return node;
     } catch (e) {
       // eslint-disable-next-line no-console
