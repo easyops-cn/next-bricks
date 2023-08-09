@@ -60,7 +60,9 @@ function printJsx(expression: t.Expression, imports: Set<string>) {
       name === "context" && path.length === 3 && path[0] === "views"
         ? `${path[path.length - 2]}_${name}`
         : name
-    ).replaceAll("-", "_");
+    )
+      .replaceAll("-", "_")
+      .replace(/^(\d)/, "_$1");
 
     let counter = 2;
     let varName = baseName;
@@ -296,11 +298,32 @@ function printJsxNamespaceAttributes(object: object, namespace: string) {
 
 function parseJsxAttributeValue(value: unknown) {
   if (typeof value === "string") {
-    const stringLiteral = t.stringLiteral(value);
-    return value.includes(PLACEHOLDER_PREFIX) ||
-      JSON.stringify(value).includes("\\")
-      ? t.jsxExpressionContainer(stringLiteral)
-      : stringLiteral;
+    if (
+      value.includes("\n") &&
+      /^\s*<%[=~]?\s/.test(value) &&
+      /\s%>\s*$/.test(value)
+    ) {
+      // Multiline expressions
+      return t.jsxExpressionContainer(
+        t.templateLiteral(
+          [
+            t.templateElement(
+              {
+                raw: getTemplateElementRaw(value),
+              },
+              true
+            ),
+          ],
+          []
+        )
+      );
+    } else {
+      const stringLiteral = t.stringLiteral(value);
+      return value.includes(PLACEHOLDER_PREFIX) ||
+        JSON.stringify(value).replaceAll('\\"', "").includes("\\")
+        ? t.jsxExpressionContainer(stringLiteral)
+        : stringLiteral;
+    }
   }
   if (value === true) {
     return null;
@@ -310,10 +333,29 @@ function parseJsxAttributeValue(value: unknown) {
 }
 
 function parseJsxText(text: string) {
-  if (/>|<|&[a-zA-Z0-9]+;/.test(text)) {
+  if (/>|<|&(?:[a-zA-Z0-9]+|#\d+|#x[\da-fA-F]+);/.test(text)) {
     return t.jsxExpressionContainer(t.stringLiteral(text));
   }
   return t.jsxText(text);
+}
+
+function getTemplateElementRaw(cooked: string): string {
+  const chunks: string[] = [];
+  const cookedChars = [...cooked];
+  let i = 0;
+  for (const char of cookedChars) {
+    if (
+      char === "`" ||
+      char === "\\" ||
+      (char === "$" && cookedChars[i + 1] === "{")
+    ) {
+      chunks.push(`\\${char}`);
+    } else {
+      chunks.push(char);
+    }
+    i++;
+  }
+  return chunks.join("");
 }
 
 function printOthers(node: unknown) {
@@ -324,7 +366,7 @@ function printOthers(node: unknown) {
   content = content.replace(PLACEHOLDER_PREFIX_REGEXP, (m, p1: string) => {
     const path = p1.split("/");
     const name = path[path.length - 1];
-    const baseName = name.replaceAll("-", "_");
+    const baseName = name.replaceAll("-", "_").replace(/^(\d)/, "_$1");
 
     let counter = 2;
     let varName = baseName;

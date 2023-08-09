@@ -346,10 +346,20 @@ function cleanBrick(
   delete brick.alias;
   delete brick.iid;
   delete brick.deviceOwner;
+  if (brick.events && Object.keys(brick.events).length === 0) {
+    delete brick.events;
+  }
+  if (brick.lifeCycle && Object.keys(brick.lifeCycle).length === 0) {
+    delete brick.lifeCycle;
+  }
+  removeFalsyFields(brick, ["bg", "portal"]);
 }
 
-function cleanContext(context: ContextConf & { path?: unknown }): void {
+function cleanContext(
+  context: ContextConf & { path?: unknown; relatedId?: unknown }
+): void {
   delete context.path;
+  delete context.relatedId;
 }
 
 function cleanProxy(proxy: CustomTemplateProxy & { invalid?: unknown }) {
