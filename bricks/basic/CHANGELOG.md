@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.21.0...@next-bricks/basic@0.22.0) (2023-08-09)
+
+
+### Features
+
+* eo-breadcrumb ([de3a6a4](https://github.com/easyops-cn/next-bricks/commit/de3a6a40026f02fb6053e6a9114920b79c9005a1))
+
+
+
+
+
 # [0.21.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.20.0...@next-bricks/basic@0.21.0) (2023-08-08)
 
 
