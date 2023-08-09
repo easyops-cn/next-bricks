@@ -5,9 +5,8 @@ import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import { format } from "prettier/standalone.js";
 import parserBabel from "prettier/parser-babel.js";
-import { parse } from "@babel/parser";
 import * as t from "@babel/types";
-import { transformFromAst } from "@babel/standalone";
+import { transform, transformFromAst } from "@babel/standalone";
 import {
   ExtractState,
   extractRoutes,
@@ -133,9 +132,11 @@ export async function exportAsSourceFiles({
     }
 
     // Prepend with `export default` for functions
-    const ast = parse(fn.source, {
-      plugins: fn.typescript ? ["typescript"] : [],
-    });
+    const ast = transform(fn.source, {
+      filename: `expr.${fn.typescript ? "ts" : "js"}`,
+      plugins: fn.typescript ? ["syntax-typescript"] : [],
+      ast: true,
+    }).ast;
     const statements = ast.program.body.map((statement) => {
       if (statement.type === "FunctionDeclaration") {
         const exportDefault = t.exportDefaultDeclaration(statement);

@@ -32,7 +32,6 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@babel/parser": "^7.22.7",
     "@babel/standalone": "^7.22.9",
     "@babel/types": "^7.22.5",
     "@next-core/types": "^1.6.0",

@@ -1,6 +1,5 @@
 import * as t from "@babel/types";
-import { transformFromAst } from "@babel/standalone";
-import { parseExpression } from "@babel/parser";
+import { transform, transformFromAst } from "@babel/standalone";
 import { isObject } from "@next-core/utils/general";
 import {
   NodeType,
@@ -535,7 +534,8 @@ function transformExpressionString(
     );
 
     try {
-      const ast = parseExpression(source);
+      const file = transform(`(${source})`, { ast: true }).ast;
+      const ast = (file.program.body[0] as t.ExpressionStatement).expression;
       const node = t.taggedTemplateExpression(
         t.identifier("E"),
         t.templateLiteral(
