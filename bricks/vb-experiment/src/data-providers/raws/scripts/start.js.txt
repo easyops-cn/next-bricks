@@ -1,16 +1,14 @@
 import path from "node:path";
-import { createRequire } from "node:module";
 import { spawn } from "node:child_process";
-import { rm, readFile, writeFile } from "node:fs/promises";
+import { rm, readFile, writeFile, readdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { parse } from "@babel/parser";
 import babelGenerator from "@babel/generator";
 import * as t from "@babel/types";
 import babelTraverse from "@babel/traverse";
+import { babel } from "./babel.js";
 import { transpile } from "./transpile.js";
 
-const require = createRequire(import.meta.url);
-const babel = getBinPath("@babel/cli", "babel");
 const { default: traverse } = babelTraverse;
 const { default: generate } = babelGenerator;
 
@@ -32,80 +30,12 @@ function start() {
     const out = String(data);
     console.log(out);
     if (out.includes("Successfully compiled ")) {
-      const functionsIndexJsPath = path.resolve("temp/resources/functions/index.js");
-      if (existsSync(functionsIndexJsPath)) {
-        const content = await readFile(functionsIndexJsPath, "utf-8");
-        const file = parse(content, { sourceType: "module" });
-        const importsMap = new Map();
-        const functions = new Set();
-        traverse(file, {
-          ImportDeclaration({ node }) {
-            for (const specifier of node.specifiers) {
-              if (specifier.type === "ImportDefaultSpecifier") {
-                importsMap.set(specifier.local.name, node.source.value);
-              }
-            }
-          },
-          ExportDefaultDeclaration({ node }) {
-            if (node.declaration.type === "ArrayExpression") {
-              for (const element of node.declaration.elements) {
-                if (element.type === "Identifier") {
-                  functions.add(element.name);
-                }
-              }
-            }
-          }
-        });
-
-        const statements = [
-          t.importDeclaration(
-            [t.importSpecifier(t.identifier("Function"), t.identifier("Function"))],
-            t.stringLiteral("jsx")
-          ),
-
-          t.exportDefaultDeclaration(
-            t.jsxFragment(
-              t.jsxOpeningFragment(),
-              t.jsxClosingFragment(),
-              [...functions].map(fn =>
-                t.jsxElement(
-                  t.jsxOpeningElement(
-                    t.jsxIdentifier("Function"),
-                    [
-                      t.jsxAttribute(
-                        t.jsxIdentifier("url"),
-                        t.stringLiteral(importsMap.get(fn)),
-                      ),
-                      t.jsxAttribute(
-                        t.jsxIdentifier("from"),
-                        t.jsxExpressionContainer(
-                          t.memberExpression(
-                            t.memberExpression(
-                              t.identifier("import"),
-                              t.identifier("meta"),
-                            ),
-                            t.identifier("url"),
-                          )
-                        )
-                      )
-                    ],
-                    true
-                  ),
-                  null,
-                  [],
-                  true
-                )
-              )
-            )
-          )
-        ];
-
-        const { code } = generate(t.program(statements, undefined, "module"));
-
-        await Promise.all([
-          writeFile(path.resolve("temp/resources/functions/index.jsx"), code),
-          rm(functionsIndexJsPath),
-        ]);
+      try {
+        await processFunctions();
+        await processExpressions();
+      } catch (e) {
+        console.error("Transpile failed:", e);
+        return;
       }
 
       transpile();
@@ -121,11 +51,140 @@ function start() {
   });
 }
 
-function getBinPath(packageName, binName = packageName) {
-  const packageJsonPath = require.resolve(`${packageName}/package.json`);
-  const packageJson = require(packageJsonPath);
-  if (typeof packageJson.bin === "string") {
-    return packageJson.bin;
+async function processFunctions() {
+  const functionsIndexJsPath = path.resolve("temp/resources/functions/index.js");
+  if (existsSync(functionsIndexJsPath)) {
+    const content = await readFile(functionsIndexJsPath, "utf-8");
+    const ast = parse(content, { sourceType: "module" });
+    const importsMap = new Map();
+    const functions = new Set();
+    traverse(ast, {
+      ImportDeclaration({ node }) {
+        for (const specifier of node.specifiers) {
+          if (specifier.type === "ImportDefaultSpecifier") {
+            importsMap.set(specifier.local.name, node.source.value);
+          }
+        }
+      },
+      ExportDefaultDeclaration({ node }) {
+        if (node.declaration.type === "ObjectExpression") {
+          for (const prop of node.declaration.properties) {
+            if (prop.value.type === "Identifier") {
+              functions.add(prop.value.name);
+            }
+          }
+        }
+      }
+    });
+
+    const statements = [
+      t.importDeclaration(
+        [t.importSpecifier(t.identifier("Function"), t.identifier("Function"))],
+        t.stringLiteral("jsx")
+      ),
+
+      t.exportDefaultDeclaration(
+        t.jsxFragment(
+          t.jsxOpeningFragment(),
+          t.jsxClosingFragment(),
+          [...functions].map(fn =>
+            t.jsxElement(
+              t.jsxOpeningElement(
+                t.jsxIdentifier("Function"),
+                [
+                  t.jsxAttribute(
+                    t.jsxIdentifier("url"),
+                    t.stringLiteral(importsMap.get(fn)),
+                  ),
+                  t.jsxAttribute(
+                    t.jsxIdentifier("from"),
+                    t.jsxExpressionContainer(
+                      t.memberExpression(
+                        t.memberExpression(
+                          t.identifier("import"),
+                          t.identifier("meta"),
+                        ),
+                        t.identifier("url"),
+                      )
+                    )
+                  )
+                ],
+                true
+              ),
+              null,
+              [],
+              true
+            )
+          )
+        )
+      )
+    ];
+
+    const { code } = generate(t.program(statements, undefined, "module"));
+
+    await Promise.all([
+      writeFile(path.resolve("temp/resources/functions/index.jsx"), code),
+      rm(functionsIndexJsPath),
+    ]);
   }
-  return path.join(path.dirname(packageJsonPath), packageJson.bin[binName]);
+}
+
+function processExpressions() {
+  return Promise.all([
+    processExpressionsInFile("temp/routes.jsx"),
+    processExpressionsInDir("temp/views"),
+    processExpressionsInDir("temp/components"),
+    processExpressionsInDir("temp/resources/menus"),
+  ]);
+}
+
+async function processExpressionsInFile(filePath) {
+  const plugins = filePath.endsWith(".jsx") ? ["jsx"] : [];
+  const content = await readFile(filePath, "utf-8");
+  if (/\bE\s*`/.test(content)) {
+    const ast = parse(content, { plugins, sourceType: "module" });
+    let transformed = false;
+    traverse(ast, {
+      TaggedTemplateExpression(path) {
+        if (path.node.tag.type === "Identifier" && path.node.tag.name === "E") {
+          const { quasi } = path.node;
+          const flag = quasi.quasis[0].value.raw;
+          if (flag !== "" && flag !== "=" && flag !== "~") {
+            throw new Error(`Unexpected dynamic expression flag: "${flag}"`);
+          }
+          if (quasi.expressions.length !== 1) {
+            throw new Error(`Expect dynamic expression with one and only one expression, received ${quasi.expressions.length}`);
+          }
+          if (quasi.quasis.length > 2 || quasi.quasis[1]?.value.raw !== "") {
+            throw new Error(`Expect dynamic expression following no extra content, received: "${quasi.quasis[1]?.value.raw}"`);
+          }
+          const expr = quasi.expressions[0];
+          const exprSource = `<%${flag} ${content.substring(expr.start, expr.end)} %>`;
+          path.container[path.key] = t.stringLiteral(exprSource);
+          transformed = true;
+        }
+      }
+    });
+
+    if (transformed) {
+      const { code } = generate(ast);
+      await writeFile(filePath, code);
+    }
+  }
+}
+
+async function processExpressionsInDir(dir) {
+  const items = await readdir(dir, { withFileTypes: true });
+  return Promise.all(
+    items.map(async (item) => {
+      if (item.isFile()) {
+        if (/\.jsx?$/.test(item.name)) {
+          const filePath = path.join(dir, item.name);
+          await processExpressionsInFile(filePath);
+        }
+      } else if (item.isDirectory()) {
+        await processExpressionsInDir(path.join(dir, item.name));
+      }
+    })
+  );
 }

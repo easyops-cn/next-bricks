@@ -19,7 +19,14 @@ export interface ExtractedItem {
   nodeType: NodeType;
 }
 
-export type NodeType = "routes" | "template" | "bricks" | "others";
+export type NodeType =
+  | "routes"
+  | "template"
+  | "bricks"
+  | "context"
+  | "menu"
+  | "plain"
+  | "others";
 
 export interface ExtractState {
   extracts: ExtractedItem[];
@@ -147,7 +154,7 @@ function extractContext(
       name,
       path,
       node: context,
-      nodeType: "others",
+      nodeType: "context",
     });
 
     return getPlaceholder(type === "context" ? `views/${routeName}` : "", name);
@@ -168,7 +175,7 @@ function extractProxy(
       name,
       path,
       node: proxy,
-      nodeType: "others",
+      nodeType: "plain",
     });
 
     return getPlaceholder("", name);
@@ -346,10 +353,20 @@ function cleanBrick(
   delete brick.alias;
   delete brick.iid;
   delete brick.deviceOwner;
+  if (brick.events && Object.keys(brick.events).length === 0) {
+    delete brick.events;
+  }
+  if (brick.lifeCycle && Object.keys(brick.lifeCycle).length === 0) {
+    delete brick.lifeCycle;
+  }
+  removeFalsyFields(brick, ["bg", "portal"]);
 }
 
-function cleanContext(context: ContextConf & { path?: unknown }): void {
+function cleanContext(
+  context: ContextConf & { path?: unknown; relatedId?: unknown }
+): void {
   delete context.path;
+  delete context.relatedId;
 }
 
 function cleanProxy(proxy: CustomTemplateProxy & { invalid?: unknown }) {

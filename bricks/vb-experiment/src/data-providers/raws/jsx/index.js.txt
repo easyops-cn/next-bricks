@@ -4,3 +4,13 @@ import Function from "./Function.js";
 export { Style, Function };
 
 export * from "./constants.js";
+
+/**
+ * Expression
+ * @param {TemplateStringsArray} strings
+ * @param {any} expr
+ * @returns {any}
+ */
+export function E(strings, expr) {
+  throw new Error("Error: expression not transpiled!")
+}
