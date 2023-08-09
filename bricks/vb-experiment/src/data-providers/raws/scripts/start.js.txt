@@ -30,8 +30,13 @@ function start() {
     const out = String(data);
     console.log(out);
     if (out.includes("Successfully compiled ")) {
-      await processFunctions();
-      await processExpressions();
+      try {
+        await processFunctions();
+        await processExpressions();
+      } catch (e) {
+        console.error("Transpile failed:", e);
+        return;
+      }
 
       transpile();
     }
