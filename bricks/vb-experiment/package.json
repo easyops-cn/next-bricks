@@ -36,10 +36,8 @@
     "@babel/types": "^7.22.5",
     "@next-core/types": "^1.6.0",
     "@next-core/utils": "^1.5.7",
-    "change-case": "^4.1.2",
     "file-saver": "^2.0.5",
     "jszip": "^3.10.1",
-    "lodash": "^4.17.21",
     "prettier": "^2.8.6",
     "process": "^0.11.10"
   },

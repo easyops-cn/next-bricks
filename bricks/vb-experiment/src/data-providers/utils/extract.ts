@@ -1,16 +1,17 @@
 import type {
-  BrickConf,
   ContextConf,
   CustomTemplate,
   CustomTemplateProxy,
   RouteConf,
 } from "@next-core/types";
 import { isObject } from "@next-core/utils/general";
-import { isEmpty } from "lodash";
-
-interface BrickNode extends BrickConf {
-  alias?: string;
-}
+import type {
+  BrickNode,
+  BrickNormalNode,
+  BrickSourceNode,
+  RouteNode,
+  RouteNodeInBrick,
+} from "./interfaces.js";
 
 export interface ExtractedItem {
   name: string;
@@ -66,47 +67,41 @@ function getPlaceholder(folder: string, name: string): string {
 }
 
 export function extractRoutes(
-  routes: RouteConf[] | undefined,
+  routes: RouteConf[],
   path: WalkPath,
   state: ExtractState
-) {
-  if (Array.isArray(routes)) {
-    return routes.map((route) => extractRoute(route, path, state));
-  }
-  return routes;
+): RouteNode[] | undefined {
+  return routes.map((route) => extractRoute(route, path, state));
 }
 
 export function extractTemplates(
-  templates: CustomTemplate[] | undefined,
+  templates: CustomTemplate[],
   path: WalkPath,
   state: ExtractState
 ) {
-  if (Array.isArray(templates)) {
-    return templates.map((tpl) => extractTemplate(tpl, path, state));
-  }
-  return templates;
+  return templates.map((tpl) => extractTemplate(tpl, path, state));
 }
 
 function extractRoute(
   route: RouteConf,
   path: WalkPath,
   state: ExtractState
-): any {
+): RouteNode {
   const name = getAvailableName("route", route.alias, path, state.namePool);
   cleanRoute(route);
 
-  let node: any;
+  let node: RouteNode;
 
   const childrenPath = [...path, "views", name];
 
   if (route.type === "redirect") {
-    node = route;
+    node = route as RouteNode;
   } else if (route.type === "routes") {
     const { routes, ...restRoute } = route;
     node = {
       ...restRoute,
       children: extractRoutes(routes, path, state),
-    };
+    } as RouteNode;
   } else {
     const { bricks, ...restRoute } = route;
     const view = extractBricks(bricks, childrenPath, state);
@@ -121,7 +116,7 @@ function extractRoute(
     node = {
       ...restRoute,
       view: getPlaceholder(`views/${name}`, name),
-    };
+    } as RouteNode;
   }
 
   const context = extractContext(
@@ -144,7 +139,7 @@ function extractContext(
   routeName: string,
   path: WalkPath,
   state: ExtractState
-) {
+): string | undefined {
   if (Array.isArray(context) && context.length > 0) {
     for (const item of context) {
       cleanContext(item);
@@ -159,8 +154,6 @@ function extractContext(
 
     return getPlaceholder(type === "context" ? `views/${routeName}` : "", name);
   }
-
-  return context;
 }
 
 function extractProxy(
@@ -168,7 +161,7 @@ function extractProxy(
   path: WalkPath,
   state: ExtractState
 ) {
-  if (!isEmpty(proxy)) {
+  if (isObject(proxy) && Object.keys(proxy).length > 0) {
     const name = getAvailableName("proxy", "proxy", path, state.namePool);
     cleanProxy(proxy);
     state.extracts.push({
@@ -216,7 +209,7 @@ function getAvailableName(
 }
 
 function extractBricks(
-  bricks: BrickNode[] | undefined,
+  bricks: BrickSourceNode[] | undefined,
   path: WalkPath,
   state: ExtractState
 ) {
@@ -227,10 +220,10 @@ function extractBricks(
 }
 
 function extractBrick(
-  brick: BrickNode,
+  brick: BrickSourceNode,
   path: WalkPath,
   state: ExtractState
-): BrickNode | string {
+): BrickNode {
   let name: string | undefined;
   if (
     typeof brick.alias === "string" &&
@@ -245,8 +238,9 @@ function extractBrick(
     name = getAvailableName("brick", name, [...path, name], state.namePool, 2);
   }
 
-  const { slots, ...newBrick } = brick;
-  const children = [];
+  const { slots, ...newBrick } = brick as BrickNormalNode &
+    Pick<BrickSourceNode, "slots">;
+  const children: (BrickNode | RouteNodeInBrick)[] = [];
   const childrenPath: WalkPath = [...path, ...(name ? [name] : [])];
 
   if (isObject(slots)) {
@@ -260,7 +254,7 @@ function extractBrick(
           })),
           path,
           state
-        ) as any[];
+        ) as RouteNodeInBrick[];
         children.push(...routes);
       } else {
         const bricks = extractBricks(
@@ -270,14 +264,14 @@ function extractBrick(
           })),
           childrenPath,
           state
-        ) as any[];
+        ) as BrickNode[];
         children.push(...bricks);
       }
     }
   }
 
   if (isObject(newBrick.properties) && !Array.isArray(newBrick.properties)) {
-    (newBrick as BrickNode).properties = extractProperties(
+    newBrick.properties = extractProperties(
       newBrick.properties,
       childrenPath,
       state
@@ -321,10 +315,10 @@ function extractPropertyValue(
 ): unknown {
   if (key === "useBrick") {
     if (Array.isArray(value)) {
-      return extractBricks(value as BrickNode[], path, state);
+      return extractBricks(value as BrickSourceNode[], path, state);
     }
     if (isObject(value)) {
-      return extractBrick(value as unknown as BrickNode, path, state);
+      return extractBrick(value as unknown as BrickSourceNode, path, state);
     }
     return value;
   }
@@ -389,15 +383,16 @@ function cleanRoute(
   if (route.menu === "") {
     delete route.menu;
   }
-  removeFalsyFields(route, ["redirect", "exact"]);
+  removeFalsyFields(route as unknown as Record<string, unknown>, [
+    "redirect",
+    "exact",
+  ]);
   if (route.type === "bricks") {
     delete route.type;
   }
 }
 
-function cleanBrick(
-  brick: BrickConf & { alias?: string; deviceOwner?: unknown }
-): void {
+function cleanBrick(brick: BrickSourceNode): void {
   delete brick.alias;
   delete brick.iid;
   delete brick.deviceOwner;
@@ -407,7 +402,10 @@ function cleanBrick(
   if (brick.lifeCycle && Object.keys(brick.lifeCycle).length === 0) {
     delete brick.lifeCycle;
   }
-  removeFalsyFields(brick, ["bg", "portal"]);
+  removeFalsyFields(brick as unknown as Record<string, unknown>, [
+    "bg",
+    "portal",
+  ]);
 }
 
 function cleanContext(
@@ -424,15 +422,16 @@ function cleanProxy(proxy: CustomTemplateProxy & { invalid?: unknown }) {
       case "events":
       case "slots":
       case "methods":
-        if (value) {
+        if (isObject(value)) {
           for (const [j, v] of Object.entries(value)) {
-            if (v) {
-              for (const k of Object.keys(v)) {
+            if (isObject(v)) {
+              const keys = Object.keys(v);
+              for (const k of keys) {
                 if (!PROXY_KEYS[key].includes(k)) {
-                  delete (v as any)[k];
+                  delete v[k];
                 }
               }
-              if (Object.keys(v).length === 0) {
+              if (keys.length === 0) {
                 delete value[j];
               }
             }
@@ -445,7 +444,10 @@ function cleanProxy(proxy: CustomTemplateProxy & { invalid?: unknown }) {
   }
 }
 
-function removeFalsyFields(node: any, fields: string[]): void {
+function removeFalsyFields(
+  node: Record<string, unknown>,
+  fields: string[]
+): void {
   for (const field of fields) {
     if (!node[field]) {
       delete node[field];
