@@ -21,7 +21,11 @@
     "eo-menu-group",
     "eo-breadcrumb-item",
     "eo-breadcrumb",
-    "eo-frame-breadcrumb"
+    "eo-frame-breadcrumb",
+    "eo-sidebar-menu-item",
+    "eo-sidebar-menu-group",
+    "eo-sidebar-menu-submenu",
+    "eo-sidebar-menu"
   ],
   "icons": ["eo-antd-icon", "eo-easyops-icon", "eo-fa-icon", "eo-icon"],
   "containers": [
