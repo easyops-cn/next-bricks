@@ -1,7 +1,7 @@
-import Style from "./Style.js";
+import loadStyleText from "./loadStyleText.js";
 import Function from "./Function.js";
 
-export { Style, Function };
+export { loadStyleText, Function };
 
 export * from "./constants.js";
 
