@@ -39,6 +39,7 @@ export function transformExpressionString(
     try {
       const file = transform(`(${source})`, {
         ast: true,
+        code: false,
         plugins: [[PipelineOperatorMinimal, { proposal: "minimal" }]],
       }).ast;
       const ast = (file.program.body[0] as t.ExpressionStatement).expression;

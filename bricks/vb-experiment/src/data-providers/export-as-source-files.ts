@@ -6,7 +6,7 @@ import { saveAs } from "file-saver";
 import { format } from "prettier/standalone.js";
 import parserBabel from "prettier/parser-babel.js";
 import * as t from "@babel/types";
-import { transform, transformFromAst } from "@babel/standalone";
+import { transform, registerPlugin } from "@babel/standalone";
 import {
   ExtractState,
   extractRoutes,
@@ -37,6 +37,37 @@ import packageJson from "./raws/package.json.txt";
 import jsconfigJson from "./raws/jsconfig.json.txt";
 import readmeMd from "./raws/README.md.txt";
 import { JS_RESERVED_WORDS } from "./utils/constants.js";
+
+let fnGlobalImports: Set<string>;
+const transformStoryboardFunction = "transform-storyboard-function";
+registerPlugin(transformStoryboardFunction, {
+  name: transformStoryboardFunction,
+  visitor: {
+    FunctionDeclaration(path) {
+      if (path.parent.type === "Program") {
+        path.replaceWith(t.exportDefaultDeclaration(path.node));
+      }
+    },
+    Identifier(path) {
+      switch (path.node.name) {
+        case "FN":
+          fnGlobalImports.add('import FN from "./index.js";');
+          break;
+        case "_":
+          fnGlobalImports.add('import _ from "lodash";');
+          break;
+        case "moment":
+          fnGlobalImports.add('import moment from "moment";');
+          break;
+        case "PIPES":
+          fnGlobalImports.add(
+            'import { pipes as PIPES } from "@easyops-cn/brick-next-pipes";'
+          );
+          break;
+      }
+    },
+  },
+});
 
 export interface StoryboardAssemblyResult {
   storyboard: Storyboard;
@@ -138,27 +169,17 @@ export async function exportAsSourceFiles({
     }
 
     // Prepend with `export default` for functions
-    const ast = transform(fn.source, {
+    fnGlobalImports = new Set();
+    let { code } = transform(fn.source, {
       filename: `expr.${fn.typescript ? "ts" : "js"}`,
-      plugins: fn.typescript ? ["syntax-typescript"] : [],
-      ast: true,
-    }).ast;
-    const statements = ast.program.body.map((statement) => {
-      if (statement.type === "FunctionDeclaration") {
-        const exportDefault = t.exportDefaultDeclaration(statement);
-        if (statement.leadingComments) {
-          exportDefault.leadingComments = statement.leadingComments;
-          delete statement.leadingComments;
-        }
-        return exportDefault;
-      }
-      return statement;
+      plugins: [
+        ...(fn.typescript ? ["syntax-typescript"] : []),
+        transformStoryboardFunction,
+      ],
     });
-    const { code } = transformFromAst(
-      t.program(statements, undefined, "module"),
-      undefined,
-      {}
-    );
+    if (fnGlobalImports.size > 0) {
+      code = `${[...fnGlobalImports].join("\n")}\n\n${code}`;
+    }
 
     fnDir.file(`${fn.name}.${fn.typescript ? "ts" : "js"}`, code);
     fnImports.push(`import ${fn.name} from "./${fn.name}.js";`);

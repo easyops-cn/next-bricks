@@ -17,6 +17,7 @@ export function generateJsx(expression: t.Expression, imports: ImportInfo) {
           minimal: true,
         },
       },
+      cloneInputAst: false,
     }
   );
 

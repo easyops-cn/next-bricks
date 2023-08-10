@@ -60,12 +60,14 @@ declare module "@babel/standalone" {
     code: string;
   }
   interface TransformResult {
+    code: string;
     ast: import("@babel/types").File;
   }
   interface TransformOptions {
     filename?: string;
     plugins?: (string | [string, object])[];
     ast?: boolean;
+    code?: boolean;
   }
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface TransformFromAstOptions {
@@ -74,6 +76,7 @@ declare module "@babel/standalone" {
         minimal?: boolean;
       };
     };
+    cloneInputAst?: boolean;
   }
   interface PluginObject {
     name?: string;

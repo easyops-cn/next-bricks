@@ -20,9 +20,13 @@ export default function loadFunction(url, from) {
   const [name] = path.basename(resolvedPath).split(".");
   const source = readFileSync(resolvedPath, "utf-8");
 
-  // Remove `export default`
+  // Remove all import declarations,
+  // and replace `export default function() {}` with `function () {}`
   const ast = parse(source, { plugins: typescript ? ["typescript"] : [], sourceType: "module" });
   traverse(ast, {
+    ImportDeclaration(path) {
+      path.remove();
+    },
     ExportDefaultDeclaration(path) {
       path.replaceWith(path.node.declaration);
     }
