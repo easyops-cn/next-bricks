@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.8.2...@next-bricks/presentational@0.9.0) (2023-08-10)
+
+
+### Features
+
+* presentational-bricks.info-display-card-list ([8959697](https://github.com/easyops-cn/next-bricks/commit/8959697ff04684b76c6be70c49b5ab117daa743f))
+
+
+
+
+
 ## [0.8.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.8.1...@next-bricks/presentational@0.8.2) (2023-08-09)
 
 **Note:** Version bump only for package @next-bricks/presentational

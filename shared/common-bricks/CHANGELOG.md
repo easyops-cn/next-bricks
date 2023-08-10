@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.9.0...@next-shared/common-bricks@0.10.0) (2023-08-10)
+
+
+### Features
+
+* eo-sidebar-menu ([a19f70f](https://github.com/easyops-cn/next-bricks/commit/a19f70f546fe8dfb0ca909a545fa27a042458cc6))
+* presentational-bricks.info-display-card-list ([8959697](https://github.com/easyops-cn/next-bricks/commit/8959697ff04684b76c6be70c49b5ab117daa743f))
+
+
+
+
+
 # [0.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.8.0...@next-shared/common-bricks@0.9.0) (2023-08-09)
 
 
