@@ -6,11 +6,11 @@ import type {
   SidebarMenuGroup,
 } from "./types.js";
 
-function isGroup(item: SidebarMenuItem): item is SidebarMenuGroup {
+export function isGroup(item: SidebarMenuItem): item is SidebarMenuGroup {
   return item.type === "group";
 }
 
-function isSubMenu(item: SidebarMenuItem): item is SidebarMenuGroup {
+export function isSubMenu(item: SidebarMenuItem): item is SidebarMenuGroup {
   return item.type === "subMenu";
 }
 
