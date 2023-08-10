@@ -25,3 +25,7 @@ import "./menu-group/index.js";
 import "./breadcrumb-item/index.js";
 import "./breadcrumb/index.js";
 import "./frame-breadcrumb/index.js";
+import "./sidebar/sidebar-menu-item/index.js";
+import "./sidebar/sidebar-menu-group/index.js";
+import "./sidebar/sidebar-menu-submenu/index.js";
+import "./sidebar/sidebar-menu/index.js";

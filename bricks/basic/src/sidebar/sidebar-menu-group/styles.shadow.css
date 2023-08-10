@@ -1,0 +1,79 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.menu-group-title {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 10px 12px;
+  line-height: 20px;
+  color: var(--antd-text-color-secondary);
+  border-radius: var(--larger-border-radius);
+  transition: all var(--side-bar-collapse-transition-duration)
+    var(--side-bar-collapse-transition-timing-function);
+}
+
+.menu-group-title-icon-container {
+  flex-shrink: 0;
+  margin-right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  font-size: 14px;
+  transition: all var(--side-bar-collapse-transition-duration)
+    var(--side-bar-collapse-transition-timing-function);
+}
+
+.menu-group-title-icon {
+  width: 1em;
+  height: 1em;
+  border-bottom: 2px solid rgba(218, 223, 232, 1);
+}
+
+.menu-group-title-text {
+  flex: 1;
+  font-size: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.menu-group-list slot::slotted(*) {
+  margin-top: 2px;
+}
+
+/* menu-collapsed */
+:host([menu-collapsed]) .menu-group-title {
+  padding: 10px calc(50% - 8px);
+}
+
+:host(:not([menu-collapsed])) .menu-group-title-icon-container {
+  width: 0;
+  margin-right: 0;
+  opacity: 0;
+}
+
+:host([menu-collapsed]) .menu-group-title-text {
+  opacity: 0;
+}
+
+:host(:not([menu-collapsed])) .menu-group-title-text {
+  white-space: pre-wrap;
+  display: -webkit-inline-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+}
