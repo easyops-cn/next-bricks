@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.9.0...@next-bricks/presentational@0.9.1) (2023-08-10)
+
+
+### Bug Fixes
+
+* v3构件待解决问题 ([d81ed80](https://github.com/easyops-cn/next-bricks/commit/d81ed80a90182d5ae58858c118b43b3e00d13707))
+
+
+
+
+
 # [0.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.8.2...@next-bricks/presentational@0.9.0) (2023-08-10)
 
 
