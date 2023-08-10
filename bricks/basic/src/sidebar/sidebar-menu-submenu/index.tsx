@@ -8,7 +8,7 @@ import type {
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import classNames from "classnames";
-import { isSidebarMenuItem } from "../utils.js";
+import { useUpdateMenuCollapsedState } from "../utils.js";
 
 const { defineElement, property } = createDecorators();
 
@@ -75,8 +75,9 @@ export function EoSidebarMenuSubmenuComponent(
 ) {
   const { icon, collapsed, menuCollapsed, onCollapseChange } = props;
 
+  const [slotRef] = useUpdateMenuCollapsedState(menuCollapsed);
+
   const titleRef = useRef<HTMLDivElement>(null);
-  const slotRef = useRef<HTMLSlotElement>(null);
 
   const handleClick = useCallback(() => {
     !menuCollapsed && onCollapseChange?.(!collapsed);
@@ -90,30 +91,6 @@ export function EoSidebarMenuSubmenuComponent(
       titleElem?.removeEventListener("click", handleClick);
     };
   }, [handleClick]);
-
-  const updateChildrenMenuCollapsedState = useCallback(() => {
-    slotRef.current?.assignedElements().forEach((ele) => {
-      if (isSidebarMenuItem(ele)) {
-        (ele as any).menuCollapsed = menuCollapsed;
-      }
-    });
-  }, [menuCollapsed]);
-
-  useEffect(() => {
-    updateChildrenMenuCollapsedState();
-  }, [menuCollapsed, updateChildrenMenuCollapsedState]);
-
-  useEffect(() => {
-    const slotElem = slotRef.current;
-    const handleSlotchange = () => {
-      updateChildrenMenuCollapsedState();
-    };
-    slotElem?.addEventListener("slotchange", handleSlotchange);
-
-    return () => {
-      slotElem?.removeEventListener("slotchange", handleSlotchange);
-    };
-  }, [updateChildrenMenuCollapsedState]);
 
   return (
     <div
