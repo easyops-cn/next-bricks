@@ -3,6 +3,7 @@ import { transformFromAst } from "@babel/standalone";
 import type { ImportInfo } from "../interfaces.js";
 import { PLACEHOLDER_PREFIX_REGEXP } from "../extract.js";
 import { generateImports, getVarNamesByImports } from "../handleImports.js";
+import { JS_RESERVED_WORDS } from "../constants.js";
 
 export function generateJsx(expression: t.Expression, imports: ImportInfo) {
   const exportDefault = t.exportDefaultDeclaration(expression);
@@ -35,7 +36,7 @@ export function generateJsx(expression: t.Expression, imports: ImportInfo) {
 
     let counter = 2;
     let varName = baseName;
-    while (usedVarNames.has(varName)) {
+    while (usedVarNames.has(varName) || JS_RESERVED_WORDS.has(varName)) {
       varName = `${baseName}_${counter++}`;
     }
     usedVarNames.add(varName);

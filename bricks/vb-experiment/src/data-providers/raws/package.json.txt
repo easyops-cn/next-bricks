@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "run-p transpile serve",
-    "transpile": "node scripts/start.js",
+    "dev": "run-p start serve",
+    "start": "node scripts/start.js",
     "serve": "brick-container-serve --local-micro-apps=\"__PROJECT_ID__\" --live-reload"
   },
   "engines": {

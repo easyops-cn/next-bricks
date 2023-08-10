@@ -53,7 +53,7 @@ export function jsx(type, config) {
       return {
         ...restConfig,
         dataSource: value,
-        brick: type === ForEach ? ":forEach" : type === "If" ? ":if" : ":switch",
+        brick: type === ForEach ? ":forEach" : type === If ? ":if" : ":switch",
         children: fixBrickChildren(config.children),
       };
     }

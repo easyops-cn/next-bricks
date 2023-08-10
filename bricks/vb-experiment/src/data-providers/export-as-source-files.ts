@@ -32,9 +32,11 @@ import srcIndexJs from "./raws/src/index.js.txt";
 import editorConfig from "./raws/.editorconfig.txt";
 import gitIgnore from "./raws/.gitignore.txt";
 import babelConfigJs from "./raws/babel.config.js.txt";
+import declarationsDTs from "./raws/declarations.d.ts.txt";
 import packageJson from "./raws/package.json.txt";
 import jsconfigJson from "./raws/jsconfig.json.txt";
 import readmeMd from "./raws/README.md.txt";
+import { JS_RESERVED_WORDS } from "./utils/constants.js";
 
 export interface StoryboardAssemblyResult {
   storyboard: Storyboard;
@@ -47,6 +49,8 @@ export interface StoryboardAssemblyResult {
       "homepage" | "theme" | "locales" | "noAuthGuard"
     > & {
       layoutType?: string;
+      defaultConfig?: string;
+      icon?: string;
     };
     brickNextVersion?: number;
   };
@@ -74,6 +78,8 @@ export async function exportAsSourceFiles({
     theme: projectDetail.appSetting.theme,
     noAuthGuard: projectDetail.appSetting.noAuthGuard,
     locales: projectDetail.appSetting.locales,
+    defaultConfig: JSON.parse(projectDetail.appSetting.defaultConfig || "{}"),
+    menuIcon: JSON.parse(projectDetail.appSetting.icon || "null"),
     standaloneMode: true,
   };
   src.file(
@@ -179,7 +185,10 @@ export async function exportAsSourceFiles({
       filename,
       formatJs(generate(menu, "menu", ["resources", "menus", filename]))
     );
-    const name = menu.menuId.replace(/^\d+|[^\w]+/g, "_");
+    let name = menu.menuId.replace(/^\d+|[^\w]+/g, "_");
+    if (JS_RESERVED_WORDS.has(name)) {
+      name = `${name}__2`;
+    }
     menuImports.push(`import ${name} from "./${filename}";`);
     menuNames.push(name);
   }
@@ -255,6 +264,7 @@ export async function exportAsSourceFiles({
   project.file(".editorconfig", editorConfig);
   project.file(".gitignore", gitIgnore);
   project.file("babel.config.js", babelConfigJs);
+  project.file("declarations.d.ts", declarationsDTs);
   project.file("jsconfig.json", jsconfigJson);
   project.file(
     "package.json",
