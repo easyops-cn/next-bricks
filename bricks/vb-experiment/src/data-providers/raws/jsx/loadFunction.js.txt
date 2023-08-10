@@ -4,7 +4,6 @@ import { fileURLToPath } from "node:url";
 import { parse } from "@babel/parser";
 import babelGenerator from "@babel/generator";
 import babelTraverse from "@babel/traverse";
-import * as t from "@babel/types";
 
 const { default: traverse } = babelTraverse;
 const { default: generate } = babelGenerator;
@@ -22,15 +21,13 @@ export default function loadFunction(url, from) {
   const source = readFileSync(resolvedPath, "utf-8");
 
   // Remove `export default`
-  // NOTE: this removes interface and type-alias declarations too!
   const ast = parse(source, { plugins: typescript ? ["typescript"] : [], sourceType: "module" });
-  let fn;
   traverse(ast, {
     ExportDefaultDeclaration(path) {
-      fn = path.node.declaration;
+      path.replaceWith(path.node.declaration);
     }
   });
-  const { code } = generate(fn ? t.program([fn], undefined, "script") : ast);
+  const { code } = generate(ast);
 
   return {
     name,

@@ -312,7 +312,11 @@ function generateByFileStructure(
     } else {
       folder.file(
         `${item.name}.js${
-          item.nodeType === "others" || item.nodeType === "context" ? "" : "x"
+          item.nodeType === "routes" ||
+          item.nodeType === "bricks" ||
+          item.nodeType === "template"
+            ? "x"
+            : ""
         }`,
         formatJs(generate(item.node, item.nodeType, childPath))
       );

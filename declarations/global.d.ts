@@ -64,7 +64,7 @@ declare module "@babel/standalone" {
   }
   interface TransformOptions {
     filename?: string;
-    plugins?: string[];
+    plugins?: (string | [string, object])[];
     ast?: boolean;
   }
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -74,6 +74,11 @@ declare module "@babel/standalone" {
         minimal?: boolean;
       };
     };
+  }
+  interface PluginObject {
+    name?: string;
+    inherits?: unknown;
+    visitor?: import("@babel/traverse").Visitor;
   }
 
   export const transformFromAst: (
@@ -86,6 +91,10 @@ declare module "@babel/standalone" {
     sourceCode: string,
     options: TransformOptions
   ) => TransformResult;
+
+  export const registerPlugin: (name: string, plugin: PluginObject) => void;
+
+  export const availablePlugins: Record<string, unknown>;
 }
 
 interface Window {

@@ -38,8 +38,9 @@ export async function build() {
   ]);
 }
 
+const start = performance.now();
 build().then(() => {
-  console.log("Build done!");
+  console.log("Build done!", `(${Math.round(performance.now() - start)}ms)`);
 }, (err) => {
   console.error("Build failed:", err);
 });

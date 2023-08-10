@@ -1,6 +1,6 @@
 import path from "node:path";
 import { spawn } from "node:child_process";
-import { rm, readFile, writeFile, readdir } from "node:fs/promises";
+import { readFile, writeFile, readdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { parse } from "@babel/parser";
 import babelGenerator from "@babel/generator";
@@ -166,7 +166,7 @@ async function processExpressionsInFile(filePath, processCssAsWell) {
       if (hasCss && path.node.source.value.startsWith(".") && path.node.source.value.endsWith(".css")) {
         const defaultSpecifier = path.node.specifiers.find(spec => spec.type === "ImportDefaultSpecifier");
         if (defaultSpecifier) {
-          const replacement = t.variableDeclaration("const", [
+          const varDeclaration = t.variableDeclaration("const", [
             t.variableDeclarator(
               defaultSpecifier.local,
               t.callExpression(
@@ -184,7 +184,7 @@ async function processExpressionsInFile(filePath, processCssAsWell) {
               )
             )
           ]);
-          path.container[path.key] = replacement;
+          path.replaceWith(varDeclaration);
           transformed = true;
           importedCss = true;
         }
@@ -202,7 +202,7 @@ async function processExpressionsInFile(filePath, processCssAsWell) {
           args.splice(0, 1);
         }
         const exprSource =  `<%${flag} ${content.substring(args[0].start, args[args.length - 1].end)} %>`;
-        path.container[path.key] = t.stringLiteral(exprSource);
+        path.replaceWith(t.stringLiteral(exprSource));
         transformed = true;
       }
     }

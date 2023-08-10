@@ -2,6 +2,7 @@ import { spawn } from "node:child_process";
 import { babel } from "./babel.js";
 
 export function transpile() {
+  const start = performance.now();
   const task = spawn(babel, [
     "temp",
     "--out-dir",
@@ -9,7 +10,7 @@ export function transpile() {
     "--config-file",
     "./babel.config.js",
     "--extensions",
-    ".js,.jsx",
+    ".jsx",
     "--copy-files",
     "--delete-dir-on-start"
   ], {
@@ -18,7 +19,7 @@ export function transpile() {
 
   task.on('close', (code) => {
     if (code === 0) {
-      console.log("Transpile done!");
+      console.log("Transpile done!", `(${Math.round(performance.now() - start)}ms)`);
       spawn("node", [
         "scripts/build.js"
       ], {
