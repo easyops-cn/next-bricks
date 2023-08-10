@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, Ref } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import type { ButtonType, ComponentSize, Shape, Target } from "../interface.js";
@@ -23,6 +23,7 @@ export interface ButtonProps {
   href?: string;
   target?: string;
   buttonStyle?: React.CSSProperties;
+  callback?: Ref<HTMLButtonElement>;
 }
 
 const { defineElement, property } = createDecorators();
@@ -99,6 +100,26 @@ class Button extends ReactNextElement implements ButtonProps {
     | React.CSSProperties
     | undefined;
 
+  /**
+   * 是否有slot
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor hasSlot: boolean | undefined;
+
+  #getSlotBySelector(selector: string): HTMLSlotElement {
+    return this.shadowRoot?.querySelector(selector) as HTMLSlotElement;
+  }
+
+  #renderCallback = () => {
+    const slot = this.#getSlotBySelector("slot");
+
+    slot?.addEventListener("slotchange", () => {
+      this.hasSlot = slot.assignedNodes().length > 0;
+    });
+  };
+
   render() {
     return (
       <ButtonComponent
@@ -112,6 +133,7 @@ class Button extends ReactNextElement implements ButtonProps {
         href={this.href}
         target={this.target}
         buttonStyle={this.buttonStyle}
+        callback={this.#renderCallback}
       />
     );
   }
@@ -128,10 +150,12 @@ export function ButtonComponent({
   href,
   target,
   buttonStyle,
+  callback,
 }: ButtonProps) {
   const buttonNode = useMemo(() => {
     const button = (
       <button
+        ref={callback}
         className={classNames(size, shape, type, {
           danger: danger,
         })}

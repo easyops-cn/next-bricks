@@ -305,3 +305,7 @@ button:active {
 .large.round {
   border-radius: 40px;
 }
+
+:host([has-slot]) button > eo-icon {
+  margin-right: 8px;
+}
