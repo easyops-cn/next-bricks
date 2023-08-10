@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.1.6...@next-bricks/vb-experiment@0.1.7) (2023-08-10)
+
+
+### Bug Fixes
+
+* refactor expressions ([03ff1fc](https://github.com/easyops-cn/next-bricks/commit/03ff1fc2c62da4bf011e80b39cf3ceaff668a97e))
+* refactor generators and transformers ([3de73f9](https://github.com/easyops-cn/next-bricks/commit/3de73f93dd18ca880c8cf830c63c22cab34c7ad9))
+* transform useBrick ([78c0751](https://github.com/easyops-cn/next-bricks/commit/78c0751c8661263b0d0c2c8c0959e8878161bfde))
+* use @babel/standalone instead of @babel/parser to parse ([038c915](https://github.com/easyops-cn/next-bricks/commit/038c915211e874a3655de3666e7b7bbc606a6449))
+
+
+
+
+
 ## [0.1.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.1.5...@next-bricks/vb-experiment@0.1.6) (2023-08-09)
 
 
