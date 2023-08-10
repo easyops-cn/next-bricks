@@ -25,6 +25,8 @@ import type {
 } from "@next-shared/general/types";
 import type { Popover, PopoverProps } from "../popover/index.js";
 import "@next-core/theme";
+import classnames from "classnames";
+import { ThreeLevelMenuPopoverContent } from "./ThreeLevelMenuPopoverContent.js";
 
 const { defineElement, property } = createDecorators();
 
@@ -36,6 +38,140 @@ const WrappedPopover = wrapBrick<Popover, PopoverProps>("eo-popover");
 interface NavMenuProps {
   menu?: SidebarMenu;
   showTooltip?: boolean;
+}
+
+interface MenuItemComProps {
+  item: SidebarMenuItem;
+  topData?: boolean;
+  selectedKey?: string[];
+  showTooltip?: boolean;
+}
+interface SimpleMenuItemComProps extends MenuItemComProps {
+  item: SidebarMenuSimpleItem;
+}
+interface MenuGroupComProps extends MenuItemComProps {
+  item: SidebarMenuGroup;
+}
+function RenderMenuItemCom(props: MenuItemComProps) {
+  const { item } = props;
+  return isSubMenu(item as SidebarMenuGroup) ? (
+    <SubMenuItemCom {...props} item={item as SidebarMenuGroup}></SubMenuItemCom>
+  ) : isGroup(item) ? (
+    <GroupMenuItemCom {...props} item={item as SidebarMenuGroup} />
+  ) : (
+    <SimpleMenuItemCom
+      {...props}
+      item={item as SidebarMenuSimpleItem}
+    ></SimpleMenuItemCom>
+  );
+}
+function SimpleMenuItemCom(props: SimpleMenuItemComProps) {
+  const { item, showTooltip, selectedKey = [] } = props;
+  return (
+    <WrappedMenuItem
+      key={item.key}
+      title={showTooltip ? item.text : ""}
+      active={item.key ? selectedKey.includes(item.key) : false}
+    >
+      {renderLinkCom(item, { width: "100%" })}
+    </WrappedMenuItem>
+  );
+}
+function SubMenuItemCom({
+  item,
+  topData,
+  showTooltip,
+  selectedKey = [],
+}: MenuGroupComProps) {
+  return item.items?.length > 0 ? (
+    <WrappedPopover
+      className={classnames("popover", { subprime: !topData })}
+      trigger={"hover"}
+      placement={topData ? "bottom-start" : "right-start"}
+      distance={0}
+      anchorDisplay="block"
+    >
+      <WrappedMenuItem
+        className="sub-menu-item-label"
+        key={item.key}
+        slot="anchor"
+        title={showTooltip ? item.title : ""}
+      >
+        {renderSpanCom(item, !topData)}
+      </WrappedMenuItem>
+      <div className="sub-menu-wrapper">
+        {item.items.map((innerItem) => (
+          <React.Fragment key={innerItem.key}>
+            <RenderMenuItemCom
+              item={innerItem}
+              selectedKey={selectedKey}
+              showTooltip={showTooltip}
+            />
+          </React.Fragment>
+        ))}
+      </div>
+    </WrappedPopover>
+  ) : null;
+}
+
+function GroupMenuItemCom({
+  item,
+  showTooltip,
+  selectedKey = [],
+}: MenuGroupComProps) {
+  return item.items?.length > 0 ? (
+    <>
+      <div className="group-label">{item.title}</div>
+      <div className="group-wrapper">
+        {item.items.map((innerItem) => {
+          return (
+            <React.Fragment key={innerItem.key}>
+              <RenderMenuItemCom
+                item={innerItem}
+                showTooltip={showTooltip}
+                selectedKey={selectedKey}
+              />
+            </React.Fragment>
+          );
+        })}
+      </div>
+    </>
+  ) : null;
+}
+
+function ThreeLevelMenuCom({
+  item,
+  selectedKey = [],
+  showTooltip,
+}: {
+  item: SidebarMenuGroup;
+  selectedKey?: string[];
+  showTooltip?: boolean;
+}) {
+  return item.items?.length > 0 ? (
+    <WrappedPopover
+      className={classnames("three-level-menu-popover", "popover")}
+      trigger={"hover"}
+      placement={"bottom-start"}
+      distance={0}
+      key={item.key}
+    >
+      <WrappedMenuItem
+        className="sub-menu-item-label"
+        key={item.key}
+        slot="anchor"
+        title={showTooltip ? item.title : ""}
+      >
+        {renderSpanCom(item)}
+      </WrappedMenuItem>
+      <div className="sub-menu-wrapper">
+        <ThreeLevelMenuPopoverContent
+          menuItem={item}
+          selectedKey={selectedKey}
+        ></ThreeLevelMenuPopoverContent>
+      </div>
+    </WrappedPopover>
+  ) : null;
 }
 
 /**
@@ -96,78 +232,28 @@ function NavMenuComponent(props: NavMenuProps) {
     return unListen;
   }, []);
 
-  const renderSimpleMenuItem = (item: SidebarMenuSimpleItem) => {
-    return (
-      <WrappedMenuItem
-        key={item.key}
-        title={showTooltip ? item.text : ""}
-        active={item.key ? selectedKey.includes(item.key) : false}
-      >
-        {renderLinkCom(item, { width: "100%" })}
-      </WrappedMenuItem>
-    );
-  };
-
-  const renderSubMenuItem = (item: SidebarMenuGroup) => {
-    if (item.items?.length > 0) {
-      return (
-        <WrappedPopover
-          className="popover"
-          trigger="hover"
-          placement="bottom-start"
-        >
-          <WrappedMenuItem
-            className="sub-menu-item-label"
-            key={item.key}
-            slot="anchor"
-            title={showTooltip ? item.title : ""}
-          >
-            {renderSpanCom(item)}
-          </WrappedMenuItem>
-          <div className="sub-menu-wrapper">
-            {item.items.map((innerItem) => (
-              <React.Fragment key={innerItem.key}>
-                {renderMenuItem(innerItem)}
-              </React.Fragment>
-            ))}
-          </div>
-        </WrappedPopover>
-      );
-    }
-  };
-
-  const renderGroupMenuItem = (item: SidebarMenuGroup) => {
-    if (item.items?.length > 0) {
-      return (
-        <>
-          <div className="group-label">{item.title}</div>
-          <div className="group-wrapper">
-            {item.items.map((innerItem) => {
-              return (
-                <React.Fragment key={innerItem.key}>
-                  {renderMenuItem(innerItem)}
-                </React.Fragment>
-              );
-            })}
-          </div>
-        </>
-      );
-    }
-  };
-
-  function renderMenuItem(item: SidebarMenuItem) {
-    return isSimple(item)
-      ? renderSimpleMenuItem(item)
-      : isSubMenu(item)
-      ? renderSubMenuItem(item)
-      : isGroup(item) && renderGroupMenuItem(item);
-  }
-
   return (
     <div className="nav-menu-wrapper">
       {menu?.menuItems.map((item) => {
         return (
-          <React.Fragment key={item.key}>{renderMenuItem(item)}</React.Fragment>
+          <React.Fragment key={item.key}>
+            {isSubMenu(item as SidebarMenuGroup, true) &&
+            (item as SidebarMenuGroup).childLayout === "category" &&
+            (item as SidebarMenuGroup).items?.length ? (
+              <ThreeLevelMenuCom
+                item={item as SidebarMenuGroup}
+                showTooltip={showTooltip}
+                selectedKey={selectedKey}
+              />
+            ) : (
+              <RenderMenuItemCom
+                item={item}
+                showTooltip={showTooltip}
+                selectedKey={selectedKey}
+                topData={true}
+              />
+            )}
+          </React.Fragment>
         );
       })}
     </div>

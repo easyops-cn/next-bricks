@@ -59,6 +59,9 @@ export interface SidebarMenuGroup {
 
   /** 该分组下的子菜单是否默认展开。 */
   defaultExpanded?: boolean;
+
+  /** 子菜单项的布局方式。 */
+  childLayout?: "default" | "category";
 }
 
 /** 图标配置。 */

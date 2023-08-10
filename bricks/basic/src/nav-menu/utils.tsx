@@ -7,6 +7,11 @@ import type {
 } from "@next-shared/general/types";
 import type { Link, LinkProps } from "../link/index.js";
 import { Target } from "../interface.js";
+import type {
+  GeneralIcon,
+  GeneralIconProps,
+} from "@next-bricks/icons/general-icon";
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 const WrappedLinkItem = wrapBrick<Link, LinkProps>("eo-link");
 
@@ -44,10 +49,14 @@ export const renderLinkCom = (
   );
 };
 
-export const renderSpanCom = (item: SidebarMenuGroup): React.ReactElement => {
+export const renderSpanCom = (
+  item: SidebarMenuGroup,
+  subMenu?: boolean
+): React.ReactElement => {
   return (
     <span key={item.key} className="menu-item-label">
       {item.title}
+      {subMenu && <WrappedIcon lib="fa" icon="angle-right" />}
     </span>
   );
 };
