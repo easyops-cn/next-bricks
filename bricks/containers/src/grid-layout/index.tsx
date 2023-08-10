@@ -262,7 +262,7 @@ class GridLayout extends ReactNextElement implements GridProps {
       gridColumn: columnSpan === 1 ? "" : `span ${columnSpan}`,
       gridRow: rowSpan === 1 ? "" : `span ${rowSpan}`,
       gridTemplateColumns:
-        this.templateColumns || columns === 1 ? "" : `repeat(${columns},1fr)`,
+        this.templateColumns || (columns === 1 ? "" : `repeat(${columns},1fr)`),
       gridTemplateRows: rows === 1 ? "" : `repeat(${rows},1fr)`,
     };
 

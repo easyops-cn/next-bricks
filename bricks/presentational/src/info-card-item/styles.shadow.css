@@ -167,7 +167,6 @@ eo-icon {
   }
 }
 
-/* expanded-area-1 */
 :host([has-icon]) .card-content-container {
   margin-left: 20px;
 }
