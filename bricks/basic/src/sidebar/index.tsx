@@ -12,7 +12,7 @@ import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
-import type { SidebarMenu } from "@next-shared/general/types";
+import type { SidebarMenu as SidebarMenuType } from "@next-shared/general/types";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import FixedSvg from "../images/fixed.svg";
@@ -24,7 +24,7 @@ import {
   SIDE_BAR_EXPAND_STATE,
   SIDE_BAR_HAS_BEEN_USED,
   SIDE_BAR_RESIZE_WIDTH,
-  renderMenu,
+  SidebarMenu,
   sideBarCollapsedWidth,
   sideBarWidth,
 } from "./utils.js";
@@ -40,7 +40,7 @@ const WrappedTooltip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 export interface EoSidebarProps {
-  menu: SidebarMenu;
+  menu: SidebarMenuType;
   expandedState?: ExpandedState;
   hiddenFixedIcon?: boolean;
 }
@@ -67,7 +67,7 @@ class EoSidebar extends ReactNextElement implements EoSidebarProps {
    * 菜单数据
    */
   @property({ attribute: false })
-  accessor menu!: SidebarMenu;
+  accessor menu!: SidebarMenuType;
 
   /**
    * 是否隐藏固定按钮
@@ -299,7 +299,7 @@ export function EoSidebarComponent(props: EoSidebarComponentProps) {
           "show-shadow": showContentShadow,
         })}
       >
-        {renderMenu(menu, expandedState)}
+        <SidebarMenu menu={menu} expandedState={expandedState} />
         <div ref={contentBottomPlaceholderRef} />
       </div>
 

@@ -1,8 +1,8 @@
-import React, { ReactNode, useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { getCssPropertyValue } from "@next-core/runtime";
 import { wrapBrick } from "@next-core/react-element";
 import type {
-  SidebarMenu,
+  SidebarMenu as SidebarMenuType,
   SidebarMenuGroup,
   SidebarMenuItem,
   SidebarMenuSimpleItem,
@@ -95,56 +95,75 @@ const WrappedSidebarMenuSubmenu = wrapBrick<
   EoSidebarMenuSubmenuProps
 >("eo-sidebar-menu-submenu");
 
-function renderItem(item: SidebarMenuSimpleItem): ReactNode {
+function MenuSimpleItem(props: SidebarMenuSimpleItem) {
+  const { to, href, target, icon, text } = props;
   return (
     <WrappedSidebarMenuItem
-      key={item.key}
-      url={item.to as any}
-      href={item.href}
-      target={item.target as any}
-      icon={item.icon}
+      url={to as any}
+      href={href}
+      target={target as any}
+      icon={icon}
     >
-      {item.text}
+      {text}
     </WrappedSidebarMenuItem>
   );
 }
 
-function renderGroup(item: SidebarMenuGroup): ReactNode {
-  if (item.items?.length > 0) {
+function MenuGroup(props: SidebarMenuGroup) {
+  const { title, items } = props;
+
+  if (items?.length > 0) {
     return (
-      <WrappedSidebarMenuGroup key={item.key}>
-        <span slot="title">{item.title}</span>
-        {item.items.map((innerItem) => renderMenuItem(innerItem))}
+      <WrappedSidebarMenuGroup>
+        <span slot="title">{title}</span>
+        {props.items.map((item) => {
+          return <MenuItem key={item.key} {...item} />;
+        })}
       </WrappedSidebarMenuGroup>
     );
   }
+  return null;
 }
 
-function renderSubmenu(item: SidebarMenuGroup): ReactNode {
-  if (item.items?.length > 0) {
+function MenuSubmenu(props: SidebarMenuGroup) {
+  const { title, icon, items } = props;
+
+  if (items?.length > 0) {
     return (
-      <WrappedSidebarMenuSubmenu key={item.key} icon={item.icon}>
-        <span slot="title">{item.title}</span>
-        {item.items.map((innerItem) => renderMenuItem(innerItem))}
+      <WrappedSidebarMenuSubmenu icon={icon}>
+        <span slot="title">{title}</span>
+        {props.items.map((item) => {
+          return <MenuItem key={item.key} {...item} />;
+        })}
       </WrappedSidebarMenuSubmenu>
     );
   }
+  return null;
 }
 
-function renderMenuItem(item: SidebarMenuItem): ReactNode {
-  return isSubMenu(item)
-    ? renderSubmenu(item)
-    : isGroup(item)
-    ? renderGroup(item)
-    : renderItem(item);
+function MenuItem(props: SidebarMenuItem) {
+  if (props.type === "subMenu") {
+    return <MenuSubmenu {...props} />;
+  } else if (props.type === "group") {
+    return <MenuGroup {...props} />;
+  } else {
+    return <MenuSimpleItem {...(props as SidebarMenuSimpleItem)} />;
+  }
 }
 
-export function renderMenu(menu: SidebarMenu, expandedState: ExpandedState) {
+export function SidebarMenu(props: {
+  menu: SidebarMenuType;
+  expandedState: ExpandedState;
+}) {
+  const { menu, expandedState } = props;
+
   return (
     <WrappedSidebarMenu
       menuCollapsed={expandedState === ExpandedState.Collapsed}
     >
-      {menu?.menuItems?.map((item) => renderMenuItem(item))}
+      {menu?.menuItems?.map((item) => {
+        return <MenuItem key={item.key} {...item} />;
+      })}
     </WrappedSidebarMenu>
   );
 }
