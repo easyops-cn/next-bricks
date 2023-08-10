@@ -25,7 +25,8 @@
     "eo-sidebar-menu-item",
     "eo-sidebar-menu-group",
     "eo-sidebar-menu-submenu",
-    "eo-sidebar-menu"
+    "eo-sidebar-menu",
+    "eo-sidebar"
   ],
   "icons": ["eo-antd-icon", "eo-easyops-icon", "eo-fa-icon", "eo-icon"],
   "containers": [

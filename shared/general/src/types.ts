@@ -2,6 +2,21 @@ import { LocationDescriptor } from "history";
 
 type ThemeType = "filled" | "outlined" | "twoTone";
 
+export interface SidebarMenu {
+  /** 菜单标题。 */
+  title: string;
+  /** 菜单标题对应的图标。 */
+  icon?: MenuIcon;
+  /** 菜单标题对应的链接地址。 */
+  link?: LocationDescriptor;
+  /** 是否默认折叠。 */
+  defaultCollapsed?: boolean;
+  /** 针对小于特定尺寸的屏幕（例如 1600px），是否默认折叠。 */
+  defaultCollapsedBreakpoint?: number;
+  /** 菜单项列表。 */
+  menuItems: SidebarMenuItem[];
+}
+
 /** 侧边栏菜单项配置。 */
 export type SidebarMenuItem = SidebarMenuSimpleItem | SidebarMenuGroup;
 
