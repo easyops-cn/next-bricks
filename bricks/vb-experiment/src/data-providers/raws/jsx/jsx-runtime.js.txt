@@ -6,6 +6,7 @@ export { Fragment };
 const RESERVED_PROP_KEYS = new Set(["events", "lifeCycle", "if", "portal", "ref"]);
 
 const NodeType = Symbol("NodeType");
+const Slot = Symbol("Slot");
 const PropNamespace = "prop:";
 const ConfNamespace = "conf:";
 
@@ -68,6 +69,7 @@ export function jsx(type, config) {
   const properties = {};
   const reservedConfig = {};
 
+  let slot;
   for (const [key, value] of Object.entries(config)) {
     if (key.includes(":")) {
       if (key.startsWith(PropNamespace)) {
@@ -79,6 +81,8 @@ export function jsx(type, config) {
       } else {
         throw new Error(`Unsupported namespace prop: "${key}"`);
       }
+    } else if (key === "slot") {
+      slot = value;
     } else if (key === "children") {
       // Ignore
     } else if (RESERVED_PROP_KEYS.has(key)) {
@@ -102,8 +106,8 @@ export function jsx(type, config) {
   return {
     brick: typeof type === "string" ? type.replaceAll("_", ".") : type,
     properties,
-    slot: properties.slot,
     slots,
+    [Slot]: slot,
     ...reservedConfig,
   };
 }
@@ -120,7 +124,7 @@ function fixBrickChildren(children) {
 function childrenToSlots(children) {
   const slots = {};
   for (const child of children) {
-    const slot = child.slot ?? "";
+    const slot = child[Slot] ?? "";
     const type = child[NodeType] === "route" ? "routes" : "bricks";
     const slotConf = slots[slot] ??= {
       type,

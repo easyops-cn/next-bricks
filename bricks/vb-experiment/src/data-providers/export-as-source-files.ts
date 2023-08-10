@@ -5,9 +5,8 @@ import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import { format } from "prettier/standalone.js";
 import parserBabel from "prettier/parser-babel.js";
-import { parse } from "@babel/parser";
 import * as t from "@babel/types";
-import { transformFromAst } from "@babel/standalone";
+import { transform, transformFromAst } from "@babel/standalone";
 import {
   ExtractState,
   extractRoutes,
@@ -17,7 +16,7 @@ import {
   SourceFileOrFolder,
   buildFileStructure,
 } from "./utils/buildFileStructure.js";
-import { printWithPlaceholders } from "./utils/printWithPlaceholders.js";
+import { generate } from "./utils/generators/generate.js";
 import jsxConstantsJs from "./raws/jsx/constants.js.txt";
 import jsxIndexJs from "./raws/jsx/index.js.txt";
 import jsxJsxRuntimeJs from "./raws/jsx/jsx-runtime.js.txt";
@@ -118,7 +117,7 @@ export async function exportAsSourceFiles({
 
   src.file(
     "routes.jsx",
-    formatJs(printWithPlaceholders(extractedRoutes, "routes", ["routes.jsx"]))
+    formatJs(generate(extractedRoutes, "routes", ["routes.jsx"]))
   );
 
   const resources = src.folder("resources")!;
@@ -133,9 +132,11 @@ export async function exportAsSourceFiles({
     }
 
     // Prepend with `export default` for functions
-    const ast = parse(fn.source, {
-      plugins: fn.typescript ? ["typescript"] : [],
-    });
+    const ast = transform(fn.source, {
+      filename: `expr.${fn.typescript ? "ts" : "js"}`,
+      plugins: fn.typescript ? ["syntax-typescript"] : [],
+      ast: true,
+    }).ast;
     const statements = ast.program.body.map((statement) => {
       if (statement.type === "FunctionDeclaration") {
         const exportDefault = t.exportDefaultDeclaration(statement);
@@ -176,9 +177,7 @@ export async function exportAsSourceFiles({
     const filename = `${menu.menuId}.js`;
     menusDir.file(
       filename,
-      formatJs(
-        printWithPlaceholders(menu, "menu", ["resources", "menus", filename])
-      )
+      formatJs(generate(menu, "menu", ["resources", "menus", filename]))
     );
     const name = menu.menuId.replace(/^\d+|[^\w]+/g, "_");
     menuImports.push(`import ${name} from "./${filename}";`);
@@ -225,7 +224,7 @@ export async function exportAsSourceFiles({
   );
   resources.file("index.js", srcResourcesIndexJs);
 
-  printFileStructure(fileStructure, src, []);
+  generateByFileStructure(fileStructure, src, []);
 
   const appRelativeDir = JSON.stringify(
     `../mock-micro-apps/${projectDetail.appId}`
@@ -290,7 +289,7 @@ function formatJs(
   });
 }
 
-function printFileStructure(
+function generateByFileStructure(
   items: SourceFileOrFolder[],
   folder: JSZip,
   path: string[]
@@ -299,13 +298,13 @@ function printFileStructure(
     const childPath = [...path, item.name];
     if (item.type === "folder") {
       const childFolder = folder.folder(item.name)!;
-      printFileStructure(item.items, childFolder, childPath);
+      generateByFileStructure(item.items, childFolder, childPath);
     } else {
       folder.file(
         `${item.name}.js${
           item.nodeType === "others" || item.nodeType === "context" ? "" : "x"
         }`,
-        formatJs(printWithPlaceholders(item.node, item.nodeType, childPath))
+        formatJs(generate(item.node, item.nodeType, childPath))
       );
     }
   }

@@ -56,17 +56,36 @@ declare module "@ungap/event-target" {
 }
 
 declare module "@babel/standalone" {
-  interface TransformFromAstFileNode {
+  interface TransformFromAstResult {
     code: string;
   }
+  interface TransformResult {
+    ast: import("@babel/types").File;
+  }
+  interface TransformOptions {
+    filename?: string;
+    plugins?: string[];
+    ast?: boolean;
+  }
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface TransformFromAstOptions {}
+  interface TransformFromAstOptions {
+    generatorOpts?: {
+      jsescOption?: {
+        minimal?: boolean;
+      };
+    };
+  }
 
   export const transformFromAst: (
     ast: unknown,
     sourceCode: string | undefined,
     options: TransformFromAstOptions
-  ) => TransformFromAstFileNode;
+  ) => TransformFromAstResult;
+
+  export const transform: (
+    sourceCode: string,
+    options: TransformOptions
+  ) => TransformResult;
 }
 
 interface Window {
