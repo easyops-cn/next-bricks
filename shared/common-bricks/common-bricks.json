@@ -65,7 +65,8 @@
     "eo-pagination",
     "eo-card-item",
     "eo-counter-badge",
-    "eo-divider"
+    "eo-divider",
+    "eo-info-card-item"
   ],
   "advanced": ["eo-cascader", "eo-table"],
   "markdown": ["eo-markdown-editor"],
