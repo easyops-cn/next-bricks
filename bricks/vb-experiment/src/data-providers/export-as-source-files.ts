@@ -22,7 +22,7 @@ import jsxIndexJs from "./raws/jsx/index.js.txt";
 import jsxJsxRuntimeJs from "./raws/jsx/jsx-runtime.js.txt";
 import jsxPackageJson from "./raws/jsx/package.json.txt";
 import jsxLoadStyleTextJs from "./raws/jsx/loadStyleText.js.txt";
-import jsxFunctionJs from "./raws/jsx/Function.js.txt";
+import jsxLoadFunctionJs from "./raws/jsx/loadFunction.js.txt";
 import scriptsBabelJs from "./raws/scripts/babel.js.txt";
 import scriptsBuildJs from "./raws/scripts/build.js.txt";
 import scriptsStartJs from "./raws/scripts/start.js.txt";
@@ -250,7 +250,7 @@ export async function exportAsSourceFiles({
   jsxDir.file("jsx-runtime.js", jsxJsxRuntimeJs);
   jsxDir.file("package.json", jsxPackageJson);
   jsxDir.file("loadStyleText.js", jsxLoadStyleTextJs);
-  jsxDir.file("Function.js", jsxFunctionJs);
+  jsxDir.file("loadFunction.js", jsxLoadFunctionJs);
 
   project.file(".editorconfig", editorConfig);
   project.file(".gitignore", gitIgnore);

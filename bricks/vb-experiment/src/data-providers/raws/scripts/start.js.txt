@@ -53,80 +53,69 @@ function start() {
 
 async function processFunctions() {
   const functionsIndexJsPath = path.resolve("temp/resources/functions/index.js");
-  if (existsSync(functionsIndexJsPath)) {
-    const content = await readFile(functionsIndexJsPath, "utf-8");
-    const ast = parse(content, { sourceType: "module" });
-    const importsMap = new Map();
-    const functions = new Set();
-    traverse(ast, {
-      ImportDeclaration({ node }) {
-        for (const specifier of node.specifiers) {
-          if (specifier.type === "ImportDefaultSpecifier") {
-            importsMap.set(specifier.local.name, node.source.value);
-          }
+  if (!existsSync(functionsIndexJsPath)) {
+    return;
+  }
+  const content = await readFile(functionsIndexJsPath, "utf-8");
+  const ast = parse(content, { sourceType: "module" });
+  const importsMap = new Map();
+  const functions = new Set();
+  traverse(ast, {
+    ImportDeclaration({ node }) {
+      for (const specifier of node.specifiers) {
+        if (specifier.type === "ImportDefaultSpecifier") {
+          importsMap.set(specifier.local.name, node.source.value);
         }
-      },
-      ExportDefaultDeclaration({ node }) {
-        if (node.declaration.type === "ObjectExpression") {
-          for (const prop of node.declaration.properties) {
-            if (prop.value.type === "Identifier") {
-              functions.add(prop.value.name);
-            }
+      }
+    },
+    ExportDefaultDeclaration({ node }) {
+      if (node.declaration.type === "ObjectExpression") {
+        for (const prop of node.declaration.properties) {
+          if (prop.value.type === "Identifier") {
+            functions.add(prop.value.name);
           }
         }
       }
-    });
+    }
+  });
 
-    const statements = [
-      t.importDeclaration(
-        [t.importSpecifier(t.identifier("Function"), t.identifier("Function"))],
-        t.stringLiteral("jsx")
-      ),
+  if (functions.size === 0) {
+    return;
+  }
 
-      t.exportDefaultDeclaration(
-        t.jsxFragment(
-          t.jsxOpeningFragment(),
-          t.jsxClosingFragment(),
-          [...functions].map(fn =>
-            t.jsxElement(
-              t.jsxOpeningElement(
-                t.jsxIdentifier("Function"),
-                [
-                  t.jsxAttribute(
-                    t.jsxIdentifier("url"),
-                    t.stringLiteral(importsMap.get(fn)),
+  const statements = [
+    t.importDeclaration(
+      [t.importSpecifier(t.identifier("loadFunction"), t.identifier("loadFunction"))],
+      t.stringLiteral("jsx")
+    ),
+
+    t.exportDefaultDeclaration(
+      t.objectExpression(
+        [...functions].map(
+          (fn) => t.objectProperty(
+            t.identifier(fn),
+            t.callExpression(
+              t.identifier("loadFunction"),
+              [
+                t.stringLiteral(importsMap.get(fn)),
+                t.memberExpression(
+                  t.memberExpression(
+                    t.identifier("import"),
+                    t.identifier("meta"),
                   ),
-                  t.jsxAttribute(
-                    t.jsxIdentifier("from"),
-                    t.jsxExpressionContainer(
-                      t.memberExpression(
-                        t.memberExpression(
-                          t.identifier("import"),
-                          t.identifier("meta"),
-                        ),
-                        t.identifier("url"),
-                      )
-                    )
-                  )
-                ],
-                true
-              ),
-              null,
-              [],
-              true
+                  t.identifier("url"),
+                )
+              ]
             )
           )
         )
       )
-    ];
+    )
+  ];
 
-    const { code } = generate(t.program(statements, undefined, "module"));
+  const { code } = generate(t.program(statements, undefined, "module"));
 
-    await Promise.all([
-      writeFile(path.resolve("temp/resources/functions/index.jsx"), code),
-      rm(functionsIndexJsPath),
-    ]);
-  }
+  await writeFile(functionsIndexJsPath, code);
 }
 
 function processExpressions() {
@@ -146,98 +135,101 @@ async function processExpressionsInFile(filePath, processCssAsWell) {
   const hasExpr = /\bExpr\s*\(/.test(content);
   const hasCss = isJsx && processCssAsWell && /\.css['"]/.test(content);
 
-  if (hasExpr || hasCss) {
-    const ast = parse(content, { plugins, sourceType: "module" });
-    let transformed = false;
-    let importedExpr = false;
-    let importedCss = false;
-    let jsxImportDeclaration;
-    let hasLoadStyleText = false;
-    traverse(ast, {
-      ImportDeclaration(path) {
-        if (path.node.source.value === "jsx") {
-          if (hasCss) {
-            jsxImportDeclaration = path.node;
-          }
-          if (hasExpr) {
-            for (const specifier of path.node.specifiers) {
-              if (specifier.type === "ImportSpecifier") {
-                if (specifier.local.name === "Expr" && specifier.imported.type === "Identifier" && specifier.imported.name === "Expr") {
-                  importedExpr = true;
-                }
-                if (hasCss && specifier.local.name === "loadStyleText" && specifier.imported.type === "Identifier" && specifier.imported.name === "loadStyleText") {
-                  hasLoadStyleText = true;
-                }
+  if (!hasExpr && !hasCss) {
+    return;
+  }
+  const ast = parse(content, { plugins, sourceType: "module" });
+  let transformed = false;
+  let importedExpr = false;
+  let importedCss = false;
+  let jsxImportDeclaration;
+  let hasLoadStyleText = false;
+  traverse(ast, {
+    ImportDeclaration(path) {
+      if (path.node.source.value === "jsx") {
+        if (hasCss) {
+          jsxImportDeclaration = path.node;
+        }
+        if (hasExpr) {
+          for (const specifier of path.node.specifiers) {
+            if (specifier.type === "ImportSpecifier") {
+              if (specifier.local.name === "Expr" && specifier.imported.type === "Identifier" && specifier.imported.name === "Expr") {
+                importedExpr = true;
+              }
+              if (hasCss && specifier.local.name === "loadStyleText" && specifier.imported.type === "Identifier" && specifier.imported.name === "loadStyleText") {
+                hasLoadStyleText = true;
               }
             }
           }
         }
-        if (hasCss && path.node.source.value.startsWith(".") && path.node.source.value.endsWith(".css")) {
-          const defaultSpecifier = path.node.specifiers.find(spec => spec.type === "ImportDefaultSpecifier");
-          if (defaultSpecifier) {
-            const replacement = t.variableDeclaration("const", [
-              t.variableDeclarator(
-                defaultSpecifier.local,
-                t.callExpression(
-                  t.identifier("loadStyleText"),
-                  [
-                    path.node.source,
+      }
+      if (hasCss && path.node.source.value.startsWith(".") && path.node.source.value.endsWith(".css")) {
+        const defaultSpecifier = path.node.specifiers.find(spec => spec.type === "ImportDefaultSpecifier");
+        if (defaultSpecifier) {
+          const replacement = t.variableDeclaration("const", [
+            t.variableDeclarator(
+              defaultSpecifier.local,
+              t.callExpression(
+                t.identifier("loadStyleText"),
+                [
+                  path.node.source,
+                  t.memberExpression(
                     t.memberExpression(
-                      t.memberExpression(
-                        t.identifier("import"),
-                        t.identifier("meta"),
-                      ),
-                      t.identifier("url"),
-                    )
-                  ]
-                )
+                      t.identifier("import"),
+                      t.identifier("meta"),
+                    ),
+                    t.identifier("url"),
+                  )
+                ]
               )
-            ]);
-            path.container[path.key] = replacement;
-            transformed = true;
-            importedCss = true;
-          }
-        }
-      },
-      CallExpression(path) {
-        if (importedExpr && path.node.callee.type === "Identifier" && path.node.callee.name === "Expr") {
-          const { arguments: args} = path.node;
-          if (args.length === 0) {
-            throw new Error("`Expr()` should always have at least one argument");
-          }
-          let flag = "";
-          if (args.length > 1 && args[0].type === "StringLiteral" && (args[0].value === "=" || args[0].value === "~")) {
-            flag = args[0].value;
-            args.splice(0, 1);
-          }
-          const exprSource =  `<%${flag} ${content.substring(args[0].start, args[args.length - 1].end)} %>`;
-          path.container[path.key] = t.stringLiteral(exprSource);
+            )
+          ]);
+          path.container[path.key] = replacement;
           transformed = true;
+          importedCss = true;
         }
       }
-    });
-
-    if (transformed) {
-      if (importedCss) {
-        if (jsxImportDeclaration) {
-          if (!hasLoadStyleText) {
-            jsxImportDeclaration.specifiers.push(
-              t.importSpecifier(t.identifier("loadStyleText"), t.identifier("loadStyleText"))
-            );
-          }
-        } else {
-          ast.program.body.unshift(
-            t.importDeclaration([
-              t.importSpecifier(t.identifier("loadStyleText"), t.identifier("loadStyleText"))
-            ], t.stringLiteral("jsx"))
-          );
+    },
+    CallExpression(path) {
+      if (importedExpr && path.node.callee.type === "Identifier" && path.node.callee.name === "Expr") {
+        const { arguments: args} = path.node;
+        if (args.length === 0) {
+          throw new Error("`Expr()` should always have at least one argument");
         }
+        let flag = "";
+        if (args.length > 1 && args[0].type === "StringLiteral" && (args[0].value === "=" || args[0].value === "~")) {
+          flag = args[0].value;
+          args.splice(0, 1);
+        }
+        const exprSource =  `<%${flag} ${content.substring(args[0].start, args[args.length - 1].end)} %>`;
+        path.container[path.key] = t.stringLiteral(exprSource);
+        transformed = true;
       }
+    }
+  });
 
-      const { code } = generate(ast);
-      await writeFile(filePath, code);
+  if (!transformed) {
+    return;
+  }
+
+  if (importedCss) {
+    if (jsxImportDeclaration) {
+      if (!hasLoadStyleText) {
+        jsxImportDeclaration.specifiers.push(
+          t.importSpecifier(t.identifier("loadStyleText"), t.identifier("loadStyleText"))
+        );
+      }
+    } else {
+      ast.program.body.unshift(
+        t.importDeclaration([
+          t.importSpecifier(t.identifier("loadStyleText"), t.identifier("loadStyleText"))
+        ], t.stringLiteral("jsx"))
+      );
     }
   }
+
+  const { code } = generate(ast);
+  await writeFile(filePath, code);
 }
 
 async function processExpressionsInDir(dir, processCssAsWell) {
