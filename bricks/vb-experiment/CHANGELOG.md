@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.1.7...@next-bricks/vb-experiment@0.1.8) (2023-08-11)
+
+
+### Bug Fixes
+
+* add dev.config.mjs ([c89ac02](https://github.com/easyops-cn/next-bricks/commit/c89ac02daa5c55eba4cfadaaba15869e86150498))
+* fix name collisions ([4292650](https://github.com/easyops-cn/next-bricks/commit/4292650357ef2a9ad9bb0c51e79c2975d7401523))
+* refine function exports ([9080e43](https://github.com/easyops-cn/next-bricks/commit/9080e43a78dd2e47416c59f019ef296882526d67))
+* refine function loader ([9136992](https://github.com/easyops-cn/next-bricks/commit/9136992fb1674d3293f15cc3163503877aeb44d2))
+* refine style loader ([8803dbd](https://github.com/easyops-cn/next-bricks/commit/8803dbd5bb840edd9b14861eecac8f10d29e8091))
+* support live-reload ([ed15672](https://github.com/easyops-cn/next-bricks/commit/ed1567249bea2c58972bb8d42921b31cefb48393))
+* support pipeline operator minimal ([f4cf43a](https://github.com/easyops-cn/next-bricks/commit/f4cf43a2855e978960de0678273b7b18094c1616))
+
+
+
+
+
 ## [0.1.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.1.6...@next-bricks/vb-experiment@0.1.7) (2023-08-10)
 
 
