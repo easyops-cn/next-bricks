@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.26.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.25.1...@next-bricks/basic@0.26.0) (2023-08-11)
+
+
+### Features
+
+* support eo-page-title ref NEXT_BUILDER-3786 ([5be2fb4](https://github.com/easyops-cn/next-bricks/commit/5be2fb4b4510d50c780aa442fe8c8743f53df197))
+
+
+
+
+
 ## [0.25.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.25.0...@next-bricks/basic@0.25.1) (2023-08-11)
 
 **Note:** Version bump only for package @next-bricks/basic

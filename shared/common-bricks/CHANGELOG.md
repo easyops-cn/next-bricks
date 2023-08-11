@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.11.0...@next-shared/common-bricks@0.12.0) (2023-08-11)
+
+
+### Features
+
+* support eo-page-title ref NEXT_BUILDER-3786 ([5be2fb4](https://github.com/easyops-cn/next-bricks/commit/5be2fb4b4510d50c780aa442fe8c8743f53df197))
+
+
+
+
+
 # [0.11.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.10.0...@next-shared/common-bricks@0.11.0) (2023-08-11)
 
 
