@@ -1,0 +1,35 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.app-bar {
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  box-shadow: var(--connected-overlay-shadow);
+}
+
+.app-bar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--app-bar-height);
+  background-color: var(--v8-top-navigation-bg);
+  padding: 0 16px;
+  transition: var(--launchpad-backdrop-transition);
+}
+
+.leftContainer {
+  display: flex;
+}
+
+.rightContainer {
+  display: flex;
+  justify-content: end;
+}
