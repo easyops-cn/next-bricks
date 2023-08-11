@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  CSSProperties,
+} from "react";
 import { createDecorators, EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import { TriggerEvent } from "../interface.js";
@@ -20,6 +26,7 @@ export interface PopoverProps extends SlPopupProps {
   curElement?: HTMLElement;
   trigger?: TriggerEvent;
   disabled?: boolean;
+  anchorDisplay?: CSSProperties["display"];
 }
 
 export interface PopoverEvents {
@@ -96,6 +103,19 @@ class Popover extends ReactNextElement implements PopoverProps {
   accessor disabled: boolean | undefined;
 
   /**
+   * 弹出窗口与其锚点之间的距离
+   */
+  @property()
+  accessor distance: number | undefined;
+
+  /**
+   * 触发器的显示类型
+   * @default "inline-block"
+   */
+  @property()
+  accessor anchorDisplay: CSSProperties["display"];
+
+  /**
    * 当弹出层可见性变化之后触发
    * @detail 当前是否可见
    */
@@ -129,6 +149,8 @@ class Popover extends ReactNextElement implements PopoverProps {
         disabled={this.disabled}
         onVisibleChange={this.#handleVisibleChange}
         beforeVisibleChange={this.#handleBeforeVisibleChange}
+        distance={this.distance}
+        anchorDisplay={this.anchorDisplay}
       />
     );
   }
@@ -147,6 +169,8 @@ function PopoverComponent(props: PopoverComponentProps) {
     trigger,
     onVisibleChange,
     beforeVisibleChange,
+    distance = props.arrow ? POPUP_DISTANCE + ARROW_SIZE : POPUP_DISTANCE,
+    anchorDisplay = "inline-block",
   } = props;
   const popoverRef = useRef<SlPopupElement>(null);
   const defaultRef = useRef<HTMLSlotElement>(null);
@@ -283,7 +307,7 @@ function PopoverComponent(props: PopoverComponentProps) {
       ref={popoverRef}
       {...omit(props, ["curElement", "onVisibleChange"])}
       shift
-      distance={props.arrow ? POPUP_DISTANCE + ARROW_SIZE : POPUP_DISTANCE}
+      distance={distance}
     >
       <slot
         name="anchor"
@@ -292,7 +316,7 @@ function PopoverComponent(props: PopoverComponentProps) {
         style={{
           padding: props.arrow ? POPUP_DISTANCE + ARROW_SIZE : POPUP_DISTANCE,
           margin: -(props.arrow ? POPUP_DISTANCE + ARROW_SIZE : POPUP_DISTANCE),
-          display: "inline-block",
+          display: anchorDisplay,
         }}
       ></slot>
       <slot ref={defaultRef} hidden={!visible}></slot>
