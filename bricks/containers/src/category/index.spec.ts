@@ -29,6 +29,10 @@ describe("containers.general-category", () => {
     expect(element.shadowRoot).toBeTruthy();
     expect(element.shadowRoot?.childNodes.length).toBe(2);
 
+    expect(element.shadowRoot.querySelectorAll(".category-item").length).toBe(
+      2
+    );
+
     act(() => {
       document.body.removeChild(element);
     });
