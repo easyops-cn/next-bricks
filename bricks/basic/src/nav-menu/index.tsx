@@ -54,7 +54,7 @@ interface MenuGroupComProps extends MenuItemComProps {
 }
 function RenderMenuItemCom(props: MenuItemComProps) {
   const { item } = props;
-  return isSubMenu(item as SidebarMenuGroup) ? (
+  return isSubMenu(item as SidebarMenuGroup, props.topData) ? (
     <SubMenuItemCom {...props} item={item as SidebarMenuGroup}></SubMenuItemCom>
   ) : isGroup(item) ? (
     <GroupMenuItemCom {...props} item={item as SidebarMenuGroup} />
