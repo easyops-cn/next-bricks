@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/presentational",
-  "version": "0.9.6",
+  "version": "0.9.7",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/presentational",
   "repository": {
     "type": "git",
@@ -34,8 +34,8 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-bricks/basic": "^0.26.1",
-    "@next-bricks/containers": "^0.11.0",
+    "@next-bricks/basic": "^0.26.2",
+    "@next-bricks/containers": "^0.11.1",
     "@next-bricks/icons": "^0.4.3",
     "@next-core/element": "^1.1.2",
     "@next-core/i18n": "^1.0.24",
