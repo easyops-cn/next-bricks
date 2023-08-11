@@ -12,7 +12,6 @@ import type {
   RouteNode,
   RouteNodeInBrick,
 } from "./interfaces.js";
-import { JS_RESERVED_WORDS } from "./constants.js";
 
 export interface ExtractedItem {
   name: string;
@@ -88,12 +87,19 @@ function extractRoute(
   path: WalkPath,
   state: ExtractState
 ): RouteNode {
-  const name = getAvailableName("route", route.alias, path, state.namePool);
+  const viewsPath = [...path, "views"];
+  const name = getAvailableName(
+    "route",
+    route.alias,
+    viewsPath,
+    state.namePool
+  );
+  addName(state.namePool, [...viewsPath, name], name);
   cleanRoute(route);
 
   let node: RouteNode;
 
-  const childrenPath = [...path, "views", name];
+  const childrenPath = [...viewsPath, name];
 
   if (route.type === "redirect") {
     node = route as RouteNode;
@@ -182,27 +188,24 @@ function getAvailableName(
   type: "route" | "brick" | "context" | "state" | "proxy",
   name: string | undefined,
   path: WalkPath,
-  namePool: Map<string, Set<string>>,
-  countStart = 1
+  namePool: Map<string, Set<string>>
 ): string {
   let lowerName = name?.toLowerCase();
-  const pathString = path.join("/");
-  let names = namePool.get(pathString);
-  if (!names) {
-    namePool.set(pathString, (names = new Set()));
+  if (lowerName == "index") {
+    lowerName = `${lowerName}_2`;
   }
+  const names = getNames(namePool, path);
 
   const aliasIsOk =
     type !== "route" ||
     (typeof lowerName === "string" &&
-      /^\w+$/.test(lowerName) &&
-      lowerName !== "index" &&
-      !JS_RESERVED_WORDS.has(lowerName));
+      /^[-\w]+$/.test(lowerName) &&
+      lowerName !== "index");
 
   if (!aliasIsOk || names.has(lowerName as string)) {
     const prefix = aliasIsOk ? lowerName : type;
     let candidate: string;
-    let count = countStart;
+    let count = 2;
     while (names.has((candidate = `${prefix}_${count}`))) {
       count++;
     }
@@ -211,6 +214,27 @@ function getAvailableName(
 
   names.add(lowerName as string);
   return lowerName as string;
+}
+
+function addName(
+  namePool: Map<string, Set<string>>,
+  path: WalkPath,
+  name: string
+) {
+  const names = getNames(namePool, path);
+  names.add(name);
+}
+
+function getNames(
+  namePool: Map<string, Set<string>>,
+  path: WalkPath
+): Set<string> {
+  const pathString = path.join("/");
+  let names = namePool.get(pathString);
+  if (!names) {
+    namePool.set(pathString, (names = new Set()));
+  }
+  return names;
 }
 
 function extractBricks(
@@ -232,7 +256,7 @@ function extractBrick(
   let name: string | undefined;
   if (
     typeof brick.alias === "string" &&
-    /^<\w+>$/.test(brick.alias) &&
+    /^<[-\w]+>$/.test(brick.alias) &&
     brick.alias !== "<index>"
   ) {
     name = brick.alias.slice(1, -1);
@@ -240,7 +264,8 @@ function extractBrick(
   cleanBrick(brick);
 
   if (name) {
-    name = getAvailableName("brick", name, [...path, name], state.namePool, 2);
+    name = getAvailableName("brick", name, path, state.namePool);
+    addName(state.namePool, [...path, name], name);
   }
 
   const { slots, ...newBrick } = brick as BrickNormalNode &

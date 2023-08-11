@@ -145,6 +145,21 @@ async function processExpressionsInFile(filePath, processCssAsWell) {
   let jsxImportDeclaration;
   let hasLoadStyleText = false;
   traverse(ast, {
+    enter(path) {
+      let match;
+      if (
+        !(t.isLiteral(path.node) && !t.isTemplateLiteral()) &&
+        !(t.isIdentifier(path.node) && path.node.name === "undefined") &&
+        !t.isJSX(path.node) &&
+        path.node.leadingComments?.some(comment => comment.type === "CommentBlock" &&
+        (match = comment.value.match(/@expr(?:\s*([~=]))?/))) &&
+        t.isExpression(path.node)
+      ) {
+        const flag = match[1] ?? "";
+        const exprSource =  `<%${flag} ${content.substring(path.node.start, path.node.end)} %>`;
+        path.replaceWith(t.stringLiteral(exprSource));
+      }
+    },
     ImportDeclaration(path) {
       if (path.node.source.value === "jsx") {
         if (hasCss) {
@@ -228,7 +243,12 @@ async function processExpressionsInFile(filePath, processCssAsWell) {
     }
   }
 
-  const { code } = generate(ast);
+  const { code } = generate(ast, {
+    jsescOption: {
+      minimal: true
+    },
+    comments: false,
+  });
   await writeFile(filePath, code);
 }
 

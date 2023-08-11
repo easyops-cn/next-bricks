@@ -4,7 +4,10 @@ import type { ImportInfo } from "../interfaces.js";
 import { generateImports } from "../handleImports.js";
 import { transformJsonWithExpressions } from "../transformers/transformJsonWithExpressions.js";
 
-export function generateJsWithExpressions(node: unknown, path: string[]) {
+export function generateJsWithExpressions(
+  node: unknown,
+  path: string[]
+): string {
   const imports: ImportInfo = new Map();
   const exportDefault = t.exportDefaultDeclaration(
     transformJsonWithExpressions(node, imports, path)
@@ -18,7 +21,7 @@ export function generateJsWithExpressions(node: unknown, path: string[]) {
       },
     },
     cloneInputAst: false,
-  }).code;
+  }).code as string;
   if (allImports.length > 0) {
     return `${allImports.join("\n")}\n\n${content}`;
   }

@@ -56,46 +56,21 @@ declare module "@ungap/event-target" {
 }
 
 declare module "@babel/standalone" {
-  interface TransformFromAstResult {
-    code: string;
-  }
-  interface TransformResult {
-    code: string;
-    ast: import("@babel/types").File;
-  }
-  interface TransformOptions {
-    filename?: string;
-    plugins?: (string | [string, object])[];
-    ast?: boolean;
-    code?: boolean;
-  }
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface TransformFromAstOptions {
-    generatorOpts?: {
-      jsescOption?: {
-        minimal?: boolean;
-      };
-    };
-    cloneInputAst?: boolean;
-  }
-  interface PluginObject {
-    name?: string;
-    inherits?: unknown;
-    visitor?: import("@babel/traverse").Visitor;
-  }
-
   export const transformFromAst: (
     ast: unknown,
     sourceCode: string | undefined,
-    options: TransformFromAstOptions
-  ) => TransformFromAstResult;
+    options: import("@babel/core").TransformOptions
+  ) => import("@babel/core").BabelFileResult;
 
   export const transform: (
     sourceCode: string,
-    options: TransformOptions
-  ) => TransformResult;
+    options: import("@babel/core").TransformOptions
+  ) => import("@babel/core").BabelFileResult;
 
-  export const registerPlugin: (name: string, plugin: PluginObject) => void;
+  export const registerPlugin: (
+    name: string,
+    plugin: (api: any, opts?: any) => import("@babel/core").PluginObj
+  ) => void;
 
   export const availablePlugins: Record<string, unknown>;
 }
