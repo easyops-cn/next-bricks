@@ -15,3 +15,9 @@ export type ComponentSize = "large" | "medium" | "small" | "xs";
 export type Placement = "left" | "right" | "top" | "bottom";
 
 /* ============== Drawer Type Start ============== */
+
+/* ============== Tab Type Start ============== */
+
+export type TabType = "default" | "panel";
+
+/* ============== Tab Type Start ============== */

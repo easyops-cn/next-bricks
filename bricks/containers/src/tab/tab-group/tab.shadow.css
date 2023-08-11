@@ -8,12 +8,25 @@
 }
 
 .tab-nav {
+  position: relative;
   display: grid;
   grid-auto-flow: column;
   justify-content: space-between;
   align-items: center;
   padding: 0 16px;
+}
+
+.tab-nav:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
   border-bottom: 1px solid var(--antd-tabs-title-border-color);
+}
+
+.tab-nav.panel {
+  padding: 0;
 }
 
 .tab-item-wrapper {

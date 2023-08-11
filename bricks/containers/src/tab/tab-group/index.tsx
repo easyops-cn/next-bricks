@@ -3,11 +3,13 @@ import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import styleText from "./tab.shadow.css";
 import classNames from "classnames";
-import type { TabItem, TabItemProps } from "../tab-item/index.js";
+import type { TabItem } from "../tab-item/index.js";
+import { TabType } from "../../interface.js";
 
 const { defineElement, property } = createDecorators();
 
 export interface TabGroupProps {
+  type?: TabType;
   activePanel?: string;
   showCard?: boolean;
   callback?: (element: HTMLDivElement) => void;
@@ -23,6 +25,14 @@ export interface TabGroupProps {
   alias: ["containers.tab-group"],
 })
 class TabGroup extends ReactNextElement {
+  /**
+   * @default
+   * @required
+   * @description 样式类型
+   */
+  @property()
+  accessor type: TabType = "default";
+
   /**
    * @default true
    * @required false
@@ -44,6 +54,7 @@ class TabGroup extends ReactNextElement {
   render() {
     return (
       <TabGroupElement
+        type={this.type}
         activePanel={this.activePanel}
         showCard={this.showCard}
       />
@@ -52,6 +63,7 @@ class TabGroup extends ReactNextElement {
 }
 
 function TabGroupElement({
+  type,
   showCard = true,
   activePanel,
 }: TabGroupProps): React.ReactElement {
@@ -116,7 +128,7 @@ function TabGroupElement({
         "show-card": showCard,
       })}
     >
-      <div className={classNames("tab-nav")}>
+      <div className={classNames("tab-nav", type)}>
         <div className="tab-item-wrapper">
           <slot name="nav" ref={navSlotRef} />
         </div>

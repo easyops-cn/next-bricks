@@ -3,14 +3,16 @@ import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import type { TabGroup, TabGroupProps } from "../tab-group/index.js";
 import type { TabItem, TabItemProps } from "../tab-item/index.js";
+import { TabType } from "../../interface.js";
 
 const { defineElement, property } = createDecorators();
 
 const WrappedTabGroup = wrapBrick<TabGroup, TabGroupProps>("eo-tab-group");
 
-const WrappedTabItem = wrapBrick<TabItem, TabGroupProps>("eo-tab-item");
+const WrappedTabItem = wrapBrick<TabItem, TabItemProps>("eo-tab-item");
 
 interface TabListProps {
+  type?: TabType;
   tabs?: TabItemProps[];
   activePanel?: string;
   showCard?: boolean;
@@ -25,6 +27,14 @@ interface TabListProps {
   alias: ["containers.tab-list"],
 })
 class TabList extends ReactNextElement {
+  /**
+   * @default
+   * @required
+   * @description 样式类型
+   */
+  @property()
+  accessor type: TabType = "default";
+
   /**
    * @default -
    * @required false
@@ -67,6 +77,7 @@ class TabList extends ReactNextElement {
   render() {
     return (
       <TabListElement
+        type={this.type}
         tabs={this.#computedTabs(this.tabs)}
         activePanel={this.activePanel}
         showCard={this.showCard}
@@ -76,14 +87,16 @@ class TabList extends ReactNextElement {
 }
 
 function TabListElement({
+  type,
   tabs,
   activePanel,
   showCard,
 }: TabListProps): React.ReactElement {
   return (
-    <WrappedTabGroup showCard={showCard} activePanel={activePanel}>
+    <WrappedTabGroup type={type} showCard={showCard} activePanel={activePanel}>
       {tabs.map((tab) => (
         <WrappedTabItem
+          type={type}
           slot="nav"
           key={tab.panel}
           active={activePanel === tab.panel}
