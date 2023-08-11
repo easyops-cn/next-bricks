@@ -68,6 +68,7 @@ eo-link {
 
 .sub-menu-wrapper > eo-menu-item .menu-item-label,
 .sub-menu-wrapper > eo-popover .menu-item-label,
+.sub-menu-wrapper > .group-wrapper > eo-popover .menu-item-label,
 .sub-menu-wrapper > .group-wrapper > eo-menu-item .menu-item-label {
   display: block;
   width: 100%;
@@ -75,7 +76,8 @@ eo-link {
   box-sizing: border-box;
   color: var(--color-normal-text);
 }
-.sub-menu-wrapper > eo-popover.subprime .menu-item-label {
+.sub-menu-wrapper > eo-popover.subprime .menu-item-label,
+.sub-menu-wrapper > .group-wrapper > eo-popover.subprime .menu-item-label {
   display: flex;
   justify-content: space-between;
   align-items: center;
