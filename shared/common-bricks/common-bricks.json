@@ -27,7 +27,8 @@
     "eo-sidebar-menu-submenu",
     "eo-sidebar-menu",
     "eo-sidebar",
-    "eo-app-bar-wrapper"
+    "eo-app-bar-wrapper",
+    "eo-page-title"
   ],
   "icons": ["eo-antd-icon", "eo-easyops-icon", "eo-fa-icon", "eo-icon"],
   "containers": [
