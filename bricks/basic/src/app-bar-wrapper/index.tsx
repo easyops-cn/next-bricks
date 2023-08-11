@@ -14,8 +14,8 @@ export interface AppBarWrapperProps {
 
 /**
  * 应用顶部容器
- * @slot leftContainer - 左侧内容区
- * @slot rightContainer - 右侧内容区
+ * @slot left - 左侧内容区
+ * @slot right - 右侧内容区
  */
 export
 @defineElement("eo-app-bar-wrapper", {
@@ -98,10 +98,10 @@ export function EoAppBarWrapperComponent({
           }}
         >
           <div className="leftContainer">
-            <slot name="leftContainer"></slot>
+            <slot name="left"></slot>
           </div>
           <div className="rightContainer">
-            <slot name="rightContainer"></slot>
+            <slot name="right"></slot>
           </div>
         </div>
       </div>

@@ -7,13 +7,13 @@
 ```yaml preview
 - brick: eo-app-bar-wrapper
   slots:
-    leftContainer:
+    left:
       bricks:
         - brick: div
           properties:
             textContent: leftContent
       type: bricks
-    rightContainer:
+    right:
       bricks:
         - brick: div
           properties:
@@ -28,13 +28,13 @@
   properties:
     displayCenter: true
   slots:
-    leftContainer:
+    left:
       bricks:
         - brick: div
           properties:
             textContent: leftContent
       type: bricks
-    rightContainer:
+    right:
       bricks:
         - brick: div
           properties:
