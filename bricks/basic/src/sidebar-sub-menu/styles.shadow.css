@@ -16,10 +16,22 @@
   height: 100%;
 
   .header {
+    display: flex;
+    gap: 10px;
+    align-items: center;
     font-size: 18px;
     padding: 0 24px 16px 24px;
     line-height: 26px;
     color: var(--color-header-text);
+
+    .title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      word-wrap: break-word;
+    }
   }
 
   .menu-item,
@@ -53,6 +65,7 @@
 
   .menu-item:hover {
     background: var(--sub-menu-brick-item-hover-bg);
+    color: var(--antd-link-color);
 
     .menu-item-text {
       color: var(--antd-link-color);

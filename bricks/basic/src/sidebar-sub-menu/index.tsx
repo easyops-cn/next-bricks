@@ -83,15 +83,17 @@ export function EoSidebarSubMenuComponent(props: SidebarSubMenuProps) {
   const { pathname, search } = location;
 
   const [selectedKey, setSelectedKey] = useState<string[]>([]);
+  const [openedKeys, setOpenedKeys] = useState<string[]>([]);
 
   const setSelected = useCallback((): void => {
-    const { selectedKeys } = initMenuItemAndMatchCurrentPathKeys(
+    const { selectedKeys, openedKeys } = initMenuItemAndMatchCurrentPathKeys(
       menu?.menuItems ?? [],
       pathname,
       search,
       ""
     );
     setSelectedKey(selectedKeys);
+    setOpenedKeys(openedKeys);
   }, [menu?.menuItems, pathname, search]);
 
   useEffect(() => {
@@ -141,6 +143,7 @@ export function EoSidebarSubMenuComponent(props: SidebarSubMenuProps) {
           className="menu-sub-item"
           icon={item.icon}
           titleStyle={{ paddingLeft: getMenuItemIndent(item) }}
+          collapsed={!openedKeys.includes(item.key!)}
         >
           <span slot="title">{item.title}</span>
           {item.items.map((innerItem) => (
@@ -185,7 +188,7 @@ export function EoSidebarSubMenuComponent(props: SidebarSubMenuProps) {
       {menu?.title && (
         <div className="header">
           <WrappedIcon {...(menu?.icon as GeneralIconProps)} />
-          <span>{menu?.title}</span>
+          <span className="title">{menu?.title}</span>
         </div>
       )}
 

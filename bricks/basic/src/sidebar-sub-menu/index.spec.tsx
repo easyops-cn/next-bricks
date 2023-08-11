@@ -8,6 +8,7 @@ jest.mock("@next-core/theme", () => ({}));
 jest.mock("@next-shared/general/menu", () => ({
   initMenuItemAndMatchCurrentPathKeys: jest.fn().mockReturnValue({
     selectedKeys: [],
+    openedKeys: [],
   }),
 }));
 
