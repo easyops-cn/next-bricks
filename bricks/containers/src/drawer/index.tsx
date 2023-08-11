@@ -38,6 +38,8 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
  * 通用抽屉构件
  * @author sailor
  * @slot - 抽屉内容插槽
+ * @slot headerLeft - 头部左上角
+ * @slot extra - 头部右上角
  * @slot footer - 抽屉底部插槽
  */
 @defineElement("eo-drawer", {
@@ -187,8 +189,11 @@ export function DrawerComponent({
   const header = useMemo(
     () => (
       <div className="drawer-header">
-        <span className="drawer-title">{customTitle}</span>
-        <div className="drawer-operator">
+        <div className="drawer-header-left">
+          <span className="drawer-title">{customTitle}</span>
+          <slot name="headerLeft"></slot>
+        </div>
+        <div className="drawer-header-right">
           <slot name="extra"></slot>
           {closable && (
             <WrappedIcon

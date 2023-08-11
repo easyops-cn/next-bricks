@@ -30,3 +30,15 @@ eo-tooltip {
 eo-link {
   display: block;
 }
+
+.menu-item-divider {
+  height: 1px;
+  margin: 4px 0;
+  overflow: hidden;
+  line-height: 0;
+  background-color: var(--antd-border-color-split);
+}
+
+.menu-item-danger:not([disabled])::part(menu-item) {
+  color: var(--theme-red-color);
+}

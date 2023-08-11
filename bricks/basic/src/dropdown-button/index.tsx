@@ -9,7 +9,8 @@ import type {
   DropdownActionsEvents,
   DropdownActionsEventsMapping,
   Action,
-} from "../dropdown-actions/index.jsx";
+  SimpleAction,
+} from "../dropdown-actions/index.js";
 import type { ButtonType, ComponentSize, Shape } from "../interface.js";
 import styleText from "./dropdown-button.shadow.css";
 
@@ -32,7 +33,7 @@ interface DropButtonProps {
   shape?: Shape;
   icon?: GeneralIconProps;
   disabled?: boolean;
-  handleClick: (action: Action) => void;
+  handleClick: (action: SimpleAction) => void;
 }
 
 const defaultIcon: GeneralIconProps = {
@@ -101,7 +102,7 @@ class DropdownButton extends ReactNextElement {
   @property()
   accessor shape: Shape | undefined;
 
-  #handleClick = (action: Action): void => {
+  #handleClick = (action: SimpleAction): void => {
     action.event && this.dispatchEvent(new CustomEvent(action.event));
   };
 

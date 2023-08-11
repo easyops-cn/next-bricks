@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
@@ -10,6 +10,7 @@ import type { Popover, PopoverProps } from "../popover/index.jsx";
 import type { EoTooltip, ToolTipProps } from "../tooltip/index.jsx";
 import type { Link, LinkProps } from "../link/index.jsx";
 import type { Target } from "../interface.js";
+import classNames from "classnames";
 
 const { defineElement, property, event } = createDecorators();
 
@@ -19,7 +20,7 @@ const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 const WrappedMenu = wrapBrick<Menu, unknown>("eo-menu");
 const WrappedMenuItem = wrapBrick<MenuItem, MenuComponentProps>("eo-menu-item");
 
-export interface Action {
+export interface SimpleAction {
   text: string;
   event?: string;
   icon?: GeneralIconProps;
@@ -29,7 +30,15 @@ export interface Action {
   url?: string;
   href?: string;
   target?: Target;
+  danger?: boolean;
 }
+
+export interface Divider {
+  type: "divider";
+  hidden?: boolean;
+}
+
+export type Action = SimpleAction | Divider;
 
 export interface DropdownActionsProps {
   actions?: Action[];
@@ -37,7 +46,7 @@ export interface DropdownActionsProps {
 }
 
 export interface DropdownActionsEvents {
-  "action.click": CustomEvent<Action>;
+  "action.click": CustomEvent<SimpleAction>;
 }
 
 export interface DropdownActionsEventsMapping {
@@ -76,9 +85,9 @@ class EoDropdownActions
    * @detail 该按钮配置
    */
   @event({ type: "action.click" })
-  accessor #actionClickEvent!: EventEmitter<Action>;
+  accessor #actionClickEvent!: EventEmitter<SimpleAction>;
 
-  #handleClick = (action: Action): void => {
+  #handleClick = (action: SimpleAction): void => {
     this.#actionClickEvent.emit(action);
     if (action.event) {
       this.dispatchEvent(new CustomEvent(action.event, { detail: action }));
@@ -96,14 +105,22 @@ class EoDropdownActions
   }
 }
 
+const isDivider = (action: Action): action is Divider => {
+  return "type" in action && action.type === "divider";
+};
+
 interface DropdownActionsComponentProps extends DropdownActionsProps {
-  handleActionClick?: (action: Action) => void;
+  handleActionClick?: (action: SimpleAction) => void;
 }
 
 export function EoDropdownActionsComponent(
   props: DropdownActionsComponentProps
 ) {
   const { actions, disabled, handleActionClick } = props;
+
+  const filteredActions = useMemo(() => {
+    return actions?.filter((action) => !action.hidden);
+  }, [actions]);
 
   return (
     <WrappedPopover
@@ -113,13 +130,20 @@ export function EoDropdownActionsComponent(
       disabled={disabled}
     >
       <slot slot="anchor" />
-      {actions && (
+      {filteredActions?.length && (
         <WrappedMenu style={{ minWidth: "max-content" }}>
-          {actions
-            ?.filter((action) => !action.hidden)
-            .map((action, index) => {
+          {filteredActions.map((action, index) => {
+            if (isDivider(action)) {
+              if (index === 0 || index === filteredActions.length - 1) {
+                return null;
+              }
+              return <div key={index} className="menu-item-divider" />;
+            } else {
               const menuItem = (
                 <WrappedMenuItem
+                  className={classNames({
+                    "menu-item-danger": action.danger,
+                  })}
                   icon={action.icon}
                   disabled={action.disabled}
                   onClick={(e: React.MouseEvent) => {
@@ -153,7 +177,8 @@ export function EoDropdownActionsComponent(
                   )}
                 </WrappedTooltip>
               );
-            })}
+            }
+          })}
         </WrappedMenu>
       )}
     </WrappedPopover>

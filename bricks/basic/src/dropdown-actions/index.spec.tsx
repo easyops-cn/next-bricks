@@ -14,6 +14,9 @@ describe("eo-dropdown-actions", () => {
     ) as EoDropdownActions;
     element.actions = [
       {
+        type: "divider",
+      },
+      {
         text: "a",
         event: "a.click",
         url: "/test",
@@ -28,6 +31,17 @@ describe("eo-dropdown-actions", () => {
         event: "c.click",
         hidden: true,
       },
+      {
+        type: "divider",
+      },
+      {
+        text: "d",
+        event: "d.click",
+        danger: true,
+      },
+      {
+        type: "divider",
+      },
     ];
     element.addEventListener("action.click", onActionClick);
 
@@ -39,8 +53,11 @@ describe("eo-dropdown-actions", () => {
     expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
 
     expect(element.shadowRoot?.querySelectorAll("eo-menu-item")).toHaveLength(
-      2
+      3
     );
+    expect(
+      element.shadowRoot?.querySelectorAll(".menu-item-divider")
+    ).toHaveLength(1);
 
     expect(
       element.shadowRoot?.querySelectorAll("eo-menu-item")[0].parentElement
@@ -50,6 +67,11 @@ describe("eo-dropdown-actions", () => {
       element.shadowRoot?.querySelectorAll("eo-menu-item")[1].parentElement
         ?.tagName
     ).not.toBe("EO-LINK");
+    expect(
+      element.shadowRoot
+        ?.querySelectorAll("eo-menu-item")[2]
+        .classList.contains("menu-item-danger")
+    ).toBeTruthy();
 
     act(() => {
       fireEvent.click(

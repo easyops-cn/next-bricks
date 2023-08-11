@@ -21,13 +21,22 @@
           category: "default"
           icon: "edit"
         event: "edit"
+      - type: divider
       - text: Delete
-        disabled: true
         icon:
           lib: "easyops"
           category: "default"
           icon: "delete"
         event: "delete"
+        tooltip: No permission
+        danger: true
+      - text: Delete 2
+        disabled: true
+        icon:
+          lib: "easyops"
+          category: "default"
+          icon: "delete"
+        event: "delete2"
         tooltip: No permission
   events:
     query:
