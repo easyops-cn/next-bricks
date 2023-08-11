@@ -6,12 +6,12 @@ export { loadStyleText, loadFunction };
 export * from "./constants.js";
 
 /**
- * Expression
+ * Use expression
  * @type {{
- * <T>(expr: T): T;
- * <T>(flag: "=" | "~" | "track context" | "track state", expr: T): T;
+ * <T>(expr: () => T): T;
+ * <T>(flag: "=" | "~" | "track context" | "track state", expr: () => T): T;
  * }}
  */
-export const Expr = () => {
+export const use = () => {
  throw new Error("Error: expression not transpiled!");
 }

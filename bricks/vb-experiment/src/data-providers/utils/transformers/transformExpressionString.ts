@@ -11,7 +11,7 @@ export function transformExpressionString(
   path: string[]
 ) {
   if (/^\s*<%[~=]?\s/.test(value) && /\s%>\s*$/.test(value)) {
-    // Turn `"<% CTX.abc %>"` into `Expr(abc)`
+    // Turn `"<% CTX.abc %>"` into `use(() => CTX.abc)`
     let flag = "";
     const source = value.replace(
       /^\s*<%([~=])?\s|\s%>\s*$/g,
@@ -33,13 +33,31 @@ export function transformExpressionString(
           [SmartImports, { imports: inferredImports }],
         ],
       }).ast as t.File;
-      const ast = (file.program.body[0] as t.ExpressionStatement).expression;
-      const node = t.callExpression(t.identifier("Expr"), [
+      let ast = (file.program.body[0] as t.ExpressionStatement).expression;
+
+      // Transfer
+      let firstExpr: t.Expression;
+      if (
+        !flag &&
+        ast.type === "SequenceExpression" &&
+        ((firstExpr = ast.expressions[0]),
+        firstExpr.type === "StringLiteral") &&
+        (firstExpr.value === "track context" ||
+          firstExpr.value === "track state")
+      ) {
+        flag = "=";
+        ast =
+          ast.expressions.length > 2
+            ? t.sequenceExpression(ast.expressions.slice(1))
+            : ast.expressions[1];
+      }
+
+      const node = t.callExpression(t.identifier("use"), [
         ...(flag ? [t.stringLiteral(flag)] : []),
-        ...(ast.type === "SequenceExpression" ? ast.expressions : [ast]),
+        t.arrowFunctionExpression([], ast),
       ]);
 
-      addImport(imports, "jsx", "Expr");
+      addImport(imports, "jsx", "use");
 
       for (const name of inferredImports) {
         switch (name) {
@@ -78,6 +96,7 @@ export function transformExpressionString(
             break;
         }
       }
+
       return node;
     } catch (e) {
       // eslint-disable-next-line no-console

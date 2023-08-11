@@ -47,7 +47,7 @@ function start() {
   });
 
   task.on('close', (code) => {
-    console.log(`Copy exited with code ${code}`);
+    console.log(`Transpile exited with code ${code}`);
   });
 }
 
@@ -132,10 +132,11 @@ async function processExpressionsInFile(filePath, processCssAsWell) {
   const plugins = isJsx ? ["jsx"] : [];
   const content = await readFile(filePath, "utf-8");
 
-  const hasExpr = /\bExpr\s*\(/.test(content);
+  const hasExprCall = /\buse\s*\(/.test(content);
+  const hasExprComment = /@expr\b/.test(content);
   const hasCss = isJsx && processCssAsWell && /\.css['"]/.test(content);
 
-  if (!hasExpr && !hasCss) {
+  if (!hasExprCall && !hasExprComment && !hasCss) {
     return;
   }
   const ast = parse(content, { plugins, sourceType: "module" });
@@ -148,7 +149,8 @@ async function processExpressionsInFile(filePath, processCssAsWell) {
     enter(path) {
       let match;
       if (
-        !(t.isLiteral(path.node) && !t.isTemplateLiteral()) &&
+        hasExprComment &&
+        !(t.isLiteral(path.node) && !t.isTemplateLiteral(path.node)) &&
         !(t.isIdentifier(path.node) && path.node.name === "undefined") &&
         !t.isJSX(path.node) &&
         path.node.leadingComments?.some(comment => comment.type === "CommentBlock" &&
@@ -156,8 +158,9 @@ async function processExpressionsInFile(filePath, processCssAsWell) {
         t.isExpression(path.node)
       ) {
         const flag = match[1] ?? "";
-        const exprSource =  `<%${flag} ${content.substring(path.node.start, path.node.end)} %>`;
+        const exprSource = `<%${flag} ${content.substring(path.node.start, path.node.end)} %>`;
         path.replaceWith(t.stringLiteral(exprSource));
+        transformed = true;
       }
     },
     ImportDeclaration(path) {
@@ -165,15 +168,13 @@ async function processExpressionsInFile(filePath, processCssAsWell) {
         if (hasCss) {
           jsxImportDeclaration = path.node;
         }
-        if (hasExpr) {
-          for (const specifier of path.node.specifiers) {
-            if (specifier.type === "ImportSpecifier") {
-              if (specifier.local.name === "Expr" && specifier.imported.type === "Identifier" && specifier.imported.name === "Expr") {
-                importedExpr = true;
-              }
-              if (hasCss && specifier.local.name === "loadStyleText" && specifier.imported.type === "Identifier" && specifier.imported.name === "loadStyleText") {
-                hasLoadStyleText = true;
-              }
+        for (const specifier of path.node.specifiers) {
+          if (specifier.type === "ImportSpecifier") {
+            if (hasExprCall && specifier.local.name === "use" && specifier.imported.type === "Identifier" && specifier.imported.name === "use") {
+              importedExpr = true;
+            }
+            if (hasCss && specifier.local.name === "loadStyleText" && specifier.imported.type === "Identifier" && specifier.imported.name === "loadStyleText") {
+              hasLoadStyleText = true;
             }
           }
         }
@@ -206,17 +207,22 @@ async function processExpressionsInFile(filePath, processCssAsWell) {
       }
     },
     CallExpression(path) {
-      if (importedExpr && path.node.callee.type === "Identifier" && path.node.callee.name === "Expr") {
+      if (importedExpr && path.node.callee.type === "Identifier" && path.node.callee.name === "use") {
         const { arguments: args} = path.node;
         if (args.length === 0) {
-          throw new Error("`Expr()` should always have at least one argument");
+          throw new Error("`use()` should always have at least one argument");
         }
         let flag = "";
+        let index = 0;
         if (args.length > 1 && args[0].type === "StringLiteral" && (args[0].value === "=" || args[0].value === "~")) {
           flag = args[0].value;
-          args.splice(0, 1);
+          index = 1;
         }
-        const exprSource =  `<%${flag} ${content.substring(args[0].start, args[args.length - 1].end)} %>`;
+        const arrow = args[index];
+        if (arrow.type !== "ArrowFunctionExpression" || arrow.body.type === "BlockStatement") {
+          throw new Error("`use()` should pass a arrow function which return an expression");
+        }
+        const exprSource =  `<%${flag} ${content.substring(arrow.body.start, arrow.body.end)} %>`;
         path.replaceWith(t.stringLiteral(exprSource));
         transformed = true;
       }
