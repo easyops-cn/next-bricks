@@ -52,12 +52,12 @@ export function transformExpressionString(
             : ast.expressions[1];
       }
 
-      const node = t.callExpression(t.identifier("use"), [
-        ...(flag ? [t.stringLiteral(flag)] : []),
-        t.arrowFunctionExpression([], ast),
-      ]);
+      // const node = t.callExpression(t.identifier("use"), [
+      //   ...(flag ? [t.stringLiteral(flag)] : []),
+      //   t.arrowFunctionExpression([], ast),
+      // ]);
 
-      addImport(imports, "jsx", "use");
+      // addImport(imports, "jsx", "use");
 
       for (const name of inferredImports) {
         switch (name) {
@@ -97,7 +97,7 @@ export function transformExpressionString(
         }
       }
 
-      return node;
+      return ast;
     } catch (e) {
       // eslint-disable-next-line no-console
       console.warn("Parse expression failed:", value, e);
