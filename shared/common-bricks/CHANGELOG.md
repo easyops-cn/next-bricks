@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.10.0...@next-shared/common-bricks@0.11.0) (2023-08-11)
+
+
+### Features
+
+* eo-sidebar ([1a1cfa9](https://github.com/easyops-cn/next-bricks/commit/1a1cfa996c701106a99912ff2b314e2187ee4d1a))
+
+
+
+
+
 # [0.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.9.0...@next-shared/common-bricks@0.10.0) (2023-08-10)
 
 

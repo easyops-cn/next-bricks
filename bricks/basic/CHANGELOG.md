@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.24.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.23.1...@next-bricks/basic@0.24.0) (2023-08-11)
+
+
+### Features
+
+* eo-nav-menu补充新三级分类菜单样式 ref NEXT_BUILDER-3786 ([e588f9c](https://github.com/easyops-cn/next-bricks/commit/e588f9c17d9148f40c8279d7788d272c633e1fd0))
+* eo-sidebar ([42c0bad](https://github.com/easyops-cn/next-bricks/commit/42c0bad115ee7f87672374f5bdf254617af352f8))
+* eo-sidebar ([1a1cfa9](https://github.com/easyops-cn/next-bricks/commit/1a1cfa996c701106a99912ff2b314e2187ee4d1a))
+
+
+
+
+
 ## [0.23.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.23.0...@next-bricks/basic@0.23.1) (2023-08-10)
 
 
