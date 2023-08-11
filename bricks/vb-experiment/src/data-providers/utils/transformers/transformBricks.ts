@@ -172,7 +172,7 @@ function transformJsxText(text: string, imports: ImportInfo, path: string[]) {
   if (expr) {
     return t.jsxExpressionContainer(expr);
   }
-  if (/>|<|&(?:[a-zA-Z0-9]+|#\d+|#x[\da-fA-F]+);/.test(text)) {
+  if (/[{}<>]|&(?:[a-zA-Z0-9]+|#\d+|#x[\da-fA-F]+);/.test(text)) {
     return t.jsxExpressionContainer(t.stringLiteral(text));
   }
   return t.jsxText(text);

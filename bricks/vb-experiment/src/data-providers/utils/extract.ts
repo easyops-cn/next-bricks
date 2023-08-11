@@ -12,6 +12,7 @@ import type {
   RouteNode,
   RouteNodeInBrick,
 } from "./interfaces.js";
+import { JS_RESERVED_WORDS } from "./constants.js";
 
 export interface ExtractedItem {
   name: string;
@@ -184,6 +185,7 @@ function getAvailableName(
   namePool: Map<string, Set<string>>,
   countStart = 1
 ): string {
+  let lowerName = name?.toLowerCase();
   const pathString = path.join("/");
   let names = namePool.get(pathString);
   if (!names) {
@@ -192,20 +194,23 @@ function getAvailableName(
 
   const aliasIsOk =
     type !== "route" ||
-    (typeof name === "string" && /^\w+$/.test(name) && name !== "index");
+    (typeof lowerName === "string" &&
+      /^\w+$/.test(lowerName) &&
+      lowerName !== "index" &&
+      !JS_RESERVED_WORDS.has(lowerName));
 
-  if (!aliasIsOk || names.has(name as string)) {
-    const prefix = aliasIsOk ? name : type;
+  if (!aliasIsOk || names.has(lowerName as string)) {
+    const prefix = aliasIsOk ? lowerName : type;
     let candidate: string;
     let count = countStart;
     while (names.has((candidate = `${prefix}_${count}`))) {
       count++;
     }
-    name = candidate;
+    lowerName = candidate;
   }
 
-  names.add(name as string);
-  return name as string;
+  names.add(lowerName as string);
+  return lowerName as string;
 }
 
 function extractBricks(

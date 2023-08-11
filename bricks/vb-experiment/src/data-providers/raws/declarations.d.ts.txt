@@ -1,0 +1,49 @@
+declare const BASE_URL: string;
+declare const IMG: {
+  get(name: string): string;
+};
+declare const I18N: (key: string, defaultValue?: string) => string;
+declare const I18N_TEXT: (data: Record<string, string> | null | undefined) => string | undefined;
+declare const PERMISSIONS: {
+  check(...actions: string[]): boolean;
+};
+declare const THEME: {
+  getTheme(): string;
+};
+
+declare const ANCHOR: string | null;
+declare const APP: {
+  id: string;
+  homepage: string;
+  name: string;
+  localeName: string;
+  config: Record<string, any>;
+  getMenu(menuId: string): any;
+};
+declare const CTX: Record<string, any>;
+declare const DATA: any;
+declare const EVENT: Event;
+declare const FLAGS: Record<string, boolean>;
+declare const HASH: string;
+declare const INSTALLED_APPS: {
+  has(appId: string, matchVersion?: string): boolean;
+};
+declare const ITEM: any;
+declare const LOCAL_STORAGE: {
+  getItem(name: string): any;
+};
+declare const MEDIA: {
+  breakpoint: "xLarge" | "large" | "medium" | "small" | "xSmall";
+};
+declare const MISC: Record<string, any>;
+declare const PARAMS: URLSearchParams;
+declare const PATH: Record<string, string>;
+declare const PATH_NAME: string;
+declare const STATE: Record<string, any>;
+declare const PROCESSORS: Record<string, Record<string, Function>>;
+declare const QUERY: Record<string, string | null>;
+declare const QUERY_ARRAY: Record<string, string[]>;
+declare const SESSION_STORAGE: {
+  getItem(name: string): any;
+};
+declare const SYS: Record<string, any>;

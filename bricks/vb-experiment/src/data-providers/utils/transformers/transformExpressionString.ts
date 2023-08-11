@@ -1,7 +1,22 @@
 import * as t from "@babel/types";
-import { transform } from "@babel/standalone";
+import { transform, registerPlugin, availablePlugins } from "@babel/standalone";
 import type { ImportInfo } from "../interfaces.js";
 import { addImport } from "../handleImports.js";
+
+const PipelineOperatorMinimal = "transform-pipeline-operator-minimal";
+registerPlugin(PipelineOperatorMinimal, {
+  name: PipelineOperatorMinimal,
+  inherits: availablePlugins["syntax-pipeline-operator"],
+  visitor: {
+    BinaryExpression(path) {
+      const { node } = path;
+      const { operator, left, right } = node;
+      if (operator !== "|>") return;
+      const call = t.callExpression(right, [left as t.Expression]);
+      path.replaceWith(call);
+    },
+  },
+});
 
 export function transformExpressionString(
   value: string,
@@ -22,7 +37,11 @@ export function transformExpressionString(
     );
 
     try {
-      const file = transform(`(${source})`, { ast: true }).ast;
+      const file = transform(`(${source})`, {
+        ast: true,
+        code: false,
+        plugins: [[PipelineOperatorMinimal, { proposal: "minimal" }]],
+      }).ast;
       const ast = (file.program.body[0] as t.ExpressionStatement).expression;
       const node = t.callExpression(t.identifier("Expr"), [
         ...(flag ? [t.stringLiteral(flag)] : []),

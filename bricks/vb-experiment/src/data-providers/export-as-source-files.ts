@@ -6,7 +6,7 @@ import { saveAs } from "file-saver";
 import { format } from "prettier/standalone.js";
 import parserBabel from "prettier/parser-babel.js";
 import * as t from "@babel/types";
-import { transform, transformFromAst } from "@babel/standalone";
+import { transform, registerPlugin } from "@babel/standalone";
 import {
   ExtractState,
   extractRoutes,
@@ -21,8 +21,8 @@ import jsxConstantsJs from "./raws/jsx/constants.js.txt";
 import jsxIndexJs from "./raws/jsx/index.js.txt";
 import jsxJsxRuntimeJs from "./raws/jsx/jsx-runtime.js.txt";
 import jsxPackageJson from "./raws/jsx/package.json.txt";
-import jsxStyleJs from "./raws/jsx/Style.js.txt";
-import jsxFunctionJs from "./raws/jsx/Function.js.txt";
+import jsxLoadStyleTextJs from "./raws/jsx/loadStyleText.js.txt";
+import jsxLoadFunctionJs from "./raws/jsx/loadFunction.js.txt";
 import scriptsBabelJs from "./raws/scripts/babel.js.txt";
 import scriptsBuildJs from "./raws/scripts/build.js.txt";
 import scriptsStartJs from "./raws/scripts/start.js.txt";
@@ -32,9 +32,43 @@ import srcIndexJs from "./raws/src/index.js.txt";
 import editorConfig from "./raws/.editorconfig.txt";
 import gitIgnore from "./raws/.gitignore.txt";
 import babelConfigJs from "./raws/babel.config.js.txt";
+import declarationsDTs from "./raws/declarations.d.ts.txt";
+import devConfigMjs from "./raws/dev.config.mjs.txt";
 import packageJson from "./raws/package.json.txt";
 import jsconfigJson from "./raws/jsconfig.json.txt";
 import readmeMd from "./raws/README.md.txt";
+import { JS_RESERVED_WORDS } from "./utils/constants.js";
+
+let fnGlobalImports: Set<string>;
+const transformStoryboardFunction = "transform-storyboard-function";
+registerPlugin(transformStoryboardFunction, {
+  name: transformStoryboardFunction,
+  visitor: {
+    FunctionDeclaration(path) {
+      if (path.parent.type === "Program") {
+        path.replaceWith(t.exportDefaultDeclaration(path.node));
+      }
+    },
+    Identifier(path) {
+      switch (path.node.name) {
+        case "FN":
+          fnGlobalImports.add('import FN from "./index.js";');
+          break;
+        case "_":
+          fnGlobalImports.add('import _ from "lodash";');
+          break;
+        case "moment":
+          fnGlobalImports.add('import moment from "moment";');
+          break;
+        case "PIPES":
+          fnGlobalImports.add(
+            'import { pipes as PIPES } from "@easyops-cn/brick-next-pipes";'
+          );
+          break;
+      }
+    },
+  },
+});
 
 export interface StoryboardAssemblyResult {
   storyboard: Storyboard;
@@ -47,6 +81,8 @@ export interface StoryboardAssemblyResult {
       "homepage" | "theme" | "locales" | "noAuthGuard"
     > & {
       layoutType?: string;
+      defaultConfig?: string;
+      icon?: string;
     };
     brickNextVersion?: number;
   };
@@ -74,6 +110,8 @@ export async function exportAsSourceFiles({
     theme: projectDetail.appSetting.theme,
     noAuthGuard: projectDetail.appSetting.noAuthGuard,
     locales: projectDetail.appSetting.locales,
+    defaultConfig: JSON.parse(projectDetail.appSetting.defaultConfig || "{}"),
+    menuIcon: JSON.parse(projectDetail.appSetting.icon || "null"),
     standaloneMode: true,
   };
   src.file(
@@ -132,27 +170,17 @@ export async function exportAsSourceFiles({
     }
 
     // Prepend with `export default` for functions
-    const ast = transform(fn.source, {
+    fnGlobalImports = new Set();
+    let { code } = transform(fn.source, {
       filename: `expr.${fn.typescript ? "ts" : "js"}`,
-      plugins: fn.typescript ? ["syntax-typescript"] : [],
-      ast: true,
-    }).ast;
-    const statements = ast.program.body.map((statement) => {
-      if (statement.type === "FunctionDeclaration") {
-        const exportDefault = t.exportDefaultDeclaration(statement);
-        if (statement.leadingComments) {
-          exportDefault.leadingComments = statement.leadingComments;
-          delete statement.leadingComments;
-        }
-        return exportDefault;
-      }
-      return statement;
+      plugins: [
+        ...(fn.typescript ? ["syntax-typescript"] : []),
+        transformStoryboardFunction,
+      ],
     });
-    const { code } = transformFromAst(
-      t.program(statements, undefined, "module"),
-      undefined,
-      {}
-    );
+    if (fnGlobalImports.size > 0) {
+      code = `${[...fnGlobalImports].join("\n")}\n\n${code}`;
+    }
 
     fnDir.file(`${fn.name}.${fn.typescript ? "ts" : "js"}`, code);
     fnImports.push(`import ${fn.name} from "./${fn.name}.js";`);
@@ -179,7 +207,10 @@ export async function exportAsSourceFiles({
       filename,
       formatJs(generate(menu, "menu", ["resources", "menus", filename]))
     );
-    const name = menu.menuId.replace(/^\d+|[^\w]+/g, "_");
+    let name = menu.menuId.replace(/^\d+|[^\w]+/g, "_");
+    if (JS_RESERVED_WORDS.has(name)) {
+      name = `${name}__2`;
+    }
     menuImports.push(`import ${name} from "./${filename}";`);
     menuNames.push(name);
   }
@@ -249,12 +280,14 @@ export async function exportAsSourceFiles({
   jsxDir.file("index.js", jsxIndexJs);
   jsxDir.file("jsx-runtime.js", jsxJsxRuntimeJs);
   jsxDir.file("package.json", jsxPackageJson);
-  jsxDir.file("Style.js", jsxStyleJs);
-  jsxDir.file("Function.js", jsxFunctionJs);
+  jsxDir.file("loadStyleText.js", jsxLoadStyleTextJs);
+  jsxDir.file("loadFunction.js", jsxLoadFunctionJs);
 
   project.file(".editorconfig", editorConfig);
   project.file(".gitignore", gitIgnore);
   project.file("babel.config.js", babelConfigJs);
+  project.file("declarations.d.ts", declarationsDTs);
+  project.file("dev.config.mjs", devConfigMjs);
   project.file("jsconfig.json", jsconfigJson);
   project.file(
     "package.json",
@@ -302,7 +335,11 @@ function generateByFileStructure(
     } else {
       folder.file(
         `${item.name}.js${
-          item.nodeType === "others" || item.nodeType === "context" ? "" : "x"
+          item.nodeType === "routes" ||
+          item.nodeType === "bricks" ||
+          item.nodeType === "template"
+            ? "x"
+            : ""
         }`,
         formatJs(generate(item.node, item.nodeType, childPath))
       );

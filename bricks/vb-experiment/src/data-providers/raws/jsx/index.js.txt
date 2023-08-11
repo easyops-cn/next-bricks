@@ -1,15 +1,15 @@
-import Style from "./Style.js";
-import Function from "./Function.js";
+import loadStyleText from "./loadStyleText.js";
+import loadFunction from "./loadFunction.js";
 
-export { Style, Function };
+export { loadStyleText, loadFunction };
 
 export * from "./constants.js";
 
 /**
  * Expression
  * @type {{
- * (expr: any): any;
- * (flag: "=" | "~" | "track context" | "track state", expr: any): any;
+ * <T>(expr: T): T;
+ * <T>(flag: "=" | "~" | "track context" | "track state", expr: T): T;
  * }}
  */
 export const Expr = () => {

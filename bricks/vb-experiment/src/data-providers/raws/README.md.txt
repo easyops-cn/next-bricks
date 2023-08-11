@@ -14,6 +14,6 @@ yarn
 
 提示：
 - 运行 `yarn serve` 时按需使用 `--subdir` 和 `--server` 等参数。
-- 修改文件后，需手动刷新浏览器。
+- 也可以选择只使用一个终端运行 `yarn dev`，此时需要把 `yarn serve` 相关的参数定义在 `package.json` 文件中。
 
 [查看贡献指南](CONTRIBUTING.md)

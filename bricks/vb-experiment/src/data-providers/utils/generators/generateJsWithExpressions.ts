@@ -17,6 +17,7 @@ export function generateJsWithExpressions(node: unknown, path: string[]) {
         minimal: true,
       },
     },
+    cloneInputAst: false,
   }).code;
   if (allImports.length > 0) {
     return `${allImports.join("\n")}\n\n${content}`;

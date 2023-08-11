@@ -4,15 +4,15 @@ import { fileURLToPath } from "node:url";
 import { parse } from "@babel/parser";
 import babelGenerator from "@babel/generator";
 import babelTraverse from "@babel/traverse";
-import * as t from "@babel/types";
 
 const { default: traverse } = babelTraverse;
 const { default: generate } = babelGenerator;
 
 /**
- * @param {{ url: string; from: string }} props
+ * @param {string} url
+ * @param {string} from
  */
-export default function Function({url, from}) {
+export default function loadFunction(url, from) {
   const jsPath = path.resolve(fileURLToPath(from), "..", url);
   const tsPath = jsPath.replace(/\.js$/, ".ts");
   const typescript = (!existsSync(jsPath) && existsSync(tsPath)) || undefined;
@@ -20,19 +20,22 @@ export default function Function({url, from}) {
   const [name] = path.basename(resolvedPath).split(".");
   const source = readFileSync(resolvedPath, "utf-8");
 
-  // Remove `export default`
+  // Remove all import declarations,
+  // and replace `export default function() {}` with `function () {}`
   const ast = parse(source, { plugins: typescript ? ["typescript"] : [], sourceType: "module" });
-  let fn;
   traverse(ast, {
+    ImportDeclaration(path) {
+      path.remove();
+    },
     ExportDefaultDeclaration(path) {
-      fn = path.node.declaration;
+      path.replaceWith(path.node.declaration);
     }
   });
-  const { code } = generate(fn ? t.program([fn], undefined, "script") : ast);
+  const { code } = generate(ast);
 
   return {
     name,
     typescript,
     source: code,
-  }
+  };
 }
