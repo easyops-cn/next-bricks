@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.10.2...@next-bricks/containers@0.11.0) (2023-08-11)
+
+
+### Features
+
+* **tab:** Add panel style ([6225611](https://github.com/easyops-cn/next-bricks/commit/6225611c309be2468e837c2f6ad967b555c87449))
+
+
+
+
+
 ## [0.10.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.10.1...@next-bricks/containers@0.10.2) (2023-08-11)
 
 **Note:** Version bump only for package @next-bricks/containers

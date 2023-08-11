@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.26.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.26.0...@next-bricks/basic@0.26.1) (2023-08-11)
+
+
+### Bug Fixes
+
+* fix eo-nav-bar bug ref NEXT_BUILDER-3786 ([2aa759d](https://github.com/easyops-cn/next-bricks/commit/2aa759db1ec849fd6c3f24364a77344029be7e7d))
+
+
+
+
+
 # [0.26.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.25.1...@next-bricks/basic@0.26.0) (2023-08-11)
 
 

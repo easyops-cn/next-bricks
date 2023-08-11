@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.6.0...@next-bricks/markdown@1.6.1) (2023-08-11)
+
+
+### Bug Fixes
+
+* Add dependency @next-shared/form ([c9dc705](https://github.com/easyops-cn/next-bricks/commit/c9dc70572d952f40216ebe9628f7e539984cd013))
+
+
+
+
+
 # [1.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.5.1...@next-bricks/markdown@1.6.0) (2023-08-02)
 
 
