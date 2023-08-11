@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.25.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.24.0...@next-bricks/basic@0.25.0) (2023-08-11)
+
+
+### Features
+
+* eo-dropdown-actions support divider and danger action ([b88dbb5](https://github.com/easyops-cn/next-bricks/commit/b88dbb5228da7612e583d0148288144fbb866f59))
+
+
+
+
+
 # [0.24.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.23.1...@next-bricks/basic@0.24.0) (2023-08-11)
 
 

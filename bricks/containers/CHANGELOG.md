@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.9.20...@next-bricks/containers@0.10.0) (2023-08-11)
+
+
+### Features
+
+* eo-dropdown-actions support divider and danger action ([b88dbb5](https://github.com/easyops-cn/next-bricks/commit/b88dbb5228da7612e583d0148288144fbb866f59))
+
+
+
+
+
 ## [0.9.20](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.9.19...@next-bricks/containers@0.9.20) (2023-08-11)
 
 **Note:** Version bump only for package @next-bricks/containers
