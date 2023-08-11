@@ -228,7 +228,7 @@
             textContent: 抽屉内容
 ```
 
-### Foot slots
+### Slots
 
 ```yaml preview
 - brick: eo-button
@@ -243,19 +243,24 @@
     customTitle: 抽屉标题
     id: "drawer"
     footerSlot: true
-  slots:
-    "":
-      bricks:
-        - brick: div
-          properties:
-            textContent: 抽屉内容
-    footer:
-      bricks:
-        - brick: div
-          properties:
-            textContent: 底部内容
-            style:
-              padding: 10px 20px
+  children:
+    - brick: div
+      properties:
+        textContent: 抽屉内容
+    - brick: div
+      slot: footer
+      properties:
+        textContent: 底部内容
+        style:
+          padding: 10px 20px
+    - brick: div
+      slot: extra
+      properties:
+        textContent: 头部右上角
+    - brick: div
+      slot: headerLeft
+      properties:
+        textContent: 头部左上角
 ```
 
 ### Open Event & Close Event
