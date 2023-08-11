@@ -1,0 +1,25 @@
+// @ts-check
+/** @typedef {import("express").RequestHandler} Mock */
+/** @typedef {{ featureFlags?: Record<string, boolean>; misc?: Record<string, unknown>; [k: string]: unknown; }} Settings */
+/** @type {{ brickFolders?: string[]; mocks?: Mock[]; settings?: Settings }} */
+export default {
+  brickFolders: [
+    "./bricks"
+  ],
+  // NOTE: Uncomment these lines below to enable local mocks:
+  // mocks: [
+  //   (req, res, next) => {
+  //     if (req.method === "GET" && req.path === "/api/auth/login") {
+  //       res.send({
+  //         code: 0,
+  //         data: {
+  //           loggedIn: true,
+  //           username: "mock_user",
+  //         },
+  //       });
+  //       return;
+  //     }
+  //     next();
+  //   }
+  // ],
+}

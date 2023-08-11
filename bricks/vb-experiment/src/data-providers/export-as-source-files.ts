@@ -33,6 +33,7 @@ import editorConfig from "./raws/.editorconfig.txt";
 import gitIgnore from "./raws/.gitignore.txt";
 import babelConfigJs from "./raws/babel.config.js.txt";
 import declarationsDTs from "./raws/declarations.d.ts.txt";
+import devConfigMjs from "./raws/dev.config.mjs.txt";
 import packageJson from "./raws/package.json.txt";
 import jsconfigJson from "./raws/jsconfig.json.txt";
 import readmeMd from "./raws/README.md.txt";
@@ -286,6 +287,7 @@ export async function exportAsSourceFiles({
   project.file(".gitignore", gitIgnore);
   project.file("babel.config.js", babelConfigJs);
   project.file("declarations.d.ts", declarationsDTs);
+  project.file("dev.config.mjs", devConfigMjs);
   project.file("jsconfig.json", jsconfigJson);
   project.file(
     "package.json",
