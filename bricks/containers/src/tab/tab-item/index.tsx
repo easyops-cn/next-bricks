@@ -7,10 +7,12 @@ import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
+import { TabType } from "../../interface.js";
 
 const { defineElement, property } = createDecorators();
 
 export interface TabItemProps {
+  type?: TabType;
   text?: string;
   panel: string;
   icon?: GeneralIconProps;
@@ -31,6 +33,14 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
   alias: ["containers.tab-item"],
 })
 class TabItem extends ReactNextElement {
+  /**
+   * @default
+   * @required
+   * @description 样式类型
+   */
+  @property()
+  accessor type: TabType = "default";
+
   /**
    * @default
    * @required
@@ -72,6 +82,7 @@ class TabItem extends ReactNextElement {
   render() {
     return (
       <TabItemElement
+        type={this.type}
         panel={this.panel}
         icon={this.icon}
         disabled={this.disabled}
@@ -83,6 +94,7 @@ class TabItem extends ReactNextElement {
 }
 
 function TabItemElement({
+  type,
   panel,
   icon,
   disabled,
@@ -99,7 +111,7 @@ function TabItemElement({
 
   return (
     <div
-      className={classNames("tab-item", {
+      className={classNames("tab-item", type, {
         disabled,
       })}
       key={panel}
