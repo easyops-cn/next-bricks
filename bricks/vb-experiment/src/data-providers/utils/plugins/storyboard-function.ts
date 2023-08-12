@@ -10,6 +10,11 @@ registerPlugin(TransformStoryboardFunction, () => ({
         path.replaceWith(t.exportDefaultDeclaration(path.node));
       }
     },
+    TSDeclareFunction(path) {
+      if (path.parent.type === "Program") {
+        path.replaceWith(t.exportDefaultDeclaration(path.node));
+      }
+    },
   },
 }));
 

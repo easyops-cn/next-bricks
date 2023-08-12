@@ -2,7 +2,7 @@ import { Component, ForEach, Fragment, If, Route, Switch, LegacyTemplate } from 
 
 export { Fragment };
 
-// Not including "children".
+// Not including "children" | "slot".
 const RESERVED_PROP_KEYS = new Set(["events", "lifeCycle", "if", "portal", "ref"]);
 
 const NodeType = Symbol("NodeType");
@@ -79,7 +79,7 @@ export function jsx(type, config) {
         const k = key.substring(ConfNamespace.length);
         reservedConfig[k] = value;
       } else {
-        throw new Error(`Unsupported namespace prop: "${key}"`);
+        throw new Error(`Unsupported namespace prop: "${originalKey}"`);
       }
     } else if (key === "slot") {
       slot = value;

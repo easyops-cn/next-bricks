@@ -404,12 +404,14 @@ function extractTemplate(
 function cleanRoute(
   route: RouteConf & {
     deviceOwner?: unknown;
+    analyticsData?: unknown;
     menu?: RouteConf["menu"] | string;
   }
 ): void {
   delete route.alias;
   delete route.iid;
   delete route.deviceOwner;
+  delete route.analyticsData;
   if (route.menu === "") {
     delete route.menu;
   }

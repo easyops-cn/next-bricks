@@ -17,11 +17,13 @@ import {
 } from "./utils/buildFileStructure.js";
 import { generate } from "./utils/generators/generate.js";
 import jsxConstantsJs from "./raws/jsx/constants.js.txt";
+import jsxIndexDTs from "./raws/jsx/index.d.ts.txt";
 import jsxIndexJs from "./raws/jsx/index.js.txt";
 import jsxJsxRuntimeJs from "./raws/jsx/jsx-runtime.js.txt";
 import jsxPackageJson from "./raws/jsx/package.json.txt";
 import jsxLoadStyleTextJs from "./raws/jsx/loadStyleText.js.txt";
 import jsxLoadFunctionJs from "./raws/jsx/loadFunction.js.txt";
+import jsxRuntimeDTs from "./raws/jsx/runtime.d.ts.txt";
 import scriptsBabelJs from "./raws/scripts/babel.js.txt";
 import scriptsBuildJs from "./raws/scripts/build.js.txt";
 import scriptsStartJs from "./raws/scripts/start.js.txt";
@@ -31,7 +33,6 @@ import srcIndexJs from "./raws/src/index.js.txt";
 import editorConfig from "./raws/.editorconfig.txt";
 import gitIgnore from "./raws/.gitignore.txt";
 import babelConfigJs from "./raws/babel.config.js.txt";
-import declarationsDTs from "./raws/declarations.d.ts.txt";
 import devConfigMjs from "./raws/dev.config.mjs.txt";
 import packageJson from "./raws/package.json.txt";
 import jsconfigJson from "./raws/jsconfig.json.txt";
@@ -150,13 +151,25 @@ export async function exportAsSourceFiles({
           SmartImports,
           {
             imports: inferredImports,
-            asImportDeclaration: true,
           },
         ],
       ],
     }) as { code: string };
+    const hasFN = inferredImports.has("FN");
+    if (hasFN) {
+      inferredImports.delete("FN");
+    }
+    const importStrings: string[] = [];
     if (inferredImports.size > 0) {
-      code = `${[...inferredImports].join("\n")}\n\n${code}`;
+      importStrings.push(
+        `import { ${[...inferredImports].join(", ")} } from "jsx/runtime";`
+      );
+    }
+    if (hasFN) {
+      importStrings.push(`import FN from "./index.js";`);
+    }
+    if (importStrings.length > 0) {
+      code = `${importStrings.join("\n")}\n\n${code}`;
     }
 
     fnDir.file(`${fn.name}.${fn.typescript ? "ts" : "js"}`, code);
@@ -255,15 +268,16 @@ export async function exportAsSourceFiles({
   const jsxDir = project.folder("jsx")!;
   jsxDir.file("constants.js", jsxConstantsJs);
   jsxDir.file("index.js", jsxIndexJs);
+  jsxDir.file("index.d.ts", jsxIndexDTs);
   jsxDir.file("jsx-runtime.js", jsxJsxRuntimeJs);
-  jsxDir.file("package.json", jsxPackageJson);
-  jsxDir.file("loadStyleText.js", jsxLoadStyleTextJs);
   jsxDir.file("loadFunction.js", jsxLoadFunctionJs);
+  jsxDir.file("loadStyleText.js", jsxLoadStyleTextJs);
+  jsxDir.file("package.json", jsxPackageJson);
+  jsxDir.file("runtime.d.ts", jsxRuntimeDTs);
 
   project.file(".editorconfig", editorConfig);
   project.file(".gitignore", gitIgnore);
   project.file("babel.config.js", babelConfigJs);
-  project.file("declarations.d.ts", declarationsDTs);
   project.file("dev.config.mjs", devConfigMjs);
   project.file("jsconfig.json", jsconfigJson);
   project.file(

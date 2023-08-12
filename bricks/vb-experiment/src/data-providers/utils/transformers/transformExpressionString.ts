@@ -11,19 +11,22 @@ export function transformExpressionString(
   path: string[]
 ) {
   if (/^\s*<%[~=]?\s/.test(value) && /\s%>\s*$/.test(value)) {
-    // Turn `"<% CTX.abc %>"` into `use(() => CTX.abc)`
-    let flag = "";
-    const source = value.replace(
-      /^\s*<%([~=])?\s|\s%>\s*$/g,
-      (m, p1: string) => {
-        if (p1) {
-          flag = p1;
-        }
-        return "";
-      }
-    );
-
     try {
+      // Turn `"<% CTX.abc %>"` into `CTX.abc`
+      let flag = "";
+      const source = value.replace(
+        /^\s*<%([~=])?\s|\s%>\s*$/g,
+        (m, p1: string) => {
+          if (p1) {
+            flag = p1;
+          }
+          return "";
+        }
+      );
+
+      let bind = flag === "=";
+      const recursive = flag === "~";
+
       const inferredImports = new Set<string>();
       const file = transform(`(${source})`, {
         ast: true,
@@ -35,66 +38,63 @@ export function transformExpressionString(
       }).ast as t.File;
       let ast = (file.program.body[0] as t.ExpressionStatement).expression;
 
-      // Transfer
       let firstExpr: t.Expression;
       if (
-        !flag &&
         ast.type === "SequenceExpression" &&
         ((firstExpr = ast.expressions[0]),
         firstExpr.type === "StringLiteral") &&
         (firstExpr.value === "track context" ||
           firstExpr.value === "track state")
       ) {
-        flag = "=";
-        ast =
-          ast.expressions.length > 2
-            ? t.sequenceExpression(ast.expressions.slice(1))
-            : ast.expressions[1];
+        if (!bind) {
+          bind = true;
+          ast =
+            ast.expressions.length > 2
+              ? t.sequenceExpression(ast.expressions.slice(1))
+              : ast.expressions[1];
+        }
       }
 
-      // const node = t.callExpression(t.identifier("use"), [
-      //   ...(flag ? [t.stringLiteral(flag)] : []),
-      //   t.arrowFunctionExpression([], ast),
-      // ]);
-
-      // addImport(imports, "jsx", "use");
+      if (
+        bind &&
+        !inferredImports.has("STATE") &&
+        !inferredImports.has("CTX")
+      ) {
+        bind = false;
+      }
 
       for (const name of inferredImports) {
-        switch (name) {
-          case "FN": {
-            const targetPath = ["resources", "functions", "index.js"];
-            let relative = 0;
-            for (let i = 0; i < targetPath.length && i < path.length; i++) {
-              relative = i;
-              if (path[i] !== targetPath[i]) {
-                break;
-              }
+        if (name === "FN") {
+          const targetPath = ["resources", "functions", "index.js"];
+          let relative = 0;
+          for (let i = 0; i < targetPath.length && i < path.length; i++) {
+            relative = i;
+            if (path[i] !== targetPath[i]) {
+              break;
             }
-            addImport(
-              imports,
-              `${
-                path.length === 1
-                  ? "."
-                  : new Array(path.length - 1 - relative).fill("..").join("/")
-              }/${targetPath.slice(relative).join("/")}`,
-              "default:FN"
-            );
-            break;
           }
-          case "_":
-            addImport(imports, "lodash", "default:_");
-            break;
-          case "moment":
-            addImport(imports, "moment", "default:moment");
-            break;
-          case "PIPES":
-            addImport(
-              imports,
-              "@easyops-cn/brick-next-pipes",
-              "pipes as PIPES"
-            );
-            break;
+          addImport(
+            imports,
+            `${
+              path.length === 1
+                ? "."
+                : new Array(path.length - 1 - relative).fill("..").join("/")
+            }/${targetPath.slice(relative).join("/")}`,
+            "default:FN"
+          );
+        } else {
+          addImport(imports, "jsx/runtime", name);
         }
+      }
+
+      if (recursive) {
+        addImport(imports, "jsx/runtime", "recursive");
+        ast = t.callExpression(t.identifier("recursive"), [ast]);
+      }
+
+      if (bind) {
+        addImport(imports, "jsx/runtime", "bind");
+        ast = t.callExpression(t.identifier("bind"), [ast]);
       }
 
       return ast;

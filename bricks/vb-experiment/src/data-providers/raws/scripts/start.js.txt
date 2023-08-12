@@ -139,103 +139,100 @@ async function processExpressionsInFile(filePath, processCssAsWell) {
   let importedCss = false;
   let jsxImportDeclaration;
   let hasLoadStyleText = false;
+
   traverse(ast, {
     enter(path) {
-      switch (path.node.type) {
-        case "ObjectProperty":
-        case "StringLiteral":
-        case "NumericLiteral":
-        case "BooleanLiteral":
-        case "NullLiteral":
+      if (path.node.type === "CallExpression") {
+        const bindNode = getRuntimeCallArg(path.node, path.scope, "bind");
+        let recursiveNode;
+        if (bindNode) {
+          if (bindNode.type === "CallExpression") {
+            recursiveNode = getRuntimeCallArg(bindNode, path.scope, "recursive");
+          }
+        } else {
+          recursiveNode = getRuntimeCallArg(path.node, path.scope, "recursive");
+        }
+        const exprNode = recursiveNode || bindNode;
+        if (exprNode) {
+          const exprSource = content.substring(exprNode.start, exprNode.end);
+          const exprString = `<%${
+            recursiveNode ? "~" : bindNode ? "=" : ""
+          } ${
+            recursiveNode && bindNode
+              ? `"track ${/\bSTATE\s*[.\[]/.test(exprSource)
+                  ? "state"
+                  : "context"
+                }",`
+              : ""
+          }${exprSource} %>`;
+          path.replaceWith(t.stringLiteral(exprString));
+          transformed = true;
           return;
+        }
       }
-
-      if (
-        t.isJSX(path.node) ||
-        !t.isExpression(path.node) ||
-        // For identifiers, ignore `undefined` and non-computed property keys
-        (path.node.type === "Identifier" && (
-          path.node.name === "undefined" || (
-            path.key === "key" && path.parent.type === "ObjectProperty" && !path.parent.computed
-          ) ||
-          path.parent.type === "ImportSpecifier" ||
-          path.parent.type === "ImportDefaultSpecifier" ||
-          (/^[a-z_0-9]+$/.test([path.node.name]) && !["_", "moment", "location"].includes(path.node.name))
-        )) ||
-        (path.node.type === "ObjectExpression" && path.node.properties.every(p => p.type === "ObjectProperty")) ||
-        (path.node.type === "ArrayExpression" && path.node.elements.every(e => e.type !== "SpreadElement"))
-      ) {
+      if (isJsonCompatible(path)) {
         return;
       }
-
       const exprSource = `<% ${content.substring(path.node.start, path.node.end)} %>`;
       path.replaceWith(t.stringLiteral(exprSource));
       transformed = true;
     },
     ImportDeclaration(path) {
-      if (!hasCss) {
-        return;
-      }
       if (path.node.source.value === "jsx") {
-        for (const specifier of path.node.specifiers) {
-          if (
-            specifier.type === "ImportSpecifier" &&
-            specifier.local.name === "loadStyleText" &&
-            specifier.imported.type === "Identifier" &&
-            specifier.imported.name === "loadStyleText"
-          ) {
-            hasLoadStyleText = true;
-          }
-        }
-      }
-      if (path.node.source.value.startsWith(".") && path.node.source.value.endsWith(".css")) {
-        const defaultSpecifier = path.node.specifiers.find(spec => spec.type === "ImportDefaultSpecifier");
-        if (defaultSpecifier) {
-          const varDeclaration = t.variableDeclaration("const", [
-            t.variableDeclarator(
-              defaultSpecifier.local,
-              t.callExpression(
-                t.identifier("loadStyleText"),
-                [
-                  path.node.source,
-                  t.memberExpression(
-                    t.memberExpression(
-                      t.identifier("import"),
-                      t.identifier("meta"),
-                    ),
-                    t.identifier("url"),
-                  )
-                ]
-              )
-            )
-          ]);
-          path.replaceWith(varDeclaration);
-          transformed = true;
-          importedCss = true;
-        }
+        jsxImportDeclaration = path.node;
       }
     },
-    // CallExpression(path) {
-    //   if (importedExpr && path.node.callee.type === "Identifier" && path.node.callee.name === "use") {
-    //     const { arguments: args} = path.node;
-    //     if (args.length === 0) {
-    //       throw new Error("`use()` should always have at least one argument");
-    //     }
-    //     let flag = "";
-    //     let index = 0;
-    //     if (args.length > 1 && args[0].type === "StringLiteral" && (args[0].value === "=" || args[0].value === "~")) {
-    //       flag = args[0].value;
-    //       index = 1;
-    //     }
-    //     const arrow = args[index];
-    //     if (arrow.type !== "ArrowFunctionExpression" || arrow.body.type === "BlockStatement") {
-    //       throw new Error("`use()` should pass a arrow function which return an expression");
-    //     }
-    //     const exprSource =  `<%${flag} ${content.substring(arrow.body.start, arrow.body.end)} %>`;
-    //     path.replaceWith(t.stringLiteral(exprSource));
-    //     transformed = true;
-    //   }
-    // }
+    ImportSpecifier(path) {
+      const { node } = path;
+      if (
+        path.parent.source.value === "jsx" &&
+        node.local.name === "loadStyleText" &&
+        node.imported.type === "Identifier" &&
+        node.imported.name === "loadStyleText"
+      ) {
+        hasLoadStyleText = true;
+      }
+    },
+    ImportDefaultSpecifier(path) {
+      if (hasCss && path.parent.source.value.startsWith(".") && path.parent.source.value.endsWith(".css")) {
+        const varDeclaration = t.variableDeclaration("const", [
+          t.variableDeclarator(
+            path.node.local,
+            t.callExpression(
+              t.identifier("loadStyleText"),
+              [
+                path.parent.source,
+                t.memberExpression(
+                  t.memberExpression(
+                    t.identifier("import"),
+                    t.identifier("meta"),
+                  ),
+                  t.identifier("url"),
+                )
+              ]
+            )
+          )
+        ]);
+        path.parentPath.replaceWith(varDeclaration);
+        transformed = true;
+        importedCss = true;
+      }
+    },
+  });
+
+  traverse(ast, {
+    ImportDeclaration(path) {
+      if (path.node.source.value === "jsx/runtime") {
+        path.remove();
+        transformed = true;
+      }
+    },
+    ImportDefaultSpecifier(path) {
+      if (path.parent.source.value.startsWith(".") && path.node.local.name === "FN") {
+        path.remove();
+        transformed = true;
+      }
+    },
   });
 
   if (!transformed) {
@@ -281,4 +278,84 @@ async function processExpressionsInDir(dir, processCssAsWell) {
       }
     })
   );
+}
+
+/**
+ * @param {babelTraverse.NodePath<t.Node>} path
+ * @returns {boolean}
+ */
+function isJsonCompatible(path) {
+  const { node } = path;
+  switch (node.type) {
+    case "ObjectProperty":
+    case "StringLiteral":
+    case "NumericLiteral":
+    case "BooleanLiteral":
+    case "NullLiteral":
+      return true;
+  }
+
+  return (
+    t.isJSX(node) ||
+    !t.isExpression(node) ||
+    (node.type === "Identifier" && isGeneralIdentifier(path)) ||
+    (node.type === "ObjectExpression" && node.properties.every(
+      p => p.type === "ObjectProperty" && (
+        p.key.type === "StringLiteral" || (p.key.type === "Identifier" && !p.computed)
+      )
+    )) ||
+    (node.type === "ArrayExpression" && node.elements.every(e => e.type !== "SpreadElement"))
+  );
+}
+
+/**
+ * @param {babelTraverse.NodePath<t.Identifier>} path
+ * @returns {boolean}
+ */
+function isGeneralIdentifier(path) {
+  const { node, parent } = path;
+  let binding;
+  return (
+    // `undefined`
+    node.name === "undefined" || (
+      // Non-computed property keys
+      path.key === "key" && parent.type === "ObjectProperty" && !parent.computed
+    ) ||
+    // Import specifiers
+    parent.type === "ImportSpecifier" ||
+    parent.type === "ImportDefaultSpecifier" ||
+    !(
+      (binding = path.scope.getBinding(node.name)) &&
+      (
+        (binding.path.node.type === "ImportSpecifier" && binding.path.parent.source.value === "jsx/runtime") ||
+        (binding.path.node.type === "ImportDefaultSpecifier" && node.name === "FN")
+      )
+    )
+  );
+}
+
+/**
+ *
+ * @param {t.CallExpression} node
+ * @param {babelTraverse.Scope} scope
+ * @param {string} name
+ */
+function getRuntimeCallArg(node, scope, name) {
+  const { callee, arguments: args } = node;
+  let binding;
+  if (
+    callee.type === "Identifier" &&
+    callee.name === name &&
+    (binding = scope.getBinding(name)) &&
+    binding.path.node.type === "ImportSpecifier" &&
+    binding.path.parent.source.value === "jsx/runtime" &&
+    binding.path.node.local.name === name &&
+    binding.path.node.imported.type === "Identifier" &&
+    binding.path.node.imported.name === name
+  ) {
+    if (args.length !== 1) {
+      throw new Error(`\`${name}()\` expect exactly one argument, received: ${args.length}`);
+    }
+    return args[0];
+  }
 }
