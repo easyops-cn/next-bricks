@@ -9,6 +9,13 @@ export {
   PIPES,
 };
 
+export const location: {
+  readonly href: string;
+  readonly origin: string;
+  readonly host: string;
+  readonly hostname: string;
+};
+
 export const BASE_URL: string;
 export const IMG: readonly {
   readonly get(name: string): string;

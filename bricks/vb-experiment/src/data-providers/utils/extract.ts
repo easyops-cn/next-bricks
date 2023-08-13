@@ -441,10 +441,11 @@ function cleanBrick(brick: BrickSourceNode): void {
 }
 
 function cleanContext(
-  context: ContextConf & { path?: unknown; relatedId?: unknown }
+  context: ContextConf & { path?: unknown; relatedId?: unknown; doc?: unknown }
 ): void {
   delete context.path;
   delete context.relatedId;
+  delete context.doc;
 }
 
 function cleanProxy(proxy: CustomTemplateProxy & { invalid?: unknown }) {

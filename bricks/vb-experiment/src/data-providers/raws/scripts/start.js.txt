@@ -6,11 +6,37 @@ import { parse } from "@babel/parser";
 import babelGenerator from "@babel/generator";
 import * as t from "@babel/types";
 import babelTraverse from "@babel/traverse";
+import { codeFrameColumns } from "@babel/code-frame";
 import { babel } from "./babel.js";
 import { transpile } from "./transpile.js";
 
 const { default: traverse } = babelTraverse;
 const { default: generate } = babelGenerator;
+
+const builtins = new Set([
+  "Array",
+  "Boolean",
+  "Date",
+  "Infinity",
+  "JSON",
+  "Math",
+  "NaN",
+  "Number",
+  "Object",
+  "String",
+  "atob",
+  "btoa",
+  "decodeURI",
+  "decodeURIComponent",
+  "encodeURI",
+  "encodeURIComponent",
+  "isFinite",
+  "isNaN",
+  "parseFloat",
+  "parseInt",
+  // "location",
+  "undefined",
+]);
 
 start();
 
@@ -128,12 +154,12 @@ function processExpressions() {
 }
 
 async function processExpressionsInFile(filePath, processCssAsWell) {
+  const srcFilePath = filePath.replace(/^temp\//, "src/");
+  const content = await readFile(srcFilePath, "utf-8");
+
   const isJsx = filePath.endsWith(".jsx");
-  const plugins = isJsx ? ["jsx"] : [];
-  const content = await readFile(filePath, "utf-8");
-
   const hasCss = isJsx && processCssAsWell && /\.css['"]/.test(content);
-
+  const plugins = isJsx ? ["jsx"] : [];
   const ast = parse(content, { plugins, sourceType: "module" });
   let transformed = false;
   let importedCss = false;
@@ -143,14 +169,14 @@ async function processExpressionsInFile(filePath, processCssAsWell) {
   traverse(ast, {
     enter(path) {
       if (path.node.type === "CallExpression") {
-        const bindNode = getRuntimeCallArg(path.node, path.scope, "bind");
+        const bindNode = getRuntimeCallArg(path.node, path.scope, "bind", content, srcFilePath);
         let recursiveNode;
         if (bindNode) {
           if (bindNode.type === "CallExpression") {
-            recursiveNode = getRuntimeCallArg(bindNode, path.scope, "recursive");
+            recursiveNode = getRuntimeCallArg(bindNode, path.scope, "recursive", content, srcFilePath);
           }
         } else {
-          recursiveNode = getRuntimeCallArg(path.node, path.scope, "recursive");
+          recursiveNode = getRuntimeCallArg(path.node, path.scope, "recursive", content, srcFilePath);
         }
         const exprNode = recursiveNode || bindNode;
         if (exprNode) {
@@ -170,7 +196,7 @@ async function processExpressionsInFile(filePath, processCssAsWell) {
           return;
         }
       }
-      if (isJsonCompatible(path)) {
+      if (isJsonCompatible(path, content, srcFilePath)) {
         return;
       }
       const exprSource = `<% ${content.substring(path.node.start, path.node.end)} %>`;
@@ -282,9 +308,11 @@ async function processExpressionsInDir(dir, processCssAsWell) {
 
 /**
  * @param {babelTraverse.NodePath<t.Node>} path
+ * @param {string} raw
+ * @param {string} filePath
  * @returns {boolean}
  */
-function isJsonCompatible(path) {
+function isJsonCompatible(path, raw, filePath) {
   const { node } = path;
   switch (node.type) {
     case "ObjectProperty":
@@ -293,12 +321,15 @@ function isJsonCompatible(path) {
     case "BooleanLiteral":
     case "NullLiteral":
       return true;
+    case "UnaryExpression":
+      // `-1` is also JSON compatible, except for `-0`
+      return node.operator === "-" && node.argument.type === "NumericLiteral" && node.argument.value !== 0;
   }
 
   return (
     t.isJSX(node) ||
     !t.isExpression(node) ||
-    (node.type === "Identifier" && isGeneralIdentifier(path)) ||
+    (node.type === "Identifier" && isGeneralIdentifier(path, raw, filePath)) ||
     (node.type === "ObjectExpression" && node.properties.every(
       p => p.type === "ObjectProperty" && (
         p.key.type === "StringLiteral" || (p.key.type === "Identifier" && !p.computed)
@@ -310,26 +341,32 @@ function isJsonCompatible(path) {
 
 /**
  * @param {babelTraverse.NodePath<t.Identifier>} path
+ * @param {string} raw
+ * @param {string} filePath
  * @returns {boolean}
  */
-function isGeneralIdentifier(path) {
-  const { node, parent } = path;
+function isGeneralIdentifier(path, raw, filePath) {
+  const { node, parent, scope } = path;
   let binding;
   return (
-    // `undefined`
-    node.name === "undefined" || (
+    (
       // Non-computed property keys
       path.key === "key" && parent.type === "ObjectProperty" && !parent.computed
     ) ||
     // Import specifiers
     parent.type === "ImportSpecifier" ||
     parent.type === "ImportDefaultSpecifier" ||
-    !(
-      (binding = path.scope.getBinding(node.name)) &&
-      (
-        (binding.path.node.type === "ImportSpecifier" && binding.path.parent.source.value === "jsx/runtime") ||
-        (binding.path.node.type === "ImportDefaultSpecifier" && node.name === "FN")
-      )
+    (
+      (binding = scope.getBinding(node.name))
+        ? !(
+            (binding.path.node.type === "ImportSpecifier" && binding.path.parent.source.value === "jsx/runtime") ||
+            (binding.path.node.type === "ImportDefaultSpecifier" && node.name === "FN")
+          )
+        : !builtins.has(node.name) && (
+            console.warn(`Warn: unknown variable "%s" (%s:%s:%s)`, node.name, filePath, node.loc.start.line, node.loc.start.column),
+            console.warn(codeFrameColumns(raw, node.loc)),
+            true
+          )
     )
   );
 }
@@ -339,8 +376,10 @@ function isGeneralIdentifier(path) {
  * @param {t.CallExpression} node
  * @param {babelTraverse.Scope} scope
  * @param {string} name
+ * @param {string} raw
+ * @param {string} filePath
  */
-function getRuntimeCallArg(node, scope, name) {
+function getRuntimeCallArg(node, scope, name, raw, filePath) {
   const { callee, arguments: args } = node;
   let binding;
   if (
@@ -354,7 +393,12 @@ function getRuntimeCallArg(node, scope, name) {
     binding.path.node.imported.name === name
   ) {
     if (args.length !== 1) {
-      throw new Error(`\`${name}()\` expect exactly one argument, received: ${args.length}`);
+      const message = `\`${name}()\` expect exactly one argument, received: ${args.length}`;
+      console.error(`${message} (${filePath}:%s:%s)`, node.loc.start.line, node.loc.start.column);
+      console.error(
+        codeFrameColumns(raw, node.loc)
+      );
+      throw new Error(message);
     }
     return args[0];
   }
