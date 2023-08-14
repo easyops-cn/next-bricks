@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.27.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.26.2...@next-bricks/basic@0.27.0) (2023-08-14)
+
+
+### Features
+
+* move counter-badge to @next-bricks/basic ([7a476ff](https://github.com/easyops-cn/next-bricks/commit/7a476ff9e8835451c7e30a52edb46d6cc7687588))
+
+
+
+
+
 ## [0.26.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.26.1...@next-bricks/basic@0.26.2) (2023-08-11)
 
 
