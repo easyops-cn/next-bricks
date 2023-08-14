@@ -1,13 +1,5 @@
 通用徽标构件。
 
-```yaml preview
-- brick: eo-counter-badge
-  properties:
-    textContent: 我的通知
-    count: 15
-    overflowCount: 99
-```
-
 ## Examples
 
 ### Basic
@@ -69,4 +61,13 @@
     color: var(--theme-green-color)
     count: 1000000
     overflowCount: 500
+```
+
+### 单独使用（无内容）
+
+```yaml preview
+- brick: eo-counter-badge
+  properties:
+    count: 15
+    overflowCount: 99
 ```

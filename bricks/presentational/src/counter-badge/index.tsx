@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
@@ -112,29 +112,43 @@ export function EoCounterBadgeComponent(props: BadgeProps) {
     offset = [0, 0],
     icon,
   } = props;
+  const [noContent, setNoContent] = useState<boolean>();
+  const slotRef = useRef<HTMLSlotElement>();
+
+  useEffect(() => {
+    const slotElement = slotRef.current;
+    const listener = () => {
+      setNoContent(slotElement.assignedNodes().length === 0);
+    };
+
+    listener();
+    slotElement.addEventListener("slotchange", listener);
+
+    return () => {
+      slotElement.removeEventListener("slotchange", listener);
+    };
+  }, []);
 
   const showCount = React.useMemo(() => {
     return count > overflowCount ? `${overflowCount}+` : count;
   }, [overflowCount, count]);
 
   return (
-    <div>
-      <span className="badgeContainer">
-        {icon && <WrappedIcon {...icon} />}
-        <slot></slot>
-        {(dot || showZero || !!count) && (
-          <sup
-            className={classnames("countContent", { badgeDot: dot })}
-            style={{
-              background: color,
-              marginTop: offset[1],
-              right: -offset[0],
-            }}
-          >
-            {dot ? null : showCount}
-          </sup>
-        )}
-      </span>
-    </div>
+    <span className={classnames("badgeContainer", { noContent })}>
+      {icon && <WrappedIcon {...icon} />}
+      <slot ref={slotRef}></slot>
+      {(dot || showZero || !!count) && (
+        <sup
+          className={classnames("countContent", { badgeDot: dot })}
+          style={{
+            background: color,
+            marginTop: offset[1],
+            right: -offset[0],
+          }}
+        >
+          {dot ? null : showCount}
+        </sup>
+      )}
+    </span>
   );
 }
