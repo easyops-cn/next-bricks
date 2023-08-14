@@ -1,9 +1,13 @@
+// istanbul ignore file
 import { createProviderClass } from "@next-core/utils/general";
+import { getHistory } from "@next-core/runtime";
 
 let injected = false;
 
 const EVENTS = ["click", "dblclick", "keydown", "change"] as const;
 let recordEnabled = false;
+
+const history = getHistory();
 
 export async function injectPreviewAgent(
   previewFromOrigin: string,
@@ -32,8 +36,24 @@ export async function injectPreviewAgent(
         case "toggle-record":
           toggleRecord(e.data.payload.recordEnabled);
           break;
+        case "reload":
+          location.reload();
+          break;
+        case "back":
+          history.goBack();
+          break;
+        case "forward":
+          history.goForward();
+          break;
       }
     }
+  });
+
+  history.listen((loc) => {
+    sendMessage({
+      type: "url-change",
+      url: location.origin + history.createHref(loc),
+    });
   });
 }
 

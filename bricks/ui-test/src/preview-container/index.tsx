@@ -4,14 +4,28 @@ import React, {
   useMemo,
   useRef,
   useState,
+  createRef,
+  forwardRef,
+  Ref,
+  useImperativeHandle,
 } from "react";
-import { createDecorators } from "@next-core/element";
+import { createDecorators, EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import { getBasePath, __secret_internals } from "@next-core/runtime";
 import styleText from "./styles.shadow.css";
 
-const { defineElement, property } = createDecorators();
+const { defineElement, property, method, event } = createDecorators();
+
+interface PreviewContainerRef {
+  back(): void;
+  forward(): void;
+  reload(): void;
+}
+
+export const PreviewContainerComponent = forwardRef(
+  LegacyPreviewContainerComponent
+);
 
 /**
  * 构件 `ui-test.preview-container`
@@ -21,17 +35,42 @@ export
   styleTexts: [styleText],
 })
 class PreviewContainer extends ReactNextElement {
+  private _previewContainerRef = createRef<PreviewContainerRef>();
+
   @property()
   accessor src!: string;
 
   @property({ type: Boolean })
   accessor recordEnabled: boolean | undefined;
 
+  @method()
+  back(): void {
+    this._previewContainerRef.current?.back();
+  }
+
+  @method()
+  forward(): void {
+    this._previewContainerRef.current?.forward();
+  }
+
+  @method()
+  reload(): void {
+    this._previewContainerRef.current?.reload();
+  }
+
+  @event({ type: "url.change" })
+  accessor #urlChangeEvent!: EventEmitter<string>;
+  #handleUrlChange = (url: string) => {
+    this.#urlChangeEvent.emit(url);
+  };
+
   render() {
     return (
       <PreviewContainerComponent
+        ref={this._previewContainerRef}
         src={this.src}
         recordEnabled={this.recordEnabled}
+        onUrlChange={this.#handleUrlChange}
       />
     );
   }
@@ -40,18 +79,46 @@ class PreviewContainer extends ReactNextElement {
 export interface PreviewContainerComponentProps {
   src: string;
   recordEnabled?: boolean;
+  onUrlChange?(url: string): void;
 }
 
-export function PreviewContainerComponent({
-  src,
-  recordEnabled,
-}: PreviewContainerComponentProps) {
+function LegacyPreviewContainerComponent(
+  { src, recordEnabled, onUrlChange }: PreviewContainerComponentProps,
+  ref: Ref<PreviewContainerRef>
+) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [initialized, setInitialized] = useState(false);
   const previewOrigin = useMemo(() => {
     const url = new URL(src, location.origin);
     return url.origin;
   }, [src]);
+
+  const back = useCallback(() => {
+    iframeRef.current?.contentWindow?.postMessage({
+      channel: "ui-test-preview",
+      type: "back",
+    });
+  }, []);
+
+  const forward = useCallback(() => {
+    iframeRef.current?.contentWindow?.postMessage({
+      channel: "ui-test-preview",
+      type: "forward",
+    });
+  }, []);
+
+  const reload = useCallback(() => {
+    iframeRef.current?.contentWindow?.postMessage({
+      channel: "ui-test-preview",
+      type: "reload",
+    });
+  }, []);
+
+  useImperativeHandle(ref, () => ({
+    back,
+    forward,
+    reload,
+  }));
 
   const handleIframeLoad = useCallback(() => {
     const pkg = __secret_internals.getBrickPackagesById("bricks/ui-test");
@@ -87,6 +154,9 @@ export function PreviewContainerComponent({
           case "initialized":
             setInitialized(true);
             break;
+          case "url-change":
+            onUrlChange?.(event.data.url);
+            break;
         }
       }
     };
@@ -113,15 +183,12 @@ export function PreviewContainerComponent({
   }, [initialized, previewOrigin, recordEnabled]);
 
   return (
-    <div>
+    <div className="preview-container">
       <iframe
         ref={iframeRef}
         src={src}
         onLoad={handleIframeLoad}
-        style={{
-          width: "1000px",
-          height: "600px",
-        }}
+        className="iframe"
       />
     </div>
   );

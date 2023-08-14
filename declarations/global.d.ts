@@ -125,6 +125,22 @@ interface Window {
 
   /** Mock global date, currently for sandbox demo website only */
   MOCK_DATE?: string;
+
+  // for File System Access Api
+  showDirectoryPicker?(options: {
+    mode: "read" | "readwrite";
+  }): Promise<FileSystemDirectoryHandle>;
+}
+
+interface FileSystemDirectoryHandle {
+  getFileHandle(
+    name: string,
+    option: { create?: boolean }
+  ): Promise<FileSystemFileHandle>;
+}
+
+interface FileSystemFileHandle {
+  createWritable(): Promise<any>;
 }
 
 declare const __webpack_public_path__: string;

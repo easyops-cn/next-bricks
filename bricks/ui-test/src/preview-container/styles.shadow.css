@@ -5,3 +5,25 @@
 :host([hidden]) {
   display: none;
 }
+
+.preview-container {
+  width: 100%;
+  height: 100%;
+  padding: 2px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 0 1px rgba(204, 204, 204, 0.2);
+  border-radius: 4px;
+
+  .iframe {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    transform-origin: 0% 0%;
+    border: 0;
+    padding: 0;
+  }
+}
