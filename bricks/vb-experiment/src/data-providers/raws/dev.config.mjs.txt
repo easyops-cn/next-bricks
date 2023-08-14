@@ -4,21 +4,23 @@
 /** @type {{ brickFolders?: string[]; mocks?: Mock[]; settings?: Settings }} */
 export default {
   brickFolders: [
-    "./bricks"
+    "./bricks",
   ],
   // NOTE: Uncomment these lines below to enable local mocks:
   // mocks: [
   //   (req, res, next) => {
-  //     if (req.method === "GET" && req.path === "/api/auth/login") {
-  //       res.send({
-  //         code: 0,
-  //         data: {
-  //           loggedIn: true,
-  //           username: "mock_user",
-  //         },
-  //       });
-  //       return;
+  //     switch (`${req.method} ${req.path}`) {
+  //       case "GET /api/auth/login":
+  //         res.send({
+  //           code: 0,
+  //           data: {
+  //             loggedIn: true,
+  //             username: "mock_user",
+  //           },
+  //         });
+  //         return;
   //     }
+  //
   //     next();
   //   }
   // ],
