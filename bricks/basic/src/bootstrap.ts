@@ -32,3 +32,4 @@ import "./sidebar/sidebar-menu/index.js";
 import "./sidebar/index.js";
 import "./app-bar-wrapper/index.js";
 import "./page-title/index.js";
+import "./counter-badge/index.js";

@@ -113,10 +113,16 @@ export function EoCounterBadgeComponent(props: BadgeProps) {
     icon,
   } = props;
   const [noContent, setNoContent] = useState<boolean>();
-  const slotRef = useRef<HTMLSlotElement>();
+  const slotRef = useRef<HTMLSlotElement>(null);
 
   useEffect(() => {
     const slotElement = slotRef.current;
+
+    /* istanbul ignore if */
+    if (!slotElement) {
+      return;
+    }
+
     const listener = () => {
       setNoContent(slotElement.assignedNodes().length === 0);
     };
