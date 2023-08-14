@@ -1,0 +1,28 @@
+{
+  "name": "@next-shared/brick-types",
+  "version": "0.0.0",
+  "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/shared/brick-types",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:easyops-cn/next-bricks.git"
+  },
+  "license": "GPL-3.0",
+  "sideEffects": false,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./index.d.ts"
+    },
+    "./index.d.ts": {
+      "types": "./index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "devDependencies": {
+    "@babel/generator": "^7.22.9",
+    "@babel/types": "^7.22.5"
+  }
+}
