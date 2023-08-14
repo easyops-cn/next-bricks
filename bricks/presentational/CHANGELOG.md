@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.9.7...@next-bricks/presentational@0.10.0) (2023-08-14)
+
+
+### Features
+
+* **counter-badge:** support no content style ([5666239](https://github.com/easyops-cn/next-bricks/commit/5666239615c96a898b85864ae3203fc1f65733ea))
+
+
+
+
+
 ## [0.9.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.9.6...@next-bricks/presentational@0.9.7) (2023-08-11)
 
 **Note:** Version bump only for package @next-bricks/presentational
