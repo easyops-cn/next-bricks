@@ -5,8 +5,7 @@ import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import { format } from "prettier/standalone.js";
 import parserBabel from "prettier/parser-babel.js";
-import * as t from "@babel/types";
-import { transform, registerPlugin } from "@babel/standalone";
+import { transform } from "@babel/standalone";
 import {
   ExtractState,
   extractRoutes,
@@ -17,58 +16,18 @@ import {
   buildFileStructure,
 } from "./utils/buildFileStructure.js";
 import { generate } from "./utils/generators/generate.js";
-import jsxConstantsJs from "./raws/jsx/constants.js.txt";
-import jsxIndexJs from "./raws/jsx/index.js.txt";
-import jsxJsxRuntimeJs from "./raws/jsx/jsx-runtime.js.txt";
-import jsxPackageJson from "./raws/jsx/package.json.txt";
-import jsxLoadStyleTextJs from "./raws/jsx/loadStyleText.js.txt";
-import jsxLoadFunctionJs from "./raws/jsx/loadFunction.js.txt";
-import scriptsBabelJs from "./raws/scripts/babel.js.txt";
-import scriptsBuildJs from "./raws/scripts/build.js.txt";
-import scriptsStartJs from "./raws/scripts/start.js.txt";
-import scriptsTranspileJs from "./raws/scripts/transpile.js.txt";
 import srcResourcesIndexJs from "./raws/src/resources/index.js.txt";
 import srcIndexJs from "./raws/src/index.js.txt";
 import editorConfig from "./raws/.editorconfig.txt";
 import gitIgnore from "./raws/.gitignore.txt";
-import babelConfigJs from "./raws/babel.config.js.txt";
-import declarationsDTs from "./raws/declarations.d.ts.txt";
 import devConfigMjs from "./raws/dev.config.mjs.txt";
-import packageJson from "./raws/package.json.txt";
 import jsconfigJson from "./raws/jsconfig.json.txt";
+import nextJsxConfigJs from "./raws/next-jsx.config.js.txt";
+import packageJson from "./raws/package.json.txt";
 import readmeMd from "./raws/README.md.txt";
 import { JS_RESERVED_WORDS } from "./utils/constants.js";
-
-let fnGlobalImports: Set<string>;
-const transformStoryboardFunction = "transform-storyboard-function";
-registerPlugin(transformStoryboardFunction, {
-  name: transformStoryboardFunction,
-  visitor: {
-    FunctionDeclaration(path) {
-      if (path.parent.type === "Program") {
-        path.replaceWith(t.exportDefaultDeclaration(path.node));
-      }
-    },
-    Identifier(path) {
-      switch (path.node.name) {
-        case "FN":
-          fnGlobalImports.add('import FN from "./index.js";');
-          break;
-        case "_":
-          fnGlobalImports.add('import _ from "lodash";');
-          break;
-        case "moment":
-          fnGlobalImports.add('import moment from "moment";');
-          break;
-        case "PIPES":
-          fnGlobalImports.add(
-            'import { pipes as PIPES } from "@easyops-cn/brick-next-pipes";'
-          );
-          break;
-      }
-    },
-  },
-});
+import TransformStoryboardFunction from "./utils/plugins/storyboard-function.js";
+import SmartImports from "./utils/plugins/smart-imports.js";
 
 export interface StoryboardAssemblyResult {
   storyboard: Storyboard;
@@ -170,16 +129,35 @@ export async function exportAsSourceFiles({
     }
 
     // Prepend with `export default` for functions
-    fnGlobalImports = new Set();
+    const inferredImports = new Set<string>();
     let { code } = transform(fn.source, {
       filename: `expr.${fn.typescript ? "ts" : "js"}`,
       plugins: [
         ...(fn.typescript ? ["syntax-typescript"] : []),
-        transformStoryboardFunction,
+        TransformStoryboardFunction,
+        [
+          SmartImports,
+          {
+            imports: inferredImports,
+          },
+        ],
       ],
-    });
-    if (fnGlobalImports.size > 0) {
-      code = `${[...fnGlobalImports].join("\n")}\n\n${code}`;
+    }) as { code: string };
+    const hasFN = inferredImports.has("FN");
+    if (hasFN) {
+      inferredImports.delete("FN");
+    }
+    const importStrings: string[] = [];
+    if (inferredImports.size > 0) {
+      importStrings.push(
+        `import { ${[...inferredImports].join(", ")} } from "next-jsx/runtime";`
+      );
+    }
+    if (hasFN) {
+      importStrings.push(`import FN from "./index.js";`);
+    }
+    if (importStrings.length > 0) {
+      code = `${importStrings.join("\n")}\n\n${code}`;
     }
 
     fnDir.file(`${fn.name}.${fn.typescript ? "ts" : "js"}`, code);
@@ -257,41 +235,22 @@ export async function exportAsSourceFiles({
 
   generateByFileStructure(fileStructure, src, []);
 
-  const appRelativeDir = JSON.stringify(
-    `../mock-micro-apps/${projectDetail.appId}`
-  );
-
-  const scripts = project.folder("scripts")!;
-  scripts.file(
-    "build.js",
-    scriptsBuildJs.replaceAll("__APP_RELATIVE_DIR__", appRelativeDir)
-  );
-  scripts.file("babel.js", scriptsBabelJs);
-  scripts.file("start.js", scriptsStartJs);
-  scripts.file("transpile.js", scriptsTranspileJs);
-
   const appDir = project
     .folder("mock-micro-apps")!
     .folder(projectDetail.appId)!;
   appDir.file(".gitignore", "*\n!.gitignore");
 
-  const jsxDir = project.folder("jsx")!;
-  jsxDir.file("constants.js", jsxConstantsJs);
-  jsxDir.file("index.js", jsxIndexJs);
-  jsxDir.file("jsx-runtime.js", jsxJsxRuntimeJs);
-  jsxDir.file("package.json", jsxPackageJson);
-  jsxDir.file("loadStyleText.js", jsxLoadStyleTextJs);
-  jsxDir.file("loadFunction.js", jsxLoadFunctionJs);
-
   project.file(".editorconfig", editorConfig);
   project.file(".gitignore", gitIgnore);
-  project.file("babel.config.js", babelConfigJs);
-  project.file("declarations.d.ts", declarationsDTs);
   project.file("dev.config.mjs", devConfigMjs);
   project.file("jsconfig.json", jsconfigJson);
   project.file(
+    "next-jsx.config.js",
+    nextJsxConfigJs.replaceAll("__APP_ID__", projectDetail.appId)
+  );
+  project.file(
     "package.json",
-    packageJson.replaceAll("__PROJECT_ID__", projectDetail.appId)
+    packageJson.replaceAll("__APP_ID__", projectDetail.appId)
   );
   project.file(
     "README.md",

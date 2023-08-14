@@ -38,6 +38,8 @@ export function getVarNamesByImports(imports: ImportInfo): Set<string> {
       names.add(
         name.startsWith(IMPORT_DEFAULT_PREFIX)
           ? name.substring(IMPORT_DEFAULT_PREFIX.length)
+          : /\s+as\s+/.test(name)
+          ? name.split(/\s+as\s+/)[1]
           : name
       );
     }

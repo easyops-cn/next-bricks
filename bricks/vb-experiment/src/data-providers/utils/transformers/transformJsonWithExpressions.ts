@@ -28,17 +28,7 @@ export function lowLevelTransformJsonWithExpressions(
   path: string[],
   transformUseBrick?: boolean,
   key?: string
-):
-  | t.ArrayExpression
-  | t.ObjectExpression
-  | t.CallExpression
-  | t.StringLiteral
-  | t.NumericLiteral
-  | t.BooleanLiteral
-  | t.NullLiteral
-  | t.JSXElement
-  | t.JSXFragment
-  | null {
+): t.Expression | null {
   if (transformUseBrick && key === "useBrick") {
     if (Array.isArray(value)) {
       return transformBricks(value, imports, path);

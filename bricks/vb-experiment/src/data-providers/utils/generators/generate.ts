@@ -5,7 +5,11 @@ import { generateOthers, generatePlain } from "./generateOthers.js";
 import { generateRoutes } from "./generateRoutes.js";
 import { generateTemplate } from "./generateTemplate.js";
 
-export function generate(node: any, nodeType: NodeType, path: string[]) {
+export function generate(
+  node: any,
+  nodeType: NodeType,
+  path: string[]
+): string {
   switch (nodeType) {
     case "routes":
       return generateRoutes(node, path);

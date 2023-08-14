@@ -53,7 +53,7 @@ export function transformBrick(
       case ":if":
       case ":switch":
         tagName = `${brick[1].toUpperCase()}${brick.substring(2)}`;
-        addImport(imports, "jsx", tagName);
+        addImport(imports, "next-jsx", tagName);
         break;
       default:
         isControlNode = false;
@@ -87,60 +87,72 @@ export function transformBrick(
       );
     }
 
-    return t.jsxElement(
-      t.jsxOpeningElement(
-        t.jsxIdentifier(tagName),
-        [
-          ...transformJsxAttributes(
-            {
-              ...restProps,
-              slot,
-              events,
-              lifeCycle,
-              if: _if === true ? undefined : _if,
-              portal,
-              ref,
-              ...(isControlNode
-                ? {
-                    value: controlDataSource,
-                  }
-                : null),
-            },
-            imports,
-            path,
-            REVERSED_BRICK_KEYS,
-            undefined,
-            true
-          ),
-          ...transformJsxAttributes(
-            {
-              children: prop_children,
-              events: prop_events,
-              lifeCycle: prop_lifeCycle,
-              if: prop_if,
-              ref: prop_ref,
-            },
-            imports,
-            path,
-            undefined,
-            "prop"
-          ),
-          ...transformJsxAttributes(restNode, imports, path, undefined, "conf"),
-        ],
-        selfClosing
-      ),
-      selfClosing ? null : t.jsxClosingElement(t.jsxIdentifier(tagName)),
-      selfClosing
-        ? []
-        : children.length > 0
-        ? children.map((child) =>
-            typeof child !== "string" && child._isRoute
-              ? transformRoute(child, imports, path)
-              : transformJsxChild(transformBrick(child, imports, path))
-          )
-        : [transformJsxText(textContent as string, imports, path)],
+    const opening = t.jsxOpeningElement(
+      t.jsxIdentifier(tagName),
+      [
+        ...transformJsxAttributes(
+          {
+            ...restProps,
+            slot,
+            events,
+            lifeCycle,
+            if: _if === true ? undefined : _if,
+            portal,
+            ref,
+            ...(isControlNode
+              ? {
+                  value: controlDataSource,
+                }
+              : null),
+          },
+          imports,
+          path,
+          REVERSED_BRICK_KEYS,
+          undefined,
+          true
+        ),
+        ...transformJsxAttributes(
+          {
+            children: prop_children,
+            events: prop_events,
+            lifeCycle: prop_lifeCycle,
+            if: prop_if,
+            ref: prop_ref,
+          },
+          imports,
+          path,
+          undefined,
+          "prop"
+        ),
+        ...transformJsxAttributes(restNode, imports, path, undefined, "conf"),
+      ],
       selfClosing
     );
+
+    const closing = selfClosing
+      ? null
+      : t.jsxClosingElement(t.jsxIdentifier(tagName));
+
+    let childElements: (
+      | t.JSXText
+      | t.JSXExpressionContainer
+      | t.JSXSpreadChild
+      | t.JSXElement
+      | t.JSXFragment
+    )[];
+    if (selfClosing) {
+      childElements = [];
+    } else if (children.length > 0) {
+      childElements = children.map((child) =>
+        typeof child !== "string" && child._isRoute
+          ? transformRoute(child, imports, path)
+          : transformJsxChild(transformBrick(child, imports, path))
+      );
+    } else {
+      childElements = [transformJsxText(textContent as string, imports, path)];
+    }
+
+    return t.jsxElement(opening, closing, childElements, selfClosing);
   }
 
   throw new Error(`Unexpected brick node: ${JSON.stringify(node)}`);
@@ -151,7 +163,7 @@ function transformLegacyTemplate(
   imports: ImportInfo,
   path: string[]
 ) {
-  addImport(imports, "jsx", "LegacyTemplate");
+  addImport(imports, "next-jsx", "LegacyTemplate");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { children, ...restNode } = node;
 

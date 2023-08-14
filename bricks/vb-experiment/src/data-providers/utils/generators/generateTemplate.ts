@@ -9,7 +9,7 @@ import { transformJsxChild } from "../transformers/transformJsxChild.js";
 
 export function generateTemplate(node: any, path: string[]) {
   const imports: ImportInfo = new Map();
-  addImport(imports, "jsx", "Component");
+  addImport(imports, "next-jsx", "Component");
 
   const { bricks, name, state, proxy } = node;
 

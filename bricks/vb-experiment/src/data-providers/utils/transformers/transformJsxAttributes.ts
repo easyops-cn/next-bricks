@@ -33,16 +33,18 @@ export function transformJsxAttributes(
   const attrs: (t.JSXAttribute | t.JSXSpreadAttribute)[] = (
     sortKeys ? normalEntries.sort(getSorterByKeys(sortKeys)) : normalEntries
   ).map(([k, v]) => {
+    const value = transformJsxAttributeValue(
+      v,
+      imports,
+      path,
+      transformUseBrick ? k : undefined
+    );
+
     return t.jsxAttribute(
       namespace
         ? t.jsxNamespacedName(t.jsxIdentifier(namespace), t.jsxIdentifier(k))
         : t.jsxIdentifier(k),
-      transformJsxAttributeValue(
-        v,
-        imports,
-        path,
-        transformUseBrick ? k : undefined
-      )
+      value
     );
   });
   if (restProperties.length > 0) {
@@ -55,7 +57,7 @@ function transformJsxAttributeValue(
   value: unknown,
   imports: ImportInfo,
   path: string[],
-  key?: string
+  key: string | undefined
 ) {
   if (typeof value === "string") {
     const expr = transformExpressionString(value, imports, path);
