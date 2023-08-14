@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.1.8...@next-bricks/vb-experiment@0.1.9) (2023-08-14)
+
+
+### Bug Fixes
+
+* expr v1 ([61cc8d6](https://github.com/easyops-cn/next-bricks/commit/61cc8d654ea57dcce72e903120b7ed57cd728b7f))
+* expr v2 ([463e5a0](https://github.com/easyops-cn/next-bricks/commit/463e5a0933ed8ab95c64014e264a05244c5909ef))
+* move next-jsx to a separate repository ([79191d4](https://github.com/easyops-cn/next-bricks/commit/79191d4b1329376e357b34289883e74dcff280c6))
+* refine bind and recursive expressions ([b5805ea](https://github.com/easyops-cn/next-bricks/commit/b5805eaff8ce37c9b543f4d69e3d2cef385020a3))
+* refine expressions ([b6001ee](https://github.com/easyops-cn/next-bricks/commit/b6001eeb284b1a9d936b1f968a8ad32ab7db739a))
+* smart imports ([87e424f](https://github.com/easyops-cn/next-bricks/commit/87e424f7d1ecc421ea0a690b948873174a15c414))
+
+
+
+
+
 ## [0.1.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.1.7...@next-bricks/vb-experiment@0.1.8) (2023-08-11)
 
 
