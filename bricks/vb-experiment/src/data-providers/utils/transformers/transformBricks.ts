@@ -53,7 +53,7 @@ export function transformBrick(
       case ":if":
       case ":switch":
         tagName = `${brick[1].toUpperCase()}${brick.substring(2)}`;
-        addImport(imports, "jsx", tagName);
+        addImport(imports, "next-jsx", tagName);
         break;
       default:
         isControlNode = false;
@@ -163,7 +163,7 @@ function transformLegacyTemplate(
   imports: ImportInfo,
   path: string[]
 ) {
-  addImport(imports, "jsx", "LegacyTemplate");
+  addImport(imports, "next-jsx", "LegacyTemplate");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { children, ...restNode } = node;
 

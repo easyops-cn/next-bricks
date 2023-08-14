@@ -83,17 +83,17 @@ export function transformExpressionString(
             "default:FN"
           );
         } else {
-          addImport(imports, "jsx/runtime", name);
+          addImport(imports, "next-jsx/runtime", name);
         }
       }
 
       if (recursive) {
-        addImport(imports, "jsx/runtime", "recursive");
+        addImport(imports, "next-jsx/runtime", "recursive");
         ast = t.callExpression(t.identifier("recursive"), [ast]);
       }
 
       if (bind) {
-        addImport(imports, "jsx/runtime", "bind");
+        addImport(imports, "next-jsx/runtime", "bind");
         ast = t.callExpression(t.identifier("bind"), [ast]);
       }
 

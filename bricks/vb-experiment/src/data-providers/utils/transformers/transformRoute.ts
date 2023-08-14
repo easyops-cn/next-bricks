@@ -9,7 +9,7 @@ export function transformRoute(
   imports: ImportInfo,
   path: string[]
 ): t.JSXElement {
-  addImport(imports, "jsx", "Route");
+  addImport(imports, "next-jsx", "Route");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { children: _children, slot: _slot, _isRoute, ...restNode } = node;
   const children = _children ?? [];
