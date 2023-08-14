@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.1.9...@next-bricks/vb-experiment@0.1.10) (2023-08-14)
+
+
+### Bug Fixes
+
+* throw when brick.properties is string ([1f57bf7](https://github.com/easyops-cn/next-bricks/commit/1f57bf7f28755b30634e5d85fdd3c080ad7906ac))
+
+
+
+
+
 ## [0.1.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.1.8...@next-bricks/vb-experiment@0.1.9) (2023-08-14)
 
 
