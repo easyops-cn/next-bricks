@@ -16,4 +16,6 @@ yarn
 - 运行 `yarn serve` 时按需使用 `--subdir` 和 `--server` 等参数。
 - 也可以选择只使用一个终端运行 `yarn dev`，此时需要把 `yarn serve` 相关的参数定义在 `package.json` 文件中。
 
-[查看贡献指南](CONTRIBUTING.md)
+## 离线开发
+
+修改 `dev.config.mjs`，取消注释 `mock` 一节的代码，参考对 `GET /api/auth/login` 接口，对其他远端接口进行 mock。

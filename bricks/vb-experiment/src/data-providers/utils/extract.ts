@@ -425,6 +425,13 @@ function cleanRoute(
 }
 
 function cleanBrick(brick: BrickSourceNode): void {
+  if (typeof brick.properties === "string") {
+    const message = `The \`properties\` of brick cannot be a string, received: "${brick.properties}"`;
+    // eslint-disable-next-line no-console
+    console.error(`${message}. Check your brick:`, brick);
+    throw new Error(message);
+  }
+
   delete brick.alias;
   delete brick.iid;
   delete brick.deviceOwner;
