@@ -16,16 +16,25 @@ describe("eo-counter-badge", () => {
       theme: "outlined",
     };
     element.count = 12;
+    element.textContent = "some content";
     expect(element.shadowRoot).toBeFalsy();
     act(() => {
       document.body.appendChild(element);
     });
     expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+    expect(element.shadowRoot?.querySelectorAll("eo-icon").length).toBe(1);
+    expect(element.shadowRoot?.querySelectorAll(".noContent").length).toBe(0);
 
-    expect(element.shadowRoot?.querySelectorAll("eo-icon")?.length).toBe(1);
+    await act(async () => {
+      element.dot = true;
+      element.count = 200;
+    });
+    expect(element.shadowRoot?.querySelectorAll(".badgeDot").length).toBe(1);
 
-    element.dot = true;
-    element.count = 200;
+    await act(async () => {
+      element.textContent = null;
+    });
+    expect(element.shadowRoot?.querySelectorAll(".noContent").length).toBe(1);
 
     act(() => {
       document.body.removeChild(element);

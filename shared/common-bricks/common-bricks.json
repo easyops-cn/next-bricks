@@ -28,7 +28,8 @@
     "eo-sidebar-menu",
     "eo-sidebar",
     "eo-app-bar-wrapper",
-    "eo-page-title"
+    "eo-page-title",
+    "eo-counter-badge"
   ],
   "icons": ["eo-antd-icon", "eo-easyops-icon", "eo-fa-icon", "eo-icon"],
   "containers": [
@@ -67,7 +68,6 @@
     "eo-descriptions",
     "eo-pagination",
     "eo-card-item",
-    "eo-counter-badge",
     "eo-divider",
     "eo-info-card-item"
   ],
