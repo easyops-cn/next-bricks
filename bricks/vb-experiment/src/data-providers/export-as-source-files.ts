@@ -20,6 +20,7 @@ import srcResourcesIndexJs from "./raws/src/resources/index.js.txt";
 import srcIndexJs from "./raws/src/index.js.txt";
 import editorConfig from "./raws/.editorconfig.txt";
 import gitIgnore from "./raws/.gitignore.txt";
+import declarationsDTs from "./raws/declarations.d.ts.txt";
 import devConfigMjs from "./raws/dev.config.mjs.txt";
 import jsconfigJson from "./raws/jsconfig.json.txt";
 import nextJsxConfigJs from "./raws/next-jsx.config.js.txt";
@@ -167,7 +168,9 @@ export async function exportAsSourceFiles({
   fnDir.file(
     "index.js",
     formatJs(
-      `${fnImports.join("\n")}\n\nexport default { ${fnNames.join(",")} };`
+      `${fnImports.join("\n")}\n\nconst FN = { ${fnNames.join(
+        ","
+      )} };\n\nexport default FN;`
     )
   );
 
@@ -243,6 +246,7 @@ export async function exportAsSourceFiles({
   project.file(".editorconfig", editorConfig);
   project.file(".gitignore", gitIgnore);
   project.file("dev.config.mjs", devConfigMjs);
+  project.file("declarations.d.ts", declarationsDTs);
   project.file("jsconfig.json", jsconfigJson);
   project.file(
     "next-jsx.config.js",
