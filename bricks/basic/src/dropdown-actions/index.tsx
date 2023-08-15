@@ -124,8 +124,7 @@ export function EoDropdownActionsComponent(
 
   return (
     <WrappedPopover
-      placement="bottom"
-      sync="width"
+      placement="bottom-start"
       trigger="click"
       disabled={disabled}
     >
