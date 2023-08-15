@@ -140,7 +140,11 @@ export function EoCounterBadgeComponent(props: BadgeProps) {
   }, [overflowCount, count]);
 
   return (
-    <span className={classnames("badgeContainer", { noContent })}>
+    <span
+      className={classnames("badgeContainer", {
+        noContent: noContent && !icon,
+      })}
+    >
       {icon && <WrappedIcon {...icon} />}
       <slot ref={slotRef}></slot>
       {(dot || showZero || !!count) && (
