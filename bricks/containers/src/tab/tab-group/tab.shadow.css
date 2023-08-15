@@ -31,7 +31,6 @@
 
 .tab-item-wrapper {
   display: flex;
-  overflow: auto;
   margin-right: 12px;
 }
 

@@ -49,6 +49,63 @@
             textContent: Panel Setting
 ```
 
+### Panel Type
+
+```yaml preview
+- brick: eo-tab-list
+  properties:
+    type: panel
+    tabs:
+      - text: Tab 1
+        panel: tab-1
+      - text: Tab 2
+        panel: tab-2
+        icon:
+          lib: "antd"
+          icon: "edit"
+          theme: "filled"
+  slots:
+    tab-1:
+      bricks:
+        - brick: div
+          properties:
+            textContent: Tab 1 Content
+    tab-2:
+      bricks:
+        - brick: div
+          properties:
+            textContent: Tab 2
+```
+
+### With Badge
+
+```yaml preview
+- brick: eo-tab-list
+  properties:
+    tabs:
+      - text: Tab 1
+        panel: tab-1
+        badgeConf:
+          count: 100
+      - text: Tab 2
+        panel: tab-2
+        icon:
+          lib: "antd"
+          icon: "edit"
+          theme: "filled"
+  slots:
+    tab-1:
+      bricks:
+        - brick: div
+          properties:
+            textContent: Tab 1 Content
+    tab-2:
+      bricks:
+        - brick: div
+          properties:
+            textContent: Tab 2
+```
+
 ### ActivePanel & Extra
 
 ```yaml preview

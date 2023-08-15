@@ -8,8 +8,11 @@ import type {
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
 import { TabType } from "../../interface.js";
+import { EoCounterBadge, BadgeProps } from "@next-bricks/basic/counter-badge";
 
 const { defineElement, property } = createDecorators();
+
+const WrappedBadge = wrapBrick<EoCounterBadge, BadgeProps>("eo-counter-badge");
 
 export interface TabItemProps {
   type?: TabType;
@@ -19,6 +22,7 @@ export interface TabItemProps {
   disabled?: boolean;
   hidden?: boolean;
   active?: boolean;
+  badgeConf?: BadgeProps;
 }
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
@@ -79,6 +83,16 @@ class TabItem extends ReactNextElement {
   })
   accessor active: boolean;
 
+  /**
+   * @default
+   * @required
+   * @description 徽标数的配置
+   */
+  @property({
+    attribute: false,
+  })
+  accessor badgeConf: BadgeProps;
+
   render() {
     return (
       <TabItemElement
@@ -88,6 +102,7 @@ class TabItem extends ReactNextElement {
         disabled={this.disabled}
         hidden={this.hidden}
         active={this.active}
+        badgeConf={this.badgeConf}
       />
     );
   }
@@ -100,6 +115,7 @@ function TabItemElement({
   disabled,
   hidden,
   active,
+  badgeConf,
 }: TabItemProps): React.ReactElement {
   const handleTabSelect = (e: React.MouseEvent) => {
     if (disabled) {
@@ -121,6 +137,7 @@ function TabItemElement({
     >
       {icon && <WrappedIcon className="tab-item-icon" {...icon} />}
       <slot />
+      {badgeConf && <WrappedBadge {...badgeConf} className="tab-item-badge" />}
     </div>
   );
 }
