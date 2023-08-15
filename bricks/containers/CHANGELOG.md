@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.11.2...@next-bricks/containers@0.12.0) (2023-08-15)
+
+
+### Features
+
+* **tab-item:** add badgeConf property ([4bf25af](https://github.com/easyops-cn/next-bricks/commit/4bf25aff618f3236ed38bd7d3475b15e472e5fbf))
+
+
+
+
+
 ## [0.11.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.11.1...@next-bricks/containers@0.11.2) (2023-08-14)
 
 **Note:** Version bump only for package @next-bricks/containers
