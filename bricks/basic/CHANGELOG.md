@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.27.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.27.1...@next-bricks/basic@0.27.2) (2023-08-15)
+
+
+### Bug Fixes
+
+* eo-dropdown-actions、eo-mini-actions使用的eo-popover改为默认左对齐 ([85dc99c](https://github.com/easyops-cn/next-bricks/commit/85dc99c9e9507d1b395961edb7172d15efd4bd30))
+* eo-dropdown-actions、eo-mini-actions暂停使用eo-popover的sync属性 ([1f1b85f](https://github.com/easyops-cn/next-bricks/commit/1f1b85fe5f61ef48682731daf4408002e56e619f))
+
+
+
+
+
 ## [0.27.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.27.0...@next-bricks/basic@0.27.1) (2023-08-15)
 
 
