@@ -123,7 +123,11 @@ export function EoDropdownActionsComponent(
   }, [actions]);
 
   return (
-    <WrappedPopover placement="bottom" trigger="click" disabled={disabled}>
+    <WrappedPopover
+      placement="bottom-start"
+      trigger="click"
+      disabled={disabled}
+    >
       <slot slot="anchor" />
       {filteredActions?.length && (
         <WrappedMenu style={{ minWidth: "max-content" }}>
