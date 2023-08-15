@@ -113,15 +113,12 @@ export function PreviewContainerComponent({
   }, [initialized, previewOrigin, recordEnabled]);
 
   return (
-    <div>
+    <div className="preview-container">
       <iframe
         ref={iframeRef}
         src={src}
         onLoad={handleIframeLoad}
-        style={{
-          width: "1000px",
-          height: "600px",
-        }}
+        className="iframe"
       />
     </div>
   );
