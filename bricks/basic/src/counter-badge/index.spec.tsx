@@ -33,6 +33,7 @@ describe("eo-counter-badge", () => {
 
     await act(async () => {
       element.textContent = null;
+      element.icon = undefined;
     });
     expect(element.shadowRoot?.querySelectorAll(".noContent").length).toBe(1);
 
