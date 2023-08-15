@@ -140,7 +140,6 @@ export function EoMiniActionsComponent(props: EoMiniActionsComponentProps) {
       {!!dropdownActions.length && (
         <WrappedPopover
           placement="bottom"
-          sync="width"
           strategy="fixed"
           beforeVisibleChange={handlePopoverVisibleChange}
         >
