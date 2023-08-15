@@ -3,7 +3,8 @@ import { transformFromAst } from "@babel/standalone";
 import * as t from "@babel/types";
 import { saveAs } from "file-saver";
 import { mockDataList } from "./mock-data.js";
-import { processNodeItem, NodeItem } from "../utils/parseNodeItem.js";
+import { processNodeItem } from "../utils/parseNodeItem.js";
+import { NodeItem } from "../interface.js";
 
 export async function exportAsFile(specData: NodeItem[]): void {
   const program = t.program(

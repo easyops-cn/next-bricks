@@ -3,14 +3,6 @@ import * as t from "@babel/types";
 import { isEmpty } from "lodash";
 import { parse } from "@babel/parser";
 
-export interface NodeItem {
-  type: string;
-  children?: NodeItem[];
-  alias?: string;
-  name?: string;
-  params?: Record<string, any>;
-}
-
 function createCodeItem(item: NodeItem): t.Statement[] {
   const source = item.params!.content;
   const ast = parse(source);
