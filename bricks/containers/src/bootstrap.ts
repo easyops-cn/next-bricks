@@ -8,3 +8,4 @@ import "./grid-layout/index.js";
 import "./flex-layout/index.js";
 import "./easy-view/index.js";
 import "./spin/index.js";
+import "./search-bar/index.js";

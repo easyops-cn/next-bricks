@@ -44,7 +44,8 @@
     "eo-tab-list",
     "eo-tab-item",
     "eo-tab-group",
-    "eo-spin"
+    "eo-spin",
+    "eo-search-bar"
   ],
   "form": [
     "eo-textarea",
