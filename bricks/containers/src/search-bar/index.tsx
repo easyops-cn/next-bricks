@@ -14,17 +14,10 @@ export interface SearchBarProps {
 const { defineElement, property } = createDecorators();
 
 /**
- * @id eo-search-bar
- * @name containers.search-bar
- * @docKind brick
- * @description 常用来包裹内容上方的搜索类构件
+ * 常用来包裹内容上方的搜索类构件
  * @author ice
- * @slots
- * start: 左侧搜索栏
- * end: 右侧操作栏
- * @history
- * @memo
- * @noInheritDoc
+ * @slot start - 左侧搜索栏
+ * @slot end - 右侧操作栏
  */
 export
 @defineElement("eo-search-bar", {
@@ -33,33 +26,13 @@ export
 })
 class SearchBar extends ReactNextElement {
   /**
-   * @kind string
-   * @required false
-   * @default var(--card-content-gap)
-   * @description bottom 偏移，`search-bar`常适配于`brick-table`，故默认加这个偏移，符合设计规范
-   * @group basic
-   */
-  @property({
-    attribute: false,
-  })
-  accessor marginBottom = "var(--card-content-gap)";
-
-  /**
-   * @kind boolean
-   * @required false
-   * @default false
-   * @description 当在搜索框插槽`start`和`end`内元素居多时，元素溢出，设置为`true`时，内容区域可以换行
-   * @group ui
+   * 当在搜索框插槽`start`和`end`内元素居多时，元素溢出，设置为`true`时，内容区域可以换行
    */
   @property({ type: Boolean })
   accessor wrap: boolean;
 
   /**
-   * @kind  "start" |"center" | "end"
-   * @required false
-   * @default  "center"
-   * @description  搜索栏中对齐的方式
-   * @group ui
+   * 搜索栏中对齐的方式
    */
   @property({ attribute: false })
   accessor align: Align = "center";
