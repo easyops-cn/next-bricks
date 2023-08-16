@@ -1,7 +1,7 @@
 import { customProcessors } from "@next-core/runtime";
 import type { GeneralIconProps } from "@next-bricks/icons/general-icon";
-import { NodeType } from "../interface.js";
-import { rest } from "lodash";
+import { NodeItem, NodeType } from "../interface.js";
+import { isEmpty } from "lodash";
 
 interface GraphEdge {
   in: string;
@@ -27,8 +27,9 @@ interface TreeData {
   name: string;
   icon: GeneralIconProps;
   data: Record<string, any>;
-  children: TreeData[];
+  children?: TreeData[];
   labelColor?: string;
+  isContainer?: boolean;
 }
 
 const setupGroup = ["before", "beforeEach", "after", "afterEach"];
@@ -53,7 +54,7 @@ function getIcon(type: string): GeneralIconProps {
       break;
     case "code":
       icon = "code";
-      color = "var(--palette-pink-6)";
+      color = "var(--palette-cyan-6)";
       break;
     case "preset":
       icon = "build";
@@ -70,17 +71,11 @@ function getIcon(type: string): GeneralIconProps {
 }
 
 function getRestParams(node: GraphNode): Partial<TreeData> {
-  if (setupGroup.includes(node.type)) {
+  if (collapseGroups.includes(node.type)) {
     return {
       name: node.type,
       labelColor: "var(--palette-gray-6)",
-    };
-  }
-
-  if (caseGroup.includes(node.type)) {
-    return {
-      name: `${node.type}  [${node.name}]`,
-      labelColor: "var(--palette-gray-6)",
+      isContainer: true,
     };
   }
 

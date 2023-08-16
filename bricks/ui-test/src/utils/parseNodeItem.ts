@@ -2,6 +2,7 @@
 import * as t from "@babel/types";
 import { isEmpty } from "lodash";
 import { parse } from "@babel/parser";
+import { NodeItem } from "../interface.js";
 
 function createCodeItem(item: NodeItem): t.Statement[] {
   const source = item.params!.content;
@@ -58,7 +59,7 @@ function createSetupNode(item: NodeItem): t.ExpressionStatement {
 function createCaseNode(item: NodeItem): t.ExpressionStatement {
   return t.expressionStatement(
     t.callExpression(t.identifier("it"), [
-      t.stringLiteral(item.alias!),
+      t.stringLiteral(item.name!),
       t.arrowFunctionExpression(
         [],
         t.blockStatement(
@@ -72,7 +73,7 @@ function createCaseNode(item: NodeItem): t.ExpressionStatement {
 function createDescribeNode(item: NodeItem): t.ExpressionStatement {
   return t.expressionStatement(
     t.callExpression(t.identifier("describe"), [
-      t.stringLiteral(item.alias!),
+      t.stringLiteral(item.name!),
       t.arrowFunctionExpression(
         [],
         t.blockStatement(
@@ -97,6 +98,7 @@ export function processNodeItem(item: NodeItem): t.ExpressionStatement {
     case "case":
       return createCaseNode(item);
     case "describe":
+    case "suite":
       return createDescribeNode(item);
     default:
       throw new Error(`Unsupported current type:${item.type}`);

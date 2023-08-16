@@ -6,9 +6,9 @@ import { mockDataList } from "./mock-data.js";
 import { processNodeItem } from "../utils/parseNodeItem.js";
 import { NodeItem } from "../interface.js";
 
-export async function exportAsFile(specData: NodeItem[]): void {
+export function exportAsFile(specDataList: NodeItem[]): void {
   const program = t.program(
-    mockDataList.map((item) => processNodeItem(item)),
+    specDataList.map((item) => processNodeItem(item)),
     undefined,
     "module"
   );
