@@ -51,7 +51,7 @@ class SearchBar extends ReactNextElement {
       this.style.display = "block";
     }
     this.style.marginBottom = this.marginBottom;
-    this._render();
+    this.render();
   }
 
   render() {
