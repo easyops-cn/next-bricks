@@ -26,6 +26,14 @@ export
 })
 class SearchBar extends ReactNextElement {
   /**
+   * bottom 偏移，`search-bar`常适配于`brick-table`，故默认加这个偏移，符合设计规范
+   */
+  @property({
+    attribute: false,
+  })
+  accessor marginBottom = "var(--card-content-gap)";
+
+  /**
    * 当在搜索框插槽`start`和`end`内元素居多时，元素溢出，设置为`true`时，内容区域可以换行
    */
   @property({ type: Boolean })
@@ -36,6 +44,15 @@ class SearchBar extends ReactNextElement {
    */
   @property({ attribute: false })
   accessor align: Align = "center";
+
+  connectedCallback(): void {
+    // istanbul ignore else
+    if (!this.style.display) {
+      this.style.display = "block";
+    }
+    this.style.marginBottom = this.marginBottom;
+    super.connectedCallback();
+  }
 
   render() {
     return <SearchBarComponent wrap={this.wrap} align={this.align} />;
