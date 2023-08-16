@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.1.11...@next-bricks/vb-experiment@0.1.12) (2023-08-15)
+
+
+### Bug Fixes
+
+* add missing comma ([86451b1](https://github.com/easyops-cn/next-bricks/commit/86451b13793028f49656082186f9b80d2ea61041))
+
+
+
+
+
+## [0.1.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.1.10...@next-bricks/vb-experiment@0.1.11) (2023-08-15)
+
+
+### Bug Fixes
+
+* refine FN auto-import ([00fb6cb](https://github.com/easyops-cn/next-bricks/commit/00fb6cb60fcb71d7eb89a57732b0d0ba87ceec7e))
+
+
+
+
+
 ## [0.1.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.1.9...@next-bricks/vb-experiment@0.1.10) (2023-08-14)
 
 
