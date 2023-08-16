@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.13.1...@next-bricks/containers@0.13.2) (2023-08-16)
+
+
+### Bug Fixes
+
+* 修复书写错误 ([1e1600a](https://github.com/easyops-cn/next-bricks/commit/1e1600a2719b938afb60266e5516c4020ddaab52))
+* 样式设置调整 ([ef3bf24](https://github.com/easyops-cn/next-bricks/commit/ef3bf24f200ea3042f313b871b13317ed12469b4))
+* 补充marginBottom ([765a21b](https://github.com/easyops-cn/next-bricks/commit/765a21ba91a28ad922dc3f71dc6b79f3c9088955))
+
+
+
+
+
 ## [0.13.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.13.0...@next-bricks/containers@0.13.1) (2023-08-16)
 
 **Note:** Version bump only for package @next-bricks/containers
