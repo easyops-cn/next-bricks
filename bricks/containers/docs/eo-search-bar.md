@@ -46,7 +46,7 @@
         - brick: eo-select
           properties:
             inputStyle:
-              width: 30px
+              width: 300px
             options:
               - Beijing
               - Shanghai
@@ -56,9 +56,6 @@
           properties:
             options:
               - Beijing
-              - Shanghai
-              - Guangzhou
-              - Shenzhen
             style:
               marginLeft: 12px
       type: bricks
