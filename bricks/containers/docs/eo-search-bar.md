@@ -9,9 +9,11 @@
   slots:
     start:
       bricks:
-        - brick: presentational-bricks.brick-general-search
+        - brick: eo-search
           properties:
-            placeholder: text here to search
+            placeholder: 请输入
+            clearable: true
+            trim: true
       type: bricks
 ```
 
@@ -22,33 +24,41 @@
   slots:
     end:
       bricks:
-        - brick: basic-bricks.general-button
+        - brick: eo-button
           properties:
-            buttonIcon: reload
-            buttonType: primary
-        - brick: basic-bricks.general-button
+            type: primary
+            icon:
+              lib: antd
+              icon: bell
+        - brick: eo-button
           properties:
-            buttonIcon: fullscreen
-            buttonType: primary
+            icon:
+              lib: antd
+              icon: bell
       type: bricks
     start:
       bricks:
-        - brick: presentational-bricks.brick-general-search
+        - brick: eo-search
           properties:
-            placeholder: text here to search
-        - brick: forms.general-select
+            placeholder: 请输入
+            clearable: true
+            trim: true
+        - brick: eo-select
           properties:
-            inputBoxStyle:
-              width: 300
+            inputStyle:
+              width: 30px
             options:
-              - general-drawer
-              - general-input
-              - general-select
-            placeholder: please select a brick
-        - brick: forms.general-checkbox
+              - Beijing
+              - Shanghai
+              - Guangzhou
+              - Shenzhen
+        - brick: eo-checkbox
           properties:
             options:
-              - 与我相关
+              - Beijing
+              - Shanghai
+              - Guangzhou
+              - Shenzhen
             style:
               marginLeft: 12px
       type: bricks
