@@ -142,7 +142,12 @@ export function CabinetContainerComponent(
           row: data.length,
         };
       }
-      if (needRow === centerRow || minCol === maxCol) {
+      if (
+        needRow === centerRow ||
+        minCol === maxCol ||
+        minCol === centerCol ||
+        maxCol === centerCol
+      ) {
         return {
           col: centerCol,
           row: needRow,
