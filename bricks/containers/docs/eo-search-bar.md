@@ -45,6 +45,7 @@
             trim: true
         - brick: eo-select
           properties:
+            placeholder: 请选择
             inputStyle:
               width: 300px
             options:
