@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.15.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.15.2...@next-bricks/data-view@0.15.3) (2023-08-16)
+
+
+### Bug Fixes
+
+* 部署架构拓扑优化边界问题 ([1818582](https://github.com/easyops-cn/next-bricks/commit/181858246223c8e14a6383fdf07405e824bfd844))
+
+
+
+
+
 ## [0.15.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.15.1...@next-bricks/data-view@0.15.2) (2023-08-11)
 
 **Note:** Version bump only for package @next-bricks/data-view
