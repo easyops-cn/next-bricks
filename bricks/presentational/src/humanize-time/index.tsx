@@ -5,7 +5,7 @@ import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import { isNil } from "lodash";
 import moment from "moment";
-import type { Link, LinkProps } from "@next-bricks/basic/Link";
+import type { Link, LinkProps } from "@next-bricks/basic/link";
 import { Target } from "../interface.js";
 import {
   costTime,
