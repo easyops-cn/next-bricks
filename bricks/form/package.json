@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/form",
-  "version": "0.15.24",
+  "version": "0.16.0",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/form",
   "repository": {
     "type": "git",
@@ -34,7 +34,7 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-bricks/containers": "^0.13.3",
+    "@next-bricks/containers": "^0.14.0",
     "@next-bricks/icons": "^0.4.4",
     "@next-core/element": "^1.1.2",
     "@next-core/http": "^1.0.8",

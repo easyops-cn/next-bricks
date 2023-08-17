@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.28.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.27.4...@next-bricks/basic@0.28.0) (2023-08-17)
+
+
+### Bug Fixes
+
+* avatar is not aligned ([01b3c23](https://github.com/easyops-cn/next-bricks/commit/01b3c23518ac5db0a35ba37ddb811d7b2c8d6c68))
+
+
+### Features
+
+* 页面模板迭代一验收问题 ([db88d07](https://github.com/easyops-cn/next-bricks/commit/db88d07d5d49ba78c145d72973df526f517c2aa4))
+
+
+
+
+
 ## [0.27.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.27.3...@next-bricks/basic@0.27.4) (2023-08-17)
 
 

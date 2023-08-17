@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.16.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.15.24...@next-bricks/form@0.16.0) (2023-08-17)
+
+
+### Features
+
+* 页面模板迭代一验收问题 ([db88d07](https://github.com/easyops-cn/next-bricks/commit/db88d07d5d49ba78c145d72973df526f517c2aa4))
+
+
+
+
+
 ## [0.15.24](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.15.23...@next-bricks/form@0.15.24) (2023-08-17)
 
 **Note:** Version bump only for package @next-bricks/form
