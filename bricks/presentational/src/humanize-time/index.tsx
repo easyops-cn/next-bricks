@@ -1,29 +1,21 @@
 import React from "react";
 import { createDecorators } from "@next-core/element";
-import { ReactNextElement } from "@next-core/react-element";
+import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import { isNil } from "lodash";
 import moment from "moment";
-
-export declare const humanizeTime: (
-  time: moment.MomentInput,
-  format?: HumanizeTimeFormat
-) => string | null;
-export declare const costTime: (cost: number, start?: any, end?: any) => string;
-
-export declare enum HumanizeTimeFormat {
-  full = "full",
-  default = "default",
-  relative = "relative",
-  future = "future",
-  accurate = "accurate",
-  auto = "auto",
-}
+import type { Link, LinkProps } from "@next-bricks/basic/Link";
+import { Target } from "../interface.js";
+import {
+  costTime,
+  humanizeTime,
+  HumanizeTimeFormat,
+} from "@next-shared/datetime";
 
 export interface LinkInfo {
   detailUrlTemplate: string;
-  target?: string;
+  target?: Target;
 }
 
 export interface EoHumanizeTimeProps {
@@ -38,12 +30,16 @@ export interface EoHumanizeTimeProps {
 
 const { defineElement, property } = createDecorators();
 
+const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
+
 /**
- * 构件 `eo-humanize-time`
+ * 人性化时间展示
+ * @author ice
  */
 export
 @defineElement("eo-humanize-time", {
   styleTexts: [styleText],
+  alias: ["presentational.humanize-time"],
 })
 class EoHumanizeTime extends ReactNextElement {
   /**
@@ -75,14 +71,6 @@ class EoHumanizeTime extends ReactNextElement {
   })
   accessor isCostTime: boolean;
 
-  connectedCallback(): void {
-    // istanbul ignore else
-    if (!this.style.display) {
-      this.style.display = "block";
-    }
-    super.connectedCallback();
-  }
-
   /**
    * 枚举值：full, default, relative, future, accurate, auto [类型链接](https://github.com/easyops-cn/next-libs/blob/207fe7ee3ac010ab860c23cd062216c8ca612f0c/libs/datetime/src/humanizeTime.ts#L9)
    * @default "default"
@@ -108,6 +96,14 @@ class EoHumanizeTime extends ReactNextElement {
   })
   accessor link: LinkInfo;
 
+  connectedCallback(): void {
+    // istanbul ignore else
+    if (!this.style.display) {
+      this.style.display = "block";
+    }
+    super.connectedCallback();
+  }
+
   render() {
     return (
       <HumanizeTimeComponent
@@ -121,16 +117,6 @@ class EoHumanizeTime extends ReactNextElement {
       />
     );
   }
-}
-
-export function BrickLink({
-  url,
-}: {
-  url: string;
-  target: string;
-  label: string;
-}) {
-  return <span>{url}</span>;
 }
 
 export function HumanizeTimeComponent({
@@ -165,11 +151,9 @@ export function HumanizeTimeComponent({
 
   if (link) {
     return (
-      <BrickLink
-        url={link.detailUrlTemplate}
-        target={link.target}
-        label={label}
-      />
+      <WrappedLink url={link.detailUrlTemplate} target={link.target}>
+        {label}
+      </WrappedLink>
     );
   }
 
