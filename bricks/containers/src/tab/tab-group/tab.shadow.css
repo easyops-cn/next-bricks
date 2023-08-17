@@ -3,7 +3,7 @@
 }
 
 .tab-wrapper.show-card {
-  background: var(--antd-tabs-title-wrapper-bg);
+  /* background: var(--antd-tabs-title-wrapper-bg); */
   box-shadow: var(--antd-tabs-shadow);
 }
 
@@ -14,6 +14,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 16px;
+  background: var(--antd-tabs-title-wrapper-bg);
 }
 
 .tab-nav:before {
@@ -27,6 +28,7 @@
 
 .tab-nav.panel {
   padding: 0;
+  border-left: 1px solid var(--antd-tabs-title-border-color);
 }
 
 .tab-item-wrapper {
@@ -35,5 +37,6 @@
 }
 
 .content {
+  background: var(--antd-tabs-title-wrapper-bg);
   padding: 16px var(--page-card-gap);
 }

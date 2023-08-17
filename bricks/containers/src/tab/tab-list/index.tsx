@@ -16,6 +16,7 @@ interface TabListProps {
   tabs?: TabItemProps[];
   activePanel?: string;
   showCard?: boolean;
+  panelStyle?: React.CSSProperties;
 }
 /**
  * Tab 列表
@@ -44,6 +45,14 @@ class TabList extends ReactNextElement {
     attribute: false,
   })
   accessor tabs: Array<TabItemProps | string> | undefined;
+
+  /**
+   * 头部样式
+   */
+  @property({
+    attribute: false,
+  })
+  accessor panelStyle: React.CSSProperties;
 
   /**
    * 激活状态 tab 的 panel
@@ -81,6 +90,7 @@ class TabList extends ReactNextElement {
         tabs={this.#computedTabs(this.tabs)}
         activePanel={this.activePanel}
         showCard={this.showCard}
+        panelStyle={this.panelStyle}
       />
     );
   }
@@ -91,9 +101,15 @@ function TabListElement({
   tabs,
   activePanel,
   showCard,
+  panelStyle,
 }: TabListProps): React.ReactElement {
   return (
-    <WrappedTabGroup type={type} showCard={showCard} activePanel={activePanel}>
+    <WrappedTabGroup
+      type={type}
+      showCard={showCard}
+      activePanel={activePanel}
+      panelStyle={panelStyle}
+    >
       {tabs.map((tab) => (
         <WrappedTabItem
           type={type}

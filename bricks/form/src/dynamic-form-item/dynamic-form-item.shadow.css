@@ -16,20 +16,24 @@
   line-height: 12px;
   padding: 2px;
   margin-left: 8px;
-  margin-bottom: 22px;
+}
+.remove-btn-wrapper {
+  padding-top: 4px;
 }
 
-.dynamic-form > *:not(.remove-btn) {
+.dynamic-form > *:not(.remove-btn-wrapper) {
   flex: 1;
   margin-right: 4px;
 }
 
 .add-btn {
-  width: 100%;
+  width: calc(100% - 34px);
 }
 
 .dynamic-form-item:first-child {
-  .remove-btn {
-    margin-top: 22px;
+  .dynamic-form:has(*[label]) {
+    .remove-btn-wrapper {
+      margin-top: 22px;
+    }
   }
 }
