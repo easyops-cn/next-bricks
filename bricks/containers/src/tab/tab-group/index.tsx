@@ -13,6 +13,7 @@ export interface TabGroupProps {
   activePanel?: string;
   showCard?: boolean;
   callback?: (element: HTMLDivElement) => void;
+  panelStyle?: React.CSSProperties;
 }
 
 /**
@@ -32,6 +33,14 @@ class TabGroup extends ReactNextElement {
    */
   @property()
   accessor type: TabType = "default";
+
+  /**
+   * 头部样式
+   */
+  @property({
+    attribute: false,
+  })
+  accessor panelStyle: React.CSSProperties;
 
   /**
    * @default true
@@ -57,6 +66,7 @@ class TabGroup extends ReactNextElement {
         type={this.type}
         activePanel={this.activePanel}
         showCard={this.showCard}
+        panelStyle={this.panelStyle}
       />
     );
   }
@@ -66,6 +76,7 @@ function TabGroupElement({
   type,
   showCard = true,
   activePanel,
+  panelStyle,
 }: TabGroupProps): React.ReactElement {
   const navSlotRef = useRef<HTMLSlotElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -128,7 +139,7 @@ function TabGroupElement({
         "show-card": showCard,
       })}
     >
-      <div className={classNames("tab-nav", type)}>
+      <div className={classNames("tab-nav", type)} style={panelStyle}>
         <div className="tab-item-wrapper">
           <slot name="nav" ref={navSlotRef} />
         </div>

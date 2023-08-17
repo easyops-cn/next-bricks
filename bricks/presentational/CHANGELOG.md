@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.11.7...@next-bricks/presentational@0.12.0) (2023-08-17)
+
+
+### Features
+
+* 页面模板迭代一验收问题 ([db88d07](https://github.com/easyops-cn/next-bricks/commit/db88d07d5d49ba78c145d72973df526f517c2aa4))
+
+
+
+
+
+## [0.11.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.11.6...@next-bricks/presentational@0.11.7) (2023-08-17)
+
+**Note:** Version bump only for package @next-bricks/presentational
+
+
+
+
+
 ## [0.11.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.11.5...@next-bricks/presentational@0.11.6) (2023-08-16)
 
 **Note:** Version bump only for package @next-bricks/presentational

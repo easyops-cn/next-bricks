@@ -31,9 +31,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 16px;
-  height: 16px;
-  font-size: 14px;
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
   transition: all var(--side-bar-collapse-transition-duration)
     var(--side-bar-collapse-transition-timing-function);
 }
@@ -76,4 +76,5 @@
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
+  color: #7f8ba6;
 }

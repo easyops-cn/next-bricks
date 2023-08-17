@@ -21,6 +21,13 @@
   padding-right: 24px;
 }
 
+.select:not(.select-disabled):hover {
+  .select-selector {
+    border-color: var(--antd-input-hover-border-color);
+    z-index: 1;
+  }
+}
+
 .select-multiple .select-selector {
   min-height: 30px;
   height: auto;

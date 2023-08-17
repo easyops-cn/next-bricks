@@ -21,6 +21,7 @@
 .tab-item[aria-selected="true"] {
   color: var(--antd-tabs-title-selected-color);
   font-weight: var(--font-weight-500);
+  background: var(--antd-tabs-title-wrapper-bg);
 }
 
 .tab-item[aria-selected="true"]:after {

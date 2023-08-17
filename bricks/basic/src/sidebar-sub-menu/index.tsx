@@ -187,16 +187,19 @@ export function EoSidebarSubMenuComponent(props: SidebarSubMenuProps) {
     <WrappedMenu className="menu-container" mode="vertical">
       {menu?.title && (
         <div className="header">
-          <WrappedIcon {...(menu?.icon as GeneralIconProps)} />
+          {menu?.icon && <WrappedIcon {...(menu?.icon as GeneralIconProps)} />}
           <span className="title">{menu?.title}</span>
         </div>
       )}
-
-      {menu?.menuItems.map((item) => {
-        return (
-          <React.Fragment key={item.key}>{renderMenuItem(item)}</React.Fragment>
-        );
-      })}
+      <div className="content">
+        {menu?.menuItems.map((item) => {
+          return (
+            <React.Fragment key={item.key}>
+              {renderMenuItem(item)}
+            </React.Fragment>
+          );
+        })}
+      </div>
     </WrappedMenu>
   );
 }

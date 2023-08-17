@@ -4,7 +4,7 @@ textarea {
   color: var(--antd-input-color);
   background: var(--antd-input-bg);
   box-sizing: border-box;
-  border-radius: 6px;
+  border-radius: var(--antd-button-border-radius);
   border: 1px solid var(--antd-input-border-color);
 }
 

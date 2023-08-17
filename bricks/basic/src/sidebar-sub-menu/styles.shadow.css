@@ -8,18 +8,18 @@
 
 .menu-container {
   box-sizing: border-box;
-  background: var(--antd-app-submenu-bg);
+  background: var(--color-fill-global-bg-1);
   border: 1px solid var(--stroke-color-default);
   border-left: 0;
-  border-radius: 6px;
-  padding: 20px 12px;
+  border-radius: 0px;
+  padding: 20px 0px;
   height: 100%;
 
   .header {
     display: flex;
     gap: 10px;
     align-items: center;
-    font-size: 18px;
+    font-size: 16px;
     padding: 0 24px 16px 24px;
     line-height: 26px;
     color: var(--color-header-text);
@@ -33,6 +33,9 @@
       word-wrap: break-word;
     }
   }
+  .content {
+    padding: 0 12px;
+  }
 
   .menu-item,
   .menu-sub-item::part(sub-menu-item-title) {
@@ -45,6 +48,7 @@
   }
 
   .menu-item-link {
+    width: 100%;
     color: var(--color-secondary-text);
   }
 
@@ -58,7 +62,6 @@
 
   .menu-item-text {
     display: block;
-    width: 100%;
     box-sizing: border-box;
     color: var(--antd-text-color);
   }
