@@ -72,10 +72,12 @@ eo-icon {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 12px;
-  height: 32px;
-  border-radius: 6px;
+  padding: 0 6px;
+  height: 28px;
+  border-radius: 4px;
+  min-width: 28px;
   cursor: pointer;
+  font-weight: 500;
 }
 
 .pagination-page-item-number {
@@ -87,8 +89,8 @@ eo-icon {
 }
 
 .pagination-page-item-active {
-  color: var(--theme-doderblue-color);
-  border-color: var(--theme-doderblue-color);
+  color: rgb(0, 113, 235);
+  border-color: var(--color-info-outline);
 }
 
 .pagination-page-item-disabled {

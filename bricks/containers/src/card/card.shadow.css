@@ -10,7 +10,6 @@
   font-feature-settings: "tnum";
   position: relative;
   background: var(--antd-card-background);
-  border-radius: 6px;
 }
 
 .card-head {

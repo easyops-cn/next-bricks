@@ -34,7 +34,7 @@
   top: 0;
   bottom: 0;
   z-index: -1;
-  background: var(--color-fill-bg-container-1);
+  background: var(--color-fill-global-bg-1);
 }
 
 /* header */

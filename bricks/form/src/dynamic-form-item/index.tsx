@@ -255,7 +255,7 @@ export function DynamicFormItemComponent(props: DynamicFormItemProps) {
               {!isEmpty(bricks) && (
                 <WrappedForm
                   layout="vertical"
-                  formStyle={{ flexDirection: "row", alignItems: "center" }}
+                  formStyle={{ flexDirection: "row", alignItems: "flex-start" }}
                   className="dynamic-form"
                   values={value}
                   defaultEmitValuesChange={false}
@@ -271,13 +271,15 @@ export function DynamicFormItemComponent(props: DynamicFormItemProps) {
                     }
                     data={value}
                   />
-                  <WrappedIcon
-                    lib="easyops"
-                    category="assets-inventory"
-                    icon="out"
-                    className="remove-btn"
-                    onClick={() => handleRemoveItem(index)}
-                  />
+                  <div className="remove-btn-wrapper">
+                    <WrappedIcon
+                      lib="easyops"
+                      category="assets-inventory"
+                      icon="out"
+                      className="remove-btn"
+                      onClick={() => handleRemoveItem(index)}
+                    />
+                  </div>
                 </WrappedForm>
               )}
             </div>

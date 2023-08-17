@@ -8,7 +8,7 @@
 
 eo-menu {
   padding: 2px;
-  border-radius: var(--larger-border-radius);
+  border-radius: 4px;
   background: var(--antd-dropdown-menu-bg);
   box-shadow: var(--antd-box-shadow-base);
   border: none;
