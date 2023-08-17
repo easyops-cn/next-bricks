@@ -70,7 +70,8 @@
     "eo-pagination",
     "eo-card-item",
     "eo-divider",
-    "eo-info-card-item"
+    "eo-info-card-item",
+    "eo-humanize-time"
   ],
   "advanced": ["eo-cascader", "eo-table"],
   "markdown": ["eo-markdown-editor"],
