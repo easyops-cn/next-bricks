@@ -45,6 +45,7 @@
   }
 
   .menu-item-link {
+    width: 100%;
     color: var(--color-secondary-text);
   }
 
@@ -58,7 +59,6 @@
 
   .menu-item-text {
     display: block;
-    width: 100%;
     box-sizing: border-box;
     color: var(--antd-text-color);
   }
