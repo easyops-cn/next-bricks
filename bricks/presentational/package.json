@@ -44,6 +44,7 @@
     "@next-core/types": "^1.6.0",
     "@next-core/utils": "^1.5.7",
     "@next-shared/general": "^0.5.0",
+    "@next-shared/datetime": "^0.0.1",
     "classnames": "^2.3.2",
     "file-saver": "^2.0.5",
     "prism-react-renderer": "^2.0.6",
