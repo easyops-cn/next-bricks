@@ -12,9 +12,6 @@ export enum K {
   HOURS = "HOURS",
   DAYS = "DARS",
   MONTHS = "MONTHS",
-  TEN_HOURS_TEN_MINUTES_TEST = "TEN_HOURS_TEN_MINUTES_TEST",
-  ONE_TWO_SECONDS = "ONE_TWO_SECONDS",
-  OO_TWO_ONE_SECONDS = "OO_TWO_ONE_SECONDS",
 }
 
 export type Locale = { [key in K]: string };
