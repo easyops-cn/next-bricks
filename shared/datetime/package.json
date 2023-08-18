@@ -13,9 +13,6 @@
     "dist"
   ],
   "exports": {
-    "./types": {
-      "types": "./dist/types/types.d.ts"
-    },
     "./package.json": "./package.json",
     ".": {
       "types": "./dist/types/index.d.ts",
@@ -35,6 +32,11 @@
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types --project tsconfig.build.json",
     "test": "cross-env NODE_ENV='test' test-next",
     "test:ci": "cross-env NODE_ENV='test' CI=true test-next"
+  },
+  "dependencies": {
+    "@next-core/i18n": "^1.0.24",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4"
   },
   "devDependencies": {
     "@next-core/build-next-libs": "^1.0.6",

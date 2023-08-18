@@ -2,6 +2,9 @@ import { isNil, findIndex, chain } from "lodash";
 import moment from "moment";
 import { NS_LIBS_DATETIME, K } from "./i18n/constants.js";
 import { i18n } from "@next-core/i18n";
+import { addResourceBundle } from "./i18n/index.js";
+addResourceBundle();
+
 export const costTime = (cost: number, start?: any, end?: any) => {
   // 某些后台接口任务初始时 `end` 为 "0001-01-01T00:00:00Z"
   if (isNil(cost) && (isNil(end) || end === "0001-01-01T00:00:00Z")) {

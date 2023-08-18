@@ -12,9 +12,6 @@ const locale: Locale = {
   [K.MILL_SECONDS]: "毫秒",
   [K.DAYS]: "天",
   [K.MINUTES]: "分钟",
-  [K.TEN_HOURS_TEN_MINUTES_TEST]: "0.2 秒",
-  [K.ONE_TWO_SECONDS]: "1.2 秒",
-  [K.OO_TWO_ONE_SECONDS]: "0.021 秒",
 };
 
 export default locale;

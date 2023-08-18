@@ -14,7 +14,7 @@ import {
 } from "@next-shared/datetime";
 
 export interface LinkInfo {
-  detailUrlTemplate: string;
+  url: string;
   target?: Target;
 }
 
@@ -44,7 +44,7 @@ export
 class EoHumanizeTime extends ReactNextElement {
   /**
    * 时间截，或字符串，当为字符串时，应提供时间格式 `inputFormat`
-   * @requires true
+   * @required
    */
   @property({
     attribute: false,
@@ -151,7 +151,7 @@ export function HumanizeTimeComponent({
 
   if (link) {
     return (
-      <WrappedLink url={link.detailUrlTemplate} target={link.target}>
+      <WrappedLink url={link.url} target={link.target}>
         {label}
       </WrappedLink>
     );
