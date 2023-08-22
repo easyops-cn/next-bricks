@@ -22,11 +22,9 @@ events:
 
 ## Usage in pro-code
 
-```jsx
+```tsx
 import { unwrapProvider } from "@next-core/utils/general";
-import type {
-  getIllustration as _getIllustration
-} from "@next-bricks/illustrations/data-providers/get-illustration";
+import type { getIllustration as _getIllustration } from "@next-bricks/illustrations/data-providers/get-illustration";
 
 // Use `unwrapProvider` to get the original function of a provider
 const getIllustration = unwrapProvider<typeof _getIllustration>(
@@ -35,6 +33,6 @@ const getIllustration = unwrapProvider<typeof _getIllustration>(
 
 function MyComponent() {
   const src = getIllustration({ category: "feedback", name: "fail" });
-  return <img src={src}>;
+  return <img src={src} />;
 }
 ```

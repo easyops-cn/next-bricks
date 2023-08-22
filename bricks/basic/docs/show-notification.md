@@ -116,13 +116,14 @@ children:
 
 ## Usage in pro-code
 
-```jsx
+```tsx
 import { unwrapProvider } from "@next-core/utils/general";
 import type { showNotification as _showNotification } from "@next-bricks/basic/data-providers/show-notification/show-notification";
 
 // Use `unwrapProvider` to get the original function of a provider
-const showNotification =
-  unwrapProvider < typeof _showNotification > "basic.show-notification";
+const showNotification = unwrapProvider<typeof _showNotification>(
+  "basic.show-notification"
+);
 
 function MyComponent() {
   const handleClick = useCallback(() => {
