@@ -118,12 +118,12 @@ children:
 
 ## Usage in pro-code
 
-```jsx
+```tsx
 import { unwrapProvider } from "@next-core/utils/general";
 import type { showDialog as _showDialog } from "@next-bricks/basic/data-providers/show-dialog/show-dialog";
 
 // Use `unwrapProvider` to get the original function of a provider
-const showDialog = unwrapProvider < typeof _showDialog > "basic.show-dialog";
+const showDialog = unwrapProvider<typeof _showDialog>("basic.show-dialog");
 
 function MyComponent() {
   const handleClick = useCallback(() => {
