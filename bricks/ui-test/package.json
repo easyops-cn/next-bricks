@@ -1,0 +1,54 @@
+{
+  "name": "@next-bricks/ui-test",
+  "version": "0.0.0",
+  "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/ui-test",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:easyops-cn/next-bricks.git"
+  },
+  "license": "GPL-3.0",
+  "type": "module",
+  "sideEffects": true,
+  "files": [
+    "dist",
+    "dist-types",
+    "docs"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    "./dist/bricks.json": "./dist/bricks.json",
+    "./dist/manifest.json": "./dist/manifest.json",
+    "./*": {
+      "types": "./dist-types/*/index.d.ts"
+    }
+  },
+  "scripts": {
+    "start": "cross-env NODE_ENV=development build-next-bricks --watch",
+    "build": "npm run build:main && npm run build:types",
+    "build:main": "cross-env NODE_ENV=production build-next-bricks",
+    "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist-types --project tsconfig.json",
+    "build:manifest": "cross-env NODE_ENV=production build-next-bricks --manifest-only",
+    "test": "cross-env NODE_ENV='test' test-next",
+    "test:ci": "cross-env NODE_ENV='test' CI=true test-next",
+    "prepublishOnly": "cp package.json package.json.bak && npm pkg delete dependencies",
+    "postpublish": "mv package.json.bak package.json"
+  },
+  "dependencies": {
+    "@next-core/element": "^1.1.2",
+    "@next-core/i18n": "^1.0.24",
+    "@next-core/react-element": "^1.0.10",
+    "@next-core/runtime": "^1.21.1",
+    "@next-core/theme": "^1.1.1",
+    "react": "0.0.0-experimental-ee8509801-20230117",
+    "@babel/standalone": "^7.22.9",
+    "@babel/parser": "^7.22.7",
+    "@babel/types": "^7.22.5",
+    "file-saver": "^2.0.5",
+    "process": "^0.11.10",
+    "idb-keyval": "^6.2.1"
+  },
+  "devDependencies": {
+    "@next-core/build-next-bricks": "^1.13.4",
+    "@next-core/test-next": "^1.0.8"
+  }
+}
