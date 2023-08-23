@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "@next-core/build-next-bricks": "^1.13.4",
-    "@next-core/illustrations": "^0.11.19",
+    "@next-core/illustrations": "^0.11.20",
     "@next-core/test-next": "^1.0.8",
     "lodash": "^4.17.21"
   }
