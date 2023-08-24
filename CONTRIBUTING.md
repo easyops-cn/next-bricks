@@ -52,6 +52,9 @@ Playground 中的示例列表来自约定的示例文件和文档文件。
 
 ```js
 // File: dev.config.mjs
+// @ts-check
+/** @typedef {{ featureFlags?: Record<string, boolean>; misc?: Record<string, unknown>; [k: string]: unknown; }} Settings */
+/** @type {{ brickFolders?: string[]; settings?: Settings }} */
 export default {
   brickFolders: [
     // 默认使用 `node_modules/@next-bricks` 及 `node_modules/@bricks` 作为构件包目录。
@@ -61,6 +64,12 @@ export default {
     // 引用其他仓库的构件包。注：可使用通配符，详见 https://github.com/isaacs/node-glob
     "../next-*/bricks",
   ],
+  // 还可以设置一些特性开关（覆盖远端服务器的特性开关设置）
+  settings: {
+    featureFlags: {
+      "some-local-feature-flag": true,
+    },
+  },
 };
 ```
 
