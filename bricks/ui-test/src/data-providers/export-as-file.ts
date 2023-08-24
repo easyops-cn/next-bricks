@@ -5,12 +5,15 @@ import * as t from "@babel/types";
 import { get, set } from "idb-keyval";
 import { processNodeItem } from "../utils/parseNodeItem.js";
 import { NodeItem } from "../interface.js";
-import { dirHandleStorageKey, fileHandleStorageKey } from "../constants.js";
+import { dirHandleStorageKey } from "../constants.js";
 
 let dirHandle;
 let fileHandle;
 
-export async function exportAsFile(specDataList: NodeItem[]): Promise<boolean> {
+export async function exportAsFile(
+  specDataList: NodeItem[],
+  appId: string
+): Promise<boolean> {
   try {
     dirHandle = await get(dirHandleStorageKey);
 
@@ -22,11 +25,23 @@ export async function exportAsFile(specDataList: NodeItem[]): Promise<boolean> {
 
     const name = `${specDataList[0]?.name}.spec.js`;
 
-    const fileHandleKey = `${dirHandle.name}-${fileHandleStorageKey}-${name}`;
+    const fileHandleKey = `${dirHandle.name}-${appId}-${name}`;
     fileHandle = await get(fileHandleKey);
 
     if (!fileHandle) {
-      fileHandle = await dirHandle?.getFileHandle?.(name, {
+      const cypressDirectory = await dirHandle.getDirectoryHandle("cypress", {
+        create: true,
+      });
+
+      const e2eDirectory = await cypressDirectory.getDirectoryHandle("e2e", {
+        create: true,
+      });
+
+      const appIdDirectory = await e2eDirectory.getDirectoryHandle(`${appId}`, {
+        create: true,
+      });
+
+      fileHandle = await appIdDirectory?.getFileHandle?.(name, {
         create: true,
       });
 
