@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/recent-history",
-  "version": "0.1.31",
+  "version": "0.1.32",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/recent-history",
   "repository": {
     "type": "git",
@@ -34,12 +34,12 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-bricks/basic": "^0.28.0",
+    "@next-bricks/basic": "^0.28.1",
     "@next-core/element": "^1.1.2",
     "@next-core/i18n": "^1.0.24",
     "@next-core/react-element": "^1.0.10",
     "@next-core/theme": "^1.1.1",
-    "@next-shared/general": "^0.5.0",
+    "@next-shared/general": "^0.5.1",
     "mnemonist": "^0.39.5",
     "react": "0.0.0-experimental-ee8509801-20230117"
   },
