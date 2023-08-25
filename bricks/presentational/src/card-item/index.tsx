@@ -162,6 +162,14 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
     expandedArea2?.addEventListener("slotchange", () => {
       this.hasExpandedArea2 = expandedArea2.assignedElements().length > 0;
     });
+
+    expandedArea1?.addEventListener("click", (e) => {
+      e.preventDefault();
+    });
+
+    expandedArea2?.addEventListener("click", (e) => {
+      e.preventDefault();
+    });
   };
 
   #getSlotBySelector(selector: string): HTMLSlotElement {
