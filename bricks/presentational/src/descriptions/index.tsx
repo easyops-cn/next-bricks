@@ -170,7 +170,7 @@ export function DescriptionsComponent(props: DescriptionsProps) {
       cardTitle={descriptionTitle}
       headerStyle={{
         border: "none",
-        padding: "12px 12px 0 12px",
+        padding: "20px 20px 0 20px",
       }}
       background={showCard}
     >
