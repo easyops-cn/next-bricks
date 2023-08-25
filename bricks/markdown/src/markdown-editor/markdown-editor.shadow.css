@@ -1673,7 +1673,7 @@ video {
   width: 100%;
   border-bottom-width: 1px;
   --tw-border-opacity: 1;
-  border-color: rgb(75 85 99 / var(--tw-border-opacity));
+  border-color: var(--color-border-divider-line);
 }
 
 .menu-container-inner {
