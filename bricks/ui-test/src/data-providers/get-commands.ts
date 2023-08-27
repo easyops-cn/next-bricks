@@ -1,48 +1,6 @@
 import { createProviderClass } from "@next-core/utils/general";
 import fetchCommands from "./data/fetchCommands.js";
-
-export interface Command {
-  name: string;
-  category: CommandCategory;
-  from: CommandFrom;
-  chain: CommandChain;
-  description?: string;
-  params?: CommandParam[];
-  overloads?: CommandOverload[];
-  keywords?: string[];
-}
-
-export type CommandCategory = "query" | "action" | "assertion" | "other";
-export type CommandFrom = "cypress" | "third-party" | "custom";
-export type CommandChain = "parent" | "child" | "dual";
-
-export interface CommandParam {
-  label: string;
-  type: CommandParamType;
-  description?: string;
-  required?: boolean;
-  default?: unknown;
-  enum?: (string | number | EnumItem)[];
-}
-
-export type CommandParamType =
-  | "number"
-  | "string"
-  | "boolean"
-  | "object"
-  | "array"
-  | "function"
-  | "mixed";
-
-export interface EnumItem {
-  label: string;
-  value: unknown;
-}
-
-export interface CommandOverload {
-  label: string;
-  params?: CommandParam[];
-}
+import { CommandDoc, CommandCategory, CommandChain } from "../interface.js";
 
 export interface GetCommandsOptions {
   category?: CommandCategory[];
@@ -50,11 +8,11 @@ export interface GetCommandsOptions {
   q?: string;
 }
 
-type CommandFilter = (cmd: Command) => boolean | undefined;
+type CommandFilter = (cmd: CommandDoc) => boolean | undefined;
 
 export async function getCommands(
   options?: GetCommandsOptions
-): Promise<Command[]> {
+): Promise<CommandDoc[]> {
   const { category, chain, q } = options ?? {};
   const commands = await fetchCommands();
   const filters: CommandFilter[] = [];
