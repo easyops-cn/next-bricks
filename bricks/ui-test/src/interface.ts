@@ -1,37 +1,53 @@
-export type NodeType = "suite" | "block" | "command";
-
-export interface NodeItem {
-  type: string;
-  children?: NodeItem[];
-  label?: string;
-  name?: string;
-  params?: any;
+export enum NodeType {
+  Suite = "suite",
+  Block = "block",
+  Command = "command",
 }
 
-export interface CommandParamsField {
+export interface NodeItem {
+  type: NodeType;
+  children?: NodeItem[];
+  label?: string;
+  name: string;
+  params?: any[];
+}
+
+export interface CommandParam {
   label: string;
+  type: CommandParamType;
   description?: string;
   required?: boolean;
-  default?: any;
-  type:
-    | "number"
-    | "string"
-    | "boolean"
-    | "object"
-    | "array"
-    | "function"
-    | "mixed";
+  default?: unknown;
   enum?: (string | number | EnumItem)[];
 }
 export interface CommandDoc {
   name: string;
+  category: CommandCategory;
+  from: CommandFrom;
+  chain: CommandChain;
   description?: string;
-  params?: CommandParamsField[];
-  category: "query" | "action" | "assertion" | "other";
-  from: "cypress" | "third-party" | "custom";
-  chain: "parent" | "child" | "dual";
+  params?: CommandParam[];
+  overloads?: CommandOverload[];
   keywords?: string[];
 }
+
+export interface CommandOverload {
+  label: string;
+  params?: CommandParam[];
+}
+
+export type CommandCategory = "query" | "action" | "assertion" | "other";
+export type CommandFrom = "cypress" | "third-party" | "custom";
+export type CommandChain = "parent" | "child" | "dual";
+
+export type CommandParamType =
+  | "number"
+  | "string"
+  | "boolean"
+  | "object"
+  | "array"
+  | "function"
+  | "mixed";
 
 export interface EnumItem {
   label: string;

@@ -1,7 +1,7 @@
-import type { Command } from "../get-commands.js";
+import type { CommandDoc } from "../../interface.js";
 
 export default function fetchCommands() {
-  return Promise.resolve<Command[]>([
+  return Promise.resolve<CommandDoc[]>([
     {
       name: "visit",
       category: "action",

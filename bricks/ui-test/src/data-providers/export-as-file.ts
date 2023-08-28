@@ -3,7 +3,7 @@ import { createProviderClass } from "@next-core/utils/general";
 import { transformFromAst } from "@babel/standalone";
 import * as t from "@babel/types";
 import { get, set } from "idb-keyval";
-import { processNodeItem } from "../utils/parseNodeItem.js";
+import { parseSuiteAst } from "../utils/parseSuiteAst.js";
 import { NodeItem } from "../interface.js";
 import { dirHandleStorageKey } from "../constants.js";
 
@@ -11,7 +11,7 @@ let dirHandle;
 let fileHandle;
 
 export async function exportAsFile(
-  specDataList: NodeItem[],
+  suiteData: NodeItem,
   appId: string
 ): Promise<boolean> {
   try {
@@ -23,7 +23,7 @@ export async function exportAsFile(
       await set(dirHandleStorageKey, dirHandle);
     }
 
-    const name = `${specDataList[0]?.name}.spec.js`;
+    const name = `${suiteData.label}.spec.js`;
 
     const fileHandleKey = `${dirHandle.name}-${appId}-${name}`;
     fileHandle = await get(fileHandleKey);
@@ -55,11 +55,7 @@ export async function exportAsFile(
 
   const writable = await fileHandle?.createWritable?.();
 
-  const program = t.program(
-    specDataList.map((item) => processNodeItem(item)),
-    undefined,
-    "module"
-  );
+  const program = t.program([parseSuiteAst(suiteData)], undefined, "module");
 
   const generatedCode = transformFromAst(program, undefined, {}).code;
 
