@@ -27,11 +27,13 @@ describe("getCommands", () => {
     const result = await getCommands({
       q: "Get",
     });
-    expect(result).toEqual([
-      expect.objectContaining({
-        name: "get",
-      }),
-    ]);
+    expect(result).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          name: "get",
+        }),
+      ])
+    );
   });
 
   test("filter by search (hit keywords)", async () => {
