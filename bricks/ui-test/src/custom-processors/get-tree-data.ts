@@ -14,6 +14,8 @@ interface GraphNode {
   instanceId: string;
   params?: any;
   type: NodeType;
+  isChainChild?: boolean;
+  parent?: GraphNode;
 }
 
 export interface GraphData {
@@ -26,10 +28,9 @@ interface TreeData {
   key: string;
   name: string;
   icon: GeneralIconProps;
-  data: Record<string, any>;
+  data: GraphNode;
   children?: TreeData[];
   labelColor?: string;
-  isChainChild?: boolean;
 }
 
 function getIcon(
@@ -106,11 +107,7 @@ export function getTreeData(
     edges,
   } = GraphData;
 
-  const getChildren = (
-    node: GraphNode,
-    options: { parentType: NodeType }
-  ): TreeData[] => {
-    const { parentType } = options;
+  const getChildren = (node: GraphNode): TreeData[] => {
     const relations = edges.filter((item) => item.in === node.instanceId);
 
     const nodes = relations
@@ -119,13 +116,13 @@ export function getTreeData(
 
     return nodes.map((nodeData) => {
       const isChainChild =
-        parentType === "command" && nodeData.type === "command";
+        node.type === "command" && nodeData.type === "command";
       return {
         name: getDisplayLabel(nodeData),
         key: nodeData.instanceId,
         icon: getIcon(nodeData, commandDocList),
-        data: { ...nodeData, isChainChild },
-        children: getChildren(nodeData, { parentType: nodeData.type }),
+        data: { ...nodeData, isChainChild, parent: node },
+        children: getChildren(nodeData),
       };
     }) as TreeData[];
   };
@@ -135,7 +132,7 @@ export function getTreeData(
     key: rootData.instanceId,
     icon: getIcon(rootData, commandDocList),
     data: rootData,
-    children: getChildren(rootData, { parentType: rootData?.type }),
+    children: getChildren(rootData),
   };
 }
 
