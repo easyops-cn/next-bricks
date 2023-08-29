@@ -848,6 +848,10 @@ export default function getCypressCommands(): CommandDoc[] {
         },
         getParamDefinitionOfArbitraryOptions(),
       ],
+      icon: {
+        lib: "fa",
+        icon: "keyboard",
+      },
     },
     {
       name: "uncheck",
@@ -1755,25 +1759,25 @@ export default function getCypressCommands(): CommandDoc[] {
       ],
     },
     // Ignore: session
-    {
-      name: "setCookie",
-      category: "other",
-      chain: "parent",
-      from: "cypress",
-      params: [
-        {
-          label: "name",
-          required: true,
-          type: "string",
-        },
-        {
-          label: "Value",
-          required: true,
-          type: "string",
-        },
-        getParamDefinitionOfArbitraryOptions(),
-      ],
-    },
+    // {
+    //   name: "setCookie",
+    //   category: "other",
+    //   chain: "parent",
+    //   from: "cypress",
+    //   params: [
+    //     {
+    //       label: "name",
+    //       required: true,
+    //       type: "string",
+    //     },
+    //     {
+    //       label: "Value",
+    //       required: true,
+    //       type: "string",
+    //     },
+    //     getParamDefinitionOfArbitraryOptions(),
+    //   ],
+    // },
     // Ignore: spread
     // Ignore: spy
     // Ignore: stub
@@ -1843,6 +1847,12 @@ export default function getCypressCommands(): CommandDoc[] {
         },
         getParamDefinitionOfArbitraryOptions(),
       ],
+      icon: {
+        lib: "fa",
+        prefix: "far",
+        icon: "compass",
+        color: "var(--palette-teal-6)",
+      },
     },
     // Ignore: wait
     // Ignore: within

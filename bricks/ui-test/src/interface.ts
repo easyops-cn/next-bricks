@@ -1,3 +1,5 @@
+import type { GeneralIconProps } from "@next-bricks/icons/general-icon";
+
 export enum NodeType {
   Suite = "suite",
   Block = "block",
@@ -20,6 +22,7 @@ export interface CommandParam {
   default?: unknown;
   enum?: (string | number | EnumItem)[];
 }
+
 export interface CommandDoc {
   name: string;
   category: CommandCategory;
@@ -29,6 +32,7 @@ export interface CommandDoc {
   params?: CommandParam[];
   overloads?: CommandOverload[];
   keywords?: string[];
+  icon?: CommandIcon;
 }
 
 export interface CommandOverload {
@@ -53,3 +57,7 @@ export interface EnumItem {
   label: string;
   value: unknown;
 }
+
+export type CommandIcon = GeneralIconProps & {
+  color?: string;
+};

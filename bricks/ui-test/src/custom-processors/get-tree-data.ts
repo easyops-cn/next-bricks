@@ -1,11 +1,10 @@
 import { customProcessors } from "@next-core/runtime";
-import type { GeneralIconProps } from "@next-bricks/icons/general-icon";
-import { CommandDoc, NodeType } from "../interface.js";
+import { CommandDoc, CommandIcon, NodeType } from "../interface.js";
 
 interface GraphEdge {
   in: string;
   out: string;
-  relation_id: string;
+  out_name: string;
 }
 
 interface GraphNode {
@@ -27,7 +26,7 @@ export interface GraphData {
 interface TreeData {
   key: string;
   name: string;
-  icon: GeneralIconProps;
+  icon: CommandIcon;
   data: GraphNode;
   children?: TreeData[];
   labelColor?: string;
@@ -36,54 +35,66 @@ interface TreeData {
 function getIcon(
   nodeData: GraphNode,
   commandDocList: CommandDoc[]
-): GeneralIconProps {
-  let icon;
-  let color;
-
-  const doc = commandDocList?.find((item) => item.name === nodeData.name);
-
-  const commandIconMap = {
-    query: {
-      icon: "search",
-      color: "var(--palette-blue-6)",
-    },
-    action: {
-      icon: "tool",
-      color: "var(--palette-red-6)",
-    },
-    assertion: {
-      icon: "aim",
-      color: "var(--palette-green-6)",
-    },
-    other: {
-      icon: "control",
-      color: "var(--palette-green-6)",
-    },
-  };
+): CommandIcon {
+  let icon: CommandIcon;
 
   switch (nodeData.type) {
     case "suite":
-      icon = "file";
-      color = "var(--palette-purple-6)";
+      icon = {
+        lib: "fa",
+        icon: "vial",
+        color: "var(--palette-purple-6)",
+      };
       break;
     case "block":
-      icon = "block";
-      color = "var(--palette-cyan-6)";
+      icon = {
+        lib: "fa",
+        icon: "bookmark",
+        color: "var(--palette-cyan-6)",
+      };
       break;
-    case "command": {
-      const result = commandIconMap[doc?.category || "other"];
-      icon = result.icon;
-      color = result.color;
-      break;
+    default: {
+      const doc = commandDocList?.find((item) => item.name === nodeData.name);
+      switch (doc?.category) {
+        case "query":
+          icon = {
+            lib: "antd",
+            icon: "aim",
+            color: "var(--palette-blue-6)",
+          };
+          break;
+        case "action":
+          icon = {
+            lib: "fa",
+            icon: "computer-mouse",
+            color: "var(--palette-red-6)",
+          };
+          break;
+        case "assertion":
+          icon = {
+            lib: "fa",
+            icon: "spell-check",
+            color: "var(--palette-green-6)",
+          };
+          break;
+        default:
+          icon = {
+            lib: "fa",
+            icon: "wrench",
+            color: "var(--palette-yellow-6)",
+          };
+      }
+
+      if (doc?.icon) {
+        icon = {
+          color: icon.color,
+          ...doc.icon,
+        };
+      }
     }
   }
 
-  return {
-    lib: "antd",
-    theme: "outlined",
-    icon,
-    color,
-  } as GeneralIconProps;
+  return icon;
 }
 
 function getDisplayLabel(nodeItem: GraphNode): string {
