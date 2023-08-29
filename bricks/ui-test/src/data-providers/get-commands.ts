@@ -27,7 +27,7 @@ export async function getCommands(
     filters.push(
       (cmd) =>
         cmd.name.toLowerCase().includes(lowerQ) ||
-        cmd.keywords?.some((k) => k.includes(lowerQ))
+        cmd.keywords?.some((k) => k.toLowerCase().includes(lowerQ))
     );
   }
   if (filters.length === 0) {
