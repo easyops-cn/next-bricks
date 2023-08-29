@@ -39,7 +39,7 @@
   "dependencies": {
     "@next-bricks/icons": "^0.4.5",
     "@next-core/element": "^1.1.2",
-    "@next-core/http": "^1.0.8",
+    "@next-core/http": "^1.1.0",
     "@next-core/i18n": "^1.0.24",
     "@next-core/react-element": "^1.0.10",
     "@next-core/theme": "^1.1.1",
@@ -52,7 +52,7 @@
   "devDependencies": {
     "@next-api-sdk/micro-app-standalone-sdk": "^1.1.1",
     "@next-api-sdk/user-service-sdk": "^1.1.1",
-    "@next-core/build-next-bricks": "^1.13.4",
+    "@next-core/build-next-bricks": "^1.13.6",
     "@next-core/test-next": "^1.0.8",
     "@types/react-transition-group": "^4.4.6",
     "classnames": "^2.3.2",
