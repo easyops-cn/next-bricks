@@ -9,7 +9,6 @@
 .preview-container {
   width: 100%;
   height: 100%;
-  padding: 2px;
   overflow: hidden;
   position: relative;
   display: flex;

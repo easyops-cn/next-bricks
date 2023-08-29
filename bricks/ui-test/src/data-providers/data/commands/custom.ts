@@ -8,12 +8,20 @@ export default function getCustomCommands(): CommandDoc[] {
       category: "action",
       chain: "parent",
       from: "custom",
+      icon: {
+        lib: "fa",
+        icon: "sign-in-alt",
+      },
     },
     {
       name: "logout",
       category: "action",
       chain: "parent",
       from: "custom",
+      icon: {
+        lib: "fa",
+        icon: "sign-out-alt",
+      },
     },
     {
       name: "setLanguage",
@@ -28,6 +36,10 @@ export default function getCustomCommands(): CommandDoc[] {
           enum: ["zh", "en"],
         },
       ],
+      icon: {
+        lib: "fa",
+        icon: "language",
+      },
     },
     {
       name: "code",
@@ -41,6 +53,10 @@ export default function getCustomCommands(): CommandDoc[] {
           type: "string",
         },
       ],
+      icon: {
+        lib: "fa",
+        icon: "code",
+      },
     },
     // Testing-library commands end -->
   ];
