@@ -8,84 +8,92 @@ describe("parseSuiteAst", () => {
   it("should work", () => {
     const suiteData = {
       type: "suite",
-      name: "describe",
+      name: "create-new-route",
       label: "test login",
       params: null,
       children: [
         {
           type: "block",
-          name: "it",
-          label: "should work",
+          name: "describe",
+          label: "test route create",
           params: null,
           children: [
             {
-              type: "command",
-              name: "get",
-              label: null,
-              params: ["#username"],
+              type: "block",
+              name: "it",
+              label: "should work",
+              params: null,
               children: [
                 {
                   type: "command",
-                  name: "type",
+                  name: "get",
                   label: null,
-                  params: ["easyops"],
-                  children: [],
-                },
-              ],
-            },
-            {
-              type: "command",
-              name: "get",
-              label: null,
-              params: ["#password"],
-              children: [
-                {
-                  type: "command",
-                  name: "type",
-                  label: null,
-                  params: ["easyops"],
-                  children: [],
-                },
-              ],
-            },
-            {
-              type: "command",
-              name: "get",
-              label: null,
-              params: ["提交"],
-              children: [
-                {
-                  type: "command",
-                  name: "click",
-                  label: null,
-                  params: [
+                  params: ["#username"],
+                  children: [
                     {
-                      force: true,
+                      type: "command",
+                      name: "type",
+                      label: null,
+                      params: ["easyops"],
+                      children: [],
                     },
                   ],
-                  children: [],
                 },
-              ],
-            },
-            {
-              type: "command",
-              name: "code",
-              label: null,
-              params: ['cy.get(".tips").should("have.class", "success")'],
-              children: [],
-            },
-            {
-              type: "command",
-              name: "get",
-              label: null,
-              params: [".tips"],
-              children: [
                 {
                   type: "command",
-                  name: "should:include.text",
+                  name: "get",
                   label: null,
-                  params: ["成功"],
+                  params: ["#password"],
+                  children: [
+                    {
+                      type: "command",
+                      name: "type",
+                      label: null,
+                      params: ["easyops"],
+                      children: [],
+                    },
+                  ],
+                },
+                {
+                  type: "command",
+                  name: "get",
+                  label: null,
+                  params: ["提交"],
+                  children: [
+                    {
+                      type: "command",
+                      name: "click",
+                      label: null,
+                      params: [
+                        {
+                          force: true,
+                        },
+                      ],
+                      children: [],
+                    },
+                  ],
+                },
+                {
+                  type: "command",
+                  name: "code",
+                  label: null,
+                  params: ['cy.get(".tips").should("have.class", "success")'],
                   children: [],
+                },
+                {
+                  type: "command",
+                  name: "get",
+                  label: null,
+                  params: [".tips"],
+                  children: [
+                    {
+                      type: "command",
+                      name: "should:include.text",
+                      label: null,
+                      params: ["成功"],
+                      children: [],
+                    },
+                  ],
                 },
               ],
             },
@@ -96,12 +104,12 @@ describe("parseSuiteAst", () => {
 
     const suiteAst = parseSuiteAst(suiteData);
 
-    const program = t.program([suiteAst], undefined, "module");
+    const program = t.program(suiteAst, undefined, "module");
 
     const generatedCode = transformFromAst(program, undefined, {}).code;
 
     expect(generatedCode).toMatchInlineSnapshot(`
-      "describe("test login", () => {
+      "describe("test route create", () => {
         it("should work", () => {
           cy.get("#username").type("easyops");
           cy.get("#password").type("easyops");
