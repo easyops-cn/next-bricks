@@ -150,6 +150,7 @@ function crateSuiteNode(item: NodeItem): t.ExpressionStatement {
   );
 }
 
-export function parseSuiteAst(suiteData: NodeItem): t.Statement {
-  return crateSuiteNode(suiteData);
+export function parseSuiteAst(suiteData: NodeItem): t.Statement[] {
+  if (isEmpty(suiteData.children)) return [];
+  return processSuiteChildren(suiteData.children as NodeItem[]);
 }

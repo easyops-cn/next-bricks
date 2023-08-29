@@ -23,7 +23,7 @@ export async function exportAsFile(
       await set(dirHandleStorageKey, dirHandle);
     }
 
-    const name = `${suiteData.label}.spec.js`;
+    const name = `${suiteData.name}.spec.js`;
 
     const fileHandleKey = `${dirHandle.name}-${appId}-${name}`;
     fileHandle = await get(fileHandleKey);
@@ -55,7 +55,7 @@ export async function exportAsFile(
 
   const writable = await fileHandle?.createWritable?.();
 
-  const program = t.program([parseSuiteAst(suiteData)], undefined, "module");
+  const program = t.program(parseSuiteAst(suiteData), undefined, "module");
 
   const generatedCode = transformFromAst(program, undefined, {}).code;
 

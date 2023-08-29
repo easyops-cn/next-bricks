@@ -101,11 +101,8 @@ function getDisplayLabel(nodeItem: GraphNode): string {
   if (nodeItem.name === "suite") {
     return nodeItem.name;
   }
-  if (["describe", "it"].includes(nodeItem.name)) {
-    return `${nodeItem.name}: ${nodeItem.label}`;
-  }
 
-  return nodeItem.name;
+  return nodeItem.label ? `${nodeItem.name}: ${nodeItem.label}` : nodeItem.name;
 }
 
 export function getTreeData(
