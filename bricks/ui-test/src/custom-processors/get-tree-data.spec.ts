@@ -34,16 +34,14 @@ describe("getTreeData", () => {
             instanceId: "603a8bb21c8e6",
             label: null,
             name: "code",
-            params: {
-              content: "console.log(1323)",
-            },
+            params: ["console.log(1323)"],
             type: "command",
           },
           {
             instanceId: "603aabdd6d6cd",
             label: null,
             name: "get",
-            params: null,
+            params: [".selector", { timeout: 1e4 }],
             type: "command",
           },
           {
@@ -183,7 +181,7 @@ describe("getTreeData", () => {
                   isChainChild: false,
                   label: null,
                   name: "code",
-                  params: { content: "console.log(1323)" },
+                  params: ["console.log(1323)"],
                   parent: {
                     instanceId: "603a85ccfb595",
                     label: "should work",
@@ -199,7 +197,7 @@ describe("getTreeData", () => {
                   lib: "fa",
                 },
                 key: "603a8bb21c8e6",
-                name: "code",
+                name: "code: console.log(1323)",
               },
               {
                 children: [
@@ -215,7 +213,7 @@ describe("getTreeData", () => {
                         instanceId: "603aabdd6d6cd",
                         label: null,
                         name: "get",
-                        params: null,
+                        params: [".selector", { timeout: 1e4 }],
                         type: "command",
                       },
                       type: "command",
@@ -266,7 +264,7 @@ describe("getTreeData", () => {
                         instanceId: "603aabdd6d6cd",
                         label: null,
                         name: "get",
-                        params: null,
+                        params: [".selector", { timeout: 1e4 }],
                         type: "command",
                       },
                       type: "command",
@@ -285,7 +283,7 @@ describe("getTreeData", () => {
                   isChainChild: false,
                   label: null,
                   name: "get",
-                  params: null,
+                  params: [".selector", { timeout: 1e4 }],
                   parent: {
                     instanceId: "603a85ccfb595",
                     label: "should work",
@@ -301,7 +299,7 @@ describe("getTreeData", () => {
                   lib: "antd",
                 },
                 key: "603aabdd6d6cd",
-                name: "get",
+                name: "get: .selector",
               },
             ],
             data: {

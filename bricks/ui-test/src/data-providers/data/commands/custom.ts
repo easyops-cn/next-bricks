@@ -5,7 +5,7 @@ export default function getCustomCommands(): CommandDoc[] {
     // <!-- Testing-library commands start
     {
       name: "login",
-      category: "action",
+      category: "other",
       chain: "parent",
       from: "custom",
       icon: {
@@ -15,7 +15,7 @@ export default function getCustomCommands(): CommandDoc[] {
     },
     {
       name: "logout",
-      category: "action",
+      category: "other",
       chain: "parent",
       from: "custom",
       icon: {
@@ -25,7 +25,7 @@ export default function getCustomCommands(): CommandDoc[] {
     },
     {
       name: "setLanguage",
-      category: "action",
+      category: "other",
       chain: "parent",
       from: "custom",
       params: [

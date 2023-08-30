@@ -98,11 +98,35 @@ function getIcon(
 }
 
 function getDisplayLabel(nodeItem: GraphNode): string {
-  if (nodeItem.name === "suite") {
+  if (nodeItem.type === "suite") {
     return nodeItem.name;
   }
 
-  return nodeItem.label ? `${nodeItem.name}: ${nodeItem.label}` : nodeItem.name;
+  if (nodeItem.label) {
+    return `${nodeItem.name}: ${nodeItem.label}`;
+  }
+
+  const literalParams = getLiteralParams(nodeItem.params);
+  return literalParams.length === 0
+    ? nodeItem.name
+    : `${nodeItem.name}: ${literalParams.join(", ")}`;
+}
+
+function getLiteralParams(params: unknown[]): unknown[] {
+  const literalParams: unknown[] = [];
+  if (Array.isArray(params)) {
+    for (const param of params) {
+      if (
+        literalParams.length < 3 &&
+        ["string", "boolean", "number"].includes(typeof param)
+      ) {
+        literalParams.push(param);
+      } else {
+        break;
+      }
+    }
+  }
+  return literalParams;
 }
 
 export function getTreeData(
