@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.1.0...@next-bricks/ui-test@0.1.1) (2023-08-30)
+
+
+### Bug Fixes
+
+* add more commands ([e4cbb20](https://github.com/easyops-cn/next-bricks/commit/e4cbb205cf0f6b4fb0021d369a0d5ed68127f4c2))
+* add parent field ([02cf3c7](https://github.com/easyops-cn/next-bricks/commit/02cf3c725cb97298eac8960b6ef3a2714d960200))
+* fix filter ([7a2ab94](https://github.com/easyops-cn/next-bricks/commit/7a2ab9485cba6070fd7255b55fedc803a4bc6726))
+* parse suite to ast ([4ddc954](https://github.com/easyops-cn/next-bricks/commit/4ddc954fb2d7d5aace7c89907f77b7f172b1364a))
+* refine tree node display labels ([335b711](https://github.com/easyops-cn/next-bricks/commit/335b711eaf395ded41b145b5a9ef7b3491162798))
+* refine tree node icons ([c6efebb](https://github.com/easyops-cn/next-bricks/commit/c6efebb27160c3bb0bf51c4baddcf25400080e5e))
+* some optimization ([80c4aef](https://github.com/easyops-cn/next-bricks/commit/80c4aef12f8727aea3a03ddb7d1cdd8bc3f4270f))
+
+
+
+
+
 # 0.1.0 (2023-08-25)
 
 
