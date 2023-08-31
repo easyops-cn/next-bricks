@@ -8,7 +8,7 @@ import React, {
 import { createDecorators, EventEmitter } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
 import { FormItemElementBase } from "@next-shared/form";
-import type { GeneralComplexOption } from "../interface.js";
+import type { GeneralComplexOption, GeneralGroupOption } from "../interface.js";
 import styleText from "./index.shadow.css";
 import classNames from "classnames";
 import "@next-core/theme";
@@ -37,7 +37,7 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 export interface SelectProps extends FormItemProps {
   value?: any;
-  options: GeneralComplexOption[];
+  options: GeneralComplexOption[] | GeneralGroupOption[];
   placeholder?: string;
   multiple?: boolean;
   clearable?: boolean;
@@ -45,7 +45,10 @@ export interface SelectProps extends FormItemProps {
   inputStyle?: React.CSSProperties;
   validateState?: string;
   onChange?: (value: any) => void;
+  onValueChange?: (value: any) => void;
   optionsChange?: (options: any, name: string) => void;
+  onFocus?: () => void;
+  onSearch?: (value: string) => void;
 }
 
 const { defineElement, property, event } = createDecorators();
@@ -137,6 +140,18 @@ class Select extends FormItemElementBase {
   }>;
 
   /**
+   * 下拉框search事件
+   */
+  @event({ type: "search" }) accessor #searchEvent!: EventEmitter<{
+    value: string;
+  }>;
+
+  /**
+   * 下拉框focus事件
+   */
+  @event({ type: "focus" }) accessor #focusEvent!: EventEmitter<void>;
+
+  /**
    * 选项列表变化事件
    */
   @event({ type: "options.change" }) accessor #optionsChange!: EventEmitter<{
@@ -177,6 +192,16 @@ class Select extends FormItemElementBase {
     });
   };
 
+  handleSearch = (value: string) => {
+    this.#searchEvent.emit({
+      value,
+    });
+  };
+
+  handleFocus = () => {
+    this.#focusEvent.emit();
+  };
+
   render() {
     return (
       <SelectComponent
@@ -198,6 +223,8 @@ class Select extends FormItemElementBase {
         options={formatOptions(this.options)}
         onChange={this.handleChange}
         optionsChange={this._handleOptionsChange}
+        onSearch={this.handleSearch}
+        onFocus={this.handleFocus}
       />
     );
   }
@@ -214,12 +241,15 @@ export function SelectComponent(props: SelectProps) {
     validateState,
     optionsChange,
     onChange,
+    onFocus,
+    onValueChange,
+    onSearch,
   } = props;
   const [inputValue, setInputValue] = useState<string>("");
   const [selectValue, setSelectValue] = useState<any>(
     multiple ? [] : undefined
   );
-  const [options, setOptions] = useState(props.options ?? []);
+  const [options, setOptions] = useState<any[]>(props.options ?? []);
   const [isDropHidden, setIsDropHidden] = useState<boolean>(true);
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [customSelectvalue, setCustomSelectValue] = useState<string[]>([]);
@@ -259,7 +289,9 @@ export function SelectComponent(props: SelectProps) {
       }
       setSelectValue(newValue);
       onChange?.(newValue);
+      onValueChange?.(newValue);
       !multiple && setIsDropHidden(true);
+      setInputValue("");
     },
     [multiple, selectValue, onChange]
   );
@@ -285,6 +317,7 @@ export function SelectComponent(props: SelectProps) {
     e.stopPropagation();
     const value = e.target.value;
     setInputValue(value);
+    onSearch?.(value);
   };
 
   const computedOptions = React.useMemo(() => {
@@ -300,7 +333,7 @@ export function SelectComponent(props: SelectProps) {
   const handleKeydown = useCallback(
     (e: KeyboardEvent): void => {
       if (e.code === "Enter" && inputValue) {
-        if (!computedOptions.find((item) => item.value === inputValue)) {
+        if (!computedOptions.find((item: any) => item.value === inputValue)) {
           setCustomSelectValue(customSelectvalue.concat(inputValue));
         }
         handleChange({
@@ -343,15 +376,21 @@ export function SelectComponent(props: SelectProps) {
       const tagList: Array<GeneralComplexOption | string | number | boolean> =
         list.slice(0, 3);
       ellipsisInfo && tagList.push(ellipsisInfo);
+      const allOptions = computedOptions.reduce(
+        (pre: any, cur: any) =>
+          cur.options ? [...pre, ...cur.options] : [...pre, cur],
+        []
+      );
+
       return tagList.map((item) => {
         let option: GeneralComplexOption;
         if (typeof item === "object") {
           option = item;
         } else {
           option =
-            computedOptions.find((option) => option.value === item) ??
+            allOptions.find((option: any) => option.value === item) ??
             ({} as GeneralComplexOption);
-          option.closeable = !disabled;
+          option.closeable = !disabled && option.closeable;
         }
         return (
           <WrappedTag
@@ -374,11 +413,16 @@ export function SelectComponent(props: SelectProps) {
 
   const getLabel = useCallback(
     (value: any) => {
+      const allOptions = computedOptions.reduce(
+        (pre: any, cur: any) =>
+          cur.options ? [...pre, ...cur.options] : [...pre, cur],
+        []
+      );
       if (value !== undefined) {
         return (
-          (Array.isArray(value)
+          (multiple
             ? renderTag(value)
-            : computedOptions.find((item) => item.value === value)?.label) ?? ""
+            : allOptions.find((item: any) => item.value === value)?.label) ?? ""
         );
       }
       return "";
@@ -403,6 +447,35 @@ export function SelectComponent(props: SelectProps) {
     };
   }, [handleKeydown]);
 
+  const getSelectOption = (item: any): React.ReactNode => (
+    <div
+      key={item.value.toString()}
+      className={classNames("select-item", "select-item-option", {
+        disabled: item.disabled,
+        "select-option-selected":
+          typeof selectValue !== "object"
+            ? selectValue === item.value
+            : (selectValue as any[]).includes(item.value),
+      })}
+      onClick={() => !item.disabled && handleChange(item)}
+    >
+      <div className="select-item-option-content">
+        <div className="option">
+          <span className="label">{item.label}</span>
+        </div>
+        <div className="is-checked">
+          <WrappedIcon
+            {...{
+              lib: "antd",
+              icon: "check",
+              theme: "outlined",
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <WrappedFormItem {...props}>
       <div
@@ -426,9 +499,11 @@ export function SelectComponent(props: SelectProps) {
             if (!disabled) {
               setIsDropHidden(!isDropHidden);
               setIsFocused(!isFocused);
+              onFocus?.();
               inputRef.current && inputRef.current.focus();
             }
           }}
+          onBlur={() => setInputValue("")}
         >
           <div className="select-selection-overflow">
             <div
@@ -488,38 +563,16 @@ export function SelectComponent(props: SelectProps) {
             <div>
               <div className="dropdown-inner">
                 {computedOptions.length > 0 ? (
-                  computedOptions.map((item) => {
-                    return (
-                      <div
-                        key={item.value.toString()}
-                        className={classNames(
-                          "select-item",
-                          "select-item-option",
-                          {
-                            disabled: item.disabled,
-                            "select-option-selected":
-                              typeof selectValue !== "object"
-                                ? selectValue === item.value
-                                : (selectValue as any[]).includes(item.value),
-                          }
+                  computedOptions.map((item: any) => {
+                    return item.options?.length ? (
+                      <div key={item.label} className="select-group-wrapper">
+                        <div className="select-group-label">{item.label}</div>
+                        {formatOptions(item.options).map((option: any) =>
+                          getSelectOption(option)
                         )}
-                        onClick={() => !item.disabled && handleChange(item)}
-                      >
-                        <div className="select-item-option-content">
-                          <div className="option">
-                            <span className="label">{item.label}</span>
-                          </div>
-                          <div className="is-checked">
-                            <WrappedIcon
-                              {...{
-                                lib: "antd",
-                                icon: "check",
-                                theme: "outlined",
-                              }}
-                            />
-                          </div>
-                        </div>
                       </div>
+                    ) : (
+                      getSelectOption(item)
                     );
                   })
                 ) : (

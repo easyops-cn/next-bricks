@@ -1,7 +1,7 @@
 import { describe, test, expect } from "@jest/globals";
-import { act } from "react-dom/test-utils";
 import "./";
 import { Select } from "./index.js";
+import { render, act, createEvent, fireEvent } from "@testing-library/react";
 
 jest.mock("@next-core/theme", () => ({}));
 
@@ -55,7 +55,6 @@ describe("form.general-select", () => {
         element.shadowRoot?.querySelector(".select-item") as HTMLElement
       ).click();
     });
-
     expect(mockChangeEvent).toBeCalledWith(
       expect.objectContaining({
         detail: {
@@ -113,6 +112,48 @@ describe("form.general-select", () => {
       ).classList.contains("select-option-selected")
     ).toBe(true);
 
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
+
+  test("search", async () => {
+    const element = document.createElement("form.general-select") as Select;
+    element.options = [
+      {
+        label: "a",
+        value: "a",
+      },
+      {
+        label: "b",
+        value: "b",
+      },
+    ];
+    element.multiple = true;
+    const mockSearchEvent = jest.fn();
+    element.addEventListener("search", mockSearchEvent);
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    await act(async () => {
+      await (element.multiple = true);
+      fireEvent.change(
+        element.shadowRoot?.querySelector(
+          ".select-selection-search-input"
+        ) as HTMLElement,
+        { target: { value: "test" } }
+      );
+    });
+
+    expect(mockSearchEvent).toBeCalledWith(
+      expect.objectContaining({
+        detail: {
+          value: "test",
+        },
+      })
+    );
     act(() => {
       document.body.removeChild(element);
     });

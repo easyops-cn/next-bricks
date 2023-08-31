@@ -133,5 +133,6 @@
     "sl-select",
     "sl-tag"
   ],
-  "form-renderer": ["eo-form-renderer"]
+  "form-renderer": ["eo-form-renderer"],
+  "form-platform": ["eo-user-or-user-group-select"]
 }

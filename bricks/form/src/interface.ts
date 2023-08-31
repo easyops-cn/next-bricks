@@ -78,6 +78,11 @@ export declare type GeneralOption =
   | GeneralComplexOption
   | Record<string, any>;
 
+export interface GeneralGroupOption {
+  label: string;
+  options: GeneralComplexOption | GeneralOption;
+}
+
 export declare type RadioGroupButtonStyle = "outline" | "solid";
 
 /* ============== Radio Type End ============== */
