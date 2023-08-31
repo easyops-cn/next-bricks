@@ -1,11 +1,12 @@
 // istanbul ignore file
 import { createProviderClass } from "@next-core/utils/general";
 import { getHistory } from "@next-core/runtime";
+import { setPreviewFromOrigin, toggleInspecting } from "./preview/inspector.js";
 
 let injected = false;
 
-const EVENTS = ["click", "dblclick", "keydown", "change"] as const;
-let recordEnabled = false;
+const EVENTS = ["click", "dblclick", "keydown"] as const;
+let recording = false;
 
 const history = getHistory();
 
@@ -29,12 +30,16 @@ export async function injectPreviewAgent(
   };
 
   sendMessage({ type: "initialized" });
+  setPreviewFromOrigin(previewFromOrigin);
 
   window.addEventListener("message", (e) => {
     if (e.data?.channel === "ui-test-preview") {
       switch (e.data.type) {
         case "toggle-record":
-          toggleRecord(e.data.payload.recordEnabled);
+          toggleRecording(e.data.payload.recording);
+          break;
+        case "toggle-inspecting":
+          toggleInspecting(e.data.payload.inspecting);
           break;
         case "reload":
           location.reload();
@@ -52,7 +57,19 @@ export async function injectPreviewAgent(
   history.listen((loc) => {
     sendMessage({
       type: "url-change",
-      url: location.origin + history.createHref(loc),
+      payload: {
+        url: location.origin + history.createHref(loc),
+      },
+    });
+  });
+
+  window.addEventListener("scroll", () => {
+    sendMessage({
+      type: "scroll",
+      payload: {
+        x: window.scrollX,
+        y: window.scrollY,
+      },
     });
   });
 }
@@ -60,24 +77,22 @@ export async function injectPreviewAgent(
 function onClick(e: Event) {
   // eslint-disable-next-line no-console
   console.log(e.type, e);
-  if (e.type === "click") {
-    for (const item of e.composedPath()) {
-      if (
-        (item as Node).nodeType === Node.ELEMENT_NODE &&
-        item instanceof HTMLElement &&
-        item.dataset.testid
-      ) {
-        // eslint-disable-next-line no-console
-        console.log("found brick:", item);
-      }
+  for (const item of e.composedPath()) {
+    if (
+      (item as Node).nodeType === Node.ELEMENT_NODE &&
+      item instanceof HTMLElement &&
+      item.dataset.testid
+    ) {
+      // eslint-disable-next-line no-console
+      console.log("found brick:", item);
     }
   }
 }
 
-function toggleRecord(enabled: boolean) {
-  if (recordEnabled !== enabled) {
-    recordEnabled = enabled;
-    (recordEnabled ? startRecord : stopRecord)();
+function toggleRecording(enabled: boolean) {
+  if (recording !== enabled) {
+    recording = enabled;
+    (recording ? startRecord : stopRecord)();
   }
 }
 
