@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.1.2...@next-bricks/ui-test@0.2.0) (2023-08-31)
+
+
+### Features
+
+* support inspect ([3325711](https://github.com/easyops-cn/next-bricks/commit/332571102eea1bb8bcace659e6c59985db625e91))
+
+
+
+
+
 ## [0.1.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.1.1...@next-bricks/ui-test@0.1.2) (2023-08-30)
 
 
