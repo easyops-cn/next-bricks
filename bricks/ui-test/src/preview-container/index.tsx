@@ -1,3 +1,4 @@
+// istanbul ignore file
 import React, {
   useCallback,
   useEffect,
@@ -13,7 +14,13 @@ import { createDecorators, EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import { getBasePath, __secret_internals } from "@next-core/runtime";
+import classNames from "classnames";
 import styleText from "./styles.shadow.css";
+import type {
+  InspectOutline,
+  InspectSelector,
+} from "../data-providers/preview/interfaces.js";
+import { InspectOutlineComponent } from "./InspectOutlineComponent.js";
 
 const { defineElement, property, method, event } = createDecorators();
 
@@ -41,7 +48,10 @@ class PreviewContainer extends ReactNextElement {
   accessor src!: string;
 
   @property({ type: Boolean })
-  accessor recordEnabled: boolean | undefined;
+  accessor recording: boolean | undefined;
+
+  @property({ type: Boolean })
+  accessor inspecting: boolean | undefined;
 
   @method()
   back(): void {
@@ -64,13 +74,21 @@ class PreviewContainer extends ReactNextElement {
     this.#urlChangeEvent.emit(url);
   };
 
+  @event({ type: "inspect.select" })
+  accessor #inspectSelectEvent!: EventEmitter<InspectSelector[]>;
+  #handleInspectSelect = (targets: InspectSelector[]) => {
+    this.#inspectSelectEvent.emit(targets);
+  };
+
   render() {
     return (
       <PreviewContainerComponent
         ref={this._previewContainerRef}
         src={this.src}
-        recordEnabled={this.recordEnabled}
+        recording={this.recording}
+        inspecting={this.inspecting}
         onUrlChange={this.#handleUrlChange}
+        onInspectSelect={this.#handleInspectSelect}
       />
     );
   }
@@ -78,12 +96,20 @@ class PreviewContainer extends ReactNextElement {
 
 export interface PreviewContainerComponentProps {
   src: string;
-  recordEnabled?: boolean;
+  recording?: boolean;
+  inspecting?: boolean;
   onUrlChange?(url: string): void;
+  onInspectSelect?(targets: InspectSelector[]): void;
 }
 
 function LegacyPreviewContainerComponent(
-  { src, recordEnabled, onUrlChange }: PreviewContainerComponentProps,
+  {
+    src,
+    recording,
+    inspecting,
+    onUrlChange,
+    onInspectSelect,
+  }: PreviewContainerComponentProps,
   ref: Ref<PreviewContainerRef>
 ) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -92,6 +118,11 @@ function LegacyPreviewContainerComponent(
     const url = new URL(src, location.origin);
     return url.origin;
   }, [src]);
+  const [scroll, setScroll] = useState({ x: 0, y: 0 });
+  const [outline, setOutline] = useState<InspectOutline | null>(null);
+  const [adjustedOutline, setAdjustedOutline] = useState<InspectOutline | null>(
+    null
+  );
 
   const back = useCallback(() => {
     iframeRef.current?.contentWindow?.postMessage({
@@ -145,17 +176,61 @@ function LegacyPreviewContainerComponent(
     );
   }, [previewOrigin]);
 
+  const handleMouseOut = useMemo(() => {
+    if (!initialized) {
+      return;
+    }
+    return () => {
+      // Delay posting message to allow iframe inner hovering message be sent before
+      // mouse out from iframe itself.
+      setTimeout(() => {
+        window.postMessage({
+          channel: "ui-test-preview",
+          type: "inspect-hover",
+          payload: { outline: null },
+        });
+      }, 100);
+    };
+  }, [initialized]);
+
+  const adjustOutline = useCallback(
+    (outline: InspectOutline | null): InspectOutline | null => {
+      if (!outline) {
+        return outline;
+      }
+      const minScale = 1;
+      const offsetLeft = iframeRef?.current?.offsetLeft ?? 0;
+      const offsetTop = iframeRef?.current?.offsetTop ?? 0;
+      const { width, height, left, top, ...rest } = outline;
+      return {
+        width: width * minScale,
+        height: height * minScale,
+        left: (left - scroll.x) * minScale + offsetLeft,
+        top: (top - scroll.y) * minScale + offsetTop,
+        ...rest,
+      };
+    },
+    [scroll.x, scroll.y]
+  );
+
   useEffect(() => {
     const listener = (event: MessageEvent) => {
-      // eslint-disable-next-line no-console
-      console.log("received message:", event);
       if (event.data?.channel === "ui-test-preview") {
         switch (event.data.type) {
           case "initialized":
             setInitialized(true);
             break;
           case "url-change":
-            onUrlChange?.(event.data.url);
+            onUrlChange?.(event.data.payload.url);
+            break;
+          case "inspect-hover":
+            setOutline(event.data.payload.outline);
+            break;
+          case "scroll":
+            setScroll(event.data.payload);
+            break;
+          case "inspect-select":
+            onInspectSelect?.(event.data.payload.targets);
             break;
         }
       }
@@ -164,7 +239,7 @@ function LegacyPreviewContainerComponent(
     return () => {
       window.removeEventListener("message", listener);
     };
-  }, []);
+  }, [onUrlChange, onInspectSelect]);
 
   useEffect(() => {
     if (!initialized) {
@@ -175,21 +250,43 @@ function LegacyPreviewContainerComponent(
         channel: "ui-test-preview",
         type: "toggle-record",
         payload: {
-          recordEnabled,
+          recording,
         },
       },
       previewOrigin
     );
-  }, [initialized, previewOrigin, recordEnabled]);
+  }, [initialized, previewOrigin, recording]);
+
+  useEffect(() => {
+    if (!initialized) {
+      return;
+    }
+    iframeRef.current?.contentWindow?.postMessage(
+      {
+        channel: "ui-test-preview",
+        type: "toggle-inspecting",
+        payload: {
+          inspecting,
+        },
+      },
+      previewOrigin
+    );
+  }, [initialized, previewOrigin, inspecting]);
+
+  useEffect(() => {
+    setAdjustedOutline(adjustOutline(outline));
+  }, [outline, adjustOutline]);
 
   return (
-    <div className="preview-container">
+    <div className={classNames("preview-container", { inspecting })}>
       <iframe
         ref={iframeRef}
         src={src}
-        onLoad={handleIframeLoad}
         className="iframe"
+        onLoad={handleIframeLoad}
+        onMouseOut={handleMouseOut}
       />
+      {adjustedOutline && <InspectOutlineComponent {...adjustedOutline} />}
     </div>
   );
 }

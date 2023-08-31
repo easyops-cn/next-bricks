@@ -16,6 +16,10 @@ export default function getCypressQueryCommands(): CommandDoc[] {
         },
         getParamDefinitionOfArbitraryOptions(),
       ],
+      icon: {
+        lib: "fa",
+        icon: "at",
+      },
     },
     {
       name: "children",
