@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.16.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.15.0...@next-shared/common-bricks@0.16.0) (2023-09-01)
+
+
+### Features
+
+* forms.user-or-user-group-select ([a935889](https://github.com/easyops-cn/next-bricks/commit/a935889439da487f965785be1e77e76d2fd96bbc))
+
+
+
+
+
 # [0.15.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.14.0...@next-shared/common-bricks@0.15.0) (2023-08-18)
 
 
