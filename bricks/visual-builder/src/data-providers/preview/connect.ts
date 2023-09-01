@@ -422,6 +422,7 @@ export default async function connect(
           case "update-preview-route": {
             options.routePath = data.routePath;
             options.routeExact = data.routeExact;
+            syncRouteMatch();
             break;
           }
           /* case "excute-proxy-method": {
@@ -457,13 +458,19 @@ export default async function connect(
   });
 
   let previewPageMatch = true;
+  let currentLocation: NextLocation;
   const sendLocationChange = (loc: NextLocation): void => {
     sendMessage<PreviewMessagePreviewerUrlChange>({
       type: "url-change",
       url: location.origin + history.createHref(loc),
     });
+    currentLocation = loc;
+    syncRouteMatch();
+  };
+
+  function syncRouteMatch() {
     if (options.routePath) {
-      const match = !!matchPath(loc.pathname, {
+      const match = !!matchPath(currentLocation.pathname, {
         path: options.routePath,
         exact: options.routeExact,
       });
@@ -520,7 +527,7 @@ export default async function connect(
       }
       previewPageMatch = match;
     }
-  };
+  }
 
   sendLocationChange(history.location);
 
