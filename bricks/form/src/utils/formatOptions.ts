@@ -1,5 +1,9 @@
 import { get } from "lodash";
-import { GeneralOption, GeneralComplexOption } from "../interface.js";
+import {
+  GeneralOption,
+  GeneralComplexOption,
+  GeneralGroupOption,
+} from "../interface.js";
 
 export function formatOptions(
   options: GeneralOption[] = [],

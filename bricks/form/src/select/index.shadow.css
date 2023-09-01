@@ -256,3 +256,14 @@
   font-size: 14px;
   color: var(--palette-gray-5);
 }
+.select-group-wrapper {
+  .select-group-label {
+    padding-left: 12px;
+    color: var(--antd-text-color-secondary);
+    font-size: 12px;
+    cursor: default;
+  }
+  .select-item-option {
+    padding-left: 24px;
+  }
+}
