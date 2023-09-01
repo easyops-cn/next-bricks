@@ -61,3 +61,28 @@ export interface EnumItem {
 export type CommandIcon = GeneralIconProps & {
   color?: string;
 };
+
+export interface NodeGraphData {
+  name: string;
+  label?: string;
+  instanceId: string;
+  params?: any;
+  type: NodeType;
+  sort?: number;
+}
+
+export interface TreeNodeItemData extends NodeGraphData {
+  isChainChild?: boolean;
+  isSortChange?: boolean;
+  parent?: NodeGraphData;
+  children?: NodeGraphData[];
+}
+
+export interface TestTreeData {
+  key: string;
+  name: string;
+  icon: CommandIcon;
+  data: TreeNodeItemData;
+  children?: TestTreeData[];
+  labelColor?: string;
+}

@@ -1,5 +1,11 @@
 import { customProcessors } from "@next-core/runtime";
-import { CommandDoc, CommandIcon, NodeType } from "../interface.js";
+import {
+  CommandDoc,
+  CommandIcon,
+  NodeGraphData,
+  TestTreeData,
+} from "../interface.js";
+import { sortBy } from "lodash";
 
 interface GraphEdge {
   in: string;
@@ -7,33 +13,14 @@ interface GraphEdge {
   out_name: string;
 }
 
-interface GraphNode {
-  name: string;
-  label?: string;
-  instanceId: string;
-  params?: any;
-  type: NodeType;
-  isChainChild?: boolean;
-  parent?: GraphNode;
-}
-
 export interface GraphData {
   edges: GraphEdge[];
-  topic_vertices: GraphNode[];
-  vertices: GraphNode[];
-}
-
-interface TreeData {
-  key: string;
-  name: string;
-  icon: CommandIcon;
-  data: GraphNode;
-  children?: TreeData[];
-  labelColor?: string;
+  topic_vertices: NodeGraphData[];
+  vertices: NodeGraphData[];
 }
 
 function getIcon(
-  nodeData: GraphNode,
+  nodeData: NodeGraphData,
   commandDocList: CommandDoc[]
 ): CommandIcon {
   let icon: CommandIcon;
@@ -97,7 +84,7 @@ function getIcon(
   return icon;
 }
 
-function getDisplayLabel(nodeItem: GraphNode): string {
+function getDisplayLabel(nodeItem: NodeGraphData): string {
   if (nodeItem.type === "suite") {
     return nodeItem.name;
   }
@@ -132,39 +119,57 @@ function getLiteralParams(params: unknown[]): unknown[] {
 export function getTreeData(
   GraphData: GraphData,
   commandDocList: CommandDoc[]
-): TreeData {
+): TestTreeData {
   const {
     topic_vertices: [rootData],
     vertices,
     edges,
   } = GraphData;
 
-  const getChildren = (node: GraphNode): TreeData[] => {
+  const getChildVertices = (children: TestTreeData[]) => {
+    return vertices.filter((v) =>
+      children.find((c) => c.data.instanceId === v.instanceId)
+    );
+  };
+
+  const getChildren = (node: NodeGraphData): TestTreeData[] => {
     const relations = edges.filter((item) => item.in === node.instanceId);
 
     const nodes = relations
       .map((relation) => vertices.find((v) => relation.out === v.instanceId))
-      .filter(Boolean) as GraphNode[];
+      .filter(Boolean) as NodeGraphData[];
 
-    return nodes.map((nodeData) => {
+    return sortBy(nodes, "sort").map((nodeData) => {
       const isChainChild =
         node.type === "command" && nodeData.type === "command";
+
+      const children = getChildren(nodeData);
       return {
         name: getDisplayLabel(nodeData),
         key: nodeData.instanceId,
         icon: getIcon(nodeData, commandDocList),
-        data: { ...nodeData, isChainChild, parent: node },
-        children: getChildren(nodeData),
+        data: {
+          ...nodeData,
+          isChainChild,
+          parent: node,
+          children: getChildVertices(children),
+        },
+        children,
       };
-    }) as TreeData[];
+    }) as TestTreeData[];
   };
+
+  const children = getChildren(rootData);
 
   return {
     name: getDisplayLabel(rootData),
     key: rootData.instanceId,
     icon: getIcon(rootData, commandDocList),
-    data: rootData,
-    children: getChildren(rootData),
+    data: {
+      ...rootData,
+      children: getChildVertices(children),
+    },
+    children,
   };
 }
 
