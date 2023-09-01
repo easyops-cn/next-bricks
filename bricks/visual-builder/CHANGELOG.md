@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.20](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.6.19...@next-bricks/visual-builder@0.6.20) (2023-09-01)
+
+
+### Bug Fixes
+
+* sync route match after preview route change ([2733364](https://github.com/easyops-cn/next-bricks/commit/2733364b5f35fb0ff948ca79f0070576f29b9f06))
+
+
+
+
+
 ## [0.6.19](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.6.18...@next-bricks/visual-builder@0.6.19) (2023-09-01)
 
 **Note:** Version bump only for package @next-bricks/visual-builder
