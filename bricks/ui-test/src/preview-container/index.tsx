@@ -125,25 +125,34 @@ function LegacyPreviewContainerComponent(
   );
 
   const back = useCallback(() => {
-    iframeRef.current?.contentWindow?.postMessage({
-      channel: "ui-test-preview",
-      type: "back",
-    });
-  }, []);
+    iframeRef.current?.contentWindow?.postMessage(
+      {
+        channel: "ui-test-preview",
+        type: "back",
+      },
+      previewOrigin
+    );
+  }, [previewOrigin]);
 
   const forward = useCallback(() => {
-    iframeRef.current?.contentWindow?.postMessage({
-      channel: "ui-test-preview",
-      type: "forward",
-    });
-  }, []);
+    iframeRef.current?.contentWindow?.postMessage(
+      {
+        channel: "ui-test-preview",
+        type: "forward",
+      },
+      previewOrigin
+    );
+  }, [previewOrigin]);
 
   const reload = useCallback(() => {
-    iframeRef.current?.contentWindow?.postMessage({
-      channel: "ui-test-preview",
-      type: "reload",
-    });
-  }, []);
+    iframeRef.current?.contentWindow?.postMessage(
+      {
+        channel: "ui-test-preview",
+        type: "reload",
+      },
+      previewOrigin
+    );
+  }, [previewOrigin]);
 
   useImperativeHandle(ref, () => ({
     back,
