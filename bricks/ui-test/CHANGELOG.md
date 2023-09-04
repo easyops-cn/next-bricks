@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.2.1...@next-bricks/ui-test@0.3.0) (2023-09-04)
+
+
+### Bug Fixes
+
+* missing targetOrigin option ([99cc948](https://github.com/easyops-cn/next-bricks/commit/99cc9484282f60fa001e674ae6eeeef817b50caa))
+
+
+### Features
+
+* support sort ([b265c0c](https://github.com/easyops-cn/next-bricks/commit/b265c0c6d0f41244990e11277dab72036d3711db))
+
+
+
+
+
 ## [0.2.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.2.0...@next-bricks/ui-test@0.2.1) (2023-09-01)
 
 **Note:** Version bump only for package @next-bricks/ui-test
