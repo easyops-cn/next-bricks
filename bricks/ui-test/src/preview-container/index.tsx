@@ -19,6 +19,7 @@ import styleText from "./styles.shadow.css";
 import type {
   InspectOutline,
   InspectSelector,
+  RecordStep,
 } from "../data-providers/preview/interfaces.js";
 import { InspectOutlineComponent } from "./InspectOutlineComponent.js";
 
@@ -80,6 +81,12 @@ class PreviewContainer extends ReactNextElement {
     this.#inspectSelectEvent.emit(targets);
   };
 
+  @event({ type: "record.complete" })
+  accessor #recordCompleteEvent!: EventEmitter<RecordStep[]>;
+  #handleRecordComplete = (targets: RecordStep[]) => {
+    this.#recordCompleteEvent.emit(targets);
+  };
+
   render() {
     return (
       <PreviewContainerComponent
@@ -89,6 +96,7 @@ class PreviewContainer extends ReactNextElement {
         inspecting={this.inspecting}
         onUrlChange={this.#handleUrlChange}
         onInspectSelect={this.#handleInspectSelect}
+        onRecordComplete={this.#handleRecordComplete}
       />
     );
   }
@@ -100,6 +108,7 @@ export interface PreviewContainerComponentProps {
   inspecting?: boolean;
   onUrlChange?(url: string): void;
   onInspectSelect?(targets: InspectSelector[]): void;
+  onRecordComplete?(steps: RecordStep[]): void;
 }
 
 function LegacyPreviewContainerComponent(
@@ -109,6 +118,7 @@ function LegacyPreviewContainerComponent(
     inspecting,
     onUrlChange,
     onInspectSelect,
+    onRecordComplete,
   }: PreviewContainerComponentProps,
   ref: Ref<PreviewContainerRef>
 ) {
@@ -240,6 +250,9 @@ function LegacyPreviewContainerComponent(
             break;
           case "inspect-select":
             onInspectSelect?.(event.data.payload.targets);
+            break;
+          case "record-complete":
+            onRecordComplete?.(event.data.payload.steps);
             break;
         }
       }

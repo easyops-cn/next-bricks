@@ -16,3 +16,9 @@ export interface InspectOutline {
   top: number;
   selector: InspectSelector;
 }
+
+export interface RecordStep {
+  event: string;
+  targets: InspectSelector[];
+  text?: string;
+}

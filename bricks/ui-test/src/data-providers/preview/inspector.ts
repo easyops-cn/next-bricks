@@ -3,36 +3,29 @@
 import { isEqual, throttle } from "lodash";
 import type { InspectOutline, InspectTarget } from "./interfaces.js";
 
-export let previewProxyOrigin: string;
+let isInspecting = false;
+export let previewFromOrigin: string;
 
 export function setPreviewFromOrigin(origin: string): void {
-  previewProxyOrigin = origin;
+  previewFromOrigin = origin;
 }
 
 export function toggleInspecting(inspecting: boolean): void {
-  (inspecting ? registerListeners : unregisterListeners)();
-}
+  if (isInspecting === inspecting) {
+    return;
+  }
+  isInspecting = inspecting;
 
-function registerListeners(): void {
-  window.addEventListener("click", onClick, true);
-  window.addEventListener("mousedown", onMouseEvent, true);
-  window.addEventListener("mouseover", onMouseEvent, true);
-  window.addEventListener("mouseup", onMouseEvent, true);
-  window.addEventListener("pointerdown", onPointerDown, true);
-  window.addEventListener("pointerover", onPointerOver, true);
-  window.addEventListener("pointerup", onMouseEvent, true);
-  window.addEventListener("pointerleave", onPointerLeave, true);
-}
+  const method = inspecting ? "addEventListener" : "removeEventListener";
 
-function unregisterListeners(): void {
-  window.removeEventListener("click", onClick, true);
-  window.removeEventListener("mousedown", onMouseEvent, true);
-  window.removeEventListener("mouseover", onMouseEvent, true);
-  window.removeEventListener("mouseup", onMouseEvent, true);
-  window.removeEventListener("pointerdown", onPointerDown, true);
-  window.removeEventListener("pointerover", onPointerOver, true);
-  window.removeEventListener("pointerup", onMouseEvent, true);
-  window.removeEventListener("pointerleave", onPointerLeave, true);
+  window[method]("click", onClick as EventListener, true);
+  window[method]("mousedown", onMouseEvent as EventListener, true);
+  window[method]("mouseover", onMouseEvent as EventListener, true);
+  window[method]("mouseup", onMouseEvent as EventListener, true);
+  window[method]("pointerdown", onPointerDown as EventListener, true);
+  window[method]("pointerover", onPointerOver as EventListener, true);
+  window[method]("pointerup", onMouseEvent as EventListener, true);
+  window[method]("pointerleave", onPointerLeave as EventListener, true);
 }
 
 function onClick(event: MouseEvent): void {
@@ -57,7 +50,7 @@ const hoverOnTarget = throttle(
           outline: getTargetOutline(targets[0]),
         },
       },
-      previewProxyOrigin
+      previewFromOrigin
     );
   },
   100,
@@ -85,7 +78,7 @@ function onPointerLeave(event: MouseEvent): void {
       type: "inspect-hover",
       payload: { outline: null },
     },
-    previewProxyOrigin
+    previewFromOrigin
   );
 }
 
@@ -100,12 +93,14 @@ function selectTarget(event: MouseEvent): void {
           targets: targets.map((t) => t.selector),
         },
       },
-      previewProxyOrigin
+      previewFromOrigin
     );
   }
 }
 
-function getPossibleTargets(eventTargets: EventTarget[]): InspectTarget[] {
+export function getPossibleTargets(
+  eventTargets: EventTarget[]
+): InspectTarget[] {
   const targets: InspectTarget[] = [];
   for (const item of eventTargets) {
     if (
