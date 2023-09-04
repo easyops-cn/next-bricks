@@ -1,0 +1,667 @@
+import { describe, test, expect } from "@jest/globals";
+import { sortTestTreeNode, findNodeData } from "./sort-test-tree-node.js";
+import { TestTreeData, TreeNodeItemData } from "../interface.js";
+
+describe("sortTestTreeNode", () => {
+  test.each([
+    [
+      [
+        {
+          children: [
+            {
+              children: [],
+              data: {
+                children: [],
+                instanceId: "603a85ccfb595",
+                isChainChild: false,
+                label: "should work",
+                name: "it",
+                params: null,
+                parent: {
+                  instanceId: "603a85a03c2c6",
+                  label: "demo app",
+                  name: "suite",
+                  params: null,
+                  type: "suite",
+                },
+                type: "block",
+              },
+              icon: {
+                color: "var(--palette-cyan-6)",
+                icon: "bookmark",
+                lib: "fa",
+              },
+              key: "603a85ccfb595",
+              name: "it: should work",
+            },
+            {
+              children: [],
+              data: {
+                children: [],
+                instanceId: "603ab42f8eae9",
+                isChainChild: false,
+                label: null,
+                name: "beforeEach",
+                params: null,
+                parent: {
+                  instanceId: "603a85a03c2c6",
+                  label: "demo app",
+                  name: "suite",
+                  params: null,
+                  type: "suite",
+                },
+                type: "block",
+              },
+              icon: {
+                color: "var(--palette-cyan-6)",
+                icon: "bookmark",
+                lib: "fa",
+              },
+              key: "603ab42f8eae9",
+              name: "beforeEach",
+            },
+          ],
+          data: {
+            children: [
+              {
+                instanceId: "603a85ccfb595",
+                label: "should work",
+                name: "it",
+                params: null,
+                type: "block",
+              },
+              {
+                instanceId: "603ab42f8eae9",
+                label: null,
+                name: "beforeEach",
+                params: null,
+                type: "block",
+              },
+            ],
+            instanceId: "603a85a03c2c6",
+            label: "demo app",
+            name: "suite",
+            params: null,
+            type: "suite",
+          },
+          icon: {
+            color: "var(--palette-purple-6)",
+            icon: "vial",
+            lib: "fa",
+          },
+          key: "603a85a03c2c6",
+          name: "suite",
+        },
+      ],
+      {
+        children: [],
+        instanceId: "603ab42f8eae9",
+        isChainChild: false,
+        label: null,
+        name: "beforeEach",
+        params: null,
+        parent: {
+          instanceId: "603a85a03c2c6",
+          label: "demo app",
+          name: "suite",
+          params: null,
+          type: "suite",
+        },
+        type: "block",
+      },
+      "move-up",
+      {
+        sortedChangeChildren: [
+          {
+            children: [],
+            data: {
+              children: [],
+              instanceId: "603ab42f8eae9",
+              isChainChild: false,
+              isSortChange: true,
+              label: null,
+              name: "beforeEach",
+              params: null,
+              parent: {
+                instanceId: "603a85a03c2c6",
+                label: "demo app",
+                name: "suite",
+                params: null,
+                type: "suite",
+              },
+              sort: 0,
+              type: "block",
+            },
+            icon: {
+              color: "var(--palette-cyan-6)",
+              icon: "bookmark",
+              lib: "fa",
+            },
+            key: "603ab42f8eae9",
+            name: "beforeEach",
+          },
+          {
+            children: [],
+            data: {
+              children: [],
+              instanceId: "603a85ccfb595",
+              isChainChild: false,
+              isSortChange: true,
+              label: "should work",
+              name: "it",
+              params: null,
+              parent: {
+                instanceId: "603a85a03c2c6",
+                label: "demo app",
+                name: "suite",
+                params: null,
+                type: "suite",
+              },
+              sort: 1,
+              type: "block",
+            },
+            icon: {
+              color: "var(--palette-cyan-6)",
+              icon: "bookmark",
+              lib: "fa",
+            },
+            key: "603a85ccfb595",
+            name: "it: should work",
+          },
+        ],
+        treeData: [
+          {
+            children: [
+              {
+                children: [],
+                data: {
+                  children: [],
+                  instanceId: "603ab42f8eae9",
+                  isChainChild: false,
+                  isSortChange: true,
+                  label: null,
+                  name: "beforeEach",
+                  params: null,
+                  parent: {
+                    instanceId: "603a85a03c2c6",
+                    label: "demo app",
+                    name: "suite",
+                    params: null,
+                    type: "suite",
+                  },
+                  sort: 0,
+                  type: "block",
+                },
+                icon: {
+                  color: "var(--palette-cyan-6)",
+                  icon: "bookmark",
+                  lib: "fa",
+                },
+                key: "603ab42f8eae9",
+                name: "beforeEach",
+              },
+              {
+                children: [],
+                data: {
+                  children: [],
+                  instanceId: "603a85ccfb595",
+                  isChainChild: false,
+                  isSortChange: true,
+                  label: "should work",
+                  name: "it",
+                  params: null,
+                  parent: {
+                    instanceId: "603a85a03c2c6",
+                    label: "demo app",
+                    name: "suite",
+                    params: null,
+                    type: "suite",
+                  },
+                  sort: 1,
+                  type: "block",
+                },
+                icon: {
+                  color: "var(--palette-cyan-6)",
+                  icon: "bookmark",
+                  lib: "fa",
+                },
+                key: "603a85ccfb595",
+                name: "it: should work",
+              },
+            ],
+            data: {
+              children: [
+                {
+                  instanceId: "603a85ccfb595",
+                  label: "should work",
+                  name: "it",
+                  params: null,
+                  type: "block",
+                },
+                {
+                  instanceId: "603ab42f8eae9",
+                  label: null,
+                  name: "beforeEach",
+                  params: null,
+                  type: "block",
+                },
+              ],
+              instanceId: "603a85a03c2c6",
+              label: "demo app",
+              name: "suite",
+              params: null,
+              type: "suite",
+            },
+            icon: { color: "var(--palette-purple-6)", icon: "vial", lib: "fa" },
+            key: "603a85a03c2c6",
+            name: "suite",
+          },
+        ],
+      },
+    ],
+    [
+      [
+        {
+          children: [
+            {
+              children: [],
+              data: {
+                children: [],
+                instanceId: "603a85ccfb595",
+                isChainChild: false,
+                label: "should work",
+                name: "it",
+                params: null,
+                parent: {
+                  instanceId: "603a85a03c2c6",
+                  label: "demo app",
+                  name: "suite",
+                  params: null,
+                  type: "suite",
+                },
+                type: "block",
+              },
+              icon: {
+                color: "var(--palette-cyan-6)",
+                icon: "bookmark",
+                lib: "fa",
+              },
+              key: "603a85ccfb595",
+              name: "it: should work",
+            },
+            {
+              children: [],
+              data: {
+                children: [],
+                instanceId: "603ab42f8eae9",
+                isChainChild: false,
+                label: null,
+                name: "beforeEach",
+                params: null,
+                parent: {
+                  instanceId: "603a85a03c2c6",
+                  label: "demo app",
+                  name: "suite",
+                  params: null,
+                  type: "suite",
+                },
+                type: "block",
+              },
+              icon: {
+                color: "var(--palette-cyan-6)",
+                icon: "bookmark",
+                lib: "fa",
+              },
+              key: "603ab42f8eae9",
+              name: "beforeEach",
+            },
+          ],
+          data: {
+            children: [
+              {
+                instanceId: "603a85ccfb595",
+                label: "should work",
+                name: "it",
+                params: null,
+                type: "block",
+              },
+              {
+                instanceId: "603ab42f8eae9",
+                label: null,
+                name: "beforeEach",
+                params: null,
+                type: "block",
+              },
+            ],
+            instanceId: "603a85a03c2c6",
+            label: "demo app",
+            name: "suite",
+            params: null,
+            type: "suite",
+          },
+          icon: {
+            color: "var(--palette-purple-6)",
+            icon: "vial",
+            lib: "fa",
+          },
+          key: "603a85a03c2c6",
+          name: "suite",
+        },
+      ],
+      {
+        children: [],
+        instanceId: "603a85ccfb595",
+        isChainChild: false,
+        label: "should work",
+        name: "it",
+        params: null,
+        parent: {
+          instanceId: "603a85a03c2c6",
+          label: "demo app",
+          name: "suite",
+          params: null,
+          type: "suite",
+        },
+        type: "block",
+      },
+      "move-down",
+      {
+        sortedChangeChildren: [
+          {
+            children: [],
+            data: {
+              children: [],
+              instanceId: "603ab42f8eae9",
+              isChainChild: false,
+              isSortChange: true,
+              label: null,
+              name: "beforeEach",
+              params: null,
+              parent: {
+                instanceId: "603a85a03c2c6",
+                label: "demo app",
+                name: "suite",
+                params: null,
+                type: "suite",
+              },
+              sort: 0,
+              type: "block",
+            },
+            icon: {
+              color: "var(--palette-cyan-6)",
+              icon: "bookmark",
+              lib: "fa",
+            },
+            key: "603ab42f8eae9",
+            name: "beforeEach",
+          },
+          {
+            children: [],
+            data: {
+              children: [],
+              instanceId: "603a85ccfb595",
+              isChainChild: false,
+              isSortChange: true,
+              label: "should work",
+              name: "it",
+              params: null,
+              parent: {
+                instanceId: "603a85a03c2c6",
+                label: "demo app",
+                name: "suite",
+                params: null,
+                type: "suite",
+              },
+              sort: 1,
+              type: "block",
+            },
+            icon: {
+              color: "var(--palette-cyan-6)",
+              icon: "bookmark",
+              lib: "fa",
+            },
+            key: "603a85ccfb595",
+            name: "it: should work",
+          },
+        ],
+        treeData: [
+          {
+            children: [
+              {
+                children: [],
+                data: {
+                  children: [],
+                  instanceId: "603ab42f8eae9",
+                  isChainChild: false,
+                  isSortChange: true,
+                  label: null,
+                  name: "beforeEach",
+                  params: null,
+                  parent: {
+                    instanceId: "603a85a03c2c6",
+                    label: "demo app",
+                    name: "suite",
+                    params: null,
+                    type: "suite",
+                  },
+                  sort: 0,
+                  type: "block",
+                },
+                icon: {
+                  color: "var(--palette-cyan-6)",
+                  icon: "bookmark",
+                  lib: "fa",
+                },
+                key: "603ab42f8eae9",
+                name: "beforeEach",
+              },
+              {
+                children: [],
+                data: {
+                  children: [],
+                  instanceId: "603a85ccfb595",
+                  isChainChild: false,
+                  isSortChange: true,
+                  label: "should work",
+                  name: "it",
+                  params: null,
+                  parent: {
+                    instanceId: "603a85a03c2c6",
+                    label: "demo app",
+                    name: "suite",
+                    params: null,
+                    type: "suite",
+                  },
+                  sort: 1,
+                  type: "block",
+                },
+                icon: {
+                  color: "var(--palette-cyan-6)",
+                  icon: "bookmark",
+                  lib: "fa",
+                },
+                key: "603a85ccfb595",
+                name: "it: should work",
+              },
+            ],
+            data: {
+              children: [
+                {
+                  instanceId: "603a85ccfb595",
+                  label: "should work",
+                  name: "it",
+                  params: null,
+                  type: "block",
+                },
+                {
+                  instanceId: "603ab42f8eae9",
+                  label: null,
+                  name: "beforeEach",
+                  params: null,
+                  type: "block",
+                },
+              ],
+              instanceId: "603a85a03c2c6",
+              label: "demo app",
+              name: "suite",
+              params: null,
+              type: "suite",
+            },
+            icon: { color: "var(--palette-purple-6)", icon: "vial", lib: "fa" },
+            key: "603a85a03c2c6",
+            name: "suite",
+          },
+        ],
+      },
+    ],
+    [
+      [],
+      {
+        children: [],
+        instanceId: "603a85ccfb595",
+        isChainChild: false,
+        label: "should work",
+        name: "it",
+        params: null,
+        parent: {
+          instanceId: "603a85a03c2c6",
+          label: "demo app",
+          name: "suite",
+          params: null,
+          type: "suite",
+        },
+        type: "block",
+      },
+      "move-up",
+      { sortedChangeChildren: [], treeData: [] },
+    ],
+  ])("should work", (treeData, itemData, action, result) => {
+    expect(
+      sortTestTreeNode(
+        treeData as TestTreeData[],
+        itemData as TreeNodeItemData,
+        action as "move-up" | "move-down"
+      )
+    ).toEqual(result);
+  });
+});
+
+describe("findNodeData", () => {
+  it.each([
+    [
+      [
+        {
+          children: [
+            {
+              children: [],
+              data: {
+                children: [],
+                instanceId: "603a85ccfb595",
+                isChainChild: false,
+                label: "should work",
+                name: "it",
+                params: null,
+                parent: {
+                  instanceId: "603a85a03c2c6",
+                  label: "demo app",
+                  name: "suite",
+                  params: null,
+                  type: "suite",
+                },
+                type: "block",
+              },
+              icon: {
+                color: "var(--palette-cyan-6)",
+                icon: "bookmark",
+                lib: "fa",
+              },
+              key: "603a85ccfb595",
+              name: "it: should work",
+            },
+            {
+              children: [],
+              data: {
+                children: [],
+                instanceId: "603ab42f8eae9",
+                isChainChild: false,
+                label: null,
+                name: "beforeEach",
+                params: null,
+                parent: {
+                  instanceId: "603a85a03c2c6",
+                  label: "demo app",
+                  name: "suite",
+                  params: null,
+                  type: "suite",
+                },
+                type: "block",
+              },
+              icon: {
+                color: "var(--palette-cyan-6)",
+                icon: "bookmark",
+                lib: "fa",
+              },
+              key: "603ab42f8eae9",
+              name: "beforeEach",
+            },
+          ],
+          data: {
+            children: [
+              {
+                instanceId: "603a85ccfb595",
+                label: "should work",
+                name: "it",
+                params: null,
+                type: "block",
+              },
+              {
+                instanceId: "603ab42f8eae9",
+                label: null,
+                name: "beforeEach",
+                params: null,
+                type: "block",
+              },
+            ],
+            instanceId: "603a85a03c2c6",
+            label: "demo app",
+            name: "suite",
+            params: null,
+            type: "suite",
+          },
+          icon: {
+            color: "var(--palette-purple-6)",
+            icon: "vial",
+            lib: "fa",
+          },
+          key: "603a85a03c2c6",
+          name: "suite",
+        },
+      ] as TestTreeData[],
+      "603a85ccfb595",
+      {
+        children: [],
+        data: {
+          children: [],
+          instanceId: "603a85ccfb595",
+          isChainChild: false,
+          label: "should work",
+          name: "it",
+          params: null,
+          parent: {
+            instanceId: "603a85a03c2c6",
+            label: "demo app",
+            name: "suite",
+            params: null,
+            type: "suite",
+          },
+          type: "block",
+        },
+        icon: { color: "var(--palette-cyan-6)", icon: "bookmark", lib: "fa" },
+        key: "603a85ccfb595",
+        name: "it: should work",
+      },
+    ],
+  ])("should work", (treeData, key, result) => {
+    expect(findNodeData(treeData, key)).toEqual(result);
+  });
+});
