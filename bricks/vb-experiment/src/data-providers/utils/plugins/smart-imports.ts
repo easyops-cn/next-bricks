@@ -20,6 +20,7 @@ const EXPRESSION_GLOBALS = new Set([
   "IMG",
   "INSTALLED_APPS",
   "ITEM",
+  "INDEX",
   "LOCAL_STORAGE",
   "MEDIA",
   "MISC",
