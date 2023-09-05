@@ -74,6 +74,7 @@ export interface NodeGraphData {
 export interface TreeNodeItemData extends NodeGraphData {
   isChainChild?: boolean;
   isSortChange?: boolean;
+  displayLabel?: string;
   parent?: NodeGraphData;
   children?: NodeGraphData[];
 }

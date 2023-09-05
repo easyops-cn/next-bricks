@@ -144,14 +144,16 @@ export function getTreeData(
         node.type === "command" && nodeData.type === "command";
 
       const children = getChildren(nodeData);
+      const displayLabel = getDisplayLabel(nodeData);
       return {
-        name: getDisplayLabel(nodeData),
+        name: displayLabel,
         key: nodeData.instanceId,
         icon: getIcon(nodeData, commandDocList),
         data: {
           ...nodeData,
           isChainChild,
           parent: node,
+          displayLabel,
           children: getChildVertices(children),
         },
         children,
@@ -160,13 +162,14 @@ export function getTreeData(
   };
 
   const children = getChildren(rootData);
-
+  const displayLabel = getDisplayLabel(rootData);
   return {
-    name: getDisplayLabel(rootData),
+    name: displayLabel,
     key: rootData.instanceId,
     icon: getIcon(rootData, commandDocList),
     data: {
       ...rootData,
+      displayLabel,
       children: getChildVertices(children),
     },
     children,

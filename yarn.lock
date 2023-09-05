@@ -2065,6 +2065,13 @@
   dependencies:
     "@next-core/http" "^1.0.0"
 
+"@next-api-sdk/cmdb-sdk@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@next-api-sdk/cmdb-sdk/-/cmdb-sdk-1.1.1.tgz#2c03b61c4fa08c85a9bd9d5798c20fdc2c0db755"
+  integrity sha512-pfc0atfR9dtT3rArlm2dDj3csGw1PTknFICuxhTWNo7+IZcptMltEbw+z4guIiNDYAk1C3Ot+SB9bObulpiWdA==
+  dependencies:
+    "@next-core/http" "^1.0.6"
+
 "@next-api-sdk/micro-app-sdk@^1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@next-api-sdk/micro-app-sdk/-/micro-app-sdk-1.2.1.tgz#b3879de5e3b06e698c003d7eb4919392b3d710c6"

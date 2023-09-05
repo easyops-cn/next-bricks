@@ -184,6 +184,7 @@ describe("getTreeData", () => {
           name: "suite",
           params: null,
           type: "suite",
+          displayLabel: "suite",
           children: [
             {
               instanceId: "603a85ccfb595",
@@ -224,6 +225,7 @@ describe("getTreeData", () => {
                 params: null,
                 type: "suite",
               },
+              displayLabel: "it: should work",
               children: [
                 {
                   instanceId: "603a8bb21c8e6",
@@ -269,6 +271,7 @@ describe("getTreeData", () => {
                     params: null,
                     type: "block",
                   },
+                  displayLabel: "code: console.log(1323)",
                   children: [],
                 },
                 children: [],
@@ -300,6 +303,7 @@ describe("getTreeData", () => {
                     params: null,
                     type: "block",
                   },
+                  displayLabel: "get: .selector",
                   children: [
                     {
                       instanceId: "603aac31912bd",
@@ -345,6 +349,7 @@ describe("getTreeData", () => {
                         ],
                         type: "command",
                       },
+                      displayLabel: "type",
                       children: [],
                     },
                     children: [],
@@ -376,6 +381,7 @@ describe("getTreeData", () => {
                         ],
                         type: "command",
                       },
+                      displayLabel: "click",
                       children: [
                         {
                           instanceId: "603aac508c917",
@@ -409,6 +415,7 @@ describe("getTreeData", () => {
                             params: null,
                             type: "command",
                           },
+                          displayLabel: "should:exist",
                           children: [],
                         },
                         children: [],
@@ -441,6 +448,7 @@ describe("getTreeData", () => {
                 params: null,
                 type: "suite",
               },
+              displayLabel: "beforeEach",
               children: [
                 {
                   instanceId: "603ab463e5d3e",
@@ -474,6 +482,7 @@ describe("getTreeData", () => {
                     params: null,
                     type: "block",
                   },
+                  displayLabel: "code",
                   children: [],
                 },
                 children: [],
