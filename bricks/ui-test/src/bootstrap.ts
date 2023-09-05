@@ -6,3 +6,5 @@ import "./data-providers/choose-directory.js";
 import "./data-providers/get-commands.js";
 import "./data-providers/sort-test-tree-node.js";
 import "./data-providers/clone-nodes.js";
+import "./data-providers/save-recorded-commands.js";
+import "./data-providers/get-flat-nodes-in-tree.js";
