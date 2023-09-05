@@ -127,8 +127,11 @@ export function getTreeData(
   } = GraphData;
 
   const getChildVertices = (children: TestTreeData[]) => {
-    return vertices.filter((v) =>
-      children.find((c) => c.data.instanceId === v.instanceId)
+    return sortBy(
+      vertices.filter((v) =>
+        children.find((c) => c.data.instanceId === v.instanceId)
+      ),
+      "sort"
     );
   };
 
