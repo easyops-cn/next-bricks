@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.3.0...@next-bricks/ui-test@0.4.0) (2023-09-05)
+
+
+### Features
+
+* support recording actions ([5008981](https://github.com/easyops-cn/next-bricks/commit/500898116b356ff6a25f2baebd29c482dab8db9a))
+
+
+
+
+
 # [0.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.2.1...@next-bricks/ui-test@0.3.0) (2023-09-04)
 
 
