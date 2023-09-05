@@ -46,6 +46,7 @@
     "file-saver": "^2.0.5",
     "idb-keyval": "^6.2.1",
     "process": "^0.11.10",
+    "@next-api-sdk/cmdb-sdk": "^1.1.1",
     "react": "0.0.0-experimental-ee8509801-20230117"
   },
   "devDependencies": {
