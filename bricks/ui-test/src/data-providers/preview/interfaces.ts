@@ -22,3 +22,9 @@ export interface RecordStep {
   targets: InspectSelector[];
   text?: string;
 }
+
+export interface SelectedRecordStep {
+  event: string;
+  target: InspectSelector;
+  text?: string;
+}

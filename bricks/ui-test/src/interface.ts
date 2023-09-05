@@ -84,6 +84,6 @@ export interface TestTreeData {
   name: string;
   icon: CommandIcon;
   data: TreeNodeItemData;
-  children?: TestTreeData[];
+  children: TestTreeData[];
   labelColor?: string;
 }
