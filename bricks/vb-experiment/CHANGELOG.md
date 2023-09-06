@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.1.14...@next-bricks/vb-experiment@0.1.15) (2023-09-06)
+
+
+### Bug Fixes
+
+* upgrade prettier to v3 ([32226d8](https://github.com/easyops-cn/next-bricks/commit/32226d87b88a83be9cdd64974d3461353234355d))
+
+
+
+
+
 ## [0.1.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.1.13...@next-bricks/vb-experiment@0.1.14) (2023-09-01)
 
 **Note:** Version bump only for package @next-bricks/vb-experiment
