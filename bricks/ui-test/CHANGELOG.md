@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.5.1...@next-bricks/ui-test@0.5.2) (2023-09-06)
+
+
+### Bug Fixes
+
+* add `findByRole` and `findAll*` ([d8ac883](https://github.com/easyops-cn/next-bricks/commit/d8ac8834e76702c4071aad6673a6668aa3ca1463))
+
+
+
+
+
 ## [0.5.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.5.0...@next-bricks/ui-test@0.5.1) (2023-09-06)
 
 **Note:** Version bump only for package @next-bricks/ui-test
