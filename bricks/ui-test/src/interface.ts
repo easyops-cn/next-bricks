@@ -77,6 +77,9 @@ export interface TreeNodeItemData extends NodeGraphData {
   displayLabel?: string;
   parent?: NodeGraphData;
   children?: NodeGraphData[];
+  nextChildSort?: number;
+  nextSiblingSort?: number;
+  isLastChild?: boolean;
 }
 
 export interface TestTreeData {
@@ -86,6 +89,4 @@ export interface TestTreeData {
   data: TreeNodeItemData;
   children: TestTreeData[];
   labelColor?: string;
-  nextChildSort?: number;
-  nextSiblingSort?: number;
 }

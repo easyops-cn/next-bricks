@@ -14,6 +14,8 @@ exports[`getTreeData should work 1`] = `
             "isChainChild": false,
             "label": null,
             "name": "code",
+            "nextChildSort": 0,
+            "nextSiblingSort": 1,
             "params": [
               "console.log(1323)",
             ],
@@ -33,8 +35,6 @@ exports[`getTreeData should work 1`] = `
           },
           "key": "603a8bb21c8e6",
           "name": "code: console.log(1323)",
-          "nextChildSort": 0,
-          "nextSiblingSort": 1,
         },
         {
           "children": [
@@ -47,6 +47,8 @@ exports[`getTreeData should work 1`] = `
                 "isChainChild": true,
                 "label": null,
                 "name": "type",
+                "nextChildSort": 0,
+                "nextSiblingSort": 1,
                 "params": null,
                 "parent": {
                   "instanceId": "603aabdd6d6cd",
@@ -69,8 +71,6 @@ exports[`getTreeData should work 1`] = `
               },
               "key": "603aac31912bd",
               "name": "type",
-              "nextChildSort": 0,
-              "nextSiblingSort": 1,
             },
             {
               "children": [
@@ -81,8 +81,11 @@ exports[`getTreeData should work 1`] = `
                     "displayLabel": "should:exist",
                     "instanceId": "603aac508c917",
                     "isChainChild": true,
+                    "isLastChild": true,
                     "label": null,
                     "name": "should:exist",
+                    "nextChildSort": 0,
+                    "nextSiblingSort": 1,
                     "params": null,
                     "parent": {
                       "instanceId": "603aac508c916",
@@ -100,8 +103,6 @@ exports[`getTreeData should work 1`] = `
                   },
                   "key": "603aac508c917",
                   "name": "should:exist",
-                  "nextChildSort": 0,
-                  "nextSiblingSort": 1,
                 },
               ],
               "data": {
@@ -117,8 +118,11 @@ exports[`getTreeData should work 1`] = `
                 "displayLabel": "click",
                 "instanceId": "603aac508c916",
                 "isChainChild": true,
+                "isLastChild": true,
                 "label": null,
                 "name": "click",
+                "nextChildSort": 1,
+                "nextSiblingSort": 1,
                 "params": null,
                 "parent": {
                   "instanceId": "603aabdd6d6cd",
@@ -141,8 +145,6 @@ exports[`getTreeData should work 1`] = `
               },
               "key": "603aac508c916",
               "name": "click",
-              "nextChildSort": 1,
-              "nextSiblingSort": 1,
             },
           ],
           "data": {
@@ -165,8 +167,11 @@ exports[`getTreeData should work 1`] = `
             "displayLabel": "get: .selector",
             "instanceId": "603aabdd6d6cd",
             "isChainChild": false,
+            "isLastChild": true,
             "label": null,
             "name": "get",
+            "nextChildSort": 1,
+            "nextSiblingSort": 1,
             "params": [
               ".selector",
               {
@@ -189,8 +194,6 @@ exports[`getTreeData should work 1`] = `
           },
           "key": "603aabdd6d6cd",
           "name": "get: .selector",
-          "nextChildSort": 1,
-          "nextSiblingSort": 1,
         },
       ],
       "data": {
@@ -222,6 +225,8 @@ exports[`getTreeData should work 1`] = `
         "isChainChild": false,
         "label": "should work",
         "name": "it",
+        "nextChildSort": 1,
+        "nextSiblingSort": 1,
         "params": null,
         "parent": {
           "instanceId": "603a85a03c2c6",
@@ -239,8 +244,6 @@ exports[`getTreeData should work 1`] = `
       },
       "key": "603a85ccfb595",
       "name": "it: should work",
-      "nextChildSort": 1,
-      "nextSiblingSort": 1,
     },
     {
       "children": [
@@ -251,8 +254,11 @@ exports[`getTreeData should work 1`] = `
             "displayLabel": "code",
             "instanceId": "603ab463e5d3e",
             "isChainChild": false,
+            "isLastChild": true,
             "label": null,
             "name": "code",
+            "nextChildSort": 0,
+            "nextSiblingSort": 1,
             "params": null,
             "parent": {
               "instanceId": "603ab42f8eae9",
@@ -270,8 +276,6 @@ exports[`getTreeData should work 1`] = `
           },
           "key": "603ab463e5d3e",
           "name": "code",
-          "nextChildSort": 0,
-          "nextSiblingSort": 1,
         },
       ],
       "data": {
@@ -287,8 +291,11 @@ exports[`getTreeData should work 1`] = `
         "displayLabel": "beforeEach",
         "instanceId": "603ab42f8eae9",
         "isChainChild": false,
+        "isLastChild": true,
         "label": null,
         "name": "beforeEach",
+        "nextChildSort": 1,
+        "nextSiblingSort": 1,
         "params": null,
         "parent": {
           "instanceId": "603a85a03c2c6",
@@ -306,8 +313,6 @@ exports[`getTreeData should work 1`] = `
       },
       "key": "603ab42f8eae9",
       "name": "beforeEach",
-      "nextChildSort": 1,
-      "nextSiblingSort": 1,
     },
   ],
   "data": {
@@ -332,6 +337,7 @@ exports[`getTreeData should work 1`] = `
     "isChainChild": false,
     "label": "demo app",
     "name": "suite",
+    "nextChildSort": 1,
     "params": null,
     "parent": undefined,
     "type": "suite",
@@ -343,6 +349,5 @@ exports[`getTreeData should work 1`] = `
   },
   "key": "603a85a03c2c6",
   "name": "suite",
-  "nextChildSort": 1,
 }
 `;

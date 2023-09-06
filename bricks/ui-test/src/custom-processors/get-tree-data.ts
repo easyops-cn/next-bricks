@@ -148,11 +148,14 @@ export function getTreeData(
   function getNode(node: NodeGraphData, parent?: NodeGraphData): TestTreeData {
     const isChainChild = parent?.type === "command" && node.type === "command";
     const children = getChildren(node);
-    const nextChildSort = children.length
-      ? (children[children.length - 1].data.sort ?? 0) + 1
-      : 0;
+    let nextChildSort = 0;
+    if (children.length > 0) {
+      const lastChild = children[children.length - 1];
+      nextChildSort = (lastChild.data.sort ?? 0) + 1;
+      lastChild.data.isLastChild = true;
+    }
     for (const child of children) {
-      child.nextSiblingSort = nextChildSort;
+      child.data.nextSiblingSort = nextChildSort;
     }
     const displayLabel = getDisplayLabel(node);
     return {
@@ -165,9 +168,9 @@ export function getTreeData(
         parent,
         displayLabel,
         children: getChildVertices(children),
+        nextChildSort,
       },
       children,
-      nextChildSort,
     };
   }
 
