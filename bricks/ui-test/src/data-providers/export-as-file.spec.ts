@@ -9,6 +9,7 @@ jest.mock("idb-keyval");
 jest.mock("../utils/parseSuiteAst.js");
 jest.mock("@babel/standalone");
 jest.mock("@babel/types");
+const consoleError = jest.spyOn(console, "error");
 
 describe("exportAsFile", () => {
   beforeEach(() => {
@@ -121,11 +122,13 @@ describe("exportAsFile", () => {
     };
 
     expect(
-      await exportAsFile(specDataList as NodeItem, "visual-builder")
+      await exportAsFile(specDataList as NodeItem, "visual-builder"),
     ).toEqual(true);
   });
 
   it("should return false with error", async () => {
+    consoleError.mockReturnValueOnce();
     expect(await exportAsFile({} as NodeItem, "visual-builder")).toEqual(false);
+    expect(consoleError).toBeCalledTimes(1);
   });
 });

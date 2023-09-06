@@ -32,7 +32,7 @@ describe("getCommands", () => {
         expect.objectContaining({
           name: "get",
         }),
-      ])
+      ]),
     );
   });
 
@@ -44,6 +44,9 @@ describe("getCommands", () => {
       expect.objectContaining({
         name: "findByTestId",
       }),
+      expect.objectContaining({
+        name: "findAllByTestId",
+      }),
     ]);
   });
 
@@ -54,7 +57,7 @@ describe("getCommands", () => {
     });
     expect(result.length).toBeGreaterThan(0);
     expect(
-      result.every((cmd) => cmd.category === "action" && cmd.chain !== "child")
+      result.every((cmd) => cmd.category === "action" && cmd.chain !== "child"),
     );
   });
 });

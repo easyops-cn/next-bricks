@@ -17,7 +17,50 @@ export default function getThirdPartyCommands(): CommandDoc[] {
         },
         getParamDefinitionOfArbitraryOptions(),
       ],
-      keywords: ["find", "test", "testid", "test-id"],
+      keywords: ["test-id"],
+    },
+    {
+      name: "findAllByTestId",
+      category: "query",
+      chain: "dual",
+      from: "third-party",
+      params: [
+        {
+          label: "Test ID",
+          required: true,
+          type: "string",
+        },
+        getParamDefinitionOfArbitraryOptions(),
+      ],
+      keywords: ["test-id"],
+    },
+    {
+      name: "findByRole",
+      category: "query",
+      chain: "dual",
+      from: "third-party",
+      params: [
+        {
+          label: "Role",
+          required: true,
+          type: "string",
+        },
+        getParamDefinitionOfArbitraryOptions(),
+      ],
+    },
+    {
+      name: "findAllByRole",
+      category: "query",
+      chain: "dual",
+      from: "third-party",
+      params: [
+        {
+          label: "Role",
+          required: true,
+          type: "string",
+        },
+        getParamDefinitionOfArbitraryOptions(),
+      ],
     },
     // Testing-library commands end -->
   ];
