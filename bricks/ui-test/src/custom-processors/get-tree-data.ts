@@ -21,7 +21,7 @@ export interface GraphData {
 
 function getIcon(
   nodeData: NodeGraphData,
-  commandDocList: CommandDoc[]
+  commandDocList: CommandDoc[],
 ): CommandIcon {
   let icon: CommandIcon;
 
@@ -118,7 +118,7 @@ function getLiteralParams(params: unknown[]): unknown[] {
 
 export function getTreeData(
   GraphData: GraphData,
-  commandDocList: CommandDoc[]
+  commandDocList: CommandDoc[],
 ): TestTreeData {
   const {
     topic_vertices: [rootData],
@@ -129,9 +129,9 @@ export function getTreeData(
   const getChildVertices = (children: TestTreeData[]) => {
     return sortBy(
       vertices.filter((v) =>
-        children.find((c) => c.data.instanceId === v.instanceId)
+        children.find((c) => c.data.instanceId === v.instanceId),
       ),
-      "sort"
+      "sort",
     );
   };
 
@@ -142,41 +142,36 @@ export function getTreeData(
       .map((relation) => vertices.find((v) => relation.out === v.instanceId))
       .filter(Boolean) as NodeGraphData[];
 
-    return sortBy(nodes, "sort").map((nodeData) => {
-      const isChainChild =
-        node.type === "command" && nodeData.type === "command";
-
-      const children = getChildren(nodeData);
-      const displayLabel = getDisplayLabel(nodeData);
-      return {
-        name: displayLabel,
-        key: nodeData.instanceId,
-        icon: getIcon(nodeData, commandDocList),
-        data: {
-          ...nodeData,
-          isChainChild,
-          parent: node,
-          displayLabel,
-          children: getChildVertices(children),
-        },
-        children,
-      };
-    }) as TestTreeData[];
+    return sortBy(nodes, "sort").map((child) => getNode(child, node));
   };
 
-  const children = getChildren(rootData);
-  const displayLabel = getDisplayLabel(rootData);
-  return {
-    name: displayLabel,
-    key: rootData.instanceId,
-    icon: getIcon(rootData, commandDocList),
-    data: {
-      ...rootData,
-      displayLabel,
-      children: getChildVertices(children),
-    },
-    children,
-  };
+  function getNode(node: NodeGraphData, parent?: NodeGraphData): TestTreeData {
+    const isChainChild = parent?.type === "command" && node.type === "command";
+    const children = getChildren(node);
+    const nextChildSort = children.length
+      ? (children[children.length - 1].data.sort ?? 0) + 1
+      : 0;
+    for (const child of children) {
+      child.nextSiblingSort = nextChildSort;
+    }
+    const displayLabel = getDisplayLabel(node);
+    return {
+      name: displayLabel,
+      key: node.instanceId,
+      icon: getIcon(node, commandDocList),
+      data: {
+        ...node,
+        isChainChild,
+        parent,
+        displayLabel,
+        children: getChildVertices(children),
+      },
+      children,
+      nextChildSort,
+    };
+  }
+
+  return getNode(rootData);
 }
 
 customProcessors.define("uiTest.getTreeData", getTreeData);

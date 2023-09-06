@@ -1,0 +1,348 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getTreeData should work 1`] = `
+{
+  "children": [
+    {
+      "children": [
+        {
+          "children": [],
+          "data": {
+            "children": [],
+            "displayLabel": "code: console.log(1323)",
+            "instanceId": "603a8bb21c8e6",
+            "isChainChild": false,
+            "label": null,
+            "name": "code",
+            "params": [
+              "console.log(1323)",
+            ],
+            "parent": {
+              "instanceId": "603a85ccfb595",
+              "label": "should work",
+              "name": "it",
+              "params": null,
+              "type": "block",
+            },
+            "type": "command",
+          },
+          "icon": {
+            "color": "var(--palette-yellow-6)",
+            "icon": "code",
+            "lib": "fa",
+          },
+          "key": "603a8bb21c8e6",
+          "name": "code: console.log(1323)",
+          "nextChildSort": 0,
+          "nextSiblingSort": 1,
+        },
+        {
+          "children": [
+            {
+              "children": [],
+              "data": {
+                "children": [],
+                "displayLabel": "type",
+                "instanceId": "603aac31912bd",
+                "isChainChild": true,
+                "label": null,
+                "name": "type",
+                "params": null,
+                "parent": {
+                  "instanceId": "603aabdd6d6cd",
+                  "label": null,
+                  "name": "get",
+                  "params": [
+                    ".selector",
+                    {
+                      "timeout": 10000,
+                    },
+                  ],
+                  "type": "command",
+                },
+                "type": "command",
+              },
+              "icon": {
+                "color": "var(--palette-red-6)",
+                "icon": "computer-mouse",
+                "lib": "fa",
+              },
+              "key": "603aac31912bd",
+              "name": "type",
+              "nextChildSort": 0,
+              "nextSiblingSort": 1,
+            },
+            {
+              "children": [
+                {
+                  "children": [],
+                  "data": {
+                    "children": [],
+                    "displayLabel": "should:exist",
+                    "instanceId": "603aac508c917",
+                    "isChainChild": true,
+                    "label": null,
+                    "name": "should:exist",
+                    "params": null,
+                    "parent": {
+                      "instanceId": "603aac508c916",
+                      "label": null,
+                      "name": "click",
+                      "params": null,
+                      "type": "command",
+                    },
+                    "type": "command",
+                  },
+                  "icon": {
+                    "color": "var(--palette-green-6)",
+                    "icon": "spell-check",
+                    "lib": "fa",
+                  },
+                  "key": "603aac508c917",
+                  "name": "should:exist",
+                  "nextChildSort": 0,
+                  "nextSiblingSort": 1,
+                },
+              ],
+              "data": {
+                "children": [
+                  {
+                    "instanceId": "603aac508c917",
+                    "label": null,
+                    "name": "should:exist",
+                    "params": null,
+                    "type": "command",
+                  },
+                ],
+                "displayLabel": "click",
+                "instanceId": "603aac508c916",
+                "isChainChild": true,
+                "label": null,
+                "name": "click",
+                "params": null,
+                "parent": {
+                  "instanceId": "603aabdd6d6cd",
+                  "label": null,
+                  "name": "get",
+                  "params": [
+                    ".selector",
+                    {
+                      "timeout": 10000,
+                    },
+                  ],
+                  "type": "command",
+                },
+                "type": "command",
+              },
+              "icon": {
+                "color": "var(--palette-red-6)",
+                "icon": "computer-mouse",
+                "lib": "fa",
+              },
+              "key": "603aac508c916",
+              "name": "click",
+              "nextChildSort": 1,
+              "nextSiblingSort": 1,
+            },
+          ],
+          "data": {
+            "children": [
+              {
+                "instanceId": "603aac31912bd",
+                "label": null,
+                "name": "type",
+                "params": null,
+                "type": "command",
+              },
+              {
+                "instanceId": "603aac508c916",
+                "label": null,
+                "name": "click",
+                "params": null,
+                "type": "command",
+              },
+            ],
+            "displayLabel": "get: .selector",
+            "instanceId": "603aabdd6d6cd",
+            "isChainChild": false,
+            "label": null,
+            "name": "get",
+            "params": [
+              ".selector",
+              {
+                "timeout": 10000,
+              },
+            ],
+            "parent": {
+              "instanceId": "603a85ccfb595",
+              "label": "should work",
+              "name": "it",
+              "params": null,
+              "type": "block",
+            },
+            "type": "command",
+          },
+          "icon": {
+            "color": "var(--palette-blue-6)",
+            "icon": "aim",
+            "lib": "antd",
+          },
+          "key": "603aabdd6d6cd",
+          "name": "get: .selector",
+          "nextChildSort": 1,
+          "nextSiblingSort": 1,
+        },
+      ],
+      "data": {
+        "children": [
+          {
+            "instanceId": "603a8bb21c8e6",
+            "label": null,
+            "name": "code",
+            "params": [
+              "console.log(1323)",
+            ],
+            "type": "command",
+          },
+          {
+            "instanceId": "603aabdd6d6cd",
+            "label": null,
+            "name": "get",
+            "params": [
+              ".selector",
+              {
+                "timeout": 10000,
+              },
+            ],
+            "type": "command",
+          },
+        ],
+        "displayLabel": "it: should work",
+        "instanceId": "603a85ccfb595",
+        "isChainChild": false,
+        "label": "should work",
+        "name": "it",
+        "params": null,
+        "parent": {
+          "instanceId": "603a85a03c2c6",
+          "label": "demo app",
+          "name": "suite",
+          "params": null,
+          "type": "suite",
+        },
+        "type": "block",
+      },
+      "icon": {
+        "color": "var(--palette-cyan-6)",
+        "icon": "bookmark",
+        "lib": "fa",
+      },
+      "key": "603a85ccfb595",
+      "name": "it: should work",
+      "nextChildSort": 1,
+      "nextSiblingSort": 1,
+    },
+    {
+      "children": [
+        {
+          "children": [],
+          "data": {
+            "children": [],
+            "displayLabel": "code",
+            "instanceId": "603ab463e5d3e",
+            "isChainChild": false,
+            "label": null,
+            "name": "code",
+            "params": null,
+            "parent": {
+              "instanceId": "603ab42f8eae9",
+              "label": null,
+              "name": "beforeEach",
+              "params": null,
+              "type": "block",
+            },
+            "type": "command",
+          },
+          "icon": {
+            "color": "var(--palette-yellow-6)",
+            "icon": "code",
+            "lib": "fa",
+          },
+          "key": "603ab463e5d3e",
+          "name": "code",
+          "nextChildSort": 0,
+          "nextSiblingSort": 1,
+        },
+      ],
+      "data": {
+        "children": [
+          {
+            "instanceId": "603ab463e5d3e",
+            "label": null,
+            "name": "code",
+            "params": null,
+            "type": "command",
+          },
+        ],
+        "displayLabel": "beforeEach",
+        "instanceId": "603ab42f8eae9",
+        "isChainChild": false,
+        "label": null,
+        "name": "beforeEach",
+        "params": null,
+        "parent": {
+          "instanceId": "603a85a03c2c6",
+          "label": "demo app",
+          "name": "suite",
+          "params": null,
+          "type": "suite",
+        },
+        "type": "block",
+      },
+      "icon": {
+        "color": "var(--palette-cyan-6)",
+        "icon": "bookmark",
+        "lib": "fa",
+      },
+      "key": "603ab42f8eae9",
+      "name": "beforeEach",
+      "nextChildSort": 1,
+      "nextSiblingSort": 1,
+    },
+  ],
+  "data": {
+    "children": [
+      {
+        "instanceId": "603a85ccfb595",
+        "label": "should work",
+        "name": "it",
+        "params": null,
+        "type": "block",
+      },
+      {
+        "instanceId": "603ab42f8eae9",
+        "label": null,
+        "name": "beforeEach",
+        "params": null,
+        "type": "block",
+      },
+    ],
+    "displayLabel": "suite",
+    "instanceId": "603a85a03c2c6",
+    "isChainChild": false,
+    "label": "demo app",
+    "name": "suite",
+    "params": null,
+    "parent": undefined,
+    "type": "suite",
+  },
+  "icon": {
+    "color": "var(--palette-purple-6)",
+    "icon": "vial",
+    "lib": "fa",
+  },
+  "key": "603a85a03c2c6",
+  "name": "suite",
+  "nextChildSort": 1,
+}
+`;

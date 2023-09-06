@@ -86,4 +86,6 @@ export interface TestTreeData {
   data: TreeNodeItemData;
   children: TestTreeData[];
   labelColor?: string;
+  nextChildSort?: number;
+  nextSiblingSort?: number;
 }
