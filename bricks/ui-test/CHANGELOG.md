@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.5.2...@next-bricks/ui-test@0.5.3) (2023-09-06)
+
+
+### Bug Fixes
+
+* add nextChildSort and nextSiblingSort for tree nodes ([44fd2e6](https://github.com/easyops-cn/next-bricks/commit/44fd2e6d2167dfdaa3b8fbed52a260863991e17f))
+* support apply snippet ([4ad18ae](https://github.com/easyops-cn/next-bricks/commit/4ad18ae8ad95d305d5344c9065c99588d98b2781))
+
+
+
+
+
 ## [0.5.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.5.1...@next-bricks/ui-test@0.5.2) (2023-09-06)
 
 
