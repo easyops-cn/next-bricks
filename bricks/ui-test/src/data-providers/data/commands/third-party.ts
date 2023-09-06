@@ -62,6 +62,34 @@ export default function getThirdPartyCommands(): CommandDoc[] {
         getParamDefinitionOfArbitraryOptions(),
       ],
     },
+    {
+      name: "findByTitle",
+      category: "query",
+      chain: "dual",
+      from: "third-party",
+      params: [
+        {
+          label: "Title",
+          required: true,
+          type: "string",
+        },
+        getParamDefinitionOfArbitraryOptions(),
+      ],
+    },
+    {
+      name: "findAllByTitle",
+      category: "query",
+      chain: "dual",
+      from: "third-party",
+      params: [
+        {
+          label: "Title",
+          required: true,
+          type: "string",
+        },
+        getParamDefinitionOfArbitraryOptions(),
+      ],
+    },
     // Testing-library commands end -->
   ];
 }
