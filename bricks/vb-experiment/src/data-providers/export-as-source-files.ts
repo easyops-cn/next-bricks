@@ -3,8 +3,9 @@ import type { Storyboard, MicroApp, StoryboardMeta } from "@next-core/types";
 import { createProviderClass } from "@next-core/utils/general";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
-import { format } from "prettier/standalone.js";
-import parserBabel from "prettier/parser-babel.js";
+import { format } from "prettier/standalone";
+import * as prettierPluginBabel from "prettier/plugins/babel";
+import * as prettierPluginEstree from "prettier/plugins/estree";
 import { transform } from "@babel/standalone";
 import {
   ExtractState,
@@ -76,7 +77,7 @@ export async function exportAsSourceFiles({
   };
   src.file(
     "app.js",
-    formatJs(`export default ${JSON.stringify(app, null, 2)};`)
+    await formatJs(`export default ${JSON.stringify(app, null, 2)};`),
   );
 
   const meta = (storyboard.meta ?? {}) as StoryboardMeta & {
@@ -100,7 +101,7 @@ export async function exportAsSourceFiles({
   const extractedTemplates = extractTemplates(
     customTemplates,
     ["components"],
-    extractState
+    extractState,
   );
   extractState.extracts.push({
     name: "index",
@@ -115,7 +116,7 @@ export async function exportAsSourceFiles({
 
   src.file(
     "routes.jsx",
-    formatJs(generate(extractedRoutes, "routes", ["routes.jsx"]))
+    await formatJs(generate(extractedRoutes, "routes", ["routes.jsx"])),
   );
 
   const resources = src.folder("resources")!;
@@ -151,7 +152,9 @@ export async function exportAsSourceFiles({
     const importStrings: string[] = [];
     if (inferredImports.size > 0) {
       importStrings.push(
-        `import { ${[...inferredImports].join(", ")} } from "next-jsx/runtime";`
+        `import { ${[...inferredImports].join(
+          ", ",
+        )} } from "next-jsx/runtime";`,
       );
     }
     if (hasFN) {
@@ -167,11 +170,11 @@ export async function exportAsSourceFiles({
   }
   fnDir.file(
     "index.js",
-    formatJs(
+    await formatJs(
       `${fnImports.join("\n")}\n\nconst FN = { ${fnNames.join(
-        ","
-      )} };\n\nexport default FN;`
-    )
+        ",",
+      )} };\n\nexport default FN;`,
+    ),
   );
 
   // Menus
@@ -186,7 +189,7 @@ export async function exportAsSourceFiles({
     const filename = `${menu.menuId}.js`;
     menusDir.file(
       filename,
-      formatJs(generate(menu, "menu", ["resources", "menus", filename]))
+      await formatJs(generate(menu, "menu", ["resources", "menus", filename])),
     );
     let name = menu.menuId.replace(/^\d+|[^\w]+/g, "_");
     if (JS_RESERVED_WORDS.has(name)) {
@@ -197,9 +200,9 @@ export async function exportAsSourceFiles({
   }
   menusDir.file(
     "index.js",
-    formatJs(
-      `${menuImports.join("\n")}\n\nexport default [${menuNames.join(",")}]`
-    )
+    await formatJs(
+      `${menuImports.join("\n")}\n\nexport default [${menuNames.join(",")}]`,
+    ),
   );
 
   // Contracts
@@ -212,7 +215,7 @@ export async function exportAsSourceFiles({
     }
     contractsDir.file(
       `${contract.name}.js`,
-      formatJs(`export default ${JSON.stringify(contract)};`)
+      await formatJs(`export default ${JSON.stringify(contract)};`),
     );
     const name = contract.name.replace(/^\d+|[^\w]+/g, "_");
     contractImports.push(`import ${name} from "./${contract.name}.js";`);
@@ -220,23 +223,26 @@ export async function exportAsSourceFiles({
   }
   contractsDir.file(
     "index.js",
-    formatJs(
+    await formatJs(
       `${contractImports.join("\n")}\n\nexport default [${contractNames.join(
-        ","
-      )}]`
-    )
+        ",",
+      )}]`,
+    ),
   );
 
   resources
     .folder("i18n")!
-    .file("index.js", formatJs(`export default ${JSON.stringify(i18n)};`));
+    .file(
+      "index.js",
+      await formatJs(`export default ${JSON.stringify(i18n)};`),
+    );
   resources.file(
     "meta.js",
-    formatJs(`export default ${JSON.stringify(meta, null, 2)};`)
+    await formatJs(`export default ${JSON.stringify(meta, null, 2)};`),
   );
   resources.file("index.js", srcResourcesIndexJs);
 
-  generateByFileStructure(fileStructure, src, []);
+  await generateByFileStructure(fileStructure, src, []);
 
   const appDir = project
     .folder("mock-micro-apps")!
@@ -250,17 +256,17 @@ export async function exportAsSourceFiles({
   project.file("jsconfig.json", jsconfigJson);
   project.file(
     "next-jsx.config.js",
-    nextJsxConfigJs.replaceAll("__APP_ID__", projectDetail.appId)
+    nextJsxConfigJs.replaceAll("__APP_ID__", projectDetail.appId),
   );
   project.file(
     "package.json",
-    packageJson.replaceAll("__APP_ID__", projectDetail.appId)
+    packageJson.replaceAll("__APP_ID__", projectDetail.appId),
   );
   project.file(
     "README.md",
     readmeMd
       .replaceAll("__PROJECT_NAME__", projectDetail.name)
-      .replaceAll("__PROJECT_HOMEPAGE__", projectDetail.appSetting.homepage)
+      .replaceAll("__PROJECT_HOMEPAGE__", projectDetail.appSetting.homepage),
   );
 
   const blob = await zip.generateAsync({ type: "blob" });
@@ -273,28 +279,29 @@ interface FormatJsOptions {
   printWidth?: number;
 }
 
-function formatJs(
+async function formatJs(
   source: string,
-  { typescript, semi = true, printWidth }: FormatJsOptions = {}
-): string {
-  return format(source, {
+  { typescript, semi = true, printWidth }: FormatJsOptions = {},
+): Promise<string> {
+  return await format(source, {
     parser: typescript ? "babel-ts" : "babel",
-    plugins: [parserBabel],
+    plugins: [prettierPluginBabel, prettierPluginEstree as any],
     semi,
     printWidth,
+    trailingComma: "es5",
   });
 }
 
-function generateByFileStructure(
+async function generateByFileStructure(
   items: SourceFileOrFolder[],
   folder: JSZip,
-  path: string[]
+  path: string[],
 ) {
   for (const item of items) {
     const childPath = [...path, item.name];
     if (item.type === "folder") {
       const childFolder = folder.folder(item.name)!;
-      generateByFileStructure(item.items, childFolder, childPath);
+      await generateByFileStructure(item.items, childFolder, childPath);
     } else {
       folder.file(
         `${item.name}.js${
@@ -304,7 +311,7 @@ function generateByFileStructure(
             ? "x"
             : ""
         }`,
-        formatJs(generate(item.node, item.nodeType, childPath))
+        await formatJs(generate(item.node, item.nodeType, childPath)),
       );
     }
   }
@@ -366,5 +373,5 @@ function cleanMenuItem(menuItem: Record<string, any>) {
 
 customElements.define(
   "vb-experiment.export-as-source-files",
-  createProviderClass(exportAsSourceFiles)
+  createProviderClass(exportAsSourceFiles),
 );
