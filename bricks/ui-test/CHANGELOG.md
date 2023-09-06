@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.4.0...@next-bricks/ui-test@0.5.0) (2023-09-06)
+
+
+### Bug Fixes
+
+* sort node ([a0cb1aa](https://github.com/easyops-cn/next-bricks/commit/a0cb1aae94002d9df3948f85e2cf4b2e4d924ded))
+
+
+### Features
+
+* save recorded commands ([792fb6d](https://github.com/easyops-cn/next-bricks/commit/792fb6d92f984ab481e8e1605ca13df463df74a1))
+* test node support copy ([a9872c3](https://github.com/easyops-cn/next-bricks/commit/a9872c313edfc135f7bd4ae11b90156179acc929))
+
+
+
+
+
 # [0.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.3.0...@next-bricks/ui-test@0.4.0) (2023-09-05)
 
 
