@@ -61,7 +61,8 @@
     "eo-upload-image",
     "eo-switch",
     "eo-form-item",
-    "eo-upload-file"
+    "eo-upload-file",
+    "eo-auto-complete"
   ],
   "presentational": [
     "eo-code-display",
