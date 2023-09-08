@@ -1,0 +1,51 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+.optionContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 2px 4px;
+  padding: 5px 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  .label {
+    line-height: 22px;
+  }
+  .caption {
+    font-size: var(--auxiliary-font-size-small);
+    color: var(--color-secondary-text);
+    line-height: 20px;
+  }
+}
+.optionContainer:hover {
+  background-color: var(--antd-select-item-active-bg);
+}
+
+.groupWrapper .optionContainer {
+  padding-left: 24px;
+}
+.groupItem {
+  color: var(--antd-text-color-secondary);
+  font-size: 12px;
+  margin: 2px 4px;
+  padding: 5px 12px;
+}
+.selectedOption {
+  color: var(--color-brand);
+  background-color: var(--v8-top-menu-item-selected-bg);
+}
+
+.dropDownWrapper {
+  max-height: 256px;
+  overflow: scroll;
+  background-color: var(--antd-select-dropdown-bg);
+  box-shadow: var(--antd-box-shadow-base);
+  z-index: 1050;
+  margin-top: 5px;
+  padding: 4px 2px;
+  border-radius: 4px;
+}
