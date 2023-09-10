@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.1.15...@next-bricks/vb-experiment@0.1.16) (2023-09-10)
+
+
+### Bug Fixes
+
+* add runtime variable: INDEX ([45342ea](https://github.com/easyops-cn/next-bricks/commit/45342ea4f8df4a8dd782e10c1e7e840e11298727))
+
+
+
+
+
 ## [0.1.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.1.14...@next-bricks/vb-experiment@0.1.15) (2023-09-06)
 
 
