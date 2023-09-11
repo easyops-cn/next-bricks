@@ -27,11 +27,15 @@ import type { Popover, PopoverProps } from "../popover/index.js";
 import "@next-core/theme";
 import classnames from "classnames";
 import { ThreeLevelMenuPopoverContent } from "./ThreeLevelMenuPopoverContent.js";
+import { SiteMapItem } from "./site-map/SiteMapItem.js";
+import SiteMapStyleText from "../nav-menu/site-map/SiteMapItem.shadow.css";
+import ItemTagStyleText from "../nav-menu/site-map/ItemTag.shadow.css";
+import GroupItemStyleText from "../nav-menu/site-map/GroupItem.shadow.css";
 
 const { defineElement, property } = createDecorators();
 
 const WrappedMenuItem = wrapBrick<MenuItemComponent, MenuComponentProps>(
-  "eo-menu-item"
+  "eo-menu-item",
 );
 const WrappedPopover = wrapBrick<Popover, PopoverProps>("eo-popover");
 
@@ -174,13 +178,53 @@ function ThreeLevelMenuCom({
   ) : null;
 }
 
+function SitMapMenCom({
+  item,
+  selectedKey = [],
+  showTooltip,
+}: {
+  item: SidebarMenuGroup;
+  selectedKey?: string[];
+  showTooltip?: boolean;
+}) {
+  return item.items?.length > 0 ? (
+    <WrappedPopover
+      className={classnames("popover")}
+      trigger={"hover"}
+      placement={"bottom-start"}
+      distance={0}
+      key={item.key}
+    >
+      <WrappedMenuItem
+        className="sub-menu-item-label"
+        key={item.key}
+        slot="anchor"
+        title={showTooltip ? item.title : ""}
+      >
+        {renderSpanCom(item)}
+      </WrappedMenuItem>
+      <div
+        className="sub-menu-sit-map-wrapper"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <SiteMapItem menuGroup={item} selectedKey={selectedKey} />
+      </div>
+    </WrappedPopover>
+  ) : null;
+}
+
 /**
  * 菜单构件
  * @author sailor
  *
  */
 @defineElement("eo-nav-menu", {
-  styleTexts: [styleText],
+  styleTexts: [
+    SiteMapStyleText,
+    ItemTagStyleText,
+    GroupItemStyleText,
+    styleText,
+  ],
   alias: ["basic.nav-menu"],
 })
 class NavMenu extends ReactNextElement {
@@ -219,7 +263,7 @@ function NavMenuComponent(props: NavMenuProps) {
       menu?.menuItems ?? [],
       pathname,
       search,
-      ""
+      "",
     );
     setSelectedKey(selectedKeys);
   };
@@ -241,6 +285,13 @@ function NavMenuComponent(props: NavMenuProps) {
             (item as SidebarMenuGroup).childLayout === "category" &&
             (item as SidebarMenuGroup).items?.length ? (
               <ThreeLevelMenuCom
+                item={item as SidebarMenuGroup}
+                showTooltip={showTooltip}
+                selectedKey={selectedKey}
+              />
+            ) : (item as SidebarMenuGroup).type === "group" &&
+              (item as SidebarMenuGroup).childLayout === "siteMap" ? (
+              <SitMapMenCom
                 item={item as SidebarMenuGroup}
                 showTooltip={showTooltip}
                 selectedKey={selectedKey}

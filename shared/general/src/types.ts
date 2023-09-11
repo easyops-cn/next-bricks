@@ -57,6 +57,12 @@ export interface SidebarMenuSimpleItem {
 
 /** 侧边栏分组菜单项的配置。 */
 export interface SidebarMenuGroup {
+  /** 分组 Id。 */
+  groupId?: string;
+
+  /** 分组来源。 */
+  groupFrom?: string;
+
   /** 分组类型。 */
   type: "group" | "subMenu";
 
@@ -76,7 +82,7 @@ export interface SidebarMenuGroup {
   defaultExpanded?: boolean;
 
   /** 子菜单项的布局方式。 */
-  childLayout?: "default" | "category";
+  childLayout?: "default" | "category" | "siteMap";
 }
 
 /** 图标配置。 */

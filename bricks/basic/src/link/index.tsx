@@ -174,7 +174,7 @@ export function LinkComponent({
   }, [disabled, href, url, currentLocation, history]);
 
   const handleClick = useCallback(
-    (e: MouseEvent) => {
+    (e: React.MouseEvent) => {
       if (disabled) {
         e.preventDefault();
         e.stopPropagation();
@@ -198,11 +198,11 @@ export function LinkComponent({
         method(
           typeof url === "string"
             ? url
-            : getExtendedLocationDescriptor(url, currentLocation)
+            : getExtendedLocationDescriptor(url, currentLocation),
         );
       }
     },
-    [currentLocation, disabled, history, href, replace, target, url]
+    [currentLocation, disabled, history, href, replace, target, url],
   );
 
   useEffect(() => {
@@ -213,15 +213,6 @@ export function LinkComponent({
       });
     }
   }, [history, url]);
-
-  useEffect(() => {
-    const link = linkRef.current;
-    if (!link) return;
-    link.addEventListener("click", handleClick);
-    return () => {
-      link.removeEventListener("click", handleClick);
-    };
-  });
 
   return (
     <a
@@ -236,6 +227,7 @@ export function LinkComponent({
       href={isEmpty(computedHref) ? undefined : computedHref}
       target={target}
       ref={linkRef}
+      onClick={handleClick}
     >
       {icon && <WrappedIcon {...icon} />}
       <slot />
