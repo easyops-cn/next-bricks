@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.5.4...@next-shared/general@0.6.0) (2023-09-12)
+
+
+### Features
+
+* support sitemap menu item ([bc05c01](https://github.com/easyops-cn/next-bricks/commit/bc05c017db23b7158b3782a1a6cc6e4cacb4fad4))
+
+
+
+
+
 ## [0.5.4](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.5.3...@next-shared/general@0.5.4) (2023-09-06)
 
 **Note:** Version bump only for package @next-shared/general

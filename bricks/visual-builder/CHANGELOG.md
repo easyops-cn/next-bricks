@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.23](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.6.22...@next-bricks/visual-builder@0.6.23) (2023-09-12)
+
+
+### Bug Fixes
+
+* pass collectUsedContracts as a function ([ecedf7d](https://github.com/easyops-cn/next-bricks/commit/ecedf7dce550e25cee478114246931a24b0324db))
+
+
+
+
+
 ## [0.6.22](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.6.21...@next-bricks/visual-builder@0.6.22) (2023-09-06)
 
 **Note:** Version bump only for package @next-bricks/visual-builder

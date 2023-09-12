@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.28.5...@next-bricks/basic@0.29.0) (2023-09-12)
+
+
+### Bug Fixes
+
+* remove native click listening event ([26b56f0](https://github.com/easyops-cn/next-bricks/commit/26b56f00d4a697808a8a5f803d2fefd08b9a9816))
+
+
+### Features
+
+* support sitemap menu item ([bc05c01](https://github.com/easyops-cn/next-bricks/commit/bc05c017db23b7158b3782a1a6cc6e4cacb4fad4))
+
+
+
+
+
 ## [0.28.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.28.4...@next-bricks/basic@0.28.5) (2023-09-06)
 
 **Note:** Version bump only for package @next-bricks/basic
