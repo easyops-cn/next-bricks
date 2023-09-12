@@ -32,6 +32,9 @@
       "extends @next-core/browserslist-config-next/production"
     ]
   },
+  "prettier": {
+    "trailingComma": "es5"
+  },
   "devDependencies": {
     "@cypress/browserify-preprocessor": "^3.0.2",
     "@next-core/babel-preset-next": "^1.0.7",
