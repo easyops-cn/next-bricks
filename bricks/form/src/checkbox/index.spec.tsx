@@ -86,6 +86,14 @@ describe("form.general-button", () => {
     ).toBe(true);
 
     act(() => {
+      (
+        element.shadowRoot?.querySelectorAll(
+          "input[type='checkbox']"
+        )[1] as HTMLInputElement
+      ).click();
+    });
+    expect(element.value).toEqual([]);
+    act(() => {
       document.body.removeChild(element);
     });
     expect(element.shadowRoot?.childNodes.length).toBe(0);

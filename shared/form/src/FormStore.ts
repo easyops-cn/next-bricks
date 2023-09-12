@@ -1,4 +1,4 @@
-import { isEmpty } from "lodash";
+import { isEmpty, isNil } from "lodash";
 import { PubSub } from "./PubSub.js";
 
 interface FormStoreOptions {
@@ -88,7 +88,7 @@ export class FormStore extends PubSub {
 
   setFieldsValueByInitData(name: string) {
     const value = this.#initData?.[name];
-    if (value) {
+    if (!isNil(value)) {
       this.#formData[name] = value;
       this.publish(`${name}.init.value`, value);
     }
