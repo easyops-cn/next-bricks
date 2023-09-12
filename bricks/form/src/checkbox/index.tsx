@@ -48,7 +48,7 @@ export interface CheckboxProps extends FormItemProps {
   disabled?: boolean;
   type?: CheckboxType;
   isCustom?: boolean;
-  onChange?: (value: CheckboxOptionType[]) => void;
+  onChange?: (value: CheckboxValueType[]) => void;
   optionsChange?: (options: CheckboxOptionType[], name: string) => void;
 }
 
@@ -123,9 +123,12 @@ class Checkbox extends FormItemElementBase {
   @event({ type: "change" })
   accessor #checkboxChangeEvent!: EventEmitter<CheckboxOptionType[]>;
 
-  handleCheckboxChange = (detail: CheckboxOptionType[]) => {
-    this.value = detail.map((item) => item.value);
-    this.#checkboxChangeEvent.emit(detail);
+  handleCheckboxChange = (detail: CheckboxValueType[]) => {
+    this.value = detail;
+    const currentSelectOption = formatOptions(this.options).filter((item) =>
+      detail.includes(item.value)
+    );
+    this.#checkboxChangeEvent.emit(currentSelectOption);
   };
 
   /**
@@ -194,15 +197,13 @@ function CheckboxComponent(props: CheckboxProps) {
     if (e.target.checked) {
       newValue = [...values, item.value];
     }
-    if (!e.target.checked && newValue?.includes(item.value)) {
+    if (!e.target.checked && values?.includes(item.value)) {
+      newValue = [...values];
       const index = newValue.findIndex((i) => i == item.value);
       newValue.splice(index, 1);
     }
-    const currentSelectOption = options.filter((item) =>
-      newValue.includes(item.value)
-    );
     setValues(newValue);
-    props.onChange?.(currentSelectOption);
+    props.onChange?.(newValue);
   };
 
   const getIcon = (item: CheckboxOptionType) => {
