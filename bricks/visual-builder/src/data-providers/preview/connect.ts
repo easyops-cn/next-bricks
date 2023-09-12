@@ -6,7 +6,7 @@ import {
   type NextLocation,
 } from "@next-core/runtime";
 import type { BrickConf, CustomTemplate, RouteConf } from "@next-core/types";
-import { isEmpty, pick, throttle } from "lodash";
+import { isEmpty, throttle } from "lodash";
 import type {
   BrickOutline,
   HighLightNode,
@@ -36,6 +36,7 @@ import {
   startInspecting,
   stopInspecting,
 } from "./inspector.js";
+import { collectUsedContracts } from "../collect-used-contracts.js";
 
 let connected = false;
 
@@ -347,7 +348,7 @@ export default async function connect(
                 appId: options.appId,
                 updateStoryboardType: data.options.updateStoryboardType,
                 formId: options.formId,
-                provider: "visual-builder.collect-used-contracts",
+                collectUsedContracts,
               });
 
               if (!isEmpty(newContracts)) {
