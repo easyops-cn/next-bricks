@@ -15,19 +15,14 @@ function collect(nodeOrNodes: StoryboardNode | StoryboardNode[]): Set<string> {
 
   traverse(nodeOrNodes, (node) => {
     switch (node.type) {
-      case "Resolvable": {
-        const useProvider = (node.raw as UseProviderResolveConf)?.useProvider;
-        if (useProvider) {
-          collection.add(useProvider);
-        }
-        break;
-      }
+      case "Resolvable":
       case "EventHandler": {
-        const useProvider = (node.raw as UseProviderEventHandler)?.useProvider;
+        const useProvider = (
+          node.raw as UseProviderResolveConf | UseProviderEventHandler
+        )?.useProvider;
         if (useProvider) {
           collection.add(useProvider);
         }
-        break;
       }
     }
   });
