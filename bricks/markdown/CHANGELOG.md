@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.6.7...@next-bricks/markdown@1.6.8) (2023-09-13)
+
+
+### Bug Fixes
+
+* add missing react-dom in dependencies ([5680d70](https://github.com/easyops-cn/next-bricks/commit/5680d70e3c85d6b4d396fed7ad2cf6c10c6aa8ce))
+
+
+
+
+
 ## [1.6.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.6.6...@next-bricks/markdown@1.6.7) (2023-09-13)
 
 **Note:** Version bump only for package @next-bricks/markdown

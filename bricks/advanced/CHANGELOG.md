@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.3.0...@next-bricks/advanced@0.4.0) (2023-09-13)
+
+
+### Features
+
+* next-table support useBrick & pagination ([cfa7b71](https://github.com/easyops-cn/next-bricks/commit/cfa7b712d47b2790dc38c59d253f630afae1519d))
+
+
+
+
+
 # [0.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.2.18...@next-bricks/advanced@0.3.0) (2023-09-13)
 
 
