@@ -218,24 +218,28 @@ class Input extends FormItemElementBase {
 
   /**
    * 是否有 addonBefore 插槽
+   * @internal
    */
   @property({ type: Boolean })
   accessor hasAddonBefore: boolean | undefined;
 
   /**
    * 是否有 addonAfter 插槽
+   * @internal
    */
   @property({ type: Boolean })
   accessor hasAddonAfter: boolean | undefined;
 
   /**
    * 是否有 prefix 插槽
+   * @internal
    */
   @property({ type: Boolean })
   accessor hasPrefix: boolean | undefined;
 
   /**
    * 是否有 suffix 插槽
+   * @internal
    */
   @property({ type: Boolean })
   accessor hasSuffix: boolean | undefined;
