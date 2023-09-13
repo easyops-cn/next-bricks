@@ -1,17 +1,12 @@
 import React from "react";
-import { createDecorators } from "@next-core/element";
+import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import { NextTableComponent } from "./Table.js";
-import { Column, RecordType } from "./interface.js";
+import { Column, DataSource, PaginationType } from "./interface.js";
 
-// --- NOTE: uncomment these lines below to enable i18n for your brick ---
-// import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
-// import { K, NS, locales } from "./i18n.js";
-// initializeReactI18n(NS, locales);
-
-const { defineElement, property } = createDecorators();
+const { defineElement, property, event } = createDecorators();
 
 /**
  * 大型表格
@@ -29,7 +24,38 @@ class EoNextTable extends ReactNextElement {
   @property({
     attribute: false,
   })
-  accessor dataSource: RecordType[] | undefined;
+  accessor dataSource: DataSource | undefined;
+
+  @property({
+    attribute: false,
+  })
+  accessor pagination: PaginationType | undefined;
+
+  /**
+   * page 或 pageSize 改变的回调
+   * @detail 改变后的页码及每页条数
+   */
+  @event({ type: "page.change" })
+  accessor #pageChangeEvent!: EventEmitter<{ page: number; pageSize: number }>;
+  #handlePageChange = (detail: { page: number; pageSize: number }): void => {
+    this.#pageChangeEvent.emit(detail);
+  };
+
+  /**
+   * pageSize 变化的回调
+   * @detail 改变后的页码及每页条数
+   */
+  @event({ type: "page.size.change" })
+  accessor #pageSizeChangeEvent!: EventEmitter<{
+    page: number;
+    pageSize: number;
+  }>;
+  #handlePageSizeChange = (detail: {
+    page: number;
+    pageSize: number;
+  }): void => {
+    this.#pageSizeChangeEvent.emit(detail);
+  };
 
   render() {
     return (
@@ -37,6 +63,9 @@ class EoNextTable extends ReactNextElement {
         shadowRoot={this.shadowRoot}
         columns={this.columns}
         dataSource={this.dataSource}
+        pagination={this.pagination}
+        onPageChange={this.#handlePageChange}
+        onPageSizeChange={this.#handlePageSizeChange}
       />
     );
   }
