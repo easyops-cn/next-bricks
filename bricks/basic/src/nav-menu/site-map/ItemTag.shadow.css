@@ -1,5 +1,8 @@
 .tag-container::part(link) {
   display: flex;
+  user-select: none;
+  -webkit-user-drag: none;
+  -moz-user-select: none;
   justify-content: space-between;
   background-color: var(--color-fill-bg-base-1);
   border-radius: 2px;
@@ -25,11 +28,23 @@
     align-items: center;
     color: var(--color-secondary-text);
   }
+
+  &.is-drag {
+    opacity: 0.4;
+  }
+}
+
+.indicate-wrapper {
+  border: 1px dashed var(--color-brand-hover);
+  border-radius: 4px;
+  height: 20px;
+  margin: 2px 0;
 }
 
 .close {
   display: inline-flex;
   margin-top: 2px;
+  padding: 0 2px;
   &:hover {
     color: var(--color-error);
   }
@@ -71,7 +86,6 @@
     .operation {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
     }
   }
   .operation {

@@ -1,5 +1,6 @@
 import { describe, test, expect, jest } from "@jest/globals";
 import { CollectService } from "./CollectService.js";
+import { DRAG_DIRECTION } from "./constants.js";
 
 jest.mock("@next-core/easyops-runtime", () => ({
   auth: {
@@ -8,8 +9,8 @@ jest.mock("@next-core/easyops-runtime", () => ({
 }));
 
 describe("CollectService", () => {
-  const collectService = new CollectService(2);
   test("should work", () => {
+    const collectService = new CollectService(2);
     expect(collectService.getFavoritesById("monitor")).toEqual([]);
 
     collectService.setItemAsFavorite("monitor", {
@@ -60,6 +61,78 @@ describe("CollectService", () => {
 
     expect(collectService.getFavoritesById("monitor")).toEqual([
       { text: "主机", to: "/host" },
+    ]);
+  });
+
+  test("should work with move items", () => {
+    const collectService = new CollectService(5);
+    collectService.setItemAsFavorite("resource", {
+      text: "交换机",
+      to: "/switch",
+    });
+
+    collectService.setItemAsFavorite("resource", {
+      text: "cmdb",
+      to: "/cmdb",
+    });
+
+    collectService.setItemAsFavorite("resource", {
+      text: "主机",
+      to: "/host",
+    });
+
+    expect(collectService.getFavoritesById("resource")).toEqual([
+      { text: "主机", to: "/host" },
+      { text: "cmdb", to: "/cmdb" },
+      { text: "交换机", to: "/switch" },
+    ]);
+
+    expect(
+      collectService.moveFavoriteTo("resource", {
+        from: { text: "主机", to: "/host" },
+        to: { text: "主机", to: "/host" },
+        direction: DRAG_DIRECTION.Left,
+      }),
+    ).toEqual([
+      { text: "主机", to: "/host" },
+      { text: "cmdb", to: "/cmdb" },
+      { text: "交换机", to: "/switch" },
+    ]);
+
+    expect(
+      collectService.moveFavoriteTo("resource", {
+        from: {
+          text: "交换机",
+          to: "/switch",
+        },
+        to: {
+          text: "cmdb",
+          to: "/cmdb",
+        },
+        direction: DRAG_DIRECTION.Left,
+      }),
+    ).toEqual([
+      { text: "主机", to: "/host" },
+      { text: "交换机", to: "/switch" },
+      { text: "cmdb", to: "/cmdb" },
+    ]);
+
+    expect(
+      collectService.moveFavoriteTo("resource", {
+        from: {
+          text: "主机",
+          to: "/host",
+        },
+        to: {
+          text: "交换机",
+          to: "/switch",
+        },
+        direction: DRAG_DIRECTION.Right,
+      }),
+    ).toEqual([
+      { text: "交换机", to: "/switch" },
+      { text: "主机", to: "/host" },
+      { text: "cmdb", to: "/cmdb" },
     ]);
   });
 });

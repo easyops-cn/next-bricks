@@ -1,7 +1,8 @@
 import React from "react";
 import { describe, expect } from "@jest/globals";
 import { act, render, screen, fireEvent } from "@testing-library/react";
-import { QuickVisitItem, RecommendItem } from "./ItemTag.js";
+import { DRAG_DIRECTION, DragContext } from "./constants.js";
+import { QuickVisitItem, RecommendItem, ItemTag } from "./ItemTag.js";
 
 describe("component test", () => {
   describe("QuickVisitItem", () => {
@@ -59,6 +60,57 @@ describe("component test", () => {
       fireEvent.click(container.querySelector("eo-icon") as Element);
 
       expect(onFavoriteFn).toBeCalled();
+    });
+  });
+
+  describe("ItemTag", () => {
+    it("should work", () => {
+      const mockDragStart = jest.fn();
+
+      const mockDragOver = jest.fn();
+
+      const mockDragEnd = jest.fn();
+
+      const div = document.createElement("div");
+      div.dataset.text = "cmdb";
+      div.dataset.to = "/cmdb";
+      const props = {
+        data: {
+          text: "cmdb",
+          to: "/cmdb",
+        },
+      };
+      const { container } = render(
+        <DragContext.Provider
+          value={{
+            groupId: "monitor",
+            allowDrag: true,
+            direction: DRAG_DIRECTION.Left,
+            onDragStart: mockDragStart,
+            onDragEnd: mockDragEnd,
+            onDragOver: mockDragOver,
+            overElement: div,
+          }}
+        >
+          <ItemTag {...props} />
+        </DragContext.Provider>,
+      );
+
+      expect(
+        container
+          .querySelector(".indicate-wrapper")
+          ?.getAttribute("data-direction"),
+      ).toEqual(DRAG_DIRECTION.Left);
+
+      fireEvent.dragStart(screen.getByText("cmdb"));
+
+      expect(mockDragStart).toBeCalled();
+
+      expect(container.querySelector(".is-drag")).toBeTruthy();
+
+      fireEvent.dragEnd(screen.getByText("cmdb"));
+
+      expect(mockDragEnd).toBeCalled();
     });
   });
 });

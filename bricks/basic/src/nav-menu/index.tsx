@@ -23,7 +23,12 @@ import type {
   SidebarMenuItem,
   SidebarMenuSimpleItem,
 } from "@next-shared/general/types";
-import type { Popover, PopoverProps } from "../popover/index.js";
+import type {
+  Popover,
+  PopoverProps,
+  PopoverEvents,
+  PopoverEventsMapping,
+} from "../popover/index.js";
 import "@next-core/theme";
 import classnames from "classnames";
 import { ThreeLevelMenuPopoverContent } from "./ThreeLevelMenuPopoverContent.js";
@@ -37,7 +42,15 @@ const { defineElement, property } = createDecorators();
 const WrappedMenuItem = wrapBrick<MenuItemComponent, MenuComponentProps>(
   "eo-menu-item",
 );
-const WrappedPopover = wrapBrick<Popover, PopoverProps>("eo-popover");
+const WrappedPopover = wrapBrick<
+  Popover,
+  PopoverProps,
+  PopoverEvents,
+  PopoverEventsMapping
+>("eo-popover", {
+  onVisibleChange: "visible.change",
+  beforeVisibleChange: "before.visible.change",
+});
 
 interface NavMenuProps {
   menu?: SidebarMenu;
@@ -81,6 +94,13 @@ function SimpleMenuItemCom(props: SimpleMenuItemComProps) {
     </WrappedMenuItem>
   );
 }
+
+// istanbul ignore next
+function handlePopupVisibleChange(event: CustomEvent<boolean>) {
+  document.body.style.overflow = event.detail ? "hidden" : "";
+  document.body.style.touchAction = event.detail ? "none" : "";
+}
+
 function SubMenuItemCom({
   item,
   topData,
@@ -94,6 +114,7 @@ function SubMenuItemCom({
       placement={topData ? "bottom-start" : "right-start"}
       distance={0}
       anchorDisplay="block"
+      onVisibleChange={handlePopupVisibleChange}
     >
       <WrappedMenuItem
         className="sub-menu-item-label"
@@ -159,6 +180,7 @@ function ThreeLevelMenuCom({
       placement={"bottom-start"}
       distance={0}
       key={item.key}
+      onVisibleChange={handlePopupVisibleChange}
     >
       <WrappedMenuItem
         className="sub-menu-item-label"
@@ -194,6 +216,7 @@ function SitMapMenCom({
       placement={"bottom-start"}
       distance={0}
       key={item.key}
+      onVisibleChange={handlePopupVisibleChange}
     >
       <WrappedMenuItem
         className="sub-menu-item-label"

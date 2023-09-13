@@ -1,4 +1,13 @@
-import React, { useMemo, useCallback } from "react";
+import React, {
+  useMemo,
+  useCallback,
+  forwardRef,
+  useRef,
+  useState,
+  useEffect,
+  useContext,
+  DragEvent,
+} from "react";
 import { wrapBrick } from "@next-core/react-element";
 import { Link, LinkProps } from "../../link/index.js";
 import type { Target } from "../../interface.js";
@@ -8,6 +17,7 @@ import { SidebarMenuSimpleItem } from "@next-shared/general/types";
 import { K, NS, locales } from "../i18n.js";
 import { collectService } from "./CollectService.js";
 import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
+import { DRAG_DIRECTION, DragContext } from "./constants.js";
 
 import type {
   GeneralIcon,
@@ -26,19 +36,122 @@ interface CellItemProps {
 
 export type OnFavoriteCallback = (collectList: SidebarMenuSimpleItem[]) => void;
 
+interface PlaceholderCompProps {
+  data: SidebarMenuSimpleItem;
+  direction: DRAG_DIRECTION;
+  onDragOver?: (e: DragEvent) => void;
+}
+function PlaceholderDropComp({
+  data,
+  onDragOver,
+  direction,
+}: PlaceholderCompProps) {
+  const { groupId, onFavoriteUpdate } = useContext(DragContext);
+  const handleDrop = (e: DragEvent) => {
+    const formData = JSON.parse(e.dataTransfer.getData("application/json"));
+
+    const newDataList = collectService.moveFavoriteTo(groupId, {
+      from: formData,
+      to: data,
+      direction,
+    });
+
+    onFavoriteUpdate?.(newDataList);
+  };
+
+  return (
+    <div
+      className="indicate-wrapper"
+      data-direction={direction}
+      data-to={data.to}
+      data-text={data.text}
+      onDragOver={onDragOver}
+      onDrop={handleDrop}
+    />
+  );
+}
+
 export function ItemTag(props: CellItemProps): React.ReactElement {
   const { data, suffix, className } = props;
 
+  const {
+    allowDrag,
+    onDragStart,
+    overElement,
+    direction,
+    onDragEnd,
+    onDragOver,
+  } = useContext(DragContext);
+  const containerRef = useRef<any>(null);
+
+  const [isDragIng, setIsDragIng] = useState(false);
+
+  const isActive = useMemo(
+    () =>
+      overElement &&
+      overElement.dataset.to == data.to &&
+      overElement.dataset.text === overElement.dataset.text,
+    [overElement, data],
+  );
+
+  const handleDragStart = (e: React.DragEvent) => {
+    if (!allowDrag) {
+      e.preventDefault();
+    } else {
+      setIsDragIng(true);
+      e.dataTransfer?.setData("application/json", JSON.stringify(data));
+      onDragStart?.(e);
+    }
+  };
+
+  const handleDragEnd = (e: React.DragEvent) => {
+    setIsDragIng(false);
+    onDragEnd?.(e);
+  };
+
+  const handleOver = (e: React.DragEvent) => {
+    e.dataTransfer.dropEffect = "none";
+    onDragOver?.(e);
+  };
+
   return (
-    <WrappedLink
-      className={classNames("tag-container", className)}
-      url={data.to as string}
-      href={data.href}
-      target={data.target as Target}
-    >
-      <span className="tag-text ellipsis">{data.text}</span>
-      <span className="tag-suffix">{suffix}</span>
-    </WrappedLink>
+    <>
+      {isActive && direction === DRAG_DIRECTION.Left && (
+        <PlaceholderDropComp
+          data={data}
+          onDragOver={onDragOver}
+          direction={DRAG_DIRECTION.Left}
+        />
+      )}
+      <WrappedLink
+        data-to={data.to}
+        data-text={data.text}
+        ref={containerRef}
+        draggable
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        onDragOver={handleOver}
+        className={classNames("tag-container", className, {
+          "is-drag": isDragIng,
+        })}
+        url={data.to as string}
+        href={data.href}
+        target={data.target as Target}
+      >
+        <span className="tag-text ellipsis">{data.text}</span>
+        <span className="tag-suffix" onClick={(e) => e.preventDefault()}>
+          {suffix}
+        </span>
+      </WrappedLink>
+
+      {isActive && direction === DRAG_DIRECTION.Right && (
+        <PlaceholderDropComp
+          data={data}
+          onDragOver={onDragOver}
+          direction={DRAG_DIRECTION.Right}
+        />
+      )}
+    </>
   );
 }
 
@@ -49,16 +162,17 @@ interface QuickVisitTagProps extends CellItemProps {
 
 export function QuickVisitItem(props: QuickVisitTagProps): React.ReactElement {
   const { t } = useTranslation(NS);
+  const { onAllowDrag } = useContext(DragContext);
   const { data, onFavorite, groupId } = props;
 
-  const handleRemove = useCallback(
-    (e: React.MouseEvent) => {
-      e.preventDefault();
-      collectService.removeItemFromFavorite(groupId, data);
-      onFavorite?.(collectService.getFavoritesById(groupId));
-    },
-    [groupId, data, onFavorite],
-  );
+  const handleRemove = useCallback(() => {
+    collectService.removeItemFromFavorite(groupId, data);
+    onFavorite?.(collectService.getFavoritesById(groupId));
+  }, [groupId, data, onFavorite]);
+
+  const handleMouseDown = () => {
+    onAllowDrag?.(true);
+  };
 
   const suffixGroups = useMemo(
     () => (
@@ -67,9 +181,13 @@ export function QuickVisitItem(props: QuickVisitTagProps): React.ReactElement {
           content={t(K.REMOVE_ITEM_FROM_QUICK_ACCESS)}
           hoist
           className="close"
+          onClick={handleRemove}
         >
-          <WrappedIcon lib="antd" icon="close" onClick={handleRemove} />
+          <WrappedIcon lib="antd" icon="close" />
         </WrappedTooltip>
+        <span className="drag-wrapper" onMouseDown={handleMouseDown}>
+          :::
+        </span>
       </div>
     ),
     [t, handleRemove],

@@ -11,10 +11,13 @@ import type {
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
 import { K, NS } from "../i18n.js";
+import { DragContext } from "./constants.js";
 import { useTranslation } from "@next-core/i18n/react";
 import { collectService } from "./CollectService.js";
 import { flatMenuItems } from "./processor.js";
+import { DRAG_DIRECTION } from "./constants.js";
 import classNames from "classnames";
+import { throttle } from "lodash";
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
@@ -38,6 +41,32 @@ interface SiteMapItemProps {
   selectedKey?: string[];
 }
 
+export function findDropElement(element: HTMLElement): HTMLElement | undefined {
+  let node = element;
+
+  while (node) {
+    if (node.draggable || node.className === "indicate-wrapper") {
+      return node;
+    }
+
+    node = node.parentElement as HTMLElement;
+  }
+}
+
+export function isValidDragAction(
+  dragElement: HTMLElement,
+  dropElement: HTMLElement,
+): boolean {
+  return (
+    dragElement &&
+    dropElement &&
+    !(
+      dragElement.dataset.to === dropElement.dataset.to &&
+      dragElement.dataset.text === dropElement.dataset.text
+    )
+  );
+}
+
 export function SiteMapItem(props: SiteMapItemProps) {
   const { t } = useTranslation(NS);
   const { menuGroup } = props;
@@ -49,6 +78,10 @@ export function SiteMapItem(props: SiteMapItemProps) {
   const flatItems = useMemo(() => flatMenuItems(menuGroup), [menuGroup]);
   const [q, setQ] = useState<string>();
   const [filter, setFilters] = useState<SidebarMenuSimpleItem[]>([]);
+  const [dragElement, setDragElement] = useState<HTMLElement>();
+  const [overElement, setOverElement] = useState<HTMLElement>();
+  const [allowDrag, setAllowDrag] = useState<boolean>();
+  const [direction, setDirection] = useState<DRAG_DIRECTION>();
 
   const handleFavorite = (collectList: SidebarMenuSimpleItem[]) => {
     setFavoriteList(collectList);
@@ -65,6 +98,47 @@ export function SiteMapItem(props: SiteMapItemProps) {
             item.text.toLowerCase().includes(e.detail.toLowerCase()),
           ),
     );
+  };
+
+  const handleDragStart = (e: React.DragEvent): void => {
+    setDragElement(e.target as HTMLElement);
+  };
+
+  const handleDragOver = useMemo(
+    () =>
+      throttle((e: React.DragEvent): void => {
+        e.preventDefault();
+
+        const dropElement = findDropElement(e.target as HTMLElement);
+        setOverElement(dropElement);
+
+        if (
+          dropElement &&
+          isValidDragAction(dropElement, dragElement as HTMLElement)
+        ) {
+          if (dropElement.className === "indicate-wrapper") {
+            setDirection(dropElement.dataset.direction as DRAG_DIRECTION);
+          } else {
+            const { width, left } = dropElement.getBoundingClientRect();
+
+            const right = e.clientX > left + width / 2;
+            setDirection(right ? DRAG_DIRECTION.Right : DRAG_DIRECTION.Left);
+          }
+        } else {
+          setDirection(undefined);
+        }
+      }),
+    [dragElement],
+  );
+
+  const handleDragEnd = (): void => {
+    setDragElement(undefined);
+    setDirection(undefined);
+    setAllowDrag(false);
+  };
+
+  const handleAllowDrag = (enable: boolean): void => {
+    setAllowDrag(enable);
   };
 
   return (
@@ -87,16 +161,30 @@ export function SiteMapItem(props: SiteMapItemProps) {
           >
             <span className="title">{t(K.QUICK_ACCESS)}</span>
             {favoriteList.length !== 0 && (
-              <div className="tag-wrapper">
-                {favoriteList.map((item) => (
-                  <QuickVisitItem
-                    onFavorite={handleFavorite}
-                    groupId={groupId}
-                    key={item.key}
-                    data={item}
-                  />
-                ))}
-              </div>
+              <DragContext.Provider
+                value={{
+                  groupId,
+                  overElement,
+                  direction,
+                  allowDrag,
+                  onDragStart: handleDragStart,
+                  onDragOver: handleDragOver,
+                  onDragEnd: handleDragEnd,
+                  onAllowDrag: handleAllowDrag,
+                  onFavoriteUpdate: handleFavorite,
+                }}
+              >
+                <div className="tag-wrapper">
+                  {favoriteList.map((item) => (
+                    <QuickVisitItem
+                      onFavorite={handleFavorite}
+                      groupId={groupId}
+                      key={item.key}
+                      data={item}
+                    />
+                  ))}
+                </div>
+              </DragContext.Provider>
             )}
 
             {favoriteList.length === 0 && (
