@@ -72,7 +72,7 @@ eo-link {
 .sub-menu-wrapper > .group-wrapper > eo-menu-item .menu-item-label {
   display: block;
   width: 100%;
-  padding: 4px 16px;
+  padding: 6px 24px;
   box-sizing: border-box;
   color: var(--color-normal-text);
 }
@@ -88,8 +88,10 @@ eo-link {
 }
 
 .menu-item-label {
+  display: inline-block;
   cursor: pointer;
   border-radius: 4px;
+  padding: 5px 10px;
   color: var(--color-normal-text);
 }
 

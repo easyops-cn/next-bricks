@@ -1,5 +1,6 @@
 import { JsonStorage } from "@next-shared/general/JsonStorage";
 import type { SidebarMenuSimpleItem } from "@next-shared/general/types";
+import { DRAG_DIRECTION } from "./constants.js";
 
 export class CollectService {
   private storage: JsonStorage;
@@ -12,7 +13,7 @@ export class CollectService {
   }
 
   private getCategoryId(id: string): string {
-    return `-${this.storageKey}-${id}`;
+    return `${this.storageKey}-${id}`;
   }
 
   public getFavoritesById(id: string): SidebarMenuSimpleItem[] {
@@ -60,6 +61,41 @@ export class CollectService {
     } else {
       this.setItemAsFavorite(id, item);
     }
+  }
+
+  public moveFavoriteTo(
+    id: string,
+    option: {
+      from: SidebarMenuSimpleItem;
+      to: SidebarMenuSimpleItem;
+      direction: DRAG_DIRECTION;
+    },
+  ): SidebarMenuSimpleItem[] {
+    const { from, to, direction } = option;
+
+    const list = this.getFavoritesById(id);
+    if (this.equalItem(from, to)) return list;
+
+    const fromIndex = list.findIndex((row) => this.equalItem(row, from));
+
+    // istanbul ignore else
+    if (fromIndex !== -1) {
+      list.splice(fromIndex, 1);
+
+      const toIndex = list.findIndex((row) => this.equalItem(row, to));
+
+      //  istanbul ignore else
+      if (toIndex !== -1) {
+        if (direction === DRAG_DIRECTION.Left) {
+          list.splice(toIndex, 0, from);
+        } else {
+          list.splice(toIndex + 1, 0, from);
+        }
+        this.storage.setItem(this.getCategoryId(id), list);
+      }
+    }
+
+    return list;
   }
 }
 
