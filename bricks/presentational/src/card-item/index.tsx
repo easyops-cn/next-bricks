@@ -131,6 +131,7 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
 
   /**
    * 是否有扩展区域 1
+   * @internal
    */
   @property({
     type: Boolean,
@@ -139,6 +140,7 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
 
   /**
    * 是否有扩展区域 2
+   * @internal
    */
   @property({
     type: Boolean,

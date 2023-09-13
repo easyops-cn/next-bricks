@@ -73,6 +73,7 @@ class EoInfoCardItem extends ReactNextElement {
 
   /**
    * 是否有Icon
+   * @internal
    */
   @property({
     type: Boolean,

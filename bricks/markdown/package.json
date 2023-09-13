@@ -56,7 +56,7 @@
     "refractor": "^4.8.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.14.1",
-    "@next-core/test-next": "^1.0.9"
+    "@next-core/build-next-bricks": "^1.14.2",
+    "@next-core/test-next": "^1.0.10"
   }
 }

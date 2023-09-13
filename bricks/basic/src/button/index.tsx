@@ -101,7 +101,8 @@ class Button extends ReactNextElement implements ButtonProps {
     | undefined;
 
   /**
-   * 是否有slot
+   * 是否有 slot
+   * @internal
    */
   @property({
     type: Boolean,
