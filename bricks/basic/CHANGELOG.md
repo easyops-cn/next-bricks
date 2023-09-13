@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.29.0...@next-bricks/basic@0.30.0) (2023-09-13)
+
+
+### Bug Fixes
+
+* fix issue where scrolling on the popup causes the body to scroll as well ([85fd17f](https://github.com/easyops-cn/next-bricks/commit/85fd17f242d57cd9dcd7d794a1b7ff13f9c93580))
+* mark internal props ([20fe818](https://github.com/easyops-cn/next-bricks/commit/20fe81854092abc89f439b7f8322d5e6aa6109ab))
+
+
+### Features
+
+* support drag ([b7bfdd2](https://github.com/easyops-cn/next-bricks/commit/b7bfdd2f94ded51747899318d144785c98ae6b8b))
+
+
+
+
+
 # [0.29.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.28.5...@next-bricks/basic@0.29.0) (2023-09-12)
 
 

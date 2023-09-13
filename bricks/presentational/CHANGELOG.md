@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.13.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.13.6...@next-bricks/presentational@0.13.7) (2023-09-13)
+
+
+### Bug Fixes
+
+* mark internal props ([20fe818](https://github.com/easyops-cn/next-bricks/commit/20fe81854092abc89f439b7f8322d5e6aa6109ab))
+
+
+
+
+
 ## [0.13.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.13.5...@next-bricks/presentational@0.13.6) (2023-09-12)
 
 **Note:** Version bump only for package @next-bricks/presentational
