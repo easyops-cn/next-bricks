@@ -5,3 +5,12 @@
 :host([hidden]) {
   display: none;
 }
+
+.pagination-total-text {
+  color: var(--antd-pagination-total-text);
+}
+
+.pagination-total-number {
+  font-weight: var(--font-weight-400);
+  color: var(--antd-pagination-total-strong-text);
+}
