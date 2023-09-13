@@ -40,7 +40,7 @@ import GroupItemStyleText from "../nav-menu/site-map/GroupItem.shadow.css";
 const { defineElement, property } = createDecorators();
 
 const WrappedMenuItem = wrapBrick<MenuItemComponent, MenuComponentProps>(
-  "eo-menu-item",
+  "eo-menu-item"
 );
 const WrappedPopover = wrapBrick<
   Popover,
@@ -286,7 +286,7 @@ function NavMenuComponent(props: NavMenuProps) {
       menu?.menuItems ?? [],
       pathname,
       search,
-      "",
+      ""
     );
     setSelectedKey(selectedKeys);
   };

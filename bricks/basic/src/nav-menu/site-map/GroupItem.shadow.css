@@ -8,6 +8,9 @@
       &::part(link) {
         color: var(--color-brand-hover);
       }
+      &::part(icon) {
+        color: var(--color-brand-hover);
+      }
     }
   }
   .item-link::part(link) {
@@ -15,6 +18,10 @@
     display: flex;
     gap: 4px;
     color: var(--color-header-text);
+  }
+
+  .item-link::part(icon) {
+    color: var(--color-normal-text);
   }
 
   .title {
@@ -25,10 +32,10 @@
     &::before {
       content: "";
       position: absolute;
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       top: 17px;
-      left: 0;
+      left: 1px;
       transform: rotate(45deg);
       background: var(--color-secondary-text);
     }
