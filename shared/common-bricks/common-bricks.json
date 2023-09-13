@@ -74,7 +74,7 @@
     "eo-info-card-item",
     "eo-humanize-time"
   ],
-  "advanced": ["eo-cascader", "eo-table"],
+  "advanced": ["eo-cascader", "eo-table", "eo-next-table"],
   "markdown": ["eo-markdown-editor"],
   "shoelace": [
     "sl-alert",
