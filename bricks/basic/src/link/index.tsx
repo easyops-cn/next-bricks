@@ -198,11 +198,11 @@ export function LinkComponent({
         method(
           typeof url === "string"
             ? url
-            : getExtendedLocationDescriptor(url, currentLocation),
+            : getExtendedLocationDescriptor(url, currentLocation)
         );
       }
     },
-    [currentLocation, disabled, history, href, replace, target, url],
+    [currentLocation, disabled, history, href, replace, target, url]
   );
 
   useEffect(() => {
@@ -229,7 +229,7 @@ export function LinkComponent({
       ref={linkRef}
       onClick={handleClick}
     >
-      {icon && <WrappedIcon {...icon} />}
+      {icon && <WrappedIcon part="icon" {...icon} />}
       <slot />
     </a>
   );

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import type {
   SidebarMenuGroup,
   SidebarMenuSimpleItem,
@@ -17,7 +17,7 @@ import { collectService } from "./CollectService.js";
 import { flatMenuItems } from "./processor.js";
 import { DRAG_DIRECTION } from "./constants.js";
 import classNames from "classnames";
-import { throttle } from "lodash";
+import { throttle, debounce } from "lodash";
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
@@ -33,7 +33,7 @@ const WrappedInput = wrapBrick<any, any, InputEvents, InputEventsMap>(
   "eo-input",
   {
     onValueChange: "change",
-  },
+  }
 );
 
 interface SiteMapItemProps {
@@ -55,7 +55,7 @@ export function findDropElement(element: HTMLElement): HTMLElement | undefined {
 
 export function isValidDragAction(
   dragElement: HTMLElement,
-  dropElement: HTMLElement,
+  dropElement: HTMLElement
 ): boolean {
   return (
     dragElement &&
@@ -73,7 +73,7 @@ export function SiteMapItem(props: SiteMapItemProps) {
   const groupId = menuGroup.groupId as string;
 
   const [favoriteList, setFavoriteList] = useState(
-    collectService.getFavoritesById(groupId),
+    collectService.getFavoritesById(groupId)
   );
   const flatItems = useMemo(() => flatMenuItems(menuGroup), [menuGroup]);
   const [q, setQ] = useState<string>();
@@ -87,18 +87,26 @@ export function SiteMapItem(props: SiteMapItemProps) {
     setFavoriteList(collectList);
   };
 
-  const handleSearch = (e: CustomEvent<string>): void => {
-    const v = e.detail;
-    setQ(e.detail);
+  const handleSearch = useCallback(
+    (e: CustomEvent<string>): void => {
+      const v = e.detail;
+      setQ(e.detail);
 
-    setFilters(
-      !v
-        ? flatItems
-        : flatItems.filter((item) =>
-            item.text.toLowerCase().includes(e.detail.toLowerCase()),
-          ),
-    );
-  };
+      setFilters(
+        !v
+          ? flatItems
+          : flatItems.filter((item) =>
+              item.text.toLowerCase().includes(e.detail.toLowerCase())
+            )
+      );
+    },
+    [flatItems]
+  );
+
+  const debouncedHandleSearch = useMemo(
+    () => debounce(handleSearch, 200),
+    [handleSearch]
+  );
 
   const handleDragStart = (e: React.DragEvent): void => {
     setDragElement(e.target as HTMLElement);
@@ -128,7 +136,7 @@ export function SiteMapItem(props: SiteMapItemProps) {
           setDirection(undefined);
         }
       }),
-    [dragElement],
+    [dragElement]
   );
 
   const handleDragEnd = (): void => {
@@ -146,7 +154,7 @@ export function SiteMapItem(props: SiteMapItemProps) {
       <WrappedInput
         className="search-input"
         style={{ width: "100%" }}
-        onValueChange={handleSearch}
+        onValueChange={debouncedHandleSearch}
         placeholder={t(K.SEARCH_ITEM_PLACEHOLDER)}
       >
         <WrappedIcon slot="prefix" lib="antd" icon="search" />

@@ -2,9 +2,14 @@ import React from "react";
 import { describe, expect } from "@jest/globals";
 
 import { act, render, screen, fireEvent } from "@testing-library/react";
-import { SiteMapItem } from "./SiteMapItem.js";
+import {
+  SiteMapItem,
+  isValidDragAction,
+  findDropElement,
+} from "./SiteMapItem.js";
 import { collectService } from "./CollectService.js";
 import { SidebarMenuGroup } from "@next-shared/general/types";
+jest.useFakeTimers();
 
 jest.mock("./CollectService.js", () => ({
   collectService: {
@@ -328,8 +333,6 @@ describe("siteMap test", () => {
     } as SidebarMenuGroup;
     const { container } = render(<SiteMapItem menuGroup={menuGroup} />);
 
-    screen.debug();
-
     const input = container.querySelector("eo-input") as Element;
 
     act(() => {
@@ -339,11 +342,40 @@ describe("siteMap test", () => {
     expect(container.querySelector(".tag-text")?.textContent).toEqual("主机");
 
     act(() => {
-      fireEvent(input, new CustomEvent("change", { detail: "不存在" }));
+      fireEvent(input, new CustomEvent("change", { detail: "notExited" }));
     });
 
+    jest.advanceTimersByTime(500);
+
     expect(container.querySelector(".no-data-tips")?.textContent).toEqual(
-      "NO_DATA_SEARCH_INFO",
+      undefined
     );
+  });
+
+  it("test drag action", async () => {
+    const div = document.createElement("div");
+    div.dataset.text = "主机";
+    div.dataset.to = "/cmdb";
+
+    const div2 = document.createElement("div");
+    div2.dataset.text = "监控";
+    div2.dataset.to = "/custom";
+
+    expect(isValidDragAction(div, div2)).toEqual(true);
+
+    div2.dataset.text = "主机";
+    div2.dataset.to = "/cmdb";
+
+    expect(isValidDragAction(div, div2)).toEqual(false);
+  });
+
+  it("test findDropElement", () => {
+    const div = document.createElement("div");
+    div.draggable = true;
+
+    const span = document.createElement("span");
+    div.appendChild(span);
+
+    expect(findDropElement(span)).toEqual(div);
   });
 });

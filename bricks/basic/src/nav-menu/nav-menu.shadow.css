@@ -37,9 +37,12 @@ eo-link {
   display: flex;
 }
 
-.nav-menu-wrapper > eo-menu-item,
-.nav-menu-wrapper > eo-popover {
+.nav-menu-wrapper > eo-menu-item {
   padding: 2px 14px;
+}
+
+.nav-menu-wrapper > eo-popover {
+  padding: 2px 6px;
 }
 
 .popover .sub-menu-item-label {
@@ -107,7 +110,7 @@ eo-link {
 
 eo-menu-item[active] .menu-item-label {
   background: var(--v8-top-menu-item-selected-bg);
-  color: var(--color-brand);
+  color: var(--color-brand) !important;
   font-weight: 500;
 }
 
@@ -198,8 +201,10 @@ eo-menu-item[active] .menu-item-label {
 }
 
 .sub-menu-sit-map-wrapper {
-  width: calc(100vw);
-  max-height: calc(80vh);
+  width: calc(100vw - 240px);
+  margin-left: 120px;
+  margin-right: 120px;
+  height: 520px;
   background-color: var(--antd-dropdown-menu-bg);
   border-radius: 6px;
   box-shadow: 0px 4px 12px 0px rgba(17, 37, 64, 0.08);
