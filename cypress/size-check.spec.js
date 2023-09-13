@@ -10,6 +10,7 @@ describe("brick size check", () => {
 
     cy.visit(`${homepage}/all`, {
       onBeforeLoad(win) {
+        win.performance.setResourceTimingBufferSize(3000);
         cy.spy(win.console, "error").as("console.error");
       },
     });
