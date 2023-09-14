@@ -203,8 +203,7 @@ eo-menu-item[active] .menu-item-label {
 .sub-menu-sit-map-wrapper {
   box-sizing: border-box;
   width: calc(100vw);
-  padding-left: 120px;
-  padding-right: 120px;
+  padding: 0 120px 24px;
   height: 520px;
   background-color: var(--antd-dropdown-menu-bg);
   border-radius: 6px;

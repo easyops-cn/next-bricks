@@ -1,5 +1,12 @@
 .site-map {
-  padding: 24px;
+  .search-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    padding-top: 24px;
+    padding-bottom: 16px;
+    background: var(--antd-dropdown-menu-bg);
+  }
   .search-input::part(affix-wrapper) {
     border: none;
     border-bottom: 1px solid var(--antd-input-border-color);
@@ -38,7 +45,7 @@
     &.hasData {
       display: flex;
     }
-    margin-top: 16px;
+    margin-bottom: 8px;
 
     .tag-wrapper {
       flex: 1;
@@ -55,7 +62,6 @@
   }
 
   .search-panel {
-    margin-top: 16px;
     .recommend-wrapper {
       margin-top: 16px;
       display: grid;
