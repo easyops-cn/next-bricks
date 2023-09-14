@@ -69,7 +69,7 @@ export function isValidDragAction(
 
 export function SiteMapItem(props: SiteMapItemProps) {
   const { t } = useTranslation(NS);
-  const { menuGroup } = props;
+  const { menuGroup, selectedKey } = props;
   const groupId = menuGroup.groupId as string;
 
   const [favoriteList, setFavoriteList] = useState(
@@ -204,6 +204,7 @@ export function SiteMapItem(props: SiteMapItemProps) {
 
           <GroupView
             groupId={groupId}
+            selectedKey={selectedKey}
             groups={menuGroup.items as SidebarMenuGroup[]}
             onFavorite={handleFavorite}
           />
