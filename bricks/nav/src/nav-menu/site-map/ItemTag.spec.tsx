@@ -2,7 +2,12 @@ import React from "react";
 import { describe, expect } from "@jest/globals";
 import { act, render, screen, fireEvent } from "@testing-library/react";
 import { DRAG_DIRECTION, DragContext } from "./constants.js";
-import { QuickVisitItem, RecommendItem, ItemTag } from "./ItemTag.js";
+import {
+  QuickVisitItem,
+  RecommendItem,
+  ItemTag,
+  PlaceholderDropComp,
+} from "./ItemTag.js";
 
 describe("component test", () => {
   describe("QuickVisitItem", () => {
@@ -111,6 +116,33 @@ describe("component test", () => {
       fireEvent.dragEnd(screen.getByText("cmdb"));
 
       expect(mockDragEnd).toBeCalled();
+    });
+  });
+
+  describe("PlaceholderDropComp", () => {
+    it("should work", () => {
+      const mockDragOver = jest.fn();
+      const { container } = render(
+        <PlaceholderDropComp
+          data={{ text: "/cmdb", to: "/cmdb" }}
+          direction={DRAG_DIRECTION.Left}
+          onDragOver={mockDragOver}
+        />
+      );
+
+      fireEvent.dragEnter(
+        container.querySelector(".indicate-wrapper") as HTMLElement
+      );
+
+      fireEvent.dragOver(
+        container.querySelector(".indicate-wrapper") as HTMLElement
+      );
+
+      fireEvent.dragLeave(
+        container.querySelector(".indicate-wrapper") as HTMLElement
+      );
+
+      expect(mockDragOver).toHaveBeenCalled();
     });
   });
 });

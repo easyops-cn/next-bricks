@@ -41,7 +41,7 @@ interface PlaceholderCompProps {
   direction: DRAG_DIRECTION;
   onDragOver?: (e: DragEvent) => void;
 }
-function PlaceholderDropComp({
+export function PlaceholderDropComp({
   data,
   onDragOver,
   direction,
@@ -64,6 +64,12 @@ function PlaceholderDropComp({
       className="indicate-wrapper"
       data-direction={direction}
       data-to={data.to}
+      onDragEnter={(e) =>
+        ((e.target as HTMLElement).style.background = "var(--palette-blue-1)")
+      }
+      onDragLeave={(e) =>
+        ((e.target as HTMLElement).style.background = "transparent")
+      }
       data-text={data.text}
       onDragOver={onDragOver}
       onDrop={handleDrop}
@@ -180,6 +186,7 @@ export function QuickVisitItem(props: QuickVisitTagProps): React.ReactElement {
         <WrappedTooltip
           content={t(K.REMOVE_ITEM_FROM_QUICK_ACCESS)}
           hoist
+          placement="bottom"
           className="close"
           onClick={handleRemove}
         >
