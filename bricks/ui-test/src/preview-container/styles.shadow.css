@@ -37,10 +37,6 @@
   pointer-events: none;
 }
 
-.preview-container:not(.inspecting) .outline {
-  display: none;
-}
-
 .label {
   position: absolute;
   left: -2px;
