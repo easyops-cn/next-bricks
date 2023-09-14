@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.5.4...@next-bricks/ui-test@0.5.5) (2023-09-14)
+
+
+### Bug Fixes
+
+* hover over tree node ([e609c90](https://github.com/easyops-cn/next-bricks/commit/e609c90ab5e22f1583c581cbeaf573ed834f32d3))
+
+
+
+
+
 ## [0.5.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.5.3...@next-bricks/ui-test@0.5.4) (2023-09-13)
 
 **Note:** Version bump only for package @next-bricks/ui-test
