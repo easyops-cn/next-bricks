@@ -9,7 +9,7 @@ import type {
 } from "@next-shared/general/types";
 import { wrapBrick } from "@next-core/react-element";
 import type { ReactNextElement } from "@next-core/react-element";
-import type { Popover, PopoverProps } from "../popover/index.js";
+import type { Popover, PopoverProps } from "@next-bricks/basic/popover";
 import type {
   GeneralIcon,
   GeneralIconProps,

@@ -5,8 +5,7 @@ import type {
 } from "@next-shared/general/types";
 import { wrapBrick } from "@next-core/react-element";
 import { StarIcon, OnFavoriteCallback } from "./ItemTag.js";
-import { Link, LinkProps } from "../../link/index.js";
-import type { Target } from "../../interface.js";
+import { Link, LinkProps } from "@next-bricks/basic/link";
 import { collectService } from "./CollectService.js";
 import { processGroupItems } from "./processor.js";
 import classNames from "classnames";
@@ -154,7 +153,7 @@ export function GroupItem(props: GroupItemProps): React.ReactElement {
       icon={data.icon}
       url={data.to as string}
       href={data.href}
-      target={data.target as Target}
+      target={data.target as LinkProps["target"]}
       className={classNames("item-link", {
         active: selectedKey?.includes(data.key as string),
       })}

@@ -201,6 +201,7 @@ eo-menu-item[active] .menu-item-label {
 }
 
 .sub-menu-sit-map-wrapper {
+  box-sizing: border-box;
   width: calc(100vw);
   padding-left: 120px;
   padding-right: 120px;

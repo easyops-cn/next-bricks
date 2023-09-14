@@ -9,9 +9,9 @@ import React, {
   DragEvent,
 } from "react";
 import { wrapBrick } from "@next-core/react-element";
-import { Link, LinkProps } from "../../link/index.js";
-import type { Target } from "../../interface.js";
-import { EoTooltip, ToolTipProps } from "../../tooltip/index.js";
+import { Link, LinkProps } from "@next-bricks/basic/link";
+
+import { EoTooltip, ToolTipProps } from "@next-bricks/basic/tooltip";
 import classNames from "classnames";
 import { SidebarMenuSimpleItem } from "@next-shared/general/types";
 import { K, NS, locales } from "../i18n.js";
@@ -91,7 +91,7 @@ export function ItemTag(props: CellItemProps): React.ReactElement {
       overElement &&
       overElement.dataset.to == data.to &&
       overElement.dataset.text === overElement.dataset.text,
-    [overElement, data],
+    [overElement, data]
   );
 
   const handleDragStart = (e: React.DragEvent) => {
@@ -136,7 +136,7 @@ export function ItemTag(props: CellItemProps): React.ReactElement {
         })}
         url={data.to as string}
         href={data.href}
-        target={data.target as Target}
+        target={data.target as LinkProps["target"]}
       >
         <span className="tag-text ellipsis">{data.text}</span>
         <span className="tag-suffix" onClick={(e) => e.preventDefault()}>
@@ -190,7 +190,7 @@ export function QuickVisitItem(props: QuickVisitTagProps): React.ReactElement {
         </span>
       </div>
     ),
-    [t, handleRemove],
+    [t, handleRemove]
   );
 
   return (
@@ -259,7 +259,7 @@ export function RecommendItem(props: RecommendItemProps): React.ReactElement {
         onFavorite={onFavorite}
       />
     ),
-    [data, groupId, onFavorite, active],
+    [data, groupId, onFavorite, active]
   );
 
   return (

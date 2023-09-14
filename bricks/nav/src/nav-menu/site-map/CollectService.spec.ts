@@ -40,7 +40,7 @@ describe("CollectService", () => {
       collectService.isCollected("monitor", {
         text: "交换机",
         to: "/switch",
-      }),
+      })
     ).toEqual(true);
 
     collectService.removeItemFromFavorite("monitor", {
@@ -92,7 +92,7 @@ describe("CollectService", () => {
         from: { text: "主机", to: "/host" },
         to: { text: "主机", to: "/host" },
         direction: DRAG_DIRECTION.Left,
-      }),
+      })
     ).toEqual([
       { text: "主机", to: "/host" },
       { text: "cmdb", to: "/cmdb" },
@@ -110,7 +110,7 @@ describe("CollectService", () => {
           to: "/cmdb",
         },
         direction: DRAG_DIRECTION.Left,
-      }),
+      })
     ).toEqual([
       { text: "主机", to: "/host" },
       { text: "交换机", to: "/switch" },
@@ -128,7 +128,7 @@ describe("CollectService", () => {
           to: "/switch",
         },
         direction: DRAG_DIRECTION.Right,
-      }),
+      })
     ).toEqual([
       { text: "交换机", to: "/switch" },
       { text: "主机", to: "/host" },

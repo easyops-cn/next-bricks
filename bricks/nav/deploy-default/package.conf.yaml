@@ -1,0 +1,12 @@
+install_path: /usr/local/easyops/bricks/nav-NB
+user: "easyops:easyops"
+dependencies:
+  - name: brick_next
+    version: ^2.86.3 || ^3.0.0
+    local_deploy: true
+  - name: "basic-NB"
+    version: ">= 0.30.1"
+  - name: "form-NB"
+    version: ">= 0.17.7"
+  - name: "icons-NB"
+    version: ">= 0.4.10"

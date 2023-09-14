@@ -5,11 +5,11 @@ import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import type { GeneralIconProps } from "@next-bricks/icons/general-icon";
 import styleText from "./nav-menu.shadow.css";
 import { LocationDescriptor, UnregisterCallback } from "history";
-import type { SidebarMenu } from "../menu/index.jsx";
+import type { SidebarMenu } from "@next-bricks/basic/menu";
 import type {
   MenuItem as MenuItemComponent,
   MenuComponentProps,
-} from "../menu-item/index.js";
+} from "@next-bricks/basic/menu-item";
 import {
   isSimple,
   isSubMenu,
@@ -28,7 +28,7 @@ import type {
   PopoverProps,
   PopoverEvents,
   PopoverEventsMapping,
-} from "../popover/index.js";
+} from "@next-bricks/basic/popover";
 import "@next-core/theme";
 import classnames from "classnames";
 import { ThreeLevelMenuPopoverContent } from "./ThreeLevelMenuPopoverContent.js";
@@ -248,7 +248,7 @@ function SitMapMenCom({
     GroupItemStyleText,
     styleText,
   ],
-  alias: ["basic.nav-menu"],
+  alias: ["nav.nav-menu"],
 })
 class NavMenu extends ReactNextElement {
   /**

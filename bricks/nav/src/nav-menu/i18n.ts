@@ -38,7 +38,7 @@ const zh: Locale = {
   SEARCH_ITEM_PLACEHOLDER: "请输入关键词搜索",
 };
 
-export const NS = "bricks/basic/nav-menu";
+export const NS = "bricks/nav/nav-menu";
 
 export const locales = { en, zh };
 

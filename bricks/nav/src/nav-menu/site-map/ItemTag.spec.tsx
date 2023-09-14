@@ -17,7 +17,7 @@ describe("component test", () => {
           groupId="monitor"
           onFavorite={onFavoriteFn}
           data={item}
-        />,
+        />
       );
 
       fireEvent.click(container.querySelector("eo-icon") as Element);
@@ -35,13 +35,13 @@ describe("component test", () => {
 
       const onFavoriteFn = jest.fn();
       const { container, rerender } = render(
-        <RecommendItem groupId="monitor" data={item} />,
+        <RecommendItem groupId="monitor" data={item} />
       );
 
       expect(container.querySelector("eo-icon")).toBeTruthy();
 
       expect(
-        container.querySelector("eo-tooltip")?.getAttribute("content"),
+        container.querySelector("eo-tooltip")?.getAttribute("content")
       ).toEqual("ADD_ITEM_TO_QUICK_ACCESS");
 
       rerender(
@@ -50,11 +50,11 @@ describe("component test", () => {
           data={item}
           active={true}
           onFavorite={onFavoriteFn}
-        />,
+        />
       );
 
       expect(
-        container.querySelector("eo-tooltip")?.getAttribute("content"),
+        container.querySelector("eo-tooltip")?.getAttribute("content")
       ).toEqual("REMOVE_ITEM_FROM_QUICK_ACCESS");
 
       fireEvent.click(container.querySelector("eo-icon") as Element);
@@ -93,13 +93,13 @@ describe("component test", () => {
           }}
         >
           <ItemTag {...props} />
-        </DragContext.Provider>,
+        </DragContext.Provider>
       );
 
       expect(
         container
           .querySelector(".indicate-wrapper")
-          ?.getAttribute("data-direction"),
+          ?.getAttribute("data-direction")
       ).toEqual(DRAG_DIRECTION.Left);
 
       fireEvent.dragStart(screen.getByText("cmdb"));

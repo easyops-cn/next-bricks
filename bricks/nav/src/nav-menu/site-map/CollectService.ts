@@ -34,7 +34,7 @@ export class CollectService {
 
   private equalItem(
     prevItem: SidebarMenuSimpleItem,
-    item: SidebarMenuSimpleItem,
+    item: SidebarMenuSimpleItem
   ): boolean {
     return prevItem.text === item.text && prevItem.to === item.to;
   }
@@ -69,7 +69,7 @@ export class CollectService {
       from: SidebarMenuSimpleItem;
       to: SidebarMenuSimpleItem;
       direction: DRAG_DIRECTION;
-    },
+    }
   ): SidebarMenuSimpleItem[] {
     const { from, to, direction } = option;
 

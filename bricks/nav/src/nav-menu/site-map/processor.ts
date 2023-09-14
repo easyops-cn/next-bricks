@@ -17,7 +17,7 @@ function walkMenuItem(item: SidebarMenuItem, list: SidebarMenuSimpleItem[]) {
 
 function walkMenuItems(
   items: SidebarMenuItem[],
-  list: SidebarMenuSimpleItem[],
+  list: SidebarMenuSimpleItem[]
 ): void {
   for (const item of items) {
     walkMenuItem(item, list);

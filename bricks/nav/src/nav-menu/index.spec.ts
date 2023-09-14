@@ -18,7 +18,7 @@ jest.mock("@next-core/runtime", () => ({
 
 describe("basic.nav-menu", () => {
   test("basic usage", async () => {
-    const element = document.createElement("basic.nav-menu") as NavMenu;
+    const element = document.createElement("nav.nav-menu") as NavMenu;
 
     expect(element.shadowRoot).toBeFalsy();
     act(() => {

@@ -5,8 +5,7 @@ import type {
   SidebarMenuItem,
   SidebarMenuSimpleItem,
 } from "@next-shared/general/types";
-import type { Link, LinkProps } from "../link/index.js";
-import { Target } from "../interface.js";
+import type { Link, LinkProps } from "@next-bricks/basic/link";
 import type {
   GeneralIcon,
   GeneralIconProps,
@@ -41,7 +40,7 @@ export const renderLinkCom = (
       key={item.key}
       url={item.to as string}
       href={item.href}
-      target={item.target as Target}
+      target={item.target as LinkProps["target"]}
       style={linkStyle}
     >
       <span className="menu-item-label">{item.text}</span>

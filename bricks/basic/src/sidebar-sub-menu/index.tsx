@@ -9,8 +9,11 @@ import {
   SidebarMenuGroup,
   SidebarMenuItem,
 } from "@next-shared/general/types";
-import { initMenuItemAndMatchCurrentPathKeys } from "@next-shared/general/menu";
-import { isGroup, isSubMenu } from "../nav-menu/utils.js";
+import {
+  initMenuItemAndMatchCurrentPathKeys,
+  isGroup,
+  isSubMenu,
+} from "@next-shared/general/menu";
 import { Menu as MenuComponent, SidebarMenu } from "../menu/index.js";
 import { Link, LinkProps } from "../link/index.js";
 import {
