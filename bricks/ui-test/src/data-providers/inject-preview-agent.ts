@@ -1,7 +1,12 @@
 // istanbul ignore file
 import { createProviderClass } from "@next-core/utils/general";
 import { getHistory } from "@next-core/runtime";
-import { setPreviewFromOrigin, toggleInspecting } from "./preview/inspector.js";
+import {
+  hoverOverTreeNode,
+  setActiveTreeNode,
+  setPreviewFromOrigin,
+  toggleInspecting,
+} from "./preview/inspector.js";
 import { toggleRecording } from "./preview/recorder.js";
 
 let injected = false;
@@ -47,6 +52,12 @@ export async function injectPreviewAgent(
           break;
         case "forward":
           history.goForward();
+          break;
+        case "hover-over-tree-node":
+          hoverOverTreeNode(e.data.payload.relatedCommands);
+          break;
+        case "set-active-tree-node":
+          setActiveTreeNode(e.data.payload.relatedCommands);
           break;
       }
     }

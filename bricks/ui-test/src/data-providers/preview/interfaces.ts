@@ -4,7 +4,7 @@ export interface InspectTarget {
 }
 
 export interface InspectSelector {
-  type: "testid" | "id";
+  type: "testid" | "id" | "css-selector";
   value: string;
   tag: string;
 }
@@ -27,4 +27,9 @@ export interface SelectedRecordStep {
   event: string;
   target: InspectSelector;
   text?: string;
+}
+
+export interface RelatedCommand {
+  name: string;
+  params?: unknown[];
 }

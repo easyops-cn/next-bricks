@@ -1,7 +1,12 @@
 // istanbul ignore file: working in progress
 // https://github.com/facebook/react/blob/cae635054e17a6f107a39d328649137b83f25972/packages/react-devtools-shared/src/backend/views/Highlighter/index.js
 import { isEqual, throttle } from "lodash";
-import type { InspectOutline, InspectTarget } from "./interfaces.js";
+import type {
+  InspectOutline,
+  InspectSelector,
+  InspectTarget,
+  RelatedCommand,
+} from "./interfaces.js";
 
 let isInspecting = false;
 export let previewFromOrigin: string;
@@ -47,7 +52,7 @@ const hoverOnTarget = throttle(
         channel: "ui-test-preview",
         type: "inspect-hover",
         payload: {
-          outline: getTargetOutline(targets[0]),
+          outlines: targets.length > 0 ? [getTargetOutline(targets[0])] : [],
         },
       },
       previewFromOrigin
@@ -76,7 +81,7 @@ function onPointerLeave(event: MouseEvent): void {
     {
       channel: "ui-test-preview",
       type: "inspect-hover",
-      payload: { outline: null },
+      payload: { outlines: [] },
     },
     previewFromOrigin
   );
@@ -157,12 +162,130 @@ export function getPossibleTargets(
   return targets;
 }
 
-export function getTargetOutline(
-  target: InspectTarget | null | undefined
-): InspectOutline | null {
-  if (!target) {
-    return null;
+export function hoverOverTreeNode(relatedCommands: RelatedCommand[]) {
+  window.parent.postMessage(
+    {
+      channel: "ui-test-preview",
+      type: "inspect-hover",
+      payload: {
+        outlines: getTargetOutlinesByRelatedCommands(relatedCommands),
+      },
+    },
+    previewFromOrigin
+  );
+}
+
+export function setActiveTreeNode(relatedCommands: RelatedCommand[]) {
+  window.parent.postMessage(
+    {
+      channel: "ui-test-preview",
+      type: "inspect-active",
+      payload: {
+        outlines: getTargetOutlinesByRelatedCommands(relatedCommands),
+      },
+    },
+    previewFromOrigin
+  );
+}
+
+function getTargetOutlinesByRelatedCommands(relatedCommands: RelatedCommand[]) {
+  const targets: InspectTarget[] = [];
+  let current: (Document | Element)[] = [document];
+  let currentChanged = false;
+
+  for (const { name, params } of relatedCommands) {
+    const [p1] = params ?? [];
+    switch (name) {
+      case "findByTestId":
+      case "findAllByTestId":
+        if (typeof p1 === "string") {
+          const selector = `[data-testid="${p1}"]`;
+          findElements(
+            (container) =>
+              name === "findByTestId"
+                ? container.querySelector(selector)
+                : [...container.querySelectorAll(selector)],
+            {
+              type: "testid",
+              value: p1,
+            }
+          );
+          break;
+        }
+        reset();
+        break;
+      case "get":
+        if (typeof p1 === "string") {
+          if (/^#[-\w]+$/.test(p1)) {
+            findElements((container) => [...container.querySelectorAll(p1)], {
+              type: "id",
+              value: p1.substring(1),
+            });
+          } else {
+            findElements((container) => [...container.querySelectorAll(p1)], {
+              type: "css-selector",
+              value: p1,
+            });
+          }
+          break;
+        }
+        reset();
+        break;
+    }
   }
+
+  function findElements(
+    finder: (container: Document | Element) => Element[] | Element | null,
+    selector: PartialInspectSelector
+  ) {
+    if (currentChanged) {
+      targets.length = 0;
+    }
+    const nextCurrent: Element[] = [];
+    for (const container of current) {
+      const elements = finder(container);
+      const singleMatch = isSingleMatch(elements);
+      if (singleMatch && !elements) {
+        break;
+      }
+      for (const element of singleMatch ? [elements] : elements) {
+        targets.push({
+          element: element as HTMLElement,
+          selector: {
+            ...selector,
+            tag: element.tagName.toLowerCase(),
+          },
+        });
+        nextCurrent.push(element);
+      }
+      if (singleMatch) {
+        break;
+      }
+    }
+    current = nextCurrent;
+    currentChanged = true;
+  }
+
+  function reset() {
+    if (currentChanged) {
+      targets.length = 0;
+    }
+    current = [];
+    currentChanged = true;
+  }
+
+  return targets.map(getTargetOutline);
+}
+
+function isSingleMatch(
+  elements: Element[] | Element | null
+): elements is Element | null {
+  return !Array.isArray(elements);
+}
+
+type PartialInspectSelector = Pick<InspectSelector, "type" | "value">;
+
+function getTargetOutline(target: InspectTarget): InspectOutline {
   const { element, selector } = target;
   const { width, height, left, top } = element.getBoundingClientRect();
   return {

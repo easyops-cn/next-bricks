@@ -22,6 +22,7 @@ import type {
   RecordStep,
 } from "../data-providers/preview/interfaces.js";
 import { InspectOutlineComponent } from "./InspectOutlineComponent.js";
+import type { NodeGraphData } from "../interface.js";
 
 const { defineElement, property, method, event } = createDecorators();
 
@@ -53,6 +54,12 @@ class PreviewContainer extends ReactNextElement {
 
   @property({ type: Boolean })
   accessor inspecting: boolean | undefined;
+
+  @property({ attribute: false })
+  accessor hoverRelatedCommands: NodeGraphData[] | undefined;
+
+  @property({ attribute: false })
+  accessor activeRelatedCommands: NodeGraphData[] | undefined;
 
   @method()
   back(): void {
@@ -94,6 +101,8 @@ class PreviewContainer extends ReactNextElement {
         src={this.src}
         recording={this.recording}
         inspecting={this.inspecting}
+        hoverRelatedCommands={this.hoverRelatedCommands}
+        activeRelatedCommands={this.activeRelatedCommands}
         onUrlChange={this.#handleUrlChange}
         onInspectSelect={this.#handleInspectSelect}
         onRecordComplete={this.#handleRecordComplete}
@@ -106,6 +115,8 @@ export interface PreviewContainerComponentProps {
   src: string;
   recording?: boolean;
   inspecting?: boolean;
+  hoverRelatedCommands?: NodeGraphData[];
+  activeRelatedCommands: NodeGraphData[] | undefined;
   onUrlChange?(url: string): void;
   onInspectSelect?(targets: InspectSelector[]): void;
   onRecordComplete?(steps: RecordStep[]): void;
@@ -116,6 +127,8 @@ function LegacyPreviewContainerComponent(
     src,
     recording,
     inspecting,
+    hoverRelatedCommands,
+    activeRelatedCommands,
     onUrlChange,
     onInspectSelect,
     onRecordComplete,
@@ -129,10 +142,14 @@ function LegacyPreviewContainerComponent(
     return url.origin;
   }, [src]);
   const [scroll, setScroll] = useState({ x: 0, y: 0 });
-  const [outline, setOutline] = useState<InspectOutline | null>(null);
-  const [adjustedOutline, setAdjustedOutline] = useState<InspectOutline | null>(
-    null
-  );
+  const [hoverOutlines, setHoverOutlines] = useState<InspectOutline[]>([]);
+  const [activeOutlines, setActiveOutlines] = useState<InspectOutline[]>([]);
+  const [adjustedHoverOutlines, setAdjustedHoverOutlines] = useState<
+    InspectOutline[]
+  >([]);
+  const [adjustedActiveOutlines, setAdjustedActiveOutlines] = useState<
+    InspectOutline[]
+  >([]);
 
   const back = useCallback(() => {
     iframeRef.current?.contentWindow?.postMessage(
@@ -206,28 +223,27 @@ function LegacyPreviewContainerComponent(
         window.postMessage({
           channel: "ui-test-preview",
           type: "inspect-hover",
-          payload: { outline: null },
+          payload: { outlines: [] },
         });
       }, 100);
     };
   }, [initialized]);
 
-  const adjustOutline = useCallback(
-    (outline: InspectOutline | null): InspectOutline | null => {
-      if (!outline) {
-        return outline;
-      }
-      const minScale = 1;
-      const offsetLeft = iframeRef?.current?.offsetLeft ?? 0;
-      const offsetTop = iframeRef?.current?.offsetTop ?? 0;
-      const { width, height, left, top, ...rest } = outline;
-      return {
-        width: width * minScale,
-        height: height * minScale,
-        left: (left - scroll.x) * minScale + offsetLeft,
-        top: (top - scroll.y) * minScale + offsetTop,
-        ...rest,
-      };
+  const adjustOutlines = useCallback(
+    (outlines: InspectOutline[]): InspectOutline[] => {
+      return outlines.map((outline) => {
+        const minScale = 1;
+        const offsetLeft = iframeRef?.current?.offsetLeft ?? 0;
+        const offsetTop = iframeRef?.current?.offsetTop ?? 0;
+        const { width, height, left, top, ...rest } = outline;
+        return {
+          width: width * minScale,
+          height: height * minScale,
+          left: (left - scroll.x) * minScale + offsetLeft,
+          top: (top - scroll.y) * minScale + offsetTop,
+          ...rest,
+        };
+      });
     },
     [scroll.x, scroll.y]
   );
@@ -243,7 +259,10 @@ function LegacyPreviewContainerComponent(
             onUrlChange?.(event.data.payload.url);
             break;
           case "inspect-hover":
-            setOutline(event.data.payload.outline);
+            setHoverOutlines(event.data.payload.outlines);
+            break;
+          case "inspect-active":
+            setActiveOutlines(event.data.payload.outlines);
             break;
           case "scroll":
             setScroll(event.data.payload);
@@ -261,7 +280,7 @@ function LegacyPreviewContainerComponent(
     return () => {
       window.removeEventListener("message", listener);
     };
-  }, [onUrlChange, onInspectSelect]);
+  }, [onUrlChange, onInspectSelect, onRecordComplete]);
 
   useEffect(() => {
     if (!initialized) {
@@ -296,8 +315,44 @@ function LegacyPreviewContainerComponent(
   }, [initialized, previewOrigin, inspecting]);
 
   useEffect(() => {
-    setAdjustedOutline(adjustOutline(outline));
-  }, [outline, adjustOutline]);
+    if (!initialized) {
+      return;
+    }
+    iframeRef.current?.contentWindow?.postMessage(
+      {
+        channel: "ui-test-preview",
+        type: "set-active-tree-node",
+        payload: {
+          relatedCommands: activeRelatedCommands ?? [],
+        },
+      },
+      previewOrigin
+    );
+  }, [previewOrigin, activeRelatedCommands, initialized]);
+
+  useEffect(() => {
+    if (!initialized) {
+      return;
+    }
+    iframeRef.current?.contentWindow?.postMessage(
+      {
+        channel: "ui-test-preview",
+        type: "hover-over-tree-node",
+        payload: {
+          relatedCommands: hoverRelatedCommands ?? [],
+        },
+      },
+      previewOrigin
+    );
+  }, [previewOrigin, hoverRelatedCommands, initialized]);
+
+  useEffect(() => {
+    setAdjustedActiveOutlines(adjustOutlines(activeOutlines));
+  }, [activeOutlines, adjustOutlines]);
+
+  useEffect(() => {
+    setAdjustedHoverOutlines(adjustOutlines(hoverOutlines));
+  }, [hoverOutlines, adjustOutlines]);
 
   return (
     <div className={classNames("preview-container", { inspecting })}>
@@ -308,7 +363,12 @@ function LegacyPreviewContainerComponent(
         onLoad={handleIframeLoad}
         onMouseOut={handleMouseOut}
       />
-      {adjustedOutline && <InspectOutlineComponent {...adjustedOutline} />}
+      {adjustedHoverOutlines.map((outline, index) => (
+        <InspectOutlineComponent key={index} type="hover" {...outline} />
+      ))}
+      {adjustedActiveOutlines.map((outline, index) => (
+        <InspectOutlineComponent key={index} type="active" {...outline} />
+      ))}
     </div>
   );
 }
