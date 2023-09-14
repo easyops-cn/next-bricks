@@ -1,0 +1,66 @@
+.site-map {
+  padding: 24px;
+  .search-input::part(affix-wrapper) {
+    border: none;
+    border-bottom: 1px solid var(--antd-input-border-color);
+    border-radius: 0px;
+  }
+  .visit-access,
+  .search-panel {
+    .title {
+      display: inline-block;
+      padding: 2px 16px;
+      font-weight: 500;
+      line-height: 24px;
+      position: relative;
+      &::before {
+        content: "";
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        top: 10px;
+        left: 1px;
+        border-radius: 50%;
+        background: var(--color-secondary-text);
+      }
+    }
+
+    .no-data-tips {
+      display: flex;
+      margin: 16px 0 32px;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-secondary-text);
+    }
+  }
+
+  .visit-access {
+    &.hasData {
+      display: flex;
+    }
+    margin-top: 16px;
+
+    .tag-wrapper {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, 200px);
+      gap: 8px;
+    }
+  }
+
+  .ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .search-panel {
+    margin-top: 16px;
+    .recommend-wrapper {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, 200px);
+      gap: 8px;
+    }
+  }
+}
