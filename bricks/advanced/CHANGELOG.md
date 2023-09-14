@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.5.0...@next-bricks/advanced@0.6.0) (2023-09-14)
+
+
+### Features
+
+* next-table support rowSelection ([4913d96](https://github.com/easyops-cn/next-bricks/commit/4913d962c052f47909616d96093c5e7c4c1381c5))
+* next-table support rowSelection ([6cedbdd](https://github.com/easyops-cn/next-bricks/commit/6cedbddbcc4c9abd98d75914f82122b101c6fdbf))
+
+
+
+
+
 # [0.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.4.0...@next-bricks/advanced@0.5.0) (2023-09-14)
 
 

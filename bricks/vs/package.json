@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/vs",
-  "version": "0.4.47",
+  "version": "0.4.48",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/vs",
   "repository": {
     "type": "git",
@@ -34,7 +34,7 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-bricks/form": "^0.17.9",
+    "@next-bricks/form": "^0.17.10",
     "@next-core/cook": "^2.2.6",
     "@next-core/element": "^1.1.4",
     "@next-core/monaco-contributions": "^0.3.2",
