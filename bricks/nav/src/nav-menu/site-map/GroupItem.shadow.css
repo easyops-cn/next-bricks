@@ -12,6 +12,11 @@
         color: var(--color-brand-hover);
       }
     }
+
+    &.active::part(link),
+    &.active::part(icon) {
+      color: var(--palette-blue-8);
+    }
   }
   .item-link::part(link) {
     padding: 8px 12px;
