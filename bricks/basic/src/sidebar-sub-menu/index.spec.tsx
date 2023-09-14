@@ -2,15 +2,14 @@ import { describe, test, expect, jest } from "@jest/globals";
 import { act } from "react-dom/test-utils";
 import "./";
 import { EoSidebarSubMenu } from "./index.js";
+import * as GeneralMenu from "@next-shared/general/menu";
 
 jest.mock("@next-core/theme", () => ({}));
 
-jest.mock("@next-shared/general/menu", () => ({
-  initMenuItemAndMatchCurrentPathKeys: jest.fn().mockReturnValue({
-    selectedKeys: [],
-    openedKeys: [],
-  }),
-}));
+jest.spyOn(GeneralMenu, "initMenuItemAndMatchCurrentPathKeys").mockReturnValue({
+  selectedKeys: [],
+  openedKeys: [],
+});
 
 jest.mock("@next-core/runtime", () => ({
   getHistory: () => ({

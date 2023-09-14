@@ -10,8 +10,13 @@ export function isGroup(item: SidebarMenuItem): item is SidebarMenuGroup {
   return item.type === "group";
 }
 
-export function isSubMenu(item: SidebarMenuItem): item is SidebarMenuGroup {
-  return item.type === "subMenu";
+export function isSubMenu(
+  item: SidebarMenuItem,
+  groupAsSubMenu?: boolean
+): item is SidebarMenuGroup {
+  return Boolean(
+    item.type === "subMenu" || (groupAsSubMenu && item.type === "group")
+  );
 }
 
 export function initMenuItemAndMatchCurrentPathKeys(
