@@ -43,6 +43,16 @@ const columns = [
     key: "address",
     title: "Address",
   },
+  {
+    dataIndex: "tag",
+    key: "tag",
+    title: "Tag",
+  },
+  {
+    dataIndex: ["tutor", "name"],
+    key: "tutorName",
+    title: "Tutor",
+  },
 ];
 const dataSource = {
   list: [
@@ -51,6 +61,10 @@ const dataSource = {
       name: "Jack",
       age: 18,
       address: "Guangzhou",
+      tag: ["nice", "good"],
+      tutor: {
+        name: "Mr.Bob",
+      },
     },
     {
       key: 1,
@@ -69,12 +83,16 @@ const dataSource = {
       name: "Sam",
       age: 28,
       address: "Guangzhou",
+      tutor: {
+        name: "Mr.Chen",
+      },
     },
     {
       key: 4,
       name: "Bob",
       age: 35,
       address: "Hainan",
+      tag: ["happy", "good"],
     },
     {
       key: 5,
@@ -93,6 +111,10 @@ const dataSource = {
       name: "Charlotte",
       age: 33,
       address: "Chongqing",
+      tutor: {
+        subject: "Physics",
+        name: "Miss.Rose",
+      },
     },
     {
       key: 8,
@@ -105,6 +127,7 @@ const dataSource = {
       name: "Noah",
       age: 38,
       address: "Hainan",
+      tag: ["happy", "nice"],
     },
     {
       key: 10,
@@ -120,8 +143,21 @@ const dataSource = {
 describe("eo-next-table", () => {
   test("basic usage", async () => {
     const element = document.createElement("eo-next-table") as EoNextTable;
-    element.columns = columns;
+    element.columns = [
+      ...columns,
+      {
+        dataIndex: "hidden1",
+        key: "hidden1",
+        title: "hidden 1",
+      },
+      {
+        dataIndex: ["group", "name"],
+        key: "groupName",
+        title: "hidden 2",
+      },
+    ];
     element.dataSource = dataSource;
+    element.hiddenColumns = ["hidden1", "groupName"];
 
     expect(element.shadowRoot).toBeFalsy();
 
@@ -149,8 +185,10 @@ describe("eo-next-table", () => {
     });
     expect(document.body.contains(element)).toBeFalsy();
   });
+});
 
-  test("pagination", async () => {
+describe("pagination", () => {
+  test("basic usage", async () => {
     const onPageChange = jest.fn();
     const onPageSizeChange = jest.fn();
     const element = document.createElement("eo-next-table") as EoNextTable;
@@ -248,6 +286,97 @@ describe("eo-next-table", () => {
       element.pagination = false;
     });
     expect(element.shadowRoot?.querySelector(".ant-pagination")).toBeFalsy();
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(document.body.contains(element)).toBeFalsy();
+  });
+});
+
+describe("front search", () => {
+  test("search by column.dataIndex", async () => {
+    const element = document.createElement("eo-next-table") as EoNextTable;
+    element.columns = columns;
+    element.dataSource = dataSource;
+    element.pagination = false;
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    await act(async () => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+
+    expect(
+      element.shadowRoot?.querySelectorAll("tbody .ant-table-row").length
+    ).toBe(dataSource.list.length);
+
+    await act(async () => {
+      element.search({ q: "nice" });
+    });
+    expect(
+      element.shadowRoot?.querySelectorAll("tbody .ant-table-row").length
+    ).toBe(2);
+
+    await act(async () => {
+      element.search({ q: "rose" });
+    });
+    expect(
+      element.shadowRoot?.querySelectorAll("tbody .ant-table-row").length
+    ).toBe(1);
+
+    await act(async () => {
+      element.search({ q: "" });
+    });
+    expect(
+      element.shadowRoot?.querySelectorAll("tbody .ant-table-row").length
+    ).toBe(dataSource.list.length);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(document.body.contains(element)).toBeFalsy();
+  });
+
+  test("search by searchFields", async () => {
+    const element = document.createElement("eo-next-table") as EoNextTable;
+    element.columns = columns;
+    element.dataSource = dataSource;
+    element.pagination = false;
+    element.searchFields = ["tutor"];
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    await act(async () => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+
+    expect(
+      element.shadowRoot?.querySelectorAll("tbody .ant-table-row").length
+    ).toBe(dataSource.list.length);
+
+    await act(async () => {
+      element.search({ q: "nice" });
+    });
+    expect(
+      element.shadowRoot?.querySelectorAll("tbody .ant-table-row").length
+    ).toBe(0);
+
+    await act(async () => {
+      element.search({ q: "physics" });
+    });
+    expect(
+      element.shadowRoot?.querySelectorAll("tbody .ant-table-row").length
+    ).toBe(1);
+
+    await act(async () => {
+      element.search({ q: "" });
+    });
+    expect(
+      element.shadowRoot?.querySelectorAll("tbody .ant-table-row").length
+    ).toBe(dataSource.list.length);
 
     act(() => {
       document.body.removeChild(element);
