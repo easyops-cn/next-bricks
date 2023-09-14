@@ -121,15 +121,18 @@ describe("component test", () => {
       const onFavoriteFn = jest.fn();
       const { container } = render(
         <GroupView
+          selectedKey={["1.4.3"]}
           groupId="monitor"
           groups={groups as SidebarMenuGroup[]}
           onFavorite={onFavoriteFn}
-        />,
+        />
       );
 
       expect(container.querySelectorAll(".group").length).toEqual(1);
 
       expect(container.querySelectorAll(".custom-group").length).toEqual(1);
+
+      expect(container.querySelector(".active")?.textContent).toEqual("视图");
     });
   });
 });

@@ -9,19 +9,21 @@ import { Link, LinkProps } from "../../link/index.js";
 import type { Target } from "../../interface.js";
 import { collectService } from "./CollectService.js";
 import { processGroupItems } from "./processor.js";
+import classNames from "classnames";
 
 const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 
 interface GroupViewProps {
   groups: SidebarMenuGroup[];
   groupId: string;
+  selectedKey?: string[];
   onFavorite: OnFavoriteCallback;
 }
 
 export const itemColumnWidth = 240;
 
 export function GroupView(props: GroupViewProps): React.ReactElement {
-  const { groupId, onFavorite } = props;
+  const { groupId, selectedKey, onFavorite } = props;
   const groupMenus = processGroupItems(props.groups);
 
   return (
@@ -33,12 +35,14 @@ export function GroupView(props: GroupViewProps): React.ReactElement {
             {item.groupFrom === "default" ? (
               <DefaultGroup
                 groupId={groupId}
+                selectedKey={selectedKey}
                 groups={item.groups}
                 onFavorite={onFavorite}
               />
             ) : (
               <CustomGroup
                 groupId={groupId}
+                selectedKey={selectedKey}
                 groups={item.groups}
                 onFavorite={onFavorite}
               />
@@ -52,11 +56,12 @@ export function GroupView(props: GroupViewProps): React.ReactElement {
 
 interface BaseGroupProps {
   groupId: string;
+  selectedKey?: string[];
   onFavorite: OnFavoriteCallback;
   groups: SidebarMenuGroup[];
 }
 export function DefaultGroup(props: BaseGroupProps): React.ReactElement {
-  const { groupId, onFavorite, groups } = props;
+  const { groupId, onFavorite, selectedKey, groups } = props;
 
   const groupRef = React.useRef<HTMLDivElement>(null);
   const [columnCount, setColumnCount] = useState<number>();
@@ -91,6 +96,7 @@ export function DefaultGroup(props: BaseGroupProps): React.ReactElement {
               <GroupItem
                 key={item.key}
                 groupId={groupId}
+                selectedKey={selectedKey}
                 data={item as SidebarMenuSimpleItem}
                 onFavorite={onFavorite}
               />
@@ -103,7 +109,7 @@ export function DefaultGroup(props: BaseGroupProps): React.ReactElement {
 }
 
 export function CustomGroup(props: BaseGroupProps): React.ReactElement {
-  const { groupId, onFavorite, groups } = props;
+  const { groupId, onFavorite, selectedKey, groups } = props;
 
   return (
     <div className="custom-group">
@@ -120,6 +126,7 @@ export function CustomGroup(props: BaseGroupProps): React.ReactElement {
             {group.items.map((item) => (
               <GroupItem
                 key={item.key}
+                selectedKey={selectedKey}
                 groupId={groupId}
                 data={item as SidebarMenuSimpleItem}
                 onFavorite={onFavorite}
@@ -134,11 +141,12 @@ export function CustomGroup(props: BaseGroupProps): React.ReactElement {
 
 interface GroupItemProps {
   data: SidebarMenuSimpleItem;
+  selectedKey?: string[];
   groupId: string;
   onFavorite: OnFavoriteCallback;
 }
 export function GroupItem(props: GroupItemProps): React.ReactElement {
-  const { data, groupId, onFavorite } = props;
+  const { data, groupId, onFavorite, selectedKey } = props;
 
   return (
     <WrappedLink
@@ -147,7 +155,9 @@ export function GroupItem(props: GroupItemProps): React.ReactElement {
       url={data.to as string}
       href={data.href}
       target={data.target as Target}
-      className="item-link"
+      className={classNames("item-link", {
+        active: selectedKey?.includes(data.key as string),
+      })}
     >
       <span className="ellipsis">{data.text}</span>
       <span className="icon-wrapper">
