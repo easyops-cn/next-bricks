@@ -6,14 +6,20 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { Column, RecordType, DataSource, PaginationType } from "./interface.js";
+import {
+  Column,
+  RecordType,
+  DataSource,
+  PaginationType,
+  RowSelectionType,
+} from "./interface.js";
 import { Table, ConfigProvider, theme } from "antd";
 import { StyleProvider, createCache } from "@ant-design/cssinjs";
 import {
   ReactUseMultipleBricks,
   useCurrentTheme,
 } from "@next-core/react-runtime";
-import { ColumnTitleProps } from "antd/es/table/interface.js";
+import { ColumnTitleProps, RowSelectMethod } from "antd/es/table/interface.js";
 import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
 import { Trans } from "react-i18next";
 import { K, NS, locales } from "./i18n.js";
@@ -21,11 +27,16 @@ import {
   DEFAULT_PAGE,
   DEFAULT_PAGE_SIZE,
   defaultPaginationConfig,
+  defaultRowSelectionConfig,
   getSearchKeywords,
 } from "./utils.js";
-import { get } from "lodash";
+import { get, isNil } from "lodash";
+import { wrapBrick } from "@next-core/react-element";
+import type { Link, LinkProps } from "@next-bricks/basic/link";
 
 initializeReactI18n(NS, locales);
+
+const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 
 interface NextTableComponentProps {
   shadowRoot: ShadowRoot | null;
@@ -33,10 +44,17 @@ interface NextTableComponentProps {
   columns?: Column[];
   dataSource?: DataSource;
   pagination?: PaginationType;
+  rowSelection?: RowSelectionType;
+  selectedRowKeys?: (string | number)[];
   hiddenColumns?: (string | number)[];
   searchFields?: (string | string[])[];
   onPageChange?: (detail: { page: number; pageSize: number }) => void;
   onPageSizeChange?: (detail: { page: number; pageSize: number }) => void;
+  onRowSelect?: (detail: {
+    keys: (string | number)[];
+    rows: RecordType[];
+    info: { type: RowSelectMethod };
+  }) => void;
 }
 
 export interface NextTableComponentRef {
@@ -53,10 +71,12 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
     columns,
     dataSource,
     pagination,
+    rowSelection,
     hiddenColumns,
     searchFields,
     onPageChange,
     onPageSizeChange,
+    onRowSelect,
   } = props;
 
   const { t } = useTranslation(NS);
@@ -73,6 +93,13 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
     page: dataSource?.page ?? DEFAULT_PAGE,
     pageSize: dataSource?.pageSize ?? DEFAULT_PAGE_SIZE,
   });
+  const [selectedRowKeys, setSelectedRowKeys] = useState<
+    (string | number)[] | undefined
+  >(props.selectedRowKeys);
+
+  useEffect(() => {
+    setSelectedRowKeys(props.selectedRowKeys);
+  }, [props.selectedRowKeys]);
 
   useEffect(() => {
     setList(dataSource?.list);
@@ -120,33 +147,22 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
       });
   }, [columns, hiddenColumns]);
 
-  const processedPagination = useMemo(() => {
+  const rowSelectionConfig = useMemo(() => {
+    if (rowSelection === false || isNil(rowSelection)) {
+      return undefined;
+    }
+    return {
+      ...defaultRowSelectionConfig,
+      ...(rowSelection === true ? {} : rowSelection),
+    };
+  }, [rowSelection]);
+
+  const paginationConfig = useMemo(() => {
     if (pagination === false) {
       return false;
     }
-    const mergedConfig = { ...defaultPaginationConfig, ...pagination };
-    return {
-      ...mergedConfig,
-      total: dataSource?.total,
-      current: page,
-      pageSize: pageSize,
-      showTotal: mergedConfig.showTotal
-        ? (total: number) => {
-            return (
-              <span className="pagination-total-text">
-                <Trans
-                  i18nKey={t(K.TOTAL)}
-                  values={{ total }}
-                  components={{
-                    el: <strong className="pagination-total-number" />,
-                  }}
-                />
-              </span>
-            );
-          }
-        : () => null,
-    };
-  }, [dataSource, pagination, page, pageSize]);
+    return { ...defaultPaginationConfig, ...pagination };
+  }, [pagination]);
 
   useImperativeHandle(ref, () => ({
     search: ({ q }) => {
@@ -202,7 +218,73 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
           rowKey={rowKey}
           columns={processedColumns}
           dataSource={list}
-          pagination={processedPagination}
+          pagination={
+            paginationConfig === false
+              ? false
+              : {
+                  ...paginationConfig,
+                  total: dataSource?.total,
+                  current: page,
+                  pageSize: pageSize,
+                  showTotal: (total: number) => {
+                    return (
+                      <div className="pagination-wrapper">
+                        {paginationConfig.showTotal ? (
+                          <span className="pagination-total-text">
+                            <Trans
+                              i18nKey={t(K.TOTAL)}
+                              values={{ total }}
+                              components={{
+                                el: (
+                                  <strong className="pagination-total-number" />
+                                ),
+                              }}
+                            />
+                          </span>
+                        ) : null}
+                        {rowSelectionConfig?.showSelectInfo &&
+                        selectedRowKeys?.length ? (
+                          <span className="select-info">
+                            <span>
+                              {t(K.SELECT_INFO, {
+                                count: selectedRowKeys.length,
+                              })}
+                            </span>
+                            <WrappedLink
+                              onClick={() => {
+                                setSelectedRowKeys([]);
+                                onRowSelect?.({
+                                  keys: [],
+                                  rows: [],
+                                  info: { type: "none" },
+                                });
+                              }}
+                            >
+                              {t(K.CLEAR)}
+                            </WrappedLink>
+                          </span>
+                        ) : null}
+                      </div>
+                    );
+                  },
+                }
+          }
+          rowSelection={
+            rowSelectionConfig === undefined
+              ? undefined
+              : {
+                  ...rowSelectionConfig,
+                  selectedRowKeys,
+                  onChange(
+                    keys: (string | number)[],
+                    rows: RecordType[],
+                    info: { type: RowSelectMethod }
+                  ) {
+                    setSelectedRowKeys(keys);
+                    onRowSelect?.({ keys, rows, info });
+                  },
+                }
+          }
           onChange={(pagination, filters, sorter, extra) => {
             if (extra.action === "paginate") {
               setPageAndPageSize((pre) => {

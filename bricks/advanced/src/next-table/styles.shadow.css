@@ -6,6 +6,11 @@
   display: none;
 }
 
+.pagination-wrapper {
+  display: flex;
+  gap: 20px;
+}
+
 .pagination-total-text {
   color: var(--antd-pagination-total-text);
 }
@@ -13,4 +18,9 @@
 .pagination-total-number {
   font-weight: var(--font-weight-400);
   color: var(--antd-pagination-total-strong-text);
+}
+
+.select-info {
+  display: flex;
+  gap: 10px;
 }
