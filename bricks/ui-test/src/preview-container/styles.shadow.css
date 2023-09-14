@@ -35,7 +35,6 @@
   border-width: 2px;
   border-radius: 0 4px 4px;
   pointer-events: none;
-  border-color: rgba(var(--palette-blue-6-channel));
 }
 
 .preview-container:not(.inspecting) .outline {
@@ -52,14 +51,20 @@
   font-size: 12px;
   border-radius: 4px 4px 0 0;
   white-space: nowrap;
-  background: rgba(var(--palette-blue-6-channel));
 }
 
-/* .outline.overflowed-x {
-  border-radius: 4px 0 4px 4px;
+.outline.hover {
+  border-color: rgba(var(--palette-blue-6-channel), 0.3);
+
+  .label {
+    background: rgba(var(--palette-blue-6-channel), 0.3);
+  }
 }
 
-.outline.overflowed-x .label {
-  left: auto;
-  right: -2px;
-} */
+.outline.active {
+  border-color: var(--palette-blue-6);
+
+  .label {
+    background: var(--palette-blue-6);
+  }
+}
