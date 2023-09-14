@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.30.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.30.1...@next-bricks/basic@0.30.2) (2023-09-14)
+
+
+### Bug Fixes
+
+* menu active item ([3240429](https://github.com/easyops-cn/next-bricks/commit/3240429ba09f0d4f574a481946a8c53e18c061e1))
+
+
+
+
+
 ## [0.30.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.30.0...@next-bricks/basic@0.30.1) (2023-09-13)
 
 
