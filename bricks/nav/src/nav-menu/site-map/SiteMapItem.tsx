@@ -151,14 +151,16 @@ export function SiteMapItem(props: SiteMapItemProps) {
 
   return (
     <div className="site-map">
-      <WrappedInput
-        className="search-input"
-        style={{ width: "100%" }}
-        onValueChange={debouncedHandleSearch}
-        placeholder={t(K.SEARCH_ITEM_PLACEHOLDER)}
-      >
-        <WrappedIcon slot="prefix" lib="antd" icon="search" />
-      </WrappedInput>
+      <div className="search-wrapper">
+        <WrappedInput
+          className="search-input"
+          style={{ width: "100%" }}
+          onValueChange={debouncedHandleSearch}
+          placeholder={t(K.SEARCH_ITEM_PLACEHOLDER)}
+        >
+          <WrappedIcon slot="prefix" lib="antd" icon="search" />
+        </WrappedInput>
+      </div>
 
       {!q && (
         <div>
