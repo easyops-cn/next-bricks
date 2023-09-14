@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.4.0...@next-bricks/advanced@0.5.0) (2023-09-14)
+
+
+### Features
+
+* next-table support hiddenColumns & front search ([13dd89f](https://github.com/easyops-cn/next-bricks/commit/13dd89fb5fea3f0b83d8a99e104e3511ab31d935))
+
+
+
+
+
 # [0.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.3.0...@next-bricks/advanced@0.4.0) (2023-09-13)
 
 
