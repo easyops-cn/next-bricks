@@ -8,6 +8,11 @@ export const defaultPaginationConfig = {
   showTotal: true,
 };
 
+export const defaultRowSelectionConfig = {
+  preserveSelectedRowKeys: true,
+  showSelectInfo: true,
+};
+
 export function getSearchKeywords(value: unknown): string[] {
   const result = [];
   if (isNil(value)) {

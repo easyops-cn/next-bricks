@@ -4,7 +4,14 @@ import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import { NextTableComponent, NextTableComponentRef } from "./Table.js";
-import { Column, DataSource, PaginationType } from "./interface.js";
+import {
+  Column,
+  DataSource,
+  PaginationType,
+  RecordType,
+  RowSelectionType,
+} from "./interface.js";
+import { RowSelectMethod } from "antd/es/table/interface.js";
 
 const { defineElement, property, method, event } = createDecorators();
 
@@ -46,7 +53,23 @@ class EoNextTable extends ReactNextElement {
   @property({
     attribute: false,
   })
-  accessor pagination: PaginationType | undefined;
+  accessor pagination: PaginationType;
+
+  /**
+   * 表格行可选择配置
+   */
+  @property({
+    attribute: false,
+  })
+  accessor rowSelection: RowSelectionType;
+
+  /**
+   * 选中项的 key
+   */
+  @property({
+    attribute: false,
+  })
+  accessor selectedRowKeys: (string | number)[] | undefined;
 
   /**
    * 隐藏的列（输入对应的 column.key）
@@ -98,6 +121,24 @@ class EoNextTable extends ReactNextElement {
     this.#pageSizeChangeEvent.emit(detail);
   };
 
+  /**
+   * 行选中项发生变化时的回调
+   * @detail 改变后的 rowKey 及行数据
+   */
+  @event({ type: "row.select" })
+  accessor #rowSelectEvent!: EventEmitter<{
+    keys: (string | number)[];
+    rows: RecordType[];
+    info: { type: RowSelectMethod };
+  }>;
+  #handleRowSelect = (detail: {
+    keys: (string | number)[];
+    rows: RecordType[];
+    info: { type: RowSelectMethod };
+  }): void => {
+    this.#rowSelectEvent.emit(detail);
+  };
+
   render() {
     return (
       <NextTableComponent
@@ -107,10 +148,13 @@ class EoNextTable extends ReactNextElement {
         columns={this.columns}
         dataSource={this.dataSource}
         pagination={this.pagination}
+        rowSelection={this.rowSelection}
+        selectedRowKeys={this.selectedRowKeys}
         hiddenColumns={this.hiddenColumns}
         searchFields={this.searchFields}
         onPageChange={this.#handlePageChange}
         onPageSizeChange={this.#handlePageSizeChange}
+        onRowSelect={this.#handleRowSelect}
       />
     );
   }

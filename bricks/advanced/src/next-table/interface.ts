@@ -1,4 +1,5 @@
 import type { ColumnType, TablePaginationConfig } from "antd/es/table";
+import type { TableRowSelection } from "antd/es/table/interface.js";
 import type { UseBrickConf } from "@next-core/types";
 
 export type RecordType = Record<string, any>;
@@ -37,3 +38,17 @@ interface PaginationConfig
 }
 
 export type PaginationType = false | PaginationConfig | undefined;
+
+interface RowSelectionConfig
+  extends Pick<
+    TableRowSelection<RecordType>,
+    | "columnWidth"
+    | "fixed"
+    | "hideSelectAll"
+    | "preserveSelectedRowKeys"
+    | "type"
+  > {
+  showSelectInfo?: boolean;
+}
+
+export type RowSelectionType = boolean | RowSelectionConfig | undefined;

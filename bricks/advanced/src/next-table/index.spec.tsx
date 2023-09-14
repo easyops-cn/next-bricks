@@ -384,3 +384,123 @@ describe("front search", () => {
     expect(document.body.contains(element)).toBeFalsy();
   });
 });
+
+describe("rowSelection", () => {
+  test("basic usage", async () => {
+    const onRowSelect = jest.fn();
+    const element = document.createElement("eo-next-table") as EoNextTable;
+    element.columns = columns;
+    element.dataSource = dataSource;
+    element.addEventListener("row.select", onRowSelect);
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    await act(async () => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+
+    expect(
+      element.shadowRoot?.querySelector(".ant-table-selection")
+    ).toBeFalsy();
+    expect(element.shadowRoot?.querySelector(".select-info")).toBeFalsy();
+
+    await act(async () => {
+      element.rowSelection = true;
+    });
+    expect(
+      element.shadowRoot?.querySelector(".ant-table-selection")
+    ).toBeTruthy();
+    expect(element.shadowRoot?.querySelector(".select-info")).toBeFalsy();
+
+    await act(async () => {
+      // 第一个为全选，后面的才是每行的选择框
+      fireEvent.click(
+        element.shadowRoot?.querySelectorAll(
+          ".ant-table-selection-column label"
+        )[1] as Element
+      );
+    });
+    expect(onRowSelect).lastCalledWith(
+      expect.objectContaining({
+        detail: {
+          keys: [dataSource.list[0].key],
+          rows: [dataSource.list[0]],
+          info: {
+            type: "single",
+          },
+        },
+      })
+    );
+    expect(element.shadowRoot?.querySelector(".select-info")).toBeTruthy();
+
+    // 全选第一页
+    await act(async () => {
+      fireEvent.click(
+        element.shadowRoot?.querySelectorAll(
+          ".ant-table-selection-column label"
+        )[0] as Element
+      );
+    });
+    expect(onRowSelect).lastCalledWith(
+      expect.objectContaining({
+        detail: {
+          keys: dataSource.list.slice(0, 5).map((v) => v.key),
+          rows: dataSource.list.slice(0, 5),
+          info: {
+            type: "all",
+          },
+        },
+      })
+    );
+
+    // 跳转并全选第二页
+    await act(async () => {
+      const pageItem = element.shadowRoot?.querySelectorAll(
+        ".ant-pagination-item"
+      )[1] as Element;
+      fireEvent.click(pageItem);
+    });
+    await act(async () => {
+      fireEvent.click(
+        element.shadowRoot?.querySelectorAll(
+          ".ant-table-selection-column label"
+        )[0] as Element
+      );
+    });
+    expect(onRowSelect).lastCalledWith(
+      expect.objectContaining({
+        detail: {
+          keys: dataSource.list.slice(0, 10).map((v) => v.key),
+          rows: dataSource.list.slice(0, 10),
+          info: {
+            type: "all",
+          },
+        },
+      })
+    );
+
+    // 清空
+    await act(async () => {
+      fireEvent.click(
+        element.shadowRoot?.querySelector(".select-info eo-link") as Element
+      );
+    });
+    expect(onRowSelect).lastCalledWith(
+      expect.objectContaining({
+        detail: {
+          keys: [],
+          rows: [],
+          info: {
+            type: "none",
+          },
+        },
+      })
+    );
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(document.body.contains(element)).toBeFalsy();
+  });
+});
