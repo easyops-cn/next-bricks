@@ -171,9 +171,10 @@ describe("siteMap test", () => {
         },
       ] as any as SidebarMenuGroup[],
     } as SidebarMenuGroup;
-    render(<SiteMapItem menuGroup={menuGroup} />);
+    const { container } = render(<SiteMapItem menuGroup={menuGroup} />);
 
-    expect(screen.getByText("NO_DATA_TIPS_IN_QUICK_ACCESS")).toBeTruthy();
+    expect(screen.getByText("网络")).toBeTruthy();
+    expect(container.querySelectorAll("eo-link").length).toEqual(8);
   });
 
   it("should work with search", async () => {

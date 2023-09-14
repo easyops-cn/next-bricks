@@ -3,6 +3,7 @@
   .search-input::part(affix-wrapper) {
     border: none;
     border-bottom: 1px solid var(--antd-input-border-color);
+    border-radius: 0px;
   }
   .visit-access,
   .search-panel {

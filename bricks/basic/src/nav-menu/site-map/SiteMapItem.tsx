@@ -162,13 +162,13 @@ export function SiteMapItem(props: SiteMapItemProps) {
 
       {!q && (
         <div>
-          <div
-            className={classNames("visit-access", {
-              hasData: favoriteList.length,
-            })}
-          >
-            <span className="title">{t(K.QUICK_ACCESS)}</span>
-            {favoriteList.length !== 0 && (
+          {favoriteList.length !== 0 && (
+            <div
+              className={classNames("visit-access", {
+                hasData: favoriteList.length,
+              })}
+            >
+              <span className="title">{t(K.QUICK_ACCESS)}</span>
               <DragContext.Provider
                 value={{
                   groupId,
@@ -193,14 +193,8 @@ export function SiteMapItem(props: SiteMapItemProps) {
                   ))}
                 </div>
               </DragContext.Provider>
-            )}
-
-            {favoriteList.length === 0 && (
-              <div className="no-data-tips">
-                {t(K.NO_DATA_TIPS_IN_QUICK_ACCESS)}
-              </div>
-            )}
-          </div>
+            </div>
+          )}
 
           <GroupView
             groupId={groupId}
