@@ -2403,10 +2403,10 @@
     minimist "^1.2.8"
     plop "^3.1.2"
 
-"@next-dll/ace@^2.0.676":
-  version "2.0.676"
-  resolved "https://registry.yarnpkg.com/@next-dll/ace/-/ace-2.0.676.tgz#b2f6104858c0c7f5d76302edf5bab7a661e8cbb6"
-  integrity sha512-ClhrYpzgNicqBEPl5TouxTCOgsiZnxU/3i0uJscmCCCUxtO+oUN23c0Nw0EQcI7efJK8rlxRIbktGHTY87Yaaw==
+"@next-dll/ace@^2.0.677":
+  version "2.0.677"
+  resolved "https://registry.yarnpkg.com/@next-dll/ace/-/ace-2.0.677.tgz#b8593a737ce0ae36444d5f8d4472a26c70dadca9"
+  integrity sha512-5xNFd/ziNOMotbZvIrMiF7wPRMv9skLDFdE8vZK08Bl/F8d9VQ8prXfbcQn7/bJAoyvTlEXlGQSKzhoZU3b2vQ==
 
 "@next-dll/d3@^2.0.79":
   version "2.0.79"
@@ -2418,15 +2418,15 @@
   resolved "https://registry.yarnpkg.com/@next-dll/echarts/-/echarts-2.0.80.tgz#92a8e09a7e549fee41368542ab3d6995c83cb2a8"
   integrity sha512-kJL1y0/X2F1KrUoeJ/fxhn845EgzTCcLrWG0OU9qjDkS7aM292RsbYROcgZU62HzB+lJNK++GZ31dOCV7fVKHw==
 
-"@next-dll/editor-bricks-helper@^0.38.21":
-  version "0.38.21"
-  resolved "https://registry.yarnpkg.com/@next-dll/editor-bricks-helper/-/editor-bricks-helper-0.38.21.tgz#837df5ba879e5d4ffb0a93ba4c4a9e30bc17b8ac"
-  integrity sha512-k4GRP/SQT6plK2vQNfopI5End8ySVJeAAGWg4VNLNBs/KdyIfzeXBl8QbX0dggGWVhX1VxJB7aIU4QYtqAd/mw==
+"@next-dll/editor-bricks-helper@^0.38.22":
+  version "0.38.22"
+  resolved "https://registry.yarnpkg.com/@next-dll/editor-bricks-helper/-/editor-bricks-helper-0.38.22.tgz#638bfe55e1d6b574f9e5de9a5c9039c571388bec"
+  integrity sha512-uA3ahIyeMLvXVSdtqHNBHFvkGy79/Z+3LR237fY4cHCpK/w4DREVqcuMg83v1Iq6c9GnyKHp1LkoVoCq4OC6iA==
 
-"@next-dll/react-dnd@^0.1.614":
-  version "0.1.614"
-  resolved "https://registry.yarnpkg.com/@next-dll/react-dnd/-/react-dnd-0.1.614.tgz#5f7e9a9be613a5f7ee6fdac9c2ef063ff45cb606"
-  integrity sha512-YIxlSMSdeYsE3iEo8yCaYt6ZkfGUwBST1j1Ap5jzSMZnBPGkin7e3VZLPIpAEZrWI9TKOI9sFFG8poGdzbOGCg==
+"@next-dll/react-dnd@^0.1.615":
+  version "0.1.615"
+  resolved "https://registry.yarnpkg.com/@next-dll/react-dnd/-/react-dnd-0.1.615.tgz#66c2b26fd2034361aa2eb6a2f64cdf58ff69354d"
+  integrity sha512-sWe3KetvqaoQDdje0JwkUNf/dWRefktIml/SGlbAYhOMcPOTopxENnMYYl4AFjgodGRK5BSLi/7n+6HmA6HaGQ==
 
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3":
   version "2.1.8-no-fsevents.3"
