@@ -504,3 +504,107 @@ describe("rowSelection", () => {
     expect(document.body.contains(element)).toBeFalsy();
   });
 });
+
+describe("expandable", () => {
+  test("basic usage", async () => {
+    const onRowExpand = jest.fn();
+    const onExpandedRowsChange = jest.fn();
+    const element = document.createElement("eo-next-table") as EoNextTable;
+    element.columns = columns;
+    element.dataSource = dataSource;
+    element.addEventListener("row.expand", onRowExpand);
+    element.addEventListener("expanded.rows.change", onExpandedRowsChange);
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    await act(async () => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+
+    expect(
+      element.shadowRoot?.querySelector(".ant-table-row-expand-icon-cell")
+    ).toBeFalsy();
+
+    await act(async () => {
+      element.expandable = {
+        rowExpandable: "<% DATA.rowData.key % 2 === 0 %>",
+        expandIconBrick: {
+          useBrick: {
+            brick: "div",
+            properties: {
+              className: "expand-icon",
+            },
+          },
+        },
+        expandedRowBrick: {
+          useBrick: {
+            brick: "div",
+            properties: {
+              className: "expanded-row-brick",
+            },
+          },
+        },
+      };
+    });
+    expect(
+      element.shadowRoot?.querySelector(".ant-table-row-expand-icon-cell")
+    ).toBeTruthy();
+
+    await act(async () => {
+      fireEvent.click(
+        element.shadowRoot?.querySelectorAll(".expand-icon")[1] as Element
+      );
+    });
+    expect(onRowExpand).not.toBeCalled();
+    expect(onExpandedRowsChange).not.toBeCalled();
+
+    await act(async () => {
+      fireEvent.click(
+        element.shadowRoot?.querySelectorAll(".expand-icon")[0] as Element
+      );
+    });
+    expect(
+      element.shadowRoot?.querySelector(
+        ".ant-table-expanded-row .expanded-row-brick"
+      )
+    ).toBeTruthy();
+    expect(onRowExpand).lastCalledWith(
+      expect.objectContaining({
+        detail: {
+          expanded: true,
+          record: dataSource.list[0],
+        },
+      })
+    );
+    expect(onExpandedRowsChange).lastCalledWith(
+      expect.objectContaining({
+        detail: [dataSource.list[0].key],
+      })
+    );
+
+    await act(async () => {
+      fireEvent.click(
+        element.shadowRoot?.querySelectorAll(".expand-icon")[0] as Element
+      );
+    });
+    expect(onRowExpand).lastCalledWith(
+      expect.objectContaining({
+        detail: {
+          expanded: false,
+          record: dataSource.list[0],
+        },
+      })
+    );
+    expect(onExpandedRowsChange).lastCalledWith(
+      expect.objectContaining({
+        detail: [],
+      })
+    );
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(document.body.contains(element)).toBeFalsy();
+  });
+});
