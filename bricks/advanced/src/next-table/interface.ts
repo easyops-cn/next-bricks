@@ -1,5 +1,8 @@
 import type { ColumnType, TablePaginationConfig } from "antd/es/table";
-import type { TableRowSelection } from "antd/es/table/interface.js";
+import type {
+  ExpandableConfig as TableExpandableConfig,
+  TableRowSelection,
+} from "antd/es/table/interface.js";
 import type { UseBrickConf } from "@next-core/types";
 
 export type RecordType = Record<string, any>;
@@ -52,3 +55,23 @@ interface RowSelectionConfig
 }
 
 export type RowSelectionType = boolean | RowSelectionConfig | undefined;
+
+interface ExpandableConfig
+  extends Pick<
+    TableExpandableConfig<RecordType>,
+    | "columnWidth"
+    | "expandRowByClick"
+    | "defaultExpandAllRows"
+    | "fixed"
+    | "showExpandColumn"
+  > {
+  expandIconBrick?: {
+    useBrick: UseBrickConf;
+  };
+  expandedRowBrick?: {
+    useBrick: UseBrickConf;
+  };
+  rowExpandable?: string | boolean;
+}
+
+export type ExpandableType = boolean | ExpandableConfig | undefined;

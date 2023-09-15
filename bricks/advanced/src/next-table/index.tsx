@@ -7,6 +7,7 @@ import { NextTableComponent, NextTableComponentRef } from "./Table.js";
 import {
   Column,
   DataSource,
+  ExpandableType,
   PaginationType,
   RecordType,
   RowSelectionType,
@@ -80,6 +81,22 @@ class EoNextTable extends ReactNextElement {
   accessor hiddenColumns: (string | number)[] | undefined;
 
   /**
+   * 表格行展开配置
+   */
+  @property({
+    attribute: false,
+  })
+  accessor expandable: ExpandableType;
+
+  /**
+   * 展开项的 key
+   */
+  @property({
+    attribute: false,
+  })
+  accessor expandedRowKeys: (string | number)[] | undefined;
+
+  /**
    * 进行前端搜索的字段，支持嵌套的写法。不配置的时候默认为对所有 column.dataIndex 进行前端搜索
    */
   @property({
@@ -139,6 +156,32 @@ class EoNextTable extends ReactNextElement {
     this.#rowSelectEvent.emit(detail);
   };
 
+  /**
+   * 点击展开图标时触发
+   * @detail 当前行的展开情况及数据
+   */
+  @event({ type: "row.expand" })
+  accessor #rowExpandEvent!: EventEmitter<{
+    expanded: boolean;
+    record: RecordType;
+  }>;
+  #handleRowExpand = (detail: {
+    expanded: boolean;
+    record: RecordType;
+  }): void => {
+    this.#rowExpandEvent.emit(detail);
+  };
+
+  /**
+   * 展开的行变化时触发
+   * @detail 所有展开行的 key
+   */
+  @event({ type: "expanded.rows.change" })
+  accessor #expandedRowsChangeEvent!: EventEmitter<(string | number)[]>;
+  #handleExpandedRowsChange = (detail: (string | number)[]): void => {
+    this.#expandedRowsChangeEvent.emit(detail);
+  };
+
   render() {
     return (
       <NextTableComponent
@@ -151,10 +194,14 @@ class EoNextTable extends ReactNextElement {
         rowSelection={this.rowSelection}
         selectedRowKeys={this.selectedRowKeys}
         hiddenColumns={this.hiddenColumns}
+        expandable={this.expandable}
+        expandedRowKeys={this.expandedRowKeys}
         searchFields={this.searchFields}
         onPageChange={this.#handlePageChange}
         onPageSizeChange={this.#handlePageSizeChange}
         onRowSelect={this.#handleRowSelect}
+        onRowExpand={this.#handleRowExpand}
+        onExpandedRowsChange={this.#handleExpandedRowsChange}
       />
     );
   }

@@ -12,6 +12,7 @@ import {
   DataSource,
   PaginationType,
   RowSelectionType,
+  ExpandableType,
 } from "./interface.js";
 import { Table, ConfigProvider, theme } from "antd";
 import { StyleProvider, createCache } from "@ant-design/cssinjs";
@@ -33,6 +34,7 @@ import {
 import { get, isNil } from "lodash";
 import { wrapBrick } from "@next-core/react-element";
 import type { Link, LinkProps } from "@next-bricks/basic/link";
+import { checkIfByTransform } from "@next-core/runtime";
 
 initializeReactI18n(NS, locales);
 
@@ -47,6 +49,8 @@ interface NextTableComponentProps {
   rowSelection?: RowSelectionType;
   selectedRowKeys?: (string | number)[];
   hiddenColumns?: (string | number)[];
+  expandable?: ExpandableType;
+  expandedRowKeys?: (string | number)[];
   searchFields?: (string | string[])[];
   onPageChange?: (detail: { page: number; pageSize: number }) => void;
   onPageSizeChange?: (detail: { page: number; pageSize: number }) => void;
@@ -55,6 +59,8 @@ interface NextTableComponentProps {
     rows: RecordType[];
     info: { type: RowSelectMethod };
   }) => void;
+  onRowExpand?: (detail: { expanded: boolean; record: RecordType }) => void;
+  onExpandedRowsChange?: (detail: (string | number)[]) => void;
 }
 
 export interface NextTableComponentRef {
@@ -73,10 +79,13 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
     pagination,
     rowSelection,
     hiddenColumns,
+    expandable,
     searchFields,
     onPageChange,
     onPageSizeChange,
     onRowSelect,
+    onRowExpand,
+    onExpandedRowsChange,
   } = props;
 
   const { t } = useTranslation(NS);
@@ -96,10 +105,17 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
   const [selectedRowKeys, setSelectedRowKeys] = useState<
     (string | number)[] | undefined
   >(props.selectedRowKeys);
+  const [expandedRowKeys, setExpandedRowKeys] = useState<(string | number)[]>(
+    props.expandedRowKeys ?? []
+  );
 
   useEffect(() => {
     setSelectedRowKeys(props.selectedRowKeys);
   }, [props.selectedRowKeys]);
+
+  useEffect(() => {
+    setExpandedRowKeys(props.expandedRowKeys ?? []);
+  }, [props.expandedRowKeys]);
 
   useEffect(() => {
     setList(dataSource?.list);
@@ -163,6 +179,13 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
     }
     return { ...defaultPaginationConfig, ...pagination };
   }, [pagination]);
+
+  const expandConfig = useMemo(() => {
+    if (expandable === false || isNil(expandable)) {
+      return undefined;
+    }
+    return expandable === true ? {} : expandable;
+  }, [expandable]);
 
   useImperativeHandle(ref, () => ({
     search: ({ q }) => {
@@ -282,6 +305,66 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                   ) {
                     setSelectedRowKeys(keys);
                     onRowSelect?.({ keys, rows, info });
+                  },
+                }
+          }
+          expandable={
+            expandConfig === undefined
+              ? undefined
+              : {
+                  ...expandConfig,
+                  expandedRowKeys,
+                  rowExpandable(record) {
+                    const data = {
+                      rowData: record,
+                    };
+                    return expandConfig.rowExpandable !== undefined
+                      ? checkIfByTransform(
+                          { if: expandConfig.rowExpandable },
+                          data
+                        )
+                      : true;
+                  },
+                  expandedRowRender(record, index, indent, expanded) {
+                    const data = {
+                      rowData: record,
+                      index,
+                      indent,
+                      expanded,
+                    };
+                    return expandConfig.expandedRowBrick?.useBrick ? (
+                      <ReactUseMultipleBricks
+                        useBrick={expandConfig.expandedRowBrick.useBrick}
+                        data={data}
+                      />
+                    ) : null;
+                  },
+                  expandIcon: expandConfig.expandIconBrick?.useBrick
+                    ? ({ expanded, expandable, record, onExpand }) => {
+                        const data = {
+                          rowData: record,
+                          expanded,
+                          expandable,
+                        };
+                        return (
+                          <span
+                            onClick={(e) => expandable && onExpand(record, e)}
+                          >
+                            <ReactUseMultipleBricks
+                              useBrick={expandConfig.expandIconBrick!.useBrick}
+                              data={data}
+                            />
+                          </span>
+                        );
+                      }
+                    : undefined,
+                  onExpand: (expanded, record) => {
+                    onRowExpand?.({ expanded, record });
+                  },
+                  onExpandedRowsChange: (expandedRows) => {
+                    const newRows = [...expandedRows];
+                    setExpandedRowKeys(newRows);
+                    onExpandedRowsChange?.(newRows);
                   },
                 }
           }
