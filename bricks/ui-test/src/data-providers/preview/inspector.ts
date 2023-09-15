@@ -231,6 +231,16 @@ function getTargetOutlinesByRelatedCommands(relatedCommands: RelatedCommand[]) {
         }
         reset();
         break;
+      case "find":
+        if (typeof p1 === "string") {
+          findElements((container) => [...container.querySelectorAll(p1)], {
+            type: "css-selector",
+            value: p1,
+          });
+          break;
+        }
+        reset();
+        break;
     }
   }
 
