@@ -70,3 +70,12 @@
     }
   }
 }
+
+:host-context(html[data-theme="dark-v2"]),
+:host-context([data-override-theme="dark-v2"]) {
+  .site-map {
+    .search-input::part(affix-wrapper) {
+      background: var(--antd-dropdown-menu-bg);
+    }
+  }
+}
