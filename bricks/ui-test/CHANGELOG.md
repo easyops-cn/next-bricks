@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.5.5...@next-bricks/ui-test@0.5.6) (2023-09-15)
+
+
+### Bug Fixes
+
+* support find elements by `find` ([09e38f0](https://github.com/easyops-cn/next-bricks/commit/09e38f0466f83a2dd8fd462081c7c5f86a24d8ad))
+
+
+
+
+
 ## [0.5.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.5.4...@next-bricks/ui-test@0.5.5) (2023-09-14)
 
 
