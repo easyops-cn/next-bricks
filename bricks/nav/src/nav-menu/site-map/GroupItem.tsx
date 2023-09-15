@@ -66,6 +66,7 @@ export function DefaultGroup(props: BaseGroupProps): React.ReactElement {
   const [columnCount, setColumnCount] = useState<number>();
 
   useEffect(() => {
+    // istanbul ignore next
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries) {
         if (entry.target === groupRef.current) {
@@ -85,7 +86,14 @@ export function DefaultGroup(props: BaseGroupProps): React.ReactElement {
     <div
       className="group"
       ref={groupRef}
-      style={{ columnCount, columnWidth: itemColumnWidth }}
+      style={
+        (columnCount as number) < groups?.length
+          ? { columnCount, columnWidth: itemColumnWidth }
+          : {
+              display: "grid",
+              gridTemplateColumns: `repeat(auto-fit, ${itemColumnWidth}px)`,
+            }
+      }
     >
       {groups.map((group) => (
         <div key={group.key} className="group-item">
@@ -119,7 +127,7 @@ export function CustomGroup(props: BaseGroupProps): React.ReactElement {
             className="custom-content"
             style={{
               display: "grid",
-              gridTemplateColumns: `repeat(auto-fit, minmax(${itemColumnWidth}px, 1fr))`,
+              gridTemplateColumns: `repeat(auto-fit, ${itemColumnWidth}px)`,
             }}
           >
             {group.items.map((item) => (
