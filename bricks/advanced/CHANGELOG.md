@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.6.1...@next-bricks/advanced@0.7.0) (2023-09-15)
+
+
+### Features
+
+* next-table support expandable ([cc30d8e](https://github.com/easyops-cn/next-bricks/commit/cc30d8ef7379426d79be6a960a51328cab57d600))
+
+
+
+
+
 ## [0.6.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.6.0...@next-bricks/advanced@0.6.1) (2023-09-15)
 
 **Note:** Version bump only for package @next-bricks/advanced
