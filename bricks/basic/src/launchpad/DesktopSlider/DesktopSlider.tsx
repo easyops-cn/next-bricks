@@ -329,20 +329,22 @@ export function DesktopSlider(props: DesktopSliderProps): React.ReactElement {
       })}
     >
       <div className={styles.desktopSelector}>
-        {[...[{ name: <HomeFilled /> }], ...desktops].map((desktop, index) => (
-          <React.Fragment key={index}>
-            {index !== 0 && <span className={styles.selectorSeparator} />}
-            <a
-              className={classNames(styles.desktopName, {
-                [styles.active]: desktopCursor === index,
-              })}
-              onClick={(e) => handleSlideTo(e, index)}
-              role="button"
-            >
-              {desktop.name}
-            </a>
-          </React.Fragment>
-        ))}
+        {[...[{ name: <HomeFilled rev={""} /> }], ...desktops].map(
+          (desktop, index) => (
+            <React.Fragment key={index}>
+              {index !== 0 && <span className={styles.selectorSeparator} />}
+              <a
+                className={classNames(styles.desktopName, {
+                  [styles.active]: desktopCursor === index,
+                })}
+                onClick={(e) => handleSlideTo(e, index)}
+                role="button"
+              >
+                {desktop.name}
+              </a>
+            </React.Fragment>
+          )
+        )}
       </div>
       <div className={styles.scrollContainer}>
         <div
@@ -392,7 +394,7 @@ export function DesktopSlider(props: DesktopSliderProps): React.ReactElement {
         role="button"
       >
         <span className={styles.arrowButton}>
-          <LeftOutlined />
+          <LeftOutlined rev={""} />
         </span>
       </a>
       <a
@@ -404,7 +406,7 @@ export function DesktopSlider(props: DesktopSliderProps): React.ReactElement {
         role="button"
       >
         <span className={styles.arrowButton}>
-          <RightOutlined />
+          <RightOutlined rev={""} />
         </span>
       </a>
     </div>
