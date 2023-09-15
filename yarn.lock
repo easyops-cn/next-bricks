@@ -2123,15 +2123,15 @@
     mockdate "^3.0.5"
     ws "^8.13.0"
 
-"@next-core/brick-dll-v3@^0.7.11":
-  version "0.7.11"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-dll-v3/-/brick-dll-v3-0.7.11.tgz#7d46f6e9c5b50ebc11c12762c19e73ae0c3683e8"
-  integrity sha512-rccOHqQC9hyWDqvU0hDHl+uk+MDuoBG74I5LeCxMOWL2YH3L3VZx7HEUxkjheNqSBMuWWrvnGyWFZEtEHXgV+A==
+"@next-core/brick-dll-v3@^0.7.13":
+  version "0.7.13"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-dll-v3/-/brick-dll-v3-0.7.13.tgz#d1c95c5455b56b2e37a1cd48e2e77ea6a3d8e5b5"
+  integrity sha512-HSHLPz16BPZLX69w4w4RJSqwa/fdlvUitR69112lDOjhFYNZZxPnHa6hcSZ8KnfBdkvaZtMBM6mofhJQ9qWPtQ==
 
-"@next-core/brick-icons@^2.31.74":
-  version "2.31.74"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-icons/-/brick-icons-2.31.74.tgz#557ea34095fa79a7b4264a3e3f2920f09bbac381"
-  integrity sha512-1/DZ9ZFqsIpK1XZ1K/VVs2ZVzzIf/YkkiFZUMwGe0G71Ltnha36Uqwy422lJMiXVVbHNhV64/OIOlVzJX9nkDQ==
+"@next-core/brick-icons@^2.32.0":
+  version "2.32.0"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-icons/-/brick-icons-2.32.0.tgz#1d456b832086ac4f415563369aa3f48b519845cd"
+  integrity sha512-Xws3Y0xytzwTt+amK2XBKlgppKQ2PYJcCwc5FQHsUPncpCX5bwYPvk7PxfO/MJuERIxCyXOSBivPDhs6wgSoQw==
 
 "@next-core/brick-manifest@^0.5.1":
   version "0.5.1"
@@ -2254,10 +2254,10 @@
     i18next-browser-languagedetector "^7.1.0"
     react-i18next "^13.2.2"
 
-"@next-core/illustrations@^0.11.20":
-  version "0.11.20"
-  resolved "https://registry.yarnpkg.com/@next-core/illustrations/-/illustrations-0.11.20.tgz#45469da63e3261fc49b52cf2db6074a67336b7db"
-  integrity sha512-nxzKBztYO0Qe9n3lbwYUtDCVVLtwMvdASt8sQmecdjzGTTy0W/s7lq/mFxe/SFMizGjlKHQ0VeKx/bk6iJ+2Ew==
+"@next-core/illustrations@^0.11.22":
+  version "0.11.22"
+  resolved "https://registry.yarnpkg.com/@next-core/illustrations/-/illustrations-0.11.22.tgz#621a81bd7ada8456dc7482b305f996e84c4f170f"
+  integrity sha512-8BFkkVbymz0LmsGKt3eSvvmRNhelu/tgcCSne1dNqX4h6UD4jo+Gy00KwagB0wTmDqxuY9NvAKJtq9ziVvL0+w==
 
 "@next-core/inject@^1.0.19":
   version "1.0.19"
@@ -2403,10 +2403,10 @@
     minimist "^1.2.8"
     plop "^3.1.2"
 
-"@next-dll/ace@^2.0.672":
-  version "2.0.672"
-  resolved "https://registry.yarnpkg.com/@next-dll/ace/-/ace-2.0.672.tgz#87af779046c43f394e6cd7334a0c6e5d75b1b7f6"
-  integrity sha512-lAzTC1H1CL+KfZjtuvZUwGkuuVWkAyz3BinZvNgLj8Q3mfkk+ngVFT9iBDGqn+pwyD3jU34irk/2g2lev4zbSw==
+"@next-dll/ace@^2.0.675":
+  version "2.0.675"
+  resolved "https://registry.yarnpkg.com/@next-dll/ace/-/ace-2.0.675.tgz#9c8d8e6a34a919edf84b39412add581bfe4449ec"
+  integrity sha512-gA+7B+yA6khxuqdBq8YyAq0pdTecf/7w6dbEETsZFOYD0nKjNiFdEk6uBVJ2aMzUeuHQs846FanFjzPDZuaFIg==
 
 "@next-dll/d3@^2.0.79":
   version "2.0.79"
@@ -2418,15 +2418,15 @@
   resolved "https://registry.yarnpkg.com/@next-dll/echarts/-/echarts-2.0.80.tgz#92a8e09a7e549fee41368542ab3d6995c83cb2a8"
   integrity sha512-kJL1y0/X2F1KrUoeJ/fxhn845EgzTCcLrWG0OU9qjDkS7aM292RsbYROcgZU62HzB+lJNK++GZ31dOCV7fVKHw==
 
-"@next-dll/editor-bricks-helper@^0.38.17":
-  version "0.38.17"
-  resolved "https://registry.yarnpkg.com/@next-dll/editor-bricks-helper/-/editor-bricks-helper-0.38.17.tgz#957fb7979a09639403a9a133a8a99a5dcaa2f3ef"
-  integrity sha512-GuArvd+ut658xoZPRgY5GJehEm71/gltV0TOcRKhIjXD+JtkgdJpKdIQcH4IjF8bb0puWGsFZ5LpqlwMOi4CSg==
+"@next-dll/editor-bricks-helper@^0.38.20":
+  version "0.38.20"
+  resolved "https://registry.yarnpkg.com/@next-dll/editor-bricks-helper/-/editor-bricks-helper-0.38.20.tgz#3e066af86aff35210ee5a82774850fa6e68ae111"
+  integrity sha512-zLU74Sn6nGzwXiYjEIjFwHQmq7Lbji0tFe6cPWdijYsHqGY/v+CKcs1uGXX/m8k5YWA3pKvW2gfd2Sk71ItqJg==
 
-"@next-dll/react-dnd@^0.1.610":
-  version "0.1.610"
-  resolved "https://registry.yarnpkg.com/@next-dll/react-dnd/-/react-dnd-0.1.610.tgz#67be753d8ecfe758373d4a1fd92840c0f1b53b78"
-  integrity sha512-/BOUF7K0sIsvo/tH3FsIpGypsiih6ps1jekgWn0LPi2O+yTWXVqfLB0ndHJ4dG6MibQe2fepb3jwr9kZoo7g+w==
+"@next-dll/react-dnd@^0.1.613":
+  version "0.1.613"
+  resolved "https://registry.yarnpkg.com/@next-dll/react-dnd/-/react-dnd-0.1.613.tgz#c9d8f85339e37c7464097e73500e1afd31652114"
+  integrity sha512-9M9RurWTtELz6Vv5AsDBtkNrFyyaWcM42rsVu6GE1WG73rrAuWMRRktCw1Ezj9AT9He6CwnTLmTVPgig153Okw==
 
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3":
   version "2.1.8-no-fsevents.3"
