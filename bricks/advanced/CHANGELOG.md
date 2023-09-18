@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.7.0...@next-bricks/advanced@0.7.1) (2023-09-18)
+
+
+### Bug Fixes
+
+* refine i18n locale types ([007ebef](https://github.com/easyops-cn/next-bricks/commit/007ebef29699dc8be0055efd770d8670fa21260a))
+
+
+
+
+
 # [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.6.1...@next-bricks/advanced@0.7.0) (2023-09-15)
 
 
