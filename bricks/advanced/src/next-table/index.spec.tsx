@@ -608,3 +608,34 @@ describe("expandable", () => {
     expect(document.body.contains(element)).toBeFalsy();
   });
 });
+
+describe("draggable", () => {
+  test("basic usage", async () => {
+    // TODO(nlicro): there's not a very practical way to test dnd in a jsdom environment - this library relies heavily on getBoundingClientRect which is stubbed to return all zeroes in jsdom.
+    const onRowDrag = jest.fn();
+    const element = document.createElement("eo-next-table") as EoNextTable;
+    element.columns = columns;
+    element.dataSource = dataSource;
+    element.pagination = false;
+    element.rowDraggable = true;
+    element.rowKey = "name";
+    element.addEventListener("row.drag", onRowDrag);
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    await act(async () => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+
+    const row = element.shadowRoot?.querySelector(
+      "[data-row-key='Jack']"
+    ) as HTMLElement;
+    expect(row.style.touchAction).toBe("none");
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(document.body.contains(element)).toBeFalsy();
+  });
+});

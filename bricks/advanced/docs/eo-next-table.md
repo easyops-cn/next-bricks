@@ -342,3 +342,72 @@
           age: 16
           address: Taiwan
 ```
+
+### Draggable
+
+```yaml preview
+- brick: eo-next-table
+  events:
+    row.drag:
+      - action: console.log
+  properties:
+    rowKey: name
+    rowDraggable: true
+    pagination: false
+    columns:
+      - dataIndex: name
+        key: name
+        title: Name
+      - dataIndex: age
+        key: age
+        title: Age
+      - dataIndex: address
+        key: address
+        title: Address
+    dataSource:
+      list:
+        - key: 0
+          name: Jack
+          age: 18
+          address: Guangzhou
+        - key: 1
+          name: Alex
+          age: 20
+          address: Shanghai
+        - key: 2
+          name: Lucy
+          age: 16
+          address: Yunnan
+        - key: 3
+          name: Sam
+          age: 28
+          address: Guangzhou
+        - key: 4
+          name: Bob
+          age: 35
+          address: Hainan
+        - key: 5
+          name: Ava
+          age: 23
+          address: Beijing
+        - key: 6
+          name: Sophia
+          age: 20
+          address: Shanghai
+        - key: 7
+          name: Charlotte
+          age: 33
+          address: Chongqing
+        - key: 8
+          name: Mia
+          age: 18
+          address: Chengdu
+        - key: 9
+          name: Noah
+          age: 38
+          address: Hainan
+        - key: 10
+          name: William
+          age: 16
+          address: Taiwan
+```
