@@ -8,6 +8,7 @@ import React, {
 import { createDecorators, EventEmitter } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import { handleHttpError } from "@next-core/runtime";
+import { auth } from "@next-core/easyops-runtime";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import { FormItem, FormItemProps } from "@next-bricks/form/form-item";
@@ -38,6 +39,7 @@ import {
   keyBy,
   DebouncedFunc,
 } from "lodash";
+import type { Button, ButtonProps } from "@next-bricks/basic/button";
 
 // --- NOTE: uncomment these lines below to enable i18n for your brick ---
 // import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
@@ -47,6 +49,8 @@ type ModelObjectItem = Partial<CmdbModels.ModelCmdbObject>;
 
 const { defineElement, property, event } = createDecorators();
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
+const WrappedButton = wrapBrick<Button, ButtonProps>("eo-button");
+
 const WrappedSelect = wrapBrick<
   Select,
   SelectProps & {
@@ -77,6 +81,7 @@ export interface EoUserOrUserGroupSelectProps extends FormItemProps {
   optionsMode: "user" | "group" | "all";
   staticList?: string[];
   isMultiple?: boolean;
+  hideAddMeQuickly?: boolean;
 }
 
 /**
@@ -221,6 +226,15 @@ class EoUserOrUserGroupSelect extends FormItemElementBase {
   })
   accessor staticList: string[] | undefined;
 
+  /**
+   * @description 快速选择我
+   * @group advanced
+   */
+  @property({
+    attribute: false,
+  })
+  accessor hideAddMeQuickly: boolean = true;
+
   @event({ type: "change" })
   accessor #changeEvent!: EventEmitter<string[] | UserOrUserGroupSelectValue>;
 
@@ -287,6 +301,7 @@ class EoUserOrUserGroupSelect extends FormItemElementBase {
         staticList={this.staticList}
         isMultiple={this.isMultiple}
         disabled={this.disabled}
+        hideAddMeQuickly={this.hideAddMeQuickly}
       />
     );
   }
@@ -652,7 +667,7 @@ export function EoUserOrUserGroupSelectComponent(
     if (isDifferent()) {
       initializeSelectedValue();
     }
-  }, [props.value]);
+  }, []);
 
   const selectOptions = useMemo(() => {
     let userListOptions: any = [];
@@ -689,6 +704,37 @@ export function EoUserOrUserGroupSelectComponent(
       : [...userListOptions, ...userGroupListOptions];
   }, [userList, userGroupList, props.optionsMode, props.staticList]);
 
+  // 快速选择我
+  const addMeQuickly = async () => {
+    const myUserName = auth.getAuth().username;
+    if (find(selectedValue, (v) => v === myUserName)) {
+      // 如果已选择项中包含我，则不重新发起请求
+      return;
+    }
+    const myUser = (
+      await InstanceApi_postSearch("USER", {
+        query: {
+          name: {
+            $eq: myUserName,
+          },
+        },
+
+        page: 1,
+        page_size: 1,
+        fields: {
+          ...zipObject(
+            getShowKey("USER"),
+            map(getShowKey("USER"), (v) => true)
+          ),
+
+          name: true,
+        },
+      })
+    ).list as any[];
+    myUser.length && setUserList([...userList, ...myUser]);
+    handleSelectChange({ detail: { value: [...selectedValue, myUserName] } });
+  };
+
   return (
     <WrappedFormItem {...(props as FormItemProps)}>
       <div className="select-wrapper">
@@ -705,6 +751,18 @@ export function EoUserOrUserGroupSelectComponent(
           options={selectOptions as any}
           disabled={props.disabled}
         ></WrappedSelect>
+        {!props.hideAddMeQuickly && props.optionsMode !== "group" && (
+          <WrappedButton
+            onClick={addMeQuickly}
+            type="link"
+            size="large"
+            style={{ fontSize: "16px" }}
+            icon={{
+              lib: "easyops",
+              icon: "quick-add-me",
+            }}
+          ></WrappedButton>
+        )}
       </div>
     </WrappedFormItem>
   );

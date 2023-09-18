@@ -12,6 +12,11 @@ const mockPostSearch = InstanceApi_postSearch as jest.Mock;
 jest.mock("@next-api-sdk/cmdb-sdk");
 
 jest.mock("@next-core/theme", () => ({}));
+jest.mock("@next-core/runtime", () => {
+  return {
+    getAuth: jest.fn().mockReturnValue({ username: "easyops2" }),
+  };
+});
 
 describe("eo-user-or-user-group-select", () => {
   test("basic usage", async () => {
@@ -87,7 +92,7 @@ describe("eo-user-or-user-group-select", () => {
     expect(element.shadowRoot?.childNodes.length).toBe(0);
   });
 
-  test("basic usage", async () => {
+  test("basic usage multiple false", async () => {
     jest.useFakeTimers({
       legacyFakeTimers: true,
     });
@@ -163,4 +168,72 @@ describe("eo-user-or-user-group-select", () => {
     });
     expect(element.shadowRoot?.childNodes.length).toBe(0);
   }, 6000);
+
+  test("add me quickly", async () => {
+    mockPostSearch.mockResolvedValue({
+      list: [
+        {
+          instanceId: "59eea4ad40bf82",
+          name: "easyops2",
+          nickname: "uwin2",
+        },
+      ],
+    } as never);
+    (CmdbObjectApi_getObjectRef as jest.Mock).mockResolvedValue({
+      data: [
+        {
+          objectId: "USER",
+          view: {
+            show_key: ["name", "nickname"],
+          },
+        },
+        {
+          objectId: "USER_GROUP",
+          view: {
+            show_key: ["name"],
+          },
+        },
+      ],
+    } as never);
+    const element = document.createElement(
+      "eo-user-or-user-group-select"
+    ) as EoUserOrUserGroupSelect;
+
+    Object.assign(element, {
+      name: "user",
+      label: "用户",
+      hideAddMeQuickly: false,
+    });
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    const mockValueChangeEvent = jest.fn();
+    element.addEventListener("change", mockValueChangeEvent);
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+    const select = element.shadowRoot?.querySelector("eo-select");
+    const addMeBtn = element.shadowRoot?.querySelector("eo-button");
+
+    await act(async () => {
+      fireEvent.click(addMeBtn as HTMLElement);
+    });
+
+    expect(InstanceApi_postSearch).toBeCalled();
+    expect(mockValueChangeEvent).toBeCalled();
+
+    mockValueChangeEvent.mockClear();
+
+    await act(async () => {
+      fireEvent.click(addMeBtn as HTMLElement);
+    });
+
+    // expect(mockValueChangeEvent).not.toBeCalled();
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
 });

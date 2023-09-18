@@ -154,6 +154,29 @@ describe("form.general-select", () => {
         },
       })
     );
+
+    act(() => {
+      (
+        element.shadowRoot?.querySelector(".select-item") as HTMLElement
+      ).click();
+    });
+
+    await act(async () => {
+      await (element.multiple = true);
+      fireEvent.keyDown(
+        element.shadowRoot?.querySelector(
+          ".select-selection-search-input"
+        ) as HTMLElement,
+        { code: "Backspace" }
+      );
+    });
+
+    expect(
+      (
+        element.shadowRoot?.querySelectorAll(".select-item")[0] as HTMLElement
+      ).classList.contains("select-option-selected")
+    ).toBeFalsy();
+
     act(() => {
       document.body.removeChild(element);
     });
