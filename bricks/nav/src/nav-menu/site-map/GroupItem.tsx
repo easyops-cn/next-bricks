@@ -166,7 +166,9 @@ export function GroupItem(props: GroupItemProps): React.ReactElement {
         active: selectedKey?.includes(data.key as string),
       })}
     >
-      <span className="ellipsis">{data.text}</span>
+      <span className="ellipsis" title={data.text}>
+        {data.text}
+      </span>
       <span className="icon-wrapper">
         <StarIcon
           active={collectService.isCollected(groupId, data)}

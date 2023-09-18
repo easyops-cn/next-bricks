@@ -15,6 +15,7 @@ jest.mock("./CollectService.js", () => ({
   collectService: {
     getFavoritesById: jest.fn(),
     isCollected: jest.fn(() => false),
+    checkMaxCapacity: jest.fn().mockReturnValue(false),
   },
 }));
 

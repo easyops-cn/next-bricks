@@ -7,6 +7,7 @@ export enum K {
   ADD_ITEM_TO_QUICK_ACCESS = "ADD_ITEM_TO_QUICK_ACCESS",
   NO_DATA_TIPS_IN_QUICK_ACCESS = "NO_DATA_TIPS_IN_QUICK_ACCESS",
   SITE_MAP_SEARCH_RECOMMEND = "SITE_MAP_SEARCH_RECOMMEND",
+  MAX_COLLECT_COUNT_TIPS = "MAX_COLLECT_COUNT_TIPS",
   NO_DATA_SEARCH_INFO = "NO_DATA_SEARCH_INFO",
   SEARCH_ITEM_PLACEHOLDER = "SEARCH_ITEM_PLACEHOLDER",
 }
@@ -21,6 +22,7 @@ const en: Locale = {
   NO_DATA_TIPS_IN_QUICK_ACCESS:
     "No quick access resources have been added yet. Please add from the list below or after searching",
   SITE_MAP_SEARCH_RECOMMEND: "Search recommend",
+  MAX_COLLECT_COUNT_TIPS: "Need to delete some favorites in order to add",
   NO_DATA_SEARCH_INFO: "The search result is empty, please enter again",
   SEARCH_ITEM_PLACEHOLDER: "Please enter keywords to search",
 };
@@ -34,6 +36,7 @@ const zh: Locale = {
   ADD_ITEM_TO_QUICK_ACCESS: "添加至快捷访问",
   NO_DATA_TIPS_IN_QUICK_ACCESS: "暂未添加快捷访问资源，从下方列表或搜索后添加",
   SITE_MAP_SEARCH_RECOMMEND: "搜索推荐",
+  MAX_COLLECT_COUNT_TIPS: "需删除部分收藏，才能添加",
   NO_DATA_SEARCH_INFO: "搜索结果为空，请重新输入",
   SEARCH_ITEM_PLACEHOLDER: "请输入关键词搜索",
 };

@@ -43,6 +43,15 @@ describe("CollectService", () => {
       })
     ).toEqual(true);
 
+    expect(
+      collectService.toggleFavorite("monitor", {
+        text: "newItem",
+        to: "/new-item",
+      })
+    );
+
+    expect(collectService.getFavoritesById("monitor").length).toEqual(2);
+
     collectService.removeItemFromFavorite("monitor", {
       text: "交换机",
       to: "/switch",

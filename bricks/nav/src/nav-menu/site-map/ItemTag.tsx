@@ -232,6 +232,8 @@ export function StarIcon({
       content={
         active
           ? t(K.REMOVE_ITEM_FROM_QUICK_ACCESS)
+          : collectService.checkMaxCapacity(groupId)
+          ? t(K.MAX_COLLECT_COUNT_TIPS)
           : t(K.ADD_ITEM_TO_QUICK_ACCESS)
       }
       className={classNames("star-icon", className)}

@@ -2,11 +2,13 @@ import React from "react";
 import { describe, expect } from "@jest/globals";
 import { act, render, screen, fireEvent } from "@testing-library/react";
 import { DRAG_DIRECTION, DragContext } from "./constants.js";
+import { collectService } from "./CollectService.js";
 import {
   QuickVisitItem,
   RecommendItem,
   ItemTag,
   PlaceholderDropComp,
+  StarIcon,
 } from "./ItemTag.js";
 
 describe("component test", () => {
@@ -144,5 +146,24 @@ describe("component test", () => {
 
       expect(mockDragOver).toHaveBeenCalled();
     });
+  });
+
+  describe("StarIcon", () => {
+    jest.spyOn(collectService, "checkMaxCapacity").mockReturnValueOnce(true);
+
+    const mockFavorite = jest.fn();
+    const { container } = render(
+      <StarIcon
+        active={false}
+        groupId="monitor"
+        onFavorite={mockFavorite}
+        data={{ text: "cmdb", to: "/cmdb" }}
+      />
+    );
+
+    screen.debug();
+    expect(
+      container.querySelector("eo-tooltip")?.getAttribute("content")
+    ).toEqual("MAX_COLLECT_COUNT_TIPS");
   });
 });

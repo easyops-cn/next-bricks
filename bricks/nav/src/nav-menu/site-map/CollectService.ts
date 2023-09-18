@@ -59,6 +59,7 @@ export class CollectService {
     if (this.isCollected(id, item)) {
       this.removeItemFromFavorite(id, item);
     } else {
+      if (this.checkMaxCapacity(id)) return;
       this.setItemAsFavorite(id, item);
     }
   }
@@ -96,6 +97,10 @@ export class CollectService {
     }
 
     return list;
+  }
+
+  checkMaxCapacity(groupId: string): boolean {
+    return this.getFavoritesById(groupId).length >= this.maxCollectLength;
   }
 }
 
