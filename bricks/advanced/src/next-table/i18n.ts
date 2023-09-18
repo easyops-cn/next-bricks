@@ -7,8 +7,6 @@ export enum K {
 const en: Locale = {
   TOTAL: "Total <el>{{ total }}</el> Items",
   SELECT_INFO: "{{ count }} item selected",
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   SELECT_INFO_plural: "{{ count }} items selected",
   CLEAR: "Clear",
 };
@@ -23,4 +21,6 @@ export const NS = "bricks/advanced/eo-next-table";
 
 export const locales = { en, zh };
 
-type Locale = { [key in K]: string };
+type Locale = { [k in K]: string } & {
+  [k in K as `${k}_plural`]?: string;
+};
