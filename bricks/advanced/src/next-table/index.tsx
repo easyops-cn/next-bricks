@@ -97,6 +97,14 @@ class EoNextTable extends ReactNextElement {
   accessor expandedRowKeys: (string | number)[] | undefined;
 
   /**
+   * 表格行拖拽配置
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor rowDraggable: boolean | undefined;
+
+  /**
    * 进行前端搜索的字段，支持嵌套的写法。不配置的时候默认为对所有 column.dataIndex 进行前端搜索
    */
   @property({
@@ -182,6 +190,25 @@ class EoNextTable extends ReactNextElement {
     this.#expandedRowsChangeEvent.emit(detail);
   };
 
+  /**
+   * 表格行拖拽结束发生的事件
+   * @detail 重新排序的行数据、拖拽的行数据、放下位置的行数据
+   */
+  @event({ type: "row.drag" })
+  accessor #rowDragEvent!: EventEmitter<{
+    list: RecordType[];
+    active: RecordType;
+    over: RecordType;
+  }>;
+  // istanbul ignore next
+  #handleRowDrag = (detail: {
+    list: RecordType[];
+    active: RecordType;
+    over: RecordType;
+  }): void => {
+    this.#rowDragEvent.emit(detail);
+  };
+
   render() {
     return (
       <NextTableComponent
@@ -196,12 +223,14 @@ class EoNextTable extends ReactNextElement {
         hiddenColumns={this.hiddenColumns}
         expandable={this.expandable}
         expandedRowKeys={this.expandedRowKeys}
+        rowDraggable={this.rowDraggable}
         searchFields={this.searchFields}
         onPageChange={this.#handlePageChange}
         onPageSizeChange={this.#handlePageSizeChange}
         onRowSelect={this.#handleRowSelect}
         onRowExpand={this.#handleRowExpand}
         onExpandedRowsChange={this.#handleExpandedRowsChange}
+        onRowDrag={this.#handleRowDrag}
       />
     );
   }

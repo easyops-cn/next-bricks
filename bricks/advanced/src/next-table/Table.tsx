@@ -1,6 +1,7 @@
 import React, {
   Ref,
   forwardRef,
+  useCallback,
   useEffect,
   useImperativeHandle,
   useMemo,
@@ -35,6 +36,24 @@ import { get, isNil } from "lodash";
 import { wrapBrick } from "@next-core/react-element";
 import type { Link, LinkProps } from "@next-bricks/basic/link";
 import { checkIfByTransform } from "@next-core/runtime";
+import {
+  type DragEndEvent,
+  DndContext,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  closestCenter,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  arrayMove,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import {
+  restrictToFirstScrollableAncestor,
+  restrictToVerticalAxis,
+} from "@dnd-kit/modifiers";
+import { DraggableRow, Row } from "./Row.js";
 
 initializeReactI18n(NS, locales);
 
@@ -42,7 +61,7 @@ const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 
 interface NextTableComponentProps {
   shadowRoot: ShadowRoot | null;
-  rowKey?: string;
+  rowKey: string;
   columns?: Column[];
   dataSource?: DataSource;
   pagination?: PaginationType;
@@ -51,6 +70,7 @@ interface NextTableComponentProps {
   hiddenColumns?: (string | number)[];
   expandable?: ExpandableType;
   expandedRowKeys?: (string | number)[];
+  rowDraggable?: boolean;
   searchFields?: (string | string[])[];
   onPageChange?: (detail: { page: number; pageSize: number }) => void;
   onPageSizeChange?: (detail: { page: number; pageSize: number }) => void;
@@ -61,6 +81,11 @@ interface NextTableComponentProps {
   }) => void;
   onRowExpand?: (detail: { expanded: boolean; record: RecordType }) => void;
   onExpandedRowsChange?: (detail: (string | number)[]) => void;
+  onRowDrag?: (detail: {
+    list: RecordType[];
+    active: RecordType;
+    over: RecordType;
+  }) => void;
 }
 
 export interface NextTableComponentRef {
@@ -80,12 +105,14 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
     rowSelection,
     hiddenColumns,
     expandable,
+    rowDraggable,
     searchFields,
     onPageChange,
     onPageSizeChange,
     onRowSelect,
     onRowExpand,
     onExpandedRowsChange,
+    onRowDrag,
   } = props;
 
   const { t } = useTranslation(NS);
@@ -94,7 +121,20 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
   }, []);
   const currentTheme = useCurrentTheme();
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 1,
+      },
+    })
+  );
+
   const [list, setList] = useState<RecordType[] | undefined>(dataSource?.list);
+  const keyList = useMemo(
+    () => list?.map((v) => v[rowKey]) ?? [],
+    [list, rowKey]
+  );
+
   const [{ page, pageSize }, setPageAndPageSize] = useState<{
     page: number;
     pageSize: number;
@@ -227,6 +267,26 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
     },
   }));
 
+  // istanbul ignore next
+  const onDragEnd = useCallback(
+    ({ active, over }: DragEndEvent) => {
+      if (over && active.id !== over?.id) {
+        setList((prev = []) => {
+          const activeIndex = prev.findIndex((v) => v[rowKey] === active.id);
+          const overIndex = prev.findIndex((v) => v[rowKey] === over?.id);
+          const newList = arrayMove(prev, activeIndex, overIndex);
+          onRowDrag?.({
+            list: newList,
+            active: prev[activeIndex],
+            over: prev[overIndex],
+          });
+          return newList;
+        });
+      }
+    },
+    [rowKey, onRowDrag]
+  );
+
   return (
     <ConfigProvider
       theme={{
@@ -237,161 +297,185 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
       }}
     >
       <StyleProvider container={shadowRoot as ShadowRoot} cache={styleCache}>
-        <Table
-          rowKey={rowKey}
-          columns={processedColumns}
-          dataSource={list}
-          pagination={
-            paginationConfig === false
-              ? false
-              : {
-                  ...paginationConfig,
-                  total: dataSource?.total,
-                  current: page,
-                  pageSize: pageSize,
-                  showTotal: (total: number) => {
-                    return (
-                      <div className="pagination-wrapper">
-                        {paginationConfig.showTotal ? (
-                          <span className="pagination-total-text">
-                            <Trans
-                              i18nKey={t(K.TOTAL)}
-                              values={{ total }}
-                              components={{
-                                el: (
-                                  <strong className="pagination-total-number" />
-                                ),
-                              }}
-                            />
-                          </span>
-                        ) : null}
-                        {rowSelectionConfig?.showSelectInfo &&
-                        selectedRowKeys?.length ? (
-                          <span className="select-info">
-                            <span>
-                              {t(K.SELECT_INFO, {
-                                count: selectedRowKeys.length,
-                              })}
-                            </span>
-                            <WrappedLink
-                              onClick={() => {
-                                setSelectedRowKeys([]);
-                                onRowSelect?.({
-                                  keys: [],
-                                  rows: [],
-                                  info: { type: "none" },
-                                });
-                              }}
-                            >
-                              {t(K.CLEAR)}
-                            </WrappedLink>
-                          </span>
-                        ) : null}
-                      </div>
-                    );
-                  },
-                }
-          }
-          rowSelection={
-            rowSelectionConfig === undefined
-              ? undefined
-              : {
-                  ...rowSelectionConfig,
-                  selectedRowKeys,
-                  onChange(
-                    keys: (string | number)[],
-                    rows: RecordType[],
-                    info: { type: RowSelectMethod }
-                  ) {
-                    setSelectedRowKeys(keys);
-                    onRowSelect?.({ keys, rows, info });
-                  },
-                }
-          }
-          expandable={
-            expandConfig === undefined
-              ? undefined
-              : {
-                  ...expandConfig,
-                  expandedRowKeys,
-                  rowExpandable(record) {
-                    const data = {
-                      rowData: record,
-                    };
-                    return expandConfig.rowExpandable !== undefined
-                      ? checkIfByTransform(
-                          { if: expandConfig.rowExpandable },
-                          data
-                        )
-                      : true;
-                  },
-                  expandedRowRender(record, index, indent, expanded) {
-                    const data = {
-                      rowData: record,
-                      index,
-                      indent,
-                      expanded,
-                    };
-                    return expandConfig.expandedRowBrick?.useBrick ? (
-                      <ReactUseMultipleBricks
-                        useBrick={expandConfig.expandedRowBrick.useBrick}
-                        data={data}
-                      />
-                    ) : null;
-                  },
-                  expandIcon: expandConfig.expandIconBrick?.useBrick
-                    ? ({ expanded, expandable, record, onExpand }) => {
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          modifiers={[
+            restrictToVerticalAxis,
+            restrictToFirstScrollableAncestor,
+          ]}
+          onDragEnd={onDragEnd}
+        >
+          <SortableContext
+            items={keyList}
+            strategy={verticalListSortingStrategy}
+          >
+            <Table
+              components={{
+                body: {
+                  row: rowDraggable ? DraggableRow : Row,
+                },
+              }}
+              rowKey={rowKey}
+              columns={processedColumns}
+              dataSource={list}
+              pagination={
+                paginationConfig === false
+                  ? false
+                  : {
+                      ...paginationConfig,
+                      total: dataSource?.total,
+                      current: page,
+                      pageSize: pageSize,
+                      showTotal: (total: number) => {
+                        return (
+                          <div className="pagination-wrapper">
+                            {paginationConfig.showTotal ? (
+                              <span className="pagination-total-text">
+                                <Trans
+                                  i18nKey={t(K.TOTAL)}
+                                  values={{ total }}
+                                  components={{
+                                    el: (
+                                      <strong className="pagination-total-number" />
+                                    ),
+                                  }}
+                                />
+                              </span>
+                            ) : null}
+                            {rowSelectionConfig?.showSelectInfo &&
+                            selectedRowKeys?.length ? (
+                              <span className="select-info">
+                                <span>
+                                  {t(K.SELECT_INFO, {
+                                    count: selectedRowKeys.length,
+                                  })}
+                                </span>
+                                <WrappedLink
+                                  onClick={() => {
+                                    setSelectedRowKeys([]);
+                                    onRowSelect?.({
+                                      keys: [],
+                                      rows: [],
+                                      info: { type: "none" },
+                                    });
+                                  }}
+                                >
+                                  {t(K.CLEAR)}
+                                </WrappedLink>
+                              </span>
+                            ) : null}
+                          </div>
+                        );
+                      },
+                    }
+              }
+              rowSelection={
+                rowSelectionConfig === undefined
+                  ? undefined
+                  : {
+                      ...rowSelectionConfig,
+                      selectedRowKeys,
+                      onChange(
+                        keys: (string | number)[],
+                        rows: RecordType[],
+                        info: { type: RowSelectMethod }
+                      ) {
+                        setSelectedRowKeys(keys);
+                        onRowSelect?.({ keys, rows, info });
+                      },
+                    }
+              }
+              expandable={
+                expandConfig === undefined
+                  ? undefined
+                  : {
+                      ...expandConfig,
+                      expandedRowKeys,
+                      rowExpandable(record) {
                         const data = {
                           rowData: record,
-                          expanded,
-                          expandable,
                         };
-                        return (
-                          <span
-                            onClick={(e) => expandable && onExpand(record, e)}
-                          >
-                            <ReactUseMultipleBricks
-                              useBrick={expandConfig.expandIconBrick!.useBrick}
-                              data={data}
-                            />
-                          </span>
-                        );
-                      }
-                    : undefined,
-                  onExpand: (expanded, record) => {
-                    onRowExpand?.({ expanded, record });
-                  },
-                  onExpandedRowsChange: (expandedRows) => {
-                    const newRows = [...expandedRows];
-                    setExpandedRowKeys(newRows);
-                    onExpandedRowsChange?.(newRows);
-                  },
+                        return expandConfig.rowExpandable !== undefined
+                          ? checkIfByTransform(
+                              { if: expandConfig.rowExpandable },
+                              data
+                            )
+                          : true;
+                      },
+                      expandedRowRender(record, index, indent, expanded) {
+                        const data = {
+                          rowData: record,
+                          index,
+                          indent,
+                          expanded,
+                        };
+                        return expandConfig.expandedRowBrick?.useBrick ? (
+                          <ReactUseMultipleBricks
+                            useBrick={expandConfig.expandedRowBrick.useBrick}
+                            data={data}
+                          />
+                        ) : null;
+                      },
+                      expandIcon: expandConfig.expandIconBrick?.useBrick
+                        ? ({ expanded, expandable, record, onExpand }) => {
+                            const data = {
+                              rowData: record,
+                              expanded,
+                              expandable,
+                            };
+                            return (
+                              <span
+                                onClick={(e) =>
+                                  expandable && onExpand(record, e)
+                                }
+                              >
+                                <ReactUseMultipleBricks
+                                  useBrick={
+                                    expandConfig.expandIconBrick!.useBrick
+                                  }
+                                  data={data}
+                                />
+                              </span>
+                            );
+                          }
+                        : undefined,
+                      onExpand: (expanded, record) => {
+                        onRowExpand?.({ expanded, record });
+                      },
+                      onExpandedRowsChange: (expandedRows) => {
+                        const newRows = [...expandedRows];
+                        setExpandedRowKeys(newRows);
+                        onExpandedRowsChange?.(newRows);
+                      },
+                    }
+              }
+              onChange={(pagination, filters, sorter, extra) => {
+                if (extra.action === "paginate") {
+                  setPageAndPageSize((pre) => {
+                    if (pre.pageSize !== pagination.pageSize) {
+                      const newData = {
+                        page: 1,
+                        pageSize: pagination.pageSize ?? DEFAULT_PAGE_SIZE,
+                      };
+                      onPageSizeChange?.(newData);
+                      onPageChange?.(newData);
+                      return newData;
+                    } else if (pre.page !== pagination.current) {
+                      const newData = {
+                        page: pagination.current ?? DEFAULT_PAGE,
+                        pageSize: pagination.pageSize ?? DEFAULT_PAGE_SIZE,
+                      };
+                      onPageChange?.(newData);
+                      return newData;
+                    }
+                    return pre;
+                  });
                 }
-          }
-          onChange={(pagination, filters, sorter, extra) => {
-            if (extra.action === "paginate") {
-              setPageAndPageSize((pre) => {
-                if (pre.pageSize !== pagination.pageSize) {
-                  const newData = {
-                    page: 1,
-                    pageSize: pagination.pageSize ?? DEFAULT_PAGE_SIZE,
-                  };
-                  onPageSizeChange?.(newData);
-                  onPageChange?.(newData);
-                  return newData;
-                } else if (pre.page !== pagination.current) {
-                  const newData = {
-                    page: pagination.current ?? DEFAULT_PAGE,
-                    pageSize: pagination.pageSize ?? DEFAULT_PAGE_SIZE,
-                  };
-                  onPageChange?.(newData);
-                  return newData;
-                }
-                return pre;
-              });
-            }
-          }}
-        />
+              }}
+            />
+          </SortableContext>
+        </DndContext>
       </StyleProvider>
     </ConfigProvider>
   );
