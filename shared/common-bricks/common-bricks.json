@@ -62,7 +62,8 @@
     "eo-form-item",
     "eo-upload-file",
     "eo-auto-complete",
-    "eo-time-picker"
+    "eo-time-picker",
+    "eo-date-picker"
   ],
   "presentational": [
     "eo-code-display",

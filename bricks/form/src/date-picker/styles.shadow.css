@@ -1,0 +1,147 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+.confirmDisabled .ant-picker-ok .ant-btn {
+  color: var(--text-color-disabled);
+  background: "red";
+  border-color: var(--antd-border-color-base);
+  text-shadow: none;
+  box-shadow: none;
+  pointer-events: none;
+}
+.quarterPicker .quarterContent {
+  left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  padding: 4px;
+}
+.quarterPicker .quarterContent:hover {
+  background: var(--antd-picker-basic-cell-hover-bg);
+}
+.quarterPicker .selectedQuarter {
+  color: var(--antd-picker-panel-cell-selected-color);
+  background: var(--antd-picker-panel-cell-selected-bg);
+}
+.quarterPicker .ant-picker-quarter-panel .ant-picker-content tr {
+  display: flex;
+  flex-wrap: wrap;
+}
+.quarterPicker .ant-picker-quarter-panel .ant-picker-content td {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  height: 50%;
+  padding: 20px;
+}
+.quarterPicker .ant-picker-cell-selected::before {
+  color: var(--antd-picker-panel-cell-selected-color);
+  background: var(--antd-picker-panel-cell-selected-bg);
+}
+.quarterPicker .ant-picker-cell::before {
+  right: auto;
+  left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  display: none;
+}
+.quarterPicker .ant-picker-cell:hover::before {
+  background: var(--antd-picker-basic-cell-hover-bg);
+  cursor: not-allowed;
+}
+.quarterPicker {
+}
+
+.pickerBtnWrap {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--antd-text-color);
+  font-size: 14px;
+  font-variant: tabular-nums;
+  list-style: none;
+  font-feature-settings: "tnum";
+  padding: 0 8px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  background: var(--antd-component-background);
+  border: 1px solid var(--antd-border-color-base);
+  border-radius: 4px;
+  user-select: none;
+}
+
+.pre,
+.current,
+.next {
+  position: relative;
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.pre:hover,
+.current:hover,
+.next:hover {
+  color: var(--antd-link-color);
+}
+
+.pre:hover .anticon-left,
+.pre:hover .anticon-right,
+.current:hover .anticon-left,
+.current:hover .anticon-right,
+.next:hover .anticon-left,
+.next:hover .anticon-right {
+  color: var(--antd-link-color);
+}
+
+.nextDisabled {
+  color: var(--text-color-disabled);
+  background: var(--antd-background-color-base);
+  pointer-events: none;
+}
+
+.pickerWrap {
+  display: flex;
+  gap: 10px;
+}
+.pickerWrap .current {
+  padding: 4px 20px;
+}
+.pickerWrap .current::after,
+.pickerWrap .current::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 1px;
+  height: 70%;
+  transform: translateY(-50%);
+  background: var(--antd-border-color-base);
+}
+
+.pickerWrap .current::after {
+  right: 10px;
+}
+.pickerWrap .current::before {
+  left: 10px;
+}
+.pickerWrap .anticon-left,
+.pickerWrap .anticon-right {
+  color: var(--antd-border-color-base);
+  font-size: " 11px";
+}
+.pickerWrap .disabledFastSelect {
+  pointer-events: none;
+  color: var(--text-color-disabled);
+  background: var(--antd-background-color-base);
+}

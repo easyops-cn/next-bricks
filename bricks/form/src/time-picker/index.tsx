@@ -84,7 +84,7 @@ class EoTimePicker extends FormItemElementBase {
   accessor configProps: Partial<TimePickerProps> | undefined;
 
   /**
-   *输入变化时被触发，时间变化时触发
+   *时间变化时触发
    */
   @event({ type: "change" })
   accessor #changeEvent!: EventEmitter<string>;
@@ -170,10 +170,7 @@ export function EoTimePickerComponent(props: EoTimePickerProps) {
   }, []);
 
   return (
-    <WrappedFormItem
-      {...(omit(props, ["shadowRoot"]) as any)}
-      trigger="onTimeChange"
-    >
+    <WrappedFormItem {...(omit(props, ["shadowRoot"]) as any)}>
       <ConfigProvider
         locale={locale as any}
         theme={{
