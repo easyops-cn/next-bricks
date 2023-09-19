@@ -97,6 +97,12 @@ class EoNextTable extends ReactNextElement {
   accessor expandedRowKeys: (string | number)[] | undefined;
 
   /**
+   * 树形结构的列名
+   */
+  @property()
+  accessor childrenColumnName: string = "children";
+
+  /**
    * 表格行拖拽配置
    */
   @property({
@@ -223,6 +229,7 @@ class EoNextTable extends ReactNextElement {
         hiddenColumns={this.hiddenColumns}
         expandable={this.expandable}
         expandedRowKeys={this.expandedRowKeys}
+        childrenColumnName={this.childrenColumnName}
         rowDraggable={this.rowDraggable}
         searchFields={this.searchFields}
         onPageChange={this.#handlePageChange}

@@ -477,3 +477,242 @@
           landlines: 0571-22098606
           mobileRowSpan: 0
 ```
+
+### Tree
+
+设置 childrenColumnName 来指定树形结构的列名，展开功能的配置可以使用 expandable。目前树形结构暂不支持拖拽。
+
+```yaml preview
+- brick: eo-next-table
+  events:
+    row.expand:
+      - action: console.log
+    expanded.rows.change:
+      - action: console.log
+  properties:
+    pagination: false
+    childrenColumnName: student
+    expandable:
+      defaultExpandAllRows: true
+    columns:
+      - dataIndex: name
+        key: name
+        title: Name
+      - dataIndex: age
+        key: age
+        title: Age
+      - dataIndex: address
+        key: address
+        title: Address
+    dataSource:
+      list:
+        - key: "1"
+          name: Jack
+          age: 18
+          address: Guangzhou
+          student:
+            - key: "11"
+              name: Alex
+              age: 20
+              address: Shanghai
+            - key: "12"
+              name: Lucy
+              age: 16
+              address: Yunnan
+            - key: "13"
+              name: Sam
+              age: 28
+              address: Guangzhou
+        - key: "2"
+          name: Bob
+          age: 35
+          address: Hainan
+          student:
+            - key: "21"
+              name: Ava
+              age: 23
+              address: Beijing
+            - key: "22"
+              name: Sophia
+              age: 20
+              address: Shanghai
+            - key: "23"
+              name: Charlotte
+              age: 33
+              address: Chongqing
+              student:
+                - key: "231"
+                  name: Mia
+                  age: 18
+                  address: Chengdu
+                - key: "232"
+                  name: Noah
+                  age: 38
+                  address: Hainan
+                - key: "233"
+                  name: William
+                  age: 16
+                  address: Taiwan
+```
+
+#### With Row Selection
+
+设置 rowSelection.checkStrictly 来控制父子数据选中状态是否关联。注意，关联的时候，节点勾选传导策略为【只勾选可触达的可勾选节点】
+
+```yaml preview
+- brick: eo-next-table
+  events:
+    row.select:
+      - action: console.log
+  properties:
+    pagination: false
+    childrenColumnName: student
+    rowSelection:
+      checkStrictly: false
+      indentSize: 50
+      rowDisabled: <% DATA.rowData.age > 30 %>
+    columns:
+      - dataIndex: name
+        key: name
+        title: Name
+      - dataIndex: age
+        key: age
+        title: Age
+      - dataIndex: address
+        key: address
+        title: Address
+    dataSource:
+      list:
+        - key: "1"
+          name: Jack
+          age: 18
+          address: Guangzhou
+          student:
+            - key: "11"
+              name: Alex
+              age: 20
+              address: Shanghai
+            - key: "12"
+              name: Lucy
+              age: 16
+              address: Yunnan
+            - key: "13"
+              name: Sam
+              age: 34
+              address: Guangzhou
+        - key: "2"
+          name: Bob
+          age: 27
+          address: Hainan
+          student:
+            - key: "21"
+              name: Ava
+              age: 23
+              address: Beijing
+            - key: "22"
+              name: Sophia
+              age: 20
+              address: Shanghai
+            - key: "23"
+              name: Charlotte
+              age: 35
+              address: Chongqing
+              student:
+                - key: "231"
+                  name: Mia
+                  age: 18
+                  address: Chengdu
+                - key: "232"
+                  name: Noah
+                  age: 38
+                  address: Hainan
+                - key: "233"
+                  name: William
+                  age: 16
+                  address: Taiwan
+```
+
+#### With Front Search
+
+```yaml preview
+- brick: eo-search-bar
+  children:
+    - brick: eo-search
+      slot: start
+      properties:
+        placeholder: Enter keyword
+      events:
+        search:
+          target: "#table"
+          method: search
+          args:
+            - q: <% EVENT.detail %>
+- brick: eo-next-table
+  properties:
+    id: table
+    searchFields:
+      - name
+      - age
+      - address
+    pagination: false
+    childrenColumnName: student
+    columns:
+      - dataIndex: name
+        key: name
+        title: Name
+      - dataIndex: age
+        key: age
+        title: Age
+      - dataIndex: address
+        key: address
+        title: Address
+    dataSource:
+      list:
+        - key: "1"
+          name: Jack
+          age: 18
+          address: Guangzhou
+          student:
+            - key: "11"
+              name: Alex
+              age: 20
+              address: Shanghai
+            - key: "12"
+              name: Lucy
+              age: 16
+              address: Yunnan
+            - key: "13"
+              name: Sam
+              age: 34
+              address: Guangzhou
+        - key: "2"
+          name: Bob
+          age: 27
+          address: Hainan
+          student:
+            - key: "21"
+              name: Ava
+              age: 23
+              address: Beijing
+            - key: "22"
+              name: Sophia
+              age: 20
+              address: Shanghai
+            - key: "23"
+              name: Charlotte
+              age: 35
+              address: Chongqing
+              student:
+                - key: "231"
+                  name: Mia
+                  age: 18
+                  address: Chengdu
+                - key: "232"
+                  name: Noah
+                  age: 38
+                  address: Hainan
+                - key: "233"
+                  name: William
+                  age: 16
+                  address: Taiwan
+```

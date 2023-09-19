@@ -54,8 +54,10 @@ interface RowSelectionConfig
     | "hideSelectAll"
     | "preserveSelectedRowKeys"
     | "type"
+    | "checkStrictly"
   > {
   showSelectInfo?: boolean;
+  rowDisabled?: string | boolean;
 }
 
 export type RowSelectionType = boolean | RowSelectionConfig | undefined;
