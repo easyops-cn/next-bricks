@@ -290,7 +290,8 @@ export function SelectComponent(props: SelectProps) {
       setSelectValue(newValue);
       onChange?.(newValue);
       onValueChange?.(newValue);
-      !multiple && setIsDropHidden(true);
+      setIsDropHidden(!multiple);
+      multiple && inputRef.current && inputRef.current.focus();
       setInputValue("");
     },
     [multiple, selectValue, onChange]
@@ -350,6 +351,7 @@ export function SelectComponent(props: SelectProps) {
       ) {
         selectValue.pop();
         setSelectValue([...selectValue]);
+        setCustomSelectValue([...selectValue]);
       }
     },
     [

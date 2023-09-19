@@ -5,3 +5,10 @@
 :host([hidden]) {
   display: none;
 }
+.select-wrapper {
+  display: flex;
+  align-items: center;
+}
+eo-select {
+  width: 100%;
+}
