@@ -135,8 +135,8 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
 
   const [list, setList] = useState<RecordType[] | undefined>(dataSource?.list);
   const keyList = useMemo(
-    () => list?.map((v) => v[rowKey]) ?? [],
-    [list, rowKey]
+    () => dataSource?.list?.map((v) => v[rowKey]) ?? [],
+    [dataSource?.list, rowKey]
   );
 
   const [{ page, pageSize }, setPageAndPageSize] = useState<{
