@@ -30,9 +30,11 @@ import {
   DEFAULT_PAGE_SIZE,
   defaultPaginationConfig,
   defaultRowSelectionConfig,
-  getSearchKeywords,
+  getAllKeys,
+  isPlainObject,
+  searchList,
 } from "./utils.js";
-import { get, isNil } from "lodash";
+import { isNil } from "lodash";
 import { wrapBrick } from "@next-core/react-element";
 import type { Link, LinkProps } from "@next-bricks/basic/link";
 import { checkIfByTransform } from "@next-core/runtime";
@@ -70,6 +72,7 @@ interface NextTableComponentProps {
   hiddenColumns?: (string | number)[];
   expandable?: ExpandableType;
   expandedRowKeys?: (string | number)[];
+  childrenColumnName: string;
   rowDraggable?: boolean;
   searchFields?: (string | string[])[];
   onPageChange?: (detail: { page: number; pageSize: number }) => void;
@@ -105,6 +108,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
     rowSelection,
     hiddenColumns,
     expandable,
+    childrenColumnName,
     rowDraggable,
     searchFields,
     onPageChange,
@@ -131,8 +135,8 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
 
   const [list, setList] = useState<RecordType[] | undefined>(dataSource?.list);
   const keyList = useMemo(
-    () => list?.map((v) => v[rowKey]) ?? [],
-    [list, rowKey]
+    () => dataSource?.list?.map((v) => v[rowKey]) ?? [],
+    [dataSource?.list, rowKey]
   );
 
   const [{ page, pageSize }, setPageAndPageSize] = useState<{
@@ -149,6 +153,11 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
     props.expandedRowKeys ?? []
   );
 
+  const isTreeData = useMemo(
+    () => dataSource?.list?.some((v) => v[childrenColumnName]?.length),
+    [dataSource?.list, childrenColumnName]
+  );
+
   useEffect(() => {
     setSelectedRowKeys(props.selectedRowKeys);
   }, [props.selectedRowKeys]);
@@ -156,6 +165,18 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
   useEffect(() => {
     setExpandedRowKeys(props.expandedRowKeys ?? []);
   }, [props.expandedRowKeys]);
+
+  useEffect(() => {
+    if (isPlainObject(expandable) && expandable.defaultExpandAllRows) {
+      setExpandedRowKeys(
+        getAllKeys({
+          list: dataSource?.list,
+          rowKey,
+          childrenColumnName,
+        })
+      );
+    }
+  }, []);
 
   useEffect(() => {
     setList(dataSource?.list);
@@ -231,37 +252,25 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
   }, [pagination]);
 
   const expandConfig = useMemo(() => {
+    if (isTreeData || (!isTreeData && childrenColumnName !== "children")) {
+      // still need to set childrenColumnName to antd
+      return isPlainObject(expandable) ? expandable : {};
+    }
     if (expandable === false || isNil(expandable)) {
       return undefined;
     }
-    return expandable === true ? {} : expandable;
-  }, [expandable]);
+    return isPlainObject(expandable) ? expandable : {};
+  }, [expandable, isTreeData, childrenColumnName]);
 
   useImperativeHandle(ref, () => ({
     search: ({ q }) => {
-      const _q = q?.trim().toLowerCase() || "";
-      let result: RecordType[] | undefined = dataSource?.list;
-      if (_q) {
-        if (searchFields) {
-          result = dataSource?.list?.filter((row) => {
-            const keywords = searchFields.flatMap((field) =>
-              getSearchKeywords(get(row, field))
-            );
-            return keywords.some((v) => v.toLowerCase().includes(_q));
-          });
-        } else {
-          result = dataSource?.list?.filter((row) => {
-            const keywords = columns?.flatMap((column) => {
-              // 嵌套在 dataIndex 中用数组表示，所以 "a.b" 这种要识别成 key: "a.b"。
-              const value = Array.isArray(column.dataIndex)
-                ? get(row, column.dataIndex)
-                : row[column.dataIndex as string];
-              return getSearchKeywords(value);
-            });
-            return keywords?.some((v) => v.toLowerCase().includes(_q));
-          });
-        }
-      }
+      const result = searchList({
+        q: q?.trim().toLowerCase() || "",
+        list: dataSource?.list,
+        columns,
+        searchFields,
+        childrenColumnName,
+      });
       setList(result);
       setPageAndPageSize((pre) => {
         if (pre.page !== 1) {
@@ -323,7 +332,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
             <Table
               components={{
                 body: {
-                  row: rowDraggable ? DraggableRow : Row,
+                  row: rowDraggable && !isTreeData ? DraggableRow : Row,
                 },
               }}
               rowKey={rowKey}
@@ -386,6 +395,20 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                   : {
                       ...rowSelectionConfig,
                       selectedRowKeys,
+                      getCheckboxProps(record: RecordType) {
+                        const data = {
+                          rowData: record,
+                        };
+                        return {
+                          disabled:
+                            rowSelectionConfig.rowDisabled !== undefined
+                              ? checkIfByTransform(
+                                  { if: rowSelectionConfig.rowDisabled },
+                                  data
+                                )
+                              : false,
+                        };
+                      },
                       onChange(
                         keys: (string | number)[],
                         rows: RecordType[],
@@ -401,6 +424,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                   ? undefined
                   : {
                       ...expandConfig,
+                      childrenColumnName,
                       expandedRowKeys,
                       rowExpandable(record) {
                         const data = {
@@ -413,20 +437,24 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                             )
                           : true;
                       },
-                      expandedRowRender(record, index, indent, expanded) {
-                        const data = {
-                          rowData: record,
-                          index,
-                          indent,
-                          expanded,
-                        };
-                        return expandConfig.expandedRowBrick?.useBrick ? (
-                          <ReactUseMultipleBricks
-                            useBrick={expandConfig.expandedRowBrick.useBrick}
-                            data={data}
-                          />
-                        ) : null;
-                      },
+                      expandedRowRender: expandConfig.expandedRowBrick?.useBrick
+                        ? (record, index, indent, expanded) => {
+                            const data = {
+                              rowData: record,
+                              index,
+                              indent,
+                              expanded,
+                            };
+                            return (
+                              <ReactUseMultipleBricks
+                                useBrick={
+                                  expandConfig.expandedRowBrick!.useBrick
+                                }
+                                data={data}
+                              />
+                            );
+                          }
+                        : undefined,
                       expandIcon: expandConfig.expandIconBrick?.useBrick
                         ? ({ expanded, expandable, record, onExpand }) => {
                             const data = {

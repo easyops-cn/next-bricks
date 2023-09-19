@@ -3,6 +3,7 @@ import { act } from "react-dom/test-utils";
 import { fireEvent } from "@testing-library/react";
 import "./";
 import { EoNextTable } from "./index.js";
+import { getAllKeys } from "./utils.js";
 
 jest.mock("@next-core/theme", () => ({}));
 jest.mock("react-i18next", () => {
@@ -138,6 +139,82 @@ const dataSource = {
   ],
   page: 1,
   pageSize: 5,
+};
+const treeDataSource = {
+  list: [
+    {
+      key: "1",
+      name: "Jack",
+      age: 18,
+      address: "Guangzhou",
+      student: [
+        {
+          key: "11",
+          name: "Alex",
+          age: 20,
+          address: "Shanghai",
+        },
+        {
+          key: "12",
+          name: "Lucy",
+          age: 16,
+          address: "Yunnan",
+        },
+        {
+          key: "13",
+          name: "Sam",
+          age: 34,
+          address: "Guangzhou",
+        },
+      ],
+    },
+    {
+      key: "2",
+      name: "Bob",
+      age: 27,
+      address: "Hainan",
+      student: [
+        {
+          key: "21",
+          name: "Ava",
+          age: 23,
+          address: "Beijing",
+        },
+        {
+          key: "22",
+          name: "Sophia",
+          age: 20,
+          address: "Shanghai",
+        },
+        {
+          key: "23",
+          name: "Charlotte",
+          age: 35,
+          address: "Chongqing",
+          student: [
+            {
+              key: "231",
+              name: "Mia",
+              age: 18,
+              address: "Chengdu",
+            },
+            {
+              key: "232",
+              name: "Noah",
+              age: 38,
+              address: "Hainan",
+            },
+            {
+              key: "233",
+              name: "William",
+              age: 16,
+              address: "Taiwan",
+            },
+          ],
+        },
+      ],
+    },
+  ],
 };
 
 describe("eo-next-table", () => {
@@ -513,6 +590,62 @@ describe("front search", () => {
     });
     expect(document.body.contains(element)).toBeFalsy();
   });
+
+  test("tree data", async () => {
+    const element = document.createElement("eo-next-table") as EoNextTable;
+    element.columns = columns;
+    element.dataSource = treeDataSource;
+    element.pagination = false;
+    element.childrenColumnName = "student";
+    element.expandable = {
+      defaultExpandAllRows: true,
+    };
+    element.searchFields = ["name"];
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    await act(async () => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+
+    expect(
+      element.shadowRoot?.querySelectorAll("tbody .ant-table-row").length
+    ).toBe(11);
+
+    await act(async () => {
+      element.search({ q: "jack" });
+    });
+    expect(
+      element.shadowRoot?.querySelectorAll("tbody .ant-table-row").length
+    ).toBe(4);
+
+    await act(async () => {
+      element.search({ q: "lucy" });
+    });
+    expect(
+      element.shadowRoot?.querySelectorAll("tbody .ant-table-row").length
+    ).toBe(2);
+
+    await act(async () => {
+      element.search({ q: "Charlotte" });
+    });
+    expect(
+      element.shadowRoot?.querySelectorAll("tbody .ant-table-row").length
+    ).toBe(5);
+
+    await act(async () => {
+      element.search({ q: "" });
+    });
+    expect(
+      element.shadowRoot?.querySelectorAll("tbody .ant-table-row").length
+    ).toBe(11);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(document.body.contains(element)).toBeFalsy();
+  });
 });
 
 describe("rowSelection", () => {
@@ -633,6 +766,207 @@ describe("rowSelection", () => {
     });
     expect(document.body.contains(element)).toBeFalsy();
   });
+
+  test("tree data and checkStrictly is true", async () => {
+    const onRowSelect = jest.fn();
+    const element = document.createElement("eo-next-table") as EoNextTable;
+    element.columns = columns;
+    element.dataSource = treeDataSource;
+    element.childrenColumnName = "student";
+    element.expandable = {
+      defaultExpandAllRows: true,
+    };
+    element.rowSelection = {
+      checkStrictly: true,
+    };
+    element.pagination = false;
+    element.addEventListener("row.select", onRowSelect);
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    await act(async () => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+
+    await act(async () => {
+      // 第一个为全选，后面的才是每行的选择框
+      fireEvent.click(
+        element.shadowRoot?.querySelectorAll(
+          ".ant-table-selection-column label"
+        )[1] as Element
+      );
+    });
+    expect(onRowSelect).lastCalledWith(
+      expect.objectContaining({
+        detail: {
+          keys: [treeDataSource.list[0].key],
+          rows: [treeDataSource.list[0]],
+          info: {
+            type: "single",
+          },
+        },
+      })
+    );
+
+    await act(async () => {
+      fireEvent.click(
+        element.shadowRoot?.querySelectorAll(
+          ".ant-table-selection-column label"
+        )[2] as Element
+      );
+    });
+    expect(onRowSelect).lastCalledWith(
+      expect.objectContaining({
+        detail: {
+          keys: [
+            treeDataSource.list[0].key,
+            treeDataSource.list[0].student[0].key,
+          ],
+          rows: [treeDataSource.list[0], treeDataSource.list[0].student[0]],
+          info: {
+            type: "single",
+          },
+        },
+      })
+    );
+
+    // 全选
+    await act(async () => {
+      fireEvent.click(
+        element.shadowRoot?.querySelectorAll(
+          ".ant-table-selection-column label"
+        )[0] as Element
+      );
+    });
+    expect(onRowSelect).lastCalledWith(
+      expect.objectContaining({
+        detail: {
+          keys: getAllKeys({
+            list: treeDataSource.list,
+            childrenColumnName: "student",
+            rowKey: "key",
+          }),
+          rows: expect.any(Array),
+          info: {
+            type: "all",
+          },
+        },
+      })
+    );
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(document.body.contains(element)).toBeFalsy();
+  });
+
+  test("tree data and checkStrictly is false", async () => {
+    const onRowSelect = jest.fn();
+    const element = document.createElement("eo-next-table") as EoNextTable;
+    element.columns = columns;
+    element.dataSource = treeDataSource;
+    element.childrenColumnName = "student";
+    element.expandable = {
+      defaultExpandAllRows: true,
+    };
+    element.rowSelection = {
+      checkStrictly: false,
+    };
+    element.pagination = false;
+    element.addEventListener("row.select", onRowSelect);
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    await act(async () => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+
+    await act(async () => {
+      // 第一个为全选，后面的才是每行的选择框
+      fireEvent.click(
+        element.shadowRoot?.querySelectorAll(
+          ".ant-table-selection-column label"
+        )[1] as Element
+      );
+    });
+    expect(onRowSelect).lastCalledWith(
+      expect.objectContaining({
+        detail: {
+          keys: [
+            treeDataSource.list[0].key,
+            ...treeDataSource.list[0].student.map((v) => v.key),
+          ],
+          rows: [treeDataSource.list[0], ...treeDataSource.list[0].student],
+          info: {
+            type: "single",
+          },
+        },
+      })
+    );
+
+    await act(async () => {
+      fireEvent.click(
+        element.shadowRoot?.querySelectorAll(
+          ".ant-table-selection-column label"
+        )[2] as Element
+      );
+    });
+    expect(onRowSelect).lastCalledWith(
+      expect.objectContaining({
+        detail: {
+          // Not including halfChecked
+          keys: [
+            ...treeDataSource.list[0].student
+              .filter((v, i) => i !== 0)
+              .map((v) => v.key),
+          ],
+          rows: [...treeDataSource.list[0].student.filter((v, i) => i !== 0)],
+          info: {
+            type: "single",
+          },
+        },
+      })
+    );
+
+    // 全选
+    await act(async () => {
+      fireEvent.click(
+        element.shadowRoot?.querySelectorAll(
+          ".ant-table-selection-column label"
+        )[0] as Element
+      );
+    });
+    // keys order will changed
+    expect(onRowSelect).lastCalledWith(
+      expect.objectContaining({
+        detail: {
+          keys: expect.any(Array),
+          rows: expect.any(Array),
+          info: {
+            type: "all",
+          },
+        },
+      })
+    );
+    expect(
+      (
+        onRowSelect.mock.calls[onRowSelect.mock.calls.length - 1][0] as any
+      ).detail.keys.sort()
+    ).toEqual(
+      getAllKeys({
+        list: treeDataSource.list,
+        childrenColumnName: "student",
+        rowKey: "key",
+      }).sort()
+    );
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(document.body.contains(element)).toBeFalsy();
+  });
 });
 
 describe("expandable", () => {
@@ -737,6 +1071,148 @@ describe("expandable", () => {
     });
     expect(document.body.contains(element)).toBeFalsy();
   });
+
+  test("tree data", async () => {
+    const onRowExpand = jest.fn();
+    const onExpandedRowsChange = jest.fn();
+    const element = document.createElement("eo-next-table") as EoNextTable;
+    element.columns = columns;
+    element.dataSource = treeDataSource;
+    element.childrenColumnName = "student";
+    element.pagination = false;
+    element.addEventListener("row.expand", onRowExpand);
+    element.addEventListener("expanded.rows.change", onExpandedRowsChange);
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    await act(async () => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+
+    expect(
+      element.shadowRoot?.querySelectorAll("tbody .ant-table-row").length
+    ).toBe(treeDataSource.list.length);
+
+    await act(async () => {
+      fireEvent.click(
+        element.shadowRoot?.querySelectorAll(
+          ".ant-table-row-expand-icon:not(.ant-table-row-expand-icon-spaced)"
+        )[1] as Element
+      );
+    });
+    expect(
+      element.shadowRoot?.querySelectorAll("tbody .ant-table-row").length
+    ).toBe(treeDataSource.list.length + treeDataSource.list[1].student.length);
+    expect(onRowExpand).lastCalledWith(
+      expect.objectContaining({
+        detail: {
+          expanded: true,
+          record: treeDataSource.list[1],
+        },
+      })
+    );
+    expect(onExpandedRowsChange).lastCalledWith(
+      expect.objectContaining({
+        detail: [treeDataSource.list[1].key],
+      })
+    );
+
+    await act(async () => {
+      fireEvent.click(
+        element.shadowRoot?.querySelectorAll(
+          ".ant-table-row-expand-icon:not(.ant-table-row-expand-icon-spaced)"
+        )[2] as Element
+      );
+    });
+    expect(
+      element.shadowRoot?.querySelectorAll("tbody .ant-table-row").length
+    ).toBe(
+      treeDataSource.list.length +
+        treeDataSource.list[1].student.length +
+        (treeDataSource.list[1].student[2].student?.length as any)
+    );
+    expect(onRowExpand).lastCalledWith(
+      expect.objectContaining({
+        detail: {
+          expanded: true,
+          record: treeDataSource.list[1].student[2],
+        },
+      })
+    );
+    expect(onExpandedRowsChange).lastCalledWith(
+      expect.objectContaining({
+        detail: [
+          treeDataSource.list[1].key,
+          treeDataSource.list[1].student[2].key,
+        ],
+      })
+    );
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(document.body.contains(element)).toBeFalsy();
+  });
+
+  test("defaultExpandAllRows", async () => {
+    const onRowExpand = jest.fn();
+    const onExpandedRowsChange = jest.fn();
+    const element = document.createElement("eo-next-table") as EoNextTable;
+    element.columns = columns;
+    element.dataSource = treeDataSource;
+    element.childrenColumnName = "student";
+    element.pagination = false;
+    element.expandable = {
+      defaultExpandAllRows: true,
+    };
+    element.addEventListener("row.expand", onRowExpand);
+    element.addEventListener("expanded.rows.change", onExpandedRowsChange);
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    await act(async () => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+
+    expect(
+      element.shadowRoot?.querySelectorAll("tbody .ant-table-row").length
+    ).toBe(11);
+
+    await act(async () => {
+      fireEvent.click(
+        element.shadowRoot?.querySelectorAll(
+          ".ant-table-row-expand-icon:not(.ant-table-row-expand-icon-spaced)"
+        )[1] as Element
+      );
+    });
+    expect(
+      element.shadowRoot?.querySelectorAll("tbody .ant-table-row").length
+    ).toBe(treeDataSource.list.length + treeDataSource.list[1].student.length);
+    expect(onRowExpand).lastCalledWith(
+      expect.objectContaining({
+        detail: {
+          expanded: false,
+          record: treeDataSource.list[1],
+        },
+      })
+    );
+    expect(onExpandedRowsChange).lastCalledWith(
+      expect.objectContaining({
+        detail: getAllKeys({
+          list: treeDataSource.list,
+          childrenColumnName: "student",
+          rowKey: "key",
+        }).filter((v) => v !== treeDataSource.list[1].key),
+      })
+    );
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(document.body.contains(element)).toBeFalsy();
+  });
 });
 
 describe("draggable", () => {
@@ -762,6 +1238,35 @@ describe("draggable", () => {
       "[data-row-key='Jack']"
     ) as HTMLElement;
     expect(row.style.touchAction).toBe("none");
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(document.body.contains(element)).toBeFalsy();
+  });
+
+  test("tree data", async () => {
+    const onRowDrag = jest.fn();
+    const element = document.createElement("eo-next-table") as EoNextTable;
+    element.columns = columns;
+    element.dataSource = treeDataSource;
+    element.childrenColumnName = "student";
+    element.pagination = false;
+    element.rowDraggable = true;
+    element.rowKey = "name";
+    element.addEventListener("row.drag", onRowDrag);
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    await act(async () => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+
+    const row = element.shadowRoot?.querySelector(
+      "[data-row-key='Jack']"
+    ) as HTMLElement;
+    expect(row.style.touchAction).not.toBe("none");
 
     act(() => {
       document.body.removeChild(element);
