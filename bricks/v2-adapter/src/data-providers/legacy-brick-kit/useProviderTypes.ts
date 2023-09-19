@@ -7,9 +7,9 @@ import {
 
 export type UseProviderError =
   | Error
-  | HttpFetchError
-  | HttpResponseError
-  | HttpParseError;
+  | InstanceType<typeof HttpFetchError>
+  | InstanceType<typeof HttpResponseError>
+  | InstanceType<typeof HttpParseError>;
 
 export type OnError = (error: UseProviderError) => void;
 
@@ -53,7 +53,7 @@ export type IncomingOptions = Partial<UseProviderCustomOptions> & RequestInit;
 export type UseProviderArgs = [
   (string | IncomingOptions)?,
   (IncomingOptions | any[])?,
-  any[]?
+  any[]?,
 ];
 
 export type UseProviderOptionArgsDefaults = keyof UseProviderCustomOptions &
@@ -74,7 +74,7 @@ export type UseProviderArrayReturn<TData> = [
   Req<TData>,
   Res<TData>,
   boolean,
-  UseProviderError
+  UseProviderError,
 ];
 
 export type UseProviderObjectReturn<TData> = ReqBase<TData> & {
