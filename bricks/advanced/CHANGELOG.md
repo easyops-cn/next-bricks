@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.7.1...@next-bricks/advanced@0.8.0) (2023-09-19)
+
+
+### Features
+
+* next-table support rowDraggable ([50d480a](https://github.com/easyops-cn/next-bricks/commit/50d480a91cc40e79095ab4369266cc63927c45d7))
+* next-table support span ([240a79a](https://github.com/easyops-cn/next-bricks/commit/240a79ae9bb4f95601c5212600701767f5844f7d))
+
+
+
+
+
 ## [0.7.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.7.0...@next-bricks/advanced@0.7.1) (2023-09-18)
 
 
