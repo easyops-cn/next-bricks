@@ -139,7 +139,7 @@ class EoUserOrUserGroupSelect extends FormItemElementBase {
   accessor query: Record<string, any> | undefined;
 
   /**
-   * @description 针对`USER/instance/_search`接口的`query`，此参数比较适用于，可能只需要针对用户做筛选的情况
+   * 针对`USER/instance/_search`接口的`query`，此参数比较适用于，可能只需要针对用户做筛选的情况
    * @group advanced
    */
   @property({
@@ -148,7 +148,7 @@ class EoUserOrUserGroupSelect extends FormItemElementBase {
   accessor userQuery: Record<string, any> | undefined;
 
   /**
-   * @description 针对`USER_GROUP/instance/_search`接口的`query`，此参数比较适用于，可能只需要针对用户组做筛选的情况
+   * 针对`USER_GROUP/instance/_search`接口的`query`，此参数比较适用于，可能只需要针对用户组做筛选的情况
    * @group advanced
    */
   @property({
@@ -157,10 +157,8 @@ class EoUserOrUserGroupSelect extends FormItemElementBase {
   accessor userGroupQuery: Record<string, any> | undefined;
 
   /**
-   * @default "all"
-   * @description 支持选择用户、用户组或者两者
-   * @editor radio
-   * @editorProps {
+   * 支持选择用户、用户组或者两者
+   * {
    *   "optionType": "button",
    *   "options": [
    *     {
@@ -189,12 +187,11 @@ class EoUserOrUserGroupSelect extends FormItemElementBase {
    * }
    * @group advanced
    */
-  @property({ attribute: false })
+  @property()
   accessor optionsMode: "user" | "group" | "all" = "all";
 
   /**
-   * @default false
-   * @description 是否合并用户和用户组数据，当设置为 true 时，输入的`value`和`user.group.change`事件输出的 detail 都为`string[]`格式。
+   * 是否合并用户和用户组数据，当设置为 true 时，输入的`value`和`user.group.change`事件输出的 detail 都为`string[]`格式。
    * @group advanced
    */
   @property({
@@ -205,20 +202,22 @@ class EoUserOrUserGroupSelect extends FormItemElementBase {
   /**
    * 是否禁用
    */
-  @property({ type: Boolean })
+  @property({
+    type: Boolean,
+  })
   accessor disabled: boolean | undefined;
 
   /**
-   * @description 是否多选，默认为多选
+   * 是否多选，默认为多选
    * @group advanced
    */
   @property({
-    attribute: false,
+    type: Boolean,
   })
   accessor isMultiple: boolean = true;
 
   /**
-   * @description 固定白名单列表，该列表中的值用户不能取消。
+   * 固定白名单列表，该列表中的值用户不能取消。
    * @group advanced
    */
   @property({
@@ -227,16 +226,18 @@ class EoUserOrUserGroupSelect extends FormItemElementBase {
   accessor staticList: string[] | undefined;
 
   /**
-   * @description 快速选择我
+   * 快速选择我
    * @group advanced
    */
   @property({
-    attribute: false,
+    type: Boolean,
   })
   accessor hideAddMeQuickly: boolean = true;
 
   @event({ type: "change" })
   accessor #changeEvent!: EventEmitter<string[] | UserOrUserGroupSelectValue>;
+
+  #mutableValue: string[] | UserOrUserGroupSelectValue | undefined;
 
   handleUserOrUserGroupChange = (values: string[]) => {
     const resultValue = {
@@ -250,7 +251,7 @@ class EoUserOrUserGroupSelect extends FormItemElementBase {
     };
 
     this.value = resultValue;
-    this.mutableValue = resultValue;
+    this.#mutableValue = resultValue;
     Promise.resolve().then(() => {
       this.#changeEvent.emit(
         this.mergeUseAndUserGroup ? values : (resultValue as any)
@@ -268,12 +269,10 @@ class EoUserOrUserGroupSelect extends FormItemElementBase {
     return result as unknown as UserOrUserGroupSelectValue;
   };
 
-  private mutableValue: string[] | UserOrUserGroupSelectValue | undefined;
-
   connectedCallback(): void {
-    this.mutableValue = this.value;
+    this.#mutableValue = this.value;
     if (this.mergeUseAndUserGroup && this.value) {
-      this.mutableValue = this._handleMergeUseAndUserGroup(this.value);
+      this.#mutableValue = this._handleMergeUseAndUserGroup(this.value);
     }
     super.connectedCallback();
   }
@@ -287,7 +286,7 @@ class EoUserOrUserGroupSelect extends FormItemElementBase {
         label={this.label}
         placeholder={this.placeholder}
         required={this.required}
-        value={this.mutableValue as UserOrUserGroupSelectValue}
+        value={this.#mutableValue as UserOrUserGroupSelectValue}
         validateState={this.validateState}
         notRender={this.notRender}
         helpBrick={this.helpBrick}
