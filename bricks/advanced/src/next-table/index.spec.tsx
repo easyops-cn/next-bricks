@@ -185,6 +185,136 @@ describe("eo-next-table", () => {
     });
     expect(document.body.contains(element)).toBeFalsy();
   });
+
+  test("colSpan & rowSpan", async () => {
+    const element = document.createElement("eo-next-table") as EoNextTable;
+    element.columns = [
+      {
+        dataIndex: "name",
+        key: "name",
+        title: "Name",
+      },
+      {
+        dataIndex: "mobile",
+        key: "mobile",
+        title: "phone",
+        colSpan: 2,
+        cellColSpanKey: "mobileColSpan",
+        cellRowSpanKey: "mobileRowSpan",
+      },
+      {
+        dataIndex: "landlines",
+        key: "landlines",
+        colSpan: 0,
+        cellColSpanKey: "landlinesColSpan",
+        cellRowSpanKey: "landlinesRowSpan",
+      },
+      {
+        dataIndex: "address",
+        key: "address",
+        title: "Address",
+      },
+    ];
+    element.dataSource = {
+      list: [
+        {
+          key: 0,
+          name: "Jack",
+          address: "Guangzhou",
+          mobile: 18900010222,
+          landlines: "0571-22098909",
+        },
+        {
+          key: 1,
+          name: "Alex",
+          address: "Shanghai",
+          mobile: 18900010333,
+          mobileColSpan: 2,
+          landlinesColSpan: 0,
+        },
+        {
+          key: 2,
+          name: "Lucy",
+          address: "Yunnan",
+          mobile: 18900010444,
+          landlines: "0571-22098707",
+          landlinesRowSpan: 2,
+        },
+        {
+          key: 3,
+          name: "Sam",
+          address: "Guangzhou",
+          mobile: 18900010555,
+          landlines: "0571-22098707",
+          landlinesRowSpan: 0,
+        },
+      ],
+    };
+    element.pagination = false;
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    await act(async () => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+
+    expect(
+      element.shadowRoot?.querySelectorAll("thead .ant-table-cell").length
+    ).toBe(3);
+    expect(
+      element.shadowRoot
+        ?.querySelectorAll("thead .ant-table-cell")[1]
+        .getAttribute("colspan")
+    ).toBe("2");
+
+    expect(
+      element.shadowRoot?.querySelectorAll("tbody .ant-table-row").length
+    ).toBe(4);
+
+    // no span
+    expect(
+      element.shadowRoot
+        ?.querySelectorAll("tbody .ant-table-row")[0]
+        .querySelectorAll(".ant-table-cell").length
+    ).toBe(4);
+
+    // colSpan
+    expect(
+      element.shadowRoot
+        ?.querySelectorAll("tbody .ant-table-row")[1]
+        .querySelectorAll(".ant-table-cell").length
+    ).toBe(3);
+    expect(
+      element.shadowRoot
+        ?.querySelectorAll("tbody .ant-table-row")[1]
+        .querySelectorAll(".ant-table-cell")[1]
+        .getAttribute("colspan")
+    ).toBe("2");
+
+    // rowSpan
+    expect(
+      element.shadowRoot
+        ?.querySelectorAll("tbody .ant-table-row")[2]
+        .querySelectorAll(".ant-table-cell").length
+    ).toBe(4);
+    expect(
+      element.shadowRoot
+        ?.querySelectorAll("tbody .ant-table-row")[2]
+        .querySelectorAll(".ant-table-cell")[2]
+        .getAttribute("rowspan")
+    ).toBe("2");
+    expect(
+      element.shadowRoot
+        ?.querySelectorAll("tbody .ant-table-row")[3]
+        .querySelectorAll(".ant-table-cell").length
+    ).toBe(3);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(document.body.contains(element)).toBeFalsy();
+  });
 });
 
 describe("pagination", () => {

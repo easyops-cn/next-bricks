@@ -199,6 +199,16 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
             }
             return <>{col.title}</>;
           },
+          onCell(record: RecordType, index?: number) {
+            return {
+              colSpan: col.cellColSpanKey
+                ? record[col.cellColSpanKey]
+                : undefined,
+              rowSpan: col.cellRowSpanKey
+                ? record[col.cellRowSpanKey]
+                : undefined,
+            };
+          },
         };
       });
   }, [columns, hiddenColumns]);

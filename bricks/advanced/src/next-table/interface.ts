@@ -14,6 +14,10 @@ export interface Column extends ColumnType<RecordType> {
   };
   /** 内容自定义展示构件 */
   useBrick?: UseBrickConf;
+  /** 记录表格列合并的值的 key */
+  cellColSpanKey?: string;
+  /** 记录表格行合并的值的 key */
+  cellRowSpanKey?: string;
 }
 
 export interface DataSource {

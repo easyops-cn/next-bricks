@@ -411,3 +411,69 @@
           age: 16
           address: Taiwan
 ```
+
+### RowSpan & ColSpan
+
+```yaml preview
+- brick: eo-next-table
+  properties:
+    pagination: false
+    columns:
+      - dataIndex: name
+        key: name
+        title: Name
+      - dataIndex: age
+        key: age
+        title: Age
+      - dataIndex: mobile
+        key: mobile
+        title: phone
+        colSpan: 2
+        cellColSpanKey: mobileColSpan
+        cellRowSpanKey: mobileRowSpan
+      - dataIndex: landlines
+        key: landlines
+        colSpan: 0
+        cellColSpanKey: landlinesColSpan
+        cellRowSpanKey: landlinesRowSpan
+      - dataIndex: address
+        key: address
+        title: Address
+    dataSource:
+      list:
+        - key: 0
+          name: Jack
+          age: 18
+          address: Guangzhou
+          mobile: 18900010222
+          landlines: 0571-22098909
+        - key: 1
+          name: Alex
+          age: 20
+          address: Shanghai
+          mobile: 18900010333
+          mobileColSpan: 2
+          landlinesColSpan: 0
+        - key: 2
+          name: Lucy
+          age: 16
+          address: Yunnan
+          mobile: 18900010444
+          landlines: 0571-22098707
+          landlinesRowSpan: 2
+        - key: 3
+          name: Sam
+          age: 28
+          address: Guangzhou
+          mobile: 18900010555
+          landlines: 0571-22098707
+          landlinesRowSpan: 0
+          mobileRowSpan: 2
+        - key: 4
+          name: Bob
+          age: 35
+          address: Hainan
+          mobile: 18900010555
+          landlines: 0571-22098606
+          mobileRowSpan: 0
+```
