@@ -242,11 +242,11 @@ export function EoPaginationComponent(props: EoPaginationComponentProps) {
         />
       </div>
       <div className="pagination-size-changer">
-        <WrappedPopover placement="bottom" sync="width">
+        <WrappedPopover placement="bottom" distance={4}>
           <div className="pagination-size-selection" slot="anchor">
             {t(K.PAGE_SIZE, { count: pageSize }) + " ▼"}
           </div>
-          <WrappedMenu style={{ minWidth: "max-content" }}>
+          <WrappedMenu className="pagination-size-selector-menu">
             {pageSizeOptions.map((value) => {
               const active = value === pageSize;
               return (
