@@ -10,6 +10,7 @@ jest.mock("@next-core/runtime", () => ({
   getHistory: () => ({
     push: mockHistoryPush,
   }),
+  getV2RuntimeFromDll: jest.fn(),
 }));
 
 describe("eo-info-card-item", () => {

@@ -120,7 +120,7 @@ jest.mock("@next-core/runtime", () => {
         },
       ],
     }),
-    getAuth: jest.fn().mockReturnValue({ org: "8888" }),
+    getV2RuntimeFromDll: jest.fn(),
   };
 });
 

@@ -15,6 +15,7 @@ jest.mock("@next-core/theme", () => ({}));
 jest.mock("@next-core/runtime", () => {
   return {
     getAuth: jest.fn().mockReturnValue({ username: "easyops2" }),
+    getV2RuntimeFromDll: jest.fn(),
   };
 });
 
