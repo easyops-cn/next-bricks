@@ -5,7 +5,7 @@ import { MicroApp } from "@next-core/types";
 import styles from "./DesktopApp.module.css";
 import defaultAppIcon from "../../images/default-app-icon.png";
 import { getImageUrl } from "../utils/getImageUrl.js";
-import type { Link, LinkProps } from "../../link/index.jsx";
+import type { Link, LinkProps } from "@next-bricks/basic/link";
 import { GeneralIcon, GeneralIconProps } from "@next-bricks/icons/general-icon";
 
 const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");

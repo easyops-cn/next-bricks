@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { LeftOutlined, RightOutlined, HomeFilled } from "@ant-design/icons";
 import { chunk } from "lodash";
 import classNames from "classnames";
 import { MicroApp } from "@next-core/types";
@@ -15,6 +14,7 @@ import {
   setRememberedDesktopCursor,
 } from "./desktopCursor.js";
 import { DesktopData, DesktopItemCustom } from "../interfaces.js";
+import { WrappedGeneralIcon } from "../common/wrapBrick.js";
 
 type appItem = MicroApp & { type?: "app" | "custom" };
 
@@ -329,22 +329,29 @@ export function DesktopSlider(props: DesktopSliderProps): React.ReactElement {
       })}
     >
       <div className={styles.desktopSelector}>
-        {[...[{ name: <HomeFilled rev={""} /> }], ...desktops].map(
-          (desktop, index) => (
-            <React.Fragment key={index}>
-              {index !== 0 && <span className={styles.selectorSeparator} />}
-              <a
-                className={classNames(styles.desktopName, {
-                  [styles.active]: desktopCursor === index,
-                })}
-                onClick={(e) => handleSlideTo(e, index)}
-                role="button"
-              >
-                {desktop.name}
-              </a>
-            </React.Fragment>
-          )
-        )}
+        {[
+          ...[
+            {
+              name: (
+                <WrappedGeneralIcon lib="antd" theme="filled" icon="home" />
+              ),
+            },
+          ],
+          ...desktops,
+        ].map((desktop, index) => (
+          <React.Fragment key={index}>
+            {index !== 0 && <span className={styles.selectorSeparator} />}
+            <a
+              className={classNames(styles.desktopName, {
+                [styles.active]: desktopCursor === index,
+              })}
+              onClick={(e) => handleSlideTo(e, index)}
+              role="button"
+            >
+              {desktop.name}
+            </a>
+          </React.Fragment>
+        ))}
       </div>
       <div className={styles.scrollContainer}>
         <div
@@ -394,7 +401,7 @@ export function DesktopSlider(props: DesktopSliderProps): React.ReactElement {
         role="button"
       >
         <span className={styles.arrowButton}>
-          <LeftOutlined rev={""} />
+          <WrappedGeneralIcon lib="antd" theme="outlined" icon="left" />
         </span>
       </a>
       <a
@@ -406,7 +413,7 @@ export function DesktopSlider(props: DesktopSliderProps): React.ReactElement {
         role="button"
       >
         <span className={styles.arrowButton}>
-          <RightOutlined rev={""} />
+          <WrappedGeneralIcon lib="antd" theme="outlined" icon="right" />
         </span>
       </a>
     </div>

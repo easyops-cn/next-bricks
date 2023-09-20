@@ -8,7 +8,8 @@ import {
   LaunchpadApi_deleteCollection,
 } from "@next-api-sdk/user-service-sdk";
 import { LaunchpadApi_getLaunchpadInfo } from "@next-api-sdk/micro-app-standalone-sdk";
-import { getRuntime, getAuth } from "@next-core/runtime";
+import { getRuntime } from "@next-core/runtime";
+import { auth } from "@next-core/easyops-runtime";
 import { pick } from "lodash";
 import { i18n } from "@next-core/i18n";
 import { LaunchpadSettings } from "./LaunchpadSettingsContext.js";
@@ -27,9 +28,9 @@ interface LaunchpadBaseInfo {
 }
 
 export class LaunchpadService {
-  readonly storageKey = `launchpad-recently-visited:${
-    (getAuth() as Record<string, string>)?.org
-  }`;
+  readonly storageKey = `launchpad-recently-visited:${(
+    auth.getAuth() as Record<string, string>
+  )?.org}`;
   private storage: JsonStorage;
   private favoriteList: LaunchpadApi_ListCollectionResponseItem[] = [];
   private filteredFavoriteList: LaunchpadApi_ListCollectionResponseItem[] = [];

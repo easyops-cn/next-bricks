@@ -9,7 +9,6 @@
     "eo-dropdown-button",
     "eo-tag-list",
     "eo-menu-item",
-    "eo-launchpad-button",
     "eo-popover",
     "eo-mini-actions",
     "eo-tooltip",
@@ -137,5 +136,5 @@
   ],
   "form-renderer": ["eo-form-renderer"],
   "form-platform": ["eo-user-or-user-group-select"],
-  "nav": ["eo-nav-menu"]
+  "nav": ["eo-nav-menu", "eo-launchpad-button"]
 }
