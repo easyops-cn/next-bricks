@@ -5,10 +5,9 @@ import styles from "./MyDesktop.module.css";
 import { FavoriteDesktopCell } from "../FavoriteDesktopCell/FavoriteDesktopCell.js";
 import classNames from "classnames";
 import { launchpadService } from "../LaunchpadService.js";
-// import { Spin } from "antd";
 import { isEmpty } from "lodash";
 import { SiteMap } from "../site-map/SiteMap.js";
-import { Link, LinkProps } from "../../link/index.js";
+import type { Link, LinkProps } from "@next-bricks/basic/link";
 import { GeneralIcon, GeneralIconProps } from "@next-bricks/icons/general-icon";
 
 const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");

@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createPortal } from "react-dom";
 import {
   LaunchpadWrapper,
   LaunchpadWrapperProps,
@@ -29,7 +29,7 @@ export function LaunchpadPortal(
     return null;
   }
 
-  return ReactDOM.createPortal(
+  return createPortal(
     <LaunchpadWrapper
       onWillClose={props.onWillClose}
       onClose={props.onClose}

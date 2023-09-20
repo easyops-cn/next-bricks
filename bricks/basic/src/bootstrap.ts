@@ -11,7 +11,6 @@ import "./menu/index.js";
 import "./menu-item/index.js";
 import "./tag/index.js";
 import "./tag-list/index.js";
-import "./launchpad/index.js";
 import "./notification.js";
 import "./data-providers/copy-to-clipboard.js";
 import "./mini-actions/index.js";

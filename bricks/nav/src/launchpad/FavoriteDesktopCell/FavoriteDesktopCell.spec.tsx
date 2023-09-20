@@ -1,6 +1,6 @@
 import React from "react";
 import { render, fireEvent, createEvent } from "@testing-library/react";
-import type { Link } from "../../link/index.js";
+import type { Link } from "@next-bricks/basic/link";
 import { FavoriteDesktopCell } from "./FavoriteDesktopCell.js";
 
 jest.mock("../LaunchpadService", () => {

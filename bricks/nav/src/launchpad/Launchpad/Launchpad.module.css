@@ -28,7 +28,9 @@
 .fadeEnterActive {
   opacity: 1;
   transform: translateX(0);
-  transition: opacity 100ms ease-out, transform 100ms ease-out;
+  transition:
+    opacity 100ms ease-out,
+    transform 100ms ease-out;
 }
 
 .fadeExit {
@@ -38,7 +40,9 @@
 .fadeExitActive {
   opacity: 0;
   transform: scale(0.95);
-  transition: opacity 100ms ease-out, transform 100ms ease-out;
+  transition:
+    opacity 100ms ease-out,
+    transform 100ms ease-out;
 }
 
 .fadeExitDone {

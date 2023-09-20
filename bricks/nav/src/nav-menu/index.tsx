@@ -248,7 +248,6 @@ function SitMapMenCom({
     GroupItemStyleText,
     styleText,
   ],
-  alias: ["nav.nav-menu"],
 })
 class NavMenu extends ReactNextElement {
   /**

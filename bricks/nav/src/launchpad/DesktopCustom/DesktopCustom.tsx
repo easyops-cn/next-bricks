@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import styles from "./DesktopCustom.module.css";
 import defaultAppIcon from "../../images/default-app-icon.png";
-import type { Link, LinkProps } from "../../link/index.js";
+import type { Link, LinkProps } from "@next-bricks/basic/link";
 import { wrapBrick } from "@next-core/react-element";
 import { GeneralIcon, GeneralIconProps } from "@next-bricks/icons/general-icon";
 

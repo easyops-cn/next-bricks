@@ -6,7 +6,9 @@
 .appearActive {
   opacity: 1;
   transform: translateX(0);
-  transition: opacity 100ms ease-out, transform 100ms ease-out;
+  transition:
+    opacity 100ms ease-out,
+    transform 100ms ease-out;
 }
 
 .exit {
@@ -16,7 +18,9 @@
 .exitActive {
   opacity: 0;
   transform: scale(1.05);
-  transition: opacity 100ms ease-out, transform 100ms ease-out;
+  transition:
+    opacity 100ms ease-out,
+    transform 100ms ease-out;
 }
 
 /* Keep these empty rules, CSSTransition need them.  */

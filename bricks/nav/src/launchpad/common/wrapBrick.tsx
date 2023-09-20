@@ -1,5 +1,5 @@
 import { wrapBrick } from "@next-core/react-element";
-import type { Link, LinkProps } from "../../link/index.js";
+import type { Link, LinkProps } from "@next-bricks/basic/link";
 import type {
   GeneralIcon,
   GeneralIconProps,

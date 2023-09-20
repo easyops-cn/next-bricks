@@ -43,7 +43,7 @@ jest.mock("./LaunchpadService.js", () => ({
 describe("launchpad", () => {
   test("basic usage", async () => {
     const element = document.createElement(
-      "basic.launchpad-button"
+      "eo-launchpad-button"
     ) as LaunchpadButton;
 
     expect(element.shadowRoot).toBeFalsy();

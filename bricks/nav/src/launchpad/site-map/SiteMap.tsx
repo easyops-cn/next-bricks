@@ -3,7 +3,7 @@ import styles from "./SiteMap.module.css";
 import { MicroApp } from "@next-core/types";
 import { launchpadService } from "../LaunchpadService.js";
 import { wrapBrick } from "@next-core/react-element";
-import { Link, LinkProps } from "../../link/index.js";
+import type { Link, LinkProps } from "@next-bricks/basic/link";
 
 const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 
