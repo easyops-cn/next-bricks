@@ -14,6 +14,7 @@ import {
   PaginationType,
   RowSelectionType,
   ExpandableType,
+  Sort,
 } from "./interface.js";
 import { Table, ConfigProvider, theme } from "antd";
 import { StyleProvider, createCache } from "@ant-design/cssinjs";
@@ -22,6 +23,7 @@ import {
   useCurrentTheme,
 } from "@next-core/react-runtime";
 import { ColumnTitleProps, RowSelectMethod } from "antd/es/table/interface.js";
+import { i18n } from "@next-core/i18n";
 import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
 import { Trans } from "react-i18next";
 import { K, NS, locales } from "./i18n.js";
@@ -31,10 +33,12 @@ import {
   defaultPaginationConfig,
   defaultRowSelectionConfig,
   getAllKeys,
+  getValueByDataIndex,
   isPlainObject,
+  naturalComparator,
   searchList,
 } from "./utils.js";
-import { isNil } from "lodash";
+import { isNil, keyBy } from "lodash";
 import { wrapBrick } from "@next-core/react-element";
 import type { Link, LinkProps } from "@next-bricks/basic/link";
 import { checkIfByTransform } from "@next-core/runtime";
@@ -56,6 +60,9 @@ import {
   restrictToVerticalAxis,
 } from "@dnd-kit/modifiers";
 import { DraggableRow, Row } from "./Row.js";
+import type { Locale } from "antd/es/locale";
+import enUS from "antd/locale/en_US.js";
+import zhCN from "antd/locale/zh_CN.js";
 
 initializeReactI18n(NS, locales);
 
@@ -66,7 +73,10 @@ interface NextTableComponentProps {
   rowKey: string;
   columns?: Column[];
   dataSource?: DataSource;
+  frontSearch?: boolean;
   pagination?: PaginationType;
+  multiSort?: boolean;
+  sort?: Sort | Sort[];
   rowSelection?: RowSelectionType;
   selectedRowKeys?: (string | number)[];
   hiddenColumns?: (string | number)[];
@@ -77,6 +87,7 @@ interface NextTableComponentProps {
   searchFields?: (string | string[])[];
   onPageChange?: (detail: { page: number; pageSize: number }) => void;
   onPageSizeChange?: (detail: { page: number; pageSize: number }) => void;
+  onSort?: (detail?: Sort | Sort[]) => void;
   onRowSelect?: (detail: {
     keys: (string | number)[];
     rows: RecordType[];
@@ -104,7 +115,9 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
     rowKey,
     columns,
     dataSource,
+    frontSearch,
     pagination,
+    multiSort,
     rowSelection,
     hiddenColumns,
     expandable,
@@ -113,6 +126,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
     searchFields,
     onPageChange,
     onPageSizeChange,
+    onSort,
     onRowSelect,
     onRowExpand,
     onExpandedRowsChange,
@@ -124,6 +138,9 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
     return createCache();
   }, []);
   const currentTheme = useCurrentTheme();
+  const locale = (i18n.language.split("-")[0] === "zh"
+    ? zhCN
+    : enUS) as unknown as Locale;
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -152,6 +169,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
   const [expandedRowKeys, setExpandedRowKeys] = useState<(string | number)[]>(
     props.expandedRowKeys ?? []
   );
+  const [sort, setSort] = useState<Sort | Sort[] | undefined>(props.sort);
 
   const isTreeData = useMemo(
     () => dataSource?.list?.some((v) => v[childrenColumnName]?.length),
@@ -186,13 +204,40 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
     });
   }, [dataSource]);
 
+  useEffect(() => {
+    setSort(props.sort);
+  }, [props.sort]);
+
   const processedColumns = useMemo(() => {
     const hiddenColumnsSet = new Set(hiddenColumns);
+    const sortMap = keyBy(([] as Sort[]).concat(sort || []), "columnKey");
+
     return columns
       ?.filter((col) => !hiddenColumnsSet.has(col.key!))
       .map((col) => {
+        const curSort = sortMap[col.key!];
+        const comparator = (recordA: RecordType, recordB: RecordType) => {
+          return naturalComparator(
+            getValueByDataIndex(recordA, col.dataIndex),
+            getValueByDataIndex(recordB, col.dataIndex)
+          );
+        };
+
         return {
           ...col,
+          ...(col.sortable
+            ? {
+                sorter: multiSort
+                  ? {
+                      compare: frontSearch ? comparator : undefined,
+                      multiple: col.sortMultiple,
+                    }
+                  : frontSearch
+                  ? comparator
+                  : true,
+                sortOrder: curSort ? curSort.order : null,
+              }
+            : {}),
           render(value: any, record: RecordType, index: number) {
             if (col.useBrick) {
               const data = {
@@ -232,7 +277,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
           },
         };
       });
-  }, [columns, hiddenColumns]);
+  }, [columns, hiddenColumns, multiSort, sort, frontSearch]);
 
   const rowSelectionConfig = useMemo(() => {
     if (rowSelection === false || isNil(rowSelection)) {
@@ -308,12 +353,16 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
 
   return (
     <ConfigProvider
+      locale={locale}
       theme={{
         algorithm:
           currentTheme === "dark-v2"
             ? theme.darkAlgorithm
             : theme.defaultAlgorithm,
       }}
+      getPopupContainer={(trigger) =>
+        (trigger as HTMLElement).parentElement as HTMLElement
+      }
     >
       <StyleProvider container={shadowRoot as ShadowRoot} cache={styleCache}>
         <DndContext
@@ -489,26 +538,46 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                     }
               }
               onChange={(pagination, filters, sorter, extra) => {
-                if (extra.action === "paginate") {
-                  setPageAndPageSize((pre) => {
-                    if (pre.pageSize !== pagination.pageSize) {
-                      const newData = {
-                        page: 1,
-                        pageSize: pagination.pageSize ?? DEFAULT_PAGE_SIZE,
-                      };
-                      onPageSizeChange?.(newData);
-                      onPageChange?.(newData);
-                      return newData;
-                    } else if (pre.page !== pagination.current) {
-                      const newData = {
-                        page: pagination.current ?? DEFAULT_PAGE,
-                        pageSize: pagination.pageSize ?? DEFAULT_PAGE_SIZE,
-                      };
-                      onPageChange?.(newData);
-                      return newData;
-                    }
-                    return pre;
-                  });
+                switch (extra.action) {
+                  case "paginate": {
+                    setPageAndPageSize((pre) => {
+                      if (pre.pageSize !== pagination.pageSize) {
+                        const newData = {
+                          page: 1,
+                          pageSize: pagination.pageSize ?? DEFAULT_PAGE_SIZE,
+                        };
+                        onPageSizeChange?.(newData);
+                        onPageChange?.(newData);
+                        return newData;
+                      } else if (pre.page !== pagination.current) {
+                        const newData = {
+                          page: pagination.current ?? DEFAULT_PAGE,
+                          pageSize: pagination.pageSize ?? DEFAULT_PAGE_SIZE,
+                        };
+                        onPageChange?.(newData);
+                        return newData;
+                      }
+                      return pre;
+                    });
+                    break;
+                  }
+                  case "sort": {
+                    const newSort = Array.isArray(sorter)
+                      ? sorter
+                          .filter((v) => v.order)
+                          .map((v) => ({
+                            columnKey: v.columnKey,
+                            order: v.order,
+                          }))
+                      : sorter.order
+                      ? {
+                          columnKey: sorter.columnKey,
+                          order: sorter.order,
+                        }
+                      : undefined;
+                    setSort(newSort);
+                    onSort?.(newSort);
+                  }
                 }
               }}
             />

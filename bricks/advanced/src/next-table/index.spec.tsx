@@ -60,7 +60,7 @@ const dataSource = {
     {
       key: 0,
       name: "Jack",
-      age: 18,
+      age: 28,
       address: "Guangzhou",
       tag: ["nice", "good"],
       tutor: {
@@ -591,6 +591,93 @@ describe("front search", () => {
     expect(document.body.contains(element)).toBeFalsy();
   });
 
+  test("sortable", async () => {
+    const onSort = jest.fn();
+    const element = document.createElement("eo-next-table") as EoNextTable;
+    element.columns = [
+      {
+        dataIndex: "name",
+        key: "name",
+        title: "Name",
+      },
+      {
+        dataIndex: "age",
+        key: "age",
+        title: "Age",
+        sortable: true,
+      },
+      {
+        dataIndex: "address",
+        key: "address",
+        title: "Address",
+        sortable: true,
+      },
+    ];
+    element.dataSource = dataSource;
+    element.pagination = false;
+    element.frontSearch = true;
+    element.sort = {
+      columnKey: "age",
+      order: "ascend",
+    };
+    element.addEventListener("sort.change", onSort);
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    await act(async () => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+
+    const ageTh = element.shadowRoot?.querySelectorAll(
+      "thead .ant-table-cell"
+    )[1] as Element;
+    expect(ageTh.getAttribute("aria-sort")).toBe("ascending");
+    expect(
+      element.shadowRoot
+        ?.querySelectorAll("tbody .ant-table-row")[0]
+        .querySelectorAll(".ant-table-cell")[1].textContent
+    ).toBe("16");
+
+    await act(async () => {
+      fireEvent.click(ageTh);
+    });
+    expect(ageTh.getAttribute("aria-sort")).toBe("descending");
+    expect(onSort).lastCalledWith(
+      expect.objectContaining({
+        detail: {
+          columnKey: "age",
+          order: "descend",
+        },
+      })
+    );
+    expect(
+      element.shadowRoot
+        ?.querySelectorAll("tbody .ant-table-row")[0]
+        .querySelectorAll(".ant-table-cell")[1].textContent
+    ).toBe("38");
+
+    await act(async () => {
+      fireEvent.click(ageTh);
+    });
+    expect(ageTh.getAttribute("aria-sort")).toBeNull;
+    expect(onSort).lastCalledWith(
+      expect.objectContaining({
+        detail: null,
+      })
+    );
+    expect(
+      element.shadowRoot
+        ?.querySelectorAll("tbody .ant-table-row")[0]
+        .querySelectorAll(".ant-table-cell")[1].textContent
+    ).toBe(String(dataSource.list[0].age));
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(document.body.contains(element)).toBeFalsy();
+  });
+
   test("tree data", async () => {
     const element = document.createElement("eo-next-table") as EoNextTable;
     element.columns = columns;
@@ -640,6 +727,187 @@ describe("front search", () => {
     expect(
       element.shadowRoot?.querySelectorAll("tbody .ant-table-row").length
     ).toBe(11);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(document.body.contains(element)).toBeFalsy();
+  });
+});
+
+describe("sortable", () => {
+  test("multiSort is false", async () => {
+    const onSort = jest.fn();
+    const element = document.createElement("eo-next-table") as EoNextTable;
+    element.columns = [
+      {
+        dataIndex: "name",
+        key: "name",
+        title: "Name",
+      },
+      {
+        dataIndex: "age",
+        key: "age",
+        title: "Age",
+        sortable: true,
+      },
+      {
+        dataIndex: "address",
+        key: "address",
+        title: "Address",
+        sortable: true,
+      },
+    ];
+    element.dataSource = dataSource;
+    element.pagination = false;
+    element.sort = {
+      columnKey: "age",
+      order: "ascend",
+    };
+    element.addEventListener("sort.change", onSort);
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    await act(async () => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+
+    const ageTh = element.shadowRoot?.querySelectorAll(
+      "thead .ant-table-cell"
+    )[1] as Element;
+    expect(ageTh.getAttribute("aria-sort")).toBe("ascending");
+    await act(async () => {
+      fireEvent.click(ageTh);
+    });
+    expect(ageTh.getAttribute("aria-sort")).toBe("descending");
+    expect(onSort).lastCalledWith(
+      expect.objectContaining({
+        detail: {
+          columnKey: "age",
+          order: "descend",
+        },
+      })
+    );
+
+    const addressTh = element.shadowRoot?.querySelectorAll(
+      "thead .ant-table-cell"
+    )[2] as Element;
+    await act(async () => {
+      fireEvent.click(addressTh);
+    });
+    expect(ageTh.getAttribute("aria-sort")).toBeNull();
+    expect(addressTh.getAttribute("aria-sort")).toBe("ascending");
+    expect(onSort).lastCalledWith(
+      expect.objectContaining({
+        detail: {
+          columnKey: "address",
+          order: "ascend",
+        },
+      })
+    );
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(document.body.contains(element)).toBeFalsy();
+  });
+
+  test("multiSort is true", async () => {
+    const onSort = jest.fn();
+    const element = document.createElement("eo-next-table") as EoNextTable;
+    element.columns = [
+      {
+        dataIndex: "name",
+        key: "name",
+        title: "Name",
+      },
+      {
+        dataIndex: "age",
+        key: "age",
+        title: "Age",
+        sortable: true,
+        sortMultiple: 1,
+      },
+      {
+        dataIndex: "address",
+        key: "address",
+        title: "Address",
+        sortable: true,
+        sortMultiple: 2,
+      },
+    ];
+    element.dataSource = dataSource;
+    element.pagination = false;
+    element.multiSort = true;
+    element.sort = [
+      {
+        columnKey: "age",
+        order: "ascend",
+      },
+      {
+        columnKey: "address",
+        order: "descend",
+      },
+    ];
+    element.addEventListener("sort.change", onSort);
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    await act(async () => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+
+    const ageTh = element.shadowRoot?.querySelectorAll(
+      "thead .ant-table-cell"
+    )[1] as Element;
+    const addressTh = element.shadowRoot?.querySelectorAll(
+      "thead .ant-table-cell"
+    )[2] as Element;
+    expect(ageTh.getAttribute("aria-sort")).toBe("ascending");
+    expect(addressTh.getAttribute("aria-sort")).toBe("descending");
+
+    await act(async () => {
+      fireEvent.click(ageTh);
+    });
+    expect(ageTh.getAttribute("aria-sort")).toBe("descending");
+    expect(addressTh.getAttribute("aria-sort")).toBe("descending");
+    expect(onSort).lastCalledWith(
+      expect.objectContaining({
+        detail: [
+          {
+            columnKey: "address",
+            order: "descend",
+          },
+          {
+            columnKey: "age",
+            order: "descend",
+          },
+        ],
+      })
+    );
+
+    await act(async () => {
+      fireEvent.click(ageTh);
+    });
+    expect(onSort).lastCalledWith(
+      expect.objectContaining({
+        detail: {
+          columnKey: "address",
+          order: "descend",
+        },
+      })
+    );
+
+    await act(async () => {
+      fireEvent.click(addressTh);
+    });
+    expect(onSort).lastCalledWith(
+      expect.objectContaining({
+        detail: null,
+      })
+    );
 
     act(() => {
       document.body.removeChild(element);

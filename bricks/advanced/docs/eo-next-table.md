@@ -111,10 +111,17 @@
       - action: console.log
     page.size.change:
       - action: console.log
+    sort.change:
+      - action: console.log
   properties:
     id: table
+    frontSearch: true
     searchFields:
       - address
+    sort:
+      columnKey: age
+      order: descend
+    multiSort: true
     pagination:
       pageSizeOptions:
         - 5
@@ -127,9 +134,13 @@
       - dataIndex: age
         key: age
         title: Age
+        sortable: true
+        sortMultiple: 1
       - dataIndex: address
         key: address
         title: Address
+        sortable: true
+        sortMultiple: 2
     dataSource:
       pageSize: 5
       page: 1
