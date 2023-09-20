@@ -230,7 +230,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                 sorter: multiSort
                   ? {
                       compare: frontSearch ? comparator : undefined,
-                      multiple: col.sortMultiple,
+                      multiple: col.sortPriority,
                     }
                   : frontSearch
                   ? comparator

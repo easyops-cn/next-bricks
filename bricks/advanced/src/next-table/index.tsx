@@ -66,7 +66,7 @@ class EoNextTable extends ReactNextElement {
   accessor pagination: PaginationType;
 
   /**
-   * 是否支持多列排序，需设置 column.sortMultiple
+   * 是否支持多列排序，前端搜索时需设置 column.sortPriority 优先级
    */
   @property({
     type: Boolean,

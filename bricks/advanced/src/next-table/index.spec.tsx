@@ -827,14 +827,14 @@ describe("sortable", () => {
         key: "age",
         title: "Age",
         sortable: true,
-        sortMultiple: 1,
+        sortPriority: 1,
       },
       {
         dataIndex: "address",
         key: "address",
         title: "Address",
         sortable: true,
-        sortMultiple: 2,
+        sortPriority: 2,
       },
     ];
     element.dataSource = dataSource;

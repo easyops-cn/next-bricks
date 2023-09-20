@@ -21,8 +21,8 @@ export interface Column extends ColumnType<RecordType> {
   cellRowSpanKey?: string;
   /** 是否可排序 */
   sortable?: boolean;
-  /** 前端搜索时，多列排序优先级 */
-  sortMultiple?: number;
+  /** 前端搜索时，多列排序优先级，数字越大优先级越高 */
+  sortPriority?: number;
 }
 
 export interface DataSource {
