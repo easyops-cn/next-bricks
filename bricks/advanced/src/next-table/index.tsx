@@ -11,6 +11,7 @@ import {
   PaginationType,
   RecordType,
   RowSelectionType,
+  Sort,
 } from "./interface.js";
 import { RowSelectMethod } from "antd/es/table/interface.js";
 
@@ -49,12 +50,36 @@ class EoNextTable extends ReactNextElement {
   accessor dataSource: DataSource | undefined;
 
   /**
+   * 是否前端搜索
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor frontSearch: boolean | undefined;
+
+  /**
    * 分页配置
    */
   @property({
     attribute: false,
   })
   accessor pagination: PaginationType;
+
+  /**
+   * 是否支持多列排序，前端搜索时需设置 column.sortPriority 优先级
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor multiSort: boolean | undefined;
+
+  /**
+   * 排序信息
+   */
+  @property({
+    attribute: false,
+  })
+  accessor sort: Sort | Sort[] | undefined;
 
   /**
    * 表格行可选择配置
@@ -153,6 +178,16 @@ class EoNextTable extends ReactNextElement {
   };
 
   /**
+   * 排序变化的回调
+   * @detail 当前排序的信息
+   */
+  @event({ type: "sort.change" })
+  accessor #sortChangeEvent!: EventEmitter<Sort | Sort[] | undefined>;
+  #handleSort = (detail: Sort | Sort[] | undefined): void => {
+    this.#sortChangeEvent.emit(detail);
+  };
+
+  /**
    * 行选中项发生变化时的回调
    * @detail 改变后的 rowKey 及行数据
    */
@@ -223,7 +258,10 @@ class EoNextTable extends ReactNextElement {
         rowKey={this.rowKey}
         columns={this.columns}
         dataSource={this.dataSource}
+        frontSearch={this.frontSearch}
         pagination={this.pagination}
+        multiSort={this.multiSort}
+        sort={this.sort}
         rowSelection={this.rowSelection}
         selectedRowKeys={this.selectedRowKeys}
         hiddenColumns={this.hiddenColumns}
@@ -234,6 +272,7 @@ class EoNextTable extends ReactNextElement {
         searchFields={this.searchFields}
         onPageChange={this.#handlePageChange}
         onPageSizeChange={this.#handlePageSizeChange}
+        onSort={this.#handleSort}
         onRowSelect={this.#handleRowSelect}
         onRowExpand={this.#handleRowExpand}
         onExpandedRowsChange={this.#handleExpandedRowsChange}

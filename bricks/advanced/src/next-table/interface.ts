@@ -1,5 +1,6 @@
 import type { ColumnType, TablePaginationConfig } from "antd/es/table";
 import type {
+  SortOrder,
   ExpandableConfig as TableExpandableConfig,
   TableRowSelection,
 } from "antd/es/table/interface.js";
@@ -18,6 +19,10 @@ export interface Column extends ColumnType<RecordType> {
   cellColSpanKey?: string;
   /** 记录表格行合并的值的 key */
   cellRowSpanKey?: string;
+  /** 是否可排序 */
+  sortable?: boolean;
+  /** 前端搜索时，多列排序优先级，数字越大优先级越高 */
+  sortPriority?: number;
 }
 
 export interface DataSource {
@@ -81,3 +86,8 @@ interface ExpandableConfig
 }
 
 export type ExpandableType = boolean | ExpandableConfig | undefined;
+
+export interface Sort {
+  columnKey?: string | number;
+  order?: SortOrder;
+}

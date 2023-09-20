@@ -35,6 +35,16 @@ export function getSearchKeywords(value: unknown): string[] {
   return result.flat(Infinity).filter(Boolean) as string[];
 }
 
+export function getValueByDataIndex(
+  record: RecordType,
+  dataIndex: Column["dataIndex"]
+) {
+  // 嵌套在 dataIndex 中用数组表示，所以 "a.b" 这种要识别成 key: "a.b"。
+  return Array.isArray(dataIndex)
+    ? get(record, dataIndex)
+    : record[dataIndex as string];
+}
+
 export function searchList({
   list,
   columns,
@@ -61,10 +71,7 @@ export function searchList({
         );
       } else if (columns) {
         keywords = columns.flatMap((column) => {
-          // 嵌套在 dataIndex 中用数组表示，所以 "a.b" 这种要识别成 key: "a.b"。
-          const value = Array.isArray(column.dataIndex)
-            ? get(row, column.dataIndex)
-            : row[column.dataIndex as string];
+          const value = getValueByDataIndex(row, column.dataIndex);
           return getSearchKeywords(value);
         });
       }
@@ -127,4 +134,8 @@ export function getAllKeys({
   });
 
   return [...new Set(keys)] as (string | number)[];
+}
+
+export function naturalComparator(a: unknown, b: unknown) {
+  return String(a).localeCompare(String(b));
 }
