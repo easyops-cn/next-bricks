@@ -36,6 +36,7 @@ import { SiteMapItem } from "./site-map/SiteMapItem.js";
 import SiteMapStyleText from "../nav-menu/site-map/SiteMapItem.shadow.css";
 import ItemTagStyleText from "../nav-menu/site-map/ItemTag.shadow.css";
 import GroupItemStyleText from "../nav-menu/site-map/GroupItem.shadow.css";
+import { debounce } from "lodash";
 
 const { defineElement, property } = createDecorators();
 
@@ -95,11 +96,19 @@ function SimpleMenuItemCom(props: SimpleMenuItemComProps) {
   );
 }
 
-// istanbul ignore next
-function handlePopupVisibleChange(event: CustomEvent<boolean>) {
+let scrollWidth: number;
+// istanbul ignore next;
+const handlePopupVisibleChange = (event: CustomEvent<boolean>) => {
+  // 当用户设置滚动条一直显示时，来回切换 overflow: hidden 会导致滚动条显示或隐藏
+  // 造成页面宽度变化而导致的抖动的问题
+  const paddingRight =
+    scrollWidth ??
+    (scrollWidth = window.innerWidth - document.body.clientWidth);
+
+  document.body.style.paddingRight = event.detail ? paddingRight + "px" : "";
   document.body.style.overflow = event.detail ? "hidden" : "";
   document.body.style.touchAction = event.detail ? "none" : "";
-}
+};
 
 function SubMenuItemCom({
   item,
@@ -114,7 +123,6 @@ function SubMenuItemCom({
       placement={topData ? "bottom-start" : "right-start"}
       distance={0}
       anchorDisplay="block"
-      onVisibleChange={handlePopupVisibleChange}
     >
       <WrappedMenuItem
         className="sub-menu-item-label"
@@ -180,7 +188,8 @@ function ThreeLevelMenuCom({
       placement={"bottom-start"}
       distance={0}
       key={item.key}
-      onVisibleChange={handlePopupVisibleChange}
+      strategy="fixed"
+      beforeVisibleChange={handlePopupVisibleChange}
     >
       <WrappedMenuItem
         className="sub-menu-item-label"
@@ -216,7 +225,8 @@ function SitMapMenCom({
       placement={"bottom-start"}
       distance={0}
       key={item.key}
-      onVisibleChange={handlePopupVisibleChange}
+      strategy="fixed"
+      beforeVisibleChange={handlePopupVisibleChange}
     >
       <WrappedMenuItem
         className="sub-menu-item-label"
