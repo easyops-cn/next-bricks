@@ -17,6 +17,7 @@ describe("parseSuiteAst", () => {
           name: "describe",
           label: "test route create",
           params: null,
+          executeType: "only",
           children: [
             {
               type: "block",
@@ -97,6 +98,28 @@ describe("parseSuiteAst", () => {
                 },
               ],
             },
+            {
+              type: "block",
+              name: "it",
+              executeType: "skip",
+              label: "test",
+              params: null,
+              children: [
+                {
+                  type: "command",
+                  name: "findByTestId",
+                  label: null,
+                  params: ["card-item"],
+                  children: [
+                    {
+                      type: "command",
+                      name: "click",
+                      label: null,
+                    },
+                  ],
+                },
+              ],
+            },
           ],
         },
       ],
@@ -109,17 +132,20 @@ describe("parseSuiteAst", () => {
     const generatedCode = transformFromAst(program, undefined, {}).code;
 
     expect(generatedCode).toMatchInlineSnapshot(`
-      "describe("test route create", () => {
-        it("should work", () => {
-          cy.get("#username").type("easyops");
-          cy.get("#password").type("easyops");
-          cy.get("提交").click({
-            "force": true
-          });
-          cy.get(".tips").should("have.class", "success");
-          cy.get(".tips").should("include.text", "成功");
-        });
-      });"
-    `);
+"describe.only("test route create", () => {
+  it("should work", () => {
+    cy.get("#username").type("easyops");
+    cy.get("#password").type("easyops");
+    cy.get("提交").click({
+      "force": true
+    });
+    cy.get(".tips").should("have.class", "success");
+    cy.get(".tips").should("include.text", "成功");
+  });
+  it.skip("test", () => {
+    cy.findByTestId("card-item").click();
+  });
+});"
+`);
   });
 });

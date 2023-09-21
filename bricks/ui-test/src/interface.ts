@@ -6,12 +6,15 @@ export enum NodeType {
   Command = "command",
 }
 
+type NodeExecuteType = "only" | "skip" | "none";
+
 export interface NodeItem {
   type: NodeType;
   children?: NodeItem[];
   label?: string;
   name: string;
   params?: any[];
+  executeType?: NodeExecuteType;
 }
 
 export interface CommandParam {

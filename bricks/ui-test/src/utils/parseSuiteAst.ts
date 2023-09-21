@@ -117,8 +117,15 @@ function processBlockItem(item: NodeItem): t.Statement[] {
 }
 
 function createBlockNode(item: NodeItem): t.ExpressionStatement {
+  const callee = ["only", "skip"].includes(item.executeType as string)
+    ? t.memberExpression(
+        t.identifier(item.name),
+        t.identifier(item.executeType as string)
+      )
+    : t.identifier(item.name);
+
   return t.expressionStatement(
-    t.callExpression(t.identifier(item.name), [
+    t.callExpression(callee, [
       ...(["before", "beforeEach", "after", "afterEach"].includes(item.name)
         ? []
         : [t.stringLiteral(item.label || "")]),
