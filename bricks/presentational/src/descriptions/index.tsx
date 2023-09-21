@@ -171,6 +171,9 @@ export function DescriptionsComponent(props: DescriptionsProps) {
       headerStyle={{
         border: "none",
         padding: "20px 20px 0 20px",
+        color: "var(--antd-description-title-color)",
+        fontSize: "14px",
+        lineHeight: "20px",
       }}
       background={showCard}
     >
@@ -198,8 +201,10 @@ export function DescriptionsComponent(props: DescriptionsProps) {
                   : {}),
               }}
             >
-              <span>{item.label}: </span>
-              <span>{renderItem(item)}</span>
+              <span className="description-item-label">{item.label}: </span>
+              <span className="description-item-content">
+                {renderItem(item)}
+              </span>
             </div>
           ))}
       </WrappedGridLayout>
