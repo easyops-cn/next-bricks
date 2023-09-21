@@ -180,7 +180,7 @@ describe("siteMap test", () => {
 
   it("should work with search", async () => {
     (collectService.getFavoritesById as jest.Mock).mockReturnValueOnce([
-      { text: "主机", to: "/host" },
+      { text: "主机", to: "/host", key: "0" },
     ]);
 
     const menuGroup = {
@@ -347,10 +347,12 @@ describe("siteMap test", () => {
       fireEvent(input, new CustomEvent("change", { detail: "notExited" }));
     });
 
-    jest.advanceTimersByTime(500);
+    act(() => {
+      jest.advanceTimersByTime(500);
+    });
 
     expect(container.querySelector(".no-data-tips")?.textContent).toEqual(
-      undefined
+      "NO_DATA_SEARCH_INFO"
     );
   });
 

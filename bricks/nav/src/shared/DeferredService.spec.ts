@@ -1,8 +1,16 @@
-import { DeferredService } from "./DeferredService";
+import { DeferredService } from "./DeferredService.js";
 
 const consoleError = jest.spyOn(console, "error");
 
 describe("DeferredService", () => {
+  beforeAll(() => {
+    jest.useFakeTimers();
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
   });

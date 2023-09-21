@@ -37,7 +37,8 @@ jest.mock("../LaunchpadService.js", () => {
   return {
     launchpadService: {
       fetchFavoriteList: () => [],
-      preFetchLaunchpadInfo: () => null,
+      preFetchLaunchpadInfo: jest.fn(),
+      preFetchFavorites: jest.fn(),
       getAllVisitors: (): any[] => [],
       setMaxVisitorLength: jest.fn(),
       getBaseInfo: () => ({
