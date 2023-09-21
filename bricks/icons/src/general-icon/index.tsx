@@ -14,14 +14,17 @@ const { defineElement, property } = createDecorators();
 
 export interface GeneralIconPropsOfAntd extends AntdIconProps {
   lib: "antd";
+  spinning?: boolean;
 }
 
 export interface GeneralIconPropsOfEasyOps extends EasyOpsIconProps {
   lib: "easyops";
+  spinning?: boolean;
 }
 
 export interface GeneralIconPropsOfFa extends FaIconProps {
   lib: "fa";
+  spinning?: boolean;
 }
 
 export type GeneralIconProps =
@@ -75,6 +78,9 @@ class GeneralIcon
 
   /** 渐变色方向（不适用于 EasyOps 图标） */
   @property() accessor gradientDirection: GradientDirection | undefined;
+
+  /** 是否自动旋转 */
+  @property({ type: Boolean }) accessor spinning: boolean | undefined;
 
   render() {
     const commonProps = {

@@ -23,7 +23,8 @@ jest.mock("@next-core/runtime");
 jest.mock("./LaunchpadService.js", () => ({
   launchpadService: {
     fetchFavoriteList: () => [],
-    preFetchLaunchpadInfo: () => null,
+    preFetchLaunchpadInfo: jest.fn(),
+    preFetchFavorites: jest.fn(),
     getAllVisitors: (): any[] => [],
     setMaxVisitorLength: jest.fn(),
     getBaseInfo: () => ({

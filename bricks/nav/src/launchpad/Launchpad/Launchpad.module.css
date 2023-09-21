@@ -54,4 +54,6 @@
   justify-content: center;
   align-items: center;
   height: 100%;
+  font-size: 58px;
+  color: var(--theme-cyan-color);
 }

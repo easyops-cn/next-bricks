@@ -133,7 +133,7 @@ Your favorite icons, including [Ant Design Icons](https://ant.design/components/
         lib: easyops
         category: default
         icon: account
-    - brick: eo-antd-icon
+    - brick: eo-icon
       properties:
         lib: antd
         theme: outlined
@@ -176,4 +176,33 @@ Your favorite icons, including [Ant Design Icons](https://ant.design/components/
         icon: bell
         startColor: pink
         endColor: purple
+```
+
+### Spinning
+
+```yaml preview
+- brick: div
+  properties:
+    style:
+      display: flex
+      gap: 1em
+      fontSize: 32px
+  children:
+    - brick: eo-icon
+      properties:
+        spinning: true
+        lib: antd
+        theme: outlined
+        icon: loading
+    - brick: eo-icon
+      properties:
+        spinning: true
+        lib: fa
+        icon: spinner
+    - brick: eo-icon
+      properties:
+        spinning: true
+        lib: easyops
+        category: third-menu
+        icon: placeholder-third-menu
 ```
