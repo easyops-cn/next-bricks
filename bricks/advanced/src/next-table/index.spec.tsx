@@ -234,6 +234,7 @@ describe("eo-next-table", () => {
       },
     ];
     element.dataSource = dataSource;
+    element.optimizedColumns = ["name", "age", "address"];
     element.hiddenColumns = ["hidden1", "groupName"];
 
     expect(element.shadowRoot).toBeFalsy();

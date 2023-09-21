@@ -5,10 +5,25 @@ import type {
   TableRowSelection,
 } from "antd/es/table/interface.js";
 import type { UseBrickConf } from "@next-core/types";
+import { CSSProperties } from "react";
 
 export type RecordType = Record<string, any>;
 
-export interface Column extends ColumnType<RecordType> {
+export interface Column
+  extends Pick<
+    ColumnType<RecordType>,
+    | "align"
+    | "colSpan"
+    | "dataIndex"
+    | "ellipsis"
+    | "fixed"
+    | "key"
+    | "rowScope"
+    | "showSorterTooltip"
+    | "sortDirections"
+    | "title"
+    | "width"
+  > {
   /** 表头自定义展示构件 */
   headerBrick?: {
     useBrick: UseBrickConf;
@@ -23,6 +38,12 @@ export interface Column extends ColumnType<RecordType> {
   sortable?: boolean;
   /** 前端搜索时，多列排序优先级，数字越大优先级越高 */
   sortPriority?: number;
+  /** 垂直对齐方式 */
+  verticalAlign?: CSSProperties["verticalAlign"];
+  /** 单元格样式 */
+  cellStyle?: CSSProperties;
+  /** 头部单元格样式 */
+  headerStyle?: CSSProperties;
 }
 
 export interface DataSource {
