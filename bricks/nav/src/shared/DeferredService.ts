@@ -1,7 +1,7 @@
 export class DeferredService {
-  private preFetchId: number;
+  private preFetchId: number | null = null;
   private preFetchScheduled = false;
-  private firstFetchPromise: Promise<unknown>;
+  private firstFetchPromise: Promise<unknown> | null = null;
   private isFetching = false;
   private readonly task: () => Promise<unknown>;
 
@@ -58,6 +58,6 @@ export class DeferredService {
         return promise;
       }
     }
-    return this.firstFetchPromise;
+    return this.firstFetchPromise!;
   }
 }
