@@ -80,4 +80,5 @@
 
 .avatar-text {
   line-height: 1;
+  white-space: nowrap;
 }

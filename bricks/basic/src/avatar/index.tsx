@@ -102,12 +102,12 @@ export function EoAvatarComponent(props: AvatarProps) {
 
   const [isImgLoadError, setIsImgLoadError] = useState<boolean>();
   const [textNodeScale, setTextNodeScale] = useState(1);
-  const [textNodeHidden, setTextNodeHidden] = useState(true);
+  const [textNodeHidden, setTextNodeHidden] = useState(false);
   const [showName, setShowName] = useState(name);
 
   useEffect(() => {
     setShowName(name);
-    setTextNodeHidden(true);
+    setTextNodeHidden(false);
   }, [name]);
 
   const handleImgLoadError = () => {
@@ -130,18 +130,25 @@ export function EoAvatarComponent(props: AvatarProps) {
                 (avatarNodeWidth - TEXT_NODE_PADDING * 2) / textNodeWidth;
               _scale = _scale > 1 ? 1 : _scale;
               const fontSize = textNodeHeight * _scale;
-              if (fontSize < TEXT_NODE_MIN_FONT_SIZE) {
+              if (
+                fontSize < TEXT_NODE_MIN_FONT_SIZE &&
+                showName &&
+                showName.length > 2
+              ) {
                 setShowName((pre) => pre?.slice(0, -1));
+                return;
               } else {
                 setTextNodeScale(_scale);
                 setTextNodeHidden(false);
+                return;
               }
             }
           }
+          setTextNodeHidden(false);
         }
       }
     },
-    []
+    [showName]
   );
 
   const Img = useMemo(() => {
