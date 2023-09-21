@@ -6,6 +6,14 @@ import { CodeEditor } from "./index.js";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api.js";
 
 jest.mock("@next-core/theme", () => ({}));
+jest.mock("./workers/index.js", () => ({
+  VSWorkers: {
+    getInstance: () => ({
+      addEventListener: () => ({}),
+      removeEventListener: () => ({}),
+    }),
+  },
+}));
 
 global.ResizeObserver = ResizeObserver as any;
 

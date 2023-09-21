@@ -1,7 +1,7 @@
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api.js";
 import storyboardJsonSchema from "@next-core/types/storyboard.json";
-import { EVALUATE_KEYWORD, brickNextKeywords, Level } from "./constants.js";
-import { get } from "lodash";
+import { EVALUATE_KEYWORD, brickNextKeywords } from "./constants.js";
+import get from "lodash/get.js";
 
 const findKeys = (
   model: monaco.editor.ITextModel,
@@ -114,7 +114,7 @@ export const isInEvaluateBody = (
   return false;
 };
 
-export const brickNextYAMLProvideCompletionItems = (
+export const brickNextYAMLProviderCompletionItems = (
   completers?: monaco.languages.CompletionItem[],
   advancedCompleters?: Record<
     string,
