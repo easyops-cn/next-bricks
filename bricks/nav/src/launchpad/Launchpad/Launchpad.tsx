@@ -37,31 +37,16 @@ export function Launchpad(props: LaunchpadProps): React.ReactElement {
   const [q, setQ] = React.useState("");
   const [microApps, setMicroApps] = React.useState(getFilterMicroApps());
   const [desktopDir, setDesktopDir] = React.useState<DirWithCoordinates>();
-  const [loading, setLoading] = React.useState<boolean>(
-    launchpadService.isFetching
+  const [loading, setLoading] = React.useState(
+    !!window.STANDALONE_MICRO_APPS && !launchpadService.loaded
   );
 
-  React.useEffect((): (() => void) => {
-    let fetchLaunchpadTimer: NodeJS.Timer;
-
+  React.useEffect(() => {
     const startFetchLaunchpadInfo = async (): Promise<void> => {
-      const updateState = (): void => {
-        clearInterval(fetchLaunchpadTimer);
+      try {
+        await launchpadService.fetchLaunchpadInfo();
         setLoading(false);
         setMicroApps(getFilterMicroApps());
-      };
-      try {
-        const hadFetch = await launchpadService.fetchLaunchpadInfo();
-        if (hadFetch) {
-          updateState();
-        } else {
-          setLoading(true);
-          fetchLaunchpadTimer = setInterval(() => {
-            if (!launchpadService.isFetching) {
-              updateState();
-            }
-          }, 300);
-        }
       } catch (error) {
         props.onWillClose?.();
         handleHttpError(error);
@@ -72,10 +57,6 @@ export function Launchpad(props: LaunchpadProps): React.ReactElement {
     } else {
       launchpadService.init();
     }
-
-    return (): void => {
-      clearInterval(fetchLaunchpadTimer);
-    };
   }, []);
 
   React.useEffect(() => {
@@ -115,10 +96,7 @@ export function Launchpad(props: LaunchpadProps): React.ReactElement {
                 icon="loading"
                 lib="antd"
                 theme="outlined"
-                color="cyan"
-                style={{
-                  fontSize: 58,
-                }}
+                spinning
               />
             </div>
           ) : (

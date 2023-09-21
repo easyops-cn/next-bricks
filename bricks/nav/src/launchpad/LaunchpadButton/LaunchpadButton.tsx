@@ -59,6 +59,7 @@ export function LaunchpadButton(): React.ReactElement {
 
   useEffect(() => {
     launchpadService.preFetchLaunchpadInfo();
+    launchpadService.preFetchFavorites();
   }, []);
 
   return (

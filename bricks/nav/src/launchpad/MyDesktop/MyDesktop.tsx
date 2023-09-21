@@ -1,14 +1,15 @@
 import React, { createRef, useEffect, useMemo, useRef, useState } from "react";
 import { wrapBrick } from "@next-core/react-element";
+import type { Link, LinkProps } from "@next-bricks/basic/link";
+import { GeneralIcon, GeneralIconProps } from "@next-bricks/icons/general-icon";
+import type { LaunchpadApi_ListCollectionResponseItem } from "@next-api-sdk/user-service-sdk";
+import classNames from "classnames";
+import { isEmpty } from "lodash";
 import { DesktopCell } from "../DesktopCell/DesktopCell.js";
 import styles from "./MyDesktop.module.css";
 import { FavoriteDesktopCell } from "../FavoriteDesktopCell/FavoriteDesktopCell.js";
-import classNames from "classnames";
 import { launchpadService } from "../LaunchpadService.js";
-import { isEmpty } from "lodash";
 import { SiteMap } from "../site-map/SiteMap.js";
-import type { Link, LinkProps } from "@next-bricks/basic/link";
-import { GeneralIcon, GeneralIconProps } from "@next-bricks/icons/general-icon";
 
 const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
@@ -27,19 +28,20 @@ let remberMode = ModeType.Sitemap;
 
 export function MyDesktop(props: MyDesktopProps, ref: any): React.ReactElement {
   const [recentlyVisitedList] = useState(launchpadService.getAllVisitors());
-  const [favoriteList, setFavoriteList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [firstRendered, setFirstRendered] = useState(true);
+  const [favoriteList, setFavoriteList] = useState<
+    LaunchpadApi_ListCollectionResponseItem[]
+  >([]);
+  const [isLoading, setIsLoading] = useState(!launchpadService.favoritesLoaded);
+  // const [firstRendered, setFirstRendered] = useState(true);
   const [mode, setMode] = useState<ModeType>(remberMode);
   const siteMapRef = createRef<HTMLDivElement>();
   const deskContainerRef = useRef<HTMLDivElement>(null);
   const [siteMapHeight, setSiteMapHeight] = useState<number>();
 
-  const getFavoriteList = async () => {
-    setIsLoading(true);
-    const favoriteList = await launchpadService.fetchFavoriteList();
+  const getFavoriteList = async (eager?: boolean): Promise<void> => {
+    const favoriteList = await launchpadService.fetchFavoriteList(eager);
     setIsLoading(false);
-    setFavoriteList(favoriteList as any);
+    setFavoriteList(favoriteList);
   };
 
   const handleMode = (e: React.MouseEvent, mode: ModeType): void => {
@@ -53,8 +55,8 @@ export function MyDesktop(props: MyDesktopProps, ref: any): React.ReactElement {
     })();
   }, []);
 
-  const handleOnSetAsFavorite = async () => {
-    await getFavoriteList();
+  const handleOnSetAsFavorite = (): void => {
+    getFavoriteList(true);
   };
 
   const handleSiteMapLoad = () => {
@@ -71,10 +73,6 @@ export function MyDesktop(props: MyDesktopProps, ref: any): React.ReactElement {
       });
     }
   };
-
-  useEffect(() => {
-    !isLoading && firstRendered && setFirstRendered(false);
-  }, [isLoading, firstRendered]);
 
   const renderRecentlyVisited = useMemo(() => {
     return (
@@ -99,21 +97,16 @@ export function MyDesktop(props: MyDesktopProps, ref: any): React.ReactElement {
   const renderMyFavorites = useMemo(() => {
     return (
       <div className={classNames([styles.section, styles.favorites])}>
-        {firstRendered && isLoading && (
-          // TODO:fix
-          // <Spin
-          //   indicator={antIcon}
-          //   spinning={isLoading}
-          //   delay={500}
-          //   className={styles.spin}
-          // />
-          <WrappedGeneralIcon
-            className={styles.spin}
-            lib="antd"
-            icon="loading"
-            theme="outlined"
-            style={{ fontSize: "2.5rem" }}
-          />
+        {isLoading && (
+          <div className={styles.spin}>
+            <WrappedGeneralIcon
+              lib="antd"
+              icon="loading"
+              theme="outlined"
+              style={{ fontSize: "2.5rem" }}
+              spinning
+            />
+          </div>
         )}
         {!isEmpty(favoriteList) ? (
           <div className={styles.favoriteContainer}>
@@ -136,7 +129,7 @@ export function MyDesktop(props: MyDesktopProps, ref: any): React.ReactElement {
         )}
       </div>
     );
-  }, [favoriteList, isLoading, firstRendered]);
+  }, [favoriteList, isLoading]);
 
   const renderSiteMap = useMemo(() => {
     const categoryList = launchpadService
@@ -158,8 +151,6 @@ export function MyDesktop(props: MyDesktopProps, ref: any): React.ReactElement {
 
   return (
     <div
-      // eslint-disable-next-line react/no-unknown-property
-      test-id="my-destop"
       ref={deskContainerRef}
       style={{
         flex: 1,

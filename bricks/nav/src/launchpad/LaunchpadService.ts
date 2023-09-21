@@ -19,6 +19,7 @@ import {
   DesktopItemCustom,
   SiteMapItem,
 } from "./interfaces.js";
+import { DeferredService } from "../shared/DeferredService.js";
 
 interface LaunchpadBaseInfo {
   settings: LaunchpadSettings;
@@ -37,8 +38,7 @@ export class LaunchpadService {
   private microApps: MicroApp[] = [];
   private customList: DesktopItemCustom[] = [];
   private maxVisitorLength = 7;
-  private preFetchId: any;
-  private fetched = false;
+  private initialized = false;
   private baseInfo: LaunchpadBaseInfo = {
     settings: {
       columns: 7,
@@ -48,9 +48,16 @@ export class LaunchpadService {
     desktops: [],
     siteSort: [],
   };
-  public isFetching = false;
+  public loaded = false;
+  public favoritesLoaded = false;
+
+  private readonly deferredLaunchpadInfo: DeferredService;
+  private readonly deferredFavorites: DeferredService;
+
   constructor() {
     this.storage = new JsonStorage(localStorage);
+    this.deferredLaunchpadInfo = new DeferredService(this.doFetchLaunchpadInfo);
+    this.deferredFavorites = new DeferredService(this.doFetchFavorites);
 
     this.init();
   }
@@ -89,38 +96,49 @@ export class LaunchpadService {
     this.maxVisitorLength = value;
   }
 
-  async fetchFavoriteList() {
+  preFetchFavorites(): void {
+    this.deferredFavorites.schedulePrefetch();
+  }
+
+  async fetchFavoriteList(
+    eager?: boolean
+  ): Promise<LaunchpadApi_ListCollectionResponseItem[]> {
+    await this.deferredFavorites.fetch(eager);
+    return this.favoriteList;
+  }
+
+  private doFetchFavorites = async (): Promise<void> => {
     const result = (
-      await LaunchpadApi_listCollection({ page: 1, pageSize: 25 })
+      await LaunchpadApi_listCollection(
+        { page: 1, pageSize: 25 },
+        {
+          interceptorParams: { ignoreLoadingBar: true },
+          noAbortOnRouteChange: true,
+        }
+      )
     ).list;
-    // const result = [];
     this.setFavorites(result);
-    return result;
+    this.favoritesLoaded = true;
+  };
+
+  preFetchLaunchpadInfo(): void {
+    if (window.STANDALONE_MICRO_APPS) {
+      this.deferredLaunchpadInfo.schedulePrefetch();
+    }
   }
 
-  async preFetchLaunchpadInfo(): Promise<void> {
-    if (window.STANDALONE_MICRO_APPS && !this.fetched) {
-      this.fetched = true;
-      const preFetchLaunchpadInfo = async (): Promise<void> => {
-        await this.fetchLaunchpadInfo();
-      };
-      if (typeof window.requestIdleCallback === "function") {
-        this.preFetchId = window.requestIdleCallback(preFetchLaunchpadInfo);
-      } else {
-        this.preFetchId = setTimeout(preFetchLaunchpadInfo);
+  fetchLaunchpadInfo(): Promise<unknown> {
+    return this.deferredLaunchpadInfo.fetch();
+  }
+
+  private doFetchLaunchpadInfo = async (): Promise<void> => {
+    const launchpadInfo = await LaunchpadApi_getLaunchpadInfo(
+      {},
+      {
+        interceptorParams: { ignoreLoadingBar: true },
+        noAbortOnRouteChange: true,
       }
-    }
-  }
-
-  async fetchLaunchpadInfo(): Promise<boolean> {
-    if (typeof window.cancelIdleCallback === "function") {
-      cancelIdleCallback(this.preFetchId);
-    } else {
-      clearTimeout(this.preFetchId);
-    }
-    if (this.isFetching) return false;
-    this.isFetching = true;
-    const launchpadInfo = await LaunchpadApi_getLaunchpadInfo(null as any);
+    );
 
     for (const storyboard of launchpadInfo.storyboards as Storyboard[]) {
       const app = storyboard.app as unknown as MicroApp;
@@ -153,9 +171,8 @@ export class LaunchpadService {
         .filter(Boolean) as unknown as MicroApp[],
     } as unknown as LaunchpadBaseInfo;
     this.initValue();
-    this.isFetching = false;
-    return true;
-  }
+    this.loaded = true;
+  };
 
   getBaseInfo(): LaunchpadBaseInfo {
     return this.baseInfo;
