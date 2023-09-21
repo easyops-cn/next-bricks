@@ -15,3 +15,14 @@
 :host > icons\.fa-icon {
   display: block;
 }
+
+:host([spinning]) {
+  animation: spinning 1s infinite linear;
+  transform-origin: 50% 50%;
+}
+
+@keyframes spinning {
+  100% {
+    transform: rotate(360deg);
+  }
+}
