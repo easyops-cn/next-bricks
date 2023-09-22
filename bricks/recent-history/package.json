@@ -37,7 +37,7 @@
     "@next-bricks/basic": "^0.31.0",
     "@next-core/element": "^1.1.4",
     "@next-core/i18n": "^1.0.26",
-    "@next-core/react-element": "^1.0.12",
+    "@next-core/react-element": "^1.0.13",
     "@next-core/theme": "^1.1.1",
     "@next-shared/general": "^0.6.3",
     "mnemonist": "^0.39.5",
