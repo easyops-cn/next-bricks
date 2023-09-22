@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.4](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.17.3...@next-shared/common-bricks@0.17.4) (2023-09-22)
+
+
+### Bug Fixes
+
+* move eo-launchpad-button from basic to nav ([828a5bf](https://github.com/easyops-cn/next-bricks/commit/828a5bf9b0c1bba53ce841824b8e600fc87b1434))
+
+
+
+
+
 ## [0.17.3](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.17.2...@next-shared/common-bricks@0.17.3) (2023-09-19)
 
 **Note:** Version bump only for package @next-shared/common-bricks

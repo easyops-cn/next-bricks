@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/presentational",
-  "version": "0.13.13",
+  "version": "0.13.14",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/presentational",
   "repository": {
     "type": "git",
@@ -34,9 +34,9 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-bricks/basic": "^0.30.6",
-    "@next-bricks/containers": "^0.14.13",
-    "@next-bricks/icons": "^0.4.12",
+    "@next-bricks/basic": "^0.31.0",
+    "@next-bricks/containers": "^0.14.14",
+    "@next-bricks/icons": "^0.5.0",
     "@next-core/element": "^1.1.4",
     "@next-core/i18n": "^1.0.26",
     "@next-core/react-element": "^1.0.12",
@@ -44,7 +44,7 @@
     "@next-core/types": "^1.6.1",
     "@next-core/utils": "^1.6.0",
     "@next-shared/datetime": "^0.1.2",
-    "@next-shared/general": "^0.6.2",
+    "@next-shared/general": "^0.6.3",
     "classnames": "^2.3.2",
     "file-saver": "^2.0.5",
     "prism-react-renderer": "^2.0.6",

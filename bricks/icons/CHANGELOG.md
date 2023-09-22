@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.4.12...@next-bricks/icons@0.5.0) (2023-09-22)
+
+
+### Features
+
+* support spinning for icons ([addfdea](https://github.com/easyops-cn/next-bricks/commit/addfdea8be0aaee4dfcfe93006dafa720a56ad02))
+
+
+
+
+
 ## [0.4.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.4.11...@next-bricks/icons@0.4.12) (2023-09-15)
 
 **Note:** Version bump only for package @next-bricks/icons

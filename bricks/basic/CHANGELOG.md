@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.31.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.30.6...@next-bricks/basic@0.31.0) (2023-09-22)
+
+
+### Bug Fixes
+
+* move eo-launchpad-button from basic to nav ([828a5bf](https://github.com/easyops-cn/next-bricks/commit/828a5bf9b0c1bba53ce841824b8e600fc87b1434))
+* 字符型头像字体大小自动调整 ([218b3e7](https://github.com/easyops-cn/next-bricks/commit/218b3e740dc3f25eedccd741f3c13950a2850985))
+* 字符型头像字体大小自动调整 ([aafae55](https://github.com/easyops-cn/next-bricks/commit/aafae5540f249ab7ac8163e5589d63fa1c26f3cd))
+
+
+### Features
+
+* new brick: v3-widget-mate ([f6ca683](https://github.com/easyops-cn/next-bricks/commit/f6ca68302b44e0b74883a7c59b1fb4082d0c36f8))
+
+
+
+
+
 ## [0.30.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.30.5...@next-bricks/basic@0.30.6) (2023-09-15)
 
 **Note:** Version bump only for package @next-bricks/basic

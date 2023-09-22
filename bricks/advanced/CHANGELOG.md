@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.8.0...@next-bricks/advanced@0.9.0) (2023-09-22)
+
+
+### Bug Fixes
+
+* Incorrect keyList when searching ([a5e4d05](https://github.com/easyops-cn/next-bricks/commit/a5e4d059e4b0df2f0fdfb6c1bd68c0c851e4092c))
+* requires latest brick_next which supports v2 runtime ([0fac148](https://github.com/easyops-cn/next-bricks/commit/0fac148c92ec4b691a27f90191fdc9543a2b605d))
+
+
+### Features
+
+* next-table support basic props ([7393639](https://github.com/easyops-cn/next-bricks/commit/7393639b777f9dff1e21ffec86ce56e6ab61e008))
+* next-table support sortable ([465a3d6](https://github.com/easyops-cn/next-bricks/commit/465a3d6d52b26288f0341beaaf174d73e5adeb22))
+* next-table support sortable ([48f7360](https://github.com/easyops-cn/next-bricks/commit/48f73600a74f4dba95d17532339075674ed58c0c))
+* next-table support tree data ([1fd35c5](https://github.com/easyops-cn/next-bricks/commit/1fd35c5f836a9556c693ecee0127ec73b87b55c4))
+
+
+
+
+
 # [0.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.7.1...@next-bricks/advanced@0.8.0) (2023-09-19)
 
 

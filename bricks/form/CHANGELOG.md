@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.17.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.17.13...@next-bricks/form@0.17.14) (2023-09-22)
+
+
+### Bug Fixes
+
+* requires latest brick_next which supports v2 runtime ([0fac148](https://github.com/easyops-cn/next-bricks/commit/0fac148c92ec4b691a27f90191fdc9543a2b605d))
+
+
+
+
+
 ## [0.17.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.17.12...@next-bricks/form@0.17.13) (2023-09-19)
 
 

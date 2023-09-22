@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.0.6...@next-bricks/nav@0.0.7) (2023-09-22)
+
+
+### Bug Fixes
+
+* fix page shaking caused by quick switching menu items ([92046c1](https://github.com/easyops-cn/next-bricks/commit/92046c14ee31f6cda0cd45505946325861a109d4))
+* fix types ([a0f8847](https://github.com/easyops-cn/next-bricks/commit/a0f8847ac4fd60c8f3220c25a537a02f33db5e14))
+* move eo-launchpad-button from basic to nav ([828a5bf](https://github.com/easyops-cn/next-bricks/commit/828a5bf9b0c1bba53ce841824b8e600fc87b1434))
+* refine launchpad service: defer requests for launchpad and favorites ([e53d64f](https://github.com/easyops-cn/next-bricks/commit/e53d64f6bed593d99a9c7ea41dda321aa4ccc4e8))
+
+
+
+
+
 ## [0.0.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.0.5...@next-bricks/nav@0.0.6) (2023-09-19)
 
 **Note:** Version bump only for package @next-bricks/nav
