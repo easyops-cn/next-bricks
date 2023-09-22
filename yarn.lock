@@ -2327,10 +2327,10 @@
     lodash "^4.17.21"
     moment "^2.29.4"
 
-"@next-core/react-element@^1.0.12":
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/@next-core/react-element/-/react-element-1.0.12.tgz#772a78816bebbbce4088f8d7da517958a3098a1a"
-  integrity sha512-vuidJkVbyaJYkduUVbbJ+qJaHSxYJPqtLrpa4F/45+cppd6DKiihrefZvZSWdrp5ThUO101w1tpBl8JRUGcc1w==
+"@next-core/react-element@^1.0.13":
+  version "1.0.13"
+  resolved "https://registry.yarnpkg.com/@next-core/react-element/-/react-element-1.0.13.tgz#6e390e5f3e21ae9015fb169c5247cb1485e82a3f"
+  integrity sha512-K/p7qBjdwOmaloDhlEjwiOZH+m0bXEsyVG3YshiMhMMr3IU6T5hLfr386Hs8HNrWAk+MSYBuswTzY6e+hClx6Q==
   dependencies:
     "@next-core/element" "^1.1.4"
     react "0.0.0-experimental-ee8509801-20230117"
@@ -2434,10 +2434,10 @@
     "@next-core/types" "^1.6.1"
     lodash "^4.17.21"
 
-"@next-core/yo@^1.4.13":
-  version "1.4.13"
-  resolved "https://registry.yarnpkg.com/@next-core/yo/-/yo-1.4.13.tgz#9f7bf1e7996fbc83015229e22b7252d3b8eca3d2"
-  integrity sha512-drB2K4dnqodvdRxerDOuEoRJHtBe8NvYQOmk8VkqT58M9gWyvi6dhewHiHlaO/0VgUH1oLvNYzBnuazH4dcyAA==
+"@next-core/yo@^1.4.14":
+  version "1.4.14"
+  resolved "https://registry.yarnpkg.com/@next-core/yo/-/yo-1.4.14.tgz#9e9c93e0ddc85b6e677d3bdc00db4691dbdb9317"
+  integrity sha512-wvNo9x6R8j5rK4FjnAG35JUkpCm2fmrhFOcUakSydncXcvzE4uo0aSK20zNYWN9N4J6PEm5Y//ENIsQtW8fTTA==
   dependencies:
     minimist "^1.2.8"
     plop "^3.1.2"
