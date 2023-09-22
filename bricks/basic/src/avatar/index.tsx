@@ -1,4 +1,11 @@
-import React, { ReactElement, useMemo, useState } from "react";
+import React, {
+  ReactElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
@@ -8,10 +15,14 @@ import type {
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
 import classNames from "classnames";
+import { WrappedSlResizeObserver } from "./sl-resize-observer.js";
 
 const { defineElement, property } = createDecorators();
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
+
+const TEXT_NODE_PADDING = 4;
+const TEXT_NODE_MIN_FONT_SIZE = 10;
 
 export type AvatarSize = "large" | "medium" | "small" | "xs";
 
@@ -86,11 +97,59 @@ class EoAvatar extends ReactNextElement implements AvatarProps {
 export function EoAvatarComponent(props: AvatarProps) {
   const { shape, size, src, alt, icon, name } = props;
 
+  const avatarNodeRef = useRef<HTMLSpanElement>(null);
+  const textNodeRef = useRef<HTMLSpanElement>(null);
+
   const [isImgLoadError, setIsImgLoadError] = useState<boolean>();
+  const [textNodeScale, setTextNodeScale] = useState(1);
+  const [textNodeHidden, setTextNodeHidden] = useState(false);
+  const [showName, setShowName] = useState(name);
+
+  useEffect(() => {
+    setShowName(name);
+    setTextNodeHidden(false);
+  }, [name]);
 
   const handleImgLoadError = () => {
     setIsImgLoadError(true);
   };
+
+  // istanbul ignore next
+  const onTextNodeResize = useCallback(
+    (e: CustomEvent<{ entries: ResizeObserverEntry[] }>) => {
+      for (const entry of e.detail.entries) {
+        if (entry.target === textNodeRef.current) {
+          setTextNodeHidden(true);
+          const textNodeWidth = textNodeRef.current.offsetWidth;
+          const textNodeHeight = textNodeRef.current.offsetHeight;
+          const avatarNodeWidth = avatarNodeRef.current?.offsetWidth;
+
+          if (avatarNodeWidth && textNodeWidth) {
+            if (avatarNodeWidth > TEXT_NODE_PADDING * 2) {
+              let _scale =
+                (avatarNodeWidth - TEXT_NODE_PADDING * 2) / textNodeWidth;
+              _scale = _scale > 1 ? 1 : _scale;
+              const fontSize = textNodeHeight * _scale;
+              if (
+                fontSize < TEXT_NODE_MIN_FONT_SIZE &&
+                showName &&
+                showName.length > 2
+              ) {
+                setShowName((pre) => pre?.slice(0, -1));
+                return;
+              } else {
+                setTextNodeScale(_scale);
+                setTextNodeHidden(false);
+                return;
+              }
+            }
+          }
+          setTextNodeHidden(false);
+        }
+      }
+    },
+    [showName]
+  );
 
   const Img = useMemo(() => {
     setIsImgLoadError(false);
@@ -109,8 +168,21 @@ export function EoAvatarComponent(props: AvatarProps) {
   }, [icon]);
 
   const Text = useMemo(() => {
-    return <span className="avatar-text">{name}</span>;
-  }, [name]);
+    return (
+      <WrappedSlResizeObserver onSlResize={onTextNodeResize}>
+        <span
+          ref={textNodeRef}
+          className="avatar-text"
+          style={{
+            transform: `scale(${textNodeScale})`,
+            visibility: textNodeHidden ? "hidden" : "visible",
+          }}
+        >
+          {showName}
+        </span>
+      </WrappedSlResizeObserver>
+    );
+  }, [showName, textNodeHidden, textNodeScale, onTextNodeResize]);
 
   let type: "img" | "icon" | "text";
   let avatarNode: ReactElement;
@@ -133,6 +205,7 @@ export function EoAvatarComponent(props: AvatarProps) {
         `size-${size}`,
         `type-${type}`
       )}
+      ref={avatarNodeRef}
       part={`avatar avatar-${type}`}
       title={name}
     >
