@@ -14,6 +14,7 @@ import {
   Sort,
 } from "./interface.js";
 import { RowSelectMethod } from "antd/es/table/interface.js";
+import type { TableProps } from "antd/es/table";
 
 const { defineElement, property, method, event } = createDecorators();
 
@@ -144,6 +145,36 @@ class EoNextTable extends ReactNextElement {
   accessor searchFields: (string | string[])[] | undefined;
 
   /**
+   * 表格大小
+   */
+  @property()
+  accessor size: TableProps<RecordType>["size"] = "large";
+
+  /**
+   * 是否显示表头
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor showHeader: boolean = true;
+
+  /**
+   * 滚动配置
+   */
+  @property({
+    attribute: false,
+  })
+  accessor scrollConfig: TableProps<RecordType>["scroll"] = { x: true };
+
+  /**
+   * 优化渲染的列（输入对应的 column.key）
+   */
+  @property({
+    attribute: false,
+  })
+  accessor optimizedColumns: (string | number)[] | undefined;
+
+  /**
    * 前端搜索
    */
   @method()
@@ -270,6 +301,10 @@ class EoNextTable extends ReactNextElement {
         childrenColumnName={this.childrenColumnName}
         rowDraggable={this.rowDraggable}
         searchFields={this.searchFields}
+        size={this.size}
+        showHeader={this.showHeader}
+        scrollConfig={this.scrollConfig}
+        optimizedColumns={this.optimizedColumns}
         onPageChange={this.#handlePageChange}
         onPageSizeChange={this.#handlePageSizeChange}
         onSort={this.#handleSort}

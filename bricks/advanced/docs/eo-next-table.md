@@ -12,6 +12,8 @@
     page.size.change:
       - action: console.log
   properties:
+    scrollConfig:
+      x: false
     pagination:
       pageSizeOptions:
         - 5
@@ -40,6 +42,135 @@
       - dataIndex: address
         key: address
         title: Address
+      - dataIndex: remarks
+        key: remarks
+        title: Long Column Long Column Long Column Long Column
+        width: 200
+        ellipsis: true
+    dataSource:
+      pageSize: 5
+      page: 1
+      list:
+        - key: 0
+          name: Jack
+          age: 18
+          address: Guangzhou
+          remarks: Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text
+        - key: 1
+          name: Alex
+          age: 20
+          address: Shanghai
+          remarks: Long text Long text
+        - key: 2
+          name: Lucy
+          age: 16
+          address: Yunnan
+        - key: 3
+          name: Sam
+          age: 28
+          address: Guangzhou
+          remarks: Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text
+        - key: 4
+          name: Bob
+          age: 35
+          address: Hainan
+        - key: 5
+          name: Ava
+          age: 23
+          address: Beijing
+        - key: 6
+          name: Sophia
+          age: 20
+          address: Shanghai
+        - key: 7
+          name: Charlotte
+          age: 33
+          address: Chongqing
+        - key: 8
+          name: Mia
+          age: 18
+          address: Chengdu
+        - key: 9
+          name: Noah
+          age: 38
+          address: Hainan
+        - key: 10
+          name: William
+          age: 16
+          address: Taiwan
+```
+
+### Fixed & Scroll
+
+```yaml preview
+- brick: eo-next-table
+  events:
+    page.change:
+      - action: console.log
+    page.size.change:
+      - action: console.log
+  properties:
+    scrollConfig:
+      x: max-content
+    pagination:
+      pageSizeOptions:
+        - 5
+        - 10
+        - 20
+    columns:
+      - dataIndex: name
+        key: name
+        title: Name
+        width: 100
+        fixed: true
+        headerBrick:
+          useBrick:
+            brick: span
+            properties:
+              style:
+                color: red
+              textContent: <% DATA.title %>
+        useBrick:
+          - brick: span
+            properties:
+              style:
+                color: pink
+              textContent: <% DATA.cellData %>
+      - dataIndex: address
+        key: column1
+        title: column1
+      - dataIndex: address
+        key: column2
+        title: column2
+      - dataIndex: address
+        key: column3
+        title: column3
+      - dataIndex: address
+        key: column4
+        title: column4
+      - dataIndex: address
+        key: column5
+        title: column5
+      - dataIndex: address
+        key: column6
+        title: column6
+      - dataIndex: address
+        key: column7
+        title: column7
+      - dataIndex: address
+        key: column8
+        title: column8
+      - dataIndex: address
+        key: column9
+        title: column9
+      - dataIndex: address
+        key: column10
+        title: column10
+      - dataIndex: age
+        key: age
+        title: Age
+        width: 100
+        fixed: right
     dataSource:
       pageSize: 5
       page: 1

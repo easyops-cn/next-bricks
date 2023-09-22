@@ -23,6 +23,7 @@ import {
   useCurrentTheme,
 } from "@next-core/react-runtime";
 import { ColumnTitleProps, RowSelectMethod } from "antd/es/table/interface.js";
+import type { TableProps } from "antd/es/table";
 import { i18n } from "@next-core/i18n";
 import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
 import { Trans } from "react-i18next";
@@ -85,6 +86,10 @@ interface NextTableComponentProps {
   childrenColumnName: string;
   rowDraggable?: boolean;
   searchFields?: (string | string[])[];
+  size?: TableProps<RecordType>["size"];
+  showHeader?: boolean;
+  scrollConfig?: TableProps<RecordType>["scroll"];
+  optimizedColumns?: (string | number)[];
   onPageChange?: (detail: { page: number; pageSize: number }) => void;
   onPageSizeChange?: (detail: { page: number; pageSize: number }) => void;
   onSort?: (detail?: Sort | Sort[]) => void;
@@ -124,6 +129,10 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
     childrenColumnName,
     rowDraggable,
     searchFields,
+    size,
+    showHeader,
+    scrollConfig,
+    optimizedColumns,
     onPageChange,
     onPageSizeChange,
     onSort,
@@ -210,6 +219,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
 
   const processedColumns = useMemo(() => {
     const hiddenColumnsSet = new Set(hiddenColumns);
+    const optimizedColumnsSet = new Set(optimizedColumns);
     const sortMap = keyBy(([] as Sort[]).concat(sort || []), "columnKey");
 
     return columns
@@ -236,6 +246,13 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                   ? comparator
                   : true,
                 sortOrder: curSort ? curSort.order : null,
+              }
+            : {}),
+          ...(optimizedColumnsSet.has(col.key!)
+            ? {
+                shouldCellUpdate(record: RecordType, preRecord: RecordType) {
+                  return record !== preRecord;
+                },
               }
             : {}),
           render(value: any, record: RecordType, index: number) {
@@ -273,11 +290,20 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
               rowSpan: col.cellRowSpanKey
                 ? record[col.cellRowSpanKey]
                 : undefined,
+              style: {
+                ...col.cellStyle,
+                verticalAlign: col.verticalAlign,
+              },
+            };
+          },
+          onHeaderCell() {
+            return {
+              style: col.headerStyle,
             };
           },
         };
       });
-  }, [columns, hiddenColumns, multiSort, sort, frontSearch]);
+  }, [columns, hiddenColumns, multiSort, sort, frontSearch, optimizedColumns]);
 
   const rowSelectionConfig = useMemo(() => {
     if (rowSelection === false || isNil(rowSelection)) {
@@ -360,9 +386,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
             ? theme.darkAlgorithm
             : theme.defaultAlgorithm,
       }}
-      getPopupContainer={(trigger) =>
-        (trigger as HTMLElement).parentElement as HTMLElement
-      }
+      getPopupContainer={(trigger) => shadowRoot as unknown as HTMLElement}
     >
       <StyleProvider container={shadowRoot as ShadowRoot} cache={styleCache}>
         <DndContext
@@ -387,6 +411,9 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
               rowKey={rowKey}
               columns={processedColumns}
               dataSource={list}
+              size={size}
+              showHeader={showHeader}
+              scroll={scrollConfig}
               pagination={
                 paginationConfig === false
                   ? false
