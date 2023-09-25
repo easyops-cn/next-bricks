@@ -19,9 +19,7 @@ describe("containers.micro-view", () => {
     expect(element.shadowRoot).toBeTruthy();
     expect(element.shadowRoot?.childNodes.length).toBe(2);
 
-    expect(element.shadowRoot.querySelector(".page-title").textContent).toBe(
-      "Hello world"
-    );
+    expect(element.shadowRoot.querySelector("eo-page-title")).toBeTruthy();
 
     act(() => {
       document.body.removeChild(element);

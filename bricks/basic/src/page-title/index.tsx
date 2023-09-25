@@ -4,7 +4,7 @@ import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import { getRuntime } from "@next-core/runtime";
-interface PageTitleProps {
+export interface PageTitleProps {
   pageTitle: string;
   pageTitleScale?: number;
   dashboardMode?: boolean;

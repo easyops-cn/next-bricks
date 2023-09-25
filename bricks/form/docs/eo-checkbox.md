@@ -170,6 +170,61 @@
           lib: "antd"
 ```
 
+### checkboxColor
+
+```yaml preview
+- brick: eo-checkbox
+  properties:
+    options:
+      - label: Beijing
+        value: 0
+        checkboxColor: red
+      - label: Shanghai
+        value: 1
+        checkboxColor: orange
+        icon:
+          icon: "bar-chart"
+          lib: "antd"
+      - label: Guangzhou
+        value: 2
+        checkboxColor: blue
+      - label: Shenzhen
+        value: 3
+        checkboxColor: green
+    value:
+      - 2
+      - 1
+```
+
+### optionGroups
+
+```yaml preview
+- brick: eo-checkbox
+  events:
+    change:
+      action: console.log
+  properties:
+    isGroup: true
+    label: 商品
+    name: goods
+    optionGroups:
+      - key: fruits
+        name: 水果
+        options:
+          - label: 苹果
+            value: apple
+          - label: 香蕉
+            value: banana
+      - key: vegetables
+        name: 蔬菜
+        options:
+          - label: 土豆
+            value: potato
+    value:
+      - banana
+      - potato
+```
+
 ### Event
 
 ```yaml preview

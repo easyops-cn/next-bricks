@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
 import classNames from "classnames";
@@ -6,12 +6,13 @@ import "@next-core/theme";
 import styleText from "./checkbox.shadow.css";
 import type { FormItem, FormItemProps } from "../form-item/index.js";
 import { formatOptions } from "../utils/formatOptions.js";
-import { isEqual } from "lodash";
+import { intersection, isEqual, uniq } from "lodash";
 import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
 import { FormItemElementBase } from "@next-shared/form";
+import { CaretRightOutlined } from "@ant-design/icons";
 
 const { defineElement, property, event } = createDecorators();
 
@@ -48,6 +49,8 @@ export interface CheckboxProps extends FormItemProps {
   disabled?: boolean;
   type?: CheckboxType;
   isCustom?: boolean;
+  isGroup?: boolean;
+  optionGroups?: OptionGroup[];
   onChange?: (value: CheckboxValueType[]) => void;
   optionsChange?: (options: CheckboxOptionType[], name: string) => void;
 }
@@ -118,6 +121,22 @@ class Checkbox extends FormItemElementBase {
   accessor message: Record<string, string> | undefined;
 
   /**
+   * 是否为复选框，为true时，则可设置分组数据 optionGroups
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor isGroup: boolean | undefined;
+
+  /**
+   * 多选框选项分组数据，需要设置 isGroup 为 true 才生效
+   */
+  @property({
+    attribute: false,
+  })
+  accessor optionGroups: OptionGroup[] | undefined;
+
+  /**
    * 复选框变化事件
    */
   @event({ type: "change" })
@@ -125,7 +144,16 @@ class Checkbox extends FormItemElementBase {
 
   handleCheckboxChange = (detail: CheckboxValueType[]) => {
     this.value = detail;
-    const currentSelectOption = formatOptions(this.options).filter((item) =>
+    const currentOptions = this.optionGroups
+      ? this.optionGroups.reduce(
+          (before: CheckboxOptionType[], after) => [
+            ...before,
+            ...after.options,
+          ],
+          []
+        )
+      : this.options;
+    const currentSelectOption = formatOptions(currentOptions).filter((item) =>
       detail.includes(item.value)
     );
     this.#checkboxChangeEvent.emit(currentSelectOption);
@@ -166,16 +194,29 @@ class Checkbox extends FormItemElementBase {
         trigger="handleCheckboxChange"
         onChange={this.handleCheckboxChange}
         optionsChange={this.#handleOptionsChange}
+        isGroup={this.isGroup}
+        optionGroups={this.optionGroups}
       />
     );
   }
 }
 
 function CheckboxComponent(props: CheckboxProps) {
+  const { isGroup } = props;
   const [values, setValues] = useState<CheckboxValueType[]>(props?.value ?? []);
   const [options, setOptions] = useState<CheckboxOptionType[]>(
     props.options || []
   );
+  const [collapseKeys, setCollapseKeys] = useState<string[]>(
+    (props.optionGroups || []).map((o) => o.key)
+  );
+  const [optionGroups, setOptionGroups] = useState(props.optionGroups);
+  useEffect(() => {
+    if (!isEqual(optionGroups, props.optionGroups)) {
+      setCollapseKeys((optionGroups || []).map((o) => o.key));
+      setOptionGroups(props.optionGroups);
+    }
+  }, [props.optionGroups]);
 
   useEffect(() => {
     if (!isEqual(options, props.options)) {
@@ -302,7 +343,7 @@ function CheckboxComponent(props: CheckboxProps) {
             checkboxWrapper: true,
           })}
         >
-          {options?.map((item: CheckboxOptionType) => {
+          {props.options?.map((item: CheckboxOptionType) => {
             const disabled = item.disabled || props.disabled;
             return (
               <label
@@ -310,6 +351,7 @@ function CheckboxComponent(props: CheckboxProps) {
                 className={classNames({
                   checkboxLabel: true,
                   checkboxLabelDisabled: disabled,
+                  checkboxLabelCheck: values.includes(item.value),
                 })}
               >
                 <span
@@ -331,7 +373,17 @@ function CheckboxComponent(props: CheckboxProps) {
                     type="checkbox"
                     id={item.value}
                   ></input>
-                  <span className={classNames({ checkboxInner: true })}></span>
+                  <span
+                    className={classNames({ checkboxInner: true })}
+                    style={
+                      values.includes(item.value) && item.checkboxColor
+                        ? {
+                            background: item.checkboxColor,
+                            borderColor: item.checkboxColor,
+                          }
+                        : {}
+                    }
+                  ></span>
                 </span>
 
                 <span className={classNames({ checkboxText: true })}>
@@ -347,13 +399,112 @@ function CheckboxComponent(props: CheckboxProps) {
       </div>
     );
   };
+  const CheckGroupItem = (props: CheckboxProps) => {
+    const _optionGroups = useMemo(() => {
+      return optionGroups?.map((option) => {
+        const newOptions = formatOptions(option.options);
+        const newOptionsKeys = newOptions.map((n) => n.value);
+        const checkOptions = intersection(values, newOptionsKeys);
+        const checkType =
+          checkOptions.length === newOptionsKeys.length
+            ? "all"
+            : checkOptions.length > 0 &&
+              checkOptions.length !== newOptionsKeys.length
+            ? "part"
+            : "none";
+        return {
+          ...option,
+          options: newOptions,
+          checkType,
+          keys: newOptionsKeys,
+        };
+      });
+    }, [optionGroups, props.value]);
+    return (
+      <div>
+        {" "}
+        {_optionGroups?.map((i) => (
+          <div key={i.key}>
+            <div
+              onClick={() => {
+                if (collapseKeys.includes(i.key)) {
+                  const newKeys = collapseKeys.filter((key) => key !== i.key);
+                  setCollapseKeys(newKeys);
+                } else {
+                  setCollapseKeys([...collapseKeys, i.key]);
+                }
+              }}
+              className={classNames("collapse-header")}
+            >
+              <span className="collapse-icon">
+                <CaretRightOutlined
+                  rotate={collapseKeys.includes(i.key) ? 90 : 0}
+                  rev=""
+                />
+              </span>
+              <label
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                className={classNames({
+                  checkboxLabel: true,
+                  checkboxLabelCheck: i.checkType === "all",
+                })}
+              >
+                <span
+                  className={classNames({
+                    checkboxInputWrapper: true,
+                    checkboxInputCheck: i.checkType === "all",
+                    checkboxInputPartCheck: i.checkType === "part",
+                  })}
+                >
+                  <input
+                    className={classNames({
+                      checkboxInput: true,
+                    })}
+                    onChange={(e) => {
+                      e.stopPropagation();
+                      if (i.checkType === "all") {
+                        const newValue = values.filter(
+                          (v) => !i.keys.includes(v)
+                        );
+                        props.onChange?.(newValue);
+                      } else {
+                        props.onChange?.(uniq([...values, ...i.keys]));
+                      }
+                    }}
+                    type="checkbox"
+                  ></input>
+                  <span className={classNames({ checkboxInner: true })}></span>
+                </span>
 
+                <span className={classNames({ checkboxText: true })}>
+                  {i.name}
+                </span>
+              </label>
+            </div>
+            <div
+              className={classNames("collapse-content", {
+                "collapse-content-visible": collapseKeys.includes(i.key),
+              })}
+            >
+              <CheckboxItem
+                {...{ ...props, options: i.options }}
+              ></CheckboxItem>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
   return (
     <WrappedFormItem {...(props as FormItemProps)}>
       {props.type == "icon" ? (
         <IconCheckbox {...props}></IconCheckbox>
+      ) : isGroup && props.optionGroups ? (
+        <CheckGroupItem {...props}></CheckGroupItem>
       ) : (
-        <CheckboxItem {...props}></CheckboxItem>
+        <CheckboxItem {...{ ...props, options: options }}></CheckboxItem>
       )}
     </WrappedFormItem>
   );

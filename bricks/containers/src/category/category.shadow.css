@@ -31,16 +31,18 @@
 
 .header-mark {
   display: inline-block;
-  width: 4px;
+  width: 3px;
   height: 16px;
   background: var(--color-brand);
   border-radius: 2px;
-  margin-right: 12px;
+  margin-right: 8px;
 }
 
 .header-title {
   font-size: var(--card-title-font-size);
-  font-family: PingFangSC-Medium, PingFang SC;
+  font-family:
+    PingFangSC-Medium,
+    PingFang SC;
   font-weight: var(--font-weight-500);
   color: var(--color-header-text);
   line-height: 24px;
@@ -48,5 +50,5 @@
 
 .category-item-content {
   /* overflow: hidden; */
-  padding: 24px 20px;
+  padding: 24px 20px 24px 31px;
 }

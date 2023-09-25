@@ -2,8 +2,16 @@ import React from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import styleText from "./micro-view.shadow.css";
-
+import { wrapBrick } from "@next-core/react-element";
+import type {
+  EoPageTitle,
+  PageTitleProps,
+} from "@next-bricks/basic/page-title";
 const { defineElement, property } = createDecorators();
+
+const WrappedPageTitle = wrapBrick<EoPageTitle, PageTitleProps>(
+  "eo-page-title"
+);
 
 interface MicroViewProps {
   pageTitle?: string;
@@ -62,7 +70,11 @@ function MicroViewElement({
   return (
     <div className="micro-view-wrapper" ref={callback}>
       <div className="header">
-        {pageTitle && <div className="page-title">{pageTitle}</div>}
+        {pageTitle && (
+          <div className="page-title">
+            <WrappedPageTitle pageTitle={pageTitle} />
+          </div>
+        )}
         <div className="toolbar">
           <slot name="toolbar" />
         </div>
