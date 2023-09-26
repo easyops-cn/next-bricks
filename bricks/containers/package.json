@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/containers",
-  "version": "0.14.16",
+  "version": "0.14.17",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/containers",
   "repository": {
     "type": "git",
@@ -34,7 +34,7 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-bricks/basic": "^0.31.2",
+    "@next-bricks/basic": "^0.31.3",
     "@next-core/element": "^1.1.4",
     "@next-core/i18n": "^1.0.26",
     "@next-core/react-element": "^1.0.13",
