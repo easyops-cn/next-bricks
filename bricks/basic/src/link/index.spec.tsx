@@ -88,7 +88,7 @@ describe("basic.general-button", () => {
     expect(element1.innerHTML).toBe("hello world");
     expect(element1.shadowRoot?.querySelector("a")?.childNodes.length).toBe(2);
     expect(element1.shadowRoot?.querySelector("a")?.href).toBe(
-      "http://www.xx.com/",
+      "http://www.xx.com/"
     );
 
     expect(element2.innerHTML).toBe("disabled link");
@@ -97,17 +97,17 @@ describe("basic.general-button", () => {
 
     expect(element4.innerHTML).toBe("current-page");
     expect(element4.shadowRoot?.querySelector("a")?.href).toBe(
-      "http://localhost/next-page",
+      "http://localhost/next-page"
     );
 
     expect(element5.shadowRoot?.querySelector("a")?.href).toBe("");
 
     expect(element6.shadowRoot?.querySelector("a")?.href).toBe(
-      "http://localhost/for-complex#and-more?even-more",
+      "http://localhost/for-complex#and-more?even-more"
     );
 
     expect(element7.shadowRoot?.querySelector("a")?.href).toEqual(
-      "http://localhost/for-complex#and-more?even-more=",
+      "http://localhost/for-complex#and-more?even-more="
     );
 
     expect(mockElement1ClickEvent).toBeCalledTimes(0);
