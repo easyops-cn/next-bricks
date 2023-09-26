@@ -42,7 +42,11 @@ describe("component test", () => {
 
       const onFavoriteFn = jest.fn();
       const { container, rerender } = render(
-        <RecommendItem groupId="monitor" data={item} />
+        <RecommendItem
+          groupId="monitor"
+          data={item}
+          onFavorite={onFavoriteFn}
+        />
       );
 
       expect(container.querySelector("eo-icon")).toBeTruthy();
