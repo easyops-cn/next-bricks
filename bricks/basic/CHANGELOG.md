@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.31.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.31.3...@next-bricks/basic@0.31.4) (2023-09-26)
+
+
+### Reverts
+
+* Revert "fix(): remove native click listening event" ([9f7a48a](https://github.com/easyops-cn/next-bricks/commit/9f7a48a0ddb2af86980a781ea111cec2317b8de3))
+
+
+
+
+
 ## [0.31.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.31.2...@next-bricks/basic@0.31.3) (2023-09-26)
 
 **Note:** Version bump only for package @next-bricks/basic

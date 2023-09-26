@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.0.10...@next-bricks/nav@0.0.11) (2023-09-26)
+
+
+### Bug Fixes
+
+* prevent Link jump when click operating area ([8e53200](https://github.com/easyops-cn/next-bricks/commit/8e532003e5ffaab92360d97ce5046248c19d6d2a))
+
+
+
+
+
 ## [0.0.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.0.9...@next-bricks/nav@0.0.10) (2023-09-26)
 
 **Note:** Version bump only for package @next-bricks/nav
