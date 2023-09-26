@@ -144,7 +144,9 @@ export function ItemTag(props: CellItemProps): React.ReactElement {
         href={data.href}
         target={data.target as LinkProps["target"]}
       >
-        <span className="tag-text ellipsis">{data.text}</span>
+        <span className="tag-text ellipsis" title={data.text}>
+          {data.text}
+        </span>
         <span className="tag-suffix" onClick={(e) => e.preventDefault()}>
           {suffix}
         </span>
@@ -170,6 +172,7 @@ export function QuickVisitItem(props: QuickVisitTagProps): React.ReactElement {
   const { t } = useTranslation(NS);
   const { onAllowDrag } = useContext(DragContext);
   const { data, onFavorite, groupId } = props;
+  const suffixRef = useRef<any>();
 
   const handleRemove = useCallback(() => {
     collectService.removeItemFromFavorite(groupId, data);
@@ -180,9 +183,21 @@ export function QuickVisitItem(props: QuickVisitTagProps): React.ReactElement {
     onAllowDrag?.(true);
   };
 
+  useEffect(() => {
+    const suffix = suffixRef.current;
+    const handleClick = (e: MouseEvent) => {
+      e.preventDefault();
+    };
+    suffix.addEventListener("click", handleClick);
+
+    return () => {
+      suffix.removeEventListener("click", handleClick);
+    };
+  }, []);
+
   const suffixGroups = useMemo(
     () => (
-      <div className="operation">
+      <div className="operation" ref={suffixRef}>
         <WrappedTooltip
           content={t(K.REMOVE_ITEM_FROM_QUICK_ACCESS)}
           hoist
@@ -221,11 +236,23 @@ export function StarIcon({
   active,
 }: StarIconProps): React.ReactElement {
   const { t } = useTranslation(NS);
+  const iconRef = useRef<any>();
+
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     collectService.toggleFavorite(groupId, data);
     onFavorite?.(collectService.getFavoritesById(groupId));
   };
+
+  useEffect(() => {
+    // workaround for prevent Link jump when click.
+    const icon = iconRef.current;
+    icon.addEventListener("click", handleClick);
+
+    return () => {
+      icon.removeEventListener("click", handleClick);
+    };
+  }, []);
 
   return (
     <WrappedTooltip
@@ -239,7 +266,7 @@ export function StarIcon({
       className={classNames("star-icon", className)}
     >
       <WrappedIcon
-        onClick={handleClick}
+        ref={iconRef}
         className={classNames({ active })}
         lib="antd"
         icon="star"
