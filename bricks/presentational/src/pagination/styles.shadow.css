@@ -48,6 +48,7 @@
   border: none;
   border-radius: var(--medius-border-radius);
   background: var(--antd-select-dropdown-bg);
+  box-shadow: var(--antd-box-shadow-base);
 }
 
 .pagination-size-selector-item {
