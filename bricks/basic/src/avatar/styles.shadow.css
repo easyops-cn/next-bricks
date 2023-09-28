@@ -43,7 +43,7 @@
 }
 
 .shape-round-square {
-  border-radius: var(--larger-border-radius);
+  border-radius: 3px;
 }
 
 /* type */
