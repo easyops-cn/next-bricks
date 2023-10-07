@@ -115,7 +115,29 @@
 - brick: eo-select
   properties:
     label: multiple
-    multiple: true
+    mode: multiple
+    value:
+      - Beijing
+      - Guangzhou
+    options:
+      - Beijing
+      - Shanghai
+      - Guangzhou
+      - Shenzhen
+```
+
+### Tags & TokenSeparators & MaxTagCount
+
+```yaml preview
+- brick: eo-select
+  properties:
+    label: tags
+    mode: tags
+    tokenSeparators:
+      - " "
+      - ";"
+      - "；"
+    maxTagCount: 3
     options:
       - Beijing
       - Shanghai
@@ -134,6 +156,120 @@
       - Shanghai
       - Guangzhou
       - Shenzhen
+```
+
+### Suffix
+
+```yaml preview
+- brick: eo-select
+  properties:
+    placeholder: This is placeholder...
+    options:
+      - label: Beijing
+        value: 1
+        color: red
+        tag: 京
+      - label: Shanghai
+        value: 2
+        color: green
+        tag: 沪
+      - label: Guangzhou
+        value: 3
+        color: blue
+        tag: 粤
+      - label: Shenzhen
+        value: 4
+        color: yellow
+        tag: 粤
+    suffix:
+      brick: eo-tag
+      properties:
+        textContent: <% DATA.tag %>
+        color: <% DATA.color %>
+```
+
+### GroupBy
+
+```yaml preview
+- brick: eo-select
+  properties:
+    placeholder: This is placeholder...
+    groupBy: tag
+    options:
+      - label: Beijing
+        value: 1
+        color: red
+        tag: 京
+      - label: Shanghai
+        value: 2
+        color: green
+        tag: 沪
+      - label: Guangzhou
+        value: 3
+        color: blue
+        tag: 粤
+      - label: Shenzhen
+        value: 4
+        color: yellow
+        tag: 粤
+```
+
+### Fields
+
+```yaml preview
+- brick: eo-select
+  properties:
+    placeholder: This is placeholder...
+    fields:
+      label: name
+      value: city
+    value: 3
+    options:
+      - name: Beijing
+        city: 1
+        color: red
+        tag: 京
+      - name: Shanghai
+        city: 2
+        color: green
+        tag: 沪
+      - name: Guangzhou
+        city: 3
+        color: blue
+        tag: 粤
+      - name: Shenzhen
+        city: 4
+        color: yellow
+        tag: 粤
+```
+
+### UseBackend
+
+```yaml preview
+- brick: eo-select
+  properties:
+    label: useBackend
+    mode: multiple
+    placeholder: 后端搜索
+    useBackend:
+      provider: basic.http-request
+      transform: |
+        <% (data) => data %>
+      onValueChangeArgs: |
+        - |
+          <% 
+            (q) => 
+              `//api.weatherapi.com/v1/search.json?q=${q ? q : "Guangzhou"}&key=9e08e5e99e0c4b4c89023605231804`
+          %>
+      args:
+        - |
+          <% 
+            (q) => 
+              `//api.weatherapi.com/v1/search.json?q=${q ? q : "China"}&key=9e08e5e99e0c4b4c89023605231804`
+          %>
+    fields:
+      label: name
+      value: id
 ```
 
 ### Input Style

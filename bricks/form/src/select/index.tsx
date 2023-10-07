@@ -1,6 +1,7 @@
 import React, {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -8,7 +9,11 @@ import React, {
 import { createDecorators, EventEmitter } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
 import { FormItemElementBase } from "@next-shared/form";
-import type { GeneralComplexOption, GeneralGroupOption } from "../interface.js";
+import type {
+  GeneralComplexOption,
+  GeneralGroupOption,
+  GeneralOption,
+} from "../interface.js";
 import styleText from "./index.shadow.css";
 import classNames from "classnames";
 import "@next-core/theme";
@@ -24,7 +29,17 @@ import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
-import { isEmpty, isEqual } from "lodash";
+import Empty from "../images/empty.svg";
+import { isEmpty, isEqual, groupBy, isNil, debounce, isArray } from "lodash";
+import { UseSingleBrickConf } from "@next-core/types";
+import { ReactUseBrick } from "@next-core/react-runtime";
+import { handleHttpError, fetchByProvider } from "@next-core/runtime";
+
+interface UseBackendConf {
+  provider: string;
+  args: any[] | ((...args: any[]) => any[]);
+  transform?: (data: any) => void;
+}
 
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 
@@ -35,16 +50,46 @@ const WrappedTag = wrapBrick<Tag, TagProps, TagEvents, TagMapEvents>("eo-tag", {
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
+const isSearchable = (value: UseBackendConf): value is UseBackendConf => {
+  return typeof value?.provider === "string";
+};
+
+const applyArgs = (
+  args: any[] | ((query: string) => any[]),
+  query: string
+): any => {
+  if (Array.isArray(args)) {
+    return args.map((arg) => applyArgs(arg, query));
+  }
+  if (typeof args === "function") {
+    return (args as (query: string) => any[]).call(null, query);
+  }
+
+  return args;
+};
+
+type RequestStatus = "loading" | "success" | "error";
+
 export interface SelectProps extends FormItemProps {
   value?: any;
-  options: GeneralComplexOption[] | GeneralGroupOption[];
+  options: GeneralComplexOption[];
   placeholder?: string;
-  multiple?: boolean;
+  mode?: "tags" | "multiple";
+  tokenSeparators?: string[];
+  maxTagCount?: number;
+  groupBy?: string;
+  suffix?: UseSingleBrickConf;
+  fields?: { label?: string; value?: string };
+  useBackend?: UseBackendConf & {
+    onValueChangeArgs?: any[] | ((...args: any[]) => any[]);
+    // emptyConfig?: Partial<Record<RequestStatus, EasyopsEmptyProps>>;
+  };
+  debounceSearchDelay?: number;
   clearable?: boolean;
   disabled?: boolean;
   inputStyle?: React.CSSProperties;
   validateState?: string;
-  onChange?: (value: any) => void;
+  onChange?: (value: any, options: GeneralComplexOption[]) => void;
   onValueChange?: (value: any) => void;
   optionsChange?: (options: any, name: string) => void;
   onFocus?: () => void;
@@ -55,7 +100,7 @@ const { defineElement, property, event } = createDecorators();
 
 /**
  * 通用下拉选择构件
- * @author julielai
+ * @author sailorshe
  */
 @defineElement("eo-select", {
   styleTexts: [styleText],
@@ -82,7 +127,7 @@ class Select extends FormItemElementBase {
    * @required
    */
   @property({ attribute: false })
-  accessor options: GeneralComplexOption[] | undefined;
+  accessor options!: GeneralComplexOption[];
 
   /**
    * 值
@@ -111,10 +156,37 @@ class Select extends FormItemElementBase {
   accessor disabled: boolean | undefined;
 
   /**
-   * 是否支持多选
+   * 类型
    */
-  @property({ type: Boolean })
-  accessor multiple: boolean | undefined;
+  @property()
+  accessor mode: "tags" | "multiple" | undefined;
+
+  /**
+   * 自动分词的分隔符，仅在 mode="tags" 时生效
+   */
+  @property({
+    attribute: false,
+  })
+  accessor tokenSeparators: string[] | undefined;
+
+  /**
+   * 最多显示多少个 tag, 剩余的 tag 将被隐藏
+   */
+  @property()
+  accessor maxTagCount: number | undefined;
+
+  /**
+   * 分组字段
+   */
+  @property()
+  accessor groupBy: string | undefined;
+
+  /**
+   */
+  @property({
+    attribute: false,
+  })
+  accessor suffix: UseSingleBrickConf | undefined;
 
   /**
    * 是否支持清除
@@ -122,6 +194,27 @@ class Select extends FormItemElementBase {
    */
   @property({ type: Boolean })
   accessor clearable: boolean | undefined;
+
+  /**
+   * 列表指定字段作为 label 和 value
+   */
+  @property({
+    attribute: false,
+  })
+  accessor fields: { label?: string; value?: string } | undefined;
+
+  /**
+   * 后端搜索
+   */
+  @property({
+    attribute: false,
+  })
+  accessor useBackend: UseBackendConf | undefined;
+
+  @property({
+    type: Number,
+  })
+  accessor debounceSearchDelay: number | undefined;
 
   /**
    * 输入框样式
@@ -163,19 +256,15 @@ class Select extends FormItemElementBase {
     name: string;
   }>;
 
-  handleChange = (value: string | string[]): void => {
+  handleChange = (
+    value: string | string[],
+    options: GeneralComplexOption[]
+  ): void => {
     this.value = value;
-    const findOption = (value: any) =>
-      (formatOptions(this.options) ?? []).find(
-        (option) => option.value === value
-      ) as GeneralComplexOption;
-    const selectedOptions = Array.isArray(value)
-      ? value.map((item) => findOption(item))
-      : [findOption(value)];
 
     this.#changeEvent.emit({
       value,
-      options: selectedOptions,
+      options,
     });
   };
 
@@ -213,14 +302,21 @@ class Select extends FormItemElementBase {
         disabled={this.disabled}
         placeholder={this.placeholder}
         required={this.required}
-        multiple={this.multiple}
+        mode={this.mode}
+        tokenSeparators={this.tokenSeparators}
+        maxTagCount={this.maxTagCount}
+        groupBy={this.groupBy}
+        suffix={this.suffix}
+        fields={this.fields}
+        useBackend={this.useBackend}
+        debounceSearchDelay={this.debounceSearchDelay}
         clearable={this.clearable}
         trigger="handleChange"
         inputStyle={this.inputStyle}
         validateState={this.validateState}
         notRender={this.notRender}
         helpBrick={this.helpBrick}
-        options={formatOptions(this.options)}
+        options={this.options}
         onChange={this.handleChange}
         optionsChange={this._handleOptionsChange}
         onSearch={this.handleSearch}
@@ -234,7 +330,13 @@ export function SelectComponent(props: SelectProps) {
   const {
     name,
     disabled,
-    multiple,
+    mode,
+    tokenSeparators,
+    maxTagCount,
+    suffix,
+    fields,
+    useBackend,
+    debounceSearchDelay,
     clearable = true,
     inputStyle,
     placeholder,
@@ -245,146 +347,366 @@ export function SelectComponent(props: SelectProps) {
     onValueChange,
     onSearch,
   } = props;
-  const [inputValue, setInputValue] = useState<string>("");
-  const [selectValue, setSelectValue] = useState<any>(
-    multiple ? [] : undefined
+
+  const multiple = useMemo(
+    () => mode && ["multiple", "tags"].includes(mode),
+    [mode]
   );
-  const [options, setOptions] = useState<any[]>(props.options ?? []);
+
+  const selectRef = useRef<HTMLDivElement>(null);
+  const inputSpanRef = useRef<HTMLSpanElement>(null);
+  const shouldTriggerOnValueChangeArgs = useRef(true);
+  const [inputValue, setInputValue] = useState<string>("");
+  const [inputWidth, setInputWidth] = useState<number>();
+  const [value, setValue] = useState<any>(mode ? [] : undefined);
+  const [requestStatus, setRequestStatus] = useState<RequestStatus>();
+  const [options, setOptions] = useState<any[]>(
+    formatOptions(props.options, fields) ?? []
+  );
   const [isDropHidden, setIsDropHidden] = useState<boolean>(true);
   const [isFocused, setIsFocused] = useState<boolean>(false);
-  const [customSelectvalue, setCustomSelectValue] = useState<string[]>([]);
+  const [selectedOptions, setSelectedOptions] = useState<
+    GeneralComplexOption[]
+  >([]);
+  const [renderOptions, setRenderOptions] = useState<any[]>([]);
+  const [focusOptionItem, setFocusOptionItem] = useState<GeneralComplexOption>(
+    {} as GeneralComplexOption
+  );
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const handleDocumentClick = (e: MouseEvent) => {
-      setIsFocused(false);
-      setIsDropHidden(true);
-    };
-    document.addEventListener("click", handleDocumentClick);
-    return () => {
-      document.removeEventListener("click", handleDocumentClick);
-    };
-  });
+    setOptions(formatOptions(props.options, fields));
+  }, [props.options, fields]);
 
-  useEffect(() => {
-    setSelectValue(props.value);
-  }, [props.value]);
-
-  useEffect(() => {
-    if (!isEqual(options, props.options)) {
-      setOptions(props.options);
-      optionsChange?.(props.options, name as string);
+  const handleSelectorClick = useCallback(() => {
+    if (!value) {
+      setIsDropHidden(false);
+      setIsFocused(true);
+      onFocus?.();
+      inputRef.current && inputRef.current.focus();
+    } else if (!disabled) {
+      setIsDropHidden(!isDropHidden);
+      setIsFocused(true);
+      inputRef.current && inputRef.current.focus();
     }
-  }, [name, options, optionsChange, props.options]);
+  }, [disabled, isDropHidden, value, onFocus]);
 
   const handleChange = useCallback(
-    (option: GeneralComplexOption): void => {
+    (option: GeneralComplexOption<any>): void => {
+      shouldTriggerOnValueChangeArgs.current = false;
       let newValue;
       if (multiple) {
-        newValue = (selectValue ?? []).includes(option.value)
-          ? (selectValue as string[]).filter((item) => item !== option.value)
-          : (((selectValue as any[]) ?? []).concat(option.value) as string[]);
+        newValue = (value ?? []).includes(option.value)
+          ? (value as string[]).filter((item) => item !== option.value)
+          : (((value as any[]) ?? []).concat(option.value) as string[]);
       } else {
-        newValue = option.value;
+        newValue = option.value === value ? "" : option.value;
       }
-      setSelectValue(newValue);
-      onChange?.(newValue);
+      const getSelectOptions = () => {
+        const hadSelected = selectedOptions.find(
+          (item) => item.value === option.value
+        );
+        return hadSelected
+          ? selectedOptions.filter((item) => item.value !== option.value)
+          : selectedOptions.concat(option);
+      };
+      const newOptions = getSelectOptions();
+      setSelectedOptions(newOptions);
+      onChange?.(newValue, newOptions);
       onValueChange?.(newValue);
       setIsDropHidden(!multiple);
+      setFocusOptionItem(option);
+      !multiple && setIsFocused(false);
       multiple && inputRef.current && inputRef.current.focus();
       setInputValue("");
     },
-    [multiple, selectValue, onChange]
+    [multiple, onChange, onValueChange, selectedOptions, value]
   );
 
   const handleMultipleItemClose = useCallback(
     (closeValue: string | number | boolean) => {
-      const newValue = (selectValue as string[]).filter(
-        (item) => item !== closeValue
+      const newOptions = selectedOptions.filter(
+        (item) => item.value !== closeValue
       );
-      setSelectValue(newValue);
-      onChange?.(newValue);
+      setSelectedOptions(newOptions);
+      onChange?.(
+        newOptions.map((item) => item.value),
+        newOptions
+      );
     },
-    [onChange, selectValue]
+    [onChange, selectedOptions]
   );
 
   const handleClear = (e: React.MouseEvent): void => {
     e.stopPropagation();
-    setSelectValue(undefined);
-    onChange?.(undefined);
+    setSelectedOptions([]);
+    onChange?.(undefined, []);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.stopPropagation();
-    const value = e.target.value;
-    setInputValue(value);
-    onSearch?.(value);
-  };
+  const handleSearchQuery = useMemo(
+    () =>
+      (value = "", type: "valueChange" | "search") => {
+        if (useBackend && isSearchable(useBackend)) {
+          const {
+            provider,
+            args,
+            onValueChangeArgs,
+            transform = (data) => data,
+          } = useBackend;
+          (async () => {
+            try {
+              setRequestStatus("loading");
+              const actualArgs = applyArgs(
+                type === "search" ? args : (onValueChangeArgs as any),
+                value
+              );
+              const result = await fetchByProvider(provider, actualArgs);
+              if (isNil(result)) return;
+              const transformedData = transform(result);
+              const actualData = formatOptions(
+                transformedData as unknown as GeneralOption[],
+                fields as any
+              );
+              setRequestStatus("success");
+              setOptions(actualData);
+              // 值设置后，需要回填
+              if (type === "valueChange") {
+                setSelectedOptions(
+                  actualData.filter((item) =>
+                    Array.isArray(props.value)
+                      ? props.value.includes(item.value)
+                      : item.value === props.value
+                  )
+                );
+              }
+            } catch (e) {
+              setRequestStatus("error");
+              handleHttpError(e);
+            }
+          })();
+        }
+      },
+    [useBackend, fields]
+  );
 
-  const computedOptions = React.useMemo(() => {
-    return options.concat(
-      customSelectvalue.map((item, index) => ({
-        key: index,
+  const handleDebounceBackendSearch = useMemo(() => {
+    return debounce(handleSearchQuery, debounceSearchDelay || 300);
+  }, [debounceSearchDelay, handleSearchQuery]);
+
+  const computedOptions = React.useMemo((): GeneralComplexOption[] => {
+    return (mode === "tags" && inputValue ? [inputValue] : [])
+      .map((item) => ({
+        key: item,
         label: item,
         value: item,
       }))
+      .concat(
+        selectedOptions.filter(
+          (selected) =>
+            !options.find((option) => option.value === selected.value)
+        ) as any
+      )
+      .concat(options);
+  }, [inputValue, mode, options, selectedOptions]);
+
+  useEffect(() => {
+    setValue(props.value);
+    // 设置回填option
+    setSelectedOptions(
+      computedOptions.filter((item) =>
+        Array.isArray(props.value)
+          ? props.value.includes(item.value)
+          : item.value === props.value
+      )
     );
-  }, [options, customSelectvalue]);
+  }, [props.value]);
+
+  useEffect(() => {
+    props?.useBackend?.onValueChangeArgs &&
+      shouldTriggerOnValueChangeArgs.current &&
+      !(Array.isArray(props.value)
+        ? props.value.length === 0
+        : isNil(props.value)) &&
+      handleSearchQuery(props.value, "valueChange");
+    shouldTriggerOnValueChangeArgs.current = true;
+  }, [handleSearchQuery, props?.useBackend?.onValueChangeArgs, props.value]);
+
+  useEffect(() => {
+    optionsChange?.(computedOptions, name as string);
+  }, [computedOptions]);
+
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.stopPropagation();
+      const value = e.target.value;
+      if (mode === "tags" && value) {
+        const matchToken = tokenSeparators?.includes(value[value.length - 1]);
+        const customValue =
+          value && matchToken ? value.substring(0, value.length - 1) : value;
+        if (matchToken) {
+          handleChange({
+            key: customValue,
+            label: customValue,
+            value: customValue,
+          });
+        } else {
+          setInputValue(value);
+        }
+      } else {
+        setInputValue(value);
+        setIsDropHidden(false);
+        onSearch?.(value);
+      }
+      handleDebounceBackendSearch(value, "search");
+    },
+    [handleChange, handleDebounceBackendSearch, mode, onSearch, tokenSeparators]
+  );
 
   const handleKeydown = useCallback(
     (e: KeyboardEvent): void => {
-      if (e.code === "Enter" && inputValue) {
-        if (!computedOptions.find((item: any) => item.value === inputValue)) {
-          setCustomSelectValue(customSelectvalue.concat(inputValue));
-        }
-        handleChange({
-          value: inputValue,
-          label: inputValue,
-        });
-        setInputValue("");
+      if (e.code === "Enter") {
+        focusOptionItem && handleChange(focusOptionItem);
       }
       if (
         e.code === "Backspace" &&
         multiple &&
         inputValue === "" &&
-        selectValue?.length
+        selectedOptions?.length
       ) {
-        selectValue.pop();
-        setSelectValue([...selectValue]);
-        setCustomSelectValue([...selectValue]);
+        selectedOptions.pop();
+        setSelectedOptions([...selectedOptions]);
+      }
+      if (!isDropHidden && focusOptionItem) {
+        if (e.code === "ArrowDown") {
+          const index = renderOptions.findIndex(
+            (item) => item.value === focusOptionItem.value
+          );
+          setFocusOptionItem(
+            renderOptions[
+              index + 1 > renderOptions.length - 1
+                ? renderOptions.length - 1
+                : index + 1
+            ]
+          );
+        }
+        if (e.code === "ArrowUp") {
+          const index = renderOptions.findIndex(
+            (item) => item.value === focusOptionItem.value
+          );
+          setFocusOptionItem(renderOptions[index - 1 < 0 ? 0 : index - 1]);
+        }
       }
     },
     [
-      computedOptions,
-      customSelectvalue,
-      handleChange,
-      inputValue,
       multiple,
-      selectValue,
+      inputValue,
+      selectedOptions,
+      isDropHidden,
+      focusOptionItem,
+      renderOptions,
+      handleChange,
     ]
   );
 
-  const renderTag = useCallback(
-    (list: Array<number | string | boolean>) => {
+  const isEmptyValue = useMemo(() => {
+    return typeof selectedOptions === "object"
+      ? isEmpty(selectedOptions)
+      : selectedOptions === undefined;
+  }, [selectedOptions]);
+
+  useLayoutEffect(() => {
+    const renderOptions = computedOptions.filter((item) =>
+      inputValue
+        ? (item.label as string)
+            .toLocaleUpperCase()
+            .includes(inputValue.toLocaleUpperCase())
+        : true
+    );
+    setRenderOptions(renderOptions);
+    setFocusOptionItem(renderOptions?.[0]);
+
+    if (inputSpanRef.current) {
+      setInputWidth(
+        inputSpanRef.current?.offsetWidth === 0
+          ? 4
+          : inputSpanRef.current?.offsetWidth
+      );
+    }
+  }, [computedOptions, handleChange, inputValue, mode, tokenSeparators]);
+
+  useEffect(() => {
+    const handleDocumentClick = (e: MouseEvent) => {
+      e.stopPropagation();
+      if (selectRef.current?.contains(e.target as HTMLElement)) return;
+      setIsFocused(false);
+      setIsDropHidden(true);
+      setInputValue("");
+    };
+    document.addEventListener("keydown", handleKeydown);
+    document.addEventListener("click", handleDocumentClick);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeydown);
+      document.removeEventListener("click", handleDocumentClick);
+    };
+  }, [handleKeydown]);
+
+  const renderSelector = useMemo(() => {
+    let tagList: GeneralComplexOption[] = selectedOptions;
+    if (maxTagCount) {
       const ellipsisInfo =
-        list.length - 3 > 0
+        selectedOptions.length - maxTagCount > 0
           ? {
-              label: `+${list.length - 3}`,
+              label: `+${selectedOptions.length - maxTagCount}`,
               key: "$$key",
               value: "",
-              closeable: false,
+              closable: false,
             }
           : null;
-      const tagList: Array<GeneralComplexOption | string | number | boolean> =
-        list.slice(0, 3);
+      tagList = selectedOptions.slice(0, maxTagCount);
       ellipsisInfo && tagList.push(ellipsisInfo);
-      const allOptions = computedOptions.reduce(
-        (pre: any, cur: any) =>
-          cur.options ? [...pre, ...cur.options] : [...pre, cur],
-        []
-      );
+    }
+    const allOptions = computedOptions.reduce(
+      (pre: any, cur: any) =>
+        cur.options ? [...pre, ...cur.options] : [...pre, cur],
+      []
+    );
 
-      return tagList.map((item) => {
+    const renderLabel = (option: GeneralComplexOption): React.ReactNode => {
+      return (
+        <div className="label">
+          <span className="text">
+            {multiple ? (
+              <WrappedTag
+                key={option.value as number}
+                color={disabled ? "#ddd" : undefined}
+                closable={option.closable ?? true}
+                tagStyle={{
+                  borderRadius: 4,
+                }}
+                checkable={false}
+                onClose={() => handleMultipleItemClose(option.value)}
+              >
+                {option.label}
+                {multiple && suffix && (
+                  <ReactUseBrick useBrick={suffix} data={option} />
+                )}
+              </WrappedTag>
+            ) : (
+              option.label
+            )}
+          </span>
+          {!multiple && suffix && (
+            <ReactUseBrick useBrick={suffix} data={option} />
+          )}
+        </div>
+      );
+    };
+
+    const renderMultipleLabel = (
+      list: Array<GeneralComplexOption>
+    ): React.ReactNode => {
+      return list.map((item) => {
         let option: GeneralComplexOption;
         if (typeof item === "object") {
           option = item;
@@ -394,92 +716,119 @@ export function SelectComponent(props: SelectProps) {
             ({} as GeneralComplexOption);
           option.closeable = !disabled && option.closeable;
         }
-        return (
-          <WrappedTag
-            key={option.value as number}
-            ellipsisWidth="100px"
-            color={disabled ? "#ddd" : undefined}
-            closable={option.closeable}
-            onCheck={() => {
-              //
-            }}
-            onClose={() => handleMultipleItemClose(option.value)}
-          >
-            {option.label}
-          </WrappedTag>
-        );
+        return renderLabel(option);
       });
-    },
-    [handleMultipleItemClose, computedOptions, disabled]
-  );
-
-  const getLabel = useCallback(
-    (value: any) => {
-      const allOptions = computedOptions.reduce(
-        (pre: any, cur: any) =>
-          cur.options ? [...pre, ...cur.options] : [...pre, cur],
-        []
-      );
-      if (value !== undefined) {
-        return (
-          (multiple
-            ? renderTag(value)
-            : allOptions.find((item: any) => item.value === value)?.label) ?? ""
-        );
-      }
-      return "";
-    },
-    [computedOptions, renderTag]
-  );
-
-  const renderLabel = useMemo(() => {
-    return getLabel(selectValue) || (placeholder as string);
-  }, [getLabel, placeholder, selectValue]);
-
-  const isEmptyValue = useMemo(() => {
-    return typeof selectValue === "object"
-      ? isEmpty(selectValue)
-      : selectValue === undefined;
-  }, [selectValue]);
-
-  useEffect(() => {
-    window.addEventListener("keydown", handleKeydown);
-    return () => {
-      window.removeEventListener("keydown", handleKeydown);
     };
-  }, [handleKeydown]);
 
-  const getSelectOption = (item: any): React.ReactNode => (
-    <div
-      key={item.value.toString()}
-      className={classNames("select-item", "select-item-option", {
-        disabled: item.disabled,
-        "select-option-selected":
-          typeof selectValue !== "object"
-            ? selectValue === item.value
-            : (selectValue as any[]).includes(item.value),
-      })}
-      onClick={() => !item.disabled && handleChange(item)}
-    >
-      <div className="select-item-option-content">
-        <div className="option">
-          <span className="label">{item.label}</span>
-        </div>
-        <div className="is-checked">
-          <WrappedIcon
-            {...{
-              lib: "antd",
-              icon: "check",
-              theme: "outlined",
-            }}
-          />
+    return (
+      <div
+        className={classNames({
+          "selected-item": multiple,
+          "select-single-item": !multiple,
+        })}
+        style={
+          isEmptyValue ? { color: "var(--antd-input-placeholder-color)" } : {}
+        }
+      >
+        {selectedOptions?.length
+          ? multiple
+            ? renderMultipleLabel(tagList)
+            : renderLabel(selectedOptions[0])
+          : isFocused || inputValue
+          ? ""
+          : placeholder}
+      </div>
+    );
+  }, [
+    computedOptions,
+    disabled,
+    handleMultipleItemClose,
+    inputValue,
+    isEmptyValue,
+    isFocused,
+    maxTagCount,
+    multiple,
+    placeholder,
+    selectedOptions,
+    suffix,
+  ]);
+
+  const Options = useMemo(() => {
+    const getSelectOption = (item: any): React.ReactNode => (
+      <div
+        key={item.value?.toString()}
+        className={classNames("select-item", "select-item-option", {
+          disabled: item.disabled,
+          "select-option-hover": item.value === focusOptionItem.value,
+          "select-option-selected":
+            typeof value !== "object"
+              ? value === item?.value
+              : (value as any[]).includes(item.value),
+        })}
+        onClick={() => !item.disabled && handleChange(item)}
+        onMouseOver={() => setFocusOptionItem(item)}
+      >
+        <div className="select-item-option-content">
+          <div className="option">
+            <span className="label">{item.label}</span>
+            {suffix && <ReactUseBrick useBrick={suffix} data={item} />}
+          </div>
+          <div className="is-checked">
+            <WrappedIcon
+              {...{
+                lib: "antd",
+                icon: "check",
+                theme: "outlined",
+              }}
+            />
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+
+    const renderGroupOption = (): React.ReactNode => {
+      const optsGroup = Object.entries(groupBy(renderOptions, props.groupBy));
+
+      return optsGroup.map(([group, options], index) =>
+        group !== "undefined" ? (
+          <div key={index} className="select-group-wrapper">
+            <div className="select-group-label">{group}</div>
+            {options.map((item) => getSelectOption(item))}
+          </div>
+        ) : (
+          options.map((item) => getSelectOption(item))
+        )
+      );
+    };
+
+    const renderOption = () =>
+      renderOptions.map((item: any) => {
+        return getSelectOption(item);
+      });
+
+    return renderOptions.length > 0 ? (
+      props.groupBy ? (
+        renderGroupOption()
+      ) : (
+        renderOption()
+      )
+    ) : (
+      <div className="empty-tips">
+        <Empty />
+        <span>暂无数据</span>
+      </div>
+    );
+  }, [
+    focusOptionItem,
+    suffix,
+    handleChange,
+    props.groupBy,
+    renderOptions,
+    value,
+  ]);
 
   return (
-    <WrappedFormItem {...props}>
+    <WrappedFormItem {...(props as FormItemProps)}>
       <div
         className={classNames("select", {
           "select-disabled": disabled,
@@ -488,6 +837,7 @@ export function SelectComponent(props: SelectProps) {
           "select-multiple": multiple,
         })}
         style={inputStyle}
+        ref={selectRef}
         onClick={(e) => {
           e.stopPropagation();
         }}
@@ -497,41 +847,30 @@ export function SelectComponent(props: SelectProps) {
             "selector-focused": isFocused,
             "is-error": validateState === "error",
           })}
-          onClick={() => {
-            if (!disabled) {
-              setIsDropHidden(!isDropHidden);
-              setIsFocused(!isFocused);
-              onFocus?.();
-              inputRef.current && inputRef.current.focus();
-            }
-          }}
-          onBlur={() => setInputValue("")}
+          onClick={handleSelectorClick}
         >
           <div className="select-selection-overflow">
-            <div
-              className="selected-item"
-              style={
-                isEmptyValue
-                  ? { color: "var(--antd-input-placeholder-color)" }
-                  : {}
-              }
-            >
-              <span className="label">{renderLabel}</span>
-            </div>
-            {multiple && (
-              <div className="selected-item">
-                <div className="select-selection-search">
-                  <input
-                    type="text"
-                    readOnly={!multiple}
-                    value={inputValue}
-                    ref={inputRef}
-                    className="select-selection-search-input"
-                    onChange={handleInputChange}
-                  />
-                </div>
+            {multiple && renderSelector}
+            <div className="input-item">
+              <div className="select-selection-search">
+                <span
+                  style={{ position: "absolute", opacity: "0" }}
+                  ref={inputSpanRef}
+                >
+                  {inputValue}
+                </span>
+                <input
+                  style={{ width: inputWidth }}
+                  type="text"
+                  // readOnly={!multiple}
+                  value={inputValue}
+                  ref={inputRef}
+                  className="select-selection-search-input"
+                  onChange={handleInputChange}
+                />
               </div>
-            )}
+              {!multiple ? !inputValue && renderSelector : null}
+            </div>
           </div>
           <span className="select-arrow">
             {!isEmptyValue && isFocused && clearable ? (
@@ -563,38 +902,19 @@ export function SelectComponent(props: SelectProps) {
         >
           <div className="dropdown-list">
             <div>
-              <div className="dropdown-inner">
-                {computedOptions.length > 0 ? (
-                  computedOptions.map((item: any) => {
-                    return item.options?.length ? (
-                      <div key={item.label} className="select-group-wrapper">
-                        <div className="select-group-label">{item.label}</div>
-                        {formatOptions(item.options).map((option: any) =>
-                          getSelectOption(option)
-                        )}
-                      </div>
-                    ) : (
-                      getSelectOption(item)
-                    );
-                  })
-                ) : (
-                  <div className="empty-tips">
-                    <WrappedIcon
-                      {...{
-                        lib: "antd",
-                        icon: "warning",
-                        theme: "filled",
-                        color: "yellow",
-                      }}
-                      style={{
-                        fontSize: 16,
-                        marginRight: 12,
-                      }}
-                    />
-                    无数据
-                  </div>
-                )}
-              </div>
+              <div className="dropdown-inner">{Options}</div>
+              {requestStatus === "loading" && (
+                <div className="dropdown-list-loading-container">
+                  <WrappedIcon
+                    {...{
+                      icon: "loading",
+                      lib: "antd",
+                      theme: "outlined",
+                      spinning: true,
+                    }}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>
