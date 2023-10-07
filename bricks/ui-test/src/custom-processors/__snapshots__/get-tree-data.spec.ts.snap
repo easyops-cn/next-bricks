@@ -20,6 +20,7 @@ exports[`getTreeData should work 1`] = `
               "console.log(1323)",
             ],
             "parent": {
+              "flag": "skip",
               "instanceId": "603a85ccfb595",
               "label": "should work",
               "name": "it",
@@ -179,6 +180,7 @@ exports[`getTreeData should work 1`] = `
               },
             ],
             "parent": {
+              "flag": "skip",
               "instanceId": "603a85ccfb595",
               "label": "should work",
               "name": "it",
@@ -220,7 +222,8 @@ exports[`getTreeData should work 1`] = `
             "type": "command",
           },
         ],
-        "displayLabel": "it: should work",
+        "displayLabel": "[skip] it: should work",
+        "flag": "skip",
         "instanceId": "603a85ccfb595",
         "isChainChild": false,
         "label": "should work",
@@ -243,7 +246,7 @@ exports[`getTreeData should work 1`] = `
         "lib": "fa",
       },
       "key": "603a85ccfb595",
-      "name": "it: should work",
+      "name": "[skip] it: should work",
     },
     {
       "children": [
@@ -318,6 +321,7 @@ exports[`getTreeData should work 1`] = `
   "data": {
     "children": [
       {
+        "flag": "skip",
         "instanceId": "603a85ccfb595",
         "label": "should work",
         "name": "it",
