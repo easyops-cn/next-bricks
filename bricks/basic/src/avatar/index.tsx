@@ -102,12 +102,12 @@ export function EoAvatarComponent(props: AvatarProps) {
 
   const [isImgLoadError, setIsImgLoadError] = useState<boolean>();
   const [textNodeScale, setTextNodeScale] = useState(1);
-  const [textNodeHidden, setTextNodeHidden] = useState(false);
+  const [textNodeHidden, setTextNodeHidden] = useState(true);
   const [showName, setShowName] = useState(name);
 
   useEffect(() => {
     setShowName(name);
-    setTextNodeHidden(false);
+    setTextNodeHidden(true);
   }, [name]);
 
   const handleImgLoadError = () => {
@@ -117,6 +117,8 @@ export function EoAvatarComponent(props: AvatarProps) {
   // istanbul ignore next
   const onTextNodeResize = useCallback(
     (e: CustomEvent<{ entries: ResizeObserverEntry[] }>) => {
+      // eslint-disable-next-line no-console
+      console.log(e);
       for (const entry of e.detail.entries) {
         if (entry.target === textNodeRef.current) {
           setTextNodeHidden(true);
