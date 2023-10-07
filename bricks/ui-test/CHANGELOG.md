@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.6.3...@next-bricks/ui-test@0.6.4) (2023-10-07)
+
+
+### Bug Fixes
+
+* label support show flag ([385ff97](https://github.com/easyops-cn/next-bricks/commit/385ff97ca4659e70024c3869a51f9d09c10c2890))
+
+
+
+
+
 ## [0.6.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.6.2...@next-bricks/ui-test@0.6.3) (2023-09-28)
 
 **Note:** Version bump only for package @next-bricks/ui-test
