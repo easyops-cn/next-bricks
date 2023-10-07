@@ -412,6 +412,7 @@ export function SelectComponent(props: SelectProps) {
       };
       const newOptions = getSelectOptions();
       setSelectedOptions(newOptions);
+      setValue(newValue);
       onChange?.(newValue, newOptions);
       onValueChange?.(newValue);
       setIsDropHidden(!multiple);
@@ -575,6 +576,8 @@ export function SelectComponent(props: SelectProps) {
       ) {
         selectedOptions.pop();
         setSelectedOptions([...selectedOptions]);
+        value.pop();
+        setValue([...value]);
       }
       if (!isDropHidden && focusOptionItem) {
         if (e.code === "ArrowDown") {

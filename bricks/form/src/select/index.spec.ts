@@ -118,7 +118,7 @@ describe("form.general-select", () => {
     expect(element.shadowRoot?.childNodes.length).toBe(0);
   });
 
-  test("search", async () => {
+  test("mode is multiple", async () => {
     const element = document.createElement("form.general-select") as Select;
     element.options = [
       {
@@ -130,15 +130,54 @@ describe("form.general-select", () => {
         value: "b",
       },
     ];
-    element.multiple = true;
+    element.mode = "multiple";
     const mockSearchEvent = jest.fn();
     element.addEventListener("search", mockSearchEvent);
     act(() => {
       document.body.appendChild(element);
     });
+    expect(element.shadowRoot).toBeTruthy();
+    expect(element.shadowRoot?.childNodes.length).toBe(2);
 
     await act(async () => {
-      await (element.multiple = true);
+      fireEvent.keyDown(
+        element.shadowRoot?.querySelector(
+          ".select-selection-search-input"
+        ) as HTMLElement,
+        { code: "Backspace" }
+      );
+    });
+
+    expect(
+      (
+        element.shadowRoot?.querySelectorAll(".select-item")[0] as HTMLElement
+      ).classList.contains("select-option-selected")
+    ).toBeFalsy();
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
+
+  test("search", () => {
+    const element = document.createElement("form.general-select") as Select;
+    element.options = [
+      {
+        label: "a",
+        value: "a",
+      },
+      {
+        label: "b",
+        value: "b",
+      },
+    ];
+    const mockSearchEvent = jest.fn();
+    element.addEventListener("search", mockSearchEvent);
+    act(() => {
+      document.body.appendChild(element);
+    });
+    act(() => {
       fireEvent.change(
         element.shadowRoot?.querySelector(
           ".select-selection-search-input"
@@ -154,28 +193,6 @@ describe("form.general-select", () => {
         },
       })
     );
-
-    act(() => {
-      (
-        element.shadowRoot?.querySelector(".select-item") as HTMLElement
-      ).click();
-    });
-
-    await act(async () => {
-      await (element.multiple = true);
-      fireEvent.keyDown(
-        element.shadowRoot?.querySelector(
-          ".select-selection-search-input"
-        ) as HTMLElement,
-        { code: "Backspace" }
-      );
-    });
-
-    expect(
-      (
-        element.shadowRoot?.querySelectorAll(".select-item")[0] as HTMLElement
-      ).classList.contains("select-option-selected")
-    ).toBeFalsy();
 
     act(() => {
       document.body.removeChild(element);

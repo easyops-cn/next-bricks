@@ -249,17 +249,17 @@
 - brick: eo-select
   properties:
     label: useBackend
-    mode: multiple
     placeholder: 后端搜索
+    value: Shenzhen
     useBackend:
       provider: basic.http-request
       transform: |
         <% (data) => data %>
-      onValueChangeArgs: |
+      onValueChangeArgs:
         - |
           <% 
             (q) => 
-              `//api.weatherapi.com/v1/search.json?q=${q ? q : "Guangzhou"}&key=9e08e5e99e0c4b4c89023605231804`
+              `//api.weatherapi.com/v1/search.json?q=${q}&key=9e08e5e99e0c4b4c89023605231804`
           %>
       args:
         - |
@@ -269,7 +269,11 @@
           %>
     fields:
       label: name
-      value: id
+      value: name
+    suffix:
+      brick: eo-tag
+      properties:
+        textContent: <% DATA.country %>
 ```
 
 ### Input Style
