@@ -72,6 +72,7 @@ export interface NodeGraphData {
   params?: any;
   type: NodeType;
   sort?: number;
+  flag?: string;
 }
 
 export interface TreeNodeItemData extends NodeGraphData {

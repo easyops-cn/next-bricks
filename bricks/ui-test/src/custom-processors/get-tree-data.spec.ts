@@ -21,6 +21,7 @@ describe("getTreeData", () => {
           name: "it",
           params: null,
           type: "block",
+          flag: "skip",
         },
         {
           instanceId: "603ab42f8eae9",

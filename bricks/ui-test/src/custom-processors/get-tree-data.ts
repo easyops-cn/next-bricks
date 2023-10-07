@@ -21,7 +21,7 @@ export interface GraphData {
 
 function getIcon(
   nodeData: NodeGraphData,
-  commandDocList: CommandDoc[],
+  commandDocList: CommandDoc[]
 ): CommandIcon {
   let icon: CommandIcon;
 
@@ -85,18 +85,22 @@ function getIcon(
 }
 
 function getDisplayLabel(nodeItem: NodeGraphData): string {
+  const flag =
+    nodeItem.flag && nodeItem.flag !== "none" ? `[${nodeItem.flag}] ` : "";
+
   if (nodeItem.type === "suite") {
     return nodeItem.name;
   }
 
   if (nodeItem.label) {
-    return `${nodeItem.name}: ${nodeItem.label}`;
+    return `${flag}${nodeItem.name}: ${nodeItem.label}`;
   }
 
   const literalParams = getLiteralParams(nodeItem.params);
+  const nodeLabel = `${flag}${nodeItem.name}`;
   return literalParams.length === 0
-    ? nodeItem.name
-    : `${nodeItem.name}: ${literalParams.join(", ")}`;
+    ? nodeLabel
+    : `${nodeLabel}: ${literalParams.join(", ")}`;
 }
 
 function getLiteralParams(params: unknown[]): unknown[] {
@@ -118,7 +122,7 @@ function getLiteralParams(params: unknown[]): unknown[] {
 
 export function getTreeData(
   GraphData: GraphData,
-  commandDocList: CommandDoc[],
+  commandDocList: CommandDoc[]
 ): TestTreeData {
   const {
     topic_vertices: [rootData],
@@ -129,9 +133,9 @@ export function getTreeData(
   const getChildVertices = (children: TestTreeData[]) => {
     return sortBy(
       vertices.filter((v) =>
-        children.find((c) => c.data.instanceId === v.instanceId),
+        children.find((c) => c.data.instanceId === v.instanceId)
       ),
-      "sort",
+      "sort"
     );
   };
 
