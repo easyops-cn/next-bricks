@@ -6,7 +6,7 @@
   font-size: 14px;
   position: relative;
   display: inline-block;
-  cursor: pointer;
+  cursor: text;
   min-width: 100px;
 }
 
@@ -43,19 +43,18 @@
 }
 
 .selected-item {
-  display: flex;
   flex: none;
   align-self: center;
   max-width: 100%;
-  height: 30px;
-  line-height: 30px;
+  line-height: 1;
+  margin-top: 2px;
 }
 
 .selected-item .label {
   display: inline-block;
   margin-right: 4px;
   overflow: hidden;
-  white-space: pre;
+  white-space: nowrap;
   text-overflow: ellipsis;
 }
 
@@ -66,8 +65,27 @@
   box-shadow: 0 0 0 2px rgb(0 113 235 / 20%);
 }
 
-.select-selection-search {
-  display: block;
+.selector-focused .selected-single-item {
+  color: var(--antd-input-placeholder-color);
+}
+
+.select-single .select-selection-search {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  bottom: 0;
+  left: 11px;
+}
+
+.select-single-item {
+  .label {
+    .text {
+      margin-right: 4px;
+    }
+  }
+}
+
+.select-multiple .select-selection-search {
   padding-right: 22px;
 }
 
@@ -114,6 +132,7 @@
 .select-arrow {
   display: inline-block;
   color: inherit;
+  cursor: pointer;
   font-style: normal;
   line-height: 0;
   text-transform: none;
@@ -204,7 +223,11 @@
   background: var(--antd-input-disabled-bg);
 }
 
-.select-item-option:hover {
+/* .select-item-option:hover {
+  background-color: var(--antd-select-item-active-bg);
+} */
+
+.select-option-hover {
   background-color: var(--antd-select-item-active-bg);
 }
 
@@ -249,13 +272,29 @@
   display: block;
 }
 
+.input-item {
+  min-height: 30px;
+  display: flex;
+  align-items: center;
+}
+
 .empty-tips {
   display: flex;
-  text-align: center;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   font-size: 14px;
-  color: var(--palette-gray-5);
+  color: var(--palette-gray-8);
 }
+
+.empty-tips > img {
+  width: 180px;
+}
+
+.empty-tips > span {
+  margin-left: -8px;
+}
+
 .select-group-wrapper {
   .select-group-label {
     padding-left: 12px;
@@ -266,4 +305,13 @@
   .select-item-option {
     padding-left: 24px;
   }
+}
+
+.dropdown-list-loading-container {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(var(--antd-component-background), 0.7);
+  font-size: 24px;
 }

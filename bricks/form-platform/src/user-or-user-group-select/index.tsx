@@ -739,7 +739,7 @@ export function EoUserOrUserGroupSelectComponent(
       <div className="select-wrapper">
         <WrappedSelect
           clearable={true}
-          multiple={props.isMultiple}
+          mode={props.isMultiple ? "multiple" : undefined}
           placeholder={props.placeholder}
           value={computedValue}
           onchange={handleSelectChange as any}
