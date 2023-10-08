@@ -259,13 +259,13 @@
         - |
           <% 
             (q) => 
-              `//api.weatherapi.com/v1/search.json?q=${q}&key=9e08e5e99e0c4b4c89023605231804`
+              `//api.weatherapi.com/v1/search.json?q=${q}&key=${MISC.weather_api_key}`
           %>
       args:
         - |
           <% 
             (q) => 
-              `//api.weatherapi.com/v1/search.json?q=${q ? q : "China"}&key=9e08e5e99e0c4b4c89023605231804`
+              `//api.weatherapi.com/v1/search.json?q=${q ? q : "China"}&key=${MISC.weather_api_key}`
           %>
     fields:
       label: name

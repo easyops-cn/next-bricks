@@ -9,11 +9,7 @@ import React, {
 import { createDecorators, EventEmitter } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
 import { FormItemElementBase } from "@next-shared/form";
-import type {
-  GeneralComplexOption,
-  GeneralGroupOption,
-  GeneralOption,
-} from "../interface.js";
+import type { GeneralComplexOption, GeneralOption } from "../interface.js";
 import styleText from "./index.shadow.css";
 import classNames from "classnames";
 import "@next-core/theme";
@@ -29,11 +25,12 @@ import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
-import Empty from "../images/empty.svg";
-import { isEmpty, isEqual, groupBy, isNil, debounce, isArray } from "lodash";
+import { isEmpty, groupBy, isNil, debounce } from "lodash";
 import { UseSingleBrickConf } from "@next-core/types";
 import { ReactUseBrick } from "@next-core/react-runtime";
 import { handleHttpError, fetchByProvider } from "@next-core/runtime";
+import { unwrapProvider } from "@next-core/utils/general";
+import type { getIllustration as _getIllustration } from "@next-bricks/illustrations/data-providers/get-illustration";
 
 interface UseBackendConf {
   provider: string;
@@ -49,6 +46,10 @@ const WrappedTag = wrapBrick<Tag, TagProps, TagEvents, TagMapEvents>("eo-tag", {
 });
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
+
+const getIllustration = unwrapProvider<typeof _getIllustration>(
+  "illustrations.get-illustration"
+);
 
 const isSearchable = (value: UseBackendConf): value is UseBackendConf => {
   return typeof value?.provider === "string";
@@ -352,7 +353,10 @@ export function SelectComponent(props: SelectProps) {
     () => mode && ["multiple", "tags"].includes(mode),
     [mode]
   );
-
+  const emptySrc = getIllustration({
+    category: "easyops2",
+    name: "search-empty",
+  });
   const selectRef = useRef<HTMLDivElement>(null);
   const inputSpanRef = useRef<HTMLSpanElement>(null);
   const shouldTriggerOnValueChangeArgs = useRef(true);
@@ -444,50 +448,47 @@ export function SelectComponent(props: SelectProps) {
     onChange?.(undefined, []);
   };
 
-  const handleSearchQuery = useMemo(
-    () =>
-      (value = "", type: "valueChange" | "search") => {
-        if (useBackend && isSearchable(useBackend)) {
-          const {
-            provider,
-            args,
-            onValueChangeArgs,
-            transform = (data) => data,
-          } = useBackend;
-          (async () => {
-            try {
-              setRequestStatus("loading");
-              const actualArgs = applyArgs(
-                type === "search" ? args : (onValueChangeArgs as any),
-                value
-              );
-              const result = await fetchByProvider(provider, actualArgs);
-              if (isNil(result)) return;
-              const transformedData = transform(result);
-              const actualData = formatOptions(
-                transformedData as unknown as GeneralOption[],
-                fields as any
-              );
-              setRequestStatus("success");
-              setOptions(actualData);
-              // 值设置后，需要回填
-              if (type === "valueChange") {
-                setSelectedOptions(
-                  actualData.filter((item) =>
-                    Array.isArray(props.value)
-                      ? props.value.includes(item.value)
-                      : item.value === props.value
-                  )
-                );
-              }
-            } catch (e) {
-              setRequestStatus("error");
-              handleHttpError(e);
-            }
-          })();
+  const handleSearchQuery = useCallback(
+    async (value = "", type: "valueChange" | "search") => {
+      if (useBackend && isSearchable(useBackend)) {
+        const {
+          provider,
+          args,
+          onValueChangeArgs,
+          transform = (data) => data,
+        } = useBackend;
+        try {
+          setRequestStatus("loading");
+          const actualArgs = applyArgs(
+            type === "search" ? args : onValueChangeArgs!,
+            value
+          );
+          const result = await fetchByProvider(provider, actualArgs);
+          if (isNil(result)) return;
+          const transformedData = transform(result);
+          const actualData = formatOptions(
+            transformedData as unknown as GeneralOption[],
+            fields as any
+          );
+          setRequestStatus("success");
+          setOptions(actualData);
+          // 值设置后，需要回填
+          if (type === "valueChange") {
+            setSelectedOptions(
+              actualData.filter((item) =>
+                Array.isArray(props.value)
+                  ? props.value.includes(item.value)
+                  : item.value === props.value
+              )
+            );
+          }
+        } catch (e) {
+          setRequestStatus("error");
+          handleHttpError(e);
         }
-      },
-    [useBackend, fields]
+      }
+    },
+    [useBackend, fields, props.value]
   );
 
   const handleDebounceBackendSearch = useMemo(() => {
@@ -520,7 +521,13 @@ export function SelectComponent(props: SelectProps) {
           : item.value === props.value
       )
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.value]);
+
+  useEffect(() => {
+    optionsChange?.(computedOptions, name as string);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [computedOptions]);
 
   useEffect(() => {
     props?.useBackend?.onValueChangeArgs &&
@@ -531,10 +538,6 @@ export function SelectComponent(props: SelectProps) {
       handleSearchQuery(props.value, "valueChange");
     shouldTriggerOnValueChangeArgs.current = true;
   }, [handleSearchQuery, props?.useBackend?.onValueChangeArgs, props.value]);
-
-  useEffect(() => {
-    optionsChange?.(computedOptions, name as string);
-  }, [computedOptions]);
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -606,8 +609,9 @@ export function SelectComponent(props: SelectProps) {
       selectedOptions,
       isDropHidden,
       focusOptionItem,
-      renderOptions,
       handleChange,
+      value,
+      renderOptions,
     ]
   );
 
@@ -817,17 +821,18 @@ export function SelectComponent(props: SelectProps) {
       )
     ) : (
       <div className="empty-tips">
-        <Empty />
+        <img src={emptySrc} />
         <span>暂无数据</span>
       </div>
     );
   }, [
+    renderOptions,
+    props.groupBy,
+    emptySrc,
     focusOptionItem,
+    value,
     suffix,
     handleChange,
-    props.groupBy,
-    renderOptions,
-    value,
   ]);
 
   return (
@@ -865,7 +870,6 @@ export function SelectComponent(props: SelectProps) {
                 <input
                   style={{ width: inputWidth }}
                   type="text"
-                  // readOnly={!multiple}
                   value={inputValue}
                   ref={inputRef}
                   className="select-selection-search-input"
@@ -904,21 +908,20 @@ export function SelectComponent(props: SelectProps) {
           className="select-dropdown"
         >
           <div className="dropdown-list">
-            <div>
+            {requestStatus === "loading" ? (
+              <div className="dropdown-list-loading-container">
+                <WrappedIcon
+                  {...{
+                    icon: "loading",
+                    lib: "antd",
+                    theme: "outlined",
+                    spinning: true,
+                  }}
+                />
+              </div>
+            ) : (
               <div className="dropdown-inner">{Options}</div>
-              {requestStatus === "loading" && (
-                <div className="dropdown-list-loading-container">
-                  <WrappedIcon
-                    {...{
-                      icon: "loading",
-                      lib: "antd",
-                      theme: "outlined",
-                      spinning: true,
-                    }}
-                  />
-                </div>
-              )}
-            </div>
+            )}
           </div>
         </div>
       </div>

@@ -287,6 +287,10 @@
   color: var(--palette-gray-8);
 }
 
+.empty-tips > img {
+  width: 180px;
+}
+
 .empty-tips > span {
   margin-left: -8px;
 }
@@ -304,14 +308,10 @@
 }
 
 .dropdown-list-loading-container {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(var(--antd-component-background), 0.7);
   font-size: 24px;
 }
