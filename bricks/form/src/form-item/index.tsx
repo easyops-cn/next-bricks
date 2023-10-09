@@ -246,17 +246,6 @@ export function FormItemComponent(props: FormItemProps) {
       curElement.validateState = defaultValidateState.current.type;
     });
 
-    return () => {
-      formInstance.removeField(name);
-      formInstance.unsubscribe(`${name}.validate`);
-      formInstance.unsubscribe(`${name}.init.value`);
-      formInstance.unsubscribe(`${name}.reset.fields`);
-      formInstance.unsubscribe("reset.fields");
-    };
-  }, [curElement, formInstance, name, trigger, valuePropsName, needValidate]);
-
-  useEffect(() => {
-    if (!formInstance || !name || !curElement) return;
     formInstance.setField(name, {
       name,
       label,
@@ -275,21 +264,15 @@ export function FormItemComponent(props: FormItemProps) {
       curElement.size = formElement.size || size;
     }
     formInstance.setFieldsValueByInitData(name);
-  }, [
-    curElement,
-    formElement,
-    formInstance,
-    label,
-    layout,
-    max,
-    message,
-    min,
-    name,
-    pattern,
-    required,
-    size,
-    validator,
-  ]);
+
+    return () => {
+      formInstance.removeField(name);
+      formInstance.unsubscribe(`${name}.validate`);
+      formInstance.unsubscribe(`${name}.init.value`);
+      formInstance.unsubscribe(`${name}.reset.fields`);
+      formInstance.unsubscribe("reset.fields");
+    };
+  }, [curElement, formInstance, name]);
 
   return (
     <div className={classNames("form-item", layout)}>
