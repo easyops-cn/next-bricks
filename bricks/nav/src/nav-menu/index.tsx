@@ -218,6 +218,13 @@ function SitMapMenCom({
   selectedKey?: string[];
   showTooltip?: boolean;
 }) {
+  const [visible, setVisible] = useState<boolean>();
+
+  const handleVisibleChange = (event: CustomEvent<boolean>): void => {
+    setVisible(event.detail);
+    handlePopupVisibleChange(event);
+  };
+
   return item.items?.length > 0 ? (
     <WrappedPopover
       className={classnames("popover")}
@@ -226,7 +233,7 @@ function SitMapMenCom({
       distance={0}
       key={item.key}
       strategy="fixed"
-      beforeVisibleChange={handlePopupVisibleChange}
+      beforeVisibleChange={handleVisibleChange}
     >
       <WrappedMenuItem
         className="sub-menu-item-label"
@@ -240,7 +247,11 @@ function SitMapMenCom({
         className="sub-menu-sit-map-wrapper"
         onClick={(e) => e.stopPropagation()}
       >
-        <SiteMapItem menuGroup={item} selectedKey={selectedKey} />
+        <SiteMapItem
+          menuGroup={item}
+          selectedKey={selectedKey}
+          visible={visible}
+        />
       </div>
     </WrappedPopover>
   ) : null;

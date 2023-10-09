@@ -1,6 +1,14 @@
 import { describe, test, expect, jest } from "@jest/globals";
 import { CollectService } from "./CollectService.js";
 import { DRAG_DIRECTION } from "./constants.js";
+import {
+  MyCollectionApi_listMyCollection,
+  MyCollectionApi_upsertMyCollection,
+} from "@next-api-sdk/user-service-sdk";
+
+jest.mock("@next-api-sdk/user-service-sdk");
+const mockListCollectionApi = MyCollectionApi_listMyCollection as jest.Mock;
+const mockUpsertCollectionApi = MyCollectionApi_upsertMyCollection as jest.Mock;
 
 jest.mock("@next-core/easyops-runtime", () => ({
   auth: {
@@ -9,15 +17,22 @@ jest.mock("@next-core/easyops-runtime", () => ({
 }));
 
 describe("CollectService", () => {
-  test("should work", () => {
+  test("should work", async () => {
     const collectService = new CollectService(2);
-    expect(collectService.getFavoritesById("monitor")).toEqual([]);
 
-    collectService.setItemAsFavorite("monitor", {
-      text: "集群",
-      to: "/cluster",
-    });
+    mockListCollectionApi.mockResolvedValueOnce({
+      module: "sidebarMenuCollect",
+      collectionName: "monitor",
+      payloads: [
+        {
+          name: "集群",
+          to: "/cluster",
+          extInfo: { text: "集群", to: "/cluster" },
+        },
+      ],
+    } as never);
 
+    await collectService.fetchFavorites("monitor");
     expect(collectService.getFavoritesById("monitor")).toEqual([
       { text: "集群", to: "/cluster" },
     ]);
@@ -26,6 +41,23 @@ describe("CollectService", () => {
       text: "主机",
       to: "/host",
     });
+
+    expect(collectService.getFavoritesById("monitor")).toEqual([
+      {
+        text: "主机",
+        to: "/host",
+      },
+      { text: "集群", to: "/cluster" },
+    ]);
+
+    await collectService.fetchFavorites("monitor");
+    expect(collectService.getFavoritesById("monitor")).toEqual([
+      {
+        text: "主机",
+        to: "/host",
+      },
+      { text: "集群", to: "/cluster" },
+    ]);
 
     expect(collectService.getFavoritesById("monitor").length).toEqual(2);
 

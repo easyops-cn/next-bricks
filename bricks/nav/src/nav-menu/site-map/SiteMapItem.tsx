@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import type {
   SidebarMenuGroup,
   SidebarMenuSimpleItem,
@@ -39,6 +39,7 @@ const WrappedInput = wrapBrick<any, any, InputEvents, InputEventsMap>(
 interface SiteMapItemProps {
   menuGroup: SidebarMenuGroup;
   selectedKey?: string[];
+  visible?: boolean;
 }
 
 export function findDropElement(element: HTMLElement): HTMLElement | undefined {
@@ -69,12 +70,10 @@ export function isValidDragAction(
 
 export function SiteMapItem(props: SiteMapItemProps) {
   const { t } = useTranslation(NS);
-  const { menuGroup, selectedKey } = props;
+  const { menuGroup, selectedKey, visible } = props;
   const groupId = menuGroup.groupId as string;
 
-  const [favoriteList, setFavoriteList] = useState(
-    collectService.getFavoritesById(groupId)
-  );
+  const [favoriteList, setFavoriteList] = useState<SidebarMenuSimpleItem[]>([]);
   const flatItems = useMemo(() => flatMenuItems(menuGroup), [menuGroup]);
   const [q, setQ] = useState<string>();
   const [filter, setFilters] = useState<SidebarMenuSimpleItem[]>([]);
@@ -148,6 +147,15 @@ export function SiteMapItem(props: SiteMapItemProps) {
   const handleAllowDrag = (enable: boolean): void => {
     setAllowDrag(enable);
   };
+
+  useEffect(() => {
+    (async () => {
+      if (visible) {
+        const list = await collectService.fetchFavorites(groupId);
+        setFavoriteList(list);
+      }
+    })();
+  }, [groupId, visible]);
 
   return (
     <div className="site-map">

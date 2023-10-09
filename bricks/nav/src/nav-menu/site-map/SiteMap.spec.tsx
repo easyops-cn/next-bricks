@@ -16,6 +16,7 @@ jest.mock("./CollectService.js", () => ({
     getFavoritesById: jest.fn(),
     isCollected: jest.fn(() => false),
     checkMaxCapacity: jest.fn().mockReturnValue(false),
+    fetchFavorites: jest.fn(),
   },
 }));
 
@@ -172,7 +173,9 @@ describe("siteMap test", () => {
         },
       ] as any as SidebarMenuGroup[],
     } as SidebarMenuGroup;
-    const { container } = render(<SiteMapItem menuGroup={menuGroup} />);
+    const { container } = render(
+      <SiteMapItem menuGroup={menuGroup} visible={true} />
+    );
 
     expect(screen.getByText("网络")).toBeTruthy();
     expect(container.querySelectorAll("eo-link").length).toEqual(8);
@@ -339,6 +342,7 @@ describe("siteMap test", () => {
 
     act(() => {
       fireEvent(input, new CustomEvent("change", { detail: "主机" }));
+      jest.advanceTimersByTime(500);
     });
 
     expect(container.querySelector(".tag-text")?.textContent).toEqual("主机");

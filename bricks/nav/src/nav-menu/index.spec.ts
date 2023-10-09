@@ -18,6 +18,10 @@ jest.mock("@next-core/runtime", () => ({
 
 describe("basic.nav-menu", () => {
   test("basic usage", async () => {
+    (window as any).ResizeObserver = jest.fn().mockImplementation(() => ({
+      observe: jest.fn(),
+      disconnect: jest.fn(),
+    }));
     const element = document.createElement("eo-nav-menu") as NavMenu;
 
     expect(element.shadowRoot).toBeFalsy();
@@ -57,6 +61,29 @@ describe("basic.nav-menu", () => {
                     key: "menu 6",
                   },
                 ],
+              },
+            ],
+          },
+          {
+            title: "菜单三",
+            type: "group",
+            childLayout: "siteMap",
+            groupFrom: "platformMenus",
+            groupId: "platformMenus",
+            items: [
+              {
+                childLayout: "default",
+
+                items: [
+                  {
+                    text: "MySQL",
+                    to: "/database-service-monitor/MySQL",
+                    type: "default",
+                  },
+                ],
+                key: "2.0",
+                title: "数据库服务",
+                type: "group",
               },
             ],
           },
