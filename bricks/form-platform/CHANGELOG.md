@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-platform@0.1.21...@next-bricks/form-platform@0.2.0) (2023-10-09)
+
+
+### Features
+
+* update user-group-select type & doc ([4bd1d5d](https://github.com/easyops-cn/next-bricks/commit/4bd1d5d7bc7477e0d67ab0e3b2724767ee1e5787))
+
+
+
+
+
 ## [0.1.21](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-platform@0.1.20...@next-bricks/form-platform@0.1.21) (2023-10-08)
 
 **Note:** Version bump only for package @next-bricks/form-platform

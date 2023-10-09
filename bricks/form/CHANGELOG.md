@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.18.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.17.20...@next-bricks/form@0.18.0) (2023-10-09)
+
+
+### Bug Fixes
+
+* fix form repeat init value ([e2b931a](https://github.com/easyops-cn/next-bricks/commit/e2b931ad16fb49b215df5487dbbca4d294d2b720))
+
+
+### Features
+
+* select update ([ec12a48](https://github.com/easyops-cn/next-bricks/commit/ec12a488b6740d77cf2e06e04910406893a48a81))
+* update user-group-select type & doc ([4bd1d5d](https://github.com/easyops-cn/next-bricks/commit/4bd1d5d7bc7477e0d67ab0e3b2724767ee1e5787))
+* use get illustration ([c58d47d](https://github.com/easyops-cn/next-bricks/commit/c58d47d4bbd7fa96ec143188d15e78000a2be070))
+
+
+
+
+
 ## [0.17.20](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.17.19...@next-bricks/form@0.17.20) (2023-10-08)
 
 **Note:** Version bump only for package @next-bricks/form
