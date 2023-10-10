@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@next-core/element": "^1.1.4",
-    "@next-core/react-element": "^1.0.13",
+    "@next-core/react-element": "^1.0.14",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
