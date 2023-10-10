@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
 import { getCssPropertyValue } from "@next-core/runtime";
 import { wrapBrick } from "@next-core/react-element";
 import type {
@@ -79,6 +85,16 @@ export const sideBarWidth =
 export const sideBarCollapsedWidth =
   parseInt(getCssPropertyValue("--side-bar-collapsed-width"), 10) || 60;
 
+interface ContextOfSidebarMenu {
+  selectedKeys: string[];
+  openedKeys: string[];
+}
+
+const SidebarMenuContext = createContext<ContextOfSidebarMenu>({
+  selectedKeys: [],
+  openedKeys: [],
+});
+
 const WrappedSidebarMenu = wrapBrick<EoSidebarMenu, EoSidebarMenuProps>(
   "eo-sidebar-menu"
 );
@@ -95,21 +111,24 @@ const WrappedSidebarMenuSubmenu = wrapBrick<
   EoSidebarMenuSubmenuProps
 >("eo-sidebar-menu-submenu");
 
-function MenuSimpleItem(props: SidebarMenuSimpleItem) {
-  const { to, href, target, icon, text } = props;
+function MenuSimpleItem(props: SidebarMenuSimpleItem & { id?: string }) {
+  const { to, href, target, icon, text, id } = props;
+  const { selectedKeys } = useContext(SidebarMenuContext);
+
   return (
     <WrappedSidebarMenuItem
       url={to as any}
       href={href}
       target={target as any}
       icon={icon}
+      selected={selectedKeys.includes(id!)}
     >
       {text}
     </WrappedSidebarMenuItem>
   );
 }
 
-function MenuGroup(props: SidebarMenuGroup) {
+function MenuGroup(props: SidebarMenuGroup & { id?: string }) {
   const { title, items } = props;
 
   if (items?.length > 0) {
@@ -117,7 +136,7 @@ function MenuGroup(props: SidebarMenuGroup) {
       <WrappedSidebarMenuGroup>
         <span slot="title">{title}</span>
         {props.items.map((item) => {
-          return <MenuItem key={item.key} {...item} />;
+          return <MenuItem key={item.key} {...item} id={item.key} />;
         })}
       </WrappedSidebarMenuGroup>
     );
@@ -125,15 +144,19 @@ function MenuGroup(props: SidebarMenuGroup) {
   return null;
 }
 
-function MenuSubmenu(props: SidebarMenuGroup) {
-  const { title, icon, items } = props;
+function MenuSubmenu(props: SidebarMenuGroup & { id?: string }) {
+  const { title, icon, items, id } = props;
+  const { openedKeys } = useContext(SidebarMenuContext);
 
   if (items?.length > 0) {
     return (
-      <WrappedSidebarMenuSubmenu icon={icon}>
+      <WrappedSidebarMenuSubmenu
+        icon={icon}
+        collapsed={!openedKeys.includes(id!)}
+      >
         <span slot="title">{title}</span>
         {props.items.map((item) => {
-          return <MenuItem key={item.key} {...item} />;
+          return <MenuItem key={item.key} {...item} id={item.key} />;
         })}
       </WrappedSidebarMenuSubmenu>
     );
@@ -141,7 +164,7 @@ function MenuSubmenu(props: SidebarMenuGroup) {
   return null;
 }
 
-function MenuItem(props: SidebarMenuItem) {
+function MenuItem(props: SidebarMenuItem & { id?: string }) {
   if (props.type === "subMenu") {
     return <MenuSubmenu {...props} />;
   } else if (props.type === "group") {
@@ -152,18 +175,24 @@ function MenuItem(props: SidebarMenuItem) {
 }
 
 export function SidebarMenu(props: {
-  menu: SidebarMenuType;
+  menu?: SidebarMenuType;
   expandedState: ExpandedState;
+  selectedKeys?: string[];
+  openedKeys?: string[];
 }) {
-  const { menu, expandedState } = props;
+  const { menu, expandedState, selectedKeys, openedKeys } = props;
 
   return (
-    <WrappedSidebarMenu
-      menuCollapsed={expandedState === ExpandedState.Collapsed}
+    <SidebarMenuContext.Provider
+      value={{ selectedKeys: selectedKeys || [], openedKeys: openedKeys || [] }}
     >
-      {menu?.menuItems?.map((item) => {
-        return <MenuItem key={item.key} {...item} />;
-      })}
-    </WrappedSidebarMenu>
+      <WrappedSidebarMenu
+        menuCollapsed={expandedState === ExpandedState.Collapsed}
+      >
+        {menu?.menuItems?.map((item) => {
+          return <MenuItem key={item.key} {...item} id={item.key} />;
+        })}
+      </WrappedSidebarMenu>
+    </SidebarMenuContext.Provider>
   );
 }

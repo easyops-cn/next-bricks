@@ -1,5 +1,6 @@
 :host {
   display: block;
+  --menu-item-icon-size: 20px;
 }
 
 :host([hidden]) {
@@ -31,9 +32,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
-  font-size: 20px;
+  width: var(--menu-item-icon-size);
+  height: var(--menu-item-icon-size);
+  font-size: var(--menu-item-icon-size);
   transition: all var(--side-bar-collapse-transition-duration)
     var(--side-bar-collapse-transition-timing-function);
 }
@@ -57,7 +58,7 @@
 
 /* menu-collapsed */
 :host([menu-collapsed]) .menu-group-title {
-  padding: 10px calc(50% - 8px);
+  padding: 10px calc(50% - var(--menu-item-icon-size) / 2);
 }
 
 :host(:not([menu-collapsed])) .menu-group-title-icon-container {
