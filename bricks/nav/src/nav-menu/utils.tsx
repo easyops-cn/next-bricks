@@ -28,7 +28,7 @@ export function isSubMenu(
 }
 
 export function isSimple(item: SidebarMenuItem): item is SidebarMenuSimpleItem {
-  return item.type === "default";
+  return item.type === "default" || !item.type;
 }
 
 export const renderLinkCom = (
