@@ -59,7 +59,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@next-core/element": "^1.1.4",
-    "@next-core/react-element": "^1.0.13",
+    "@next-core/react-element": "^1.0.14",
     "@next-core/utils": "^1.6.0",
     "react": "0.0.0-experimental-ee8509801-20230117"
   },
