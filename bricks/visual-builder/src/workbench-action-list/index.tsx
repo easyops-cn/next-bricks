@@ -90,11 +90,17 @@ export function WorkbenchActionListComponent({
     historyMap.set(activeIndex, `${location.pathname}${location.search}`);
   };
 
+  const isSimpleMenuItem = (
+    item: SidebarMenuItem
+  ): item is SidebarMenuSimpleItem => {
+    return item.type === "default" || !item.type;
+  };
+
   return (
     <div className="workBenchActionList">
       {menu?.menuItems
         ?.map((item, index) => {
-          if (item.type === "default") {
+          if (isSimpleMenuItem(item)) {
             let url = item.to;
             if (activeIndex !== index && historyMap.has(index)) {
               url = historyMap.get(index);
