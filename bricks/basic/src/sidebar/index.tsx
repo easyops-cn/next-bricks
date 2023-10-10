@@ -1,5 +1,6 @@
 import React, {
   MouseEventHandler,
+  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -31,6 +32,9 @@ import {
 import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
 import { K, NS, locales } from "./i18n.js";
 import classNames from "classnames";
+import { initMenuItemAndMatchCurrentPathKeys } from "@next-shared/general/menu";
+import { UnregisterCallback } from "history";
+import { getHistory } from "@next-core/runtime";
 
 initializeReactI18n(NS, locales);
 
@@ -123,10 +127,12 @@ interface EoSidebarComponentProps extends EoSidebarProps {
 export function EoSidebarComponent(props: EoSidebarComponentProps) {
   const { t } = useTranslation(NS);
 
-  const { menu, hiddenFixedIcon, onActualWidthChange, onExpandedStateChange } =
-    props;
+  const { hiddenFixedIcon, onActualWidthChange, onExpandedStateChange } = props;
 
   const storage = useMemo(() => new JsonStorage(localStorage), []);
+  const history = getHistory();
+  const [location, setLocation] = useState(history.location);
+  const { pathname, search } = location;
 
   const [isFirstUsedTooltip, setIsFirstUsedTooltip] = useState<boolean>(
     !storage.getItem(SIDE_BAR_HAS_BEEN_USED)
@@ -138,6 +144,28 @@ export function EoSidebarComponent(props: EoSidebarComponentProps) {
       storage.getItem(SIDE_BAR_EXPAND_STATE) ||
       ExpandedState.Collapsed
   );
+  const [menu, setMenu] = useState<SidebarMenuType>();
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  const [openedKeys, setOpenedKeys] = useState<string[]>([]);
+
+  useEffect(() => {
+    const { selectedKeys, openedKeys } = initMenuItemAndMatchCurrentPathKeys(
+      props.menu?.menuItems ?? [],
+      pathname,
+      search,
+      ""
+    );
+    setMenu(props.menu);
+    setSelectedKeys(selectedKeys);
+    setOpenedKeys(openedKeys);
+  }, [props.menu, pathname, search]);
+
+  useEffect(() => {
+    const unListen: UnregisterCallback = history.listen((location) => {
+      setLocation(location);
+    });
+    return unListen;
+  }, [history]);
 
   const contentBottomPlaceholderRef = useRef<HTMLDivElement>(null);
 
@@ -299,7 +327,12 @@ export function EoSidebarComponent(props: EoSidebarComponentProps) {
           "show-shadow": showContentShadow,
         })}
       >
-        <SidebarMenu menu={menu} expandedState={expandedState} />
+        <SidebarMenu
+          selectedKeys={selectedKeys}
+          openedKeys={openedKeys}
+          menu={menu}
+          expandedState={expandedState}
+        />
         <div ref={contentBottomPlaceholderRef} />
       </div>
 

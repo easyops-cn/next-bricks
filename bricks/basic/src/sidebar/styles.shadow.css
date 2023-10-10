@@ -174,7 +174,7 @@
   right: -2px;
   height: 100%;
   width: 2px;
-  cursor: all-scroll;
+  cursor: col-resize;
 }
 
 .resize-line:hover,

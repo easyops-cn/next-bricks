@@ -5,6 +5,12 @@ import "./";
 import { EoSidebar } from "./index.jsx";
 import { SidebarMenu } from "@next-shared/general/types";
 import { ExpandedState } from "./utils.jsx";
+import "./sidebar-menu";
+import "./sidebar-menu-group";
+import "./sidebar-menu-submenu";
+import "./sidebar-menu-item";
+import * as generalMenu from "@next-shared/general/menu";
+import * as runtime from "@next-core/runtime";
 
 const observe = jest.fn();
 const disconnect = jest.fn();
@@ -14,6 +20,19 @@ const disconnect = jest.fn();
 }));
 
 jest.mock("@next-core/theme", () => ({}));
+jest.mock("@next-core/runtime");
+jest.spyOn(generalMenu, "initMenuItemAndMatchCurrentPathKeys").mockReturnValue({
+  selectedKeys: ["2.0"],
+  openedKeys: ["2"],
+});
+jest.spyOn(runtime, "getHistory").mockReturnValue({
+  location: {
+    pathname: "/test",
+  },
+  listen: () => {
+    //
+  },
+} as any);
 jest.useFakeTimers();
 
 const menu = {
@@ -28,7 +47,6 @@ const menu = {
       icon: {
         icon: "chevron-circle-right",
         lib: "fa",
-        prefix: "fas",
       },
       text: "item 1",
       to: "/nlicro-test3/breadcrumb/new",
@@ -40,7 +58,6 @@ const menu = {
       icon: {
         icon: "trash-alt",
         lib: "fa",
-        prefix: "fas",
       },
       text: "item 2",
       to: "item 2",
@@ -54,14 +71,12 @@ const menu = {
       icon: {
         icon: "trash-can",
         lib: "fa",
-        prefix: "fas",
       },
       items: [
         {
           icon: {
             icon: "message",
             lib: "fa",
-            prefix: "fas",
           },
           text: "inner 1",
           to: "inner 1",
@@ -73,7 +88,6 @@ const menu = {
           icon: {
             icon: "text-height",
             lib: "fa",
-            prefix: "fas",
           },
           text: "inner 2",
           to: "inner 2",
@@ -88,7 +102,6 @@ const menu = {
       icon: {
         icon: "user-times",
         lib: "fa",
-        prefix: "fas",
       },
       text: "item 3",
       to: "item 3",
@@ -104,7 +117,6 @@ const menu = {
           icon: {
             icon: "message",
             lib: "fa",
-            prefix: "fas",
           },
           text: "inner 3",
           to: "inner 3",
@@ -116,7 +128,6 @@ const menu = {
           icon: {
             icon: "circle-chevron-right",
             lib: "fa",
-            prefix: "fas",
           },
           text: "inner 4",
           to: "inner 4",
@@ -131,7 +142,6 @@ const menu = {
       icon: {
         icon: "user-xmark",
         lib: "fa",
-        prefix: "fas",
       },
       text: "item 4",
       to: "item 4",
@@ -162,78 +172,73 @@ describe("eo-sidebar", () => {
     expect(element.shadowRoot?.querySelector(".menu-title-icon")).toBeTruthy();
     expect(element.shadowRoot?.querySelector(".content")?.childNodes)
       .toMatchInlineSnapshot(`
-      NodeList [
-        <eo-sidebar-menu
-          menucollapsed=""
-        >
-          <eo-sidebar-menu-item
-            icon="[object Object]"
-            url="/nlicro-test3/breadcrumb/new"
-          >
-            item 1
-          </eo-sidebar-menu-item>
-          <eo-sidebar-menu-item
-            icon="[object Object]"
-            url="item 2"
-          >
-            item 2
-          </eo-sidebar-menu-item>
-          <eo-sidebar-menu-submenu
-            icon="[object Object]"
-          >
-            <span
-              slot="title"
-            >
-              sub 1
-            </span>
-            <eo-sidebar-menu-item
-              icon="[object Object]"
-              url="inner 1"
-            >
-              inner 1
-            </eo-sidebar-menu-item>
-            <eo-sidebar-menu-item
-              icon="[object Object]"
-              url="inner 2"
-            >
-              inner 2
-            </eo-sidebar-menu-item>
-          </eo-sidebar-menu-submenu>
-          <eo-sidebar-menu-item
-            icon="[object Object]"
-            url="item 3"
-          >
-            item 3
-          </eo-sidebar-menu-item>
-          <eo-sidebar-menu-group>
-            <span
-              slot="title"
-            >
-              group 1
-            </span>
-            <eo-sidebar-menu-item
-              icon="[object Object]"
-              url="inner 3"
-            >
-              inner 3
-            </eo-sidebar-menu-item>
-            <eo-sidebar-menu-item
-              icon="[object Object]"
-              url="inner 4"
-            >
-              inner 4
-            </eo-sidebar-menu-item>
-          </eo-sidebar-menu-group>
-          <eo-sidebar-menu-item
-            icon="[object Object]"
-            url="item 4"
-          >
-            item 4
-          </eo-sidebar-menu-item>
-        </eo-sidebar-menu>,
-        <div />,
-      ]
-    `);
+NodeList [
+  <eo-sidebar-menu
+    menu-collapsed=""
+  >
+    <eo-sidebar-menu-item
+      menu-collapsed=""
+    >
+      item 1
+    </eo-sidebar-menu-item>
+    <eo-sidebar-menu-item
+      menu-collapsed=""
+    >
+      item 2
+    </eo-sidebar-menu-item>
+    <eo-sidebar-menu-submenu
+      menu-collapsed=""
+    >
+      <span
+        slot="title"
+      >
+        sub 1
+      </span>
+      <eo-sidebar-menu-item
+        menu-collapsed=""
+        selected=""
+      >
+        inner 1
+      </eo-sidebar-menu-item>
+      <eo-sidebar-menu-item
+        menu-collapsed=""
+      >
+        inner 2
+      </eo-sidebar-menu-item>
+    </eo-sidebar-menu-submenu>
+    <eo-sidebar-menu-item
+      menu-collapsed=""
+    >
+      item 3
+    </eo-sidebar-menu-item>
+    <eo-sidebar-menu-group
+      menu-collapsed=""
+    >
+      <span
+        slot="title"
+      >
+        group 1
+      </span>
+      <eo-sidebar-menu-item
+        menu-collapsed=""
+      >
+        inner 3
+      </eo-sidebar-menu-item>
+      <eo-sidebar-menu-item
+        menu-collapsed=""
+      >
+        inner 4
+      </eo-sidebar-menu-item>
+    </eo-sidebar-menu-group>
+    <eo-sidebar-menu-item
+      menu-collapsed=""
+    >
+      item 4
+    </eo-sidebar-menu-item>
+  </eo-sidebar-menu>,
+  <div />,
+]
+`);
 
     act(() => {
       document.body.removeChild(element);
