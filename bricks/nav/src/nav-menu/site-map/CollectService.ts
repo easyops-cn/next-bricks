@@ -1,27 +1,46 @@
 import { JsonStorage } from "@next-shared/general/JsonStorage";
 import type { SidebarMenuSimpleItem } from "@next-shared/general/types";
-import { DRAG_DIRECTION } from "./constants.js";
+import {
+  MyCollectionApi_listMyCollection,
+  MyCollectionApi_ListMyCollectionResponseBody,
+  MyCollectionApi_upsertMyCollection,
+} from "@next-api-sdk/user-service-sdk";
+import { DRAG_DIRECTION, collectModule } from "./constants.js";
+import { cloneDeep, isEmpty } from "lodash";
+import { handleHttpError } from "@next-core/runtime";
 
 export class CollectService {
-  private storage: JsonStorage;
   private maxCollectLength: number;
-  readonly storageKey = "site-map-collect";
+  private collectMap: Map<string, SidebarMenuSimpleItem[]> = new Map();
 
   constructor(maxCollectLength?: number) {
-    this.storage = new JsonStorage(localStorage);
     this.maxCollectLength = maxCollectLength ?? 10;
   }
 
-  private getCategoryId(id: string): string {
-    return `${this.storageKey}-${id}`;
+  public getFavoritesById(id: string): SidebarMenuSimpleItem[] {
+    return cloneDeep(this.collectMap.get(id)) ?? [];
   }
 
-  public getFavoritesById(id: string): SidebarMenuSimpleItem[] {
-    return this.storage.getItem(this.getCategoryId(id)) || [];
+  public async fetchFavorites(id: string): Promise<SidebarMenuSimpleItem[]> {
+    if (!isEmpty(this.getFavoritesById(id))) {
+      return this.getFavoritesById(id);
+    }
+
+    const favorites = (
+      await MyCollectionApi_listMyCollection({
+        module: collectModule,
+        collectionName: id,
+      })
+    ).payloads
+      ?.map((item) => item.extInfo)
+      .filter(Boolean) as SidebarMenuSimpleItem[];
+
+    this.collectMap.set(id, favorites);
+
+    return favorites;
   }
 
   public setItemAsFavorite(id: string, item: SidebarMenuSimpleItem): void {
-    const key = this.getCategoryId(id);
     const list = this.getFavoritesById(id);
 
     if (list.length >= this.maxCollectLength) {
@@ -29,7 +48,25 @@ export class CollectService {
     }
 
     list.unshift(item);
-    this.storage.setItem(key, list);
+    this.updateFavoriteItems(id, list);
+  }
+
+  public updateFavoriteItems(id: string, list: SidebarMenuSimpleItem[]): void {
+    try {
+      this.collectMap.set(id, list);
+      MyCollectionApi_upsertMyCollection({
+        module: collectModule,
+        collectionName: id,
+        payloads: list?.map((item) => ({
+          name: item.text,
+          url: item.to,
+          extInfo: item,
+        })) as MyCollectionApi_ListMyCollectionResponseBody["payloads"],
+      });
+    } catch (error) {
+      // istanbul ignore next
+      handleHttpError(error);
+    }
   }
 
   private equalItem(
@@ -40,13 +77,12 @@ export class CollectService {
   }
 
   public removeItemFromFavorite(id: string, item: SidebarMenuSimpleItem): void {
-    const key = this.getCategoryId(id);
     const list = this.getFavoritesById(id);
     const index = list.findIndex((row) => this.equalItem(row, item));
     // istanbul ignore else
     if (index !== -1) {
       list.splice(index, 1);
-      this.storage.setItem(key, list);
+      this.updateFavoriteItems(id, list);
     }
   }
 
@@ -92,7 +128,8 @@ export class CollectService {
         } else {
           list.splice(toIndex + 1, 0, from);
         }
-        this.storage.setItem(this.getCategoryId(id), list);
+
+        this.updateFavoriteItems(id, list);
       }
     }
 

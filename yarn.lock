@@ -2125,12 +2125,12 @@
   dependencies:
     "@next-core/http" "^1.0.0"
 
-"@next-api-sdk/user-service-sdk@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@next-api-sdk/user-service-sdk/-/user-service-sdk-1.1.1.tgz#2db7d0b3c8ae2f1a9cb67b89af24e6d9357bacd2"
-  integrity sha512-IwJB37K8W5MDDFIXb/okfbQ7O+0Zt87ejlJRZMr+mMUa2D9GnHRR02SuISMrdkiJJmVgvxSN5KAjCRR1kLza+g==
+"@next-api-sdk/user-service-sdk@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@next-api-sdk/user-service-sdk/-/user-service-sdk-1.2.1.tgz#a89ca63321163247513b40c32c9dd4b2e5df2146"
+  integrity sha512-ahfEhFlXKhpPFkgvpWH3lRmJHFZE6IZ182HwUdn6I7UEu39QpNrMrnEE0XUJn8hYOEfNvgP/IeRWkPW2IjrxzA==
   dependencies:
-    "@next-core/http" "^1.0.6"
+    "@next-core/http" "^1.0.0"
 
 "@next-core/babel-preset-next@^1.0.7":
   version "1.0.7"

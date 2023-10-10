@@ -16,6 +16,9 @@ export interface ContextOfDragProps {
   onDragEnd?: (e: React.DragEvent) => void;
   onFavoriteUpdate?: (list: any[]) => void;
 }
+
+export const collectModule = "sidebarMenuCollect";
+
 export const DragContext = React.createContext<ContextOfDragProps>(
   {} as ContextOfDragProps
 );

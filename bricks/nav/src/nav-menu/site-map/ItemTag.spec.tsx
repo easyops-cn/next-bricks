@@ -11,6 +11,8 @@ import {
   StarIcon,
 } from "./ItemTag.js";
 
+jest.mock("@next-api-sdk/user-service-sdk");
+
 describe("component test", () => {
   describe("QuickVisitItem", () => {
     it("should work", () => {
