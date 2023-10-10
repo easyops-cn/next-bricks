@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.0.14...@next-bricks/nav@0.0.15) (2023-10-10)
+
+
+### Bug Fixes
+
+* Replace the collection with a backend API for storage ([27bf44f](https://github.com/easyops-cn/next-bricks/commit/27bf44fc4f0c2719fff1d3ed46f106721c2f2665))
+
+
+
+
+
 ## [0.0.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.0.13...@next-bricks/nav@0.0.14) (2023-10-09)
 
 **Note:** Version bump only for package @next-bricks/nav
