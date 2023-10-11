@@ -26,6 +26,7 @@ export interface PopoverProps extends SlPopupProps {
   curElement?: HTMLElement;
   trigger?: TriggerEvent;
   disabled?: boolean;
+  arrowColor?: string;
   anchorDisplay?: CSSProperties["display"];
 }
 
@@ -80,6 +81,12 @@ class Popover extends ReactNextElement implements PopoverProps {
     type: Boolean,
   })
   accessor arrow: boolean | undefined;
+
+  /**
+   * 箭头颜色
+   */
+  @property()
+  accessor arrowColor: string | undefined;
 
   /**
    * 弹出层如何定位
@@ -143,6 +150,7 @@ class Popover extends ReactNextElement implements PopoverProps {
         trigger={this.trigger ?? "click"}
         placement={this.placement ?? "bottom"}
         arrow={this.arrow}
+        arrowColor={this.arrowColor}
         strategy={this.strategy}
         sync={this.sync}
         active={this.active}
@@ -167,6 +175,7 @@ function PopoverComponent(props: PopoverComponentProps) {
     active = false,
     disabled,
     trigger,
+    arrowColor,
     onVisibleChange,
     beforeVisibleChange,
     distance = props.arrow ? POPUP_DISTANCE + ARROW_SIZE : POPUP_DISTANCE,
@@ -261,6 +270,11 @@ function PopoverComponent(props: PopoverComponentProps) {
     handleVisibleChange(false);
   }, [handleVisibleChange]);
 
+  const handleNotTrigger = (e: MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+  };
+
   useEffect(() => {
     disabled && visible && handleVisibleChange(false);
   }, [disabled]);
@@ -272,22 +286,22 @@ function PopoverComponent(props: PopoverComponentProps) {
 
     if (trigger === "click") {
       triggerSlot?.addEventListener("click", handleTriggerClick);
-      defaultSlot?.addEventListener("click", handlePopoverClose);
       document.addEventListener("click", handleAutoDropdownClose);
 
       return () => {
         triggerSlot?.removeEventListener("click", handleTriggerClick);
-        defaultSlot?.addEventListener("click", handlePopoverClose);
         document.removeEventListener("click", handleAutoDropdownClose);
       };
     } else if (trigger === "hover") {
       triggerSlot?.addEventListener("mouseover", handlePopoverOpen);
       curElement?.addEventListener("mouseleave", handlePopoverClose);
+      defaultSlot?.addEventListener("click", handleNotTrigger);
       document?.addEventListener("click", handlePopoverClose);
 
       return () => {
         triggerSlot?.removeEventListener("mouseover", handlePopoverOpen);
         curElement?.removeEventListener("mouseleave", handlePopoverClose);
+        defaultSlot?.removeEventListener("click", handleNotTrigger);
         document?.removeEventListener("click", handlePopoverClose);
       };
     }
@@ -301,6 +315,12 @@ function PopoverComponent(props: PopoverComponentProps) {
     curElement,
     disabled,
   ]);
+
+  useEffect(() => {
+    if (popoverRef.current && arrowColor) {
+      popoverRef.current.style.setProperty("--arrow-color", arrowColor);
+    }
+  }, [arrowColor]);
 
   return (
     <WrappedSlPopup
@@ -318,7 +338,7 @@ function PopoverComponent(props: PopoverComponentProps) {
           margin: -(props.arrow ? POPUP_DISTANCE + ARROW_SIZE : POPUP_DISTANCE),
           display: anchorDisplay,
         }}
-      ></slot>
+      />
       <slot ref={defaultRef} hidden={!visible}></slot>
     </WrappedSlPopup>
   );

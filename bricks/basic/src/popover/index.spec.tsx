@@ -191,6 +191,30 @@ describe("basic.general-popover", () => {
     `);
 
     act(() => {
+      fireEvent.click(content);
+    });
+
+    expect(element.shadowRoot?.querySelector("sl-popup"))
+      .toMatchInlineSnapshot(`
+    <sl-popup
+      distance="4"
+      placement="bottom"
+      shift=""
+      strategy="fixed"
+      trigger="hover"
+    >
+      <slot
+        name="anchor"
+        slot="anchor"
+        style="padding: 4px; margin: -4px; display: inline-block;"
+      />
+      <slot
+        hidden=""
+      />
+    </sl-popup>
+    `);
+
+    act(() => {
       fireEvent.mouseOver(element.querySelector("button") as HTMLElement);
     });
 
@@ -242,7 +266,7 @@ describe("basic.general-popover", () => {
     expect(document.body.contains(element)).toBeFalsy();
   });
 
-  test("disabled should work", async () => {
+  test("disabled should work & arrowColor", async () => {
     const element = document.createElement("basic.general-popover") as Popover;
     element.active = true;
     element.disabled = true;
@@ -253,6 +277,8 @@ describe("basic.general-popover", () => {
 
     const content = document.createElement("div");
     content.textContent = "hello world";
+
+    element.arrowColor = "pink";
 
     const mockListener = jest.fn();
     element.append(button);
@@ -275,6 +301,12 @@ describe("basic.general-popover", () => {
       button.click();
     });
     expect(mockListener).toHaveBeenCalledTimes(1);
+
+    expect(
+      (
+        element.shadowRoot?.querySelector("sl-popup") as HTMLElement
+      ).style.getPropertyValue("--arrow-color")
+    ).toBe("pink");
 
     act(() => {
       document.body.removeChild(element);
