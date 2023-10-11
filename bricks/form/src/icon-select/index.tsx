@@ -12,6 +12,7 @@ import type { FormItem, FormItemProps } from "../form-item/index.js";
 import type {
   GeneralIcon,
   GeneralIconProps,
+  LibIconProps,
 } from "@next-bricks/icons/general-icon";
 import type {
   Modal,
@@ -75,7 +76,7 @@ const WrappedSearch = wrapBrick<
 });
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 
-type Icon = GeneralIconProps & { color?: string };
+type Icon = LibIconProps & { color?: string };
 
 export interface IconSelectProps {
   name?: string;
@@ -205,7 +206,7 @@ export function IconSelectComponent(props: IconSelectComponentProps) {
     );
   };
 
-  const [previewIcon, setPreviewIcon] = useState<GeneralIconProps>();
+  const [previewIcon, setPreviewIcon] = useState<LibIconProps>();
   const [previewColor, setPreviewColor] = useState<string>();
 
   useEffect(() => {
@@ -213,7 +214,7 @@ export function IconSelectComponent(props: IconSelectComponentProps) {
     setPreviewColor(props.value?.color);
   }, [props.value]);
 
-  const [selectedIcon, setSelectedIcon] = useState<GeneralIconProps>();
+  const [selectedIcon, setSelectedIcon] = useState<LibIconProps>();
   const [selectedColor, setSelectedColor] = useState<string>();
 
   const clearSelect = () => {
@@ -241,7 +242,7 @@ export function IconSelectComponent(props: IconSelectComponentProps) {
     modalRef.current?.close();
   };
 
-  const handleIconSelect = (icon: GeneralIconProps) => {
+  const handleIconSelect = (icon: LibIconProps) => {
     setSelectedIcon(icon);
   };
 

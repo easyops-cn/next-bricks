@@ -1,11 +1,11 @@
 import { createProviderClass } from "@next-core/utils/general";
-import { GeneralIconProps } from "../general-icon/index.jsx";
+import { LibIconProps } from "../general-icon/index.jsx";
 import { getEasyopsIcons, getFaIcons, getAntdIcons } from "./get-icons.js";
 import { uniqBy } from "lodash";
 
 export interface IconInfo {
   title: string;
-  icon: GeneralIconProps;
+  icon: LibIconProps;
   $searchTextPool: string[];
 }
 
