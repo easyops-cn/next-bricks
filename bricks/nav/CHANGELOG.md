@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.17](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.0.16...@next-bricks/nav@0.0.17) (2023-10-11)
+
+
+### Bug Fixes
+
+* v3 框架下侧栏菜单不显示 ([7a6f82b](https://github.com/easyops-cn/next-bricks/commit/7a6f82b349029ddad9b86877017482c226840ebf))
+
+
+
+
+
 ## [0.0.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.0.15...@next-bricks/nav@0.0.16) (2023-10-10)
 
 **Note:** Version bump only for package @next-bricks/nav

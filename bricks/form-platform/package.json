@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/form-platform",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/form-platform",
   "repository": {
     "type": "git",
@@ -34,7 +34,7 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-bricks/form": "^0.18.2",
+    "@next-bricks/form": "^0.18.3",
     "@next-core/element": "^1.1.4",
     "@next-core/i18n": "^1.0.26",
     "@next-core/react-element": "^1.0.14",

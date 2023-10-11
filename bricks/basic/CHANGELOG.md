@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.31.7...@next-bricks/basic@0.32.0) (2023-10-11)
+
+
+### Features
+
+* **popover:** add arrow color property ([7ce0279](https://github.com/easyops-cn/next-bricks/commit/7ce027952f90ad32065bf7b9866259afdf9c3fd2))
+
+
+
+
+
 ## [0.31.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.31.6...@next-bricks/basic@0.31.7) (2023-10-10)
 
 
