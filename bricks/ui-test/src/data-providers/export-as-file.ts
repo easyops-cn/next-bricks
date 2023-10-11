@@ -50,6 +50,12 @@ export async function exportAsFile(
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);
+
+    if ((error as any).name === "NotAllowedError") {
+      const storedDirHandle = await get(dirHandleStorageKey);
+      await storedDirHandle.requestPermission();
+    }
+
     return false;
   }
 
