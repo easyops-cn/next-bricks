@@ -77,19 +77,26 @@ class EoSidebarMenuItem
         href={this.href}
         target={this.target}
         icon={this.icon}
+        selected={this.selected}
       />
     );
   }
 }
 
 export function EoSidebarMenuItemComponent(props: EoSidebarMenuItemProps) {
-  const { url, href, target, icon } = props;
+  const { url, href, target, icon, selected } = props;
 
   return (
     <WrappedLink type="plain" url={url} href={href} target={target}>
       <div className={"menu-item"}>
         <span className="menu-item-icon-container">
-          <WrappedIcon {...icon!} className="menu-item-icon" />
+          <WrappedIcon
+            {...icon}
+            className="menu-item-icon"
+            {...(icon && "imgSrc" in icon
+              ? { imgStyle: { filter: selected ? "brightness(7)" : undefined } }
+              : {})}
+          />
         </span>
         <span className="menu-item-text">
           <slot />
