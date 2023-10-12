@@ -106,7 +106,7 @@ function processBlockItem(item: NodeItem): t.Statement[] {
   if (item.name === "describe") {
     if (item.children!.some((c) => c.type !== NodeType.Block)) {
       throw new Error(
-        `The children of the \`${describe}\` are only be  \` block \` type, specifically including before, beforeEach, after, afterEach and "it."`
+        `The children of the \`${item.name}\` are only be  \` block \` type, specifically including before, beforeEach, after, afterEach and "it."`
       );
     }
 

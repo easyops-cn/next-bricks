@@ -53,7 +53,7 @@ export async function exportAsFile(
 
     if ((error as any).name === "NotAllowedError") {
       const storedDirHandle = await get(dirHandleStorageKey);
-      await storedDirHandle.requestPermission();
+      await storedDirHandle.requestPermission({ mode: "readwrite" });
     }
 
     return false;
