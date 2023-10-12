@@ -2269,10 +2269,10 @@
     js-yaml "^3.14.1"
     lodash "^4.17.21"
 
-"@next-core/element@^1.1.4":
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/@next-core/element/-/element-1.1.4.tgz#51772df54ccf282bcfe3bf482fd96bc65ec2c0ef"
-  integrity sha512-V29rklfNPWYfHXkZZamsyWqWFLTuabMZAxZItjw7WQ8YxGNwnL3/V7YAKPysaWjWoTTqDNqlHE/U9XNSUhCsMQ==
+"@next-core/element@^1.1.5":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@next-core/element/-/element-1.1.5.tgz#5e207f7f18a79ab62bddfa5eb17d502e505498e6"
+  integrity sha512-zWsPdMkAJ4A6jyEigw/wsqGSHjxNMaAmBylZKx41AlCOo2fEdGjMWM2zX3JUXuN0rApl265YzbVYWFGABSiYIw==
 
 "@next-core/eslint-config-next@^2.0.7":
   version "2.0.7"
@@ -2332,12 +2332,12 @@
     lodash "^4.17.21"
     moment "^2.29.4"
 
-"@next-core/react-element@^1.0.14":
-  version "1.0.14"
-  resolved "https://registry.yarnpkg.com/@next-core/react-element/-/react-element-1.0.14.tgz#40c47c7bf2dd6b1d52e25531e0d3872d5619e318"
-  integrity sha512-Pz62IHygHuALZrQMactujyiX5+Kr1j6k+BITDQX/hJ0b8f+jbYAfjsIy3T1bHfQFtJvp2mZYtY5nBZdD+LOpuA==
+"@next-core/react-element@^1.0.15":
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/@next-core/react-element/-/react-element-1.0.15.tgz#5cbd8ddadd110b7bf5a4cb1640730b24320caedb"
+  integrity sha512-O83ixNmVzo/e63dvp/JDjA2Q+F0ubIBZcprKQCiGr4CDxI/eowAr72uqyZ6YB+9xaxj0tN8WHKbydoOBVYPR4g==
   dependencies:
-    "@next-core/element" "^1.1.4"
+    "@next-core/element" "^1.1.5"
     react "0.0.0-experimental-ee8509801-20230117"
     react-dom "0.0.0-experimental-ee8509801-20230117"
 
@@ -2439,10 +2439,10 @@
     "@next-core/types" "^1.6.1"
     lodash "^4.17.21"
 
-"@next-core/yo@^1.4.15":
-  version "1.4.15"
-  resolved "https://registry.yarnpkg.com/@next-core/yo/-/yo-1.4.15.tgz#99f55bb6849ee75724659e67c5b0b9cecb47b903"
-  integrity sha512-jYLUH6PgZgvaGOKGbwzWZ6+dPapwAGLhBGSl1JMC7Durfh0FPbZ7J2rLcm7S6QO+rPpkBuoAOhJQ+lZxHTRYXg==
+"@next-core/yo@^1.4.16":
+  version "1.4.16"
+  resolved "https://registry.yarnpkg.com/@next-core/yo/-/yo-1.4.16.tgz#92e620fd3576a388cf7c1458bdf251803e56e658"
+  integrity sha512-yYoR+c2r1v7mpUfQUWCzTY+Ip/8jG+RsWO+17KhsagRlOSpGTmGVh5w0dwEdSG+lEEmM7saaa7EUx9KfhIyG+g==
   dependencies:
     minimist "^1.2.8"
     plop "^3.1.2"

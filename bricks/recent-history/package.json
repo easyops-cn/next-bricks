@@ -35,9 +35,9 @@
   },
   "dependencies": {
     "@next-bricks/basic": "^0.32.2",
-    "@next-core/element": "^1.1.4",
+    "@next-core/element": "^1.1.5",
     "@next-core/i18n": "^1.0.26",
-    "@next-core/react-element": "^1.0.14",
+    "@next-core/react-element": "^1.0.15",
     "@next-core/theme": "^1.1.1",
     "@next-shared/general": "^0.6.6",
     "mnemonist": "^0.39.5",
