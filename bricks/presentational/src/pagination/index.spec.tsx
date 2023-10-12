@@ -29,6 +29,9 @@ describe("eo-pagination", () => {
       document.body.appendChild(element);
     });
     expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+    expect(
+      element.shadowRoot?.querySelectorAll(".pagination-size-changer").length
+    ).toBe(1);
 
     act(() => {
       fireEvent.click(
@@ -134,6 +137,27 @@ describe("eo-pagination", () => {
     expect(element.page).toBe(1);
     expect(element.pageSize).toBe(10);
 
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
+  test("showSizeChanger is false", () => {
+    const element = document.createElement("eo-pagination") as EoPagination;
+    const onChange = jest.fn();
+    element.total = 100;
+    element.pageSize = 10;
+    element.page = 10;
+    element.showSizeChanger = false;
+    element.addEventListener("change", onChange);
+    expect(element.shadowRoot).toBeFalsy();
+    act(() => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+    expect(
+      element.shadowRoot?.querySelectorAll(".pagination-size-changer").length
+    ).toBe(0);
     act(() => {
       document.body.removeChild(element);
     });

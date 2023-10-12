@@ -30,6 +30,7 @@ interface EoPaginationProps {
   page: number;
   pageSize: number;
   pageSizeOptions?: number[];
+  showSizeChanger?: boolean;
 }
 
 /**
@@ -73,6 +74,15 @@ class EoPagination extends ReactNextElement {
   accessor pageSizeOptions: number[] = [10, 20, 50, 100];
 
   /**
+   * 是否展示`pageSize`分页器
+   * @default true
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor showSizeChanger: boolean | undefined;
+
+  /**
    * 页码及每页条数改变事件
    */
   @event({ type: "change" })
@@ -91,6 +101,7 @@ class EoPagination extends ReactNextElement {
         pageSize={this.pageSize}
         pageSizeOptions={this.pageSizeOptions}
         onChange={this.#handleChange}
+        showSizeChanger={this.showSizeChanger}
       />
     );
   }
@@ -120,9 +131,9 @@ interface EoPaginationComponentProps extends EoPaginationProps {
 
 export function EoPaginationComponent(props: EoPaginationComponentProps) {
   const { t } = useTranslation(NS);
-  const { onChange } = props;
+  const { onChange, showSizeChanger = true } = props;
 
-  const [{ total, page, pageSize }, setPaginationData] = useState<{
+  const [paginationData, setPaginationData] = useState<{
     page?: number;
     pageSize?: number;
     total?: number;
@@ -136,16 +147,17 @@ export function EoPaginationComponent(props: EoPaginationComponentProps) {
   }, [props.page, props.pageSize, props.total]);
 
   const pageSizeOptions = useMemo(() => {
-    const options = [pageSize]
+    const options = [paginationData.pageSize]
       .concat(props.pageSizeOptions || [])
       .map((v) => Number(v))
       .filter((v) => !Number.isNaN(v));
     return sortBy([...new Set(options)], (value) => value);
-  }, [pageSize, props.pageSizeOptions]);
+  }, [paginationData.pageSize, props.pageSizeOptions]);
 
   const allPages = useMemo(
-    () => formatValue(Math.ceil(total / pageSize), 0),
-    [pageSize, total]
+    () =>
+      formatValue(Math.ceil(paginationData.total / paginationData.pageSize), 0),
+    [paginationData.pageSize, paginationData.total]
   );
 
   const pagerDataSource = useMemo(() => {
@@ -153,18 +165,24 @@ export function EoPaginationComponent(props: EoPaginationComponentProps) {
 
     const prevArrow = {
       type: "prev-arrow",
-      disabled: page === 1 || allPages === 0,
+      disabled: paginationData.page === 1 || allPages === 0,
     } as const;
     const nextArrow = {
       type: "next-arrow",
-      disabled: page === allPages || allPages === 0,
+      disabled: paginationData.page === allPages || allPages === 0,
     } as const;
     const prevJump = { type: "prev-jump", span: 5 } as const;
     const nextJump = { type: "next-jump", span: 5 } as const;
 
-    const pageList = getPageWindow(allPages, page, 5).map((p) => {
-      return { type: "page", page: p, active: p === page } as const;
-    });
+    const pageList = getPageWindow(allPages, paginationData.page, 5).map(
+      (p) => {
+        return {
+          type: "page",
+          page: p,
+          active: p === paginationData.page,
+        } as const;
+      }
+    );
 
     data.push(prevArrow);
 
@@ -187,7 +205,7 @@ export function EoPaginationComponent(props: EoPaginationComponentProps) {
     data.push(nextArrow);
 
     return data;
-  }, [allPages, page]);
+  }, [allPages, paginationData.page]);
 
   const handlePageSizeChange = (value: number) => {
     setPaginationData((pre) => ({ ...pre, page: 1, pageSize: value }));
@@ -198,34 +216,51 @@ export function EoPaginationComponent(props: EoPaginationComponentProps) {
     switch (pagerData.type) {
       case "prev-arrow": {
         if (!pagerData.disabled) {
-          setPaginationData((pre) => ({ ...pre, page: page - 1 }));
-          onChange?.({ page: page - 1, pageSize });
+          setPaginationData((pre) => ({
+            ...pre,
+            page: paginationData.page - 1,
+          }));
+          onChange?.({
+            page: paginationData.page - 1,
+            pageSize: paginationData.pageSize,
+          });
         }
         break;
       }
       case "next-arrow": {
         if (!pagerData.disabled) {
-          setPaginationData((pre) => ({ ...pre, page: page + 1 }));
-          onChange?.({ page: page + 1, pageSize });
+          setPaginationData((pre) => ({
+            ...pre,
+            page: paginationData.page + 1,
+          }));
+          onChange?.({
+            page: paginationData.page + 1,
+            pageSize: paginationData.pageSize,
+          });
         }
         break;
       }
       case "prev-jump": {
-        const _page = page - pagerData.span < 1 ? 1 : page - pagerData.span;
+        const _page =
+          paginationData.page - pagerData.span < 1
+            ? 1
+            : paginationData.page - pagerData.span;
         setPaginationData((pre) => ({ ...pre, page: _page }));
-        onChange?.({ page: _page, pageSize });
+        onChange?.({ page: _page, pageSize: paginationData.pageSize });
         break;
       }
       case "next-jump": {
         const _page =
-          page + pagerData.span > allPages ? allPages : page + pagerData.span;
+          paginationData.page + pagerData.span > allPages
+            ? allPages
+            : paginationData.page + pagerData.span;
         setPaginationData((pre) => ({ ...pre, page: _page }));
-        onChange?.({ page: _page, pageSize });
+        onChange?.({ page: _page, pageSize: paginationData.pageSize });
         break;
       }
       case "page": {
         setPaginationData((pre) => ({ ...pre, page: pagerData.page }));
-        onChange?.({ page: pagerData.page, pageSize });
+        onChange?.({ page: pagerData.page, pageSize: paginationData.pageSize });
       }
     }
   };
@@ -235,36 +270,38 @@ export function EoPaginationComponent(props: EoPaginationComponentProps) {
       <div className="pagination-total">
         <Trans
           i18nKey={t(K.TOTAL)}
-          values={{ total }}
+          values={{ total: paginationData.total }}
           components={{
             total: <span className="pagination-total-number" />,
           }}
         />
       </div>
-      <div className="pagination-size-changer">
-        <WrappedPopover placement="bottom" distance={4}>
-          <div className="pagination-size-selection" slot="anchor">
-            {t(K.PAGE_SIZE, { count: pageSize }) + " ▼"}
-          </div>
-          <WrappedMenu className="pagination-size-selector-menu">
-            {pageSizeOptions.map((value) => {
-              const active = value === pageSize;
-              return (
-                <WrappedMenuItem
-                  className={classNames(
-                    "pagination-size-selector-item",
-                    active ? "pagination-size-selector-active" : null
-                  )}
-                  key={value}
-                  onClick={() => handlePageSizeChange(value)}
-                >
-                  {t(K.PAGE_SIZE, { count: value })}
-                </WrappedMenuItem>
-              );
-            })}
-          </WrappedMenu>
-        </WrappedPopover>
-      </div>
+      {showSizeChanger && (
+        <div className="pagination-size-changer">
+          <WrappedPopover placement="bottom" distance={4}>
+            <div className="pagination-size-selection" slot="anchor">
+              {t(K.PAGE_SIZE, { count: paginationData.pageSize }) + " ▼"}
+            </div>
+            <WrappedMenu className="pagination-size-selector-menu">
+              {pageSizeOptions.map((value) => {
+                const active = value === paginationData.pageSize;
+                return (
+                  <WrappedMenuItem
+                    className={classNames(
+                      "pagination-size-selector-item",
+                      active ? "pagination-size-selector-active" : null
+                    )}
+                    key={value}
+                    onClick={() => handlePageSizeChange(value)}
+                  >
+                    {t(K.PAGE_SIZE, { count: value })}
+                  </WrappedMenuItem>
+                );
+              })}
+            </WrappedMenu>
+          </WrappedPopover>
+        </div>
+      )}
       <div className="pagination-page">
         {pagerDataSource.map((pagerData) => {
           switch (pagerData.type) {
