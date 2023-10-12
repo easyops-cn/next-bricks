@@ -1,0 +1,8 @@
+html[data-theme="light"] body.ui-v8-2 {
+  --body-background: #ffffff;
+}
+
+html[data-theme="dark"] body.ui-v8-2,
+html[data-theme="dark-v2"] body.ui-v8-2 {
+  --body-background: #29292d;
+}
