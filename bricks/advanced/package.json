@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/advanced",
-  "version": "0.9.11",
+  "version": "0.9.12",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/basic",
   "repository": {
     "type": "git",
@@ -38,7 +38,7 @@
     "@dnd-kit/modifiers": "^6.0.1",
     "@dnd-kit/sortable": "^7.0.2",
     "@dnd-kit/utilities": "^3.2.1",
-    "@next-bricks/basic": "^0.32.3",
+    "@next-bricks/basic": "^0.33.0",
     "@next-bricks/icons": "^0.6.1",
     "@next-core/element": "^1.1.5",
     "@next-core/http": "^1.1.4",

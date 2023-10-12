@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.33.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.32.3...@next-bricks/basic@0.33.0) (2023-10-12)
+
+
+### Features
+
+* support ui-adapter ([9fdbe3d](https://github.com/easyops-cn/next-bricks/commit/9fdbe3df90b92c14d0a6ea2a9fa4b7bf7c309e1d))
+* update unit test ([f514862](https://github.com/easyops-cn/next-bricks/commit/f5148624d93e1a675b765d5b504b2bd1dbb302fc))
+
+
+
+
+
 ## [0.32.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.32.2...@next-bricks/basic@0.32.3) (2023-10-12)
 
 
