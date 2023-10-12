@@ -40,7 +40,9 @@
       list-style-type: none;
       font-size: 12px;
       padding: 5px 0px;
-      > a {
+
+      > eo-link {
+        cursor: pointer;
         color: rgba(255, 255, 255, 0.65);
         &:hover {
           color: var(--antd-link-hover-color);

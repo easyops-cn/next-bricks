@@ -50,7 +50,7 @@ class EoCounterBadge extends ReactNextElement {
    * 展示的数字，大于 overflowCount 时显示为 ${overflowCount}+，为 0 时隐藏
    */
   @property({
-    attribute: true,
+    type: Number,
   })
   accessor count: number | undefined;
 
@@ -59,7 +59,7 @@ class EoCounterBadge extends ReactNextElement {
    * @default true
    */
   @property({
-    attribute: true,
+    type: Number,
   })
   accessor overflowCount: number | undefined;
 
@@ -147,7 +147,7 @@ export function EoCounterBadgeComponent(props: BadgeProps) {
     >
       {icon && <WrappedIcon {...icon} />}
       <slot ref={slotRef}></slot>
-      {(dot || showZero || !!count) && (
+      {(showZero || !!count) && (
         <sup
           className={classnames("countContent", { badgeDot: dot })}
           style={{

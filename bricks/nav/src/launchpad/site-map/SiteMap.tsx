@@ -55,6 +55,7 @@ export function LeacySiteMap(
               {item.apps?.map((row, index) => (
                 <li className={styles.item} key={index}>
                   <WrappedLink
+                    type="plain"
                     url={row.homepage}
                     onClick={() => handleClick(row as MicroApp)}
                   >
