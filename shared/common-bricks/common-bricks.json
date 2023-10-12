@@ -68,7 +68,8 @@
     "eo-upload-file",
     "eo-auto-complete",
     "eo-time-picker",
-    "eo-date-picker"
+    "eo-date-picker",
+    "eo-time-range-picker"
   ],
   "presentational": [
     "eo-code-display",
