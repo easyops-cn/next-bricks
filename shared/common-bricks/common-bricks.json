@@ -29,7 +29,13 @@
     "eo-page-title",
     "eo-counter-badge"
   ],
-  "icons": ["eo-antd-icon", "eo-easyops-icon", "eo-fa-icon", "eo-icon"],
+  "icons": [
+    "eo-antd-icon",
+    "eo-easyops-icon",
+    "eo-fa-icon",
+    "eo-icon",
+    "eo-img-icon"
+  ],
   "containers": [
     "eo-drawer",
     "eo-micro-view",

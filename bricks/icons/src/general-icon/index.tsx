@@ -1,9 +1,10 @@
-import React from "react";
+import React, { CSSProperties } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import { AntdIconProps, WrappedAntdIcon } from "../antd-icon/index.js";
 import { EasyOpsIconProps, WrappedEasyOpsIcon } from "../easyops-icon/index.js";
 import { FaIconProps, WrappedFaIcon } from "../fa-icon/index.js";
+import { EoImgIconProps, WrappedEoImgIcon } from "../img-icon/index.js";
 import type {
   DefineLinearGradientProps,
   GradientDirection,
@@ -27,10 +28,14 @@ export interface GeneralIconPropsOfFa extends FaIconProps {
   spinning?: boolean;
 }
 
-export type GeneralIconProps =
+export interface ImgIconProps extends EoImgIconProps {}
+
+export type LibIconProps =
   | GeneralIconPropsOfAntd
   | GeneralIconPropsOfEasyOps
   | GeneralIconPropsOfFa;
+
+export type GeneralIconProps = LibIconProps | ImgIconProps;
 
 export interface GeneralIconEvents {
   "icon.click": CustomEvent<{ icon: string }>;
@@ -82,7 +87,35 @@ class GeneralIcon
   /** 是否自动旋转 */
   @property({ type: Boolean }) accessor spinning: boolean | undefined;
 
+  /** 图片地址 */
+  @property() accessor imgSrc: string | undefined;
+
+  /** 图片样式 */
+  @property({
+    attribute: false,
+  })
+  accessor imgStyle: CSSProperties | undefined;
+
+  /** 加载方式 */
+  @property() accessor imgLoading: "lazy" | "eager" | undefined;
+
+  @property({
+    type: Boolean,
+  })
+  accessor noPublicRoot: boolean | undefined;
+
   render() {
+    if (this.imgSrc) {
+      return (
+        <WrappedEoImgIcon
+          imgSrc={this.imgSrc}
+          imgStyle={this.imgStyle}
+          imgLoading={this.imgLoading}
+          noPublicRoot={this.noPublicRoot}
+        />
+      );
+    }
+
     const commonProps = {
       icon: this.icon,
       startColor: this.startColor,

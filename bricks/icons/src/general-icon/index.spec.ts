@@ -54,6 +54,14 @@ describe("icons.general-icon", () => {
       `"styles.shadow.css fa-icon:{"icon":"user"}"`
     );
 
+    element.imgSrc = "https://test.com/image.jpg";
+    await act(async () => {
+      await (global as any).flushPromises();
+    });
+    expect(element.shadowRoot?.innerHTML).toMatchInlineSnapshot(
+      `"<style>styles.shadow.css</style><eo-img-icon img-src="https://test.com/image.jpg"></eo-img-icon>"`
+    );
+
     act(() => {
       document.body.removeChild(element);
     });

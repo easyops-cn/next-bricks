@@ -12,7 +12,11 @@
 
 :host > icons\.antd-icon,
 :host > icons\.easyops-icon,
-:host > icons\.fa-icon {
+:host > icons\.fa-icon,
+:host > eo-antd-icon,
+:host > eo-easyops-icon,
+:host > eo-fa-icon,
+:host > eo-img-icon {
   display: block;
 }
 

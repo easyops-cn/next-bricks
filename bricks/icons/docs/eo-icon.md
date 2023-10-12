@@ -106,6 +106,27 @@ Your favorite icons, including [Ant Design Icons](https://ant.design/components/
         icon: app
 ```
 
+### Image
+
+```yaml preview
+- brick: div
+  properties:
+    style:
+      display: flex
+      gap: 1em
+      fontSize: 32px
+  children:
+    - brick: eo-icon
+      properties:
+        imgSrc: https://img.icons8.com/cotton/64/like--v1.png
+    - brick: eo-icon
+      properties:
+        imgSrc: https://img.icons8.com/color/48/happy--v1.png
+    - brick: eo-icon
+      properties:
+        imgSrc: https://img.icons8.com/flat-round/64/cottage.png
+```
+
 ### Colors
 
 ```yaml preview
