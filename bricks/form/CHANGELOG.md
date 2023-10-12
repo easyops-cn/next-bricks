@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.18.3...@next-bricks/form@0.19.0) (2023-10-12)
+
+
+### Features
+
+* icon support imgSrc ([761b014](https://github.com/easyops-cn/next-bricks/commit/761b014f58c0713d6fc816df6666d56dfd03d8c6))
+
+
+
+
+
 ## [0.18.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.18.2...@next-bricks/form@0.18.3) (2023-10-11)
 
 **Note:** Version bump only for package @next-bricks/form

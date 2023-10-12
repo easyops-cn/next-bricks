@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/nav",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/nav",
   "repository": {
     "type": "git",
@@ -36,9 +36,9 @@
   "dependencies": {
     "@next-api-sdk/micro-app-standalone-sdk": "^1.1.1",
     "@next-api-sdk/user-service-sdk": "^1.2.1",
-    "@next-bricks/basic": "^0.32.0",
-    "@next-bricks/form": "^0.18.3",
-    "@next-bricks/icons": "^0.5.4",
+    "@next-bricks/basic": "^0.32.1",
+    "@next-bricks/form": "^0.19.0",
+    "@next-bricks/icons": "^0.6.0",
     "@next-core/easyops-runtime": "^0.6.39",
     "@next-core/element": "^1.1.4",
     "@next-core/i18n": "^1.0.26",
