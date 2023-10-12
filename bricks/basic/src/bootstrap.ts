@@ -1,6 +1,7 @@
 import "./data-providers/httpRequest.js";
 import "./data-providers/getLanguage.js";
 import "./data-providers/changeLanguage.js";
+import "./data-providers/apply-ui-version/apply-ui-version.js";
 import "./button/index.js";
 import "./link/index.js";
 import "./text/index.js";
