@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.13.23...@next-bricks/presentational@0.14.0) (2023-10-12)
+
+
+### Features
+
+* eo-pagination support showSizeChanger ([3934111](https://github.com/easyops-cn/next-bricks/commit/39341110c7e454d8091d6ea673d5ff62f357b461))
+
+
+
+
+
 ## [0.13.23](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.13.22...@next-bricks/presentational@0.13.23) (2023-10-12)
 
 **Note:** Version bump only for package @next-bricks/presentational

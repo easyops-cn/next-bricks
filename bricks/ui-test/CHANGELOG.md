@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.6.5...@next-bricks/ui-test@0.6.6) (2023-10-12)
+
+
+### Bug Fixes
+
+* show permission prompt if no permission ([6e226c6](https://github.com/easyops-cn/next-bricks/commit/6e226c69b01af1a97b6e9f940eae534fbbe2536e))
+
+
+
+
+
 ## [0.6.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.6.4...@next-bricks/ui-test@0.6.5) (2023-10-10)
 
 **Note:** Version bump only for package @next-bricks/ui-test
