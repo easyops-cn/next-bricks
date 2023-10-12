@@ -122,7 +122,7 @@ describe("exportAsFile", () => {
     };
 
     expect(
-      await exportAsFile(specDataList as NodeItem, "visual-builder"),
+      await exportAsFile(specDataList as NodeItem, "visual-builder")
     ).toEqual(true);
   });
 
