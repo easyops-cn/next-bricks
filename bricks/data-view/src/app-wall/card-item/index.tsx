@@ -26,29 +26,20 @@ export interface AppWallCardItemProps {
 })
 class AppWallCardItem extends ReactNextElement implements AppWallCardItemProps {
   /**
-  * @kind "normal" | "warning"
-  * @required false
-  * @default "normal"
-  * @description 状态
-  */
+   *  状态
+   */
   @property()
   accessor status: "normal" | "warning" = "normal";
 
   /**
-  * @kind string
-  * @required false
-  * @default
-  * @description 标题
-  */
+   *  标题
+   */
   @property()
   accessor cardTitle: string;
 
   /**
-  * @kind string
-  * @required false
-  * @default
-  * @description 描述
-  */
+   * 描述
+   */
   @property()
   accessor description: string;
 
@@ -63,11 +54,18 @@ class AppWallCardItem extends ReactNextElement implements AppWallCardItemProps {
   }
 }
 
-function AppWallCardItemElement(props: AppWallCardItemProps): React.ReactElement {
+function AppWallCardItemElement(
+  props: AppWallCardItemProps
+): React.ReactElement {
   const { status, cardTitle, description } = props;
 
   return (
-    <div className={classNames("card-item-container", status && `status-${status}`)}>
+    <div
+      className={classNames(
+        "card-item-container",
+        status && `status-${status}`
+      )}
+    >
       <div className="card-item">
         <div className="card-item-text-container">
           <div className="card-item-title">{cardTitle}</div>

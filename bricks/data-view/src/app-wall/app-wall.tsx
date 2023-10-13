@@ -40,14 +40,14 @@ import "./card-item/index.js";
 import { SystemCard, SystemCardProps } from "./system-card/index.jsx";
 import { wrapBrick } from "@next-core/react-element";
 import classNames from "classnames";
-const cardSize: CardSize = {
-  width: 120,
-  height: 160,
-  outerWidth: 140,
-  outerHeight: 180,
-  lgWidth: 180,
-  lgHeight: 240,
-};
+// const cardSize: CardSize = {
+//   width: 120,
+//   height: 160,
+//   outerWidth: 140,
+//   outerHeight: 180,
+//   lgWidth: 180,
+//   lgHeight: 240,
+// };
 const distanceConfig: DistanceConfig[] = [
   {
     numRange: [0, 40],
@@ -78,7 +78,7 @@ const fov = 45;
 const angle = 100;
 const panelSpace = 300;
 
-const getViewBounds = (length: number) => {
+const getViewBounds = (length: number, cardSize: CardSize) => {
   const maxX = Math.ceil(
     Math.sqrt((length * cardSize.outerHeight) / (0.4 * cardSize.outerWidth))
   );
@@ -115,6 +115,10 @@ export function AppWallElement(props: AppWallProps): ReactElement {
     handleCardDbClick,
     rightBtnOnClick,
     leftBtnOnClick,
+    cardBrickName,
+    cardSize,
+    disabledDefaultClickEvent,
+    handleCardClick,
   } = props;
   const [curClickCardItemAppData, setCurClickCardItemAppData] =
     useState<AppData>(null);
@@ -166,7 +170,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
   }, []);
 
   const updateViewBounds = (length: number) => {
-    configRef.current = getViewBounds(length);
+    configRef.current = getViewBounds(length, cardSize);
   };
 
   const init = () => {
@@ -194,9 +198,8 @@ export function AppWallElement(props: AppWallProps): ReactElement {
 
   const createView = (table: Target[]) => {
     table.forEach((data, i) => {
-      const element = document.createElement(
-        "data-view.app-wall-card-item"
-      ) as AppWallCardItem & Ele;
+      const element = document.createElement(cardBrickName) as AppWallCardItem &
+        Ele;
       element.status = data.status;
       element.cardTitle = data.cardItemProps?.cardTitle;
       element.description = data.cardItemProps?.description;
@@ -687,7 +690,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         !registerEvents.current.enable
       )
         return false;
-      const target = findElementByEvent(e);
+      const target = findElementByEvent(e, cardBrickName);
       registerEvents.current.mouseoverTimer = window.setTimeout(() => {
         restoreElementState(() => {
           target &&
@@ -707,7 +710,8 @@ export function AppWallElement(props: AppWallProps): ReactElement {
       )
         return false;
 
-      const target = findElementByEvent(e);
+      const target = findElementByEvent(e, cardBrickName);
+
       registerEvents.current.clickTimer = window.setTimeout(function () {
         clearTimeout(registerEvents.current.mouseoverTimer);
         restoreElementState(() => {
@@ -716,8 +720,12 @@ export function AppWallElement(props: AppWallProps): ReactElement {
             clearTimeout(registerEvents.current.mouseoverTimer);
             e.stopPropagation();
             registerEvents.current.element = target;
-            setCurClickCardItemAppData(target.__userData);
-            showAppInfoAnimate(false);
+            if (disabledDefaultClickEvent) {
+              handleCardClick?.(target.__userData);
+            } else {
+              setCurClickCardItemAppData(target.__userData);
+              showAppInfoAnimate(false);
+            }
           }
         });
       }, 300);
@@ -733,7 +741,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
       )
         return false;
 
-      const target = findElementByEvent(e);
+      const target = findElementByEvent(e, cardBrickName);
       const { __userData, __objectCSS } = target;
       registerEvents.current.isShowGraph3D = true;
       registerEvents.current.dblClickTimer = window.setTimeout(function () {
@@ -851,7 +859,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
       container.removeEventListener("click", handleClick);
       container.removeEventListener("dblclick", handleDbClick);
     };
-  }, []);
+  }, [disabledDefaultClickEvent, handleCardClick]);
 
   return (
     <div className="appwall-container" ref={containerRef}>

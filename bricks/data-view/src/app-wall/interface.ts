@@ -4,73 +4,77 @@ import { CabinetThumbnailProps } from "../cabinet/cabinet-thumbnail/index.jsx";
 import { AppData } from "./utils.js";
 
 interface TrapezoidalObjectData {
-     width: number;
-     height: number;
-     point: Vector3Tuple
+  width: number;
+  height: number;
+  point: Vector3Tuple;
 }
 export interface TrapezoidalProps extends CabinetThumbnailProps {
-     leftBtnName?: string | undefined;
-     rightBtnName?: string | undefined;
-
+  leftBtnName?: string | undefined;
+  rightBtnName?: string | undefined;
 }
 export interface TrapezoidalObjectProps extends TrapezoidalProps {
-     objectData: TrapezoidalObjectData;
-     leftOnClick?: () => void;
-     rightOnClick?: () => void;
-
+  objectData: TrapezoidalObjectData;
+  leftOnClick?: () => void;
+  rightOnClick?: () => void;
 }
-export type AnimationEventType = "click" | "dbClick" | "mouseenter" | "mouseleave" | "other"
+export type AnimationEventType =
+  | "click"
+  | "dbClick"
+  | "mouseenter"
+  | "mouseleave"
+  | "other";
 
 export type Position = {
-     x: number;
-     y: number;
-     z: number;
-}
-export type Grid = Omit<Position, 'z'>;
-export type Target = AppData & Grid
+  x: number;
+  y: number;
+  z: number;
+};
+export type Grid = Omit<Position, "z">;
+export type Target = AppData & Grid;
 export interface Targets {
-     table: Object3D[];
-     curve: Object3D[];
+  table: Object3D[];
+  curve: Object3D[];
 }
 export interface CardSize {
-     width: number;
-     height: number;
-     outerWidth: number;
-     outerHeight: number;
-     lgWidth: number;
-     lgHeight: number;
+  width: number;
+  height: number;
+  outerWidth: number;
+  outerHeight: number;
+  lgWidth: number;
+  lgHeight: number;
 }
 
 export type DistanceConfig = {
-     numRange: number[];
-     distance: number;
-}
+  numRange: number[];
+  distance: number;
+};
 export type bounds = {
-     width: number;
-     height: number;
-     margin: number;
-     z: number
-}
+  width: number;
+  height: number;
+  margin: number;
+  z: number;
+};
 export interface BaseConfig {
-     maxX: number;
-     maxY: number;
-     radius: number;
-     bounds: bounds
+  maxX: number;
+  maxY: number;
+  radius: number;
+  bounds: bounds;
 }
 
-export interface Ele extends HTMLElement{
-     __userData:Target;
-     __objectCSS:CSS3DObject;
-     __curve:Object3D
+export interface Ele extends HTMLElement {
+  __userData: Target;
+  __objectCSS: CSS3DObject;
+  __curve: Object3D;
 }
 export interface RegisterEvents {
-     element: Ele;
-     mouseoverTimer: number;
-     mouseoutTimer: number;
-     clickTimer: number;
-     dblClickTimer: number;
-     isShowGraph3D: boolean;
-     isShowAppInfo: boolean;
-     isShowRelations:boolean
-     enable: boolean;
+  element: Ele;
+  mouseoverTimer: number;
+  mouseoutTimer: number;
+  clickTimer: number;
+  dblClickTimer: number;
+  isShowGraph3D: boolean;
+  isShowAppInfo: boolean;
+  isShowRelations: boolean;
+  enable: boolean;
 }
+export type AppWallCardBrickNameType = "data-view.app-wall-card-item";
