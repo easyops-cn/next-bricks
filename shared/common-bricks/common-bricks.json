@@ -27,7 +27,8 @@
     "eo-sidebar",
     "eo-app-bar-wrapper",
     "eo-page-title",
-    "eo-counter-badge"
+    "eo-counter-badge",
+    "eo-easyops-avatar"
   ],
   "icons": [
     "eo-antd-icon",

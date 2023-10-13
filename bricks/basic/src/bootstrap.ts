@@ -33,3 +33,4 @@ import "./app-bar-wrapper/index.js";
 import "./page-title/index.js";
 import "./counter-badge/index.js";
 import "./v3-widget-mate/index.js";
+import "./easyops-avatar/index.js";
