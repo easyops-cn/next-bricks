@@ -24,6 +24,7 @@ import {
   Position,
   Target,
   Ele,
+  AppWallCardBrickNameType,
 } from "./interface.js";
 import { CabinetThumbnail } from "../cabinet/cabinet-thumbnail/index.jsx";
 
@@ -130,8 +131,8 @@ export const createTrapezoidalRightOrLeftElement = (props: {
                    height:${TH}px;
                    position: relative;
                    clip-path: polygon(0 0, ${height}px ${
-    TH / 2 - BH / 2
-  }px, ${height}px ${TH / 2 - BH / 2 + BH}px, 0 ${TH}px);
+                     TH / 2 - BH / 2
+                   }px, ${height}px ${TH / 2 - BH / 2 + BH}px, 0 ${TH}px);
                     `;
   const cantCard = document.createElement("div");
   cantCard.className = "trapezoidalLeftOrRightAnimation";
@@ -165,8 +166,8 @@ export const createTrapezoidalTopOrBottomElement = (props: {
                    height:${height}px;
                    position: relative;
                    clip-path: polygon(0 0, ${TW}px 0, ${
-    TW / 2 - BW / 2 + BW
-  }px ${height}px, ${TW / 2 - BW / 2}px ${height}px);
+                     TW / 2 - BW / 2 + BW
+                   }px ${height}px, ${TW / 2 - BW / 2}px ${height}px);
                    `;
   const cantCard = document.createElement("div");
   cantCard.className = "trapezoidalTopOrBottomAnimation";
@@ -452,16 +453,20 @@ export const getAppRelations = (
     });
   return relations;
 };
-export const findElementByEvent = (e: MouseEvent) => {
+export const findElementByEvent = (
+  e: MouseEvent,
+  tagName: AppWallCardBrickNameType
+) => {
+  const _targetName = tagName.toUpperCase();
   const path = (e.composedPath() as Element[]).find(
     (node) => node?.shadowRoot
   ) as Ele;
-  if (path?.tagName === "DATA-VIEW.APP-WALL-CARD-ITEM") return path;
+  if (path?.tagName === _targetName) return path;
   const customEle = document.elementFromPoint(e.clientX, e.clientY);
   const target = customEle?.shadowRoot.elementFromPoint(
     e.clientX,
     e.clientY
   ) as Ele;
-  if (target?.tagName === "DATA-VIEW.APP-WALL-CARD-ITEM") return target;
+  if (target?.tagName === _targetName) return target;
   return null;
 };

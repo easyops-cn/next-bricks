@@ -12,6 +12,38 @@ import React from "react";
 jest.useFakeTimers();
 const customGlobal = window as any;
 const mockedFindElementByEvent = jest.spyOn(Utils, "findElementByEvent");
+
+const table = Array.from({
+  length: 262,
+}).map((v, i) => ({
+  key: `${i}`,
+  shortName: `shortName-${i}`,
+  status: i % 5 ? "normal" : "warning",
+  cardItemProps: {
+    cardTitle: "cardTitle",
+    description: "description",
+  },
+  systemCardProps: {
+    cardTitle: "cardTitle",
+    description: "description",
+  },
+  trapezoidalProps: {
+    leftBtnName: "leftBtnName",
+    rightBtnName: "rightBtnName",
+    clusters: Array.from({
+      length: 3,
+    }).map((c, j) => ({
+      title: `${j}集群容器`,
+      type: j % 2 ? "host" : "k8s",
+      data: Array.from({
+        length: 100,
+      }).map((p) => ({
+        type: "physical-machine",
+        nodeTitle: "255.255.255",
+      })),
+    })),
+  },
+})) as any as Utils.AppData[];
 describe("data-view.app-wall", () => {
   beforeEach(() => {
     customGlobal.innerWidth = 500;
@@ -32,38 +64,6 @@ describe("data-view.app-wall", () => {
     expect(document.body.contains(element)).toBeFalsy();
   });
   test("render AppWallElement", () => {
-    const table = Array.from({
-      length: 262,
-    }).map((v, i) => ({
-      key: `${i}`,
-      shortName: `shortName-${i}`,
-      status: i % 5 ? "normal" : "warning",
-      cardItemProps: {
-        cardTitle: "cardTitle",
-        description: "description",
-      },
-      systemCardProps: {
-        cardTitle: "cardTitle",
-        description: "description",
-      },
-      trapezoidalProps: {
-        leftBtnName: "leftBtnName",
-        rightBtnName: "rightBtnName",
-        clusters: Array.from({
-          length: 3,
-        }).map((c, j) => ({
-          title: `${j}集群容器`,
-          type: j % 2 ? "host" : "k8s",
-          data: Array.from({
-            length: 100,
-          }).map((p) => ({
-            type: "physical-machine",
-            nodeTitle: "255.255.255",
-          })),
-        })),
-      },
-    })) as any as Utils.AppData[];
-
     const onSystemCardButtonClick = jest.fn();
     const handleCardDbClick = jest.fn();
     const rightBtnOnClick = jest.fn();
@@ -83,10 +83,20 @@ describe("data-view.app-wall", () => {
           },
         ]}
         useDblclick={false}
+        disabledDefaultClickEvent={false}
         onSystemCardButtonClick={onSystemCardButtonClick}
         handleCardDbClick={handleCardDbClick}
         rightBtnOnClick={rightBtnOnClick}
         leftBtnOnClick={leftBtnOnClick}
+        cardSize={{
+          width: 120,
+          height: 160,
+          outerWidth: 140,
+          outerHeight: 180,
+          lgWidth: 180,
+          lgHeight: 240,
+        }}
+        cardBrickName="data-view.app-wall-card-item"
       />
     );
     expect(asFragment()).toBeTruthy();
@@ -142,5 +152,46 @@ describe("data-view.app-wall", () => {
       jest.advanceTimersByTime(20000);
       fireEvent.click(container.querySelector(".closeBtn"));
     });
+  });
+  test("disabledDefaultClickEvent is  true", async () => {
+    const element = document.createElement("data-view.app-wall") as AppWall;
+
+    act(() => {
+      element.dataSource = table;
+      element.handleCardClick(table[0]);
+      element.relations = [];
+      element.disabledDefaultClickEvent = true;
+      element.useDblclick = true;
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot).toBeTruthy();
+    const appwall = element.shadowRoot?.querySelector(".appwall-container");
+
+    act(() => {
+      jest.advanceTimersByTime(20000); //立即到transform的onComplete执行
+      fireEvent.mouseOver(appwall);
+      jest.runOnlyPendingTimers(); //执行【handleMouseover】中的定时器,触发的showElementBetweenRelation
+      jest.runOnlyPendingTimers(); //执行【showElementBetweenRelation】中的onStart
+      jest.advanceTimersByTime(20000); //立即到【showElementBetweenRelation】的onComplete执行
+
+      fireEvent.mouseOver(appwall);
+      jest.runOnlyPendingTimers(); //执行【handleMouseover】中的定时器
+      jest.runOnlyPendingTimers(); //执行【restoreElementState】中的onStart
+      jest.advanceTimersByTime(20000); //立即到【restoreElementState】的onComplete执行
+    });
+    /**
+     * handleClick
+     */
+    act(() => {
+      fireEvent.click(appwall);
+      jest.runOnlyPendingTimers(); //执行定时器,
+      jest.runOnlyPendingTimers(); //执行【showAppInfoAnimate】false中的onStart
+      jest.advanceTimersByTime(30000);
+    });
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(document.body.contains(element)).toBeFalsy();
   });
 });
