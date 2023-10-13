@@ -28,6 +28,11 @@
       "import": "./dist/esm/debounceByAnimationFrame.js",
       "require": "./dist/cjs/debounceByAnimationFrame.js"
     },
+    "./makeThrottledAggregation": {
+      "types": "./dist/types/makeThrottledAggregation.d.ts",
+      "import": "./dist/esm/makeThrottledAggregation.js",
+      "require": "./dist/cjs/makeThrottledAggregation.js"
+    },
     "./types": {
       "types": "./dist/types/types.d.ts"
     },
