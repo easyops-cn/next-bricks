@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/form",
-  "version": "0.19.3",
+  "version": "0.19.4",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/form",
   "repository": {
     "type": "git",
@@ -34,8 +34,9 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-bricks/containers": "^0.14.26",
-    "@next-bricks/icons": "^0.6.1",
+    "@ant-design/cssinjs": "^1.16.0",
+    "@next-bricks/containers": "^0.14.27",
+    "@next-bricks/icons": "^0.6.2",
     "@next-bricks/illustrations": "^0.1.27",
     "@next-core/element": "^1.1.5",
     "@next-core/http": "^1.1.4",
@@ -53,8 +54,7 @@
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "0.0.0-experimental-ee8509801-20230117",
-    "resize-observer-polyfill": "^1.5.1",
-    "@ant-design/cssinjs": "^1.16.0"
+    "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {
     "@next-core/build-next-bricks": "^1.14.2",
