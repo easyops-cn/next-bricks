@@ -94,3 +94,7 @@ td.alignBottom {
   font-weight: 500;
   color: var(--antd-table-header-color);
 }
+
+.ant-table-wrapper .ant-table-pagination.ant-pagination {
+  margin: 24px 0;
+}
