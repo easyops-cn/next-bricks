@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.16.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.15.24...@next-bricks/data-view@0.16.0) (2023-10-16)
+
+
+### Features
+
+* app-wall support cardBrickName && disabledDefaultClickEvent ([c6a6852](https://github.com/easyops-cn/next-bricks/commit/c6a6852cc03788da91d04e9b2ea7743c2683b3d5))
+* **data-view:** app-wall support data-view.simple-card-item ([3df889f](https://github.com/easyops-cn/next-bricks/commit/3df889fd87564da1618edc92d7703ebc68a54105))
+
+
+
+
+
 ## [0.15.24](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.15.23...@next-bricks/data-view@0.15.24) (2023-10-13)
 
 **Note:** Version bump only for package @next-bricks/data-view

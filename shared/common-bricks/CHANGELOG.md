@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.18.1...@next-shared/common-bricks@0.19.0) (2023-10-16)
+
+
+### Features
+
+* support eo-easyops-avatar ([04cca3f](https://github.com/easyops-cn/next-bricks/commit/04cca3ff5844fbc0627e7ca63d985dbd5fc05ecd))
+
+
+
+
+
 ## [0.18.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.18.0...@next-shared/common-bricks@0.18.1) (2023-10-13)
 
 **Note:** Version bump only for package @next-shared/common-bricks

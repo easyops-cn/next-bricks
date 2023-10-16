@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.34.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.33.1...@next-bricks/basic@0.34.0) (2023-10-16)
+
+
+### Features
+
+* support eo-easyops-avatar ([04cca3f](https://github.com/easyops-cn/next-bricks/commit/04cca3ff5844fbc0627e7ca63d985dbd5fc05ecd))
+
+
+
+
+
 ## [0.33.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.33.0...@next-bricks/basic@0.33.1) (2023-10-13)
 
 **Note:** Version bump only for package @next-bricks/basic
