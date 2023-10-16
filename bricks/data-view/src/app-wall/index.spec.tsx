@@ -163,6 +163,7 @@ describe("data-view.app-wall", () => {
       element.disabledDefaultClickEvent = true;
       element.useDblclick = true;
       document.body.appendChild(element);
+      element.cardBrickName = "data-view.simple-card-item";
     });
     expect(element.shadowRoot).toBeTruthy();
     const appwall = element.shadowRoot?.querySelector(".appwall-container");

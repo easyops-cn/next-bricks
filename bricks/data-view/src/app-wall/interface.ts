@@ -2,6 +2,11 @@ import { Vector3Tuple, Object3D } from "three";
 import { CSS3DObject } from "three/examples/jsm/renderers/CSS3DRenderer.js";
 import { CabinetThumbnailProps } from "../cabinet/cabinet-thumbnail/index.jsx";
 import { AppData } from "./utils.js";
+import { AppWallCardItem } from "./card-item/index.js";
+import {
+  SimpleCardItem,
+  SimpleCardItemProps,
+} from "../simple-card-item/index.js";
 
 interface TrapezoidalObjectData {
   width: number;
@@ -77,4 +82,8 @@ export interface RegisterEvents {
   isShowRelations: boolean;
   enable: boolean;
 }
-export type AppWallCardBrickNameType = "data-view.app-wall-card-item";
+export type AppWallCardBrickNameType =
+  | "data-view.app-wall-card-item"
+  | "data-view.simple-card-item";
+
+export type AppWallCardBrickEleType = AppWallCardItem & SimpleCardItem;

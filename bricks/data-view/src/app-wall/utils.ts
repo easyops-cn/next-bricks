@@ -27,11 +27,12 @@ import {
   AppWallCardBrickNameType,
 } from "./interface.js";
 import { CabinetThumbnail } from "../cabinet/cabinet-thumbnail/index.jsx";
+import { SimpleCardItemProps } from "../simple-card-item/index.js";
 
 export interface AppData {
   key: string;
   status: "normal" | "warning";
-  cardItemProps: AppWallCardItemProps;
+  cardItemProps: AppWallCardItemProps & SimpleCardItemProps;
   systemCardProps: SystemCardProps;
   trapezoidalProps: TrapezoidalProps;
 }
