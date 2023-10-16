@@ -15,6 +15,7 @@ import { TrackballControls } from "three/addons/controls/TrackballControls.js";
 import TWEEN, { Tween, Easing } from "@tweenjs/tween.js";
 import type { AppWallProps } from "./index.jsx";
 import {
+  AppWallCardBrickEleType,
   BaseConfig,
   CardSize,
   DistanceConfig,
@@ -36,10 +37,12 @@ import {
   findElementByEvent,
 } from "./utils.js";
 import { AppWallCardItem } from "./card-item/index.jsx";
+
 import "./card-item/index.js";
 import { SystemCard, SystemCardProps } from "./system-card/index.jsx";
 import { wrapBrick } from "@next-core/react-element";
 import classNames from "classnames";
+import { SimpleCardItem } from "../simple-card-item/index.js";
 // const cardSize: CardSize = {
 //   width: 120,
 //   height: 160,
@@ -198,11 +201,15 @@ export function AppWallElement(props: AppWallProps): ReactElement {
 
   const createView = (table: Target[]) => {
     table.forEach((data, i) => {
-      const element = document.createElement(cardBrickName) as AppWallCardItem &
-        Ele;
+      const element = document.createElement(
+        cardBrickName
+      ) as AppWallCardBrickEleType & Ele;
       element.status = data.status;
       element.cardTitle = data.cardItemProps?.cardTitle;
       element.description = data.cardItemProps?.description;
+      element.background = data.cardItemProps?.background;
+      element.color = data.cardItemProps?.color;
+      element.descriptionList = data.cardItemProps?.descriptionList;
       const statusClass = `status-${data?.status || "normal"}`;
       element.className = `card-item-container  ${statusClass}`;
       element.style.width = `${cardSize.width}px`;
@@ -300,9 +307,10 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         300
       )
       .onStart(() => {
-        __objectCSS.element.classList.add(
-          `status-${__userData.status || "normal"}-card`
-        );
+        cardBrickName === "data-view.app-wall-card-item" &&
+          __objectCSS.element.classList.add(
+            `status-${__userData.status || "normal"}-card`
+          );
       })
       .start();
     new Tween(__objectCSS.scale)
@@ -366,9 +374,10 @@ export function AppWallElement(props: AppWallProps): ReactElement {
       )
       .onUpdate(render)
       .onStart(() => {
-        __objectCSS.element.classList.remove(
-          `status-${__userData.status || "normal"}-card`
-        );
+        cardBrickName === "data-view.app-wall-card-item" &&
+          __objectCSS.element.classList.remove(
+            `status-${__userData.status || "normal"}-card`
+          );
         objectsRef.current?.forEach((item) => {
           item.element.style.opacity = "1";
         });
