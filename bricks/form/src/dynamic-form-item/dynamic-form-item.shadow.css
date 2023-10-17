@@ -29,11 +29,27 @@
 .add-btn {
   width: calc(100% - 34px);
 }
-
+.add-btn-wrapper-disabled {
+  cursor: not-allowed;
+}
+.add-btn-disabled {
+  pointer-events: none;
+}
 .dynamic-form-item:first-child {
   .dynamic-form:has(*[label]) {
     .remove-btn-wrapper {
       margin-top: 22px;
     }
   }
+}
+.remove-btn-disabled-wrapper {
+  cursor: not-allowed;
+}
+.remove-btn-disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  color: var(--text-color-disabled);
+}
+.add-btn-hide {
+  display: none;
 }

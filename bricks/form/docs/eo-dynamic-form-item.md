@@ -93,6 +93,36 @@
             - Shenzhen
 ```
 
+### hideRemoveButton、disabledRemoveButton;hideAddButton、disabledAddButton
+
+```yaml preview
+- brick: eo-dynamic-form-item
+  properties:
+    hideAddButton: <% (value)=>value.length===5 %>
+    disabledAddButton: <% (value)=>value.length===4 %>
+    hideRemoveButton: <% (value,row)=>row===1 %>
+    disabledRemoveButton: <% (value,row)=>row===0 %>
+    value:
+      - input: hello1
+        select: abc1
+      - input: hello2
+        select: abc2
+      - input: hello3
+        select: abc3
+    useBrick:
+      - brick: eo-input
+        properties:
+          name: input
+      - brick: eo-select
+        properties:
+          name: select
+          options:
+            - abc1
+            - abc2
+            - abc2
+            - abc4
+```
+
 ### Event
 
 ```yaml preview
@@ -112,6 +142,10 @@
             - Guangzhou
             - Shenzhen
   events:
+    row.remove:
+      action: console.log
+    row.add:
+      action: console.log
     change:
       - action: message.success
         args:
