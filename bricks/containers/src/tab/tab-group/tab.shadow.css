@@ -38,5 +38,5 @@
 
 .content {
   background: var(--antd-tabs-title-wrapper-bg);
-  padding: 16px var(--page-card-gap);
+  padding: var(--tab-content-padding);
 }

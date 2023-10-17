@@ -2,10 +2,19 @@
 body.ui-v8-2 {
   --page-title-padding: 0 24px;
   --page-title-margin-bottom: 16px;
+  --page-title-with-breadcrumb-margin-top: 0px;
+
+  --page-title-margin-top: 18px;
   --page-content-padding: 16px 24px;
   --page-content-padding-top-with-wide-line: 5px;
 
   --wide-color: "#F4F6F9";
+
+  --page-card-gap: 32px;
+
+  --tab-content-padding: 16px 24px 24px 24px;
+
+  --side-bar-width: 220px;
 }
 
 /* light */
