@@ -6,7 +6,8 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "as",
       category: "query",
-      chain: "dual",
+      description: "设置一个别名，以便后续引用",
+      chain: "child",
       from: "cypress",
       params: [
         {
@@ -24,7 +25,8 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "children",
       category: "query",
-      chain: "dual",
+      description: "获取所有子元素",
+      chain: "child",
       from: "cypress",
       overloads: [
         {
@@ -47,7 +49,8 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "closest",
       category: "query",
-      chain: "dual",
+      description: "获取最近的一个满足条件的元素（自己或其祖先元素）",
+      chain: "child",
       from: "cypress",
       params: [
         {
@@ -61,6 +64,7 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "contains",
       category: "query",
+      description: "获取包含指定文本的元素",
       chain: "dual",
       from: "cypress",
       overloads: [
@@ -96,6 +100,7 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "document",
       category: "query",
+      description: "获取当前页面的 `window.document` 对象",
       chain: "parent",
       from: "cypress",
       params: [getParamDefinitionOfArbitraryOptions()],
@@ -103,7 +108,9 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "eq",
       category: "query",
-      chain: "dual",
+      description:
+        "获取指定序号对应的元素（从 0 开始计数，设置负数时从最后查找）",
+      chain: "child",
       from: "cypress",
       params: [
         {
@@ -117,7 +124,8 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "filter",
       category: "query",
-      chain: "dual",
+      description: "获取与选择器匹配的元素",
+      chain: "child",
       from: "cypress",
       params: [
         {
@@ -131,7 +139,8 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "find",
       category: "query",
-      chain: "dual",
+      description: "根据选择器获取匹配的后代元素",
+      chain: "child",
       from: "cypress",
       params: [
         {
@@ -145,13 +154,15 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "first",
       category: "query",
-      chain: "dual",
+      description: "获取第一个元素",
+      chain: "child",
       from: "cypress",
       params: [getParamDefinitionOfArbitraryOptions()],
     },
     {
       name: "focused",
       category: "query",
+      description: "获取当前聚焦的元素",
       chain: "parent",
       from: "cypress",
       params: [getParamDefinitionOfArbitraryOptions()],
@@ -159,6 +170,7 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "get",
       category: "query",
+      description: "根据选择器或别名获取元素",
       chain: "parent",
       from: "cypress",
       params: [
@@ -173,7 +185,8 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "hash",
       category: "query",
-      chain: "dual",
+      description: "获取当前页面的 URL 的 hash 部分",
+      chain: "parent",
       from: "cypress",
       params: [getParamDefinitionOfArbitraryOptions()],
     },
@@ -181,7 +194,8 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "its",
       category: "query",
-      chain: "dual",
+      description: "获取当前对象的指定属性的值",
+      chain: "child",
       from: "cypress",
       params: [
         {
@@ -195,13 +209,15 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "last",
       category: "query",
-      chain: "dual",
+      description: "获取最后一个元素",
+      chain: "child",
       from: "cypress",
       params: [getParamDefinitionOfArbitraryOptions()],
     },
     {
       name: "location",
       category: "query",
+      description: "获取当前页面的 `window.location` 对象",
       chain: "parent",
       from: "cypress",
       overloads: [
@@ -225,7 +241,8 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "next",
       category: "query",
-      chain: "dual",
+      description: "获取紧邻的后一个同级元素",
+      chain: "child",
       from: "cypress",
       overloads: [
         {
@@ -248,7 +265,8 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "nextAll",
       category: "query",
-      chain: "dual",
+      description: "获取所有后面的同级元素",
+      chain: "child",
       from: "cypress",
       overloads: [
         {
@@ -270,8 +288,9 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     },
     {
       name: "nextUntil",
+      description: "获取所有后面的同级元素，直到匹配指定选择器（不含）",
       category: "query",
-      chain: "dual",
+      chain: "child",
       from: "cypress",
       overloads: [
         {
@@ -306,7 +325,8 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "not",
       category: "query",
-      chain: "dual",
+      description: "获取与选择器不匹配的元素",
+      chain: "child",
       from: "cypress",
       params: [
         {
@@ -320,7 +340,8 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "parent",
       category: "query",
-      chain: "dual",
+      description: "获取父元素",
+      chain: "child",
       from: "cypress",
       overloads: [
         {
@@ -343,7 +364,8 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "parents",
       category: "query",
-      chain: "dual",
+      description: "获取所有祖先元素",
+      chain: "child",
       from: "cypress",
       overloads: [
         {
@@ -366,7 +388,8 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "parentsUntil",
       category: "query",
-      chain: "dual",
+      description: "获取所有祖先元素，直到匹配指定选择器（不含）",
+      chain: "child",
       from: "cypress",
       overloads: [
         {
@@ -401,7 +424,8 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "prev",
       category: "query",
-      chain: "dual",
+      description: "获取紧邻的前一个同级元素",
+      chain: "child",
       from: "cypress",
       overloads: [
         {
@@ -424,7 +448,8 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "prevAll",
       category: "query",
-      chain: "dual",
+      description: "获取所有前面的同级元素",
+      chain: "child",
       from: "cypress",
       overloads: [
         {
@@ -447,7 +472,8 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "prevUntil",
       category: "query",
-      chain: "dual",
+      description: "获取所有前面的同级元素，直到匹配指定选择器（不含）",
+      chain: "child",
       from: "cypress",
       overloads: [
         {
@@ -482,6 +508,7 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "root",
       category: "query",
+      description: "获取根元素",
       chain: "parent",
       from: "cypress",
       params: [getParamDefinitionOfArbitraryOptions()],
@@ -489,14 +516,16 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "shadow",
       category: "query",
-      chain: "dual",
+      description: "在元素的 shadow DOM 中查找元素",
+      chain: "child",
       from: "cypress",
       params: [getParamDefinitionOfArbitraryOptions()],
     },
     {
       name: "siblings",
       category: "query",
-      chain: "dual",
+      description: "获取所有同级元素",
+      chain: "child",
       from: "cypress",
       overloads: [
         {
@@ -519,6 +548,7 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "title",
       category: "query",
+      description: "获取当前页面的标题",
       chain: "parent",
       from: "cypress",
       params: [getParamDefinitionOfArbitraryOptions()],
@@ -526,6 +556,7 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "url",
       category: "query",
+      description: "获取当前页面的 URL",
       chain: "parent",
       from: "cypress",
       params: [getParamDefinitionOfArbitraryOptions()],
@@ -533,6 +564,7 @@ export default function getCypressQueryCommands(): CommandDoc[] {
     {
       name: "window",
       category: "query",
+      description: "获取当前页面的 `window` 对象",
       chain: "parent",
       from: "cypress",
       params: [getParamDefinitionOfArbitraryOptions()],

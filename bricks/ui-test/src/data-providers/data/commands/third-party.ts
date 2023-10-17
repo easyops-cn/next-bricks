@@ -7,6 +7,7 @@ export default function getThirdPartyCommands(): CommandDoc[] {
     {
       name: "findByTestId",
       category: "query",
+      description: "根据 `data-testid` 获取元素",
       chain: "dual",
       from: "third-party",
       params: [
@@ -22,6 +23,7 @@ export default function getThirdPartyCommands(): CommandDoc[] {
     {
       name: "findAllByTestId",
       category: "query",
+      description: "根据 `data-testid` 获取所有元素",
       chain: "dual",
       from: "third-party",
       params: [
@@ -37,6 +39,7 @@ export default function getThirdPartyCommands(): CommandDoc[] {
     {
       name: "findByRole",
       category: "query",
+      description: "根据 `role` 获取元素",
       chain: "dual",
       from: "third-party",
       params: [
@@ -51,6 +54,7 @@ export default function getThirdPartyCommands(): CommandDoc[] {
     {
       name: "findAllByRole",
       category: "query",
+      description: "根据 `role` 获取所有元素",
       chain: "dual",
       from: "third-party",
       params: [
@@ -65,6 +69,7 @@ export default function getThirdPartyCommands(): CommandDoc[] {
     {
       name: "findByTitle",
       category: "query",
+      description: "根据 `title` 获取元素",
       chain: "dual",
       from: "third-party",
       params: [
@@ -79,6 +84,7 @@ export default function getThirdPartyCommands(): CommandDoc[] {
     {
       name: "findAllByTitle",
       category: "query",
+      description: "根据 `title` 获取所有元素",
       chain: "dual",
       from: "third-party",
       params: [

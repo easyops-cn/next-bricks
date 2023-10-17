@@ -6,6 +6,7 @@ export default function getCypressOtherCommands(): CommandDoc[] {
     {
       name: "blur",
       category: "other",
+      description: "解除一个已聚焦的元素的聚焦状态",
       chain: "child",
       from: "cypress",
       params: [getParamDefinitionOfArbitraryOptions()],
@@ -94,6 +95,7 @@ export default function getCypressOtherCommands(): CommandDoc[] {
     {
       name: "debug",
       category: "other",
+      description: "设置一个调试断点，并打印前一个命令的产物",
       chain: "dual",
       from: "cypress",
       params: [getParamDefinitionOfArbitraryOptions()],
@@ -104,6 +106,7 @@ export default function getCypressOtherCommands(): CommandDoc[] {
     {
       name: "focus",
       category: "other",
+      description: "聚焦到一个元素上",
       chain: "child",
       from: "cypress",
       params: [getParamDefinitionOfArbitraryOptions()],
@@ -161,6 +164,7 @@ export default function getCypressOtherCommands(): CommandDoc[] {
     {
       name: "go",
       category: "other",
+      description: "控制浏览器前进或后退（负数后退，正数前进）",
       chain: "parent",
       from: "cypress",
       params: [
@@ -178,6 +182,7 @@ export default function getCypressOtherCommands(): CommandDoc[] {
     {
       name: "pause",
       category: "other",
+      description: "暂停测试",
       chain: "dual",
       from: "cypress",
       params: [getParamDefinitionOfArbitraryOptions()],
@@ -186,6 +191,7 @@ export default function getCypressOtherCommands(): CommandDoc[] {
     {
       name: "reload",
       category: "other",
+      description: "重新载入页面",
       chain: "parent",
       from: "cypress",
       params: [
@@ -200,6 +206,7 @@ export default function getCypressOtherCommands(): CommandDoc[] {
     {
       name: "request",
       category: "other",
+      description: "发起 HTTP 请求",
       chain: "parent",
       from: "cypress",
       overloads: [
@@ -253,6 +260,7 @@ export default function getCypressOtherCommands(): CommandDoc[] {
     {
       name: "screenshot",
       category: "other",
+      description: "截图",
       chain: "dual",
       from: "cypress",
       overloads: [
@@ -299,6 +307,7 @@ export default function getCypressOtherCommands(): CommandDoc[] {
     {
       name: "submit",
       category: "other",
+      description: "提交一个表单",
       chain: "child",
       from: "cypress",
       params: [getParamDefinitionOfArbitraryOptions()],
@@ -309,6 +318,7 @@ export default function getCypressOtherCommands(): CommandDoc[] {
     {
       name: "viewport",
       category: "other",
+      description: "控制视窗大小和朝向",
       chain: "parent",
       from: "cypress",
       overloads: [
@@ -352,6 +362,7 @@ export default function getCypressOtherCommands(): CommandDoc[] {
     {
       name: "visit",
       category: "other",
+      description: "访问指定 URL",
       chain: "parent",
       from: "cypress",
       params: [

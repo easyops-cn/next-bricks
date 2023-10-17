@@ -6,6 +6,7 @@ export default function getCustomCommands(): CommandDoc[] {
     {
       name: "login",
       category: "other",
+      description: "使用默认用户登录",
       chain: "parent",
       from: "custom",
       icon: {
@@ -16,6 +17,7 @@ export default function getCustomCommands(): CommandDoc[] {
     {
       name: "logout",
       category: "other",
+      description: "执行登出",
       chain: "parent",
       from: "custom",
       icon: {
@@ -26,6 +28,7 @@ export default function getCustomCommands(): CommandDoc[] {
     {
       name: "setLanguage",
       category: "other",
+      description: "设置平台语言",
       chain: "parent",
       from: "custom",
       params: [
@@ -44,7 +47,8 @@ export default function getCustomCommands(): CommandDoc[] {
     {
       name: "code",
       category: "other",
-      chain: "dual",
+      description: "填写任意代码",
+      chain: "parent",
       from: "custom",
       params: [
         {
