@@ -6,6 +6,7 @@ export default function getCypressActionCommands(): CommandDoc[] {
     {
       name: "check",
       category: "action",
+      description: "勾选 checkbox 或 radio",
       chain: "child",
       from: "cypress",
       overloads: [
@@ -40,6 +41,7 @@ export default function getCypressActionCommands(): CommandDoc[] {
     {
       name: "clear",
       category: "action",
+      description: "清除文本输入框的内容",
       chain: "child",
       from: "cypress",
       params: [getParamDefinitionOfArbitraryOptions()],
@@ -47,6 +49,7 @@ export default function getCypressActionCommands(): CommandDoc[] {
     {
       name: "click",
       category: "action",
+      description: "鼠标点击",
       chain: "child",
       from: "cypress",
       overloads: [
@@ -86,6 +89,7 @@ export default function getCypressActionCommands(): CommandDoc[] {
     {
       name: "dblclick",
       category: "action",
+      description: "鼠标双击",
       chain: "child",
       from: "cypress",
       overloads: [
@@ -125,6 +129,7 @@ export default function getCypressActionCommands(): CommandDoc[] {
     {
       name: "rightclick",
       category: "action",
+      description: "鼠标右键点击",
       chain: "child",
       from: "cypress",
       overloads: [
@@ -164,6 +169,7 @@ export default function getCypressActionCommands(): CommandDoc[] {
     {
       name: "scrollIntoView",
       category: "action",
+      description: "将元素滚动到视图中",
       chain: "child",
       from: "cypress",
       params: [getParamDefinitionOfArbitraryOptions()],
@@ -171,6 +177,7 @@ export default function getCypressActionCommands(): CommandDoc[] {
     {
       name: "scrollTo",
       category: "action",
+      description: "滚动到指定位置",
       chain: "dual",
       from: "cypress",
       overloads: [
@@ -206,6 +213,7 @@ export default function getCypressActionCommands(): CommandDoc[] {
     {
       name: "Select",
       category: "action",
+      description: "选中指定选项",
       chain: "child",
       from: "cypress",
       overloads: [
@@ -248,6 +256,7 @@ export default function getCypressActionCommands(): CommandDoc[] {
     {
       name: "trigger",
       category: "action",
+      description: "触发指定事件",
       chain: "child",
       from: "cypress",
       overloads: [
@@ -304,6 +313,7 @@ export default function getCypressActionCommands(): CommandDoc[] {
     {
       name: "type",
       category: "action",
+      description: "输入指定内容",
       chain: "child",
       from: "cypress",
       params: [
@@ -322,6 +332,7 @@ export default function getCypressActionCommands(): CommandDoc[] {
     {
       name: "uncheck",
       category: "action",
+      description: "取消勾选 checkbox",
       chain: "child",
       from: "cypress",
       overloads: [
