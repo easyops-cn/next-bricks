@@ -32,3 +32,4 @@ import "./lights-component-title/index.js";
 import "./hi-tech-button/index.js";
 import "./tech-mesh-base-view/index.js";
 import "./simple-card-item/index.js";
+import "./basic-index-group/index.js";
