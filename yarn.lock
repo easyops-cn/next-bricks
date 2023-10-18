@@ -2388,10 +2388,10 @@
   resolved "https://registry.yarnpkg.com/@next-core/styles-v3/-/styles-v3-0.2.22.tgz#a235fa3175b5a120bf5e581a32258219abb3f640"
   integrity sha512-jswrlXO5HDIfjEKDwQaCSmTICpGUHoTkvQOwnNmahHFXVaYPgymtiQHEhk/jAj3dhHVQHvp+E7h+1Of11B8euw==
 
-"@next-core/styles-v3@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@next-core/styles-v3/-/styles-v3-0.3.1.tgz#d4412fbed0991de06f4f53ee81574bbff65eb5d7"
-  integrity sha512-HuwMJyjLpDyMy8Dr02pghSXVErpKIdL6WlMsXFdBWwVSvgpyBHJnNA+TJlETmIG0g3RtrG7vW9cPOetLju2B8w==
+"@next-core/styles-v3@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@next-core/styles-v3/-/styles-v3-0.3.2.tgz#8f2f52f4a3c23bbbf7b3b5b6eb63435fc9aaf591"
+  integrity sha512-EPYwK+LcYr3vn7AwqGvJ3cmC7gAh/OxLegcH361U7VAp9y0U9qGzU/iarckljYk4a4xdqOiZXbUMCGN0hgeY5g==
 
 "@next-core/supply@^2.1.5":
   version "2.1.5"
