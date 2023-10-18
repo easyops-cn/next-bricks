@@ -22,6 +22,7 @@ export interface AppWallProps {
   disabledDefaultClickEvent?: boolean;
   handleCardClick?: (data: AppData) => void;
   cardBrickName: AppWallCardBrickNameType; // 支持更多种类，需要在dependencies内增加引入增加的类型
+  containerId?: string;
 }
 
 /**
@@ -106,6 +107,12 @@ class AppWall extends ReactNextElement implements AppWallProps {
     "data-view.app-wall-card-item";
 
   /**
+   *  容器id，用于监听容器大小
+   */
+  @property()
+  accessor containerId: string;
+
+  /**
    *  详情卡片点击事件
    */
   @event({ type: "system.card.button.click" })
@@ -170,6 +177,7 @@ class AppWall extends ReactNextElement implements AppWallProps {
         handleCardClick={this.handleCardClick}
         cardSize={this.cardSize}
         cardBrickName={this.cardBrickName}
+        containerId={this.containerId}
       />
     );
   }

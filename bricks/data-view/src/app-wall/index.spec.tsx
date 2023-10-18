@@ -8,7 +8,6 @@ import * as Utils from "./utils.js";
 import { Ele } from "./interface.js";
 import { AppWallElement } from "./app-wall.js";
 import React from "react";
-
 jest.useFakeTimers();
 const customGlobal = window as any;
 const mockedFindElementByEvent = jest.spyOn(Utils, "findElementByEvent");
@@ -48,6 +47,15 @@ describe("data-view.app-wall", () => {
   beforeEach(() => {
     customGlobal.innerWidth = 500;
     customGlobal.innerHeight = 800;
+    customGlobal.ResizeObserver = function ResizeObserver(
+      callback: ResizeObserverCallback
+    ) {
+      customGlobal.obFn = callback;
+      return {
+        observe: jest.fn(),
+        disconnect: jest.fn(),
+      };
+    };
   });
   test("createElement data-view.app-wall", () => {
     const element = document.createElement("data-view.app-wall") as AppWall;
@@ -100,11 +108,11 @@ describe("data-view.app-wall", () => {
       />
     );
     expect(asFragment()).toBeTruthy();
+    customGlobal.obFn();
     let appwall: Element = null,
       cardItems: Ele = null;
-
     act(() => {
-      fireEvent.resize(window);
+      jest.runOnlyPendingTimers();
       appwall = container.querySelector(".appwall-container");
       cardItems = container.querySelectorAll(".card-item-container")[
         index
@@ -155,6 +163,9 @@ describe("data-view.app-wall", () => {
   });
   test("disabledDefaultClickEvent is  true", async () => {
     const element = document.createElement("data-view.app-wall") as AppWall;
+    const containerEle = document.createElement("div");
+    containerEle.id = "wrapper";
+    containerEle.appendChild(element);
 
     act(() => {
       element.dataSource = table;
@@ -162,8 +173,9 @@ describe("data-view.app-wall", () => {
       element.relations = [];
       element.disabledDefaultClickEvent = true;
       element.useDblclick = true;
-      document.body.appendChild(element);
       element.cardBrickName = "data-view.simple-card-item";
+      element.containerId = "wrapper";
+      document.body.appendChild(containerEle);
     });
     expect(element.shadowRoot).toBeTruthy();
     const appwall = element.shadowRoot?.querySelector(".appwall-container");
@@ -191,8 +203,8 @@ describe("data-view.app-wall", () => {
     });
 
     act(() => {
-      document.body.removeChild(element);
+      document.body.removeChild(containerEle);
     });
-    expect(document.body.contains(element)).toBeFalsy();
+    expect(document.body.contains(containerEle)).toBeFalsy();
   });
 });
