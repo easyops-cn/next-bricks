@@ -37,12 +37,12 @@
     "@next-bricks/basic": "^0.35.0",
     "@next-bricks/containers": "^0.15.0",
     "@next-bricks/icons": "^0.6.2",
-    "@next-core/element": "^1.1.5",
-    "@next-core/i18n": "^1.0.26",
-    "@next-core/react-element": "^1.0.15",
-    "@next-core/react-runtime": "^1.1.18",
-    "@next-core/types": "^1.6.1",
-    "@next-core/utils": "^1.6.0",
+    "@next-core/element": "^1.1.6",
+    "@next-core/i18n": "^1.0.28",
+    "@next-core/react-element": "^1.0.16",
+    "@next-core/react-runtime": "^1.1.20",
+    "@next-core/types": "^1.7.1",
+    "@next-core/utils": "^1.6.2",
     "@next-shared/datetime": "^0.1.2",
     "@next-shared/general": "^0.7.0",
     "classnames": "^2.3.2",
@@ -53,8 +53,8 @@
     "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.14.2",
-    "@next-core/test-next": "^1.0.10",
+    "@next-core/build-next-bricks": "^1.14.3",
+    "@next-core/test-next": "^1.0.11",
     "babel-plugin-prismjs": "^2.1.0"
   }
 }
