@@ -1,5 +1,5 @@
 sl-popup::part(popup) {
-  z-index: 700;
+  z-index: 1030;
 }
 
 sl-popup[data-current-placement^="top"]::part(popup) {

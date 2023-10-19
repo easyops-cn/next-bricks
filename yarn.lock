@@ -2137,6 +2137,13 @@
   dependencies:
     "@next-core/http" "^1.0.6"
 
+"@next-api-sdk/next-builder-sdk@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/@next-api-sdk/next-builder-sdk/-/next-builder-sdk-1.2.0.tgz#f6caa535e05aab89d6378b92b78cca98b91258c5"
+  integrity sha512-80Ifk3NxnXln26OgJiCtNlDWG0/mTpo1b5mEzkpBGz7Ic32W5DOYreCbJ9qweTQXrCG55yKOSSx74o245zDxjQ==
+  dependencies:
+    "@next-core/http" "^1.0.0"
+
 "@next-api-sdk/object-store-sdk@1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@next-api-sdk/object-store-sdk/-/object-store-sdk-1.1.0.tgz#c1e1750ff6248dea69579d1935c641fbda85ab09"
