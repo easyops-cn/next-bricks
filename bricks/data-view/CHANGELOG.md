@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.17.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.16.0...@next-bricks/data-view@0.17.0) (2023-10-19)
+
+
+### Features
+
+* **data-view:** app-wall support containerId ([97bb583](https://github.com/easyops-cn/next-bricks/commit/97bb583a6cb803ef6103254889557adaeabcb4ed))
+
+
+
+
+
 # [0.16.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.15.24...@next-bricks/data-view@0.16.0) (2023-10-16)
 
 
