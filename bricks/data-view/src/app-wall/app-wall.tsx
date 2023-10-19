@@ -1,4 +1,3 @@
-/* istanbul ignore next */
 import React, {
   ReactElement,
   useCallback,
@@ -6,6 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { debounce } from "lodash";
 import { MathUtils, Object3D, PerspectiveCamera, Scene } from "three";
 import {
   CSS3DObject,
@@ -36,21 +36,11 @@ import {
   getAppRelations,
   findElementByEvent,
 } from "./utils.js";
-import { AppWallCardItem } from "./card-item/index.jsx";
 
 import "./card-item/index.js";
 import { SystemCard, SystemCardProps } from "./system-card/index.jsx";
 import { wrapBrick } from "@next-core/react-element";
 import classNames from "classnames";
-import { SimpleCardItem } from "../simple-card-item/index.js";
-// const cardSize: CardSize = {
-//   width: 120,
-//   height: 160,
-//   outerWidth: 140,
-//   outerHeight: 180,
-//   lgWidth: 180,
-//   lgHeight: 240,
-// };
 const distanceConfig: DistanceConfig[] = [
   {
     numRange: [0, 40],
@@ -122,10 +112,10 @@ export function AppWallElement(props: AppWallProps): ReactElement {
     cardSize,
     disabledDefaultClickEvent,
     handleCardClick,
+    containerId,
   } = props;
   const [curClickCardItemAppData, setCurClickCardItemAppData] =
     useState<AppData>(null);
-  // props.dataSource=table;
 
   const containerRef = useRef<HTMLDivElement>();
   const appwallRef = useRef<HTMLDivElement>();
@@ -640,19 +630,23 @@ export function AppWallElement(props: AppWallProps): ReactElement {
       controlsRef.current.update();
     };
     animate();
+    const container = containerId
+      ? document.getElementById(containerId)
+      : document.body;
 
-    const onWindowResize = () => {
-      cameraRef.current.aspect = window.innerWidth / window.innerHeight;
-      cameraRef.current.updateProjectionMatrix();
-      rendererRef.current.setSize(window.innerWidth, window.innerHeight);
-      render();
-    };
-
+    const observer = new ResizeObserver(
+      debounce(() => {
+        const { width, height } = container.getBoundingClientRect();
+        cameraRef.current.aspect = width / height;
+        cameraRef.current.updateProjectionMatrix();
+        rendererRef.current.setSize(width, height);
+        render();
+      }, 300)
+    );
     controlsRef.current.addEventListener("change", render);
-    window.addEventListener("resize", onWindowResize);
-
+    observer.observe(container);
     return () => {
-      window.removeEventListener("resize", onWindowResize);
+      observer.disconnect();
       controlsRef.current.removeEventListener("change", render);
       controlsRef.current.dispose();
       TWEEN.removeAll();
@@ -720,7 +714,6 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         return false;
 
       const target = findElementByEvent(e, cardBrickName);
-
       registerEvents.current.clickTimer = window.setTimeout(function () {
         clearTimeout(registerEvents.current.mouseoverTimer);
         restoreElementState(() => {
