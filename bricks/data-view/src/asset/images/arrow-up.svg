@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="6px" height="8.78091365px" viewBox="0 0 6 8.78091365" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>小图标-上升</title>
+    <g id="数据指标组" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="切片" transform="translate(-571.778619, -240.145336)" fill="#F64452">
+            <g id="静态切片" transform="translate(138.000000, 190.000000)">
+                <path d="M436.778619,50.1453356 L433.778619,53.6772211 L435.7255,53.6772211 C435.940048,56.1095062 435.504326,57.7511732 434.418332,58.602222 C432.789341,59.8787951 438.17995,57.2069321 438.123387,53.6772211 C438.73425,53.7083259 439.285994,53.7083259 439.778619,53.6772211 L436.778619,50.1453356 Z" id="小图标-上升"></path>
+            </g>
+        </g>
+    </g>
+</svg>
