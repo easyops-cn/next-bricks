@@ -1,0 +1,4 @@
+body.disable-scroll {
+  overflow: hidden;
+  padding-right: var(--body-scroll-lock-size);
+}
