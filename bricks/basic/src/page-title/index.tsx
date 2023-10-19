@@ -89,9 +89,9 @@ export function EoPageTitleComponent(props: PageTitleProps) {
                     }),
               }
             : {
-                fontSize: "var(--title-font-size-larger)",
-                fontWeight: "normal",
-                lineHeight: "32px",
+                fontSize: "var(--page-title-font-size)",
+                fontWeight: "var(--page-title-font-weight)",
+                lineHeight: "var(--page-title-line-height)",
               }),
         }}
       >

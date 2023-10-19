@@ -2,7 +2,7 @@ install_path: /usr/local/easyops/bricks/v2-adapter-NB
 user: "easyops:easyops"
 dependencies:
   - name: brick_next
-    version: ^2.89.8 || ^3.5.2
+    version: ^2.90.0 || ^3.8.2
     local_deploy: true
   - name: icons-NB
     version: ">= 0.3.0"

@@ -81,9 +81,12 @@ export enum ExpandedState {
 }
 
 export const sideBarWidth =
-  parseInt(getCssPropertyValue("--side-bar-width"), 10) || 208;
+  parseInt(getCssPropertyValue("--side-bar-width", document.body), 10) || 220;
 export const sideBarCollapsedWidth =
-  parseInt(getCssPropertyValue("--side-bar-collapsed-width"), 10) || 60;
+  parseInt(
+    getCssPropertyValue("--side-bar-collapsed-width", document.body),
+    10
+  ) || 60;
 
 interface ContextOfSidebarMenu {
   selectedKeys: string[];

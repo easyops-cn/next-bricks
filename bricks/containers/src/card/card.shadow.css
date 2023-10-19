@@ -14,12 +14,12 @@
 
 .card-head {
   margin-bottom: -1px;
-  padding: 12px 20px;
+  padding: var(--card-head-padding);
   color: var(--antd-heading-color);
   font-weight: 500;
   font-size: 16px;
   background: transparent;
-  border-bottom: 1px solid var(--antd-border-color-split);
+  border-bottom: 1px solid var(--card-border-color-split);
   border-radius: 6px 6px 0 0;
 }
 
@@ -46,7 +46,7 @@
 }
 
 .card-body {
-  padding: 16px;
+  padding: var(--card-body-padding);
 }
 .card-body::before {
   display: table;
@@ -59,10 +59,10 @@
 }
 .card-footer {
   width: 100%;
-  box-shadow: 0px -2px 8px 0px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--card-footer-shadow);
   border-radius: 0 0 6px 6px;
   position: absolute;
-  padding: 8px @card-padding-base;
+  padding: var(--card-footer-padding);
   left: 0;
   bottom: 0;
   box-sizing: border-box;
