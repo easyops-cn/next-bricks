@@ -1,27 +1,15 @@
 import { createProviderClass } from "@next-core/utils/general";
-import { get } from "idb-keyval";
 import { NodeItem } from "../interface.js";
-import { dirHandleStorageKey } from "../constants.js";
-import { handleHttpError } from "@next-core/runtime";
+import { getTestDirHandle, getAppDirHandle } from "./shared/fileAccess.js";
 
 let dirHandle: any;
 async function deleteCaseFile(
   suiteData: NodeItem,
   appId: string
 ): Promise<undefined> {
-  dirHandle = await get(dirHandleStorageKey);
+  dirHandle = await getTestDirHandle();
 
-  const cypressDirectory = await dirHandle.getDirectoryHandle("cypress", {
-    create: true,
-  });
-
-  const e2eDirectory = await cypressDirectory.getDirectoryHandle("e2e", {
-    create: true,
-  });
-
-  const appIdDirectory = await e2eDirectory.getDirectoryHandle(`${appId}`, {
-    create: true,
-  });
+  const appIdDirectory = await getAppDirHandle(dirHandle, { appId });
 
   await appIdDirectory.removeEntry(`${suiteData.name}.spec.js`);
 }
@@ -37,7 +25,8 @@ export async function deleteFile(
       await dirHandle.requestPermission({ mode: "readwrite" });
       await deleteCaseFile(suiteData, appId);
     } else {
-      handleHttpError(error);
+      // eslint-disable-next-line no-console
+      console.error(error);
     }
   }
 }
