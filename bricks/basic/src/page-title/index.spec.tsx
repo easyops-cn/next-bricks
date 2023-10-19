@@ -25,11 +25,11 @@ describe("eo-page-title", () => {
       .toMatchInlineSnapshot(`
       <span
         class="page-title-content"
-        style="display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: normal; line-height: 32px;"
+        style="display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: var(--page-title-font-weight); line-height: var(--page-title-line-height);"
       >
         Hello World
       </span>
-    `);
+      `);
 
     act(() => {
       document.body.removeChild(element);
@@ -56,7 +56,7 @@ describe("eo-page-title", () => {
       >
         Hello World
       </span>
-    `);
+      `);
 
     act(() => {
       document.body.removeChild(element);

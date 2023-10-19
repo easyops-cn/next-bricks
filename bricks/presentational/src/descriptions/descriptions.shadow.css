@@ -1,6 +1,7 @@
 :host {
   display: block;
   --blue-gray-1: #f0f7ff;
+  border-bottom: 1px solid var(--description-border-bottom-color);
 }
 
 :host([hidden]) {
@@ -13,7 +14,7 @@
 }
 
 .description-content {
-  padding: 0 16px;
+  padding: var(--description-content-padding);
 }
 
 .description-item {

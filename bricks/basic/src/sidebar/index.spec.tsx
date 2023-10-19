@@ -383,7 +383,7 @@ NodeList [
     });
     expect(onActualWidthChange).lastCalledWith(
       expect.objectContaining({
-        detail: 208,
+        detail: 220,
       })
     );
 

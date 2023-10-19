@@ -13,7 +13,8 @@
 }
 
 .drawer > * {
-  transition: transform 0.3s cubic-bezier(0.7, 0.3, 0.1, 1),
+  transition:
+    transform 0.3s cubic-bezier(0.7, 0.3, 0.1, 1),
     box-shadow 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
 }
 
@@ -45,7 +46,9 @@
   height: 0;
   background-color: var(--antd-modal-mask-bg);
   opacity: 0;
-  transition: opacity 0.3s linear, height 0s ease 0.3s;
+  transition:
+    opacity 0.3s linear,
+    height 0s ease 0.3s;
 }
 
 .drawer.open > .mask {
@@ -70,7 +73,12 @@
   width: 100%;
   height: 100%;
   background: var(--antd-component-background);
-  box-shadow: -6px 0 16px -8px rgb(0 0 0 / 8%), -9px 0 28px 0 rgb(0 0 0 / 5%),
+}
+
+.drawer.open .drawer-wrapper {
+  box-shadow:
+    -6px 0 16px -8px rgb(0 0 0 / 8%),
+    -9px 0 28px 0 rgb(0 0 0 / 5%),
     -12px 0 48px 16px rgb(0 0 0 / 3%);
 }
 

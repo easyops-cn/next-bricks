@@ -170,7 +170,7 @@ export function DescriptionsComponent(props: DescriptionsProps) {
       cardTitle={descriptionTitle}
       headerStyle={{
         border: "none",
-        padding: "20px 20px 0 20px",
+        padding: "var(--description-header-padding)",
         color: "var(--antd-description-title-color)",
         fontSize: "14px",
         lineHeight: "20px",
