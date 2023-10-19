@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
 import { getBasePath } from "@next-core/runtime";
@@ -7,6 +7,7 @@ import { K, NS, locales } from "./i18n.js";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import type { Button, ButtonProps } from "@next-bricks/basic/button";
+import type { Image, ImageProps } from "@next-bricks/basic/image";
 import type {
   GeneralIcon,
   GeneralIconProps,
@@ -22,6 +23,7 @@ initializeReactI18n(NS, locales);
 const { defineElement, property, event } = createDecorators();
 
 const WrappedButton = wrapBrick<Button, ButtonProps>("eo-button");
+const WrappedImage = wrapBrick<Image, ImageProps>("eo-image");
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 
@@ -193,7 +195,7 @@ export function UploadImageComponent(props: UploadImageComponentProps) {
         })}
       >
         <div className="image-item-inner">
-          <img className="image" src={userData?.url || url} />
+          {<WrappedImage width="64" imgList={[{ src: userData.url || url }]} />}
           <div className="infos">
             <div className="file-name">{name}</div>
             {status === "uploading" && <div className="progress"></div>}

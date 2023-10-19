@@ -3,6 +3,7 @@ import { ImageListContext, PreviewImage } from "./ImageListContext.js";
 import { Preview } from "./Preview.js";
 import { ImageComponent } from "./ImageComponent.js";
 import { isNil } from "lodash";
+import { ImageProps } from "./index.jsx";
 
 export interface ImageConfig {
   src?: string;
@@ -15,8 +16,7 @@ export interface ImageConfig {
   style?: React.CSSProperties;
 }
 
-export interface ImageListProps {
-  imgList?: ImageConfig[];
+export interface ImageListProps extends ImageProps {
   onVisibleChange?: (visible: boolean) => void;
 }
 
@@ -28,7 +28,7 @@ export interface ImageListRef {
 const { Provider } = ImageListContext;
 
 export const ImageList = forwardRef(function LegacyImageList(
-  { imgList, onVisibleChange }: ImageListProps,
+  { imgList, width, height, onVisibleChange }: ImageListProps,
   ref: Ref<ImageListRef>
 ) {
   const [visible, setVisible] = useState(false);
@@ -102,8 +102,8 @@ export const ImageList = forwardRef(function LegacyImageList(
               fallback={img.fallback}
               placeholder={img.placeholder}
               alt={img.alt}
-              width={img.width}
-              height={img.height}
+              width={img.width || width}
+              height={img.height || height}
               style={img.style}
               preview={img.preview}
               onClick={handleImageClick}
