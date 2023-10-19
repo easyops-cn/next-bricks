@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.18.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.17.0...@next-bricks/data-view@0.18.0) (2023-10-19)
+
+
+### Features
+
+* update ui_version and package dependencies ([ac3f98a](https://github.com/easyops-cn/next-bricks/commit/ac3f98a3c6ea6e776ad949db33993edd30422044))
+* 指标组构件-基础样式 ([fad8c12](https://github.com/easyops-cn/next-bricks/commit/fad8c12919e6da262e6ebeb069df5de47a71a3af))
+
+
+
+
+
 # [0.17.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.16.0...@next-bricks/data-view@0.17.0) (2023-10-19)
 
 
