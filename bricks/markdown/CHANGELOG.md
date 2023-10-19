@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.6.12...@next-bricks/markdown@1.7.0) (2023-10-19)
+
+
+### Features
+
+* update ui_version and package dependencies ([ac3f98a](https://github.com/easyops-cn/next-bricks/commit/ac3f98a3c6ea6e776ad949db33993edd30422044))
+
+
+
+
+
 ## [1.6.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.6.11...@next-bricks/markdown@1.6.12) (2023-10-19)
 
 **Note:** Version bump only for package @next-bricks/markdown
