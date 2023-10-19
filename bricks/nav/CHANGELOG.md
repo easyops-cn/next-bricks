@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.27](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.0.26...@next-bricks/nav@0.0.27) (2023-10-19)
+
+**Note:** Version bump only for package @next-bricks/nav
+
+
+
+
+
 ## [0.0.26](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.0.25...@next-bricks/nav@0.0.26) (2023-10-19)
 
 **Note:** Version bump only for package @next-bricks/nav

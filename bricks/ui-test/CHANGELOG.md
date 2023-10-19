@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.6.10...@next-bricks/ui-test@0.7.0) (2023-10-19)
+
+
+### Features
+
+* add delete file provider ([90580ad](https://github.com/easyops-cn/next-bricks/commit/90580adb8b4ee05bfdbc73b71b0ce36a938ddb31))
+
+
+
+
+
 ## [0.6.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.6.9...@next-bricks/ui-test@0.6.10) (2023-10-19)
 
 **Note:** Version bump only for package @next-bricks/ui-test
