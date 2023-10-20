@@ -10,6 +10,11 @@
   font-feature-settings: "tnum";
   position: relative;
   background: var(--antd-card-background);
+  border-radius: 6px;
+}
+
+:host-context(body.ui-v8-2) .card.compactCardContainer {
+  border-radius: 0;
 }
 
 .card-head {
@@ -20,7 +25,6 @@
   font-size: 16px;
   background: transparent;
   border-bottom: 1px solid var(--card-border-color-split);
-  border-radius: 6px 6px 0 0;
 }
 
 .card-head-wrapper {
@@ -60,7 +64,6 @@
 .card-footer {
   width: 100%;
   box-shadow: var(--card-footer-shadow);
-  border-radius: 0 0 6px 6px;
   position: absolute;
   padding: var(--card-footer-padding);
   left: 0;

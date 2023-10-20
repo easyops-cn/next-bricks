@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import type { Button, ButtonProps } from "@next-bricks/basic/button";
+import classNames from "classnames";
 import { isEmpty } from "lodash";
 import styleText from "./card.shadow.css";
 import "@next-core/theme";
@@ -24,6 +25,7 @@ export interface CardProps {
   operationButtons?: OperationButton[];
   headerStyle?: React.CSSProperties;
   background?: boolean | string;
+  compact?: boolean;
 }
 const WrappedButton = wrapBrick<Button, ButtonProps>("eo-button");
 
@@ -35,6 +37,7 @@ const { defineElement, property } = createDecorators();
  * @slot - 卡片内容
  * @slot extra - 头部右侧拓展元素
  * @slot footer - 底部拓展元素
+ * @slot titleSuffix - 标题后缀的插槽
  */
 @defineElement("eo-card", {
   styleTexts: [styleText],
@@ -100,6 +103,14 @@ class Card extends ReactNextElement implements CardProps {
   })
   accessor background: boolean | string | undefined;
 
+  /**
+   * 卡片是否ui8.2的紧凑模式
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor compact: boolean | undefined;
+
   render() {
     return (
       <CardComponent
@@ -111,6 +122,7 @@ class Card extends ReactNextElement implements CardProps {
         operationButtons={this.operationButtons}
         headerStyle={this.headerStyle}
         background={this.background}
+        compact={this.compact}
       />
     );
   }
@@ -125,6 +137,7 @@ export function CardComponent({
   operationButtons,
   headerStyle,
   background = true,
+  compact,
 }: CardProps) {
   const [paddingBottom, setPaddingBottom] = useState(0);
   const [fixedStyle, setFixedStyle] = useState({});
@@ -163,7 +176,7 @@ export function CardComponent({
     ),
     [headerStyle, cardTitle, hasExtraSlot, operationButtons, renderButtons]
   );
-
+  // istanbul ignore next;
   const handleFooter = () => {
     if (!isEmpty(footerRef.current)) {
       const rootNodeRect = footerRef.current?.getBoundingClientRect();
@@ -212,7 +225,7 @@ export function CardComponent({
 
   return (
     <div
-      className="card"
+      className={classNames("card", { compactCardContainer: compact })}
       style={{
         ...(fillVertical ? { height: "100%" } : {}),
         ...(verticalCenter

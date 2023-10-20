@@ -15,7 +15,12 @@ import type {
 import "@next-core/theme";
 import type { Button, ButtonProps } from "@next-bricks/basic/button";
 import styleText from "./modal.shadow.css";
+import { unwrapProvider } from "@next-core/utils/general";
+import type { lockBodyScroll as _lockBodyScroll } from "@next-bricks/basic/data-providers/lock-body-scroll/lock-body-scroll";
 
+const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
+  "basic.lock-body-scroll"
+);
 /**
  * Wrap usage:
  *
@@ -36,6 +41,7 @@ import styleText from "./modal.shadow.css";
  */
 
 export interface ModalProps {
+  curElement?: HTMLElement;
   modalTitle?: string;
   width?: string | number;
   maskClosable?: boolean;
@@ -196,6 +202,11 @@ class Modal extends ReactNextElement implements ModalProps {
     this.#handleModelClose();
   }
 
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    lockBodyScroll(this, false);
+  }
+
   #closeModal = () => {
     this.visible = false;
     this.#handleModelClose();
@@ -217,6 +228,7 @@ class Modal extends ReactNextElement implements ModalProps {
         onModalClose={this.#closeModal}
         onModalConfirm={this.#handleModelConfirm}
         onModalCancel={this.#handleModelCancel}
+        curElement={this}
       />
     );
   }
@@ -244,6 +256,7 @@ function ModalComponent({
   onModalConfirm,
   onModalCancel,
   onModalClose,
+  curElement,
 }: ModalComponentProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState<boolean>(open);
@@ -324,6 +337,7 @@ function ModalComponent({
   );
 
   useEffect(() => {
+    lockBodyScroll(curElement, open);
     setIsOpen(open);
   }, [open]);
 

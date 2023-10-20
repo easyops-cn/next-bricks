@@ -6,6 +6,7 @@ textarea {
   box-sizing: border-box;
   border-radius: var(--antd-button-border-radius);
   border: 1px solid var(--antd-input-border-color);
+  line-height: 1.5715;
 }
 
 textarea:not(:disabled):hover {
