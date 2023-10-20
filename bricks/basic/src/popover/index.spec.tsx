@@ -62,22 +62,23 @@ describe("basic.general-popover", () => {
 
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
-      <sl-popup
-        distance="4"
-        placement="bottom"
-        shift=""
-        trigger="click"
-      >
-        <slot
-          name="anchor"
-          slot="anchor"
-          style="padding: 4px; margin: -4px; display: inline-block;"
-        />
-        <slot
-          hidden=""
-        />
-      </sl-popup>
-    `);
+<sl-popup
+  distance="4"
+  exportparts="popup"
+  placement="bottom"
+  shift=""
+  trigger="click"
+>
+  <slot
+    name="anchor"
+    slot="anchor"
+    style="padding: 4px; margin: -4px; display: inline-block;"
+  />
+  <slot
+    hidden=""
+  />
+</sl-popup>
+`);
 
     act(() => {
       element.querySelector("button")?.click();
@@ -94,20 +95,21 @@ describe("basic.general-popover", () => {
 
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
-      <sl-popup
-        distance="4"
-        placement="bottom"
-        shift=""
-        trigger="click"
-      >
-        <slot
-          name="anchor"
-          slot="anchor"
-          style="padding: 4px; margin: -4px; display: inline-block;"
-        />
-        <slot />
-      </sl-popup>
-    `);
+<sl-popup
+  distance="4"
+  exportparts="popup"
+  placement="bottom"
+  shift=""
+  trigger="click"
+>
+  <slot
+    name="anchor"
+    slot="anchor"
+    style="padding: 4px; margin: -4px; display: inline-block;"
+  />
+  <slot />
+</sl-popup>
+`);
 
     await act(async () => {
       await document.body?.click();
@@ -123,22 +125,23 @@ describe("basic.general-popover", () => {
 
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
-      <sl-popup
-        distance="4"
-        placement="bottom"
-        shift=""
-        trigger="click"
-      >
-        <slot
-          name="anchor"
-          slot="anchor"
-          style="padding: 4px; margin: -4px; display: inline-block;"
-        />
-        <slot
-          hidden=""
-        />
-      </sl-popup>
-    `);
+<sl-popup
+  distance="4"
+  exportparts="popup"
+  placement="bottom"
+  shift=""
+  trigger="click"
+>
+  <slot
+    name="anchor"
+    slot="anchor"
+    style="padding: 4px; margin: -4px; display: inline-block;"
+  />
+  <slot
+    hidden=""
+  />
+</sl-popup>
+`);
 
     act(() => {
       document.body.removeChild(element);
@@ -172,23 +175,24 @@ describe("basic.general-popover", () => {
 
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
-      <sl-popup
-        distance="4"
-        placement="bottom"
-        shift=""
-        strategy="fixed"
-        trigger="hover"
-      >
-        <slot
-          name="anchor"
-          slot="anchor"
-          style="padding: 4px; margin: -4px; display: inline-block;"
-        />
-        <slot
-          hidden=""
-        />
-      </sl-popup>
-    `);
+<sl-popup
+  distance="4"
+  exportparts="popup"
+  placement="bottom"
+  shift=""
+  strategy="fixed"
+  trigger="hover"
+>
+  <slot
+    name="anchor"
+    slot="anchor"
+    style="padding: 4px; margin: -4px; display: inline-block;"
+  />
+  <slot
+    hidden=""
+  />
+</sl-popup>
+`);
 
     act(() => {
       fireEvent.click(content);
@@ -196,23 +200,24 @@ describe("basic.general-popover", () => {
 
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
-    <sl-popup
-      distance="4"
-      placement="bottom"
-      shift=""
-      strategy="fixed"
-      trigger="hover"
-    >
-      <slot
-        name="anchor"
-        slot="anchor"
-        style="padding: 4px; margin: -4px; display: inline-block;"
-      />
-      <slot
-        hidden=""
-      />
-    </sl-popup>
-    `);
+<sl-popup
+  distance="4"
+  exportparts="popup"
+  placement="bottom"
+  shift=""
+  strategy="fixed"
+  trigger="hover"
+>
+  <slot
+    name="anchor"
+    slot="anchor"
+    style="padding: 4px; margin: -4px; display: inline-block;"
+  />
+  <slot
+    hidden=""
+  />
+</sl-popup>
+`);
 
     act(() => {
       fireEvent.mouseOver(element.querySelector("button") as HTMLElement);
@@ -220,21 +225,22 @@ describe("basic.general-popover", () => {
 
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
-      <sl-popup
-        distance="4"
-        placement="bottom"
-        shift=""
-        strategy="fixed"
-        trigger="hover"
-      >
-        <slot
-          name="anchor"
-          slot="anchor"
-          style="padding: 4px; margin: -4px; display: inline-block;"
-        />
-        <slot />
-      </sl-popup>
-    `);
+<sl-popup
+  distance="4"
+  exportparts="popup"
+  placement="bottom"
+  shift=""
+  strategy="fixed"
+  trigger="hover"
+>
+  <slot
+    name="anchor"
+    slot="anchor"
+    style="padding: 4px; margin: -4px; display: inline-block;"
+  />
+  <slot />
+</sl-popup>
+`);
 
     await act(async () => {
       await fireEvent.mouseOver(document.body);
@@ -243,21 +249,22 @@ describe("basic.general-popover", () => {
 
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
-      <sl-popup
-        distance="4"
-        placement="bottom"
-        shift=""
-        strategy="fixed"
-        trigger="hover"
-      >
-        <slot
-          name="anchor"
-          slot="anchor"
-          style="padding: 4px; margin: -4px; display: inline-block;"
-        />
-        <slot />
-      </sl-popup>
-    `);
+<sl-popup
+  distance="4"
+  exportparts="popup"
+  placement="bottom"
+  shift=""
+  strategy="fixed"
+  trigger="hover"
+>
+  <slot
+    name="anchor"
+    slot="anchor"
+    style="padding: 4px; margin: -4px; display: inline-block;"
+  />
+  <slot />
+</sl-popup>
+`);
 
     act(() => {
       document.body.removeChild(element);

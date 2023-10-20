@@ -45,6 +45,8 @@ export interface PopoverEventsMapping {
  *
  * @slot - 弹出层内容
  * @slot anchor - 触发弹出层的元素
+ *
+ * @part popup - The popup’s container. Useful for setting a background color, box shadow, etc.
  */
 @defineElement("eo-popover", {
   styleTexts: [styleText],
@@ -324,6 +326,7 @@ function PopoverComponent(props: PopoverComponentProps) {
 
   return (
     <WrappedSlPopup
+      exportparts="popup"
       ref={popoverRef}
       {...omit(props, ["curElement", "onVisibleChange"])}
       shift
