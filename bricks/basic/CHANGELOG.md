@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.38.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.37.1...@next-bricks/basic@0.38.0) (2023-10-20)
+
+
+### Features
+
+* add a new provider: set-theme-by-apps ([5e9fa3f](https://github.com/easyops-cn/next-bricks/commit/5e9fa3f39f9a8de49d87b168d343ddbb833ac4d9))
+
+
+
+
+
 ## [0.37.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.37.0...@next-bricks/basic@0.37.1) (2023-10-20)
 
 **Note:** Version bump only for package @next-bricks/basic
