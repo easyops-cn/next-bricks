@@ -11,6 +11,7 @@
   justify-items: center;
   align-items: center;
   cursor: pointer;
+  border-radius: var(--larger-border-radius);
 }
 
 .menu-item.disabled {
@@ -20,4 +21,8 @@
 
 .menu-item-icon {
   margin-right: 4px;
+}
+
+.menu-item:hover {
+  background-color: #e6f4ff;
 }
