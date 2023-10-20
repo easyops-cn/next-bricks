@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import type {
@@ -9,7 +9,12 @@ import classNames from "classnames";
 import type { Placement } from "../interface.js";
 import "@next-core/theme";
 import styleText from "./drawer.shadow.css";
+import { unwrapProvider } from "@next-core/utils/general";
+import type { lockBodyScroll as _lockBodyScroll } from "@next-bricks/basic/data-providers/lock-body-scroll/lock-body-scroll";
 
+const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
+  "basic.lock-body-scroll"
+);
 export interface DrawerEvents {
   close?: Event;
   open?: Event;
@@ -21,6 +26,7 @@ export interface DrawerMapEvents {
 }
 
 interface DrawerProps {
+  curElement?: HTMLElement;
   customTitle?: string;
   width?: number;
   height?: number;
@@ -30,6 +36,7 @@ interface DrawerProps {
   maskClosable?: boolean;
   visible?: boolean;
   footerSlot?: boolean;
+  scrollToTopWhenOpen?: boolean;
 }
 const { defineElement, property, event, method } = createDecorators();
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
@@ -115,6 +122,12 @@ class Drawer extends ReactNextElement implements DrawerProps {
   @property() accessor placement: Placement | undefined;
 
   /**
+   * 打开抽屉时内容区是否自动滚动到顶部
+   */
+  @property({ attribute: false })
+  accessor scrollToTopWhenOpen = true;
+
+  /**
    * 抽屉开启事件
    */
   @event({ type: "open" })
@@ -152,6 +165,11 @@ class Drawer extends ReactNextElement implements DrawerProps {
     this.#handleDrawerClose();
   }
 
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    lockBodyScroll(this, false);
+  }
+
   render() {
     return (
       <DrawerComponent
@@ -165,6 +183,8 @@ class Drawer extends ReactNextElement implements DrawerProps {
         placement={this.placement}
         footerSlot={this.footerSlot}
         onDrawerClose={this.#handleDrawerClose}
+        scrollToTopWhenOpen={this.scrollToTopWhenOpen}
+        curElement={this}
       />
     );
   }
@@ -185,7 +205,10 @@ export function DrawerComponent({
   visible: open = false,
   footerSlot = false,
   onDrawerClose,
+  scrollToTopWhenOpen,
+  curElement,
 }: DrawerComponentProps) {
+  const contentRef = useRef<HTMLDivElement>();
   const header = useMemo(
     () => (
       <div className="drawer-header">
@@ -210,6 +233,10 @@ export function DrawerComponent({
     [closable, customTitle, onDrawerClose]
   );
 
+  useEffect(() => {
+    lockBodyScroll(curElement, open);
+    scrollToTopWhenOpen && open && contentRef.current?.scrollTo(0, 0);
+  }, [open]);
   return (
     <div
       className={classNames("drawer", `drawer-${placement}`, {
@@ -228,7 +255,7 @@ export function DrawerComponent({
       >
         <div className="drawer-content">
           {header}
-          <div className="drawer-body">
+          <div className="drawer-body" ref={contentRef}>
             <slot></slot>
           </div>
           {footerSlot && (

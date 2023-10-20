@@ -85,6 +85,20 @@
               borderTop: "1px solid #ddd"
 ```
 
+### titleSuffix Slot
+
+```yaml preview
+- brick: eo-card
+  properties:
+    cardTitle: 卡片标题
+  slots:
+    titleSuffix:
+      bricks:
+        - brick: span
+          properties:
+            textContent: titleSuffix span
+```
+
 ### Header Style
 
 ```yaml preview

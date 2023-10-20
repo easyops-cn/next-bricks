@@ -4,6 +4,13 @@ import "./";
 import { Modal } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
+const lockBodyScroll = jest.fn();
+customElements.define(
+  "basic.lock-body-scroll",
+  class extends HTMLElement {
+    resolve = lockBodyScroll;
+  }
+);
 
 describe("containers.general-modal", () => {
   test("basic usage", async () => {
@@ -31,9 +38,7 @@ describe("containers.general-modal", () => {
     });
     expect(element.shadowRoot).toBeTruthy();
     expect(element.shadowRoot?.childNodes.length).toBe(1);
-    expect(element.innerHTML).toBe(
-      "<div>This is a body</div>"
-    );
+    expect(element.innerHTML).toBe("<div>This is a body</div>");
 
     expect(element.visible).toBeFalsy();
     expect(element.shadowRoot?.querySelector(".modal")).toBeFalsy();
@@ -47,12 +52,15 @@ describe("containers.general-modal", () => {
     expect(mockOpenEvent).toBeCalledTimes(1);
     expect(element.visible).toBeTruthy();
     expect(element.shadowRoot?.querySelector(".modal")).toBeTruthy();
-    expect((element.shadowRoot?.querySelector(".modal-container") as HTMLElement).className).toBe("modal-container fullscreen");
+    expect(
+      (element.shadowRoot?.querySelector(".modal-container") as HTMLElement)
+        .className
+    ).toBe("modal-container fullscreen");
 
     // close
     await act(async () => {
       (element.shadowRoot?.querySelector(".close-btn") as HTMLElement).click();
-    })
+    });
 
     expect(element.visible).toBeFalsy();
     expect(mockCloseEvnet).toBeCalledTimes(1);
@@ -66,7 +74,10 @@ describe("containers.general-modal", () => {
     expect(element.visible).toBeTruthy();
 
     await act(async () => {
-      (element.shadowRoot?.querySelector(".modal-footer")?.lastChild as HTMLElement).click()
+      (
+        element.shadowRoot?.querySelector(".modal-footer")
+          ?.lastChild as HTMLElement
+      ).click();
     });
 
     expect(element.visible).toBeFalsy();
@@ -79,7 +90,10 @@ describe("containers.general-modal", () => {
     });
 
     await act(async () => {
-      (element.shadowRoot?.querySelector(".modal-footer")?.firstChild as HTMLElement).click()
+      (
+        element.shadowRoot?.querySelector(".modal-footer")
+          ?.firstChild as HTMLElement
+      ).click();
     });
 
     expect(element.visible).toBeFalsy();
@@ -126,7 +140,10 @@ describe("containers.general-modal", () => {
     });
 
     await act(async () => {
-      (element.shadowRoot?.querySelector(".modal-footer")?.lastChild as HTMLElement).click()
+      (
+        element.shadowRoot?.querySelector(".modal-footer")
+          ?.lastChild as HTMLElement
+      ).click();
     });
 
     expect(mockConfirmEvent).toBeCalledTimes(1);
@@ -136,5 +153,5 @@ describe("containers.general-modal", () => {
     act(() => {
       document.body.removeChild(element);
     });
-  })
+  });
 });
