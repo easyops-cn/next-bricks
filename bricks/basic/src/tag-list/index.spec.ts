@@ -22,10 +22,10 @@ describe("basic.general-tag-list", () => {
       document.body.appendChild(element);
     });
     expect(element.shadowRoot).toBeTruthy();
-    expect(element.shadowRoot?.childNodes.length).toBe(1);
+    expect(element.shadowRoot?.childNodes.length).toBe(2);
 
     expect(element.shadowRoot?.innerHTML).toMatchInlineSnapshot(
-      `"<div class="tag-list"><eo-tag size="large" color="yellow" closable="" checkable="" text="Item 1">Item 1</eo-tag><eo-tag size="large" color="yellow" checkable="" text="Item 2">Item 2</eo-tag><eo-tag size="large" color="yellow" disabled="" closable="" checkable="" text="Item 3">Item 3</eo-tag></div>"`
+      `"<style>index.shadow.css</style><div class="tag-list"><eo-tag size="large" color="yellow" closable="" checkable="" text="Item 1">Item 1</eo-tag><eo-tag size="large" color="yellow" checkable="" text="Item 2">Item 2</eo-tag><eo-tag size="large" color="yellow" disabled="" closable="" checkable="" text="Item 3">Item 3</eo-tag></div>"`
     );
 
     act(() => {

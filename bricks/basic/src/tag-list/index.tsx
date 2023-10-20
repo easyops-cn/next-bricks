@@ -9,7 +9,14 @@ import {
   TagMapEvents,
 } from "../tag/index.js";
 import { ComponentSize } from "../interface.js";
+import styleText from "./index.shadow.css";
+import type {
+  GeneralIcon,
+  GeneralIconProps,
+} from "@next-bricks/icons/general-icon";
 import "@next-core/theme";
+
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 const { defineElement, property, event } = createDecorators();
 
@@ -22,6 +29,7 @@ type tagListItem = TagProps & { text: string; key?: string };
 
 interface TagListComponentProps {
   list?: Array<tagListItem | string>;
+  showTagCircle?: boolean;
   multiple?: boolean;
 }
 
@@ -31,6 +39,7 @@ interface TagListComponentProps {
  */
 @defineElement("eo-tag-list", {
   alias: ["basic.general-tag-list"],
+  styleTexts: [styleText],
 })
 class TagList extends ReactNextElement {
   /**
@@ -52,6 +61,14 @@ class TagList extends ReactNextElement {
    */
   @property()
   accessor color: TagColor | string | undefined;
+
+  /**
+   * 颜色
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor showTagCircle: boolean | undefined;
 
   /**
    * 是否禁用
@@ -138,6 +155,7 @@ class TagList extends ReactNextElement {
         size={this.size}
         color={this.color}
         disabled={this.disabled}
+        showTagCircle={this.showTagCircle}
         closable={this.closable}
         checkable={this.checkable}
         multiple={this.multiple}
@@ -156,6 +174,7 @@ function TagListComponent({
   disabled,
   closable,
   checkable,
+  showTagCircle,
   multiple = true,
   tagStyle,
   onCheck,
@@ -209,10 +228,7 @@ function TagListComponent({
       if (tag.checked) {
         handleCheck(tag);
       }
-      onClose?.(
-        tag,
-        computedList?.filter((item) => !item.hidden)
-      );
+      onClose?.(tag, computedList?.filter((item) => !item.hidden));
     },
     [computedList, handleCheck, onClose]
   );
@@ -237,6 +253,14 @@ function TagListComponent({
             onCheck={() => handleCheck(tag)}
             onClose={() => handleClose(tag)}
           >
+            {showTagCircle && (
+              <WrappedIcon
+                className="tag-circle"
+                lib="fa"
+                icon="circle"
+                prefix="fas"
+              />
+            )}
             {tag.text}
           </WrappedTag>
         );
