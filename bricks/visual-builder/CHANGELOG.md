@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.7.0...@next-bricks/visual-builder@0.8.0) (2023-10-20)
+
+
+### Features
+
+* support workbench-history-action ([24ed1e7](https://github.com/easyops-cn/next-bricks/commit/24ed1e72133d46ef40e8ae619ff8104ef8e05601))
+
+
+
+
+
 # [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.6.48...@next-bricks/visual-builder@0.7.0) (2023-10-19)
 
 

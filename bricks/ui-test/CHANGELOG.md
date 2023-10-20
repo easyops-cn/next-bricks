@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.7.0...@next-bricks/ui-test@0.8.0) (2023-10-20)
+
+
+### Features
+
+* support rename file ([e49eb6f](https://github.com/easyops-cn/next-bricks/commit/e49eb6f7cbfdb0b7765684013b5946c6f34d5bad))
+
+
+
+
+
 # [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.6.10...@next-bricks/ui-test@0.7.0) (2023-10-19)
 
 
