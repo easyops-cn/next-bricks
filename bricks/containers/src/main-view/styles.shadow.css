@@ -1,0 +1,31 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: var(--page-padding-top) var(--page-padding-right)
+    var(--page-padding-bottom) var(--page-padding-left);
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.banner {
+  margin-top: calc(-1 * var(--page-padding-top));
+  margin-left: calc(-1 * var(--page-padding-left));
+  margin-right: calc(-1 * var(--page-padding-right));
+  padding-top: var(--page-padding-top);
+  padding-left: var(--page-padding-left);
+  padding-right: var(--page-padding-right);
+}
+
+.breadcrumb,
+.titlebar {
+  display: flex;
+  align-items: center;
+}
+
+.titlebar {
+  justify-content: space-between;
+  height: 50px;
+}

@@ -10,3 +10,4 @@ import "./easy-view/index.js";
 import "./spin/index.js";
 import "./search-bar/index.js";
 import "./page-view/index.js";
+import "./main-view/index.js";

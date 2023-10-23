@@ -51,7 +51,8 @@
     "eo-tab-group",
     "eo-spin",
     "eo-search-bar",
-    "eo-page-view"
+    "eo-page-view",
+    "eo-main-view"
   ],
   "form": [
     "eo-textarea",

@@ -1,7 +1,33 @@
 :host {
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 :host([hidden]) {
   display: none;
+}
+
+.header {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.main {
+  overflow: hidden;
+  flex-grow: 1;
+  display: flex;
+}
+
+.sidebar,
+.sub-sidebar {
+  min-width: 0;
+}
+
+.content {
+  overflow: hidden auto;
+}
+
+.content {
+  flex-grow: 1;
 }

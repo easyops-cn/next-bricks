@@ -47,6 +47,7 @@ export interface EoSidebarProps {
   menu: SidebarMenuType;
   expandedState?: ExpandedState;
   hiddenFixedIcon?: boolean;
+  staticPosition?: boolean;
 }
 
 export interface EoSidebarEvents {
@@ -86,6 +87,12 @@ class EoSidebar extends ReactNextElement implements EoSidebarProps {
   accessor expandedState: ExpandedState | undefined;
 
   /**
+   * 是否以静态定位（而不是固定定位）显示
+   */
+  @property({ type: Boolean })
+  accessor staticPosition: boolean | undefined;
+
+  /**
    * 宽度变化时触发
    * @detail 当前宽度
    */
@@ -112,6 +119,7 @@ class EoSidebar extends ReactNextElement implements EoSidebarProps {
         menu={this.menu}
         expandedState={this.expandedState}
         hiddenFixedIcon={this.hiddenFixedIcon}
+        staticPosition={this.staticPosition}
         onActualWidthChange={this.#handleActualWidthChange}
         onExpandedStateChange={this.#handleExpandedStateChange}
       />
@@ -127,7 +135,12 @@ interface EoSidebarComponentProps extends EoSidebarProps {
 export function EoSidebarComponent(props: EoSidebarComponentProps) {
   const { t } = useTranslation(NS);
 
-  const { hiddenFixedIcon, onActualWidthChange, onExpandedStateChange } = props;
+  const {
+    hiddenFixedIcon,
+    staticPosition,
+    onActualWidthChange,
+    onExpandedStateChange,
+  } = props;
 
   const storage = useMemo(() => new JsonStorage(localStorage), []);
   const history = getHistory();
@@ -289,83 +302,94 @@ export function EoSidebarComponent(props: EoSidebarComponentProps) {
     onActualWidthChange?.(sidebarActualWidth);
   }, [onActualWidthChange, sidebarActualWidth]);
 
+  const getContainerWidth = (inner?: boolean) => {
+    // With static position, when not expanded, the outer container will keep
+    // collapsed even if hovered, while only the inner container will expand.
+    if (staticPosition) {
+      return expandedState === ExpandedState.Expanded ||
+        (inner && expandedState === ExpandedState.Hovered)
+        ? expandedWidth
+        : sideBarCollapsedWidth;
+    }
+    return expandedState === ExpandedState.Collapsed
+      ? sideBarCollapsedWidth
+      : expandedWidth;
+  };
+
   return (
     <div
       className={classNames("sidebar-container", `state-${expandedState}`, {
         dragging,
       })}
-      style={{
-        width:
-          expandedState === ExpandedState.Collapsed
-            ? sideBarCollapsedWidth
-            : expandedWidth,
-      }}
+      style={{ width: getContainerWidth() }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       data-testid="side-bar"
     >
-      <div className="header">
-        <div className="menu-title">
-          <div className={classNames("menu-title-icon-container")}>
-            {menu?.icon ? (
-              <WrappedIcon
-                {...(menu.icon as GeneralIconProps)}
-                className="menu-title-icon"
-              />
-            ) : (
-              <span className="menu-title-point" />
-            )}
-          </div>
-          <div className="menu-title-text" title={menu?.title}>
-            {menu?.title}
+      <div className="inner" style={{ width: getContainerWidth(true) }}>
+        <div className="header">
+          <div className="menu-title">
+            <div className={classNames("menu-title-icon-container")}>
+              {menu?.icon ? (
+                <WrappedIcon
+                  {...(menu.icon as GeneralIconProps)}
+                  className="menu-title-icon"
+                />
+              ) : (
+                <span className="menu-title-point" />
+              )}
+            </div>
+            <div className="menu-title-text" title={menu?.title}>
+              {menu?.title}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div
-        className={classNames("content", {
-          "show-shadow": showContentShadow,
-        })}
-      >
-        <SidebarMenu
-          selectedKeys={selectedKeys}
-          openedKeys={openedKeys}
-          menu={menu}
-          expandedState={expandedState}
-        />
-        <div ref={contentBottomPlaceholderRef} />
-      </div>
+        <div
+          className={classNames("content", {
+            "show-shadow": showContentShadow,
+          })}
+        >
+          <SidebarMenu
+            selectedKeys={selectedKeys}
+            openedKeys={openedKeys}
+            menu={menu}
+            expandedState={expandedState}
+          />
+          <div ref={contentBottomPlaceholderRef} />
+        </div>
 
-      <div className="footer">
-        {!hiddenFixedIcon && (
-          <WrappedTooltip
-            content={
-              (expandedState === ExpandedState.Expanded
-                ? isFirstUsedTooltip
+        <div className="footer">
+          {!hiddenFixedIcon && (
+            <WrappedTooltip
+              content={
+                (expandedState === ExpandedState.Expanded
+                  ? isFirstUsedTooltip
+                    ? t(K.CLICK_TO_FIX_NAVIGATION, {
+                        action: t(K.UNPIN_NAVIGATION),
+                      })
+                    : t(K.UNPIN_NAVIGATION)
+                  : isFirstUsedTooltip
                   ? t(K.CLICK_TO_FIX_NAVIGATION, {
-                      action: t(K.UNPIN_NAVIGATION),
+                      action: t(K.FIXED_NAVIGATION),
                     })
-                  : t(K.UNPIN_NAVIGATION)
-                : isFirstUsedTooltip
-                ? t(K.CLICK_TO_FIX_NAVIGATION, {
-                    action: t(K.FIXED_NAVIGATION),
-                  })
-                : t(K.FIXED_NAVIGATION)) as string
-            }
-          >
-            <i className="fixed-icon" onClick={handleFixedIconClick}>
-              {expandedState === ExpandedState.Expanded ? (
-                <FixedSvg />
-              ) : (
-                <ToFixedSvg />
-              )}
-            </i>
-          </WrappedTooltip>
+                  : t(K.FIXED_NAVIGATION)) as string
+              }
+            >
+              <i className="fixed-icon" onClick={handleFixedIconClick}>
+                {expandedState === ExpandedState.Expanded ? (
+                  <FixedSvg />
+                ) : (
+                  <ToFixedSvg />
+                )}
+              </i>
+            </WrappedTooltip>
+          )}
+        </div>
+        {expandedState === ExpandedState.Expanded && (
+          <span className="resize-line" onMouseDown={handleResizeDown} />
         )}
       </div>
-      {expandedState === ExpandedState.Expanded && (
-        <span className="resize-line" onMouseDown={handleResizeDown} />
-      )}
     </div>
   );
 }
