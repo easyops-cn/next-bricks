@@ -50,7 +50,8 @@
     "eo-tab-item",
     "eo-tab-group",
     "eo-spin",
-    "eo-search-bar"
+    "eo-search-bar",
+    "eo-page-view"
   ],
   "form": [
     "eo-textarea",
