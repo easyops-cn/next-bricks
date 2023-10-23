@@ -1,0 +1,78 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.flipperWrapper {
+  display: flex;
+}
+
+.title-content {
+  display: flex;
+  margin-bottom: 20px;
+}
+.prefix {
+  margin-right: 10px;
+}
+.default-title-prefix {
+  width: 23px;
+  height: 21px;
+  background-image: url(../asset/images/flipper-title-icon.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+}
+.title {
+  font-size: 18px;
+  font-family: SourceHanSansCN-Bold, SourceHanSansCN;
+  font-weight: bold;
+  color: #ffffff;
+  line-height: 18px;
+  margin-top: 3px;
+}
+
+.data-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  z-index: 2;
+  padding: 0 32px 23px 41px;
+}
+
+.data {
+  font-size: 39px;
+  font-family: Roboto-Bold, Roboto;
+  font-weight: bold;
+  color: #66ffff;
+  line-height: 39px;
+  -webkit-box-reflect: below -7px -webkit-linear-gradient(
+      transparent,
+      transparent 50%,
+      rgba(255, 255, 255, 0.1)
+    );
+}
+.unit {
+  font-size: 18px;
+  font-family: SourceHanSansCN-Regular, SourceHanSansCN;
+  font-weight: 400;
+  color: #66ffff;
+  line-height: 27px;
+  margin-left: 6px;
+}
+.data-wrapper {
+  position: relative;
+  background-image: url(../asset/images/flipper3-Bg.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+  /* padding: 0 32px 23px 41px; */
+  margin-left: 7px;
+  justify-content: center;
+  display: flex;
+  height: 41px;
+}

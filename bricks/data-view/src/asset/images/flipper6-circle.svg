@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="89.1038594px" height="2px" viewBox="0 0 89.1038594 2" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>路径 7</title>
+    <defs>
+        <linearGradient x1="0%" y1="50.0065588%" x2="89.0237654%" y2="49.9937024%" id="linearGradient-1">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#48D5EC" offset="19.0894102%"></stop>
+            <stop stop-color="#48D5EC" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="数据指标组" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="切片" transform="translate(-306.555734, -3356.722578)" stroke="url(#linearGradient-1)" stroke-width="2">
+            <g id="翻牌器切片" transform="translate(133.000000, 2456.092407)">
+                <g id="翻牌器5" transform="translate(1.647735, 710.907593)">
+                    <line x1="171.907999" y1="190.722578" x2="261.011859" y2="190.722578" id="路径-7"></line>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

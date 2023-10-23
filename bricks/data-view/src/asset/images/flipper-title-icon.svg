@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="23px" height="20px" viewBox="0 0 23 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>翻牌器-矩形条纹点缀</title>
+    <defs>
+        <linearGradient x1="0%" y1="50%" x2="81.7897727%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#00E0DB" offset="0%"></stop>
+            <stop stop-color="#0E5FFF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="数据指标组" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="切片" transform="translate(-133.000000, -2654.776179)" fill="url(#linearGradient-1)" fill-rule="nonzero">
+            <g id="翻牌器切片" transform="translate(133.000000, 2456.092407)">
+                <g id="翻牌器1" transform="translate(0.000000, 184.183771)">
+                    <path d="M3,14.5 L3,34.5 L0,34.5 L0,14.5 L3,14.5 Z M8,14.5 L8,34.5 L5,34.5 L5,14.5 L8,14.5 Z M13,14.5 L13,34.5 L10,34.5 L10,14.5 L13,14.5 Z M18,14.5 L18,34.5 L15,34.5 L15,14.5 L18,14.5 Z M23,14.5 L23,34.5 L20,34.5 L20,14.5 L23,14.5 Z" id="翻牌器-矩形条纹点缀"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
