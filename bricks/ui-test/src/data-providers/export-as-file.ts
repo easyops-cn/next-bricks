@@ -41,7 +41,13 @@ export async function exportAsFile(
 
   const program = t.program(parseSuiteAst(suiteData), undefined, "module");
 
-  const generatedCode = transformFromAst(program, undefined, {}).code;
+  const generatedCode = transformFromAst(program, undefined, {
+    generatorOpts: {
+      jsescOption: {
+        minimal: true,
+      },
+    },
+  }).code;
 
   await writable.write(generatedCode);
 

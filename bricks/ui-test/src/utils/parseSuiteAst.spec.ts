@@ -112,9 +112,26 @@ describe("parseSuiteAst", () => {
                   params: ["card-item"],
                   children: [
                     {
+                      name: "code",
+                      params: [],
+                    },
+                    {
+                      name: "code",
+                      params: ["find('.wrapper').find('.search')"],
+                    },
+                    {
+                      name: "code",
+                      params: ["then(() => {console.log('test code')})"],
+                    },
+                    {
                       type: "command",
-                      name: "click",
+                      name: "type",
                       label: null,
+                      params: ["easyops"],
+                    },
+                    {
+                      name: "code",
+                      params: ["as('@input').click()"],
                     },
                   ],
                 },
@@ -143,7 +160,9 @@ describe("parseSuiteAst", () => {
     cy.get(".tips").should("include.text", "成功");
   });
   it.skip("test", () => {
-    cy.findByTestId("card-item").click();
+    cy.findByTestId("card-item").find('.wrapper').find('.search').then(() => {
+      console.log('test code');
+    }).type("easyops").as('@input').click();
   });
 });"
 `);
