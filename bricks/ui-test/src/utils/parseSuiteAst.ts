@@ -50,38 +50,92 @@ function createCommandParams(item: NodeItem): t.Expression[] {
   return (ast.program.body[0] as any).expression.elements;
 }
 
-function processCommandItem(item: NodeItem): t.ExpressionStatement {
-  const ChainStartExpr = t.callExpression(
+function createChainedExpr(
+  chainList: NodeItem[],
+  { startItem }: { startItem: NodeItem }
+): t.Expression {
+  const [current, ...rest] = chainList;
+
+  if (rest.length === 0) {
+    return getChainStartExpr(startItem);
+  }
+
+  if (current.name === "code") {
+    const exprArr = processCodeItem(current);
+
+    if (exprArr.length === 0) {
+      return createChainedExpr(rest.slice(1), { startItem });
+    } else {
+      const callExpr = (exprArr[0] as t.ExpressionStatement)?.expression;
+
+      // istanbul ignore if
+      if (!t.isCallExpression(callExpr)) {
+        throw new Error(
+          "to use the `code` command in the call chain, it must be a callExpression type"
+        );
+      }
+
+      return createChainedCode(callExpr, rest, { startItem });
+    }
+  }
+
+  return t.callExpression(
+    t.memberExpression(
+      createChainedExpr(rest, { startItem }),
+      t.identifier(preProcessCommandName(current))
+    ),
+    createCommandParams(current)
+  );
+}
+
+function createChainedCode(
+  callExpr: t.CallExpression,
+  nodes: NodeItem[],
+  { startItem }: { startItem: NodeItem }
+): t.CallExpression {
+  if (t.isMemberExpression(callExpr.callee)) {
+    return t.callExpression(
+      t.memberExpression(
+        createChainedCode(
+          (callExpr.callee as t.MemberExpression).object as t.CallExpression,
+          nodes,
+          { startItem }
+        ),
+        (callExpr.callee as t.MemberExpression).property
+      ),
+      callExpr.arguments
+    );
+  }
+
+  return t.callExpression(
+    t.memberExpression(
+      createChainedExpr(nodes, { startItem }),
+      callExpr.callee as t.Identifier
+    ),
+    callExpr.arguments
+  );
+}
+
+function getChainStartExpr(startItem: NodeItem) {
+  return t.callExpression(
     t.memberExpression(
       t.identifier("cy"),
-      t.identifier(preProcessCommandName(item))
+      t.identifier(preProcessCommandName(startItem))
     ),
-    createCommandParams(item)
+    createCommandParams(startItem)
   );
+}
 
+function processCommandItem(item: NodeItem): t.ExpressionStatement {
   if (isEmpty(item.children)) {
-    return t.expressionStatement(ChainStartExpr);
+    return t.expressionStatement(getChainStartExpr(item));
   }
 
   const chainList = item.children?.reverse().concat(item) as NodeItem[];
 
-  const createChainedExpr = (chainList: NodeItem[]): t.Expression => {
-    const [current, ...rest] = chainList;
-
-    if (rest.length === 0) {
-      return ChainStartExpr;
-    }
-
-    return t.callExpression(
-      t.memberExpression(
-        createChainedExpr(rest),
-        t.identifier(preProcessCommandName(current))
-      ),
-      createCommandParams(current)
-    );
-  };
-
-  return t.expressionStatement(createChainedExpr(chainList));
+  return t.expressionStatement(
+    createChainedExpr(chainList, { startItem: item })
+  );
 }
 
 function createCommandNode(children: NodeItem[]): t.Statement[] {
