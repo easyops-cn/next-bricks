@@ -52,7 +52,9 @@
     "eo-spin",
     "eo-search-bar",
     "eo-page-view",
-    "eo-main-view"
+    "eo-main-view",
+    "eo-narrow-view",
+    "eo-banner"
   ],
   "form": [
     "eo-textarea",

@@ -8,7 +8,9 @@ const { defineElement, property } = createDecorators();
 
 /**
  * 构件 `eo-page-view`
+ *
  * @author steve
+ *
  * @slot - 内容区
  * @slot header - 顶栏
  * @slot sidebar - 侧边栏

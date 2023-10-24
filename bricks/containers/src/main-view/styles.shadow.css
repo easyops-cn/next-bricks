@@ -10,13 +10,21 @@
   display: none;
 }
 
-.banner {
+:host([gap="small"]) {
+  gap: 8px;
+}
+
+eo-banner {
   margin-top: calc(-1 * var(--page-padding-top));
   margin-left: calc(-1 * var(--page-padding-left));
   margin-right: calc(-1 * var(--page-padding-right));
+}
+
+:host(:not([banner-only])) eo-banner {
   padding-top: var(--page-padding-top);
   padding-left: var(--page-padding-left);
   padding-right: var(--page-padding-right);
+  padding-bottom: 0;
 }
 
 .breadcrumb,
@@ -28,4 +36,21 @@
 .titlebar {
   justify-content: space-between;
   height: 50px;
+}
+
+:host([banner-only]) .breadcrumb,
+:host([banner-only]) .titlebar {
+  display: none;
+}
+
+:host([banner-sunk]) {
+  gap: 0;
+}
+
+:host([banner-sunk]) eo-banner {
+  padding-bottom: 76px;
+}
+
+:host([banner-sunk]) .content {
+  margin-top: -60px;
 }
