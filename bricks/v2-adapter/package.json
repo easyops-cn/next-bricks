@@ -48,11 +48,11 @@
     "@next-core/build-next-bricks": "^1.14.3",
     "@next-core/styles-v3": "^0.3.2",
     "@next-core/test-next": "^1.0.11",
-    "@next-dll/ace": "^2.0.690",
+    "@next-dll/ace": "^2.0.691",
     "@next-dll/d3": "^2.0.79",
     "@next-dll/echarts": "^2.0.80",
-    "@next-dll/editor-bricks-helper": "^0.38.35",
-    "@next-dll/react-dnd": "^0.1.628",
+    "@next-dll/editor-bricks-helper": "^0.38.36",
+    "@next-dll/react-dnd": "^0.1.629",
     "copy-webpack-plugin": "^11.0.0"
   }
 }
