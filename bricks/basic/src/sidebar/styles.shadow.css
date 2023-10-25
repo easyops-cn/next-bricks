@@ -183,7 +183,7 @@
 }
 
 /* state */
-.state-hovered {
+.state-hovered .inner {
   box-shadow: var(--left-sidebar-shadow);
 }
 
