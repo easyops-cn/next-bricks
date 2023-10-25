@@ -1,6 +1,6 @@
 :host {
-  --banner-sunk-gap: 32px;
-  --banner-sunk-offset: 42px;
+  --banner-sunk-gap: 36px;
+  --banner-sunk-offset: 38px;
 
   display: flex;
   flex-direction: column;

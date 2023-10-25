@@ -1,6 +1,6 @@
 :host {
   --banner-padding-horizontal: 60px;
-  --banner-padding-vertical: 44px;
+  --banner-padding-vertical: 36px;
   --banner-title-color: #57689c;
   --banner-desc-color: #3c4875;
 
@@ -33,6 +33,7 @@
 
 .title-and-desc {
   gap: 14px;
+  max-width: 800px;
 }
 
 .page-title {
