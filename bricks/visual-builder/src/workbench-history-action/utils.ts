@@ -69,20 +69,49 @@ export function translateHistory(
     modelI18nKeyMap[history.abstract.rightObjectId] ??
       history.abstract.rightObjectId
   );
+  const nodes = translateNodes(
+    history.abstract.nodes,
+    history.abstract.nodesCount
+  );
+  const leftNodes = translateNodes(
+    history.abstract.leftNodes,
+    history.abstract.leftNodesCount
+  );
+  const rightNodes = translateNodes(
+    history.abstract.rightNodes,
+    history.abstract.rightNodesCount
+  );
 
   const abstract = i18n.t(
     fullActionI18nKeyMap[history.action] ?? history.action,
     {
-      category: category,
-      nodes: history.abstract.nodes?.join(", "),
-      leftNodes: history.abstract.leftNodes?.join(", "),
-      rightNodes: history.abstract.rightNodes?.join(", "),
+      category,
+      nodes,
+      leftNodes,
+      rightNodes,
       nodeChanges: history.abstract.nodeChanges?.join(", "),
       relationChanges: history.abstract.relationChanges?.join(", "),
-      leftObjectId: leftObjectId,
-      rightObjectId: rightObjectId,
+      leftObjectId,
+      rightObjectId,
     }
   );
 
-  return { category, action, leftObjectId, rightObjectId, abstract };
+  return {
+    category,
+    action,
+    leftObjectId,
+    rightObjectId,
+    nodes,
+    leftNodes,
+    rightNodes,
+    abstract,
+  };
+}
+
+function translateNodes(nodes: string[] = [], total: number, separator = ", ") {
+  return i18n.t(`${NS}:${K.NODE}`, {
+    nodes: nodes.join(separator),
+    context: total > nodes.length ? "ellipsis" : undefined,
+    count: total,
+  });
 }
