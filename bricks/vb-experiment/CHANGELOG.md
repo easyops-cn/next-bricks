@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.1.18...@next-bricks/vb-experiment@0.2.0) (2023-10-25)
+
+
+### Features
+
+* new provider: export-widgets ([0b0e7df](https://github.com/easyops-cn/next-bricks/commit/0b0e7df2f894ec4255626a10a2d54c1cff2c050d))
+
+
+
+
+
 ## [0.1.18](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.1.17...@next-bricks/vb-experiment@0.1.18) (2023-10-19)
 
 **Note:** Version bump only for package @next-bricks/vb-experiment
