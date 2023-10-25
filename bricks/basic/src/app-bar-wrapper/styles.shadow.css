@@ -6,13 +6,25 @@
   display: none;
 }
 
+.app-bar-container {
+  height: var(--app-bar-height);
+}
+
 .app-bar {
-  position: fixed;
+  position: relative;
+  z-index: 1000;
+  box-shadow: var(--connected-overlay-shadow);
+}
+
+.app-bar.fixed,
+.app-bar.absolute {
   right: 0;
   left: 0;
   top: 0;
-  z-index: 1000;
-  box-shadow: var(--connected-overlay-shadow);
+}
+
+.app-bar.fixed {
+  position: fixed;
 }
 
 .app-bar-content {
@@ -25,11 +37,11 @@
   transition: var(--launchpad-backdrop-transition);
 }
 
-.leftContainer {
+.left {
   display: flex;
 }
 
-.rightContainer {
+.right {
   display: flex;
   justify-content: end;
 }

@@ -1,7 +1,10 @@
 :host {
+  --banner-sunk-gap: 32px;
+  --banner-sunk-offset: 42px;
+
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: var(--card-content-gap);
   padding: var(--page-padding-top) var(--page-padding-right)
     var(--page-padding-bottom) var(--page-padding-left);
 }
@@ -10,7 +13,7 @@
   display: none;
 }
 
-:host([gap="small"]) {
+:host([content-gap="small"]) {
   gap: 8px;
 }
 
@@ -20,7 +23,7 @@ eo-banner {
   margin-right: calc(-1 * var(--page-padding-right));
 }
 
-:host(:not([banner-only])) eo-banner {
+:host(:not([banner-alone])) eo-banner {
   padding-top: var(--page-padding-top);
   padding-left: var(--page-padding-left);
   padding-right: var(--page-padding-right);
@@ -38,8 +41,8 @@ eo-banner {
   height: 50px;
 }
 
-:host([banner-only]) .breadcrumb,
-:host([banner-only]) .titlebar {
+:host([banner-alone]) .breadcrumb,
+:host([banner-alone]) .titlebar {
   display: none;
 }
 
@@ -48,9 +51,18 @@ eo-banner {
 }
 
 :host([banner-sunk]) eo-banner {
-  padding-bottom: 76px;
+  padding-bottom: calc(var(--banner-sunk-gap) + var(--banner-sunk-offset));
 }
 
 :host([banner-sunk]) .content {
-  margin-top: -60px;
+  margin-top: calc(-1 * var(--banner-sunk-offset));
+}
+
+:host([fill-container]) {
+  height: 100%;
+}
+
+:host([fill-container]) .content {
+  flex-grow: 1;
+  min-height: 0;
 }

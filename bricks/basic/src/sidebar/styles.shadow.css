@@ -6,7 +6,7 @@
   display: none;
 }
 
-:host([static-position]) {
+:host([position="static"]) {
   height: 100%;
 }
 
@@ -28,7 +28,7 @@
     var(--side-bar-collapse-transition-timing-function);
 }
 
-:host(:not([static-position])) .sidebar-container {
+:host(:not([position="static"])) .sidebar-container {
   position: fixed;
   left: 0;
   top: var(--app-bar-height);

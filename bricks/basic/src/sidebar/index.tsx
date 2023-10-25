@@ -1,6 +1,5 @@
 import React, {
   MouseEventHandler,
-  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -47,7 +46,7 @@ export interface EoSidebarProps {
   menu: SidebarMenuType;
   expandedState?: ExpandedState;
   hiddenFixedIcon?: boolean;
-  staticPosition?: boolean;
+  position?: "static" | "fixed";
 }
 
 export interface EoSidebarEvents {
@@ -87,10 +86,12 @@ class EoSidebar extends ReactNextElement implements EoSidebarProps {
   accessor expandedState: ExpandedState | undefined;
 
   /**
-   * 是否以静态定位（而不是固定定位）显示
+   * 设置定位方式：静态定位或固定定位。
+   *
+   * @default "fixed"
    */
-  @property({ type: Boolean })
-  accessor staticPosition: boolean | undefined;
+  @property()
+  accessor position: "static" | "fixed" | undefined;
 
   /**
    * 宽度变化时触发
@@ -119,7 +120,7 @@ class EoSidebar extends ReactNextElement implements EoSidebarProps {
         menu={this.menu}
         expandedState={this.expandedState}
         hiddenFixedIcon={this.hiddenFixedIcon}
-        staticPosition={this.staticPosition}
+        position={this.position}
         onActualWidthChange={this.#handleActualWidthChange}
         onExpandedStateChange={this.#handleExpandedStateChange}
       />
@@ -137,7 +138,7 @@ export function EoSidebarComponent(props: EoSidebarComponentProps) {
 
   const {
     hiddenFixedIcon,
-    staticPosition,
+    position,
     onActualWidthChange,
     onExpandedStateChange,
   } = props;
@@ -305,7 +306,7 @@ export function EoSidebarComponent(props: EoSidebarComponentProps) {
   const getContainerWidth = (inner?: boolean) => {
     // With static position, when not expanded, the outer container will keep
     // collapsed even if hovered, while only the inner container will expand.
-    if (staticPosition) {
+    if (position === "static") {
       return expandedState === ExpandedState.Expanded ||
         (inner && expandedState === ExpandedState.Hovered)
         ? expandedWidth

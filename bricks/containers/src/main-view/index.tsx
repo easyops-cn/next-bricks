@@ -1,4 +1,4 @@
-import React, { CSSProperties } from "react";
+import React from "react";
 import { createDecorators } from "@next-core/element";
 import {
   ReactNextElement,
@@ -22,9 +22,9 @@ const WrappedNarrowView = wrapBrick<EoNarrowView, NarrowViewProps>(
 const WrappedBanner = wrapLocalBrick<EoBanner, BannerProps>(EoBanner);
 
 export interface MainViewProps {
-  gap?: MainViewGap;
+  contentGap?: MainViewGap;
   narrow?: NarrowViewSize;
-  bannerOnly?: boolean;
+  bannerAlone?: boolean;
   bannerTitle?: string;
   bannerDescription?: string;
   bannerImage?: string;
@@ -51,12 +51,12 @@ export
 class EoMainView extends ReactNextElement {
   /**
    * 标题栏和内容区之间的间隔。
-   * 如果内容区已包含一些视觉上的留白，可以设置 `gap: small`。
+   * 如果内容区已包含一些视觉上的留白，可以设置 `contentGap: small`。
    *
    * @default "medium"
    */
   @property()
-  accessor gap: MainViewGap | undefined;
+  accessor contentGap: MainViewGap | undefined;
 
   /**
    * 设置窄布局模式（居中）。
@@ -72,10 +72,16 @@ class EoMainView extends ReactNextElement {
   accessor narrow: NarrowViewSize | undefined;
 
   /**
+   * 设置是否铺满容器。
+   */
+  @property({ type: Boolean })
+  accessor fillContainer: boolean | undefined;
+
+  /**
    * 设置仅使用 banner 时，面包屑、标题和工具栏将不会显示。
    */
   @property({ type: Boolean })
-  accessor bannerOnly: boolean | undefined;
+  accessor bannerAlone: boolean | undefined;
 
   @property()
   accessor bannerTitle: string | undefined;
@@ -93,7 +99,7 @@ class EoMainView extends ReactNextElement {
     return (
       <EoMainViewComponent
         narrow={this.narrow}
-        bannerOnly={this.bannerOnly}
+        bannerAlone={this.bannerAlone}
         bannerTitle={this.bannerTitle}
         bannerDescription={this.bannerDescription}
         bannerImage={this.bannerImage}
@@ -104,13 +110,13 @@ class EoMainView extends ReactNextElement {
 
 export function EoMainViewComponent({
   narrow: _narrow,
-  bannerOnly,
+  bannerAlone,
   bannerTitle,
   bannerDescription,
   bannerImage,
 }: MainViewProps) {
   const narrow = _narrow ?? "full";
-  const bannerConfig = bannerOnly ? { bannerTitle, bannerDescription } : null;
+  const bannerConfig = bannerAlone ? { bannerTitle, bannerDescription } : null;
 
   return (
     <>
@@ -136,10 +142,8 @@ export function EoMainViewComponent({
           <slot name="banner" />
         </div>
       </WrappedBanner>
-      <WrappedNarrowView size={narrow}>
-        <div className="content">
-          <slot />
-        </div>
+      <WrappedNarrowView className="content" size={narrow}>
+        <slot />
       </WrappedNarrowView>
     </>
   );
