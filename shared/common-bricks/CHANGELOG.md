@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.19.0...@next-shared/common-bricks@0.20.0) (2023-10-25)
+
+
+### Features
+
+* initialize new brick: eo-page-view ([5a138b3](https://github.com/easyops-cn/next-bricks/commit/5a138b308abb463d99dce07ca6fd9b6b95bc3845))
+* new brick: eo-main-view ([043baf4](https://github.com/easyops-cn/next-bricks/commit/043baf43035c27e2a8b5616b1593aaf5f96f2578))
+* new bricks: eo-narrow-view and eo-banner ([5a6ea25](https://github.com/easyops-cn/next-bricks/commit/5a6ea25c2ed701ac2af844dbedc8236ca92cb68b))
+
+
+
+
+
 # [0.19.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.18.1...@next-shared/common-bricks@0.19.0) (2023-10-16)
 
 

@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.40.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.39.0...@next-bricks/basic@0.40.0) (2023-10-25)
+
+
+### Bug Fixes
+
+* fix sidebar box-shadow when hovered ([e083fe0](https://github.com/easyops-cn/next-bricks/commit/e083fe07247e2ecf903c6bb44c100e0f88612144))
+* refine layout views ([ac8dd05](https://github.com/easyops-cn/next-bricks/commit/ac8dd05e2458d0e1a832c2a3c7b612366885fabc))
+* **sidebar:** consider x offset when resizing ([30deca6](https://github.com/easyops-cn/next-bricks/commit/30deca625bf5fb05302c926ec9362865cad4eed4))
+
+
+### Features
+
+* new brick: eo-main-view ([043baf4](https://github.com/easyops-cn/next-bricks/commit/043baf43035c27e2a8b5616b1593aaf5f96f2578))
+
+
+
+
+
 # [0.39.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.38.1...@next-bricks/basic@0.39.0) (2023-10-25)
 
 
