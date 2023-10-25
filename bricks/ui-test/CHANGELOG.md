@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.8.0...@next-bricks/ui-test@0.9.0) (2023-10-25)
+
+
+### Features
+
+* support use `code` in chain call ([a0198b2](https://github.com/easyops-cn/next-bricks/commit/a0198b22c6baf8c4ad42d1888a3c493ed0b2e32d))
+
+
+
+
+
 # [0.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.7.0...@next-bricks/ui-test@0.8.0) (2023-10-20)
 
 

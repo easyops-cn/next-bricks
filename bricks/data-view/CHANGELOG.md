@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.18.1...@next-bricks/data-view@0.19.0) (2023-10-25)
+
+
+### Features
+
+* 翻牌器资源组-3、5、6 ([c379b7e](https://github.com/easyops-cn/next-bricks/commit/c379b7ec95a6c033f7e09c5fbc27ef2f51a7fccc))
+
+
+
+
+
 ## [0.18.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.18.0...@next-bricks/data-view@0.18.1) (2023-10-20)
 
 **Note:** Version bump only for package @next-bricks/data-view
