@@ -244,6 +244,8 @@ export function EoSidebarComponent(props: EoSidebarComponentProps) {
     storage.setItem(SIDE_BAR_RESIZE_WIDTH, expandedWidth);
   }, [expandedWidth]);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const handleResizeDown: MouseEventHandler = (e) => {
     setDragging(true);
 
@@ -252,8 +254,11 @@ export function EoSidebarComponent(props: EoSidebarComponentProps) {
       e.preventDefault();
     }
 
+    const offsetX = containerRef.current?.getBoundingClientRect().left ?? 0;
+
     const drag = debounceByAnimationFrame((e: MouseEvent) => {
-      const width = e.clientX >= sideBarWidth ? e.clientX : sideBarWidth;
+      const x = e.clientX - offsetX;
+      const width = x >= sideBarWidth ? x : sideBarWidth;
 
       setExpandedWidth(width);
     });
@@ -325,6 +330,7 @@ export function EoSidebarComponent(props: EoSidebarComponentProps) {
       style={{ width: getContainerWidth() }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      ref={containerRef}
       data-testid="side-bar"
     >
       <div className="inner" style={{ width: getContainerWidth(true) }}>
