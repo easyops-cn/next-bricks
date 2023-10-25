@@ -9,6 +9,7 @@ brick: eo-sidebar
 properties:
   style:
     height: 600px
+  position: static
   menu:
     title: 这是一个菜单标题
     menuItems:

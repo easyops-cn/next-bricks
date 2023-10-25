@@ -312,6 +312,13 @@ NodeList [
     expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
 
     expect(element.shadowRoot?.querySelector(".state-collapsed")).toBeTruthy();
+    expect(
+      (element.shadowRoot?.querySelector(".sidebar-container") as HTMLElement)
+        ?.style.width
+    ).toBe("60px");
+    expect(
+      (element.shadowRoot?.querySelector(".inner") as HTMLElement)?.style.width
+    ).toBe("60px");
 
     act(() => {
       fireEvent.mouseEnter(
@@ -324,6 +331,73 @@ NodeList [
         detail: "hovered",
       })
     );
+    expect(
+      (element.shadowRoot?.querySelector(".sidebar-container") as HTMLElement)
+        ?.style.width
+    ).toBe("220px");
+    expect(
+      (element.shadowRoot?.querySelector(".inner") as HTMLElement)?.style.width
+    ).toBe("220px");
+
+    act(() => {
+      fireEvent.mouseLeave(
+        element.shadowRoot?.querySelector(".sidebar-container") as HTMLElement
+      );
+    });
+    expect(element.shadowRoot?.querySelector(".state-collapsed")).toBeTruthy();
+    expect(onExpandedStateChange).lastCalledWith(
+      expect.objectContaining({
+        detail: "collapsed",
+      })
+    );
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
+
+  test("hover with static position", async () => {
+    const onExpandedStateChange = jest.fn();
+    const element = document.createElement("eo-sidebar") as EoSidebar;
+    element.menu = menu;
+    element.position = "static";
+    element.addEventListener("expanded.state.change", onExpandedStateChange);
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    await act(async () => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+
+    expect(element.shadowRoot?.querySelector(".state-collapsed")).toBeTruthy();
+    expect(
+      (element.shadowRoot?.querySelector(".sidebar-container") as HTMLElement)
+        ?.style.width
+    ).toBe("60px");
+    expect(
+      (element.shadowRoot?.querySelector(".inner") as HTMLElement)?.style.width
+    ).toBe("60px");
+
+    act(() => {
+      fireEvent.mouseEnter(
+        element.shadowRoot?.querySelector(".sidebar-container") as HTMLElement
+      );
+    });
+    expect(element.shadowRoot?.querySelector(".state-hovered")).toBeTruthy();
+    expect(onExpandedStateChange).lastCalledWith(
+      expect.objectContaining({
+        detail: "hovered",
+      })
+    );
+    expect(
+      (element.shadowRoot?.querySelector(".sidebar-container") as HTMLElement)
+        ?.style.width
+    ).toBe("60px");
+    expect(
+      (element.shadowRoot?.querySelector(".inner") as HTMLElement)?.style.width
+    ).toBe("220px");
 
     act(() => {
       fireEvent.mouseLeave(

@@ -29,7 +29,6 @@ import type {
   EoSidebarMenuSubmenu,
   EoSidebarMenuSubmenuProps,
 } from "./sidebar-menu-submenu/index.js";
-import { isSubMenu, isGroup } from "@next-shared/general/menu";
 
 const sidebarMenuItemTagNameSet = new Set([
   "EO-SIDEBAR-MENU-ITEM",

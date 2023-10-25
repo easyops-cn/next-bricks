@@ -4,6 +4,10 @@
 
 ### Basic
 
-```html preview
-<eo-banner>Hello world</eo-banner>
+```yaml preview
+brick: eo-banner
+properties:
+  bannerAlone: true
+  bannerTitle: Hello World
+  bannerDescription: Say hello to everyone!
 ```

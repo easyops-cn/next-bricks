@@ -201,6 +201,7 @@
   background-color: rgba(26, 122, 255, 1);
 }
 
-.dragging {
+.dragging,
+.dragging .inner {
   transition: none;
 }
