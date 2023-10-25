@@ -220,7 +220,7 @@ function HistoryItem(props: HistoryItemProps) {
   const { data, enableRollback, current, onHistoryItemClick, onRollback } =
     props;
 
-  const ts = moment(data.ts * 1000);
+  const ts = moment(data.ts / 1000000);
   const duration = moment.duration(ts.diff(moment()));
   const humanizedTime =
     duration.days() <= -1

@@ -2,6 +2,7 @@ export enum K {
   LOAD_MORE = "LOAD_MORE",
   LOADING = "LOADING",
   NO_DATA = "NO_DATA",
+  NODE = "NODE",
   // action
   ADD = "ADD",
   EDIT = "EDIT",
@@ -37,6 +38,8 @@ const en: Locale = {
   LOAD_MORE: "Load more",
   LOADING: "Loading",
   NO_DATA: "No data",
+  NODE: "{{ nodes }}",
+  NODE_ellipsis: "{{ nodes }} etc., a total of {{ count }} items",
   // action
   ADD: "Add node",
   EDIT: "Edit node",
@@ -75,6 +78,8 @@ const zh: Locale = {
   LOAD_MORE: "加载更多",
   LOADING: "加载中",
   NO_DATA: "没有数据",
+  NODE: "{{ nodes }}",
+  NODE_ellipsis: "{{ nodes }}等共{{ count }}项",
   // action
   ADD: "新增节点",
   EDIT: "编辑节点",
@@ -115,4 +120,4 @@ export const locales = { en, zh };
 
 type Locale = { [k in K]: string } & {
   [k in K as `${k}_plural`]?: string;
-};
+} & { NODE_ellipsis: string };
