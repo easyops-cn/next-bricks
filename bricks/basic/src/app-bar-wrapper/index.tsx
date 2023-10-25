@@ -2,12 +2,14 @@ import React from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
+import classNames from "classnames";
 import styleText from "./styles.shadow.css";
 
 const { defineElement, property } = createDecorators();
 
 export interface AppBarWrapperProps {
   isFixed?: boolean;
+  position?: "static" | "fixed";
   displayCenter?: boolean;
   extraAppBarContentStyle?: React.CSSProperties;
 }
@@ -23,13 +25,26 @@ export
   alias: ["basic.app-bar-wrapper"],
 })
 class EoAppBarWrapper extends ReactNextElement implements AppBarWrapperProps {
-  /** 固定定位
+  /**
+   * 是否固定定位。
+   *
    * @default true
+   * @deprecated 使用 `position` 属性代替
    */
   @property({
     type: Boolean,
   })
   accessor isFixed: boolean | undefined;
+
+  /**
+   * 设置定位方式：静态定位或固定定位。
+   *
+   * 设置时优先级高于 `isFixed`。
+   *
+   * @default "fixed"
+   */
+  @property()
+  accessor position: "static" | "fixed" | undefined;
 
   /**
    * 居中显示
@@ -51,6 +66,7 @@ class EoAppBarWrapper extends ReactNextElement implements AppBarWrapperProps {
       <EoAppBarWrapperComponent
         displayCenter={this.displayCenter}
         isFixed={this.isFixed}
+        position={this.position}
         extraAppBarContentStyle={this.extraAppBarContentStyle}
       />
     );
@@ -59,14 +75,10 @@ class EoAppBarWrapper extends ReactNextElement implements AppBarWrapperProps {
 
 export function EoAppBarWrapperComponent({
   isFixed = true,
+  position,
   displayCenter = false,
   extraAppBarContentStyle = {},
 }: AppBarWrapperProps) {
-  // TODO: when AppBarTips rendered, setAppbarHeight should be used to set
-  const [appbarHeight, setAppbarHeight] = React.useState<string>(
-    `var(--app-bar-height)`
-  );
-
   React.useEffect(() => {
     const mainElement = document.getElementById("main-mount-point");
     const iframeMainElement = document.getElementById(
@@ -77,17 +89,16 @@ export function EoAppBarWrapperComponent({
   }, []);
 
   return (
-    <div
-      className="app-bar-container"
-      style={{
-        height: appbarHeight,
-      }}
-    >
+    <div className="app-bar-container">
       <div
-        className="app-bar"
-        style={{
-          position: isFixed ? "fixed" : "absolute",
-        }}
+        className={classNames(
+          "app-bar",
+          position === "static"
+            ? "static"
+            : position === "fixed" || isFixed
+            ? "fixed"
+            : "absolute"
+        )}
       >
         {/* TODO: need AppBarTips */}
         <div
@@ -97,11 +108,11 @@ export function EoAppBarWrapperComponent({
             ...extraAppBarContentStyle,
           }}
         >
-          <div className="leftContainer">
-            <slot name="left"></slot>
+          <div className="left">
+            <slot name="left" />
           </div>
-          <div className="rightContainer">
-            <slot name="right"></slot>
+          <div className="right">
+            <slot name="right" />
           </div>
         </div>
       </div>

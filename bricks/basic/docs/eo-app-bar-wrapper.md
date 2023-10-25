@@ -6,18 +6,20 @@
 
 ```yaml preview
 - brick: eo-app-bar-wrapper
+  properties:
+    position: static
   slots:
     left:
       bricks:
         - brick: div
           properties:
-            textContent: leftContent
+            textContent: Left Content
       type: bricks
     right:
       bricks:
         - brick: div
           properties:
-            textContent: rightContent
+            textContent: Right Content
       type: bricks
 ```
 
@@ -26,18 +28,19 @@
 ```yaml preview
 - brick: eo-app-bar-wrapper
   properties:
+    position: static
     displayCenter: true
   slots:
     left:
       bricks:
         - brick: div
           properties:
-            textContent: leftContent
+            textContent: Left Content
       type: bricks
     right:
       bricks:
         - brick: div
           properties:
-            textContent: rightContent
+            textContent: Right Content
       type: bricks
 ```

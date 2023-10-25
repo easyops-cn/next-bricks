@@ -1,0 +1,44 @@
+:host {
+  --banner-padding-horizontal: 60px;
+  --banner-padding-vertical: 44px;
+  --banner-title-color: #57689c;
+  --banner-desc-color: #3c4875;
+
+  display: block;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: var(--banner-padding-vertical) var(--banner-padding-horizontal);
+}
+
+:host-context(html[data-theme="dark-v2"]),
+:host-context([data-override-theme="dark-v2"]) {
+  --banner-title-color: rgba(255, 255, 255, 0.85);
+  --banner-desc-color: rgba(255, 255, 255, 0.65);
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.container,
+.title-and-desc {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  gap: var(--card-content-gap);
+}
+
+.title-and-desc {
+  gap: 14px;
+}
+
+.page-title {
+  color: var(--banner-title-color);
+}
+
+.page-desc {
+  color: var(--banner-desc-color);
+}

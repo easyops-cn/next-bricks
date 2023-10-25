@@ -1,0 +1,36 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.header,
+.main {
+  min-height: 0;
+}
+
+.main {
+  flex-grow: 1;
+  display: flex;
+}
+
+.sidebar,
+.sub-sidebar,
+.content {
+  min-width: 0;
+}
+
+.header,
+.sidebar,
+.sub-sidebar {
+  flex-shrink: 0;
+}
+
+.content {
+  flex-grow: 1;
+  overflow: auto;
+}
