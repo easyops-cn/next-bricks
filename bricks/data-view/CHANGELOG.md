@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.19.1...@next-bricks/data-view@0.20.0) (2023-10-25)
+
+
+### Features
+
+* 数据指标组-4 ([34e3acc](https://github.com/easyops-cn/next-bricks/commit/34e3acc67ca60710245c93a338f19fcc7253b480))
+
+
+
+
+
 ## [0.19.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.19.0...@next-bricks/data-view@0.19.1) (2023-10-25)
 
 **Note:** Version bump only for package @next-bricks/data-view
