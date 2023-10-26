@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.18.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.17.2...@next-bricks/containers@0.18.0) (2023-10-26)
+
+
+### Bug Fixes
+
+* refine style ([817c11d](https://github.com/easyops-cn/next-bricks/commit/817c11dcc573d2a70cd03131966bde8161118dd4))
+
+
+### Features
+
+* new brick: eo-content-layout ([5bdbefb](https://github.com/easyops-cn/next-bricks/commit/5bdbefb57701dc4726645e21a80842a800267701))
+
+
+
+
+
 ## [0.17.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.17.1...@next-bricks/containers@0.17.2) (2023-10-25)
 
 

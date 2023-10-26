@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.21.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.20.0...@next-shared/common-bricks@0.21.0) (2023-10-26)
+
+
+### Features
+
+* new brick: eo-content-layout ([5bdbefb](https://github.com/easyops-cn/next-bricks/commit/5bdbefb57701dc4726645e21a80842a800267701))
+
+
+
+
+
 # [0.20.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.19.0...@next-shared/common-bricks@0.20.0) (2023-10-25)
 
 
