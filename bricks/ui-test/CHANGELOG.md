@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.9.0...@next-bricks/ui-test@0.10.0) (2023-10-26)
+
+
+### Features
+
+* 支持命令下方插入命令 ([aa7a18a](https://github.com/easyops-cn/next-bricks/commit/aa7a18a25905992e6fd35489a6cab85e12b04c69))
+
+
+
+
+
 # [0.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.8.0...@next-bricks/ui-test@0.9.0) (2023-10-25)
 
 
