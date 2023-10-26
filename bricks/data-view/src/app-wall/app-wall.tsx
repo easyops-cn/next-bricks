@@ -113,6 +113,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
     disabledDefaultClickEvent,
     handleCardClick,
     containerId,
+    noRotate,
   } = props;
   const [curClickCardItemAppData, setCurClickCardItemAppData] =
     useState<AppData>(null);
@@ -160,6 +161,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
 
   const render = useCallback(() => {
     rendererRef.current.render(sceneRef.current, cameraRef.current);
+    controlsRef.current.handleResize();
   }, []);
 
   const updateViewBounds = (length: number) => {
@@ -170,18 +172,18 @@ export function AppWallElement(props: AppWallProps): ReactElement {
     const width = window.innerWidth;
     const height = window.innerHeight;
     const aspect = width / height;
+    const scene = new Scene();
+    const camera = new PerspectiveCamera(fov, aspect, 0.1, 10000);
 
     const renderer = new CSS3DRenderer();
     renderer.setSize(width, height);
     appwallRef.current.replaceChildren(renderer.domElement);
 
-    const camera = new PerspectiveCamera(fov, aspect, 0.1, 10000);
-
     const controls = new TrackballControls(camera, renderer.domElement);
     controls.rotateSpeed = 0.5;
     controls.minDistance = 500;
     controls.maxDistance = 10000;
-    const scene = new Scene();
+    controls.noRotate = noRotate;
 
     sceneRef.current = scene;
     cameraRef.current = camera;
@@ -285,7 +287,8 @@ export function AppWallElement(props: AppWallProps): ReactElement {
       y: __objectCSS.position.y + 15,
       z: __objectCSS.position.z + 100 * Math.cos(rotationY),
     };
-    const scale = 1.25;
+    const scale = 1.25,
+      duration = 200;
     registerEvents.current.isShowRelations = true;
     new Tween(__objectCSS.rotation)
       .to(
@@ -294,7 +297,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
           y: 0,
           z: 0,
         },
-        300
+        duration
       )
       .onStart(() => {
         cardBrickName === "data-view.app-wall-card-item" &&
@@ -310,11 +313,11 @@ export function AppWallElement(props: AppWallProps): ReactElement {
           y: scale,
           z: scale,
         },
-        300
+        duration
       )
       .start();
     new Tween(__objectCSS.position)
-      .to(position, 300)
+      .to(position, duration)
       .onUpdate(render)
       .onComplete(function () {
         //创建连线
@@ -332,6 +335,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
       __curve: object3d,
       __userData,
     } = registerEvents.current.element;
+    const duration = 200;
 
     new Tween(__objectCSS.rotation)
       .to(
@@ -340,7 +344,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
           y: object3d.rotation.y,
           z: object3d.rotation.z,
         },
-        300
+        duration
       )
       .start();
     new Tween(__objectCSS.scale)
@@ -350,7 +354,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
           y: 1,
           z: 1,
         },
-        300
+        duration
       )
       .start();
     new Tween(__objectCSS.position)
@@ -360,7 +364,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
           y: object3d.position.y,
           z: object3d.position.z,
         },
-        300
+        duration
       )
       .onUpdate(render)
       .onStart(() => {
@@ -675,7 +679,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         configRef.current.maxY
       );
       createView(appData);
-      transform(targetsRef.current.curve, 1500);
+      transform(targetsRef.current.curve, 1000);
     }
 
     return () => {
@@ -701,7 +705,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
             showElementBetweenRelation(target);
           clearTimeout(registerEvents.current.mouseoverTimer);
         });
-      }, 500);
+      }, 300);
     };
     const handleClick = (e: MouseEvent) => {
       clearTimeout(registerEvents.current.clickTimer);
@@ -730,7 +734,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
             }
           }
         });
-      }, 300);
+      }, 200);
     };
     const handleDbClick = (e: MouseEvent) => {
       clearTimeout(registerEvents.current.clickTimer);
@@ -850,7 +854,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
             }
           }
         });
-      }, 300);
+      }, 200);
     };
 
     container.addEventListener("dblclick", handleDbClick);

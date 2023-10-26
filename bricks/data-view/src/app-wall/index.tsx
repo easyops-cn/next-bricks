@@ -23,6 +23,7 @@ export interface AppWallProps {
   handleCardClick?: (data: AppData) => void;
   cardBrickName: AppWallCardBrickNameType; // 支持更多种类，需要在dependencies内增加引入增加的类型
   containerId?: string;
+  noRotate?: boolean;
 }
 
 /**
@@ -111,6 +112,11 @@ class AppWall extends ReactNextElement implements AppWallProps {
    */
   @property()
   accessor containerId: string;
+  /**
+   *  控制是否旋转
+   */
+  @property({ type: Boolean })
+  accessor noRotate: boolean;
 
   /**
    *  详情卡片点击事件
@@ -178,6 +184,7 @@ class AppWall extends ReactNextElement implements AppWallProps {
         cardSize={this.cardSize}
         cardBrickName={this.cardBrickName}
         containerId={this.containerId}
+        noRotate={this.noRotate}
       />
     );
   }
