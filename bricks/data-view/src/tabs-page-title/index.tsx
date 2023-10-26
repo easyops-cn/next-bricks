@@ -5,14 +5,6 @@ import styleText from "./styles.shadow.css";
 import classNames from "classnames";
 const { defineElement, property, event } = createDecorators();
 
-/**
- * 带有tabs的标题构件
- * @author astrid
- * @slot - 标题
- * @slot start - 顶部左边插槽
- * @slot end - 顶部右边插槽
- * @slot [key] - 标签对应的key的插槽
- */
 interface TabsItem {
   /** 唯一标识，对应 slot 名称 */
   key: string;
@@ -25,6 +17,14 @@ interface TabsPageTitleProps {
   onTabChange?: (key: string) => void;
 }
 
+/**
+ * 带有tabs的标题构件
+ * @author astrid
+ * @slot - 标题
+ * @slot start - 顶部左边插槽
+ * @slot end - 顶部右边插槽
+ * @slot [key] - 标签对应的key的插槽
+ */
 export
 @defineElement("data-view.tabs-page-title", {
   styleTexts: [styleText],

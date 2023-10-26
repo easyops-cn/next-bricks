@@ -12,12 +12,8 @@ export interface GraphNodeProps {
 }
 
 /**
- * @id data-view.graph-node
- * @name data-view.graph-node
- * @docKind brick
- * @description
+ * Graph Node
  * @author astrid
- * @noInheritDoc
  */
 @defineElement("data-view.graph-node", {
   styleTexts: [variablesStyleText, styleText],

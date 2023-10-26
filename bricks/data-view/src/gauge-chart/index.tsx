@@ -12,12 +12,8 @@ interface GaugeChartProps {
   fontSize?: number;
 }
 /**
- * @id data-view.gauge-chart
- * @name data-view.gauge-chart
- * @docKind brick
- * @description 大屏仪表盘
+ * 大屏仪表盘
  * @author astrid
- * @noInheritDoc
  */
 @defineElement("data-view.gauge-chart", {
   styleTexts: [variablesStyleText, styleText],
@@ -129,7 +125,7 @@ export function GaugeChartComponent(props: GaugeChartProps) {
       y: radius + 30,
       height: height,
       width,
-      circleR
+      circleR,
     };
   }, [radius]);
   const innerStrokeRadius = radius - strokeWidth / 2;
@@ -141,7 +137,9 @@ export function GaugeChartComponent(props: GaugeChartProps) {
         height={`${transform.height}px`}
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
-        viewBox={`0 0 ${transform.width} ${transform.height + transform.circleR}`}
+        viewBox={`0 0 ${transform.width} ${
+          transform.height + transform.circleR
+        }`}
       >
         <defs>
           <linearGradient id="strokeGradient">
@@ -197,7 +195,7 @@ export function GaugeChartComponent(props: GaugeChartProps) {
           fill="#46E0DB"
           cx={x}
           cy={-y}
-          r={transform.circleR/3}
+          r={transform.circleR / 3}
         />
         {/* 内部刻度的 */}
         <path

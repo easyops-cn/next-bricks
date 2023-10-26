@@ -21,7 +21,8 @@ export interface SimpleCardItemProps {
 }
 
 /**
- * 构件 `data-view.simple-card-item`
+ * 基础卡片项
+ * @author astrid
  */
 export
 @defineElement("data-view.simple-card-item", {

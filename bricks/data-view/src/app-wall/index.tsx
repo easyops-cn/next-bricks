@@ -26,12 +26,8 @@ export interface AppWallProps {
 }
 
 /**
- * @id data-view.app-wall
- * @name data-view.app-wall
- * @docKind brick
- * @description 应用墙
+ * 应用墙
  * @author nlicroshan
- * @noInheritDoc
  */
 @defineElement("data-view.app-wall", {
   styleTexts: [variablesStyleText, styleText],

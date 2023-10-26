@@ -13,51 +13,48 @@ export interface CabinetAppLayerProps {
 }
 
 /**
- * @id data-view.cabinet-app-layer
- * @name data-view.cabinet-app-layer
- * @docKind brick
- * @description cabinet子构件----应用层
+ * cabinet子构件----应用层
  * @author nlicroshan
- * @noInheritDoc
  */
 @defineElement("data-view.cabinet-app-layer", {
   styleTexts: [variablesStyleText, styleText],
 })
 class CabinetAppLayer extends ReactNextElement implements CabinetAppLayerProps {
   /**
-  * @kind string
-  * @required true
-  * @default
-  * @description 标题
-  */
+   * @kind string
+   * @required true
+   * @default
+   * @description 标题
+   */
   @property()
   accessor appTitle: string;
 
   /**
-  * @kind "active" | "faded"
-  * @required false
-  * @default
-  * @description 当前状态
-  */
+   * @kind "active" | "faded"
+   * @required false
+   * @default
+   * @description 当前状态
+   */
   @property()
   accessor status: "active" | "faded";
 
   render() {
     return (
-      <CabinetAppLayerElement
-        appTitle={this.appTitle}
-        status={this.status}
-      />
+      <CabinetAppLayerElement appTitle={this.appTitle} status={this.status} />
     );
   }
 }
 
-function CabinetAppLayerElement(props: CabinetAppLayerProps): React.ReactElement {
+function CabinetAppLayerElement(
+  props: CabinetAppLayerProps
+): React.ReactElement {
   const { appTitle, status } = props;
 
   return (
     <div className={classNames("container", status && `status-${status}`)}>
-      <div className="app-title" title={appTitle}>{appTitle}</div>
+      <div className="app-title" title={appTitle}>
+        {appTitle}
+      </div>
       <div className="divider" />
     </div>
   );

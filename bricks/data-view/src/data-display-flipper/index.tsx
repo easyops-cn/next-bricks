@@ -17,7 +17,8 @@ export interface DataDisplayFlipperProps {
 }
 
 /**
- * 构件 `data-view.data-display-flipper`
+ * 翻牌器-type-3
+ * @author jiezhou
  */
 @defineElement("data-view.data-display-flipper", {
   styleTexts: [styleText],

@@ -9,12 +9,8 @@ interface GearBackgroundProps {
 }
 
 /**
- * @id data-view.gear-background
- * @name data-view.gear-background
- * @docKind brick
- * @description
+ * 齿轮背景
  * @author astrid
- * @noInheritDoc
  */
 @defineElement("data-view.gear-background")
 class GearBackground extends ReactNextElement implements GearBackgroundProps {

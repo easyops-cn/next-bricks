@@ -6,18 +6,17 @@ import classNames from "classnames";
 import variablesStyleText from "../../data-view-variables.shadow.css";
 import type {
   GeneralIcon,
-  GeneralIconProps
+  GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
 
 const { defineElement, property, event } = createDecorators();
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
   "icons.general-icon"
 );
-type StatusType = "normal" | "warning"
+type StatusType = "normal" | "warning";
 interface DescriptionItem {
   key: string;
   value: string;
-
 }
 export interface SystemCardProps {
   status: StatusType;
@@ -29,12 +28,8 @@ export interface SystemCardProps {
 }
 
 /**
- * @id data-view.app-wall-system-card
- * @name data-view.app-wall-system-card
- * @docKind brick
- * @description
+ * 应用墙系统卡片
  * @author astrid
- * @noInheritDoc
  */
 @defineElement("data-view.app-wall-system-card", {
   styleTexts: [variablesStyleText, styleText],
@@ -104,23 +99,33 @@ class SystemCard extends ReactNextElement implements SystemCardProps {
 
   handleClick = () => {
     this.#onClickEvent.emit();
-  }
-
+  };
 
   render(): React.ReactNode {
-    return <SystemCardComponent
-      buttonName={this.buttonName}
-      status={this.status}
-      cardTitle={this.cardTitle}
-      itemList={this.itemList}
-      handleClick={this.handleClick}
-      containerStyle={this.containerStyle}
-    />;
+    return (
+      <SystemCardComponent
+        buttonName={this.buttonName}
+        status={this.status}
+        cardTitle={this.cardTitle}
+        itemList={this.itemList}
+        handleClick={this.handleClick}
+        containerStyle={this.containerStyle}
+      />
+    );
   }
 }
 
-export function SystemCardComponent(props: SystemCardProps): React.ReactElement {
-  const { status, itemList, cardTitle, buttonName, handleClick, containerStyle } = props;
+export function SystemCardComponent(
+  props: SystemCardProps
+): React.ReactElement {
+  const {
+    status,
+    itemList,
+    cardTitle,
+    buttonName,
+    handleClick,
+    containerStyle,
+  } = props;
   const descriptionRef = useRef<HTMLDivElement>();
 
   useEffect(() => {
@@ -128,28 +133,28 @@ export function SystemCardComponent(props: SystemCardProps): React.ReactElement 
   }, [itemList]);
 
   return (
-<div className="wrapper" style={containerStyle}>
-      <div className="cardName" title={cardTitle}>{cardTitle}</div>
-      {
-        itemList?.length && (<div className="descriptions" ref={descriptionRef}>
-          {
-            itemList.map((item, index) => (
-              <div key={index} className="descriptionsItem">
-                <div className="itemKey">{item.key}</div>
-                <div className="itemValue">{item.value}</div>
-              </div>))
-          }
-        </div>)
-      }
-      {
-        buttonName &&
+    <div className="wrapper" style={containerStyle}>
+      <div className="cardName" title={cardTitle}>
+        {cardTitle}
+      </div>
+      {itemList?.length && (
+        <div className="descriptions" ref={descriptionRef}>
+          {itemList.map((item, index) => (
+            <div key={index} className="descriptionsItem">
+              <div className="itemKey">{item.key}</div>
+              <div className="itemValue">{item.value}</div>
+            </div>
+          ))}
+        </div>
+      )}
+      {buttonName && (
         <div className="buttonContent" onClick={handleClick}>
           <WrappedIcon lib="antd" icon="fall" theme="outlined" />
           <span className="buttonName">{buttonName}</span>
         </div>
-      }
+      )}
     </div>
-  )
+  );
 }
 
-export { SystemCard }
+export { SystemCard };

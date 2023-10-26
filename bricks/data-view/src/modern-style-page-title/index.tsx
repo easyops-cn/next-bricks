@@ -15,12 +15,8 @@ interface ModernStylePageTitleProps {
 }
 
 /**
- * @id data-view.modern-style-page-title
- * @name data-view.modern-style-page-title
- * @docKind brick
- * @description 现代风页面标题
+ * 现代风页面标题
  * @author nlicroshan
- * @noInheritDoc
  */
 @defineElement("data-view.modern-style-page-title", {
   styleTexts: [variablesStyleText, styleText],

@@ -27,12 +27,8 @@ export interface CabinetContainerProps {
 }
 
 /**
- * @id data-view.cabinet-container
- * @name data-view.cabinet-container
- * @docKind brick
- * @description 大屏集群容器构件
+ * 大屏集群容器构件
  * @author astrid
- * @noInheritDoc
  */
 @defineElement("data-view.cabinet-container", {
   styleTexts: [variablesText, styleText],
