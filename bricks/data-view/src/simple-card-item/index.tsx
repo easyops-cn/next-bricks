@@ -96,7 +96,7 @@ export function SimpleCardItemComponent(props: SimpleCardItemProps) {
           {description && (
             <div className="card-item-description">{description}</div>
           )}
-          {descriptionList?.length && (
+          {!!descriptionList?.length && (
             <div className="card-item-description-list">
               {descriptionList.map((item, index) => (
                 <div key={index}>

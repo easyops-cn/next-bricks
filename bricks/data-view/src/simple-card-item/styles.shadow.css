@@ -29,7 +29,7 @@
 }
 
 .status-normal:hover {
-  box-shadow: 0 0 32px 0 rgba(0, 62, 179, 0.5);
+  box-shadow: 0 0 32px 0 rgba(0, 62, 179, 0.24);
   border: 2px solid #fff;
 }
 .status-warning:hover {
