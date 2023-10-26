@@ -11,3 +11,4 @@ import "./data-providers/get-flat-nodes-in-tree.js";
 import "./data-providers/apply-snippet.js";
 import "./data-providers/delete-file.js";
 import "./data-providers/rename-file.js";
+import "./data-providers/insert-node.js";
