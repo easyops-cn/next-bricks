@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.21.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.20.0...@next-bricks/data-view@0.21.0) (2023-10-26)
+
+
+### Features
+
+* **data-view:** app-wall support noRotate && modify style ([2e7c07c](https://github.com/easyops-cn/next-bricks/commit/2e7c07c921eb2e6a2a098aa78ce59720cdd33dc9))
+
+
+
+
+
 # [0.20.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.19.1...@next-bricks/data-view@0.20.0) (2023-10-25)
 
 
