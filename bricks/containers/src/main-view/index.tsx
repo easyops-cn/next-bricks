@@ -29,6 +29,7 @@ export interface MainViewProps {
   bannerDescription?: string;
   bannerImage?: string;
   bannerSunk?: boolean;
+  showFooter?: boolean;
 }
 
 export type MainViewGap = "small" | "medium";
@@ -43,6 +44,7 @@ export type MainViewGap = "small" | "medium";
  * @slot pageTitle - 页面标题
  * @slot toolbar - 工具栏
  * @slot banner - Banner 内容
+ * @slot footer - 底栏（通常放置按钮）
  */
 export
 @defineElement("eo-main-view", {
@@ -95,6 +97,12 @@ class EoMainView extends ReactNextElement {
   @property({ type: Boolean })
   accessor bannerSunk: boolean | undefined;
 
+  /**
+   * 是否显示底栏（通常放置按钮）
+   */
+  @property({ type: Boolean })
+  accessor showFooter: boolean | undefined;
+
   render() {
     return (
       <EoMainViewComponent
@@ -145,6 +153,11 @@ export function EoMainViewComponent({
       <WrappedNarrowView className="content" size={narrow}>
         <slot />
       </WrappedNarrowView>
+      <div className="footer">
+        <WrappedNarrowView size={narrow}>
+          <slot name="footer" />
+        </WrappedNarrowView>
+      </div>
     </>
   );
 }
