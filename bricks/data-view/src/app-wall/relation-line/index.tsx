@@ -12,40 +12,42 @@ export interface AppWallRelationLineProps {
 }
 
 /**
- * @id data-view.app-wall-relation-line
- * @name data-view.app-wall-relation-line
- * @docKind brick
- * @description 应用墙子构件----关联连线
+ * 应用墙子构件----关联连线
  * @author nlicroshan
- * @noInheritDoc
  */
 @defineElement("data-view.app-wall-relation-line", {
   styleTexts: [variablesStyleText, styleText],
 })
-class AppWallRelationLine extends ReactNextElement implements AppWallRelationLineProps {
+class AppWallRelationLine
+  extends ReactNextElement
+  implements AppWallRelationLineProps
+{
   /**
-  * @kind "blue" | "purple"
-  * @required false
-  * @default "blue"
-  * @description 光线颜色
-  */
+   * @kind "blue" | "purple"
+   * @required false
+   * @default "blue"
+   * @description 光线颜色
+   */
   @property()
   accessor lightColor: "blue" | "purple" = "blue";
 
   render() {
-    return (
-      <AppWallRelationLineElement
-        lightColor={this.lightColor}
-      />
-    );
+    return <AppWallRelationLineElement lightColor={this.lightColor} />;
   }
 }
 
-function AppWallRelationLineElement(props: AppWallRelationLineProps): React.ReactElement {
+function AppWallRelationLineElement(
+  props: AppWallRelationLineProps
+): React.ReactElement {
   const { lightColor } = props;
 
   return (
-    <div className={classNames("relation-line", lightColor && `light-color-${lightColor}`)} />
+    <div
+      className={classNames(
+        "relation-line",
+        lightColor && `light-color-${lightColor}`
+      )}
+    />
   );
 }
 

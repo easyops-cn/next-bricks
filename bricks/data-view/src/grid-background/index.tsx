@@ -16,12 +16,8 @@ interface GridBackgroundProps {
 }
 
 /**
- * @id data-view.grid-background
- * @name data-view.grid-background
- * @docKind brick
- * @description  大屏网格背景
+ * 大屏网格背景
  * @author astrid
- * @noInheritDoc
  */
 @defineElement("data-view.grid-background", {
   styleTexts: [styleText],

@@ -48,12 +48,8 @@ interface ModernStyleTreemapProps {
 }
 
 /**
- * @id data-view.modern-style-treemap
- * @name data-view.modern-style-treemap
- * @docKind brick
- * @description 现代风树图
+ * 现代风树图
  * @author nlicroshan
- * @noInheritDoc
  */
 @defineElement("data-view.modern-style-treemap", {
   styleTexts: [variablesStyleText, styleText],

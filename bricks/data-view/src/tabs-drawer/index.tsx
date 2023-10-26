@@ -40,12 +40,8 @@ interface TabsDrawerProps {
   onTabChange?: (key: string) => void;
 }
 /**
- * @id data-view.tabs-drawer
- * @name data-view.tabs-drawer
- * @docKind brick
- * @description 大屏仪标签页抽屉
+ * 大屏仪标签页抽屉
  * @author astrid
- * @noInheritDoc
  */
 
 @defineElement("data-view.tabs-drawer", {

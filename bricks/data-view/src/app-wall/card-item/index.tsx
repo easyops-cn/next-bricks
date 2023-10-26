@@ -14,12 +14,8 @@ export interface AppWallCardItemProps {
 }
 
 /**
- * @id data-view.app-wall-card-item
- * @name data-view.app-wall-card-item
- * @docKind brick
- * @description 应用墙子构件----卡片项
+ * 应用墙子构件----卡片项
  * @author nlicroshan
- * @noInheritDoc
  */
 @defineElement("data-view.app-wall-card-item", {
   styleTexts: [variablesStyleText, styleText],

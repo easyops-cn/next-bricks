@@ -15,12 +15,8 @@ import { Radar } from "./radar.js";
 const { defineElement, property } = createDecorators();
 
 /**
- * @id data-view.radar-chart
- * @name data-view.radar-chart
- * @docKind brick
- * @description 雷达图
+ * 雷达图
  * @author zekunpan
- * @noInheritDoc
  */
 @defineElement("data-view.radar-chart", {
   styleTexts: [styleText],

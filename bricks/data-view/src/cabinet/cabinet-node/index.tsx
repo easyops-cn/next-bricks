@@ -34,12 +34,8 @@ export interface CabinetNodeProps {
 }
 
 /**
- * @id data-view.cabinet-node
- * @name data-view.cabinet-node
- * @docKind brick
- * @description cabinet子构件----节点
+ * cabinet子构件----节点
  * @author nlicroshan
- * @noInheritDoc
  */
 @defineElement("data-view.cabinet-node", {
   styleTexts: [variablesStyleText, styleText],

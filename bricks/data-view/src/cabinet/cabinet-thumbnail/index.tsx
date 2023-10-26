@@ -32,12 +32,8 @@ export interface CabinetThumbnailProps {
 }
 
 /**
- * @id data-view.cabinet-thumbnail
- * @name data-view.cabinet-thumbnail
- * @docKind brick
- * @description 应用墙缩略图
+ * 应用墙缩略图
  * @author astrid
- * @noInheritDoc
  */
 @defineElement("data-view.cabinet-thumbnail", {
   styleTexts: [variablesText, styleText],

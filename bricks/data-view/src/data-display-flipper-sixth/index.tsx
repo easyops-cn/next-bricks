@@ -13,7 +13,8 @@ export interface DataDisplayFlipperSixthProps {
 }
 
 /**
- * 构件 `data-view.data-display-flipper-sixth`
+ * 翻牌器-type-6
+ * @author jiezhou
  */
 @defineElement("data-view.data-display-flipper-sixth", {
   styleTexts: [styleText],

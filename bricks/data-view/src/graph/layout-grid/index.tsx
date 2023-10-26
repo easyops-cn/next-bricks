@@ -25,12 +25,8 @@ export interface GraphLayoutGridProps {
 }
 
 /**
- * @id data-view.graph-layout-grid
- * @name data-view.graph-layout-grid
- * @docKind brick
- * @description
+ * Graph grid 布局
  * @author astrid
- * @noInheritDoc
  */
 @defineElement("data-view.graph-layout-grid", {
   styleTexts: [variablesStyleText, styleText],

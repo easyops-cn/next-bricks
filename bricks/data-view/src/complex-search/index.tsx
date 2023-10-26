@@ -39,12 +39,8 @@ interface ComplexSearchProps {
 }
 
 /**
- * @id data-view.complex-search
- * @name data-view.complex-search
- * @docKind brick
- * @description 大屏搜索构件
+ * 大屏搜索构件
  * @author astrid
- * @noInheritDoc
  */
 @defineElement("data-view.complex-search", {
   styleTexts: [variablesStyleText, styleText],

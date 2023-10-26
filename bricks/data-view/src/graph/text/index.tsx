@@ -13,12 +13,8 @@ export interface GraphTextProps {
 }
 
 /**
- * @id data-view.graph-text
- * @name data-view.graph-text
- * @docKind brick
- * @description
+ * Graph text
  * @author astrid
- * @noInheritDoc
  */
 @defineElement("data-view.graph-text", {
   styleTexts: [variablesStyleText, styleText],

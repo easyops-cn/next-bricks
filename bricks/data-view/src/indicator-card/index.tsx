@@ -9,7 +9,8 @@ import blockUrl from "../asset/images/block.png";
 const { defineElement, property } = createDecorators();
 
 /**
- * 构件 `data-view.indicator-card`
+ * 指标卡片
+ * @author alexchen
  */
 export
 @defineElement("data-view.indicator-card", {
@@ -88,3 +89,5 @@ export function IndicatorCardComponent({
     </div>
   );
 }
+
+// Nth Fibonacci number

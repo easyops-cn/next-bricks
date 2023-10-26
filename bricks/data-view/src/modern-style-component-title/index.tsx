@@ -15,12 +15,8 @@ interface ModernStyleComponentTitleProps {
 }
 
 /**
- * @id data-view.modern-style-component-title
- * @name data-view.modern-style-component-title
- * @docKind brick
- * @description 现代风组件标题
+ * 现代风组件标题
  * @author nlicroshan
- * @noInheritDoc
  */
 @defineElement("data-view.modern-style-component-title", {
   styleTexts: [variablesStyleText, styleText],

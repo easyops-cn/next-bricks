@@ -16,7 +16,7 @@ export interface DataDisplayFlipperFifthProps {
 }
 
 /**
- * 构件 `data-view.data-display-flipper-fifth`
+ * 翻牌器-type-5
  */
 @defineElement("data-view.data-display-flipper-fifth", {
   styleTexts: [styleText],
