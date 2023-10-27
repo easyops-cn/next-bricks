@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.40.2...@next-bricks/basic@0.40.3) (2023-10-27)
+
+
+### Bug Fixes
+
+* fix absolute app-bar ([d8a9dd8](https://github.com/easyops-cn/next-bricks/commit/d8a9dd82f4d41ef82c1578034ee4e628a7e22566))
+
+
+
+
+
 ## [0.40.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.40.1...@next-bricks/basic@0.40.2) (2023-10-26)
 
 
