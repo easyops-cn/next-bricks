@@ -82,4 +82,12 @@
   .menu-item-text.item-has-icon {
     margin-left: 10px;
   }
+
+  .menu-item[active] {
+    background-color: var(--app-submenu-active-bg);
+  }
+
+  .menu-item[active] .menu-item-text {
+    color: var(--antd-link-color);
+  }
 }
