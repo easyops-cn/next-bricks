@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.23.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.22.0...@next-bricks/data-view@0.23.0) (2023-10-27)
+
+
+### Features
+
+* **data-view:** app-wall support boundMargin ([3e8c6b1](https://github.com/easyops-cn/next-bricks/commit/3e8c6b12d754591ba039ffb9e67c930d66c20a0b))
+
+
+
+
+
 # [0.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.21.0...@next-bricks/data-view@0.22.0) (2023-10-26)
 
 
