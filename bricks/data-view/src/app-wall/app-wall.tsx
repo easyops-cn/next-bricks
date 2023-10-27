@@ -71,7 +71,7 @@ const fov = 45;
 const angle = 100;
 const panelSpace = 300;
 
-const getViewBounds = (length: number, cardSize: CardSize) => {
+const getViewBounds = (length: number, cardSize: CardSize, margin: number) => {
   const maxX = Math.ceil(
     Math.sqrt((length * cardSize.outerHeight) / (0.4 * cardSize.outerWidth))
   );
@@ -89,7 +89,7 @@ const getViewBounds = (length: number, cardSize: CardSize) => {
     bounds: {
       width,
       height,
-      margin: 100,
+      margin,
       z,
     },
   };
@@ -114,6 +114,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
     handleCardClick,
     containerId,
     noRotate,
+    boundMargin,
   } = props;
   const [curClickCardItemAppData, setCurClickCardItemAppData] =
     useState<AppData>(null);
@@ -143,7 +144,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
     bounds: {
       width: 0,
       height: 0,
-      margin: 100,
+      margin: boundMargin,
       z: 0,
     },
   });
@@ -165,12 +166,15 @@ export function AppWallElement(props: AppWallProps): ReactElement {
   }, []);
 
   const updateViewBounds = (length: number) => {
-    configRef.current = getViewBounds(length, cardSize);
+    configRef.current = getViewBounds(length, cardSize, boundMargin);
   };
 
   const init = () => {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+    const containerRect = document
+      .getElementById(containerId)
+      ?.getBoundingClientRect();
+    const width = containerRect?.width || window.innerWidth;
+    const height = containerRect?.height || window.innerHeight;
     const aspect = width / height;
     const scene = new Scene();
     const camera = new PerspectiveCamera(fov, aspect, 0.1, 10000);
