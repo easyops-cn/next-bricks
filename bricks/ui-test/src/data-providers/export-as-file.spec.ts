@@ -3,12 +3,14 @@ import { exportAsFile } from "./export-as-file.js";
 import { get, set } from "idb-keyval";
 import { parseSuiteAst } from "../utils/parseSuiteAst.js";
 import { transformFromAst } from "@babel/standalone";
+import { format } from "prettier/standalone";
 import { NodeItem } from "../interface.js";
 
 jest.mock("idb-keyval");
 jest.mock("../utils/parseSuiteAst.js");
 jest.mock("@babel/standalone");
 jest.mock("@babel/types");
+jest.mock("prettier/standalone");
 const consoleError = jest.spyOn(console, "error");
 
 describe("exportAsFile", () => {

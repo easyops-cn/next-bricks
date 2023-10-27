@@ -7,6 +7,8 @@ import { parseSuiteAst } from "../utils/parseSuiteAst.js";
 import { getCaseFileHandle, getTestDirHandle } from "./shared/fileAccess.js";
 import { NodeItem } from "../interface.js";
 import { dirHandleStorageKey } from "../constants.js";
+import { format } from "prettier/standalone";
+import parserBabel from "prettier/parser-babel";
 
 export async function exportAsFile(
   suiteData: NodeItem,
@@ -49,7 +51,13 @@ export async function exportAsFile(
     },
   }).code;
 
-  await writable.write(generatedCode);
+  const prettyCode = await format(generatedCode as string, {
+    parser: "babel-ts",
+    plugins: [parserBabel],
+    printWidth: 50,
+  });
+
+  await writable.write(prettyCode);
 
   await writable.close();
 
