@@ -8,7 +8,8 @@ import { getCaseFileHandle, getTestDirHandle } from "./shared/fileAccess.js";
 import { NodeItem } from "../interface.js";
 import { dirHandleStorageKey } from "../constants.js";
 import { format } from "prettier/standalone";
-import parserBabel from "prettier/parser-babel";
+import * as parserBabel from "prettier/plugins/babel";
+import * as pluginEstree from "prettier/plugins/estree";
 
 export async function exportAsFile(
   suiteData: NodeItem,
@@ -51,9 +52,10 @@ export async function exportAsFile(
     },
   }).code;
 
+  // https://prettier.io/blog/2023/07/05/3.0.0.html#api-1
   const prettyCode = await format(generatedCode as string, {
     parser: "babel-ts",
-    plugins: [parserBabel],
+    plugins: [parserBabel, pluginEstree as any],
     printWidth: 50,
   });
 
