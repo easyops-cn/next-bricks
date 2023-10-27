@@ -35,14 +35,8 @@ eo-link {
 
 .nav-menu-wrapper {
   display: flex;
-}
-
-.nav-menu-wrapper > eo-menu-item {
-  padding: 2px 14px;
-}
-
-.nav-menu-wrapper > eo-popover {
-  padding: 2px 6px;
+  align-items: center;
+  gap: 8px;
 }
 
 .popover .sub-menu-item-label {
