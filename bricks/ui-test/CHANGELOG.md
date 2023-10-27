@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.10.2...@next-bricks/ui-test@0.10.3) (2023-10-27)
+
+
+### Bug Fixes
+
+* 适配 prettier 3.0 ([da11fe1](https://github.com/easyops-cn/next-bricks/commit/da11fe1c5c668b3169547e4328fff620b434a083))
+
+
+
+
+
 ## [0.10.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.10.1...@next-bricks/ui-test@0.10.2) (2023-10-27)
 
 
