@@ -27,6 +27,10 @@
   position: fixed;
 }
 
+.app-bar.absolute {
+  position: absolute;
+}
+
 .app-bar-content {
   display: flex;
   justify-content: space-between;
