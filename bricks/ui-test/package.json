@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/ui-test",
-  "version": "0.10.1",
+  "version": "0.10.2",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/ui-test",
   "repository": {
     "type": "git",
@@ -34,7 +34,6 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "prettier": "^3.0.3",
     "@babel/parser": "^7.22.7",
     "@babel/standalone": "^7.22.9",
     "@babel/types": "^7.22.5",
@@ -47,6 +46,7 @@
     "classnames": "^2.3.2",
     "file-saver": "^2.0.5",
     "idb-keyval": "^6.2.1",
+    "prettier": "^3.0.3",
     "process": "^0.11.10",
     "react": "0.0.0-experimental-ee8509801-20230117"
   },

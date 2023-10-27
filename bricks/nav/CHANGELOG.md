@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.1.10...@next-bricks/nav@0.1.11) (2023-10-27)
+
+
+### Bug Fixes
+
+* refine gap between nav menu items ([31c0451](https://github.com/easyops-cn/next-bricks/commit/31c045125972f6b2cadceaadc93edc4e5fcfd376))
+
+
+
+
+
 ## [0.1.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.1.9...@next-bricks/nav@0.1.10) (2023-10-27)
 
 **Note:** Version bump only for package @next-bricks/nav

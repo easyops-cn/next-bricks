@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.40.3...@next-bricks/basic@0.40.4) (2023-10-27)
+
+
+### Bug Fixes
+
+* revert menu-item hover style ([08166a6](https://github.com/easyops-cn/next-bricks/commit/08166a69a5575a71c16d2e14c28f04bbd957ae5f))
+
+
+
+
+
 ## [0.40.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.40.2...@next-bricks/basic@0.40.3) (2023-10-27)
 
 
