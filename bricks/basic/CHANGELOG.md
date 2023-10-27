@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.40.4...@next-bricks/basic@0.40.5) (2023-10-27)
+
+
+### Bug Fixes
+
+* set active style for active sub menu items ([1d64878](https://github.com/easyops-cn/next-bricks/commit/1d64878a3af4ccb26ee0dc648c797836b90a5906))
+
+
+
+
+
 ## [0.40.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.40.3...@next-bricks/basic@0.40.4) (2023-10-27)
 
 
