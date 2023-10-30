@@ -23,10 +23,7 @@ import moment from "moment";
 import styleText from "./styles.shadow.css";
 import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
 import { K, NS, locales } from "./i18n.js";
-import {
-  WorkspaceApi_getChangeHistory,
-  WorkspaceApi_GetChangeHistoryResponseBody_list_item,
-} from "@next-api-sdk/next-builder-sdk";
+import { WorkspaceApi_getChangeHistory } from "@next-api-sdk/next-builder-sdk";
 import { translateHistory } from "./utils.js";
 
 initializeReactI18n(NS, locales);
@@ -49,9 +46,7 @@ const WrappedPopover = wrapBrick<
   beforeVisibleChange: "before.visible.change",
 });
 
-type HistoryData = WorkspaceApi_GetChangeHistoryResponseBody_list_item & {
-  translation: Record<string, string>;
-};
+type HistoryData = Record<string, any>;
 
 export interface WorkbenchHistoryActionProps {
   appId: string;
@@ -120,16 +115,17 @@ export function WorkbenchHistoryActionComponent(
   const [loading, setLoading] = useState(false);
   const [hideLoadMore, setHideLoadMore] = useState(true);
   const [historyList, setHistoryList] = useState<HistoryData[]>([]);
-  const lastTs = useRef<number>();
+  const lastTs = useRef<string>("");
 
   const handleLoadList = (isFirst?: boolean) => {
     setLoading(true);
     WorkspaceApi_getChangeHistory(appId, { ts: lastTs.current, limit: 20 })
       .then((result) => {
         setHistoryList((pre) => {
-          const list = result.list
-            .filter((v) => v.abstract)
-            .map((v) => ({ ...v, translation: translateHistory(v) }));
+          const list = result.list.map((v) => ({
+            ...v,
+            translation: translateHistory(v),
+          }));
           return isFirst ? list : pre.concat(list);
         });
         lastTs.current = result.ts;
@@ -147,7 +143,7 @@ export function WorkbenchHistoryActionComponent(
     if (e.detail) {
       setHideLoadMore(true);
       setHistoryList([]);
-      lastTs.current = 0;
+      lastTs.current = "";
       handleLoadList(true);
     }
   };
