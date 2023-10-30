@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.8.11...@next-bricks/visual-builder@0.8.12) (2023-10-30)
+
+
+### Bug Fixes
+
+* ts 更换为字符串 ([cba40d5](https://github.com/easyops-cn/next-bricks/commit/cba40d57485f847d21b481ac4c415f27f44707c4))
+* ts 更换为字符串 ([4be95db](https://github.com/easyops-cn/next-bricks/commit/4be95db43e0e13a200fd43301f8defede884b8c1))
+
+
+
+
+
 ## [0.8.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.8.10...@next-bricks/visual-builder@0.8.11) (2023-10-27)
 
 **Note:** Version bump only for package @next-bricks/visual-builder
