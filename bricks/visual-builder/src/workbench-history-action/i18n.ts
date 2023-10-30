@@ -65,7 +65,7 @@ const en: Locale = {
     "Update the relation between {{ leftObjectId }} ({{ leftNodes }}) and {{ rightObjectId }} ({{ rightNodes }})",
   REMOVE_RELATION_FULL:
     "Remove the relation between {{ leftObjectId }} ({{ leftNodes }}) and {{ rightObjectId }} ({{ rightNodes }})",
-  ROLLBACK_FULL: "Rollback to {{ rollback_abstract }}({{ rollback_time }})",
+  ROLLBACK_FULL: "Rollback to [{{ rollbackAbstract }}]",
   // category
   PROJECT: "Project",
   USER: "User Group",
@@ -109,7 +109,7 @@ const zh: Locale = {
     "更新{{ leftObjectId }}（{{ leftNodes }}）和{{ rightObjectId }}（{{ rightNodes }}）的关系",
   REMOVE_RELATION_FULL:
     "移除{{ leftObjectId }}（{{ leftNodes }}）和{{ rightObjectId }}（{{ rightNodes }}）的关系",
-  ROLLBACK_FULL: "回滚到{{ rollback_abstract }}（{{ rollback_time }}）",
+  ROLLBACK_FULL: "回滚到【{{ rollbackAbstract }}】",
   // category
   PROJECT: "项目",
   USER: "用户组",

@@ -59,7 +59,17 @@ const modelI18nKeyMap: Record<string, string> = {
   "WORKFLOW_DEF@EASYOPS": `${NS}:${K.WORKFLOW}`,
 };
 
-export function translateHistory(history: Record<string, any>) {
+export function translateHistory(history: Record<string, any>): {
+  category: string;
+  action: string;
+  leftObjectId: string;
+  rightObjectId: string;
+  nodes: string;
+  leftNodes: string;
+  rightNodes: string;
+  abstract: string;
+  rollbackAbstract: string;
+} {
   const category = i18n.t(
     categoryI18nKeyMap[history.category] ?? history.category
   );
@@ -84,6 +94,10 @@ export function translateHistory(history: Record<string, any>) {
     history.abstract?.rightNodes,
     history.abstract?.rightNodesCount
   );
+  const translatedRollback =
+    history.action === "rollback" && history.rollBackIdInfo
+      ? translateHistory(history.rollBackIdInfo)
+      : null;
 
   const abstract = i18n.t(
     fullActionI18nKeyMap[history.action] ?? history.action,
@@ -96,8 +110,9 @@ export function translateHistory(history: Record<string, any>) {
       relationChanges: history.abstract?.relationChanges?.join(", "),
       leftObjectId,
       rightObjectId,
+      rollbackAbstract: translatedRollback?.abstract,
     }
-  );
+  ) as string;
 
   return {
     category,
@@ -108,6 +123,7 @@ export function translateHistory(history: Record<string, any>) {
     leftNodes,
     rightNodes,
     abstract,
+    rollbackAbstract: translatedRollback?.abstract,
   };
 }
 
