@@ -18,7 +18,6 @@ describe("eo-card", () => {
     element.cardTitle = "title";
     element.textContent = "context";
     element.hasExtraSlot = true;
-    element.isFixedFooter = true;
     element.operationButtons = [{ text: "1", id: "1" } as any];
 
     const footerElement = document.createElement("div");
