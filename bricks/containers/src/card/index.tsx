@@ -1,8 +1,7 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import type { Button, ButtonProps } from "@next-bricks/basic/button";
-import classNames from "classnames";
 import { isEmpty } from "lodash";
 import styleText from "./card.shadow.css";
 import "@next-core/theme";
@@ -21,12 +20,20 @@ export interface CardProps {
   fillVertical?: boolean;
   verticalCenter?: boolean;
   hasExtraSlot?: boolean;
-  isFixedFooter?: boolean;
   operationButtons?: OperationButton[];
   headerStyle?: React.CSSProperties;
   background?: boolean | string;
   compact?: boolean;
+  outline?: CardOutline;
 }
+
+export type CardOutline =
+  | "border"
+  | "shadow"
+  | "background"
+  | "none"
+  | "default";
+
 const WrappedButton = wrapBrick<Button, ButtonProps>("eo-button");
 
 const { defineElement, property } = createDecorators();
@@ -36,7 +43,6 @@ const { defineElement, property } = createDecorators();
  * @author julielai
  * @slot - 卡片内容
  * @slot extra - 头部右侧拓展元素
- * @slot footer - 底部拓展元素
  * @slot titleSuffix - 标题后缀的插槽
  */
 @defineElement("eo-card", {
@@ -74,14 +80,6 @@ class Card extends ReactNextElement implements CardProps {
   accessor hasExtraSlot: boolean | undefined;
 
   /**
-   * footer 插槽固定在窗口底部
-   */
-  @property({
-    attribute: false,
-  })
-  accessor isFixedFooter = true;
-
-  /**
    * 右上角的操作按钮列表
    */
   @property({ attribute: false })
@@ -104,12 +102,12 @@ class Card extends ReactNextElement implements CardProps {
   accessor background: boolean | string | undefined;
 
   /**
-   * 卡片是否ui8.2的紧凑模式
+   * 卡片轮廓。默认情况下，使用默认背景填充色，8.2 下默认则为无描边且无填充。
+   *
+   * @default "default"
    */
-  @property({
-    type: Boolean,
-  })
-  accessor compact: boolean | undefined;
+  @property()
+  accessor outline: CardOutline | undefined;
 
   render() {
     return (
@@ -118,11 +116,9 @@ class Card extends ReactNextElement implements CardProps {
         fillVertical={this.fillVertical}
         verticalCenter={this.verticalCenter}
         hasExtraSlot={this.hasExtraSlot}
-        isFixedFooter={this.isFixedFooter}
         operationButtons={this.operationButtons}
         headerStyle={this.headerStyle}
         background={this.background}
-        compact={this.compact}
       />
     );
   }
@@ -133,16 +129,10 @@ export function CardComponent({
   fillVertical,
   verticalCenter,
   hasExtraSlot,
-  isFixedFooter,
   operationButtons,
   headerStyle,
   background = true,
-  compact,
 }: CardProps) {
-  const [paddingBottom, setPaddingBottom] = useState(0);
-  const [fixedStyle, setFixedStyle] = useState({});
-  const footerRef = useRef<HTMLDivElement>(null);
-
   const renderButtons = useMemo(
     () =>
       operationButtons?.map((button) => {
@@ -162,7 +152,7 @@ export function CardComponent({
           {cardTitle && (
             <div className="card-head-title">
               {cardTitle}
-              <slot id="titleSlot" name="titleSuffix" />
+              <slot name="titleSuffix" />
             </div>
           )}
           {(hasExtraSlot || !isEmpty(operationButtons)) && (
@@ -176,62 +166,15 @@ export function CardComponent({
     ),
     [headerStyle, cardTitle, hasExtraSlot, operationButtons, renderButtons]
   );
-  // istanbul ignore next;
-  const handleFooter = () => {
-    if (!isEmpty(footerRef.current)) {
-      const rootNodeRect = footerRef.current?.getBoundingClientRect();
-      const top = rootNodeRect?.bottom - window.innerHeight;
-      if (top <= 0) {
-        setFixedStyle({});
-      } else {
-        setFixedStyle({
-          position: "fixed",
-          left: rootNodeRect?.left,
-          bottom: 0,
-          width: footerRef.current?.clientWidth,
-        });
-      }
-    }
-  };
-
-  useEffect(() => {
-    if (!isEmpty(footerRef.current)) {
-      const resizeObserver = new ResizeObserver(() => {
-        if (
-          paddingBottom !== footerRef.current?.clientHeight &&
-          footerRef.current?.clientHeight
-        ) {
-          setPaddingBottom(footerRef.current?.clientHeight);
-          if (isFixedFooter) {
-            handleFooter();
-          }
-        }
-      });
-      resizeObserver.observe(footerRef?.current);
-
-      if (isFixedFooter) {
-        window.addEventListener("scroll", handleFooter);
-        window.addEventListener("resize", handleFooter);
-      }
-      return () => {
-        resizeObserver.disconnect();
-        if (isFixedFooter) {
-          window.removeEventListener("scroll", handleFooter);
-          window.removeEventListener("resize", handleFooter);
-        }
-      };
-    }
-  }, [isFixedFooter, paddingBottom]);
 
   return (
     <div
-      className={classNames("card", { compactCardContainer: compact })}
+      className="card"
       style={{
         ...(fillVertical ? { height: "100%" } : {}),
         ...(verticalCenter
           ? { display: "grid", gridTemplate: "50px auto/auto" }
           : {}),
-        paddingBottom,
         ...(background
           ? { background: typeof background === "string" ? background : "" }
           : { background: "none" }),
@@ -254,16 +197,6 @@ export function CardComponent({
         <div>
           <slot></slot>
         </div>
-      </div>
-      <div
-        className="card-footer"
-        ref={footerRef}
-        style={{
-          ...fixedStyle,
-          ...(paddingBottom ? {} : { padding: 0 }),
-        }}
-      >
-        <slot name="footer"></slot>
       </div>
     </div>
   );
