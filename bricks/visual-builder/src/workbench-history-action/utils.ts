@@ -1,25 +1,30 @@
 import { NS, K } from "./i18n.js";
 import { i18n } from "@next-core/i18n";
-import { WorkspaceApi_GetChangeHistoryResponseBody_list_item } from "@next-api-sdk/next-builder-sdk";
 
 const actionI18nKeyMap: Record<string, string> = {
   add: `${NS}:${K.ADD}`,
   edit: `${NS}:${K.EDIT}`,
   delete: `${NS}:${K.DELETE}`,
+  batch_delete: `${NS}:${K.DELETE}`,
   import: `${NS}:${K.IMPORT}`,
+  clone: `${NS}:${K.CLONE}`,
   append_relation: `${NS}:${K.APPEND_RELATION}`,
   update_relation: `${NS}:${K.UPDATE_RELATION}`,
   remove_relation: `${NS}:${K.REMOVE_RELATION}`,
+  rollback: `${NS}:${K.ROLLBACK}`,
 };
 
 const fullActionI18nKeyMap: Record<string, string> = {
   add: `${NS}:${K.ADD_FULL}`,
   edit: `${NS}:${K.EDIT_FULL}`,
   delete: `${NS}:${K.DELETE_FULL}`,
+  batch_delete: `${NS}:${K.DELETE_FULL}`,
   import: `${NS}:${K.IMPORT_FULL}`,
+  clone: `${NS}:${K.CLONE_FULL}`,
   append_relation: `${NS}:${K.APPEND_RELATION_FULL}`,
   update_relation: `${NS}:${K.UPDATE_RELATION_FULL}`,
   remove_relation: `${NS}:${K.REMOVE_RELATION_FULL}`,
+  rollback: `${NS}:${K.ROLLBACK_FULL}`,
 };
 
 const categoryI18nKeyMap: Record<string, string> = {
@@ -54,33 +59,45 @@ const modelI18nKeyMap: Record<string, string> = {
   "WORKFLOW_DEF@EASYOPS": `${NS}:${K.WORKFLOW}`,
 };
 
-export function translateHistory(
-  history: WorkspaceApi_GetChangeHistoryResponseBody_list_item
-) {
+export function translateHistory(history: Record<string, any>): {
+  category: string;
+  action: string;
+  leftObjectId: string;
+  rightObjectId: string;
+  nodes: string;
+  leftNodes: string;
+  rightNodes: string;
+  abstract: string;
+  rollbackAbstract: string;
+} {
   const category = i18n.t(
     categoryI18nKeyMap[history.category] ?? history.category
   );
   const action = i18n.t(actionI18nKeyMap[history.action] ?? history.action);
   const leftObjectId = i18n.t(
-    modelI18nKeyMap[history.abstract.leftObjectId] ??
-      history.abstract.leftObjectId
+    modelI18nKeyMap[history.abstract?.leftObjectId] ??
+      history.abstract?.leftObjectId
   );
   const rightObjectId = i18n.t(
-    modelI18nKeyMap[history.abstract.rightObjectId] ??
-      history.abstract.rightObjectId
+    modelI18nKeyMap[history.abstract?.rightObjectId] ??
+      history.abstract?.rightObjectId
   );
   const nodes = translateNodes(
-    history.abstract.nodes,
-    history.abstract.nodesCount
+    history.abstract?.nodes,
+    history.abstract?.nodesCount
   );
   const leftNodes = translateNodes(
-    history.abstract.leftNodes,
-    history.abstract.leftNodesCount
+    history.abstract?.leftNodes,
+    history.abstract?.leftNodesCount
   );
   const rightNodes = translateNodes(
-    history.abstract.rightNodes,
-    history.abstract.rightNodesCount
+    history.abstract?.rightNodes,
+    history.abstract?.rightNodesCount
   );
+  const translatedRollback =
+    history.action === "rollback" && history.rollBackIdInfo
+      ? translateHistory(history.rollBackIdInfo)
+      : null;
 
   const abstract = i18n.t(
     fullActionI18nKeyMap[history.action] ?? history.action,
@@ -89,12 +106,13 @@ export function translateHistory(
       nodes,
       leftNodes,
       rightNodes,
-      nodeChanges: history.abstract.nodeChanges?.join(", "),
-      relationChanges: history.abstract.relationChanges?.join(", "),
+      nodeChanges: history.abstract?.nodeChanges?.join(", "),
+      relationChanges: history.abstract?.relationChanges?.join(", "),
       leftObjectId,
       rightObjectId,
+      rollbackAbstract: translatedRollback?.abstract,
     }
-  );
+  ) as string;
 
   return {
     category,
@@ -105,6 +123,7 @@ export function translateHistory(
     leftNodes,
     rightNodes,
     abstract,
+    rollbackAbstract: translatedRollback?.abstract,
   };
 }
 

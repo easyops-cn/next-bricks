@@ -57,10 +57,10 @@ describe("visual-builder.workbench-history-action", () => {
                     nodes: ["div"],
                     nodeChanges: ["properties"],
                   },
-                  ts: i + 1 * 10,
+                  ts: String(i + 1 * 10),
                 };
               }) as any,
-            ts: 200,
+            ts: "200",
           });
         }, 1000);
       });
@@ -101,10 +101,10 @@ describe("visual-builder.workbench-history-action", () => {
                     nodes: ["div"],
                     nodeChanges: ["properties"],
                   },
-                  ts: i + 1 * 10 + 200,
+                  ts: String(i + 1 * 10 + 200),
                 };
               }) as any,
-            ts: 250,
+            ts: "250",
           });
         }, 1000);
       });
@@ -155,10 +155,10 @@ describe("visual-builder.workbench-history-action", () => {
                     nodes: ["div"],
                     nodeChanges: ["properties"],
                   },
-                  ts: i + 1 * 10,
+                  ts: String(i + 1 * 10),
                 };
               }) as any,
-            ts: 50,
+            ts: "50",
           });
         }, 1000);
       });

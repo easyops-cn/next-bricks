@@ -2137,10 +2137,10 @@
   dependencies:
     "@next-core/http" "^1.0.6"
 
-"@next-api-sdk/next-builder-sdk@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.npmjs.org/@next-api-sdk/next-builder-sdk/-/next-builder-sdk-1.2.0.tgz#f6caa535e05aab89d6378b92b78cca98b91258c5"
-  integrity sha512-80Ifk3NxnXln26OgJiCtNlDWG0/mTpo1b5mEzkpBGz7Ic32W5DOYreCbJ9qweTQXrCG55yKOSSx74o245zDxjQ==
+"@next-api-sdk/next-builder-sdk@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.npmjs.org/@next-api-sdk/next-builder-sdk/-/next-builder-sdk-1.2.2.tgz#5d060558de2eebcce9f7f215403112b7c41fa768"
+  integrity sha512-pkOmAzXb6VYJGrPWp563/oK1wsFVpbqZwve4V4HNIaQWaHnDhGsGXkChx8zegS5UqfsihXd7zvMgfcwr9BZeSg==
   dependencies:
     "@next-core/http" "^1.0.0"
 
