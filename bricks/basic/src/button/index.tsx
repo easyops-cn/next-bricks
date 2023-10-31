@@ -7,11 +7,14 @@ import type {
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
 import type { Link, LinkProps } from "../link/index.js";
+import type { EoTooltip, ToolTipProps } from "../tooltip/index.jsx";
 import classNames from "classnames";
 import styleText from "./button.shadow.css";
 import "@next-core/theme";
 
 export const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
+const WrappedTooltip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");
+
 export interface ButtonProps {
   type?: ButtonType;
   size?: ComponentSize;
@@ -22,6 +25,7 @@ export interface ButtonProps {
   url?: string;
   href?: string;
   target?: string;
+  tooltip?: string;
   buttonStyle?: React.CSSProperties;
   callback?: Ref<HTMLButtonElement>;
 }
@@ -92,6 +96,9 @@ class Button extends ReactNextElement implements ButtonProps {
   /** 链接类型 */
   @property() accessor target: string | undefined;
 
+  /** tooltip */
+  @property() accessor tooltip: string | undefined;
+
   /**
    * 按钮样式
    * @group other
@@ -133,6 +140,7 @@ class Button extends ReactNextElement implements ButtonProps {
         url={this.url}
         href={this.href}
         target={this.target}
+        tooltip={this.tooltip}
         buttonStyle={this.buttonStyle}
         callback={this.#renderCallback}
       />
@@ -150,6 +158,7 @@ export function ButtonComponent({
   url,
   href,
   target,
+  tooltip,
   buttonStyle,
   callback,
 }: ButtonProps) {
@@ -170,14 +179,30 @@ export function ButtonComponent({
 
     // mouse events don't trigger at disabled button in Chrome, so the tooltip don't work
     // wrap the disabled button in span to make it work in tooltip
-    return disabled ? (
+    const wrappedNode = disabled ? (
       <span style={{ display: "inline-block", cursor: "not-allowed" }}>
         {button}
       </span>
     ) : (
       button
     );
-  }, [size, shape, type, disabled, danger, buttonStyle, icon]);
+
+    return tooltip ? (
+      <WrappedTooltip content={tooltip}>{wrappedNode}</WrappedTooltip>
+    ) : (
+      wrappedNode
+    );
+  }, [
+    size,
+    shape,
+    type,
+    disabled,
+    danger,
+    buttonStyle,
+    icon,
+    tooltip,
+    callback,
+  ]);
 
   return url || href ? (
     <WrappedLink

@@ -80,6 +80,16 @@
 <eo-button disabled danger type="primary">Danger primary</eo-button>
 ```
 
+### tooltip
+
+```html preview gap
+<eo-button type="primary" tooltip="primary">Primary</eo-button>
+
+<eo-button type="link" tooltip="link">Link</eo-button>
+
+<eo-button disabled tooltip="disabled">Default</eo-button>
+```
+
 ### Icons
 
 ```yaml preview gap
