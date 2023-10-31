@@ -37,6 +37,7 @@ eo-link {
   display: flex;
   align-items: center;
   gap: 8px;
+  white-space: nowrap;
 }
 
 .popover .sub-menu-item-label {
@@ -198,4 +199,11 @@ eo-link {
   box-shadow: 0px 4px 12px 0px rgba(17, 37, 64, 0.08);
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+.overflow-menu-item {
+  position: absolute;
+  opacity: 0;
+  height: 0;
+  pointer-events: none;
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createDecorators } from "@next-core/element";
 import { getHistory } from "@next-core/runtime";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
@@ -36,7 +36,6 @@ import { SiteMapItem } from "./site-map/SiteMapItem.js";
 import SiteMapStyleText from "../nav-menu/site-map/SiteMapItem.shadow.css";
 import ItemTagStyleText from "../nav-menu/site-map/ItemTag.shadow.css";
 import GroupItemStyleText from "../nav-menu/site-map/GroupItem.shadow.css";
-import { debounce } from "lodash";
 
 const { defineElement, property } = createDecorators();
 
@@ -53,12 +52,17 @@ const WrappedPopover = wrapBrick<
   beforeVisibleChange: "before.visible.change",
 });
 
+const GAP_WIDTH = 8;
+const OVERFLOW_RESERVED_WIDTH = 20;
+
 interface NavMenuProps {
   menu?: SidebarMenu;
   showTooltip?: boolean;
 }
 
 interface MenuItemComProps {
+  index?: number;
+  hidden?: boolean;
   item: SidebarMenuItem;
   topData?: boolean;
   selectedKey?: string[];
@@ -84,9 +88,11 @@ function RenderMenuItemCom(props: MenuItemComProps) {
   );
 }
 function SimpleMenuItemCom(props: SimpleMenuItemComProps) {
-  const { item, showTooltip, selectedKey = [] } = props;
+  const { item, index, hidden, showTooltip, selectedKey = [] } = props;
   return (
     <WrappedMenuItem
+      data-index={index}
+      className={hidden ? "overflow-menu-item" : ""}
       key={item.key}
       title={showTooltip ? item.text : ""}
       active={item.key ? selectedKey.includes(item.key) : false}
@@ -111,6 +117,8 @@ const handlePopupVisibleChange = (event: CustomEvent<boolean>) => {
 };
 
 function SubMenuItemCom({
+  index,
+  hidden,
   item,
   topData,
   showTooltip,
@@ -118,11 +126,16 @@ function SubMenuItemCom({
 }: MenuGroupComProps) {
   return item.items?.length > 0 ? (
     <WrappedPopover
-      className={classnames("popover", { subprime: !topData })}
-      trigger={"hover"}
+      data-index={index}
+      className={classnames("popover", {
+        subprime: !topData,
+        "overflow-menu-item": hidden,
+      })}
+      trigger="hover"
       placement={topData ? "bottom-start" : "right-start"}
       distance={0}
       anchorDisplay="block"
+      strategy="fixed"
     >
       <WrappedMenuItem
         className="sub-menu-item-label"
@@ -173,17 +186,24 @@ function GroupMenuItemCom({
 }
 
 function ThreeLevelMenuCom({
+  index,
+  hidden,
   item,
   selectedKey = [],
   showTooltip,
 }: {
+  index?: number;
+  hidden?: boolean;
   item: SidebarMenuGroup;
   selectedKey?: string[];
   showTooltip?: boolean;
 }) {
   return item.items?.length > 0 ? (
     <WrappedPopover
-      className={classnames("three-level-menu-popover", "popover")}
+      data-index={index}
+      className={classnames("three-level-menu-popover", "popover", {
+        "overflow-menu-item": hidden,
+      })}
       trigger={"hover"}
       placement={"bottom-start"}
       distance={0}
@@ -210,10 +230,14 @@ function ThreeLevelMenuCom({
 }
 
 function SitMapMenCom({
+  index,
+  hidden,
   item,
   selectedKey = [],
   showTooltip,
 }: {
+  index?: number;
+  hidden?: boolean;
   item: SidebarMenuGroup;
   selectedKey?: string[];
   showTooltip?: boolean;
@@ -227,7 +251,10 @@ function SitMapMenCom({
 
   return item.items?.length > 0 ? (
     <WrappedPopover
-      className={classnames("popover")}
+      data-index={index}
+      className={classnames("popover", {
+        "overflow-menu-item": hidden,
+      })}
       trigger={"hover"}
       placement={"bottom-start"}
       distance={0}
@@ -296,7 +323,9 @@ function NavMenuComponent(props: NavMenuProps) {
   const { menu, showTooltip } = props;
 
   const history = getHistory();
+  const navMenuWrapperRef = useRef<HTMLDivElement>(null);
   const [location, setLocation] = useState(history.location);
+  const [overflowIndex, setOverflowIndex] = useState(Number.MAX_SAFE_INTEGER);
   const { pathname, search } = location;
 
   const [selectedKey, setSelectedKey] = useState<string[]>([]);
@@ -319,15 +348,48 @@ function NavMenuComponent(props: NavMenuProps) {
     return unListen;
   }, []);
 
+  useEffect(() => {
+    if (navMenuWrapperRef.current) {
+      const resizeObserver = new ResizeObserver(() => {
+        if (navMenuWrapperRef.current) {
+          const { width } = navMenuWrapperRef.current.getClientRects()[0] ?? {};
+          const child =
+            navMenuWrapperRef.current?.querySelectorAll("[data-index]");
+          if (child?.length && width) {
+            let wapperWidth =
+              width - OVERFLOW_RESERVED_WIDTH - GAP_WIDTH * child.length;
+            for (let i = 0; i < child.length; i++) {
+              const { width: childWidth } = child[i].getClientRects()[0];
+              wapperWidth = wapperWidth - childWidth;
+              if (wapperWidth < 0) {
+                setOverflowIndex(i);
+                return;
+              }
+            }
+            setOverflowIndex(child?.length ?? -1);
+          }
+        }
+      });
+      resizeObserver.observe(navMenuWrapperRef.current);
+
+      return () => {
+        resizeObserver.disconnect();
+      };
+    }
+  }, []);
+
   return (
-    <div className="nav-menu-wrapper">
-      {menu?.menuItems.map((item) => {
+    <div ref={navMenuWrapperRef} className="nav-menu-wrapper">
+      {menu?.menuItems.map((item, index) => {
+        const isHidden = overflowIndex <= index;
         return (
           <React.Fragment key={item.key}>
             {isSubMenu(item as SidebarMenuGroup, true) &&
             (item as SidebarMenuGroup).childLayout === "category" &&
             (item as SidebarMenuGroup).items?.length ? (
               <ThreeLevelMenuCom
+                index={index}
+                hidden={isHidden}
                 item={item as SidebarMenuGroup}
                 showTooltip={showTooltip}
                 selectedKey={selectedKey}
@@ -335,12 +397,16 @@ function NavMenuComponent(props: NavMenuProps) {
             ) : (item as SidebarMenuGroup).type === "group" &&
               (item as SidebarMenuGroup).childLayout === "siteMap" ? (
               <SitMapMenCom
+                index={index}
+                hidden={isHidden}
                 item={item as SidebarMenuGroup}
                 showTooltip={showTooltip}
                 selectedKey={selectedKey}
               />
             ) : (
               <RenderMenuItemCom
+                index={index}
+                hidden={isHidden}
                 item={item}
                 showTooltip={showTooltip}
                 selectedKey={selectedKey}
@@ -350,6 +416,20 @@ function NavMenuComponent(props: NavMenuProps) {
           </React.Fragment>
         );
       })}
+      <RenderMenuItemCom
+        hidden={overflowIndex > (menu?.menuItems?.length ?? 0)}
+        item={{
+          type: "subMenu",
+          title: "···",
+          items: menu?.menuItems.slice(
+            overflowIndex,
+            menu.menuItems.length
+          ) as SidebarMenuItem[],
+        }}
+        showTooltip={showTooltip}
+        selectedKey={selectedKey}
+        topData={true}
+      />
     </div>
   );
 }
