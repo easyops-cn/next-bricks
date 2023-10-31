@@ -17,6 +17,7 @@ interface ImageProps {
   imgList?: ImageConfig[];
   width?: string;
   height?: string;
+  onlyPreview?: boolean;
 }
 
 /**
@@ -44,6 +45,14 @@ class Image extends ReactNextElement implements ImageListProps {
    * 图片列表
    */
   @property() accessor height: string | undefined;
+
+  /**
+   * 纯预览模式
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor onlyPreview: boolean | undefined;
 
   /**
    * 打开预览框
@@ -78,6 +87,7 @@ class Image extends ReactNextElement implements ImageListProps {
         imgList={this.imgList}
         width={this.width}
         height={this.height}
+        onlyPreview={this.onlyPreview}
         onVisibleChange={this.#handleVisibleChange}
       />
     );

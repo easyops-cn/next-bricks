@@ -28,7 +28,7 @@ export interface ImageListRef {
 const { Provider } = ImageListContext;
 
 export const ImageList = forwardRef(function LegacyImageList(
-  { imgList, width, height, onVisibleChange }: ImageListProps,
+  { imgList, width, height, onlyPreview, onVisibleChange }: ImageListProps,
   ref: Ref<ImageListRef>
 ) {
   const [visible, setVisible] = useState(false);
@@ -89,6 +89,7 @@ export const ImageList = forwardRef(function LegacyImageList(
         value={{
           previewImageList,
           currentUUid,
+          onlyPreview,
           setCurrentUUid,
           registerImage,
         }}

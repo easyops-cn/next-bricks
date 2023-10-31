@@ -27,7 +27,8 @@ export interface UploadProps {
   itemRender: (
     fileData: FileData,
     fileDataList: FileData[],
-    actions: ItemActions
+    actions: ItemActions,
+    index: number
   ) => React.ReactElement;
   fileList?: FileData[];
   autoUpload?: boolean;
@@ -271,13 +272,13 @@ export function Upload(props: UploadProps) {
           uploadFiles: (files) => handleFileUpload(files),
         })}
         <div className="file-list">
-          {internalFileDataList.map((fileData) => {
+          {internalFileDataList.map((fileData, index) => {
             const actions = {
               remove: () => handleRemove(fileData),
             };
             return (
               <React.Fragment key={fileData.uid}>
-                {itemRender(fileData, internalFileDataList, actions)}
+                {itemRender(fileData, internalFileDataList, actions, index)}
               </React.Fragment>
             );
           })}
