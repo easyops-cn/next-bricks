@@ -37,12 +37,12 @@ class Image extends ReactNextElement implements ImageListProps {
   @property({ attribute: false }) accessor imgList: ImageConfig[] | undefined;
 
   /**
-   * 图片列表
+   * 图片宽度
    */
   @property() accessor width: string | undefined;
 
   /**
-   * 图片列表
+   * 图片高度
    */
   @property() accessor height: string | undefined;
 

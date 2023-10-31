@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import type {
   GeneralIcon,
   GeneralIconProps,
@@ -8,6 +8,7 @@ import classnames from "classnames";
 import useTransform from "./hooks/useTransform.js";
 import { BASE_SCALE_RATIO, MAX_SCALE, MIN_SCALE } from "./previewConfig.js";
 import { ImageListContext } from "./ImageListContext.js";
+import { lockBodyScroll } from "../data-providers/lock-body-scroll/lock-body-scroll.js";
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
@@ -24,11 +25,13 @@ export const Preview = ({
 }: PreviewProps) => {
   const { transform, resetTransform, updateTransform, dispatchZoomChange } =
     useTransform();
+  const previewRootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!visible) {
       resetTransform();
     }
+    previewRootRef.current && lockBodyScroll(previewRootRef.current, !!visible);
   }, [visible]);
 
   const { previewImageList, currentUUid, setCurrentUUid } =
@@ -78,6 +81,7 @@ export const Preview = ({
   return (
     <div
       className="preview-root"
+      ref={previewRootRef}
       style={{ visibility: visible ? "visible" : "hidden" }}
     >
       <div className="preview-mask" />
