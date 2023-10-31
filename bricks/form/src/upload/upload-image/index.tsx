@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
 import { getBasePath } from "@next-core/runtime";
@@ -7,6 +7,7 @@ import { K, NS, locales } from "./i18n.js";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import type { Button, ButtonProps } from "@next-bricks/basic/button";
+import type { Image, ImageProps } from "@next-bricks/basic/image";
 import type {
   GeneralIcon,
   GeneralIconProps,
@@ -22,6 +23,7 @@ initializeReactI18n(NS, locales);
 const { defineElement, property, event } = createDecorators();
 
 const WrappedButton = wrapBrick<Button, ButtonProps>("eo-button");
+const WrappedImage = wrapBrick<Image, ImageProps>("eo-image");
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 
@@ -150,6 +152,7 @@ interface UploadImageComponentProps extends UploadImageProps, FormItemProps {
 export function UploadImageComponent(props: UploadImageComponentProps) {
   const { value, bucketName, multiple, onChange } = props;
   const { t } = useTranslation(NS);
+  const wrapBrickImageRef = useRef<Image>(null);
 
   const handleChange = (images: ImageData[]) => {
     const processedImages = images?.map((image) => {
@@ -171,7 +174,8 @@ export function UploadImageComponent(props: UploadImageComponentProps) {
   const itemRender = (
     fileData: ImageData,
     fileDataList: ImageData[],
-    actions: ItemActions
+    actions: ItemActions,
+    index: number
   ) => {
     const {
       uid,
@@ -193,7 +197,11 @@ export function UploadImageComponent(props: UploadImageComponentProps) {
         })}
       >
         <div className="image-item-inner">
-          <img className="image" src={userData?.url || url} />
+          <img
+            className="image"
+            src={userData?.url || url}
+            onClick={() => wrapBrickImageRef.current!.open(index)}
+          />
           <div className="infos">
             <div className="file-name">{name}</div>
             {status === "uploading" && <div className="progress"></div>}
@@ -253,12 +261,21 @@ export function UploadImageComponent(props: UploadImageComponentProps) {
       >
         {(fileDataList: ImageData[], uploadActions: UploadActions) => {
           return (
-            <WrappedButton
-              icon={defaultUploadIcon}
-              onClick={uploadActions.upload}
-            >
-              {t(K.UPLOAD)}
-            </WrappedButton>
+            <>
+              <WrappedButton
+                icon={defaultUploadIcon}
+                onClick={uploadActions.upload}
+              >
+                {t(K.UPLOAD)}
+              </WrappedButton>
+              <WrappedImage
+                ref={wrapBrickImageRef}
+                onlyPreview={true}
+                imgList={fileDataList.map((item) => ({
+                  src: item.userData?.url,
+                }))}
+              />
+            </>
           );
         }}
       </Upload>

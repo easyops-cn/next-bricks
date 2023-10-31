@@ -78,6 +78,8 @@ describe("form.upload-image", () => {
       );
     });
 
+    expect(element.shadowRoot?.querySelectorAll("eo-image").length).toBe(1);
+
     act(() => {
       document.body.removeChild(element);
     });

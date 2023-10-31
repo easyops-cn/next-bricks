@@ -49,7 +49,7 @@ export function ImageComponent({
   const { status, src: validSrc } = useImage(srcList);
 
   const [currentId] = React.useState<number>(++uuid);
-  const { registerImage } = useContext(ImageListContext);
+  const { onlyPreview, registerImage } = useContext(ImageListContext);
 
   useEffect(() => {
     const unRegister = registerImage(currentId, {
@@ -73,7 +73,7 @@ export function ImageComponent({
     });
   }, [validSrc, preview, alt, index]);
 
-  return (
+  return onlyPreview ? null : (
     <>
       <div
         className="image-wrapper"

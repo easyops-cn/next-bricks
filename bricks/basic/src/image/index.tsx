@@ -13,6 +13,13 @@ import {
 
 const { defineElement, property, method, event } = createDecorators();
 
+interface ImageProps {
+  imgList?: ImageConfig[];
+  width?: string;
+  height?: string;
+  onlyPreview?: boolean;
+}
+
 /**
  * 通用图片构件
  * @author nlicro
@@ -28,6 +35,24 @@ class Image extends ReactNextElement implements ImageListProps {
    * 图片列表
    */
   @property({ attribute: false }) accessor imgList: ImageConfig[] | undefined;
+
+  /**
+   * 图片宽度
+   */
+  @property() accessor width: string | undefined;
+
+  /**
+   * 图片高度
+   */
+  @property() accessor height: string | undefined;
+
+  /**
+   * 纯预览模式
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor onlyPreview: boolean | undefined;
 
   /**
    * 打开预览框
@@ -60,10 +85,13 @@ class Image extends ReactNextElement implements ImageListProps {
       <ImageList
         ref={this._ImageListRef}
         imgList={this.imgList}
+        width={this.width}
+        height={this.height}
+        onlyPreview={this.onlyPreview}
         onVisibleChange={this.#handleVisibleChange}
       />
     );
   }
 }
 
-export { Image };
+export { Image, ImageProps };

@@ -82,6 +82,34 @@ describe("ImageComponent", () => {
     fireEvent.click(container.querySelector(".image-wrapper") as Element);
     expect(onClick).lastCalledWith(expect.any(Number), false);
 
+    expect(container.querySelectorAll("img").length).toBe(1);
+
+    rerender(
+      <Provider
+        value={{
+          previewImageList: [],
+          currentUUid: 0,
+          onlyPreview: true,
+          setCurrentUUid: jest.fn(),
+          registerImage,
+        }}
+      >
+        <ImageComponent
+          index={0}
+          src={"src"}
+          fallback={"fallback"}
+          placeholder={"placeholder"}
+          alt={"alt"}
+          width={200}
+          height={300}
+          preview={false}
+          onClick={onClick}
+        />
+      </Provider>
+    );
+
+    expect(container.querySelectorAll("img").length).toBe(0);
+
     expect(unRegister).not.toBeCalled();
     unmount();
     expect(unRegister).toBeCalled();
