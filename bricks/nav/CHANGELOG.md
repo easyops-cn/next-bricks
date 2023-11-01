@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.1.13...@next-bricks/nav@0.2.0) (2023-11-01)
+
+
+### Features
+
+* **nav-menu:** add overflow style ([549fe00](https://github.com/easyops-cn/next-bricks/commit/549fe00c1d7c486ebfb4f3329f465ca90202fc12))
+* update code ([a6e0a8c](https://github.com/easyops-cn/next-bricks/commit/a6e0a8c510b6f31f18bb6abc70a1fbff50881561))
+
+
+
+
+
 ## [0.1.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.1.12...@next-bricks/nav@0.1.13) (2023-10-27)
 
 **Note:** Version bump only for package @next-bricks/nav

@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.41.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.40.5...@next-bricks/basic@0.41.0) (2023-11-01)
+
+
+### Features
+
+* **image-preview:** add lock body scroll ([d7541be](https://github.com/easyops-cn/next-bricks/commit/d7541beb91bcc710a0be121f547bf2536984e411))
+* **image:** add onlyPreview property ([2c891a8](https://github.com/easyops-cn/next-bricks/commit/2c891a8665e33a73407f07063fb97dabc464649b))
+* support upload-image preview ([8d377dc](https://github.com/easyops-cn/next-bricks/commit/8d377dc54bb7735ec82f86b78f60d22b1a50a34b))
+* update code ([a6e0a8c](https://github.com/easyops-cn/next-bricks/commit/a6e0a8c510b6f31f18bb6abc70a1fbff50881561))
+
+
+
+
+
 ## [0.40.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.40.4...@next-bricks/basic@0.40.5) (2023-10-27)
 
 

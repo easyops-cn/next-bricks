@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.21.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.20.12...@next-bricks/form@0.21.0) (2023-11-01)
+
+
+### Features
+
+* **image:** add onlyPreview property ([2c891a8](https://github.com/easyops-cn/next-bricks/commit/2c891a8665e33a73407f07063fb97dabc464649b))
+* mock date ([1d52d5e](https://github.com/easyops-cn/next-bricks/commit/1d52d5e9e4e9c1ebed3b0765f69069d5f89e0ae8))
+* support upload-image preview ([8d377dc](https://github.com/easyops-cn/next-bricks/commit/8d377dc54bb7735ec82f86b78f60d22b1a50a34b))
+
+
+
+
+
 ## [0.20.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.20.11...@next-bricks/form@0.20.12) (2023-10-27)
 
 **Note:** Version bump only for package @next-bricks/form

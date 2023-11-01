@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.18.3...@next-bricks/containers@0.19.0) (2023-11-01)
+
+
+### Features
+
+* **card:** support new prop: outline ([630a916](https://github.com/easyops-cn/next-bricks/commit/630a91608a985ef640541f2aa130f32f2cdfd839))
+
+
+
+
+
 ## [0.18.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.18.2...@next-bricks/containers@0.18.3) (2023-10-27)
 
 **Note:** Version bump only for package @next-bricks/containers
