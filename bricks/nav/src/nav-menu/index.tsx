@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { CSSProperties, useEffect, useRef, useState } from "react";
 import { createDecorators } from "@next-core/element";
 import { getHistory } from "@next-core/runtime";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
@@ -28,6 +28,7 @@ import type {
   PopoverProps,
   PopoverEvents,
   PopoverEventsMapping,
+  Placement,
 } from "@next-bricks/basic/popover";
 import "@next-core/theme";
 import classnames from "classnames";
@@ -36,7 +37,6 @@ import { SiteMapItem } from "./site-map/SiteMapItem.js";
 import SiteMapStyleText from "../nav-menu/site-map/SiteMapItem.shadow.css";
 import ItemTagStyleText from "../nav-menu/site-map/ItemTag.shadow.css";
 import GroupItemStyleText from "../nav-menu/site-map/GroupItem.shadow.css";
-import { debounce } from "lodash";
 
 const { defineElement, property } = createDecorators();
 
@@ -53,12 +53,16 @@ const WrappedPopover = wrapBrick<
   beforeVisibleChange: "before.visible.change",
 });
 
+const GAP_WIDTH = 8;
+
 interface NavMenuProps {
   menu?: SidebarMenu;
   showTooltip?: boolean;
 }
 
 interface MenuItemComProps {
+  index?: number;
+  hidden?: boolean;
   item: SidebarMenuItem;
   topData?: boolean;
   selectedKey?: string[];
@@ -84,9 +88,11 @@ function RenderMenuItemCom(props: MenuItemComProps) {
   );
 }
 function SimpleMenuItemCom(props: SimpleMenuItemComProps) {
-  const { item, showTooltip, selectedKey = [] } = props;
+  const { item, index, hidden, showTooltip, selectedKey = [] } = props;
   return (
     <WrappedMenuItem
+      data-index={index}
+      className={hidden ? "overflow-menu-item" : ""}
       key={item.key}
       title={showTooltip ? item.text : ""}
       active={item.key ? selectedKey.includes(item.key) : false}
@@ -111,6 +117,8 @@ const handlePopupVisibleChange = (event: CustomEvent<boolean>) => {
 };
 
 function SubMenuItemCom({
+  index,
+  hidden,
   item,
   topData,
   showTooltip,
@@ -118,11 +126,16 @@ function SubMenuItemCom({
 }: MenuGroupComProps) {
   return item.items?.length > 0 ? (
     <WrappedPopover
-      className={classnames("popover", { subprime: !topData })}
-      trigger={"hover"}
+      data-index={index}
+      className={classnames("popover", {
+        subprime: !topData,
+        "overflow-menu-item": hidden,
+      })}
+      trigger="hover"
       placement={topData ? "bottom-start" : "right-start"}
       distance={0}
       anchorDisplay="block"
+      strategy="fixed"
     >
       <WrappedMenuItem
         className="sub-menu-item-label"
@@ -153,42 +166,73 @@ function GroupMenuItemCom({
   selectedKey = [],
 }: MenuGroupComProps) {
   return item.items?.length > 0 ? (
-    <>
-      <div className="group-label">{item.title}</div>
-      <div className="group-wrapper">
-        {item.items.map((innerItem) => {
-          return (
-            <React.Fragment key={innerItem.key}>
-              <RenderMenuItemCom
-                item={innerItem}
-                showTooltip={showTooltip}
-                selectedKey={selectedKey}
-              />
-            </React.Fragment>
-          );
-        })}
-      </div>
-    </>
+    item.childLayout === "category" ? (
+      <ThreeLevelMenuCom
+        item={item}
+        selectedKey={selectedKey}
+        showTooltip={showTooltip}
+        placement="right-start"
+        anchorDisplay="block"
+      />
+    ) : (item as SidebarMenuGroup).childLayout === "siteMap" ? (
+      <SitMapMenCom
+        item={item}
+        selectedKey={selectedKey}
+        showTooltip={showTooltip}
+        placement="right-start"
+        anchorDisplay="block"
+        topData={false}
+      />
+    ) : (
+      <>
+        <div className="group-label">{item.title}</div>
+        <div className="group-wrapper">
+          {item.items.map((innerItem) => {
+            return (
+              <React.Fragment key={innerItem.key}>
+                <RenderMenuItemCom
+                  item={innerItem}
+                  showTooltip={showTooltip}
+                  selectedKey={selectedKey}
+                />
+              </React.Fragment>
+            );
+          })}
+        </div>
+      </>
+    )
   ) : null;
 }
 
 function ThreeLevelMenuCom({
+  index,
+  hidden,
   item,
   selectedKey = [],
   showTooltip,
+  placement = "bottom-start",
+  anchorDisplay,
 }: {
+  index?: number;
+  hidden?: boolean;
   item: SidebarMenuGroup;
   selectedKey?: string[];
   showTooltip?: boolean;
+  placement?: Placement;
+  anchorDisplay?: CSSProperties["display"];
 }) {
   return item.items?.length > 0 ? (
     <WrappedPopover
-      className={classnames("three-level-menu-popover", "popover")}
+      data-index={index}
+      className={classnames("three-level-menu-popover", "popover", {
+        "overflow-menu-item": hidden,
+      })}
       trigger={"hover"}
-      placement={"bottom-start"}
+      placement={placement}
       distance={0}
       key={item.key}
       strategy="fixed"
+      anchorDisplay={anchorDisplay}
       beforeVisibleChange={handlePopupVisibleChange}
     >
       <WrappedMenuItem
@@ -210,13 +254,23 @@ function ThreeLevelMenuCom({
 }
 
 function SitMapMenCom({
+  index,
+  hidden,
   item,
   selectedKey = [],
   showTooltip,
+  placement = "bottom-start",
+  anchorDisplay,
+  topData,
 }: {
+  index?: number;
+  hidden?: boolean;
   item: SidebarMenuGroup;
   selectedKey?: string[];
   showTooltip?: boolean;
+  placement?: Placement;
+  anchorDisplay?: CSSProperties["display"];
+  topData?: boolean;
 }) {
   const [visible, setVisible] = useState<boolean>();
 
@@ -227,12 +281,16 @@ function SitMapMenCom({
 
   return item.items?.length > 0 ? (
     <WrappedPopover
-      className={classnames("popover")}
+      data-index={index}
+      className={classnames("popover", {
+        "overflow-menu-item": hidden,
+      })}
       trigger={"hover"}
-      placement={"bottom-start"}
+      placement={placement}
       distance={0}
       key={item.key}
       strategy="fixed"
+      anchorDisplay={anchorDisplay}
       beforeVisibleChange={handleVisibleChange}
     >
       <WrappedMenuItem
@@ -244,7 +302,9 @@ function SitMapMenCom({
         {renderSpanCom(item)}
       </WrappedMenuItem>
       <div
-        className="sub-menu-sit-map-wrapper"
+        className={classnames("sub-menu-sit-map-wrapper", {
+          "in-group-site-map": !topData,
+        })}
         onClick={(e) => e.stopPropagation()}
       >
         <SiteMapItem
@@ -296,7 +356,11 @@ function NavMenuComponent(props: NavMenuProps) {
   const { menu, showTooltip } = props;
 
   const history = getHistory();
+  const navMenuWrapperRef = useRef<HTMLDivElement>(null);
   const [location, setLocation] = useState(history.location);
+  const [overflowIndex, setOverflowIndex] = useState<number>(
+    Number.MAX_SAFE_INTEGER
+  );
   const { pathname, search } = location;
 
   const [selectedKey, setSelectedKey] = useState<string[]>([]);
@@ -319,15 +383,59 @@ function NavMenuComponent(props: NavMenuProps) {
     return unListen;
   }, []);
 
+  useEffect(() => {
+    if (navMenuWrapperRef.current) {
+      const resizeObserver = new ResizeObserver(() => {
+        if (navMenuWrapperRef.current) {
+          const { width } = navMenuWrapperRef.current.getClientRects()[0] ?? {};
+          const childNodes = navMenuWrapperRef.current.childNodes;
+
+          if (childNodes.length && width) {
+            let wrapperWidth = width;
+            let overflowIndex = childNodes.length;
+
+            for (let i = 0; i < childNodes.length; i++) {
+              const { width: childWidth, height: childHeight } = (
+                childNodes[i] as HTMLElement
+              ).getClientRects()[0];
+
+              if (!childHeight && wrapperWidth - 40 < 0) {
+                overflowIndex = i - 1;
+                break;
+              }
+
+              wrapperWidth =
+                wrapperWidth - childWidth - (i > 0 ? GAP_WIDTH : 0);
+              if (wrapperWidth < 0) {
+                overflowIndex = i;
+                break;
+              }
+            }
+
+            setOverflowIndex(overflowIndex);
+          }
+        }
+      });
+      resizeObserver.observe(navMenuWrapperRef.current);
+
+      return () => {
+        resizeObserver.disconnect();
+      };
+    }
+  }, []);
+
   return (
-    <div className="nav-menu-wrapper">
-      {menu?.menuItems.map((item) => {
+    <div ref={navMenuWrapperRef} className="nav-menu-wrapper">
+      {menu?.menuItems.map((item, index) => {
+        const isHidden = overflowIndex <= index;
         return (
           <React.Fragment key={item.key}>
             {isSubMenu(item as SidebarMenuGroup, true) &&
             (item as SidebarMenuGroup).childLayout === "category" &&
             (item as SidebarMenuGroup).items?.length ? (
               <ThreeLevelMenuCom
+                index={index}
+                hidden={isHidden}
                 item={item as SidebarMenuGroup}
                 showTooltip={showTooltip}
                 selectedKey={selectedKey}
@@ -335,12 +443,17 @@ function NavMenuComponent(props: NavMenuProps) {
             ) : (item as SidebarMenuGroup).type === "group" &&
               (item as SidebarMenuGroup).childLayout === "siteMap" ? (
               <SitMapMenCom
+                index={index}
+                hidden={isHidden}
                 item={item as SidebarMenuGroup}
                 showTooltip={showTooltip}
                 selectedKey={selectedKey}
+                topData={true}
               />
             ) : (
               <RenderMenuItemCom
+                index={index}
+                hidden={isHidden}
                 item={item}
                 showTooltip={showTooltip}
                 selectedKey={selectedKey}
@@ -350,6 +463,20 @@ function NavMenuComponent(props: NavMenuProps) {
           </React.Fragment>
         );
       })}
+      <RenderMenuItemCom
+        hidden={overflowIndex > (menu?.menuItems?.length ?? 0)}
+        item={{
+          type: "subMenu",
+          title: "···",
+          items: menu?.menuItems.slice(
+            overflowIndex,
+            menu.menuItems.length
+          ) as SidebarMenuItem[],
+        }}
+        showTooltip={showTooltip}
+        selectedKey={selectedKey}
+        topData={true}
+      />
     </div>
   );
 }

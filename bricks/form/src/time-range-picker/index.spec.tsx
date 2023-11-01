@@ -14,6 +14,14 @@ dayjs.extend(quarterOfYear);
 
 jest.mock("@next-core/theme", () => ({}));
 
+beforeAll(() => {
+  jest.useFakeTimers().setSystemTime(new Date("2023-10-01"));
+});
+
+afterAll(() => {
+  jest.useRealTimers();
+});
+
 describe("eo-time-range-picker", () => {
   test("basic usage", async () => {
     const element = document.createElement(
@@ -246,7 +254,7 @@ describe("eo-time-range-picker", () => {
       contentList?.[0]?.querySelector(
         ":not(.ant-picker-cell-disabled) >.ant-picker-cell-inner"
       )?.textContent
-    )?.toBe(dayjs().format("YYYY-MM-DD ").split("-")[2].trim());
+    )?.toBe("1");
     act(() => {
       document.body.removeChild(element);
     });
