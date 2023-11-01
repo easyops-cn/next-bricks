@@ -51,6 +51,10 @@
   margin-right: 12px;
 }
 
+.tab-nav:not(.panel) .tab-item-wrapper {
+  gap: 20px;
+}
+
 .content {
   padding: var(--local-tabs-content-padding);
 }
