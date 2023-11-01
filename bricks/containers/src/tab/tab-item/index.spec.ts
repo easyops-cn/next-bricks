@@ -30,7 +30,7 @@ describe("containers.tab-item", () => {
     const tabItem = element.shadowRoot.querySelector(
       ".tab-item"
     ) as HTMLElement;
-    expect(tabItem.className).toBe("tab-item default disabled");
+    expect(tabItem.className).toBe("tab-item disabled");
     expect(tabItem.hidden).toBeTruthy();
     expect(tabItem.getAttribute("aria-selected")).toBeTruthy();
 

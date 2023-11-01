@@ -40,18 +40,18 @@
   cursor: not-allowed;
 }
 
-.tab-item.panel {
+:host([type="panel"]) .tab-item {
   padding: 4px 20px;
   border-right: 1px solid var(--antd-tabs-title-border-color);
   border-top: 1px solid var(--antd-tabs-title-border-color);
 }
 
-.tab-item.panel[aria-selected="true"] {
+:host([type="panel"]) .tab-item[aria-selected="true"] {
   border-top: none;
   border-bottom: 1px solid var(--antd-tabs-title-wrapper-bg);
 }
 
-.tab-item.panel[aria-selected="true"]:after {
+:host([type="panel"]) .tab-item[aria-selected="true"]:after {
   top: 0;
   bottom: auto;
 }

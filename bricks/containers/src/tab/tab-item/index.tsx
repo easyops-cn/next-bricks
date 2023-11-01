@@ -38,12 +38,12 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 })
 class TabItem extends ReactNextElement {
   /**
-   * @default
-   * @required
-   * @description 样式类型
+   * 样式类型
+   *
+   * @default "default"
    */
   @property()
-  accessor type: TabType = "default";
+  accessor type: TabType;
 
   /**
    * @default
@@ -96,7 +96,6 @@ class TabItem extends ReactNextElement {
   render() {
     return (
       <TabItemElement
-        type={this.type}
         panel={this.panel}
         icon={this.icon}
         disabled={this.disabled}
@@ -109,7 +108,6 @@ class TabItem extends ReactNextElement {
 }
 
 function TabItemElement({
-  type,
   panel,
   icon,
   disabled,
@@ -127,7 +125,7 @@ function TabItemElement({
 
   return (
     <div
-      className={classNames("tab-item", type, {
+      className={classNames("tab-item", {
         disabled,
       })}
       key={panel}
