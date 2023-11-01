@@ -207,3 +207,8 @@ eo-link {
   height: 0;
   pointer-events: none;
 }
+
+.in-group-site-map {
+  width: auto;
+  padding: 0 20px;
+}

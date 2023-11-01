@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { CSSProperties, useEffect, useRef, useState } from "react";
 import { createDecorators } from "@next-core/element";
 import { getHistory } from "@next-core/runtime";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
@@ -28,6 +28,7 @@ import type {
   PopoverProps,
   PopoverEvents,
   PopoverEventsMapping,
+  Placement,
 } from "@next-bricks/basic/popover";
 import "@next-core/theme";
 import classnames from "classnames";
@@ -53,7 +54,6 @@ const WrappedPopover = wrapBrick<
 });
 
 const GAP_WIDTH = 8;
-const OVERFLOW_RESERVED_WIDTH = 20;
 
 interface NavMenuProps {
   menu?: SidebarMenu;
@@ -166,22 +166,41 @@ function GroupMenuItemCom({
   selectedKey = [],
 }: MenuGroupComProps) {
   return item.items?.length > 0 ? (
-    <>
-      <div className="group-label">{item.title}</div>
-      <div className="group-wrapper">
-        {item.items.map((innerItem) => {
-          return (
-            <React.Fragment key={innerItem.key}>
-              <RenderMenuItemCom
-                item={innerItem}
-                showTooltip={showTooltip}
-                selectedKey={selectedKey}
-              />
-            </React.Fragment>
-          );
-        })}
-      </div>
-    </>
+    item.childLayout === "category" ? (
+      <ThreeLevelMenuCom
+        item={item}
+        selectedKey={selectedKey}
+        showTooltip={showTooltip}
+        placement="right-start"
+        anchorDisplay="block"
+      />
+    ) : (item as SidebarMenuGroup).childLayout === "siteMap" ? (
+      <SitMapMenCom
+        item={item}
+        selectedKey={selectedKey}
+        showTooltip={showTooltip}
+        placement="right-start"
+        anchorDisplay="block"
+        topData={false}
+      />
+    ) : (
+      <>
+        <div className="group-label">{item.title}</div>
+        <div className="group-wrapper">
+          {item.items.map((innerItem) => {
+            return (
+              <React.Fragment key={innerItem.key}>
+                <RenderMenuItemCom
+                  item={innerItem}
+                  showTooltip={showTooltip}
+                  selectedKey={selectedKey}
+                />
+              </React.Fragment>
+            );
+          })}
+        </div>
+      </>
+    )
   ) : null;
 }
 
@@ -191,12 +210,16 @@ function ThreeLevelMenuCom({
   item,
   selectedKey = [],
   showTooltip,
+  placement = "bottom-start",
+  anchorDisplay,
 }: {
   index?: number;
   hidden?: boolean;
   item: SidebarMenuGroup;
   selectedKey?: string[];
   showTooltip?: boolean;
+  placement?: Placement;
+  anchorDisplay?: CSSProperties["display"];
 }) {
   return item.items?.length > 0 ? (
     <WrappedPopover
@@ -205,10 +228,11 @@ function ThreeLevelMenuCom({
         "overflow-menu-item": hidden,
       })}
       trigger={"hover"}
-      placement={"bottom-start"}
+      placement={placement}
       distance={0}
       key={item.key}
       strategy="fixed"
+      anchorDisplay={anchorDisplay}
       beforeVisibleChange={handlePopupVisibleChange}
     >
       <WrappedMenuItem
@@ -235,12 +259,18 @@ function SitMapMenCom({
   item,
   selectedKey = [],
   showTooltip,
+  placement = "bottom-start",
+  anchorDisplay,
+  topData,
 }: {
   index?: number;
   hidden?: boolean;
   item: SidebarMenuGroup;
   selectedKey?: string[];
   showTooltip?: boolean;
+  placement?: Placement;
+  anchorDisplay?: CSSProperties["display"];
+  topData?: boolean;
 }) {
   const [visible, setVisible] = useState<boolean>();
 
@@ -256,10 +286,11 @@ function SitMapMenCom({
         "overflow-menu-item": hidden,
       })}
       trigger={"hover"}
-      placement={"bottom-start"}
+      placement={placement}
       distance={0}
       key={item.key}
       strategy="fixed"
+      anchorDisplay={anchorDisplay}
       beforeVisibleChange={handleVisibleChange}
     >
       <WrappedMenuItem
@@ -271,7 +302,9 @@ function SitMapMenCom({
         {renderSpanCom(item)}
       </WrappedMenuItem>
       <div
-        className="sub-menu-sit-map-wrapper"
+        className={classnames("sub-menu-sit-map-wrapper", {
+          "in-group-site-map": !topData,
+        })}
         onClick={(e) => e.stopPropagation()}
       >
         <SiteMapItem
@@ -325,7 +358,9 @@ function NavMenuComponent(props: NavMenuProps) {
   const history = getHistory();
   const navMenuWrapperRef = useRef<HTMLDivElement>(null);
   const [location, setLocation] = useState(history.location);
-  const [overflowIndex, setOverflowIndex] = useState(Number.MAX_SAFE_INTEGER);
+  const [overflowIndex, setOverflowIndex] = useState<number>(
+    Number.MAX_SAFE_INTEGER
+  );
   const { pathname, search } = location;
 
   const [selectedKey, setSelectedKey] = useState<string[]>([]);
@@ -353,20 +388,31 @@ function NavMenuComponent(props: NavMenuProps) {
       const resizeObserver = new ResizeObserver(() => {
         if (navMenuWrapperRef.current) {
           const { width } = navMenuWrapperRef.current.getClientRects()[0] ?? {};
-          const child =
-            navMenuWrapperRef.current?.querySelectorAll("[data-index]");
-          if (child?.length && width) {
-            let wapperWidth =
-              width - OVERFLOW_RESERVED_WIDTH - GAP_WIDTH * child.length;
-            for (let i = 0; i < child.length; i++) {
-              const { width: childWidth } = child[i].getClientRects()[0];
-              wapperWidth = wapperWidth - childWidth;
-              if (wapperWidth < 0) {
-                setOverflowIndex(i);
-                return;
+          const childNodes = navMenuWrapperRef.current.childNodes;
+
+          if (childNodes.length && width) {
+            let wrapperWidth = width;
+            let overflowIndex = childNodes.length;
+
+            for (let i = 0; i < childNodes.length; i++) {
+              const { width: childWidth, height: childHeight } = (
+                childNodes[i] as HTMLElement
+              ).getClientRects()[0];
+
+              if (!childHeight && wrapperWidth - 40 < 0) {
+                overflowIndex = i - 1;
+                break;
+              }
+
+              wrapperWidth =
+                wrapperWidth - childWidth - (i > 0 ? GAP_WIDTH : 0);
+              if (wrapperWidth < 0) {
+                overflowIndex = i;
+                break;
               }
             }
-            setOverflowIndex(child?.length ?? -1);
+
+            setOverflowIndex(overflowIndex);
           }
         }
       });
@@ -402,6 +448,7 @@ function NavMenuComponent(props: NavMenuProps) {
                 item={item as SidebarMenuGroup}
                 showTooltip={showTooltip}
                 selectedKey={selectedKey}
+                topData={true}
               />
             ) : (
               <RenderMenuItemCom
