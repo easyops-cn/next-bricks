@@ -1,9 +1,25 @@
-.tab-wrapper {
-  border-radius: 6px;
+:host,
+:host-context(html[data-ui="v8-2"]):host([outline="shadow"]) {
+  --local-tabs-border-radius: var(--tabs-outlined-border-radius);
+  --local-tabs-header-padding: var(--tabs-outlined-header-padding);
+  --local-tabs-content-padding: var(--tabs-outlined-content-padding);
+  --local-tabs-background: var(--tabs-outlined-background);
+  --local-tabs-shadow: var(--tabs-outlined-shadow);
 }
 
-.tab-wrapper.show-card {
-  box-shadow: var(--tab-shadow);
+:host([outline="none"]),
+:host-context(html[data-ui="v8-2"]) {
+  --local-tabs-border-radius: 0;
+  --local-tabs-header-padding: var(--tabs-header-padding);
+  --local-tabs-content-padding: var(--tabs-content-padding);
+  --local-tabs-background: none;
+  --local-tabs-shadow: none;
+}
+
+.tab-wrapper {
+  border-radius: var(--local-tabs-border-radius);
+  background: var(--local-tabs-background);
+  box-shadow: var(--local-tabs-shadow);
 }
 
 .tab-nav {
@@ -12,8 +28,7 @@
   grid-auto-flow: column;
   justify-content: space-between;
   align-items: center;
-  padding: var(--tab-header-padding);
-  background: var(--antd-tabs-title-wrapper-bg);
+  padding: var(--local-tabs-header-padding);
 }
 
 .tab-nav:before {
@@ -28,6 +43,7 @@
 .tab-nav.panel {
   padding: 0;
   border-left: 1px solid var(--antd-tabs-title-border-color);
+  background: var(--antd-component-background);
 }
 
 .tab-item-wrapper {
@@ -36,6 +52,5 @@
 }
 
 .content {
-  background: var(--antd-tabs-title-wrapper-bg);
-  padding: var(--tab-content-padding);
+  padding: var(--local-tabs-content-padding);
 }

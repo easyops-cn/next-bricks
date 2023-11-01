@@ -11,10 +11,17 @@ const { defineElement, property } = createDecorators();
 export interface TabGroupProps {
   type?: TabType;
   activePanel?: string;
-  showCard?: boolean;
   callback?: (element: HTMLDivElement) => void;
   panelStyle?: React.CSSProperties;
+  outline?: TabsOutline;
 }
+
+export type TabsOutline =
+  // | "border"
+  | "shadow"
+  // | "background"
+  | "none"
+  | "default";
 
 /**
  * Tab 容器组
@@ -27,9 +34,8 @@ export interface TabGroupProps {
 })
 class TabGroup extends ReactNextElement {
   /**
-   * @default
-   * @required
-   * @description 样式类型
+   * 样式类型
+   * @default "default"
    */
   @property()
   accessor type: TabType = "default";
@@ -43,29 +49,24 @@ class TabGroup extends ReactNextElement {
   accessor panelStyle: React.CSSProperties;
 
   /**
-   * @default true
-   * @required false
-   * @description 是否展示背景
+   * 是否展示背景
    */
   @property()
   accessor activePanel: string | undefined;
 
   /**
-   * @default true
-   * @required false
-   * @description 是否展示背景
+   * 轮廓。默认情况下，使用阴影，8.2 下默认则为无轮廓。
+   *
+   * @default "default"
    */
-  @property({
-    type: Boolean,
-  })
-  accessor showCard: boolean | undefined;
+  @property()
+  accessor outline: TabsOutline | undefined;
 
   render() {
     return (
       <TabGroupElement
         type={this.type}
         activePanel={this.activePanel}
-        showCard={this.showCard}
         panelStyle={this.panelStyle}
       />
     );
@@ -74,7 +75,6 @@ class TabGroup extends ReactNextElement {
 
 function TabGroupElement({
   type,
-  showCard = true,
   activePanel,
   panelStyle,
 }: TabGroupProps): React.ReactElement {
@@ -111,7 +111,7 @@ function TabGroupElement({
       setTabs(navSlotChildren.map((item) => item.panel));
   };
 
-  const handleSetAcitve = useCallback((e: MouseEvent) => {
+  const handleSetActive = useCallback((e: MouseEvent) => {
     setActiveItem((e.target as TabItem).panel);
   }, []);
 
@@ -119,13 +119,13 @@ function TabGroupElement({
     const navSlot = navSlotRef.current;
     initSetTab();
 
-    navSlot.addEventListener("click", handleSetAcitve);
+    navSlot.addEventListener("click", handleSetActive);
     navSlot.addEventListener("slotchange", initSetTab);
     return () => {
-      navSlot.removeEventListener("click", handleSetAcitve);
+      navSlot.removeEventListener("click", handleSetActive);
       navSlot.removeEventListener("slotchange", initSetTab);
     };
-  }, [activePanel, handleSetAcitve]);
+  }, [activePanel, handleSetActive]);
 
   useEffect(() => {
     if (tabs.length) {
@@ -134,11 +134,7 @@ function TabGroupElement({
   }, [activePanel, tabs]);
 
   return (
-    <div
-      className={classNames("tab-wrapper", {
-        "show-card": showCard,
-      })}
-    >
+    <div className="tab-wrapper">
       <div className={classNames("tab-nav", type)} style={panelStyle}>
         <div className="tab-item-wrapper">
           <slot name="nav" ref={navSlotRef} />
@@ -148,9 +144,7 @@ function TabGroupElement({
         </div>
       </div>
       <div className="content" ref={contentRef}>
-        {tabs?.map((tab) => (
-          <slot key={tab} name={tab} />
-        ))}
+        {tabs?.map((tab) => <slot key={tab} name={tab} />)}
       </div>
     </div>
   );
