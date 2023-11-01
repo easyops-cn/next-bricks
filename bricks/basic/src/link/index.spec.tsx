@@ -39,6 +39,8 @@ describe("basic.general-button", () => {
     const element7 = document.createElement("basic.general-link") as Link;
     element1.href = "http://www.xx.com";
     element1.textContent = "hello world";
+    element1.target = "_blank";
+    element1.showExternalIcon = true;
     element1.icon = {} as GeneralIconProps;
 
     element2.url = "www.xx.com";
@@ -83,7 +85,10 @@ describe("basic.general-button", () => {
       document.body.appendChild(element7);
     });
     expect(element1.shadowRoot).toBeTruthy();
-    expect(element1.shadowRoot?.childNodes.length).toBe(2);
+    expect(element1.shadowRoot?.childNodes.length).toBe(3);
+    expect(
+      element1.shadowRoot?.querySelectorAll(".external-icon").length
+    ).toEqual(1);
 
     expect(element1.innerHTML).toBe("hello world");
     expect(element1.shadowRoot?.querySelector("a")?.childNodes.length).toBe(2);

@@ -19,7 +19,9 @@
 如果设置了 `href`，将使用原生 `<a>` 标签来实现链接跳转，通常用于外链的跳转。
 
 ```html preview
-<eo-link href="https://baidu.com/" target="_blank"> Link to Baidu </eo-link>
+<eo-link href="https://baidu.com/" target="_blank" show-external-icon>
+  Link to Baidu
+</eo-link>
 ```
 
 ### As text
