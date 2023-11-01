@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import styleText from "./tab.shadow.css";
-import classNames from "classnames";
 import type { TabItem } from "../tab-item/index.js";
 import { TabType } from "../../interface.js";
 
@@ -12,10 +11,10 @@ export interface TabGroupProps {
   type?: TabType;
   activePanel?: string;
   callback?: (element: HTMLDivElement) => void;
-  panelStyle?: React.CSSProperties;
   outline?: TabsOutline;
 }
 
+// Tabs 对轮廓暂只支持阴影或无轮廓，不支持边框或填充色。
 export type TabsOutline =
   // | "border"
   | "shadow"
@@ -38,15 +37,7 @@ class TabGroup extends ReactNextElement {
    * @default "default"
    */
   @property()
-  accessor type: TabType = "default";
-
-  /**
-   * 头部样式
-   */
-  @property({
-    attribute: false,
-  })
-  accessor panelStyle: React.CSSProperties;
+  accessor type: TabType | undefined;
 
   /**
    * 是否展示背景
@@ -57,27 +48,19 @@ class TabGroup extends ReactNextElement {
   /**
    * 轮廓。默认情况下，使用阴影，8.2 下默认则为无轮廓。
    *
+   * 该属性对 panel 类型无效（其始终无轮廓）。
+   *
    * @default "default"
    */
   @property()
   accessor outline: TabsOutline | undefined;
 
   render() {
-    return (
-      <TabGroupElement
-        type={this.type}
-        activePanel={this.activePanel}
-        panelStyle={this.panelStyle}
-      />
-    );
+    return <TabGroupElement type={this.type} activePanel={this.activePanel} />;
   }
 }
 
-function TabGroupElement({
-  type,
-  activePanel,
-  panelStyle,
-}: TabGroupProps): React.ReactElement {
+function TabGroupElement({ activePanel }: TabGroupProps): React.ReactElement {
   const navSlotRef = useRef<HTMLSlotElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [tabs, setTabs] = useState<string[]>([]);
@@ -135,7 +118,7 @@ function TabGroupElement({
 
   return (
     <div className="tab-wrapper">
-      <div className={classNames("tab-nav", type)} style={panelStyle}>
+      <div className="tab-nav">
         <div className="tab-item-wrapper">
           <slot name="nav" ref={navSlotRef} />
         </div>

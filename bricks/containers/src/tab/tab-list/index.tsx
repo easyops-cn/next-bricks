@@ -19,7 +19,6 @@ interface TabListProps {
   type?: TabType;
   tabs?: TabItemProps[];
   activePanel?: string;
-  panelStyle?: React.CSSProperties;
   outline?: TabsOutline;
 }
 
@@ -38,7 +37,7 @@ class TabList extends ReactNextElement {
    * @default "default"
    */
   @property()
-  accessor type: TabType = "default";
+  accessor type: TabType | undefined;
 
   /**
    * 标签页列表
@@ -49,14 +48,6 @@ class TabList extends ReactNextElement {
   accessor tabs: Array<TabItemProps | string> | undefined;
 
   /**
-   * 头部样式
-   */
-  @property({
-    attribute: false,
-  })
-  accessor panelStyle: React.CSSProperties;
-
-  /**
    * 激活状态 tab 的 panel
    */
   @property()
@@ -64,6 +55,8 @@ class TabList extends ReactNextElement {
 
   /**
    * 轮廓。默认情况下，使用阴影，8.2 下默认则为无轮廓。
+   *
+   * 该属性对 panel 类型无效（其始终无轮廓）。
    *
    * @default "default"
    */
@@ -91,7 +84,6 @@ class TabList extends ReactNextElement {
         type={this.type}
         tabs={this.#computedTabs(this.tabs)}
         activePanel={this.activePanel}
-        panelStyle={this.panelStyle}
         outline={this.outline}
       />
     );
@@ -102,16 +94,10 @@ function TabListElement({
   type,
   tabs,
   activePanel,
-  panelStyle,
   outline,
 }: TabListProps): React.ReactElement {
   return (
-    <WrappedTabGroup
-      type={type}
-      activePanel={activePanel}
-      panelStyle={panelStyle}
-      outline={outline}
-    >
+    <WrappedTabGroup type={type} activePanel={activePanel} outline={outline}>
       {tabs.map((tab) => (
         <WrappedTabItem
           type={type}
