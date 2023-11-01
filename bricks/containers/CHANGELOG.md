@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.19.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.19.0...@next-bricks/containers@0.19.1) (2023-11-01)
+
+
+### Bug Fixes
+
+* add gap between tabs ([ba8f5fe](https://github.com/easyops-cn/next-bricks/commit/ba8f5fec54750cd6d595f2082fff9bc99b8c5a77))
+* fix card content padding ([05b4be4](https://github.com/easyops-cn/next-bricks/commit/05b4be4a7ca33c85f8fb6c2c6af7488ebe90f488))
+* require new brick_next ([d0f0d70](https://github.com/easyops-cn/next-bricks/commit/d0f0d70c6fce85b8dbf30df8d708c1168d0a3929))
+* **tabs:** panel tabs always have no outline ([4cc92d4](https://github.com/easyops-cn/next-bricks/commit/4cc92d4db935421579fabc890f26cef9850d0b1e))
+* **tabs:** style with type attr instead of class name ([2541ae0](https://github.com/easyops-cn/next-bricks/commit/2541ae023dae2becb26981ba3203866f466ab037))
+* **tabs:** support ui v8.2 ([8381d2b](https://github.com/easyops-cn/next-bricks/commit/8381d2bd814eaf0caf701cb7ce3661178d5f48dc))
+
+
+
+
+
 # [0.19.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.18.3...@next-bricks/containers@0.19.0) (2023-11-01)
 
 ### Features

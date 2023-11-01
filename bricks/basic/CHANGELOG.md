@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.42.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.41.0...@next-bricks/basic@0.42.0) (2023-11-01)
+
+
+### Features
+
+* button support tooltip ([b864453](https://github.com/easyops-cn/next-bricks/commit/b8644530e4c52faa0475a21c8160b114834dfbb1))
+
+
+
+
+
 # [0.41.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.40.5...@next-bricks/basic@0.41.0) (2023-11-01)
 
 ### Features
