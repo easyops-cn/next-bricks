@@ -161,7 +161,7 @@
             textContent: Extra Button
 ```
 
-### ShowCard
+### No Outline
 
 ```yaml preview
 - brick: eo-tab-list
@@ -170,7 +170,7 @@
       - Item A
       - Item B
       - Item C
-    showCard: false
+    outline: none
   slots:
     "Item A":
       bricks:
