@@ -23,7 +23,10 @@ import moment from "moment";
 import styleText from "./styles.shadow.css";
 import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
 import { K, NS, locales } from "./i18n.js";
-import { WorkspaceApi_getChangeHistory } from "@next-api-sdk/next-builder-sdk";
+import {
+  WorkspaceApi_getChangeHistory,
+  NextBuilderModels,
+} from "@next-api-sdk/next-builder-sdk";
 import { translateHistory } from "./utils.js";
 
 initializeReactI18n(NS, locales);
@@ -46,7 +49,10 @@ const WrappedPopover = wrapBrick<
   beforeVisibleChange: "before.visible.change",
 });
 
-type HistoryData = Record<string, any>;
+interface HistoryData
+  extends Partial<NextBuilderModels.ModelWorkspaceChangeHistory> {
+  translation: Record<string, string>;
+}
 
 export interface WorkbenchHistoryActionProps {
   appId: string;
@@ -74,8 +80,12 @@ class WorkbenchHistoryAction
    * 点击历史项标题触发
    */
   @event({ type: "history.item.click" })
-  accessor #historyItemClickEvent!: EventEmitter<HistoryData>;
-  #handleHistoryItemClick = (data: HistoryData): void => {
+  accessor #historyItemClickEvent!: EventEmitter<
+    HistoryData & { enableRollback: boolean }
+  >;
+  #handleHistoryItemClick = (
+    data: HistoryData & { enableRollback: boolean }
+  ): void => {
     this.#historyItemClickEvent.emit(data);
   };
 
@@ -102,7 +112,9 @@ class WorkbenchHistoryAction
 
 interface WorkbenchHistoryActionComponentProps
   extends WorkbenchHistoryActionProps {
-  onHistoryItemClick?: (data: HistoryData) => void;
+  onHistoryItemClick?: (
+    data: HistoryData & { enableRollback: boolean }
+  ) => void;
   onRollback?: (data: HistoryData) => void;
 }
 
@@ -175,7 +187,7 @@ export function WorkbenchHistoryActionComponent(
                 <HistoryItem
                   key={`${v.uniqueKey}-${v.ts}`}
                   data={v}
-                  enableRollback={i !== 0}
+                  enableRollback={i !== 0 && v.action !== "rollback"}
                   current={i === 0}
                   onHistoryItemClick={onHistoryItemClick}
                   onRollback={onRollback}
@@ -208,7 +220,9 @@ interface HistoryItemProps {
   data: HistoryData;
   enableRollback?: boolean;
   current?: boolean;
-  onHistoryItemClick?: (data: HistoryData) => void;
+  onHistoryItemClick?: (
+    data: HistoryData & { enableRollback: boolean }
+  ) => void;
   onRollback?: (data: HistoryData) => void;
 }
 
@@ -216,7 +230,7 @@ function HistoryItem(props: HistoryItemProps) {
   const { data, enableRollback, current, onHistoryItemClick, onRollback } =
     props;
 
-  const ts = moment(data.ts / 1000000);
+  const ts = moment(Number(data.ts) / 1000000);
   const duration = moment.duration(ts.diff(moment()));
   const humanizedTime =
     duration.days() <= -1
@@ -226,7 +240,10 @@ function HistoryItem(props: HistoryItemProps) {
   return (
     <div className="item-container">
       <div className="item-title">
-        <div className="title-left" onClick={(e) => onHistoryItemClick(data)}>
+        <div
+          className="title-left"
+          onClick={(e) => onHistoryItemClick({ ...data, enableRollback })}
+        >
           <div className="topic" title={data.translation.abstract}>
             {data.translation.abstract}
           </div>
