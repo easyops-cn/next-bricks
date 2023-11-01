@@ -8,6 +8,14 @@ dayjs.extend(advancedFormat);
 
 jest.mock("@next-core/theme", () => ({}));
 
+beforeAll(() => {
+  jest.useFakeTimers().setSystemTime(new Date("2023-10-01"));
+});
+
+afterAll(() => {
+  jest.useRealTimers();
+});
+
 describe("eo-date-picker", () => {
   it("should work ", async () => {
     const element = document.createElement("eo-date-picker") as EoDatePicker;
