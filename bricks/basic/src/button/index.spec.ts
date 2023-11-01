@@ -111,6 +111,7 @@ describe("eo-button", () => {
     act(() => {
       element.disabled = true;
       element.textContent = "disabled";
+      element.tooltip = "disabled";
       document.body.appendChild(element);
     });
     expect(element.shadowRoot).toBeTruthy();
@@ -119,6 +120,8 @@ describe("eo-button", () => {
     expect(
       element.shadowRoot?.querySelector("button")?.parentElement?.tagName
     ).toBe("SPAN");
+
+    expect(element.shadowRoot?.querySelector("eo-tooltip")).toBeTruthy();
 
     act(() => {
       document.body.removeChild(element);
