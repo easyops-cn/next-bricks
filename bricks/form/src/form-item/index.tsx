@@ -1,15 +1,20 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { createDecorators } from "@next-core/element";
 import {
   AbstractForm,
   FormItemElementBase,
   MessageBody,
+  ColProps,
 } from "@next-shared/form";
 import { ReactUseMultipleBricks } from "@next-core/react-runtime";
 import type { Form } from "../form/index.jsx";
-import styleText from "./FormItem.shadow.css";
+import styleText from "./FormItem.shadow.less";
 import classNames from "classnames";
 import type { ComponentSize, Layout } from "../interface.js";
+import {
+  convertToItemColName,
+  calcWrapperColOffsetWithoutLabel,
+} from "./convertToItemColName.js";
 import "@next-core/theme";
 import { UseSingleBrickConf } from "@next-core/types";
 
@@ -29,8 +34,8 @@ export interface FormItemProps {
   pattern?: string;
   min?: number;
   max?: number;
-  labelCol?: string;
-  wrapperCol?: string;
+  labelCol?: ColProps;
+  wrapperCol?: ColProps;
   message?: Record<string, string>;
   layout?: Layout;
   size?: ComponentSize;
@@ -102,20 +107,6 @@ class FormItem extends FormItemElementBase implements FormItemProps {
    */
   @property() accessor value: string | undefined;
 
-  /**
-   * 表单项 label 标签布局
-   * @group ui
-   */
-  @property()
-  accessor labelCol: string | undefined;
-
-  /**
-   * 表单项控件布局
-   * @group ui
-   */
-  @property()
-  accessor wrapperCol: string | undefined;
-
   @property() accessor valuePropsName: string | undefined;
 
   @property() accessor layout: Layout | undefined;
@@ -171,6 +162,8 @@ class FormItem extends FormItemElementBase implements FormItemProps {
         layout={this.layout || this.formElement?.layout}
         trigger={this.trigger}
         notRender={this.notRender}
+        labelCol={this.labelCol}
+        wrapperCol={this.wrapperCol}
         helpBrick={this.helpBrick}
         labelBrick={this.labelBrick}
         valuePropsName={this.valuePropsName}
@@ -204,6 +197,17 @@ export function FormItemComponent(props: FormItemProps) {
     validator,
   } = props;
   const formInstance = formElement?.formStore;
+
+  const labelCol = props.labelCol ?? formElement?.labelCol;
+  const wrapperCol = props.wrapperCol ?? formElement?.wrapperCol;
+
+  const finalWrapperCol = useMemo(() => {
+    if (wrapperCol && !label) {
+      return calcWrapperColOffsetWithoutLabel(labelCol, wrapperCol);
+    }
+
+    return wrapperCol;
+  }, [wrapperCol, label, labelCol]);
 
   const defaultValidateState = useRef<MessageBody>({
     message: "",
@@ -277,7 +281,12 @@ export function FormItemComponent(props: FormItemProps) {
   return (
     <div className={classNames("form-item", layout)}>
       {label && (
-        <div className="form-item-label-wrapper">
+        <div
+          className={classNames(
+            "form-item-label-wrapper",
+            convertToItemColName(labelCol, layout)
+          )}
+        >
           <div className="form-item-label">
             <label>
               {required && <span className="required">*</span>}
@@ -289,7 +298,12 @@ export function FormItemComponent(props: FormItemProps) {
           </div>
         </div>
       )}
-      <div className="form-item-wrapper">
+      <div
+        className={classNames(
+          "form-item-wrapper",
+          convertToItemColName(finalWrapperCol, layout)
+        )}
+      >
         <div className="form-item-control">
           <slot></slot>
         </div>

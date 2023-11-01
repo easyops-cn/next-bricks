@@ -1,6 +1,6 @@
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
-import type { AbstractForm } from "./Form.js";
+import type { AbstractForm, ColProps } from "./Form.js";
 import { UseSingleBrickConf } from "@next-core/types";
 
 const { method, property } = createDecorators();
@@ -57,6 +57,16 @@ export abstract class FormItemElementBase extends ReactNextElement {
   accessor labelBrick:
     | { useBrick: UseSingleBrickConf | UseSingleBrickConf[] }
     | undefined;
+
+  @property({
+    attribute: false,
+  })
+  accessor labelCol: ColProps | undefined;
+
+  @property({
+    attribute: false,
+  })
+  accessor wrapperCol: ColProps | undefined;
 
   @method()
   setNotRender(value: boolean) {
