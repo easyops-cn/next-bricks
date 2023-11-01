@@ -1,7 +1,11 @@
 import React from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
-import type { TabGroup, TabGroupProps } from "../tab-group/index.js";
+import type {
+  TabGroup,
+  TabGroupProps,
+  TabsOutline,
+} from "../tab-group/index.js";
 import type { TabItem, TabItemProps } from "../tab-item/index.js";
 import { TabType } from "../../interface.js";
 
@@ -15,9 +19,9 @@ interface TabListProps {
   type?: TabType;
   tabs?: TabItemProps[];
   activePanel?: string;
-  showCard?: boolean;
-  panelStyle?: React.CSSProperties;
+  outline?: TabsOutline;
 }
+
 /**
  * Tab 列表
  * @author sailorshe
@@ -29,30 +33,19 @@ interface TabListProps {
 })
 class TabList extends ReactNextElement {
   /**
-   * @default
-   * @required
-   * @description 样式类型
+   * 样式类型
+   * @default "default"
    */
   @property()
-  accessor type: TabType = "default";
+  accessor type: TabType | undefined;
 
   /**
-   * @default -
-   * @required false
-   * @description 标签页列表
+   * 标签页列表
    */
   @property({
     attribute: false,
   })
   accessor tabs: Array<TabItemProps | string> | undefined;
-
-  /**
-   * 头部样式
-   */
-  @property({
-    attribute: false,
-  })
-  accessor panelStyle: React.CSSProperties;
 
   /**
    * 激活状态 tab 的 panel
@@ -61,12 +54,14 @@ class TabList extends ReactNextElement {
   accessor activePanel: string | undefined;
 
   /**
-   * 是否展示背景
+   * 轮廓。默认情况下，使用阴影，8.2 下默认则为无轮廓。
+   *
+   * 该属性对 panel 类型无效（其始终无轮廓）。
+   *
+   * @default "default"
    */
-  @property({
-    type: Boolean,
-  })
-  accessor showCard: boolean | undefined;
+  @property()
+  accessor outline: TabsOutline | undefined;
 
   #computedTabs = (tabs: Array<TabItemProps | string>): TabItemProps[] => {
     if (tabs?.length) {
@@ -89,8 +84,7 @@ class TabList extends ReactNextElement {
         type={this.type}
         tabs={this.#computedTabs(this.tabs)}
         activePanel={this.activePanel}
-        showCard={this.showCard}
-        panelStyle={this.panelStyle}
+        outline={this.outline}
       />
     );
   }
@@ -100,16 +94,10 @@ function TabListElement({
   type,
   tabs,
   activePanel,
-  showCard,
-  panelStyle,
+  outline,
 }: TabListProps): React.ReactElement {
   return (
-    <WrappedTabGroup
-      type={type}
-      showCard={showCard}
-      activePanel={activePanel}
-      panelStyle={panelStyle}
-    >
+    <WrappedTabGroup type={type} activePanel={activePanel} outline={outline}>
       {tabs.map((tab) => (
         <WrappedTabItem
           type={type}

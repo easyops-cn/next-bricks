@@ -161,7 +161,7 @@
             textContent: Extra Button
 ```
 
-### ShowCard
+### No Outline
 
 ```yaml preview
 - brick: eo-tab-list
@@ -170,39 +170,7 @@
       - Item A
       - Item B
       - Item C
-    showCard: false
-  slots:
-    "Item A":
-      bricks:
-        - brick: div
-          properties:
-            textContent: Item A
-    "Item B":
-      bricks:
-        - brick: div
-          properties:
-            textContent: Item B
-    "Item C":
-      bricks:
-        - brick: div
-          properties:
-            textContent: Item C
-```
-
-### panelStyle
-
-```yaml preview
-- brick: eo-tab-list
-  properties:
-    panelStyle:
-      background: none
-      margin-left: 24px
-    type: panel
-    tabs:
-      - Item A
-      - Item B
-      - Item C
-    showCard: false
+    outline: none
   slots:
     "Item A":
       bricks:

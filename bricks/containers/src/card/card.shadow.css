@@ -14,7 +14,7 @@
     --card-head-padding: var(--card-head-padding-vertical)
       var(--card-head-padding-horizontal-base);
     --card-body-padding: var(--card-body-padding-vertical)
-      var(--card-head-padding-horizontal-base);
+      var(--card-body-padding-horizontal-base);
     --card-border-radius: 6px;
   }
 }

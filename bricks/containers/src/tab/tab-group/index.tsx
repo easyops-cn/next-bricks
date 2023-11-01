@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import styleText from "./tab.shadow.css";
-import classNames from "classnames";
 import type { TabItem } from "../tab-item/index.js";
 import { TabType } from "../../interface.js";
 
@@ -11,10 +10,17 @@ const { defineElement, property } = createDecorators();
 export interface TabGroupProps {
   type?: TabType;
   activePanel?: string;
-  showCard?: boolean;
   callback?: (element: HTMLDivElement) => void;
-  panelStyle?: React.CSSProperties;
+  outline?: TabsOutline;
 }
+
+// Tabs 对轮廓暂只支持阴影或无轮廓，不支持边框或填充色。
+export type TabsOutline =
+  // | "border"
+  | "shadow"
+  // | "background"
+  | "none"
+  | "default";
 
 /**
  * Tab 容器组
@@ -27,57 +33,34 @@ export interface TabGroupProps {
 })
 class TabGroup extends ReactNextElement {
   /**
-   * @default
-   * @required
-   * @description 样式类型
+   * 样式类型
+   * @default "default"
    */
   @property()
-  accessor type: TabType = "default";
+  accessor type: TabType | undefined;
 
   /**
-   * 头部样式
-   */
-  @property({
-    attribute: false,
-  })
-  accessor panelStyle: React.CSSProperties;
-
-  /**
-   * @default true
-   * @required false
-   * @description 是否展示背景
+   * 是否展示背景
    */
   @property()
   accessor activePanel: string | undefined;
 
   /**
-   * @default true
-   * @required false
-   * @description 是否展示背景
+   * 轮廓。默认情况下，使用阴影，8.2 下默认则为无轮廓。
+   *
+   * 该属性对 panel 类型无效（其始终无轮廓）。
+   *
+   * @default "default"
    */
-  @property({
-    type: Boolean,
-  })
-  accessor showCard: boolean | undefined;
+  @property()
+  accessor outline: TabsOutline | undefined;
 
   render() {
-    return (
-      <TabGroupElement
-        type={this.type}
-        activePanel={this.activePanel}
-        showCard={this.showCard}
-        panelStyle={this.panelStyle}
-      />
-    );
+    return <TabGroupElement type={this.type} activePanel={this.activePanel} />;
   }
 }
 
-function TabGroupElement({
-  type,
-  showCard = true,
-  activePanel,
-  panelStyle,
-}: TabGroupProps): React.ReactElement {
+function TabGroupElement({ activePanel }: TabGroupProps): React.ReactElement {
   const navSlotRef = useRef<HTMLSlotElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [tabs, setTabs] = useState<string[]>([]);
@@ -111,7 +94,7 @@ function TabGroupElement({
       setTabs(navSlotChildren.map((item) => item.panel));
   };
 
-  const handleSetAcitve = useCallback((e: MouseEvent) => {
+  const handleSetActive = useCallback((e: MouseEvent) => {
     setActiveItem((e.target as TabItem).panel);
   }, []);
 
@@ -119,13 +102,13 @@ function TabGroupElement({
     const navSlot = navSlotRef.current;
     initSetTab();
 
-    navSlot.addEventListener("click", handleSetAcitve);
+    navSlot.addEventListener("click", handleSetActive);
     navSlot.addEventListener("slotchange", initSetTab);
     return () => {
-      navSlot.removeEventListener("click", handleSetAcitve);
+      navSlot.removeEventListener("click", handleSetActive);
       navSlot.removeEventListener("slotchange", initSetTab);
     };
-  }, [activePanel, handleSetAcitve]);
+  }, [activePanel, handleSetActive]);
 
   useEffect(() => {
     if (tabs.length) {
@@ -134,12 +117,8 @@ function TabGroupElement({
   }, [activePanel, tabs]);
 
   return (
-    <div
-      className={classNames("tab-wrapper", {
-        "show-card": showCard,
-      })}
-    >
-      <div className={classNames("tab-nav", type)} style={panelStyle}>
+    <div className="tab-wrapper">
+      <div className="tab-nav">
         <div className="tab-item-wrapper">
           <slot name="nav" ref={navSlotRef} />
         </div>
@@ -148,9 +127,7 @@ function TabGroupElement({
         </div>
       </div>
       <div className="content" ref={contentRef}>
-        {tabs?.map((tab) => (
-          <slot key={tab} name={tab} />
-        ))}
+        {tabs?.map((tab) => <slot key={tab} name={tab} />)}
       </div>
     </div>
   );

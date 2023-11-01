@@ -7,351 +7,198 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @next-bricks/ui-test
 
-
-
-
-
 ## [0.10.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.10.2...@next-bricks/ui-test@0.10.3) (2023-10-27)
-
 
 ### Bug Fixes
 
-* 适配 prettier 3.0 ([da11fe1](https://github.com/easyops-cn/next-bricks/commit/da11fe1c5c668b3169547e4328fff620b434a083))
-
-
-
-
+- 适配 prettier 3.0 ([da11fe1](https://github.com/easyops-cn/next-bricks/commit/da11fe1c5c668b3169547e4328fff620b434a083))
 
 ## [0.10.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.10.1...@next-bricks/ui-test@0.10.2) (2023-10-27)
 
-
 ### Bug Fixes
 
-* pretty case file ([53bdfb5](https://github.com/easyops-cn/next-bricks/commit/53bdfb5f8616930c865a23ec1307bbad18c37862))
-
-
-
-
+- pretty case file ([53bdfb5](https://github.com/easyops-cn/next-bricks/commit/53bdfb5f8616930c865a23ec1307bbad18c37862))
 
 ## [0.10.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.10.0...@next-bricks/ui-test@0.10.1) (2023-10-27)
 
 **Note:** Version bump only for package @next-bricks/ui-test
 
-
-
-
-
 # [0.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.9.0...@next-bricks/ui-test@0.10.0) (2023-10-26)
-
 
 ### Features
 
-* 支持命令下方插入命令 ([aa7a18a](https://github.com/easyops-cn/next-bricks/commit/aa7a18a25905992e6fd35489a6cab85e12b04c69))
-
-
-
-
+- 支持命令下方插入命令 ([aa7a18a](https://github.com/easyops-cn/next-bricks/commit/aa7a18a25905992e6fd35489a6cab85e12b04c69))
 
 # [0.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.8.0...@next-bricks/ui-test@0.9.0) (2023-10-25)
 
-
 ### Features
 
-* support use `code` in chain call ([a0198b2](https://github.com/easyops-cn/next-bricks/commit/a0198b22c6baf8c4ad42d1888a3c493ed0b2e32d))
-
-
-
-
+- support use `code` in chain call ([a0198b2](https://github.com/easyops-cn/next-bricks/commit/a0198b22c6baf8c4ad42d1888a3c493ed0b2e32d))
 
 # [0.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.7.0...@next-bricks/ui-test@0.8.0) (2023-10-20)
 
-
 ### Features
 
-* support rename file ([e49eb6f](https://github.com/easyops-cn/next-bricks/commit/e49eb6f7cbfdb0b7765684013b5946c6f34d5bad))
-
-
-
-
+- support rename file ([e49eb6f](https://github.com/easyops-cn/next-bricks/commit/e49eb6f7cbfdb0b7765684013b5946c6f34d5bad))
 
 # [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.6.10...@next-bricks/ui-test@0.7.0) (2023-10-19)
 
-
 ### Features
 
-* add delete file provider ([90580ad](https://github.com/easyops-cn/next-bricks/commit/90580adb8b4ee05bfdbc73b71b0ce36a938ddb31))
-
-
-
-
+- add delete file provider ([90580ad](https://github.com/easyops-cn/next-bricks/commit/90580adb8b4ee05bfdbc73b71b0ce36a938ddb31))
 
 ## [0.6.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.6.9...@next-bricks/ui-test@0.6.10) (2023-10-19)
 
 **Note:** Version bump only for package @next-bricks/ui-test
 
-
-
-
-
 ## [0.6.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.6.8...@next-bricks/ui-test@0.6.9) (2023-10-18)
-
 
 ### Bug Fixes
 
-* add description for commands ([0aabdc9](https://github.com/easyops-cn/next-bricks/commit/0aabdc9bcf8ab383b9966109610777e834bf78ec))
-
-
-
-
+- add description for commands ([0aabdc9](https://github.com/easyops-cn/next-bricks/commit/0aabdc9bcf8ab383b9966109610777e834bf78ec))
 
 ## [0.6.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.6.7...@next-bricks/ui-test@0.6.8) (2023-10-12)
 
-
 ### Bug Fixes
 
-* little optimization ([583ea03](https://github.com/easyops-cn/next-bricks/commit/583ea0381901fe744c2ba8c4e85c6e93c60932d1))
-
-
-
-
+- little optimization ([583ea03](https://github.com/easyops-cn/next-bricks/commit/583ea0381901fe744c2ba8c4e85c6e93c60932d1))
 
 ## [0.6.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.6.6...@next-bricks/ui-test@0.6.7) (2023-10-12)
 
 **Note:** Version bump only for package @next-bricks/ui-test
 
-
-
-
-
 ## [0.6.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.6.5...@next-bricks/ui-test@0.6.6) (2023-10-12)
-
 
 ### Bug Fixes
 
-* show permission prompt if no permission ([6e226c6](https://github.com/easyops-cn/next-bricks/commit/6e226c69b01af1a97b6e9f940eae534fbbe2536e))
-
-
-
-
+- show permission prompt if no permission ([6e226c6](https://github.com/easyops-cn/next-bricks/commit/6e226c69b01af1a97b6e9f940eae534fbbe2536e))
 
 ## [0.6.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.6.4...@next-bricks/ui-test@0.6.5) (2023-10-10)
 
 **Note:** Version bump only for package @next-bricks/ui-test
 
-
-
-
-
 ## [0.6.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.6.3...@next-bricks/ui-test@0.6.4) (2023-10-07)
-
 
 ### Bug Fixes
 
-* label support show flag ([385ff97](https://github.com/easyops-cn/next-bricks/commit/385ff97ca4659e70024c3869a51f9d09c10c2890))
-
-
-
-
+- label support show flag ([385ff97](https://github.com/easyops-cn/next-bricks/commit/385ff97ca4659e70024c3869a51f9d09c10c2890))
 
 ## [0.6.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.6.2...@next-bricks/ui-test@0.6.3) (2023-09-28)
 
 **Note:** Version bump only for package @next-bricks/ui-test
 
-
-
-
-
 ## [0.6.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.6.1...@next-bricks/ui-test@0.6.2) (2023-09-26)
 
 **Note:** Version bump only for package @next-bricks/ui-test
-
-
-
-
 
 ## [0.6.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.6.0...@next-bricks/ui-test@0.6.1) (2023-09-22)
 
 **Note:** Version bump only for package @next-bricks/ui-test
 
-
-
-
-
 # [0.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.5.6...@next-bricks/ui-test@0.6.0) (2023-09-22)
-
 
 ### Features
 
-* support only / skip ([6e71513](https://github.com/easyops-cn/next-bricks/commit/6e715132a5390045e0716a787e6d4c6992b07a70))
-
-
-
-
+- support only / skip ([6e71513](https://github.com/easyops-cn/next-bricks/commit/6e715132a5390045e0716a787e6d4c6992b07a70))
 
 ## [0.5.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.5.5...@next-bricks/ui-test@0.5.6) (2023-09-15)
 
-
 ### Bug Fixes
 
-* support find elements by `find` ([09e38f0](https://github.com/easyops-cn/next-bricks/commit/09e38f0466f83a2dd8fd462081c7c5f86a24d8ad))
-
-
-
-
+- support find elements by `find` ([09e38f0](https://github.com/easyops-cn/next-bricks/commit/09e38f0466f83a2dd8fd462081c7c5f86a24d8ad))
 
 ## [0.5.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.5.4...@next-bricks/ui-test@0.5.5) (2023-09-14)
 
-
 ### Bug Fixes
 
-* hover over tree node ([e609c90](https://github.com/easyops-cn/next-bricks/commit/e609c90ab5e22f1583c581cbeaf573ed834f32d3))
-
-
-
-
+- hover over tree node ([e609c90](https://github.com/easyops-cn/next-bricks/commit/e609c90ab5e22f1583c581cbeaf573ed834f32d3))
 
 ## [0.5.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.5.3...@next-bricks/ui-test@0.5.4) (2023-09-13)
 
 **Note:** Version bump only for package @next-bricks/ui-test
 
-
-
-
-
 ## [0.5.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.5.2...@next-bricks/ui-test@0.5.3) (2023-09-06)
-
 
 ### Bug Fixes
 
-* add nextChildSort and nextSiblingSort for tree nodes ([44fd2e6](https://github.com/easyops-cn/next-bricks/commit/44fd2e6d2167dfdaa3b8fbed52a260863991e17f))
-* support apply snippet ([4ad18ae](https://github.com/easyops-cn/next-bricks/commit/4ad18ae8ad95d305d5344c9065c99588d98b2781))
-
-
-
-
+- add nextChildSort and nextSiblingSort for tree nodes ([44fd2e6](https://github.com/easyops-cn/next-bricks/commit/44fd2e6d2167dfdaa3b8fbed52a260863991e17f))
+- support apply snippet ([4ad18ae](https://github.com/easyops-cn/next-bricks/commit/4ad18ae8ad95d305d5344c9065c99588d98b2781))
 
 ## [0.5.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.5.1...@next-bricks/ui-test@0.5.2) (2023-09-06)
 
-
 ### Bug Fixes
 
-* add `findByRole` and `findAll*` ([d8ac883](https://github.com/easyops-cn/next-bricks/commit/d8ac8834e76702c4071aad6673a6668aa3ca1463))
-
-
-
-
+- add `findByRole` and `findAll*` ([d8ac883](https://github.com/easyops-cn/next-bricks/commit/d8ac8834e76702c4071aad6673a6668aa3ca1463))
 
 ## [0.5.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.5.0...@next-bricks/ui-test@0.5.1) (2023-09-06)
 
 **Note:** Version bump only for package @next-bricks/ui-test
 
-
-
-
-
 # [0.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.4.0...@next-bricks/ui-test@0.5.0) (2023-09-06)
-
 
 ### Bug Fixes
 
-* sort node ([a0cb1aa](https://github.com/easyops-cn/next-bricks/commit/a0cb1aae94002d9df3948f85e2cf4b2e4d924ded))
-
+- sort node ([a0cb1aa](https://github.com/easyops-cn/next-bricks/commit/a0cb1aae94002d9df3948f85e2cf4b2e4d924ded))
 
 ### Features
 
-* save recorded commands ([792fb6d](https://github.com/easyops-cn/next-bricks/commit/792fb6d92f984ab481e8e1605ca13df463df74a1))
-* test node support copy ([a9872c3](https://github.com/easyops-cn/next-bricks/commit/a9872c313edfc135f7bd4ae11b90156179acc929))
-
-
-
-
+- save recorded commands ([792fb6d](https://github.com/easyops-cn/next-bricks/commit/792fb6d92f984ab481e8e1605ca13df463df74a1))
+- test node support copy ([a9872c3](https://github.com/easyops-cn/next-bricks/commit/a9872c313edfc135f7bd4ae11b90156179acc929))
 
 # [0.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.3.0...@next-bricks/ui-test@0.4.0) (2023-09-05)
 
-
 ### Features
 
-* support recording actions ([5008981](https://github.com/easyops-cn/next-bricks/commit/500898116b356ff6a25f2baebd29c482dab8db9a))
-
-
-
-
+- support recording actions ([5008981](https://github.com/easyops-cn/next-bricks/commit/500898116b356ff6a25f2baebd29c482dab8db9a))
 
 # [0.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.2.1...@next-bricks/ui-test@0.3.0) (2023-09-04)
 
-
 ### Bug Fixes
 
-* missing targetOrigin option ([99cc948](https://github.com/easyops-cn/next-bricks/commit/99cc9484282f60fa001e674ae6eeeef817b50caa))
-
+- missing targetOrigin option ([99cc948](https://github.com/easyops-cn/next-bricks/commit/99cc9484282f60fa001e674ae6eeeef817b50caa))
 
 ### Features
 
-* support sort ([b265c0c](https://github.com/easyops-cn/next-bricks/commit/b265c0c6d0f41244990e11277dab72036d3711db))
-
-
-
-
+- support sort ([b265c0c](https://github.com/easyops-cn/next-bricks/commit/b265c0c6d0f41244990e11277dab72036d3711db))
 
 ## [0.2.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.2.0...@next-bricks/ui-test@0.2.1) (2023-09-01)
 
 **Note:** Version bump only for package @next-bricks/ui-test
 
-
-
-
-
 # [0.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.1.2...@next-bricks/ui-test@0.2.0) (2023-08-31)
-
 
 ### Features
 
-* support inspect ([3325711](https://github.com/easyops-cn/next-bricks/commit/332571102eea1bb8bcace659e6c59985db625e91))
-
-
-
-
+- support inspect ([3325711](https://github.com/easyops-cn/next-bricks/commit/332571102eea1bb8bcace659e6c59985db625e91))
 
 ## [0.1.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.1.1...@next-bricks/ui-test@0.1.2) (2023-08-30)
 
-
 ### Bug Fixes
 
-* add negative assertions ([e702bb5](https://github.com/easyops-cn/next-bricks/commit/e702bb55d5367b540ee13dd3886a4fb4152bd766))
-
-
-
-
+- add negative assertions ([e702bb5](https://github.com/easyops-cn/next-bricks/commit/e702bb55d5367b540ee13dd3886a4fb4152bd766))
 
 ## [0.1.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.1.0...@next-bricks/ui-test@0.1.1) (2023-08-30)
 
-
 ### Bug Fixes
 
-* add more commands ([e4cbb20](https://github.com/easyops-cn/next-bricks/commit/e4cbb205cf0f6b4fb0021d369a0d5ed68127f4c2))
-* add parent field ([02cf3c7](https://github.com/easyops-cn/next-bricks/commit/02cf3c725cb97298eac8960b6ef3a2714d960200))
-* fix filter ([7a2ab94](https://github.com/easyops-cn/next-bricks/commit/7a2ab9485cba6070fd7255b55fedc803a4bc6726))
-* parse suite to ast ([4ddc954](https://github.com/easyops-cn/next-bricks/commit/4ddc954fb2d7d5aace7c89907f77b7f172b1364a))
-* refine tree node display labels ([335b711](https://github.com/easyops-cn/next-bricks/commit/335b711eaf395ded41b145b5a9ef7b3491162798))
-* refine tree node icons ([c6efebb](https://github.com/easyops-cn/next-bricks/commit/c6efebb27160c3bb0bf51c4baddcf25400080e5e))
-* some optimization ([80c4aef](https://github.com/easyops-cn/next-bricks/commit/80c4aef12f8727aea3a03ddb7d1cdd8bc3f4270f))
-
-
-
-
+- add more commands ([e4cbb20](https://github.com/easyops-cn/next-bricks/commit/e4cbb205cf0f6b4fb0021d369a0d5ed68127f4c2))
+- add parent field ([02cf3c7](https://github.com/easyops-cn/next-bricks/commit/02cf3c725cb97298eac8960b6ef3a2714d960200))
+- fix filter ([7a2ab94](https://github.com/easyops-cn/next-bricks/commit/7a2ab9485cba6070fd7255b55fedc803a4bc6726))
+- parse suite to ast ([4ddc954](https://github.com/easyops-cn/next-bricks/commit/4ddc954fb2d7d5aace7c89907f77b7f172b1364a))
+- refine tree node display labels ([335b711](https://github.com/easyops-cn/next-bricks/commit/335b711eaf395ded41b145b5a9ef7b3491162798))
+- refine tree node icons ([c6efebb](https://github.com/easyops-cn/next-bricks/commit/c6efebb27160c3bb0bf51c4baddcf25400080e5e))
+- some optimization ([80c4aef](https://github.com/easyops-cn/next-bricks/commit/80c4aef12f8727aea3a03ddb7d1cdd8bc3f4270f))
 
 # 0.1.0 (2023-08-25)
 
-
 ### Bug Fixes
 
-* export to micro app directory ([a811578](https://github.com/easyops-cn/next-bricks/commit/a81157890fa2731a10b7f4df77b256fb5ba82fc5))
-* tree data optimization ([9a096fa](https://github.com/easyops-cn/next-bricks/commit/9a096fa477f236f81537023e6aa86bb9f4a96c55))
-
+- export to micro app directory ([a811578](https://github.com/easyops-cn/next-bricks/commit/a81157890fa2731a10b7f4df77b256fb5ba82fc5))
+- tree data optimization ([9a096fa](https://github.com/easyops-cn/next-bricks/commit/9a096fa477f236f81537023e6aa86bb9f4a96c55))
 
 ### Features
 
-* get commands ([2ceb3ac](https://github.com/easyops-cn/next-bricks/commit/2ceb3acf799c55bd92c2aa740d889d6664702e29))
-* initial brick: preview-container ([9863b72](https://github.com/easyops-cn/next-bricks/commit/9863b72774bd258de4ab47ea2876acc5565b25f6))
-* inject preview agent ([a921b2a](https://github.com/easyops-cn/next-bricks/commit/a921b2a9c01ba29b538946a1096b96e925399950))
-* support for converting into test case files ([155bd18](https://github.com/easyops-cn/next-bricks/commit/155bd18a9069ddffcc23bc2fdb171a730644f4eb))
+- get commands ([2ceb3ac](https://github.com/easyops-cn/next-bricks/commit/2ceb3acf799c55bd92c2aa740d889d6664702e29))
+- initial brick: preview-container ([9863b72](https://github.com/easyops-cn/next-bricks/commit/9863b72774bd258de4ab47ea2876acc5565b25f6))
+- inject preview agent ([a921b2a](https://github.com/easyops-cn/next-bricks/commit/a921b2a9c01ba29b538946a1096b96e925399950))
+- support for converting into test case files ([155bd18](https://github.com/easyops-cn/next-bricks/commit/155bd18a9069ddffcc23bc2fdb171a730644f4eb))
