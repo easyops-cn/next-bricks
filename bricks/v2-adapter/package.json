@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/v2-adapter",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/v2-adapter",
   "repository": {
     "type": "git",
@@ -46,13 +46,13 @@
   "devDependencies": {
     "@next-core/brick-dll-v3": "^0.7.16",
     "@next-core/build-next-bricks": "^1.14.3",
-    "@next-core/styles-v3": "^0.3.2",
+    "@next-core/styles-v3": "^0.3.3",
     "@next-core/test-next": "^1.0.11",
-    "@next-dll/ace": "^2.0.691",
+    "@next-dll/ace": "^2.0.693",
     "@next-dll/d3": "^2.0.79",
     "@next-dll/echarts": "^2.0.80",
-    "@next-dll/editor-bricks-helper": "^0.38.36",
-    "@next-dll/react-dnd": "^0.1.629",
+    "@next-dll/editor-bricks-helper": "^0.38.38",
+    "@next-dll/react-dnd": "^0.1.631",
     "copy-webpack-plugin": "^11.0.0"
   }
 }
