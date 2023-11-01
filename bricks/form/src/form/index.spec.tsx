@@ -9,6 +9,10 @@ describe("eo-form", () => {
   test("basic usage", async () => {
     const element = document.createElement("eo-form") as Form;
     element.layout = "vertical";
+    element.values = {
+      name: "test",
+    };
+    element.setInitValue({ age: 10, name: "test" });
 
     expect(element.shadowRoot).toBeFalsy();
     act(() => {
@@ -16,6 +20,7 @@ describe("eo-form", () => {
     });
     expect(element.shadowRoot).toBeTruthy();
     expect(element.shadowRoot?.childNodes.length).toBe(1);
+    expect(element.isFormElement).toEqual(true);
 
     expect(element.shadowRoot?.querySelector("slot")?.style.display).toBe(
       "flex"
@@ -40,7 +45,7 @@ describe("eo-form", () => {
     });
 
     expect(element.shadowRoot?.querySelector("slot")?.style.flexDirection).toBe(
-      ""
+      "column"
     );
 
     expect(element.shadowRoot?.querySelector("slot")?.style.gap).toBe("");
