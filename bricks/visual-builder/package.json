@@ -40,7 +40,7 @@
     "@next-core/react-element": "^1.0.16",
     "@next-core/runtime": "^1.24.5",
     "@next-core/storyboard": "^0.6.5",
-    "@next-core/theme": "^1.3.5",
+    "@next-core/theme": "^1.3.6",
     "@next-core/types": "^1.7.1",
     "@next-core/utils": "^1.6.2",
     "@next-shared/general": "^0.7.3",
