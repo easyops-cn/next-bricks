@@ -38,7 +38,7 @@
     "@next-core/runtime": "^1.24.5"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.14.3",
+    "@next-core/build-next-bricks": "^1.14.4",
     "@next-core/test-next": "^1.0.11"
   }
 }
