@@ -8,6 +8,11 @@ declare module "*.css" {
   export default css;
 }
 
+declare module "*.less" {
+  const lessValue: string;
+  export default lessValue;
+}
+
 interface SvgrComponent
   extends React.FunctionComponent<React.SVGAttributes<SVGElement>> {}
 

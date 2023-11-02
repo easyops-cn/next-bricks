@@ -10,7 +10,7 @@ import type { ButtonType } from "../interface.js";
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 const WrappedButton = wrapBrick<Button, ButtonProps>("eo-button");
 
-interface SubmitButtonsProps {
+interface SubmitButtonsProps extends FormItemProps {
   curElement: HTMLElement;
   submitText?: string;
   submitType?: ButtonType;
@@ -96,6 +96,7 @@ class SubmitButtons extends FormItemElementBase {
   render() {
     return (
       <ButtonsComponent
+        formElement={this.getFormElement()}
         curElement={this}
         submitDisabled={this.submitDisabled}
         submitText={this.submitText}
