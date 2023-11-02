@@ -3,7 +3,8 @@ import { act } from "react-dom/test-utils";
 import { fireEvent } from "@testing-library/react";
 import "./";
 import { GeneralAlert } from "./index.js";
-import { AlertType } from "./constants.js";
+import { AlertType, LOCAL_STORAGE_PREFIX } from "./constants.js";
+import { JsonStorage } from "@next-shared/general/JsonStorage";
 
 jest.mock("@next-core/theme", () => ({}));
 jest.mock("@next-core/runtime", () => ({
@@ -40,10 +41,30 @@ describe("presentational.general-alert", () => {
     });
     expect(element.shadowRoot?.querySelector("alert-wrapper")).toBeFalsy();
 
-    act(() => {
-      document.body.removeChild(element);
-    });
     expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
+
+  test("not show when the value of localStorageKey is true", async () => {
+    const element = document.createElement(
+      "presentational.general-alert"
+    ) as GeneralAlert;
+    element.textContent = "content";
+    element.type = AlertType.INFO;
+    element.disableUrlNamespace = true;
+    element.closable = true;
+    element.localStorageKey = "test";
+
+    const storage = new JsonStorage(localStorage);
+
+    storage.setItem(`${LOCAL_STORAGE_PREFIX}_test`, true);
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(element.shadowRoot?.querySelector(".alert-title")).toBeFalsy();
   });
 
   test("has title", async () => {
