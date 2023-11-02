@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.19.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.19.1...@next-bricks/containers@0.19.2) (2023-11-02)
+
+
+### Bug Fixes
+
+* **tabs:** depends on new brick_next ([2732a22](https://github.com/easyops-cn/next-bricks/commit/2732a22f6870435219fa9e7114d4829e7199ea84))
+
+
+
+
+
 ## [0.19.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.19.0...@next-bricks/containers@0.19.1) (2023-11-01)
 
 
