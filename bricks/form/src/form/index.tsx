@@ -1,7 +1,12 @@
 import React, { useMemo } from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
-import { AbstractForm, FormStore, MessageBody } from "@next-shared/form";
+import {
+  AbstractForm,
+  FormStore,
+  MessageBody,
+  ColProps,
+} from "@next-shared/form";
 import { ComponentSize, Layout } from "../interface.js";
 
 const { defineElement, property, event, method } = createDecorators();
@@ -62,14 +67,63 @@ class Form extends ReactNextElement implements FormProps, AbstractForm {
   }
 
   /**
-   * 布局方式
+   * 布局方式(默认 vertical 布局)
+   * @default vertical
    */
-  @property() accessor layout: Layout | undefined;
+  @property() accessor layout: Layout = "vertical";
 
   /**
    * 表单组件尺寸
    */
   @property() accessor size: ComponentSize | undefined;
+
+  /**
+   * 标签列布局样式（仅当 layout="horizontal" 时有效）
+   */
+  @property({
+    attribute: false,
+  })
+  accessor labelCol: ColProps = {
+    sm: {
+      span: 24,
+    },
+    md: {
+      span: 24,
+    },
+    lg: {
+      span: 7,
+    },
+    xl: {
+      span: 5,
+    },
+    xxl: {
+      span: 4,
+    },
+  };
+
+  /**
+   * 输入控件列布局样式（仅当 layout="horizontal" 时有效）
+   */
+  @property({
+    attribute: false,
+  })
+  accessor wrapperCol: ColProps = {
+    sm: {
+      span: 18,
+    },
+    md: {
+      span: 18,
+    },
+    lg: {
+      span: 13,
+    },
+    xl: {
+      span: 16,
+    },
+    xxl: {
+      span: 18,
+    },
+  };
 
   /**
    * 表单值变更事件
@@ -161,6 +215,8 @@ class Form extends ReactNextElement implements FormProps, AbstractForm {
       <FormComponent
         layout={this.layout}
         size={this.size}
+        labelCol={this.labelCol}
+        wrapperCol={this.wrapperCol}
         formStyle={this.formStyle}
       />
     );
@@ -169,18 +225,21 @@ class Form extends ReactNextElement implements FormProps, AbstractForm {
 
 interface FormComponentProps extends FormProps {
   formStyle?: React.CSSProperties;
+  labelCol?: ColProps;
+  wrapperCol?: ColProps;
   onValuesChange?: (value: Record<string, any>) => void;
   onValidateSuccess?: () => void;
   onValidateError?: () => void;
 }
 
 export function FormComponent({
-  layout = "horizontal",
+  layout = "vertical",
   formStyle,
 }: FormComponentProps) {
   const computedStyle = useMemo((): React.CSSProperties => {
     switch (layout) {
-      case "vertical": {
+      case "vertical":
+      case "horizontal": {
         return {
           display: "flex",
           flexDirection: "column",
