@@ -48,7 +48,7 @@
     "@milkdown/transformer": "7.2.0",
     "@milkdown/utils": "7.2.0",
     "@next-api-sdk/object-store-sdk": "1.1.0",
-    "@next-core/theme": "^1.3.6",
+    "@next-core/theme": "^1.3.7",
     "@next-shared/form": "^0.3.8",
     "@prosemirror-adapter/react": "^0.2.2",
     "@type-config/strict": "^1.2.1",
