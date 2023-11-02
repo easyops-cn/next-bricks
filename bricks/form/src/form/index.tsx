@@ -67,9 +67,10 @@ class Form extends ReactNextElement implements FormProps, AbstractForm {
   }
 
   /**
-   * 布局方式
+   * 布局方式(默认 vertical 布局)
+   * @default vertical
    */
-  @property() accessor layout: Layout | undefined;
+  @property() accessor layout: Layout = "vertical";
 
   /**
    * 表单组件尺寸
@@ -232,7 +233,7 @@ interface FormComponentProps extends FormProps {
 }
 
 export function FormComponent({
-  layout = "horizontal",
+  layout = "vertical",
   formStyle,
 }: FormComponentProps) {
   const computedStyle = useMemo((): React.CSSProperties => {
