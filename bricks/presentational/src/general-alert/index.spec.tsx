@@ -65,6 +65,11 @@ describe("presentational.general-alert", () => {
     });
 
     expect(element.shadowRoot?.querySelector(".alert-title")).toBeFalsy();
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBe(0);
   });
 
   test("has title", async () => {
