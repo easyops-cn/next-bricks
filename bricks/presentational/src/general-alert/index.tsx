@@ -22,6 +22,7 @@ export interface GeneralAlertProps {
   closable?: boolean;
   localStorageKey?: string;
   disableUrlNamespace?: boolean;
+  removeHostNode?: () => void;
 }
 
 /**
@@ -73,6 +74,10 @@ class GeneralAlert extends ReactNextElement implements GeneralAlertProps {
   })
   accessor disableUrlNamespace: boolean | undefined;
 
+  #removeHostNode = () => {
+    this.remove();
+  };
+
   render() {
     return (
       <GeneralAlertComponent
@@ -81,14 +86,21 @@ class GeneralAlert extends ReactNextElement implements GeneralAlertProps {
         closable={this.closable}
         localStorageKey={this.localStorageKey}
         disableUrlNamespace={this.disableUrlNamespace}
+        removeHostNode={this.#removeHostNode}
       />
     );
   }
 }
 
 export function GeneralAlertComponent(props: GeneralAlertProps) {
-  const { type, hasTitle, closable, localStorageKey, disableUrlNamespace } =
-    props;
+  const {
+    type,
+    hasTitle,
+    closable,
+    localStorageKey,
+    disableUrlNamespace,
+    removeHostNode,
+  } = props;
 
   const storage = useMemo(() => new JsonStorage(localStorage), []);
   const nameSpace = useMemo(() => {
@@ -144,6 +156,7 @@ export function GeneralAlertComponent(props: GeneralAlertProps) {
           onClick={() => {
             setHidden(true);
             storage.setItem(nameSpace, true);
+            removeHostNode?.();
           }}
         />
       )}

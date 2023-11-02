@@ -32,6 +32,7 @@ export interface LinkProps {
   href?: string;
   icon?: GeneralIconProps;
   target?: Target;
+  showExternalIcon?: boolean;
   underline?: boolean;
   replace?: boolean;
   danger?: boolean;
@@ -84,6 +85,12 @@ class Link extends ReactNextElement implements LinkProps {
   @property() accessor target: Target | undefined;
 
   /**
+   * target 为 _blank 时，是否在后面显示特定图标
+   */
+  @property({ type: Boolean })
+  accessor showExternalIcon: boolean | undefined;
+
+  /**
    * 是否显示下划线
    */
   @property({
@@ -130,6 +137,7 @@ class Link extends ReactNextElement implements LinkProps {
         url={this.url}
         href={this.href}
         target={this.target}
+        showExternalIcon={this.showExternalIcon}
         icon={this.icon}
         underline={this.underline}
         danger={this.danger}
@@ -150,6 +158,7 @@ export function LinkComponent({
   url,
   href,
   target,
+  showExternalIcon,
   icon,
   underline,
   danger,
@@ -224,22 +233,31 @@ export function LinkComponent({
   });
 
   return (
-    <a
-      part="link"
-      className={classNames({
-        [type]: type,
-        danger: danger,
-        disabled: disabled,
-        underline: underline,
-      })}
-      style={linkStyle}
-      href={isEmpty(computedHref) ? undefined : computedHref}
-      target={target}
-      ref={linkRef}
-    >
-      {icon && <WrappedIcon part="icon" {...icon} />}
-      <slot />
-    </a>
+    <>
+      <a
+        part="link"
+        className={classNames({
+          [type]: type,
+          danger: danger,
+          disabled: disabled,
+          underline: underline,
+        })}
+        style={linkStyle}
+        href={isEmpty(computedHref) ? undefined : computedHref}
+        target={target}
+        ref={linkRef}
+      >
+        {icon && <WrappedIcon part="icon" {...icon} />}
+        <slot />
+      </a>
+      {showExternalIcon && (
+        <WrappedIcon
+          className="external-icon"
+          lib="fa"
+          icon="external-link-alt"
+        />
+      )}
+    </>
   );
 }
 
