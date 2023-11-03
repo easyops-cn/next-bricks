@@ -28,7 +28,7 @@
     "@shoelace-style/shoelace": "^2.9.0"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.14.4",
+    "@next-core/build-next-bricks": "^1.14.5",
     "copy-webpack-plugin": "^11.0.0"
   }
 }
