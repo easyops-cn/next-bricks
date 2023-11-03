@@ -5,10 +5,11 @@ import {
   startInspecting,
   stopInspecting,
 } from "./inspector.js";
-import connect from "./connect.js";
+import _connect from "./connect.js";
 jest.mock("@next-core/runtime");
 jest.mock("./inspector.js");
 jest.mock("./capture.js");
+jest.mock("../collect-used-contracts.js");
 
 const historyListeners = new Set<(loc: string) => void>();
 const history = {
@@ -74,21 +75,46 @@ window.parent = {
 
 const addEventListener = jest.spyOn(window, "addEventListener");
 
-const brick = document.createElement("div");
-brick.dataset.iid = "i-01";
-document.body.appendChild(brick);
-
-const mainElement = document.createElement("div");
-mainElement.setAttribute("id", "main-mount-point");
-
-const span = document.createElement("span");
-span.dataset.tplStateStoreId = "tpl-state-8";
-
-mainElement.appendChild(span);
-document.body.appendChild(mainElement);
+// Workaround for build error
+const CE = customElements;
+CE.define(
+  "eo-page-view",
+  class extends HTMLElement {
+    connectedCallback() {
+      const shadowRoot = this.attachShadow({ mode: "open" });
+      const content = document.createElement("div");
+      content.className = "content";
+      shadowRoot.appendChild(content);
+    }
+  }
+);
 
 describe("connect", () => {
+  let connect: typeof _connect;
+
+  beforeEach(() => {
+    jest.isolateModules(() => {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const m = require("./connect.js");
+      connect = m.default;
+    });
+    document.body.replaceChildren();
+  });
+
   it("should work", async () => {
+    const brick = document.createElement("div");
+    brick.dataset.iid = "i-01";
+    document.body.appendChild(brick);
+
+    const mainElement = document.createElement("div");
+    mainElement.setAttribute("id", "main-mount-point");
+
+    const span = document.createElement("span");
+    span.dataset.tplStateStoreId = "tpl-state-8";
+
+    mainElement.appendChild(span);
+    document.body.appendChild(mainElement);
+
     connect("http://localhost:8081", {
       routePath: "/a",
       routeExact: true,
@@ -637,6 +663,68 @@ describe("connect", () => {
           error: {
             message: "tplStateStoreId not found, unable to preview STATE value",
           },
+        },
+      },
+      "http://localhost:8081"
+    );
+  });
+
+  it("should handle content scroll", async () => {
+    const pageView = document.createElement("eo-page-view");
+    document.body.appendChild(pageView);
+
+    const brick = document.createElement("div");
+    brick.dataset.iid = "i-01";
+    pageView.appendChild(brick);
+
+    connect("http://localhost:8081", {
+      routePath: "/a",
+      routeExact: true,
+      appId: "my-app",
+      templateId: "my-tpl",
+    });
+
+    expect(parentPostMessage).toBeCalledTimes(3);
+
+    const listener = addEventListener.mock.calls[0][1] as EventListener;
+
+    // Hover on brick.
+    listener({
+      origin: "http://localhost:8081",
+      data: {
+        sender: "preview-container",
+        type: "hover-on-brick",
+        forwardedFor: "builder",
+        iid: "i-01",
+      },
+    } as any);
+    expect(parentPostMessage).toBeCalledTimes(4);
+    expect(parentPostMessage).toHaveBeenNthCalledWith(
+      4,
+      {
+        sender: "previewer",
+        type: "highlight-brick",
+        highlightType: "hover",
+        outlines: [
+          { width: 0, height: 0, left: 0, top: 0, hasContentScroll: true },
+        ],
+        iid: "i-01",
+      },
+      "http://localhost:8081"
+    );
+
+    pageView.shadowRoot
+      .querySelector(".content")
+      .dispatchEvent(new Event("scroll"));
+    expect(parentPostMessage).toBeCalledTimes(5);
+    expect(parentPostMessage).toHaveBeenNthCalledWith(
+      5,
+      {
+        sender: "previewer",
+        type: "content-scroll",
+        scroll: {
+          x: 0,
+          y: 0,
         },
       },
       "http://localhost:8081"
