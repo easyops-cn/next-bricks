@@ -7,7 +7,7 @@ import styleText from "./styles.shadow.css";
 const { defineElement, property } = createDecorators();
 
 /**
- * 构件 `eo-page-view`
+ * 页面视图
  *
  * @author steve
  *

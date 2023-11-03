@@ -7,7 +7,7 @@ import styleText from "./styles.shadow.css";
 const { defineElement } = createDecorators();
 
 /**
- * 内容区流式布局，为子元素之间提供默认的间距。
+ * 内容区流式布局（上下），为子元素之间提供默认的间距。
  *
  * @author steve
  *

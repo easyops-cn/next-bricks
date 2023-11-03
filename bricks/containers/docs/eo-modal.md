@@ -1,6 +1,6 @@
 通用模态框容器构件。
 
-```html preview
+```html preview minHeight="320px"
 <eo-modal modal-title="Modal Title" visible="true">Content</eo-card>
 ```
 
@@ -8,7 +8,7 @@
 
 ### Width & Height
 
-```yaml preview
+```yaml preview minHeight="320px"
 - brick: eo-button
   properties:
     textContent: Open Modal
@@ -17,22 +17,21 @@
       - target: "#modal"
         method: open
 - brick: eo-modal
+  portal: true
   properties:
     id: "modal"
     modalTitle: 模态框标题
     width: 300px
     height: 200px
-  slots:
-    "":
-      bricks:
-        - brick: div
-          properties:
-            textContent: Content
+  children:
+    - brick: div
+      properties:
+        textContent: Content
 ```
 
 ### MaskClosable
 
-```yaml preview
+```yaml preview minHeight="320px"
 - brick: eo-button
   properties:
     textContent: Mask Allow Close
@@ -41,6 +40,7 @@
       - target: "#modal-mask-allow-close"
         method: open
 - brick: eo-modal
+  portal: true
   properties:
     modalTitle: 模态框标题
     id: "modal-mask-allow-close"
@@ -73,7 +73,7 @@
 
 ### Fullscreen
 
-```yaml preview
+```yaml preview minHeight="320px"
 - brick: eo-button
   properties:
     textContent: open
@@ -82,6 +82,7 @@
       - target: "#modal"
         method: open
 - brick: eo-modal
+  portal: true
   properties:
     modalTitle: 模态框标题
     id: "modal"
@@ -96,7 +97,7 @@
 
 ### Confirm Text & Cancel Text
 
-```html preview
+```html preview minHeight="320px"
 <eo-modal
   modal-title="Modal Title"
   visible="true"
@@ -109,7 +110,7 @@
 
 ### Hide Cancel Button
 
-```html preview
+```html preview minHeight="320px"
 <eo-modal
   modal-title="Modal Title"
   visible="true"
@@ -121,7 +122,7 @@
 
 ### Open Event & Close Event
 
-```yaml preview
+```yaml preview minHeight="320px"
 - brick: eo-button
   properties:
     textContent: open
@@ -130,6 +131,7 @@
       - target: "#modal"
         method: open
 - brick: eo-modal
+  portal: true
   properties:
     modalTitle: 模态框标题
     id: "modal"
@@ -143,10 +145,8 @@
       - action: message.success
         args:
           - modal Close
-  slots:
-    "":
-      bricks:
-        - brick: div
-          properties:
-            textContent: Content
+  children:
+    - brick: div
+      properties:
+        textContent: Content
 ```

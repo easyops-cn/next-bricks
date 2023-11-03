@@ -4,7 +4,7 @@
 
 ### Basic
 
-```yaml preview
+```yaml preview minHeight="240px"
 - brick: eo-dropdown-actions
   properties:
     actions:

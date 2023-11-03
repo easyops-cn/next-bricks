@@ -1,6 +1,6 @@
 通用下拉按钮构件。
 
-```yaml preview
+```yaml preview minHeight="160px"
 - brick: eo-dropdown-button
   properties:
     actions:
@@ -12,7 +12,7 @@
 
 ### Type
 
-```yaml preview
+```yaml preview minHeight="160px"
 - brick: eo-dropdown-button
   properties:
     type: primary
@@ -41,7 +41,7 @@
 
 ### Button Text & Icon
 
-```yaml preview
+```yaml preview minHeight="160px"
 - brick: eo-dropdown-button
   properties:
     btnText: 下拉按钮
@@ -56,7 +56,7 @@
 
 ### Size
 
-```yaml preview
+```yaml preview minHeight="160px"
 - brick: eo-dropdown-button
   properties:
     size: large
@@ -79,7 +79,7 @@
 
 ### Shape
 
-```yaml preview
+```yaml preview minHeight="160px"
 - brick: eo-dropdown-button
   properties:
     btnText: "Hello world"
@@ -102,7 +102,7 @@
 
 ### Disabled
 
-```yaml preview
+```yaml preview minHeight="160px"
 - brick: eo-dropdown-button
   properties:
     disabled: true
@@ -125,7 +125,7 @@
 
 ### Actions & Event
 
-```yaml preview
+```yaml preview minHeight="200px"
 - brick: eo-dropdown-button
   properties:
     icon:

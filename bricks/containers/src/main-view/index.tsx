@@ -35,7 +35,7 @@ export interface MainViewProps {
 export type MainViewGap = "small" | "medium";
 
 /**
- * 构件 `eo-main-view`
+ * 主内容视图
  *
  * @author steve
  *
