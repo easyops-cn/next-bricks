@@ -1,17 +1,26 @@
 import React from "react";
-import { createDecorators } from "@next-core/element";
+import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import type {
   TabGroup,
+  TabGroupEvents,
+  TabGroupEventsMapping,
   TabGroupProps,
   TabsOutline,
 } from "../tab-group/index.js";
 import type { TabItem, TabItemProps } from "../tab-item/index.js";
 import { TabType } from "../../interface.js";
 
-const { defineElement, property } = createDecorators();
+const { defineElement, property, event } = createDecorators();
 
-const WrappedTabGroup = wrapBrick<TabGroup, TabGroupProps>("eo-tab-group");
+const WrappedTabGroup = wrapBrick<
+  TabGroup,
+  TabGroupProps,
+  TabGroupEvents,
+  TabGroupEventsMapping
+>("eo-tab-group", {
+  onTabSelect: "tab.select",
+});
 
 const WrappedTabItem = wrapBrick<TabItem, TabItemProps>("eo-tab-item");
 
@@ -20,6 +29,14 @@ interface TabListProps {
   tabs?: TabItemProps[];
   activePanel?: string;
   outline?: TabsOutline;
+}
+
+export interface TabListEvents {
+  "tab.select": CustomEvent<string>;
+}
+
+export interface TabListEventsMapping {
+  onTabSelect: "tab.select";
 }
 
 /**
@@ -78,6 +95,18 @@ class TabList extends ReactNextElement {
     return [];
   };
 
+  /**
+   * 选择 tab 时触发
+   * @detail panel
+   */
+  @event({ type: "tab.select" })
+  accessor #tabSelectEvent!: EventEmitter<string>;
+
+  #handleTabSelect = (panel: string): void => {
+    this.activePanel = panel;
+    this.#tabSelectEvent.emit(panel);
+  };
+
   render() {
     return (
       <TabListElement
@@ -85,9 +114,14 @@ class TabList extends ReactNextElement {
         tabs={this.#computedTabs(this.tabs)}
         activePanel={this.activePanel}
         outline={this.outline}
+        onTabSelect={this.#handleTabSelect}
       />
     );
   }
+}
+
+interface TabListElementProps extends TabListProps {
+  onTabSelect?: (panel: string) => void;
 }
 
 function TabListElement({
@@ -95,9 +129,15 @@ function TabListElement({
   tabs,
   activePanel,
   outline,
-}: TabListProps): React.ReactElement {
+  onTabSelect,
+}: TabListElementProps): React.ReactElement {
   return (
-    <WrappedTabGroup type={type} activePanel={activePanel} outline={outline}>
+    <WrappedTabGroup
+      type={type}
+      activePanel={activePanel}
+      outline={outline}
+      onTabSelect={(e) => onTabSelect?.(e.detail)}
+    >
       {tabs.map((tab) => (
         <WrappedTabItem
           type={type}
