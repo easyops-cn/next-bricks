@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { createDecorators } from "@next-core/element";
+import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import styleText from "./tab.shadow.css";
 import type { TabItem } from "../tab-item/index.js";
 import { TabType } from "../../interface.js";
 
-const { defineElement, property } = createDecorators();
+const { defineElement, property, event } = createDecorators();
 
 export interface TabGroupProps {
   type?: TabType;
@@ -21,6 +21,14 @@ export type TabsOutline =
   // | "background"
   | "none"
   | "default";
+
+export interface TabGroupEvents {
+  "tab.select": CustomEvent<string>;
+}
+
+export interface TabGroupEventsMapping {
+  onTabSelect: "tab.select";
+}
 
 /**
  * Tab 容器组
@@ -46,6 +54,18 @@ class TabGroup extends ReactNextElement {
   accessor activePanel: string | undefined;
 
   /**
+   * 选择 tab 时触发
+   * @detail panel
+   */
+  @event({ type: "tab.select" })
+  accessor #tabSelectEvent!: EventEmitter<string>;
+
+  #handleTabSelect = (panel: string): void => {
+    this.activePanel = panel;
+    this.#tabSelectEvent.emit(panel);
+  };
+
+  /**
    * 轮廓。默认情况下，使用阴影，8.2 下默认则为无轮廓。
    *
    * 该属性对 panel 类型无效（其始终无轮廓）。
@@ -56,11 +76,24 @@ class TabGroup extends ReactNextElement {
   accessor outline: TabsOutline | undefined;
 
   render() {
-    return <TabGroupElement type={this.type} activePanel={this.activePanel} />;
+    return (
+      <TabGroupElement
+        type={this.type}
+        activePanel={this.activePanel}
+        onTabSelect={this.#handleTabSelect}
+      />
+    );
   }
 }
 
-function TabGroupElement({ activePanel }: TabGroupProps): React.ReactElement {
+interface TabGroupElementProps extends TabGroupProps {
+  onTabSelect?: (panel: string) => void;
+}
+
+function TabGroupElement({
+  activePanel,
+  onTabSelect,
+}: TabGroupElementProps): React.ReactElement {
   const navSlotRef = useRef<HTMLSlotElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [tabs, setTabs] = useState<string[]>([]);
@@ -95,7 +128,9 @@ function TabGroupElement({ activePanel }: TabGroupProps): React.ReactElement {
   };
 
   const handleSetActive = useCallback((e: MouseEvent) => {
-    setActiveItem((e.target as TabItem).panel);
+    const panel = (e.target as TabItem).panel;
+    setActiveItem(panel);
+    onTabSelect?.(panel);
   }, []);
 
   useEffect(() => {

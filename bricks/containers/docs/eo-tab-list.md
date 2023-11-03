@@ -6,6 +6,9 @@
 
 ```yaml preview
 - brick: eo-tab-list
+  events:
+    tab.select:
+      - action: console.log
   properties:
     tabs:
       - text: Create
