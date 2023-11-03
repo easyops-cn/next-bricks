@@ -1,5 +1,5 @@
 import { describe, test, expect } from "@jest/globals";
-import { acceptValidator, sizeValidator } from "./utils.js";
+import { acceptValidator, sizeValidator, FileSizeUnit } from "./utils.js";
 
 describe("utils", () => {
   test("acceptValidator", () => {
@@ -59,11 +59,20 @@ describe("utils", () => {
 
   test("sizeValidator", async () => {
     const file = new File([""], "success.png", { type: "image/png" });
-    Object.defineProperty(file, "size", { value: 1024, configurable: true });
+    Object.defineProperty(file, "size", {
+      value: 3 * 1024 * 1024,
+      configurable: true,
+    });
 
     await expect(sizeValidator(file)).resolves.toBeInstanceOf(File);
-    await expect(sizeValidator(file, 2048)).resolves.toBeInstanceOf(File);
-    await expect(sizeValidator(file, 512)).rejects.toThrowError();
-    await expect(sizeValidator(file, 1024)).rejects.toThrowError();
+    await expect(sizeValidator(file, 1024 * 1024 * 5)).resolves.toBeInstanceOf(
+      File
+    );
+    await expect(
+      sizeValidator(file, 1, FileSizeUnit.KB)
+    ).rejects.toThrowError();
+    await expect(
+      sizeValidator(file, 0.1, FileSizeUnit.MB)
+    ).rejects.toThrowError();
   });
 });
