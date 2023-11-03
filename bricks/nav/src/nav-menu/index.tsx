@@ -37,6 +37,7 @@ import { SiteMapItem } from "./site-map/SiteMapItem.js";
 import SiteMapStyleText from "../nav-menu/site-map/SiteMapItem.shadow.css";
 import ItemTagStyleText from "../nav-menu/site-map/ItemTag.shadow.css";
 import GroupItemStyleText from "../nav-menu/site-map/GroupItem.shadow.css";
+import { debounce } from "lodash";
 
 const { defineElement, property } = createDecorators();
 
@@ -54,6 +55,8 @@ const WrappedPopover = wrapBrick<
 });
 
 const GAP_WIDTH = 8;
+const NAV_PADDING = 32;
+const DEFAULT_SETTINGS_WIDTH = 370;
 
 interface NavMenuProps {
   menu?: SidebarMenu;
@@ -331,6 +334,9 @@ function SitMapMenCom({
   ],
 })
 class NavMenu extends ReactNextElement {
+  #curElementSiblingWidth = 0;
+  #watchResize = false;
+
   /**
    * 菜单项
    */
@@ -346,6 +352,48 @@ class NavMenu extends ReactNextElement {
     type: Boolean,
   })
   accessor showTooltip: boolean | undefined;
+
+  /*
+   * 根据父容器自适应宽度
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor autoWidth: boolean | undefined;
+
+  #handleResize = debounce(() => {
+    this.style.width = "auto";
+
+    const siblingWidth = (
+      this.parentElement?.previousElementSibling ||
+      this.parentElement?.nextElementSibling
+    )?.clientWidth;
+
+    this.style.width = `calc(100vw - ${this.#curElementSiblingWidth}px - ${
+      (siblingWidth ?? DEFAULT_SETTINGS_WIDTH) + NAV_PADDING
+    }px)`;
+  }, 30);
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.#watchResize = !!(this.parentElement && this.autoWidth);
+    if (this.#watchResize) {
+      const { width: parentWidth } = this.parentElement!.getClientRects()[0];
+
+      const { width: currentWidth } = this.getClientRects()[0];
+      this.#curElementSiblingWidth = parentWidth - currentWidth;
+
+      document.addEventListener("resize", this.#handleResize);
+      this.#handleResize();
+    }
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    if (this.#watchResize) {
+      document.removeEventListener("resize", this.#handleResize);
+    }
+  }
 
   render() {
     return <NavMenuComponent menu={this.menu} showTooltip={this.showTooltip} />;
