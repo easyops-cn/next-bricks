@@ -1,4 +1,4 @@
-构件 `eo-page-view`
+页面视图
 
 ## Examples
 
@@ -14,14 +14,14 @@ children:
     slot: header
     properties:
       style:
-        height: 60px
+        height: 50px
         background: green
       textContent: Header
   - brick: div
     slot: sidebar
     properties:
       style:
-        width: 220px
+        width: 150px
         height: 100%
         background: purple
       textContent: Sidebar
@@ -29,7 +29,7 @@ children:
     slot: subSidebar
     properties:
       style:
-        width: 220px
+        width: 150px
         height: 100%
         background: red
       textContent: Sub-Sidebar
@@ -42,7 +42,7 @@ children:
       textContent: Content
 ```
 
-### With Content
+### With Main View
 
 ```yaml preview
 brick: eo-page-view
@@ -54,14 +54,14 @@ children:
     slot: header
     properties:
       style:
-        height: 60px
+        height: 50px
         background: green
       textContent: Header
   - brick: div
     slot: sidebar
     properties:
       style:
-        width: 220px
+        width: 150px
         height: 100%
         background: purple
       textContent: Sidebar
@@ -69,7 +69,7 @@ children:
     slot: subSidebar
     properties:
       style:
-        width: 220px
+        width: 150px
         height: 100%
         background: red
       textContent: Sub-Sidebar
@@ -85,5 +85,5 @@ children:
           textContent: Hello World
       - brick: div
         properties:
-          textContent: Say hello to everyone!
+          textContent: Say hello to everyone! And then say goodbye to everyone!
 ```

@@ -1,4 +1,4 @@
-构件 `eo-narrow-view`
+窄布局视图（居中）
 
 ## Examples
 

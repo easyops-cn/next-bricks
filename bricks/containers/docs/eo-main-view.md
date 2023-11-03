@@ -1,4 +1,4 @@
-构件 `eo-main-view`
+主内容视图
 
 ## Examples
 

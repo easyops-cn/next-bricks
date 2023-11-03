@@ -4,7 +4,7 @@
 
 ### Basic
 
-```yaml preview
+```yaml preview minHeight="160px"
 brick: eo-mini-actions
 properties:
   actions:

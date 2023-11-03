@@ -1,6 +1,6 @@
 通用抽屉容器构件。
 
-```html preview
+```html preview minHeight="320px"
 <eo-drawer custom-title="Drawer Title" visible="true">Content</eo-card>
 ```
 
@@ -8,7 +8,7 @@
 
 ### Placement
 
-```yaml preview
+```yaml preview minHeight="500px"
 - brick: eo-button
   properties:
     textContent: Top
@@ -61,7 +61,7 @@
 
 ### Width
 
-```yaml preview
+```yaml preview minHeight="320px"
 - brick: eo-button
   properties:
     textContent: open
@@ -74,17 +74,15 @@
     customTitle: 抽屉标题
     id: "drawer"
     width: 200
-  slots:
-    "":
-      bricks:
-        - brick: div
-          properties:
-            textContent: 抽屉内容
+  children:
+    - brick: div
+      properties:
+        textContent: 抽屉内容
 ```
 
 ### Height
 
-```yaml preview
+```yaml preview minHeight="320px"
 - brick: eo-button
   properties:
     textContent: open
@@ -98,17 +96,15 @@
     id: "drawer"
     height: 200
     placement: top
-  slots:
-    "":
-      bricks:
-        - brick: div
-          properties:
-            textContent: 抽屉内容
+  children:
+    - brick: div
+      properties:
+        textContent: 抽屉内容
 ```
 
 ### Closable
 
-```yaml preview
+```yaml preview minHeight="320px"
 - brick: eo-button
   properties:
     textContent: Show Close
@@ -127,28 +123,24 @@
   properties:
     customTitle: 抽屉标题
     id: "drawer-show-close"
-  slots:
-    "":
-      bricks:
-        - brick: div
-          properties:
-            textContent: 抽屉内容
+  children:
+    - brick: div
+      properties:
+        textContent: 抽屉内容
 - brick: eo-drawer
   properties:
     customTitle: 抽屉标题
     id: "drawer-hide-close"
     closable: false
-  slots:
-    "":
-      bricks:
-        - brick: div
-          properties:
-            textContent: 抽屉内容
+  children:
+    - brick: div
+      properties:
+        textContent: 抽屉内容
 ```
 
 ### Mask
 
-```yaml preview
+```yaml preview minHeight="320px"
 - brick: eo-button
   properties:
     textContent: Show Mask
@@ -161,12 +153,10 @@
     customTitle: 抽屉标题
     id: "drawer-show-mask"
     mask: true
-  slots:
-    "":
-      bricks:
-        - brick: div
-          properties:
-            textContent: 抽屉内容
+  children:
+    - brick: div
+      properties:
+        textContent: 抽屉内容
 - brick: eo-button
   properties:
     textContent: Hide Mask
@@ -179,17 +169,15 @@
     customTitle: 抽屉标题
     id: "drawer-hide-mask"
     mask: false
-  slots:
-    "":
-      bricks:
-        - brick: div
-          properties:
-            textContent: 抽屉内容
+  children:
+    - brick: div
+      properties:
+        textContent: 抽屉内容
 ```
 
 ### MaskClosable
 
-```yaml preview
+```yaml preview minHeight="320px"
 - brick: eo-button
   properties:
     textContent: Mask Allow Close
@@ -202,12 +190,10 @@
     customTitle: 抽屉标题
     id: "drawer-mask-allow-close"
     maskClosable: true
-  slots:
-    "":
-      bricks:
-        - brick: div
-          properties:
-            textContent: 抽屉内容
+  children:
+    - brick: div
+      properties:
+        textContent: 抽屉内容
 - brick: eo-button
   properties:
     textContent: Mask Not Allow Close
@@ -220,17 +206,15 @@
     customTitle: 抽屉标题
     id: "drawer-mast-not-allow-close"
     maskClosable: false
-  slots:
-    "":
-      bricks:
-        - brick: div
-          properties:
-            textContent: 抽屉内容
+  children:
+    - brick: div
+      properties:
+        textContent: 抽屉内容
 ```
 
 ### Slots
 
-```yaml preview
+```yaml preview minHeight="320px"
 - brick: eo-button
   properties:
     textContent: open
@@ -265,7 +249,7 @@
 
 ### Open Event & Close Event
 
-```yaml preview
+```yaml preview minHeight="320px"
 - brick: eo-button
   properties:
     textContent: open
@@ -287,14 +271,12 @@
       - action: message.success
         args:
           - Drawer Close
-  slots:
-    "":
-      bricks:
-        - brick: eo-button
-          properties:
-            textContent: 关闭弹窗
-          events:
-            click:
-              - target: "#drawer"
-                method: "close"
+  children:
+    - brick: eo-button
+      properties:
+        textContent: 关闭弹窗
+      events:
+        click:
+          - target: "#drawer"
+            method: "close"
 ```

@@ -1,4 +1,4 @@
-构件 `eo-content-layout`
+内容区流式布局（上下），为子元素之间提供默认的间距。
 
 ## Examples
 

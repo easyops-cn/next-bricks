@@ -13,7 +13,7 @@ export interface NarrowViewProps {
 export type NarrowViewSize = "small" | "medium" | "large" | "full";
 
 /**
- * 构件 `eo-narrow-view`
+ * 窄布局视图（居中）
  *
  * @author steve
  *
