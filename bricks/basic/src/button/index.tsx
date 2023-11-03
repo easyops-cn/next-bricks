@@ -180,7 +180,11 @@ export function ButtonComponent({
     // mouse events don't trigger at disabled button in Chrome, so the tooltip don't work
     // wrap the disabled button in span to make it work in tooltip
     const wrappedNode = disabled ? (
-      <span style={{ display: "inline-block", cursor: "not-allowed" }}>
+      <span
+        style={{ display: "inline-block", cursor: "not-allowed" }}
+        // disabled button should not trigger click event
+        onClick={/* istanbul ignore next */ (e) => e.stopPropagation()}
+      >
         {button}
       </span>
     ) : (

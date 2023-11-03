@@ -38,6 +38,7 @@ export interface UploadProps {
   accept?: string;
   multiple?: boolean;
   maxCount?: number;
+  limitSize?: number;
   overMaxCountMode?: "ignore" | "replace";
   beforeUploadValidators?: ((file: File, files: File[]) => Promise<unknown>)[];
   beforeUploadUserDataProcessor?: (
@@ -58,6 +59,7 @@ export function Upload(props: UploadProps) {
     method,
     accept,
     maxCount,
+    limitSize,
     overMaxCountMode = "replace",
     beforeUploadValidators = [],
     beforeUploadUserDataProcessor,
@@ -83,7 +85,7 @@ export function Upload(props: UploadProps) {
       files.map((file) =>
         Promise.allSettled([
           file,
-          sizeValidator(file),
+          sizeValidator(file, limitSize),
           ...beforeUploadValidators.map((validator) => validator(file, files)),
         ])
       )

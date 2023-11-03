@@ -1,3 +1,6 @@
+import { i18n } from "@next-core/i18n";
+import { NS, K } from "./upload-file/i18n.js";
+
 let uid = 0;
 
 export const symbolForAbortController = Symbol.for("AbortController");
@@ -7,6 +10,12 @@ export const LIST_IGNORE = Symbol.for("list-ignore");
 export const getUid = () => {
   return `upload-image-${+new Date()}-${++uid}`;
 };
+
+export enum FileSizeUnit {
+  KB = "KB",
+  MB = "MB",
+  GB = "GB",
+}
 
 export const acceptValidator = (file: File, accepts?: string | string[]) => {
   const validAccepts = ([] as string[]).concat(accepts || []).reduce(
@@ -58,10 +67,26 @@ export const acceptValidator = (file: File, accepts?: string | string[]) => {
   return true;
 };
 
-export const sizeValidator = (file: File, limitSize?: number) => {
+export const sizeValidator = (
+  file: File,
+  limitSize?: number,
+  unit: FileSizeUnit = FileSizeUnit.MB
+) => {
   return new Promise((resolve, reject) => {
     if (file && limitSize) {
-      file.size < limitSize ? resolve(file) : reject(new Error("Wrong size!"));
+      const sizeConst = {
+        [FileSizeUnit.KB]: 1024,
+        [FileSizeUnit.MB]: 1024 * 1024,
+        [FileSizeUnit.GB]: 1024 * 1024 * 1024,
+      };
+
+      file.size < limitSize * sizeConst[unit]
+        ? resolve(file)
+        : reject(
+            new Error(
+              i18n.t(`${NS}:${K.EXCEEDED_FILE_SIZE_LIMIT}`, { limitSize, unit })
+            )
+          );
     } else {
       resolve(file);
     }

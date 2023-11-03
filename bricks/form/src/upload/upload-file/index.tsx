@@ -11,6 +11,7 @@ import type {
   EasyOpsIcon,
   EasyOpsIconProps,
 } from "@next-bricks/icons/easyops-icon";
+import { EoTooltip, ToolTipProps } from "@next-bricks/basic/tooltip";
 import { FormItemElementBase } from "@next-shared/form";
 import type { FormItem, FormItemProps } from "../../form-item/index.js";
 import "@next-core/theme";
@@ -31,6 +32,7 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 const WrappedEasyopsIcon = wrapBrick<EasyOpsIcon, EasyOpsIconProps>(
   "eo-easyops-icon"
 );
+const WrappedTooltip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 
 export interface UploadFileProps {
@@ -42,6 +44,7 @@ export interface UploadFileProps {
   multiple?: boolean;
   accept?: string;
   maxCount?: number;
+  limitSize?: number;
   overMaxCountMode?: "ignore" | "replace";
   uploadDraggable?: boolean;
   draggableUploadTip?: string;
@@ -49,6 +52,9 @@ export interface UploadFileProps {
   url?: string;
   method?: string;
   uploadName?: string;
+  buttonText?: string;
+  buttonType?: ButtonProps["type"];
+  buttonIcon?: GeneralIconProps;
 }
 
 /**
@@ -116,6 +122,39 @@ class EoUploadFile extends FormItemElementBase implements UploadFileProps {
     type: Number,
   })
   accessor maxCount: number | undefined;
+
+  /**
+   * 上传大小限制(单位为 MB)
+   */
+  @property({
+    type: Number,
+  })
+  accessor limitSize: number | undefined;
+
+  /**
+   * 上传按钮文本
+   * @default 上传
+   */
+  @property()
+  accessor buttonText: string | undefined;
+
+  /**
+   * 上传按钮类型
+   */
+  @property()
+  accessor buttonType: ButtonProps["type"] | undefined;
+
+  /**
+   * 上传按钮类型
+   */
+  @property({
+    attribute: false,
+  })
+  accessor buttonIcon: GeneralIconProps = {
+    lib: "antd",
+    icon: "upload",
+    theme: "outlined",
+  };
 
   /**
    * 超出最大上传数量时文件的保留方式
@@ -186,6 +225,10 @@ class EoUploadFile extends FormItemElementBase implements UploadFileProps {
         multiple={this.multiple}
         accept={this.accept}
         maxCount={this.maxCount}
+        limitSize={this.limitSize}
+        buttonText={this.buttonText}
+        buttonIcon={this.buttonIcon}
+        buttonType={this.buttonType}
         overMaxCountMode={this.overMaxCountMode}
         uploadDraggable={this.uploadDraggable}
         draggableUploadTip={this.draggableUploadTip}
@@ -201,12 +244,6 @@ class EoUploadFile extends FormItemElementBase implements UploadFileProps {
     );
   }
 }
-
-const defaultUploadIcon = {
-  lib: "antd",
-  icon: "upload",
-  theme: "outlined",
-} as GeneralIconProps;
 
 const deleteIcon = {
   lib: "easyops",
@@ -242,6 +279,10 @@ export function EoUploadFileComponent(props: UploadFileComponentProps) {
     multiple,
     accept,
     maxCount,
+    limitSize,
+    buttonIcon,
+    buttonText,
+    buttonType,
     overMaxCountMode,
     uploadDraggable,
     draggableUploadTip,
@@ -268,33 +309,35 @@ export function EoUploadFileComponent(props: UploadFileComponentProps) {
     const { uid, file, name, userData, status = "done", errors } = fileData;
 
     return (
-      <div
-        key={uid}
-        className={classNames(
-          "upload-item-container",
-          status && `upload-item-container-${status}`
-        )}
-      >
-        <div className="upload-item-inner">
-          <WrappedIcon
-            className={classNames(
-              "upload-item-icon",
-              status === "uploading" && "upload-icon"
-            )}
-            {...(status === "uploading" ? loadingIcon : fileTextIcon)}
-          />
-          <div className="upload-item-infos">
-            <div className="upload-item-file-name">{name}</div>
-          </div>
-          <div className="upload-item-operators">
+      <WrappedTooltip content={errors?.map((item) => item.message).join(", ")}>
+        <div
+          key={uid}
+          className={classNames(
+            "upload-item-container",
+            status && `upload-item-container-${status}`
+          )}
+        >
+          <div className="upload-item-inner">
             <WrappedIcon
-              className="delete-icon"
-              {...(status === "done" ? deleteIcon : closeIcon)}
-              onClick={actions.remove}
+              className={classNames(
+                "upload-item-icon",
+                status === "uploading" && "upload-icon"
+              )}
+              {...(status === "uploading" ? loadingIcon : fileTextIcon)}
             />
+            <div className="upload-item-infos">
+              <div className="upload-item-file-name">{name}</div>
+            </div>
+            <div className="upload-item-operators">
+              <WrappedIcon
+                className="delete-icon"
+                {...(status === "done" ? deleteIcon : closeIcon)}
+                onClick={actions.remove}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </WrappedTooltip>
     );
   };
 
@@ -313,6 +356,7 @@ export function EoUploadFileComponent(props: UploadFileComponentProps) {
         multiple={multiple}
         accept={accept}
         maxCount={maxCount}
+        limitSize={limitSize}
         overMaxCountMode={overMaxCountMode}
         autoUpload={autoUpload}
         action={url}
@@ -321,6 +365,9 @@ export function EoUploadFileComponent(props: UploadFileComponentProps) {
         onChange={handleChange}
       >
         {(fileDataList: FileData[], uploadActions: UploadActions) => {
+          const isMaxQuantity =
+            maxCount !== undefined && fileDataList.length >= maxCount;
+
           return uploadDraggable ? (
             <div
               className={classNames(
@@ -366,10 +413,12 @@ export function EoUploadFileComponent(props: UploadFileComponentProps) {
             </div>
           ) : (
             <WrappedButton
-              icon={defaultUploadIcon}
+              disabled={isMaxQuantity}
+              type={buttonType}
+              icon={buttonIcon}
               onClick={uploadActions.upload}
             >
-              {t(K.UPLOAD)}
+              {buttonText || t(K.UPLOAD)}
             </WrappedButton>
           );
         }}
