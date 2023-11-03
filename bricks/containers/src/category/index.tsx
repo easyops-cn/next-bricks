@@ -15,6 +15,7 @@ export interface CategoryContainerProps {
   headerStyle?: React.CSSProperties;
   contentStyle?: React.CSSProperties;
   containerStyle?: React.CSSProperties;
+  split?: boolean;
 }
 
 /**
@@ -58,6 +59,14 @@ class Category extends ReactNextElement implements CategoryContainerProps {
     attribute: false,
   })
   accessor containerStyle: React.CSSProperties;
+
+  /**
+   * 是否展示分割线
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor split: boolean;
 
   render() {
     return (
