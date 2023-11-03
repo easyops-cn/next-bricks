@@ -18,6 +18,7 @@ import type {
   PreviewMessagePreviewDataValueSuccess,
   PreviewMessagePreviewerCaptureFailed,
   PreviewMessagePreviewerCaptureOk,
+  PreviewMessagePreviewerContentScroll,
   PreviewMessagePreviewerHighlightBrick,
   PreviewMessagePreviewerHighlightContext,
   PreviewMessagePreviewerHoverOnMain,
@@ -94,6 +95,9 @@ try {
   // eslint-disable-next-line no-console
   console.error("Try to use v2 runtime APIs failed:", e);
 }
+
+let contentScrollElement: Element | null = null;
+let contentScrollHost: Element | null = null;
 
 export default async function connect(
   previewFromOrigin: string,
@@ -546,7 +550,31 @@ export default async function connect(
     updateSnippetPreviewSettings();
   }
 
+  function setupContentScroll() {
+    const host = document.querySelector("eo-page-view");
+    const element = host?.shadowRoot?.querySelector(".content") ?? null;
+    if (element !== contentScrollElement) {
+      contentScrollElement?.removeEventListener("scroll", onContentScroll);
+      element?.addEventListener("scroll", onContentScroll);
+      contentScrollElement = element;
+      contentScrollHost = host;
+    }
+  }
+
+  function onContentScroll(this: Element) {
+    sendMessage<PreviewMessagePreviewerContentScroll>({
+      type: "content-scroll",
+      scroll: {
+        x: this.scrollLeft,
+        y: this.scrollTop,
+      },
+    });
+  }
+
+  setupContentScroll();
+
   const mutationCallback = (): void => {
+    setupContentScroll();
     if (hoverIid) {
       sendHighlightBrickOutlines("hover", hoverIid, hoverAlias);
     }
@@ -582,13 +610,21 @@ function getOutlines(
   alias?: string
 ): BrickOutline[] {
   return [...elements].map((element) => {
+    const hasContentScroll = contentScrollHost?.contains(element);
     const { width, height, left, top } = element.getBoundingClientRect();
     return {
       width,
       height,
-      left: left + window.scrollX,
-      top: top + window.scrollY,
+      left:
+        left +
+        window.scrollX +
+        (hasContentScroll ? contentScrollElement.scrollLeft : 0),
+      top:
+        top +
+        window.scrollY +
+        (hasContentScroll ? contentScrollElement.scrollTop : 0),
       alias,
+      hasContentScroll,
     };
   });
 }

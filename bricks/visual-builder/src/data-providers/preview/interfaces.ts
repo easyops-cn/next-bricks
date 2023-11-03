@@ -87,6 +87,7 @@ export type PreviewMessageFromPreviewer =
   | PreviewMessagePreviewerUrlChange
   | PreviewMessagePreviewerRouteMatchChange
   | PreviewMessagePreviewerScroll
+  | PreviewMessagePreviewerContentScroll
   | PreviewMessagePreviewerCaptureOk
   | PreviewMessagePreviewerCaptureFailed
   | PreviewMessagePreviewDataValueSuccess
@@ -225,6 +226,16 @@ export interface PreviewMessagePreviewerRouteMatchChange
 export interface PreviewMessagePreviewerScroll extends PreviewBaseMessage {
   sender: "previewer";
   type: "scroll";
+  scroll: {
+    x: number;
+    y: number;
+  };
+}
+
+export interface PreviewMessagePreviewerContentScroll
+  extends PreviewBaseMessage {
+  sender: "previewer";
+  type: "content-scroll";
   scroll: {
     x: number;
     y: number;
@@ -405,6 +416,7 @@ export interface BrickOutline {
   left: number;
   top: number;
   alias?: string;
+  hasContentScroll?: boolean;
 }
 
 export type UpdateStoryboardType = "route" | "template" | "snippet";
