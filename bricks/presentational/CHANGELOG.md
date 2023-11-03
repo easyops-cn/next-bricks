@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.15.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.15...@next-bricks/presentational@0.15.16) (2023-11-03)
+
+
+### Bug Fixes
+
+* close alert and delete the host node ([8c60f15](https://github.com/easyops-cn/next-bricks/commit/8c60f153b42090545817ee0a9802186897b1f1dd))
+* fix test ([558eccd](https://github.com/easyops-cn/next-bricks/commit/558eccd978693abd483eea9ead9c8d0789405e1b))
+
+
+
+
+
 ## [0.15.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.14...@next-bricks/presentational@0.15.15) (2023-11-02)
 
 **Note:** Version bump only for package @next-bricks/presentational

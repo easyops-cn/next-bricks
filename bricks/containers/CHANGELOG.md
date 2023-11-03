@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.19.2...@next-bricks/containers@0.20.0) (2023-11-03)
+
+
+### Features
+
+* **category:** support UI 8.2 ([a737eca](https://github.com/easyops-cn/next-bricks/commit/a737ecacfba6414f06722de3ba92326f8abd08d8))
+
+
+
+
+
 ## [0.19.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.19.1...@next-bricks/containers@0.19.2) (2023-11-02)
 
 

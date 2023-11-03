@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.8.15...@next-bricks/visual-builder@0.8.16) (2023-11-03)
+
+
+### Bug Fixes
+
+* **preview:** handle content scroll ([5be9e94](https://github.com/easyops-cn/next-bricks/commit/5be9e944ac90e3bc797ac7b9e3f27249dc3f7979))
+
+
+
+
+
 ## [0.8.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.8.14...@next-bricks/visual-builder@0.8.15) (2023-11-02)
 
 **Note:** Version bump only for package @next-bricks/visual-builder

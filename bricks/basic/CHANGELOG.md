@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.43.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.42.1...@next-bricks/basic@0.43.0) (2023-11-03)
+
+
+### Features
+
+* support showExternalIcon ([8f6bdb1](https://github.com/easyops-cn/next-bricks/commit/8f6bdb1d469d139af8f6be3b370b74860a985e9b))
+
+
+
+
+
 ## [0.42.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.42.0...@next-bricks/basic@0.42.1) (2023-11-02)
 
 **Note:** Version bump only for package @next-bricks/basic

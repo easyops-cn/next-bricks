@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/form@0.3.8...@next-shared/form@0.4.0) (2023-11-03)
+
+
+### Features
+
+* form support labelCol and wrapperCol ([f26906c](https://github.com/easyops-cn/next-bricks/commit/f26906cd8959a24b088506d1069f1d8ab12bc3a3))
+
+
+
+
+
 ## [0.3.8](https://github.com/easyops-cn/next-bricks/compare/@next-shared/form@0.3.7...@next-shared/form@0.3.8) (2023-10-19)
 
 **Note:** Version bump only for package @next-shared/form
