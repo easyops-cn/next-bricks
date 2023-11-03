@@ -103,6 +103,12 @@ eo-link {
   color: var(--palette-gray-7);
 }
 
+.sub-menu-wrapper eo-menu-item[active] .menu-item-label {
+  background: var(--v8-top-menu-item-selected-bg);
+  color: var(--color-brand);
+  font-weight: 500;
+}
+
 .three-level-menu-container {
   max-width: 980px;
   max-height: 510px;

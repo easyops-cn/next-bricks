@@ -37,6 +37,7 @@ export const renderLinkCom = (
 ): React.ReactElement => {
   return (
     <WrappedLinkItem
+      type="plain"
       key={item.key}
       url={item.to as string}
       href={item.href}
