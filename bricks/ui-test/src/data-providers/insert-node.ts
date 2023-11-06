@@ -9,7 +9,8 @@ import {
 export async function insertNode(
   treeData: TestTreeData[],
   itemNode: TreeNodeItemData,
-  formData: Record<string, any>
+  formData: Record<string, any>,
+  direction: "up" | "down" = "down"
 ): Promise<undefined> {
   const parentKey = itemNode.parent?.instanceId;
 
@@ -21,8 +22,16 @@ export async function insertNode(
     (item) => item.key === itemNode.instanceId
   );
 
-  const belowNodes = children.slice(findIndex + 1);
-  const insertNodeSort = (itemNode.sort as number) + 1;
+  let belowNodes;
+  let insertNodeSort: number;
+
+  if (direction === "up") {
+    belowNodes = children.slice(findIndex);
+    insertNodeSort = itemNode.sort as number;
+  } else {
+    belowNodes = children.slice(findIndex + 1);
+    insertNodeSort = (itemNode.sort as number) + 1;
+  }
 
   await InstanceApi_createInstance("UI_TEST_NODE@EASYOPS", {
     ...formData,

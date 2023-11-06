@@ -157,6 +157,8 @@ export function SiteMapItem(props: SiteMapItemProps) {
     })();
   }, [groupId, visible]);
 
+  if (!visible) return null;
+
   return (
     <div className="site-map">
       <div className="search-wrapper">

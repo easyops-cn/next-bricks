@@ -25,6 +25,21 @@ describe("siteMap test", () => {
     observe: jest.fn(),
     disconnect: jest.fn(),
   }));
+
+  it("not render when not visible", () => {
+    const menuGroup = {
+      title: "服务",
+      type: "group",
+      groupId: "resource",
+      childLayout: "siteMap",
+      items: [],
+    } as SidebarMenuGroup;
+    const { container } = render(
+      <SiteMapItem menuGroup={menuGroup} visible={false} />
+    );
+
+    expect(container.querySelector(".site-map")).toBeFalsy();
+  });
   it("should work with no favorites data", () => {
     (collectService.getFavoritesById as jest.Mock).mockReturnValueOnce([]);
     const menuGroup = {
@@ -336,7 +351,9 @@ describe("siteMap test", () => {
         },
       ] as any as SidebarMenuGroup[],
     } as SidebarMenuGroup;
-    const { container } = render(<SiteMapItem menuGroup={menuGroup} />);
+    const { container } = render(
+      <SiteMapItem menuGroup={menuGroup} visible={true} />
+    );
 
     const input = container.querySelector("eo-input") as Element;
 

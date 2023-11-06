@@ -368,15 +368,38 @@ describe("insertNode", () => {
       formData
     );
 
-    expect(InstanceApi_createInstance).toHaveBeenCalledWith(
+    expect(InstanceApi_createInstance).toHaveBeenLastCalledWith(
       "UI_TEST_NODE@EASYOPS",
       { name: "find", params: [".header"], parent: "608744d9ede46", sort: 1 }
     );
 
-    expect(InstanceApi_importInstance).toHaveBeenCalledWith(
+    expect(InstanceApi_importInstance).toHaveBeenLastCalledWith(
       "UI_TEST_NODE@EASYOPS",
       {
         datas: [{ instanceId: "60874512bc785", sort: 2 }],
+        keys: ["instanceId"],
+      }
+    );
+
+    await insertNode(
+      TestTreeData as unknown as TestTreeData[],
+      itemNode as unknown as TreeNodeItemData,
+      formData,
+      "up"
+    );
+
+    expect(InstanceApi_createInstance).toHaveBeenLastCalledWith(
+      "UI_TEST_NODE@EASYOPS",
+      { name: "find", params: [".header"], parent: "608744d9ede46", sort: 0 }
+    );
+
+    expect(InstanceApi_importInstance).toHaveBeenLastCalledWith(
+      "UI_TEST_NODE@EASYOPS",
+      {
+        datas: [
+          { instanceId: "608744ec6d575", sort: 1 },
+          { instanceId: "60874512bc785", sort: 2 },
+        ],
         keys: ["instanceId"],
       }
     );
