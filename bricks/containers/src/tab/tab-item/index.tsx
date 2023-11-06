@@ -23,6 +23,7 @@ export interface TabItemProps {
   hidden?: boolean;
   active?: boolean;
   badgeConf?: BadgeProps;
+  panelColor?: string;
 }
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
@@ -93,6 +94,12 @@ class TabItem extends ReactNextElement {
   })
   accessor badgeConf: BadgeProps;
 
+  /**
+   * 面板颜色
+   */
+  @property()
+  accessor panelColor: string | undefined;
+
   render() {
     return (
       <TabItemElement
@@ -102,6 +109,7 @@ class TabItem extends ReactNextElement {
         hidden={this.hidden}
         active={this.active}
         badgeConf={this.badgeConf}
+        panelColor={this.panelColor}
       />
     );
   }
@@ -114,6 +122,7 @@ function TabItemElement({
   hidden,
   active,
   badgeConf,
+  panelColor,
 }: TabItemProps): React.ReactElement {
   const handleTabSelect = (e: React.MouseEvent) => {
     if (disabled) {
@@ -132,6 +141,14 @@ function TabItemElement({
       hidden={hidden}
       aria-selected={active}
       onClick={handleTabSelect}
+      style={
+        {
+          "--tab-item-default-color":
+            panelColor ?? "var(--antd-tabs-title-color)",
+          "--tab-item-active-color":
+            panelColor ?? "var(--antd-tabs-title-selected-color)",
+        } as React.CSSProperties
+      }
     >
       {icon && <WrappedIcon className="tab-item-icon" {...icon} />}
       <slot />
