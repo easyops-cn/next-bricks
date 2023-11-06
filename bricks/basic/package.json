@@ -43,6 +43,7 @@
     "@next-core/http": "^1.1.5",
     "@next-core/i18n": "^1.0.28",
     "@next-core/react-element": "^1.0.16",
+    "@next-core/react-runtime": "^1.1.26",
     "@next-core/runtime": "^1.24.6",
     "@next-core/theme": "^1.3.9",
     "@next-core/types": "^1.7.1",

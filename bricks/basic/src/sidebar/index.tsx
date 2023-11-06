@@ -33,7 +33,8 @@ import { K, NS, locales } from "./i18n.js";
 import classNames from "classnames";
 import { initMenuItemAndMatchCurrentPathKeys } from "@next-shared/general/menu";
 import { UnregisterCallback } from "history";
-import { getHistory } from "@next-core/runtime";
+import { getHistory, getRuntime } from "@next-core/runtime";
+import { useCurrentApp } from "@next-core/react-runtime";
 
 initializeReactI18n(NS, locales);
 
@@ -143,8 +144,14 @@ export function EoSidebarComponent(props: EoSidebarComponentProps) {
     onExpandedStateChange,
   } = props;
 
+  const showUserDefinedIcon = React.useMemo(
+    () => getRuntime()?.getFeatureFlags()["sidebar-show-user-defined-icon"],
+    []
+  );
+
   const storage = useMemo(() => new JsonStorage(localStorage), []);
   const history = getHistory();
+  const currentApp = useCurrentApp();
   const [location, setLocation] = useState(history.location);
   const { pathname, search } = location;
 
@@ -161,6 +168,8 @@ export function EoSidebarComponent(props: EoSidebarComponentProps) {
   const [menu, setMenu] = useState<SidebarMenuType>();
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const [openedKeys, setOpenedKeys] = useState<string[]>([]);
+
+  const titleIcon = showUserDefinedIcon ? menu?.icon : currentApp?.menuIcon;
 
   useEffect(() => {
     const { selectedKeys, openedKeys } = initMenuItemAndMatchCurrentPathKeys(
@@ -337,9 +346,9 @@ export function EoSidebarComponent(props: EoSidebarComponentProps) {
         <div className="header">
           <div className="menu-title">
             <div className={classNames("menu-title-icon-container")}>
-              {menu?.icon ? (
+              {titleIcon ? (
                 <WrappedIcon
-                  {...(menu.icon as GeneralIconProps)}
+                  {...(titleIcon as GeneralIconProps)}
                   className="menu-title-icon"
                 />
               ) : (
