@@ -18,7 +18,7 @@ import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
 import { Trans } from "react-i18next";
-import { K, NS, locales } from "./i18n.js";
+import { K, NS, locales } from "../i18n.js";
 import { ItemActions, UploadActions, Upload } from "../Upload.js";
 import { FileData } from "../utils.js";
 import classNames from "classnames";

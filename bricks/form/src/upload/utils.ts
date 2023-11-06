@@ -1,5 +1,5 @@
 import { i18n } from "@next-core/i18n";
-import { NS, K } from "./upload-file/i18n.js";
+import { NS, K } from "./i18n.js";
 
 let uid = 0;
 

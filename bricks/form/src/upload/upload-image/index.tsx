@@ -3,7 +3,7 @@ import { EventEmitter, createDecorators } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
 import { getBasePath } from "@next-core/runtime";
 import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
-import { K, NS, locales } from "./i18n.js";
+import { K, NS, locales } from "../i18n.js";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import type { Button, ButtonProps } from "@next-bricks/basic/button";
@@ -35,6 +35,7 @@ export interface UploadImageProps {
   value?: ImageData[];
   bucketName: string;
   multiple?: boolean;
+  limitSize?: number;
 }
 
 /**
@@ -81,6 +82,14 @@ class UploadImage extends FormItemElementBase implements UploadImageProps {
   accessor multiple: boolean | undefined;
 
   /**
+   * 上传大小限制(单位为 MB)
+   */
+  @property({
+    type: Number,
+  })
+  accessor limitSize: number | undefined;
+
+  /**
    * 是否必填
    */
   @property({
@@ -118,6 +127,7 @@ class UploadImage extends FormItemElementBase implements UploadImageProps {
         message={this.message}
         bucketName={this.bucketName}
         multiple={this.multiple}
+        limitSize={this.limitSize}
         notRender={this.notRender}
         helpBrick={this.helpBrick}
         onChange={this.handleChange}
@@ -150,7 +160,7 @@ interface UploadImageComponentProps extends UploadImageProps, FormItemProps {
 }
 
 export function UploadImageComponent(props: UploadImageComponentProps) {
-  const { value, bucketName, multiple, onChange } = props;
+  const { value, bucketName, multiple, onChange, limitSize } = props;
   const { t } = useTranslation(NS);
   const wrapBrickImageRef = useRef<Image>(null);
 
@@ -255,6 +265,7 @@ export function UploadImageComponent(props: UploadImageComponentProps) {
         method="PUT"
         accept="image/*"
         multiple={multiple}
+        limitSize={limitSize}
         beforeUploadValidators={[(file) => imageValidator(file)]}
         beforeUploadUserDataProcessor={userDataProcessor}
         onChange={handleChange}

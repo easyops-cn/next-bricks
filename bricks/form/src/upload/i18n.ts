@@ -20,7 +20,7 @@ const zh: Locale = {
   EXCEEDED_FILE_SIZE_LIMIT: "上传的文件超出大小限制: {{limitSize}} {{unit}}",
 };
 
-export const NS = "bricks/form/eo-upload-file";
+export const NS = "bricks/form/eo-upload-file-and-image";
 
 export const locales = { en, zh };
 
