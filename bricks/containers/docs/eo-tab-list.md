@@ -191,3 +191,36 @@
           properties:
             textContent: Item C
 ```
+
+### Panel Color
+
+```yaml preview
+- brick: eo-tab-list
+  properties:
+    tabs:
+      - text: Item A
+        panel: Item A
+      - text: Item B
+        panel: Item B
+        panelColor: var(--palette-green-6)
+      - text: Item C
+        panel: Item C
+        panelColor: var(--palette-red-6)
+    outline: none
+  slots:
+    "Item A":
+      bricks:
+        - brick: div
+          properties:
+            textContent: Item A
+    "Item B":
+      bricks:
+        - brick: div
+          properties:
+            textContent: Item B
+    "Item C":
+      bricks:
+        - brick: div
+          properties:
+            textContent: Item C
+```

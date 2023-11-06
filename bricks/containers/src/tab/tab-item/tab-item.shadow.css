@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  color: var(--antd-tabs-title-color);
+  color: var(--tab-item-default-color);
   height: 100%;
   font-size: 16px;
   padding: 10px 8px;
@@ -19,7 +19,7 @@
 }
 
 .tab-item[aria-selected="true"] {
-  color: var(--antd-tabs-title-selected-color);
+  color: var(--tab-item-active-color);
   font-weight: var(--font-weight-500);
   /* background: var(--antd-tabs-title-wrapper-bg); */
 }
@@ -32,7 +32,7 @@
   bottom: 0;
   left: 0;
   border-radius: 2px 2px 0 0;
-  background-color: var(--antd-tabs-title-selected-color);
+  background-color: var(--tab-item-active-color);
 }
 
 .tab-item.disabled {

@@ -33,6 +33,22 @@ describe("containers.tab-item", () => {
     expect(tabItem.className).toBe("tab-item disabled");
     expect(tabItem.hidden).toBeTruthy();
     expect(tabItem.getAttribute("aria-selected")).toBeTruthy();
+    expect(tabItem.style.getPropertyValue("--tab-item-default-color")).toBe(
+      "var(--antd-tabs-title-color)"
+    );
+    expect(tabItem.style.getPropertyValue("--tab-item-active-color")).toBe(
+      "var(--antd-tabs-title-selected-color)"
+    );
+
+    await act(async () => {
+      element.panelColor = "red";
+    });
+    expect(tabItem.style.getPropertyValue("--tab-item-default-color")).toBe(
+      "red"
+    );
+    expect(tabItem.style.getPropertyValue("--tab-item-active-color")).toBe(
+      "red"
+    );
 
     act(() => {
       document.body.removeChild(element);
