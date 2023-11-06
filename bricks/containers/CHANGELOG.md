@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.21.0...@next-bricks/containers@0.22.0) (2023-11-06)
+
+
+### Features
+
+* support panel color ([7a0eea4](https://github.com/easyops-cn/next-bricks/commit/7a0eea4ea0a1ef8b033ead096cf472a49e049629))
+
+
+
+
+
 # [0.21.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.20.0...@next-bricks/containers@0.21.0) (2023-11-06)
 
 
