@@ -21,6 +21,7 @@ const disconnect = jest.fn();
 
 jest.mock("@next-core/theme", () => ({}));
 jest.mock("@next-core/runtime");
+jest.mock("@next-core/react-runtime");
 jest.spyOn(generalMenu, "initMenuItemAndMatchCurrentPathKeys").mockReturnValue({
   selectedKeys: ["2.0"],
   openedKeys: ["2"],
@@ -32,6 +33,12 @@ jest.spyOn(runtime, "getHistory").mockReturnValue({
   listen: () => {
     //
   },
+} as any);
+const getFeatureFlags = jest.fn();
+jest.spyOn(runtime, "getRuntime").mockReturnValue({
+  getFeatureFlags: getFeatureFlags.mockReturnValue({
+    "sidebar-show-user-defined-icon": true,
+  }),
 } as any);
 jest.useFakeTimers();
 
@@ -247,6 +254,9 @@ NodeList [
   });
 
   test("fixed icon", async () => {
+    getFeatureFlags.mockReturnValueOnce({
+      "sidebar-show-user-defined-icon": false,
+    });
     const onExpandedStateChange = jest.fn();
     const element = document.createElement("eo-sidebar") as EoSidebar;
     element.hiddenFixedIcon = true;
@@ -260,6 +270,7 @@ NodeList [
     });
     expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
 
+    expect(element.shadowRoot?.querySelector(".menu-title-icon")).toBeFalsy();
     expect(element.shadowRoot?.querySelector(".state-collapsed")).toBeTruthy();
     expect(element.shadowRoot?.querySelector(".fixed-icon")).toBeFalsy();
 
