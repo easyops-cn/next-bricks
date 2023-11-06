@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.44.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.43.0...@next-bricks/basic@0.44.0) (2023-11-06)
+
+
+### Bug Fixes
+
+* sidebar show app icon ([58e39d4](https://github.com/easyops-cn/next-bricks/commit/58e39d43173fe91617e856fe9fa201d5cca84f2b))
+
+
+### Features
+
+* support limitSize and related button properties ([c34f27a](https://github.com/easyops-cn/next-bricks/commit/c34f27acbb99083460245af3a24a92c9b7f608b7))
+
+
+
+
+
 # [0.43.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.42.1...@next-bricks/basic@0.43.0) (2023-11-03)
 
 

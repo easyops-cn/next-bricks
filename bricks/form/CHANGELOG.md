@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.23.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.22.0...@next-bricks/form@0.23.0) (2023-11-06)
+
+
+### Features
+
+* support limitSize and related button properties ([c34f27a](https://github.com/easyops-cn/next-bricks/commit/c34f27acbb99083460245af3a24a92c9b7f608b7))
+
+
+
+
+
 # [0.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.21.2...@next-bricks/form@0.22.0) (2023-11-03)
 
 

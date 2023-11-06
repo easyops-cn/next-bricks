@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.21.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.20.0...@next-bricks/containers@0.21.0) (2023-11-06)
+
+
+### Features
+
+* support tab.select event ([2c87665](https://github.com/easyops-cn/next-bricks/commit/2c87665e6130b9636ff61d74b4720ff6aa52ef67))
+
+
+
+
+
 # [0.20.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.19.2...@next-bricks/containers@0.20.0) (2023-11-03)
 
 
