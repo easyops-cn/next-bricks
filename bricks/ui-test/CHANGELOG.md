@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.10.8...@next-bricks/ui-test@0.10.9) (2023-11-07)
+
+
+### Bug Fixes
+
+* support insert up position ([5140131](https://github.com/easyops-cn/next-bricks/commit/5140131a169d0cd04e5af5324e57ab572c820b16))
+
+
+
+
+
 ## [0.10.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.10.7...@next-bricks/ui-test@0.10.8) (2023-11-06)
 
 **Note:** Version bump only for package @next-bricks/ui-test

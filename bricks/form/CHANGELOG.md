@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.24.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.23.1...@next-bricks/form@0.24.0) (2023-11-07)
+
+
+### Features
+
+* upload image support limitSize ([dbbe097](https://github.com/easyops-cn/next-bricks/commit/dbbe097dc01f3de0dc2867569745a74e5318387c))
+
+
+
+
+
 ## [0.23.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.23.0...@next-bricks/form@0.23.1) (2023-11-06)
 
 **Note:** Version bump only for package @next-bricks/form
