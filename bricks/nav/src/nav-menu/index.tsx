@@ -412,7 +412,7 @@ function NavMenuComponent(props: NavMenuProps) {
               }
             }
 
-            setOverflowIndex(overflowIndex);
+            setOverflowIndex(overflowIndex < 0 ? 0 : overflowIndex);
           }
         }
       });
