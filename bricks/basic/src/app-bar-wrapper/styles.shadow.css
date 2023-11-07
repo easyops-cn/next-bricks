@@ -43,6 +43,7 @@
 
 .left {
   display: flex;
+  flex: 1;
 }
 
 .right {
