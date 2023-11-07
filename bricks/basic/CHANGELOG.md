@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.44.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.44.1...@next-bricks/basic@0.44.2) (2023-11-07)
+
+
+### Bug Fixes
+
+* **app-bar:** fix style ([9991442](https://github.com/easyops-cn/next-bricks/commit/9991442b4820c571f038ac23229a0bffec1f08d7))
+
+
+
+
+
 ## [0.44.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.44.0...@next-bricks/basic@0.44.1) (2023-11-07)
 
 **Note:** Version bump only for package @next-bricks/basic

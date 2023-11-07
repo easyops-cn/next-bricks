@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.2.6...@next-bricks/nav@0.2.7) (2023-11-07)
+
+
+### Bug Fixes
+
+* **app-bar:** fix style ([9991442](https://github.com/easyops-cn/next-bricks/commit/9991442b4820c571f038ac23229a0bffec1f08d7))
+
+
+
+
+
 ## [0.2.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.2.5...@next-bricks/nav@0.2.6) (2023-11-07)
 
 
