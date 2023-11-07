@@ -2,6 +2,7 @@ import React, {
   useCallback,
   useEffect,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -261,8 +262,8 @@ export function CodeEditorComponent({
   const minLines = _minLines ?? 3;
   const maxLines = _maxLines ?? Infinity;
   const height = _height ?? 500;
+  const workerId = useMemo(() => uniqueId("worker"), []);
 
-  const workerInstance = VSWorkers.getInstance(uniqueId("worker"));
   const containerRef = useRef<HTMLDivElement>(null);
   const decorationsCollection =
     useRef<monaco.editor.IEditorDecorationsCollection>();
@@ -277,6 +278,8 @@ export function CodeEditorComponent({
   const systemTheme = useCurrentTheme();
 
   useEffect(() => {
+    if (language !== "brick_next_yaml") return;
+    const workerInstance = VSWorkers.getInstance(workerId);
     const id = workerInstance.addEventListener("message", (message: any) => {
       const { token, data } = message.data;
       const model = editorRef.current!.getModel()!;
@@ -356,6 +359,8 @@ export function CodeEditorComponent({
   }, [completers, advancedCompleters, language]);
 
   const parseYaml = useCallback(() => {
+    if (language !== "brick_next_yaml") return;
+    const workerInstance = VSWorkers.getInstance(workerId);
     workerInstance.postMessage({
       token: "parse_yaml",
       data: {
@@ -364,7 +369,7 @@ export function CodeEditorComponent({
         markers,
       },
     });
-  }, [workerInstance, links, markers]);
+  }, [language, links, markers, workerId]);
 
   useLayoutEffect(() => {
     if (automaticLayoutRef.current !== "fit-content" || !containerRef.current) {

@@ -1,14 +1,19 @@
 import { uniqueId } from "lodash";
 
-const parseWorker = new Worker(
-  new URL("./parseYaml.worker.ts", import.meta.url)
-);
+let parseWorker: Worker;
+
+function init() {
+  if (!parseWorker) {
+    parseWorker = new Worker(new URL("./parseYaml.worker.ts", import.meta.url));
+  }
+}
 
 export class VSWorkers {
   static #instance: Record<string, VSWorkers> = {};
 
   static getInstance(id: string): VSWorkers {
     if (!this.#instance[id]) {
+      init();
       this.#instance[id] = new VSWorkers(id);
     }
     return this.#instance[id];
