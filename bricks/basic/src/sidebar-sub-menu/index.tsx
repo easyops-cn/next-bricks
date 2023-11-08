@@ -121,6 +121,7 @@ export function EoSidebarSubMenuComponent(props: SidebarSubMenuProps) {
       >
         <WrappedLinkItem
           className="menu-item-link"
+          type="plain"
           url={item.to as string}
           href={item.href}
           title={item.text}
