@@ -16,11 +16,32 @@
     "./package.json": "./package.json",
     "./dist/bricks.json": "./dist/bricks.json"
   },
+  "nx": {
+    "targets": {
+      "build": {
+        "outputs": [
+          "{projectRoot}/dist",
+          "{projectRoot}/.pkgbuild",
+          "{projectRoot}/deploy",
+          "{projectRoot}/src/generated"
+        ]
+      },
+      "build:main": {
+        "outputs": [
+          "{projectRoot}/dist",
+          "{projectRoot}/.pkgbuild",
+          "{projectRoot}/deploy",
+          "{projectRoot}/src/generated"
+        ]
+      }
+    }
+  },
   "scripts": {
     "prestart": "node ./scripts/pre-build.js",
     "start": "cross-env NODE_ENV=development NODE_OPTIONS='--experimental-import-meta-resolve' build-next-bricks --watch",
-    "prebuild": "node ./scripts/pre-build.js",
-    "build": "cross-env NODE_ENV=production NODE_OPTIONS='--experimental-import-meta-resolve' build-next-bricks",
+    "prebuild:main": "node ./scripts/pre-build.js",
+    "build": "npm run build:main",
+    "build:main": "cross-env NODE_ENV=production NODE_OPTIONS='--experimental-import-meta-resolve' build-next-bricks",
     "prepublishOnly": "cp package.json package.json.bak && npm pkg delete dependencies",
     "postpublish": "mv package.json.bak package.json"
   },
