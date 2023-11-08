@@ -1,4 +1,10 @@
-import React, { CSSProperties, useEffect, useRef, useState } from "react";
+import React, {
+  CSSProperties,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { createDecorators } from "@next-core/element";
 import { getHistory } from "@next-core/runtime";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
@@ -67,6 +73,7 @@ interface MenuItemComProps {
   topData?: boolean;
   selectedKey?: string[];
   showTooltip?: boolean;
+  overflow?: boolean;
 }
 interface SimpleMenuItemComProps extends MenuItemComProps {
   item: SidebarMenuSimpleItem;
@@ -123,6 +130,7 @@ function SubMenuItemCom({
   topData,
   showTooltip,
   selectedKey = [],
+  overflow,
 }: MenuGroupComProps) {
   return item.items?.length > 0 ? (
     <WrappedPopover
@@ -145,7 +153,11 @@ function SubMenuItemCom({
       >
         {renderSpanCom(item, !topData)}
       </WrappedMenuItem>
-      <div className="sub-menu-wrapper">
+      <div
+        className={classnames("sub-menu-wrapper", {
+          "overflow-menu-wrapper": overflow,
+        })}
+      >
         {item.items.map((innerItem) => (
           <React.Fragment key={innerItem.key}>
             <RenderMenuItemCom
@@ -424,6 +436,18 @@ function NavMenuComponent(props: NavMenuProps) {
     }
   }, []);
 
+  const overflowMenu = useMemo(
+    (): SidebarMenuItem => ({
+      type: "subMenu",
+      title: "···",
+      items: menu?.menuItems.slice(
+        overflowIndex,
+        menu.menuItems.length
+      ) as SidebarMenuItem[],
+    }),
+    [menu?.menuItems, overflowIndex]
+  );
+
   return (
     <div ref={navMenuWrapperRef} className="nav-menu-wrapper">
       {menu?.menuItems.map((item, index) => {
@@ -465,16 +489,10 @@ function NavMenuComponent(props: NavMenuProps) {
       })}
       <RenderMenuItemCom
         hidden={overflowIndex > (menu?.menuItems?.length ?? 0)}
-        item={{
-          type: "subMenu",
-          title: "···",
-          items: menu?.menuItems.slice(
-            overflowIndex,
-            menu.menuItems.length
-          ) as SidebarMenuItem[],
-        }}
+        item={overflowMenu}
         showTooltip={showTooltip}
         selectedKey={selectedKey}
+        overflow={true}
         topData={true}
       />
     </div>
