@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/visual-builder",
-  "version": "0.8.19",
+  "version": "0.8.20",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/visual-builder",
   "repository": {
     "type": "git",
@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@next-api-sdk/next-builder-sdk": "^1.2.2",
-    "@next-bricks/basic": "^0.44.2",
+    "@next-bricks/basic": "^0.44.3",
     "@next-bricks/icons": "^0.6.11",
     "@next-core/element": "^1.1.6",
     "@next-core/http": "^1.1.5",

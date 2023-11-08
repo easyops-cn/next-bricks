@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.44.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.44.2...@next-bricks/basic@0.44.3) (2023-11-08)
+
+
+### Bug Fixes
+
+* nav-menu & popover style ([50fad73](https://github.com/easyops-cn/next-bricks/commit/50fad73034fe6494e6f21ebb4114dd1ebe42561e))
+
+
+
+
+
 ## [0.44.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.44.1...@next-bricks/basic@0.44.2) (2023-11-07)
 
 
