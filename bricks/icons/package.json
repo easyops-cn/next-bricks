@@ -26,6 +26,14 @@
           "{projectRoot}/src/easyops-icon/generated",
           "{projectRoot}/src/fa-icon/generated"
         ]
+      },
+      "build:types": {
+        "outputs": [
+          "{projectRoot}/dist-types",
+          "{projectRoot}/src/antd-icon/generated",
+          "{projectRoot}/src/easyops-icon/generated",
+          "{projectRoot}/src/fa-icon/generated"
+        ]
       }
     }
   },
@@ -44,6 +52,7 @@
     "prestart": "node ./scripts/pre-build.js",
     "start": "cross-env NODE_ENV=development build-next-bricks --watch",
     "prebuild": "node ./scripts/pre-build.js",
+    "prebuild:types": "node ./scripts/pre-build.js",
     "build": "npm run build:main && npm run build:types",
     "build:main": "cross-env NODE_ENV=production build-next-bricks",
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist-types --project tsconfig.json",

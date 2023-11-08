@@ -3,7 +3,13 @@
     "default": {
       "runner": "nx/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "test", "test:ci"],
+        "cacheableOperations": [
+          "build",
+          "build:main",
+          "build:types",
+          "test",
+          "test:ci"
+        ],
         "cacheDirectory": ".cache",
         "useDaemonProcess": false
       }
@@ -11,7 +17,7 @@
   },
   "namedInputs": {
     "default": ["{projectRoot}/**/*"],
-    "prod": ["!{projectRoot}/**/*.spec.*"],
+    "prod": ["default", "!{projectRoot}/**/*.spec.*"],
     "global": [
       "{workspaceRoot}/package.json",
       "{workspaceRoot}/yarn.lock",
@@ -36,6 +42,23 @@
         "{projectRoot}/.pkgbuild",
         "{projectRoot}/deploy"
       ]
+    },
+    "build:main": {
+      "inputs": [
+        "prod",
+        "global",
+        "{workspaceRoot}/shared/common-bricks/common-bricks.json"
+      ],
+      "outputs": [
+        "{projectRoot}/dist",
+        "{projectRoot}/.pkgbuild",
+        "{projectRoot}/deploy"
+      ]
+    },
+    "build:types": {
+      "dependsOn": ["^build:types"],
+      "inputs": ["prod", "^prod", "global"],
+      "outputs": ["{projectRoot}/dist-types"]
     },
     "test": {
       "inputs": ["default", "^prod", "global", "jest"],

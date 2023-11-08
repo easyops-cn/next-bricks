@@ -26,7 +26,6 @@
     "start": "cross-env NODE_ENV=development build-next-bricks --watch",
     "build": "npm run build:main",
     "build:main": "cross-env NODE_ENV=production build-next-bricks",
-    "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist-types --project tsconfig.json",
     "build:manifest": "cross-env NODE_ENV=production build-next-bricks --manifest-only",
     "prepublishOnly": "cp package.json package.json.bak && npm pkg delete dependencies",
     "postpublish": "mv package.json.bak package.json"
