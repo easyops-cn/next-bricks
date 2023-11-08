@@ -59,6 +59,11 @@ eo-link {
   overflow-y: auto;
 }
 
+.overflow-menu-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .sub-menu-wrapper > eo-menu-item {
   display: block;
   width: 100%;

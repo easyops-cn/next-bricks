@@ -236,7 +236,7 @@ function PopoverComponent(props: PopoverComponentProps) {
                     scale: 0.9,
                   },
                 ],
-            { duration: 300, easing: "ease" }
+            { duration: 100, easing: "ease" }
           ));
 
         !visible && (popover.active = visible);
@@ -268,9 +268,11 @@ function PopoverComponent(props: PopoverComponentProps) {
     () => !visible && handleVisibleChange(true),
     [visible, handleVisibleChange]
   );
-  const handlePopoverClose = useCallback(() => {
-    handleVisibleChange(false);
-  }, [handleVisibleChange]);
+
+  const handlePopoverClose = useCallback(
+    () => handleVisibleChange(false),
+    [handleVisibleChange]
+  );
 
   const handleNotTrigger = (e: MouseEvent) => {
     e.stopPropagation();
