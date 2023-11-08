@@ -16,7 +16,7 @@
     }
   },
   "namedInputs": {
-    "default": ["{projectRoot}/**/*"],
+    "default": ["{projectRoot}/**/*", "!{projectRoot}/docs/**/*"],
     "prod": ["default", "!{projectRoot}/**/*.spec.*"],
     "global": [
       "{workspaceRoot}/package.json",
