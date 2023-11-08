@@ -332,6 +332,7 @@ function PopoverComponent(props: PopoverComponentProps) {
       ref={popoverRef}
       {...omit(props, ["curElement", "onVisibleChange"])}
       shift
+      shiftPadding={24}
       distance={distance}
     >
       <slot

@@ -7,7 +7,8 @@
 }
 
 eo-popover::part(popup) {
-  width: 400px;
+  width: 800px;
+  max-width: 60vw;
   padding: 10px;
   background: var(--color-fill-bg-container-4);
   border-radius: var(--medius-border-radius);

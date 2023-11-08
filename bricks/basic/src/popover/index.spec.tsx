@@ -67,6 +67,7 @@ describe("basic.general-popover", () => {
   exportparts="popup"
   placement="bottom"
   shift=""
+  shiftpadding="24"
   trigger="click"
 >
   <slot
@@ -100,6 +101,7 @@ describe("basic.general-popover", () => {
   exportparts="popup"
   placement="bottom"
   shift=""
+  shiftpadding="24"
   trigger="click"
 >
   <slot
@@ -130,6 +132,7 @@ describe("basic.general-popover", () => {
   exportparts="popup"
   placement="bottom"
   shift=""
+  shiftpadding="24"
   trigger="click"
 >
   <slot
@@ -180,6 +183,7 @@ describe("basic.general-popover", () => {
   exportparts="popup"
   placement="bottom"
   shift=""
+  shiftpadding="24"
   strategy="fixed"
   trigger="hover"
 >
@@ -205,6 +209,7 @@ describe("basic.general-popover", () => {
   exportparts="popup"
   placement="bottom"
   shift=""
+  shiftpadding="24"
   strategy="fixed"
   trigger="hover"
 >
@@ -230,6 +235,7 @@ describe("basic.general-popover", () => {
   exportparts="popup"
   placement="bottom"
   shift=""
+  shiftpadding="24"
   strategy="fixed"
   trigger="hover"
 >
@@ -254,6 +260,7 @@ describe("basic.general-popover", () => {
   exportparts="popup"
   placement="bottom"
   shift=""
+  shiftpadding="24"
   strategy="fixed"
   trigger="hover"
 >
