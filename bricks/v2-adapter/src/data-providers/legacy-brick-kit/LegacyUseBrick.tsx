@@ -33,11 +33,17 @@ export function ReactUseBrick({
   );
 
   LegacyReact.useEffect(() => {
+    let ignore = false;
     async function init() {
       try {
-        setRenderResult(
-          await __secret_internals.renderUseBrick(useBrick, data)
+        const newRender = await __secret_internals.renderUseBrick(
+          useBrick,
+          data
         );
+        if (ignore) {
+          return;
+        }
+        setRenderResult(newRender);
         setRenderKey(getUniqueId(IdCounterRef));
       } catch (error) {
         if (isTheSameRender(initialRenderId)) {
@@ -53,6 +59,9 @@ export function ReactUseBrick({
       }
     }
     init();
+    return () => {
+      ignore = true;
+    };
   }, [data, useBrick, initialRenderId]);
 
   const _refCallback = LegacyReact.useCallback(
