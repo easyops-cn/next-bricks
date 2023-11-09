@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.11...@next-bricks/v2-adapter@0.3.12) (2023-11-09)
+
+
+### Bug Fixes
+
+* ignore stale useBrick render ([c2eeea6](https://github.com/easyops-cn/next-bricks/commit/c2eeea6aff69e8669394460091ee20f51fb0bcde))
+
+
+
+
+
 ## [0.3.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.10...@next-bricks/v2-adapter@0.3.11) (2023-11-08)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
