@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.45.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.45.0...@next-bricks/basic@0.45.1) (2023-11-10)
+
+
+### Bug Fixes
+
+* do not store hovered state ([0788df6](https://github.com/easyops-cn/next-bricks/commit/0788df6e712fcb7b1c74a100c5dcebfb819f3ea7))
+
+
+
+
+
 # [0.45.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.44.6...@next-bricks/basic@0.45.0) (2023-11-10)
 
 
