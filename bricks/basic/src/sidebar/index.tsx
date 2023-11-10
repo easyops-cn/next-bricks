@@ -222,7 +222,12 @@ export function EoSidebarComponent(props: EoSidebarComponentProps) {
   }, [props.expandedState]);
 
   useEffect(() => {
-    storage.setItem(SIDE_BAR_EXPAND_STATE, expandedState);
+    storage.setItem(
+      SIDE_BAR_EXPAND_STATE,
+      expandedState === ExpandedState.Expanded
+        ? ExpandedState.Expanded
+        : ExpandedState.Collapsed
+    );
   }, [expandedState]);
 
   const handleFixedIconClick = (): void => {
