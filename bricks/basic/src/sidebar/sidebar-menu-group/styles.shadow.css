@@ -18,7 +18,7 @@
   display: flex;
   align-items: center;
   min-height: 36px;
-  padding: 10px 12px;
+  padding: 8px 12px;
   line-height: 20px;
   color: var(--antd-text-color-secondary);
   border-radius: var(--larger-border-radius);
@@ -50,10 +50,69 @@
   font-size: 12px;
   overflow: hidden;
   white-space: nowrap;
+  margin-right: 12px;
 }
 
 .menu-group-list slot::slotted(*) {
   margin-top: 2px;
+}
+
+.menu-group-arrow {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  width: 10px;
+  color: var(--color-normal-text);
+  transform: translateY(-2px);
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.menu-group-arrow::before,
+.menu-group-arrow::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 1.5px;
+  background-color: currentColor;
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.menu-group-arrow::before {
+  transform: rotate(45deg) translateX(2.5px);
+}
+
+.menu-group-arrow::after {
+  transform: rotate(-45deg) translateX(-2.5px);
+}
+
+.menu-group-collapsed .menu-group-arrow {
+  transform: translateY(-50%);
+}
+
+.menu-group-collapsed .menu-group-arrow::before {
+  transform: rotate(-45deg) translateX(2.5px);
+}
+
+.menu-group-collapsed .menu-group-arrow::after {
+  transform: rotate(45deg) translateX(-2.5px);
+}
+
+/** menu-group-list */
+.menu-group-list {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: all var(--side-bar-collapse-transition-duration)
+    var(--side-bar-collapse-transition-timing-function);
+}
+
+.menu-group-list-inner {
+  overflow: hidden;
+}
+
+.menu-group-collapsed .menu-group-list {
+  grid-template-rows: 0fr;
+  opacity: 0;
 }
 
 /* menu-collapsed */
@@ -68,6 +127,10 @@
 }
 
 :host([menu-collapsed]) .menu-group-title-text {
+  opacity: 0;
+}
+
+:host([menu-collapsed]) .menu-group-arrow {
   opacity: 0;
 }
 

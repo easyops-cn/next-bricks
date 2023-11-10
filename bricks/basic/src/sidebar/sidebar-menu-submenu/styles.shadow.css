@@ -19,7 +19,7 @@
   display: flex;
   align-items: center;
   min-height: 36px;
-  padding: 10px 12px;
+  padding: 8px 12px;
   line-height: 20px;
   color: var(--v8-left-sidebar-item-normal);
   border-radius: var(--larger-border-radius);
@@ -42,7 +42,9 @@
 .menu-submenu-title-text {
   flex: 1;
   margin-left: 14px;
+  margin-right: 12px;
   font-size: 14px;
+  font-weight: 500;
   overflow: hidden;
   white-space: nowrap;
 }
