@@ -331,14 +331,23 @@ export function EoSidebarComponent(props: EoSidebarComponentProps) {
       : expandedWidth;
   };
 
+  useEffect(() => {
+    const container = containerRef.current;
+    container?.addEventListener("mouseenter", handleMouseEnter);
+    container?.addEventListener("mouseleave", handleMouseLeave);
+
+    return () => {
+      container?.removeEventListener("mouseenter", handleMouseEnter);
+      container?.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, []);
+
   return (
     <div
       className={classNames("sidebar-container", `state-${expandedState}`, {
         dragging,
       })}
       style={{ width: getContainerWidth() }}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       ref={containerRef}
       data-testid="side-bar"
     >
