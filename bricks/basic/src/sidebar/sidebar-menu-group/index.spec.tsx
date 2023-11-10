@@ -10,7 +10,7 @@ describe("eo-sidebar-menu-group", () => {
     const element = document.createElement(
       "eo-sidebar-menu-group"
     ) as EoSidebarMenuGroup;
-    element.menuCollapsed = true;
+    element.menuCollapsed = false;
     const itemElement = document.createElement("eo-sidebar-menu-item");
     const titleElement = document.createElement("span");
     titleElement.textContent = "menu group";
@@ -21,7 +21,7 @@ describe("eo-sidebar-menu-group", () => {
 
     expect(element.shadowRoot).toBeFalsy();
 
-    await act(async () => {
+    act(() => {
       document.body.appendChild(element);
     });
     expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
@@ -32,7 +32,21 @@ describe("eo-sidebar-menu-group", () => {
     expect(
       element.shadowRoot?.querySelector(".menu-group-title-text")
     ).toBeTruthy();
-    expect((itemElement as any).menuCollapsed).toBeTruthy();
+    expect((itemElement as any).menuCollapsed).toBeFalsy();
+
+    expect(element.collapsed).toBeFalsy();
+
+    await act(async () => {
+      await (
+        element.shadowRoot?.querySelector(".menu-group-title") as HTMLElement
+      ).click();
+    });
+
+    expect(element.collapsed).toBeTruthy();
+
+    expect(element.shadowRoot?.querySelector(".menu-group")?.className).toBe(
+      "menu-group menu-group-collapsed"
+    );
 
     act(() => {
       document.body.removeChild(element);
