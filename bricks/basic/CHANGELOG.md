@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.45.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.44.6...@next-bricks/basic@0.45.0) (2023-11-10)
+
+
+### Bug Fixes
+
+* sidebar use native event ([a67b2b6](https://github.com/easyops-cn/next-bricks/commit/a67b2b699150e7f05d46fc55d5fca24ece910c0c))
+
+
+### Features
+
+* **sidebar:** group support collapsed ([75d19a1](https://github.com/easyops-cn/next-bricks/commit/75d19a189d0f017a378d55684724ee9bc9702642))
+
+
+
+
+
 ## [0.44.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.44.5...@next-bricks/basic@0.44.6) (2023-11-09)
 
 **Note:** Version bump only for package @next-bricks/basic
