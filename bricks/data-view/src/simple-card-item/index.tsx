@@ -15,6 +15,7 @@ export interface SimpleCardItemProps {
   cardTitle: string;
   description: string;
   status?: "normal" | "warning";
+  titleStyle?: CSSProperties;
   desStyle?: CSSProperties;
   color?: CSSProperties["color"];
   background?: CSSProperties["background"];
@@ -41,6 +42,12 @@ class SimpleCardItem extends ReactNextElement {
    */
   @property()
   accessor cardTitle: string;
+
+  /**
+   * 标题样式
+   */
+  @property({ attribute: false })
+  accessor titleStyle: CSSProperties;
 
   /**
    * 描述
@@ -101,7 +108,11 @@ export function SimpleCardItemComponent(props: SimpleCardItemProps) {
     >
       <div className="card-item">
         <div className="card-item-text-container">
-          {cardTitle && <div className="card-item-title">{cardTitle}</div>}
+          {cardTitle && (
+            <div className="card-item-title" style={props.titleStyle}>
+              {cardTitle}
+            </div>
+          )}
           {description && (
             <div className="card-item-description" style={props.desStyle}>
               {description}
