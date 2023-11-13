@@ -9,6 +9,8 @@ import classNames from "classnames";
 const { defineElement, property } = createDecorators();
 
 export interface EoSidebarMenuGroupProps {
+  selected?: boolean;
+  collapsable?: boolean;
   collapsed?: boolean;
   menuCollapsed?: boolean;
 }
@@ -26,10 +28,22 @@ class EoSidebarMenuGroup
   implements EoSidebarMenuGroupProps
 {
   /**
+   * 是否允许折叠
+   */
+  @property({ type: Boolean })
+  accessor collapsable: boolean = true;
+
+  /**
    * 是否折叠
    */
   @property({ type: Boolean })
   accessor collapsed: boolean | undefined;
+
+  /**
+   * 是否选中
+   * */
+  @property({ type: Boolean })
+  accessor selected: boolean | undefined;
 
   /**
    * 菜单整体是否收起状态
@@ -44,6 +58,8 @@ class EoSidebarMenuGroup
   render() {
     return (
       <EoSidebarMenuGroupComponent
+        collapsable={this.collapsable}
+        selected={this.selected}
         collapsed={this.collapsed}
         menuCollapsed={this.menuCollapsed}
         onCollapseChange={this.#handleCollapseChang}
@@ -59,7 +75,7 @@ interface EoSidebarMenuGroupComponentProps extends EoSidebarMenuGroupProps {
 export function EoSidebarMenuGroupComponent(
   props: EoSidebarMenuGroupComponentProps
 ) {
-  const { collapsed, menuCollapsed, onCollapseChange } = props;
+  const { collapsable, collapsed, menuCollapsed, onCollapseChange } = props;
 
   const [slotRef] = useUpdateMenuCollapsedState(menuCollapsed);
 
@@ -91,7 +107,7 @@ export function EoSidebarMenuGroupComponent(
         <div className="menu-group-title-text">
           <slot name="title" />
         </div>
-        <span className="menu-group-arrow" />
+        {collapsable && <span className="menu-group-arrow" />}
       </div>
       <div className="menu-group-list">
         <div className="menu-group-list-inner">

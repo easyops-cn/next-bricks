@@ -8,7 +8,7 @@
 
 .menu-container {
   box-sizing: border-box;
-  background: var(--sidebar-bg);
+  background: var(--third-menu-default-bg);
   border: 1px solid var(--stroke-color-default);
   border-width: 0 1px 0 0;
   border-radius: 0px;
@@ -19,7 +19,7 @@
     display: flex;
     gap: 10px;
     align-items: center;
-    font-size: 16px;
+    font-size: var(--title-font-size);
     padding: 0 24px 16px 24px;
     line-height: 26px;
     color: var(--color-header-text);
@@ -68,15 +68,16 @@
 
   .menu-item:hover {
     background: var(--sub-menu-brick-item-hover-bg);
-    color: var(--antd-link-color);
+    color: var(--color-header-text);
 
     .menu-item-text {
-      color: var(--antd-link-color);
+      color: var(--color-header-text);
+      font-weight: var(--font-weight-400);
     }
   }
 
   .menu-sub-item::part(sub-menu-item-title):hover {
-    color: var(--antd-link-color);
+    color: var(--color-header-text);
   }
 
   .menu-item-text.item-has-icon {
@@ -84,10 +85,11 @@
   }
 
   .menu-item[active] {
-    background-color: var(--app-submenu-active-bg);
+    background-color: var(--third-menu-item-selected-bg);
   }
 
   .menu-item[active] .menu-item-text {
-    color: var(--antd-link-color);
+    color: var(--color-brand);
+    font-weight: var(--font-weight-500);
   }
 }

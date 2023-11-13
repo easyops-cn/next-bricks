@@ -113,6 +113,30 @@ const WrappedSidebarMenuSubmenu = wrapBrick<
   EoSidebarMenuSubmenuProps
 >("eo-sidebar-menu-submenu");
 
+export function matchPath(paths?: string[], id?: string) {
+  if (!id || !paths) {
+    return false;
+  }
+
+  const idArray = id.split(".");
+  for (let i = 0; i < paths.length; i++) {
+    const pathArray = paths[i].split(".");
+
+    let j = 0;
+    while (j < pathArray.length) {
+      if (pathArray[j] === idArray[j]) {
+        j++;
+        if (idArray[j] === undefined) {
+          return true;
+        }
+      } else {
+        break;
+      }
+    }
+  }
+  return false;
+}
+
 function MenuSimpleItem(props: SidebarMenuSimpleItem & { id?: string }) {
   const { to, href, target, icon, text, id } = props;
   const { selectedKeys } = useContext(SidebarMenuContext);
@@ -130,15 +154,19 @@ function MenuSimpleItem(props: SidebarMenuSimpleItem & { id?: string }) {
   );
 }
 
-function MenuGroup(props: SidebarMenuGroup & { id?: string }) {
-  const { title, items } = props;
+function MenuGroup(props: SidebarMenuGroup & { id?: string; top?: boolean }) {
+  const { title, items, id, top } = props;
+  const { selectedKeys } = useContext(SidebarMenuContext);
+  const isSelected = matchPath(selectedKeys, id);
 
   if (items?.length > 0) {
     return (
-      <WrappedSidebarMenuGroup>
+      <WrappedSidebarMenuGroup selected={isSelected} collapsable={!top}>
         <span slot="title">{title}</span>
         {props.items.map((item) => {
-          return <MenuItem key={item.key} {...item} id={item.key} />;
+          return (
+            <MenuItem key={item.key} {...item} id={item.key} top={false} />
+          );
         })}
       </WrappedSidebarMenuGroup>
     );
@@ -148,17 +176,21 @@ function MenuGroup(props: SidebarMenuGroup & { id?: string }) {
 
 function MenuSubmenu(props: SidebarMenuGroup & { id?: string }) {
   const { title, icon, items, id } = props;
-  const { openedKeys } = useContext(SidebarMenuContext);
+  const { selectedKeys, openedKeys } = useContext(SidebarMenuContext);
+  const isSelected = matchPath(selectedKeys, id);
 
   if (items?.length > 0) {
     return (
       <WrappedSidebarMenuSubmenu
         icon={icon}
         collapsed={!openedKeys.includes(id!)}
+        selected={isSelected}
       >
         <span slot="title">{title}</span>
         {props.items.map((item) => {
-          return <MenuItem key={item.key} {...item} id={item.key} />;
+          return (
+            <MenuItem key={item.key} {...item} id={item.key} top={false} />
+          );
         })}
       </WrappedSidebarMenuSubmenu>
     );
@@ -166,7 +198,7 @@ function MenuSubmenu(props: SidebarMenuGroup & { id?: string }) {
   return null;
 }
 
-function MenuItem(props: SidebarMenuItem & { id?: string }) {
+function MenuItem(props: SidebarMenuItem & { id?: string; top?: boolean }) {
   if (props.type === "subMenu") {
     return <MenuSubmenu {...props} />;
   } else if (props.type === "group") {
@@ -192,7 +224,7 @@ export function SidebarMenu(props: {
         menuCollapsed={expandedState === ExpandedState.Collapsed}
       >
         {menu?.menuItems?.map((item) => {
-          return <MenuItem key={item.key} {...item} id={item.key} />;
+          return <MenuItem key={item.key} {...item} id={item.key} top={true} />;
         })}
       </WrappedSidebarMenu>
     </SidebarMenuContext.Provider>

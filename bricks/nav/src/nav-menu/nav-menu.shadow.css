@@ -99,7 +99,7 @@ eo-link {
 }
 
 .menu-item-label:hover {
-  background-color: var(--v8-top-menu-item-hover);
+  background-color: var(--top-menu-item-hover-bg);
 }
 
 .group-label {
@@ -109,7 +109,7 @@ eo-link {
 }
 
 .sub-menu-wrapper eo-menu-item[active] .menu-item-label {
-  background: var(--v8-top-menu-item-selected-bg);
+  background: var(--top-menu-item-selected-bg);
   color: var(--color-brand);
   font-weight: 500;
 }

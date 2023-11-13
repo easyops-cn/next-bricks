@@ -36,7 +36,7 @@
   justify-content: space-between;
   align-items: center;
   height: var(--app-bar-height);
-  background-color: var(--v8-top-navigation-bg);
+  background-color: var(--top-navigation-bg);
   padding: 0 16px;
   transition: var(--launchpad-backdrop-transition);
 }

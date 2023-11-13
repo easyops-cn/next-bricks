@@ -16,6 +16,7 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 export interface EoSidebarMenuSubmenuProps {
   icon?: GeneralIconProps;
+  selected?: boolean;
   collapsed?: boolean;
   menuCollapsed?: boolean;
 }
@@ -39,6 +40,12 @@ class EoSidebarMenuSubmenu
   accessor icon: GeneralIconProps | undefined;
 
   /**
+   * 是否选中
+   * */
+  @property({ type: Boolean })
+  accessor selected: boolean | undefined;
+
+  /**
    * 是否折叠
    */
   @property({ type: Boolean })
@@ -58,6 +65,7 @@ class EoSidebarMenuSubmenu
     return (
       <EoSidebarMenuSubmenuComponent
         icon={this.icon}
+        selected={this.selected}
         collapsed={this.collapsed}
         menuCollapsed={this.menuCollapsed}
         onCollapseChange={this.#handleCollapseChang}

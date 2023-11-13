@@ -195,6 +195,7 @@ NodeList [
     </eo-sidebar-menu-item>
     <eo-sidebar-menu-submenu
       menu-collapsed=""
+      selected=""
     >
       <span
         slot="title"

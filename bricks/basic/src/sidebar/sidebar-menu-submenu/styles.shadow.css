@@ -21,7 +21,7 @@
   min-height: 36px;
   padding: 8px 12px;
   line-height: 20px;
-  color: var(--v8-left-sidebar-item-normal);
+  color: var(--left-sidebar-item-normal-color);
   border-radius: var(--larger-border-radius);
   cursor: pointer;
   transition: all var(--side-bar-collapse-transition-duration)
@@ -36,7 +36,8 @@
   width: var(--menu-item-icon-size);
   height: var(--menu-item-icon-size);
   font-size: var(--menu-item-icon-size);
-  color: rgb(87, 104, 156);
+  /* color: rgb(87, 104, 156); */
+  color: var(--left-sidebar-item-collapsed-icon-color);
 }
 
 .menu-submenu-title-text {
@@ -44,7 +45,6 @@
   margin-left: 14px;
   margin-right: 12px;
   font-size: 14px;
-  font-weight: 500;
   overflow: hidden;
   white-space: nowrap;
 }
@@ -54,7 +54,7 @@
   top: 50%;
   right: 12px;
   width: 10px;
-  color: var(--color-normal-text);
+  color: var(--left-sidebar-item-arrow-color);
   transform: translateY(-2px);
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
@@ -116,12 +116,16 @@
 }
 
 /* menu-collapsed */
-:host([menu-collapsed]) .menu-submenu-title {
-  padding: 10px calc(50% - var(--menu-item-icon-size) / 2);
-}
-
-:host([menu-collapsed]) .menu-submenu-title-text {
-  opacity: 0;
+:host([menu-collapsed]) {
+  .menu-submenu-title {
+    padding: 10px calc(50% - var(--menu-item-icon-size) / 2);
+  }
+  .menu-submenu-title-text {
+    opacity: 0;
+  }
+  .menu-submenu-arrow {
+    opacity: 0;
+  }
 }
 
 :host(:not([menu-collapsed])) .menu-submenu-title-text {
@@ -132,6 +136,19 @@
   text-overflow: ellipsis;
 }
 
-:host([menu-collapsed]) .menu-submenu-arrow {
-  opacity: 0;
+/* selected & collapsed */
+:host([selected]):host([menu-collapsed]),
+:host([selected]):host([collapsed]) {
+  .menu-submenu-title {
+    background: var(--left-sidebar-item-selected-bg);
+    color: var(--left-sidebar-item-selected-color);
+  }
+  .menu-submenu-title-icon-container,
+  .menu-submenu-arrow {
+    color: var(--left-sidebar-item-selected-color);
+  }
+}
+
+:host([selected]) .menu-submenu-title-text {
+  font-weight: var(--font-weight-500);
 }
