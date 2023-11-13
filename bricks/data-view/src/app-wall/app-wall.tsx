@@ -205,6 +205,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
       element.description = data.cardItemProps?.description;
       element.background = data.cardItemProps?.background;
       element.color = data.cardItemProps?.color;
+      element.titleStyle = data.cardItemProps?.titleStyle;
       element.desStyle = data.cardItemProps?.desStyle;
       element.descriptionList = data.cardItemProps?.descriptionList;
       const statusClass = `status-${data?.status || "normal"}`;
