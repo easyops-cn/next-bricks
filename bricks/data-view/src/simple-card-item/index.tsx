@@ -1,4 +1,4 @@
-import React from "react";
+import React, { CSSProperties } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
@@ -15,8 +15,9 @@ export interface SimpleCardItemProps {
   cardTitle: string;
   description: string;
   status?: "normal" | "warning";
-  color?: React.CSSProperties["color"];
-  background?: React.CSSProperties["background"];
+  desStyle?: CSSProperties;
+  color?: CSSProperties["color"];
+  background?: CSSProperties["background"];
   descriptionList?: descriptionListItem[];
 }
 
@@ -51,9 +52,16 @@ class SimpleCardItem extends ReactNextElement {
    * 字体颜色
    */
   @property({ attribute: false })
-  accessor color: React.CSSProperties["color"];
+  accessor color: CSSProperties["color"];
+
   /**
-   * 字体颜色
+   * 描述样式
+   */
+  @property({ attribute: false })
+  accessor desStyle: CSSProperties;
+
+  /**
+   * 描述列表
    */
   @property({ attribute: false })
   accessor descriptionList: descriptionListItem[];
@@ -95,7 +103,9 @@ export function SimpleCardItemComponent(props: SimpleCardItemProps) {
         <div className="card-item-text-container">
           {cardTitle && <div className="card-item-title">{cardTitle}</div>}
           {description && (
-            <div className="card-item-description">{description}</div>
+            <div className="card-item-description" style={props.desStyle}>
+              {description}
+            </div>
           )}
           {!!descriptionList?.length && (
             <div className="card-item-description-list">
