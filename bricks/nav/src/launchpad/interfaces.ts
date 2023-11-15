@@ -1,4 +1,5 @@
 import { MicroApp } from "@next-core/types";
+import { MenuIcon } from "@next-shared/general/types";
 
 export type NormalizedDesktopDir = Pick<DesktopItemDir, "name" | "items"> & {
   size?: string;
@@ -27,7 +28,7 @@ export type DesktopItem = DesktopItemApp | DesktopItemDir | DesktopItemCustom;
 export interface DesktopItemApp {
   type: "app";
   id: string;
-  app?: MicroApp;
+  app: MicroApp;
 }
 
 /** @internal */
@@ -44,4 +45,5 @@ export interface DesktopItemCustom {
   id: string;
   name: string;
   url: string;
+  menuIcon?: MenuIcon;
 }

@@ -149,5 +149,5 @@
   ],
   "form-renderer": ["eo-form-renderer"],
   "form-platform": ["eo-user-or-user-group-select"],
-  "nav": ["eo-nav-menu", "eo-launchpad-button"]
+  "nav": ["eo-nav-menu", "eo-launchpad-button", "eo-launchpad-button-v2"]
 }
