@@ -906,7 +906,9 @@ class TableComponent extends ReactNextElement {
     this._selectedRow = undefined;
     const extraRowKeyRowMap = keyBy(this.extraRows, rowKey);
     this._selectedRows = this.selectedRowKeys.map(
-      (key) => rowKeyRowMap[key] || extraRowKeyRowMap[key]
+      (key) =>
+        rowKeyRowMap[key as string | number] ||
+        extraRowKeyRowMap[key as string | number]
     );
 
     let detail = null;
@@ -1178,8 +1180,8 @@ class TableComponent extends ReactNextElement {
 
     if (direction !== undefined) {
       tempDataSource.sort((a, b) => {
-        const aValue = get(a, columnKey);
-        const bValue = get(b, columnKey);
+        const aValue = get(a, columnKey as string | number);
+        const bValue = get(b, columnKey as string | number);
 
         if (isNil(aValue)) {
           if (!isNil(bValue)) {
@@ -1517,7 +1519,7 @@ class TableComponent extends ReactNextElement {
           const urlSearchParams = new URLSearchParams(history.location.search);
           const filteredValue =
             urlSearchParams.get(item.key as string) ??
-            get(this.filters, item.key)?.join(",");
+            get(this.filters, item.key as string | number)?.join(",");
           if (!isNil(filteredValue) && !isEmpty(filteredValue)) {
             item.filtered = true;
             item.filteredValue = filteredValue

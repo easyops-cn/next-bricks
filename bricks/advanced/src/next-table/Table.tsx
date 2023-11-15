@@ -470,7 +470,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                   ? undefined
                   : {
                       ...rowSelectionConfig,
-                      selectedRowKeys,
+                      selectedRowKeys: selectedRowKeys,
                       getCheckboxProps(record: RecordType) {
                         const data = {
                           rowData: record,
@@ -486,12 +486,16 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                         };
                       },
                       onChange(
-                        keys: (string | number)[],
+                        keys,
                         rows: RecordType[],
                         info: { type: RowSelectMethod }
                       ) {
-                        setSelectedRowKeys(keys);
-                        onRowSelect?.({ keys, rows, info });
+                        setSelectedRowKeys(keys as (string | number)[]);
+                        onRowSelect?.({
+                          keys: keys as (string | number)[],
+                          rows,
+                          info,
+                        });
                       },
                     }
               }
@@ -558,7 +562,10 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                         onRowExpand?.({ expanded, record });
                       },
                       onExpandedRowsChange: (expandedRows) => {
-                        const newRows = [...expandedRows];
+                        const newRows = [...expandedRows] as (
+                          | string
+                          | number
+                        )[];
                         setExpandedRowKeys(newRows);
                         onExpandedRowsChange?.(newRows);
                       },
@@ -593,12 +600,12 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                       ? sorter
                           .filter((v) => v.order)
                           .map((v) => ({
-                            columnKey: v.columnKey,
+                            columnKey: v.columnKey as string | number,
                             order: v.order,
                           }))
                       : sorter.order
                       ? {
-                          columnKey: sorter.columnKey,
+                          columnKey: sorter.columnKey as string | number,
                           order: sorter.order,
                         }
                       : undefined;
