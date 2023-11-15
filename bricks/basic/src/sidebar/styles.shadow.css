@@ -41,8 +41,12 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid;
-  border-image: var(--v8-left-sidebar-border-right) 1;
+  background-color: var(--left-menu-bg);
+  border-right: 1px solid var(--left-sidebar-border-right);
+}
+
+.inner:hover {
+  background-color: var(--left-menu-hover-bg);
 }
 
 .inner::before {
@@ -68,6 +72,7 @@
   height: 100%;
   display: flex;
   align-items: center;
+  color: var(--left-sidebar-large-title-color);
 }
 
 .menu-title-icon-container {
@@ -97,7 +102,7 @@
 .menu-title-text {
   font-size: 16px;
   font-weight: var(--font-weight-500);
-  color: #242c4f;
+  color: var(--left-sidebar-large-title-color);
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

@@ -253,7 +253,7 @@
 
 .select-option-selected {
   color: var(--color-brand);
-  background-color: var(--v8-top-menu-item-selected-bg);
+  background-color: var(--top-menu-item-selected-bg);
 }
 
 .select-option-hover {

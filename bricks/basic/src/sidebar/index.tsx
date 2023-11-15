@@ -168,19 +168,22 @@ export function EoSidebarComponent(props: EoSidebarComponentProps) {
   const [menu, setMenu] = useState<SidebarMenuType>();
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const [openedKeys, setOpenedKeys] = useState<string[]>([]);
+  const [matchedKeys, setmatchedKeys] = useState<string[]>([]);
 
   const titleIcon = showUserDefinedIcon ? menu?.icon : currentApp?.menuIcon;
 
   useEffect(() => {
-    const { selectedKeys, openedKeys } = initMenuItemAndMatchCurrentPathKeys(
-      props.menu?.menuItems ?? [],
-      pathname,
-      search,
-      ""
-    );
+    const { selectedKeys, openedKeys, matchedKeys } =
+      initMenuItemAndMatchCurrentPathKeys(
+        props.menu?.menuItems ?? [],
+        pathname,
+        search,
+        ""
+      );
     setMenu(props.menu);
     setSelectedKeys(selectedKeys);
     setOpenedKeys(openedKeys);
+    setmatchedKeys(matchedKeys);
   }, [props.menu, pathname, search]);
 
   useEffect(() => {
@@ -383,6 +386,7 @@ export function EoSidebarComponent(props: EoSidebarComponentProps) {
           <SidebarMenu
             selectedKeys={selectedKeys}
             openedKeys={openedKeys}
+            matchedKeys={matchedKeys}
             menu={menu}
             expandedState={expandedState}
           />

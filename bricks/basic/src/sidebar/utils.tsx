@@ -90,11 +90,13 @@ export const sideBarCollapsedWidth =
 interface ContextOfSidebarMenu {
   selectedKeys: string[];
   openedKeys: string[];
+  matchedKeys: string[];
 }
 
 const SidebarMenuContext = createContext<ContextOfSidebarMenu>({
   selectedKeys: [],
   openedKeys: [],
+  matchedKeys: [],
 });
 
 const WrappedSidebarMenu = wrapBrick<EoSidebarMenu, EoSidebarMenuProps>(
@@ -130,15 +132,19 @@ function MenuSimpleItem(props: SidebarMenuSimpleItem & { id?: string }) {
   );
 }
 
-function MenuGroup(props: SidebarMenuGroup & { id?: string }) {
-  const { title, items } = props;
+function MenuGroup(props: SidebarMenuGroup & { id?: string; top?: boolean }) {
+  const { title, items, id, top } = props;
+  const { matchedKeys } = useContext(SidebarMenuContext);
+  const isSelected = id && matchedKeys.includes(id);
 
   if (items?.length > 0) {
     return (
-      <WrappedSidebarMenuGroup>
+      <WrappedSidebarMenuGroup selected={!!isSelected} collapsable={!top}>
         <span slot="title">{title}</span>
         {props.items.map((item) => {
-          return <MenuItem key={item.key} {...item} id={item.key} />;
+          return (
+            <MenuItem key={item.key} {...item} id={item.key} top={false} />
+          );
         })}
       </WrappedSidebarMenuGroup>
     );
@@ -148,17 +154,21 @@ function MenuGroup(props: SidebarMenuGroup & { id?: string }) {
 
 function MenuSubmenu(props: SidebarMenuGroup & { id?: string }) {
   const { title, icon, items, id } = props;
-  const { openedKeys } = useContext(SidebarMenuContext);
+  const { openedKeys, matchedKeys } = useContext(SidebarMenuContext);
+  const isSelected = id && matchedKeys.includes(id);
 
   if (items?.length > 0) {
     return (
       <WrappedSidebarMenuSubmenu
         icon={icon}
         collapsed={!openedKeys.includes(id!)}
+        selected={!!isSelected}
       >
         <span slot="title">{title}</span>
         {props.items.map((item) => {
-          return <MenuItem key={item.key} {...item} id={item.key} />;
+          return (
+            <MenuItem key={item.key} {...item} id={item.key} top={false} />
+          );
         })}
       </WrappedSidebarMenuSubmenu>
     );
@@ -166,7 +176,7 @@ function MenuSubmenu(props: SidebarMenuGroup & { id?: string }) {
   return null;
 }
 
-function MenuItem(props: SidebarMenuItem & { id?: string }) {
+function MenuItem(props: SidebarMenuItem & { id?: string; top?: boolean }) {
   if (props.type === "subMenu") {
     return <MenuSubmenu {...props} />;
   } else if (props.type === "group") {
@@ -181,18 +191,23 @@ export function SidebarMenu(props: {
   expandedState: ExpandedState;
   selectedKeys?: string[];
   openedKeys?: string[];
+  matchedKeys?: string[];
 }) {
-  const { menu, expandedState, selectedKeys, openedKeys } = props;
+  const { menu, expandedState, selectedKeys, openedKeys, matchedKeys } = props;
 
   return (
     <SidebarMenuContext.Provider
-      value={{ selectedKeys: selectedKeys || [], openedKeys: openedKeys || [] }}
+      value={{
+        selectedKeys: selectedKeys || [],
+        openedKeys: openedKeys || [],
+        matchedKeys: matchedKeys || [],
+      }}
     >
       <WrappedSidebarMenu
         menuCollapsed={expandedState === ExpandedState.Collapsed}
       >
         {menu?.menuItems?.map((item) => {
-          return <MenuItem key={item.key} {...item} id={item.key} />;
+          return <MenuItem key={item.key} {...item} id={item.key} top={true} />;
         })}
       </WrappedSidebarMenu>
     </SidebarMenuContext.Provider>
