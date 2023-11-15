@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.7.7...@next-shared/general@0.8.0) (2023-11-15)
+
+
+### Features
+
+* initMenuItemAndMatchCurrentPathKeys return matchKeys ([b52aa69](https://github.com/easyops-cn/next-bricks/commit/b52aa69af2b998e0ccc003db7177e0eb19ca5722))
+
+
+
+
+
 ## [0.7.7](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.7.6...@next-shared/general@0.7.7) (2023-11-13)
 
 **Note:** Version bump only for package @next-shared/general
