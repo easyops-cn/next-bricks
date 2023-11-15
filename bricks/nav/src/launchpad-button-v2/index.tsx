@@ -62,6 +62,7 @@ export function EoLaunchpadButtonV2Component({ host }: { host: HTMLElement }) {
     }
   }, [active, initialized]);
 
+  // istanbul ignore next
   useEffect(() => {
     hotkeys.filter = function () {
       return true;

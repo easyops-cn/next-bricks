@@ -35,7 +35,7 @@ export function getMenuGroups(
                           app,
                         };
                       }
-                    } else if (item.type === "custom") {
+                    } else {
                       return item;
                     }
                   })

@@ -74,6 +74,7 @@ export async function fetchFavorites() {
   return stored;
 }
 
+// istanbul ignore next: will refactor soon
 export async function favorite(item: DesktopItemApp | DesktopItemCustom) {
   if (item.type === "app") {
     return LaunchpadApi_createCollection(
@@ -92,6 +93,7 @@ export async function favorite(item: DesktopItemApp | DesktopItemCustom) {
   // TODO: custom links
 }
 
+// istanbul ignore next: will refactor soon
 export async function undoFavorite(item: FavMenuItem) {
   if (item.favoriteId) {
     return LaunchpadApi_deleteCollection(item.favoriteId);

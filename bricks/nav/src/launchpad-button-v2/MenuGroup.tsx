@@ -21,9 +21,13 @@ export function MenuGroup({ name, items }: MenuGroupProps) {
       <ul className="menu">
         {items.map((item) =>
           item.type === "dir" ? (
-            <MenuItemFolder key={item.id} name={item.name} items={item.items} />
+            <MenuItemFolder
+              key={`${item.type}-${item.id}`}
+              name={item.name}
+              items={item.items}
+            />
           ) : (
-            <MenuItem key={item.id} item={item} />
+            <MenuItem key={`${item.type}-${item.id}`} item={item} />
           )
         )}
       </ul>
@@ -92,6 +96,7 @@ export function MenuItem({ item, isSidebar }: MenuItemProps) {
           prefix={starred ? "fas" : "far"}
           icon="star"
           className={classNames("menu-item-star", { starred })}
+          title={starred ? "取消收藏" : "收藏"}
           onClick={handleStarClick}
         />
       )}
@@ -143,7 +148,7 @@ function MenuItemFolder({ name, items }: MenuItemFolderProps) {
       </WrappedLink>
       <ul className={classNames("sub-menu", { expanded: actualExpanded })}>
         {items.map((item) => (
-          <MenuItem key={item.id} item={item} />
+          <MenuItem key={`${item.type}-${item.id}`} item={item} />
         ))}
       </ul>
     </li>

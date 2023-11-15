@@ -106,7 +106,7 @@ export function useLaunchpadInfo(active?: boolean) {
 
   useEffect(() => {
     // 仅当首次加载完成或重新打开 launchpad 时更新一次数据。
-    if (active || !loading) {
+    if (active && !loading) {
       setDesktops(candidateDesktops);
       setMicroAppsById(candidateMicroAppsById);
       setCustomLinksById(candidateCustomLinksById);
@@ -114,7 +114,7 @@ export function useLaunchpadInfo(active?: boolean) {
   }, [active, loading]);
 
   useEffect(() => {
-    if (active || !loadingFavorites) {
+    if (active && !loadingFavorites) {
       setStoredFavorites(candidateFavorites);
     }
   }, [active, loadingFavorites]);
