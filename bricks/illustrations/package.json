@@ -60,7 +60,7 @@
     "@next-core/utils": "^1.6.2"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.14.6",
+    "@next-core/build-next-bricks": "^1.15.0",
     "@next-core/illustrations": "^0.11.24",
     "@next-core/test-next": "^1.0.11",
     "lodash": "^4.17.21"
