@@ -9,6 +9,7 @@ jest.mock("@next-core/theme", () => ({}));
 jest.spyOn(GeneralMenu, "initMenuItemAndMatchCurrentPathKeys").mockReturnValue({
   selectedKeys: [],
   openedKeys: [],
+  matchedKeys: [],
 });
 
 jest.mock("@next-core/runtime", () => ({

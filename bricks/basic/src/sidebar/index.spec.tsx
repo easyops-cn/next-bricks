@@ -25,6 +25,7 @@ jest.mock("@next-core/react-runtime");
 jest.spyOn(generalMenu, "initMenuItemAndMatchCurrentPathKeys").mockReturnValue({
   selectedKeys: ["2.0"],
   openedKeys: ["2"],
+  matchedKeys: ["2", "2.0"],
 });
 jest.spyOn(runtime, "getHistory").mockReturnValue({
   location: {

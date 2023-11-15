@@ -34,12 +34,8 @@ describe("initMenuItemAndMatchCurrentPathKeys", () => {
         ],
       },
     ];
-    const { selectedKeys, openedKeys } = initMenuItemAndMatchCurrentPathKeys(
-      menuItems,
-      "/for/submenu",
-      "",
-      ""
-    );
+    const { selectedKeys, openedKeys, matchedKeys } =
+      initMenuItemAndMatchCurrentPathKeys(menuItems, "/for/submenu", "", "");
     expect(menuItems[0].key).toBe("0");
     expect(menuItems[1].key).toBe("1");
     expect((menuItems[1] as SidebarMenuGroup).items[0].key).toBe("1.0");
@@ -50,6 +46,8 @@ describe("initMenuItemAndMatchCurrentPathKeys", () => {
     expect(selectedKeys).toEqual(["1.1.0"]);
     expect(openedKeys).toContain("1");
     expect(openedKeys).toContain("1.1");
+    expect(matchedKeys).toEqual(["1", "1.1", "1.1.0"]);
+
     const { selectedKeys: selectedKeys2, openedKeys: openedKeys2 } =
       initMenuItemAndMatchCurrentPathKeys(
         menuItems,

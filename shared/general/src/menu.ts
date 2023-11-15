@@ -27,9 +27,11 @@ export function initMenuItemAndMatchCurrentPathKeys(
 ): {
   selectedKeys: string[];
   openedKeys: string[];
+  matchedKeys: string[];
 } {
   const selectedKeys: string[] = [];
   const openedKeys: string[] = [];
+  const matchedKeys: string[] = [];
 
   let cursor = 0;
   menuItems.forEach((item) => {
@@ -47,9 +49,16 @@ export function initMenuItemAndMatchCurrentPathKeys(
         openedKeys.push(item.key);
       }
       openedKeys.push(...tmp.openedKeys);
+      matchedKeys.push(...tmp.matchedKeys);
     } else {
       if (matchMenuItem(item, pathname, search)) {
         selectedKeys.push(String(item.key));
+
+        const keyPath = item.key.split(".");
+
+        for (let i = 0; i < keyPath.length; i++) {
+          matchedKeys.push(keyPath.slice(0, i + 1).join("."));
+        }
       }
     }
     cursor += 1;
@@ -60,6 +69,7 @@ export function initMenuItemAndMatchCurrentPathKeys(
   return {
     selectedKeys: selectedKeys,
     openedKeys: openedKeys,
+    matchedKeys: matchedKeys,
   };
 }
 
