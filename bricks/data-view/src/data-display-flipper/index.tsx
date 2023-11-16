@@ -19,6 +19,7 @@ export interface DataDisplayFlipperProps {
 /**
  * 翻牌器-type-3
  * @author jiezhou
+ * @category big-screen-content
  */
 @defineElement("data-view.data-display-flipper", {
   styleTexts: [styleText],

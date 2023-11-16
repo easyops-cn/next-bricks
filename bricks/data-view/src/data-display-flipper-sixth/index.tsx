@@ -15,6 +15,7 @@ export interface DataDisplayFlipperSixthProps {
 /**
  * 翻牌器-type-6
  * @author jiezhou
+ * @category big-screen-content
  */
 @defineElement("data-view.data-display-flipper-sixth", {
   styleTexts: [styleText],

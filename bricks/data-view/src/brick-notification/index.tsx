@@ -16,6 +16,7 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
 /**
  * 大屏提示构件
  * @author astrid
+ * @category big-screen-content
  */
 interface BrickNotificationProps {
   message: string;

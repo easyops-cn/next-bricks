@@ -41,6 +41,7 @@ interface ComplexSearchProps {
 /**
  * 大屏搜索构件
  * @author astrid
+ * @category big-screen-content
  */
 @defineElement("data-view.complex-search", {
   styleTexts: [variablesStyleText, styleText],

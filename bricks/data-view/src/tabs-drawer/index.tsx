@@ -42,6 +42,7 @@ interface TabsDrawerProps {
 /**
  * 大屏仪标签页抽屉
  * @author astrid
+ * @category big-screen-layout
  */
 
 @defineElement("data-view.tabs-drawer", {

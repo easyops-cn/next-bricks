@@ -14,6 +14,7 @@ export interface GraphNodeProps {
 /**
  * Graph Node
  * @author astrid
+ * @category big-screen-content
  */
 @defineElement("data-view.graph-node", {
   styleTexts: [variablesStyleText, styleText],

@@ -11,6 +11,7 @@ interface GearBackgroundProps {
 /**
  * 齿轮背景
  * @author astrid
+ * @category big-screen-layout
  */
 @defineElement("data-view.gear-background")
 class GearBackground extends ReactNextElement implements GearBackgroundProps {

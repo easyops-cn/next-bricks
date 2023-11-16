@@ -17,6 +17,7 @@ export interface DataDisplayFlipperFifthProps {
 
 /**
  * 翻牌器-type-5
+ * @category big-screen-content
  */
 @defineElement("data-view.data-display-flipper-fifth", {
   styleTexts: [styleText],

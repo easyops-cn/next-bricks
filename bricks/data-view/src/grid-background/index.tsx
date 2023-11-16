@@ -18,6 +18,7 @@ interface GridBackgroundProps {
 /**
  * 大屏网格背景
  * @author astrid
+ * @category big-screen-layout
  */
 @defineElement("data-view.grid-background", {
   styleTexts: [styleText],

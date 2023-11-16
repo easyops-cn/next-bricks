@@ -21,6 +21,7 @@ interface BatteryChartChartProps {
 /**
  * 大屏电池
  * @author astrid
+ * @category big-screen-content
  */
 @defineElement("data-view.battery-chart", {
   styleTexts: [variablesStyleText, styleText],

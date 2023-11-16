@@ -10,6 +10,7 @@ const { defineElement } = createDecorators();
  * 大屏框架构件-网格纹
  * @author jiezhou
  * @slot - 页面内容
+ * @category big-screen-layout
  */
 export
 @defineElement("data-view.tech-mesh-base-view", {

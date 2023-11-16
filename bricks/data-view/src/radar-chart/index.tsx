@@ -17,6 +17,7 @@ const { defineElement, property } = createDecorators();
 /**
  * 雷达图
  * @author zekunpan
+ * @category big-screen-content
  */
 @defineElement("data-view.radar-chart", {
   styleTexts: [styleText],

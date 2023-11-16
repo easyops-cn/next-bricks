@@ -20,6 +20,7 @@ interface ParticleAnimationProps {
 /**
  * 大屏粒子加载动效
  * @author astrid
+ * @category big-screen-content
  */
 @defineElement("data-view.particle-animation", {
   styleTexts: [variablesStyleText, styleText],

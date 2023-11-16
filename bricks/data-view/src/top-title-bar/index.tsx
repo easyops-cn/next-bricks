@@ -14,6 +14,7 @@ interface TopTitleBarProps {
 /**
  * 大屏标题栏三种样式构件
  * @author jiezhou
+ * @category big-screen-content
  */
 @defineElement("data-view.top-title-bar", {
   styleTexts: [variablesStyleText, styleText],
