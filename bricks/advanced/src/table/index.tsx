@@ -130,6 +130,7 @@ export interface CustomColumn extends ColumnProps<Record<string, any>> {
 /**
  * 通用表格构件
  * @author sailor
+ * @category table
  */
 @defineElement("eo-table", {
   styleTexts: [styleText],
