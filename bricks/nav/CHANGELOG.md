@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.3.1...@next-bricks/nav@0.4.0) (2023-11-16)
+
+
+### Features
+
+* launchpad-button-v2 ([2f99ce9](https://github.com/easyops-cn/next-bricks/commit/2f99ce9c2c304fd3515dc7ca104e973b5cd8b1e3))
+
+
+
+
+
 ## [0.3.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.3.0...@next-bricks/nav@0.3.1) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/nav

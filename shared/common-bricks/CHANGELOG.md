@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.21.0...@next-shared/common-bricks@0.22.0) (2023-11-16)
+
+
+### Features
+
+* launchpad-button-v2 ([2f99ce9](https://github.com/easyops-cn/next-bricks/commit/2f99ce9c2c304fd3515dc7ca104e973b5cd8b1e3))
+
+
+
+
+
 # [0.21.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.20.0...@next-shared/common-bricks@0.21.0) (2023-10-26)
 
 

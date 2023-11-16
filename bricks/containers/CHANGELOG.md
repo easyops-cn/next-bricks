@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.22.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.22.11...@next-bricks/containers@0.22.12) (2023-11-16)
+
+
+### Bug Fixes
+
+* **main-view:** show footer shadow only when it's pinned ([9045955](https://github.com/easyops-cn/next-bricks/commit/9045955842d29f238927ee0be656423f967870bd))
+
+
+
+
+
 ## [0.22.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.22.10...@next-bricks/containers@0.22.11) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/containers

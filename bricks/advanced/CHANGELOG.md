@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.28](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.11.27...@next-bricks/advanced@0.11.28) (2023-11-16)
+
+
+### Bug Fixes
+
+* fix types that React.key now adds bigint ([aa92189](https://github.com/easyops-cn/next-bricks/commit/aa9218928e2fb7f919dcca2a42afe652881eae84))
+
+
+
+
+
 ## [0.11.27](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.11.26...@next-bricks/advanced@0.11.27) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/advanced
