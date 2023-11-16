@@ -1,9 +1,6 @@
 // istanbul ignore file: nothing logical except calling html2canvas.
-import _html2canvas from "html2canvas";
+import html2canvas from "html2canvas";
 import { resizeScreenshot } from "./resizeScreenshot.js";
-
-// There is a type issue like i18next
-const html2canvas = _html2canvas as unknown as typeof _html2canvas.default;
 
 function getCanvasBlob(canvas: HTMLCanvasElement): Promise<Blob> {
   return new Promise(function (resolve, reject) {

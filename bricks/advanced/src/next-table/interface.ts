@@ -17,13 +17,13 @@ export interface Column
     | "dataIndex"
     | "ellipsis"
     | "fixed"
-    | "key"
     | "rowScope"
     | "showSorterTooltip"
     | "sortDirections"
     | "title"
     | "width"
   > {
+  key?: string | number;
   /** 表头自定义展示构件 */
   headerBrick?: {
     useBrick: UseBrickConf;

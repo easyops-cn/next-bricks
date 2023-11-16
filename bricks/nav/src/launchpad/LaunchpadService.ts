@@ -38,7 +38,6 @@ export class LaunchpadService {
   private microApps: MicroApp[] = [];
   private customList: DesktopItemCustom[] = [];
   private maxVisitorLength = 7;
-  private initialized = false;
   private baseInfo: LaunchpadBaseInfo = {
     settings: {
       columns: 7,

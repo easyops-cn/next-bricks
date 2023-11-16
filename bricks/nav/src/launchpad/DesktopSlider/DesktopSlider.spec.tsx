@@ -361,7 +361,7 @@ describe("Mount DesktopSlider", () => {
       homepage: "/rest",
     },
   ];
-  const desktops: DesktopData[] = [
+  const desktops = [
     {
       items: [
         {
@@ -385,7 +385,7 @@ describe("Mount DesktopSlider", () => {
         },
       ],
     },
-  ];
+  ] as DesktopData[];
 
   it("active item with enter hotkey", () => {
     mockGetRuntime.mockReturnValue({
@@ -412,7 +412,7 @@ describe("Mount DesktopSlider", () => {
   });
 
   it("query custom item should work", () => {
-    const desktops: DesktopData[] = [
+    const desktops = [
       {
         items: [
           {
@@ -442,7 +442,7 @@ describe("Mount DesktopSlider", () => {
           },
         ],
       },
-    ];
+    ] as DesktopData[];
 
     const { container } = render(
       <DesktopSlider
