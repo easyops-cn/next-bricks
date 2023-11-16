@@ -35,6 +35,8 @@ interface EoPaginationProps {
 
 /**
  * 分页
+ * @author nlicro
+ * @category navigation
  */
 export
 @defineElement("eo-pagination", {

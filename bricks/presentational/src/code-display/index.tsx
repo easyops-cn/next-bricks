@@ -45,6 +45,8 @@ export interface CodeDisplayProps {
 
 /**
  * 代码展示
+ * @author nlicro
+ * @category display-component
  */
 export
 @defineElement("eo-code-display", {

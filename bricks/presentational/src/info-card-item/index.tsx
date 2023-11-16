@@ -25,7 +25,9 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 const WrappedTooltip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");
 
 /**
- * 构件 `eo-info-card-item`
+ * 信息卡片
+ * @author dophijing
+ * @category card-info
  */
 export
 @defineElement("eo-info-card-item", {

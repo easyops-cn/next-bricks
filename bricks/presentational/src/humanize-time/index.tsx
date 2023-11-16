@@ -35,6 +35,7 @@ const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 /**
  * 人性化时间展示
  * @author ice
+ * @category text
  */
 export
 @defineElement("eo-humanize-time", {

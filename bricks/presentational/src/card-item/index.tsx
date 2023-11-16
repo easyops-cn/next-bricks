@@ -63,6 +63,7 @@ export interface EoCardItemProps {
  * 信息类卡片 —— 通用卡片
  * @slot expanded-area-1 - 扩展区域 1，通常放置标签信息
  * @slot expanded-area-2 - 扩展区域 2，通常放置操作和其他属性信息（图标/头像/小字描述/统计信息）
+ * @category card-info
  */
 export
 @defineElement("eo-card-item", {
