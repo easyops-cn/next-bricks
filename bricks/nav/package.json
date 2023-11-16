@@ -36,9 +36,9 @@
   "dependencies": {
     "@next-api-sdk/micro-app-standalone-sdk": "^1.1.1",
     "@next-api-sdk/user-service-sdk": "^1.2.1",
-    "@next-bricks/basic": "^0.46.2",
-    "@next-bricks/form": "^0.25.4",
-    "@next-bricks/icons": "^0.6.16",
+    "@next-bricks/basic": "*",
+    "@next-bricks/form": "*",
+    "@next-bricks/icons": "*",
     "@next-core/easyops-runtime": "^0.6.52",
     "@next-core/element": "^1.1.6",
     "@next-core/i18n": "^1.0.30",
