@@ -48,6 +48,7 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
  * @slot headerLeft - 头部左上角
  * @slot extra - 头部右上角
  * @slot footer - 抽屉底部插槽
+ * @category container-display
  */
 @defineElement("eo-drawer", {
   styleTexts: [styleText],

@@ -44,6 +44,7 @@ export interface TabListEventsMapping {
  * @author sailorshe
  * @slot extra - 头部插槽
  * @slot [panel] - Tab 页插槽
+ * @category container-display
  */
 @defineElement("eo-tab-list", {
   alias: ["containers.tab-list"],
