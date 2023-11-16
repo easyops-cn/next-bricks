@@ -5,8 +5,16 @@ import { EoMainView } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
+const disconnect = jest.fn();
+(global.IntersectionObserver as any) = jest.fn((callback: any) => ({
+  observe() {
+    callback([{ intersectionRatio: 0.99 }]);
+  },
+  disconnect,
+}));
+
 describe("eo-main-view", () => {
-  test("basic usage", async () => {
+  test("basic usage", () => {
     const element = document.createElement("eo-main-view") as EoMainView;
 
     expect(element.shadowRoot).toBeFalsy();
@@ -26,7 +34,7 @@ describe("eo-main-view", () => {
     expect(element.shadowRoot?.childNodes.length).toBe(0);
   });
 
-  test("narrow", async () => {
+  test("narrow", () => {
     const element = document.createElement("eo-main-view") as EoMainView;
     element.narrow = "medium";
 
@@ -43,7 +51,7 @@ describe("eo-main-view", () => {
     });
   });
 
-  test("banner alone", async () => {
+  test("banner alone", () => {
     const element = document.createElement("eo-main-view") as EoMainView;
     element.bannerAlone = true;
     element.bannerTitle = "Hello";
@@ -60,6 +68,27 @@ describe("eo-main-view", () => {
       "bannerDescription",
       "World"
     );
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("footer", async () => {
+    const element = document.createElement("eo-main-view") as EoMainView;
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+    expect(
+      element.shadowRoot?.querySelector(".footer").classList.contains("pinned")
+    ).toBe(false);
+
+    element.showFooter = true;
+    await act(() => (global as any).flushPromises());
+    expect(
+      element.shadowRoot?.querySelector(".footer").classList.contains("pinned")
+    ).toBe(true);
 
     act(() => {
       document.body.removeChild(element);
