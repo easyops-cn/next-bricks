@@ -74,7 +74,8 @@ export interface Marker {
 }
 
 /**
- * 构件 code-editor
+ * 构件代码编辑器
+ * @category form-input-advanced
  */
 export
 @defineElement("vs.code-editor", {
