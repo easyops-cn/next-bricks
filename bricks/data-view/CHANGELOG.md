@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.24.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.23.10...@next-bricks/data-view@0.24.0) (2023-11-16)
+
+
+### Features
+
+* app-wall 应用墙构调整 ([e5f17e4](https://github.com/easyops-cn/next-bricks/commit/e5f17e4df64cee9ba81a0f43f2145c1ec847a742))
+
+
+
+
+
 ## [0.23.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.23.9...@next-bricks/data-view@0.23.10) (2023-11-15)
 
 **Note:** Version bump only for package @next-bricks/data-view
