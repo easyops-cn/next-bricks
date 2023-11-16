@@ -58,6 +58,7 @@ export interface CheckboxProps extends FormItemProps {
 /**
  * 表单复选框构件
  * @author derrickma
+ * @category form-input-basic
  */
 @defineElement("eo-checkbox", {
   styleTexts: [styleText],

@@ -64,6 +64,7 @@ const { defineElement, property, event } = createDecorators();
 /**
  * 通用单选构件
  * @author sailor
+ * @category form-input-basic
  */
 @defineElement("eo-radio", {
   styleTexts: [styleText],

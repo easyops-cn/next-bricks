@@ -102,6 +102,7 @@ const { defineElement, property, event } = createDecorators();
 /**
  * 通用下拉选择构件
  * @author sailorshe
+ * @category form-input-basic
  */
 @defineElement("eo-select", {
   styleTexts: [styleText],

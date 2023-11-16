@@ -69,6 +69,7 @@ export interface InputEventsMap {
  * @slot addonAfter - 输入框后置标签
  * @slot prefix - 输入框前缀图标
  * @slot suffix - 输入框后缀图标
+ * @category form-input-basic
  */
 export
 @defineElement("eo-input", {

@@ -46,6 +46,8 @@ export interface SearchEventsMap {
 
 /**
  * 搜索框
+ * @author nlicro
+ * @category form-input-basic
  */
 export
 @defineElement("eo-search", {
