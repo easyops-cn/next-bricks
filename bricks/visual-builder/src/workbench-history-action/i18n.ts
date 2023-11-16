@@ -13,6 +13,7 @@ export enum K {
   UPDATE_RELATION = "UPDATE_RELATION",
   REMOVE_RELATION = "REMOVE_RELATION",
   ROLLBACK = "ROLLBACK",
+  ROLLBACK_ALL = "ROLLBACK_ALL",
   ADD_FULL = "ADD_FULL",
   EDIT_FULL = "EDIT_FULL",
   DELETE_FULL = "DELETE_FULL",
@@ -22,6 +23,7 @@ export enum K {
   UPDATE_RELATION_FULL = "UPDATE_RELATION_FULL",
   REMOVE_RELATION_FULL = "REMOVE_RELATION_FULL",
   ROLLBACK_FULL = "ROLLBACK_FULL",
+  ROLLBACK_ALL_FULL = "ROLLBACK_ALL_FULL",
   // category
   PROJECT = "PROJECT",
   USER = "USER",
@@ -54,6 +56,7 @@ const en: Locale = {
   UPDATE_RELATION: "Update Relation",
   REMOVE_RELATION: "Remove Relation",
   ROLLBACK: "Rollback",
+  ROLLBACK_ALL: "Rollback all operations",
   ADD_FULL: "Add {{ category }} ({{ nodes }})",
   EDIT_FULL: "Edit {{ nodeChanges }} of {{ category }} ({{ nodes }})",
   DELETE_FULL: "Delete {{ category }} ({{ nodes }})",
@@ -66,6 +69,7 @@ const en: Locale = {
   REMOVE_RELATION_FULL:
     "Remove the relation between {{ leftObjectId }} ({{ leftNodes }}) and {{ rightObjectId }} ({{ rightNodes }})",
   ROLLBACK_FULL: "Rollback to [{{ rollbackAbstract }}]",
+  ROLLBACK_ALL_FULL: "Rollback all operations",
   // category
   PROJECT: "Project",
   USER: "User Group",
@@ -98,6 +102,7 @@ const zh: Locale = {
   UPDATE_RELATION: "更新关系",
   REMOVE_RELATION: "移除关系",
   ROLLBACK: "回滚",
+  ROLLBACK_ALL: "回滚全部操作",
   ADD_FULL: "新增{{ category }}（{{ nodes }}）",
   EDIT_FULL: "编辑{{ category }}（{{ nodes }}）的 {{ nodeChanges }}",
   DELETE_FULL: "删除{{ category }}（{{ nodes }}）",
@@ -110,6 +115,7 @@ const zh: Locale = {
   REMOVE_RELATION_FULL:
     "移除{{ leftObjectId }}（{{ leftNodes }}）和{{ rightObjectId }}（{{ rightNodes }}）的关系",
   ROLLBACK_FULL: "回滚到【{{ rollbackAbstract }}】",
+  ROLLBACK_ALL_FULL: "回滚全部操作",
   // category
   PROJECT: "项目",
   USER: "用户组",
