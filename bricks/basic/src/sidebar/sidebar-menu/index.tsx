@@ -13,6 +13,8 @@ export interface EoSidebarMenuProps {
 
 /**
  * 侧栏菜单
+ *
+ * @category navigation
  */
 export
 @defineElement("eo-sidebar-menu", {

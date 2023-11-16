@@ -55,6 +55,8 @@ export interface DropdownActionsEventsMapping {
 
 /**
  * 下拉菜单
+ *
+ * @category interact-basic
  */
 export
 @defineElement("eo-dropdown-actions", {

@@ -36,6 +36,8 @@ export interface TooltipEventsMapping {
  *
  * @slot - 提示的目标元素
  * @slot content - 放置在提示中的元素
+ *
+ * @category feedback-and-tooltip
  */
 export
 @defineElement("eo-tooltip", {

@@ -57,6 +57,7 @@ const { defineElement, property } = createDecorators();
 
 /**
  * 构件 `eo-sidebar-sub-menu`
+ * @category navigation
  */
 export
 @defineElement("eo-sidebar-sub-menu", {

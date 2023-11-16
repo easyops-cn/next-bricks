@@ -36,6 +36,8 @@ interface TagListComponentProps {
 /**
  * 标签列表构件
  * @author sailor
+ *
+ * @categoru display-component
  */
 @defineElement("eo-tag-list", {
   alias: ["basic.general-tag-list"],

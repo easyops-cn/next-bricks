@@ -23,6 +23,7 @@ interface ImageProps {
 /**
  * 通用图片构件
  * @author nlicro
+ * @category display-component
  */
 @defineElement("eo-image", {
   styleTexts: [imageComponentStyleText, previewStyleText],

@@ -51,6 +51,7 @@ export interface EoMiniActionsEventsMapping {
 
 /**
  * 小尺寸按钮组
+ * @category interact-basic
  */
 export
 @defineElement("eo-mini-actions", {

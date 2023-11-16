@@ -45,6 +45,7 @@ const defaultIcon: GeneralIconProps = {
 /**
  * 下拉按钮
  * @author sailor
+ * @category interact-basic
  */
 @defineElement("eo-dropdown-button", {
   styleTexts: [styleText],

@@ -47,6 +47,8 @@ export interface PopoverEventsMapping {
  * @slot anchor - 触发弹出层的元素
  *
  * @part popup - The popup’s container. Useful for setting a background color, box shadow, etc.
+ *
+ * @category container-display
  */
 @defineElement("eo-popover", {
   styleTexts: [styleText],

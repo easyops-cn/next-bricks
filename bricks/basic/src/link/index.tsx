@@ -48,6 +48,8 @@ const { defineElement, property } = createDecorators();
  * @part link - 锚元素
  *
  * @slot - 链接内容
+ *
+ * @category text
  */
 @defineElement("eo-link", {
   styleTexts: [styleText],

@@ -41,6 +41,7 @@ export interface AvatarProps {
  * @part avatar-img - 显示为图片时的头像容器
  * @part avatar-icon - 显示为图标时的头像容器
  * @part avatar-text - 显示为文本时的头像容器
+ * @category display-component
  */
 export
 @defineElement("eo-avatar", {
