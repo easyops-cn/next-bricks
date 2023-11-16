@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.23.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.22.13...@next-bricks/containers@0.23.0) (2023-11-16)
+
+
+### Bug Fixes
+
+* decrease footer padding ([dfbeac2](https://github.com/easyops-cn/next-bricks/commit/dfbeac2a67c8417da684c73fb9cc81f3fe71691b))
+
+
+### Features
+
+* move footer to eo-page-view from eo-main-view ([d1d479b](https://github.com/easyops-cn/next-bricks/commit/d1d479ba59e7e0484f7fd3a49a0598013794f1b1))
+
+
+
+
+
 ## [0.22.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.22.12...@next-bricks/containers@0.22.13) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/containers
