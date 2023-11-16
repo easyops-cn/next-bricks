@@ -35,6 +35,7 @@ const { defineElement, property, event } = createDecorators();
 /**
  * 通用多行文本输入框构件
  * @author sailor
+ * @category form-input-basic
  */
 @defineElement("eo-textarea", {
   styleTexts: [styleText],

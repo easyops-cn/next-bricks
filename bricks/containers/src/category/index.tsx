@@ -21,7 +21,7 @@ export interface CategoryContainerProps {
 /**
  * 通用分类容器
  * @author sailorshe
- *
+ * @category container-display
  */
 @defineElement("eo-category", {
   styleTexts: [styleText],

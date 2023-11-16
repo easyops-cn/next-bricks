@@ -28,7 +28,7 @@ const WrappedInput = wrapBrick<Input, InputProps, InputEvents, InputEventsMap>(
   "eo-input",
   {
     onChange: "change",
-  },
+  }
 );
 
 interface EoAutoCompleteComponentProps extends FormItemProps {
@@ -55,7 +55,10 @@ export interface OptionGroup {
 export type OptionType = Option | OptionGroup;
 
 /**
- * 构件 `eo-auto-complete`
+ * 带候选项的输入框
+ * @author zhendonghuang
+ *
+ * @category form-input-basic
  */
 export
 @defineElement("eo-auto-complete", {
@@ -283,12 +286,12 @@ export function EoAutoCompleteComponent(props: EoAutoCompleteComponentProps) {
                 <div key={`${f.label}_${index}`} className="groupWrapper">
                   <div className={"groupItem"}>{f.label}</div>
                   {f.options.map((option: any, i: number) =>
-                    renderLabel(option, i),
+                    renderLabel(option, i)
                   )}
                 </div>
               ) : (
                 renderLabel(f, index)
-              ),
+              )
             )}
           </div>
         )}

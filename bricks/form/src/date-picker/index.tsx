@@ -78,7 +78,9 @@ const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 /**
- * 构件 `eo-date-picker`
+ * 日期选择器
+ * @author zhendonghuang
+ * @category form-input-basic
  */
 export
 @defineElement("eo-date-picker", {

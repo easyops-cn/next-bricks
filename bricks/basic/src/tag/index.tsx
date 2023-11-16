@@ -68,6 +68,8 @@ export interface TagMapEvents {
 /**
  * 标签构件
  * @author sailor
+ *
+ * @category display-component
  */
 @defineElement("eo-tag", {
   styleTexts: [styleText],

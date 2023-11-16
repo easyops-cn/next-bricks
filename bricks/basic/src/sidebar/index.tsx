@@ -62,6 +62,8 @@ export interface EoSidebarEventsMapping {
 
 /**
  * 侧边栏
+ *
+ * @category navigation
  */
 export
 @defineElement("eo-sidebar", {

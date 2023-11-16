@@ -18,6 +18,8 @@ export type NarrowViewSize = "small" | "medium" | "large" | "full";
  * @author steve
  *
  * @slot - 内容区
+ *
+ * @category container-layout
  */
 export
 @defineElement("eo-narrow-view", {

@@ -89,6 +89,8 @@ export interface IconSelectProps {
 
 /**
  * 图标选择构件
+ * @author nlicro
+ * @category form-input-basic
  */
 export
 @defineElement("eo-icon-select", {

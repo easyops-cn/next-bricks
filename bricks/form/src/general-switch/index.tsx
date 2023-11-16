@@ -30,8 +30,9 @@ interface SwitchProps extends FormItemProps {
 const { defineElement, property, event } = createDecorators();
 
 /**
- * 构件 eo-switch
+ * 开关
  * @author zhendonghuang
+ * @category form-input-basic
  */
 export
 @defineElement("eo-switch", {

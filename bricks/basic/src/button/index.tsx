@@ -38,6 +38,7 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
  * 通用按钮构件
  * @author sailor
  * @slot - 按钮内容
+ * @category interact-basic
  */
 @defineElement("eo-button", {
   styleTexts: [styleText],

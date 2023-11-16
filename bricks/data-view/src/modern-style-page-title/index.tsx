@@ -17,6 +17,7 @@ interface ModernStylePageTitleProps {
 /**
  * 现代风页面标题
  * @author nlicroshan
+ * @category big-screen-content
  */
 @defineElement("data-view.modern-style-page-title", {
   styleTexts: [variablesStyleText, styleText],

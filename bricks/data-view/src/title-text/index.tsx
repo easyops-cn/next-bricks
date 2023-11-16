@@ -17,6 +17,7 @@ export interface TitleTextProps {
 /**
  * 大屏标题文本构件
  * @author astrid
+ * @category big-screen-content
  */
 @defineElement("data-view.title-text", {
   styleTexts: [variablesStyleText, styleText],

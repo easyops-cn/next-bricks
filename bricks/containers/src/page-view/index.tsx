@@ -15,6 +15,8 @@ const { defineElement, property } = createDecorators();
  * @slot header - 顶栏
  * @slot sidebar - 侧边栏
  * @slot subSidebar - 子侧边栏
+ *
+ * @category container-layout
  */
 export
 @defineElement("eo-page-view", {

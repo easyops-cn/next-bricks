@@ -85,7 +85,9 @@ export interface EoUserOrUserGroupSelectProps extends FormItemProps {
 }
 
 /**
- * 构件 `eo-user-or-user-group-select`
+ * 用户(组)选择器
+ * @author dophijing
+ * @category form-input-business
  */
 export
 @defineElement("eo-user-or-user-group-select", {

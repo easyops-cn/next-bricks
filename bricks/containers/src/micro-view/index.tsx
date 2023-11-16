@@ -22,6 +22,7 @@ interface MicroViewProps {
 /**
  * 基础页面布局
  * @author sailorshe
+ * @category container-layout
  *
  */
 @defineElement("eo-micro-view", {

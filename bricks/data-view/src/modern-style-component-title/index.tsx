@@ -17,6 +17,7 @@ interface ModernStyleComponentTitleProps {
 /**
  * 现代风组件标题
  * @author nlicroshan
+ * @category big-screen-content
  */
 @defineElement("data-view.modern-style-component-title", {
   styleTexts: [variablesStyleText, styleText],

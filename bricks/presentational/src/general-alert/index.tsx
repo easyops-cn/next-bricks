@@ -27,8 +27,10 @@ export interface GeneralAlertProps {
 
 /**
  * 告警提示
+ * @author nlicro
  * @slot - 内容区
  * @slot title - 标题
+ * @category display-component
  */
 export
 @defineElement("eo-alert", {

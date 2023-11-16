@@ -23,9 +23,10 @@ export interface BadgeProps {
 const { defineElement, property } = createDecorators();
 
 /**
- * 构件 `eo-counter-badge`
+ * 通用徽标构件
  * @author zhendonghuang
  * @slot - 内容区
+ * @category display-component
  */
 export
 @defineElement("eo-counter-badge", {

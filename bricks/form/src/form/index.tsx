@@ -33,6 +33,7 @@ export interface FormMapEvents {
  * 表单构件
  * @author sailor
  * @slot - 表单内容
+ * @category form-input-basic
  */
 @defineElement("eo-form", {
   alias: ["form.general-form"],

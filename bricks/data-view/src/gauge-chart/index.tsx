@@ -14,6 +14,7 @@ interface GaugeChartProps {
 /**
  * 大屏仪表盘
  * @author astrid
+ * @category big-screen-content
  */
 @defineElement("data-view.gauge-chart", {
   styleTexts: [variablesStyleText, styleText],

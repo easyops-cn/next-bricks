@@ -49,6 +49,7 @@ const mediaQueryMap: Record<MediaSize, string> = {
 /**
  * 多行多列的响应式网格布局
  * @author abert
+ * @category container-layout
  */
 @defineElement("eo-grid-layout", {
   styleTexts: [styleText],

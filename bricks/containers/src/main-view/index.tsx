@@ -46,6 +46,7 @@ export type MainViewGap = "small" | "medium";
  * @slot toolbar - 工具栏
  * @slot banner - Banner 内容
  * @slot footer - 底栏（通常放置按钮）
+ * @category container-layout
  */
 export
 @defineElement("eo-main-view", {

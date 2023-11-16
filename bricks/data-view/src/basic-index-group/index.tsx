@@ -8,7 +8,8 @@ import { isNumber, isNil } from "lodash";
 const { defineElement, property } = createDecorators();
 
 /**
- * 构件 `data-view.basic-index-group`
+ * 基础指标组构件
+ * @category big-screen-content
  */
 interface BasicIndexGroupProps {
   width?: number;

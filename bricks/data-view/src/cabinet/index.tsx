@@ -68,12 +68,9 @@ export interface CabinetGraphProps {
 }
 
 /**
- * @id data-view.cabinet-graph
- * @name data-view.cabinet-graph
- * @docKind brick
- * @description cabinet构件
+ * cabinet 部署架构拓扑
  * @author nlicroshan
- * @noInheritDoc
+ * @category big-screen-content
  */
 @defineElement("data-view.cabinet-graph", {
   styleTexts: [variablesStyleText, styleText],

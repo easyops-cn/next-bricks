@@ -20,6 +20,8 @@ const { defineElement, property, method, event } = createDecorators();
 
 /**
  * 大型表格
+ * @author nlicro
+ * @category table
  */
 export
 @defineElement("eo-next-table", {

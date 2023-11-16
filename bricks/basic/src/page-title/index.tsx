@@ -13,7 +13,9 @@ export interface PageTitleProps {
 const { defineElement, property } = createDecorators();
 
 /**
- * 构件 `eo-page-title`
+ * 页面标题
+ *
+ * @category text
  */
 export
 @defineElement("eo-page-title", {

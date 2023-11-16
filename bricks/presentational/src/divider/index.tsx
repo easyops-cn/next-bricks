@@ -17,8 +17,9 @@ export interface EoDividerProps {
 const { defineElement, property } = createDecorators();
 
 /**
- * 构件 `eo-divider`
+ * 分割线
  * @author zhendonghuang
+ * @category container-display
  */
 export
 @defineElement("eo-divider", {

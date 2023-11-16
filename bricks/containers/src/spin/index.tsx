@@ -14,6 +14,10 @@ interface EoSpinProps {
 
 /**
  * 加载中
+ *
+ * @author nlicro
+ * @slot - 容器内容
+ * @category container-display
  */
 export
 @defineElement("eo-spin", {

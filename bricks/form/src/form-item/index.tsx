@@ -53,6 +53,8 @@ const { defineElement, property } = createDecorators();
 /**
  * 通用输入框构件
  * @author sailor
+ * @slot - 表单项内容
+ * @category form-input-basic
  */
 @defineElement("eo-form-item", {
   styleTexts: [styleText],

@@ -46,6 +46,7 @@ const { defineElement, property } = createDecorators();
 /**
  * 通用描述列表构件
  * @author sailor
+ * @category text
  */
 @defineElement("eo-descriptions", {
   styleTexts: [styleText],

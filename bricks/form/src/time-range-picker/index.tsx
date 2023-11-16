@@ -71,7 +71,9 @@ type RealTimeRangePickerProps = Omit<
   keyof FormItemProps
 >;
 /**
- * 构件 `eo-time-range-picker`
+ * 时间区间选择器
+ * @author zhendonghuang
+ * @category form-input-basic
  */
 export
 @defineElement("eo-time-range-picker", {

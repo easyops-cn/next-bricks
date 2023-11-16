@@ -17,6 +17,7 @@ interface LoadingPanelProps {
 /**
  * 大屏加载模块展示
  * @author astrid
+ * @category big-screen-content
  */
 @defineElement("data-view.loading-panel", {
   styleTexts: [variablesStyleText, styleText],

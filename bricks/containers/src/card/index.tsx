@@ -44,6 +44,7 @@ const { defineElement, property } = createDecorators();
  * @slot - 卡片内容
  * @slot extra - 头部右侧拓展元素
  * @slot titleSuffix - 标题后缀的插槽
+ * @category card-info
  */
 @defineElement("eo-card", {
   styleTexts: [styleText],

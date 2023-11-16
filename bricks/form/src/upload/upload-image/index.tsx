@@ -40,6 +40,8 @@ export interface UploadImageProps {
 
 /**
  * 上传图片构件
+ * @author nlicro
+ * @category form-input-basic
  */
 export
 @defineElement("eo-upload-image", {

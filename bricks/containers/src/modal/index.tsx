@@ -74,6 +74,12 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 const { defineElement, property, event, method } = createDecorators();
 
+/**
+ * 模态框
+ * @author sailor
+ * @slot - 内容插槽
+ * @category container-display
+ */
 @defineElement("eo-modal", {
   styleTexts: [styleText],
   alias: ["containers.general-modal"],

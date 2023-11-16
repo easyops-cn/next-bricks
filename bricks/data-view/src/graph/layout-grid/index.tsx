@@ -27,6 +27,7 @@ export interface GraphLayoutGridProps {
 /**
  * Graph grid 布局
  * @author astrid
+ * @category big-screen-content
  */
 @defineElement("data-view.graph-layout-grid", {
   styleTexts: [variablesStyleText, styleText],

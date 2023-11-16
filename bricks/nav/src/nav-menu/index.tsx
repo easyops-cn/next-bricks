@@ -332,7 +332,7 @@ function SitMapMenCom({
 /**
  * 菜单构件
  * @author sailor
- *
+ * @category navigation
  */
 @defineElement("eo-nav-menu", {
   styleTexts: [

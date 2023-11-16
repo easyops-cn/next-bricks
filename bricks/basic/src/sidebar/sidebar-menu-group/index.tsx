@@ -18,6 +18,7 @@ export interface EoSidebarMenuGroupProps {
 /**
  * 侧栏菜单分组
  * @slot title - 分组标题
+ * @category navigation
  */
 export
 @defineElement("eo-sidebar-menu-group", {

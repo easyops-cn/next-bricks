@@ -105,6 +105,7 @@ export const getRealValue = (
 /**
  * 动态表单
  * @author sailor
+ * @category form-input-basic
  */
 @defineElement("eo-dynamic-form-item", {
   styleTexts: [styleText],

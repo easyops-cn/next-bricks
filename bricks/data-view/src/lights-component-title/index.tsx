@@ -7,11 +7,12 @@ const { defineElement, property } = createDecorators();
 
 interface LightsComponentTitleProps {
   componentTitle: string;
-  theme: "light"|"dark";
+  theme: "light" | "dark";
 }
 /**
  * 构件 `data-view.lights-component-title`
  * @author astrid
+ * @category big-screen-content
  */
 
 export
@@ -29,28 +30,33 @@ class LightsComponentTitle
   @property()
   accessor componentTitle: string;
   /**
-   * @default 
-   * @required 
-   * @description 
+   * @default
+   * @required
+   * @description
    */
   @property()
-  accessor theme: "light"|"dark";
+  accessor theme: "light" | "dark";
   render() {
     return (
-      <LightsComponentTitleComponent componentTitle={this.componentTitle} theme={this.theme} />
+      <LightsComponentTitleComponent
+        componentTitle={this.componentTitle}
+        theme={this.theme}
+      />
     );
   }
 }
 export function LightsComponentTitleComponent(
   props: LightsComponentTitleProps
 ) {
-  const {componentTitle, theme="light"} = props;
+  const { componentTitle, theme = "light" } = props;
   return (
     <div className="wrapper">
-      <div className={theme==="dark"?"darkContent":"lightContent"}>
-        {theme==="light"&&<div className="lightIcon"></div>}
-        {theme==="dark"&&<div className="darkIcon"></div>}
-        <div className={theme==="dark"?"darkTitle":"lightTitle"}>{componentTitle}</div>
+      <div className={theme === "dark" ? "darkContent" : "lightContent"}>
+        {theme === "light" && <div className="lightIcon"></div>}
+        {theme === "dark" && <div className="darkIcon"></div>}
+        <div className={theme === "dark" ? "darkTitle" : "lightTitle"}>
+          {componentTitle}
+        </div>
       </div>
     </div>
   );

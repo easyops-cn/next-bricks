@@ -17,6 +17,7 @@ export interface EoEasyopsAvatarProps {
 
 /**
  * easyops 头像
+ * @category display-component
  */
 export
 @defineElement("eo-easyops-avatar", {

@@ -30,6 +30,7 @@ export interface AppWallProps {
 /**
  * 应用墙
  * @author nlicroshan
+ * @category big-screen-layout
  */
 @defineElement("data-view.app-wall", {
   styleTexts: [variablesStyleText, styleText],

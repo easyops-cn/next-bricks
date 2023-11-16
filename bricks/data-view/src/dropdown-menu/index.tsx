@@ -29,6 +29,7 @@ interface DropdownMenuProps {
 /**
  * 基础下拉菜单
  * @author nlicroshan
+ * @category big-screen-content
  */
 @defineElement("data-view.dropdown-menu", {
   styleTexts: [variablesStyleText, styleText],

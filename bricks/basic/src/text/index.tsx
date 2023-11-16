@@ -16,6 +16,8 @@ const { defineElement, property } = createDecorators();
 /**
  * 通用文本构件
  * @author astrid
+ *
+ * @category text
  */
 @defineElement("eo-text", {
   alias: ["basic.general-text"],

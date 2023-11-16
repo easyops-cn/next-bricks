@@ -41,6 +41,11 @@ export interface GeneralIconEvents {
   "icon.click": CustomEvent<{ icon: string }>;
 }
 
+/**
+ * 通用图标构件
+ *
+ * @category display-component
+ */
 export
 @defineElement("eo-icon", {
   styleTexts: [styleText],

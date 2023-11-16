@@ -18,6 +18,7 @@ const { defineElement, property } = createDecorators();
  * @author ice
  * @slot start - 左侧搜索栏
  * @slot end - 右侧操作栏
+ * @category container-display
  */
 export
 @defineElement("eo-search-bar", {

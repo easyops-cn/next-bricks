@@ -11,6 +11,7 @@ const { defineElement, property } = createDecorators();
 /**
  * 指标卡片
  * @author alexchen
+ * @category big-screen-content
  */
 export
 @defineElement("data-view.indicator-card", {

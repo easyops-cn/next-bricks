@@ -38,6 +38,8 @@ export interface BannerProps {
  * @author steve
  *
  * @slot - 内容区
+ *
+ * @category container-layout
  */
 export
 @defineElement("eo-banner", {

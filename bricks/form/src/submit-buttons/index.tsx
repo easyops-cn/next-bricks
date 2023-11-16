@@ -24,8 +24,9 @@ interface SubmitButtonsProps extends FormItemProps {
 const { defineElement, property, event } = createDecorators();
 
 /**
- * 用于general-forms的通用按钮
- * @author zhendong
+ * 表单提交按钮
+ * @author zhendonghuang
+ * @category form-input-basic
  */
 @defineElement("eo-submit-buttons", {
   styleTexts: [styleText],

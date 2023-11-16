@@ -33,7 +33,9 @@ interface EoTimePickerProps extends FormItemProps {
 }
 
 /**
- * 构件 `eo-time-picker`
+ * 时间选择器
+ * @author zhendonghuang
+ * @category form-input-basic
  */
 export
 @defineElement("eo-time-picker", {

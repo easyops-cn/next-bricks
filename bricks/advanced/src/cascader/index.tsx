@@ -41,6 +41,7 @@ export interface CascaderProps
 /**
  * 级联选择器
  * @author nlicroshan
+ * @category form-input-basic
  */
 @defineElement("eo-cascader", {
   alias: ["advanced.general-cascader"],

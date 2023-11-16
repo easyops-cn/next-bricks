@@ -59,6 +59,8 @@ export interface UploadFileProps {
 
 /**
  * 上传文件
+ * @author nlicro
+ * @category form-input-basic
  */
 export
 @defineElement("eo-upload-file", {

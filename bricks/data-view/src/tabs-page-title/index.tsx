@@ -24,6 +24,7 @@ interface TabsPageTitleProps {
  * @slot start - 顶部左边插槽
  * @slot end - 顶部右边插槽
  * @slot [key] - 标签对应的key的插槽
+ * @category big-screen-content
  */
 export
 @defineElement("data-view.tabs-page-title", {

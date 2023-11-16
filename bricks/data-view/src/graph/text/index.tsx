@@ -15,6 +15,7 @@ export interface GraphTextProps {
 /**
  * Graph text
  * @author astrid
+ * @category big-screen-content
  */
 @defineElement("data-view.graph-text", {
   styleTexts: [variablesStyleText, styleText],

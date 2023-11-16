@@ -25,6 +25,7 @@ export interface SimpleCardItemProps {
 /**
  * 基础卡片项
  * @author astrid
+ * @category big-screen-content
  */
 export
 @defineElement("data-view.simple-card-item", {

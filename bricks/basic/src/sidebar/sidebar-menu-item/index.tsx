@@ -25,6 +25,7 @@ export interface EoSidebarMenuItemProps {
 
 /**
  * 侧栏菜单项
+ * @category navigation
  */
 export
 @defineElement("eo-sidebar-menu-item", {

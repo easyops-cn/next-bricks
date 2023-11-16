@@ -50,6 +50,7 @@ interface ModernStyleTreemapProps {
 /**
  * 现代风树图
  * @author nlicroshan
+ * @category big-screen-content
  */
 @defineElement("data-view.modern-style-treemap", {
   styleTexts: [variablesStyleText, styleText],
