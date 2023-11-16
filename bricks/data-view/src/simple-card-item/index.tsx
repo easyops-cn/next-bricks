@@ -83,6 +83,8 @@ class SimpleCardItem extends ReactNextElement {
       <SimpleCardItemComponent
         cardTitle={this.cardTitle}
         description={this.description}
+        titleStyle={this.titleStyle}
+        desStyle={this.desStyle}
         status={this.status}
         background={this.background}
         color={this.color}

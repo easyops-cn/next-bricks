@@ -13,7 +13,7 @@
 *::after {
   box-sizing: border-box;
 }
-.mask-container{
+.mask-container {
   position: absolute;
   top: 0;
   left: 0;
@@ -22,7 +22,12 @@
   background: #0c1216;
   z-index: 1000;
 }
-
+.appwall-container {
+  /*
+    * 增加边距，解决hover卡片的时候，卡片高于容器，此时鼠标沿着卡片离开的时候不触发handleMouseover事件，导致卡片没有恢复的问题
+    */
+  padding: 8px;
+}
 .appwall {
   position: relative;
 }
@@ -51,15 +56,20 @@
 .infoWrapper {
   position: absolute;
   background: var(--color-fill-bg-base-4);
-  box-shadow: 0 0 12px 2px rgba(80, 255, 255, 0.45), inset 0 0 22px 0 #20242A;
-  border: 2px solid #50FFFF;
+  box-shadow:
+    0 0 12px 2px rgba(80, 255, 255, 0.45),
+    inset 0 0 22px 0 #20242a;
+  border: 2px solid #50ffff;
   overflow: hidden;
 }
 
 .warningWrapper {
   position: absolute;
-  background: linear-gradient(180deg, #CC0066 0%, rgba(204, 0, 102, 0.2) 100%),#0F1117FF;
-  box-shadow: 0 0 12px 2px rgba(204, 0, 102, 0.4), inset 0 4px 10px 0 rgba(255, 255, 255, 0.65);
+  background: linear-gradient(180deg, #cc0066 0%, rgba(204, 0, 102, 0.2) 100%),
+    #0f1117ff;
+  box-shadow:
+    0 0 12px 2px rgba(204, 0, 102, 0.4),
+    inset 0 4px 10px 0 rgba(255, 255, 255, 0.65);
   overflow: hidden;
 }
 .relation-line {
@@ -80,7 +90,13 @@
   line-height: 46px;
   cursor: pointer;
   background: rgba(138, 189, 255, 0.13);
-  border-image: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.33)) 1 1;
+  border-image: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.33)
+    )
+    1 1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -92,14 +108,12 @@
   content: "";
   width: 2px;
   height: 20px;
-  background: linear-gradient(180deg, #3467FF 0%, #98CBFF 100%);
+  background: linear-gradient(180deg, #3467ff 0%, #98cbff 100%);
   position: absolute;
-
 }
 
 .closeBtn:before {
   transform: rotateZ(45deg);
-
 }
 
 .closeBtn:after {
@@ -118,7 +132,7 @@
 
 .trapezoidalLeftOrRightAnimation,
 .trapezoidalTopOrBottomAnimation {
-  background: linear-gradient(180deg, rgba(51, 102, 255, 0.4) 0%, #99CCFF 100%);
+  background: linear-gradient(180deg, rgba(51, 102, 255, 0.4) 0%, #99ccff 100%);
   opacity: 0.2;
   position: absolute;
 }
@@ -140,13 +154,11 @@
 @keyframes animateTop {
   0% {
     height: 0;
-
   }
 
   100% {
     height: 100%;
   }
-
 }
 
 @keyframes animateLeft {
@@ -157,7 +169,6 @@
   100% {
     width: 100%;
   }
-
 }
 
 @keyframes visibility {
@@ -168,21 +179,40 @@
   100% {
     visibility: visible;
   }
-
 }
 
-.card-item-container{
+.card-item-container {
   transition: opacity 0.5s;
 }
 
 .status-normal-card {
   box-shadow: 0 0 100px rgba(80, 255, 255, 0.58);
   border: 1px solid rgba(80, 255, 255, 0.58);
-  background:-webkit-gradient(liner,left top,left bottom, from(#002c8d),to(#00123e));
-  background: linear-gradient(to bottom,rgba(80, 255, 255, 1) 0%,rgba(80, 255, 255, 0) 100%);
+  background: -webkit-gradient(
+    liner,
+    left top,
+    left bottom,
+    from(#002c8d),
+    to(#00123e)
+  );
+  background: linear-gradient(
+    to bottom,
+    rgba(80, 255, 255, 1) 0%,
+    rgba(80, 255, 255, 0) 100%
+  );
 }
 .status-warning-card {
-  box-shadow: 0 0 100px #CC0066;
-  background:-webkit-gradient(liner,left top,left bottom, from(#CC0066),to(rgba(204, 0, 102, 0.2)));
-  background: linear-gradient(to bottom,#CC0066 0%,rgba(204, 0, 102, 0.2) 100%);
+  box-shadow: 0 0 100px #cc0066;
+  background: -webkit-gradient(
+    liner,
+    left top,
+    left bottom,
+    from(#cc0066),
+    to(rgba(204, 0, 102, 0.2))
+  );
+  background: linear-gradient(
+    to bottom,
+    #cc0066 0%,
+    rgba(204, 0, 102, 0.2) 100%
+  );
 }

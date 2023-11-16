@@ -71,9 +71,14 @@ const fov = 45;
 const angle = 100;
 const panelSpace = 300;
 
-const getViewBounds = (length: number, cardSize: CardSize, margin: number) => {
+const getViewBounds = (
+  length: number,
+  cardSize: CardSize,
+  margin: number,
+  aspectH: number
+) => {
   const maxX = Math.ceil(
-    Math.sqrt((length * cardSize.outerHeight) / (0.4 * cardSize.outerWidth))
+    Math.sqrt((length * cardSize.outerHeight) / (aspectH * cardSize.outerWidth))
   );
   const maxY = Math.ceil(length / maxX);
   const radius =
@@ -136,6 +141,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
   });
   const objectsRef = useRef<CSS3DObject[]>([]);
   const lineCiCodesRef = useRef<CSS3DObject[]>([]);
+  const hoverScaleRef = useRef<number>(1.15);
 
   const configRef = useRef<BaseConfig>({
     maxX: 0,
@@ -162,11 +168,18 @@ export function AppWallElement(props: AppWallProps): ReactElement {
 
   const render = useCallback(() => {
     rendererRef.current.render(sceneRef.current, cameraRef.current);
+    controlsRef.current.maxDistance =
+      configRef.current.bounds.z + configRef.current.radius;
     controlsRef.current.handleResize();
   }, []);
 
   const updateViewBounds = (length: number) => {
-    configRef.current = getViewBounds(length, cardSize, boundMargin);
+    configRef.current = getViewBounds(
+      length,
+      cardSize,
+      boundMargin,
+      1 / cameraRef.current.aspect
+    );
   };
 
   const init = () => {
@@ -288,23 +301,30 @@ export function AppWallElement(props: AppWallProps): ReactElement {
   const showElementBetweenRelation = (target: Ele) => {
     const { __objectCSS, __userData } = target;
     const rotationY = __objectCSS.rotation.y;
+    const currentEleRect = __objectCSS.element.getBoundingClientRect();
     const position: Position = {
       x: __objectCSS.position.x + 50 * Math.sin(rotationY),
       y: __objectCSS.position.y + 15,
       z: __objectCSS.position.z + 100 * Math.cos(rotationY),
     };
-    const scale = 1.25,
-      duration = 200;
+    const scale =
+        currentEleRect.width >= cardSize.width
+          ? hoverScaleRef.current
+          : Math.min(
+              cardSize.width / currentEleRect.width,
+              cardSize.height / currentEleRect.height
+            ),
+      duration = 100;
     registerEvents.current.isShowRelations = true;
     new Tween(__objectCSS.rotation)
-      .to(
-        {
-          x: 0,
-          y: 0,
-          z: 0,
-        },
-        duration
-      )
+      // .to(
+      //   {
+      //     x: 0,
+      //     y: 0,
+      //     z: 0,
+      //   },
+      //   duration
+      // )
       .onStart(() => {
         cardBrickName === "data-view.app-wall-card-item" &&
           __objectCSS.element.classList.add(
@@ -341,7 +361,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
       __curve: object3d,
       __userData,
     } = registerEvents.current.element;
-    const duration = 200;
+    const duration = 100;
 
     new Tween(__objectCSS.rotation)
       .to(
@@ -605,7 +625,6 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         maskRef.current.hidden = toggle;
       });
   };
-
   const resetView = () => {
     controlsRef.current.reset();
     TWEEN.removeAll();
