@@ -2210,10 +2210,10 @@
   resolved "https://registry.yarnpkg.com/@next-core/brick-dll-v3/-/brick-dll-v3-0.7.16.tgz#540de3810750e5869f74ef82563d24a57dd62b8a"
   integrity sha512-qMCLteEmXzaZS/Wk/aUp3GQLG6SEH0Lu+NjawaMUZkwh98vOuQG6wXMwjSHQE6ttC1vOtREeaovhk54P/45/rA==
 
-"@next-core/brick-icons@^2.33.10":
-  version "2.33.10"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-icons/-/brick-icons-2.33.10.tgz#19fbbb5a5d5bd38fd7e2ade7eb00665cc4428dfc"
-  integrity sha512-vx0pNx210SiJ4/SuI7yXYWHZYrnwxA7d2nFMZPYCDx35QJ5YAMpsMWmjcG/aKQU8h1uLHSC3AmP3mYykhcftyA==
+"@next-core/brick-icons@^2.33.11":
+  version "2.33.11"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-icons/-/brick-icons-2.33.11.tgz#5f570b19d048d331b78ec915b4c5949ca792a509"
+  integrity sha512-D8HIj/7v4Psoy0+C1TdcbOarxCjY8dEijebj18rEhJPMaOyJ1dfLE9UQMk70hm8Cl/uNAhQ5A+fboGNILij5sA==
 
 "@next-core/brick-manifest@^0.6.0":
   version "0.6.0"
@@ -2490,10 +2490,10 @@
     minimist "^1.2.8"
     plop "^3.1.2"
 
-"@next-dll/ace@^2.0.696":
-  version "2.0.696"
-  resolved "https://registry.yarnpkg.com/@next-dll/ace/-/ace-2.0.696.tgz#ab9b7acb005c0a6bb1907bd9c3a2e560d6a754fd"
-  integrity sha512-UnB4Tn/Mve/bn4XemzzKCmwKYqAZty6P7VK906vFOz3h0f+HhnvrIHlSQDu6mDEI+XczqFoc5DXVFVufyM4Gig==
+"@next-dll/ace@^2.0.697":
+  version "2.0.697"
+  resolved "https://registry.yarnpkg.com/@next-dll/ace/-/ace-2.0.697.tgz#f3186ccded9bd809b2a08aca244b1956fd4dec06"
+  integrity sha512-Epl7ZGHW/KfAyYxaEzpDgiNvvsfISjElXJO+V5lKlFR1mLgo0EQ1WEpp97bGhkVHX1vnqCrRFZt7V4vTAKQWsQ==
 
 "@next-dll/d3@^2.0.79":
   version "2.0.79"
@@ -2505,15 +2505,15 @@
   resolved "https://registry.yarnpkg.com/@next-dll/echarts/-/echarts-2.0.80.tgz#92a8e09a7e549fee41368542ab3d6995c83cb2a8"
   integrity sha512-kJL1y0/X2F1KrUoeJ/fxhn845EgzTCcLrWG0OU9qjDkS7aM292RsbYROcgZU62HzB+lJNK++GZ31dOCV7fVKHw==
 
-"@next-dll/editor-bricks-helper@^0.38.41":
-  version "0.38.41"
-  resolved "https://registry.yarnpkg.com/@next-dll/editor-bricks-helper/-/editor-bricks-helper-0.38.41.tgz#fd999fadbdcf0c64d4c21a18350181683d4a46dd"
-  integrity sha512-4gF/FSkndXSadgCYsZSdRS3orQFqFwEJ0vhrpzpbjHZDQn6unzetPSC52QgygePBVf8aMD91TE9qPApmp6DXyw==
+"@next-dll/editor-bricks-helper@^0.38.42":
+  version "0.38.42"
+  resolved "https://registry.yarnpkg.com/@next-dll/editor-bricks-helper/-/editor-bricks-helper-0.38.42.tgz#9c821720013c3901ef8630e2a4e000cda56e8183"
+  integrity sha512-AkcWRcdhtyvA1PGGU2S9IvC5ojP7Cf7yaz6r8hrfoZ6yz5OLotM20kAnrV/bsBc1+juKc8zS4ZLASyhbghZGvw==
 
-"@next-dll/react-dnd@^0.1.634":
-  version "0.1.634"
-  resolved "https://registry.yarnpkg.com/@next-dll/react-dnd/-/react-dnd-0.1.634.tgz#1dc75c45ec1e28cf2dadb3793ec0633aa9ee0d2f"
-  integrity sha512-kYc+mtQP4Go1yQi/RZsXD1XtqPy7XRK6VMsDWUXBsDurbgDXWsCe0bciSJrfTOunNBDso3PqnUW/e+ySTkhiIw==
+"@next-dll/react-dnd@^0.1.635":
+  version "0.1.635"
+  resolved "https://registry.yarnpkg.com/@next-dll/react-dnd/-/react-dnd-0.1.635.tgz#87542627e8564f5a01c09ef30bb678e1c31833df"
+  integrity sha512-Rmp5/L3R8xZEWeQeyUzpBU/HvPJfAWxXbNSG/gOouP6xpgKXM2sxaOuSOelwPZgasMseGpcBQREqO5pQxcQ1kg==
 
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3":
   version "2.1.8-no-fsevents.3"
