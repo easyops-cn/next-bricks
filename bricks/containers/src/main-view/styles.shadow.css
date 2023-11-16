@@ -94,7 +94,7 @@ eo-banner {
 }
 
 .footer > eo-narrow-view {
-  padding: 20px 0;
+  padding: 15px 0;
 }
 
 :host([show-footer]) .footer {
