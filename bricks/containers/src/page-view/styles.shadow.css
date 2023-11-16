@@ -1,4 +1,6 @@
 :host {
+  --local-footer-height: 65px;
+
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -33,4 +35,41 @@
 .content {
   flex-grow: 1;
   overflow: auto;
+  position: relative;
+}
+
+.footer {
+  display: none;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: var(--page-padding-left);
+  padding-right: var(--page-padding-right);
+}
+
+:host([fixed-footer]) .footer,
+.pinned {
+  background: var(--color-fill-global-bg-2);
+  box-shadow: var(--slide-up-shadow);
+}
+
+:host([fixed-footer][show-footer]) .content {
+  display: flex;
+  flex-direction: column;
+}
+
+:host([fixed-footer][show-footer]) slot:not([name])::slotted(*) {
+  flex-grow: 1;
+}
+
+.footer > eo-narrow-view {
+  display: flex;
+  align-items: center;
+  gap: var(--toolbar-button-gap);
+  height: var(--local-footer-height);
+}
+
+:host([show-footer]) .footer {
+  display: block;
 }

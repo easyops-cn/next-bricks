@@ -1,10 +1,6 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createDecorators } from "@next-core/element";
-import {
-  ReactNextElement,
-  wrapBrick,
-  wrapLocalBrick,
-} from "@next-core/react-element";
+import { ReactNextElement, wrapLocalBrick } from "@next-core/react-element";
 import "@next-core/theme";
 import type {
   EoNarrowView,
@@ -17,7 +13,7 @@ import classNames from "classnames";
 
 const { defineElement, property } = createDecorators();
 
-const WrappedNarrowView = wrapBrick<EoNarrowView, NarrowViewProps>(
+const WrappedNarrowView = wrapLocalBrick<EoNarrowView, NarrowViewProps>(
   "eo-narrow-view"
 );
 const WrappedBanner = wrapLocalBrick<EoBanner, BannerProps>(EoBanner);
@@ -45,7 +41,7 @@ export type MainViewGap = "small" | "medium";
  * @slot pageTitle - 页面标题
  * @slot toolbar - 工具栏
  * @slot banner - Banner 内容
- * @slot footer - 底栏（通常放置按钮）
+ * @slot footer - 底栏（通常放置按钮），已废弃，请使用 eo-page-view 的 footer
  * @category container-layout
  */
 export
@@ -101,6 +97,7 @@ class EoMainView extends ReactNextElement {
 
   /**
    * 是否显示底栏（通常放置按钮）
+   * @deprecated 已废弃，请使用 eo-page-view 的 footer
    */
   @property({ type: Boolean })
   accessor showFooter: boolean | undefined;
