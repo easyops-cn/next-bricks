@@ -1,6 +1,7 @@
 // istanbul ignore file: working in progress
 // https://github.com/facebook/react/blob/cae635054e17a6f107a39d328649137b83f25972/packages/react-devtools-shared/src/backend/views/Highlighter/index.js
-import { isEqual, throttle } from "lodash";
+import { isEmpty, isEqual, throttle } from "lodash";
+import { blacklistBricksOfQueries } from "../../constants.js";
 import type {
   InspectOutline,
   InspectSelector,
@@ -9,6 +10,23 @@ import type {
 } from "./interfaces.js";
 
 let isInspecting = false;
+
+const brickFilters = [
+  (element: HTMLElement) => {
+    const tag = element.tagName.toLowerCase();
+
+    return !blacklistBricksOfQueries.some((item) =>
+      item instanceof RegExp ? item.test(tag) : item === tag
+    );
+  },
+  (element: HTMLElement) => element.hasAttribute("data-iid"),
+  (element: HTMLElement) =>
+    element.hasAttribute("data-testid")
+      ? // 用户填写的以下划线开头的 test-id 会过滤掉
+        !element.dataset.testid?.startsWith("_")
+      : !!element.id,
+];
+
 export let previewFromOrigin: string;
 
 export function setPreviewFromOrigin(origin: string): void {
@@ -46,7 +64,7 @@ function onMouseEvent(event: MouseEvent): void {
 
 const hoverOnTarget = throttle(
   (eventTargets: EventTarget[]) => {
-    const targets = getPossibleTargets(eventTargets);
+    const targets = getPossibleTargets(eventTargets, brickFilters);
     window.parent.postMessage(
       {
         channel: "ui-test-preview",
@@ -88,7 +106,7 @@ function onPointerLeave(event: MouseEvent): void {
 }
 
 function selectTarget(event: MouseEvent): void {
-  const targets = getPossibleTargets(event.composedPath());
+  const targets = getPossibleTargets(event.composedPath(), brickFilters);
   if (targets.length > 0) {
     window.parent.postMessage(
       {
@@ -104,7 +122,8 @@ function selectTarget(event: MouseEvent): void {
 }
 
 export function getPossibleTargets(
-  eventTargets: EventTarget[]
+  eventTargets: EventTarget[],
+  extraFilters?: Array<(target: HTMLElement) => boolean>
 ): InspectTarget[] {
   const targets: InspectTarget[] = [];
   for (const item of eventTargets) {
@@ -123,6 +142,12 @@ export function getPossibleTargets(
       if (tag === "slot") {
         continue;
       }
+
+      // 目前会在 inspect 模式下定位元素的时候做一些构件上的过滤，在其他的地方不做过滤 1.右侧树 click / hover 高亮 2. 屏幕录制
+      if (!isEmpty(extraFilters) && extraFilters?.some((fn) => !fn(item))) {
+        continue;
+      }
+
       if (item.dataset.testid) {
         targets.push({
           element: item,
