@@ -101,6 +101,7 @@ const { defineElement, property, event } = createDecorators();
  * @docKind brick
  * @author kehua
  * @noInheritDoc
+ * @category form-input-advanced
  */
 class MarkdownEditor extends FormItemElementBase {
   /**
