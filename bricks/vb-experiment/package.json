@@ -42,6 +42,6 @@
     "process": "^0.11.10"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.15.0"
+    "@next-core/build-next-bricks": "^1.15.1"
   }
 }
