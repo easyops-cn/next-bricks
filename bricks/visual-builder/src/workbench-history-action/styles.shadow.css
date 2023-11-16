@@ -106,3 +106,16 @@ eo-popover::part(popup) {
   display: block;
   text-align: center;
 }
+
+.end-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 16px;
+  color: var(--color-brand);
+}
+
+.rollback-all {
+  cursor: pointer;
+}

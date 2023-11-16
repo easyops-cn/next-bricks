@@ -13,7 +13,7 @@ jest.useFakeTimers();
 class MockEoPopover extends HTMLElement {
   changeActive(active: boolean) {
     this.dispatchEvent(
-      new CustomEvent("before.visible.change", { detail: { active } })
+      new CustomEvent("before.visible.change", { detail: active })
     );
   }
 }
@@ -42,6 +42,7 @@ describe("visual-builder.workbench-history-action", () => {
       "NO_DATA"
     );
     expect(element.shadowRoot?.querySelector(".load-more")).toBeFalsy();
+    expect(element.shadowRoot?.querySelector(".end-container")).toBeFalsy();
 
     mockGetChangeHistory.mockImplementationOnce(() => {
       return new Promise((resolve, reject) => {
@@ -71,6 +72,7 @@ describe("visual-builder.workbench-history-action", () => {
       ).changeActive(true);
     });
     expect(element.shadowRoot?.querySelector(".load-more")).toBeFalsy();
+    expect(element.shadowRoot?.querySelector(".end-container")).toBeFalsy();
     expect(element.shadowRoot?.querySelector(".item-container")).toBeFalsy();
     expect(element.shadowRoot?.querySelector(".empty").textContent).toBe(
       "LOADING"
@@ -114,6 +116,7 @@ describe("visual-builder.workbench-history-action", () => {
       jest.runAllTimers();
     });
     expect(element.shadowRoot?.querySelector(".load-more")).toBeFalsy();
+    expect(element.shadowRoot?.querySelector(".end-container")).toBeTruthy();
     expect(element.shadowRoot?.querySelectorAll(".item-container").length).toBe(
       25
     );
@@ -127,12 +130,14 @@ describe("visual-builder.workbench-history-action", () => {
   test("event", async () => {
     const onHistoryItemClick = jest.fn();
     const onRollback = jest.fn();
+    const onRollbackAll = jest.fn();
     const element = document.createElement(
       "visual-builder.workbench-history-action"
     ) as WorkbenchHistoryAction;
     element.appId = "project-a";
     element.addEventListener("history.item.click", onHistoryItemClick);
     element.addEventListener("rollback", onRollback);
+    element.addEventListener("rollback.all", onRollbackAll);
 
     expect(element.shadowRoot).toBeFalsy();
 
@@ -169,6 +174,42 @@ describe("visual-builder.workbench-history-action", () => {
       ).changeActive(true);
       jest.runAllTimers();
     });
+
+    await act(async () => {
+      fireEvent.click(
+        element.shadowRoot?.querySelectorAll(".item-container .title-left")[0]
+      );
+    });
+    expect(onHistoryItemClick).lastCalledWith(
+      expect.objectContaining({
+        detail: expect.objectContaining({
+          enableRollback: false,
+          ts: "10",
+        }),
+      })
+    );
+
+    await act(async () => {
+      fireEvent.click(
+        element.shadowRoot?.querySelectorAll(".item-container .rollback")[0]
+      );
+    });
+    expect(onRollback).lastCalledWith(
+      expect.objectContaining({
+        detail: expect.objectContaining({
+          ts: "11",
+        }),
+      })
+    );
+
+    await act(async () => {
+      fireEvent.click(element.shadowRoot?.querySelector(".rollback-all"));
+    });
+    expect(onRollbackAll).lastCalledWith(
+      expect.objectContaining({
+        detail: null,
+      })
+    );
 
     act(() => {
       document.body.removeChild(element);

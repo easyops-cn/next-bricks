@@ -98,6 +98,15 @@ class WorkbenchHistoryAction
     this.#rollbackEvent.emit(data);
   };
 
+  /**
+   * 回滚全部
+   */
+  @event({ type: "rollback.all" })
+  accessor #rollbackAllEvent!: EventEmitter<void>;
+  #handleRollbackAll = (): void => {
+    this.#rollbackAllEvent.emit();
+  };
+
   render() {
     return (
       <WorkbenchHistoryActionComponent
@@ -105,6 +114,7 @@ class WorkbenchHistoryAction
         projectId={this.projectId}
         onHistoryItemClick={this.#handleHistoryItemClick}
         onRollback={this.#handleRollback}
+        onRollbackAll={this.#handleRollbackAll}
       />
     );
   }
@@ -116,16 +126,19 @@ interface WorkbenchHistoryActionComponentProps
     data: HistoryData & { enableRollback: boolean }
   ) => void;
   onRollback?: (data: HistoryData) => void;
+  onRollbackAll?: () => void;
 }
 
 export function WorkbenchHistoryActionComponent(
   props: WorkbenchHistoryActionComponentProps
 ) {
-  const { appId, projectId, onHistoryItemClick, onRollback } = props;
+  const { appId, projectId, onHistoryItemClick, onRollback, onRollbackAll } =
+    props;
   const { t } = useTranslation(NS);
 
   const [loading, setLoading] = useState(false);
   const [hideLoadMore, setHideLoadMore] = useState(true);
+  const [allLoaded, setAllLoaded] = useState(false);
   const [historyList, setHistoryList] = useState<HistoryData[]>([]);
   const lastTs = useRef<string>("");
 
@@ -141,6 +154,7 @@ export function WorkbenchHistoryActionComponent(
           return isFirst ? list : pre.concat(list);
         });
         lastTs.current = result.ts;
+        setAllLoaded(result.list.length < 20);
         setHideLoadMore(result.list.length < 20);
       })
       .catch((error) => {
@@ -154,6 +168,7 @@ export function WorkbenchHistoryActionComponent(
   const handleBeforeVisibleChange = (e: CustomEvent<boolean>) => {
     if (e.detail) {
       setHideLoadMore(true);
+      setAllLoaded(false);
       setHistoryList([]);
       lastTs.current = "";
       handleLoadList(true);
@@ -182,31 +197,45 @@ export function WorkbenchHistoryActionComponent(
         <div className="history-title">History</div>
         <div className="history-list">
           {historyList.length ? (
-            historyList.map((v, i) => {
-              return (
-                <HistoryItem
-                  key={`${v.uniqueKey}-${v.ts}`}
-                  data={v}
-                  enableRollback={i !== 0 && v.action !== "rollback"}
-                  current={i === 0}
-                  onHistoryItemClick={onHistoryItemClick}
-                  onRollback={onRollback}
-                />
-              );
-            })
+            <>
+              {historyList.map((v, i) => {
+                return (
+                  <HistoryItem
+                    key={`${v.uniqueKey}-${v.ts}`}
+                    data={v}
+                    enableRollback={i !== 0 && v.action !== "rollback"}
+                    current={i === 0}
+                    onHistoryItemClick={onHistoryItemClick}
+                    onRollback={onRollback}
+                  />
+                );
+              })}
+              {!hideLoadMore && (
+                <span className="load-more-container">
+                  <WrappedLink
+                    className="load-more"
+                    disabled={loading}
+                    onClick={(e) => handleLoadList()}
+                  >
+                    {t(K.LOAD_MORE)}
+                  </WrappedLink>
+                </span>
+              )}
+              {allLoaded && (
+                <span className="end-container">
+                  The End
+                  <WrappedIcon
+                    className="rollback-all"
+                    lib="antd"
+                    icon="rollback"
+                    theme="outlined"
+                    onClick={(e) => onRollbackAll()}
+                  />
+                </span>
+              )}
+            </>
           ) : (
             <div className="empty">{loading ? t(K.LOADING) : t(K.NO_DATA)}</div>
-          )}
-          {!hideLoadMore && (
-            <span className="load-more-container">
-              <WrappedLink
-                className="load-more"
-                disabled={loading}
-                onClick={(e) => handleLoadList()}
-              >
-                {t(K.LOAD_MORE)}
-              </WrappedLink>
-            </span>
           )}
         </div>
         {/* 点击历史详情会打开 modal 来展示，这里提供一个 slot，编排将 modal 放置在这里，使其成为 popover 的 children，才能防止用户在操作 modal 过程中意外关闭 popover */}
