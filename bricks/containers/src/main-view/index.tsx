@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createDecorators } from "@next-core/element";
 import {
   ReactNextElement,
@@ -13,6 +13,7 @@ import type {
 } from "../narrow-view/index.js";
 import { BannerProps, EoBanner } from "../banner/index.js";
 import styleText from "./styles.shadow.css";
+import classNames from "classnames";
 
 const { defineElement, property } = createDecorators();
 
@@ -111,6 +112,7 @@ class EoMainView extends ReactNextElement {
         bannerTitle={this.bannerTitle}
         bannerDescription={this.bannerDescription}
         bannerImage={this.bannerImage}
+        showFooter={this.showFooter}
       />
     );
   }
@@ -122,9 +124,31 @@ export function EoMainViewComponent({
   bannerTitle,
   bannerDescription,
   bannerImage,
+  showFooter,
 }: MainViewProps) {
   const narrow = _narrow ?? "full";
   const bannerConfig = bannerAlone ? { bannerTitle, bannerDescription } : null;
+  const footerRef = useRef<HTMLDivElement>(null);
+  const [footerPinned, setFooterPinned] = useState(false);
+
+  useEffect(() => {
+    const footer = footerRef.current;
+    if (showFooter && footer) {
+      const observer = new IntersectionObserver(
+        ([e]) => {
+          setFooterPinned(e.intersectionRatio < 1);
+        },
+        {
+          rootMargin: "0px 0px -1px 0px",
+          threshold: [1],
+        }
+      );
+      observer.observe(footer);
+      return () => {
+        observer.disconnect();
+      };
+    }
+  }, [showFooter]);
 
   return (
     <>
@@ -153,7 +177,10 @@ export function EoMainViewComponent({
       <WrappedNarrowView className="content" size={narrow}>
         <slot />
       </WrappedNarrowView>
-      <div className="footer">
+      <div
+        className={classNames("footer", { pinned: footerPinned })}
+        ref={footerRef}
+      >
         <WrappedNarrowView size={narrow}>
           <slot name="footer" />
         </WrappedNarrowView>
