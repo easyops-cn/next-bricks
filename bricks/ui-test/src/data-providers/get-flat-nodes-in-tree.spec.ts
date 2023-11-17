@@ -17,6 +17,7 @@ describe("getFlatNodesInTree", () => {
           label: "demo app",
           name: "suite",
           params: null,
+          nextChildSort: 2,
           type: "suite",
           children: [
             {
@@ -51,6 +52,8 @@ describe("getFlatNodesInTree", () => {
               params: null,
               type: "block",
               isChainChild: false,
+              sort: 0,
+              nextChildSort: 2,
               parent: {
                 instanceId: "603a85a03c2c6",
                 label: "demo app",
@@ -97,6 +100,8 @@ describe("getFlatNodesInTree", () => {
                   params: ["console.log(1323)"],
                   type: "command",
                   isChainChild: false,
+                  sort: 0,
+                  nextChildSort: 0,
                   parent: {
                     instanceId: "603a85ccfb595",
                     label: "should work",
@@ -129,6 +134,8 @@ describe("getFlatNodesInTree", () => {
 
                   type: "command",
                   isChainChild: false,
+                  sort: 1,
+                  nextChildSort: 2,
                   parent: {
                     instanceId: "603a85ccfb595",
                     label: "should work",
@@ -169,6 +176,7 @@ describe("getFlatNodesInTree", () => {
                       params: null,
                       type: "command",
                       isChainChild: true,
+                      nextChildSort: 0,
                       parent: {
                         instanceId: "603aabdd6d6cd",
                         label: null,
@@ -201,6 +209,7 @@ describe("getFlatNodesInTree", () => {
                       params: null,
                       type: "command",
                       isChainChild: true,
+                      nextChildSort: 1,
                       parent: {
                         instanceId: "603aabdd6d6cd",
                         label: null,
@@ -240,6 +249,7 @@ describe("getFlatNodesInTree", () => {
                           params: null,
                           type: "command",
                           isChainChild: true,
+                          nextChildSort: 0,
                           parent: {
                             instanceId: "603aac508c916",
                             label: null,
@@ -271,6 +281,8 @@ describe("getFlatNodesInTree", () => {
               name: "beforeEach",
               params: null,
               type: "block",
+              nextChildSort: 1,
+              sort: 1,
               isChainChild: false,
               parent: {
                 instanceId: "603a85a03c2c6",
@@ -305,6 +317,7 @@ describe("getFlatNodesInTree", () => {
                   params: null,
                   type: "command",
                   isChainChild: false,
+                  nextChildSort: 0,
                   parent: {
                     instanceId: "603ab42f8eae9",
                     label: null,
@@ -321,62 +334,62 @@ describe("getFlatNodesInTree", () => {
         ],
       } as any)
     ).toMatchInlineSnapshot(`
-      [
-        {
-          "display": "suite",
-          "initialSort": 1,
-          "instanceId": "603a85a03c2c6",
-          "type": "suite",
-        },
-        {
-          "display": "it: should work",
-          "initialSort": 1,
-          "instanceId": "603a85ccfb595",
-          "type": "block",
-        },
-        {
-          "display": "code: console.log(1323)",
-          "initialSort": 0,
-          "instanceId": "603a8bb21c8e6",
-          "type": "command",
-        },
-        {
-          "display": "get: .selector",
-          "initialSort": 1,
-          "instanceId": "603aabdd6d6cd",
-          "type": "command",
-        },
-        {
-          "display": "type",
-          "initialSort": 0,
-          "instanceId": "603aac31912bd",
-          "type": "command",
-        },
-        {
-          "display": "click",
-          "initialSort": 1,
-          "instanceId": "603aac508c916",
-          "type": "command",
-        },
-        {
-          "display": "should:exist",
-          "initialSort": 0,
-          "instanceId": "603aac508c917",
-          "type": "command",
-        },
-        {
-          "display": "beforeEach",
-          "initialSort": 1,
-          "instanceId": "603ab42f8eae9",
-          "type": "block",
-        },
-        {
-          "display": "code",
-          "initialSort": 0,
-          "instanceId": "603ab463e5d3e",
-          "type": "command",
-        },
-      ]
-    `);
+[
+  {
+    "display": "suite",
+    "initialSort": 2,
+    "instanceId": "603a85a03c2c6",
+    "type": "suite",
+  },
+  {
+    "display": "it: should work",
+    "initialSort": 2,
+    "instanceId": "603a85ccfb595",
+    "type": "block",
+  },
+  {
+    "display": "code: console.log(1323)",
+    "initialSort": 0,
+    "instanceId": "603a8bb21c8e6",
+    "type": "command",
+  },
+  {
+    "display": "get: .selector",
+    "initialSort": 2,
+    "instanceId": "603aabdd6d6cd",
+    "type": "command",
+  },
+  {
+    "display": "type",
+    "initialSort": 0,
+    "instanceId": "603aac31912bd",
+    "type": "command",
+  },
+  {
+    "display": "click",
+    "initialSort": 1,
+    "instanceId": "603aac508c916",
+    "type": "command",
+  },
+  {
+    "display": "should:exist",
+    "initialSort": 0,
+    "instanceId": "603aac508c917",
+    "type": "command",
+  },
+  {
+    "display": "beforeEach",
+    "initialSort": 1,
+    "instanceId": "603ab42f8eae9",
+    "type": "block",
+  },
+  {
+    "display": "code",
+    "initialSort": 0,
+    "instanceId": "603ab463e5d3e",
+    "type": "command",
+  },
+]
+`);
   });
 });
