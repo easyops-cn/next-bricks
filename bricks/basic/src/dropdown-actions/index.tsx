@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
@@ -6,7 +6,12 @@ import styleText from "./styles.shadow.css";
 import type { GeneralIconProps } from "@next-bricks/icons/general-icon";
 import type { MenuComponentProps, MenuItem } from "../menu-item/index.jsx";
 import type { Menu } from "../menu/index.jsx";
-import type { Popover, PopoverProps } from "../popover/index.jsx";
+import type {
+  Popover,
+  PopoverEvents,
+  PopoverEventsMapping,
+  PopoverProps,
+} from "../popover/index.jsx";
 import type { EoTooltip, ToolTipProps } from "../tooltip/index.jsx";
 import type { Link, LinkProps } from "../link/index.jsx";
 import type { Target } from "../interface.js";
@@ -14,7 +19,15 @@ import classNames from "classnames";
 
 const { defineElement, property, event } = createDecorators();
 
-const WrappedPopover = wrapBrick<Popover, PopoverProps>("eo-popover");
+const WrappedPopover = wrapBrick<
+  Popover,
+  PopoverProps,
+  PopoverEvents,
+  PopoverEventsMapping
+>("eo-popover", {
+  onVisibleChange: "visible.change",
+  beforeVisibleChange: "before.visible.change",
+});
 const WrappedTooltip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");
 const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 const WrappedMenu = wrapBrick<Menu, unknown>("eo-menu");
@@ -119,6 +132,7 @@ export function EoDropdownActionsComponent(
   props: DropdownActionsComponentProps
 ) {
   const { actions, disabled, handleActionClick } = props;
+  const [visible, setVisible] = useState(false);
 
   const filteredActions = useMemo(() => {
     return actions?.filter((action) => !action.hidden);
@@ -129,6 +143,10 @@ export function EoDropdownActionsComponent(
       placement="bottom-start"
       trigger="click"
       disabled={disabled}
+      active={visible}
+      beforeVisibleChange={(e) => {
+        setVisible(e.detail);
+      }}
     >
       <slot slot="anchor" />
       {filteredActions?.length && (
@@ -149,6 +167,7 @@ export function EoDropdownActionsComponent(
                   disabled={action.disabled}
                   onClick={(e: React.MouseEvent) => {
                     e.stopPropagation();
+                    setVisible(false);
                     handleActionClick?.(action);
                   }}
                 >
