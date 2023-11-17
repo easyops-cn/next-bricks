@@ -1,7 +1,7 @@
 import type { MemberExpression, Identifier } from "@babel/types";
 import type * as monaco from "monaco-editor/esm/vs/editor/editor.api.js";
 import BrickNextYamlSourceMap, { Token } from "../utils/brickNextSourceMap.js";
-import { Marker } from "../index.jsx";
+import type { Marker } from "../index.jsx";
 import { EVALUATE_KEYWORD, Level } from "../utils/constants.js";
 
 async function init() {
