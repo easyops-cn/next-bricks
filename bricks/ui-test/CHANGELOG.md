@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.10.14...@next-bricks/ui-test@0.10.15) (2023-11-17)
+
+
+### Bug Fixes
+
+* depends on others bricks of current workspace ([4b835f9](https://github.com/easyops-cn/next-bricks/commit/4b835f902d58d6fa08a5239fb077053121c3df9f))
+* refactor query brick with inspect mode ([d19965a](https://github.com/easyops-cn/next-bricks/commit/d19965a878f9100ceaa4d4975372e35f6e978482))
+
+
+
+
+
 ## [0.10.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@0.10.13...@next-bricks/ui-test@0.10.14) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/ui-test

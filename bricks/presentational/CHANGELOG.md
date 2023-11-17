@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.15.33](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.32...@next-bricks/presentational@0.15.33) (2023-11-17)
+
+
+### Bug Fixes
+
+* depends on others bricks of current workspace ([4b835f9](https://github.com/easyops-cn/next-bricks/commit/4b835f902d58d6fa08a5239fb077053121c3df9f))
+
+
+
+
+
 ## [0.15.32](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.31...@next-bricks/presentational@0.15.32) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/presentational

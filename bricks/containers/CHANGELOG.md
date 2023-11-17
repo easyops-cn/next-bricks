@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.23.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.23.0...@next-bricks/containers@0.23.1) (2023-11-17)
+
+
+### Bug Fixes
+
+* depends on others bricks of current workspace ([4b835f9](https://github.com/easyops-cn/next-bricks/commit/4b835f902d58d6fa08a5239fb077053121c3df9f))
+
+
+
+
+
 # [0.23.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.22.13...@next-bricks/containers@0.23.0) (2023-11-16)
 
 
