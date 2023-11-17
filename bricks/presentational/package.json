@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/presentational",
-  "version": "0.15.33",
+  "version": "0.15.34",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/presentational",
   "repository": {
     "type": "git",
@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@next-bricks/basic": "^0.46.3",
-    "@next-bricks/containers": "^0.23.1",
+    "@next-bricks/containers": "^0.23.2",
     "@next-bricks/icons": "^0.6.17",
     "@next-core/element": "^1.1.6",
     "@next-core/i18n": "^1.0.30",
