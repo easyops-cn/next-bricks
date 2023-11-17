@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.35...@next-bricks/vs@0.6.0) (2023-11-17)
+
+
+### Features
+
+* **vsCodeEditor:** add border ([5c8a70f](https://github.com/easyops-cn/next-bricks/commit/5c8a70f6f2f4f833fa765ca2992f3201d05a4bf8))
+
+
+
+
+
 ## [0.5.35](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.34...@next-bricks/vs@0.5.35) (2023-11-17)
 
 **Note:** Version bump only for package @next-bricks/vs
