@@ -8,3 +8,9 @@
 .pointer {
   cursor: pointer;
 }
+
+.monaco-editor .overflow-guard {
+  border-radius: var(--antd-button-border-radius);
+  background: var(--color-border-divider-line);
+  border: 1px solid var(--color-border-divider-line);
+}
