@@ -1,5 +1,5 @@
 :host {
-  --local-footer-height: 65px;
+  --local-footer-height: 62px;
 
   display: flex;
   flex-direction: column;
