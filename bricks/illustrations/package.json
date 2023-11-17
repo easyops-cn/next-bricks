@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "@next-core/types": "^1.7.1",
-    "@next-core/utils": "^1.6.2"
+    "@next-core/utils": "^1.6.3"
   },
   "devDependencies": {
     "@next-core/build-next-bricks": "^1.15.1",
