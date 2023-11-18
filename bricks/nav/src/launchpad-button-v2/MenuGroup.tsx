@@ -2,16 +2,16 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { pick } from "lodash";
 import classNames from "classnames";
 import { WrappedIcon, WrappedLink } from "./wrapped-bricks";
-import type {
-  DesktopItem,
-  DesktopItemApp,
-  DesktopItemCustom,
-} from "../launchpad/interfaces";
 import { useLaunchpadContext } from "./LaunchpadContext";
+import type {
+  MenuItemData,
+  MenuItemDataNormal,
+  SidebarMenuItemData,
+} from "./interfaces";
 
 export interface MenuGroupProps {
   name: string;
-  items: DesktopItem[];
+  items: MenuItemData[];
 }
 
 export function MenuGroup({ name, items }: MenuGroupProps) {
@@ -36,16 +36,14 @@ export function MenuGroup({ name, items }: MenuGroupProps) {
 }
 
 export interface MenuItemProps {
-  item: DesktopItemApp | DesktopItemCustom;
-  isSidebar?: boolean;
+  item: MenuItemDataNormal;
 }
 
-export function MenuItem({ item, isSidebar }: MenuItemProps) {
-  const { pushRecentVisit, toggleStar, isStarred } = useLaunchpadContext();
-  const starred = useMemo(
-    () => !isSidebar && isStarred(item),
-    [isSidebar, isStarred, item]
-  );
+function MenuItem({ item }: MenuItemProps) {
+  const { loadingFavorites, pushRecentVisit, toggleStar, isStarred } =
+    useLaunchpadContext();
+
+  const starred = useMemo(() => isStarred(item), [isStarred, item]);
 
   const handleStarClick = useCallback(() => {
     toggleStar(item);
@@ -55,58 +53,107 @@ export function MenuItem({ item, isSidebar }: MenuItemProps) {
     pushRecentVisit(item);
   }, [item, pushRecentVisit]);
 
-  const classPrefix = isSidebar ? "sidebar-" : "";
+  return (
+    <li
+      className={classNames("menu-item", {
+        starred,
+        "can-star": !loadingFavorites,
+      })}
+    >
+      <WrappedLink
+        onClick={handleClick}
+        {...(item.type === "app"
+          ? {
+              url: item.url,
+            }
+          : {
+              href: item.url,
+              target: "_blank",
+            })}
+      >
+        <WrappedIcon
+          className="menu-icon"
+          lib="easyops"
+          icon="micro-app-center"
+          {...(pick(item.menuIcon, [
+            "lib",
+            "icon",
+            "theme",
+            "category",
+            "prefix",
+          ]) as any)}
+        />
+        <span className="menu-item-label">{item.name}</span>
+      </WrappedLink>
+      <WrappedIcon
+        lib="fa"
+        prefix={starred ? "fas" : "far"}
+        icon="star"
+        className="menu-item-star"
+        title={starred ? "取消收藏" : "收藏"}
+        onClick={handleStarClick}
+      />
+    </li>
+  );
+}
+
+export interface SidebarMenuItemProps {
+  item: SidebarMenuItemData;
+}
+
+export function SidebarMenuItem({ item }: SidebarMenuItemProps) {
+  const { pushRecentVisit, toggleStar } = useLaunchpadContext();
+
+  const handleClick = useCallback(() => {
+    if (item.type !== "link") {
+      pushRecentVisit(item);
+    }
+  }, [item, pushRecentVisit]);
+
+  const handleRemoveStar = useCallback(() => {
+    toggleStar(item);
+  }, [item, toggleStar]);
 
   return (
-    <li className={classNames(`${classPrefix}menu-item`, { starred })}>
-      {item.type === "app" ? (
-        <WrappedLink url={item.app.homepage} onClick={handleClick}>
-          <WrappedIcon
-            className={`${classPrefix}menu-icon`}
-            {...pick(item.app.menuIcon, [
-              "lib",
-              "icon",
-              "theme",
-              "category",
-              "prefix",
-            ])}
-          />
-          <span className="menu-item-label">{item.app.localeName}</span>
-        </WrappedLink>
-      ) : (
-        <WrappedLink href={item.url} target="_blank" onClick={handleClick}>
-          <WrappedIcon
-            className={`${classPrefix}menu-icon`}
-            lib="easyops"
-            icon="micro-app-center"
-            {...(pick(item.menuIcon, [
-              "lib",
-              "icon",
-              "theme",
-              "category",
-              "prefix",
-            ]) as any)}
-          />
-          <span className="menu-item-label">{item.name}</span>
-        </WrappedLink>
-      )}
-      {!isSidebar && (
+    <li className="sidebar-menu-item">
+      <WrappedLink
+        onClick={handleClick}
+        {...(item.type === "app"
+          ? {
+              url: item.url,
+            }
+          : {
+              href: item.url,
+              target: "_blank",
+            })}
+      >
         <WrappedIcon
-          lib="fa"
-          prefix={starred ? "fas" : "far"}
-          icon="star"
-          className={classNames("menu-item-star", { starred })}
-          title={starred ? "取消收藏" : "收藏"}
-          onClick={handleStarClick}
+          className={`sidebar-menu-icon`}
+          lib="easyops"
+          icon="micro-app-center"
+          {...(pick(item.menuIcon, [
+            "lib",
+            "icon",
+            "theme",
+            "category",
+            "prefix",
+          ]) as any)}
         />
-      )}
+        <span className="menu-item-label">{item.name}</span>
+      </WrappedLink>
+      <WrappedIcon
+        lib="fa"
+        icon="xmark"
+        className="menu-item-remove"
+        onClick={handleRemoveStar}
+      />
     </li>
   );
 }
 
 export interface MenuItemFolderProps {
   name: string;
-  items: (DesktopItemApp | DesktopItemCustom)[];
+  items: MenuItemDataNormal[];
 }
 
 function MenuItemFolder({ name, items }: MenuItemFolderProps) {

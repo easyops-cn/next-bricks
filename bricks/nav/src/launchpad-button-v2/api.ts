@@ -1,16 +1,22 @@
-import type { MicroApp, Storyboard } from "@next-core/types";
-import { i18n } from "@next-core/i18n";
+import type { I18nData, MicroApp, Storyboard } from "@next-core/types";
+import { i18nText } from "@next-core/i18n";
 import { LaunchpadApi_getLaunchpadInfo } from "@next-api-sdk/micro-app-standalone-sdk";
 import {
-  LaunchpadApi_createCollection,
-  LaunchpadApi_deleteCollection,
-  LaunchpadApi_listCollection,
+  LaunchpadApi_createCollectionV2,
+  LaunchpadApi_deleteCollectionV2,
+  LaunchpadApi_listCollectionV2,
 } from "@next-api-sdk/user-service-sdk";
 import type {
-  DesktopItemApp,
-  DesktopItemCustom,
-} from "../launchpad/interfaces";
-import type { FavMenuItem } from "./interfaces";
+  FavMenuItem,
+  MenuGroupData,
+  MenuItemData,
+  MenuItemDataApp,
+  MenuItemDataCustom,
+  MenuItemDataDir,
+  MenuItemDataNormal,
+  MicroAppWithInstanceId,
+} from "./interfaces";
+import { FAVORITES_LIMIT } from "./constants";
 
 export async function fetchLaunchpadInfo() {
   const launchpadInfo = await LaunchpadApi_getLaunchpadInfo(
@@ -21,33 +27,91 @@ export async function fetchLaunchpadInfo() {
     }
   );
 
+  const microAppsById = new Map<string, MicroAppWithInstanceId>();
   for (const storyboard of launchpadInfo.storyboards as Storyboard[]) {
-    const app = storyboard.app as unknown as MicroApp;
-    if (app.locales) {
-      // Prefix to avoid conflict between brick package's i18n namespace.
-      const ns = `$tmp-${app.id}`;
-      // Support any languages in `app.locales`.
-      Object.entries(app.locales).forEach(([lang, resources]) => {
-        i18n.addResourceBundle(lang, ns, resources);
-      });
-      // Use `app.name` as the fallback `app.localeName`.
-      app.localeName = i18n.getFixedT(null, ns)("name", app.name) as string;
-      // Remove the temporary i18n resource bundles.
-      Object.keys(app.locales).forEach((lang) => {
-        i18n.removeResourceBundle(lang, ns);
-      });
-    } else {
-      app.localeName = app.name;
+    const app = storyboard.app as unknown as MicroAppWithInstanceId;
+    initializeAppLocaleName(app);
+    microAppsById.set(app.id, app);
+  }
+
+  const menuGroups: MenuGroupData[] = [];
+  const customLinksById = new Map<string, MenuItemDataCustom>();
+
+  for (const group of launchpadInfo.desktops as unknown as MenuGroupData[]) {
+    const items: MenuItemData[] = [];
+    for (const item of group.items) {
+      switch (item.type) {
+        case "app": {
+          const app = microAppsById.get(item.id);
+          if (app) {
+            items.push({
+              ...item,
+              name: app.localeName,
+              url: app.homepage,
+              menuIcon: app.menuIcon,
+            } as MenuItemDataApp);
+          }
+          break;
+        }
+        case "custom":
+          items.push(item);
+          customLinksById.set(item.id, item);
+          break;
+        case "dir": {
+          const subItems: MenuItemDataNormal[] = [];
+          for (const subItem of item.items) {
+            if (subItem.type === "app") {
+              const app = microAppsById.get(subItem.id);
+              if (app) {
+                subItems.push({
+                  ...subItem,
+                  name: app.localeName,
+                  url: app.homepage,
+                  menuIcon: app.menuIcon,
+                } as MenuItemDataApp);
+              }
+            } else if (subItem.type === "custom") {
+              subItems.push(subItem as MenuItemDataCustom);
+              customLinksById.set(subItem.id, subItem);
+            }
+          }
+          if (subItems.length > 0) {
+            items.push({
+              ...item,
+              items: subItems,
+            } as MenuItemDataDir);
+          }
+          break;
+        }
+      }
+    }
+    if (items.length > 0) {
+      menuGroups.push({ ...group, items });
     }
   }
 
-  return launchpadInfo;
+  return { menuGroups, microAppsById, customLinksById };
+}
+
+function initializeAppLocaleName(
+  app: Pick<MicroApp, "locales" | "name" | "localeName">
+) {
+  if (app.locales) {
+    const i18nData = Object.fromEntries(
+      Object.entries(app.locales)
+        .filter(([lang, resources]) => resources.name)
+        .map(([lang, resources]) => [lang, resources.name])
+    ) as I18nData;
+    app.localeName = i18nText(i18nData) ?? app.name;
+  } else {
+    app.localeName = app.name;
+  }
 }
 
 async function fetchRawFavorites() {
   return (
-    await LaunchpadApi_listCollection(
-      { page: 1, pageSize: 10 },
+    await LaunchpadApi_listCollectionV2(
+      { page: 1, pageSize: FAVORITES_LIMIT },
       {
         interceptorParams: { ignoreLoadingBar: true },
         noAbortOnRouteChange: true,
@@ -60,56 +124,74 @@ export async function fetchFavorites() {
   const list = await fetchRawFavorites();
   const stored: FavMenuItem[] = [];
   for (const fav of list) {
-    if (fav.launchpadCollection?.type === "microApp") {
-      if (fav.microAppId) {
-        stored.push({
-          type: "app",
-          id: fav.microAppId,
-          favoriteId: fav.launchpadCollection?.instanceId,
-        });
-      }
+    if (fav.type === "microApp") {
+      const app = fav.relatedApp as Omit<MicroAppWithInstanceId, "id"> & {
+        appId: string;
+      };
+      initializeAppLocaleName(app);
+      stored.push({
+        favoriteId: fav.instanceId,
+        type: "app",
+        name: app.localeName,
+        id: app.appId,
+        url: app.homepage,
+        instanceId: app.instanceId,
+        menuIcon: app.menuIcon,
+      } as FavMenuItem);
+    } else if (fav.type === "customItem") {
+      const customItem = fav.relatedCustomItem!;
+      stored.push({
+        favoriteId: fav.instanceId,
+        type: "custom",
+        name: customItem.name,
+        id: customItem.id,
+        url: customItem.url,
+        menuIcon: customItem.menuIcon,
+      } as FavMenuItem);
+    } else if (fav.type === "link") {
+      stored.push({
+        favoriteId: fav.instanceId,
+        type: "link",
+        name: fav.name,
+        // id: fav.id,
+        url: fav.link,
+        menuIcon: fav.icon,
+      } as FavMenuItem);
     }
-    // TODO: custom links
   }
   return stored;
 }
 
-// istanbul ignore next: will refactor soon
-export async function favorite(item: DesktopItemApp | DesktopItemCustom) {
-  if (item.type === "app") {
-    return LaunchpadApi_createCollection(
-      {
-        microAppId: item.id,
-        launchpadCollection: {
-          type: "microApp",
-          name: item.app.localeName,
-        },
-      },
-      {
-        interceptorParams: { ignoreLoadingBar: true },
-      }
-    );
-  }
-  // TODO: custom links
+export async function favorite(
+  item: MenuItemDataNormal
+): Promise<{ instanceId?: string }> {
+  return LaunchpadApi_createCollectionV2(
+    {
+      type: item.type === "app" ? "microApp" : "customItem",
+      relatedInstanceId: item.instanceId,
+    },
+    {
+      interceptorParams: { ignoreLoadingBar: true },
+    }
+  );
 }
 
-// istanbul ignore next: will refactor soon
 export async function undoFavorite(item: FavMenuItem) {
   if (item.favoriteId) {
-    return LaunchpadApi_deleteCollection(item.favoriteId);
+    return LaunchpadApi_deleteCollectionV2(item.favoriteId);
   }
 
   return fetchRawFavorites().then((list) => {
-    const foundId = list.find(
-      (fav) =>
-        item.type === "app"
-          ? fav.launchpadCollection?.type === "microApp" &&
-            fav.microAppId === item.id
-          : false // TODO: custom links
-    )?.launchpadCollection?.instanceId;
+    const foundId = list.find((fav) =>
+      item.type === "app"
+        ? fav.type === "microApp" && fav.relatedApp?.appId === item.id
+        : item.type === "custom" && fav.relatedCustomItem?.id === item.id
+    )?.instanceId;
 
     if (foundId) {
-      return LaunchpadApi_deleteCollection(foundId);
+      return LaunchpadApi_deleteCollectionV2(foundId);
     }
+    // eslint-disable-next-line no-console
+    console.error("Menu item to unstar not found:", item);
   });
 }

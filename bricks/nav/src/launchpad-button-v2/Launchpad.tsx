@@ -2,8 +2,9 @@ import React, { useCallback, useRef } from "react";
 import classNames from "classnames";
 import { WrappedIcon, WrappedLink } from "./wrapped-bricks";
 import { useLaunchpadInfo } from "./useLaunchpadInfo.js";
-import { MenuGroup, MenuItem } from "./MenuGroup.js";
+import { MenuGroup, SidebarMenuItem } from "./MenuGroup.js";
 import { LaunchpadsContext } from "./LaunchpadContext.js";
+import { SidebarMenuItemData } from "./interfaces";
 
 export function Launchpad({ active }: { active?: boolean }) {
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -38,79 +39,85 @@ export function Launchpad({ active }: { active?: boolean }) {
 
   return (
     <div className={classNames("launchpad", { active })}>
-      <div className="sidebar">
-        <div className="quick-nav">
-          <div className="quick-nav-label">快捷访问</div>
-          {/* <Loading loading={loading || loadingFavorites} /> */}
-          <ul className="sidebar-menu">
-            {favorites.map((item, index) => (
-              <MenuItem key={index} item={item} isSidebar />
-            ))}
-          </ul>
+      <LaunchpadsContext.Provider
+        value={{
+          searching,
+          loadingFavorites,
+          pushRecentVisit,
+          toggleStar,
+          isStarred,
+        }}
+      >
+        <div className="sidebar">
+          <div className="quick-nav">
+            <div className="quick-nav-label">快捷访问</div>
+            {/* <Loading loading={loading || loadingFavorites} /> */}
+            <ul className="sidebar-menu">
+              {favorites.map((item, index) => (
+                <SidebarMenuItem
+                  key={index}
+                  item={item as SidebarMenuItemData}
+                />
+              ))}
+            </ul>
+          </div>
         </div>
-      </div>
-      <div className={classNames("content", { loading })}>
-        <Loading loading={loading} />
-        <div className="search-box" onClick={handleClickSearchBox}>
-          <WrappedIcon
-            lib="fa"
-            icon="magnifying-glass"
-            className="search-icon"
-          />
-          <input
-            ref={searchInputRef}
-            placeholder="通过关键字搜索"
-            value={q}
-            onChange={handleSearch}
-            className="search-input"
-          />
-          <WrappedIcon
-            lib="antd"
-            theme="filled"
-            icon="close-circle"
-            className={classNames("search-clear", { searching })}
-            onClick={clearSearch}
-          />
-        </div>
-        <div className={classNames({ empty: recentVisits.length === 0 })}>
-          <div className="recent-visits-label">最近访问</div>
-          <ul className="recent-visits">
-            {recentVisits.map((item, index) => (
-              <li key={index}>
-                {item.type === "app" ? (
+        <div className={classNames("content", { loading })}>
+          <Loading loading={loading} />
+          <div className="search-box" onClick={handleClickSearchBox}>
+            <WrappedIcon
+              lib="fa"
+              icon="magnifying-glass"
+              className="search-icon"
+            />
+            <input
+              ref={searchInputRef}
+              placeholder="通过关键字搜索"
+              value={q}
+              onChange={handleSearch}
+              className="search-input"
+            />
+            <WrappedIcon
+              lib="antd"
+              theme="filled"
+              icon="close-circle"
+              className={classNames("search-clear", { searching })}
+              onClick={clearSearch}
+            />
+          </div>
+          <div className={classNames({ empty: recentVisits.length === 0 })}>
+            <div className="recent-visits-label">最近访问</div>
+            <ul className="recent-visits">
+              {recentVisits.map((item, index) => (
+                <li key={index}>
                   <WrappedLink
-                    url={item.app.homepage}
                     onClick={() => pushRecentVisit(item)}
-                  >
-                    <span>{item.app.localeName}</span>
-                  </WrappedLink>
-                ) : (
-                  <WrappedLink
-                    href={item.url}
-                    target="_blank"
-                    onClick={() => pushRecentVisit(item)}
+                    {...(item.type === "app"
+                      ? {
+                          url: item.url,
+                        }
+                      : {
+                          href: item.url,
+                          target: "_blank",
+                        })}
                   >
                     <span>{item.name}</span>
                   </WrappedLink>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <LaunchpadsContext.Provider
-          value={{ searching, pushRecentVisit, toggleStar, isStarred }}
-        >
+                </li>
+              ))}
+            </ul>
+          </div>
           <ul className="menu-groups">
             {menuGroups.map((group) => (
               <MenuGroup
                 key={group.name}
-                name={group.name!}
+                name={group.name}
                 items={group.items}
               />
             ))}
           </ul>
-        </LaunchpadsContext.Provider>
-      </div>
+        </div>
+      </LaunchpadsContext.Provider>
     </div>
   );
 }

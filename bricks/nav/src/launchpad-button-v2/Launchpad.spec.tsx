@@ -8,7 +8,7 @@ import { LaunchpadApi_getLaunchpadInfo } from "@next-api-sdk/micro-app-standalon
 import {
   LaunchpadApi_createCollection,
   LaunchpadApi_deleteCollection,
-  LaunchpadApi_listCollection,
+  LaunchpadApi_listCollectionV2,
 } from "@next-api-sdk/user-service-sdk";
 import { Launchpad } from "./Launchpad.js";
 
@@ -17,7 +17,7 @@ jest.mock("@next-api-sdk/micro-app-standalone-sdk");
 jest.mock("@next-api-sdk/user-service-sdk");
 
 const getLaunchpadInfo = LaunchpadApi_getLaunchpadInfo as jest.Mock<any>;
-const listCollection = LaunchpadApi_listCollection as jest.Mock<any>;
+const listCollectionV2 = LaunchpadApi_listCollectionV2 as jest.Mock<any>;
 const mockGetRuntime = getRuntime as jest.Mock<any>;
 
 initializeI18n();
@@ -48,36 +48,44 @@ customElements.define(
   }
 );
 
-listCollection.mockResolvedValue({
+listCollectionV2.mockResolvedValue({
   list: [
     {
-      microAppId: "instances",
-      launchpadCollection: {
-        type: "microApp",
+      type: "microApp",
+      relatedApp: {
+        appId: "instances",
+        name: "实例",
       },
     },
     {
-      microAppId: "not-existed",
-      launchpadCollection: {
-        type: "microApp",
+      type: "customItem",
+      relatedCustomItem: {
+        name: "Fav Custom",
       },
     },
     {
-      launchpadCollection: {
-        type: "microApp",
-      },
+      type: "link",
+      name: "Fav Link",
     },
-    {
-      launchpadCollection: {
-        type: "custom",
-      },
-    },
+    {},
   ],
 });
 
 describe("Launchpad", () => {
+  beforeEach(() => {
+    window.STANDALONE_MICRO_APPS = false;
+    localStorage.clear();
+  });
+
   test("standalone", async () => {
     window.STANDALONE_MICRO_APPS = true;
+    localStorage.setItem(
+      "brick-next-launchpad-recent-visits:undefined",
+      JSON.stringify([
+        { type: "app", id: "hello" },
+        { type: "custom", id: "foo" },
+      ])
+    );
     getLaunchpadInfo.mockResolvedValueOnce({
       desktops: [
         {
@@ -86,6 +94,14 @@ describe("Launchpad", () => {
             {
               type: "app",
               id: "hello",
+            },
+            {
+              type: "app",
+              id: "unknown-1",
+            },
+            {
+              type: "app",
+              id: "empty-locales",
             },
             {
               type: "custom",
@@ -98,14 +114,31 @@ describe("Launchpad", () => {
               items: [
                 {
                   type: "app",
-                  id: "unknown",
+                  id: "instances",
+                },
+                {
+                  type: "app",
+                  id: "unknown-2",
                 },
                 {
                   type: "custom",
                   id: "cmdb-extends",
                   name: "CMDB 扩展",
                 },
+                {
+                  type: "unknown",
+                },
               ],
+            },
+          ],
+        },
+        {
+          name: "oops",
+          items: [
+            {
+              type: "dir",
+              name: "empty",
+              items: [],
             },
           ],
         },
@@ -131,6 +164,13 @@ describe("Launchpad", () => {
             name: "实例",
           },
         },
+        {
+          app: {
+            id: "empty-locales",
+            name: "空",
+            locales: {},
+          },
+        },
       ],
     });
 
@@ -141,9 +181,15 @@ describe("Launchpad", () => {
       await (global as any).flushPromises();
     });
     expect(container.querySelectorAll(".spinner").length).toBe(0);
-    expect(container.querySelectorAll(".sidebar-menu > li").length).toBe(1);
+    expect(container.querySelectorAll(".sidebar-menu > li").length).toBe(3);
     expect(container.querySelectorAll(".menu-groups > li").length).toBe(1);
-    expect(container.querySelectorAll(".menu > li").length).toBe(3);
+    expect(container.querySelectorAll(".menu > li").length).toBe(4);
+    expect(container.querySelectorAll(".recent-visits > li").length).toBe(2);
+
+    // Push recent visits
+    fireEvent.click(
+      container.querySelector(".recent-visits eo-link") as HTMLElement
+    );
 
     expect(
       container.querySelector(".search-clear")?.classList.contains("searching")
@@ -170,7 +216,6 @@ describe("Launchpad", () => {
     rerender(<Launchpad active={false} />);
 
     getLaunchpadInfo.mockReset();
-    window.STANDALONE_MICRO_APPS = false;
   });
 
   test("non-standalone", async () => {

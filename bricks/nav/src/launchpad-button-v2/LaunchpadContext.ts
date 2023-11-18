@@ -1,14 +1,12 @@
 import React from "react";
-import type {
-  DesktopItemApp,
-  DesktopItemCustom,
-} from "../launchpad/interfaces";
+import type { MenuItemDataLink, MenuItemDataNormal } from "./interfaces";
 
 export interface LaunchpadContextData {
   searching: boolean;
-  pushRecentVisit(item: DesktopItemApp | DesktopItemCustom): void;
-  toggleStar(item: DesktopItemApp | DesktopItemCustom): void;
-  isStarred(item: DesktopItemApp | DesktopItemCustom): boolean;
+  loadingFavorites: boolean;
+  pushRecentVisit(item: MenuItemDataNormal): void;
+  toggleStar(item: MenuItemDataNormal | MenuItemDataLink): void;
+  isStarred(item: MenuItemDataNormal): boolean;
 }
 
 export const LaunchpadsContext = React.createContext<LaunchpadContextData>(
