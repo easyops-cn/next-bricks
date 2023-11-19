@@ -5,6 +5,15 @@ import "./";
 import { EoDropdownActions } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
+class MockEoPopover extends HTMLElement {
+  changeActive(active: boolean) {
+    this.dispatchEvent(
+      new CustomEvent("before.visible.change", { detail: active })
+    );
+  }
+}
+
+customElements.define("eo-popover", MockEoPopover);
 
 describe("eo-dropdown-actions", () => {
   test("basic usage", async () => {
@@ -52,6 +61,15 @@ describe("eo-dropdown-actions", () => {
     });
     expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
 
+    await act(async () => {
+      (
+        element.shadowRoot?.querySelector("eo-popover") as MockEoPopover
+      ).changeActive(true);
+    });
+    expect(
+      element.shadowRoot?.querySelector("eo-popover")?.hasAttribute("active")
+    ).toBeTruthy();
+
     expect(element.shadowRoot?.querySelectorAll("eo-menu-item")).toHaveLength(
       3
     );
@@ -87,6 +105,9 @@ describe("eo-dropdown-actions", () => {
         },
       })
     );
+    expect(
+      element.shadowRoot?.querySelector("eo-popover")?.hasAttribute("active")
+    ).toBeFalsy();
 
     act(() => {
       document.body.removeChild(element);

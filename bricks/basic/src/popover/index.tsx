@@ -144,6 +144,7 @@ class Popover extends ReactNextElement implements PopoverProps {
   @event({ type: "before.visible.change" })
   accessor #beforeVisibleChangeEvent!: EventEmitter<boolean>;
   #handleBeforeVisibleChange = (visible: boolean): void => {
+    this.active = visible;
     this.#beforeVisibleChangeEvent.emit(visible);
   };
 
@@ -189,6 +190,10 @@ function PopoverComponent(props: PopoverComponentProps) {
   const defaultRef = useRef<HTMLSlotElement>(null);
   const triggerRef = useRef<HTMLSlotElement>(null);
   const [visible, setVisible] = useState(active);
+
+  useEffect(() => {
+    setVisible(active);
+  }, [active]);
 
   const runAnimate = async (
     element: HTMLElement,
