@@ -16,6 +16,9 @@ import {
   SlPopupProps,
   Sync,
   WrappedSlPopup,
+  popupAnimationOptions,
+  popupInvisibleStyle,
+  popupVisibleStyle,
 } from "./popup.js";
 import { omit } from "lodash";
 import styleText from "./popover.shadow.css";
@@ -186,100 +189,121 @@ function PopoverComponent(props: PopoverComponentProps) {
     distance = props.arrow ? POPUP_DISTANCE + ARROW_SIZE : POPUP_DISTANCE,
     anchorDisplay = "inline-block",
   } = props;
+  const firstRendered = useRef(true);
   const popoverRef = useRef<SlPopupElement>(null);
   const defaultRef = useRef<HTMLSlotElement>(null);
   const triggerRef = useRef<HTMLSlotElement>(null);
+  const popupAnimation = useRef<Animation | null>(null);
   const [visible, setVisible] = useState(active);
 
   useEffect(() => {
     setVisible(active);
   }, [active]);
 
-  const runAnimate = async (
-    element: HTMLElement,
-    keyframes: Keyframe[],
-    options?: KeyframeAnimationOptions
-  ) => {
-    return new Promise((resolve) => {
-      const animation = element.animate(keyframes, {
-        ...options,
-        duration: options!.duration,
-      });
-
-      animation.addEventListener("cancel", resolve, { once: true });
-      animation.addEventListener("finish", resolve, { once: true });
-    });
-  };
-
   const handleVisibleChange = useCallback(
-    async (visible: boolean): Promise<void> => {
-      beforeVisibleChange?.(visible);
+    async (
+      visible: boolean,
+      options: { triggerEvent?: boolean; runAnimation?: boolean }
+    ): Promise<void> => {
+      const { triggerEvent, runAnimation } = options;
       const popover = popoverRef.current;
-      if (popover) {
-        visible && setVisible(visible);
-        visible && (popover.active = visible);
+      const body = defaultRef.current;
 
-        popover.popup &&
-          (await runAnimate(
-            popover.popup,
-            visible
-              ? [
-                  {
-                    opacity: 0,
-                    scale: 0.9,
-                  },
-                  {
-                    opacity: 1,
-                    scale: 1,
-                  },
-                ]
-              : [
-                  {
-                    opacity: 1,
-                    scale: 1,
-                  },
-                  {
-                    opacity: 0,
-                    scale: 0.9,
-                  },
-                ],
-            { duration: 100, easing: "ease" }
-          ));
+      if (popover?.popup && body) {
+        triggerEvent && beforeVisibleChange?.(visible);
 
-        !visible && (popover.active = visible);
-        !visible && setVisible(visible);
+        if (!runAnimation) {
+          if (popupAnimation.current) {
+            popupAnimation.current.cancel();
+            popupAnimation.current = null;
+          }
+          if (visible) {
+            body.hidden = false;
+            popover.active = true;
+            for (const key in popupVisibleStyle) {
+              popover.popup.style[key as any] = popupVisibleStyle[key];
+            }
+          } else {
+            popover.active = false;
+            body.hidden = true;
+            for (const key in popupInvisibleStyle) {
+              popover.popup.style[key as any] = popupVisibleStyle[key];
+            }
+          }
+          triggerEvent && onVisibleChange?.(visible);
+        } else {
+          if (visible) {
+            const callback = () => {
+              popupAnimation.current = null;
+              triggerEvent && onVisibleChange?.(visible);
+            };
+
+            if (popupAnimation.current) {
+              popupAnimation.current.reverse();
+              popupAnimation.current.onfinish = callback;
+            } else {
+              body.hidden = false;
+              popover.active = true;
+              const animation = popover.popup.animate(
+                [popupInvisibleStyle, popupVisibleStyle],
+                popupAnimationOptions as KeyframeAnimationOptions
+              );
+              animation.onfinish = callback;
+              popupAnimation.current = animation;
+            }
+          } else {
+            const callback = () => {
+              popupAnimation.current = null;
+              popover.active = false;
+              body.hidden = true;
+              triggerEvent && onVisibleChange?.(visible);
+            };
+
+            if (popupAnimation.current) {
+              popupAnimation.current.reverse();
+              popupAnimation.current.onfinish = callback;
+            } else {
+              const animation = popover.popup.animate(
+                [popupVisibleStyle, popupInvisibleStyle],
+                popupAnimationOptions as KeyframeAnimationOptions
+              );
+              animation.onfinish = callback;
+              popupAnimation.current = animation;
+            }
+          }
+        }
       }
-
-      onVisibleChange?.(visible);
     },
     [beforeVisibleChange, onVisibleChange]
   );
 
+  useEffect(() => {
+    handleVisibleChange(visible, {
+      triggerEvent: !firstRendered.current,
+      runAnimation: !firstRendered.current,
+    });
+    firstRendered.current = false;
+  }, [visible]);
+
   const handleAutoDropdownClose = useCallback(
     (e: MouseEvent) => {
-      if (visible && curElement) {
+      if (curElement) {
         const path = e.composedPath();
         if (!path.includes(curElement)) {
-          handleVisibleChange(false);
+          setVisible(false);
         }
       }
     },
-    [curElement, visible, handleVisibleChange]
+    [curElement]
   );
 
   const handleTriggerClick = useCallback(() => {
-    handleVisibleChange(!visible);
-  }, [visible, handleVisibleChange]);
+    setVisible((v) => !v);
+  }, []);
 
-  const handlePopoverOpen = useCallback(
-    () => !visible && handleVisibleChange(true),
-    [visible, handleVisibleChange]
-  );
+  const handlePopoverOpen = useCallback(() => setVisible(true), []);
 
-  const handlePopoverClose = useCallback(
-    () => handleVisibleChange(false),
-    [handleVisibleChange]
-  );
+  const handlePopoverClose = useCallback(() => setVisible(false), []);
 
   const handleNotTrigger = (e: MouseEvent) => {
     e.stopPropagation();
@@ -287,7 +311,7 @@ function PopoverComponent(props: PopoverComponentProps) {
   };
 
   useEffect(() => {
-    disabled && visible && handleVisibleChange(false);
+    disabled && setVisible(false);
   }, [disabled]);
 
   useEffect(() => {
@@ -307,12 +331,14 @@ function PopoverComponent(props: PopoverComponentProps) {
       triggerSlot?.addEventListener("mouseover", handlePopoverOpen);
       curElement?.addEventListener("mouseleave", handlePopoverClose);
       defaultSlot?.addEventListener("click", handleNotTrigger);
+      triggerSlot?.addEventListener("click", handleNotTrigger);
       document?.addEventListener("click", handlePopoverClose);
 
       return () => {
         triggerSlot?.removeEventListener("mouseover", handlePopoverOpen);
         curElement?.removeEventListener("mouseleave", handlePopoverClose);
         defaultSlot?.removeEventListener("click", handleNotTrigger);
+        triggerSlot?.removeEventListener("click", handleNotTrigger);
         document?.removeEventListener("click", handlePopoverClose);
       };
     }
@@ -337,7 +363,7 @@ function PopoverComponent(props: PopoverComponentProps) {
     <WrappedSlPopup
       exportparts="popup"
       ref={popoverRef}
-      {...omit(props, ["curElement", "onVisibleChange"])}
+      {...omit(props, ["active", "curElement", "onVisibleChange"])}
       shift
       shiftPadding={24}
       distance={distance}
@@ -352,7 +378,7 @@ function PopoverComponent(props: PopoverComponentProps) {
           display: anchorDisplay,
         }}
       />
-      <slot ref={defaultRef} hidden={!visible}></slot>
+      <slot ref={defaultRef} />
     </WrappedSlPopup>
   );
 }
