@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapLocalBrick } from "@next-core/react-element";
 import "@next-core/theme";
-import type {
+import {
   EoNarrowView,
   NarrowViewProps,
   NarrowViewSize,
@@ -14,7 +14,7 @@ import classNames from "classnames";
 const { defineElement, property } = createDecorators();
 
 const WrappedNarrowView = wrapLocalBrick<EoNarrowView, NarrowViewProps>(
-  "eo-narrow-view"
+  EoNarrowView
 );
 const WrappedBanner = wrapLocalBrick<EoBanner, BannerProps>(EoBanner);
 
