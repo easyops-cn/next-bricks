@@ -24,6 +24,7 @@ const WrappedDropdownActions = wrapBrick<
   DropdownActionsEventsMapping
 >("eo-dropdown-actions", {
   onActionClick: "action.click",
+  onVisibleChange: "visible.change",
 });
 
 interface DropButtonProps {
