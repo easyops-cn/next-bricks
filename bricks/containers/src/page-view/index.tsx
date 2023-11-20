@@ -3,7 +3,7 @@ import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapLocalBrick } from "@next-core/react-element";
 import "@next-core/theme";
 import classNames from "classnames";
-import type {
+import {
   EoNarrowView,
   NarrowViewProps,
   NarrowViewSize,
@@ -13,7 +13,7 @@ import styleText from "./styles.shadow.css";
 const { defineElement, property } = createDecorators();
 
 const WrappedNarrowView = wrapLocalBrick<EoNarrowView, NarrowViewProps>(
-  "eo-narrow-view"
+  EoNarrowView
 );
 
 export interface PageViewProps {

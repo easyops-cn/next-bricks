@@ -60,10 +60,12 @@ export interface DropdownActionsProps {
 
 export interface DropdownActionsEvents {
   "action.click": CustomEvent<SimpleAction>;
+  "visible.change": CustomEvent<boolean>;
 }
 
 export interface DropdownActionsEventsMapping {
   onActionClick: "action.click";
+  onVisibleChange: "visible.change";
 }
 
 /**
@@ -102,6 +104,17 @@ class EoDropdownActions
   @event({ type: "action.click" })
   accessor #actionClickEvent!: EventEmitter<SimpleAction>;
 
+  /**
+   * 当弹出层可见性变化之后触发
+   * @detail 当前是否可见
+   */
+  @event({ type: "visible.change" })
+  accessor #visibleChangeEvent!: EventEmitter<boolean>;
+
+  #handleVisibleChange = (visible: boolean): void => {
+    this.#visibleChangeEvent.emit(visible);
+  };
+
   #handleClick = (action: SimpleAction): void => {
     this.#actionClickEvent.emit(action);
     if (action.event) {
@@ -115,6 +128,7 @@ class EoDropdownActions
         actions={this.actions}
         disabled={this.disabled}
         handleActionClick={this.#handleClick}
+        onVisibleChange={this.#handleVisibleChange}
       />
     );
   }
@@ -126,12 +140,15 @@ const isDivider = (action: Action): action is Divider => {
 
 interface DropdownActionsComponentProps extends DropdownActionsProps {
   handleActionClick?: (action: SimpleAction) => void;
+  onVisibleChange?: (event: boolean) => void;
 }
 
-export function EoDropdownActionsComponent(
-  props: DropdownActionsComponentProps
-) {
-  const { actions, disabled, handleActionClick } = props;
+export function EoDropdownActionsComponent({
+  actions,
+  disabled,
+  handleActionClick,
+  onVisibleChange,
+}: DropdownActionsComponentProps) {
   const [visible, setVisible] = useState(false);
 
   const filteredActions = useMemo(() => {
@@ -146,6 +163,7 @@ export function EoDropdownActionsComponent(
       active={visible}
       beforeVisibleChange={(e) => {
         setVisible(e.detail);
+        onVisibleChange?.(e.detail);
       }}
     >
       <slot slot="anchor" />
