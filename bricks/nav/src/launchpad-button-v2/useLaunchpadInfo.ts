@@ -1,16 +1,18 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { MicroApp, Storyboard } from "@next-core/types";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { getRuntime, handleHttpError } from "@next-core/runtime";
 import { auth } from "@next-core/easyops-runtime";
 import { JsonStorage } from "@next-shared/general/JsonStorage";
-import type {
-  DesktopData,
-  DesktopItemApp,
-  DesktopItemCustom,
-} from "../launchpad/interfaces";
 import { DeferredService } from "../shared/DeferredService";
 import { showDialog } from "./wrapped-bricks";
-import type { FavMenuItem, StoredMenuItem } from "./interfaces";
+import type {
+  FavMenuItem,
+  MenuGroupData,
+  MenuItemDataCustom,
+  MenuItemDataLink,
+  MenuItemDataNormal,
+  MicroAppWithInstanceId,
+  StoredMenuItem,
+} from "./interfaces";
 import {
   favorite,
   fetchFavorites,
@@ -18,51 +20,27 @@ import {
   undoFavorite,
 } from "./api";
 import { search } from "./search";
-import { getMenuGroups } from "./getMenuGroups";
+import { FAVORITES_LIMIT, RECENT_VISITS_LIMIT } from "./constants";
 
 const storageKey = `launchpad-recent-visits:${(
   auth.getAuth() as Record<string, string>
 )?.org}`;
 const storage = new JsonStorage(localStorage);
 
-const FAVORITES_LIMIT = 10;
-const RECENT_VISITS_LIMIT = 10;
-
-let candidateDesktops: DesktopData[] = [];
-let candidateMicroAppsById = new Map<string, MicroApp>();
-let candidateCustomLinksById = new Map<string, DesktopItemCustom>();
+let candidateDesktops: MenuGroupData[] = [];
+let candidateMicroAppsById = new Map<string, MicroAppWithInstanceId>();
+let candidateCustomLinksById = new Map<string, MenuItemDataCustom>();
 let preLoaded = false;
 
 let candidateFavorites: FavMenuItem[] = [];
 let preLoadedFavorites = false;
 
 export const deferredLaunchpadInfo = new DeferredService(async () => {
-  const info = await fetchLaunchpadInfo();
-  candidateDesktops = info.desktops as DesktopData[];
-
-  candidateMicroAppsById = (info.storyboards as Storyboard[]).reduce(
-    (acc, { app }) => {
-      acc.set(app.id, app);
-      return acc;
-    },
-    new Map<string, MicroApp>()
-  );
-
-  const linksById = new Map<string, DesktopItemCustom>();
-  for (const desktop of info.desktops as DesktopData[]) {
-    for (const item of desktop.items) {
-      if (item.type === "custom") {
-        linksById.set(item.id, item);
-      } else if (item.type === "dir") {
-        for (const subItem of item.items) {
-          if (subItem.type === "custom") {
-            linksById.set(subItem.id, subItem);
-          }
-        }
-      }
-    }
-  }
-  candidateCustomLinksById = linksById;
+  ({
+    menuGroups: candidateDesktops,
+    microAppsById: candidateMicroAppsById,
+    customLinksById: candidateCustomLinksById,
+  } = await fetchLaunchpadInfo());
   preLoaded = true;
 });
 
@@ -94,15 +72,9 @@ export function useLaunchpadInfo(active?: boolean) {
     StoredMenuItem[]
   >([]);
 
-  const [recentVisits, setRecentVisits] = useState<
-    (DesktopItemApp | DesktopItemCustom)[]
-  >([]);
+  const [recentVisits, setRecentVisits] = useState<MenuItemDataNormal[]>([]);
 
-  const [storedFavorites, setStoredFavorites] =
-    useState<FavMenuItem[]>(candidateFavorites);
-  const [favorites, setFavorites] = useState<
-    (DesktopItemApp | DesktopItemCustom)[]
-  >([]);
+  const [favorites, setFavorites] = useState<FavMenuItem[]>(candidateFavorites);
 
   useEffect(() => {
     // 仅当首次加载完成或重新打开 launchpad 时更新一次数据。
@@ -115,7 +87,7 @@ export function useLaunchpadInfo(active?: boolean) {
 
   useEffect(() => {
     if (active && !loadingFavorites) {
-      setStoredFavorites(candidateFavorites);
+      setFavorites(candidateFavorites);
     }
   }, [active, loadingFavorites]);
 
@@ -132,7 +104,6 @@ export function useLaunchpadInfo(active?: boolean) {
           await deferredLaunchpadInfo.fetch();
           setLoading(false);
         } catch (error) {
-          // props.onWillClose?.();
           handleHttpError(error);
         }
       };
@@ -143,11 +114,14 @@ export function useLaunchpadInfo(active?: boolean) {
   useEffect(() => {
     if (!window.STANDALONE_MICRO_APPS) {
       const runtime = getRuntime();
-      candidateDesktops = runtime.getDesktops() as DesktopData[];
+      candidateDesktops = runtime.getDesktops() as MenuGroupData[];
       candidateMicroAppsById = new Map();
       const currentApp = runtime.getCurrentApp();
       if (currentApp) {
-        candidateMicroAppsById.set(currentApp.id, currentApp);
+        candidateMicroAppsById.set(
+          currentApp.id,
+          currentApp as MicroAppWithInstanceId
+        );
       }
       setLoading(false);
     }
@@ -160,8 +134,7 @@ export function useLaunchpadInfo(active?: boolean) {
           await deferredFavorites.fetch();
           setLoadingFavorites(false);
         } catch (error) {
-          // props.onWillClose?.();
-          // handleHttpError(error);
+          handleHttpError(error);
         }
       };
       startFetchFavorites();
@@ -174,13 +147,23 @@ export function useLaunchpadInfo(active?: boolean) {
     }
     const visits = storedRecentVisits
       .map((item) => {
+        // Remembered recent visits maybe no longer existed in launchpad
         if (item.type === "app") {
           const app = microAppsById.get(item.id);
-          return app ? { type: "app", app } : null;
+          return app
+            ? {
+                type: "app",
+                name: app.localeName,
+                id: app.id,
+                url: app.homepage,
+                instanceId: app.instanceId,
+                menuIcon: app.menuIcon,
+              }
+            : null;
         }
         return customLinksById.get(item.id);
       })
-      .filter(Boolean) as (DesktopItemApp | DesktopItemCustom)[];
+      .filter(Boolean) as MenuItemDataNormal[];
     setRecentVisits(visits);
   }, [customLinksById, loading, microAppsById, storedRecentVisits]);
 
@@ -200,52 +183,28 @@ export function useLaunchpadInfo(active?: boolean) {
     storage.setItem(storageKey, visits);
   }, []);
 
-  useEffect(() => {
-    if (loading || loadingFavorites) {
-      return;
-    }
-    const list = storedFavorites
-      .map((item) => {
-        if (item.type === "app") {
-          const app = microAppsById.get(item.id);
-          return app ? { type: "app", app } : null;
-        }
-        return customLinksById.get(item.id);
-      })
-      .filter(Boolean) as (DesktopItemApp | DesktopItemCustom)[];
-    setFavorites(list);
-  }, [
-    customLinksById,
-    loading,
-    loadingFavorites,
-    microAppsById,
-    storedFavorites,
-  ]);
-
   const isStarred = useCallback(
-    ({ type, id }: FavMenuItem) => {
-      return storedFavorites.some(
-        (item) => item.type === type && item.id === id
-      );
-    },
-    [storedFavorites]
+    (item: MenuItemDataNormal) =>
+      favorites.some((fav) => matchFavorite(item, fav)),
+    [favorites]
   );
 
   const toggleStar = useCallback(
-    (item: DesktopItemApp | DesktopItemCustom) => {
-      const { type, id } = item;
-      const index = storedFavorites.findIndex(
-        (item) => item.type === type && item.id === id
+    (item: MenuItemDataNormal | MenuItemDataLink) => {
+      const index = favorites.findIndex((fav) =>
+        item.type === "link"
+          ? fav.favoriteId === item.favoriteId
+          : matchFavorite(item, fav)
       );
-      let newFavorites: StoredMenuItem[];
+      let newFavorites: FavMenuItem[];
       if (index > -1) {
-        const removed = storedFavorites[index];
-        newFavorites = storedFavorites
+        const removed = favorites[index];
+        newFavorites = favorites
           .slice(0, index)
-          .concat(storedFavorites.slice(index + 1));
-        undoFavorite(removed);
+          .concat(favorites.slice(index + 1));
+        undoFavorite(removed).catch(handleHttpError);
       } else {
-        if (storedFavorites.length >= FAVORITES_LIMIT) {
+        if (favorites.length >= FAVORITES_LIMIT) {
           showDialog({
             type: "warn",
             title: "收藏数量已达上限",
@@ -253,26 +212,24 @@ export function useLaunchpadInfo(active?: boolean) {
           });
           return;
         }
-        const fav: FavMenuItem = { type, id };
-        newFavorites = storedFavorites.concat(fav);
-        favorite(item);
+        // Assert: no link item
+        const fav: FavMenuItem = { ...(item as MenuItemDataNormal) };
+        newFavorites = favorites.concat(fav);
+        favorite(item as MenuItemDataNormal).then((result) => {
+          if (result) {
+            fav.favoriteId = result.instanceId;
+          }
+        }, handleHttpError);
       }
-      setStoredFavorites(newFavorites);
+      setFavorites(newFavorites);
       candidateFavorites = newFavorites;
     },
-    [storedFavorites]
+    [favorites]
   );
 
-  const allMenuGroups: DesktopData[] = useMemo(() => {
-    if (loading) {
-      return [];
-    }
-    return getMenuGroups(desktops, microAppsById);
-  }, [loading, desktops, microAppsById]);
-
-  const menuGroups: DesktopData[] = useMemo(
-    () => search(allMenuGroups, q),
-    [allMenuGroups, q]
+  const menuGroups: MenuGroupData[] = useMemo(
+    () => search(desktops, q),
+    [desktops, q]
   );
 
   return {
@@ -287,4 +244,10 @@ export function useLaunchpadInfo(active?: boolean) {
     isStarred,
     toggleStar,
   };
+}
+
+export function matchFavorite(item: MenuItemDataNormal, fav: FavMenuItem) {
+  return item.instanceId && fav.instanceId
+    ? fav.instanceId === item.instanceId
+    : fav.type === item.type && fav.id === item.id;
 }

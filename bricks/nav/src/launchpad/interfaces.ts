@@ -29,6 +29,7 @@ export interface DesktopItemApp {
   type: "app";
   id: string;
   app: MicroApp;
+  instanceId?: string;
 }
 
 /** @internal */
@@ -46,4 +47,5 @@ export interface DesktopItemCustom {
   name: string;
   url: string;
   menuIcon?: MenuIcon;
+  instanceId?: string;
 }

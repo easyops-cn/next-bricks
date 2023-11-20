@@ -18,22 +18,79 @@ initializeI18n();
 describe("fetchLaunchpadInfo", () => {
   test("", async () => {
     getLaunchpadInfo.mockResolvedValueOnce({
+      desktops: [
+        {
+          name: "IT 资源管理",
+          items: [
+            {
+              type: "app",
+              id: "cmdb-instances",
+            },
+            {
+              type: "app",
+              id: "models",
+            },
+            {
+              type: "custom",
+              id: "foo",
+              name: "Bar",
+            },
+            {
+              type: "dir",
+              name: "extends",
+              items: [
+                {
+                  type: "app",
+                  id: "dir-cmdb-app",
+                },
+                {
+                  type: "custom",
+                  id: "dir-cmdb-custom",
+                  name: "Dir Custom",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          name: "新分类",
+          items: [
+            {
+              type: "dir",
+              name: "cmdb-extends",
+              items: [
+                {
+                  type: "app",
+                  id: "dir-foo-app",
+                },
+              ],
+            },
+          ],
+        },
+      ],
       storyboards: [
         {
           app: {
-            name: "Hello",
+            id: "cmdb-instances",
             locales: {
               en: {
-                name: "Hello",
+                name: "Cmdb Instances",
               },
               zh: {
-                name: "你好",
+                name: "实例管理",
               },
             },
           },
         },
         {
           app: {
+            id: "dir-cmdb-app",
+            name: "DIR CMDB",
+          },
+        },
+        {
+          app: {
+            id: "oops",
             name: "Oops",
           },
         },
@@ -42,28 +99,79 @@ describe("fetchLaunchpadInfo", () => {
     const result = await fetchLaunchpadInfo();
     expect(result).toMatchInlineSnapshot(`
 {
-  "storyboards": [
-    {
-      "app": {
-        "localeName": "Hello",
-        "locales": {
-          "en": {
-            "name": "Hello",
-          },
-          "zh": {
-            "name": "你好",
-          },
-        },
-        "name": "Hello",
-      },
+  "customLinksById": Map {
+    "foo" => {
+      "id": "foo",
+      "name": "Bar",
+      "type": "custom",
     },
+    "dir-cmdb-custom" => {
+      "id": "dir-cmdb-custom",
+      "name": "Dir Custom",
+      "type": "custom",
+    },
+  },
+  "menuGroups": [
     {
-      "app": {
-        "localeName": "Oops",
-        "name": "Oops",
-      },
+      "items": [
+        {
+          "id": "cmdb-instances",
+          "menuIcon": undefined,
+          "name": "Cmdb Instances",
+          "type": "app",
+          "url": undefined,
+        },
+        {
+          "id": "foo",
+          "name": "Bar",
+          "type": "custom",
+        },
+        {
+          "items": [
+            {
+              "id": "dir-cmdb-app",
+              "menuIcon": undefined,
+              "name": "DIR CMDB",
+              "type": "app",
+              "url": undefined,
+            },
+            {
+              "id": "dir-cmdb-custom",
+              "name": "Dir Custom",
+              "type": "custom",
+            },
+          ],
+          "name": "extends",
+          "type": "dir",
+        },
+      ],
+      "name": "IT 资源管理",
     },
   ],
+  "microAppsById": Map {
+    "cmdb-instances" => {
+      "id": "cmdb-instances",
+      "localeName": "Cmdb Instances",
+      "locales": {
+        "en": {
+          "name": "Cmdb Instances",
+        },
+        "zh": {
+          "name": "实例管理",
+        },
+      },
+    },
+    "dir-cmdb-app" => {
+      "id": "dir-cmdb-app",
+      "localeName": "DIR CMDB",
+      "name": "DIR CMDB",
+    },
+    "oops" => {
+      "id": "oops",
+      "localeName": "Oops",
+      "name": "Oops",
+    },
+  },
 }
 `);
   });

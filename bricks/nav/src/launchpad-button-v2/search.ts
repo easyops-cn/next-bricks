@@ -1,19 +1,22 @@
 import type {
-  DesktopData,
-  DesktopItem,
-  DesktopItemApp,
-  DesktopItemCustom,
-} from "../launchpad/interfaces";
+  MenuGroupData,
+  MenuItemData,
+  MenuItemDataApp,
+  MenuItemDataCustom,
+} from "./interfaces";
 
-export function search(allMenuGroups: DesktopData[], q: string): DesktopData[] {
+export function search(
+  allMenuGroups: MenuGroupData[],
+  q: string
+): MenuGroupData[] {
   if (!q) {
     return allMenuGroups;
   }
   const lowerQ = q.toLowerCase();
-  const groups: DesktopData[] = allMenuGroups
-    .map((desktop) => ({
-      name: desktop.name,
-      items: desktop.items
+  const groups: MenuGroupData[] = allMenuGroups
+    .map((group) => ({
+      ...group,
+      items: group.items
         .map((item) => {
           switch (item.type) {
             case "app":
@@ -25,9 +28,11 @@ export function search(allMenuGroups: DesktopData[], q: string): DesktopData[] {
                 .map((sub) =>
                   sub.type === "app"
                     ? matchMenuItemApp(sub, lowerQ)
-                    : matchMenuItemCustom(sub, lowerQ)
+                    : sub.type === "custom"
+                    ? matchMenuItemCustom(sub, lowerQ)
+                    : null
                 )
-                .filter(Boolean) as DesktopItem[];
+                .filter(Boolean) as MenuItemData[];
               return filteredSubItems.length > 0
                 ? {
                     ...item,
@@ -38,21 +43,21 @@ export function search(allMenuGroups: DesktopData[], q: string): DesktopData[] {
           }
         })
         // Ignore not matched items
-        .filter(Boolean) as DesktopItem[],
+        .filter(Boolean) as MenuItemData[],
     }))
     // ignore empty desktops
-    .filter((desktop) => desktop.items.length > 0);
+    .filter((group) => group.items.length > 0);
   return groups;
 }
 
-function matchMenuItemApp(item: DesktopItemApp, lowerQ: string) {
-  return item.app.id.toLowerCase().includes(lowerQ) ||
-    item.app.localeName!.toLowerCase().includes(lowerQ)
+function matchMenuItemApp(item: MenuItemDataApp, lowerQ: string) {
+  return item.id.toLowerCase().includes(lowerQ) ||
+    item.name.toLowerCase().includes(lowerQ)
     ? item
     : null;
 }
 
-function matchMenuItemCustom(item: DesktopItemCustom, lowerQ: string) {
+function matchMenuItemCustom(item: MenuItemDataCustom, lowerQ: string) {
   return item.id.toLowerCase().includes(lowerQ) ||
     item.name.toLowerCase().includes(lowerQ)
     ? item

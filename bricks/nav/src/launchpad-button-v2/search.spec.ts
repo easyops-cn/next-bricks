@@ -1,5 +1,5 @@
 import { describe, test, expect } from "@jest/globals";
-import type { DesktopData } from "../launchpad/interfaces.js";
+import type { MenuGroupData } from "./interfaces.js";
 import { search } from "./search.js";
 
 describe("search", () => {
@@ -9,24 +9,18 @@ describe("search", () => {
       items: [
         {
           type: "app",
-          app: {
-            id: "cmdb-instances",
-            localeName: "实例管理",
-          },
+          id: "cmdb-instances",
+          name: "实例管理",
         },
         {
           type: "app",
-          app: {
-            id: "models",
-            localeName: "CMDB 模型",
-          },
+          id: "models",
+          name: "CMDB 模型",
         },
         {
           type: "app",
-          app: {
-            id: "others",
-            localeName: "其他",
-          },
+          id: "others",
+          name: "其他",
         },
         {
           type: "custom",
@@ -44,10 +38,8 @@ describe("search", () => {
           items: [
             {
               type: "app",
-              app: {
-                id: "dir-cmdb-app",
-                localeName: "Dir APP",
-              },
+              id: "dir-cmdb-app",
+              name: "Dir APP",
             },
             {
               type: "custom",
@@ -67,10 +59,8 @@ describe("search", () => {
           items: [
             {
               type: "app",
-              app: {
-                id: "dir-foo-app",
-                localeName: "Dir Bar APP",
-              },
+              id: "dir-foo-app",
+              name: "Dir Bar APP",
             },
             {
               type: "custom",
@@ -81,7 +71,7 @@ describe("search", () => {
         },
       ],
     },
-  ] as DesktopData[];
+  ] as MenuGroupData[];
 
   test("no query", () => {
     expect(search(allMenuGroups, "")).toBe(allMenuGroups);
@@ -93,17 +83,13 @@ describe("search", () => {
   {
     "items": [
       {
-        "app": {
-          "id": "cmdb-instances",
-          "localeName": "实例管理",
-        },
+        "id": "cmdb-instances",
+        "name": "实例管理",
         "type": "app",
       },
       {
-        "app": {
-          "id": "models",
-          "localeName": "CMDB 模型",
-        },
+        "id": "models",
+        "name": "CMDB 模型",
         "type": "app",
       },
       {
@@ -114,10 +100,8 @@ describe("search", () => {
       {
         "items": [
           {
-            "app": {
-              "id": "dir-cmdb-app",
-              "localeName": "Dir APP",
-            },
+            "id": "dir-cmdb-app",
+            "name": "Dir APP",
             "type": "app",
           },
           {

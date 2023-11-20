@@ -71,7 +71,7 @@
 }
 
 .sidebar {
-  width: 160px;
+  width: 190px;
   padding: 20px 0 24px;
   display: flex;
   flex-direction: column;
@@ -80,7 +80,7 @@
   background-image: url("../images/launchpad-sidebar.png");
   background-size: 205px 205px;
   background-repeat: no-repeat;
-  background-position: left 22px bottom 27px;
+  background-position: left 52px bottom 27px;
 }
 
 .quick-nav-label,
@@ -124,8 +124,9 @@
   color: var(--color-header-text);
 }
 
-.sidebar-menu-item > eo-link::part(link) {
-  padding: 0 16px;
+.sidebar-menu-item {
+  padding: 0 12px 0 16px;
+  justify-content: space-between;
 }
 
 .sidebar-menu-icon {
@@ -223,6 +224,7 @@
   margin-bottom: 14px;
 }
 
+.sidebar-menu-item,
 .menu-item:not(.folder) {
   display: flex;
   gap: 8px;
@@ -255,25 +257,43 @@
   padding-left: 15px;
 }
 
+.menu-item-remove,
 .menu-item-star {
   cursor: pointer;
 }
 
+.menu-item-remove,
 .menu-item-star,
 .menu-item-toggle {
   color: var(--color-secondary-text);
 }
 
-.menu-item:not(.starred) > .menu-item-star {
+.sidebar-menu-item:not(:hover) .menu-item-remove {
   display: none;
-  color: var(--color-secondary-text);
 }
 
-.menu-item:not(.starred):hover > .menu-item-star {
+.menu-item-remove:hover {
+  color: var(--color-normal-text);
+}
+
+.menu-item-remove:active {
+  color: var(--color-strong-text);
+}
+
+.menu-item-star {
+  display: none;
+}
+
+.can-star.starred > .menu-item-star,
+.can-star:hover > .menu-item-star {
   display: inline-block;
 }
 
-.menu-item-star.starred {
+.can-star:not(.starred) > .menu-item-star {
+  color: var(--color-secondary-text);
+}
+
+.starred > .menu-item-star {
   color: var(--palette-yellow-6);
 }
 

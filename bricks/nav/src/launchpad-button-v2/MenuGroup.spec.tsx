@@ -1,10 +1,15 @@
 import React from "react";
 import { describe, test, expect, jest } from "@jest/globals";
 import { render, fireEvent } from "@testing-library/react";
-import { MenuGroup } from "./MenuGroup.js";
-import { DesktopItem } from "../launchpad/interfaces.js";
-import { LaunchpadsContext } from "./LaunchpadContext.js";
-import type { FavMenuItem } from "./interfaces.js";
+import { MenuGroup, SidebarMenuItem } from "./MenuGroup.js";
+import { LaunchpadContextData, LaunchpadsContext } from "./LaunchpadContext.js";
+import type {
+  FavMenuItem,
+  MenuItemData,
+  MenuItemDataNormal,
+  SidebarMenuItemData,
+} from "./interfaces.js";
+import { matchFavorite } from "./useLaunchpadInfo.js";
 
 class WithShadowElement extends HTMLElement {
   connectedCallback() {
@@ -37,10 +42,7 @@ describe("MenuGroup", () => {
     {
       type: "app",
       id: "cmdb-instances",
-      app: {
-        id: "cmdb-instances",
-        localeName: "实例管理",
-      },
+      name: "实例管理",
     },
     {
       type: "custom",
@@ -55,44 +57,40 @@ describe("MenuGroup", () => {
         {
           type: "app",
           id: "dir-cmdb-app",
-          app: {
-            id: "dir-cmdb-app",
-            localeName: "Dir APP",
-          },
+          name: "Dir APP",
         },
         {
           type: "custom",
-          id: "dir-cmdb-custom",
+          instanceId: "dir-cmdb-custom",
           name: "Dir Custom",
         },
       ],
     },
-  ] as DesktopItem[];
+  ] as MenuItemData[];
 
   test("basic usage", async () => {
     const starred = [
       { type: "app", id: "cmdb-instances" },
-      { type: "custom", id: "dir-cmdb-custom" },
-    ];
+      { type: "custom", instanceId: "dir-cmdb-custom" },
+    ] as Partial<FavMenuItem>[] as FavMenuItem[];
     const pushRecentVisit = jest.fn();
 
     const getComponent = (searching: boolean) => (
       <LaunchpadsContext.Provider
         value={{
           searching,
-          isStarred: (item: FavMenuItem) => {
-            return starred.some(
-              (star) => star.type === item.type && star.id === item.id
-            );
+          loadingFavorites: false,
+          isStarred: (item) => {
+            return starred.some((fav) => matchFavorite(item, fav));
           },
-          toggleStar: (item: FavMenuItem) => {
-            const index = starred.findIndex(
-              (star) => star.type === item.type && star.id === item.id
+          toggleStar: (item) => {
+            const index = starred.findIndex((fav) =>
+              matchFavorite(item as MenuItemDataNormal, fav)
             );
             if (index > -1) {
               starred.splice(index, 1);
             } else {
-              starred.push(item);
+              starred.push(item as MenuItemDataNormal);
             }
           },
           pushRecentVisit,
@@ -105,10 +103,10 @@ describe("MenuGroup", () => {
     const { getByText, rerender } = render(getComponent(false));
 
     expect(getByText("实例管理").parentElement?.parentElement?.className).toBe(
-      "menu-item starred"
+      "menu-item starred can-star"
     );
     expect(getByText("Bar").parentElement?.parentElement?.className).toBe(
-      "menu-item"
+      "menu-item can-star"
     );
 
     // 最近访问
@@ -141,7 +139,7 @@ describe("MenuGroup", () => {
     rerender(getComponent(true));
     expect(getByText("扩展").nextElementSibling).toHaveProperty("icon", "up");
     expect(getByText("实例管理").parentElement?.parentElement?.className).toBe(
-      "menu-item"
+      "menu-item can-star"
     );
 
     // 收藏
@@ -152,12 +150,70 @@ describe("MenuGroup", () => {
     );
     rerender(getComponent(true));
     expect(getByText("实例管理").parentElement?.parentElement?.className).toBe(
-      "menu-item starred"
+      "menu-item starred can-star"
     );
 
     // 搜索后影响文件夹展开/折叠
     fireEvent.click(getByText("扩展").parentElement as HTMLElement);
     rerender(getComponent(true));
     expect(getByText("扩展").nextElementSibling).toHaveProperty("icon", "down");
+  });
+});
+
+describe("SidebarMenuItem", () => {
+  test.each<[string, SidebarMenuItemData]>([
+    [
+      "app",
+      {
+        type: "app",
+        id: "cmdb-instances",
+        name: "实例管理",
+      },
+    ],
+    [
+      "custom",
+      {
+        type: "custom",
+        id: "foo",
+        name: "Bar",
+      },
+    ],
+    [
+      "link",
+      {
+        favoriteId: "fav-3",
+        type: "link",
+        name: "割接链接",
+        url: "/any-where",
+      },
+    ],
+  ] as any)("%s", (type, item) => {
+    const toggleStar = jest.fn();
+    const pushRecentVisit = jest.fn();
+
+    const { container } = render(
+      <LaunchpadsContext.Provider
+        value={
+          {
+            toggleStar,
+            pushRecentVisit,
+          } as Partial<LaunchpadContextData> as LaunchpadContextData
+        }
+      >
+        <SidebarMenuItem item={item} />
+      </LaunchpadsContext.Provider>
+    );
+
+    fireEvent.click(
+      container.querySelector(".menu-item-remove") as HTMLElement
+    );
+    expect(toggleStar).toBeCalledWith(item);
+
+    fireEvent.click(container.querySelector("eo-link") as HTMLElement);
+    if (type === "link") {
+      expect(pushRecentVisit).not.toBeCalled();
+    } else {
+      expect(pushRecentVisit).toBeCalledWith(item);
+    }
   });
 });

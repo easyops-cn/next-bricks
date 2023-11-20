@@ -5,10 +5,12 @@ dependencies:
     version: ^2.90.23 || ^3.8.26
     local_deploy: true
   - name: "basic-NB"
-    version: ">= 0.41.0"
+    version: ">= 0.47.0"
   - name: "form-NB"
     version: ">= 0.17.7"
   - name: "icons-NB"
     version: ">= 0.5.0"
   - name: user_service
-    version: ^1.36.1
+    version: ^1.37.0
+  - name: micro_app_standalone_service
+    version: ^1.7.0
