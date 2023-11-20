@@ -3,6 +3,20 @@ import { wrapBrick } from "@next-core/react-element";
 export const ARROW_SIZE = 6;
 export const POPUP_DISTANCE = 4;
 
+export const popupVisibleStyle: Record<string, any> = {
+  opacity: 1,
+  scale: 1,
+};
+export const popupInvisibleStyle: Record<string, any> = {
+  opacity: 0,
+  scale: 0.9,
+};
+export const popupAnimationOptions = {
+  duration: 100,
+  easing: "ease",
+  fill: "forwards",
+};
+
 export type Placement =
   | "top"
   | "top-start"
