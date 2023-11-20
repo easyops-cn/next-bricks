@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.23.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.23.3...@next-bricks/containers@0.23.4) (2023-11-20)
+
+
+### Bug Fixes
+
+* refine wrap local bricks ([34b4861](https://github.com/easyops-cn/next-bricks/commit/34b48616cdf0a11449dcfb86b75a13d866a81b01))
+
+
+
+
+
 ## [0.23.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.23.2...@next-bricks/containers@0.23.3) (2023-11-17)
 
 **Note:** Version bump only for package @next-bricks/containers

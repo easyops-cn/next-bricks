@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.47.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.46.4...@next-bricks/basic@0.47.0) (2023-11-20)
+
+
+### Bug Fixes
+
+* dropdown actions 没有自动收起 ([8c08b2f](https://github.com/easyops-cn/next-bricks/commit/8c08b2f98d29af7b7a5424b5913635421d2e0de2))
+* dropdown actions 没有自动收起 ([6009451](https://github.com/easyops-cn/next-bricks/commit/600945143154201c546eebe6a7df3208f2def236))
+* 更新 popup active 没有动画 ([60e0d7a](https://github.com/easyops-cn/next-bricks/commit/60e0d7ab8ad2e76feeacf21211c5b1c88368d137))
+
+
+### Features
+
+* **dropdown-actions:** new event: visible.change ([75fe40d](https://github.com/easyops-cn/next-bricks/commit/75fe40de7f373e57b5fa3aa59c8d941848c97c62))
+* use new fav api ([4569699](https://github.com/easyops-cn/next-bricks/commit/45696998247b64c0ae006ebf9ac6e9387eb74d1d))
+
+
+
+
+
 ## [0.46.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.46.3...@next-bricks/basic@0.46.4) (2023-11-17)
 
 **Note:** Version bump only for package @next-bricks/basic

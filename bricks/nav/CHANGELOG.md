@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.4.5...@next-bricks/nav@0.5.0) (2023-11-20)
+
+
+### Features
+
+* launchpad config ([772b302](https://github.com/easyops-cn/next-bricks/commit/772b30296f8c91ccd880faba46d14c098f9cbcf5))
+* use new fav api ([4569699](https://github.com/easyops-cn/next-bricks/commit/45696998247b64c0ae006ebf9ac6e9387eb74d1d))
+
+
+
+
+
 ## [0.4.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.4.4...@next-bricks/nav@0.4.5) (2023-11-17)
 
 **Note:** Version bump only for package @next-bricks/nav
