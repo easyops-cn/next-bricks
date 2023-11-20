@@ -1,0 +1,125 @@
+:host {
+  display: block;
+  --local-menu-icon-color: #8c8c8c;
+}
+
+:host([hidden]) {
+  display: none;
+  --local-menu-icon-color: rgba(255, 255, 255, 0.45);
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-groups {
+  display: grid;
+  gap: 32px 16px;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+
+.sidebar-menu,
+.menu,
+.sub-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.menu-folder-label-wrapper > eo-link,
+.menu-item > eo-link {
+  display: block;
+}
+
+.menu-folder-label-wrapper > eo-link::part(link),
+.menu-item > eo-link::part(link) {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-header-text);
+}
+
+.menu-group-label-wrapper,
+.menu-folder-label-wrapper,
+.menu-item:not(.folder) {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.menu-group-label-wrapper {
+  margin-bottom: 14px;
+  gap: 3px;
+}
+
+.menu-group-label,
+.menu-item-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menu-group-label {
+  font-size: var(--card-title-font-size);
+  font-weight: 500;
+  color: var(--color-header-text);
+}
+
+.menu-icon {
+  color: var(--local-menu-icon-color);
+}
+
+.menu-folder-label-wrapper > eo-link,
+.menu-item > eo-link {
+  max-width: 100%;
+  width: fit-content;
+  min-width: 0;
+}
+
+.sub-menu:not(.expanded) {
+  display: none;
+}
+
+.sub-menu {
+  margin-top: 14px;
+  margin-left: 8px;
+  border-left: 1px solid var(--color-text-divider-line);
+  padding-left: 15px;
+}
+
+.menu-item-toggle {
+  color: var(--color-secondary-text);
+}
+
+.menu-config {
+  visibility: hidden;
+  color: var(--color-brand);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+}
+
+.menu-config.active,
+.menu-group-label-wrapper:hover .menu-config,
+.menu-folder-label-wrapper:hover .menu-config {
+  visibility: visible;
+}
+
+.menu-folder-label-wrapper > eo-dropdown-actions {
+  margin: -3px 0;
+}
+
+.menu-config:hover,
+.menu-item > eo-link:hover::part(link),
+.menu-item > eo-link:hover .menu-icon,
+.menu-folder-label-wrapper > eo-link:hover::part(link),
+.menu-folder-label-wrapper > eo-link:hover .menu-icon,
+.menu-folder-label-wrapper > eo-link:hover .menu-item-toggle {
+  color: var(--color-brand-hover);
+}
