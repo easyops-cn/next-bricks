@@ -5,6 +5,7 @@
   --local-sidebar-menu-item-active-bg: rgba(0, 0, 0, 0.04);
   --local-background: #fff;
   --local-menu-icon-color: #8c8c8c;
+  --local-max-height: calc(100vh - var(--app-bar-height) - 10px);
 }
 
 :host([hidden]) {
@@ -59,7 +60,10 @@
   z-index: 1;
   width: 1070px;
   max-width: calc(100vw - 100px);
-  max-height: calc(100vh - var(--app-bar-height) - 10px);
+  max-height: var(--local-max-height);
+  min-height: 50vh;
+  /* Chrome >= 79 */
+  min-height: min(500px, var(--local-max-height));
   background-color: var(--local-background);
   border: 1px solid var(--color-text-divider-line);
   border-radius: 6px;
@@ -151,7 +155,6 @@
   flex: 1;
   padding: 20px 24px 24px;
   min-width: 0;
-  min-height: 50vh;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -336,4 +339,51 @@
 .empty,
 .loading > :not(.spinner) {
   display: none;
+}
+
+/* https://github.com/w3c/csswg-drafts/issues/3559#issuecomment-1758459996 */
+@supports not (inset: 0) {
+  /* .content, */
+  .search-box,
+  .sidebar-menu,
+  .menu,
+  .sub-menu,
+  .sidebar-menu-item,
+  .menu-item:not(.folder),
+  .sidebar-menu-item > eo-link::part(link),
+  .menu-item > eo-link::part(link) {
+    gap: 0;
+  }
+
+  .content {
+    display: grid;
+    grid-auto-flow: row;
+  }
+
+  .content:not(.loading) {
+    height: min-content;
+  }
+
+  .sidebar-menu > :not(:first-child),
+  .menu > :not(:first-child),
+  .sub-menu > :not(:first-child) {
+    margin-top: 14px;
+  }
+
+  .search-icon,
+  .sidebar-menu-icon,
+  .menu-icon {
+    margin-right: 8px;
+  }
+
+  .search-clear,
+  .menu-item-star,
+  .menu-item-toggle {
+    margin-left: 8px;
+  }
+
+  /* .search-box,
+  .recent-visits {
+    margin-bottom: 24px;
+  } */
 }
