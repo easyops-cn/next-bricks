@@ -111,7 +111,8 @@
 }
 
 .sidebar-menu-item > eo-link,
-.menu-item > eo-link {
+.menu-item > eo-link,
+.recent-visits eo-link {
   display: block;
   min-width: 0;
 }
@@ -304,22 +305,14 @@
   gap: 8px;
 }
 
-.recent-visits li {
-  height: 24px;
-  padding: 0 8px;
+.recent-visits eo-link::part(link) {
   background-color: var(--color-fill-bg-base-1);
   border-radius: 3px;
+  color: var(--color-header-text);
   display: flex;
   align-items: center;
-}
-
-.recent-visits eo-link {
-  flex: 1;
-  min-width: 0;
-}
-
-.recent-visits eo-link::part(link) {
-  color: var(--color-header-text);
+  height: 24px;
+  padding: 0 8px;
 }
 
 .sidebar-menu-item > eo-link:hover::part(link),
