@@ -73,12 +73,10 @@ listCollectionV2.mockResolvedValue({
 
 describe("Launchpad", () => {
   beforeEach(() => {
-    window.STANDALONE_MICRO_APPS = false;
     localStorage.clear();
   });
 
-  test("standalone", async () => {
-    window.STANDALONE_MICRO_APPS = true;
+  test("basic usage", async () => {
     localStorage.setItem(
       "brick-next-launchpad-recent-visits:undefined",
       JSON.stringify([
@@ -216,25 +214,5 @@ describe("Launchpad", () => {
     rerender(<Launchpad active={false} />);
 
     getLaunchpadInfo.mockReset();
-  });
-
-  test("non-standalone", async () => {
-    mockGetRuntime.mockReturnValueOnce({
-      getDesktops() {
-        return [];
-      },
-      getCurrentApp() {
-        return {
-          id: "hello",
-          name: "Hello",
-        };
-      },
-    });
-    const { container } = render(<Launchpad active />);
-
-    await act(async () => {
-      await (global as any).flushPromises();
-    });
-    expect(container.querySelectorAll(".spinner").length).toBe(0);
   });
 });

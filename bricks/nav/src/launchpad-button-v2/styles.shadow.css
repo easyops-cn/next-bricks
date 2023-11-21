@@ -57,7 +57,7 @@
   position: absolute;
   margin-top: 4px;
   z-index: 1;
-  width: 1040px;
+  width: 1070px;
   max-width: calc(100vw - 100px);
   max-height: calc(100vh - var(--app-bar-height) - 10px);
   background-color: var(--local-background);
@@ -113,6 +113,7 @@
 .sidebar-menu-item > eo-link,
 .menu-item > eo-link {
   display: block;
+  min-width: 0;
 }
 
 .sidebar-menu-item > eo-link::part(link),
@@ -233,12 +234,6 @@
 
 .menu-icon {
   color: var(--local-menu-icon-color);
-}
-
-.menu-item > eo-link {
-  max-width: 100%;
-  width: fit-content;
-  min-width: 0;
 }
 
 .menu-item.active,
