@@ -13,5 +13,6 @@
   :host {
     display: grid;
     grid-auto-flow: row;
+    height: min-content;
   }
 }
