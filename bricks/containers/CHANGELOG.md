@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.23.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.23.5...@next-bricks/containers@0.23.6) (2023-11-21)
+
+**Note:** Version bump only for package @next-bricks/containers
+
+
+
+
+
 ## [0.23.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.23.4...@next-bricks/containers@0.23.5) (2023-11-21)
 
 
