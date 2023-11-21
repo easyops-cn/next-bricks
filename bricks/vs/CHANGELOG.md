@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.6.2...@next-bricks/vs@0.7.0) (2023-11-21)
+
+
+### Bug Fixes
+
+*  completion items repeat ([937bb9c](https://github.com/easyops-cn/next-bricks/commit/937bb9c08c85f70ae00ce73dfbd51f08e7eac698))
+
+
+### Features
+
+* monaco editor computed move to worker ([866db5a](https://github.com/easyops-cn/next-bricks/commit/866db5a9ef1554c1099d48c9f490c8f9b1d891e2))
+* worker only init once ([9eda703](https://github.com/easyops-cn/next-bricks/commit/9eda70339864939c1bc5f56adab75ab5ce66b88c))
+
+
+
+
+
 ## [0.6.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.6.1...@next-bricks/vs@0.6.2) (2023-11-21)
 
 **Note:** Version bump only for package @next-bricks/vs
