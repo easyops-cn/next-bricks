@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.5.0...@next-bricks/nav@0.5.1) (2023-11-21)
+
+
+### Bug Fixes
+
+* **launchpad-v2:** refine style ([bb2efe6](https://github.com/easyops-cn/next-bricks/commit/bb2efe63972be2c8a6cfe42f7042784d921b7399))
+
+
+
+
+
 # [0.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.4.5...@next-bricks/nav@0.5.0) (2023-11-20)
 
 
