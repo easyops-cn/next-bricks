@@ -73,3 +73,12 @@
 :host([show-footer]) .footer {
   display: block;
 }
+
+/* https://github.com/w3c/csswg-drafts/issues/3559#issuecomment-1758459996 */
+@supports not (inset: 0) {
+  .footer > eo-narrow-view {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: start;
+  }
+}
