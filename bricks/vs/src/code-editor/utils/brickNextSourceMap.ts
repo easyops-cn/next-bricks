@@ -1,5 +1,5 @@
 import type { State } from "js-yaml";
-import { isEqual } from "lodash";
+import isEqual from "lodash/isEqual.js";
 
 export interface Token {
   startLineNumber: number;

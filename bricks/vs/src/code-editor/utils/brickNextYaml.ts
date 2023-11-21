@@ -1,7 +1,8 @@
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api.js";
 import storyboardJsonSchema from "@next-core/types/storyboard.json";
-import { EVALUATE_KEYWORD, brickNextKeywords, Level } from "./constants.js";
-import { get } from "lodash";
+import { EVALUATE_KEYWORD, brickNextKeywords } from "./constants.js";
+import get from "lodash/get.js";
+import { getEditorId } from "./editorId.js";
 
 const findKeys = (
   model: monaco.editor.ITextModel,
@@ -114,12 +115,13 @@ export const isInEvaluateBody = (
   return false;
 };
 
-export const brickNextYAMLProvideCompletionItems = (
+export const brickNextYAMLProviderCompletionItems = (
   completers?: monaco.languages.CompletionItem[],
   advancedCompleters?: Record<
     string,
     { triggerCharacter: string; completers: monaco.languages.CompletionItem[] }
-  >
+  >,
+  id?: string
 ) => {
   return (
     model: monaco.editor.ITextModel,
@@ -127,6 +129,10 @@ export const brickNextYAMLProvideCompletionItems = (
     context: monaco.languages.CompletionContext,
     _token: monaco.CancellationToken
   ): monaco.languages.ProviderResult<monaco.languages.CompletionList> => {
+    if (id && id !== getEditorId())
+      return {
+        suggestions: [],
+      };
     const word = model.getWordUntilPosition(position);
     const { word: prefixWord, token: prefixToken } = getPrefixWord(
       model,
