@@ -98,7 +98,7 @@ export function useLaunchpadInfo(active?: boolean) {
   }, [active]);
 
   useEffect(() => {
-    if (window.STANDALONE_MICRO_APPS && active) {
+    if (active) {
       const startFetchLaunchpadInfo = async (): Promise<void> => {
         try {
           await deferredLaunchpadInfo.fetch();
@@ -110,22 +110,6 @@ export function useLaunchpadInfo(active?: boolean) {
       startFetchLaunchpadInfo();
     }
   }, [active]);
-
-  useEffect(() => {
-    if (!window.STANDALONE_MICRO_APPS) {
-      const runtime = getRuntime();
-      candidateDesktops = runtime.getDesktops() as MenuGroupData[];
-      candidateMicroAppsById = new Map();
-      const currentApp = runtime.getCurrentApp();
-      if (currentApp) {
-        candidateMicroAppsById.set(
-          currentApp.id,
-          currentApp as MicroAppWithInstanceId
-        );
-      }
-      setLoading(false);
-    }
-  }, []);
 
   useEffect(() => {
     if (active) {
