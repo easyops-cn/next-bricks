@@ -29,6 +29,7 @@ import { brickNextYAMLProviderCompletionItems } from "./utils/brickNextYaml.js";
 import "./index.css";
 import { Level } from "./utils/constants.js";
 import { VSWorkers } from "./workers/index.js";
+import { setEditorId } from "./utils/editorId.js";
 
 registerJavaScript(monaco);
 registerTypeScript(monaco);
@@ -343,7 +344,8 @@ export function CodeEditorComponent({
     if (language === "brick_next_yaml") {
       const provideCompletionItems = brickNextYAMLProviderCompletionItems(
         completers,
-        advancedCompleters
+        advancedCompleters,
+        workerId
       );
       const monacoProviderRef = monaco.languages.registerCompletionItemProvider(
         "brick_next_yaml",
@@ -590,6 +592,7 @@ export function CodeEditorComponent({
     }
     const currentModel = editorRef.current.getModel()!;
     const listener = currentModel.onDidChangeContent(() => {
+      setEditorId(workerId);
       parseYaml();
     });
     return () => {
