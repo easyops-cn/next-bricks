@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.11.35](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.11.34...@next-bricks/advanced@0.11.35) (2023-11-22)
+
+**Note:** Version bump only for package @next-bricks/advanced
+
+
+
+
+
 ## [0.11.34](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.11.33...@next-bricks/advanced@0.11.34) (2023-11-22)
 
 **Note:** Version bump only for package @next-bricks/advanced

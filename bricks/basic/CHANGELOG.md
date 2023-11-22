@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.48.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.48.0...@next-bricks/basic@0.48.1) (2023-11-22)
+
+
+### Bug Fixes
+
+* don't maintain the animation's state ([dd51e8c](https://github.com/easyops-cn/next-bricks/commit/dd51e8c6a43cde8a8afb6c38b5fe67daefdbaeb1))
+
+
+
+
+
 # [0.48.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.47.1...@next-bricks/basic@0.48.0) (2023-11-22)
 
 
