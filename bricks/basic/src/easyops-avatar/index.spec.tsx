@@ -28,6 +28,7 @@ describe("eo-easyops-avatar", () => {
       "eo-easyops-avatar"
     ) as EoEasyopsAvatar;
     element.nameOrInstanceId = "easyops";
+    element.bordered = true;
 
     expect(element.shadowRoot).toBeFalsy();
 
@@ -36,7 +37,7 @@ describe("eo-easyops-avatar", () => {
     });
     expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
     expect(element.shadowRoot?.innerHTML).toMatchInlineSnapshot(
-      `"<style>styles.shadow.css</style><eo-avatar src="/test.jpg" name="easyops" size="medium"></eo-avatar>"`
+      `"<style>styles.shadow.css</style><eo-avatar src="/test.jpg" name="easyops" size="medium" bordered=""></eo-avatar>"`
     );
 
     act(() => {

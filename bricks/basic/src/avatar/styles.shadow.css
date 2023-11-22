@@ -19,10 +19,18 @@
   --avatar-font-size: 22px;
 }
 
+:host([size="large"]) {
+  --avatar-stack-spacing: 0;
+}
+
 .size-medium {
   --avatar-size: 40px;
   --avatar-icon-font-size: 24px;
   --avatar-font-size: 12px;
+}
+
+:host([size="medium"]) {
+  --avatar-stack-spacing: 0;
 }
 
 .size-small {
@@ -31,10 +39,18 @@
   --avatar-font-size: 12px;
 }
 
+:host([size="small"]) {
+  --avatar-stack-spacing: -8px;
+}
+
 .size-xs {
   --avatar-size: 24px;
   --avatar-icon-font-size: 12px;
   --avatar-font-size: 12px;
+}
+
+:host([size="xs"]) {
+  --avatar-stack-spacing: -6px;
 }
 
 /* shape */
@@ -81,4 +97,8 @@
 .avatar-text {
   line-height: 1;
   white-space: nowrap;
+}
+
+.bordered {
+  border: 1px solid #fff;
 }

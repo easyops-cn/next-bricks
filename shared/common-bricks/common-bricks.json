@@ -28,7 +28,8 @@
     "eo-app-bar-wrapper",
     "eo-page-title",
     "eo-counter-badge",
-    "eo-easyops-avatar"
+    "eo-easyops-avatar",
+    "eo-avatar-group"
   ],
   "icons": [
     "eo-antd-icon",

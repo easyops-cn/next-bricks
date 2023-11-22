@@ -13,6 +13,7 @@ const WrappedAvatar = wrapBrick<EoAvatar, AvatarProps>("eo-avatar");
 export interface EoEasyopsAvatarProps {
   nameOrInstanceId?: string;
   size?: AvatarSize;
+  bordered?: boolean;
 }
 
 /**
@@ -34,20 +35,36 @@ class EoEasyopsAvatar extends ReactNextElement implements EoEasyopsAvatarProps {
    */
   @property() accessor size: AvatarSize = "medium";
 
+  /**
+   * 是否有边框
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor bordered: boolean | undefined;
+
   render() {
     return (
       <EoEasyopsAvatarComponent
         nameOrInstanceId={this.nameOrInstanceId}
         size={this.size}
+        bordered={this.bordered}
       />
     );
   }
 }
 
 export function EoEasyopsAvatarComponent(props: EoEasyopsAvatarProps) {
-  const { nameOrInstanceId, size } = props;
+  const { nameOrInstanceId, size, bordered } = props;
 
   const { user } = useUserInfoByNameOrInstanceId(nameOrInstanceId);
 
-  return <WrappedAvatar src={user?.user_icon} name={user?.name} size={size} />;
+  return (
+    <WrappedAvatar
+      src={user?.user_icon}
+      name={user?.name}
+      size={size}
+      bordered={bordered}
+    />
+  );
 }
