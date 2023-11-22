@@ -14,7 +14,6 @@ export const popupInvisibleStyle: Record<string, any> = {
 export const popupAnimationOptions = {
   duration: 100,
   easing: "ease",
-  fill: "forwards",
 };
 
 export type Placement =
