@@ -2,7 +2,6 @@ import React from "react";
 import { describe, test, expect, jest } from "@jest/globals";
 import { act } from "react-dom/test-utils";
 import { render, fireEvent } from "@testing-library/react";
-import { getRuntime } from "@next-core/runtime";
 import { initializeI18n } from "@next-core/i18n";
 import { LaunchpadApi_getLaunchpadInfo } from "@next-api-sdk/micro-app-standalone-sdk";
 import {
@@ -18,7 +17,6 @@ jest.mock("@next-api-sdk/user-service-sdk");
 
 const getLaunchpadInfo = LaunchpadApi_getLaunchpadInfo as jest.Mock<any>;
 const listCollectionV2 = LaunchpadApi_listCollectionV2 as jest.Mock<any>;
-const mockGetRuntime = getRuntime as jest.Mock<any>;
 
 initializeI18n();
 

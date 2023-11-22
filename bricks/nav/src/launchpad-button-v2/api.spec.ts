@@ -2,21 +2,22 @@ import { describe, test, expect } from "@jest/globals";
 import { initializeI18n } from "@next-core/i18n";
 import { LaunchpadApi_getLaunchpadInfo } from "@next-api-sdk/micro-app-standalone-sdk";
 import {
-  LaunchpadApi_createCollection,
-  LaunchpadApi_deleteCollection,
-  LaunchpadApi_listCollection,
+  LaunchpadApi_createCollectionV2,
+  LaunchpadApi_deleteCollectionV2,
+  LaunchpadApi_listCollectionV2,
 } from "@next-api-sdk/user-service-sdk";
-import { fetchLaunchpadInfo } from "./api.js";
+import { favorite, fetchLaunchpadInfo } from "./api.js";
 
 jest.mock("@next-api-sdk/micro-app-standalone-sdk");
 jest.mock("@next-api-sdk/user-service-sdk");
 
 const getLaunchpadInfo = LaunchpadApi_getLaunchpadInfo as jest.Mock;
+const createCollectionV2 = LaunchpadApi_createCollectionV2 as jest.Mock;
 
 initializeI18n();
 
 describe("fetchLaunchpadInfo", () => {
-  test("", async () => {
+  test("basic usage", async () => {
     getLaunchpadInfo.mockResolvedValueOnce({
       desktops: [
         {
@@ -174,5 +175,33 @@ describe("fetchLaunchpadInfo", () => {
   },
 }
 `);
+  });
+});
+
+describe("favorite", () => {
+  test("app", async () => {
+    await favorite({ type: "app", instanceId: "my-fav-app" } as any);
+    expect(createCollectionV2).toBeCalledWith(
+      {
+        type: "microApp",
+        relatedInstanceId: "my-fav-app",
+      },
+      {
+        interceptorParams: { ignoreLoadingBar: true },
+      }
+    );
+  });
+
+  test("custom", async () => {
+    await favorite({ type: "custom", instanceId: "my-fav-custom" } as any);
+    expect(createCollectionV2).toBeCalledWith(
+      {
+        type: "customItem",
+        relatedInstanceId: "my-fav-custom",
+      },
+      {
+        interceptorParams: { ignoreLoadingBar: true },
+      }
+    );
   });
 });

@@ -43,11 +43,19 @@ describe("MenuGroup", () => {
       type: "app",
       id: "cmdb-instances",
       name: "实例管理",
+      menuIcon: {
+        lib: "antd",
+        icon: "",
+      },
     },
     {
       type: "custom",
       id: "foo",
       name: "Bar",
+      menuIcon: {
+        lib: "antd",
+        icon: "link",
+      },
     },
     {
       type: "dir",
@@ -121,6 +129,10 @@ describe("MenuGroup", () => {
       type: "custom",
       id: "foo",
       name: "Bar",
+      menuIcon: {
+        lib: "antd",
+        icon: "link",
+      },
     });
 
     // 文件夹展开/折叠
@@ -168,6 +180,10 @@ describe("SidebarMenuItem", () => {
         type: "app",
         id: "cmdb-instances",
         name: "实例管理",
+        menuIcon: {
+          lib: "antd",
+          icon: "link",
+        },
       },
     ],
     [
@@ -176,6 +192,10 @@ describe("SidebarMenuItem", () => {
         type: "custom",
         id: "foo",
         name: "Bar",
+        menuIcon: {
+          lib: "antd",
+          icon: "",
+        },
       },
     ],
     [

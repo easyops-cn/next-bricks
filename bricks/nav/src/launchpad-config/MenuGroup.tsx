@@ -43,7 +43,7 @@ export function MenuGroup({ data, actions, onActionClick }: MenuGroupProps) {
   );
 
   return (
-    <li className="menu-group">
+    <li className={classNames("menu-group", { empty: items.length === 0 })}>
       <div className="menu-group-label-wrapper">
         <span className="menu-group-label">{name}</span>
         <WrappedDropdownActions
@@ -90,13 +90,15 @@ export function MenuItem({ data }: MenuItemProps) {
           className={`menu-icon`}
           lib="easyops"
           icon="micro-app-center"
-          {...(pick(data.menuIcon, [
-            "lib",
-            "icon",
-            "theme",
-            "category",
-            "prefix",
-          ]) as any)}
+          {...(data.menuIcon?.lib && data.menuIcon.icon
+            ? (pick(data.menuIcon, [
+                "lib",
+                "icon",
+                "theme",
+                "category",
+                "prefix",
+              ]) as any)
+            : null)}
         />
         <span className="menu-item-label">{data.name}</span>
       </WrappedLink>
@@ -135,7 +137,9 @@ function MenuItemFolder({ data, actions, onActionClick }: MenuItemFolderProps) {
   );
 
   return (
-    <li className="menu-item folder">
+    <li
+      className={classNames("menu-item folder", { empty: items.length === 0 })}
+    >
       <div className="menu-folder-label-wrapper">
         <WrappedLink onClick={toggle}>
           <WrappedIcon

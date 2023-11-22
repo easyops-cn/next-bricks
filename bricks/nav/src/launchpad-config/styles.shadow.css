@@ -17,7 +17,7 @@ ul {
 .menu-groups {
   display: grid;
   gap: 32px 16px;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
 }
 
 .sidebar-menu,
@@ -51,8 +51,11 @@ ul {
 }
 
 .menu-group-label-wrapper {
-  margin-bottom: 14px;
   gap: 3px;
+}
+
+.menu-group:not(.empty) .menu-group-label-wrapper {
+  margin-bottom: 14px;
 }
 
 .menu-group-label,
@@ -84,10 +87,13 @@ ul {
 }
 
 .sub-menu {
-  margin-top: 14px;
   margin-left: 8px;
   border-left: 1px solid var(--color-text-divider-line);
   padding-left: 15px;
+}
+
+.menu-item:not(.empty) .sub-menu {
+  margin-top: 14px;
 }
 
 .menu-item-toggle {

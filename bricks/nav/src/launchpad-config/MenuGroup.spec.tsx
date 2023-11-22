@@ -58,6 +58,10 @@ describe("MenuGroup", () => {
           id: "foo",
           name: "Bar",
           url: "/foo",
+          menuIcon: {
+            lib: "antd",
+            icon: "link",
+          },
         },
         {
           instanceId: "i-4",
@@ -78,6 +82,10 @@ describe("MenuGroup", () => {
               id: "dir-cmdb-custom",
               name: "Dir Custom",
               url: "/dir-cmdb-custom",
+              menuIcon: {
+                lib: "antd",
+                icon: "",
+              },
             },
           ],
         },
