@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { getRuntime, handleHttpError } from "@next-core/runtime";
+import { handleHttpError, httpErrorToString } from "@next-core/runtime";
 import { auth } from "@next-core/easyops-runtime";
 import { JsonStorage } from "@next-shared/general/JsonStorage";
 import { DeferredService } from "../shared/DeferredService";
-import { showDialog } from "./wrapped-bricks";
+import { showDialog, showNotification } from "./wrapped-bricks";
 import type {
   FavMenuItem,
   MenuGroupData,
@@ -48,6 +48,12 @@ export const deferredFavorites = new DeferredService(async () => {
   candidateFavorites = await fetchFavorites();
   preLoadedFavorites = true;
 });
+
+const showErrorAsNotification = (error: unknown) =>
+  showNotification({
+    type: "error",
+    message: httpErrorToString(error),
+  });
 
 /**
  * - 页面初始化时预加载 launchpad 信息。
@@ -118,7 +124,8 @@ export function useLaunchpadInfo(active?: boolean) {
           await deferredFavorites.fetch();
           setLoadingFavorites(false);
         } catch (error) {
-          handleHttpError(error);
+          setLoadingFavorites(false);
+          showErrorAsNotification(error);
         }
       };
       startFetchFavorites();
@@ -186,7 +193,7 @@ export function useLaunchpadInfo(active?: boolean) {
         newFavorites = favorites
           .slice(0, index)
           .concat(favorites.slice(index + 1));
-        undoFavorite(removed).catch(handleHttpError);
+        undoFavorite(removed).catch(showErrorAsNotification);
       } else {
         if (favorites.length >= FAVORITES_LIMIT) {
           showDialog({
@@ -203,7 +210,7 @@ export function useLaunchpadInfo(active?: boolean) {
           if (result) {
             fav.favoriteId = result.instanceId;
           }
-        }, handleHttpError);
+        }, showErrorAsNotification);
       }
       setFavorites(newFavorites);
       candidateFavorites = newFavorites;

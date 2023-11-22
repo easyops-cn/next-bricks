@@ -1,4 +1,4 @@
-import type { MenuIcon } from "@next-shared/general/types";
+import type { LegacyAntdIcon, MenuIcon } from "@next-shared/general/types";
 
 export interface ConfigMenuGroup extends ConfigMenuBase {
   order?: number;
@@ -25,7 +25,7 @@ export interface ConfigMenuItemDir extends ConfigMenuItemBase {
 
 interface ConfigMenuItemBase extends ConfigMenuBase {
   type: "app" | "custom" | "dir";
-  menuIcon?: MenuIcon;
+  menuIcon?: Exclude<MenuIcon, LegacyAntdIcon>;
   position?: number;
 }
 

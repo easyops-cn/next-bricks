@@ -1,5 +1,5 @@
 import type { MicroApp } from "@next-core/types";
-import type { MenuIcon } from "@next-shared/general/types";
+import type { LegacyAntdIcon, MenuIcon } from "@next-shared/general/types";
 
 export interface MenuGroupData {
   name: string;
@@ -23,7 +23,7 @@ export interface MenuItemDataApp {
   id: string;
   instanceId: string;
   url: string;
-  menuIcon?: MenuIcon;
+  menuIcon?: Exclude<MenuIcon, LegacyAntdIcon>;
 }
 
 export interface MenuItemDataCustom {
@@ -32,7 +32,7 @@ export interface MenuItemDataCustom {
   id: string;
   instanceId: string;
   url: string;
-  menuIcon?: MenuIcon;
+  menuIcon?: Exclude<MenuIcon, LegacyAntdIcon>;
 }
 
 export interface MenuItemDataDir {
@@ -47,7 +47,7 @@ export interface MenuItemDataLink {
   favoriteId: string;
   name: string;
   url: string;
-  menuIcon?: MenuIcon;
+  menuIcon?: Exclude<MenuIcon, LegacyAntdIcon>;
 }
 
 export interface StoredMenuItem {

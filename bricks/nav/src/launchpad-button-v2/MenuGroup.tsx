@@ -75,13 +75,15 @@ function MenuItem({ item }: MenuItemProps) {
           className="menu-icon"
           lib="easyops"
           icon="micro-app-center"
-          {...(pick(item.menuIcon, [
-            "lib",
-            "icon",
-            "theme",
-            "category",
-            "prefix",
-          ]) as any)}
+          {...(item.menuIcon?.lib && item.menuIcon.icon
+            ? (pick(item.menuIcon, [
+                "lib",
+                "icon",
+                "theme",
+                "category",
+                "prefix",
+              ]) as any)
+            : null)}
         />
         <span className="menu-item-label">{item.name}</span>
       </WrappedLink>
@@ -131,13 +133,15 @@ export function SidebarMenuItem({ item }: SidebarMenuItemProps) {
           className={`sidebar-menu-icon`}
           lib="easyops"
           icon="micro-app-center"
-          {...(pick(item.menuIcon, [
-            "lib",
-            "icon",
-            "theme",
-            "category",
-            "prefix",
-          ]) as any)}
+          {...(item.menuIcon?.lib && item.menuIcon.icon
+            ? (pick(item.menuIcon, [
+                "lib",
+                "icon",
+                "theme",
+                "category",
+                "prefix",
+              ]) as any)
+            : null)}
         />
         <span className="menu-item-label">{item.name}</span>
       </WrappedLink>
