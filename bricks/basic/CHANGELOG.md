@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.48.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.47.1...@next-bricks/basic@0.48.0) (2023-11-22)
+
+
+### Features
+
+* support eo-avatar-group ([b550c4e](https://github.com/easyops-cn/next-bricks/commit/b550c4e4254d8bad26e75ab8f2be5d6fb8e43832))
+
+
+
+
+
 ## [0.47.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.47.0...@next-bricks/basic@0.47.1) (2023-11-21)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.5.4...@next-bricks/nav@0.5.5) (2023-11-22)
+
+
+### Bug Fixes
+
+* handle empty icon, and refine style ([191ea97](https://github.com/easyops-cn/next-bricks/commit/191ea97ec424871920ed63122c1c0c0a053ea5c4))
+
+
+
+
+
 ## [0.5.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.5.3...@next-bricks/nav@0.5.4) (2023-11-21)
 
 

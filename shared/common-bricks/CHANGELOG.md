@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.23.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.22.0...@next-shared/common-bricks@0.23.0) (2023-11-22)
+
+
+### Features
+
+* support eo-avatar-group ([b550c4e](https://github.com/easyops-cn/next-bricks/commit/b550c4e4254d8bad26e75ab8f2be5d6fb8e43832))
+
+
+
+
+
 # [0.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.21.0...@next-shared/common-bricks@0.22.0) (2023-11-16)
 
 
