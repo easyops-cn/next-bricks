@@ -5,3 +5,19 @@
 :host([hidden]) {
   display: none;
 }
+
+:host([size="large"]) {
+  --avatar-stack-spacing: 0;
+}
+
+:host([size="medium"]) {
+  --avatar-stack-spacing: 0;
+}
+
+:host([size="small"]) {
+  --avatar-stack-spacing: -8px;
+}
+
+:host([size="xs"]) {
+  --avatar-stack-spacing: -6px;
+}

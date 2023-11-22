@@ -1,0 +1,11 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+slot:not([name])::slotted(*:not(:first-child)) {
+  margin-left: var(--avatar-stack-spacing);
+}

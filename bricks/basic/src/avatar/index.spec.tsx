@@ -26,6 +26,7 @@ describe("eo-avatar", () => {
   test("img load success", async () => {
     const element = document.createElement("eo-avatar") as EoAvatar;
     element.src = "success";
+    element.bordered = true;
     element.icon = {
       lib: "antd",
       icon: "user",
@@ -44,6 +45,7 @@ describe("eo-avatar", () => {
     });
     expect(element.shadowRoot?.querySelector(".type-img")).toBeTruthy();
     expect(element.shadowRoot?.querySelector(".avatar-img")).toBeTruthy();
+    expect(element.shadowRoot?.querySelector(".bordered")).toBeTruthy();
 
     act(() => {
       document.body.removeChild(element);

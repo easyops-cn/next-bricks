@@ -33,6 +33,7 @@ export interface AvatarProps {
   alt?: string;
   icon?: GeneralIconProps;
   name?: string;
+  bordered?: boolean;
 }
 
 /**
@@ -81,6 +82,14 @@ class EoAvatar extends ReactNextElement implements AvatarProps {
    */
   @property() accessor name: string | undefined;
 
+  /**
+   * 是否有边框
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor bordered: boolean | undefined;
+
   render() {
     return (
       <EoAvatarComponent
@@ -90,13 +99,14 @@ class EoAvatar extends ReactNextElement implements AvatarProps {
         alt={this.alt}
         icon={this.icon}
         name={this.name}
+        bordered={this.bordered}
       />
     );
   }
 }
 
 export function EoAvatarComponent(props: AvatarProps) {
-  const { shape, size, src, alt, icon, name } = props;
+  const { shape, size, src, alt, icon, name, bordered } = props;
 
   const avatarNodeRef = useRef<HTMLSpanElement>(null);
   const textNodeRef = useRef<HTMLSpanElement>(null);
@@ -204,7 +214,10 @@ export function EoAvatarComponent(props: AvatarProps) {
         "avatar",
         `shape-${shape}`,
         `size-${size}`,
-        `type-${type}`
+        `type-${type}`,
+        {
+          bordered: !!bordered,
+        }
       )}
       ref={avatarNodeRef}
       part={`avatar avatar-${type}`}
