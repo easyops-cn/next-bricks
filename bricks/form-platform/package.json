@@ -34,7 +34,6 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-bricks/form": "^0.25.12",
     "@next-core/element": "^1.1.6",
     "@next-core/i18n": "^1.0.31",
     "@next-core/react-element": "^1.0.16",
@@ -45,5 +44,8 @@
     "@next-api-sdk/cmdb-sdk": "^1.1.0",
     "@next-core/build-next-bricks": "^1.15.1",
     "@next-core/test-next": "^1.0.11"
+  },
+  "peerDependencies": {
+    "@next-bricks/form": "*"
   }
 }
