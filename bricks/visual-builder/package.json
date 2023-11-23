@@ -33,8 +33,6 @@
   },
   "dependencies": {
     "@next-api-sdk/next-builder-sdk": "^1.2.2",
-    "@next-bricks/basic": "^0.48.1",
-    "@next-bricks/icons": "^0.6.18",
     "@next-core/element": "^1.1.6",
     "@next-core/http": "^1.1.5",
     "@next-core/react-element": "^1.0.16",
@@ -53,5 +51,9 @@
   "devDependencies": {
     "@next-core/build-next-bricks": "^1.16.0",
     "@next-core/test-next": "^1.0.11"
+  },
+  "peerDependencies": {
+    "@next-bricks/basic": "*",
+    "@next-bricks/icons": "*"
   }
 }
