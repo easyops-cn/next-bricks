@@ -45,7 +45,7 @@ eo-link {
   color: var(--color-normal-text);
 }
 .popover.subprime {
-  display: inline-block;
+  display: block;
   width: 100%;
 }
 .sub-menu-wrapper {
