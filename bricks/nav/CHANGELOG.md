@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.5.6...@next-bricks/nav@0.5.7) (2023-11-23)
+
+
+### Bug Fixes
+
+* **nav-menu:** fix submenu overflow ([be732e9](https://github.com/easyops-cn/next-bricks/commit/be732e95b00d96a06c782a8fef79494aa3b1a306))
+
+
+
+
+
 ## [0.5.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.5.5...@next-bricks/nav@0.5.6) (2023-11-22)
 
 **Note:** Version bump only for package @next-bricks/nav

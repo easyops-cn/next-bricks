@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/basic",
-  "version": "0.48.1",
+  "version": "0.48.2",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/basic",
   "repository": {
     "type": "git",
@@ -46,7 +46,7 @@
     "@next-core/runtime": "^1.25.7",
     "@next-core/theme": "^1.4.2",
     "@next-core/types": "^1.7.1",
-    "@next-shared/general": "^0.8.1",
+    "@next-shared/general": "^0.8.2",
     "classnames": "^2.3.2",
     "lodash": "^4.17.21",
     "react": "0.0.0-experimental-ee8509801-20230117"
