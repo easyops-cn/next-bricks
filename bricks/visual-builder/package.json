@@ -33,16 +33,14 @@
   },
   "dependencies": {
     "@next-api-sdk/next-builder-sdk": "^1.2.2",
-    "@next-bricks/basic": "^0.48.1",
-    "@next-bricks/icons": "^0.6.18",
     "@next-core/element": "^1.1.6",
     "@next-core/http": "^1.1.5",
     "@next-core/react-element": "^1.0.16",
-    "@next-core/runtime": "^1.25.6",
+    "@next-core/runtime": "^1.25.7",
     "@next-core/storyboard": "^0.6.5",
-    "@next-core/theme": "^1.4.1",
+    "@next-core/theme": "^1.4.2",
     "@next-core/types": "^1.7.1",
-    "@next-core/utils": "^1.6.3",
+    "@next-core/utils": "^1.6.4",
     "@next-shared/general": "^0.8.1",
     "classnames": "^2.3.2",
     "html2canvas": "^1.4.1",
@@ -51,7 +49,11 @@
     "react": "0.0.0-experimental-ee8509801-20230117"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.15.1",
+    "@next-core/build-next-bricks": "^1.16.0",
     "@next-core/test-next": "^1.0.11"
+  },
+  "peerDependencies": {
+    "@next-bricks/basic": "*",
+    "@next-bricks/icons": "*"
   }
 }

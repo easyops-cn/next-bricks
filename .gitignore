@@ -1,6 +1,7 @@
 dist
 dist-*
 node_modules
+*.bak
 .coverage
 .vscode
 .idea
