@@ -12,3 +12,4 @@ import "./data-providers/apply-snippet.js";
 import "./data-providers/delete-file.js";
 import "./data-providers/rename-file.js";
 import "./data-providers/insert-node.js";
+import "./data-providers/get-brick-custom-commands.js";

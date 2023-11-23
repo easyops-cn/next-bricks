@@ -1,4 +1,11 @@
+import {
+  BrickCommandConf,
+  SelectorConf,
+  BrickTarget,
+} from "../../data-providers/data/bricks/interfaces.js";
+
 export interface InspectTarget {
+  host?: InspectSelector;
   element: HTMLElement;
   selector: InspectSelector;
 }
@@ -19,7 +26,7 @@ export interface InspectOutline {
 
 export interface RecordStep {
   event: string;
-  targets: InspectSelector[];
+  targets: InspectSelector[][];
   text?: string;
 }
 
@@ -32,4 +39,20 @@ export interface SelectedRecordStep {
 export interface RelatedCommand {
   name: string;
   params?: unknown[];
+}
+
+export interface RuntimeSelectorConf extends SelectorConf {
+  eq?: number;
+  isolate?: boolean;
+  element?: HTMLElement;
+}
+
+export interface RuntimeBrickTarget extends Omit<BrickTarget, "selectors"> {
+  selectors: RuntimeSelectorConf[];
+}
+
+export interface RuntimeBrickCommandConf
+  extends Omit<BrickCommandConf, "targets"> {
+  element?: HTMLElement;
+  targets: RuntimeBrickTarget[];
 }
