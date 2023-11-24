@@ -1,0 +1,37 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.alert {
+  height: 32px;
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text {
+  color: var(--antd-text-color);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.icon {
+  margin-left: 20px;
+  cursor: pointer;
+  color: #8c8c8c;
+}
+
+.info {
+  background-color: var(--color-info-bg);
+}
+
+.warning {
+  background-color: var(--color-warning-bg);
+}
