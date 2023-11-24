@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.5.7...@next-bricks/nav@0.6.0) (2023-11-24)
+
+
+### Features
+
+* new brick: easyops-navbar-alerts ([5bc8db4](https://github.com/easyops-cn/next-bricks/commit/5bc8db42c912d6b7ce5fec3fd192bbe8341cd94c))
+
+
+
+
+
 ## [0.5.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.5.6...@next-bricks/nav@0.5.7) (2023-11-23)
 
 
