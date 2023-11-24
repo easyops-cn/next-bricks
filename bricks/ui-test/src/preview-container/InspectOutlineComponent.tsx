@@ -12,7 +12,7 @@ export function InspectOutlineComponent({
   height,
   left,
   top,
-  selector,
+  selectors,
 }: InspectOutlineComponentProps): React.ReactElement {
   const borderWidth = 2;
   return (
@@ -26,11 +26,17 @@ export function InspectOutlineComponent({
       }}
     >
       <div className="label">
-        {selector.type === "testid"
-          ? `{${selector.value}}`
-          : selector.type === "id"
-          ? `#${selector.value}`
-          : selector.value}
+        {selectors.reduce((str, selector, index) => {
+          const indent = () => (index === 0 ? "" : " ");
+          str +=
+            indent() + selector.type === "testid"
+              ? `{${selector.value}}`
+              : selector.type === "id"
+              ? `#${selector.value}`
+              : selector.value;
+
+          return str;
+        }, "")}
       </div>
     </div>
   );

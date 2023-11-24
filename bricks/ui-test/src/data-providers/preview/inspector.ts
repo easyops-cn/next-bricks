@@ -113,7 +113,7 @@ function selectTarget(event: MouseEvent): void {
         channel: "ui-test-preview",
         type: "inspect-select",
         payload: {
-          targets: targets.map((t) => t.selector),
+          targets: targets.map((t) => t.selectors),
         },
       },
       previewFromOrigin
@@ -151,20 +151,24 @@ export function getPossibleTargets(
       if (item.dataset.testid) {
         targets.push({
           element: item,
-          selector: {
-            type: "testid",
-            value: item.dataset.testid,
-            tag,
-          },
+          selectors: [
+            {
+              type: "testid",
+              value: item.dataset.testid,
+              tag,
+            },
+          ],
         });
       } else if (item.id) {
         targets.push({
           element: item,
-          selector: {
-            type: "id",
-            value: item.id,
-            tag,
-          },
+          selectors: [
+            {
+              type: "id",
+              value: item.id,
+              tag,
+            },
+          ],
         });
       }
     }
@@ -174,12 +178,12 @@ export function getPossibleTargets(
   // - Ignore `button[data-testid=button]` in `basic-bricks.general-button`
   if (
     targets.length > 1 &&
-    isEqual(targets[0].selector, {
+    isEqual(targets[0].selectors[0], {
       tag: "button",
       type: "testid",
       value: "button",
     }) &&
-    targets[1].selector.tag === "basic-bricks.general-button"
+    targets[1].selectors[0].tag === "basic-bricks.general-button"
   ) {
     targets.shift();
   }
@@ -286,10 +290,12 @@ function getTargetOutlinesByRelatedCommands(relatedCommands: RelatedCommand[]) {
       for (const element of singleMatch ? [elements] : elements) {
         targets.push({
           element: element as HTMLElement,
-          selector: {
-            ...selector,
-            tag: element.tagName.toLowerCase(),
-          },
+          selectors: [
+            {
+              ...selector,
+              tag: element.tagName.toLowerCase(),
+            },
+          ],
         });
         nextCurrent.push(element);
       }
@@ -321,13 +327,13 @@ function isSingleMatch(
 type PartialInspectSelector = Pick<InspectSelector, "type" | "value">;
 
 function getTargetOutline(target: InspectTarget): InspectOutline {
-  const { element, selector } = target;
+  const { element, selectors } = target;
   const { width, height, left, top } = element.getBoundingClientRect();
   return {
     width,
     height,
     left: left + window.scrollX,
     top: top + window.scrollY,
-    selector,
+    selectors,
   };
 }

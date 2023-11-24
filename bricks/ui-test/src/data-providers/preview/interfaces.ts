@@ -7,7 +7,7 @@ import {
 export interface InspectTarget {
   host?: InspectSelector;
   element: HTMLElement;
-  selector: InspectSelector;
+  selectors: InspectSelector[];
 }
 
 export interface InspectSelector {
@@ -21,7 +21,7 @@ export interface InspectOutline {
   height: number;
   left: number;
   top: number;
-  selector: InspectSelector;
+  selectors: InspectSelector[];
 }
 
 export interface RecordStep {
