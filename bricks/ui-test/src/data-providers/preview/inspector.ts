@@ -1,31 +1,18 @@
 // istanbul ignore file: working in progress
 // https://github.com/facebook/react/blob/cae635054e17a6f107a39d328649137b83f25972/packages/react-devtools-shared/src/backend/views/Highlighter/index.js
-import { isEmpty, isEqual, throttle } from "lodash";
+import { cloneDeep, curry, isEmpty, isEqual, throttle } from "lodash";
+import { brickCommandsConf } from "../data/bricks/index.js";
 import { blacklistBricksOfQueries } from "../../constants.js";
 import type {
   InspectOutline,
   InspectSelector,
   InspectTarget,
   RelatedCommand,
+  RuntimeBrickCommandConf,
+  RuntimeSelectorConf,
 } from "./interfaces.js";
 
 let isInspecting = false;
-
-const brickFilters = [
-  (element: HTMLElement) => {
-    const tag = element.tagName.toLowerCase();
-
-    return !blacklistBricksOfQueries.some((item) =>
-      item instanceof RegExp ? item.test(tag) : item === tag
-    );
-  },
-  (element: HTMLElement) => element.hasAttribute("data-iid"),
-  (element: HTMLElement) =>
-    element.hasAttribute("data-testid")
-      ? // 用户填写的以下划线开头的 test-id 会过滤掉
-        !element.dataset.testid?.startsWith("_")
-      : !!element.id,
-];
 
 export let previewFromOrigin: string;
 
@@ -64,7 +51,7 @@ function onMouseEvent(event: MouseEvent): void {
 
 const hoverOnTarget = throttle(
   (eventTargets: EventTarget[]) => {
-    const targets = getPossibleTargets(eventTargets, brickFilters);
+    const targets = getPossibleTargets(eventTargets);
     window.parent.postMessage(
       {
         channel: "ui-test-preview",
@@ -106,7 +93,7 @@ function onPointerLeave(event: MouseEvent): void {
 }
 
 function selectTarget(event: MouseEvent): void {
-  const targets = getPossibleTargets(event.composedPath(), brickFilters);
+  const targets = getPossibleTargets(event.composedPath());
   if (targets.length > 0) {
     window.parent.postMessage(
       {
@@ -121,11 +108,171 @@ function selectTarget(event: MouseEvent): void {
   }
 }
 
-export function getPossibleTargets(
-  eventTargets: EventTarget[],
-  extraFilters?: Array<(target: HTMLElement) => boolean>
-): InspectTarget[] {
+export function calcElementPosition(element: HTMLElement): number {
+  const children = element.parentElement?.children ?? [];
+
+  return Array.from(children).indexOf(element);
+}
+
+export function matchSelectorType(
+  select: RuntimeSelectorConf,
+  element: HTMLElement
+): boolean {
+  if (select.type === "testid") {
+    return select.value === element.dataset.testid;
+  }
+
+  if (select.type === "css-selector") {
+    return element.matches(select.value);
+  }
+
+  return false;
+}
+
+export function matchBrickElements(
+  brickCommandConfList: RuntimeBrickCommandConf[],
+  eventTargets: EventTarget[]
+) {
+  const matches: InspectTarget[] = [];
+
+  const processedConf = brickCommandConfList.map((conf) => {
+    return {
+      brick: conf.brick,
+      element: conf.element,
+      targets: conf.targets.map((target) => ({
+        ...target,
+        selectors: cloneDeep(target.selectors),
+        cursor: -1,
+        end: target.selectors.length - 1,
+      })),
+    };
+  });
+
+  for (const item of eventTargets) {
+    if (
+      (item as Node).nodeType === Node.ELEMENT_NODE &&
+      item instanceof HTMLElement
+    ) {
+      processedConf.forEach((conf) => {
+        conf.targets.forEach((target) => {
+          const { cursor, end, selectors } = target;
+          const reversSelectors = [...selectors].reverse();
+          const curSelector = reversSelectors[cursor + 1];
+
+          if (cursor < end && matchSelectorType(curSelector, item)) {
+            if (curSelector.multiple) {
+              curSelector.eq = calcElementPosition(item);
+            }
+
+            curSelector.element = item;
+            target.cursor = cursor + 1;
+
+            if (target.cursor === target.end) {
+              let hostBrickData;
+
+              if (conf.element) {
+                const hostElement = conf.element as HTMLElement;
+                const tag = hostElement.tagName.toLowerCase();
+                if (hostElement.dataset.testid) {
+                  hostBrickData = {
+                    type: "testid",
+                    value: hostElement.dataset.testid,
+                    tag,
+                  };
+                } else if (hostElement.id) {
+                  hostBrickData = {
+                    type: "id",
+                    value: hostElement.id,
+                    tag,
+                  };
+                }
+              }
+
+              matches.push({
+                element: selectors[selectors.length - 1].element as HTMLElement,
+                selectors: [
+                  ...(hostBrickData ? [hostBrickData as InspectSelector] : []),
+                  ...target.selectors.map((s) => ({
+                    type: s.type,
+                    value: s.value,
+                    tag: (s.element as HTMLElement).tagName.toLowerCase(),
+                    isolate: target.isolate,
+                    eq: s.eq,
+                  })),
+                ],
+              });
+            }
+          }
+        });
+      });
+    }
+  }
+
+  return matches;
+}
+
+export function getBrickTargets(eventTargets: EventTarget[]) {
+  const matchedBrickCommands = [] as RuntimeBrickCommandConf[];
+  eventTargets.forEach((item: any) => {
+    if (
+      (item as Node).nodeType === Node.ELEMENT_NODE &&
+      item instanceof HTMLElement &&
+      item.hasAttribute("data-iid")
+    ) {
+      const brick = item.tagName.toLowerCase();
+
+      const find = brickCommandsConf.find((conf) => conf.brick === brick);
+
+      if (find) {
+        matchedBrickCommands.push({
+          ...find,
+          targets: find.targets.filter((item) => !item.isolate),
+          element: item,
+        });
+      }
+    }
+  });
+
+  return matchBrickElements(matchedBrickCommands, eventTargets);
+}
+
+export function getBrickIsolateTargets(eventTargets: EventTarget[]) {
+  const matchedBrickIsolateCommands = [] as RuntimeBrickCommandConf[];
+  brickCommandsConf.forEach((item) => {
+    const filters = item.targets.filter((t) => t.isolate);
+
+    if (filters.length) {
+      matchedBrickIsolateCommands.push({
+        ...item,
+        targets: filters,
+      });
+    }
+  });
+
+  return matchBrickElements(matchedBrickIsolateCommands, eventTargets);
+}
+
+export function getPossibleBrickTargets(eventTargets: EventTarget[]) {
   const targets: InspectTarget[] = [];
+
+  const matched = [getBrickTargets, getBrickIsolateTargets].reduce(
+    (arr, fn: (e: EventTarget[]) => any) => {
+      return arr.length === 0 ? fn(eventTargets) : arr;
+    },
+    []
+  );
+
+  if (matched.length > 0) {
+    targets.push(...matched);
+    return targets;
+  }
+
+  return targets;
+}
+
+export function getPossibleElementTargets(eventTargets: EventTarget[]) {
+  const targets: InspectTarget[] = [];
+
   for (const item of eventTargets) {
     if (
       (item as Node).nodeType === Node.ELEMENT_NODE &&
@@ -143,12 +290,16 @@ export function getPossibleTargets(
         continue;
       }
 
-      // 目前会在 inspect 模式下定位元素的时候做一些构件上的过滤，在其他的地方不做过滤 1.右侧树 click / hover 高亮 2. 屏幕录制
-      if (!isEmpty(extraFilters) && extraFilters?.some((fn) => !fn(item))) {
+      if (
+        blacklistBricksOfQueries.some((s) =>
+          s instanceof RegExp ? s.test(tag) : s === tag
+        )
+      ) {
         continue;
       }
 
-      if (item.dataset.testid) {
+      // 用户填写的以下划线开头的 testid 过滤掉
+      if (item.dataset.testid && !item.dataset.testid?.startsWith("_")) {
         targets.push({
           element: item,
           selectors: [
@@ -189,6 +340,17 @@ export function getPossibleTargets(
   }
 
   return targets;
+}
+
+export function getPossibleTargets(
+  eventTargets: EventTarget[]
+): InspectTarget[] {
+  const brickTargets = getPossibleBrickTargets(eventTargets);
+
+  if (brickTargets.length) return brickTargets;
+
+  // rollback the legacy way
+  return getPossibleElementTargets(eventTargets);
 }
 
 export function hoverOverTreeNode(relatedCommands: RelatedCommand[]) {

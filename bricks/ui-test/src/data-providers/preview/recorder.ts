@@ -64,7 +64,7 @@ function onMouseEvent(event: MouseEvent): void {
   }
   steps.push({
     event: event.type,
-    targets: targets.map((t) => t.selector),
+    targets: targets.map((t) => t.selectors),
   });
 }
 
@@ -106,7 +106,7 @@ function completeKeyDown(): void {
   if (currentKeydownTargets && currentKeydownTexts.length > 0) {
     steps.push({
       event: "type",
-      targets: currentKeydownTargets.map((t) => t.selector),
+      targets: currentKeydownTargets.map((t) => t.selectors),
       text: currentKeydownTexts.join(""),
     });
   }

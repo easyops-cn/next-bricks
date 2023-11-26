@@ -29,11 +29,12 @@ export function InspectOutlineComponent({
         {selectors.reduce((str, selector, index) => {
           const indent = () => (index === 0 ? "" : " ");
           str +=
-            indent() + selector.type === "testid"
+            indent() +
+            (selector.type === "testid"
               ? `{${selector.value}}`
               : selector.type === "id"
               ? `#${selector.value}`
-              : selector.value;
+              : selector.value);
 
           return str;
         }, "")}
