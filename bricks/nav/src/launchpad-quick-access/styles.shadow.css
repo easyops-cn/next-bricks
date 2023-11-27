@@ -1,0 +1,81 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.quick-access-list {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, 1fr);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.sidebar-menu-item > eo-link {
+  display: block;
+  min-width: 0;
+}
+
+.sidebar-menu-item > eo-link::part(link) {
+  display: flex;
+  align-items: center;
+  height: 20px;
+  gap: 8px;
+  color: var(--color-header-text);
+}
+
+.sidebar-menu-icon {
+  color: var(--left-sidebar-item-collapsed-icon-color);
+}
+
+.menu-item-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menu-item-remove {
+  color: var(--color-secondary-text);
+  cursor: pointer;
+}
+
+.sidebar-menu-item:not(:hover) .menu-item-remove {
+  display: none;
+}
+
+.menu-item-remove:hover {
+  color: var(--color-normal-text);
+}
+
+.menu-item-remove:active {
+  color: var(--color-strong-text);
+}
+
+.sidebar-menu-item > eo-link:hover::part(link),
+.sidebar-menu-item > eo-link:hover .sidebar-menu-icon {
+  color: var(--color-brand-hover);
+}
+
+/* https://github.com/w3c/csswg-drafts/issues/3559#issuecomment-1758459996 */
+@supports not (inset: 0) {
+  /* .content, */
+  .sidebar-menu-item,
+  .sidebar-menu-item > eo-link::part(link) {
+    gap: 0;
+  }
+
+  .sidebar-menu-icon {
+    margin-right: 8px;
+  }
+}
