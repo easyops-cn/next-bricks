@@ -1,0 +1,255 @@
+:host {
+  display: block;
+  --local-menu-icon-color: #8c8c8c;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+:host-context(html[data-theme="dark"]),
+:host-context(html[data-theme="dark-v2"]) {
+  --local-menu-icon-color: rgba(255, 255, 255, 0.45);
+}
+
+.container {
+  position: relative;
+}
+
+.dropdown {
+  margin-top: 5px;
+  position: absolute;
+  top: 100%;
+  left: 0px;
+  width: 100%;
+  z-index: 1050;
+  padding: 20px 24px 24px;
+  overflow: hidden;
+  box-sizing: border-box;
+  background-color: var(--antd-select-dropdown-bg);
+  border-radius: 4px;
+  box-shadow: var(--antd-box-shadow-base);
+  display: none;
+}
+
+.dropdown-active {
+  display: block;
+}
+
+.search-box {
+  border-bottom: 1px solid var(--color-text-divider-line);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 0;
+  cursor: text;
+}
+
+.search-icon {
+  color: var(--color-auxiliary-text);
+}
+
+.search-input {
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline: none;
+  color: inherit;
+  background-color: transparent;
+  font-size: 14px;
+  line-height: 22px;
+  flex: 1;
+  min-width: 0;
+}
+
+.search-input::placeholder {
+  color: var(--color-disabled-text);
+  opacity: 1;
+}
+
+.search-clear {
+  display: none;
+  color: var(--color-secondary-text);
+  cursor: pointer;
+}
+
+.search-clear.searching {
+  display: inline-block;
+}
+
+.search-clear:hover {
+  color: var(--color-auxiliary-text);
+}
+
+.dropdown-content {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--theme-doderblue-color);
+  flex: 1;
+  font-size: 30px;
+}
+
+.loading > :not(.spinner) {
+  display: none;
+}
+
+.menu-group-label,
+.menu-item-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menu-groups,
+.menu,
+.sub-menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.menu,
+.sub-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.menu-item > eo-link {
+  display: block;
+  min-width: 0;
+}
+
+.menu-item > eo-link::part(link) {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-header-text);
+}
+
+.menu-groups {
+  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+}
+
+.menu-groups {
+  display: grid;
+  gap: 32px 8px;
+}
+
+.menu-group {
+  padding-right: 12px;
+  color: var(--color-header-text);
+}
+
+.menu-group-label {
+  font-size: var(--card-title-font-size);
+  font-weight: 500;
+  color: var(--color-header-text);
+  margin-bottom: 14px;
+}
+
+.menu-item:not(.folder) {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.menu-icon {
+  color: var(--local-menu-icon-color);
+}
+
+.menu-item.active,
+.menu-item.active .menu-icon {
+  color: var(--color-brand-active);
+}
+
+.sub-menu:not(.expanded) {
+  display: none;
+}
+
+.sub-menu {
+  margin-top: 14px;
+  margin-left: 8px;
+  border-left: 1px solid var(--color-text-divider-line);
+  padding-left: 15px;
+}
+
+.menu-item-star {
+  cursor: pointer;
+}
+
+.menu-item-star,
+.menu-item-toggle {
+  color: var(--color-secondary-text);
+}
+
+.menu-item-star {
+  display: none;
+}
+
+.can-star.starred > .menu-item-star,
+.can-star:hover > .menu-item-star {
+  display: inline-block;
+}
+
+.can-star:not(.starred) > .menu-item-star {
+  color: var(--color-secondary-text);
+}
+
+.starred > .menu-item-star {
+  color: var(--palette-yellow-6);
+}
+
+.menu-item > eo-link:hover::part(link),
+.menu-item > eo-link:hover .menu-icon,
+.menu-item > eo-link:hover .menu-item-toggle {
+  color: var(--color-brand-hover);
+}
+
+/* https://github.com/w3c/csswg-drafts/issues/3559#issuecomment-1758459996 */
+@supports not (inset: 0) {
+  /* .content, */
+  .search-box,
+  .menu,
+  .sub-menu,
+  .menu-item:not(.folder),
+  .menu-item > eo-link::part(link) {
+    gap: 0;
+  }
+
+  .dropdown-content {
+    display: grid;
+    grid-auto-flow: row;
+  }
+
+  .dropdown-content:not(.loading) {
+    height: min-content;
+  }
+
+  .menu > :not(:first-child),
+  .sub-menu > :not(:first-child) {
+    margin-top: 14px;
+  }
+
+  .search-icon,
+  .menu-icon {
+    margin-right: 8px;
+  }
+
+  .search-clear,
+  .menu-item-star,
+  .menu-item-toggle {
+    margin-left: 8px;
+  }
+}
