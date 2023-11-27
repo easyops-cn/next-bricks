@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.26.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.25.14...@next-bricks/form@0.26.0) (2023-11-27)
+
+
+### Features
+
+* add workbench layout ([847e5d0](https://github.com/easyops-cn/next-bricks/commit/847e5d08f5aef4ca11285a3d3c638fcd56ded6b5))
+* update type ([693513e](https://github.com/easyops-cn/next-bricks/commit/693513e1ceae6efcfb560d58153a69ca1a8c99c8))
+
+
+
+
+
 ## [0.25.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.25.13...@next-bricks/form@0.25.14) (2023-11-23)
 
 **Note:** Version bump only for package @next-bricks/form

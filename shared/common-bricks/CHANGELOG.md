@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.24.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.23.0...@next-shared/common-bricks@0.24.0) (2023-11-27)
+
+
+### Features
+
+* add workbench layout ([847e5d0](https://github.com/easyops-cn/next-bricks/commit/847e5d08f5aef4ca11285a3d3c638fcd56ded6b5))
+
+
+
+
+
 # [0.23.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.22.0...@next-shared/common-bricks@0.23.0) (2023-11-22)
 
 

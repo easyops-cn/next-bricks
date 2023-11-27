@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.11.36...@next-bricks/advanced@0.12.0) (2023-11-27)
+
+
+### Features
+
+* add unit test ([f729a48](https://github.com/easyops-cn/next-bricks/commit/f729a48b0c3f05f52b8ef9f729fddfb0812f2c52))
+* add workbench layout ([847e5d0](https://github.com/easyops-cn/next-bricks/commit/847e5d08f5aef4ca11285a3d3c638fcd56ded6b5))
+* update type ([693513e](https://github.com/easyops-cn/next-bricks/commit/693513e1ceae6efcfb560d58153a69ca1a8c99c8))
+* update useBrick ([721307a](https://github.com/easyops-cn/next-bricks/commit/721307a4ab9fe5e6d2bb8bdfb447d62e186eeece))
+
+
+
+
+
 ## [0.11.36](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.11.35...@next-bricks/advanced@0.11.36) (2023-11-23)
 
 **Note:** Version bump only for package @next-bricks/advanced
