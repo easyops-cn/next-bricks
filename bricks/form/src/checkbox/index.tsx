@@ -339,7 +339,7 @@ function CheckboxComponent(props: CheckboxProps) {
           minHeight: "32px",
         }}
       >
-        <div className="checkboxWrapper" part="checkbox-wrapper">
+        <div className="checkbox-wrapper" part="checkbox-wrapper">
           {props.options?.map((item: CheckboxOptionType) => {
             const disabled = item.disabled || props.disabled;
             return (

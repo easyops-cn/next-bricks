@@ -12,8 +12,6 @@ import {
 } from "react-grid-layout";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
-import "react-grid-layout/css/styles.css";
-import "react-resizable/css/styles.css";
 import type {
   GeneralIcon,
   GeneralIconProps,
@@ -68,12 +66,12 @@ class EoWorkbenchLayout extends ReactNextElement {
   @property({
     attribute: false,
   })
-  accessor layouts: Layout[];
+  accessor layouts: Layout[] | undefined;
 
   @property({
     attribute: false,
   })
-  accessor componentList: Item[];
+  accessor componentList: Item[] | undefined;
 
   @event({
     type: "save.layout",
@@ -97,8 +95,8 @@ class EoWorkbenchLayout extends ReactNextElement {
 }
 
 export interface EoWorkbenchLayoutProps {
-  layouts: Layout[];
-  componentList: Item[];
+  layouts?: Layout[];
+  componentList?: Item[];
   isEdit?: boolean;
   onSave?: (layout: Layout[]) => void;
 }
@@ -111,13 +109,13 @@ export function EoWorkbenchLayoutComponent(props: EoWorkbenchLayoutProps) {
     () => WidthProvider(Responsive),
     []
   );
-  const gridLayoutRef = useRef<HTMLDivElement>();
+  const gridLayoutRef = useRef<HTMLDivElement>(null);
   const layoutCacheRef = useRef<Layout[]>();
 
   const [componentList, setComponentList] = useState<Item[]>(
-    props.componentList
+    props?.componentList ?? []
   );
-  const [layouts, setLayouts] = useState<Layout[]>(props.layouts);
+  const [layouts, setLayouts] = useState<Layout[]>(props?.layouts ?? []);
   const [cols, setCols] = useState<number>(3);
 
   const handleDragCallback: ItemCallback = (layout, oldItem, newItem) => {
@@ -149,18 +147,19 @@ export function EoWorkbenchLayoutComponent(props: EoWorkbenchLayoutProps) {
         }
       }
       if (!isAllowAction) {
-        setLayouts((items) =>
-          items.map((item) => {
-            const matchLayout = layoutCacheRef.current.find(
-              (layout) => getRealKey(layout.i) === getRealKey(item.i)
-            );
-            // should update key to refresh layout
-            const key = `${getRealKey(item.i)}:${Math.random()}`;
-            return {
-              ...matchLayout,
-              i: key,
-            };
-          })
+        setLayouts(
+          (items) =>
+            items?.map((item) => {
+              const matchLayout = layoutCacheRef.current?.find(
+                (layout) => getRealKey(layout.i) === getRealKey(item.i)
+              );
+              // should update key to refresh layout
+              const key = `${getRealKey(item.i)}:${Math.random()}`;
+              return {
+                ...matchLayout,
+                i: key,
+              } as Layout;
+            })
         );
         return;
       }
@@ -223,7 +222,7 @@ export function EoWorkbenchLayoutComponent(props: EoWorkbenchLayoutProps) {
       layouts.map((layout) => {
         const component = componentList.find(
           (item) => item.key === getRealKey(layout.i)
-        );
+        )!;
         return (
           <div
             key={layout.i}
@@ -233,7 +232,7 @@ export function EoWorkbenchLayoutComponent(props: EoWorkbenchLayoutProps) {
             }}
             className="drag-box"
           >
-            <ReactUseBrick useBrick={component} />
+            <ReactUseBrick useBrick={component as UseSingleBrickConf} />
             {props.isEdit && (
               <WrappedIcon
                 icon="delete"
