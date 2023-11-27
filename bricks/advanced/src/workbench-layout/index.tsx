@@ -74,12 +74,21 @@ class EoWorkbenchLayout extends ReactNextElement {
   accessor componentList: Item[] | undefined;
 
   @event({
-    type: "save.layout",
+    type: "save",
   })
   accessor #saveLayoutEvent!: EventEmitter<Layout[]>;
 
   #handleSaveLayout = (layout: Layout[]) => {
     this.#saveLayoutEvent.emit(layout);
+  };
+
+  @event({
+    type: "cancel",
+  })
+  accessor #cancelEvent!: EventEmitter<void>;
+
+  #handleCancel = () => {
+    this.#cancelEvent.emit();
   };
 
   render() {
@@ -89,6 +98,7 @@ class EoWorkbenchLayout extends ReactNextElement {
         componentList={this.componentList}
         isEdit={this.isEdit}
         onSave={this.#handleSaveLayout}
+        onCancel={this.#handleCancel}
       />
     );
   }
@@ -99,6 +109,7 @@ export interface EoWorkbenchLayoutProps {
   componentList?: Item[];
   isEdit?: boolean;
   onSave?: (layout: Layout[]) => void;
+  onCancel?: () => void;
 }
 
 const getRealKey = (key: string): string =>
@@ -207,12 +218,18 @@ export function EoWorkbenchLayoutComponent(props: EoWorkbenchLayoutProps) {
     );
   };
 
+  const handleCancel = () => {
+    props.onCancel?.();
+  };
+
   const handleDeleteItem = useCallback(
     (e: React.MouseEvent, deteleItem: Item) => {
       e.stopPropagation();
-      setLayouts((items) => {
-        return items.filter((item) => getRealKey(item.i) !== deteleItem.key);
-      });
+      setLayouts(
+        layoutCacheRef.current?.filter(
+          (item) => getRealKey(item.i) !== deteleItem.key
+        ) ?? []
+      );
     },
     []
   );
@@ -285,7 +302,7 @@ export function EoWorkbenchLayoutComponent(props: EoWorkbenchLayoutProps) {
             <WrappedButton type="primary" onClick={handleSave}>
               保存
             </WrappedButton>
-            <WrappedButton>取消</WrappedButton>
+            <WrappedButton onClick={handleCancel}>取消</WrappedButton>
           </div>
         )}
         <ResponsiveReactGridLayout
