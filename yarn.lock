@@ -2482,7 +2482,7 @@
   resolved "https://registry.yarnpkg.com/@next-core/types/-/types-1.7.1.tgz#83b3b647bd3811c30272c0463744d38921d2d595"
   integrity sha512-kYIQg91cyiPFIQ87RgX5pc+gRMaflKkliOYsy5KPcjOIXXL5rAPyK7r5iPn2JLDMKw8yUfHUe//cLl2RMP3xXA==
 
-"@next-core/utils@^1.6.3", "@next-core/utils@^1.6.4":
+"@next-core/utils@^1.6.4":
   version "1.6.4"
   resolved "https://registry.yarnpkg.com/@next-core/utils/-/utils-1.6.4.tgz#e115544c8ab42d85d83be542930e7bef8956dbba"
   integrity sha512-cjKjN8tgD5Fl532L0BLwIinIW/DQSZyBSq7zVwxV0Kk8TS6MwQyUdEquNJBc6T4IbgTxYDFIZ84WVneK8d65+g==
