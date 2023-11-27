@@ -155,7 +155,7 @@ class Checkbox extends FormItemElementBase {
         )
       : this.options;
     const currentSelectOption = formatOptions(currentOptions).filter((item) =>
-      detail.includes(item.value)
+      typeof item.value === "object" ? true : detail.includes(item.value)
     );
     this.#checkboxChangeEvent.emit(currentSelectOption);
   };
@@ -339,11 +339,7 @@ function CheckboxComponent(props: CheckboxProps) {
           minHeight: "32px",
         }}
       >
-        <div
-          className={classNames({
-            checkboxWrapper: true,
-          })}
-        >
+        <div className="checkbox-wrapper" part="checkbox-wrapper">
           {props.options?.map((item: CheckboxOptionType) => {
             const disabled = item.disabled || props.disabled;
             return (
@@ -354,6 +350,7 @@ function CheckboxComponent(props: CheckboxProps) {
                   checkboxLabelDisabled: disabled,
                   checkboxLabelCheck: values.includes(item.value),
                 })}
+                part="checkbox-option"
               >
                 <span
                   style={{ color: item.checkboxColor }}

@@ -88,7 +88,12 @@
     "eo-info-card-item",
     "eo-humanize-time"
   ],
-  "advanced": ["eo-cascader", "eo-table", "eo-next-table"],
+  "advanced": [
+    "eo-cascader",
+    "eo-table",
+    "eo-next-table",
+    "eo-workbench-layout"
+  ],
   "markdown": ["eo-markdown-editor"],
   "shoelace": [
     "sl-alert",

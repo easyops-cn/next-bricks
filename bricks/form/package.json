@@ -58,6 +58,7 @@
     "@next-core/test-next": "^1.0.11"
   },
   "peerDependencies": {
+    "@next-bricks/basic": "*",
     "@next-bricks/containers": "*",
     "@next-bricks/icons": "*",
     "@next-bricks/illustrations": "*"

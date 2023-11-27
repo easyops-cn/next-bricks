@@ -1,0 +1,83 @@
+@import url("react-grid-layout/css/styles.css");
+@import url("react-resizable/css/styles.css");
+
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.grid-layout-wrapper {
+  display: flex;
+  height: 100%;
+  .component-wrapper {
+    width: 150px;
+    padding: 6px 12px;
+    overflow-y: scroll;
+    box-shadow: 1px 0 0 0 #e3e4e6;
+    background: #fff;
+    z-index: 1000;
+
+    .component-title {
+      font-size: 16px;
+      padding: 6px 0;
+      font-weight: 500;
+    }
+
+    .component-list {
+      margin-top: 6px;
+      eo-checkbox::part(checkbox-wrapper) {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      eo-checkbox::part(checkbox-option) {
+        margin-left: 0;
+        width: 100%;
+        background: none;
+      }
+    }
+  }
+
+  .layout-wrapper {
+    flex: 1;
+
+    .layout {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .actions-wrapper {
+      position: relative;
+      display: flex;
+      gap: 8px;
+      justify-content: end;
+      background: #fff;
+      padding: 6px 12px;
+      box-shadow: 0 1px 1px 0 #c0c6cc;
+    }
+
+    .delete-icon {
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+  }
+}
+
+.react-grid-item.react-grid-placeholder {
+  background-color: #ddd;
+}
+
+/* .react-grid-item.react-draggable-dragging {
+  border: 1px solid red;
+} */
+
+.react-grid-item.react-grid-placeholder.forbidden {
+  background-color: red;
+}
