@@ -1,5 +1,5 @@
 import { createProviderClass } from "@next-core/utils/general";
-import { isEqual } from "lodash";
+import { isEqual, isNil } from "lodash";
 import type {
   InspectSelector,
   SelectedRecordStep,
@@ -26,7 +26,7 @@ export function transformRecordedCommands(
   steps: SelectedRecordStep[]
 ): NodeItem[] {
   const commands: NodeItem[] = [];
-  let prevTarget: InspectSelector | undefined;
+  let prevTarget: InspectSelector[] | undefined;
   let prevCommand: NodeItem | undefined;
   for (const step of steps) {
     if (
@@ -37,19 +37,29 @@ export function transformRecordedCommands(
       prevCommand.children.push(transformRecordedAction(step));
     } else {
       prevTarget = step.target;
+
+      const [startCommand, ...restCommands] = step.target;
+
       commands.push(
         (prevCommand = {
           type: NodeType.Command,
-          ...(step.target.type === "testid"
+          ...(startCommand.type === "testid"
             ? {
                 name: "findByTestId",
-                params: [step.target.value],
+                params: [startCommand.value],
               }
             : {
                 name: "get",
-                params: [`#${step.target.value}`],
+                params: [
+                  `${startCommand.type === "id" ? "#" : ""}${
+                    startCommand.value
+                  }${startCommand.isolate ? ":visible" : ""}`,
+                ],
               }),
-          children: [transformRecordedAction(step)],
+          children: [
+            ...processChainCommand(restCommands),
+            transformRecordedAction(step),
+          ],
         })
       );
     }
@@ -69,6 +79,34 @@ function transformRecordedAction(step: SelectedRecordStep): NodeItem {
           name: step.event,
         }),
   };
+}
+
+function processChainCommand(selectors: InspectSelector[]): NodeItem[] {
+  const nodes: NodeItem[] = [];
+  selectors.forEach((selector) => {
+    nodes.push({
+      type: NodeType.Command,
+      ...(selector.type === "testid"
+        ? {
+            name: "findByTestId",
+            params: [selector.value],
+          }
+        : {
+            name: "find",
+            params: [`${selector.value}`],
+          }),
+    });
+
+    if (!isNil(selector.eq)) {
+      nodes.push({
+        type: NodeType.Command,
+        name: "eq",
+        params: [selector.eq],
+      });
+    }
+  });
+
+  return nodes;
 }
 
 customElements.define(

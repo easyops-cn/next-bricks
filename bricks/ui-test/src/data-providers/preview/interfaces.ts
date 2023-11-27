@@ -14,6 +14,8 @@ export interface InspectSelector {
   type: "testid" | "id" | "css-selector";
   value: string;
   tag: string;
+  isolate?: boolean;
+  eq?: number;
 }
 
 export interface InspectOutline {
@@ -32,7 +34,7 @@ export interface RecordStep {
 
 export interface SelectedRecordStep {
   event: string;
-  target: InspectSelector;
+  target: InspectSelector[];
   text?: string;
 }
 
