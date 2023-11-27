@@ -31,9 +31,11 @@ describe("eo-workbench-layout", () => {
     element.componentList = [
       {
         title: "card-1",
-        brick: "div",
-        properties: {
-          textContent: "card-1",
+        useBrick: {
+          brick: "div",
+          properties: {
+            textContent: "card-1",
+          },
         },
         position: {
           i: "card-1",
@@ -46,9 +48,11 @@ describe("eo-workbench-layout", () => {
       },
       {
         title: "card-2",
-        brick: "div",
-        properties: {
-          textContent: "card-2",
+        useBrick: {
+          brick: "div",
+          properties: {
+            textContent: "card-2",
+          },
         },
         position: {
           i: "card-2",
@@ -61,9 +65,11 @@ describe("eo-workbench-layout", () => {
       },
       {
         title: "card-3",
-        brick: "div",
-        properties: {
-          textContent: "card-3",
+        useBrick: {
+          brick: "div",
+          properties: {
+            textContent: "card-3",
+          },
         },
         position: {
           i: "card-3",

@@ -25,10 +25,11 @@ import type {
 
 const { defineElement, property, event } = createDecorators();
 
-type Item = UseSingleBrickConf & {
+type Item = {
   position: Layout;
   key: string;
   title: string;
+  useBrick: UseSingleBrickConf;
 };
 
 interface CheckboxEvents {
@@ -249,7 +250,7 @@ export function EoWorkbenchLayoutComponent(props: EoWorkbenchLayoutProps) {
             }}
             className="drag-box"
           >
-            <ReactUseBrick useBrick={component as UseSingleBrickConf} />
+            <ReactUseBrick useBrick={component.useBrick} />
             {props.isEdit && (
               <WrappedIcon
                 icon="delete"
