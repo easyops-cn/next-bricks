@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.7.0...@next-bricks/nav@0.7.1) (2023-11-28)
+
+
+### Bug Fixes
+
+* support locales for launchpad config menu items ([2595806](https://github.com/easyops-cn/next-bricks/commit/2595806075dc7732689c4654e17be834d9b17b66))
+
+
+
+
+
 # [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.6.0...@next-bricks/nav@0.7.0) (2023-11-27)
 
 
