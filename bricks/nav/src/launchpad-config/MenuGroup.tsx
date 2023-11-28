@@ -15,6 +15,7 @@ import type {
   MenuAction,
   MenuActionEventDetail,
 } from "./interfaces";
+import { getAppLocaleName } from "../shared/getLocaleName";
 
 export interface MenuGroupProps {
   data: ConfigMenuGroup;
@@ -83,6 +84,14 @@ export interface MenuItemProps {
 }
 
 export function MenuItem({ data }: MenuItemProps) {
+  const name = useMemo(
+    () =>
+      data.type === "app"
+        ? getAppLocaleName(data.locales, data.name)
+        : data.name,
+    [data]
+  );
+
   return (
     <li className="menu-item">
       <WrappedLink>
@@ -100,7 +109,7 @@ export function MenuItem({ data }: MenuItemProps) {
               ]) as any)
             : null)}
         />
-        <span className="menu-item-label">{data.name}</span>
+        <span className="menu-item-label">{name}</span>
       </WrappedLink>
     </li>
   );

@@ -1,5 +1,4 @@
-import type { I18nData, MicroApp, Storyboard } from "@next-core/types";
-import { i18nText } from "@next-core/i18n";
+import type { Storyboard } from "@next-core/types";
 import { LaunchpadApi_getLaunchpadInfo } from "@next-api-sdk/micro-app-standalone-sdk";
 import {
   LaunchpadApi_createCollectionV2,
@@ -17,6 +16,7 @@ import type {
   MicroAppWithInstanceId,
 } from "./interfaces";
 import { FAVORITES_LIMIT } from "./constants";
+import { getAppLocaleName } from "../shared/getLocaleName";
 
 export async function fetchLaunchpadInfo() {
   const launchpadInfo = await LaunchpadApi_getLaunchpadInfo(
@@ -30,7 +30,7 @@ export async function fetchLaunchpadInfo() {
   const microAppsById = new Map<string, MicroAppWithInstanceId>();
   for (const storyboard of launchpadInfo.storyboards as Storyboard[]) {
     const app = storyboard.app as unknown as MicroAppWithInstanceId;
-    initializeAppLocaleName(app);
+    app.localeName = getAppLocaleName(app.locales, app.name);
     microAppsById.set(app.id, app);
   }
 
@@ -93,21 +93,6 @@ export async function fetchLaunchpadInfo() {
   return { menuGroups, microAppsById, customLinksById };
 }
 
-function initializeAppLocaleName(
-  app: Pick<MicroApp, "locales" | "name" | "localeName">
-) {
-  if (app.locales) {
-    const i18nData = Object.fromEntries(
-      Object.entries(app.locales)
-        .filter(([lang, resources]) => resources.name)
-        .map(([lang, resources]) => [lang, resources.name])
-    ) as I18nData;
-    app.localeName = i18nText(i18nData) ?? app.name;
-  } else {
-    app.localeName = app.name;
-  }
-}
-
 async function fetchRawFavorites() {
   return (
     await LaunchpadApi_listCollectionV2(
@@ -128,7 +113,7 @@ export async function fetchFavorites() {
       const app = fav.relatedApp as Omit<MicroAppWithInstanceId, "id"> & {
         appId: string;
       };
-      initializeAppLocaleName(app);
+      app.localeName = getAppLocaleName(app.locales, app.name);
       stored.push({
         favoriteId: fav.instanceId,
         type: "app",
