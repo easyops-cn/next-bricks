@@ -29,6 +29,7 @@ type Item = {
   position: Layout;
   key: string;
   title: string;
+  style?: React.CSSProperties;
   useBrick: UseSingleBrickConf;
 };
 
@@ -210,14 +211,14 @@ export function EoWorkbenchLayoutComponent(props: EoWorkbenchLayoutProps) {
     setLayouts([]);
   };
 
-  const handleSave = () => {
+  const handleSave = useCallback(() => {
     props.onSave?.(
-      layouts.map((item) => ({
+      (layoutCacheRef.current ?? []).map((item) => ({
         ...item,
         i: getRealKey(item.i),
       }))
     );
-  };
+  }, [props]);
 
   const handleCancel = () => {
     props.onCancel?.();
@@ -248,6 +249,7 @@ export function EoWorkbenchLayoutComponent(props: EoWorkbenchLayoutProps) {
               ...(component?.position ?? {}),
               ...layout,
             }}
+            style={component?.style}
             className="drag-box"
           >
             <ReactUseBrick useBrick={component.useBrick} />
