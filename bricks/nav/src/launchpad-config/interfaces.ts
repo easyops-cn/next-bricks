@@ -1,3 +1,4 @@
+import { AppLocales } from "@next-core/types";
 import type { LegacyAntdIcon, MenuIcon } from "@next-shared/general/types";
 
 export interface ConfigMenuGroup extends ConfigMenuBase {
@@ -11,6 +12,7 @@ export type ConfigMenuItemNormal = ConfigMenuItemApp | ConfigMenuItemCustom;
 export interface ConfigMenuItemApp extends ConfigMenuItemBase {
   type: "app";
   url: string;
+  locales?: AppLocales;
 }
 
 export interface ConfigMenuItemCustom extends ConfigMenuItemBase {
