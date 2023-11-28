@@ -74,9 +74,9 @@
   background-color: #ddd;
 }
 
-/* .react-grid-item.react-draggable-dragging {
-  border: 1px solid red;
-} */
+.react-grid-item.react-draggable-dragging {
+  pointer-events: none;
+}
 
 .react-grid-item.react-grid-placeholder.forbidden {
   background-color: red;
