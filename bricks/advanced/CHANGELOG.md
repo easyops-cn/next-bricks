@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.12.1...@next-bricks/advanced@0.13.0) (2023-11-29)
+
+
+### Features
+
+* **workbench-layout:** add toolbar slot ([e0c48a6](https://github.com/easyops-cn/next-bricks/commit/e0c48a6e9c69661a6f7ebcb4b05e26227238cde7))
+
+
+
+
+
 ## [0.12.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.12.0...@next-bricks/advanced@0.12.1) (2023-11-28)
 
 
