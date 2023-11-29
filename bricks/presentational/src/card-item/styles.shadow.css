@@ -1,9 +1,44 @@
 :host {
   display: inline-block;
+  --local-card-border: 1px solid var(--card-item-border-color);
+  --local-card-hovered-border: none;
+  --local-card-background-color: var(--card-item-bg);
+  --local-card-hovered-background-color: var(--card-item-hover-bg);
+  --local-card-hovered-box-shadow: var(--card-item-hover-shadow);
+  --local-card-title-color: var(--text-color-title);
+  --local-card-hovered-title-color: var(--color-brand);
+  --local-card-description-color: var(--text-color-secondary);
 }
 
 :host([hidden]) {
   display: none;
+}
+
+:host([style-type="grayish"]) {
+  --local-card-border: 1px solid transparent;
+  --local-card-hovered-border: 1px solid transparent;
+  --local-card-background-color: #f6f8fa;
+  --local-card-hovered-background-color: var(--color-fill-bg-container-1);
+  --local-card-hovered-box-shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.06);
+  --local-card-title-color: var(--color-header-text);
+  --local-card-hovered-title-color: var(--color-header-text);
+  --local-card-description-color: var(--color-secondary-text);
+  --local-card-icon-box-shadow: 0px 2px 4px 0px rgba(26, 122, 255, 0.08);
+  --local-card-hovered-icon-box-shadow: none;
+  --local-card-icon-background-color: var(--color-fill-bg-container-1);
+  --local-card-hovered-icon-background-color: var(--palette-blue-1);
+  --local-card-icon-color: var(--palette-gray-blue-6);
+}
+
+:host-context(html[data-theme="dark-v2"]):host([style-type="grayish"]),
+:host-context(html[data-override-theme="dark-v2"]):host(
+    [style-type="grayish"]
+  ) {
+  --local-card-hovered-border: 1px solid rgba(255, 255, 255, 0.12);
+  --local-card-background-color: rgb(255 255 255 / 8%);
+  --local-card-hovered-box-shadow: none;
+  --local-card-icon-box-shadow: none;
+  --local-card-hovered-icon-background-color: var(--palette-blue-2);
 }
 
 *,
@@ -23,8 +58,8 @@ eo-link {
 
 .card-wrapper {
   position: relative;
-  background: var(--card-item-bg);
-  border: 1px solid var(--card-item-border-color);
+  background: var(--local-card-background-color);
+  border: var(--local-card-border);
   border-radius: var(--larger-border-radius);
   transition: var(--card-transition);
   overflow: hidden;
@@ -33,9 +68,9 @@ eo-link {
 }
 
 .card-wrapper:hover {
-  box-shadow: var(--card-item-hover-shadow);
-  background: var(--card-item-hover-bg);
-  border-color: transparent;
+  box-shadow: var(--local-card-hovered-box-shadow);
+  background: var(--local-card-hovered-background-color);
+  border: var(--local-card-hovered-border);
 }
 
 /* header */
@@ -78,9 +113,18 @@ eo-link {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 40px;
   overflow: hidden;
+  box-shadow: var(--local-card-icon-box-shadow);
+  background-color: var(--local-card-icon-background-color);
+}
+
+.card-avatar eo-icon {
+  color: var(--local-card-icon-color);
+}
+
+.card-wrapper:hover .card-avatar {
+  box-shadow: var(--local-card-hovered-icon-box-shadow);
+  background-color: var(--local-card-hovered-icon-background-color);
 }
 
 .card-avatar-circle {
@@ -100,7 +144,7 @@ eo-link {
   margin-bottom: 3px;
   font-size: 14px;
   font-weight: var(--font-weight-500);
-  color: var(--text-color-title);
+  color: var(--local-card-title-color);
   line-height: 20px;
   overflow: hidden;
   white-space: nowrap;
@@ -108,12 +152,12 @@ eo-link {
 }
 
 .card-wrapper:hover .card-title {
-  color: var(--color-brand);
+  color: var(--local-card-hovered-title-color);
 }
 
 .card-description {
   font-size: 12px;
-  color: var(--text-color-secondary);
+  color: var(--local-card-description-color);
   line-height: 17px;
   overflow: hidden;
   text-overflow: ellipsis;

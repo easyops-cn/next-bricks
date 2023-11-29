@@ -175,3 +175,23 @@ properties:
               properties:
                 size: small
 ```
+
+### Style type
+
+```yaml preview
+brick: eo-card-item
+properties:
+  styleType: grayish
+  style:
+    width: 300px
+  cardTitle: 资源监控微应用
+  description: 资源监控微应用相关前后台
+  url: /test
+  target: _blank
+  avatar:
+    icon:
+      lib: easyops
+      category: default
+      icon: monitor
+    size: 20
+```

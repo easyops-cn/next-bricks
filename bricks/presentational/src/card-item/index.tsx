@@ -31,6 +31,7 @@ const WrappedMiniActions = wrapBrick<
 });
 
 interface IconAvatar {
+  containerSize?: string;
   icon: GeneralIconProps;
   color?: string;
   size?: number;
@@ -39,6 +40,7 @@ interface IconAvatar {
 }
 
 interface ImgAvatar {
+  containerSize?: string;
   imgSrc: string;
   imgStyle?: CSSProperties;
   shape?: "circle" | "square" | "round-square";
@@ -57,6 +59,7 @@ export interface EoCardItemProps {
   actions?: ActionType[];
   hasExpandedArea1?: boolean;
   hasExpandedArea2?: boolean;
+  styleType?: "grayish";
 }
 
 /**
@@ -129,6 +132,12 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
     attribute: false,
   })
   accessor actions: ActionType[] | undefined;
+
+  /**
+   * 卡片样式类型
+   */
+  @property()
+  accessor styleType: "grayish" | undefined;
 
   /**
    * 是否有扩展区域 1
@@ -233,23 +242,44 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
   const Avatar = useMemo(() => {
     if (!avatar) return;
     if ("icon" in avatar && avatar.icon) {
-      const { icon, shape = "round-square", bgColor, color, size } = avatar;
+      const {
+        icon,
+        shape = "round-square",
+        bgColor,
+        color,
+        size,
+        containerSize = 40,
+      } = avatar;
       return (
         <div
           className={classNames("card-avatar", shape && `card-avatar-${shape}`)}
-          style={{ background: bgColor }}
+          style={{
+            background: bgColor,
+            width: containerSize,
+            height: containerSize,
+          }}
         >
           <WrappedIcon {...icon} style={{ color: color, fontSize: size }} />
         </div>
       );
     } else if ("imgSrc" in avatar && avatar.imgSrc) {
-      const { imgSrc, shape = "round-square", bgColor, imgStyle } = avatar;
+      const {
+        imgSrc,
+        shape = "round-square",
+        bgColor,
+        imgStyle,
+        containerSize = 40,
+      } = avatar;
       return (
         <div
           className={classNames("card-avatar", shape && `card-avatar-${shape}`)}
-          style={{ background: bgColor }}
+          style={{
+            background: bgColor,
+            width: containerSize,
+            height: containerSize,
+          }}
         >
-          <img src={imgSrc} width={40} height={40} style={imgStyle} />
+          <img src={imgSrc} width={"100%"} height={"100%"} style={imgStyle} />
         </div>
       );
     }
