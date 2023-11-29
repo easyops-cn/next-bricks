@@ -12,7 +12,7 @@
   padding: 0;
   display: grid;
   gap: 8px;
-  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
 }
 
 .recent-visits span {
