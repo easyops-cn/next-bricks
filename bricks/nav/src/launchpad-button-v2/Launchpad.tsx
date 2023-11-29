@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import classNames from "classnames";
 import { WrappedIcon, WrappedLink } from "./wrapped-bricks";
 import { useLaunchpadInfo } from "./useLaunchpadInfo.js";
@@ -36,6 +36,12 @@ export function Launchpad({ active }: { active?: boolean }) {
   const clearSearch = useCallback(() => {
     setQ("");
   }, [setQ]);
+
+  useEffect(() => {
+    if (active) {
+      searchInputRef.current?.focus();
+    }
+  }, [active]);
 
   return (
     <div className={classNames("launchpad", { active })}>
