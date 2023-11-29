@@ -1,4 +1,10 @@
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import { UseSingleBrickConf } from "@next-core/types";
@@ -117,7 +123,13 @@ export interface EoWorkbenchLayoutProps {
 const getRealKey = (key: string): string =>
   key?.includes(":") ? key.split(":")[0] : key;
 
-export function EoWorkbenchLayoutComponent(props: EoWorkbenchLayoutProps) {
+export function EoWorkbenchLayoutComponent({
+  layouts: layoutsProps,
+  componentList = [],
+  isEdit,
+  onSave,
+  onCancel,
+}: EoWorkbenchLayoutProps) {
   const ResponsiveReactGridLayout = useMemo(
     () => WidthProvider(Responsive),
     []
@@ -125,10 +137,7 @@ export function EoWorkbenchLayoutComponent(props: EoWorkbenchLayoutProps) {
   const gridLayoutRef = useRef<HTMLDivElement>(null);
   const layoutCacheRef = useRef<Layout[]>();
 
-  const [componentList, setComponentList] = useState<Item[]>(
-    props?.componentList ?? []
-  );
-  const [layouts, setLayouts] = useState<Layout[]>(props?.layouts ?? []);
+  const [layouts, setLayouts] = useState<Layout[]>(layoutsProps ?? []);
   const [cols, setCols] = useState<number>(3);
 
   const handleDragCallback: ItemCallback = (layout, oldItem, newItem) => {
@@ -212,16 +221,16 @@ export function EoWorkbenchLayoutComponent(props: EoWorkbenchLayoutProps) {
   };
 
   const handleSave = useCallback(() => {
-    props.onSave?.(
+    onSave?.(
       (layoutCacheRef.current ?? []).map((item) => ({
         ...item,
         i: getRealKey(item.i),
       }))
     );
-  }, [props]);
+  }, [onSave]);
 
   const handleCancel = () => {
-    props.onCancel?.();
+    onCancel?.();
   };
 
   const handleDeleteItem = useCallback(
@@ -253,7 +262,7 @@ export function EoWorkbenchLayoutComponent(props: EoWorkbenchLayoutProps) {
             className="drag-box"
           >
             <ReactUseBrick useBrick={component.useBrick} />
-            {props.isEdit && (
+            {isEdit && (
               <WrappedIcon
                 icon="delete"
                 lib="antd"
@@ -264,7 +273,7 @@ export function EoWorkbenchLayoutComponent(props: EoWorkbenchLayoutProps) {
           </div>
         );
       }),
-    [componentList, handleDeleteItem, layouts, props.isEdit]
+    [componentList, handleDeleteItem, layouts, isEdit]
   );
 
   const computedOptions = useMemo(
@@ -284,7 +293,7 @@ export function EoWorkbenchLayoutComponent(props: EoWorkbenchLayoutProps) {
 
   return (
     <div className="grid-layout-wrapper" ref={gridLayoutRef}>
-      {props.isEdit && (
+      {isEdit && (
         <div className="component-wrapper">
           <div className="component-title">构件列表</div>
           <div className="component-list">
@@ -293,11 +302,12 @@ export function EoWorkbenchLayoutComponent(props: EoWorkbenchLayoutProps) {
               value={computedSelectedComponentKeys}
               onChange={handleCheckBoxChange as any}
             />
+            <slot name="toolbar"></slot>
           </div>
         </div>
       )}
       <div className="layout-wrapper">
-        {props.isEdit && (
+        {isEdit && (
           <div className="actions-wrapper">
             <WrappedButton danger={true} onClick={handleClearLayout}>
               清除
@@ -310,11 +320,11 @@ export function EoWorkbenchLayoutComponent(props: EoWorkbenchLayoutProps) {
         )}
         <ResponsiveReactGridLayout
           className="layout"
-          draggableCancel=".delete-icon"
+          draggableCancel=".delete-icon,.edit-actions,.ingore-item"
           breakpoints={{ lg: 1300, md: 1024, sm: 768 }}
           cols={{ lg: 3, md: 3, sm: 1 }}
           isResizable={false}
-          isDraggable={props.isEdit}
+          isDraggable={isEdit}
           onDrag={handleDragCallback}
           onLayoutChange={handleLayoutChange}
           onBreakpointChange={handleBreakpointChange}
