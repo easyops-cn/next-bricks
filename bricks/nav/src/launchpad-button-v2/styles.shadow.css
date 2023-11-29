@@ -210,7 +210,7 @@
 
 .menu-groups,
 .recent-visits {
-  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
 }
 
 .menu-groups {
