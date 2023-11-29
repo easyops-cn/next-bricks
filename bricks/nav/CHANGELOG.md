@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.8.0...@next-bricks/nav@0.8.1) (2023-11-29)
+
+
+### Bug Fixes
+
+* **launchpad:** auto focus on search input ([3098dd0](https://github.com/easyops-cn/next-bricks/commit/3098dd0af9df022b230324f7281d73c10db37111))
+
+
+
+
+
 # [0.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.7.1...@next-bricks/nav@0.8.0) (2023-11-29)
 
 
