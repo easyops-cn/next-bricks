@@ -1,7 +1,7 @@
 // istanbul ignore file: working in progress
 // https://github.com/facebook/react/blob/cae635054e17a6f107a39d328649137b83f25972/packages/react-devtools-shared/src/backend/views/Highlighter/index.js
 import { cloneDeep, curry, isEmpty, isEqual, throttle } from "lodash";
-import { brickCommandsConf } from "../data/bricks/index.js";
+import { brickCommandsConf } from "@next-shared/ui-test";
 import { blacklistBricksOfQueries } from "../../constants.js";
 import type {
   InspectOutline,

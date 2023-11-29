@@ -2,7 +2,7 @@ import {
   BrickCommandConf,
   SelectorConf,
   BrickTarget,
-} from "../../data-providers/data/bricks/interfaces.js";
+} from "@next-shared/ui-test";
 
 export interface InspectTarget {
   host?: InspectSelector;
