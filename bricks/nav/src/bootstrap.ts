@@ -5,3 +5,4 @@ import "./launchpad-config/index.js";
 import "./easyops-navbar-alerts/index.js";
 import "./launchpad-quick-access/index.js";
 import "./search-launchpad/index.js";
+import "./launchpad-recent-visits/index.js";

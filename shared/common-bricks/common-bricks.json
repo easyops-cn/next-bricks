@@ -160,6 +160,7 @@
     "eo-launchpad-button",
     "eo-launchpad-button-v2",
     "eo-launchpad-quick-access",
-    "eo-search-launchpad"
+    "eo-search-launchpad",
+    "eo-launchpad-recent-visits"
   ]
 }
