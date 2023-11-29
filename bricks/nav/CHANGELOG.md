@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.8.1...@next-bricks/nav@0.8.2) (2023-11-29)
+
+
+### Bug Fixes
+
+* decrease launchpad item min-width ([f5c91c9](https://github.com/easyops-cn/next-bricks/commit/f5c91c966e75ad9fa6f13263c73d57cb5d56f314))
+
+
+
+
+
 ## [0.8.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.8.0...@next-bricks/nav@0.8.1) (2023-11-29)
 
 
