@@ -1,4 +1,4 @@
-import { BrickCommandConf } from "./interfaces.js";
+import { BrickCommandConf } from "../../interfaces.js";
 
 export const presentationalBricks: BrickCommandConf[] = [
   {

@@ -1,6 +1,5 @@
 import { createProviderClass } from "@next-core/utils/general";
-import { brickCommandsConf } from "../data-providers/data/bricks/index.js";
-import { BrickCommandConf } from "../data-providers/data/bricks/interfaces.js";
+import { brickCommandsConf, BrickCommandConf } from "@next-shared/ui-test";
 
 export async function getBrickCustomCommands(): Promise<BrickCommandConf[]> {
   return brickCommandsConf;
