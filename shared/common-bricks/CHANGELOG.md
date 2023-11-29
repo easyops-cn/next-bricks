@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.26.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.25.0...@next-shared/common-bricks@0.26.0) (2023-11-29)
+
+
+### Features
+
+* eo-launchpad-recent-visits ([a05c418](https://github.com/easyops-cn/next-bricks/commit/a05c418bc190aec27339d6a825554e56ce945a0f))
+
+
+
+
+
 # [0.25.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.24.0...@next-shared/common-bricks@0.25.0) (2023-11-27)
 
 

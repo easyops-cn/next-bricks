@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.16.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.42...@next-bricks/presentational@0.16.0) (2023-11-29)
+
+
+### Features
+
+* eo-card-item support grayish style ([dbb1c96](https://github.com/easyops-cn/next-bricks/commit/dbb1c96262626822d0f0846ac8e7aee57379b075))
+
+
+
+
+
 ## [0.15.42](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.41...@next-bricks/presentational@0.15.42) (2023-11-23)
 
 **Note:** Version bump only for package @next-bricks/presentational
