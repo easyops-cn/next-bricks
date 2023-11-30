@@ -15,6 +15,7 @@ export const containerBricks: BrickCommandConf[] = [
             type: "css-selector",
             value: ".tabTitle",
             multiple: true,
+            field: "tabIndex",
           },
         ],
         actions: [
@@ -56,7 +57,7 @@ export const containerBricks: BrickCommandConf[] = [
           {
             name: "click",
             params: {
-              type: "next",
+              type: "prev",
             },
           },
         ],
