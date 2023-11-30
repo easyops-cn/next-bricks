@@ -2,7 +2,6 @@ import React from "react";
 import { describe, test, expect, jest } from "@jest/globals";
 import { render, fireEvent } from "@testing-library/react";
 import { MenuGroup } from "./MenuGroup";
-import { DesktopItem } from "../launchpad/interfaces";
 import { ConfigMenuGroup } from "./interfaces";
 
 class WithShadowElement extends HTMLElement {

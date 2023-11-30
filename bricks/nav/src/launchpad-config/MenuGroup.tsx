@@ -71,7 +71,12 @@ export function MenuGroup({ data, actions, onActionClick }: MenuGroupProps) {
               onActionClick={onActionClick}
             />
           ) : (
-            <MenuItem key={`${item.type}-${item.id}`} data={item} />
+            <MenuItem
+              key={`${item.type}-${item.id}`}
+              data={item}
+              actions={actions}
+              onActionClick={onActionClick}
+            />
           )
         )}
       </ul>
@@ -81,15 +86,34 @@ export function MenuGroup({ data, actions, onActionClick }: MenuGroupProps) {
 
 export interface MenuItemProps {
   data: ConfigMenuItemNormal;
+  actions?: MenuAction[];
+  onActionClick?: (detail: MenuActionEventDetail) => void;
 }
 
-export function MenuItem({ data }: MenuItemProps) {
+export function MenuItem({ data, actions, onActionClick }: MenuItemProps) {
   const name = useMemo(
     () =>
       data.type === "app"
         ? getAppLocaleName(data.locales, data.name)
         : data.name,
     [data]
+  );
+
+  const [dropdownActive, setDropdownActive] = useState(false);
+
+  const filteredActions = useMemo(
+    () => actions?.filter((item) => checkIfByTransform(item, data)),
+    [actions, data]
+  );
+
+  const handleActionClick = useCallback(
+    (event: CustomEvent<SimpleAction>) => {
+      onActionClick?.({
+        data,
+        action: event.detail,
+      });
+    },
+    [data, onActionClick]
   );
 
   return (
@@ -111,6 +135,19 @@ export function MenuItem({ data }: MenuItemProps) {
         />
         <span className="menu-item-label">{name}</span>
       </WrappedLink>
+      <WrappedDropdownActions
+        actions={filteredActions}
+        onVisibleChange={(event) => {
+          setDropdownActive(event.detail);
+        }}
+        onActionClick={handleActionClick}
+      >
+        <WrappedIcon
+          lib="fa"
+          icon="gear"
+          className={classNames("menu-config", { active: dropdownActive })}
+        />
+      </WrappedDropdownActions>
     </li>
   );
 }
@@ -180,7 +217,12 @@ function MenuItemFolder({ data, actions, onActionClick }: MenuItemFolderProps) {
       </div>
       <ul className={classNames("sub-menu", { expanded })}>
         {items.map((item) => (
-          <MenuItem key={item.instanceId} data={item} />
+          <MenuItem
+            key={item.instanceId}
+            data={item}
+            actions={actions}
+            onActionClick={onActionClick}
+          />
         ))}
       </ul>
     </li>

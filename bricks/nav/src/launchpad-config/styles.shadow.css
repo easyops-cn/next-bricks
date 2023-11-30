@@ -107,16 +107,19 @@ ul {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 24px;
   height: 24px;
+  width: 0;
 }
 
 .menu-config.active,
 .menu-group-label-wrapper:hover .menu-config,
+.menu-item:not(.folder):hover .menu-config,
 .menu-folder-label-wrapper:hover .menu-config {
   visibility: visible;
+  width: 24px;
 }
 
+.menu-item > eo-dropdown-actions,
 .menu-folder-label-wrapper > eo-dropdown-actions {
   margin: -3px 0;
 }
