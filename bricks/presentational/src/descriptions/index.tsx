@@ -11,6 +11,7 @@ import "@next-core/theme";
 import { UseSingleBrickConf } from "@next-core/types";
 import classnames from "classnames";
 import { ReactUseMultipleBricks } from "@next-core/react-runtime";
+import "./host-context.css";
 
 const WrappedGeneralCard = wrapBrick<Card, CardProps>(
   "containers.general-card"

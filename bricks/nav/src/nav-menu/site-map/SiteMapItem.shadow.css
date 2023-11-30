@@ -11,6 +11,7 @@
     border: none;
     border-bottom: 1px solid var(--antd-input-border-color);
     border-radius: 0px;
+    background: transparent;
   }
   .visit-access,
   .search-panel {
@@ -67,15 +68,6 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, 200px);
       gap: 8px;
-    }
-  }
-}
-
-:host-context(html[data-theme="dark-v2"]),
-:host-context([data-override-theme="dark-v2"]) {
-  .site-map {
-    .search-input::part(affix-wrapper) {
-      background: var(--antd-dropdown-menu-bg);
     }
   }
 }

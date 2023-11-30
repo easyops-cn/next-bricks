@@ -2,21 +2,11 @@
   display: inline-block;
   width: 32px;
   height: 32px;
-  --local-sidebar-menu-item-active-bg: rgba(0, 0, 0, 0.04);
-  --local-background: #fff;
-  --local-menu-icon-color: #8c8c8c;
-  --local-max-height: calc(100vh - var(--app-bar-height) - 10px);
+  --eo-launchpad-v2-max-height: calc(100vh - var(--app-bar-height) - 10px);
 }
 
 :host([hidden]) {
   display: none;
-}
-
-:host-context(html[data-theme="dark"]),
-:host-context(html[data-theme="dark-v2"]) {
-  --local-sidebar-menu-item-active-bg: rgba(255, 255, 255, 0.04);
-  --local-background: #26262a;
-  --local-menu-icon-color: rgba(255, 255, 255, 0.45);
 }
 
 .launchpad-button {
@@ -61,11 +51,11 @@
   z-index: 1;
   width: 1110px;
   max-width: calc(100vw - 100px);
-  max-height: var(--local-max-height);
+  max-height: var(--eo-launchpad-v2-max-height);
   min-height: 50vh;
   /* Chrome >= 79 */
-  min-height: min(500px, var(--local-max-height));
-  background-color: var(--local-background);
+  min-height: min(500px, var(--eo-launchpad-v2-max-height));
+  background-color: var(--eo-launchpad-v2-background);
   border: 1px solid var(--color-text-divider-line);
   border-radius: 6px;
   box-shadow: var(--fullscreen-overlay-shadow);
@@ -238,7 +228,7 @@
 }
 
 .menu-icon {
-  color: var(--local-menu-icon-color);
+  color: var(--eo-launchpad-v2-menu-icon-color);
 }
 
 .menu-item.active,

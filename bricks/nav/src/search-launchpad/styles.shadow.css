@@ -1,15 +1,9 @@
 :host {
   display: block;
-  --local-menu-icon-color: #8c8c8c;
 }
 
 :host([hidden]) {
   display: none;
-}
-
-:host-context(html[data-theme="dark"]),
-:host-context(html[data-theme="dark-v2"]) {
-  --local-menu-icon-color: rgba(255, 255, 255, 0.45);
 }
 
 .container {
@@ -166,7 +160,7 @@
 }
 
 .menu-icon {
-  color: var(--local-menu-icon-color);
+  color: var(--eo-search-launchpad-menu-icon-color);
 }
 
 .menu-item.active,

@@ -1,0 +1,8 @@
+:root {
+  --eo-descriptions-label-background: #f0f7ff;
+}
+
+html[data-theme="dark"],
+html[data-theme="dark-v2"] {
+  --eo-descriptions-label-background: #1d1f28;
+}

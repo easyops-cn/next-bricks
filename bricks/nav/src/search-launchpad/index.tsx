@@ -8,6 +8,7 @@ import { LaunchpadsContext } from "../launchpad-button-v2/LaunchpadContext";
 import { useLaunchpadInfo } from "../launchpad-button-v2/useLaunchpadInfo";
 import { MenuGroup } from "../launchpad-button-v2/MenuGroup";
 import { GeneralIcon, GeneralIconProps } from "@next-bricks/icons/general-icon";
+import "./host-context.css";
 
 export const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
