@@ -34,12 +34,12 @@
     "test:ci": "cross-env NODE_ENV='test' CI=true test-next"
   },
   "dependencies": {
-    "@next-core/i18n": "^1.0.32",
+    "@next-core/i18n": "^1.0.33",
     "lodash": "^4.17.21",
     "moment": "^2.29.4"
   },
   "devDependencies": {
-    "@next-core/build-next-libs": "^1.0.8",
-    "@next-core/test-next": "^1.0.11"
+    "@next-core/build-next-libs": "^1.0.9",
+    "@next-core/test-next": "^1.0.12"
   }
 }

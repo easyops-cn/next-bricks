@@ -34,14 +34,14 @@
   "dependencies": {
     "@babel/standalone": "^7.22.9",
     "@babel/types": "^7.22.5",
-    "@next-core/types": "^1.7.1",
-    "@next-core/utils": "^1.6.4",
+    "@next-core/types": "^1.7.2",
+    "@next-core/utils": "^1.6.5",
     "file-saver": "^2.0.5",
     "jszip": "^3.10.1",
     "prettier": "^3.0.3",
     "process": "^0.11.10"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.16.0"
+    "@next-core/build-next-bricks": "^1.16.1"
   }
 }
