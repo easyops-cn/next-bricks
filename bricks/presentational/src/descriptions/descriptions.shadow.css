@@ -1,16 +1,10 @@
 :host {
   display: block;
-  --blue-gray-1: #f0f7ff;
   border-bottom: 1px solid var(--description-border-bottom-color);
 }
 
 :host([hidden]) {
   display: none;
-}
-
-:host-context(html[data-theme="dark-v2"]),
-:host-context([data-override-theme="dark-v2"]) {
-  --blue-gray-1: #1d1f28;
 }
 
 .description-content {
@@ -75,5 +69,5 @@
 }
 
 .description-item.bordered > span:first-child {
-  background-color: var(--blue-gray-1);
+  background-color: var(--eo-descriptions-label-background);
 }

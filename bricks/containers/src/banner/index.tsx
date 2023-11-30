@@ -16,6 +16,7 @@ import {
   NarrowViewSize,
 } from "../narrow-view/index.js";
 import styleText from "./styles.shadow.css";
+import "./host-context.css";
 
 const { defineElement, property } = createDecorators();
 

@@ -13,6 +13,7 @@ import LaunchpadSvg from "../images/launchpad.svg";
 import styleText from "./styles.shadow.css";
 import { Launchpad } from "./Launchpad";
 import { deferredFavorites, deferredLaunchpadInfo } from "./useLaunchpadInfo";
+import "./host-context.css";
 
 // initializeReactI18n(NS, locales);
 

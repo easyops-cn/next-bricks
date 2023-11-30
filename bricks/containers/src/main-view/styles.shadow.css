@@ -1,6 +1,6 @@
 :host {
-  --banner-sunk-gap: 36px;
-  --banner-sunk-offset: 38px;
+  --eo-banner-sunk-gap: 36px;
+  --eo-banner-sunk-offset: 38px;
   --local-content-gap: var(--card-content-gap);
 
   display: flex;
@@ -60,11 +60,13 @@ eo-banner {
 }
 
 :host([banner-sunk]) eo-banner {
-  padding-bottom: calc(var(--banner-sunk-gap) + var(--banner-sunk-offset));
+  padding-bottom: calc(
+    var(--eo-banner-sunk-gap) + var(--eo-banner-sunk-offset)
+  );
 }
 
 :host([banner-sunk]) .content {
-  margin-top: calc(-1 * var(--banner-sunk-offset));
+  margin-top: calc(-1 * var(--eo-banner-sunk-offset));
 }
 
 :host([fill-container]) {

@@ -1,28 +1,32 @@
-:host(:not([type="panel"])),
-:host-context(html[data-ui="v8-2"]):host(
-    [outline="shadow"]:not([type="panel"])
-  ) {
-  --local-tabs-border-radius: var(--tabs-outlined-border-radius);
-  --local-tabs-header-padding: var(--tabs-outlined-header-padding);
-  --local-tabs-content-padding: var(--tabs-outlined-content-padding);
-  --local-tabs-background: var(--tabs-outlined-background);
-  --local-tabs-shadow: var(--tabs-outlined-shadow);
+:host {
+  --eo-tabs-border-radius: var(--eo-tabs-default-border-radius);
+  --eo-tabs-header-padding: var(--eo-tabs-default-header-padding);
+  --eo-tabs-content-padding: var(--eo-tabs-default-content-padding);
+  --eo-tabs-background: var(--eo-tabs-default-background);
+  --eo-tabs-shadow: var(--eo-tabs-default-shadow);
 }
 
-:host([type="panel"]),
+:host([outline="shadow"]:not([type="panel"])) {
+  --eo-tabs-border-radius: var(--tabs-outlined-border-radius);
+  --eo-tabs-header-padding: var(--tabs-outlined-header-padding);
+  --eo-tabs-content-padding: var(--tabs-outlined-content-padding);
+  --eo-tabs-background: var(--tabs-outlined-background);
+  --eo-tabs-shadow: var(--tabs-outlined-shadow);
+}
+
 :host([outline="none"]),
-:host-context(html[data-ui="v8-2"]) {
-  --local-tabs-border-radius: 0;
-  --local-tabs-header-padding: var(--tabs-header-padding);
-  --local-tabs-content-padding: var(--tabs-content-padding);
-  --local-tabs-background: none;
-  --local-tabs-shadow: none;
+:host([type="panel"]) {
+  --eo-tabs-border-radius: 0;
+  --eo-tabs-header-padding: var(--tabs-header-padding);
+  --eo-tabs-content-padding: var(--tabs-content-padding);
+  --eo-tabs-background: none;
+  --eo-tabs-shadow: none;
 }
 
 .tab-wrapper {
-  border-radius: var(--local-tabs-border-radius);
-  background: var(--local-tabs-background);
-  box-shadow: var(--local-tabs-shadow);
+  border-radius: var(--eo-tabs-border-radius);
+  background: var(--eo-tabs-background);
+  box-shadow: var(--eo-tabs-shadow);
 }
 
 .tab-nav {
@@ -31,7 +35,7 @@
   grid-auto-flow: column;
   justify-content: space-between;
   align-items: center;
-  padding: var(--local-tabs-header-padding);
+  padding: var(--eo-tabs-header-padding);
 }
 
 .tab-nav:before {
@@ -59,5 +63,5 @@
 }
 
 .content {
-  padding: var(--local-tabs-content-padding);
+  padding: var(--eo-tabs-content-padding);
 }

@@ -8,21 +8,14 @@ import React, {
 import { createDecorators } from "@next-core/element";
 import { getHistory } from "@next-core/runtime";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
-import type { GeneralIconProps } from "@next-bricks/icons/general-icon";
 import styleText from "./nav-menu.shadow.css";
-import { LocationDescriptor, UnregisterCallback } from "history";
+import { UnregisterCallback } from "history";
 import type { SidebarMenu } from "@next-bricks/basic/menu";
 import type {
   MenuItem as MenuItemComponent,
   MenuComponentProps,
 } from "@next-bricks/basic/menu-item";
-import {
-  isSimple,
-  isSubMenu,
-  isGroup,
-  renderLinkCom,
-  renderSpanCom,
-} from "./utils.js";
+import { isSubMenu, isGroup, renderLinkCom, renderSpanCom } from "./utils.js";
 import { initMenuItemAndMatchCurrentPathKeys } from "@next-shared/general/menu";
 import type {
   SidebarMenuGroup,
@@ -43,6 +36,7 @@ import { SiteMapItem } from "./site-map/SiteMapItem.js";
 import SiteMapStyleText from "../nav-menu/site-map/SiteMapItem.shadow.css";
 import ItemTagStyleText from "../nav-menu/site-map/ItemTag.shadow.css";
 import GroupItemStyleText from "../nav-menu/site-map/GroupItem.shadow.css";
+import "./host-context.css";
 
 const { defineElement, property } = createDecorators();
 

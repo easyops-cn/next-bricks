@@ -3,7 +3,8 @@ import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import styleText from "./tab.shadow.css";
 import type { TabItem } from "../tab-item/index.js";
-import { TabType } from "../../interface.js";
+import type { TabType } from "../../interface.js";
+import "./host-context.css";
 
 const { defineElement, property, event } = createDecorators();
 

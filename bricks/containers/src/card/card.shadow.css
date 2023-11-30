@@ -1,22 +1,7 @@
 :host {
-  --card-border-radius: 6px;
+  --eo-card-border-radius: 6px;
   --card-border-color: none;
   --card-box-shadow: none;
-}
-
-:host-context(html[data-ui="v8-2"]) {
-  --card-border-radius: 0;
-
-  /* In UI v8.2, these outlined cards do have horizontal padding */
-  &:host([outline="border"]),
-  &:host([outline="shadow"]),
-  &:host([outline="background"]) {
-    --card-head-padding: var(--card-head-padding-vertical)
-      var(--card-head-padding-horizontal-base);
-    --card-body-padding: var(--card-body-padding-vertical)
-      var(--card-body-padding-horizontal-base);
-    --card-border-radius: 6px;
-  }
 }
 
 :host([outline="border"]) {
@@ -40,13 +25,13 @@
   position: relative;
   background: var(--antd-card-background);
   border: var(--card-border-color);
-  border-radius: var(--card-border-radius);
+  border-radius: var(--eo-card-border-radius);
   box-shadow: var(--card-box-shadow);
 }
 
 .card-head {
   margin-bottom: -1px;
-  padding: var(--card-head-padding);
+  padding: var(--eo-card-head-padding);
   color: var(--antd-heading-color);
   font-weight: 500;
   font-size: 16px;
@@ -76,7 +61,7 @@
 }
 
 .card-body {
-  padding: var(--card-body-padding);
+  padding: var(--eo-card-body-padding);
 }
 .card-body::before {
   display: table;

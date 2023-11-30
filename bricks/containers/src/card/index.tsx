@@ -3,8 +3,9 @@ import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import type { Button, ButtonProps } from "@next-bricks/basic/button";
 import { isEmpty } from "lodash";
-import styleText from "./card.shadow.css";
 import "@next-core/theme";
+import styleText from "./card.shadow.css";
+import "./host-context.css";
 
 export interface OperationButton {
   id: string;

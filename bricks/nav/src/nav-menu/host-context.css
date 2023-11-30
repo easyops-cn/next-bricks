@@ -1,0 +1,26 @@
+:root {
+  --eo-three-level-menu-search-input-background: linear-gradient(
+    90deg,
+    #e8eef6 0%,
+    rgba(233, 234, 243, 0) 100%
+  );
+  --eo-three-level-menu-hover-color: #6bb3ff;
+  --eo-three-level-menu-title-color: #0b5ad9;
+  --eo-three-level-menu-active-color: #1a7aff;
+  --eo-three-level-menu-search-tag-color: rgb(89, 89, 89);
+  --eo-three-level-menu-search-tag-background: rgb(245, 245, 245);
+}
+
+html[data-theme="dark"],
+html[data-theme="dark-v2"] {
+  --eo-three-level-menu-search-input-background: linear-gradient(
+    124deg,
+    rgba(255, 255, 255, 0.36) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  --eo-three-level-menu-hover-color: rgba(54, 95, 175, 0.85);
+  --eo-three-level-menu-title-color: #6597e8;
+  --eo-three-level-menu-active-color: #3f75dd;
+  --eo-three-level-menu-search-tag-color: rgb(140, 140, 140);
+  --eo-three-level-menu-search-tag-background: rgb(107, 107, 107);
+}
