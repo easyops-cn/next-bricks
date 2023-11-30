@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.26](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/shoelace@0.4.25...@next-bricks/shoelace@0.4.26) (2023-11-30)
+
+**Note:** Version bump only for package @next-bricks/shoelace
+
+
+
+
+
 ## [0.4.25](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/shoelace@0.4.24...@next-bricks/shoelace@0.4.25) (2023-11-27)
 
 **Note:** Version bump only for package @next-bricks/shoelace

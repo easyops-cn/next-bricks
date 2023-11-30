@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.8.3...@next-bricks/nav@0.8.4) (2023-11-30)
+
+
+### Bug Fixes
+
+* launchpad actions for normal menu items ([de32325](https://github.com/easyops-cn/next-bricks/commit/de32325ee5e34e201a230d403698e5dc8f626c0c))
+
+
+
+
+
 ## [0.8.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.8.2...@next-bricks/nav@0.8.3) (2023-11-30)
 
 
