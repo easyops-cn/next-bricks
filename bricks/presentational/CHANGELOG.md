@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.16.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.16.0...@next-bricks/presentational@0.16.1) (2023-11-30)
+
+
+### Bug Fixes
+
+* host-context fallback ([6c627f7](https://github.com/easyops-cn/next-bricks/commit/6c627f7863d0d80b1f0e9dcc44185e4cb56e0d46))
+
+
+
+
+
 # [0.16.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.42...@next-bricks/presentational@0.16.0) (2023-11-29)
 
 
