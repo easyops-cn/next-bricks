@@ -30,6 +30,9 @@ export const presentationalBricks: BrickCommandConf[] = [
         actions: [
           {
             name: "click",
+            params: {
+              type: "icon",
+            },
           },
         ],
       },
@@ -62,6 +65,7 @@ export const presentationalBricks: BrickCommandConf[] = [
             type: "css-selector",
             value: ".ant-tag",
             multiple: true,
+            field: "tagIndex",
           },
         ],
         actions: [

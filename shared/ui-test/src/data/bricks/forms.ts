@@ -109,6 +109,7 @@ export const formsBricks: BrickCommandConf[] = [
             type: "css-selector",
             value: ".ant-checkbox-wrapper",
             multiple: true,
+            field: "checkboxIndex",
           },
         ],
         actions: [
@@ -132,6 +133,7 @@ export const formsBricks: BrickCommandConf[] = [
             type: "css-selector",
             value: ".ant-radio-wrapper",
             multiple: true,
+            field: "radioIndex",
           },
         ],
         actions: [
@@ -150,6 +152,7 @@ export const formsBricks: BrickCommandConf[] = [
             type: "css-selector",
             value: ".ant-radio-button-wrapper",
             multiple: true,
+            field: "radioButtonIndex",
           },
         ],
         actions: [
@@ -197,6 +200,7 @@ export const formsBricks: BrickCommandConf[] = [
             type: "css-selector",
             value: ".ant-select-item",
             multiple: true,
+            field: "selectItemIndex",
           },
         ],
         actions: [

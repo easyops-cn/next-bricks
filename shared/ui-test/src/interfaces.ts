@@ -7,6 +7,7 @@ export interface SelectorConf {
   type: "css-selector" | "testid";
   value: string;
   multiple?: boolean;
+  field?: string;
 }
 
 export interface BrickTarget {

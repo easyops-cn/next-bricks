@@ -28,6 +28,7 @@ export const basicBricks: BrickCommandConf[] = [
             type: "css-selector",
             value: "button.ant-btn",
             multiple: true,
+            field: "buttonIndex",
           },
         ],
         actions: [
@@ -47,6 +48,7 @@ export const basicBricks: BrickCommandConf[] = [
             type: "css-selector",
             value: ".ant-dropdown-menu-item",
             multiple: true,
+            field: "dropdownItemIndex",
           },
         ],
         actions: [
