@@ -52,6 +52,6 @@ export interface MenuActionDivider {
 }
 
 export interface MenuActionEventDetail {
-  data: ConfigMenuGroup | ConfigMenuItemDir;
+  data: ConfigMenuGroup | ConfigMenuItem;
   action: MenuSimpleAction;
 }
