@@ -139,6 +139,7 @@ export function matchBrickElements(
     return {
       brick: conf.brick,
       element: conf.element,
+      shadowDom: conf.shadowDom,
       targets: conf.targets.map((target) => ({
         ...target,
         selectors: cloneDeep(target.selectors),
@@ -176,12 +177,14 @@ export function matchBrickElements(
                 if (hostElement.dataset.testid) {
                   hostBrickData = {
                     type: "testid",
+                    shadowDom: conf.shadowDom,
                     value: hostElement.dataset.testid,
                     tag,
                   };
                 } else if (hostElement.id) {
                   hostBrickData = {
                     type: "id",
+                    shadowDom: conf.shadowDom,
                     value: hostElement.id,
                     tag,
                   };
