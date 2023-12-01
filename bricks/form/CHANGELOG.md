@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.26.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.26.1...@next-bricks/form@0.26.2) (2023-12-01)
+
+
+### Bug Fixes
+
+* select Enter should not work when ([b1f5c4b](https://github.com/easyops-cn/next-bricks/commit/b1f5c4b511db49cfd06c93bbfb97fa89c5bd2ed5))
+
+
+
+
+
 ## [0.26.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.26.0...@next-bricks/form@0.26.1) (2023-11-30)
 
 **Note:** Version bump only for package @next-bricks/form
