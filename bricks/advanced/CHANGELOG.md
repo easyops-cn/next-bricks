@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.13.1...@next-bricks/advanced@0.14.0) (2023-12-01)
+
+
+### Bug Fixes
+
+* 编辑时卡片禁止交互 ([cbcfa33](https://github.com/easyops-cn/next-bricks/commit/cbcfa33137383848b860dda815483fbcb1ee14e4))
+
+
+### Features
+
+* update workbench style ([1ab5220](https://github.com/easyops-cn/next-bricks/commit/1ab5220d98750b360bb1b5c9948b098ca5890229))
+
+
+
+
+
 ## [0.13.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.13.0...@next-bricks/advanced@0.13.1) (2023-11-30)
 
 **Note:** Version bump only for package @next-bricks/advanced
