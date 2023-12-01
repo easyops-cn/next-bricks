@@ -253,4 +253,78 @@ export const formsBricks: BrickCommandConf[] = [
       },
     ],
   },
+  {
+    brick: "forms.general-modal",
+    shadowDom: true,
+    targets: [
+      {
+        selectors: [
+          {
+            type: "css-selector",
+            value: ".ant-modal-content",
+          },
+          {
+            type: "css-selector",
+            value: ".ant-modal-footer",
+          },
+          {
+            type: "css-selector",
+            value: ".okBtn",
+          },
+        ],
+        actions: [
+          {
+            name: "click",
+            params: {
+              type: "ok",
+            },
+          },
+        ],
+      },
+      {
+        selectors: [
+          {
+            type: "css-selector",
+            value: ".ant-modal-content",
+          },
+          {
+            type: "css-selector",
+            value: ".ant-modal-footer",
+          },
+          {
+            type: "css-selector",
+            value: ".cancelBtn",
+          },
+        ],
+        actions: [
+          {
+            name: "click",
+            params: {
+              type: "cancel",
+            },
+          },
+        ],
+      },
+      {
+        selectors: [
+          {
+            type: "css-selector",
+            value: ".ant-modal-content",
+          },
+          {
+            type: "css-selector",
+            value: ".ant-modal-close",
+          },
+        ],
+        actions: [
+          {
+            name: "click",
+            params: {
+              type: "close",
+            },
+          },
+        ],
+      },
+    ],
+  },
 ];
