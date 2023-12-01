@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.5](https://github.com/easyops-cn/next-bricks/compare/@next-shared/ui-test@1.0.4...@next-shared/ui-test@1.0.5) (2023-12-01)
+
+
+### Bug Fixes
+
+* add forms.general-modal conf ([4a14d11](https://github.com/easyops-cn/next-bricks/commit/4a14d117c3ac2fc9b1efb11f4ba8e13e97687623))
+
+
+
+
+
 ## [1.0.4](https://github.com/easyops-cn/next-bricks/compare/@next-shared/ui-test@1.0.3...@next-shared/ui-test@1.0.4) (2023-12-01)
 
 
