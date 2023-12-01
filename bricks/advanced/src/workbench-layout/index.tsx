@@ -261,7 +261,15 @@ export function EoWorkbenchLayoutComponent({
             style={component?.style}
             className="drag-box"
           >
-            <ReactUseBrick useBrick={component.useBrick} />
+            <div
+              style={{
+                height: "100%",
+                pointerEvents: isEdit ? "none" : undefined,
+                userSelect: isEdit ? "none" : undefined,
+              }}
+            >
+              <ReactUseBrick useBrick={component.useBrick} />
+            </div>
             {isEdit && (
               <WrappedIcon
                 icon="delete"
