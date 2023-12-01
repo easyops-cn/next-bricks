@@ -41,9 +41,9 @@ export interface Targets {
   curve: Object3D[];
 }
 export interface CardSize {
-  width: number;
+  width: number; //卡片宽度
   height: number;
-  outerWidth: number;
+  outerWidth: number; //卡片宽度+边距
   outerHeight: number;
   lgWidth: number;
   lgHeight: number;

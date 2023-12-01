@@ -33,7 +33,7 @@
   border: 2px solid #fff;
 }
 .status-warning:hover {
-  box-shadow: 0 0 32px 0 rgba(242, 76, 37, 0.5);
+  box-shadow: 0 0 4px 0 rgba(242, 76, 37, 0.5);
   border: 2px solid #fff;
 }
 .card-item-text-container {
