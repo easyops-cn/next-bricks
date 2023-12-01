@@ -330,6 +330,7 @@ export function EoWorkbenchLayoutComponent({
           className="layout"
           draggableCancel=".delete-icon,.edit-actions,.ingore-item"
           breakpoints={{ lg: 1300, md: 1024, sm: 768 }}
+          rowHeight={1}
           cols={{ lg: 3, md: 3, sm: 1 }}
           isResizable={false}
           isDraggable={isEdit}

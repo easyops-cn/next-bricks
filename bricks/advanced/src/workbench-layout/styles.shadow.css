@@ -16,8 +16,8 @@
     width: 150px;
     padding: 6px 12px;
     overflow-y: scroll;
-    box-shadow: 1px 0 0 0 #e3e4e6;
-    background: #fff;
+    box-shadow: 1px 0 0 0 var(--palette-gray-5);
+    background: var(--color-fill-bg-container-1);
     z-index: 1000;
 
     .component-title {
@@ -55,17 +55,32 @@
       display: flex;
       gap: 8px;
       justify-content: end;
-      background: #fff;
+      background: var(--color-fill-bg-container-1);
       padding: 6px 12px;
-      box-shadow: 0 1px 1px 0 #c0c6cc;
+      box-shadow: 0 1px 1px 0 var(--palette-gray-5);
     }
 
     .delete-icon {
       position: absolute;
-      right: 20px;
-      top: 20px;
+      right: 15px;
+      top: 15px;
       cursor: pointer;
-      font-size: 18px;
+      font-size: 16px;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--color-fill-bg-container-1);
+      color: var(--color-normal-text);
+    }
+
+    .delete-icon:hover {
+      color: var(--color-warning);
+    }
+
+    .delete-icon:active {
+      color: var(--color-warning-active);
     }
   }
 }
