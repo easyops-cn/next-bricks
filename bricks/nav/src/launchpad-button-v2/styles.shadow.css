@@ -334,7 +334,7 @@
 
 /* https://github.com/w3c/csswg-drafts/issues/3559#issuecomment-1758459996 */
 @supports not (inset: 0) {
-  /* .content, */
+  .content,
   .search-box,
   .sidebar-menu,
   .menu,
@@ -344,15 +344,6 @@
   .sidebar-menu-item > eo-link::part(link),
   .menu-item > eo-link::part(link) {
     gap: 0;
-  }
-
-  .content {
-    display: grid;
-    grid-auto-flow: row;
-  }
-
-  .content:not(.loading) {
-    height: min-content;
   }
 
   .sidebar-menu > :not(:first-child),
@@ -373,8 +364,7 @@
     margin-left: 8px;
   }
 
-  /* .search-box,
-  .recent-visits {
+  .content > :not(:last-child) {
     margin-bottom: 24px;
-  } */
+  }
 }
