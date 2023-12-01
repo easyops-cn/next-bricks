@@ -15,6 +15,7 @@ export interface InspectSelector {
   value: string;
   tag: string;
   isolate?: boolean;
+  shadowDom?: boolean;
   eq?: number;
 }
 

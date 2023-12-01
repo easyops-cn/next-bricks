@@ -2,24 +2,6 @@ import { BrickCommandConf } from "../../interfaces.js";
 
 export const basicBricks: BrickCommandConf[] = [
   {
-    brick: "basic-bricks.general-button",
-    targets: [
-      {
-        selectors: [
-          {
-            type: "testid",
-            value: "button",
-          },
-        ],
-        actions: [
-          {
-            name: "click",
-          },
-        ],
-      },
-    ],
-  },
-  {
     brick: "basic-bricks.general-custom-buttons",
     targets: [
       {
@@ -64,6 +46,7 @@ export const basicBricks: BrickCommandConf[] = [
   },
   {
     brick: "basic-bricks.general-drawer",
+    shadowDom: true,
     targets: [
       {
         selectors: [
@@ -93,6 +76,7 @@ export const basicBricks: BrickCommandConf[] = [
   },
   {
     brick: "basic-bricks.general-modal",
+    shadowDom: true,
     targets: [
       {
         selectors: [
