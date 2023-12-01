@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/ui-test",
-  "version": "0.11.4",
+  "version": "0.11.5",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/ui-test",
   "repository": {
     "type": "git",
@@ -43,7 +43,7 @@
     "@next-core/react-element": "^1.0.17",
     "@next-core/runtime": "^1.25.8",
     "@next-core/theme": "^1.4.2",
-    "@next-shared/ui-test": "^1.0.3",
+    "@next-shared/ui-test": "^1.0.4",
     "classnames": "^2.3.2",
     "file-saver": "^2.0.5",
     "idb-keyval": "^6.2.1",
