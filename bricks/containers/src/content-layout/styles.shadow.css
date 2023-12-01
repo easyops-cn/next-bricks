@@ -15,4 +15,8 @@
     grid-auto-flow: row;
     height: min-content;
   }
+
+  ::slotted(*) {
+    min-width: 0;
+  }
 }
