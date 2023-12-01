@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.8.4...@next-bricks/nav@0.8.5) (2023-12-01)
+
+
+### Bug Fixes
+
+* fix style in older browser without flex gap support ([e986947](https://github.com/easyops-cn/next-bricks/commit/e986947057db3a8d4aa93a6cdebe15a94c716d87))
+
+
+
+
+
 ## [0.8.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.8.3...@next-bricks/nav@0.8.4) (2023-11-30)
 
 
