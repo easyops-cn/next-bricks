@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.24.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.24.3...@next-bricks/containers@0.24.4) (2023-12-01)
+
+
+### Bug Fixes
+
+* refine content-layout compatibility ([6bfac9f](https://github.com/easyops-cn/next-bricks/commit/6bfac9fc2e252e173fd03faf34c60629289e09e8))
+
+
+
+
+
 ## [0.24.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.24.2...@next-bricks/containers@0.24.3) (2023-11-30)
 
 **Note:** Version bump only for package @next-bricks/containers
