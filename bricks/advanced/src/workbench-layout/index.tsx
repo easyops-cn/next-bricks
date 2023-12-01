@@ -245,6 +245,10 @@ export function EoWorkbenchLayoutComponent({
     []
   );
 
+  const handleEditMaskClcik = (e: React.MouseEvent) => {
+    e.preventDefault();
+  };
+
   const renderChild = useMemo(
     () =>
       layouts.map((layout) => {
@@ -261,15 +265,10 @@ export function EoWorkbenchLayoutComponent({
             style={component?.style}
             className="drag-box"
           >
-            <div
-              style={{
-                height: "100%",
-                pointerEvents: isEdit ? "none" : undefined,
-                userSelect: isEdit ? "none" : undefined,
-              }}
-            >
-              <ReactUseBrick useBrick={component.useBrick} />
-            </div>
+            {isEdit && (
+              <div className="edit-mask" onMouseDown={handleEditMaskClcik} />
+            )}
+            <ReactUseBrick useBrick={component.useBrick} />
             {isEdit && (
               <WrappedIcon
                 icon="delete"

@@ -60,6 +60,15 @@
       box-shadow: 0 1px 1px 0 var(--palette-gray-5);
     }
 
+    .edit-mask {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 45px;
+      bottom: 0;
+      z-index: 10;
+    }
+
     .delete-icon {
       position: absolute;
       right: 15px;

@@ -172,6 +172,14 @@ describe("form.general-select", () => {
     ).toBe(2);
 
     act(() => {
+      fireEvent.click(
+        element.shadowRoot?.querySelector(
+          ".select-selection-search-input"
+        ) as HTMLElement
+      );
+    });
+
+    act(() => {
       fireEvent.keyDown(
         element.shadowRoot?.querySelector(
           ".select-selection-search-input"

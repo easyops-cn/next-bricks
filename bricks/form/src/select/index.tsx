@@ -569,19 +569,21 @@ export function SelectComponent(props: SelectProps) {
 
   const handleKeydown = useCallback(
     (e: KeyboardEvent): void => {
-      if (e.code === "Enter") {
-        focusOptionItem && handleChange(focusOptionItem);
-      }
-      if (
-        e.code === "Backspace" &&
-        multiple &&
-        inputValue === "" &&
-        selectedOptions?.length
-      ) {
-        selectedOptions.pop();
-        setSelectedOptions([...selectedOptions]);
-        value.pop();
-        setValue([...value]);
+      if (isFocused) {
+        if (e.code === "Enter") {
+          focusOptionItem && handleChange(focusOptionItem);
+        }
+        if (
+          e.code === "Backspace" &&
+          multiple &&
+          inputValue === "" &&
+          selectedOptions?.length
+        ) {
+          selectedOptions.pop();
+          setSelectedOptions([...selectedOptions]);
+          value.pop();
+          setValue([...value]);
+        }
       }
       if (!isDropHidden && focusOptionItem) {
         if (e.code === "ArrowDown") {
@@ -605,6 +607,7 @@ export function SelectComponent(props: SelectProps) {
       }
     },
     [
+      isFocused,
       multiple,
       inputValue,
       selectedOptions,
