@@ -20,7 +20,6 @@ ul {
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
 }
 
-.sidebar-menu,
 .menu,
 .sub-menu {
   display: flex;
@@ -119,11 +118,6 @@ ul {
   width: 24px;
 }
 
-.menu-item > eo-dropdown-actions,
-.menu-folder-label-wrapper > eo-dropdown-actions {
-  margin: -3px 0;
-}
-
 .menu-config:hover,
 .menu-item > eo-link:hover::part(link),
 .menu-item > eo-link:hover .menu-icon,
@@ -131,4 +125,30 @@ ul {
 .menu-folder-label-wrapper > eo-link:hover .menu-icon,
 .menu-folder-label-wrapper > eo-link:hover .menu-item-toggle {
   color: var(--color-brand-hover);
+}
+
+/* https://github.com/w3c/csswg-drafts/issues/3559#issuecomment-1758459996 */
+@supports not (inset: 0) {
+  .sub-menu,
+  .menu,
+  .menu-group-label-wrapper,
+  .menu-folder-label-wrapper,
+  .menu-item:not(.folder),
+  .menu-item > eo-link::part(link) {
+    gap: 0;
+  }
+
+  .menu > :not(:first-child),
+  .sub-menu > :not(:first-child) {
+    margin-top: 14px;
+  }
+
+  .menu-icon {
+    margin-right: 8px;
+  }
+
+  eo-dropdown-actions,
+  .menu-item-toggle {
+    margin-left: 8px;
+  }
 }
