@@ -70,6 +70,7 @@ const distanceConfig: DistanceConfig[] = [
 const fov = 45;
 const angle = 100;
 const panelSpace = 300;
+const offsetDistance = 500;
 
 const getViewBounds = (
   length: number,
@@ -141,7 +142,8 @@ export function AppWallElement(props: AppWallProps): ReactElement {
   });
   const objectsRef = useRef<CSS3DObject[]>([]);
   const lineCiCodesRef = useRef<CSS3DObject[]>([]);
-  const hoverScaleRef = useRef<number>(1.15);
+  const hoverScaleRef = useRef<number>(1);
+  const baseCameraDistance = useRef<number>(5000);
 
   const configRef = useRef<BaseConfig>({
     maxX: 0,
@@ -169,7 +171,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
   const render = useCallback(() => {
     rendererRef.current.render(sceneRef.current, cameraRef.current);
     controlsRef.current.maxDistance =
-      configRef.current.bounds.z + configRef.current.radius;
+      baseCameraDistance.current + offsetDistance;
     controlsRef.current.handleResize();
   }, []);
 
@@ -307,6 +309,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
       y: __objectCSS.position.y + 15,
       z: __objectCSS.position.z + 100 * Math.cos(rotationY),
     };
+
     const scale =
         currentEleRect.width >= cardSize.width
           ? hoverScaleRef.current
@@ -342,6 +345,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         duration
       )
       .start();
+
     new Tween(__objectCSS.position)
       .to(position, duration)
       .onUpdate(render)
@@ -689,12 +693,13 @@ export function AppWallElement(props: AppWallProps): ReactElement {
     const length = props.dataSource?.length || 0;
     if (length > 0) {
       updateViewBounds(length);
-      cameraRef.current.position.z = computeCameraDistance(
+      baseCameraDistance.current = computeCameraDistance(
         cameraRef.current,
         configRef.current.bounds,
         useDistanceConfig ? distanceConfig : [],
         length
       );
+      cameraRef.current.position.z = baseCameraDistance.current;
       cameraRef.current.updateProjectionMatrix();
       controlsRef.current.position0.copy(cameraRef.current.position);
 
