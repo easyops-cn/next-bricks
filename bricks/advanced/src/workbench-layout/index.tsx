@@ -357,11 +357,11 @@ export function EoWorkbenchLayoutComponent({
       >
         {isEdit && (
           <div className="actions-wrapper">
-            <WrappedButton danger={true} onClick={handleClearLayout}>
-              清除
-            </WrappedButton>
             <WrappedButton type="primary" onClick={handleSave}>
               保存
+            </WrappedButton>
+            <WrappedButton danger={true} onClick={handleClearLayout}>
+              清除
             </WrappedButton>
             <WrappedButton onClick={handleCancel}>取消</WrappedButton>
           </div>
