@@ -196,6 +196,33 @@ describe("eo-workbench-layout", () => {
       element.shadowRoot?.querySelector(".layout")?.childNodes.length
     ).toBe(2);
 
+    // delete component item
+    await act(async () => {
+      element.componentList = [
+        {
+          title: "card-1",
+          useBrick: {
+            brick: "div",
+            properties: {
+              textContent: "card-1",
+            },
+          },
+          position: {
+            i: "card-1",
+            x: 0,
+            y: 0,
+            w: 2,
+            h: 1,
+          },
+          key: "card-1",
+        },
+      ];
+    });
+
+    expect(
+      element.shadowRoot?.querySelector(".layout")?.childNodes.length
+    ).toBe(1);
+
     // reset
     await act(async () => {
       (

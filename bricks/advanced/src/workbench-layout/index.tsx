@@ -257,35 +257,40 @@ export function EoWorkbenchLayoutComponent({
 
   const renderChild = useMemo(
     () =>
-      layouts.map((layout) => {
-        const component = componentList.find(
-          (item) => item.key === getRealKey(layout.i)
-        )!;
-        return (
-          <div
-            key={layout.i}
-            data-grid={{
-              ...(component?.position ?? {}),
-              ...layout,
-            }}
-            style={component?.style}
-            className="drag-box"
-          >
-            {isEdit && (
-              <div className="edit-mask" onMouseDown={handleEditMaskClcik} />
-            )}
-            <ReactUseBrick useBrick={component.useBrick} />
-            {isEdit && (
-              <WrappedIcon
-                icon="delete"
-                lib="antd"
-                className="delete-icon"
-                onClick={(e) => handleDeleteItem(e, component)}
-              />
-            )}
-          </div>
-        );
-      }),
+      layouts
+        .map((layout) => {
+          const component = componentList.find(
+            (item) => item.key === getRealKey(layout.i)
+          );
+          if (!component) {
+            return null;
+          }
+          return (
+            <div
+              key={layout.i}
+              data-grid={{
+                ...(component.position ?? {}),
+                ...layout,
+              }}
+              style={component.style}
+              className="drag-box"
+            >
+              {isEdit && (
+                <div className="edit-mask" onMouseDown={handleEditMaskClcik} />
+              )}
+              <ReactUseBrick useBrick={component.useBrick} />
+              {isEdit && (
+                <WrappedIcon
+                  icon="delete"
+                  lib="antd"
+                  className="delete-icon"
+                  onClick={(e) => handleDeleteItem(e, component)}
+                />
+              )}
+            </div>
+          );
+        })
+        .filter(Boolean),
     [componentList, handleDeleteItem, layouts, isEdit]
   );
 
