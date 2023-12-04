@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.15.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.14.1...@next-bricks/advanced@0.15.0) (2023-12-04)
+
+
+### Features
+
+* **workbench:** add cardTitle prop ([0b62a24](https://github.com/easyops-cn/next-bricks/commit/0b62a24d9e605d96c78ec9372ed22f4c1f9602c2))
+
+
+
+
+
 ## [0.14.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.14.0...@next-bricks/advanced@0.14.1) (2023-12-01)
 
 
