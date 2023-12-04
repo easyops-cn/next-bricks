@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.17.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.16.0...@next-bricks/advanced@0.17.0) (2023-12-04)
+
+
+### Features
+
+* **workbench-layout:** update style ([acba47f](https://github.com/easyops-cn/next-bricks/commit/acba47f34b07dad624b698ddcfa0276460dbd64c))
+
+
+
+
+
 # [0.16.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.15.1...@next-bricks/advanced@0.16.0) (2023-12-04)
 
 
