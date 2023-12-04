@@ -142,9 +142,12 @@ export function EoWorkbenchLayoutComponent({
   );
   const gridLayoutRef = useRef<HTMLDivElement>(null);
   const layoutCacheRef = useRef<Layout[]>();
+  const layoutWarpperRef = useRef<HTMLDivElement>(null);
 
   const [layouts, setLayouts] = useState<Layout[]>(layoutsProps ?? []);
   const [cols, setCols] = useState<number>(3);
+  const [layoutWrapperStyle, setLayoutWrapperStyle] =
+    useState<React.CSSProperties>();
 
   const handleDragCallback: ItemCallback = (layout, oldItem, newItem) => {
     const placeholderDOM = gridLayoutRef.current?.querySelector(
@@ -309,6 +312,29 @@ export function EoWorkbenchLayoutComponent({
     [layouts]
   );
 
+  const handleWatchLayoutSizeChange = useCallback(() => {
+    if (layoutWarpperRef && isEdit) {
+      const { top } =
+        layoutWarpperRef.current?.getClientRects()?.[0] ?? ({} as DOMRect);
+      top !== undefined &&
+        setLayoutWrapperStyle({
+          height: document.body.clientHeight - top,
+          overflow: "scroll",
+        });
+    }
+  }, [isEdit]);
+
+  useEffect(() => {
+    if (isEdit) {
+      handleWatchLayoutSizeChange();
+      window.addEventListener("resize", handleWatchLayoutSizeChange);
+
+      return () => {
+        window.removeEventListener("resize", handleWatchLayoutSizeChange);
+      };
+    }
+  }, [isEdit, handleWatchLayoutSizeChange]);
+
   return (
     <div className="grid-layout-wrapper" ref={gridLayoutRef}>
       {isEdit && (
@@ -324,7 +350,11 @@ export function EoWorkbenchLayoutComponent({
           </div>
         </div>
       )}
-      <div className="layout-wrapper">
+      <div
+        className="layout-wrapper"
+        ref={layoutWarpperRef}
+        style={layoutWrapperStyle}
+      >
         {isEdit && (
           <div className="actions-wrapper">
             <WrappedButton danger={true} onClick={handleClearLayout}>

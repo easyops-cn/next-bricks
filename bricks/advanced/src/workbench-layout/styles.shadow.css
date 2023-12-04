@@ -12,6 +12,7 @@
 .grid-layout-wrapper {
   display: flex;
   height: 100%;
+  position: relative;
   .component-wrapper {
     width: 150px;
     padding: 6px 12px;
@@ -19,6 +20,8 @@
     box-shadow: 1px 0 0 0 var(--palette-gray-5);
     background: var(--color-fill-bg-container-1);
     z-index: 1000;
+    position: sticky;
+    top: 0;
 
     .component-title {
       font-size: 16px;
@@ -51,7 +54,10 @@
     }
 
     .actions-wrapper {
-      position: relative;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      margin-left: 1px;
       display: flex;
       gap: 8px;
       justify-content: end;
