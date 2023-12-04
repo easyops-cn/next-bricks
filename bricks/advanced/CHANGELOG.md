@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.15.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.15.0...@next-bricks/advanced@0.15.1) (2023-12-04)
+
+
+### Bug Fixes
+
+* delete component and render error ([6735c28](https://github.com/easyops-cn/next-bricks/commit/6735c28bcf9748f5ccd573109b02cc420828f108))
+
+
+
+
+
 # [0.15.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.14.1...@next-bricks/advanced@0.15.0) (2023-12-04)
 
 
