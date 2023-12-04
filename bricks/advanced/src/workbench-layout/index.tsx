@@ -66,6 +66,9 @@ export
   styleTexts: [styleText],
 })
 class EoWorkbenchLayout extends ReactNextElement {
+  @property()
+  accessor cardTitle: string | undefined;
+
   @property({
     type: Boolean,
   })
@@ -102,6 +105,7 @@ class EoWorkbenchLayout extends ReactNextElement {
   render() {
     return (
       <EoWorkbenchLayoutComponent
+        cardTitle={this.cardTitle}
         layouts={this.layouts}
         componentList={this.componentList}
         isEdit={this.isEdit}
@@ -113,6 +117,7 @@ class EoWorkbenchLayout extends ReactNextElement {
 }
 
 export interface EoWorkbenchLayoutProps {
+  cardTitle?: string;
   layouts?: Layout[];
   componentList?: Item[];
   isEdit?: boolean;
@@ -124,6 +129,7 @@ const getRealKey = (key: string): string =>
   key?.includes(":") ? key.split(":")[0] : key;
 
 export function EoWorkbenchLayoutComponent({
+  cardTitle = "卡片列表",
   layouts: layoutsProps,
   componentList = [],
   isEdit,
@@ -302,7 +308,7 @@ export function EoWorkbenchLayoutComponent({
     <div className="grid-layout-wrapper" ref={gridLayoutRef}>
       {isEdit && (
         <div className="component-wrapper">
-          <div className="component-title">构件列表</div>
+          <div className="component-title">{cardTitle}</div>
           <div className="component-list">
             <WrappedCheckbox
               options={computedOptions}
