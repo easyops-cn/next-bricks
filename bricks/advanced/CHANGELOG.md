@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.16.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.15.1...@next-bricks/advanced@0.16.0) (2023-12-04)
+
+
+### Features
+
+* **workbench:** add sticky for action wrapper ([f755b79](https://github.com/easyops-cn/next-bricks/commit/f755b795b2d352999b63738684f945a9b24c8d3a))
+
+
+
+
+
 ## [0.15.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.15.0...@next-bricks/advanced@0.15.1) (2023-12-04)
 
 
