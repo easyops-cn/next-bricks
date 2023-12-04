@@ -22,6 +22,7 @@ import type {
   PreviewMessagePreviewerHighlightBrick,
   PreviewMessagePreviewerHighlightContext,
   PreviewMessagePreviewerHoverOnMain,
+  PreviewMessagePreviewerRealTimeDataInspectChange,
   PreviewMessagePreviewerRouteMatchChange,
   PreviewMessagePreviewerScroll,
   PreviewMessagePreviewerUrlChange,
@@ -38,6 +39,7 @@ import {
   stopInspecting,
 } from "./inspector.js";
 import { collectUsedContracts } from "../collect-used-contracts.js";
+import { getRealTimeDataAnnotation } from "./realTimeDataInspect.js";
 
 let connected = false;
 
@@ -221,14 +223,9 @@ export default async function connect(
     try {
       const { dataType } = option;
       let tplStateStoreId;
-      const datasetKey = isV2 ? "tplContextId" : "tplStateStoreId";
 
       if (dataType === "state") {
-        const mainMountPoint = document.querySelector("#main-mount-point")!;
-
-        tplStateStoreId = (mainMountPoint.firstChild as HTMLElement).dataset[
-          datasetKey
-        ];
+        tplStateStoreId = getRootTplStateStoreId();
 
         if (!tplStateStoreId) {
           sendMessage<PreviewMessagePreviewDataValueError>({
@@ -571,10 +568,50 @@ export default async function connect(
     });
   }
 
+  __secret_internals.addRealTimeDataInspectHook?.(
+    ({ changeType, tplStateStoreId, detail }) => {
+      sendMessage<PreviewMessagePreviewerRealTimeDataInspectChange>({
+        type: "real-time-data-inspect-change",
+        changeType,
+        tplStateStoreId,
+        detail:
+          changeType === "update"
+            ? {
+                name: detail.name,
+                annotation: getRealTimeDataAnnotation(detail.value),
+              }
+            : {
+                data: Object.fromEntries(
+                  Object.entries(detail.data).map(([k, v]) => [
+                    k,
+                    getRealTimeDataAnnotation(v),
+                  ])
+                ),
+              },
+      });
+    }
+  );
+
+  let memoizedRootTplStateStoreId: string | undefined = "?";
+
+  function setupRealTimeDataInspect() {
+    const tplStateStoreId = options.templateId
+      ? getRootTplStateStoreId()
+      : undefined;
+    if (memoizedRootTplStateStoreId !== tplStateStoreId) {
+      memoizedRootTplStateStoreId = tplStateStoreId;
+      __secret_internals.setRealTimeDataInspectRoot?.({
+        tplStateStoreId,
+      });
+    }
+  }
+
   setupContentScroll();
+  setupRealTimeDataInspect();
 
   const mutationCallback = (): void => {
     setupContentScroll();
+    setupRealTimeDataInspect();
     if (hoverIid) {
       sendHighlightBrickOutlines("hover", hoverIid, hoverAlias);
     }
@@ -627,4 +664,12 @@ function getOutlines(
       hasContentScroll,
     };
   });
+}
+
+function getRootTplStateStoreId(): string | undefined {
+  const mainMountPoint = document.querySelector("#main-mount-point")!;
+
+  return (mainMountPoint?.firstChild as HTMLElement)?.dataset[
+    isV2 ? "tplContextId" : "tplStateStoreId"
+  ];
 }

@@ -55,8 +55,12 @@ jobs:
       if: steps.yarn-lock-check-before.outputs.sum != steps.yarn-lock-check-after.outputs.sum
 
     - run: yarn build
+      env:
+        NX_REJECT_UNKNOWN_LOCAL_CACHE: '0'
 
     - run: yarn test:ci
+      env:
+        NX_REJECT_UNKNOWN_LOCAL_CACHE: '0'
 
     - name: Codecov
       uses: codecov/codecov-action@v3
