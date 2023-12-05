@@ -30,6 +30,9 @@ export interface WorkbenchPaneProps {
   onFirstActivated?(): void;
 }
 
+/**
+ * @insider
+ */
 @defineElement("visual-builder.workbench-pane", {
   styleTexts: [styleText, sharedStyle],
 })

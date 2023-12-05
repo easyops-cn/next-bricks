@@ -14,6 +14,7 @@ const { defineElement, property, event } = createDecorators();
 
 /**
  * 构件 `nav.launchpad-config`
+ * @insider
  */
 export
 @defineElement("nav.launchpad-config", {

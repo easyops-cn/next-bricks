@@ -12,10 +12,11 @@ import "./host-context.css";
 
 export const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
-const { defineElement, property } = createDecorators();
+const { defineElement } = createDecorators();
 
 /**
  * launchpad 搜索
+ * @insider
  */
 export
 @defineElement("eo-search-launchpad", {

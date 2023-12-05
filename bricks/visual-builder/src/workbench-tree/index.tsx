@@ -31,6 +31,7 @@ const { defineElement, property, event } = createDecorators();
  * 1.x.0: 新增构件 `next-builder.workbench-tree`
  * @docKind brick
  * @noInheritDoc
+ * @insider
  */
 @defineElement("visual-builder.workbench-tree", {
   styleTexts: [treeStyleText, actionStyleText],

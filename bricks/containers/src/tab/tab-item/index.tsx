@@ -31,7 +31,7 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 /**
  * Tab 子项构件
  * @author sailorshe
- *
+ * @insider
  */
 @defineElement("eo-tab-item", {
   styleTexts: [styleText],

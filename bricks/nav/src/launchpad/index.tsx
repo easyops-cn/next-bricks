@@ -14,6 +14,7 @@ const { defineElement } = createDecorators();
 /**
  * Launchpad 按钮构件
  * @author sailor
+ * @insider
  */
 @defineElement("eo-launchpad-button", {
   styleTexts: [styleText],

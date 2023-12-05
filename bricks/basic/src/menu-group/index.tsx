@@ -4,10 +4,12 @@ import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 
-const { defineElement, property } = createDecorators();
+const { defineElement } = createDecorators();
 
 /**
  * 构件 `eo-menu-group`
+ *
+ * @insider
  */
 export
 @defineElement("eo-menu-group", {

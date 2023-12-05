@@ -31,6 +31,9 @@ interface WorkbenchActionListProps {
   menu: SidebarMenu;
 }
 
+/**
+ * @insider
+ */
 @defineElement("visual-builder.workbench-action-list", {
   styleTexts: [styleText],
 })
