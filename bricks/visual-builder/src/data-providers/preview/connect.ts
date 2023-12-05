@@ -592,13 +592,13 @@ export default async function connect(
     }
   );
 
-  let memoizedRootTplStateStoreId: string | undefined = "?";
+  let memoizedRootTplStateStoreId: string | undefined;
 
-  function setupRealTimeDataInspect() {
+  function setupRealTimeDataInspect(force?: boolean) {
     const tplStateStoreId = options.templateId
       ? getRootTplStateStoreId()
       : undefined;
-    if (memoizedRootTplStateStoreId !== tplStateStoreId) {
+    if (memoizedRootTplStateStoreId !== tplStateStoreId || force) {
       memoizedRootTplStateStoreId = tplStateStoreId;
       __secret_internals.setRealTimeDataInspectRoot?.({
         tplStateStoreId,
@@ -606,8 +606,12 @@ export default async function connect(
     }
   }
 
+  window.addEventListener("route.render", () => {
+    setupRealTimeDataInspect(true);
+  });
+
   setupContentScroll();
-  setupRealTimeDataInspect();
+  setupRealTimeDataInspect(true);
 
   const mutationCallback = (): void => {
     setupContentScroll();

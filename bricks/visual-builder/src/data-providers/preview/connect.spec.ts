@@ -60,11 +60,12 @@ jest
   .mockImplementation();
 
 const realTimeDataInspectHooks: any = [];
-(runtime.__secret_internals as any).addRealTimeDataInspectHook = jest.fn(
-  (hook: any) => {
+jest
+  .spyOn(runtime.__secret_internals, "addRealTimeDataInspectHook")
+  .mockImplementation((hook) => {
     realTimeDataInspectHooks.push(hook);
-  }
-);
+  });
+jest.spyOn(runtime.__secret_internals, "setRealTimeDataInspectRoot");
 
 const mockCapture = capture as jest.Mock;
 
@@ -694,6 +695,15 @@ describe("connect", () => {
         },
       });
     }
+
+    expect(
+      runtime.__secret_internals.setRealTimeDataInspectRoot
+    ).toHaveBeenCalledTimes(1);
+
+    window.dispatchEvent(new CustomEvent("route.render"));
+    expect(
+      runtime.__secret_internals.setRealTimeDataInspectRoot
+    ).toHaveBeenCalledTimes(2);
   });
 
   it("should handle content scroll", async () => {
