@@ -58,6 +58,14 @@ jest.spyOn(runtime.__secret_internals, "getContextValue").mockImplementation();
 jest
   .spyOn(runtime.__secret_internals, "getAllContextValues")
   .mockImplementation();
+
+const realTimeDataInspectHooks: any = [];
+(runtime.__secret_internals as any).addRealTimeDataInspectHook = jest.fn(
+  (hook: any) => {
+    realTimeDataInspectHooks.push(hook);
+  }
+);
+
 const mockCapture = capture as jest.Mock;
 
 delete (window as any).location;
@@ -667,6 +675,25 @@ describe("connect", () => {
       },
       "http://localhost:8081"
     );
+
+    for (const hook of realTimeDataInspectHooks) {
+      hook({
+        changeType: "initialize",
+        detail: {
+          data: { a: 1 },
+        },
+      });
+    }
+
+    for (const hook of realTimeDataInspectHooks) {
+      hook({
+        changeType: "update",
+        detail: {
+          name: "a",
+          value: 2,
+        },
+      });
+    }
   });
 
   it("should handle content scroll", async () => {

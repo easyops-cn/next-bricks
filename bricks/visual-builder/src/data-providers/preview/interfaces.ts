@@ -88,6 +88,7 @@ export type PreviewMessageFromPreviewer =
   | PreviewMessagePreviewerRouteMatchChange
   | PreviewMessagePreviewerScroll
   | PreviewMessagePreviewerContentScroll
+  | PreviewMessagePreviewerRealTimeDataInspectChange
   | PreviewMessagePreviewerCaptureOk
   | PreviewMessagePreviewerCaptureFailed
   | PreviewMessagePreviewDataValueSuccess
@@ -240,6 +241,15 @@ export interface PreviewMessagePreviewerContentScroll
     x: number;
     y: number;
   };
+}
+
+export interface PreviewMessagePreviewerRealTimeDataInspectChange
+  extends PreviewBaseMessage {
+  sender: "previewer";
+  type: "real-time-data-inspect-change";
+  changeType: string;
+  tplStateStoreId?: string;
+  detail: unknown;
 }
 
 export interface PreviewMessagePreviewerCaptureOk extends PreviewBaseMessage {
