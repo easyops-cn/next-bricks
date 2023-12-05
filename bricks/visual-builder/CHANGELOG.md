@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.10.0...@next-bricks/visual-builder@0.10.1) (2023-12-05)
+
+
+### Bug Fixes
+
+* reset real time data inspect when route rendered ([7c49301](https://github.com/easyops-cn/next-bricks/commit/7c493011b3e393aeecaeb21cf848b94db6478582))
+
+
+
+
+
 # [0.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.9.9...@next-bricks/visual-builder@0.10.0) (2023-12-05)
 
 
