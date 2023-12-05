@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.9.9...@next-bricks/visual-builder@0.10.0) (2023-12-05)
+
+
+### Features
+
+* real time data inspect ([8efc923](https://github.com/easyops-cn/next-bricks/commit/8efc92303cf4b2259db2997270eaf03494f3ae07))
+
+
+
+
+
 ## [0.9.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.9.8...@next-bricks/visual-builder@0.9.9) (2023-12-05)
 
 **Note:** Version bump only for package @next-bricks/visual-builder
