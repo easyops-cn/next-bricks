@@ -55,6 +55,7 @@ const { defineElement, property } = createDecorators();
  * @author sailor
  * @slot - 表单项内容
  * @category form-input-basic
+ * @insider
  */
 @defineElement("eo-form-item", {
   styleTexts: [styleText],

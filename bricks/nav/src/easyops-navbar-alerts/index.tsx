@@ -17,10 +17,11 @@ import styleText from "./styles.shadow.css";
 export const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 export const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 
-const { defineElement, property } = createDecorators();
+const { defineElement } = createDecorators();
 
 /**
  * 构件 `nav.easyops-navbar-alerts`
+ * @insider
  */
 export
 @defineElement("nav.easyops-navbar-alerts", {

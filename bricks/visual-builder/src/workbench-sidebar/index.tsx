@@ -14,6 +14,9 @@ interface WorkbenchSidebarChildElement extends HTMLElement {
 
 const { defineElement, property } = createDecorators();
 
+/**
+ * @insider
+ */
 @defineElement("visual-builder.workbench-sidebar", {
   styleTexts: [styleText],
 })

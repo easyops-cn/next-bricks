@@ -21,6 +21,7 @@ export interface SidebarMenu {
  * @author sailor
  *
  * @slot - 菜单内容
+ * @insider
  */
 @defineElement("eo-menu", {
   styleTexts: [styleText],

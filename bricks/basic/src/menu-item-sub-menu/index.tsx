@@ -23,6 +23,8 @@ export interface EoMenuSubMenuProps {
 
 /**
  * 构件 `eo-menu-item-sub-menu`
+ *
+ * @insider
  */
 export
 @defineElement("eo-menu-item-sub-menu", {

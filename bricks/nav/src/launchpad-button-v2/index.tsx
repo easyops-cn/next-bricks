@@ -25,6 +25,7 @@ const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
 
 /**
  * 构件 `eo-launchpad-button-v2`
+ * @insider
  */
 export
 @defineElement("eo-launchpad-button-v2", {

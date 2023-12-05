@@ -61,6 +61,7 @@ export interface WorkbenchHistoryActionProps {
 
 /**
  * 项目变更历史
+ * @insider
  */
 export
 @defineElement("visual-builder.workbench-history-action", {
@@ -132,8 +133,7 @@ interface WorkbenchHistoryActionComponentProps
 export function WorkbenchHistoryActionComponent(
   props: WorkbenchHistoryActionComponentProps
 ) {
-  const { appId, projectId, onHistoryItemClick, onRollback, onRollbackAll } =
-    props;
+  const { appId, onHistoryItemClick, onRollback, onRollbackAll } = props;
   const { t } = useTranslation(NS);
 
   const [loading, setLoading] = useState(false);
@@ -215,7 +215,7 @@ export function WorkbenchHistoryActionComponent(
                   <WrappedLink
                     className="load-more"
                     disabled={loading}
-                    onClick={(e) => handleLoadList()}
+                    onClick={() => handleLoadList()}
                   >
                     {t(K.LOAD_MORE)}
                   </WrappedLink>
@@ -229,7 +229,7 @@ export function WorkbenchHistoryActionComponent(
                     lib="antd"
                     icon="rollback"
                     theme="outlined"
-                    onClick={(e) => onRollbackAll()}
+                    onClick={() => onRollbackAll()}
                   />
                 </span>
               )}
@@ -271,7 +271,7 @@ function HistoryItem(props: HistoryItemProps) {
       <div className="item-title">
         <div
           className="title-left"
-          onClick={(e) => onHistoryItemClick({ ...data, enableRollback })}
+          onClick={() => onHistoryItemClick({ ...data, enableRollback })}
         >
           <div className="topic" title={data.translation.abstract}>
             {data.translation.abstract}
@@ -285,7 +285,7 @@ function HistoryItem(props: HistoryItemProps) {
               lib="antd"
               icon="rollback"
               theme="outlined"
-              onClick={(e) => onRollback(data)}
+              onClick={() => onRollback(data)}
             />
           )}
         </div>

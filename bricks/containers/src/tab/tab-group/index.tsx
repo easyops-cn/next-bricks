@@ -34,7 +34,7 @@ export interface TabGroupEventsMapping {
 /**
  * Tab 容器组
  * @author sailorshe
- *
+ * @insider
  */
 @defineElement("eo-tab-group", {
   styleTexts: [styleText],

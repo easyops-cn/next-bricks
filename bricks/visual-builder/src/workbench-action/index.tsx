@@ -21,6 +21,9 @@ export interface WorkbenchActionProps {
   href?: string;
 }
 
+/**
+ * @insider
+ */
 @defineElement("visual-builder.workbench-action", {
   styleTexts: [styleText],
 })

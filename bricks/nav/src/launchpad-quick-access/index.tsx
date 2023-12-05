@@ -8,10 +8,11 @@ import { LaunchpadsContext } from "../launchpad-button-v2/LaunchpadContext";
 import { SidebarMenuItem } from "../launchpad-button-v2/MenuGroup";
 import { SidebarMenuItemData } from "../launchpad-button-v2/interfaces";
 
-const { defineElement, property } = createDecorators();
+const { defineElement } = createDecorators();
 
 /**
  * 快捷访问
+ * @insider
  */
 export
 @defineElement("eo-launchpad-quick-access", {

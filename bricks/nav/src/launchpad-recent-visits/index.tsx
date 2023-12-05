@@ -8,10 +8,11 @@ import type { Link, LinkProps } from "@next-bricks/basic/link";
 
 const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 
-const { defineElement, property } = createDecorators();
+const { defineElement } = createDecorators();
 
 /**
  * launchpad 最近访问
+ * @insider
  */
 export
 @defineElement("eo-launchpad-recent-visits", {
