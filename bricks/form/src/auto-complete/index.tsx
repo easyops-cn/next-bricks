@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useRef,
-  useMemo,
-  useState,
-  type ChangeEvent,
-} from "react";
+import React, { useEffect, useRef, useMemo, useState } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
@@ -148,6 +142,7 @@ class EoAutoComplete extends FormItemElementBase {
     return (
       <EoAutoCompleteComponent
         curElement={this}
+        formElement={this.getFormElement()}
         name={this.name}
         label={this.label}
         placeholder={this.placeholder}
@@ -160,6 +155,7 @@ class EoAutoComplete extends FormItemElementBase {
         validator={this.validator}
         pattern={this.pattern}
         filterByCaption={this.filterByCaption}
+        trigger="handleInputChange"
         onChange={this.handleInputChange}
       />
     );
@@ -267,7 +263,7 @@ export function EoAutoCompleteComponent(props: EoAutoCompleteComponentProps) {
 
   return (
     <WrappedFormItem {...props}>
-      <div>
+      <div className="complete-container">
         <WrappedInput
           ref={inputRef}
           value={value}

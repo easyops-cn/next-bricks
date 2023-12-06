@@ -182,10 +182,10 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
   };
 
   @event({ type: "token.click" })
-  accessor #highlighClickEvent!: EventEmitter<string>;
+  accessor #tokenClickEvent!: EventEmitter<string>;
 
-  #handleHighlightClick = (word: string) => {
-    this.#highlighClickEvent.emit(word);
+  #handleTokenClick = (word: string) => {
+    this.#tokenClickEvent.emit(word);
   };
 
   #handleValidtor = (value: string) => {
@@ -231,7 +231,7 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
           links={this.links}
           validateState={this.validateState}
           onChange={this.#handleChange}
-          onHighlightClick={this.#handleHighlightClick}
+          onTokenClick={this.#handleTokenClick}
         />
       </WrappedFormItem>
     );
@@ -253,10 +253,10 @@ export function CodeEditorComponent({
   links,
   validateState,
   onChange,
-  onHighlightClick,
+  onTokenClick,
 }: CodeEditorProps & {
   onChange(value: string, parseValue: any, isFlush: boolean): void;
-  onHighlightClick(word: string): void;
+  onTokenClick(word: string): void;
 }) {
   const value = _value ?? "";
   const language = _language ?? "plaintext";
@@ -500,7 +500,7 @@ export function CodeEditorComponent({
             e.event[modKey] &&
             range.containsPosition(e.target.position)
           ) {
-            onHighlightClick(model.getValueInRange(range));
+            onTokenClick(model.getValueInRange(range));
           }
         });
       });
@@ -546,7 +546,7 @@ export function CodeEditorComponent({
         editorMouseDownEvent?.dispose();
       };
     }
-  }, [language, onHighlightClick, systemTheme, theme, parseYaml]);
+  }, [language, onTokenClick, systemTheme, theme, parseYaml]);
 
   useEffect(() => {
     const editor = editorRef.current;

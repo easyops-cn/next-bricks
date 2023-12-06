@@ -4,13 +4,13 @@
 
 ### Basic
 
-```yaml preview
+```yaml preview minHeight="450px"
 - brick: eo-date-picker
 ```
 
 ### picker
 
-```yaml preview
+```yaml preview minHeight="550px"
 - brick: eo-radio
   events:
     change:
@@ -69,7 +69,7 @@
 
 ### showTime
 
-```yaml preview
+```yaml preview minHeight="450px"
 - brick: eo-date-picker
   events:
     ok:
@@ -84,7 +84,7 @@
 
 ### 禁用日期
 
-```yaml preview
+```yaml preview minHeight="450px"
 - brick: eo-date-picker
   events:
     ok:
@@ -102,4 +102,22 @@
     format: "YYYY-MM-DD HH:mm:ss"
     showTime: true
     value: "2019-10-01 00:00:00"
+```
+
+### With Form
+
+```yaml preview minHeight="450px"
+- brick: eo-form
+  events:
+    validate.success:
+      - action: console.log
+    values.change:
+      - action: console.log
+  children:
+    - brick: eo-date-picker
+      properties:
+        label: 日期
+        name: date
+        required: true
+    - brick: eo-submit-buttons
 ```

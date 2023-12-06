@@ -103,7 +103,7 @@ class EoTimePicker extends FormItemElementBase {
   @event({ type: "close" })
   accessor #closeEvent!: EventEmitter<string>;
 
-  #handleChange = (value: string): void => {
+  handleChange = (value: string): void => {
     this.value = value;
     this.#changeEvent.emit(value);
   };
@@ -123,7 +123,8 @@ class EoTimePicker extends FormItemElementBase {
         configProps={this.configProps}
         name={this.name}
         label={this.label}
-        onChange={this.#handleChange}
+        onChange={this.handleChange}
+        trigger="handleChange"
         onOpenChange={this.#handleOpenChange}
         placeholder={this.placeholder}
         value={this.value}
