@@ -6,6 +6,7 @@ export interface BrickSourceNode extends BrickConf {
   ref?: string;
   alias?: string;
   iid?: string;
+  uuid?: string;
   deviceOwner?: unknown;
   template?: string;
   prams?: unknown;

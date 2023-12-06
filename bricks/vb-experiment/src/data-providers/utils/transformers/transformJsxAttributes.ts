@@ -37,7 +37,8 @@ export function transformJsxAttributes(
       v,
       imports,
       path,
-      transformUseBrick ? k : undefined
+      k,
+      transformUseBrick
     );
 
     return t.jsxAttribute(
@@ -57,7 +58,8 @@ function transformJsxAttributeValue(
   value: unknown,
   imports: ImportInfo,
   path: string[],
-  key: string | undefined
+  key: string | undefined,
+  transformUseBrick?: boolean
 ) {
   if (typeof value === "string") {
     const expr = transformExpressionString(value, imports, path);
@@ -74,7 +76,7 @@ function transformJsxAttributeValue(
   if (value === true) {
     return null;
   }
-  if (key === "useBrick") {
+  if (transformUseBrick && key === "useBrick") {
     if (Array.isArray(value)) {
       return transformJsxValue(
         transformBricks(value as BrickNode[], imports, path)
@@ -85,7 +87,12 @@ function transformJsxAttributeValue(
       );
     }
   }
-  const expr = transformJsonWithExpressions(value, imports, path, true);
+  const expr = transformJsonWithExpressions(
+    value,
+    imports,
+    path,
+    transformUseBrick
+  );
   return t.jsxExpressionContainer(expr);
 }
 
