@@ -5,7 +5,7 @@ import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
-import { Cascader } from "antd";
+import { Cascader, ConfigProvider, theme } from "antd";
 import {
   CascaderProps as AntdCascaderProps,
   DefaultOptionType,
@@ -13,6 +13,7 @@ import {
 import { StyleProvider, createCache } from "@ant-design/cssinjs";
 import type { FormItem, FormItemProps } from "@next-bricks/form/form-item";
 import { FormItemElementBase } from "@next-shared/form";
+import { useCurrentTheme } from "@next-core/react-runtime";
 
 const { defineElement, property, event } = createDecorators();
 
@@ -207,6 +208,8 @@ function CascaderElement(props: CascaderProps): React.ReactElement {
     onChange,
   } = props;
 
+  const currentTheme = useCurrentTheme();
+
   const cache = useMemo(() => {
     return createCache();
   }, []);
@@ -230,29 +233,38 @@ function CascaderElement(props: CascaderProps): React.ReactElement {
   };
 
   return (
-    <StyleProvider container={shadowRoot as ShadowRoot} cache={cache}>
-      <Cascader
-        getPopupContainer={(trigger) => trigger.parentElement}
-        allowClear={allowClear}
-        disabled={disabled}
-        multiple={multiple}
-        expandTrigger={expandTrigger}
-        fieldNames={fieldNames}
-        placeholder={placeholder}
-        size={size}
-        showSearch={showSearch && { limit, filter }}
-        placement={popupPlacement}
-        style={cascaderStyle}
-        suffixIcon={suffixIcon && <WrappedIcon {...suffixIcon} />}
-        maxTagCount={maxTagCount}
-        value={value}
-        options={options}
-        onChange={(
-          value: AntdCascaderProps["value"],
-          selectedOptions: DefaultOptionType[] | DefaultOptionType[][]
-        ) => onChange?.(value, selectedOptions)}
-      />
-    </StyleProvider>
+    <ConfigProvider
+      theme={{
+        algorithm:
+          currentTheme === "dark-v2"
+            ? theme.darkAlgorithm
+            : theme.defaultAlgorithm,
+      }}
+    >
+      <StyleProvider container={shadowRoot as ShadowRoot} cache={cache}>
+        <Cascader
+          getPopupContainer={(trigger) => trigger.parentElement}
+          allowClear={allowClear}
+          disabled={disabled}
+          multiple={multiple}
+          expandTrigger={expandTrigger}
+          fieldNames={fieldNames}
+          placeholder={placeholder}
+          size={size}
+          showSearch={showSearch && { limit, filter }}
+          placement={popupPlacement}
+          style={cascaderStyle}
+          suffixIcon={suffixIcon && <WrappedIcon {...suffixIcon} />}
+          maxTagCount={maxTagCount}
+          value={value}
+          options={options}
+          onChange={(
+            value: AntdCascaderProps["value"],
+            selectedOptions: DefaultOptionType[] | DefaultOptionType[][]
+          ) => onChange?.(value, selectedOptions)}
+        />
+      </StyleProvider>
+    </ConfigProvider>
   );
 }
 

@@ -4,7 +4,7 @@
 
 ### Basic
 
-```yaml preview minHeight: 500px
+```yaml preview minHeight=500px
 - brick: eo-auto-complete
   properties:
     options:
@@ -106,7 +106,7 @@
 
 ### With Form
 
-```yaml preview minHeight: 500px
+```yaml preview minHeight=500px
 - brick: eo-form
   events:
     validate.success:
