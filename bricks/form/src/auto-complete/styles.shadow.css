@@ -5,6 +5,12 @@
 :host([hidden]) {
   display: none;
 }
+
+.complete-container {
+  position: relative;
+  width: fit-content;
+}
+
 .optionContainer {
   display: flex;
   flex-direction: column;
@@ -40,6 +46,9 @@
 }
 
 .dropDownWrapper {
+  position: absolute;
+  box-sizing: border-box;
+  width: 100%;
   max-height: 256px;
   overflow: scroll;
   background-color: var(--antd-select-dropdown-bg);

@@ -183,8 +183,8 @@ export class FormStore extends PubSub {
         (typeof value === "object"
           ? isEmpty(value)
           : typeof value === "number"
-          ? false
-          : !value)
+            ? false
+            : !value)
       ) {
         return messageBody(message?.required || `${label}为必填项`);
       }
@@ -249,7 +249,7 @@ export class FormStore extends PubSub {
 
   onWatch(
     name: string,
-    event: React.ChangeEvent,
+    event: any,
     callback?: (v: string) => void,
     options?: WatchOptions
   ) {
@@ -257,15 +257,17 @@ export class FormStore extends PubSub {
 
     if (field) {
       const value = this.getValueFromEvent(event);
+      // default first params is value
+      const realValue = Array.isArray(value) ? value[0] : value;
 
       this.setFieldsValue({
-        [name]: value,
+        [name]: realValue,
       });
 
       if (options?.needValidate ?? true) {
         this.validateField(field.detail);
       }
-      callback?.(value);
+      callback?.apply(this, value);
     }
   }
 

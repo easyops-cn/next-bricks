@@ -181,7 +181,7 @@ class EoDatePicker extends FormItemElementBase {
   @event({ type: "ok" })
   accessor #okEvent!: EventEmitter<string>;
 
-  #handleChange = (value: string): void => {
+  handleChange = (value: string): void => {
     this.value = value;
     this.#changeEvent.emit(value);
   };
@@ -207,7 +207,8 @@ class EoDatePicker extends FormItemElementBase {
         picker={this.picker}
         format={this.format}
         showTime={this.showTime}
-        onChange={this.#handleChange}
+        onChange={this.handleChange}
+        trigger={"handleChange"}
         onOk={this.#handleOk}
         useFastSelectBtn={this.useFastSelectBtn}
       />
@@ -618,7 +619,7 @@ export function InternalStateDatePicker(
 export function EoDatePickerComponent(
   props: EoDatePickerProps
 ): React.ReactElement {
-  const { name, formElement, picker = "date", ...restProps } = props;
+  const { picker = "date", ...restProps } = props;
 
   const PickerFormatMap = {
     date: "YYYY-MM-DD",

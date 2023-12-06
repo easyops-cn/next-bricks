@@ -6,14 +6,14 @@ import React, {
   useCallback,
 } from "react";
 import { createDecorators, EventEmitter } from "@next-core/element";
-import { ReactNextElement, wrapBrick } from "@next-core/react-element";
+import { wrapBrick } from "@next-core/react-element";
 import { handleHttpError } from "@next-core/runtime";
 import { auth } from "@next-core/easyops-runtime";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import { FormItem, FormItemProps } from "@next-bricks/form/form-item";
 import { Select, SelectProps } from "@next-bricks/form/select";
-import { FormItemElementBase, MessageBody } from "@next-shared/form";
+import { FormItemElementBase } from "@next-shared/form";
 import {
   InstanceApi_postSearch,
   CmdbModels,
@@ -28,10 +28,8 @@ import {
   filter,
   reject,
   isNil,
-  uniqBy,
   uniq,
   find,
-  isEmpty,
   isEqual,
   groupBy,
   compact,
@@ -88,6 +86,7 @@ export interface EoUserOrUserGroupSelectProps extends FormItemProps {
  * 用户(组)选择器
  * @author dophijing
  * @category form-input-business
+ * @insider
  */
 export
 @defineElement("eo-user-or-user-group-select", {
@@ -387,7 +386,7 @@ export function EoUserOrUserGroupSelectComponent(
         fields: {
           ...zipObject(
             showKey,
-            map(showKey, (v) => true)
+            map(showKey, () => true)
           ),
 
           name: true,
@@ -399,16 +398,16 @@ export function EoUserOrUserGroupSelectComponent(
                 $or: staticQuery,
               }
             : props.userGroupQuery && objectId === "USER_GROUP"
-            ? {
-                $and: [props.userGroupQuery, showKeyQuery],
-                $or: staticQuery,
-              }
-            : props.query
-            ? {
-                $and: [props.query, showKeyQuery],
-                $or: staticQuery,
-              }
-            : { $or: [showKeyQuery, staticQuery] },
+              ? {
+                  $and: [props.userGroupQuery, showKeyQuery],
+                  $or: staticQuery,
+                }
+              : props.query
+                ? {
+                    $and: [props.query, showKeyQuery],
+                    $or: staticQuery,
+                  }
+                : { $or: [showKeyQuery, staticQuery] },
       })
     ).list;
   };
@@ -453,8 +452,8 @@ export function EoUserOrUserGroupSelectComponent(
       Array.isArray(originValue)
         ? originValue
         : originValue
-        ? [originValue]
-        : [],
+          ? [originValue]
+          : [],
       (item) => {
         return !find(props.staticList, (v) => v === item);
       }
@@ -597,7 +596,7 @@ export function EoUserOrUserGroupSelectComponent(
               fields: {
                 ...zipObject(
                   getShowKey("USER"),
-                  map(getShowKey("USER"), (v) => true)
+                  map(getShowKey("USER"), () => true)
                 ),
 
                 name: true,
@@ -620,7 +619,7 @@ export function EoUserOrUserGroupSelectComponent(
               fields: {
                 ...zipObject(
                   getShowKey("USER_GROUP"),
-                  map(getShowKey("USER_GROUP"), (v) => true)
+                  map(getShowKey("USER_GROUP"), () => true)
                 ),
 
                 name: true,
@@ -701,8 +700,8 @@ export function EoUserOrUserGroupSelectComponent(
     return props.optionsMode === "user"
       ? userListOptions
       : props.optionsMode === "group"
-      ? userGroupListOptions
-      : [...userListOptions, ...userGroupListOptions];
+        ? userGroupListOptions
+        : [...userListOptions, ...userGroupListOptions];
   }, [userList, userGroupList, props.optionsMode, props.staticList]);
 
   // 快速选择我
@@ -725,7 +724,7 @@ export function EoUserOrUserGroupSelectComponent(
         fields: {
           ...zipObject(
             getShowKey("USER"),
-            map(getShowKey("USER"), (v) => true)
+            map(getShowKey("USER"), () => true)
           ),
 
           name: true,

@@ -290,12 +290,10 @@ export function RealTimeRangePicker(
   };
 
   useEffect(() => {
-    if (emitChangeOnInit && !value && onChange) {
-      times.includes(rangeType)
-        ? onChange(INIT_TIME_RANGE)
-        : onChange(initRange);
+    if (emitChangeOnInit && onChange) {
+      onChange(times.includes(rangeType) ? INIT_TIME_RANGE : initRange);
     }
-  }, []);
+  }, [onChange]);
 
   useEffect(() => {
     if (value?.startTime) {
@@ -373,7 +371,7 @@ export function RealTimeRangePicker(
     }
     return rangeResult;
   }, [rangeType, selectNearDays, presetRanges]);
-  const rangeChange = (dates: any, dateStrings: [string, string]) => {
+  const rangeChange = (dates: any) => {
     setStartTime(dates?.[0]);
     setEndTime(dates?.[1]);
     onChange?.({

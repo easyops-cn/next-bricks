@@ -1,6 +1,6 @@
 import React, { CSSProperties, useMemo } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
-import { ReactNextElement, wrapBrick } from "@next-core/react-element";
+import { wrapBrick } from "@next-core/react-element";
 import type {
   GeneralIcon,
   GeneralIconProps,
@@ -11,10 +11,13 @@ import {
   DefaultOptionType,
 } from "antd/lib/cascader";
 import { StyleProvider, createCache } from "@ant-design/cssinjs";
+import type { FormItem, FormItemProps } from "@next-bricks/form/form-item";
+import { FormItemElementBase } from "@next-shared/form";
 
 const { defineElement, property, event } = createDecorators();
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
+const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 
 export interface CascaderProps
   extends Pick<
@@ -46,7 +49,18 @@ export interface CascaderProps
 @defineElement("eo-cascader", {
   alias: ["advanced.general-cascader"],
 })
-class CascaderBrick extends ReactNextElement implements CascaderProps {
+class CascaderBrick extends FormItemElementBase implements CascaderProps {
+  @property()
+  accessor name: string | undefined;
+
+  @property()
+  accessor label: string | undefined;
+
+  @property({
+    type: Boolean,
+  })
+  accessor required: boolean | undefined;
+
   @property({
     attribute: false,
   })
@@ -128,7 +142,7 @@ class CascaderBrick extends ReactNextElement implements CascaderProps {
     selectedOptions: DefaultOptionType[] | DefaultOptionType[][];
   }>;
 
-  #handleOnChange = (
+  handleOnChange = (
     value: AntdCascaderProps["value"],
     selectedOptions: DefaultOptionType[] | DefaultOptionType[][]
   ): void => {
@@ -140,25 +154,34 @@ class CascaderBrick extends ReactNextElement implements CascaderProps {
 
   render() {
     return (
-      <CascaderElement
-        shadowRoot={this.shadowRoot}
-        options={this.options}
-        fieldNames={this.fieldNames}
-        value={this.value}
-        multiple={this.multiple}
-        placeholder={this.placeholder}
-        disabled={this.disabled}
-        allowClear={this.allowClear}
-        showSearch={this.showSearch}
-        expandTrigger={this.expandTrigger}
-        suffixIcon={this.suffixIcon}
-        size={this.size}
-        limit={this.limit}
-        popupPlacement={this.popupPlacement}
-        maxTagCount={this.maxTagCount}
-        cascaderStyle={this.cascaderStyle}
-        onChange={this.#handleOnChange}
-      />
+      <WrappedFormItem
+        curElement={this as HTMLElement}
+        formElement={this.getFormElement()}
+        name={this.name}
+        label={this.label}
+        required={this.required}
+        trigger="handleOnChange"
+      >
+        <CascaderElement
+          shadowRoot={this.shadowRoot}
+          options={this.options}
+          fieldNames={this.fieldNames}
+          value={this.value}
+          multiple={this.multiple}
+          placeholder={this.placeholder}
+          disabled={this.disabled}
+          allowClear={this.allowClear}
+          showSearch={this.showSearch}
+          expandTrigger={this.expandTrigger}
+          suffixIcon={this.suffixIcon}
+          size={this.size}
+          limit={this.limit}
+          popupPlacement={this.popupPlacement}
+          maxTagCount={this.maxTagCount}
+          cascaderStyle={this.cascaderStyle}
+          onChange={this.handleOnChange}
+        />
+      </WrappedFormItem>
     );
   }
 }
