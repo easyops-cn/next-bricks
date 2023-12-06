@@ -2,7 +2,6 @@ import * as t from "@babel/types";
 import type { BrickNode, BrickNormalNode, ImportInfo } from "../interfaces.js";
 import { addImport } from "../handleImports.js";
 import { transformJsxAttributes } from "./transformJsxAttributes.js";
-import { REVERSED_BRICK_KEYS } from "../constants.js";
 import { transformRoute } from "./transformRoute.js";
 import { transformJsxChild } from "./transformJsxChild.js";
 import { transformExpressionString } from "./transformExpressionString.js";
@@ -73,6 +72,9 @@ export function transformBrick(
       lifeCycle: prop_lifeCycle,
       if: prop_if,
       ref: prop_ref,
+      id: prop_id,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      slot: prop_slot,
       ...restProps
     } = props;
     const hasTextContent = typeof textContent === "string";
@@ -92,13 +94,10 @@ export function transformBrick(
       [
         ...transformJsxAttributes(
           {
-            ...restProps,
-            slot,
-            events,
-            lifeCycle,
             if: _if === true ? undefined : _if,
-            portal,
+            slot,
             ref,
+            id: prop_id,
             ...(isControlNode
               ? {
                   value: controlDataSource,
@@ -106,10 +105,24 @@ export function transformBrick(
               : null),
           },
           imports,
+          path
+        ),
+        ...transformJsxAttributes(
+          restProps,
+          imports,
           path,
-          REVERSED_BRICK_KEYS,
+          undefined,
           undefined,
           true
+        ),
+        ...transformJsxAttributes(
+          {
+            events,
+            lifeCycle,
+            portal,
+          },
+          imports,
+          path
         ),
         ...transformJsxAttributes(
           {

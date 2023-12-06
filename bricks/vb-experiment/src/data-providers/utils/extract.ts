@@ -435,6 +435,7 @@ function cleanBrick(brick: BrickSourceNode): void {
   delete brick.alias;
   delete brick.iid;
   delete brick.deviceOwner;
+  delete brick.uuid;
   if (brick.events && Object.keys(brick.events).length === 0) {
     delete brick.events;
   }

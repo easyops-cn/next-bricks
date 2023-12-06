@@ -3,7 +3,6 @@ import type { ImportInfo } from "../interfaces.js";
 import { generateJsx } from "./generateJsx.js";
 import { addImport } from "../handleImports.js";
 import { transformJsxAttributes } from "../transformers/transformJsxAttributes.js";
-import { REVERSED_TEMPLATE_KEYS } from "../constants.js";
 import { transformBrick } from "../transformers/transformBricks.js";
 import { transformJsxChild } from "../transformers/transformJsxChild.js";
 
@@ -16,12 +15,7 @@ export function generateTemplate(node: any, path: string[]) {
   const tpl = t.jsxElement(
     t.jsxOpeningElement(
       t.jsxIdentifier("Component"),
-      transformJsxAttributes(
-        { name, state, proxy },
-        imports,
-        path,
-        REVERSED_TEMPLATE_KEYS
-      )
+      transformJsxAttributes({ name, state, proxy }, imports, path)
     ),
     t.jsxClosingElement(t.jsxIdentifier("Component")),
     (bricks ?? []).map((brick: any) =>
