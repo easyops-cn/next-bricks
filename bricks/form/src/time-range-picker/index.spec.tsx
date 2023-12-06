@@ -72,7 +72,7 @@ describe("eo-time-range-picker", () => {
       )?.click();
     });
 
-    expect(onChangeMock).toBeCalledTimes(2);
+    expect(onChangeMock).toBeCalledTimes(3);
     act(() => {
       document.body.removeChild(element);
     });
@@ -214,8 +214,8 @@ describe("eo-time-range-picker", () => {
         contentList?.[1]?.querySelector("[title='2023-11-16']") as HTMLElement
       )?.click();
     });
-    expect(onChangeMock).toBeCalledTimes(2);
-    expect((onChangeMock.mock.calls[1][0] as CustomEvent).detail).toEqual({
+    expect(onChangeMock).toBeCalledTimes(3);
+    expect((onChangeMock.mock.calls[2][0] as CustomEvent).detail).toEqual({
       endTime: "2023-11-16",
       startTime: "2023-10-10",
     });

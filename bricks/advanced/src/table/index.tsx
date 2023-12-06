@@ -131,6 +131,8 @@ export interface CustomColumn extends ColumnProps<Record<string, any>> {
  * 通用表格构件
  * @author sailor
  * @category table
+ *
+ * @insider
  */
 @defineElement("eo-table", {
   styleTexts: [styleText],
@@ -747,8 +749,8 @@ class TableComponent extends ReactNextElement {
     const order = isNil(this.order)
       ? null
       : this._fields.ascend === this.order
-      ? "ascend"
-      : "descend";
+        ? "ascend"
+        : "descend";
     tempDataSource = this.handleFrontendSorter(tempDataSource, {
       columnKey: this.sort as string,
       order,
@@ -955,8 +957,7 @@ class TableComponent extends ReactNextElement {
   // istanbul ignore next
   private _handleOnSelect = (
     row: Record<string, any>,
-    checked: boolean,
-    selectedRows: Record<string, any>[]
+    checked: boolean
   ): void => {
     this._selected = checked;
     this._selectedRow = row;
@@ -1415,10 +1416,10 @@ class TableComponent extends ReactNextElement {
             selectedRowKeys: this._isInSelect
               ? this.selectedRowKeys
               : this.storeCheckedByUrl
-              ? this._getCheckedFromUrl()
-              : this.defaultSelectAll
-              ? this._handleDefaultSelectAll()
-              : this.selectedRowKeys,
+                ? this._getCheckedFromUrl()
+                : this.defaultSelectAll
+                  ? this._handleDefaultSelectAll()
+                  : this.selectedRowKeys,
             onSelect: this._handleOnSelect,
             onSelectAll: this._handleSelectAll,
             onChange: this._handleRowSelectChange,

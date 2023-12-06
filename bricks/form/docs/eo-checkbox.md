@@ -274,3 +274,26 @@
             - label: Hangzhou
               value: 4
 ```
+
+### With Form
+
+```yaml preview
+- brick: eo-form
+  events:
+    validate.success:
+      - action: console.log
+    values.change:
+      - action: console.log
+  children:
+    - brick: eo-checkbox
+      properties:
+        name: city
+        label: 城市
+        required: true
+        options:
+          - Beijing
+          - Shanghai
+          - Guangzhou
+          - Shenzhen
+    - brick: eo-submit-buttons
+```

@@ -4,7 +4,7 @@
 
 ### Basic
 
-```yaml preview
+```yaml preview minHeight=500px
 - brick: eo-auto-complete
   properties:
     options:
@@ -102,4 +102,27 @@
       - Shanghai
       - Guangzhou
       - Shenzhen
+```
+
+### With Form
+
+```yaml preview minHeight=500px
+- brick: eo-form
+  events:
+    validate.success:
+      - action: console.log
+    values.change:
+      - action: console.log
+  children:
+    - brick: eo-auto-complete
+      properties:
+        name: city
+        label: 城市
+        required: true
+        options:
+          - Beijing
+          - Shanghai
+          - Guangzhou
+          - Shenzhen
+    - brick: eo-submit-buttons
 ```

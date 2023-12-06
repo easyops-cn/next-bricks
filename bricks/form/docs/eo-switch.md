@@ -75,3 +75,20 @@
   properties:
     disabled: false
 ```
+
+### With Form
+
+```yaml preview
+- brick: eo-form
+  events:
+    validate.success:
+      - action: console.log
+    values.change:
+      - action: console.log
+  children:
+    - brick: eo-switch
+      properties:
+        name: switch
+        label: 开关
+    - brick: eo-submit-buttons
+```

@@ -224,8 +224,8 @@ export function FormItemComponent(props: FormItemProps) {
     if (!formInstance || !name || !curElement || curElement.$bindFormItem)
       return;
     const originTrigger = curElement[trigger];
-    curElement[trigger] = (e: React.ChangeEvent) =>
-      formInstance.onWatch(name, e, originTrigger, {
+    curElement[trigger] = (...args: any[]) =>
+      formInstance.onWatch(name, args, originTrigger, {
         needValidate,
       });
     curElement.$bindFormItem = true;

@@ -70,3 +70,21 @@ markdown 编辑器
         - change
         - <% EVENT.detail %>
 ````
+
+### With Form
+
+```yaml preview
+- brick: eo-form
+  events:
+    validate.success:
+      - action: console.log
+    values.change:
+      - action: console.log
+  children:
+    - brick: eo-markdown-editor
+      properties:
+        name: markdown
+        label: markdown
+        required: true
+    - brick: eo-submit-buttons
+```

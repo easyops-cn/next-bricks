@@ -4,7 +4,7 @@
 
 ### Basic
 
-```yaml preview
+```yaml preview minHeight="400px"
 - brick: eo-time-range-picker
   properties:
     label: hello
@@ -13,7 +13,7 @@
 
 ### rangeType
 
-```yaml preview
+```yaml preview minHeight="400px"
 - brick: eo-radio
   properties:
     options:
@@ -40,7 +40,7 @@
 
 ### presetRanges
 
-```yaml preview
+```yaml preview minHeight="400px"
 - brick: eo-time-range-picker
   properties:
     label: hello
@@ -56,7 +56,7 @@
 
 ### validate
 
-```yaml preview
+```yaml preview minHeight="400px"
 - brick: eo-form
   events:
     values.change:
@@ -85,7 +85,7 @@
 
 ### selectNearDays
 
-```yaml preview
+```yaml preview minHeight="400px"
 - brick: eo-time-range-picker
   events:
     - action: console.log
@@ -98,11 +98,29 @@
 
 ### Events
 
-```yaml preview
+```yaml preview minHeight="400px"
 - brick: eo-time-range-picker
   events:
     - action: console.log
   properties:
     label: hello
     name: time
+```
+
+### With Form
+
+```yaml preview minHeight="400px"
+- brick: eo-form
+  events:
+    validate.success:
+      - action: console.log
+    values.change:
+      - action: console.log
+  children:
+    - brick: eo-time-range-picker
+      properties:
+        label: 时间
+        name: time
+        required: true
+    - brick: eo-submit-buttons
 ```

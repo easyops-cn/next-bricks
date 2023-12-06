@@ -1,6 +1,6 @@
 表单下拉选择构件。
 
-```yaml preview
+```yaml preview minHeight="250px"
 - brick: eo-select
   properties:
     options:
@@ -14,7 +14,7 @@
 
 ### Label
 
-```yaml preview
+```yaml preview minHeight="250px"
 - brick: eo-select
   properties:
     label: city
@@ -27,7 +27,7 @@
 
 ### Value
 
-```yaml preview
+```yaml preview minHeight="250px"
 - brick: eo-select
   properties:
     label: city
@@ -41,7 +41,7 @@
 
 ### Options
 
-```yaml preview
+```yaml preview minHeight="300px"
 - brick: eo-select
   properties:
     label: string
@@ -82,7 +82,7 @@
 
 ### Disabled
 
-```yaml preview
+```yaml preview minHeight="250px"
 - brick: eo-select
   properties:
     options:
@@ -111,7 +111,7 @@
 
 ### Multiple
 
-```yaml preview
+```yaml preview minHeight="250px"
 - brick: eo-select
   properties:
     label: multiple
@@ -128,7 +128,7 @@
 
 ### Tags & TokenSeparators & MaxTagCount
 
-```yaml preview
+```yaml preview minHeight="250px"
 - brick: eo-select
   properties:
     label: tags
@@ -147,7 +147,7 @@
 
 ### Placeholder
 
-```yaml preview
+```yaml preview minHeight="250px"
 - brick: eo-select
   properties:
     placeholder: This is placeholder...
@@ -160,7 +160,7 @@
 
 ### Suffix
 
-```yaml preview
+```yaml preview minHeight="250px"
 - brick: eo-select
   properties:
     placeholder: This is placeholder...
@@ -190,7 +190,7 @@
 
 ### GroupBy
 
-```yaml preview
+```yaml preview minHeight="300px"
 - brick: eo-select
   properties:
     placeholder: This is placeholder...
@@ -216,7 +216,7 @@
 
 ### Fields
 
-```yaml preview
+```yaml preview minHeight="300px"
 - brick: eo-select
   properties:
     placeholder: This is placeholder...
@@ -245,7 +245,7 @@
 
 ### UseBackend
 
-```yaml preview
+```yaml preview minHeight="300px"
 - brick: eo-select
   properties:
     label: useBackend
@@ -278,7 +278,7 @@
 
 ### Input Style
 
-```yaml preview
+```yaml preview minHeight="250px"
 - brick: eo-select
   properties:
     inputStyle:
@@ -292,7 +292,7 @@
 
 ### Event
 
-```yaml preview
+```yaml preview minHeight="400px"
 - brick: eo-select
   properties:
     id: options-change-select
@@ -342,4 +342,27 @@
   properties:
     style:
       height: 20px
+```
+
+### With Form
+
+```yaml preview minHeight="250px"
+- brick: eo-form
+  events:
+    validate.success:
+      - action: console.log
+    values.change:
+      - action: console.log
+  children:
+    - brick: eo-select
+      properties:
+        options:
+          - Beijing
+          - Shanghai
+          - Guangzhou
+          - Shenzhen
+        label: 选择框
+        name: select
+        required: true
+    - brick: eo-submit-buttons
 ```

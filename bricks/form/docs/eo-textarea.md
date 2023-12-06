@@ -107,3 +107,21 @@
       args:
         - blur
 ```
+
+### With Form
+
+```yaml preview
+- brick: eo-form
+  events:
+    validate.success:
+      - action: console.log
+    values.change:
+      - action: console.log
+  children:
+    - brick: eo-textarea
+      properties:
+        label: 输入框
+        name: text
+        required: true
+    - brick: eo-submit-buttons
+```

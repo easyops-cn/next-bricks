@@ -4,7 +4,7 @@
 
 ### Basic
 
-```yaml preview
+```yaml preview minHeight="400px"
 - brick: eo-time-picker
   properties:
     label: time
@@ -14,14 +14,14 @@
 
 ### 国际化
 
-```yaml preview
-- brick: eo-time-picker
+```yaml preview minHeight="400px"
 - brick: div
   properties:
     style:
       display: grid
       gap: 1em
   children:
+    - brick: eo-time-picker
     - brick: eo-button
       properties:
         textContent: 中文
@@ -52,7 +52,7 @@
 
 ### event
 
-```yaml preview
+```yaml preview minHeight="400px"
 - brick: eo-time-picker
   events:
     change:
@@ -64,4 +64,22 @@
   properties:
     label: time
     placeholder: 选择时间
+```
+
+### With Form
+
+```yaml preview minHeight="400px"
+- brick: eo-form
+  events:
+    validate.success:
+      - action: console.log
+    values.change:
+      - action: console.log
+  children:
+    - brick: eo-time-picker
+      properties:
+        label: 时间
+        name: time
+        required: true
+    - brick: eo-submit-buttons
 ```
