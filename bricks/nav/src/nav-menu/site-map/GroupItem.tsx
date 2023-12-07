@@ -72,7 +72,9 @@ export function DefaultGroup(props: BaseGroupProps): React.ReactElement {
         if (entry.target === groupRef.current) {
           const width = entry.contentRect.width;
 
-          setColumnCount(Math.floor(width / itemColumnWidth));
+          if (width) {
+            setColumnCount(Math.floor(width / itemColumnWidth));
+          }
         }
       }
     });
