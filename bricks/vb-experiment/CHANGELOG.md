@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.2.10...@next-bricks/vb-experiment@0.2.11) (2023-12-07)
+
+
+### Bug Fixes
+
+* handle contract duplication of name ([9ca3ee5](https://github.com/easyops-cn/next-bricks/commit/9ca3ee58b621b145d89046c156e4ad23b7227539))
+
+
+
+
+
 ## [0.2.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@0.2.9...@next-bricks/vb-experiment@0.2.10) (2023-12-07)
 
 **Note:** Version bump only for package @next-bricks/vb-experiment
