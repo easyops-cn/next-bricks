@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.9.0...@next-bricks/nav@0.9.1) (2023-12-07)
+
+
+### Bug Fixes
+
+* 修复切换菜单项卡死问题 ([8f05289](https://github.com/easyops-cn/next-bricks/commit/8f052899b196ef1e7baa54bc785ee8d622f6a43e))
+
+
+
+
+
 # [0.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.8.7...@next-bricks/nav@0.9.0) (2023-12-07)
 
 
