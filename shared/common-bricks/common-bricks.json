@@ -86,7 +86,8 @@
     "eo-card-item",
     "eo-divider",
     "eo-info-card-item",
-    "eo-humanize-time"
+    "eo-humanize-time",
+    "eo-statistics-card"
   ],
   "advanced": [
     "eo-cascader",
