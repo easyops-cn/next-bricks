@@ -145,3 +145,35 @@
           properties:
             textContent: Content
 ```
+
+### Outline
+
+```yaml preview gap
+- brick: div
+  properties:
+    style:
+      display: grid
+      flexDirection: column
+      gap: 1em
+  children:
+    - brick: eo-card
+      properties:
+        cardTitle: 卡片标题
+        textContent: "outline: (not set)"
+    - brick: eo-card
+      properties:
+        cardTitle: 卡片标题
+        outline: border
+        textContent: "outline: border"
+    - brick: eo-card
+      properties:
+        cardTitle: 卡片标题
+        outline: shadow
+        textContent: "outline: shadow"
+    - brick: eo-card
+      properties:
+        cardTitle: 卡片标题
+        outline: background
+        background: darkgreen
+        textContent: "outline: background"
+```

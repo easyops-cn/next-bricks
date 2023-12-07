@@ -1,18 +1,20 @@
 :root {
-  --eo-card-border-radius: 6px;
+  --eo-card-border-radius: var(--card-default-border-radius);
+  --eo-card-head-padding: var(--card-head-padding);
+  --eo-card-body-padding: var(--card-body-padding);
 }
 
 html[data-ui="v8-2"] {
   --eo-card-border-radius: 0;
 
   /* In UI v8.2, these outlined cards do have horizontal padding */
-  &[outline="border"],
-  &[outline="shadow"],
-  &[outline="background"] {
-    --eo-card-head-padding: var(--eo-card-head-padding-vertical)
-      var(--eo-card-head-padding-horizontal-base);
-    --eo-card-body-padding: var(--eo-card-body-padding-vertical)
-      var(--eo-card-body-padding-horizontal-base);
-    --eo-card-border-radius: 6px;
+  eo-card[outline="border"],
+  eo-card[outline="shadow"],
+  eo-card[outline="background"] {
+    --eo-card-head-padding: var(--card-head-padding-vertical)
+      var(--card-head-padding-horizontal-base);
+    --eo-card-body-padding: var(--card-body-padding-vertical)
+      var(--card-body-padding-horizontal-base);
+    --eo-card-border-radius: var(--card-default-border-radius);
   }
 }

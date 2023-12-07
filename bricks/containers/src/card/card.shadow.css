@@ -1,15 +1,14 @@
 :host {
-  --eo-card-border-radius: 6px;
-  --card-border-color: none;
-  --card-box-shadow: none;
+  --eo-card-border-color: none;
+  --eo-card-box-shadow: none;
 }
 
 :host([outline="border"]) {
-  --card-border-color: 1px solid var(--color-text-divider-line);
+  --eo-card-border-color: 1px solid var(--color-text-divider-line);
 }
 
 :host([outline="shadow"]) {
-  --card-box-shadow: var(--connected-overlay-shadow);
+  --eo-card-box-shadow: var(--connected-overlay-shadow);
 }
 
 .card {
@@ -24,9 +23,9 @@
   font-feature-settings: "tnum";
   position: relative;
   background: var(--antd-card-background);
-  border: var(--card-border-color);
+  border: var(--eo-card-border-color);
   border-radius: var(--eo-card-border-radius);
-  box-shadow: var(--card-box-shadow);
+  box-shadow: var(--eo-card-box-shadow);
 }
 
 .card-head {
