@@ -77,7 +77,7 @@ export async function exportAsSourceFiles({
   };
   src.file(
     "app.js",
-    await formatJs(`export default ${JSON.stringify(app, null, 2)};`),
+    await formatJs(`export default ${JSON.stringify(app, null, 2)};`)
   );
 
   const meta = (storyboard.meta ?? {}) as StoryboardMeta & {
@@ -101,7 +101,7 @@ export async function exportAsSourceFiles({
   const extractedTemplates = extractTemplates(
     customTemplates,
     ["components"],
-    extractState,
+    extractState
   );
   extractState.extracts.push({
     name: "index",
@@ -116,7 +116,7 @@ export async function exportAsSourceFiles({
 
   src.file(
     "routes.jsx",
-    await formatJs(generate(extractedRoutes, "routes", ["routes.jsx"])),
+    await formatJs(generate(extractedRoutes, "routes", ["routes.jsx"]))
   );
 
   const resources = src.folder("resources")!;
@@ -152,9 +152,7 @@ export async function exportAsSourceFiles({
     const importStrings: string[] = [];
     if (inferredImports.size > 0) {
       importStrings.push(
-        `import { ${[...inferredImports].join(
-          ", ",
-        )} } from "next-jsx/runtime";`,
+        `import { ${[...inferredImports].join(", ")} } from "next-jsx/runtime";`
       );
     }
     if (hasFN) {
@@ -172,9 +170,9 @@ export async function exportAsSourceFiles({
     "index.js",
     await formatJs(
       `${fnImports.join("\n")}\n\nconst FN = { ${fnNames.join(
-        ",",
-      )} };\n\nexport default FN;`,
-    ),
+        ","
+      )} };\n\nexport default FN;`
+    )
   );
 
   // Menus
@@ -189,7 +187,7 @@ export async function exportAsSourceFiles({
     const filename = `${menu.menuId}.js`;
     menusDir.file(
       filename,
-      await formatJs(generate(menu, "menu", ["resources", "menus", filename])),
+      await formatJs(generate(menu, "menu", ["resources", "menus", filename]))
     );
     let name = menu.menuId.replace(/^\d+|[^\w]+/g, "_");
     if (JS_RESERVED_WORDS.has(name)) {
@@ -201,44 +199,51 @@ export async function exportAsSourceFiles({
   menusDir.file(
     "index.js",
     await formatJs(
-      `${menuImports.join("\n")}\n\nexport default [${menuNames.join(",")}]`,
-    ),
+      `${menuImports.join("\n")}\n\nexport default [${menuNames.join(",")}]`
+    )
   );
 
   // Contracts
   const contractsDir = resources.folder("contracts")!;
-  const contractNames: string[] = [];
   const contractImports: string[] = [];
+  const contractNames = new Set<string>();
   for (const contract of contracts) {
-    if (contract.name === "index") {
-      throw new Error('Unexpected contract name: "index"');
+    const baseName = contract.name.replace(/^\d+|[^\w]+/g, "_");
+    let counter = 2;
+    let varName = baseName;
+    while (
+      contractNames.has(varName) ||
+      JS_RESERVED_WORDS.has(varName) ||
+      varName === "index"
+    ) {
+      varName = `${baseName}_${counter++}`;
     }
+    contractNames.add(varName);
+
     contractsDir.file(
-      `${contract.name}.js`,
-      await formatJs(`export default ${JSON.stringify(contract)};`),
+      `${varName}.js`,
+      await formatJs(`export default ${JSON.stringify(contract)};`)
     );
-    const name = contract.name.replace(/^\d+|[^\w]+/g, "_");
-    contractImports.push(`import ${name} from "./${contract.name}.js";`);
-    contractNames.push(name);
+    contractImports.push(`import ${varName} from "./${varName}.js";`);
   }
   contractsDir.file(
     "index.js",
     await formatJs(
-      `${contractImports.join("\n")}\n\nexport default [${contractNames.join(
-        ",",
-      )}]`,
-    ),
+      `${contractImports.join("\n")}\n\nexport default [${[
+        ...contractNames,
+      ].join(",")}]`
+    )
   );
 
   resources
     .folder("i18n")!
     .file(
       "index.js",
-      await formatJs(`export default ${JSON.stringify(i18n)};`),
+      await formatJs(`export default ${JSON.stringify(i18n)};`)
     );
   resources.file(
     "meta.js",
-    await formatJs(`export default ${JSON.stringify(meta, null, 2)};`),
+    await formatJs(`export default ${JSON.stringify(meta, null, 2)};`)
   );
   resources.file("index.js", srcResourcesIndexJs);
 
@@ -256,17 +261,17 @@ export async function exportAsSourceFiles({
   project.file("jsconfig.json", jsconfigJson);
   project.file(
     "next-jsx.config.js",
-    nextJsxConfigJs.replaceAll("__APP_ID__", projectDetail.appId),
+    nextJsxConfigJs.replaceAll("__APP_ID__", projectDetail.appId)
   );
   project.file(
     "package.json",
-    packageJson.replaceAll("__APP_ID__", projectDetail.appId),
+    packageJson.replaceAll("__APP_ID__", projectDetail.appId)
   );
   project.file(
     "README.md",
     readmeMd
       .replaceAll("__PROJECT_NAME__", projectDetail.name)
-      .replaceAll("__PROJECT_HOMEPAGE__", projectDetail.appSetting.homepage),
+      .replaceAll("__PROJECT_HOMEPAGE__", projectDetail.appSetting.homepage)
   );
 
   const blob = await zip.generateAsync({ type: "blob" });
@@ -281,7 +286,7 @@ interface FormatJsOptions {
 
 async function formatJs(
   source: string,
-  { typescript, semi = true, printWidth }: FormatJsOptions = {},
+  { typescript, semi = true, printWidth }: FormatJsOptions = {}
 ): Promise<string> {
   return await format(source, {
     parser: typescript ? "babel-ts" : "babel",
@@ -295,7 +300,7 @@ async function formatJs(
 async function generateByFileStructure(
   items: SourceFileOrFolder[],
   folder: JSZip,
-  path: string[],
+  path: string[]
 ) {
   for (const item of items) {
     const childPath = [...path, item.name];
@@ -311,7 +316,7 @@ async function generateByFileStructure(
             ? "x"
             : ""
         }`,
-        await formatJs(generate(item.node, item.nodeType, childPath)),
+        await formatJs(generate(item.node, item.nodeType, childPath))
       );
     }
   }
@@ -373,5 +378,5 @@ function cleanMenuItem(menuItem: Record<string, any>) {
 
 customElements.define(
   "vb-experiment.export-as-source-files",
-  createProviderClass(exportAsSourceFiles),
+  createProviderClass(exportAsSourceFiles)
 );
