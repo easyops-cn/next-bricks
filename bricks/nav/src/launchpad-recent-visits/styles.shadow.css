@@ -13,6 +13,8 @@
   display: grid;
   gap: 8px;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  max-height: 56px;
+  overflow: hidden;
 }
 
 .recent-visits span {
