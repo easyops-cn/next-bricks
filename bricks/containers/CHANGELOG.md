@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.24.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.24.5...@next-bricks/containers@0.24.6) (2023-12-07)
+
+
+### Bug Fixes
+
+* **card:** fix css variables ([b7b0a47](https://github.com/easyops-cn/next-bricks/commit/b7b0a47ef96c24af90b91c03c7a15a5c4bcf69fb))
+
+
+
+
+
 ## [0.24.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.24.4...@next-bricks/containers@0.24.5) (2023-12-06)
 
 **Note:** Version bump only for package @next-bricks/containers
