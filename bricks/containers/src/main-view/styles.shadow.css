@@ -49,6 +49,7 @@ eo-banner {
 }
 
 .toolbar,
+.page-title,
 .footer > eo-narrow-view {
   display: flex;
   align-items: center;
