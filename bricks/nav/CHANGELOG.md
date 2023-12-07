@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.8.7...@next-bricks/nav@0.9.0) (2023-12-07)
+
+
+### Features
+
+* **launchpad-recent-visit:** add max-height ([990b288](https://github.com/easyops-cn/next-bricks/commit/990b2884940124e2f47a18e92b64574ac4d8b89b))
+
+
+
+
+
 ## [0.8.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.8.6...@next-bricks/nav@0.8.7) (2023-12-06)
 
 **Note:** Version bump only for package @next-bricks/nav

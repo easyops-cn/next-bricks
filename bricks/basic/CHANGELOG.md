@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.48.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.48.5...@next-bricks/basic@0.48.6) (2023-12-07)
+
+
+### Bug Fixes
+
+* **popover:** fix click not emit detault event ([81a7a36](https://github.com/easyops-cn/next-bricks/commit/81a7a369b9f2b40028a9423e287d5b17851d9dc1))
+
+
+
+
+
 ## [0.48.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.48.4...@next-bricks/basic@0.48.5) (2023-12-06)
 
 **Note:** Version bump only for package @next-bricks/basic
