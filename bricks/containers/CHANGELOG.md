@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.24.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.24.6...@next-bricks/containers@0.24.7) (2023-12-07)
+
+
+### Bug Fixes
+
+* main-view 的 pageTitle 插槽使用 flex 布局 ([d81a08c](https://github.com/easyops-cn/next-bricks/commit/d81a08ca05bad2d71f9008621425a7996b5b4840))
+
+
+
+
+
 ## [0.24.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.24.5...@next-bricks/containers@0.24.6) (2023-12-07)
 
 
