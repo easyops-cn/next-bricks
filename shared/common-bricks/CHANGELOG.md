@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.27.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.26.0...@next-shared/common-bricks@0.27.0) (2023-12-07)
+
+
+### Features
+
+* eo-statistics-card ([c4ce5ab](https://github.com/easyops-cn/next-bricks/commit/c4ce5ab4699a47cf6460073e50d465e5186e7a21))
+
+
+
+
+
 # [0.26.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.25.0...@next-shared/common-bricks@0.26.0) (2023-11-29)
 
 

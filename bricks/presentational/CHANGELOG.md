@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.17.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.16.4...@next-bricks/presentational@0.17.0) (2023-12-07)
+
+
+### Features
+
+* eo-statistics-card ([c4ce5ab](https://github.com/easyops-cn/next-bricks/commit/c4ce5ab4699a47cf6460073e50d465e5186e7a21))
+
+
+
+
+
 ## [0.16.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.16.3...@next-bricks/presentational@0.16.4) (2023-12-06)
 
 **Note:** Version bump only for package @next-bricks/presentational
