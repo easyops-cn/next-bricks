@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.7.8...@next-bricks/vs@0.8.0) (2023-12-07)
+
+
+### Features
+
+* update docs ([95267ac](https://github.com/easyops-cn/next-bricks/commit/95267ac0b22d78c30cf46b29b9ef477954d45d05))
+
+
+
+
+
 ## [0.7.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.7.7...@next-bricks/vs@0.7.8) (2023-12-06)
 
 **Note:** Version bump only for package @next-bricks/vs

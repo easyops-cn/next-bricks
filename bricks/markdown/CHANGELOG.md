@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.7.16...@next-bricks/markdown@1.8.0) (2023-12-07)
+
+
+### Features
+
+* update docs ([95267ac](https://github.com/easyops-cn/next-bricks/commit/95267ac0b22d78c30cf46b29b9ef477954d45d05))
+
+
+
+
+
 ## [1.7.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.7.15...@next-bricks/markdown@1.7.16) (2023-12-06)
 
 **Note:** Version bump only for package @next-bricks/markdown

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.18.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.17.2...@next-bricks/advanced@0.18.0) (2023-12-07)
+
+
+### Features
+
+* update cascader theme ([c6f8261](https://github.com/easyops-cn/next-bricks/commit/c6f82616f57897cdd2b96be13f8227aa5c11a1d6))
+* update docs ([95267ac](https://github.com/easyops-cn/next-bricks/commit/95267ac0b22d78c30cf46b29b9ef477954d45d05))
+
+
+
+
+
 ## [0.17.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.17.1...@next-bricks/advanced@0.17.2) (2023-12-06)
 
 **Note:** Version bump only for package @next-bricks/advanced
