@@ -26,7 +26,7 @@ describe("siteMap test", () => {
     disconnect: jest.fn(),
   }));
 
-  it("not render when not visible", () => {
+  it("not trigger request when not visible", () => {
     const menuGroup = {
       title: "服务",
       type: "group",
@@ -34,11 +34,9 @@ describe("siteMap test", () => {
       childLayout: "siteMap",
       items: [],
     } as SidebarMenuGroup;
-    const { container } = render(
-      <SiteMapItem menuGroup={menuGroup} visible={false} />
-    );
+    render(<SiteMapItem menuGroup={menuGroup} visible={false} />);
 
-    expect(container.querySelector(".site-map")).toBeFalsy();
+    expect(collectService.fetchFavorites).not.toBeCalled();
   });
   it("should work with no favorites data", () => {
     (collectService.getFavoritesById as jest.Mock).mockReturnValueOnce([]);

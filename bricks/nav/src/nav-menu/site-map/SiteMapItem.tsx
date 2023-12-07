@@ -81,6 +81,13 @@ export function SiteMapItem(props: SiteMapItemProps) {
   const [overElement, setOverElement] = useState<HTMLElement>();
   const [allowDrag, setAllowDrag] = useState<boolean>();
   const [direction, setDirection] = useState<DRAG_DIRECTION>();
+  const [initialized, setInitialized] = useState(false);
+
+  useEffect(() => {
+    if (visible && !initialized) {
+      setInitialized(true);
+    }
+  }, [visible, initialized]);
 
   const handleFavorite = (collectList: SidebarMenuSimpleItem[]) => {
     setFavoriteList(collectList);
@@ -157,86 +164,86 @@ export function SiteMapItem(props: SiteMapItemProps) {
     })();
   }, [groupId, visible]);
 
-  if (!visible) return null;
-
   return (
-    <div className="site-map">
-      <div className="search-wrapper">
-        <WrappedInput
-          className="search-input"
-          style={{ width: "100%" }}
-          onValueChange={debouncedHandleSearch}
-          placeholder={t(K.SEARCH_ITEM_PLACEHOLDER)}
-        >
-          <WrappedIcon slot="prefix" lib="antd" icon="search" />
-        </WrappedInput>
-      </div>
+    initialized && (
+      <div className="site-map">
+        <div className="search-wrapper">
+          <WrappedInput
+            className="search-input"
+            style={{ width: "100%" }}
+            onValueChange={debouncedHandleSearch}
+            placeholder={t(K.SEARCH_ITEM_PLACEHOLDER)}
+          >
+            <WrappedIcon slot="prefix" lib="antd" icon="search" />
+          </WrappedInput>
+        </div>
 
-      {!q && (
-        <div>
-          {favoriteList.length !== 0 && (
-            <div
-              className={classNames("visit-access", {
-                hasData: favoriteList.length,
-              })}
-            >
-              <span className="title">{t(K.QUICK_ACCESS)}</span>
-              <DragContext.Provider
-                value={{
-                  groupId,
-                  overElement,
-                  direction,
-                  allowDrag,
-                  onDragStart: handleDragStart,
-                  onDragOver: handleDragOver,
-                  onDragEnd: handleDragEnd,
-                  onAllowDrag: handleAllowDrag,
-                  onFavoriteUpdate: handleFavorite,
-                }}
+        {!q && (
+          <div>
+            {favoriteList.length !== 0 && (
+              <div
+                className={classNames("visit-access", {
+                  hasData: favoriteList.length,
+                })}
               >
-                <div className="tag-wrapper">
-                  {favoriteList.map((item) => (
-                    <QuickVisitItem
-                      onFavorite={handleFavorite}
-                      groupId={groupId}
-                      key={item.key}
-                      data={item}
-                    />
-                  ))}
-                </div>
-              </DragContext.Provider>
-            </div>
-          )}
+                <span className="title">{t(K.QUICK_ACCESS)}</span>
+                <DragContext.Provider
+                  value={{
+                    groupId,
+                    overElement,
+                    direction,
+                    allowDrag,
+                    onDragStart: handleDragStart,
+                    onDragOver: handleDragOver,
+                    onDragEnd: handleDragEnd,
+                    onAllowDrag: handleAllowDrag,
+                    onFavoriteUpdate: handleFavorite,
+                  }}
+                >
+                  <div className="tag-wrapper">
+                    {favoriteList.map((item) => (
+                      <QuickVisitItem
+                        onFavorite={handleFavorite}
+                        groupId={groupId}
+                        key={item.key}
+                        data={item}
+                      />
+                    ))}
+                  </div>
+                </DragContext.Provider>
+              </div>
+            )}
 
-          <GroupView
-            groupId={groupId}
-            selectedKey={selectedKey}
-            groups={menuGroup.items as SidebarMenuGroup[]}
-            onFavorite={handleFavorite}
-          />
-        </div>
-      )}
+            <GroupView
+              groupId={groupId}
+              selectedKey={selectedKey}
+              groups={menuGroup.items as SidebarMenuGroup[]}
+              onFavorite={handleFavorite}
+            />
+          </div>
+        )}
 
-      {q && (
-        <div className="search-panel">
-          <span className="title">{t(K.SITE_MAP_SEARCH_RECOMMEND)}</span>
-          {filter.length ? (
-            <div className="recommend-wrapper">
-              {filter.map((item) => (
-                <RecommendItem
-                  key={item.key}
-                  groupId={groupId}
-                  data={item}
-                  onFavorite={handleFavorite}
-                  active={collectService.isCollected(groupId, item)}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="no-data-tips">{t(K.NO_DATA_SEARCH_INFO)}</div>
-          )}
-        </div>
-      )}
-    </div>
+        {q && (
+          <div className="search-panel">
+            <span className="title">{t(K.SITE_MAP_SEARCH_RECOMMEND)}</span>
+            {filter.length ? (
+              <div className="recommend-wrapper">
+                {filter.map((item) => (
+                  <RecommendItem
+                    key={item.key}
+                    groupId={groupId}
+                    data={item}
+                    onFavorite={handleFavorite}
+                    active={collectService.isCollected(groupId, item)}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="no-data-tips">{t(K.NO_DATA_SEARCH_INFO)}</div>
+            )}
+          </div>
+        )}
+      </div>
+    )
   );
 }
