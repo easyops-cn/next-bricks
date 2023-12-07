@@ -307,7 +307,6 @@ function PopoverComponent(props: PopoverComponentProps) {
 
   const handleNotTrigger = (e: MouseEvent) => {
     e.stopPropagation();
-    e.preventDefault();
   };
 
   useEffect(() => {
