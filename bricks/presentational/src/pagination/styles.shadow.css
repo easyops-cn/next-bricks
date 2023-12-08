@@ -40,6 +40,13 @@
   font-size: 14px;
   line-height: 30px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  eo-icon {
+    color: var(--pagination-size-selection-icon-color);
+  }
 }
 
 .pagination-size-selector-menu {
@@ -99,17 +106,13 @@
 }
 
 .pagination-page-item-active {
-  color: var(--antd-pagination-item-active-text-color);
-  background-color: var(--antd-pagination-item-active-bg);
-  border-color: var(--antd-pagination-item-active-border);
+  color: var(--color-brand-hover);
+  border-color: var(--color-brand-hover);
 }
 
 .pagination-page-item-active:not(.pagination-page-item-disabled):hover {
-  color: var(--antd-pagination-item-selected-hover-text-color);
-  background-color: var(--antd-pagination-item-selected-hover-bg);
-  border-color: var(--antd-pagination-item-selected-hover-border-color);
+  color: var(--color-brand-hover);
 }
-
 .pagination-page-item-disabled {
   color: var(--text-color-disabled);
   border-color: transparent;

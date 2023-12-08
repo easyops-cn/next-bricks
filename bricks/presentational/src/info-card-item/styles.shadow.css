@@ -33,7 +33,7 @@ eo-icon {
   grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
 }
 
-.card-wrapper:hover {
+.card-wrapper.hoverable:hover {
   box-shadow: var(--card-item-hover-shadow);
   background: var(--card-item-hover-bg);
   border-color: transparent;
@@ -62,7 +62,7 @@ eo-icon {
   align-items: center;
   height: 40px;
   max-width: 90%;
-  /* gap: var(--card-content-gap); */
+  gap: var(--card-content-gap);
 }
 
 .card-description {
@@ -113,8 +113,10 @@ eo-icon {
   }
 }
 
-.card-wrapper:hover .card-title {
-  color: var(--color-brand);
+.card-wrapper.hoverable:hover .card-title {
+  > span {
+    color: var(--color-brand);
+  }
 }
 
 .card-description {

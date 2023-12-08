@@ -22,7 +22,7 @@
   height: 100%;
   vertical-align: middle;
   border-top: 0;
-  border-left: 1px solid var(--antd-divider-color);
+  border-left: 1px solid var(--color-text-divider-line);
   position: relative;
   content: "";
 }
@@ -35,10 +35,11 @@
   top: 50%;
   width: 50%;
   border-top: 1px solid transparent;
-  border-top-color: var(--antd-divider-color);
+  border-top-color: var(--color-text-divider-line);
   border-bottom: 0;
   transform: translateY(50%);
   content: "";
+  color: var(--color-text-divider-line);
 }
 .horizontal.left::before,
 .horizontal.right::after {
@@ -60,7 +61,7 @@
   width: 95%;
   transform: translateY(50%);
   height: 1px;
-  background: var(--antd-divider-radiation-color);
+  background: var(--color-text-divider-line);
   -webkit-mask-image: linear-gradient(
     to right,
     #f9f9f9 6px,

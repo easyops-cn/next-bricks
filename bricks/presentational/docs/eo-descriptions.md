@@ -46,10 +46,7 @@
                   key: 2
                   color: green
 
-- brick: div
-  properties:
-    style:
-      margin: 10px 0px
+- brick: eo-divider
 - brick: eo-descriptions
   properties:
     column: 4
@@ -107,6 +104,7 @@
                 - text: 大男孩
                   key: 2
                   color: green
+- brick: eo-divider
 - brick: eo-descriptions
   properties:
     layout: vertical

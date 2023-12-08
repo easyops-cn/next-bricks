@@ -82,6 +82,15 @@ class EoInfoCardItem extends ReactNextElement {
   })
   accessor hasIcon: boolean | undefined;
 
+  /**
+   * 是否hoverable
+   * @internal
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor hoverable: boolean | undefined;
+
   #getSlotBySelector(selector: string): HTMLSlotElement {
     return this.shadowRoot?.querySelector(selector) as HTMLSlotElement;
   }
@@ -110,6 +119,7 @@ class EoInfoCardItem extends ReactNextElement {
         cardIcon={this.cardIcon}
         detailList={this.detailList}
         callback={this.#renderCallback}
+        hoverable={this.hoverable}
       />
     );
   }
@@ -137,6 +147,7 @@ interface EoInfoCardItemComponentProps {
   cardIcon?: IconAvatar | undefined;
   detailList?: InfoCardDetail[];
   callback?: Ref<HTMLDivElement>;
+  hoverable?: boolean;
 }
 
 export function EoInfoCardItemComponent({
@@ -147,6 +158,7 @@ export function EoInfoCardItemComponent({
   cardIcon,
   detailList,
   callback,
+  hoverable = true,
 }: EoInfoCardItemComponentProps) {
   // const { t } = useTranslation(NS);
   // const hello = t(K.HELLO);
@@ -178,7 +190,11 @@ export function EoInfoCardItemComponent({
   };
 
   return (
-    <div className="card-wrapper" ref={callback} onClick={handleCardClick}>
+    <div
+      className={classNames("card-wrapper", { hoverable })}
+      ref={callback}
+      onClick={handleCardClick}
+    >
       <div className="card-content">
         <div className="card-icon">
           <slot name="icon">
