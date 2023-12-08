@@ -182,7 +182,7 @@ export function DescriptionsComponent(props: DescriptionsProps) {
       <WrappedGridLayout
         gap={layout === "vertical" || bordered ? "0" : "10px"}
         columns={column}
-        className="description-content"
+        className={classnames("description-content", { bordered })}
       >
         {list
           ?.filter((item) =>
@@ -203,7 +203,10 @@ export function DescriptionsComponent(props: DescriptionsProps) {
                   : {}),
               }}
             >
-              <span className="description-item-label">{item.label}: </span>
+              <span className="description-item-label">
+                {item.label}
+                {bordered ? "" : ": "}
+              </span>
               <span className="description-item-content">
                 {renderItem(item)}
               </span>

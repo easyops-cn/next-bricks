@@ -15,6 +15,7 @@ import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
 import { K, NS, locales } from "./i18n.js";
 import classNames from "classnames";
 import { sortBy } from "lodash";
+import "./host-context.css";
 
 initializeReactI18n(NS, locales);
 
@@ -282,7 +283,8 @@ export function EoPaginationComponent(props: EoPaginationComponentProps) {
         <div className="pagination-size-changer">
           <WrappedPopover placement="bottom" distance={4}>
             <div className="pagination-size-selection" slot="anchor">
-              {t(K.PAGE_SIZE, { count: paginationData.pageSize }) + " ▼"}
+              {t(K.PAGE_SIZE, { count: paginationData.pageSize })}
+              <WrappedIcon lib="antd" theme="filled" icon="caret-down" />
             </div>
             <WrappedMenu className="pagination-size-selector-menu">
               {pageSizeOptions.map((value) => {
