@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.18.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.17.0...@next-bricks/presentational@0.18.0) (2023-12-08)
+
+
+### Features
+
+* UI验收问题整改-presentational ([7414fd5](https://github.com/easyops-cn/next-bricks/commit/7414fd5a433ce328c03d2b45d06e5bc07396d8d4))
+
+
+
+
+
 # [0.17.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.16.4...@next-bricks/presentational@0.17.0) (2023-12-07)
 
 
