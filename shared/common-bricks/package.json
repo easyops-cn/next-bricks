@@ -15,6 +15,7 @@
   "exports": {
     ".": "./common-bricks.json",
     "./common-bricks.json": "./common-bricks.json",
+    "./deprecated-bricks.json": "./deprecated-bricks.json",
     "./package.json": "./package.json"
   }
 }

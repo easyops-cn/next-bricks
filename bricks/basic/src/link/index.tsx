@@ -23,6 +23,9 @@ import {
   getExtendedLocationDescriptor,
 } from "./getExtendedLocationDescriptor.js";
 
+export { ExtendedLocationDescriptor } from "./getExtendedLocationDescriptor.js";
+export { Target } from "../interface.js";
+
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 export interface LinkProps {

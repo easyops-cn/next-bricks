@@ -16,9 +16,10 @@ export interface EoSidebarMenuGroupProps {
 }
 
 /**
- * 侧栏菜单分组
+ * 侧栏菜单分组 已迁移至 `nav` 构件包，后续在在 `basic` 构件包中将不再更新。
  * @slot title - 分组标题
  * @category navigation
+ * @deprecated
  */
 export
 @defineElement("eo-sidebar-menu-group", {

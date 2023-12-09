@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
-import type { EoTooltip, ToolTipProps } from "../tooltip/index.jsx";
+import type { EoTooltip, ToolTipProps } from "@next-bricks/basic/tooltip";
 import type {
   GeneralIcon,
   GeneralIconProps,
@@ -61,8 +61,7 @@ export interface EoSidebarEventsMapping {
 }
 
 /**
- * 侧边栏 已迁移至 `nav` 构件包，后续在在 `basic` 构件包中将不再更新。
- * @deprecated
+ * 侧边栏
  *
  * @category navigation
  */
@@ -139,7 +138,6 @@ interface EoSidebarComponentProps extends EoSidebarProps {
 
 export function EoSidebarComponent(props: EoSidebarComponentProps) {
   const { t } = useTranslation(NS);
-
   const {
     hiddenFixedIcon,
     position,

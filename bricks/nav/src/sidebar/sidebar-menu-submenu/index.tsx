@@ -22,8 +22,7 @@ export interface EoSidebarMenuSubmenuProps {
 }
 
 /**
- * 侧栏菜单子菜单 已迁移至 `nav` 构件包，后续在在 `basic` 构件包中将不再更新。
- * @deprecated
+ * 侧栏菜单子菜单
  * @slot title - 子菜单标题
  * @category navigation
  */

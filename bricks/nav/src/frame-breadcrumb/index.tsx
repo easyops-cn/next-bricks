@@ -6,16 +6,16 @@ import { useCurrentApp } from "@next-core/react-runtime";
 import { BreadcrumbItemConf } from "@next-core/types";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
-import type { EoBreadcrumb } from "../breadcrumb/index.js";
+import type { EoBreadcrumb } from "@next-bricks/basic/breadcrumb";
 import type {
   EoBreadcrumbItem,
   BreadcrumbItemProps,
-} from "../breadcrumb-item/index.js";
+} from "@next-bricks/basic/breadcrumb-item";
 import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
-import type { ExtendedLocationDescriptor } from "../link/getExtendedLocationDescriptor.js";
+import type { ExtendedLocationDescriptor } from "@next-bricks/basic/link";
 
 const { defineElement, property } = createDecorators();
 
@@ -38,8 +38,7 @@ export interface EoFrameBreadcrumbProps {
 }
 
 /**
- * 面包屑 已迁移至 `nav` 构件包，后续在在 `basic` 构件包中将不再更新。
- * @deprecated
+ * 面包屑
  */
 export
 @defineElement("eo-frame-breadcrumb", {
