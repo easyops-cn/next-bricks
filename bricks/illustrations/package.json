@@ -62,7 +62,7 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.17.0",
+    "@next-core/build-next-bricks": "^1.18.0",
     "@next-core/test-next": "^1.0.12"
   }
 }
