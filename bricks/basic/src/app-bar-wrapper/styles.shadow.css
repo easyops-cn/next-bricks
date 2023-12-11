@@ -13,7 +13,7 @@
 .app-bar {
   position: relative;
   z-index: 1000;
-  box-shadow: var(--connected-overlay-shadow);
+  box-shadow: var(--top-nav-shadow);
 }
 
 .app-bar.fixed,
