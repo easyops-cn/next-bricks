@@ -2,7 +2,7 @@ install_path: /usr/local/easyops/bricks/nav-NB
 user: "easyops:easyops"
 dependencies:
   - name: brick_next
-    version: ^2.90.23 || ^3.8.26
+    version: ^2.90.33 || ^3.8.38
     local_deploy: true
   - name: "basic-NB"
     version: ">= 0.47.0"

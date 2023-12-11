@@ -15,8 +15,7 @@ export interface AppBarWrapperProps {
 }
 
 /**
- * 应用顶部容器 已迁移至 `nav` 构件包，后续在在 `basic` 构件包中将不再更新。
- * @deprecated
+ * 应用顶部容器
  * @slot left - 左侧内容区
  * @slot right - 右侧内容区
  */

@@ -1,57 +1,50 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { createDecorators } from "@next-core/element";
-import { ReactNextElement, wrapBrick } from "@next-core/react-element";
-import type {
-  GeneralIcon,
-  GeneralIconProps,
-} from "@next-bricks/icons/general-icon";
+import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
-import classNames from "classnames";
 import { useUpdateMenuCollapsedState } from "../utils.js";
+import classNames from "classnames";
 
 const { defineElement, property } = createDecorators();
 
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
-
-export interface EoSidebarMenuSubmenuProps {
-  icon?: GeneralIconProps;
+export interface EoSidebarMenuGroupProps {
   selected?: boolean;
+  collapsable?: boolean;
   collapsed?: boolean;
   menuCollapsed?: boolean;
 }
 
 /**
- * 侧栏菜单子菜单 已迁移至 `nav` 构件包，后续在在 `basic` 构件包中将不再更新。
- * @deprecated
- * @slot title - 子菜单标题
+ * 侧栏菜单分组
+ * @slot title - 分组标题
  * @category navigation
  */
 export
-@defineElement("eo-sidebar-menu-submenu", {
+@defineElement("eo-sidebar-menu-group", {
   styleTexts: [styleText],
 })
-class EoSidebarMenuSubmenu
+class EoSidebarMenuGroup
   extends ReactNextElement
-  implements EoSidebarMenuSubmenuProps
+  implements EoSidebarMenuGroupProps
 {
   /**
-   * 菜单的图标
+   * 是否允许折叠
    */
-  @property({ attribute: false })
-  accessor icon: GeneralIconProps | undefined;
-
-  /**
-   * 是否选中
-   * */
   @property({ type: Boolean })
-  accessor selected: boolean | undefined;
+  accessor collapsable: boolean = true;
 
   /**
    * 是否折叠
    */
   @property({ type: Boolean })
   accessor collapsed: boolean | undefined;
+
+  /**
+   * 是否选中
+   * */
+  @property({ type: Boolean })
+  accessor selected: boolean | undefined;
 
   /**
    * 菜单整体是否收起状态
@@ -65,8 +58,8 @@ class EoSidebarMenuSubmenu
 
   render() {
     return (
-      <EoSidebarMenuSubmenuComponent
-        icon={this.icon}
+      <EoSidebarMenuGroupComponent
+        collapsable={this.collapsable}
         selected={this.selected}
         collapsed={this.collapsed}
         menuCollapsed={this.menuCollapsed}
@@ -76,14 +69,14 @@ class EoSidebarMenuSubmenu
   }
 }
 
-interface EoSidebarMenuSubmenuComponentProps extends EoSidebarMenuSubmenuProps {
+interface EoSidebarMenuGroupComponentProps extends EoSidebarMenuGroupProps {
   onCollapseChange?: (collapsed: boolean) => void;
 }
 
-export function EoSidebarMenuSubmenuComponent(
-  props: EoSidebarMenuSubmenuComponentProps
+export function EoSidebarMenuGroupComponent(
+  props: EoSidebarMenuGroupComponentProps
 ) {
-  const { icon, collapsed, menuCollapsed, onCollapseChange } = props;
+  const { collapsable, collapsed, menuCollapsed, onCollapseChange } = props;
 
   const [slotRef] = useUpdateMenuCollapsedState(menuCollapsed);
 
@@ -104,21 +97,21 @@ export function EoSidebarMenuSubmenuComponent(
 
   return (
     <div
-      className={classNames("menu-submenu", {
-        "menu-submenu-collapsed": menuCollapsed ? true : collapsed,
+      className={classNames("menu-group", {
+        "menu-group-collapsed": menuCollapsed ? true : collapsed,
       })}
     >
-      <div className="menu-submenu-title" ref={titleRef}>
-        <span className="menu-submenu-title-icon-container">
-          <WrappedIcon {...icon!} className="menu-submenu-title-icon" />
+      <div className="menu-group-title" ref={titleRef}>
+        <span className="menu-group-title-icon-container">
+          <span className="menu-group-title-icon"></span>
         </span>
-        <span className="menu-submenu-title-text">
+        <div className="menu-group-title-text">
           <slot name="title" />
-        </span>
-        <span className="menu-submenu-arrow" />
+        </div>
+        {collapsable && <span className="menu-group-arrow" />}
       </div>
-      <div className="menu-sub">
-        <div className="menu-sub-inner">
+      <div className="menu-group-list">
+        <div className="menu-group-list-inner">
           <slot ref={slotRef} />
         </div>
       </div>

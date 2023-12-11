@@ -5,7 +5,7 @@ import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
-import type { Link, LinkProps } from "../../link/index.jsx";
+import type { Link, LinkProps } from "@next-bricks/basic/link";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 
@@ -24,8 +24,7 @@ export interface EoSidebarMenuItemProps {
 }
 
 /**
- * 侧栏菜单项 已迁移至 `nav` 构件包，后续在在 `basic` 构件包中将不再更新。
- * @deprecated
+ * 侧栏菜单项
  * @category navigation
  */
 export

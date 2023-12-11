@@ -162,6 +162,14 @@
     "eo-launchpad-button-v2",
     "eo-launchpad-quick-access",
     "eo-search-launchpad",
-    "eo-launchpad-recent-visits"
+    "eo-launchpad-recent-visits",
+    "eo-app-bar-wrapper",
+    "eo-sidebar-menu-item",
+    "eo-sidebar",
+    "eo-sidebar-menu-group",
+    "eo-sidebar-menu",
+    "eo-sidebar-menu-submenu",
+    "eo-frame-breadcrumb",
+    "eo-sidebar-sub-menu"
   ]
 }

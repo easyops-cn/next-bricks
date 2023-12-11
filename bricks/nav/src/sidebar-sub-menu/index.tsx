@@ -14,15 +14,14 @@ import {
   isGroup,
   isSubMenu,
 } from "@next-shared/general/menu";
-import { Menu as MenuComponent, SidebarMenu } from "../menu/index.js";
-import { Link, LinkProps } from "../link/index.js";
+import { Menu as MenuComponent, SidebarMenu } from "@next-bricks/basic/menu";
+import { Link, LinkProps, Target } from "@next-bricks/basic/link";
 import {
   EoMenuItemSubMenu,
   EoMenuSubMenuProps,
-} from "../menu-item-sub-menu/index.js";
-import { EoMenuGroup } from "../menu-group/index.js";
-import { MenuComponentProps, MenuItem } from "../menu-item/index.js";
-import { Target } from "../interface.js";
+} from "@next-bricks/basic/menu-item-sub-menu";
+import { EoMenuGroup } from "@next-bricks/basic/menu-group";
+import { MenuComponentProps, MenuItem } from "@next-bricks/basic/menu-item";
 import styleText from "./styles.shadow.css";
 import type {
   GeneralIcon,
@@ -56,8 +55,7 @@ interface SidebarSubMenuProps {
 const { defineElement, property } = createDecorators();
 
 /**
- * 构件 `eo-sidebar-sub-menu` 已迁移至 `nav` 构件包，后续在在 `basic` 构件包中将不再更新。
- * @deprecated
+ * 构件 `eo-sidebar-sub-menu`
  * @category navigation
  */
 export

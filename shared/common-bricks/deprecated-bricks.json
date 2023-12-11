@@ -1,0 +1,12 @@
+{
+  "basic": [
+    "eo-app-bar-wrapper",
+    "eo-frame-breadcrumb",
+    "eo-sidebar",
+    "eo-sidebar-menu-item",
+    "eo-sidebar-menu-group",
+    "eo-sidebar-menu",
+    "eo-sidebar-sub-menu",
+    "eo-sidebar-menu-submenu"
+  ]
+}
