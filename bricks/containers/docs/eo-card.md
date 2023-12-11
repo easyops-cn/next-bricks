@@ -63,28 +63,6 @@
             textContent: Extra Div
 ```
 
-### Footer slot
-
-```yaml preview
-- brick: eo-card
-  properties:
-    cardTitle: 卡片标题
-  slots:
-    "":
-      bricks:
-        - brick: div
-          properties:
-            textContent: Content
-    footer:
-      bricks:
-        - brick: div
-          properties:
-            textContent: Footer Div
-            style:
-              padding: 5px 20px
-              borderTop: "1px solid #ddd"
-```
-
 ### titleSuffix Slot
 
 ```yaml preview
@@ -97,6 +75,23 @@
         - brick: span
           properties:
             textContent: titleSuffix span
+```
+
+### Header Icon
+
+```yaml preview
+- brick: eo-card
+  properties:
+    cardTitle: 卡片标题
+    headerIcon:
+      lib: antd
+      icon: search
+  slots:
+    "":
+      bricks:
+        - brick: div
+          properties:
+            textContent: Content
 ```
 
 ### Header Style

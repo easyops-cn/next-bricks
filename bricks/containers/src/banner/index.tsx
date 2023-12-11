@@ -41,6 +41,8 @@ export interface BannerProps {
  * @slot - 内容区
  *
  * @category container-layout
+ *
+ * @insider
  */
 export
 @defineElement("eo-banner", {

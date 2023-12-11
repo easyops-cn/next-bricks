@@ -29,17 +29,20 @@
 }
 
 .card-head {
-  margin-bottom: -1px;
+  margin-top: 1px;
   padding: var(--eo-card-head-padding);
   color: var(--antd-heading-color);
   font-weight: 500;
   font-size: 16px;
   border-bottom: 1px solid var(--card-border-color-split);
+  line-height: 22px;
+  box-sizing: border-box;
 }
 
 .card-head-wrapper {
   display: flex;
   align-items: center;
+  gap: 4px;
 }
 
 .card-head-title {

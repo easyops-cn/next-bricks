@@ -6,7 +6,8 @@
   color: var(--tab-item-default-color);
   height: 100%;
   font-size: 16px;
-  padding: 10px 8px;
+  line-height: 24px;
+  padding: 6px 0;
   text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
@@ -21,7 +22,6 @@
 .tab-item[aria-selected="true"] {
   color: var(--tab-item-active-color);
   font-weight: var(--font-weight-500);
-  /* background: var(--antd-tabs-title-wrapper-bg); */
 }
 
 .tab-item[aria-selected="true"]:after {
@@ -40,20 +40,20 @@
   cursor: not-allowed;
 }
 
-:host([type="panel"]) .tab-item {
-  padding: 4px 20px;
-  border-right: 1px solid var(--antd-tabs-title-border-color);
-  border-top: 1px solid var(--antd-tabs-title-border-color);
-}
-
-:host([type="panel"]) .tab-item[aria-selected="true"] {
-  border-top: none;
-  border-bottom: 1px solid var(--antd-tabs-title-wrapper-bg);
-}
-
-:host([type="panel"]) .tab-item[aria-selected="true"]:after {
-  top: 0;
-  bottom: auto;
+:host([type="panel"]) {
+  .tab-item {
+    padding: 4px 20px;
+    border-right: 1px solid var(--antd-tabs-title-border-color);
+    border-top: 1px solid var(--antd-tabs-title-border-color);
+  }
+  .tab-item[aria-selected="true"] {
+    border-top: none;
+    border-bottom: 1px solid var(--antd-tabs-title-wrapper-bg);
+  }
+  .tab-item[aria-selected="true"]:after {
+    top: 0;
+    bottom: auto;
+  }
 }
 
 .tab-item-badge {

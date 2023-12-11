@@ -235,8 +235,6 @@
       slot: footer
       properties:
         textContent: 底部内容
-        style:
-          padding: 10px 20px
     - brick: div
       slot: extra
       properties:

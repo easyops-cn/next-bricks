@@ -131,7 +131,7 @@
 .drawer-header {
   display: flex;
   justify-content: space-between;
-  padding: 16px 24px;
+  padding: 12px 24px;
   border-bottom: 1px solid var(--palette-gray-4);
 }
 
@@ -139,6 +139,7 @@
 .drawer-header-right {
   display: flex;
   align-items: center;
+  gap: 4px;
 }
 
 .close-btn {
@@ -154,15 +155,19 @@
 }
 
 .drawer-body {
-  padding: 20px;
+  padding: 24px;
   flex-grow: 1;
   overflow: auto;
 }
 
 .drawer-footer {
   display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
   align-items: center;
   width: 100%;
-  padding: 16px 0px;
-  background: var(--antd-modal-footer-bg);
+  padding: 12px 24px;
+  border-top: 1px solid var(--palette-gray-4);
+  background: var(--color-fill-bg-base-3);
+  box-sizing: border-box;
 }

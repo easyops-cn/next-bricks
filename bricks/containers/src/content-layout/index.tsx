@@ -14,6 +14,8 @@ const { defineElement } = createDecorators();
  * @slot - 内容区
  *
  * @category container-layout
+ *
+ * @insider
  */
 export
 @defineElement("eo-content-layout", {

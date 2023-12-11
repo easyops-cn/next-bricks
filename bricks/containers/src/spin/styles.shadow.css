@@ -45,8 +45,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--color-white);
-  opacity: 0.4;
+  opacity: 0.5;
   transition: opacity 0.3s;
 }
 
