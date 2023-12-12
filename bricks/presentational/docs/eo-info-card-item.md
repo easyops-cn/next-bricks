@@ -9,6 +9,99 @@
   properties:
     style:
       width: 100%
+    cardTitle: 持续集成
+    cardIcon:
+      color: green
+      icon:
+        icon: object-topology
+        lib: easyops
+        category: app
+      bgColor: var(--theme-green-background)
+    description: 支持展客户两会话健康和空间和健康和健康和健康几节课或军扩过过过过科技股科技股就开始刚开始搞是接口关键时刻哥萨克伽伽司空见惯撒十多个数据库高升控股撒奥会计噶会计师公开撒娇鬼萨科技馆萨科技会计师干撒冈萨加国盛金控hhhhhhhhhhhhh
+    detailList:
+      - useBrick:
+          brick: eo-tag
+          properties:
+            textContent: IT资源管理
+            tagStyle:
+              borderRadius: 3px
+              height: 32px
+              lineHeight: 32px
+      - useBrick:
+          brick: eo-tag
+          properties:
+            textContent: 存储设备
+            tagStyle:
+              borderRadius: 3px
+              height: 32px
+              lineHeight: 32px
+      - useBrick:
+          brick: eo-tag
+          properties:
+            textContent: 资源套餐
+            tagStyle:
+              borderRadius: 3px
+              height: 32px
+              lineHeight: 32px
+  slots:
+    action:
+      type: bricks
+      bricks:
+        - brick: eo-dropdown-actions
+          events:
+            advanced.setting:
+              - action: message.success
+                args:
+                  - click advanced button
+            button.delete:
+              - useProvider: basic.show-dialog
+                args:
+                  - type: confirm
+                    title: Please Confirm
+                    content: Are you sure?
+                callback:
+                  success:
+                    action: message.success
+                    args:
+                      - You just confirmed!
+                  error:
+                    action: message.warn
+                    args:
+                      - You just canceled.
+          children:
+            - brick: eo-button
+              properties:
+                type: text
+                icon:
+                  lib: fa
+                  icon: ellipsis-h
+                  color: red
+                size: small
+          properties:
+            actions:
+              - text: 高级设置
+                color: red
+                icon:
+                  icon: setting
+                  lib: antd
+                event: advanced.setting
+              - text: 删除
+                icon:
+                  lib: antd
+                  icon: delete
+                event: button.delete
+                tooltip: 删除
+                tooltipPlacement: right
+                danger: true
+                color: var(--theme-red-color)
+- brick: div
+  properties:
+    style:
+      height: 20px
+- brick: eo-info-card-item
+  properties:
+    style:
+      width: 100%
     cardTitle: 资产盘点
     cardIcon:
       color: orange
@@ -61,10 +154,11 @@
           children:
             - brick: eo-button
               properties:
-                type: link
+                type: text
                 icon:
                   lib: fa
-                  icon: ellipsis-v
+                  icon: ellipsis-h
+                  color: red
                 size: small
           properties:
             actions:
@@ -75,13 +169,13 @@
                 event: advanced.setting
               - text: 删除
                 icon:
-                  lib: easyops
-                  category: default
+                  lib: antd
                   icon: delete
                 event: button.delete
                 tooltip: 删除
                 tooltipPlacement: right
                 color: var(--theme-red-color)
+                danger: true
 - brick: div
   properties:
     style:
@@ -148,10 +242,10 @@
           children:
             - brick: eo-button
               properties:
-                type: link
+                type: text
                 icon:
                   lib: fa
-                  icon: ellipsis-v
+                  icon: ellipsis-h
                 size: small
           properties:
             actions:
@@ -162,12 +256,12 @@
                 event: advanced.setting
               - text: 删除
                 icon:
-                  lib: easyops
-                  category: default
+                  lib: antd
                   icon: delete
                 event: button.delete
                 tooltip: 删除
                 tooltipPlacement: right
+                danger: true
                 color: var(--theme-red-color)
 - brick: div
   properties:

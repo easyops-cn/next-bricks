@@ -41,6 +41,7 @@
 
 .description-content.bordered {
   border-top: 1px solid var(--antd-border-color-split);
+  border-right: 1px solid var(--antd-border-color-split);
 }
 .description-item.bordered {
   box-sizing: border-box;
