@@ -21,6 +21,18 @@ jest.mock("../fa-icon/index.js", () => ({
   },
 }));
 
+jest.mock("../img-icon/index.js", () => ({
+  WrappedEoImgIcon(props: unknown) {
+    return ` img-icon:${JSON.stringify(props)}`;
+  },
+}));
+
+jest.mock("../svg-icon/index.js", () => ({
+  WrappedSvgIcon(props: unknown) {
+    return ` svg-icon:${JSON.stringify(props)}`;
+  },
+}));
+
 describe("icons.general-icon", () => {
   test("basic usage", async () => {
     const element = document.createElement("icons.general-icon") as GeneralIcon;
@@ -59,7 +71,15 @@ describe("icons.general-icon", () => {
       await (global as any).flushPromises();
     });
     expect(element.shadowRoot?.innerHTML).toMatchInlineSnapshot(
-      `"<style>styles.shadow.css</style><eo-img-icon img-src="https://test.com/image.jpg"></eo-img-icon>"`
+      `"<style>styles.shadow.css</style> img-icon:{"imgSrc":"https://test.com/image.jpg"}"`
+    );
+
+    element.imgSrc = "https://test.com/image.svg";
+    await act(async () => {
+      await (global as any).flushPromises();
+    });
+    expect(element.shadowRoot?.innerHTML).toMatchInlineSnapshot(
+      `"<style>styles.shadow.css</style> svg-icon:{"imgSrc":"https://test.com/image.svg"}"`
     );
 
     act(() => {

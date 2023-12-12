@@ -5,29 +5,26 @@ import {
 } from "@next-core/element";
 import { wrapLocalBrick } from "@next-core/react-element";
 import { getIcon } from "../shared/SvgCache.js";
+import { getImageUrl } from "../shared/getImageUrl.js";
 import sharedStyleText from "../shared/icons.shadow.css";
 
 const { defineElement, property } = createDecorators();
 
-export interface EasyOpsIconProps {
-  /** Defaults to "default" */
-  category?: string;
-  icon?: string;
+export interface SvgIconProps {
+  imgSrc?: string;
+  noPublicRoot?: boolean;
 }
 
 export
-@defineElement("eo-easyops-icon", {
-  alias: ["icons.easyops-icon"],
-})
-class EasyOpsIcon extends NextElement implements EasyOpsIconProps {
-  /**
-   * 图标分类
-   * @default "default"
-   */
-  @property() accessor category: string | undefined;
+@defineElement("eo-svg-icon", {})
+class SvgIcon extends NextElement implements SvgIconProps {
+  /** 图标地址 */
+  @property() accessor imgSrc: string | undefined;
 
-  /** 图标名 */
-  @property() accessor icon: string | undefined;
+  @property({
+    type: Boolean,
+  })
+  accessor noPublicRoot: boolean | undefined;
 
   #createShadowRoot(): void {
     if (this.shadowRoot) {
@@ -56,18 +53,10 @@ class EasyOpsIcon extends NextElement implements EasyOpsIconProps {
     if (!this.isConnected || !this.shadowRoot) {
       return;
     }
-    const { category: _category, icon } = this;
-    const category = _category ?? "default";
-    const url = icon
-      ? `${
-          // istanbul ignore next
-          process.env.NODE_ENV === "test" ? "" : __webpack_public_path__
-        }chunks/easyops-icons/${category}/${icon}.svg`
-      : undefined;
-    const svg = await getIcon(url, {
-      currentColor: !category.startsWith("colored-"),
-    });
-    if (category !== (this.category ?? "default") || icon !== this.icon) {
+    const url = getImageUrl(this.imgSrc, this.noPublicRoot);
+
+    const svg = await getIcon(url, { currentColor: true });
+    if (url !== getImageUrl(this.imgSrc, this.noPublicRoot)) {
       // The icon has changed during `await getIcon(...)`
       return;
     }
@@ -87,6 +76,4 @@ class EasyOpsIcon extends NextElement implements EasyOpsIconProps {
   }
 }
 
-export const WrappedEasyOpsIcon = wrapLocalBrick<EasyOpsIcon, EasyOpsIconProps>(
-  EasyOpsIcon
-);
+export const WrappedSvgIcon = wrapLocalBrick<SvgIcon, SvgIconProps>(SvgIcon);

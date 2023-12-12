@@ -5,6 +5,7 @@ import { AntdIconProps, WrappedAntdIcon } from "../antd-icon/index.js";
 import { EasyOpsIconProps, WrappedEasyOpsIcon } from "../easyops-icon/index.js";
 import { FaIconProps, WrappedFaIcon } from "../fa-icon/index.js";
 import { EoImgIconProps, WrappedEoImgIcon } from "../img-icon/index.js";
+import { WrappedSvgIcon } from "../svg-icon/index.js";
 import type {
   DefineLinearGradientProps,
   GradientDirection,
@@ -13,22 +14,30 @@ import styleText from "./styles.shadow.css";
 
 const { defineElement, property } = createDecorators();
 
-export interface GeneralIconPropsOfAntd extends AntdIconProps {
+export interface GeneralIconPropsOfAntd
+  extends AntdIconProps,
+    GeneralIconBaseProps {
   lib: "antd";
-  spinning?: boolean;
 }
 
-export interface GeneralIconPropsOfEasyOps extends EasyOpsIconProps {
+export interface GeneralIconPropsOfEasyOps
+  extends EasyOpsIconProps,
+    GeneralIconBaseProps {
   lib: "easyops";
-  spinning?: boolean;
 }
 
-export interface GeneralIconPropsOfFa extends FaIconProps {
+export interface GeneralIconPropsOfFa
+  extends FaIconProps,
+    GeneralIconBaseProps {
   lib: "fa";
-  spinning?: boolean;
 }
 
-export interface ImgIconProps extends EoImgIconProps {}
+export interface ImgIconProps extends EoImgIconProps, GeneralIconBaseProps {}
+
+export interface GeneralIconBaseProps {
+  spinning?: boolean;
+  keepSvgOriginalColor?: boolean;
+}
 
 export type LibIconProps =
   | GeneralIconPropsOfAntd
@@ -36,10 +45,6 @@ export type LibIconProps =
   | GeneralIconPropsOfFa;
 
 export type GeneralIconProps = LibIconProps | ImgIconProps;
-
-export interface GeneralIconEvents {
-  "icon.click": CustomEvent<{ icon: string }>;
-}
 
 /**
  * 通用图标构件
@@ -109,9 +114,17 @@ class GeneralIcon
   })
   accessor noPublicRoot: boolean | undefined;
 
+  /** 如果是 svg 图片，默认将转换该图标颜色为自动跟随文本色，设置 `keepSvgOriginalColor: true` 可保留原始颜色 */
+  @property({
+    type: Boolean,
+  })
+  accessor keepSvgOriginalColor: boolean | undefined;
+
   render() {
-    if (this.imgSrc) {
-      return (
+    if (this.imgSrc && typeof this.imgSrc === "string") {
+      return !this.keepSvgOriginalColor && this.imgSrc.endsWith(".svg") ? (
+        <WrappedSvgIcon imgSrc={this.imgSrc} noPublicRoot={this.noPublicRoot} />
+      ) : (
         <WrappedEoImgIcon
           imgSrc={this.imgSrc}
           imgStyle={this.imgStyle}

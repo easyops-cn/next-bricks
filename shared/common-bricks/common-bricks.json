@@ -36,7 +36,8 @@
     "eo-easyops-icon",
     "eo-fa-icon",
     "eo-icon",
-    "eo-img-icon"
+    "eo-img-icon",
+    "eo-svg-icon"
   ],
   "containers": [
     "eo-drawer",

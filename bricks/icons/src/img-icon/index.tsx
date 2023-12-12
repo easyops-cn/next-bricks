@@ -1,7 +1,7 @@
 import React, { CSSProperties } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapLocalBrick } from "@next-core/react-element";
-import { getBasePath } from "@next-core/runtime";
+import { getImageUrl } from "../shared/getImageUrl";
 import styleText from "./styles.shadow.css";
 
 const { defineElement, property } = createDecorators();
@@ -47,22 +47,15 @@ class EoImgIcon extends ReactNextElement implements EoImgIconProps {
   }
 }
 
-export function EoImgIconComponent(props: EoImgIconProps) {
-  const { imgSrc, imgStyle, imgLoading, noPublicRoot } = props;
+export function EoImgIconComponent({
+  imgSrc,
+  imgStyle,
+  imgLoading,
+  noPublicRoot,
+}: EoImgIconProps) {
+  const url = getImageUrl(imgSrc, noPublicRoot);
 
-  return imgSrc ? (
-    <img
-      src={
-        /^(?:https?|data):|^\//.test(imgSrc) || imgSrc.startsWith("api/")
-          ? imgSrc
-          : `${
-              noPublicRoot ? getBasePath() : (window as any).PUBLIC_ROOT ?? ""
-            }${imgSrc}`
-      }
-      style={imgStyle}
-      loading={imgLoading}
-    />
-  ) : null;
+  return url ? <img src={url} style={imgStyle} loading={imgLoading} /> : null;
 }
 
 export const WrappedEoImgIcon = wrapLocalBrick<EoImgIcon, EoImgIconProps>(
