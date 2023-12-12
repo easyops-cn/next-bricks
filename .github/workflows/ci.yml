@@ -41,7 +41,7 @@ jobs:
         restore-keys: |
           node-cache-${{ runner.os }}-yarn-
 
-    - name: Cache nx cache
+    - name: Cache nx cache (push)
       uses: actions/cache@v3
       with:
         path: .cache
@@ -50,6 +50,7 @@ jobs:
           ${{ runner.os }}-nx-${{ hashFiles('yarn.lock', 'package.json') }}-
       if: github.event_name != 'pull_request'
 
+    # Use a more specific cache key for pull request
     - name: Cache nx cache (pull request)
       uses: actions/cache@v3
       with:
