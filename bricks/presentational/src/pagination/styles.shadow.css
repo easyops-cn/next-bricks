@@ -106,12 +106,12 @@
 }
 
 .pagination-page-item-active {
-  color: var(--color-brand-hover);
-  border-color: var(--color-brand-hover);
+  color: var(--color-brand);
+  border-color: var(--color-brand);
 }
 
 .pagination-page-item-active:not(.pagination-page-item-disabled):hover {
-  color: var(--color-brand-hover);
+  color: var(--color-brand);
 }
 .pagination-page-item-disabled {
   color: var(--text-color-disabled);
