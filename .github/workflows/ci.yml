@@ -48,6 +48,17 @@ jobs:
         key: ${{ runner.os }}-nx-${{ hashFiles('yarn.lock', 'package.json') }}-${{ hashFiles('**/package.json') }}
         restore-keys: |
           ${{ runner.os }}-nx-${{ hashFiles('yarn.lock', 'package.json') }}-
+      if: github.event_name != 'pull_request'
+
+    - name: Cache nx cache (pull request)
+      uses: actions/cache@v3
+      with:
+        path: .cache
+        key: ${{ runner.os }}-nx-${{ hashFiles('yarn.lock', 'package.json') }}-${{ hashFiles('**/package.json') }}-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-nx-${{ hashFiles('yarn.lock', 'package.json') }}-${{ hashFiles('**/package.json') }}-
+          ${{ runner.os }}-nx-${{ hashFiles('yarn.lock', 'package.json') }}-
+      if: github.event_name == 'pull_request'
 
     # Fix `yarn install --frozen-lockfile` not working in monorepo.
     # https://github.com/yarnpkg/yarn/issues/5840#issuecomment-468782288
