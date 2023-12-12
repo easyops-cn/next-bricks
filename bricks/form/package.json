@@ -54,7 +54,7 @@
     "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.18.0",
+    "@next-core/build-next-bricks": "^1.19.0",
     "@next-core/test-next": "^1.0.12"
   },
   "peerDependencies": {
