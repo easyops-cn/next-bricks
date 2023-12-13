@@ -4,35 +4,37 @@
 
 ### Basic
 
-```yaml preview
-brick: eo-statistics-card
-properties:
-  cardTitle: 安全评分
-  value: 93
-  icon:
-    lib: easyops
-    category: monitor
-    icon: infra-monitor
-    bgColor: "#E6F0FC"
-    color: "#3480EA"
-  style:
-    width: 300px
-children:
-  - brick: eo-tooltip
-    slot: titleSuffix
-    properties:
-      content: 安全评分是根据您的资产状态进行的评分
-      trigger: hover
-      placement: top-start
-    children:
-      - brick: eo-icon
-        properties:
-          lib: antd
-          icon: question-circle
-          theme: outlined
-          style:
-            font-size: 12px
-            color: var(--text-color-secondary)
+```yaml preview gap
+- brick: eo-statistics-card
+  properties:
+    cardTitle: 安全评分
+    value: 93
+    valueStyle:
+      color: var(--color-success)
+    icon:
+      lib: easyops
+      category: monitor
+      icon: infra-monitor
+      bgColor: "#E6F0FC"
+      color: "#3480EA"
+    style:
+      width: 300px
+  children:
+    - brick: eo-tooltip
+      slot: titleSuffix
+      properties:
+        content: 安全评分是根据您的资产状态进行的评分
+        trigger: hover
+        placement: top-start
+      children:
+        - brick: eo-icon
+          properties:
+            lib: antd
+            icon: question-circle
+            theme: outlined
+            style:
+              font-size: 12px
+              color: var(--text-color-secondary)
 ```
 
 ### Outline

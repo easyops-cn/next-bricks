@@ -18,6 +18,7 @@ export interface EoStatisticsCardProps {
   outline?: "border" | "background" | "none";
   background?: string;
   descriptionPosition?: "bottom" | "right";
+  valueStyle?: React.CSSProperties;
 }
 
 /**
@@ -85,6 +86,14 @@ class EoStatisticsCard extends ReactNextElement {
   @property()
   accessor descriptionPosition: "bottom" | "right" = "bottom";
 
+  /**
+   * 值样式
+   */
+  @property({
+    attribute: false,
+  })
+  accessor valueStyle: React.CSSProperties | undefined;
+
   render() {
     return (
       <EoStatisticsCardComponent
@@ -94,14 +103,22 @@ class EoStatisticsCard extends ReactNextElement {
         icon={this.icon}
         background={this.background}
         descriptionPosition={this.descriptionPosition}
+        valueStyle={this.valueStyle}
       />
     );
   }
 }
 
 export function EoStatisticsCardComponent(props: EoStatisticsCardProps) {
-  const { cardTitle, value, unit, icon, background, descriptionPosition } =
-    props;
+  const {
+    cardTitle,
+    value,
+    unit,
+    icon,
+    background,
+    descriptionPosition,
+    valueStyle,
+  } = props;
 
   const iconNode = useMemo(() => {
     if (!icon) return null;
@@ -123,7 +140,9 @@ export function EoStatisticsCardComponent(props: EoStatisticsCardProps) {
             <slot name="titleSuffix" />
           </div>
           <div className="value-container">
-            <span className="value">{value}</span>
+            <span className="value" title={value} style={valueStyle}>
+              {value}
+            </span>
             {unit && <span className="unit">{unit}</span>}
             {descriptionPosition === "right" && <slot name="description" />}
           </div>
