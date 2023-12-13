@@ -1,7 +1,7 @@
 import { wrapBrick } from "@next-core/react-element";
 
 export const ARROW_SIZE = 6;
-export const POPUP_DISTANCE = 4;
+export const POPUP_DISTANCE = 0;
 
 export const popupVisibleStyle: Record<string, any> = {
   opacity: 1,

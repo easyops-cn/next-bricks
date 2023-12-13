@@ -1,7 +1,7 @@
 import { describe, test, expect } from "@jest/globals";
 import "./";
 import { Select } from "./index.js";
-import { render, act, createEvent, fireEvent } from "@testing-library/react";
+import { act, fireEvent } from "@testing-library/react";
 
 jest.mock("@next-core/theme", () => ({}));
 
@@ -14,6 +14,8 @@ customElements.define(
 );
 
 describe("form.general-select", () => {
+  const consoleError = jest.spyOn(console, "error").mockReturnValue();
+
   test("basic usage", async () => {
     const element = document.createElement("form.general-select") as Select;
     element.options = [
@@ -138,6 +140,18 @@ describe("form.general-select", () => {
         },
       })
     );
+
+    await act(async () => {
+      await (element.value = null);
+    });
+
+    expect(consoleError).toBeCalledTimes(0);
+
+    expect(
+      element.shadowRoot?.querySelectorAll(
+        ".select-item .select-option-selected"
+      ).length
+    ).toBe(0);
 
     act(() => {
       document.body.removeChild(element);
