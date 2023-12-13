@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.18.3...@next-bricks/presentational@0.19.0) (2023-12-13)
+
+
+### Features
+
+* support valueStyle & ellipsis ([849c88a](https://github.com/easyops-cn/next-bricks/commit/849c88a723f6d59f9a7282c4647471e2220b3261))
+
+
+
+
+
 ## [0.18.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.18.2...@next-bricks/presentational@0.18.3) (2023-12-12)
 
 **Note:** Version bump only for package @next-bricks/presentational
