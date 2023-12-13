@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.28.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.27.1...@next-shared/common-bricks@0.28.0) (2023-12-13)
+
+
+### Features
+
+* support svg image as icon by default ([d4d3176](https://github.com/easyops-cn/next-bricks/commit/d4d317632710c5bb386eba8f0528475a5f73e926))
+
+
+
+
+
 ## [0.27.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.27.0...@next-shared/common-bricks@0.27.1) (2023-12-12)
 
 **Note:** Version bump only for package @next-shared/common-bricks
