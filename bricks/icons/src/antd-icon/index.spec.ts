@@ -226,4 +226,11 @@ describe("icons.antd-icon", () => {
     `);
     document.body.removeChild(element);
   });
+
+  test("not connected", async () => {
+    const element = document.createElement("eo-antd-icon") as AntdIcon;
+    element.icon = "branches";
+    (element as any)._render();
+    expect(fetch).not.toBeCalled();
+  });
 });

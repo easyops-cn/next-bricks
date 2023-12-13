@@ -109,22 +109,30 @@ Your favorite icons, including [Ant Design Icons](https://ant.design/components/
 ### Image
 
 ```yaml preview
-- brick: div
-  properties:
-    style:
-      display: flex
-      gap: 1em
-      fontSize: 32px
-  children:
-    - brick: eo-icon
-      properties:
-        imgSrc: https://img.icons8.com/cotton/64/like--v1.png
-    - brick: eo-icon
-      properties:
-        imgSrc: https://img.icons8.com/color/48/happy--v1.png
-    - brick: eo-icon
-      properties:
-        imgSrc: https://img.icons8.com/flat-round/64/cottage.png
+brick: div
+properties:
+  style:
+    display: flex
+    gap: 1em
+    fontSize: 32px
+    color: var(--palette-green-6)
+children:
+  - brick: eo-icon
+    properties:
+      imgSrc: https://img.icons8.com/cotton/64/like--v1.png
+  - brick: eo-icon
+    properties:
+      imgSrc: https://img.icons8.com/color/48/happy--v1.png
+  - brick: eo-icon
+    properties:
+      imgSrc: https://img.icons8.com/flat-round/64/cottage.png
+  - brick: eo-icon
+    properties:
+      imgSrc: "https://cdn.jsdelivr.net/npm/lucide-static@0.16.29/icons/pie-chart.svg"
+  - brick: eo-icon
+    properties:
+      imgSrc: "https://cdn.jsdelivr.net/npm/lucide-static@0.16.29/icons/pie-chart.svg"
+      keepSvgOriginalColor: true
 ```
 
 ### Colors
