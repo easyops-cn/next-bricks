@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.27.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.27.2...@next-bricks/form@0.27.3) (2023-12-13)
+
+
+### Bug Fixes
+
+* fix popover hide and select hover ([1a2ef0e](https://github.com/easyops-cn/next-bricks/commit/1a2ef0eb32795bd3354d1bc2cc9cb00d3d003e53))
+* hover and show close btn ([c6b687e](https://github.com/easyops-cn/next-bricks/commit/c6b687e445bb32971df8fe6151de12264889b8ad))
+
+
+
+
+
 ## [0.27.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.27.1...@next-bricks/form@0.27.2) (2023-12-12)
 
 **Note:** Version bump only for package @next-bricks/form
