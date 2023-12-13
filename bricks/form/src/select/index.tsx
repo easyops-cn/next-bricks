@@ -883,8 +883,9 @@ export function SelectComponent(props: SelectProps) {
             </div>
           </div>
           <span className="select-arrow">
-            {!isEmptyValue && isFocused && clearable ? (
+            {!isEmptyValue && clearable ? (
               <WrappedIcon
+                className="close-btn"
                 lib="antd"
                 icon="close-circle"
                 theme="filled"

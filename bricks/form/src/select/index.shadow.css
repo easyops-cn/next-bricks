@@ -25,6 +25,10 @@
     border-color: var(--antd-input-hover-border-color);
     z-index: 1;
   }
+
+  .close-btn {
+    display: block;
+  }
 }
 
 .select-multiple .select-selector {
@@ -116,6 +120,10 @@
 
 .select-selector.is-error {
   border-color: var(--antd-error-color);
+}
+
+.close-btn {
+  display: none;
 }
 
 /* arrow */
