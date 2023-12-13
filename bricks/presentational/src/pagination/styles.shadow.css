@@ -107,7 +107,7 @@
 
 .pagination-page-item-active {
   color: var(--color-brand);
-  border-color: var(--color-brand);
+  border-color: var(--color-brand-hover);
 }
 
 .pagination-page-item-active:not(.pagination-page-item-disabled):hover {

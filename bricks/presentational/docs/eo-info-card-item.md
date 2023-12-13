@@ -25,7 +25,6 @@
             textContent: IT资源管理
             tagStyle:
               borderRadius: 3px
-              height: 32px
               lineHeight: 32px
       - useBrick:
           brick: eo-tag
@@ -33,7 +32,6 @@
             textContent: 存储设备
             tagStyle:
               borderRadius: 3px
-              height: 32px
               lineHeight: 32px
       - useBrick:
           brick: eo-tag
@@ -41,7 +39,6 @@
             textContent: 资源套餐
             tagStyle:
               borderRadius: 3px
-              height: 32px
               lineHeight: 32px
   slots:
     action:
