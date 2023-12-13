@@ -12,8 +12,8 @@ export const eoMainViewStory = {
   },
 
   description: {
-    en: "Support slots: `pageTitle`, `toolbar`, `banner`, `bannerTitleBar`, `bannerToolbar` (Also be used directly through the snippet of easy-view)",
-    zh: "提供了 pageTitle、toolbar、banner、bannerTitleBar、bannerToolbar 插槽(也可通过 easy-view 的 snippet 直接使用)",
+    en: "Support slots: `breadcrumb`, `pageTitle`, `toolbar`, `banner` (Also be used directly through the snippet of easy-view)",
+    zh: "提供了 breadcrumb, pageTitle、toolbar、banner 插槽(也可通过 easy-view 的 snippet 直接使用)",
   },
   icon: {
     imgSrc: eoMainViewSvg,
@@ -110,58 +110,25 @@ export const eoMainViewStory = {
               type: "bricks",
               bricks: [
                 {
-                  brick: "div",
+                  brick: "eo-flex-layout",
                   properties: {
-                    textContent: "hello",
-                    style: {
-                      border: "3px solid orange",
-                      height: "60px",
-                      background: "#fff",
-                    },
+                    gap: "8px",
                   },
-                },
-                {
-                  brick: "div",
-                  properties: {
-                    textContent: "world",
-                    style: {
-                      border: "3px solid orange",
-                      height: "100px",
-                      color: "#000",
-                      background: "#fff",
-                    },
-                  },
-                },
-                {
-                  brick: "eo-divider",
-                  properties: {
-                    dividerStyle: {
-                      margin: "12px 0",
-                    },
-                  },
-                },
-                {
-                  brick: "eo-tab-list",
-                  properties: {
-                    showCard: false,
-                    list: [
-                      {
-                        text: "Tab 1",
-                        key: "tab1",
+                  children: [
+                    {
+                      brick: "eo-button",
+                      properties: {
+                        textContent: "开始使用",
+                        type: "primary",
                       },
-                      {
-                        text: "Tab 2",
-                        key: "tab2",
-                      },
-                      {
-                        text: "Tab 3",
-                        key: "tab3",
-                      },
-                    ],
-                    style: {
-                      marginBottom: "calc(var(--page-card-gap) * -1 - 1px)",
                     },
-                  },
+                    {
+                      brick: "eo-button",
+                      properties: {
+                        textContent: "帮助文档",
+                      },
+                    },
+                  ],
                 },
               ],
             },

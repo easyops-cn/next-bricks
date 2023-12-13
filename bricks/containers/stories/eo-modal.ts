@@ -73,24 +73,6 @@ export const eoModalStory = {
                     textContent: "modal content",
                   },
                 },
-                {
-                  brick: "p",
-                  properties: {
-                    textContent: "some content...",
-                  },
-                },
-                {
-                  brick: "p",
-                  properties: {
-                    textContent: "some content...",
-                  },
-                },
-                {
-                  brick: "p",
-                  properties: {
-                    textContent: "some content...",
-                  },
-                },
               ],
               type: "bricks",
             },
