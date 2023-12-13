@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="105px" height="55px" viewBox="0 0 105 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>basic-bricks-widgets.general-button-primary</title>
+    <defs>
+        <linearGradient x1="1.28821746%" y1="61.3378685%" x2="100%" y2="38.6621315%" id="linearGradient-1">
+            <stop stop-color="#1A7AFF" offset="0%"></stop>
+            <stop stop-color="#6BB3FF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="nora" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="-构件概览图七" transform="translate(-48.000000, -796.000000)">
+            <g id="basic-bricks-widgets.general-button-primary" transform="translate(48.000000, 796.000000)">
+                <rect id="矩形备份-46" x="0" y="0" width="105" height="55" rx="4"></rect>
+                <g id="1.通用/1.Buttons按钮/带图标的按钮/亮色/次按钮-大" transform="translate(10.000000, 8.000000)">
+                    <rect id="outline" fill="url(#linearGradient-1)" x="0" y="0" width="84" height="40" rx="6"></rect>
+                    <g id="编组" transform="translate(14.000000, 7.000000)">
+                        <text id="新建" font-family="PingFangSC-Regular, PingFang SC" font-size="16" font-weight="normal" line-spacing="24" fill="#FFFFFF">
+                            <tspan x="22" y="17">新建</tspan>
+                        </text>
+                        <g id="通用图标/plus-circle" transform="translate(0.000000, 5.000000)">
+                            <rect id="矩形" fill="#000000" fill-rule="nonzero" opacity="0" x="0" y="0" width="16" height="16"></rect>
+                            <path d="M10.875,7.5 L8.5,7.5 L8.5,5.125 C8.5,5.05625 8.44375,5 8.375,5 L7.625,5 C7.55625,5 7.5,5.05625 7.5,5.125 L7.5,7.5 L5.125,7.5 C5.05625,7.5 5,7.55625 5,7.625 L5,8.375 C5,8.44375 5.05625,8.5 5.125,8.5 L7.5,8.5 L7.5,10.875 C7.5,10.94375 7.55625,11 7.625,11 L8.375,11 C8.44375,11 8.5,10.94375 8.5,10.875 L8.5,8.5 L10.875,8.5 C10.94375,8.5 11,8.44375 11,8.375 L11,7.625 C11,7.55625 10.94375,7.5 10.875,7.5 Z" id="路径" fill="#FFFFFF"></path>
+                            <path d="M8,1 C4.134375,1 1,4.134375 1,8 C1,11.865625 4.134375,15 8,15 C11.865625,15 15,11.865625 15,8 C15,4.134375 11.865625,1 8,1 Z M8,13.8125 C4.790625,13.8125 2.1875,11.209375 2.1875,8 C2.1875,4.790625 4.790625,2.1875 8,2.1875 C11.209375,2.1875 13.8125,4.790625 13.8125,8 C13.8125,11.209375 11.209375,13.8125 8,13.8125 Z" id="形状" fill="#FFFFFF"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

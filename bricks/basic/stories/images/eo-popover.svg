@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="105px" height="59px" viewBox="0 0 105 59" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>basic-bricks.popover-container</title>
+    <defs>
+        <path d="M85,8 C85.5522847,8 86,8.44771525 86,9 L86,42 C86,42.5522847 85.5522847,43 85,43 L34.376,43 L31.0777366,46.8445269 L27.778,43 L19,43 C18.4477153,43 18,42.5522847 18,42 L18,9 C18,8.44771525 18.4477153,8 19,8 L85,8 Z" id="path-1"></path>
+        <filter x="-20.6%" y="-25.7%" width="141.2%" height="172.1%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.6   0 0 0 0 0.6   0 0 0 0 0.6  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="lydia" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="构件概览图二" transform="translate(-911.000000, -539.000000)">
+            <g id="编组-35" transform="translate(911.000000, 539.000000)">
+                <rect id="矩形备份-124" x="0" y="0" width="105" height="55" rx="4"></rect>
+                <g id="形状结合">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                </g>
+                <rect id="矩形备份-74" fill="#D6DBEC" x="22" y="14" width="20" height="4" rx="1"></rect>
+                <rect id="矩形备份-75" fill="#F4F5F9" x="22" y="21" width="57" height="4" rx="1"></rect>
+                <rect id="矩形备份-43" fill="#1A7AFF" transform="translate(74.000000, 36.500000) rotate(-180.000000) translate(-74.000000, -36.500000) " x="68" y="34" width="12" height="5" rx="1"></rect>
+                <rect id="矩形备份-43" stroke="#D6DBEC" transform="translate(60.000000, 36.500000) rotate(-180.000000) translate(-60.000000, -36.500000) " x="54" y="34" width="12" height="5" rx="1"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

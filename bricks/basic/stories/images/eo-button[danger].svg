@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="105px" height="55px" viewBox="0 0 105 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>basic-bricks-widgets.general-button-darnger</title>
+    <defs>
+        <linearGradient x1="1.11022302e-14%" y1="69.53125%" x2="100%" y2="30.46875%" id="linearGradient-1">
+            <stop stop-color="#F0493C" offset="0%"></stop>
+            <stop stop-color="#FF9A78" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="nora" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="-构件概览图七" transform="translate(-48.000000, -1094.000000)">
+            <g id="basic-bricks-widgets.general-button-darnger" transform="translate(48.000000, 1094.000000)">
+                <rect id="矩形备份-46" x="0" y="0" width="105" height="55" rx="4"></rect>
+                <g id="1.通用/1.Buttons按钮/危险按钮/亮色/主按钮大" transform="translate(20.500000, 9.000000)">
+                    <path d="M6,0 L58,0 C61.3137085,-6.08718376e-16 64,2.6862915 64,6 L64,34 C64,37.3137085 61.3137085,40 58,40 L6,40 C2.6862915,40 4.05812251e-16,37.3137085 0,34 L0,6 C-4.05812251e-16,2.6862915 2.6862915,1.4968968e-15 6,0 Z" id="Rectangle-13-Copy-15备份" fill="url(#linearGradient-1)"></path>
+                    <text id="危险按钮" font-family="PingFangSC-Regular, PingFang SC" font-size="16" font-weight="normal" fill="#FFFFFF">
+                        <tspan x="16" y="26">危险</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

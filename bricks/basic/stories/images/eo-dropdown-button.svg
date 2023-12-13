@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="105px" height="62px" viewBox="0 0 105 62" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>presentational-bricks.dropdown-button</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="33" height="22" rx="1"></rect>
+        <filter x="-42.4%" y="-45.5%" width="184.8%" height="227.3%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.6   0 0 0 0 0.6   0 0 0 0 0.6  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <path d="M56,2 L75,2 C75.5522847,2 76,2.44771525 76,3 L76,17 C76,17.5522847 75.5522847,18 75,18 L56,18 L56,18 L56,2 Z" id="path-3"></path>
+    </defs>
+    <g id="nora" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="-构件概览图四" transform="translate(-670.000000, -232.000000)">
+            <g id="presentational-bricks.dropdown-button" transform="translate(670.000000, 232.000000)">
+                <rect id="矩形备份-46" x="0" y="0" width="105" height="55" rx="4"></rect>
+                <g id="编组-17" transform="translate(56.000000, 28.000000)">
+                    <g id="矩形备份-104">
+                        <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                        <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    </g>
+                    <rect id="矩形" fill="#1A7AFF" x="2" y="2" width="29" height="8" rx="1"></rect>
+                    <rect id="矩形备份-4" fill="#D6DBEC" x="2" y="12" width="29" height="8" rx="1"></rect>
+                </g>
+                <g id="编组-12备份" transform="translate(12.000000, 6.000000)">
+                    <g id="编组-13" transform="translate(4.000000, 0.000000)">
+                        <text id="XXXX" font-family="PingFang-SC-Medium, PingFang SC" font-size="14" font-weight="400" fill="#D6DBEC">
+                            <tspan x="0" y="15">XXXX</tspan>
+                        </text>
+                        <polyline id="路径-2" stroke="#778DC3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(62.000000, 10.105263) rotate(-180.000000) translate(-62.000000, -10.105263) " points="57.5 7.5 62.2368421 12.7105263 66.5 7.5"></polyline>
+                    </g>
+                    <rect id="矩形备份-60" stroke="#F4F5F9" x="-0.5" y="1.5" width="77" height="17" rx="1"></rect>
+                    <g id="矩形备份-60">
+                        <use stroke="#1A7AFF" stroke-width="2" xlink:href="#path-3"></use>
+                        <path stroke="#C6DEFF" stroke-width="1" d="M75,1.5 C75.4142136,1.5 75.7892136,1.66789322 76.0606602,1.93933983 C76.3321068,2.21078644 76.5,2.58578644 76.5,3 L76.5,3 L76.5,17 C76.5,17.4142136 76.3321068,17.7892136 76.0606602,18.0606602 C75.7892136,18.3321068 75.4142136,18.5 75,18.5 L75,18.5 L55.5,18.5 L55.5,1.5 Z"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
