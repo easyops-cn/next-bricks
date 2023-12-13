@@ -21,6 +21,7 @@
 ```yaml preview
 - brick: eo-descriptions
   properties:
+    descriptionTitle: UserInfo
     column: 2
     list:
       - label: 姓名
@@ -49,6 +50,7 @@
 - brick: eo-divider
 - brick: eo-descriptions
   properties:
+    descriptionTitle: 用户信息
     column: 4
     list:
       - label: 姓名

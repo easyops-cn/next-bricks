@@ -173,9 +173,10 @@ export function DescriptionsComponent(props: DescriptionsProps) {
       headerStyle={{
         border: "none",
         padding: "var(--description-header-padding)",
-        color: "var(--antd-description-title-color)",
+        color: "var(--color-header-text)",
         fontSize: "14px",
         lineHeight: "20px",
+        fontWeight: 500,
       }}
       background={showCard}
     >
