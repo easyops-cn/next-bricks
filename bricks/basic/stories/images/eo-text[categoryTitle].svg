@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="105px" height="55px" viewBox="0 0 105 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>分类标题</title>
+    <g id="nora" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="-构件概览图十" transform="translate(-374.000000, -337.000000)">
+            <g id="分类标题" transform="translate(374.000000, 337.000000)">
+                <rect id="矩形备份-22" x="0" y="0" width="105" height="55" rx="4"></rect>
+                <text fill-rule="nonzero" font-family="PingFang-SC-Medium, PingFang SC" font-size="16" font-weight="400" letter-spacing="2" fill="#BFBFBF">
+                    <tspan x="17" y="33">分类标题</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

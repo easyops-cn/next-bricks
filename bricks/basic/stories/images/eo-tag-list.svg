@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="105px" height="55px" viewBox="0 0 105 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>presentational-bricks.brick-tag</title>
+    <g id="nora" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="构件概览图一" transform="translate(-1787.000000, -105.000000)">
+            <g id="presentational-bricks.brick-tag" transform="translate(1787.000000, 105.000000)">
+                <rect id="矩形备份-52" x="0" y="0" width="105" height="55" rx="4"></rect>
+                <g id="编组-4" transform="translate(11.000000, 10.000000)">
+                    <g id="编组-5" transform="translate(0.000000, 21.000000)">
+                        <rect id="矩形备份-62" stroke="#D6DBEC" fill="#F4F5F9" x="0" y="0" width="43" height="15" rx="1"></rect>
+                        <g id="编组-13" transform="translate(34.242641, 8.242641) rotate(-315.000000) translate(-34.242641, -8.242641) translate(31.242641, 5.242641)" fill="#D6DBEC">
+                            <rect id="矩形" x="2.5" y="0" width="1" height="6"></rect>
+                            <rect id="矩形" transform="translate(3.000000, 3.000000) rotate(-90.000000) translate(-3.000000, -3.000000) " x="2.5" y="0" width="1" height="6"></rect>
+                        </g>
+                        <text id="Tag2" font-family="PingFangSC-Regular, PingFang SC" font-size="10" font-weight="normal" fill="#262626">
+                            <tspan x="5" y="11">Tag2</tspan>
+                        </text>
+                    </g>
+                    <g id="编组-6">
+                        <rect id="矩形备份-50" stroke="#D6DBEC" fill="#F4F5F9" x="0" y="0" width="32" height="16" rx="1"></rect>
+                        <text id="Tag1" font-family="PingFangSC-Regular, PingFang SC" font-size="10" font-weight="normal" fill="#262626">
+                            <tspan x="5" y="12">Tag1</tspan>
+                        </text>
+                    </g>
+                    <g id="编组-6备份" transform="translate(37.000000, 0.000000)">
+                        <rect id="矩形备份-50" stroke="#D6DBEC" fill="#F4F5F9" x="0" y="0" width="30" height="16" rx="1"></rect>
+                        <text id="Link" font-family="PingFangSC-Regular, PingFang SC" font-size="10" font-weight="normal" fill="#262626">
+                            <tspan x="5" y="12">Link</tspan>
+                        </text>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
