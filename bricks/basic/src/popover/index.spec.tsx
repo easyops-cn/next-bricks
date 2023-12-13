@@ -1,4 +1,3 @@
-import React from "react";
 import { describe, test, expect } from "@jest/globals";
 import { act } from "react-dom/test-utils";
 import "./index.jsx";
@@ -83,7 +82,7 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
 <sl-popup
-  distance="4"
+  distance="0"
   exportparts="popup"
   placement="bottom"
   shift=""
@@ -93,7 +92,7 @@ describe("basic.general-popover", () => {
   <slot
     name="anchor"
     slot="anchor"
-    style="padding: 4px; margin: -4px; display: inline-block;"
+    style="padding: 0px; margin: 0px; display: inline-block;"
   />
   <slot
     hidden=""
@@ -115,7 +114,7 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
     <sl-popup
-      distance="4"
+      distance="0"
       exportparts="popup"
       placement="bottom"
       shift=""
@@ -125,7 +124,7 @@ describe("basic.general-popover", () => {
       <slot
         name="anchor"
         slot="anchor"
-        style="padding: 4px; margin: -4px; display: inline-block;"
+        style="padding: 0px; margin: 0px; display: inline-block;"
       />
       <slot />
     </sl-popup>
@@ -145,7 +144,7 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
     <sl-popup
-      distance="4"
+      distance="0"
       exportparts="popup"
       placement="bottom"
       shift=""
@@ -155,7 +154,7 @@ describe("basic.general-popover", () => {
       <slot
         name="anchor"
         slot="anchor"
-        style="padding: 4px; margin: -4px; display: inline-block;"
+        style="padding: 0px; margin: 0px; display: inline-block;"
       />
       <slot
         hidden=""
@@ -172,6 +171,8 @@ describe("basic.general-popover", () => {
 
   test("trigger is hover should work", async () => {
     const element = document.createElement("basic.general-popover") as Popover;
+    const divElement = document.createElement("div");
+    divElement.setAttribute("textContent", "Hello");
     const mockListener = jest.fn();
     element.addEventListener("visible.change", mockListener);
 
@@ -190,6 +191,7 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot).toBeFalsy();
     act(() => {
       document.body.appendChild(element);
+      document.body.appendChild(divElement);
     });
 
     expect(element.shadowRoot).toBeTruthy();
@@ -198,7 +200,7 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
 <sl-popup
-  distance="4"
+  distance="0"
   exportparts="popup"
   placement="bottom"
   shift=""
@@ -209,7 +211,7 @@ describe("basic.general-popover", () => {
   <slot
     name="anchor"
     slot="anchor"
-    style="padding: 4px; margin: -4px; display: inline-block;"
+    style="padding: 0px; margin: 0px; display: inline-block;"
   />
   <slot
     hidden=""
@@ -226,7 +228,7 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
 <sl-popup
-  distance="4"
+  distance="0"
   exportparts="popup"
   placement="bottom"
   shift=""
@@ -237,7 +239,7 @@ describe("basic.general-popover", () => {
   <slot
     name="anchor"
     slot="anchor"
-    style="padding: 4px; margin: -4px; display: inline-block;"
+    style="padding: 0px; margin: 0px; display: inline-block;"
   />
   <slot
     hidden=""
@@ -246,7 +248,7 @@ describe("basic.general-popover", () => {
 `);
 
     await act(async () => {
-      fireEvent.mouseOver(element.querySelector("button") as HTMLElement);
+      await fireEvent.mouseMove(element.querySelector("button") as HTMLElement);
     });
     jest.runAllTimers();
 
@@ -259,7 +261,7 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
 <sl-popup
-  distance="4"
+  distance="0"
   exportparts="popup"
   placement="bottom"
   shift=""
@@ -270,14 +272,14 @@ describe("basic.general-popover", () => {
   <slot
     name="anchor"
     slot="anchor"
-    style="padding: 4px; margin: -4px; display: inline-block;"
+    style="padding: 0px; margin: 0px; display: inline-block;"
   />
   <slot />
 </sl-popup>
 `);
 
     await act(async () => {
-      fireEvent.mouseLeave(element);
+      fireEvent.mouseMove(divElement);
     });
     jest.runAllTimers();
 
@@ -290,7 +292,7 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
 <sl-popup
-  distance="4"
+  distance="0"
   exportparts="popup"
   placement="bottom"
   shift=""
@@ -301,7 +303,7 @@ describe("basic.general-popover", () => {
   <slot
     name="anchor"
     slot="anchor"
-    style="padding: 4px; margin: -4px; display: inline-block;"
+    style="padding: 0px; margin: 0px; display: inline-block;"
   />
   <slot
     hidden=""

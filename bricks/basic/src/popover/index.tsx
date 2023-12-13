@@ -305,6 +305,12 @@ function PopoverComponent(props: PopoverComponentProps) {
 
   const handlePopoverClose = useCallback(() => setVisible(false), []);
 
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    const path = e.composedPath();
+    const isVisible = popoverRef.current && path.includes(popoverRef.current);
+    setVisible(Boolean(isVisible));
+  }, []);
+
   const handleNotTrigger = (e: MouseEvent) => {
     e.stopPropagation();
   };
@@ -327,15 +333,13 @@ function PopoverComponent(props: PopoverComponentProps) {
         document.removeEventListener("click", handleAutoDropdownClose);
       };
     } else if (trigger === "hover") {
-      triggerSlot?.addEventListener("mouseover", handlePopoverOpen);
-      curElement?.addEventListener("mouseleave", handlePopoverClose);
+      document.addEventListener("mousemove", handleMouseMove);
       defaultSlot?.addEventListener("click", handleNotTrigger);
       triggerSlot?.addEventListener("click", handleNotTrigger);
       document?.addEventListener("click", handlePopoverClose);
 
       return () => {
-        triggerSlot?.removeEventListener("mouseover", handlePopoverOpen);
-        curElement?.removeEventListener("mouseleave", handlePopoverClose);
+        document.removeEventListener("mousemove", handleMouseMove);
         defaultSlot?.removeEventListener("click", handleNotTrigger);
         triggerSlot?.removeEventListener("click", handleNotTrigger);
         document?.removeEventListener("click", handlePopoverClose);
@@ -343,6 +347,7 @@ function PopoverComponent(props: PopoverComponentProps) {
     }
   }, [
     handleAutoDropdownClose,
+    handleMouseMove,
     handlePopoverClose,
     handlePopoverOpen,
     handleTriggerClick,

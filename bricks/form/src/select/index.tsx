@@ -330,6 +330,7 @@ class Select extends FormItemElementBase {
 
 export function SelectComponent(props: SelectProps) {
   const {
+    curElement,
     name,
     disabled,
     mode,
@@ -405,7 +406,7 @@ export function SelectComponent(props: SelectProps) {
           ? (value as string[]).filter((item) => item !== option.value)
           : (((value as any[]) ?? []).concat(option.value) as string[]);
       } else {
-        newValue = option.value === value ? "" : option.value;
+        newValue = option.value;
       }
       const getSelectOptions = () => {
         const hadSelected = selectedOptions.find(
@@ -415,7 +416,7 @@ export function SelectComponent(props: SelectProps) {
           ? selectedOptions.filter((item) => item.value !== option.value)
           : selectedOptions.concat(option);
       };
-      const newOptions = getSelectOptions();
+      const newOptions = multiple ? getSelectOptions() : [option];
       setSelectedOptions(newOptions);
       setValue(newValue);
       onChange?.(newValue, newOptions);
@@ -648,7 +649,8 @@ export function SelectComponent(props: SelectProps) {
   useEffect(() => {
     const handleDocumentClick = (e: MouseEvent) => {
       e.stopPropagation();
-      if (selectRef.current?.contains(e.target as HTMLElement)) return;
+      const path = e.composedPath();
+      if (curElement && path.includes(curElement)) return;
       setIsFocused(false);
       setIsDropHidden(true);
       setInputValue("");
@@ -660,7 +662,7 @@ export function SelectComponent(props: SelectProps) {
       document.removeEventListener("keydown", handleKeydown);
       document.removeEventListener("click", handleDocumentClick);
     };
-  }, [handleKeydown]);
+  }, [curElement, handleKeydown]);
 
   const renderSelector = useMemo(() => {
     let tagList: GeneralComplexOption[] = selectedOptions;
@@ -746,8 +748,8 @@ export function SelectComponent(props: SelectProps) {
             ? renderMultipleLabel(tagList)
             : renderLabel(selectedOptions[0])
           : isFocused || inputValue
-          ? ""
-          : placeholder}
+            ? ""
+            : placeholder}
       </div>
     );
   }, [
@@ -774,7 +776,7 @@ export function SelectComponent(props: SelectProps) {
           "select-option-selected":
             typeof value !== "object"
               ? value === item?.value
-              : (value as any[]).includes(item.value),
+              : (value as any[])?.includes(item.value),
         })}
         onClick={() => !item.disabled && handleChange(item)}
         onMouseOver={() => setFocusOptionItem(item)}
@@ -850,9 +852,6 @@ export function SelectComponent(props: SelectProps) {
         })}
         style={inputStyle}
         ref={selectRef}
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
       >
         <div
           className={classNames("select-selector", {

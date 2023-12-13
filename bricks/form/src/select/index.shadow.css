@@ -64,6 +64,10 @@
   box-shadow: 0 0 0 2px rgb(0 113 235 / 20%);
 }
 
+.select-single-item {
+  line-height: 1;
+}
+
 .selector-focused .selected-single-item {
   color: var(--antd-input-placeholder-color);
 }
