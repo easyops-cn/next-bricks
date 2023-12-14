@@ -48,6 +48,9 @@
                   color: green
 
 - brick: eo-divider
+  properties:
+    dividerStyle:
+      margin: 8px 0 4px 0
 - brick: eo-descriptions
   properties:
     descriptionTitle: 用户信息
@@ -107,6 +110,9 @@
                   key: 2
                   color: green
 - brick: eo-divider
+  properties:
+    dividerStyle:
+      margin: 8px 0 4px 0
 - brick: eo-descriptions
   properties:
     layout: vertical
