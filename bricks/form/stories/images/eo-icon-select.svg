@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="105px" height="55px" viewBox="0 0 105 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>forms.icon-select</title>
+    <g id="nora" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="-构件概览图五" transform="translate(-1623.000000, -103.000000)">
+            <g id="forms.icon-select" transform="translate(1623.000000, 103.000000)">
+                <rect id="矩形备份-46" x="0" y="0" width="105" height="55" rx="4"></rect>
+                <circle id="椭圆形" fill="#F7BF02" cx="52.5" cy="9.5" r="5.5"></circle>
+                <circle id="椭圆形" fill-opacity="0.5" fill="#FFFFFF" cx="52.5" cy="9.5" r="3.5"></circle>
+                <g id="编组-41" transform="translate(7.000000, 18.000000)">
+                    <rect id="矩形备份-62" fill="#D6DBEC" x="0" y="0" width="13" height="4" rx="1"></rect>
+                    <rect id="矩形备份-49" fill="#1A7AFF" x="17" y="0" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-124" fill="#21D4F3" x="24" y="0" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-125" fill="#F7BF02" x="31" y="0" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-126" fill="#F24C25" x="38" y="0" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-127" fill="#855800" x="45" y="0" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-128" fill="#52C41A" x="52" y="0" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-129" fill="#6641F9" x="59" y="0" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-130" fill="#778DC3" x="66" y="0" width="4" height="4" rx="1"></rect>
+                </g>
+                <rect id="矩形备份-123" fill="#D6DBEC" x="7" y="26" width="13" height="4" rx="1"></rect>
+                <rect id="矩形备份-131" fill="#F4F5F9" x="24" y="26" width="69" height="24" rx="1"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

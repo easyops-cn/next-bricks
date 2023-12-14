@@ -524,7 +524,7 @@ export function SelectComponent(props: SelectProps) {
       )
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.value]);
+  }, [props.value, options]);
 
   useEffect(() => {
     optionsChange?.(computedOptions, name as string);

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="105px" height="55px" viewBox="0 0 105 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>forms.general-date-picker</title>
+    <g id="nora" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="-构件概览图三" transform="translate(-537.000000, -103.000000)">
+            <g id="forms.general-date-picker" transform="translate(537.000000, 103.000000)">
+                <rect id="矩形备份-46" x="0" y="0" width="105" height="55" rx="4"></rect>
+                <g id="编组-13" transform="translate(10.000000, 4.000000)">
+                    <rect id="矩形备份-65" fill="#F4F5F9" x="0" y="0" width="16" height="6" rx="1"></rect>
+                    <rect id="矩形备份-63" fill="#F4F5F9" x="20" y="0" width="65" height="6" rx="1"></rect>
+                    <rect id="矩形备份-104" fill="#D6DBEC" x="23" y="1" width="29" height="4" rx="1"></rect>
+                    <rect id="矩形备份-75" stroke="#F4F5F9" x="20.5" y="8.5" width="64" height="38" rx="1"></rect>
+                    <line x1="21" y1="18" x2="84" y2="18" id="路径-5" stroke="#F4F5F9"></line>
+                    <text id="X年-X月" fill="#778DC3" fill-rule="nonzero" font-family="PingFang-SC-Medium, PingFang SC" font-size="6" font-weight="400">
+                        <tspan x="42" y="15">X年 X月</tspan>
+                    </text>
+                    <polyline id="路径-6" stroke="#D6DBEC" stroke-linecap="round" stroke-linejoin="round" points="26.5 11 24 13.5 26.5 16"></polyline>
+                    <polyline id="路径-6备份" stroke="#D6DBEC" stroke-linecap="round" stroke-linejoin="round" transform="translate(80.250000, 13.500000) scale(-1, 1) translate(-80.250000, -13.500000) " points="81.5 11 79 13.5 81.5 16"></polyline>
+                    <rect id="矩形备份-76" fill="#D6DBEC" x="26" y="21" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-83" fill="#F4F5F9" x="26" y="27" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-90" fill="#F4F5F9" x="26" y="33" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-97" fill="#F4F5F9" x="26" y="39" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-77" fill="#D6DBEC" x="34" y="21" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-84" fill="#F4F5F9" x="34" y="27" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-91" fill="#F4F5F9" x="34" y="33" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-98" fill="#F7BF02" x="34" y="39" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-78" fill="#D6DBEC" x="42" y="21" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-85" fill="#F4F5F9" x="42" y="27" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-92" fill="#F4F5F9" x="42" y="33" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-99" fill="#F4F5F9" x="42" y="39" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-79" fill="#D6DBEC" x="50" y="21" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-86" fill="#F4F5F9" x="50" y="27" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-93" fill="#F4F5F9" x="50" y="33" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-100" fill="#F4F5F9" x="50" y="39" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-80" fill="#D6DBEC" x="58" y="21" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-87" fill="#F4F5F9" x="58" y="27" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-94" fill="#1A7AFF" x="58" y="33" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-101" fill="#F4F5F9" x="58" y="39" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-81" fill="#D6DBEC" x="66" y="21" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-88" fill="#F4F5F9" x="66" y="27" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-95" fill="#F4F5F9" x="66" y="33" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-102" fill="#F4F5F9" x="66" y="39" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-82" fill="#D6DBEC" x="74" y="21" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-89" fill="#F4F5F9" x="74" y="27" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-96" fill="#F4F5F9" x="74" y="33" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-103" fill="#F4F5F9" x="74" y="39" width="4" height="4" rx="1"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="105px" height="55px" viewBox="0 0 105 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>forms-widgets.radio-icon</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="105" height="55" rx="4"></rect>
+    </defs>
+    <g id="nora" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="-构件概览图八" transform="translate(-1342.000000, -505.000000)">
+            <g id="forms-widgets.radio-icon" transform="translate(1342.000000, 505.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="矩形备份-46"></g>
+                <g id="编组-7" mask="url(#mask-2)">
+                    <g transform="translate(9.000000, 14.000000)">
+                        <rect id="矩形" stroke-opacity="0.5" stroke="#1A7AFF" stroke-width="1" fill="none" x="0" y="0" width="25" height="25" rx="1"></rect>
+                        <rect id="矩形备份-76" stroke="none" fill="#D6DBEC" fill-rule="evenodd" x="8" y="5" width="9" height="9" rx="1"></rect>
+                        <rect id="矩形备份-76" stroke="none" fill="#F4F5F9" fill-rule="evenodd" x="5" y="16" width="15" height="4" rx="1"></rect>
+                    </g>
+                </g>
+                <g id="编组-7备份" mask="url(#mask-2)">
+                    <g transform="translate(40.000000, 14.000000)">
+                        <rect id="矩形" stroke="#D6DBEC" stroke-width="1" fill="none" x="0" y="0" width="25" height="25" rx="1"></rect>
+                        <rect id="矩形备份-76" stroke="none" fill="#D6DBEC" fill-rule="evenodd" x="8" y="5" width="9" height="9" rx="1"></rect>
+                        <rect id="矩形备份-76" stroke="none" fill="#F4F5F9" fill-rule="evenodd" x="5" y="16" width="15" height="4" rx="1"></rect>
+                    </g>
+                </g>
+                <g id="编组-7备份-2" mask="url(#mask-2)">
+                    <g transform="translate(71.000000, 14.000000)">
+                        <rect id="矩形" stroke="#D6DBEC" stroke-width="1" fill="none" x="0" y="0" width="25" height="25" rx="1"></rect>
+                        <rect id="矩形备份-76" stroke="none" fill="#D6DBEC" fill-rule="evenodd" x="8" y="5" width="9" height="9" rx="1"></rect>
+                        <rect id="矩形备份-76" stroke="none" fill="#F4F5F9" fill-rule="evenodd" x="5" y="16" width="15" height="4" rx="1"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
