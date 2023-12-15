@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.9.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.9.4...@next-bricks/nav@0.9.5) (2023-12-15)
+
+
+### Bug Fixes
+
+* sidebar 取消固定没有马上收起 ([17232b2](https://github.com/easyops-cn/next-bricks/commit/17232b23ed600c8208466ae94472d2275cb73b50))
+
+
+
+
+
 ## [0.9.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.9.3...@next-bricks/nav@0.9.4) (2023-12-12)
 
 
