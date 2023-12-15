@@ -6,6 +6,7 @@
   --local-box-shadow: 0 0 0 1px var(--card-item-border-color);
   --local-card-hovered-border: none;
   --local-card-background-color: var(--card-item-bg);
+  --local-cover-background-color: var(--color-fill-bg-base-3);
   --local-card-hovered-background-color: var(--card-item-hover-bg);
   --local-card-hovered-box-shadow: var(--card-item-hover-shadow);
   --local-card-title-color: var(--text-color-title);
@@ -198,7 +199,7 @@ eo-link {
   position: relative;
   width: 100%;
   padding-top: 56.25%; /* keep aspect ratio 16:9 */
-  background-color: #f2f5fa; /* TODO: dark theme, should use params */
+  background-color: var(--local-cover-background-color);
   border-bottom: var(--local-cover-border-bottom);
 }
 
