@@ -19,14 +19,20 @@ eo-icon {
 .group-wrapper {
   display: flex;
   gap: 4px;
+  align-items: center;
+}
+
+.group-wrapper > eo-popover {
+  height: 22px;
+  width: 22px;
 }
 
 .button-item {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   cursor: pointer;
   border-radius: var(--medius-border-radius);
 }
@@ -41,7 +47,7 @@ eo-icon {
 }
 
 .button-item-icon {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .button-dropdown-item {
