@@ -96,6 +96,7 @@ eo-link {
 
 /* operator */
 :host([cover-image]) .operator,
+:host([cover-color]) .operator,
 :host(:not([has-header])) .operator {
   position: absolute;
   top: 6px;
