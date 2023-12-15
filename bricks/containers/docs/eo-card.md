@@ -163,7 +163,8 @@
           properties:
             icon:
               lib: antd
-              icon: home
+              category: filled
+              icon: info-circle
             type: icon
             tooltip: 首页
 ```
