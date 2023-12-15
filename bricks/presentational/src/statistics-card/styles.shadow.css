@@ -57,6 +57,8 @@
 }
 
 :host([outline="background"]) {
+  --card-border: none;
+  --card-hovered-border: none;
   --card-hovered-box-shadow: var(--connected-overlay-shadow);
   --card-background: var(--antd-card-background);
   --card-border-radius: 6px;
