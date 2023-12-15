@@ -1,5 +1,9 @@
 :host {
   display: inline-block;
+  --card-padding: 0;
+  --card-border: none;
+  --card-border-radius: 0;
+  --card-background: none;
 }
 
 :host([hidden]) {
@@ -57,7 +61,6 @@
 }
 
 :host([outline="background"]) {
-  --card-border: none;
   --card-hovered-border: none;
   --card-hovered-box-shadow: var(--connected-overlay-shadow);
   --card-background: var(--antd-card-background);
