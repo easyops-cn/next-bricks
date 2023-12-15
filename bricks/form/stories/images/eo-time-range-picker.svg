@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="105px" height="55px" viewBox="0 0 105 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>forms.time-range-picker</title>
+    <g id="nora" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="-构件概览图五" transform="translate(-280.000000, -232.000000)">
+            <g id="forms.time-range-picker" transform="translate(280.000000, 232.000000)">
+                <rect id="矩形备份-46" x="0" y="0" width="105" height="55" rx="4"></rect>
+                <g id="编组-12" transform="translate(6.000000, 22.000000)">
+                    <g id="编组-13" transform="translate(3.000000, 0.500000)" fill="#D6DBEC" font-family="PingFang-SC-Medium, PingFang SC" font-size="8" font-weight="400">
+                        <text id="XXX">
+                            <tspan x="0" y="8">XXX</tspan>
+                        </text>
+                    </g>
+                    <g id="编组-13备份" transform="translate(54.000000, 0.500000)" fill="#D6DBEC" font-family="PingFang-SC-Medium, PingFang SC" font-size="8" font-weight="400">
+                        <text id="XXX">
+                            <tspan x="0" y="8">XXX</tspan>
+                        </text>
+                    </g>
+                    <rect id="矩形备份-60" stroke="#F4F5F9" x="-0.5" y="-0.5" width="94" height="12" rx="1"></rect>
+                    <rect id="矩形" fill="#F4F5F9" x="42" y="0" width="9" height="11"></rect>
+                    <text id="～" stroke="#778DC3" fill-rule="nonzero" font-family="PingFang-SC-Medium, PingFang SC" font-size="8" font-weight="400" fill="#D6DBEC">
+                        <tspan x="42.5" y="8">～</tspan>
+                    </text>
+                    <g id="通用图标/time-Line" transform="translate(31.000000, 1.500000)" fill="#778DC3">
+                        <rect id="矩形" fill-rule="nonzero" opacity="0" x="0" y="0" width="8" height="8"></rect>
+                        <g id="time-circle">
+                            <rect id="矩形" fill-rule="nonzero" opacity="0" x="0" y="0" width="8" height="8"></rect>
+                            <path d="M4,0.5 C5.9328125,0.5 7.5,2.0671875 7.5,4 C7.5,5.9328125 5.9328125,7.5 4,7.5 C2.0671875,7.5 0.5,5.9328125 0.5,4 C0.5,2.0671875 2.0671875,0.5 4,0.5 Z M4,1.09375 C2.3953125,1.09375 1.09375,2.3953125 1.09375,4 C1.09375,5.6046875 2.3953125,6.90625 4,6.90625 C5.6046875,6.90625 6.90625,5.6046875 6.90625,4 C6.90625,2.3953125 5.6046875,1.09375 4,1.09375 Z M4.18828125,2.1875 C4.22265625,2.1875 4.25078125,2.215625 4.25078125,2.25 L4.25078125,2.25 L4.25078125,4.18359375 L5.36484375,4.9890625 C5.39296875,5.00859375 5.39921875,5.04765625 5.37890625,5.0765625 L5.37890625,5.0765625 L5.15546875,5.38125 C5.13515625,5.40859375 5.09609375,5.41484375 5.06796875,5.39453125 L5.06796875,5.39453125 L3.77578125,4.45234375 C3.759375,4.440625 3.75,4.421875 3.75,4.4015625 L3.75,4.4015625 L3.75,2.25 C3.75,2.215625 3.778125,2.1875 3.8125,2.1875 L3.8125,2.1875 Z" id="形状结合"></path>
+                        </g>
+                    </g>
+                    <g id="通用图标/time-Line备份" transform="translate(82.000000, 1.500000)" fill="#778DC3">
+                        <rect id="矩形" fill-rule="nonzero" opacity="0" x="0" y="0" width="8" height="8"></rect>
+                        <g id="time-circle">
+                            <rect id="矩形" fill-rule="nonzero" opacity="0" x="0" y="0" width="8" height="8"></rect>
+                            <path d="M4,0.5 C5.9328125,0.5 7.5,2.0671875 7.5,4 C7.5,5.9328125 5.9328125,7.5 4,7.5 C2.0671875,7.5 0.5,5.9328125 0.5,4 C0.5,2.0671875 2.0671875,0.5 4,0.5 Z M4,1.09375 C2.3953125,1.09375 1.09375,2.3953125 1.09375,4 C1.09375,5.6046875 2.3953125,6.90625 4,6.90625 C5.6046875,6.90625 6.90625,5.6046875 6.90625,4 C6.90625,2.3953125 5.6046875,1.09375 4,1.09375 Z M4.18828125,2.1875 C4.22265625,2.1875 4.25078125,2.215625 4.25078125,2.25 L4.25078125,2.25 L4.25078125,4.18359375 L5.36484375,4.9890625 C5.39296875,5.00859375 5.39921875,5.04765625 5.37890625,5.0765625 L5.37890625,5.0765625 L5.15546875,5.38125 C5.13515625,5.40859375 5.09609375,5.41484375 5.06796875,5.39453125 L5.06796875,5.39453125 L3.77578125,4.45234375 C3.759375,4.440625 3.75,4.421875 3.75,4.4015625 L3.75,4.4015625 L3.75,2.25 C3.75,2.215625 3.778125,2.1875 3.8125,2.1875 L3.8125,2.1875 Z" id="形状结合"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

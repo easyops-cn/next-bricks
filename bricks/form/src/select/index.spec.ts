@@ -113,6 +113,11 @@ describe("form.general-select", () => {
     });
 
     expect(
+      (element.shadowRoot?.querySelector(".select-single-item") as HTMLElement)
+        .textContent
+    ).toBe("c");
+
+    expect(
       (
         element.shadowRoot?.querySelectorAll(".select-item")[0] as HTMLElement
       ).classList.contains("select-option-selected")

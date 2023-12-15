@@ -45,7 +45,7 @@ interface InternalStateDatePickerProps {
   placeholder?: string;
   value?: Dayjs;
   showTime?: boolean;
-  inputBoxStyle?: React.CSSProperties;
+  inputStyle?: React.CSSProperties;
   format?: string;
   picker?: PickerMode;
   disabledDate?: DisabledDateType;
@@ -167,7 +167,7 @@ class EoDatePicker extends FormItemElementBase {
   @property({
     attribute: false,
   })
-  accessor inputBoxStyle: CSSProperties | undefined;
+  accessor inputStyle: CSSProperties | undefined;
 
   /**
    *日期变化时触发
@@ -200,7 +200,7 @@ class EoDatePicker extends FormItemElementBase {
         message={this.message}
         required={this.required}
         placeholder={this.placeholder}
-        inputBoxStyle={this.inputBoxStyle}
+        inputStyle={this.inputStyle}
         disabled={this.disabled}
         disabledDate={this.disabledDate}
         futureDateDisabled={this.futureDateDisabled}
@@ -268,7 +268,7 @@ export function InternalStateDatePicker(
     picker,
     format,
     showTime,
-    inputBoxStyle,
+    inputStyle,
     disabledDate,
     futureDateDisabled,
     useFastSelectBtn,
@@ -599,7 +599,7 @@ export function InternalStateDatePicker(
         format={format}
         showTime={isDatePicker ? showTime : undefined}
         onChange={onChange}
-        style={inputBoxStyle}
+        style={inputStyle}
         placeholder={placeholder}
         onOk={onOk}
         suffixIcon={<WrappedIcon icon="calendar" lib="easyops" />}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="105px" height="55px" viewBox="0 0 105 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>orms.general-textarea</title>
+    <defs>
+        <rect id="path-1" x="18" y="10" width="69" height="35" rx="3"></rect>
+    </defs>
+    <g id="lydia" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="构件概览图二" transform="translate(-1102.000000, -367.000000)">
+            <g id="orms.general-textarea" transform="translate(1102.000000, 367.000000)">
+                <rect id="矩形备份-79" x="0" y="0" width="105" height="55" rx="4"></rect>
+                <rect id="矩形备份-4" fill="#D6DBEC" x="26" y="16" width="53" height="4" rx="1"></rect>
+                <rect id="矩形备份-5" fill="#D6DBEC" x="26" y="24" width="18" height="4" rx="1"></rect>
+                <g id="矩形备份-23">
+                    <use stroke="#1A7AFF" stroke-width="2" xlink:href="#path-1"></use>
+                    <rect stroke="#C6DEFF" stroke-width="1" x="17.5" y="9.5" width="70" height="36" rx="3"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

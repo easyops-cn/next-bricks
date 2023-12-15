@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="105px" height="55px" viewBox="0 0 105 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>forms.general-select</title>
+    <g id="nora" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="构件概览图一" transform="translate(-421.000000, -105.000000)">
+            <g id="forms.general-select" transform="translate(421.000000, 105.000000)">
+                <rect id="矩形备份-22" x="0" y="0" width="105" height="55" rx="4"></rect>
+                <g id="编组-12备份" transform="translate(15.000000, 6.000000)">
+                    <g id="编组-13" transform="translate(4.000000, 0.000000)">
+                        <text id="XXXX" font-family="PingFang-SC-Medium, PingFang SC" font-size="14" font-weight="400" fill="#D6DBEC">
+                            <tspan x="0" y="15">XXXX</tspan>
+                        </text>
+                        <polyline id="路径-2" stroke="#778DC3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="58 7.5 62.7368421 12.7105263 67 7.5"></polyline>
+                    </g>
+                    <rect id="矩形备份-60" stroke="#F4F5F9" x="-0.5" y="1.5" width="77" height="17" rx="1"></rect>
+                </g>
+                <g id="编组-12备份-2" transform="translate(15.000000, 28.000000)">
+                    <g id="编组-13" transform="translate(4.000000, 0.000000)">
+                        <text id="XXXX" font-family="PingFang-SC-Medium, PingFang SC" font-size="14" font-weight="400" fill="#D6DBEC">
+                            <tspan x="0" y="15">XXXX</tspan>
+                        </text>
+                        <polyline id="路径-2" stroke="#778DC3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="58 7.5 62.7368421 12.7105263 67 7.5"></polyline>
+                    </g>
+                    <rect id="矩形备份-60" stroke="#F4F5F9" x="-0.5" y="1.5" width="77" height="17" rx="1"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

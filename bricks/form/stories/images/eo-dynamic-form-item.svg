@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="105px" height="55px" viewBox="0 0 105 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>forms.dynamic-form-item-v2</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="68" height="10" rx="1"></rect>
+    </defs>
+    <g id="nora" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="-构件概览图五" transform="translate(-915.000000, -103.000000)">
+            <g id="forms.dynamic-form-item-v2" transform="translate(915.000000, 103.000000)">
+                <rect id="矩形备份-46" x="0" y="0" width="105" height="55" rx="4"></rect>
+                <g id="编组-38" transform="translate(12.000000, 10.000000)">
+                    <g id="编组-12备份-6" transform="translate(5.000000, 0.000000)" fill="#778DC3">
+                        <rect id="矩形备份-48" x="0" y="0" width="1.22222222" height="5"></rect>
+                        <rect id="矩形备份-54" x="2.44444444" y="0" width="1.22222222" height="5"></rect>
+                        <rect id="矩形备份-57" x="9.77777778" y="0" width="1.22222222" height="5"></rect>
+                        <rect id="矩形备份-68" x="4.88888889" y="0" width="1.22222222" height="5"></rect>
+                        <rect id="矩形备份-69" x="7.33333333" y="0" width="1.22222222" height="5"></rect>
+                    </g>
+                    <g id="编组-37" transform="translate(0.000000, 1.300000)" stroke="#F24C25" stroke-linecap="round" stroke-linejoin="round" stroke-width="0.5">
+                        <line x1="0" y1="1.12460064" x2="2.73412737" y2="1.12460064" id="路径-34"></line>
+                        <line x1="2.2875153" y1="-4.50847056e-17" x2="0.511188266" y2="2.37639845" id="路径-35"></line>
+                        <line x1="0.511188266" y1="-5.32727307e-17" x2="2.2875153" y2="2.37639845" id="路径-36"></line>
+                    </g>
+                    <g id="编组-18" transform="translate(0.000000, 9.000000)">
+                        <path d="M36.382716,22 L32.617284,22 C32.2777778,22 32,21.775 32,21.5 C32,21.225 32.2777778,21 32.617284,21 L36.382716,21 C36.7222222,21 37,21.225 37,21.5 C37,21.775 36.7222222,22 36.382716,22 Z" id="路径" fill="#1A7AFF" fill-rule="nonzero"></path>
+                        <path d="M79.382716,6 L75.617284,6 C75.2777778,6 75,5.775 75,5.5 C75,5.225 75.2777778,5 75.617284,5 L79.382716,5 C79.7222222,5 80,5.225 80,5.5 C80,5.775 79.7222222,6 79.382716,6 Z" id="路径" fill="#1A7AFF" fill-rule="nonzero"></path>
+                        <path d="M35,19.617284 L35,23.382716 C35,23.7222222 34.775,24 34.5,24 C34.225,24 34,23.7222222 34,23.382716 L34,19.617284 C34,19.2777778 34.225,19 34.5,19 C34.775,19 35,19.2777778 35,19.617284 Z" id="形状" fill="#1A7AFF" fill-rule="nonzero"></path>
+                        <g id="矩形备份-23">
+                            <use stroke="#1A7AFF" stroke-width="2" xlink:href="#path-1"></use>
+                            <rect stroke="#C6DEFF" stroke-width="1" x="-0.5" y="-0.5" width="69" height="11" rx="1"></rect>
+                        </g>
+                        <path d="M1,16 L67,16 C67.5522847,16 68,16.4477153 68,17 L68,25 C68,25.5522847 67.5522847,26 67,26 L1,26 C0.44771525,26 2.8967998e-16,25.5522847 0,25 L0,17 C-6.76353751e-17,16.4477153 0.44771525,16 1,16 Z" id="矩形备份-23" stroke="#1A7AFF" stroke-linejoin="round" stroke-dasharray="1,1"></path>
+                        <circle id="椭圆形" stroke="#1A7AFF" cx="77.5" cy="5.5" r="4"></circle>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

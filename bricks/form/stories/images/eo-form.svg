@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="105px" height="55px" viewBox="0 0 105 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>forms.general-form</title>
+    <g id="nora" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="构件概览图一" transform="translate(-833.000000, -104.000000)">
+            <g id="forms.general-form" transform="translate(833.000000, 104.000000)">
+                <rect id="矩形备份-52" x="0" y="0" width="105" height="55" rx="4"></rect>
+                <g id="编组-11备份-2" transform="translate(16.000000, 9.000000)">
+                    <rect id="矩形备份-48" fill="#D6DBEC" x="0" y="0" width="16" height="4" rx="1"></rect>
+                    <rect id="矩形备份-49" fill="#F4F5F9" x="19" y="0" width="54" height="4" rx="1"></rect>
+                </g>
+                <g id="编组-11备份-3" transform="translate(16.000000, 17.000000)">
+                    <rect id="矩形备份-48" fill="#1A7AFF" x="0" y="0" width="16" height="4" rx="1"></rect>
+                    <rect id="矩形备份-49" fill="#F4F5F9" x="19" y="0" width="38" height="4" rx="1"></rect>
+                </g>
+                <g id="编组-11备份-4" transform="translate(16.000000, 25.000000)">
+                    <rect id="矩形备份-48" fill="#20D4F3" x="0" y="0" width="16" height="4" rx="1"></rect>
+                    <rect id="矩形备份-49" fill="#F4F5F9" x="19" y="0" width="20" height="4" rx="1"></rect>
+                </g>
+                <g id="编组-11备份-5" transform="translate(16.000000, 33.000000)">
+                    <rect id="矩形备份-48" fill="#F7BF05" x="0" y="0" width="16" height="4" rx="1"></rect>
+                    <rect id="矩形备份-49" fill="#F4F5F9" x="19" y="0" width="48" height="4" rx="1"></rect>
+                </g>
+                <g id="编组-11备份-6" transform="translate(16.000000, 41.000000)">
+                    <rect id="矩形备份-48" fill="#D6DBEC" x="0" y="0" width="16" height="4" rx="1"></rect>
+                    <rect id="矩形备份-49" fill="#F4F5F9" x="19" y="0" width="29" height="4" rx="1"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

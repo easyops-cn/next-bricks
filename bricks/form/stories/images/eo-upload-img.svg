@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="105px" height="55px" viewBox="0 0 105 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>forms.upload-img</title>
+    <g id="nora" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="-构件概览图三" transform="translate(-915.000000, -103.000000)">
+            <g id="forms.upload-img" transform="translate(915.000000, 103.000000)">
+                <rect id="矩形备份-46" x="0" y="0" width="105" height="55" rx="4"></rect>
+                <g id="编组-15" transform="translate(26.000000, 8.000000)">
+                    <rect id="矩形备份-60" fill="#1A7AFF" x="0" y="0" width="53" height="39" rx="2"></rect>
+                    <g id="编组-14" transform="translate(12.000000, 6.000000)" stroke="#FFFFFF" stroke-width="3">
+                        <polyline id="路径-7" points="0 15 0 24 29 24 29 15"></polyline>
+                        <line x1="14.5" y1="19" x2="14.5" y2="1" id="路径-8"></line>
+                        <polyline id="路径-9" points="5.5 6 14.5 6.79456491e-14 23.5 6"></polyline>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

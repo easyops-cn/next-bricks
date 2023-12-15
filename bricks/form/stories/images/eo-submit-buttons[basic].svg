@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="105px" height="55px" viewBox="0 0 105 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>forms-widgets.forms-general-buttons-base</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="105" height="55" rx="4"></rect>
+    </defs>
+    <g id="nora" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="-构件概览图八" transform="translate(-917.000000, -202.000000)">
+            <g id="forms-widgets.forms-general-buttons-base" transform="translate(917.000000, 202.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="矩形备份-46"></g>
+                <g id="编组-4" mask="url(#mask-2)">
+                    <g transform="translate(12.000000, 19.000000)" id="编组-5">
+                        <rect id="矩形备份-62" fill="#1A7AFF" x="0" y="0" width="37" height="17" rx="1"></rect>
+                        <text id="提交" font-family="PingFangSC-Regular, PingFang SC" font-size="12" font-weight="normal" fill="#FFFFFF">
+                            <tspan x="7" y="13">提交</tspan>
+                        </text>
+                    </g>
+                </g>
+                <text id="取消" mask="url(#mask-2)" font-family="PingFangSC-Regular, PingFang SC" font-size="12" font-weight="normal" fill="#595959">
+                    <tspan x="63" y="32">取消</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>
