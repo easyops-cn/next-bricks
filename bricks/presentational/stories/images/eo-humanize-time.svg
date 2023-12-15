@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="105px" height="55px" viewBox="0 0 105 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>presentational-bricks.brick-humanize-time</title>
+    <g id="lydia" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="构件概览图二" transform="translate(-719.000000, -367.000000)">
+            <g id="presentational-bricks.brick-humanize-time" transform="translate(719.000000, 367.000000)">
+                <rect id="矩形备份-9" x="0" y="0" width="105" height="55" rx="4"></rect>
+                <text id="2022-10-02" font-family="PingFangSC-Medium, PingFang SC" font-size="14" font-weight="400" line-spacing="22" fill="#262626">
+                    <tspan x="12.274" y="24">2022-10-02</tspan>
+                </text>
+                <text id="09:30" font-family="PingFangSC-Medium, PingFang SC" font-size="14" font-weight="400" line-spacing="22" fill="#1A7AFF">
+                    <tspan x="34.296" y="44">09:30</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

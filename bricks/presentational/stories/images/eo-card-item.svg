@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="105px" height="55px" viewBox="0 0 105 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>presentational-bricks.card-item</title>
+    <g id="nora" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="-构件概览图三" transform="translate(-280.000000, -103.000000)">
+            <g id="presentational-bricks.card-item" transform="translate(280.000000, 103.000000)">
+                <rect id="矩形备份-46" x="0" y="0" width="105" height="55" rx="4"></rect>
+                <rect id="矩形备份-75" stroke="#F4F5F9" x="15.5" y="6.5" width="74" height="43" rx="1"></rect>
+                <g id="编组-12备份" transform="translate(20.000000, 11.000000)">
+                    <rect id="矩形备份-58" fill="#1A7AFF" x="1.13686838e-13" y="0" width="12" height="12" rx="3"></rect>
+                    <g id="编组-13" transform="translate(0.000000, 16.000000)" fill="#F4F5F9">
+                        <rect id="矩形备份-63" x="0" y="0" width="65" height="10" rx="1"></rect>
+                    </g>
+                    <rect id="矩形备份-66" fill="#D6DBEC" x="1.13686838e-13" y="30" width="16" height="4" rx="1"></rect>
+                    <rect id="矩形备份-73" fill="#D6DBEC" x="18" y="30" width="16" height="4" rx="1"></rect>
+                    <rect id="矩形备份-74" fill="#F4F5F9" x="61" y="30" width="4" height="4" rx="1"></rect>
+                    <rect id="矩形备份-60" fill="#D6DBEC" x="16" y="0" width="23" height="6" rx="1"></rect>
+                    <rect id="矩形备份-72" fill="#F4F5F9" x="14.8235294" y="9" width="48" height="3" rx="1"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

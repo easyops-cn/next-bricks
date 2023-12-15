@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="105px" height="55px" viewBox="0 0 105 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>presentational-bricks-widgets.brick-alert-closable</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="105" height="55" rx="4"></rect>
+    </defs>
+    <g id="nora" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="-构件概览图七" transform="translate(-573.000000, -400.000000)">
+            <g id="presentational-bricks-widgets.brick-alert-closable" transform="translate(573.000000, 400.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="矩形备份-46"></g>
+                <g id="编组-4" mask="url(#mask-2)">
+                    <g transform="translate(8.000000, 24.000000)">
+                        <rect id="矩形备份-76" stroke-opacity="0.5" stroke="#F7BF02" fill-opacity="0.1" fill="#F7BF02" x="-0.5" y="1.13686838e-13" width="94" height="7" rx="1"></rect>
+                        <g id="编组-10" stroke="none" fill="none" transform="translate(88.267767, 3.535534) rotate(-315.000000) translate(-88.267767, -3.535534) translate(85.767767, 1.035534)">
+                            <rect id="矩形备份-11" fill="#F7BF02" x="2.08333333" y="0" width="1" height="5" rx="0.5"></rect>
+                            <path d="M2.5,-1.10844667e-12 C2.73011865,-1.10848894e-12 2.91666667,0.186548021 2.91666667,0.416666667 L2.91666667,4.58333333 C2.91666667,4.81345198 2.73011865,5 2.5,5 C2.26988135,5 2.08333333,4.81345198 2.08333333,4.58333333 L2.08333333,0.416666667 C2.08333333,0.186548021 2.26988135,-1.1084044e-12 2.5,-1.10844667e-12 Z" id="矩形备份-70" fill="#F7BF02" transform="translate(2.500000, 2.500000) rotate(-90.000000) translate(-2.500000, -2.500000) "></path>
+                        </g>
+                        <g id="编组-9备份-2" stroke="none" fill="none" transform="translate(10.000000, 1.500000)">
+                            <rect id="矩形备份-5" fill="#F7BF02" x="0" y="0" width="1" height="4" rx="0.5"></rect>
+                            <rect id="矩形备份-12" fill="#F7BF02" x="2" y="0" width="1" height="4" rx="0.5"></rect>
+                            <rect id="矩形备份-13" fill="#F7BF02" x="4" y="0" width="1" height="4" rx="0.5"></rect>
+                            <rect id="矩形备份-14" fill="#F7BF02" x="6" y="0" width="1" height="4" rx="0.5"></rect>
+                            <rect id="矩形备份-15" fill="#F7BF02" x="8" y="0" width="1" height="4" rx="0.5"></rect>
+                            <rect id="矩形备份-16" fill="#F7BF02" x="10" y="0" width="1" height="4" rx="0.5"></rect>
+                            <rect id="矩形备份-17" fill="#F7BF02" x="12" y="0" width="1" height="4" rx="0.5"></rect>
+                            <rect id="矩形备份-18" fill="#F7BF02" x="14" y="0" width="1" height="4" rx="0.5"></rect>
+                            <rect id="矩形备份-19" fill="#F7BF02" x="16" y="0" width="1" height="4" rx="0.5"></rect>
+                            <rect id="矩形备份-20" fill="#F7BF02" x="18" y="0" width="1" height="4" rx="0.5"></rect>
+                            <rect id="矩形备份-21" fill="#F7BF02" x="20" y="0" width="1" height="4" rx="0.5"></rect>
+                            <rect id="矩形备份-42" fill="#F7BF02" x="22" y="0" width="1" height="4" rx="0.5"></rect>
+                            <rect id="矩形备份-43" fill="#F7BF02" x="24" y="0" width="1" height="4" rx="0.5"></rect>
+                            <rect id="矩形备份-44" fill="#F7BF02" x="26" y="0" width="1" height="4" rx="0.5"></rect>
+                            <rect id="矩形备份-45" fill="#F7BF02" x="28" y="0" width="1" height="4" rx="0.5"></rect>
+                            <rect id="矩形备份-46" fill="#F7BF02" x="30" y="0" width="1" height="4" rx="0.5"></rect>
+                            <rect id="矩形备份-47" fill="#F7BF02" x="32" y="0" width="1" height="4" rx="0.5"></rect>
+                            <rect id="矩形备份-57" fill="#F7BF02" x="34" y="0" width="1" height="4" rx="0.5"></rect>
+                            <rect id="矩形备份-61" fill="#F7BF02" x="36" y="0" width="1" height="4" rx="0.5"></rect>
+                            <rect id="矩形备份-65" fill="#F7BF02" x="38" y="0" width="1" height="4" rx="0.5"></rect>
+                            <rect id="矩形备份-66" fill="#F7BF02" x="40" y="0" width="1" height="4" rx="0.5"></rect>
+                            <rect id="矩形备份-67" fill="#F7BF02" x="42" y="0" width="1" height="4" rx="0.5"></rect>
+                            <rect id="矩形备份-68" fill="#F7BF02" x="44" y="0" width="1" height="4" rx="0.5"></rect>
+                            <rect id="矩形备份-69" fill="#F7BF02" x="46" y="0" width="1" height="4" rx="0.5"></rect>
+                        </g>
+                        <g id="通用图标/Warning-circle-fill" stroke="none" fill="none" transform="translate(2.000000, 1.000000)">
+                            <rect id="矩形" fill="#F7BF02" fill-rule="nonzero" opacity="0" x="0" y="0" width="5" height="5"></rect>
+                            <path d="M2.5,0.3125 C1.29199219,0.3125 0.3125,1.29199219 0.3125,2.5 C0.3125,3.70800781 1.29199219,4.6875 2.5,4.6875 C3.70800781,4.6875 4.6875,3.70800781 4.6875,2.5 C4.6875,1.29199219 3.70800781,0.3125 2.5,0.3125 Z M2.34375,1.4453125 C2.34375,1.42382812 2.36132812,1.40625 2.3828125,1.40625 L2.6171875,1.40625 C2.63867188,1.40625 2.65625,1.42382812 2.65625,1.4453125 L2.65625,2.7734375 C2.65625,2.79492188 2.63867188,2.8125 2.6171875,2.8125 L2.3828125,2.8125 C2.36132812,2.8125 2.34375,2.79492188 2.34375,2.7734375 L2.34375,1.4453125 Z M2.5,3.59375 C2.37060547,3.59375 2.265625,3.48876953 2.265625,3.359375 C2.265625,3.22998047 2.37060547,3.125 2.5,3.125 C2.62939453,3.125 2.734375,3.22998047 2.734375,3.359375 C2.734375,3.48876953 2.62939453,3.59375 2.5,3.59375 Z" id="形状" fill="#F7BF02"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

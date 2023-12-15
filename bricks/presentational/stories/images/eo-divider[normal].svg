@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="105px" height="55px" viewBox="0 0 105 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>presentational-bricks-widgets.brick-divider-base</title>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="105" height="55" rx="4"></rect>
+    </defs>
+    <g id="nora" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="-构件概览图七" transform="translate(-573.000000, -796.000000)">
+            <g id="presentational-bricks-widgets.brick-divider-base" transform="translate(573.000000, 796.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="矩形备份-46"></g>
+                <text id="分割线" fill-rule="nonzero" mask="url(#mask-2)" font-family="PingFang-SC-Medium, PingFang SC" font-size="8" font-weight="400" fill="#595959">
+                    <tspan x="41" y="30">分割线</tspan>
+                </text>
+                <line x1="6" y1="27.5" x2="37" y2="27.5" id="路径-38" stroke="#D9D9D9" stroke-width="1.5" mask="url(#mask-2)"></line>
+                <line x1="69" y1="27.5" x2="99" y2="27.5" id="路径-38备份-2" stroke="#D9D9D9" stroke-width="1.5" mask="url(#mask-2)"></line>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>presentational-bricks.card-blue</title>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0.5" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="卡片样式规范" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="信息类卡片" transform="translate(-172.000000, -3401.000000)">
+            <g id="内部卡片" transform="translate(0.000000, 784.995045)">
+                <g id="基础用法" transform="translate(0.000000, 284.978849)">
+                    <g id="基础卡片" transform="translate(0.000000, 1171.919789)">
+                        <g id="样式明细" transform="translate(0.000000, 115.991661)">
+                            <g id="通用卡片" transform="translate(0.000000, 0.000000)">
+                                <g id="基本2" transform="translate(0.000000, 756.958343)">
+                                    <g id="默认态" transform="translate(156.000000, 126.989928)">
+                                        <g id="基准卡片-完整备份-2" transform="translate(0.000000, 143.166385)">
+                                            <g id="图标" transform="translate(16.000000, 16.000000)">
+                                                <rect id="矩形" fill="#1A7AFF" x="0" y="0" width="40" height="39.9967771" rx="8"></rect>
+                                                <g id="mail-fill" transform="translate(10.000000, 9.999194)" fill-rule="nonzero">
+                                                    <rect id="矩形" fill="#000000" opacity="0" x="0" y="0" width="20" height="19.9983885"></rect>
+                                                    <path d="M18.125,3.12474821 L1.875,3.12474821 C1.52929688,3.12474821 1.25,3.40402258 1.25,3.74969785 L1.25,16.2486907 C1.25,16.5943659 1.52929688,16.8736403 1.875,16.8736403 L18.125,16.8736403 C18.4707031,16.8736403 18.75,16.5943659 18.75,16.2486907 L18.75,3.74969785 C18.75,3.40402258 18.4707031,3.12474821 18.125,3.12474821 Z M16.546875,5.25152996 L10.3847656,10.0460655 C10.2324219,10.1651965 10.0195312,10.1651965 9.8671875,10.0460655 L3.703125,5.25152996 C3.66796875,5.22418841 3.6484375,5.18317609 3.6484375,5.1402108 C3.6484375,5.0620921 3.7109375,4.99959713 3.7890625,4.99959713 L16.4609375,4.99959713 C16.5039062,4.99959713 16.5449219,5.01912681 16.5722656,5.05428023 C16.6191406,5.11482222 16.609375,5.20270577 16.546875,5.25152996 Z" id="形状" fill="url(#linearGradient-1)"></path>
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
