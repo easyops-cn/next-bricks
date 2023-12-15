@@ -412,11 +412,22 @@ export function EoSidebarComponent(props: EoSidebarComponentProps) {
               }
             >
               <i className="fixed-icon" onClick={handleFixedIconClick}>
-                {expandedState === ExpandedState.Expanded ? (
-                  <FixedSvg />
-                ) : (
-                  <ToFixedSvg />
-                )}
+                <FixedSvg
+                  style={{
+                    display:
+                      expandedState === ExpandedState.Expanded
+                        ? undefined
+                        : "none",
+                  }}
+                />
+                <ToFixedSvg
+                  style={{
+                    display:
+                      expandedState === ExpandedState.Expanded
+                        ? "none"
+                        : undefined,
+                  }}
+                />
               </i>
             </WrappedTooltip>
           )}
