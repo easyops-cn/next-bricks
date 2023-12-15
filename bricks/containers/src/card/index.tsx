@@ -27,6 +27,7 @@ export interface CardProps {
   background?: boolean | string;
   compact?: boolean;
   outline?: CardOutline;
+  split?: boolean;
 }
 
 export type CardOutline =
@@ -124,6 +125,14 @@ class Card extends ReactNextElement implements CardProps {
   @property()
   accessor outline: CardOutline | undefined;
 
+  /**
+   * 分割线
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor split: boolean | undefined;
+
   render() {
     return (
       <CardComponent
@@ -134,6 +143,7 @@ class Card extends ReactNextElement implements CardProps {
         operationButtons={this.operationButtons}
         headerStyle={this.headerStyle}
         headerIcon={this.headerIcon}
+        split={this.split}
         background={this.background}
       />
     );
@@ -149,6 +159,7 @@ export function CardComponent({
   headerStyle,
   headerIcon,
   background = true,
+  split = true,
 }: CardProps) {
   const renderButtons = useMemo(
     () =>
@@ -164,7 +175,13 @@ export function CardComponent({
 
   const header = useMemo(
     () => (
-      <div className="card-head" style={headerStyle}>
+      <div
+        className="card-head"
+        style={{
+          ...(split ? {} : { borderBottom: "none" }),
+          ...headerStyle,
+        }}
+      >
         <div className="card-head-wrapper">
           {headerIcon && (
             <WrappedGeneralIcon className="header-icon" {...headerIcon} />
@@ -190,6 +207,7 @@ export function CardComponent({
       cardTitle,
       hasExtraSlot,
       operationButtons,
+      split,
       renderButtons,
     ]
   );
@@ -210,16 +228,17 @@ export function CardComponent({
       {(cardTitle || hasExtraSlot) && header}
       <div
         className="card-body"
-        style={
-          verticalCenter
+        style={{
+          ...(verticalCenter
             ? {
                 height: "100%",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
               }
-            : {}
-        }
+            : {}),
+          ...(split ? {} : { padding: "4px 0" }),
+        }}
       >
         <div>
           <slot></slot>

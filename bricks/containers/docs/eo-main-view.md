@@ -24,6 +24,14 @@ children:
   - brick: div
     properties:
       textContent: Say hello to everyone!
+  - brick: eo-button
+    slot: toolbar
+    properties:
+      type: primary
+      textContent: Toolbar Button
+      icon:
+        lib: antd
+        icon: search
 ```
 
 ### Fill Container

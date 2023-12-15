@@ -45,6 +45,10 @@
   gap: 4px;
 }
 
+.header-icon {
+  font-size: 20px;
+}
+
 .card-head-title {
   display: inline-block;
   flex: 1;

@@ -48,6 +48,93 @@
               height: 50px
 ```
 
+### Hide Split
+
+```yaml preview
+- brick: eo-card
+  properties:
+    cardTitle: 卡片标题
+    split: false
+  slots:
+    "":
+      bricks:
+        - brick: eo-next-table
+          properties:
+            scrollConfig:
+              x: false
+            pagination:
+              pageSizeOptions:
+                - 5
+                - 10
+                - 20
+            columns:
+              - dataIndex: name
+                key: name
+                title: Name
+              - dataIndex: age
+                key: age
+                title: Age
+              - dataIndex: address
+                key: address
+                title: Address
+              - dataIndex: remarks
+                key: remarks
+                title: Long Column Long Column Long Column Long Column
+                width: 200
+                ellipsis: true
+            dataSource:
+              pageSize: 5
+              page: 1
+              list:
+                - key: 0
+                  name: Jack
+                  age: 18
+                  address: Guangzhou
+                  remarks: Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text
+                - key: 1
+                  name: Alex
+                  age: 20
+                  address: Shanghai
+                  remarks: Long text Long text
+                - key: 2
+                  name: Lucy
+                  age: 16
+                  address: Yunnan
+                - key: 3
+                  name: Sam
+                  age: 28
+                  address: Guangzhou
+                  remarks: Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text
+                - key: 4
+                  name: Bob
+                  age: 35
+                  address: Hainan
+                - key: 5
+                  name: Ava
+                  age: 23
+                  address: Beijing
+                - key: 6
+                  name: Sophia
+                  age: 20
+                  address: Shanghai
+                - key: 7
+                  name: Charlotte
+                  age: 33
+                  address: Chongqing
+                - key: 8
+                  name: Mia
+                  age: 18
+                  address: Chengdu
+                - key: 9
+                  name: Noah
+                  age: 38
+                  address: Hainan
+                - key: 10
+                  name: William
+                  age: 16
+                  address: Taiwan
+```
+
 ### Extra Slot
 
 ```yaml preview
@@ -58,9 +145,9 @@
   slots:
     extra:
       bricks:
-        - brick: div
+        - brick: eo-button
           properties:
-            textContent: Extra Div
+            textContent: Extra Button
 ```
 
 ### titleSuffix Slot
@@ -72,9 +159,13 @@
   slots:
     titleSuffix:
       bricks:
-        - brick: span
+        - brick: eo-button
           properties:
-            textContent: titleSuffix span
+            icon:
+              lib: antd
+              icon: home
+            type: icon
+            tooltip: 首页
 ```
 
 ### Header Icon
@@ -169,6 +260,6 @@
       properties:
         cardTitle: 卡片标题
         outline: background
-        background: darkgreen
+        background: var(--color-fill-bg-base-4)
         textContent: "outline: background"
 ```
