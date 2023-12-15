@@ -194,7 +194,7 @@ properties:
     style:
       width: 280px
     avatarPosition: cover
-    coverColor: "#d6d6ff"
+    coverColor: "#167be0"
     cardTitle: 资源监控微应用
     description: 资源监控微应用相关前后台
     url: /test
@@ -204,12 +204,15 @@ properties:
         lib: easyops
         category: default
         icon: monitor
-      color: "#167be0"
+      color: "#fff"
+
     actions:
       - icon:
           lib: antd
           theme: outlined
           icon: star
+          startColor: "#fff"
+          endColor: "#fff"
         isDropdown: false
         event: collect
       - icon:
