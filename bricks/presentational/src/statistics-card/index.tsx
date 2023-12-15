@@ -19,6 +19,7 @@ export interface EoStatisticsCardProps {
   background?: string;
   descriptionPosition?: "bottom" | "right";
   valueStyle?: React.CSSProperties;
+  interactable?: boolean;
 }
 
 /**
@@ -29,6 +30,7 @@ export interface EoStatisticsCardProps {
  * @slot description - 描述信息，通常是对于统计值的描述
  * @slot basicContent - 卡片右侧内容区，适合放置迷你图表，常用于小卡片
  * @slot extraContent - 卡片下方内容区，适合放置图表，用于展示更多信息的场景
+ * @slot operator - 右上角操作区
  *
  */
 export
@@ -94,6 +96,14 @@ class EoStatisticsCard extends ReactNextElement {
   })
   accessor valueStyle: React.CSSProperties | undefined;
 
+  /**
+   * 是否可互动
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor interactable: boolean | undefined;
+
   render() {
     return (
       <EoStatisticsCardComponent
@@ -131,6 +141,9 @@ export function EoStatisticsCardComponent(props: EoStatisticsCardProps) {
 
   return (
     <div className="card" style={{ ...(background ? { background } : {}) }}>
+      <div className="operator">
+        <slot name="operator" />
+      </div>
       <div className="basic-container">
         {iconNode}
         <div className="basic-info">

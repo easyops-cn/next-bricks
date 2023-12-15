@@ -509,3 +509,120 @@ children:
         to: 1626609200
       yField: host_load_5_per_core
 ```
+
+### Interaction
+
+#### Operator slot
+
+```yaml preview gap
+- brick: eo-statistics-card
+  properties:
+    cardTitle: 安全评分
+    value: 93
+    valueStyle:
+      color: var(--color-success)
+    icon:
+      lib: easyops
+      category: monitor
+      icon: infra-monitor
+      bgColor: "#E6F0FC"
+      color: "#3480EA"
+    style:
+      width: 300px
+  children:
+    - brick: eo-mini-actions
+      slot: operator
+      properties:
+        actions:
+          - icon:
+              lib: antd
+              icon: edit
+              theme: outlined
+            text: 编辑
+            isDropdown: true
+            event: edit
+          - icon:
+              lib: antd
+              icon: delete
+              theme: outlined
+            text: 删除
+            isDropdown: true
+            disabled: true
+            event: delete
+      events:
+        edit:
+          - action: console.log
+        delete:
+          - action: console.log
+```
+
+#### Whole card
+
+```yaml preview gap
+- brick: eo-link
+  properties:
+    type: plain
+    url: /detail
+    target: _blank
+  children:
+    - brick: eo-statistics-card
+      properties:
+        interactable: true
+        outline: border
+        cardTitle: 安全评分
+        value: 93
+        valueStyle:
+          color: var(--color-success)
+        icon:
+          lib: easyops
+          category: monitor
+          icon: infra-monitor
+          bgColor: "#E6F0FC"
+          color: "#3480EA"
+        style:
+          width: 200px
+- brick: eo-link
+  properties:
+    type: plain
+    url: /detail
+    target: _blank
+  children:
+    - brick: eo-statistics-card
+      properties:
+        interactable: true
+        outline: background
+        cardTitle: 安全评分
+        value: 93
+        valueStyle:
+          color: var(--color-success)
+        icon:
+          lib: easyops
+          category: monitor
+          icon: infra-monitor
+          bgColor: "#E6F0FC"
+          color: "#3480EA"
+        style:
+          width: 200px
+- brick: eo-link
+  properties:
+    type: plain
+    url: /detail
+    target: _blank
+  children:
+    - brick: eo-statistics-card
+      properties:
+        interactable: true
+        outline: none
+        cardTitle: 安全评分
+        value: 93
+        valueStyle:
+          color: var(--color-success)
+        icon:
+          lib: easyops
+          category: monitor
+          icon: infra-monitor
+          bgColor: "#E6F0FC"
+          color: "#3480EA"
+        style:
+          width: 200px
+```

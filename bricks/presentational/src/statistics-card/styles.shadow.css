@@ -50,11 +50,14 @@
 
 :host([outline="border"]) {
   --card-border: 1px solid var(--color-text-divider-line);
+  --card-hovered-border: 1px solid transparent;
+  --card-hovered-box-shadow: var(--connected-overlay-shadow);
   --card-background: var(--antd-card-background);
   --card-border-radius: 6px;
 }
 
 :host([outline="background"]) {
+  --card-hovered-box-shadow: var(--connected-overlay-shadow);
   --card-background: var(--antd-card-background);
   --card-border-radius: 6px;
 }
@@ -70,6 +73,12 @@
   border: var(--card-border);
   border-radius: var(--card-border-radius);
   background: var(--card-background);
+}
+
+.operator {
+  position: absolute;
+  top: 6px;
+  right: 8px;
 }
 
 .basic-container {
@@ -147,4 +156,20 @@ slot[name="description"] {
 
 slot[name="extraContent"]::slotted(*) {
   margin-top: 10px;
+}
+
+:host([interactable]) .card {
+  cursor: pointer;
+}
+
+:host([interactable][outline="border"]) .card:hover,
+:host([interactable][outline="background"]) .card:hover {
+  border: var(--card-hovered-border);
+  box-shadow: var(--card-hovered-box-shadow);
+}
+
+:host([interactable][outline="none"]) .card:hover .card-title,
+:host([interactable][outline="none"]) .card:hover .value,
+:host([interactable][outline="none"]) .card:hover .unit {
+  color: var(--color-brand);
 }

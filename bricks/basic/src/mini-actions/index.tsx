@@ -120,7 +120,10 @@ export function EoMiniActionsComponent(props: EoMiniActionsComponentProps) {
   };
 
   const handleActionClick = (action: ActionType) => {
-    onActionClick?.(action);
+    if (!action.disabled) {
+      setDropdownVisible(false);
+      onActionClick?.(action);
+    }
   };
 
   return (
@@ -132,7 +135,7 @@ export function EoMiniActionsComponent(props: EoMiniActionsComponentProps) {
             className={classNames("button-item", {
               disabled: action.disabled,
             })}
-            onClick={(e) => handleActionClick(action)}
+            onClick={() => handleActionClick(action)}
           >
             <WrappedIcon className="button-item-icon" {...action.icon!} />
           </div>
@@ -142,6 +145,7 @@ export function EoMiniActionsComponent(props: EoMiniActionsComponentProps) {
         <WrappedPopover
           placement="bottom-start"
           strategy="fixed"
+          active={dropdownVisible}
           beforeVisibleChange={handlePopoverVisibleChange}
         >
           <div
@@ -168,10 +172,7 @@ export function EoMiniActionsComponent(props: EoMiniActionsComponentProps) {
                     disabled: action.disabled,
                   })}
                   key={i}
-                  onClickCapture={(event) =>
-                    action.disabled && event.stopPropagation()
-                  }
-                  onClick={(e) => handleActionClick(action)}
+                  onClick={() => handleActionClick(action)}
                 >
                   <WrappedIcon
                     className="dropdown-item-icon"
