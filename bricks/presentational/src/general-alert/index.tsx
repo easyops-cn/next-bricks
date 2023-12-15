@@ -19,6 +19,7 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 export interface GeneralAlertProps {
   type: AlertType;
   hasTitle?: boolean;
+  showIcon?: boolean;
   closable?: boolean;
   localStorageKey?: string;
   disableUrlNamespace?: boolean;
@@ -55,6 +56,14 @@ class GeneralAlert extends ReactNextElement implements GeneralAlertProps {
   accessor hasTitle: boolean | undefined;
 
   /**
+   * 是否显示提示图标
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor showIcon: boolean | undefined;
+
+  /**
    * 是否显示关闭按钮
    */
   @property({
@@ -85,6 +94,7 @@ class GeneralAlert extends ReactNextElement implements GeneralAlertProps {
       <GeneralAlertComponent
         type={this.type}
         hasTitle={this.hasTitle}
+        showIcon={this.showIcon}
         closable={this.closable}
         localStorageKey={this.localStorageKey}
         disableUrlNamespace={this.disableUrlNamespace}
@@ -98,6 +108,7 @@ export function GeneralAlertComponent(props: GeneralAlertProps) {
   const {
     type,
     hasTitle,
+    showIcon,
     closable,
     localStorageKey,
     disableUrlNamespace,
@@ -132,13 +143,15 @@ export function GeneralAlertComponent(props: GeneralAlertProps) {
       )}
       style={{ background: curTypeInfo?.bgColor }}
     >
-      <WrappedIcon
-        {...((hasTitle
-          ? curTypeInfo?.outlinedIcon
-          : curTypeInfo?.filledIcon) as GeneralIconProps)}
-        className="alert-icon"
-        style={{ color: curTypeInfo?.color }}
-      />
+      {showIcon && (
+        <WrappedIcon
+          {...((hasTitle
+            ? curTypeInfo?.outlinedIcon
+            : curTypeInfo?.filledIcon) as GeneralIconProps)}
+          className="alert-icon"
+          style={{ color: curTypeInfo?.color }}
+        />
+      )}
       <div className="alert-container">
         {hasTitle && (
           <div className="alert-title">

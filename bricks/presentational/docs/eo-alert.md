@@ -25,16 +25,19 @@ slots:
           textContent: 恭喜！你所提交的信息已经审核通过。
           type: success
           closable: true
+          showIcon: true
       - brick: eo-alert
         properties:
           textContent: "系统将于 15 : 00 - 17 : 00 进行升级，请及时保存你的资料！"
           type: warning
           closable: true
+          showIcon: true
       - brick: eo-alert
         properties:
           textContent: 系统错误，请稍后重试。
           type: error
           closable: true
+          showIcon: true
 ```
 
 ### HasTitle
@@ -56,6 +59,7 @@ slots:
           type: info
           closable: true
           hasTitle: true
+          showIcon: true
         slots:
           title:
             type: bricks
@@ -69,6 +73,7 @@ slots:
           type: success
           closable: true
           hasTitle: true
+          showIcon: true
         slots:
           title:
             type: bricks
@@ -82,6 +87,7 @@ slots:
           type: warning
           closable: true
           hasTitle: true
+          showIcon: true
         slots:
           title:
             type: bricks
@@ -95,6 +101,7 @@ slots:
           type: error
           closable: true
           hasTitle: true
+          showIcon: true
         slots:
           title:
             type: bricks
