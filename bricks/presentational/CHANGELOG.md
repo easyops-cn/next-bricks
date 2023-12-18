@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.21.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.20.1...@next-bricks/presentational@0.21.0) (2023-12-18)
+
+
+### Features
+
+* statistics-card 支持交互 ([f168f4e](https://github.com/easyops-cn/next-bricks/commit/f168f4ec26b8b08fd4fd26813ad873680088b332))
+* statistics-card 支持交互 ([554d0f5](https://github.com/easyops-cn/next-bricks/commit/554d0f5f370bf8508eb420290ba492ece11abb0b))
+* statistics-card 支持交互 ([601190a](https://github.com/easyops-cn/next-bricks/commit/601190ae4df09c1bf1df1ed6e971a654e3e8f00d))
+
+
+
+
+
 ## [0.20.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.20.0...@next-bricks/presentational@0.20.1) (2023-12-15)
 
 **Note:** Version bump only for package @next-bricks/presentational

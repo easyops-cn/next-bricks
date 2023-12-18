@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.49.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.48.12...@next-bricks/basic@0.49.0) (2023-12-18)
+
+
+### Features
+
+* statistics-card 支持交互 ([601190a](https://github.com/easyops-cn/next-bricks/commit/601190ae4df09c1bf1df1ed6e971a654e3e8f00d))
+
+
+
+
+
 ## [0.48.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.48.11...@next-bricks/basic@0.48.12) (2023-12-15)
 
 **Note:** Version bump only for package @next-bricks/basic
