@@ -54,85 +54,22 @@
 - brick: eo-card
   properties:
     cardTitle: 卡片标题
-    split: false
+    hideSplit: true
   slots:
     "":
       bricks:
-        - brick: eo-next-table
+        - brick: div
           properties:
-            scrollConfig:
-              x: false
-            pagination:
-              pageSizeOptions:
-                - 5
-                - 10
-                - 20
-            columns:
-              - dataIndex: name
-                key: name
-                title: Name
-              - dataIndex: age
-                key: age
-                title: Age
-              - dataIndex: address
-                key: address
-                title: Address
-              - dataIndex: remarks
-                key: remarks
-                title: Long Column Long Column Long Column Long Column
-                width: 200
-                ellipsis: true
-            dataSource:
-              pageSize: 5
-              page: 1
-              list:
-                - key: 0
-                  name: Jack
-                  age: 18
-                  address: Guangzhou
-                  remarks: Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text
-                - key: 1
-                  name: Alex
-                  age: 20
-                  address: Shanghai
-                  remarks: Long text Long text
-                - key: 2
-                  name: Lucy
-                  age: 16
-                  address: Yunnan
-                - key: 3
-                  name: Sam
-                  age: 28
-                  address: Guangzhou
-                  remarks: Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text Long text
-                - key: 4
-                  name: Bob
-                  age: 35
-                  address: Hainan
-                - key: 5
-                  name: Ava
-                  age: 23
-                  address: Beijing
-                - key: 6
-                  name: Sophia
-                  age: 20
-                  address: Shanghai
-                - key: 7
-                  name: Charlotte
-                  age: 33
-                  address: Chongqing
-                - key: 8
-                  name: Mia
-                  age: 18
-                  address: Chengdu
-                - key: 9
-                  name: Noah
-                  age: 38
-                  address: Hainan
-                - key: 10
-                  name: William
-                  age: 16
-                  address: Taiwan
+            textContent: Content
+            style:
+              display: flex
+              background: pink
+              height: 200px
+              alignItems: center
+              justifyContent: center
+              fontSize: 22px
+              fontWeight: 500
+              color: "#fff"
 ```
 
 ### Extra Slot
@@ -159,14 +96,22 @@
   slots:
     titleSuffix:
       bricks:
-        - brick: eo-button
+        - brick: eo-tooltip
           properties:
-            icon:
-              lib: antd
-              category: filled
-              icon: info-circle
-            type: icon
-            tooltip: 首页
+            content: This is a tooltip
+            trigger: hover
+          children:
+            - brick: eo-icon
+              properties:
+                lib: antd
+                category: filled
+                icon: info-circle
+                style:
+                  height: 14px
+                  lineHeight: 14px
+                  fontSize: 14px
+                  marginLeft: 6px
+                  color: var(--color-normal-text)
 ```
 
 ### Header Icon
@@ -251,10 +196,12 @@
       properties:
         cardTitle: 卡片标题
         outline: border
+        hideSplit: true
         textContent: "outline: border"
     - brick: eo-card
       properties:
         cardTitle: 卡片标题
+        hideSplit: true
         outline: shadow
         textContent: "outline: shadow"
     - brick: eo-card

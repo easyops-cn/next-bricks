@@ -27,7 +27,7 @@ export interface CardProps {
   background?: boolean | string;
   compact?: boolean;
   outline?: CardOutline;
-  split?: boolean;
+  hideSplit?: boolean;
 }
 
 export type CardOutline =
@@ -131,7 +131,7 @@ class Card extends ReactNextElement implements CardProps {
   @property({
     type: Boolean,
   })
-  accessor split: boolean | undefined;
+  accessor hideSplit: boolean | undefined;
 
   render() {
     return (
@@ -143,7 +143,7 @@ class Card extends ReactNextElement implements CardProps {
         operationButtons={this.operationButtons}
         headerStyle={this.headerStyle}
         headerIcon={this.headerIcon}
-        split={this.split}
+        hideSplit={this.hideSplit}
         background={this.background}
       />
     );
@@ -159,7 +159,6 @@ export function CardComponent({
   headerStyle,
   headerIcon,
   background = true,
-  split = true,
 }: CardProps) {
   const renderButtons = useMemo(
     () =>
@@ -175,13 +174,7 @@ export function CardComponent({
 
   const header = useMemo(
     () => (
-      <div
-        className="card-head"
-        style={{
-          ...(split ? {} : { borderBottom: "none" }),
-          ...headerStyle,
-        }}
-      >
+      <div className="card-head" style={headerStyle}>
         <div className="card-head-wrapper">
           {headerIcon && (
             <WrappedGeneralIcon className="header-icon" {...headerIcon} />
@@ -207,7 +200,6 @@ export function CardComponent({
       cardTitle,
       hasExtraSlot,
       operationButtons,
-      split,
       renderButtons,
     ]
   );
@@ -237,7 +229,6 @@ export function CardComponent({
                 alignItems: "center",
               }
             : {}),
-          ...(split ? {} : { padding: "4px 0" }),
         }}
       >
         <div>
