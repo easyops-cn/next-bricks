@@ -167,7 +167,7 @@ export function EoDropdownActionsComponent({
       }}
     >
       <slot slot="anchor" />
-      {filteredActions?.length && (
+      {filteredActions?.length ? (
         <WrappedMenu style={{ minWidth: "max-content" }}>
           {filteredActions.map((action, index) => {
             if (isDivider(action)) {
@@ -218,7 +218,7 @@ export function EoDropdownActionsComponent({
             }
           })}
         </WrappedMenu>
-      )}
+      ) : null}
     </WrappedPopover>
   );
 }
