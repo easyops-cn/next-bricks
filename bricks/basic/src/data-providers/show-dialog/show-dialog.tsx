@@ -203,7 +203,7 @@ export function DialogComponent({
         </div>
       </div>
       {(type === "confirm" || type === "delete") && (
-        <WrappedButton slot="footer" onClick={onCancelClick}>
+        <WrappedButton slot="footer" type="text" onClick={onCancelClick}>
           {i18n.t(`${NS}:${K.CANCEL}`)}
         </WrappedButton>
       )}
