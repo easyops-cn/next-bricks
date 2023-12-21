@@ -40,6 +40,12 @@ export default {
           // Terser skip this file for minimization
           info: { minimized: true },
         },
+        {
+          from: "src/easyops-icon/generated/sprite.svg",
+          to: "chunks/easyops-icons",
+          // Terser skip this file for minimization
+          info: { minimized: true },
+        },
       ],
     }),
   ],

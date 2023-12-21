@@ -5,13 +5,108 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { existsSync, mkdirSync, rmSync } from "node:fs";
-import { readdir, writeFile } from "node:fs/promises";
+import { readFile, readdir, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import antdIcons from "@ant-design/icons-svg";
 import antdIconsHelpers from "@ant-design/icons-svg/lib/helpers.js";
+import { XMLParser, XMLBuilder } from "fast-xml-parser";
+
+const parser = new XMLParser({
+  preserveOrder: true,
+  processEntities: true,
+  htmlEntities: true,
+  ignoreAttributes: false,
+  removeNSPrefix: true,
+  allowBooleanAttributes: true,
+  parseTagValue: false,
+  parseAttributeValue: true,
+  // unpairedTags: UNPAIRED_TAGS,
+  stopNodes: ["svg"],
+  trimValues: false,
+});
+
+const builder = new XMLBuilder({
+  preserveOrder: true,
+  processEntities: true,
+  htmlEntities: true,
+  ignoreAttributes: false,
+  removeNSPrefix: true,
+  allowBooleanAttributes: true,
+  parseTagValue: false,
+  parseAttributeValue: true,
+  // unpairedTags: UNPAIRED_TAGS,
+  stopNodes: ["symbol", "defs"],
+  trimValues: false,
+});
+
+let counter = 0;
+function getNextIdPrefix() {
+  return `d${++counter}-`;
+}
+
+async function buildSprite(spriteElements, iconPath, folder, iconName) {
+  const content = await readFile(iconPath, "utf-8");
+  const root = parser.parse(content);
+  const svgNode = root.find((item) => item.svg);
+  if (!svgNode) {
+    throw new Error(`SVG not found in file ${iconPath}`);
+  }
+  const viewBox = svgNode[":@"]?.["@_viewBox"];
+
+  const defsTexts = [];
+  let text,
+    symbol = svgNode.svg;
+
+  if (symbol.length === 1 && (text = symbol[0]["#text"])) {
+    text = text.replaceAll(/<title>[^<>]*<\/title>\s*/g, "");
+    // .replaceAll(/(?<=\s)xlink:href(?==")/g, "href");
+    const hasDefs = text.includes("<defs>");
+    if (hasDefs) {
+      const defs = [];
+      text = text.replaceAll(/(<defs>[\s\S]*?<\/defs>)\s*/g, (match, p1) => {
+        defs.push(p1);
+        return "";
+      });
+      const ids = defs
+        .flatMap((def) => def.match(/(?<=\sid=")([^"]+)(?=")/g) ?? [])
+        .filter((id) => text.includes(`"url(#${id})"`));
+      if (ids.length > 0) {
+        const prefix = getNextIdPrefix();
+        for (const def of defs) {
+          defsTexts.push(
+            def.replaceAll(/(?<=\sid=")([^"]+)(?=")/g, `${prefix}$1`)
+          );
+        }
+        text = text.replaceAll(/(="url\(#)([^")]+\)")/g, `$1${prefix}$2`);
+      }
+    }
+    if (!folder.startsWith("colored-")) {
+      text = text.replaceAll(
+        /(\s(?:fill|stroke|(?:(?:stop|flood|lighting)-)?color)=)"(?!none)[^"]+"/g,
+        '$1"currentColor"'
+      );
+    }
+    symbol = [{ "#text": text }];
+  }
+
+  const symbolNode = {
+    symbol,
+    ":@": {
+      "@_id": `${folder}--${iconName}`,
+      ...(viewBox
+        ? {
+            "@_viewBox": viewBox,
+          }
+        : null),
+    },
+  };
+  spriteElements.unshift(...defsTexts);
+  const symbolText = builder.build([symbolNode]);
+  spriteElements.push(symbolText);
+}
 
 const { renderIconDefinitionToSVGElement } = antdIconsHelpers;
 
@@ -40,11 +135,13 @@ const tasks = [];
     default: [],
   };
 
+  const spriteElements = [];
+
   tasks.push(
     readdir(legacyEasyOpsIconsPath, { withFileTypes: true })
       .then((list) =>
         Promise.all(
-          list.map((item) => {
+          list.map(async (item) => {
             if (item.isDirectory() && /\w/.test(item.name)) {
               const categoryDir = path.resolve(
                 legacyEasyOpsIconsPath,
@@ -54,27 +151,48 @@ const tasks = [];
                 allIcons[item.name] = [];
               }
               return readdir(categoryDir).then((icons) =>
-                icons
-                  .filter((icon) => icon.endsWith(".svg"))
-                  .map((icon) => {
-                    allIcons[item.name].push(
-                      icon.substring(0, icon.length - 4)
-                    );
-                  })
+                Promise.all(
+                  icons
+                    .filter((icon) => icon.endsWith(".svg"))
+                    .map(async (icon) => {
+                      const iconName = icon.substring(0, icon.length - 4);
+                      allIcons[item.name].push(iconName);
+                      const iconPath = path.join(
+                        legacyEasyOpsIconsPath,
+                        item.name,
+                        icon
+                      );
+                      await buildSprite(
+                        spriteElements,
+                        iconPath,
+                        item.name,
+                        iconName
+                      );
+                    })
+                )
               );
             } else if (item.name.endsWith(".svg")) {
-              allIcons.default.push(
-                item.name.substring(0, item.name.length - 4)
-              );
+              const iconName = item.name.substring(0, item.name.length - 4);
+              allIcons.default.push(iconName);
+              const iconPath = path.join(legacyEasyOpsIconsPath, item.name);
+              await buildSprite(spriteElements, iconPath, "default", iconName);
             }
           })
         )
       )
       .then(() =>
-        writeFile(
-          path.resolve(newEasyOpsIconsPath, "icons.json"),
-          JSON.stringify(allIcons)
-        )
+        Promise.all([
+          writeFile(
+            path.resolve(newEasyOpsIconsPath, "icons.json"),
+            JSON.stringify(allIcons)
+          ),
+          writeFile(
+            path.resolve(newEasyOpsIconsPath, "sprite.svg"),
+            `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">\n${spriteElements.join(
+              "\n"
+            )}\n</svg>`
+          ),
+        ])
       )
   );
 }
@@ -191,5 +309,6 @@ Promise.all(tasks).then(
   },
   (error) => {
     console.error("Generate icon files failed:", error);
+    process.exitCode = 1;
   }
 );
