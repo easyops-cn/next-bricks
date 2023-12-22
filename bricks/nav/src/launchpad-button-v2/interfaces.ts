@@ -23,6 +23,7 @@ export interface MenuItemDataApp {
   id: string;
   instanceId: string;
   url: string;
+  description?: string;
   menuIcon?: Exclude<MenuIcon, LegacyAntdIcon>;
 }
 
@@ -32,6 +33,7 @@ export interface MenuItemDataCustom {
   id: string;
   instanceId: string;
   url: string;
+  description?: string;
   menuIcon?: Exclude<MenuIcon, LegacyAntdIcon>;
 }
 
@@ -63,4 +65,12 @@ export interface FavMenuItem {
   instanceId: string;
   url: string;
   menuIcon?: MenuIcon;
+}
+
+export interface PlatformCategoryItem {
+  instanceId?: string;
+  id: string;
+  name: string;
+  icon: Exclude<MenuIcon, LegacyAntdIcon>;
+  items: MenuItemDataNormal[];
 }

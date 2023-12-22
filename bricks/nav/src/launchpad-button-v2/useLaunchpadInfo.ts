@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { handleHttpError, httpErrorToString } from "@next-core/runtime";
+import {
+  getRuntime,
+  handleHttpError,
+  httpErrorToString,
+} from "@next-core/runtime";
 import { auth } from "@next-core/easyops-runtime";
 import { JsonStorage } from "@next-shared/general/JsonStorage";
 import { DeferredService } from "../shared/DeferredService";
@@ -11,15 +15,17 @@ import type {
   MenuItemDataLink,
   MenuItemDataNormal,
   MicroAppWithInstanceId,
+  PlatformCategoryItem,
   StoredMenuItem,
 } from "./interfaces";
 import {
   favorite,
   fetchFavorites,
   fetchLaunchpadInfo,
+  fetchPlatformCategories,
   undoFavorite,
 } from "./api";
-import { search } from "./search";
+import { search, searchCategories } from "./search";
 import { FAVORITES_LIMIT, RECENT_VISITS_LIMIT } from "./constants";
 
 const storageKey = `launchpad-recent-visits:${(
@@ -35,6 +41,9 @@ let preLoaded = false;
 let candidateFavorites: FavMenuItem[] = [];
 let preLoadedFavorites = false;
 
+let candidatePlatformCategories: PlatformCategoryItem[] = [];
+let preLoadedPlatformCategories = false;
+
 export const deferredLaunchpadInfo = new DeferredService(async () => {
   ({
     menuGroups: candidateDesktops,
@@ -47,6 +56,11 @@ export const deferredLaunchpadInfo = new DeferredService(async () => {
 export const deferredFavorites = new DeferredService(async () => {
   candidateFavorites = await fetchFavorites();
   preLoadedFavorites = true;
+});
+
+export const deferredPlatformCategories = new DeferredService(async () => {
+  candidatePlatformCategories = await fetchPlatformCategories();
+  preLoadedPlatformCategories = true;
 });
 
 const showErrorAsNotification = (error: unknown) =>
@@ -73,6 +87,9 @@ export function useLaunchpadInfo(active?: boolean) {
 
   const [loading, setLoading] = useState(!preLoaded);
   const [loadingFavorites, setLoadingFavorites] = useState(!preLoadedFavorites);
+  const [loadingPlatformCategories, setLoadingPlatformCategories] = useState(
+    !preLoadedPlatformCategories
+  );
 
   const [storedRecentVisits, setStoredRecentVisits] = useState<
     StoredMenuItem[]
@@ -81,6 +98,9 @@ export function useLaunchpadInfo(active?: boolean) {
   const [recentVisits, setRecentVisits] = useState<MenuItemDataNormal[]>([]);
 
   const [favorites, setFavorites] = useState<FavMenuItem[]>(candidateFavorites);
+  const [platformCategories, setPlatformCategories] = useState<
+    PlatformCategoryItem[]
+  >(candidatePlatformCategories);
 
   useEffect(() => {
     // 仅当首次加载完成或重新打开 launchpad 时更新一次数据。
@@ -96,6 +116,12 @@ export function useLaunchpadInfo(active?: boolean) {
       setFavorites(candidateFavorites);
     }
   }, [active, loadingFavorites]);
+
+  useEffect(() => {
+    if (active && !loadingPlatformCategories) {
+      setPlatformCategories(candidatePlatformCategories);
+    }
+  }, [active, loadingPlatformCategories]);
 
   useEffect(() => {
     if (active) {
@@ -129,6 +155,24 @@ export function useLaunchpadInfo(active?: boolean) {
         }
       };
       startFetchFavorites();
+    }
+  }, [active]);
+
+  useEffect(() => {
+    if (
+      active &&
+      getRuntime()?.getFeatureFlags()["launchpad-show-app-category"]
+    ) {
+      const startFetchPlatformCategories = async (): Promise<void> => {
+        try {
+          await deferredPlatformCategories.fetch();
+          setLoadingPlatformCategories(false);
+        } catch (error) {
+          setLoadingPlatformCategories(false);
+          showErrorAsNotification(error);
+        }
+      };
+      startFetchPlatformCategories();
     }
   }, [active]);
 
@@ -223,17 +267,24 @@ export function useLaunchpadInfo(active?: boolean) {
     [desktops, q]
   );
 
+  const filteredPlatformCategories: PlatformCategoryItem[] = useMemo(
+    () => searchCategories(platformCategories, q),
+    [platformCategories, q]
+  );
+
   return {
     loading,
     q,
     setQ,
     menuGroups,
     loadingFavorites,
+    loadingPlatformCategories,
     favorites,
     recentVisits,
     pushRecentVisit,
     isStarred,
     toggleStar,
+    platformCategories: filteredPlatformCategories,
   };
 }
 

@@ -67,7 +67,6 @@
 
 .sidebar {
   width: 190px;
-  padding: 20px 0 24px;
   display: flex;
   flex-direction: column;
   background: var(--color-fill-bg-base-3);
@@ -78,7 +77,14 @@
   background-position: left 52px bottom 27px;
 }
 
+.sidebar > *:not(:last-child) {
+  border-bottom: 1px solid var(--stroke-color-default);
+}
+
 .quick-nav-label,
+.platform-nav-label,
+.solution-nav-label,
+.scenario-nav-label,
 .menu-group-label,
 .menu-item-label,
 .recent-visits span {
@@ -91,7 +97,8 @@
 .menu-groups,
 .menu,
 .sub-menu,
-.recent-visits {
+.recent-visits,
+.platform-items {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -130,16 +137,53 @@
   color: var(--left-sidebar-item-collapsed-icon-color);
 }
 
-.quick-nav {
-  overflow-y: auto;
+.quick-nav,
+.platform-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0 24px;
+  overflow: hidden;
   flex: 1;
 }
 
-.quick-nav-label {
+.quick-nav-label,
+.platform-nav-label {
   color: var(--color-header-text);
   font-weight: 500;
   margin-bottom: 14px;
   padding: 0 16px;
+}
+
+.quick-nav-menu,
+.platform-nav-menu {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.scenario-nav > eo-link,
+.solution-nav > eo-link {
+  display: block;
+  cursor: pointer;
+}
+.scenario-nav > eo-link::part(link),
+.solution-nav > eo-link::part(link) {
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.solution-nav-label,
+.scenario-nav-label {
+  flex: 1;
+  color: var(--color-header-text);
+  font-weight: 500;
+}
+
+.solution-nav > eo-icon,
+.scenario-nav > eo-icon {
+  font-size: 14px;
+  color: var(--text-color-default);
 }
 
 .content {

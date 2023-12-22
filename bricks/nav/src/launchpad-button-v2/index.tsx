@@ -11,6 +11,7 @@ import classNames from "classnames";
 // import { K, NS, locales } from "./i18n.js";
 import LaunchpadSvg from "../images/launchpad.svg";
 import styleText from "./styles.shadow.css";
+import platformCategoryStyleText from "./PlatformCategory.shadow.css";
 import { Launchpad } from "./Launchpad";
 import { deferredFavorites, deferredLaunchpadInfo } from "./useLaunchpadInfo";
 import "./host-context.css";
@@ -29,7 +30,7 @@ const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
  */
 export
 @defineElement("eo-launchpad-button-v2", {
-  styleTexts: [styleText],
+  styleTexts: [styleText, platformCategoryStyleText],
 })
 class EoLaunchpadButtonV2 extends ReactNextElement {
   disconnectedCallback(): void {
