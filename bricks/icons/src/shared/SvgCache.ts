@@ -41,6 +41,11 @@ async function resolveIcon(
     const svgEl = doc.body.querySelector("svg");
     if (!svgEl) return CACHEABLE_ERROR;
 
+    const titles = svgEl.querySelectorAll("title");
+    for (const title of titles) {
+      title.remove();
+    }
+
     if (options?.currentColor) {
       const colorProps = [
         "color",
@@ -55,7 +60,9 @@ async function resolveIcon(
           `[${prop}]:not([${prop}="none"])`
         );
         for (const e of elements) {
-          e.setAttribute(prop, "currentColor");
+          if (!belongToMask(e, svgEl)) {
+            e.setAttribute(prop, "currentColor");
+          }
         }
       }
     }
@@ -93,5 +100,17 @@ export async function getIcon(
       return null;
     default:
       return svg.cloneNode(true) as SVGElement;
+  }
+}
+
+function belongToMask(e: Element | null, svg: SVGSVGElement) {
+  while (e) {
+    if (e === svg) {
+      return false;
+    }
+    if (e.tagName === "mask") {
+      return true;
+    }
+    e = e.parentElement;
   }
 }
