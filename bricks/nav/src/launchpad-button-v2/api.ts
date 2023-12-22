@@ -5,6 +5,7 @@ import {
   LaunchpadApi_deleteCollectionV2,
   LaunchpadApi_listCollectionV2,
 } from "@next-api-sdk/user-service-sdk";
+import { InstanceApi_postSearchV3 } from "@next-api-sdk/cmdb-sdk";
 import type {
   FavMenuItem,
   MenuGroupData,
@@ -14,9 +15,11 @@ import type {
   MenuItemDataDir,
   MenuItemDataNormal,
   MicroAppWithInstanceId,
+  PlatformCategoryItem,
 } from "./interfaces";
 import { FAVORITES_LIMIT } from "./constants";
 import { getAppLocaleName } from "../shared/getLocaleName";
+import { sortBy } from "lodash";
 
 export async function fetchLaunchpadInfo() {
   const launchpadInfo = await LaunchpadApi_getLaunchpadInfo(
@@ -179,4 +182,93 @@ export async function undoFavorite(item: FavMenuItem) {
     // eslint-disable-next-line no-console
     console.error("Menu item to unstar not found:", item);
   });
+}
+
+export async function fetchPlatformCategories(): Promise<
+  PlatformCategoryItem[]
+> {
+  const categories = (
+    await InstanceApi_postSearchV3("MICRO_APP_CATEGORY@EASYOPS", {
+      fields: [
+        "id",
+        "type",
+        "name",
+        "icon",
+        "order",
+        "platformApps.appId",
+        "platformApps.name",
+        "platformApps.homepage",
+        "platformApps.description",
+        "platformApps.menuIcon",
+        "platformApps.locales",
+        "platformApps._object_id",
+        "platformApps.@.order",
+        "platformItems.id",
+        "platformItems.name",
+        "platformItems.url",
+        "platformItems.description",
+        "platformItems.menuIcon",
+        "platformItems._object_id",
+        "platformItems.@.order",
+      ],
+      page: 1,
+      page_size: 300,
+      query: {
+        type: "platform",
+      },
+    })
+  ).list;
+
+  const _categories = categories?.map((category) => {
+    const apps = category.platformApps.map((app: Record<string, any>) => {
+      return {
+        type: "app",
+        name: getAppLocaleName(app.locales, app.name),
+        id: app.appId,
+        url: app.homepage,
+        menuIcon: app.menuIcon,
+        description: app.description,
+        instanceId: app.instanceId,
+        order: app["@"]?.order,
+      };
+    }) as MenuItemDataApp[];
+    const customItems = category.platformItems.map(
+      (item: Record<string, any>) => {
+        return {
+          type: "custom",
+          name: item.name,
+          id: item.id,
+          url: item.url,
+          menuIcon: item.menuIcon,
+          description: item.description,
+          instanceId: item.instanceId,
+          order: item["@"]?.order,
+        };
+      }
+    ) as MenuItemDataCustom[];
+
+    const items = sortBy([...apps, ...customItems], "order");
+    return {
+      instanceId: category.instanceId,
+      id: category.id,
+      name: category.name,
+      icon: category.icon,
+      order: category.order,
+      items,
+    } as PlatformCategoryItem;
+  });
+
+  return [
+    {
+      id: "#all",
+      name: "全部",
+      icon: {
+        lib: "easyops",
+        category: "second-menu",
+        icon: "sprint-planning-second-menu",
+      },
+      items: [],
+    },
+    ...sortBy(_categories, "order"),
+  ];
 }

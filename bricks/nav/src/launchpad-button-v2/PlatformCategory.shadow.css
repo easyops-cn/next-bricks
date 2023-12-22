@@ -1,0 +1,105 @@
+.platform-category-name,
+.platform-category-sidebar-menu-item-label,
+.platform-item-name,
+.platform-item-description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.platform-category-sidebar-menu-item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 0px 12px 0px 16px;
+}
+
+.platform-category-sidebar-menu-item > eo-link {
+  display: block;
+  min-width: 0px;
+  color: var(--color-header-text);
+  cursor: pointer;
+}
+
+.platform-category-sidebar-menu-item > eo-link:hover,
+.platform-category-sidebar-menu-item
+  > eo-link:hover
+  .platform-category-sidebar-menu-icon {
+  color: var(--color-brand-hover);
+}
+
+.platform-category-sidebar-menu-item > eo-link.active,
+.platform-category-sidebar-menu-item
+  > eo-link.active
+  .platform-category-sidebar-menu-icon {
+  color: var(--color-brand-active);
+}
+
+.platform-category-sidebar-menu-item > eo-link::part(link) {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.platform-category-sidebar-menu-icon {
+  color: var(--left-sidebar-item-collapsed-icon-color);
+}
+
+.platform-category-name {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-color-secondary);
+  flex-shrink: 0;
+}
+
+.platform-items {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 54px;
+}
+
+.platform-items > li {
+  min-width: 0;
+}
+
+.platform-items > li > eo-link {
+  width: 100%;
+  cursor: pointer;
+}
+
+.platform-item {
+  padding: 12px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.platform-item:hover .platform-item-icon,
+.platform-item:hover .platform-item-name {
+  color: var(--color-brand-hover);
+}
+
+.platform-item-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.platform-item-icon {
+  margin-right: 8px;
+  font-size: 14px;
+  color: var(--text-color-secondary);
+  flex-shrink: 0;
+}
+
+.platform-item-name {
+  font-weight: 500;
+  color: var(--text-color-title);
+  line-height: 18px;
+}
+
+.platform-item-description {
+  margin-left: 22px;
+  color: var(--text-color-secondary);
+  line-height: 18px;
+}

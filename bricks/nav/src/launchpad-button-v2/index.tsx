@@ -3,7 +3,7 @@ import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import { unwrapProvider } from "@next-core/utils/general";
 import "@next-core/theme";
-import { getHistory } from "@next-core/runtime";
+import { getHistory, getRuntime } from "@next-core/runtime";
 import type { lockBodyScroll as _lockBodyScroll } from "@next-bricks/basic/data-providers/lock-body-scroll/lock-body-scroll";
 // import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
 import hotkeys from "hotkeys-js";
@@ -11,8 +11,13 @@ import classNames from "classnames";
 // import { K, NS, locales } from "./i18n.js";
 import LaunchpadSvg from "../images/launchpad.svg";
 import styleText from "./styles.shadow.css";
+import platformCategoryStyleText from "./PlatformCategory.shadow.css";
 import { Launchpad } from "./Launchpad";
-import { deferredFavorites, deferredLaunchpadInfo } from "./useLaunchpadInfo";
+import {
+  deferredFavorites,
+  deferredLaunchpadInfo,
+  deferredPlatformCategories,
+} from "./useLaunchpadInfo";
 import "./host-context.css";
 
 // initializeReactI18n(NS, locales);
@@ -29,7 +34,7 @@ const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
  */
 export
 @defineElement("eo-launchpad-button-v2", {
-  styleTexts: [styleText],
+  styleTexts: [styleText, platformCategoryStyleText],
 })
 class EoLaunchpadButtonV2 extends ReactNextElement {
   disconnectedCallback(): void {
@@ -94,6 +99,8 @@ export function EoLaunchpadButtonV2Component({ host }: { host: HTMLElement }) {
   useEffect(() => {
     deferredLaunchpadInfo.schedulePrefetch();
     deferredFavorites.schedulePrefetch();
+    getRuntime()?.getFeatureFlags()["launchpad-show-app-category"] &&
+      deferredPlatformCategories.schedulePrefetch();
   }, []);
 
   return (
