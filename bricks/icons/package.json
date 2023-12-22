@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/icons",
-  "version": "0.7.5",
+  "version": "0.8.0",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/icons",
   "repository": {
     "type": "git",
@@ -75,9 +75,9 @@
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
-    "@next-shared/icons": "^0.0.0",
     "@next-core/build-next-bricks": "^1.19.0",
     "@next-core/test-next": "^1.0.12",
+    "@next-shared/icons": "^0.1.0",
     "copy-webpack-plugin": "^11.0.0"
   }
 }

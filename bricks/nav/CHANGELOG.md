@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.9.7...@next-bricks/nav@0.10.0) (2023-12-22)
+
+
+### Features
+
+* launchpad 支持分类展示 ([bdca6cd](https://github.com/easyops-cn/next-bricks/commit/bdca6cd0c07abdd7b160e7f6be0302b1b44ee1e5))
+* Prefetch category data ([21f6162](https://github.com/easyops-cn/next-bricks/commit/21f6162542e6745ed03ca4f8d9df690601f7b25a))
+
+
+
+
+
 ## [0.9.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.9.6...@next-bricks/nav@0.9.7) (2023-12-22)
 
 **Note:** Version bump only for package @next-bricks/nav
