@@ -5,7 +5,7 @@ import CopyPlugin from "copy-webpack-plugin";
 
 const require = createRequire(import.meta.url);
 const easyopsIconsDir = path.resolve(
-  require.resolve("@next-core/brick-icons/package.json"),
+  require.resolve("@next-shared/icons/package.json"),
   "../src/icons"
 );
 

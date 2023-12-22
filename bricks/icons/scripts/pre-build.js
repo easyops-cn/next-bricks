@@ -1,5 +1,5 @@
 /**
- * - 拷贝 @next-core/brick-icons
+ * - 拷贝 @next-shared/icons
  * - 生成 FontAwesome 图标数据以便使用 dynamic imports
  */
 import path from "node:path";
@@ -24,7 +24,7 @@ const tasks = [];
 {
   // --- EasyOps Icons start ---
   const legacyEasyOpsIconsPath = path.resolve(
-    require.resolve("@next-core/brick-icons/package.json"),
+    require.resolve("@next-shared/icons/package.json"),
     "../src/icons"
   );
   const newEasyOpsIconsPath = path.resolve(
