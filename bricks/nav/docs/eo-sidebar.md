@@ -14,18 +14,18 @@ properties:
     title: 这是一个菜单标题
     menuItems:
       - icon:
-          icon: chevron-circle-right
-          lib: fa
-          prefix: fas
+          lib: easyops
+          category: second-menu
+          icon: automatic-collection-second-menu
         text: item 1
         to: /nlicro-test3/breadcrumb/new
         type: default
         children: []
         key: "0"
       - icon:
-          icon: trash-alt
-          lib: fa
-          prefix: fas
+          lib: easyops
+          category: second-menu
+          icon: deployment-instance-second-menu
         text: item 2
         to: item 2
         type: default
@@ -34,33 +34,38 @@ properties:
       - type: subMenu
         title: sub 1
         icon:
-          icon: trash-can
-          lib: fa
-          prefix: fas
+          lib: easyops
+          category: second-menu
+          icon: deployment-architecture-second-menu
         items:
-          - icon:
-              icon: message
-              lib: fa
-              prefix: fas
-            text: inner 1
+          - text: inner 1
             to: inner 1
             type: default
             children: []
             key: "2.0"
-          - icon:
-              icon: text-height
-              lib: fa
-              prefix: fas
-            text: inner 2
+          - text: inner 2
             to: inner 2
             type: default
             children: []
             key: "2.1"
+          - type: group
+            title: group in submenu
+            items:
+              - text: item - 1
+                to: item - 1
+                type: default
+                children: []
+                key: "2.3.1"
+              - text: item - 2
+                to: item - 2
+                type: default
+                children: []
+                key: "2.3.2"
         key: "2"
       - icon:
-          icon: user-times
-          lib: fa
-          prefix: fas
+          lib: easyops
+          category: second-menu
+          icon: elasticsearch-second-menu
         text: item 3
         to: item 3
         type: default
@@ -70,18 +75,18 @@ properties:
         title: group 1
         items:
           - icon:
-              icon: message
-              lib: fa
-              prefix: fas
+              lib: easyops
+              category: second-menu
+              icon: change-history-second-menu
             text: inner 3
             to: inner 3
             type: default
             children: []
             key: "4.0"
           - icon:
-              icon: circle-chevron-right
-              lib: fa
-              prefix: fas
+              lib: easyops
+              category: second-menu
+              icon: broadband-line-second-menu
             text: inner 4
             to: inner 4
             type: default
@@ -89,9 +94,9 @@ properties:
             key: "4.1"
         key: "4"
       - icon:
-          icon: user-xmark
-          lib: fa
-          prefix: fas
+          lib: easyops
+          category: second-menu
+          icon: fill-in-second-menu
         text: item 4
         to: item 4
         type: default

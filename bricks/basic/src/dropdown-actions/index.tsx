@@ -161,6 +161,7 @@ export function EoDropdownActionsComponent({
       trigger="click"
       disabled={disabled}
       active={visible}
+      distance={4}
       beforeVisibleChange={(e) => {
         setVisible(e.detail);
         onVisibleChange?.(e.detail);

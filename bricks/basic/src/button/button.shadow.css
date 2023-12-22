@@ -12,8 +12,6 @@ button {
   border: none;
   background: none;
   cursor: pointer;
-  padding: 4px 15px;
-  height: 32px;
   font-size: 14px;
   display: flex;
   justify-content: center;
@@ -36,9 +34,8 @@ button:active {
 }
 
 .circle {
-  padding: 4px 8px;
+  padding: 4px 7px;
   border-radius: 50%;
-  min-width: 32px;
 }
 
 /* primary */
@@ -275,23 +272,22 @@ button:active {
 
 /* size */
 .xs {
+  font-size: 10px;
   height: 22px;
-  font-size: 11px;
 }
 
 .small {
+  font-size: 12px;
   height: 26px;
-  font-size: 13px;
-  line-height: 18px;
 }
 
 .medium {
-  line-height: 22px;
+  height: 30px;
 }
 
 .large {
-  height: 40px;
   font-size: 18px;
+  height: 40px;
 }
 
 .xs.round {
@@ -308,4 +304,16 @@ button:active {
 
 :host([has-slot]) button > eo-icon {
   margin-right: 8px;
+}
+
+button {
+  padding: 4px 7px;
+}
+
+:host([has-slot]) button {
+  padding: 4px 16px;
+}
+
+:host([has-slot]):host([shape="circle"]) button {
+  padding: 4px 10px;
 }

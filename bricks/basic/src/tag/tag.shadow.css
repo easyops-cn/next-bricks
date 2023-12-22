@@ -1,14 +1,14 @@
 .tag {
   display: inline-block;
   box-sizing: border-box;
-  margin: 0px 8px 0px 0px;
-  padding: 0px 9px;
+  /* margin: 0px 8px 0px 0px; */
+  padding: 0px 8px;
   color: var(--antd-text-color);
   list-style: none;
   height: auto;
   font-size: 12px;
   line-height: 20px;
-  border-radius: 12px;
+  border-radius: var(--small-border-radius);
   white-space: nowrap;
   background: var(--antd-background-color-light);
   opacity: 1;
@@ -31,6 +31,13 @@
   cursor: pointer;
   background-color: var(--antd-tag-checkable-bg);
   color: var(--antd-tag-checkable-color);
+}
+
+.tag.closable:hover {
+  background: #e8e8e8;
+  .close-icon {
+    color: #595959;
+  }
 }
 
 .tag.checkable:not(.checked, .disabled):hover {
@@ -56,16 +63,22 @@
 .tag.small {
   font-size: 12px;
   list-style: 20px;
+  line-height: 12px;
+  height: 16px;
 }
 
 .tag.medium {
   font-size: 14px;
   list-style: 22px;
+
+  height: 24px;
 }
 
 .tag.large {
   font-size: 16px;
   list-style: 24px;
+  line-height: 28px;
+  height: 32px;
 }
 /* Size */
 

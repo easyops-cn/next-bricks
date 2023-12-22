@@ -93,29 +93,33 @@
 ### Icons
 
 ```yaml preview gap
-- brick: eo-button
+- brick: eo-flex-layout
   properties:
-    icon:
-      lib: antd
-      icon: bell
-    textContent: Alarm
-- brick: eo-button
-  properties:
-    icon:
-      lib: antd
-      icon: bell
-- brick: eo-button
-  properties:
-    icon:
-      lib: antd
-      icon: bell
-    type: primary
-- brick: eo-button
-  properties:
-    icon:
-      lib: antd
-      icon: bell
-    shape: circle
+    gap: 8px
+  children:
+    - brick: eo-button
+      properties:
+        icon:
+          lib: antd
+          icon: bell
+        textContent: Alarm
+    - brick: eo-button
+      properties:
+        icon:
+          lib: antd
+          icon: bell
+    - brick: eo-button
+      properties:
+        icon:
+          lib: antd
+          icon: bell
+        type: primary
+    - brick: eo-button
+      properties:
+        icon:
+          lib: antd
+          icon: bell
+        shape: circle
 ```
 
 ### Click

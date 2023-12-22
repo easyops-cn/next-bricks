@@ -1,48 +1,37 @@
 .notification::part(base) {
-  border-radius: 32px;
   border: var(--antd-message-border);
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
   box-shadow: 0px 6px 18px 0px rgba(0, 0, 0, 0.14) !important;
   backdrop-filter: blur(20px);
+  background: var(--color-fill-bg-container-3);
+  border-radius: 6px;
 }
 
 .notification::part(icon) {
-  padding-inline-start: 22px;
-  font-size: 28px;
+  padding-inline-start: 24px;
+  font-size: 22px;
 }
 
 .notification::part(message) {
-  padding: 16px 22px 16px 8px;
+  padding: 16px 24px 16px 15px;
 }
 
-.notification[variant="success"]::part(base) {
-  background: var(--antd-message-bg-success);
+.notification::part(close-button)::part(base) {
+  padding: 4px;
 }
 
 .notification[variant="success"]::part(icon) {
   color: var(--palette-green-6);
 }
 
-.notification[variant="primary"]::part(base) {
-  background: var(--antd-message-bg-info);
-}
-
 .notification[variant="primary"]::part(icon) {
   color: var(--palette-blue-6);
 }
 
-.notification[variant="danger"]::part(base) {
-  background: var(--antd-message-bg-error);
-}
-
 .notification[variant="danger"]::part(icon) {
   color: var(--palette-red-6);
-}
-
-.notification[variant="warning"]::part(base) {
-  background: var(--antd-message-bg-warn);
 }
 
 .notification[variant="warning"]::part(icon) {
@@ -53,10 +42,25 @@
   width: 28rem;
   margin-right: 16px;
 }
+
+.topRight::part(icon) {
+  padding: 16px 0 0 24px;
+  align-items: flex-start;
+}
+
+.topRight::part(close-button) {
+  padding: 12px 24px 0 0;
+  align-items: flex-start;
+  font-size: 14px;
+}
+
 .rectAngle::part(base) {
   border-radius: 0px;
 }
 .title {
   font-size: 16px;
   color: var(--antd-heading-color);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }

@@ -97,6 +97,7 @@ export function EoMenuItemSubMenuComponent(props: EoMenuSubMenuProps) {
         <span className="sub-menu-label">
           {icon && (
             <WrappedIcon
+              part="menu-item-icon"
               className="menu-item-icon"
               {...(icon as GeneralIconProps)}
             />

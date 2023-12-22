@@ -247,6 +247,7 @@ function TagComponent(props: TagComponentProps) {
         checkable,
         checked,
         disabled,
+        closable,
       })}
       style={{
         ...(!useDefineColor && color

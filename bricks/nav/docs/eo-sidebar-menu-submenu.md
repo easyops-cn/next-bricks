@@ -8,7 +8,7 @@
 - brick: eo-sidebar-menu-submenu
   properties:
     style:
-      width: 200px
+      width: 196px
     icon:
       lib: antd
       icon: menu
@@ -22,21 +22,24 @@
       properties:
         textContent: "菜单项 1"
         icon:
-          lib: "easyops"
-          category: "monitor"
-          icon: "alert-rule"
+          lib: easyops
+          category: second-menu
+          icon: availability-zone-second-menu
+        inSubmenu: true
     - brick: eo-sidebar-menu-item
       properties:
         textContent: "菜单项 2"
         icon:
-          lib: "easyops"
-          category: "monitor"
-          icon: "alert-rule"
+          lib: easyops
+          category: second-menu
+          icon: basic-info-second-menu
+        inSubmenu: true
     - brick: eo-sidebar-menu-item
       properties:
         textContent: "菜单项 3"
         icon:
-          lib: "easyops"
-          category: "monitor"
-          icon: "alert-rule"
+          lib: easyops
+          category: second-menu
+          icon: deployment-tasks-second-menu
+        inSubmenu: true
 ```

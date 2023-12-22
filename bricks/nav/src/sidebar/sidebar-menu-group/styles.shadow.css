@@ -34,6 +34,7 @@
   justify-content: center;
   width: var(--menu-item-icon-size);
   height: var(--menu-item-icon-size);
+  color: var(--left-sidebar-item-collapsed-icon-color);
   font-size: var(--menu-item-icon-size);
   transition: all var(--side-bar-collapse-transition-duration)
     var(--side-bar-collapse-transition-timing-function);
@@ -62,8 +63,6 @@
   top: 50%;
   right: 12px;
   width: 10px;
-  /* color: var(--color-normal-text); */
-  color: var(--left-sidebar-item-arrow-color);
   transform: translateY(-2px);
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
@@ -113,7 +112,7 @@
 
 /* menu-collapsed */
 :host([menu-collapsed]) .menu-group-title {
-  padding: 10px calc(50% - var(--menu-item-icon-size) / 2);
+  padding: 0px calc(50% - var(--menu-item-icon-size) / 2);
 }
 
 :host(:not([menu-collapsed])) .menu-group-title-icon-container {

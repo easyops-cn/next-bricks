@@ -113,7 +113,7 @@
 
 /* menu-collapsed */
 :host([menu-collapsed]) .menu-group-title {
-  padding: 10px calc(50% - var(--menu-item-icon-size) / 2);
+  padding: 0px calc(50% - var(--menu-item-icon-size) / 2);
 }
 
 :host(:not([menu-collapsed])) .menu-group-title-icon-container {
@@ -136,7 +136,6 @@
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
-  color: #7f8ba6;
 }
 
 /* collapsable & group list hidden */

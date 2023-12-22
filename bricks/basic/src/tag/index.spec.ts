@@ -26,7 +26,7 @@ describe("basic.general-tag", () => {
 
     expect(
       (element.shadowRoot?.querySelector(".tag") as HTMLElement).className
-    ).toBe("tag large color-yellow checkable checked");
+    ).toBe("tag large color-yellow checkable checked closable");
     expect(
       element.shadowRoot?.querySelector(".tag-icon.custom-icon")
     ).toBeTruthy();
@@ -51,7 +51,7 @@ describe("basic.general-tag", () => {
     expect(mockCloseFn).toBeCalled();
     expect(
       (element.shadowRoot?.querySelector(".tag") as HTMLElement).className
-    ).toBe("tag large color-yellow checkable");
+    ).toBe("tag large color-yellow checkable closable");
 
     act(() => {
       document.body.removeChild(element);

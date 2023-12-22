@@ -33,10 +33,12 @@
       position: absolute;
       width: 6px;
       height: 1.5px;
-      background-color: currentColor;
+      background-color: var(--left-sidebar-item-arrow-color);
       border-radius: 2px;
-      transition: background 0.3s var(--arrow-animation),
-        transform 0.3s var(--arrow-animation), top 0.3s var(--arrow-animation),
+      transition:
+        background 0.3s var(--arrow-animation),
+        transform 0.3s var(--arrow-animation),
+        top 0.3s var(--arrow-animation),
         color 0.3s var(--arrow-animation);
     }
 
@@ -46,10 +48,12 @@
       position: absolute;
       width: 6px;
       height: 1.5px;
-      background-color: currentColor;
+      background-color: var(--left-sidebar-item-arrow-color);
       border-radius: 2px;
-      transition: background 0.3s var(--arrow-animation),
-        transform 0.3s var(--arrow-animation), top 0.3s var(--arrow-animation),
+      transition:
+        background 0.3s var(--arrow-animation),
+        transform 0.3s var(--arrow-animation),
+        top 0.3s var(--arrow-animation),
         color 0.3s var(--arrow-animation);
     }
   }
