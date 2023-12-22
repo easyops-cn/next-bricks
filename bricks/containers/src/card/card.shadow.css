@@ -1,6 +1,7 @@
 :host {
   --eo-card-border-color: none;
   --eo-card-box-shadow: none;
+  --eo-card-header-border-bottom: 1px solid var(--card-border-color-split);
 }
 
 :host([outline="border"]) {
@@ -9,6 +10,10 @@
 
 :host([outline="shadow"]) {
   --eo-card-box-shadow: var(--connected-overlay-shadow);
+}
+
+:host([hide-split]) {
+  --eo-card-header-border-bottom: none;
 }
 
 .card {
@@ -29,17 +34,24 @@
 }
 
 .card-head {
-  margin-bottom: -1px;
+  margin-top: 1px;
   padding: var(--eo-card-head-padding);
   color: var(--antd-heading-color);
   font-weight: 500;
   font-size: 16px;
-  border-bottom: 1px solid var(--card-border-color-split);
+  border-bottom: var(--eo-card-header-border-bottom);
+  line-height: 22px;
+  box-sizing: border-box;
 }
 
 .card-head-wrapper {
   display: flex;
   align-items: center;
+  gap: 4px;
+}
+
+.header-icon {
+  font-size: 20px;
 }
 
 .card-head-title {

@@ -6,7 +6,7 @@ import { isEmpty } from "lodash";
 import "@next-core/theme";
 import styleText from "./card.shadow.css";
 import "./host-context.css";
-
+import { GeneralIcon, GeneralIconProps } from "@next-bricks/icons/general-icon";
 export interface OperationButton {
   id: string;
   eventName: string;
@@ -23,9 +23,11 @@ export interface CardProps {
   hasExtraSlot?: boolean;
   operationButtons?: OperationButton[];
   headerStyle?: React.CSSProperties;
+  headerIcon?: GeneralIconProps;
   background?: boolean | string;
   compact?: boolean;
   outline?: CardOutline;
+  hideSplit?: boolean;
 }
 
 export type CardOutline =
@@ -38,6 +40,8 @@ export type CardOutline =
 const WrappedButton = wrapBrick<Button, ButtonProps>("eo-button");
 
 const { defineElement, property } = createDecorators();
+
+const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 /**
  * 通用卡片构件
@@ -56,6 +60,14 @@ class Card extends ReactNextElement implements CardProps {
    * 标题
    */
   @property() accessor cardTitle: string | undefined;
+
+  /**
+   * 头部图标
+   */
+  @property({
+    attribute: false,
+  })
+  accessor headerIcon: GeneralIconProps | undefined;
 
   /**
    * 自动撑满父容器
@@ -111,6 +123,14 @@ class Card extends ReactNextElement implements CardProps {
   @property()
   accessor outline: CardOutline | undefined;
 
+  /**
+   * 是否隐藏分割线
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor hideSplit: boolean | undefined;
+
   render() {
     return (
       <CardComponent
@@ -120,6 +140,7 @@ class Card extends ReactNextElement implements CardProps {
         hasExtraSlot={this.hasExtraSlot}
         operationButtons={this.operationButtons}
         headerStyle={this.headerStyle}
+        headerIcon={this.headerIcon}
         background={this.background}
       />
     );
@@ -133,6 +154,7 @@ export function CardComponent({
   hasExtraSlot,
   operationButtons,
   headerStyle,
+  headerIcon,
   background = true,
 }: CardProps) {
   const renderButtons = useMemo(
@@ -151,6 +173,9 @@ export function CardComponent({
     () => (
       <div className="card-head" style={headerStyle}>
         <div className="card-head-wrapper">
+          {headerIcon && (
+            <WrappedGeneralIcon className="header-icon" {...headerIcon} />
+          )}
           {cardTitle && (
             <div className="card-head-title">
               {cardTitle}
@@ -166,7 +191,14 @@ export function CardComponent({
         </div>
       </div>
     ),
-    [headerStyle, cardTitle, hasExtraSlot, operationButtons, renderButtons]
+    [
+      headerIcon,
+      headerStyle,
+      cardTitle,
+      hasExtraSlot,
+      operationButtons,
+      renderButtons,
+    ]
   );
 
   return (
@@ -185,16 +217,16 @@ export function CardComponent({
       {(cardTitle || hasExtraSlot) && header}
       <div
         className="card-body"
-        style={
-          verticalCenter
+        style={{
+          ...(verticalCenter
             ? {
                 height: "100%",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
               }
-            : {}
-        }
+            : {}),
+        }}
       >
         <div>
           <slot></slot>

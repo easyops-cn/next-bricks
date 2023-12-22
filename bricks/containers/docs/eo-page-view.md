@@ -21,7 +21,7 @@ children:
     slot: sidebar
     properties:
       style:
-        width: 150px
+        width: 220px
         height: 100%
         background: purple
       textContent: Sidebar
@@ -29,7 +29,7 @@ children:
     slot: subSidebar
     properties:
       style:
-        width: 150px
+        width: 208px
         height: 100%
         background: red
       textContent: Sub-Sidebar
@@ -61,7 +61,7 @@ children:
     slot: sidebar
     properties:
       style:
-        width: 150px
+        width: 220px
         height: 100%
         background: purple
       textContent: Sidebar
@@ -69,20 +69,26 @@ children:
     slot: subSidebar
     properties:
       style:
-        width: 150px
+        width: 208px
         height: 100%
         background: red
       textContent: Sub-Sidebar
   - brick: eo-main-view
     children:
-      - brick: div
+      - brick: eo-frame-breadcrumb
         slot: breadcrumb
         properties:
-          textContent: Home / List / Detail
-      - brick: h1
+          breadcrumb:
+            - text: Home
+              to: /Home
+            - text: Detail
+              to: /Detail
+            - text: List
+              to: /List
+      - brick: eo-page-title
         slot: pageTitle
         properties:
-          textContent: Hello World
+          pageTitle: Hello World
       - brick: div
         properties:
           textContent: Say hello to everyone! And then say goodbye to everyone!

@@ -16,6 +16,7 @@ export interface CategoryContainerProps {
   contentStyle?: React.CSSProperties;
   containerStyle?: React.CSSProperties;
   split?: boolean;
+  headerMask?: boolean;
 }
 
 /**
@@ -68,6 +69,14 @@ class Category extends ReactNextElement implements CategoryContainerProps {
   })
   accessor split: boolean;
 
+  /**
+   * 是否显示头部线条
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor headerMask: boolean;
+
   render() {
     return (
       <CategoryElement
@@ -75,13 +84,20 @@ class Category extends ReactNextElement implements CategoryContainerProps {
         contentStyle={this.contentStyle}
         headerStyle={this.headerStyle}
         containerStyle={this.containerStyle}
+        headerMask={this.headerMask}
       />
     );
   }
 }
 
 function CategoryElement(props: CategoryContainerProps): React.ReactElement {
-  const { categories, headerStyle, contentStyle, containerStyle } = props;
+  const {
+    categories,
+    headerStyle,
+    contentStyle,
+    containerStyle,
+    headerMask = true,
+  } = props;
   return (
     <div className="category-container-wrapper" style={containerStyle}>
       {categories?.map((categoryItem: categoryProps): React.ReactElement => {
@@ -89,7 +105,7 @@ function CategoryElement(props: CategoryContainerProps): React.ReactElement {
           <div className="category-item" key={categoryItem.key}>
             <div className="category-item-header" style={headerStyle}>
               <div className="category-left-wrap">
-                <span className="header-mark"></span>
+                {headerMask && <span className="header-mark" />}
                 <span className="header-title">
                   {categoryItem.title}
                   <slot

@@ -23,7 +23,7 @@ interface MicroViewProps {
  * 基础页面布局
  * @author sailorshe
  * @category container-layout
- *
+ * @deprecated
  */
 @defineElement("eo-micro-view", {
   styleTexts: [styleText],

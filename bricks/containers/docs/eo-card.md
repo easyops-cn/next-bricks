@@ -48,6 +48,30 @@
               height: 50px
 ```
 
+### Hide Split
+
+```yaml preview
+- brick: eo-card
+  properties:
+    cardTitle: 卡片标题
+    hideSplit: true
+  slots:
+    "":
+      bricks:
+        - brick: div
+          properties:
+            textContent: Content
+            style:
+              display: flex
+              background: pink
+              height: 200px
+              alignItems: center
+              justifyContent: center
+              fontSize: 22px
+              fontWeight: 500
+              color: "#fff"
+```
+
 ### Extra Slot
 
 ```yaml preview
@@ -58,31 +82,9 @@
   slots:
     extra:
       bricks:
-        - brick: div
+        - brick: eo-button
           properties:
-            textContent: Extra Div
-```
-
-### Footer slot
-
-```yaml preview
-- brick: eo-card
-  properties:
-    cardTitle: 卡片标题
-  slots:
-    "":
-      bricks:
-        - brick: div
-          properties:
-            textContent: Content
-    footer:
-      bricks:
-        - brick: div
-          properties:
-            textContent: Footer Div
-            style:
-              padding: 5px 20px
-              borderTop: "1px solid #ddd"
+            textContent: Extra Button
 ```
 
 ### titleSuffix Slot
@@ -94,9 +96,39 @@
   slots:
     titleSuffix:
       bricks:
-        - brick: span
+        - brick: eo-tooltip
           properties:
-            textContent: titleSuffix span
+            content: This is a tooltip
+            trigger: hover
+          children:
+            - brick: eo-icon
+              properties:
+                lib: antd
+                category: filled
+                icon: info-circle
+                style:
+                  height: 14px
+                  lineHeight: 14px
+                  fontSize: 14px
+                  marginLeft: 6px
+                  color: var(--color-normal-text)
+```
+
+### Header Icon
+
+```yaml preview
+- brick: eo-card
+  properties:
+    cardTitle: 卡片标题
+    headerIcon:
+      lib: antd
+      icon: search
+  slots:
+    "":
+      bricks:
+        - brick: div
+          properties:
+            textContent: Content
 ```
 
 ### Header Style
@@ -164,16 +196,18 @@
       properties:
         cardTitle: 卡片标题
         outline: border
+        hideSplit: true
         textContent: "outline: border"
     - brick: eo-card
       properties:
         cardTitle: 卡片标题
+        hideSplit: true
         outline: shadow
         textContent: "outline: shadow"
     - brick: eo-card
       properties:
         cardTitle: 卡片标题
         outline: background
-        background: darkgreen
+        background: var(--color-fill-bg-base-4)
         textContent: "outline: background"
 ```
