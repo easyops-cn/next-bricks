@@ -41,9 +41,7 @@ const WrappedButton = wrapBrick<Button, ButtonProps>("eo-button");
 
 const { defineElement, property } = createDecorators();
 
-const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 /**
  * 通用卡片构件
@@ -126,7 +124,7 @@ class Card extends ReactNextElement implements CardProps {
   accessor outline: CardOutline | undefined;
 
   /**
-   * 分割线
+   * 是否隐藏分割线
    */
   @property({
     type: Boolean,
@@ -143,7 +141,6 @@ class Card extends ReactNextElement implements CardProps {
         operationButtons={this.operationButtons}
         headerStyle={this.headerStyle}
         headerIcon={this.headerIcon}
-        hideSplit={this.hideSplit}
         background={this.background}
       />
     );

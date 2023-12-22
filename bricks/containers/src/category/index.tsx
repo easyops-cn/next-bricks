@@ -70,7 +70,7 @@ class Category extends ReactNextElement implements CategoryContainerProps {
   accessor split: boolean;
 
   /**
-   * 是否隐藏头部线条
+   * 是否显示头部线条
    */
   @property({
     type: Boolean,
