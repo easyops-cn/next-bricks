@@ -2280,11 +2280,6 @@
   resolved "https://registry.yarnpkg.com/@next-core/brick-dll-v3/-/brick-dll-v3-0.7.18.tgz#9e3150726955f6994d3cdafc6e8888013512c8b8"
   integrity sha512-GCTAJN84UDd8lNNcYDQaHHRdw8Yr3DdA1j5E3XwukDz9vIKXOjiRNdAv3rhDoVEZU/ozsChqMB6I6B4DVIw2BQ==
 
-"@next-core/brick-icons@^2.33.25":
-  version "2.33.25"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-icons/-/brick-icons-2.33.25.tgz#88b5d02cdf0eba240c9ef79440fcef6f1bfc1988"
-  integrity sha512-R/3g4jZfAT3DL03b3hLxsWxTHNwaDhFkJ7teWJpM0zfXElHWWF+zj4V/BjPynYcyvvqFms4Zm2xZQdVZnK40Pw==
-
 "@next-core/brick-manifest@^0.7.0":
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@next-core/brick-manifest/-/brick-manifest-0.7.0.tgz#77954eefee65eeef7c4b867ca0a26cbc928782c7"

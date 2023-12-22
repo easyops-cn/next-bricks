@@ -4,7 +4,8 @@
   "overrides": [
     {
       "files": [
-        "bricks/*/scripts/**/*.js"
+        "bricks/*/scripts/**/*.js",
+        "shared/*/scripts/**/*.js"
       ],
       "extends": "@next-core/eslint-config-next/node"
     },
