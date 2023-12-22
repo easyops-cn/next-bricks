@@ -9,6 +9,8 @@ import type { EasyOpsIcon } from "./index.js";
       Promise.resolve(
         `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="15px" height="17px" viewBox="0 0 15 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>WILL BE REMOVED</title>
+    <mask fill="white"></mask>
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g transform="translate(-1804.000000, -58.000000)" stroke="#595959">
             <g transform="translate(1805.000000, 59.000000)">
@@ -32,46 +34,49 @@ describe("icons.easyops-icon", () => {
     expect(element.shadowRoot).toBeTruthy();
     await (global as any).flushPromises();
     expect(element.shadowRoot?.childNodes).toMatchInlineSnapshot(`
-      NodeList [
-        <style>
-          icons.shadow.css
-        </style>,
-        <svg
-          height="1em"
-          version="1.1"
-          viewBox="0 0 15 17"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
+NodeList [
+  <style>
+    icons.shadow.css
+  </style>,
+  <svg
+    height="1em"
+    version="1.1"
+    viewBox="0 0 15 17"
+    width="1em"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+  >
+    <mask
+      fill="white"
+    />
+    <g
+      fill="none"
+      fill-rule="evenodd"
+      stroke="none"
+      stroke-width="1"
+    >
+      <g
+        stroke="currentColor"
+        transform="translate(-1804.000000, -58.000000)"
+      >
+        <g
+          transform="translate(1805.000000, 59.000000)"
         >
-          <g
-            fill="none"
-            fill-rule="evenodd"
-            stroke="none"
-            stroke-width="1"
-          >
-            <g
-              stroke="currentColor"
-              transform="translate(-1804.000000, -58.000000)"
-            >
-              <g
-                transform="translate(1805.000000, 59.000000)"
-              >
-                <circle
-                  cx="6.512"
-                  cy="3.552"
-                  r="3.552"
-                />
-                <path
-                  d="M10.448,8.184 Z"
-                  stroke-linecap="square"
-                />
-              </g>
-            </g>
-          </g>
-        </svg>,
-      ]
-    `);
+          <circle
+            cx="6.512"
+            cy="3.552"
+            r="3.552"
+          />
+          <path
+            d="M10.448,8.184 Z"
+            stroke-linecap="square"
+          />
+        </g>
+      </g>
+    </g>
+  </svg>,
+]
+`);
     document.body.removeChild(element);
     expect(element.shadowRoot?.childNodes.length).toBe(0);
 
@@ -93,46 +98,49 @@ describe("icons.easyops-icon", () => {
     expect(element.shadowRoot).toBeTruthy();
     await (global as any).flushPromises();
     expect(element.shadowRoot?.childNodes).toMatchInlineSnapshot(`
-      NodeList [
-        <style>
-          icons.shadow.css
-        </style>,
-        <svg
-          height="1em"
-          version="1.1"
-          viewBox="0 0 15 17"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-          xmlns:xlink="http://www.w3.org/1999/xlink"
+NodeList [
+  <style>
+    icons.shadow.css
+  </style>,
+  <svg
+    height="1em"
+    version="1.1"
+    viewBox="0 0 15 17"
+    width="1em"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+  >
+    <mask
+      fill="white"
+    />
+    <g
+      fill="none"
+      fill-rule="evenodd"
+      stroke="none"
+      stroke-width="1"
+    >
+      <g
+        stroke="#595959"
+        transform="translate(-1804.000000, -58.000000)"
+      >
+        <g
+          transform="translate(1805.000000, 59.000000)"
         >
-          <g
-            fill="none"
-            fill-rule="evenodd"
-            stroke="none"
-            stroke-width="1"
-          >
-            <g
-              stroke="#595959"
-              transform="translate(-1804.000000, -58.000000)"
-            >
-              <g
-                transform="translate(1805.000000, 59.000000)"
-              >
-                <circle
-                  cx="6.512"
-                  cy="3.552"
-                  r="3.552"
-                />
-                <path
-                  d="M10.448,8.184 Z"
-                  stroke-linecap="square"
-                />
-              </g>
-            </g>
-          </g>
-        </svg>,
-      ]
-    `);
+          <circle
+            cx="6.512"
+            cy="3.552"
+            r="3.552"
+          />
+          <path
+            d="M10.448,8.184 Z"
+            stroke-linecap="square"
+          />
+        </g>
+      </g>
+    </g>
+  </svg>,
+]
+`);
     document.body.removeChild(element);
   });
 
