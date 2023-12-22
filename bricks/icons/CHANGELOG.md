@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.7.3...@next-bricks/icons@0.7.4) (2023-12-22)
+
+
+### Bug Fixes
+
+* keep color for masks, remove titles in svg ([8cab821](https://github.com/easyops-cn/next-bricks/commit/8cab821a3dcaf0b8f2d1766fd13e795d5203dc8e))
+
+
+
+
+
 ## [0.7.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.7.2...@next-bricks/icons@0.7.3) (2023-12-19)
 
 **Note:** Version bump only for package @next-bricks/icons
