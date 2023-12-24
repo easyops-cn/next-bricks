@@ -42,7 +42,7 @@
     "@next-core/i18n": "^1.0.34",
     "@next-core/react-element": "^1.0.17",
     "@next-core/runtime": "^1.28.1",
-    "@next-core/theme": "^1.4.5",
+    "@next-core/theme": "^1.4.6",
     "@next-shared/ui-test": "^1.0.5",
     "classnames": "^2.3.2",
     "file-saver": "^2.0.5",
