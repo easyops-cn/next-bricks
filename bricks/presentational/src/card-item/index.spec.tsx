@@ -61,6 +61,45 @@ describe("eo-card-item", () => {
     });
     expect(onActionClick).toBeCalled();
 
+    await act(async () => {
+      element.hasCover = true;
+      element.coverColor = "#d6d6ff";
+    });
+    expect(
+      element.shadowRoot?.querySelector(".card-cover-wrapper")
+    ).toBeTruthy();
+
+    await act(async () => {
+      element.coverColor = null;
+      element.coverImage = "./test.jpg";
+      element.avatarPosition = "cover";
+      element.avatar = {
+        imgSrc: "./test.jpg",
+      };
+    });
+    expect(
+      element.shadowRoot?.querySelector(".card-cover-wrapper")
+    ).toBeTruthy();
+    expect(
+      element.shadowRoot?.querySelector(".card-cover-wrapper .card-avatar img")
+    ).toBeTruthy();
+
+    await act(async () => {
+      element.avatar = {
+        icon: {
+          lib: "easyops",
+          category: "default",
+          icon: "monitor",
+        },
+      };
+    });
+    expect(
+      element.shadowRoot?.querySelector(".card-cover-wrapper")
+    ).toBeTruthy();
+    expect(
+      element.shadowRoot?.querySelector(".card-cover-wrapper .card-avatar")
+    ).toBeTruthy();
+
     act(() => {
       document.body.removeChild(element);
     });

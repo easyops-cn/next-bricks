@@ -176,6 +176,62 @@ properties:
                 size: small
 ```
 
+### Cover
+
+```yaml preview
+- brick: eo-card-item
+  properties:
+    style:
+      width: 280px
+    hasCover: true
+    coverImage: https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png
+    cardTitle: 信息卡片
+    description: 这是一只可爱的北极熊
+    url: /test
+    target: _blank
+- brick: eo-card-item
+  properties:
+    style:
+      width: 280px
+    hasCover: true
+    coverColor: "#167be0"
+    cardTitle: 资源监控微应用
+    description: 资源监控微应用相关前后台
+    url: /test
+    target: _blank
+    avatarPosition: cover
+    avatar:
+      icon:
+        lib: easyops
+        category: default
+        icon: monitor
+      color: "#fff"
+    actions:
+      - icon:
+          lib: antd
+          theme: outlined
+          icon: star
+          startColor: "#fff"
+          endColor: "#fff"
+        isDropdown: false
+        event: collect
+      - icon:
+          lib: antd
+          icon: copy
+          theme: outlined
+        text: 复制链接
+        isDropdown: true
+        event: copy
+      - icon:
+          lib: antd
+          icon: download
+          theme: outlined
+        text: 下载
+        isDropdown: true
+        disabled: true
+        event: download
+```
+
 ### Style type
 
 ```yaml preview

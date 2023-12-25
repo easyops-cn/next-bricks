@@ -60,6 +60,10 @@ export interface EoCardItemProps {
   hasExpandedArea1?: boolean;
   hasExpandedArea2?: boolean;
   styleType?: "grayish";
+  hasCover?: boolean;
+  coverImage?: string;
+  coverColor?: string;
+  avatarPosition?: "content" | "cover";
 }
 
 /**
@@ -74,7 +78,7 @@ export
 })
 class EoCardItem extends ReactNextElement implements EoCardItemProps {
   /**
-   * 是否有顶部
+   * 是否有顶部小标题
    */
   @property({
     type: Boolean,
@@ -140,6 +144,34 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
   accessor styleType: "grayish" | undefined;
 
   /**
+   * 是否使用卡片封面
+   */
+  @property()
+  accessor hasCover: boolean;
+
+  /**
+   * 卡片封面背景图片
+   */
+  @property({
+    attribute: false,
+  })
+  accessor coverImage: string;
+
+  /**
+   * 卡片封面背景颜色（使用纯色背景）
+   */
+  @property({
+    attribute: false,
+  })
+  accessor coverColor: string;
+
+  /**
+   * 图标是否放置在卡片封面
+   */
+  @property()
+  accessor avatarPosition: "content" | "cover";
+
+  /**
    * 是否有扩展区域 1
    * @internal
    */
@@ -194,6 +226,10 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
         target={this.target}
         callback={this.#renderCallback}
         onActionClick={this.#handleActionClick}
+        hasCover={this.hasCover}
+        coverImage={this.coverImage}
+        coverColor={this.coverColor}
+        avatarPosition={this.avatarPosition}
       />
     );
   }
@@ -216,6 +252,10 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
     target,
     href,
     callback,
+    hasCover,
+    coverImage,
+    coverColor,
+    avatarPosition,
     onActionClick,
   } = props;
 
@@ -247,8 +287,8 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
         shape = "round-square",
         bgColor,
         color,
-        size,
-        containerSize = 40,
+        size = avatarPosition === "cover" ? 68 : 40,
+        containerSize = avatarPosition === "cover" ? 90 : 40,
       } = avatar;
       return (
         <div
@@ -268,7 +308,7 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
         shape = "round-square",
         bgColor,
         imgStyle,
-        containerSize = 40,
+        containerSize = avatarPosition === "cover" ? 90 : 40,
       } = avatar;
       return (
         <div
@@ -285,19 +325,37 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
     }
   }, [avatar]);
 
+  // const shouldRenderCover = useMemo(() => {
+  //   return coverColor || coverImage;
+  // }, [coverColor, coverImage]);
+
   return (
     <WrappedLink type="plain" url={url} target={target} href={href}>
       <div className="card-wrapper" ref={callback}>
+        {hasCover && (
+          <div className="card-cover-wrapper">
+            <div
+              className="card-cover-content"
+              style={{
+                ...(coverImage && { backgroundImage: `url(${coverImage})` }),
+                ...(coverColor && { backgroundColor: coverColor }),
+              }}
+            >
+              {MiniActions}
+              {avatarPosition === "cover" && Avatar}
+            </div>
+          </div>
+        )}
         {hasHeader ? (
           <div className="card-header">
             <div className="auxiliary-text">{auxiliaryText}</div>
-            {MiniActions}
+            {!hasCover && MiniActions}
           </div>
         ) : (
-          MiniActions
+          !hasCover && MiniActions
         )}
         <div className="card-content">
-          {Avatar}
+          {avatarPosition !== "cover" && Avatar}
           <div className="card-content-container">
             <div className="card-title">{cardTitle}</div>
             <div className="card-description">{description}</div>
