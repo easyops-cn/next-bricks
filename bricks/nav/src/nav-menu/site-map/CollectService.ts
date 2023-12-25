@@ -1,4 +1,3 @@
-import { JsonStorage } from "@next-shared/general/JsonStorage";
 import type { SidebarMenuSimpleItem } from "@next-shared/general/types";
 import {
   MyCollectionApi_listMyCollection,
@@ -6,12 +5,14 @@ import {
   MyCollectionApi_upsertMyCollection,
 } from "@next-api-sdk/user-service-sdk";
 import { DRAG_DIRECTION, collectModule } from "./constants.js";
-import { cloneDeep, isEmpty } from "lodash";
+import { cloneDeep } from "lodash";
 import { handleHttpError } from "@next-core/runtime";
 
 export class CollectService {
   private maxCollectLength: number;
   private collectMap: Map<string, SidebarMenuSimpleItem[]> = new Map();
+  private collectPromise: Map<string, Promise<SidebarMenuSimpleItem[]>> =
+    new Map();
 
   constructor(maxCollectLength?: number) {
     this.maxCollectLength = maxCollectLength ?? 10;
@@ -22,22 +23,28 @@ export class CollectService {
   }
 
   public async fetchFavorites(id: string): Promise<SidebarMenuSimpleItem[]> {
-    if (!isEmpty(this.getFavoritesById(id))) {
-      return this.getFavoritesById(id);
+    const cachedPromise = this.collectPromise.get(id);
+    if (cachedPromise) {
+      const collectList = this.collectMap.get(id);
+
+      return collectList ? collectList : cachedPromise;
     }
 
-    const favorites = (
-      await MyCollectionApi_listMyCollection({
-        module: collectModule,
-        collectionName: id,
-      })
-    ).payloads
-      ?.map((item) => item.extInfo)
-      .filter(Boolean) as SidebarMenuSimpleItem[];
+    const favoritesPromise = MyCollectionApi_listMyCollection({
+      module: collectModule,
+      collectionName: id,
+    }).then((result) => {
+      const list = result.payloads
+        ?.map((item) => item.extInfo)
+        .filter(Boolean) as SidebarMenuSimpleItem[];
+      this.collectMap.set(id, list);
 
-    this.collectMap.set(id, favorites);
+      return list;
+    }) as Promise<SidebarMenuSimpleItem[]>;
 
-    return favorites;
+    this.collectPromise.set(id, favoritesPromise);
+
+    return favoritesPromise;
   }
 
   public setItemAsFavorite(id: string, item: SidebarMenuSimpleItem): void {

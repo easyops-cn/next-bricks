@@ -1,14 +1,10 @@
 import { describe, test, expect, jest } from "@jest/globals";
 import { CollectService } from "./CollectService.js";
 import { DRAG_DIRECTION } from "./constants.js";
-import {
-  MyCollectionApi_listMyCollection,
-  MyCollectionApi_upsertMyCollection,
-} from "@next-api-sdk/user-service-sdk";
+import { MyCollectionApi_listMyCollection } from "@next-api-sdk/user-service-sdk";
 
 jest.mock("@next-api-sdk/user-service-sdk");
 const mockListCollectionApi = MyCollectionApi_listMyCollection as jest.Mock;
-const mockUpsertCollectionApi = MyCollectionApi_upsertMyCollection as jest.Mock;
 
 jest.mock("@next-core/easyops-runtime", () => ({
   auth: {
@@ -175,5 +171,29 @@ describe("CollectService", () => {
       { text: "主机", to: "/host" },
       { text: "cmdb", to: "/cmdb" },
     ]);
+  });
+
+  test("should work with cache promise", async () => {
+    const collectService = new CollectService(5);
+
+    mockListCollectionApi.mockResolvedValueOnce({
+      module: "sidebarMenuCollect",
+      collectionName: "monitor",
+      payloads: [
+        {
+          name: "集群",
+          to: "/cluster",
+          extInfo: { text: "集群", to: "/cluster" },
+        },
+      ],
+    } as never);
+
+    collectService.fetchFavorites("monitor");
+
+    expect(mockListCollectionApi).toHaveBeenCalledTimes(1);
+
+    await collectService.fetchFavorites("monitor");
+
+    expect(mockListCollectionApi).toHaveBeenCalledTimes(1);
   });
 });
