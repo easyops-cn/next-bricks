@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.21.2...@next-bricks/presentational@0.22.0) (2023-12-25)
+
+
+### Bug Fixes
+
+* add hasCover attr ([11535d4](https://github.com/easyops-cn/next-bricks/commit/11535d4a3d3f2895f1a81488c7ebf96ddb2ca0db))
+* docs ([5c2a55b](https://github.com/easyops-cn/next-bricks/commit/5c2a55b06f24238337752a56e98e65b1bf1bf8ae))
+* 操作按钮区域错误 ([94ebc0f](https://github.com/easyops-cn/next-bricks/commit/94ebc0fad551a3148566af63a35cc6f97663bfa0))
+* 替换颜色变量 ([9c7b2d1](https://github.com/easyops-cn/next-bricks/commit/9c7b2d1c3823134b9e2932f4812ea50cea636832))
+
+
+### Features
+
+* eo-card-item 支持封面区域 ([cf9d38f](https://github.com/easyops-cn/next-bricks/commit/cf9d38f3ab19ccf0e9ce9c6d843c5b1da688f394))
+
+
+
+
+
 ## [0.21.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.21.1...@next-bricks/presentational@0.21.2) (2023-12-25)
 
 **Note:** Version bump only for package @next-bricks/presentational

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.50.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.49.4...@next-bricks/basic@0.50.0) (2023-12-25)
+
+
+### Features
+
+* eo-card-item 支持封面区域 ([cf9d38f](https://github.com/easyops-cn/next-bricks/commit/cf9d38f3ab19ccf0e9ce9c6d843c5b1da688f394))
+
+
+
+
+
 ## [0.49.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@0.49.3...@next-bricks/basic@0.49.4) (2023-12-25)
 
 **Note:** Version bump only for package @next-bricks/basic
