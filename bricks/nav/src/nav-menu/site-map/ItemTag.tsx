@@ -1,7 +1,6 @@
 import React, {
   useMemo,
   useCallback,
-  forwardRef,
   useRef,
   useState,
   useEffect,
@@ -199,7 +198,7 @@ export function QuickVisitItem(props: QuickVisitTagProps): React.ReactElement {
     () => (
       <div className="operation" ref={suffixRef}>
         <WrappedTooltip
-          content={t(K.REMOVE_ITEM_FROM_QUICK_ACCESS)}
+          content={t(K.REMOVE_ITEM_FROM_QUICK_ACCESS)!}
           hoist
           placement="bottom"
           className="close"
@@ -258,10 +257,10 @@ export function StarIcon({
     <WrappedTooltip
       content={
         active
-          ? t(K.REMOVE_ITEM_FROM_QUICK_ACCESS)
+          ? t(K.REMOVE_ITEM_FROM_QUICK_ACCESS)!
           : collectService.checkMaxCapacity(groupId)
-          ? t(K.MAX_COLLECT_COUNT_TIPS)
-          : t(K.ADD_ITEM_TO_QUICK_ACCESS)
+            ? t(K.MAX_COLLECT_COUNT_TIPS)!
+            : t(K.ADD_ITEM_TO_QUICK_ACCESS)!
       }
       className={classNames("star-icon", className)}
     >
