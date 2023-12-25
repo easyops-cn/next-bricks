@@ -1,4 +1,3 @@
-import { JsonStorage } from "@next-shared/general/JsonStorage";
 import type { SidebarMenuSimpleItem } from "@next-shared/general/types";
 import {
   MyCollectionApi_listMyCollection,
@@ -6,7 +5,7 @@ import {
   MyCollectionApi_upsertMyCollection,
 } from "@next-api-sdk/user-service-sdk";
 import { DRAG_DIRECTION, collectModule } from "./constants.js";
-import { cloneDeep, isEmpty } from "lodash";
+import { cloneDeep } from "lodash";
 import { handleHttpError } from "@next-core/runtime";
 
 export class CollectService {
@@ -22,9 +21,8 @@ export class CollectService {
   }
 
   public async fetchFavorites(id: string): Promise<SidebarMenuSimpleItem[]> {
-    if (!isEmpty(this.getFavoritesById(id))) {
-      return this.getFavoritesById(id);
-    }
+    const cached = this.collectMap.get(id);
+    if (cached) return cached;
 
     const favorites = (
       await MyCollectionApi_listMyCollection({
