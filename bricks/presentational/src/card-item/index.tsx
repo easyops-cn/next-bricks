@@ -60,6 +60,7 @@ export interface EoCardItemProps {
   hasExpandedArea1?: boolean;
   hasExpandedArea2?: boolean;
   styleType?: "grayish";
+  hasCover?: boolean;
   coverImage?: string;
   coverColor?: string;
   avatarPosition?: "content" | "cover";
@@ -143,15 +144,25 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
   accessor styleType: "grayish" | undefined;
 
   /**
-   * 卡片封面图片
+   * 是否使用卡片封面
    */
   @property()
+  accessor hasCover: boolean;
+
+  /**
+   * 卡片封面背景图片
+   */
+  @property({
+    attribute: false,
+  })
   accessor coverImage: string;
 
   /**
-   * 卡片封面颜色
+   * 卡片封面背景颜色（使用纯色背景）
    */
-  @property()
+  @property({
+    attribute: false,
+  })
   accessor coverColor: string;
 
   /**
@@ -215,6 +226,7 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
         target={this.target}
         callback={this.#renderCallback}
         onActionClick={this.#handleActionClick}
+        hasCover={this.hasCover}
         coverImage={this.coverImage}
         coverColor={this.coverColor}
         avatarPosition={this.avatarPosition}
@@ -240,6 +252,7 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
     target,
     href,
     callback,
+    hasCover,
     coverImage,
     coverColor,
     avatarPosition,
@@ -312,14 +325,14 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
     }
   }, [avatar]);
 
-  const shouldRenderCover = useMemo(() => {
-    return coverColor || coverImage;
-  }, [coverColor, coverImage]);
+  // const shouldRenderCover = useMemo(() => {
+  //   return coverColor || coverImage;
+  // }, [coverColor, coverImage]);
 
   return (
     <WrappedLink type="plain" url={url} target={target} href={href}>
       <div className="card-wrapper" ref={callback}>
-        {shouldRenderCover && (
+        {hasCover && (
           <div className="card-cover-wrapper">
             <div
               className="card-cover-content"
@@ -336,10 +349,10 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
         {hasHeader ? (
           <div className="card-header">
             <div className="auxiliary-text">{auxiliaryText}</div>
-            {!shouldRenderCover && MiniActions}
+            {!hasCover && MiniActions}
           </div>
         ) : (
-          !shouldRenderCover && MiniActions
+          !hasCover && MiniActions
         )}
         <div className="card-content">
           {avatarPosition !== "cover" && Avatar}

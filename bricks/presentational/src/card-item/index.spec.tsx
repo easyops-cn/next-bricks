@@ -62,6 +62,7 @@ describe("eo-card-item", () => {
     expect(onActionClick).toBeCalled();
 
     await act(async () => {
+      element.hasCover = true;
       element.coverColor = "#d6d6ff";
     });
     expect(

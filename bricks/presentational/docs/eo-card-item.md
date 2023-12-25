@@ -183,7 +183,7 @@ properties:
   properties:
     style:
       width: 280px
-    avatarPosition: cover
+    hasCover: true
     coverImage: https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png
     cardTitle: 信息卡片
     description: 这是一只可爱的北极熊
@@ -193,19 +193,19 @@ properties:
   properties:
     style:
       width: 280px
-    avatarPosition: cover
+    hasCover: true
     coverColor: "#167be0"
     cardTitle: 资源监控微应用
     description: 资源监控微应用相关前后台
     url: /test
     target: _blank
+    avatarPosition: cover
     avatar:
       icon:
         lib: easyops
         category: default
         icon: monitor
       color: "#fff"
-
     actions:
       - icon:
           lib: antd
