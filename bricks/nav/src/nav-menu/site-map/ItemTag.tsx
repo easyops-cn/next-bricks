@@ -172,6 +172,7 @@ export function QuickVisitItem(props: QuickVisitTagProps): React.ReactElement {
   const { onAllowDrag } = useContext(DragContext);
   const { data, onFavorite, groupId } = props;
   const suffixRef = useRef<any>();
+  const iconRef = useRef<any>();
 
   const handleRemove = useCallback(() => {
     collectService.removeItemFromFavorite(groupId, data);
@@ -181,6 +182,15 @@ export function QuickVisitItem(props: QuickVisitTagProps): React.ReactElement {
   const handleMouseDown = () => {
     onAllowDrag?.(true);
   };
+
+  useEffect(() => {
+    const icon = iconRef.current;
+    icon.addEventListener("click", handleRemove);
+
+    return () => {
+      icon.removeEventListener("click", handleRemove);
+    };
+  }, [handleRemove]);
 
   useEffect(() => {
     const suffix = suffixRef.current;
@@ -202,9 +212,8 @@ export function QuickVisitItem(props: QuickVisitTagProps): React.ReactElement {
           hoist
           placement="bottom"
           className="close"
-          onClick={handleRemove}
         >
-          <WrappedIcon lib="antd" icon="close" />
+          <WrappedIcon lib="antd" icon="close" ref={iconRef} />
         </WrappedTooltip>
         <span className="drag-wrapper" onMouseDown={handleMouseDown}>
           :::
