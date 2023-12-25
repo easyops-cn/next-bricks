@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.10.0...@next-bricks/nav@0.10.1) (2023-12-25)
+
+
+### Bug Fixes
+
+* assert t will not return null ([9c68e10](https://github.com/easyops-cn/next-bricks/commit/9c68e10640ef3b877b38cba14b307a3aa38225d8))
+
+
+
+
+
 # [0.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.9.7...@next-bricks/nav@0.10.0) (2023-12-22)
 
 

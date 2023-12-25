@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.30](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/shoelace@0.4.29...@next-bricks/shoelace@0.4.30) (2023-12-25)
+
+
+### Bug Fixes
+
+* transform lit whose output is not ES5 compatible ([2ceb657](https://github.com/easyops-cn/next-bricks/commit/2ceb657cb1e436f938bcc60209a04283690ad7db))
+
+
+
+
+
 ## [0.4.29](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/shoelace@0.4.28...@next-bricks/shoelace@0.4.29) (2023-12-12)
 
 **Note:** Version bump only for package @next-bricks/shoelace
