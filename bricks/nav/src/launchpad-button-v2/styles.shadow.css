@@ -2,7 +2,7 @@
   display: inline-block;
   width: 32px;
   height: 32px;
-  --eo-launchpad-v2-max-height: calc(100vh - var(--app-bar-height) - 10px);
+  --eo-launchpad-v2-max-height: calc(100vh - var(--app-bar-height) - 36px);
 }
 
 :host([hidden]) {
@@ -51,10 +51,10 @@
   z-index: 1;
   width: 1110px;
   max-width: calc(100vw - 100px);
-  max-height: var(--eo-launchpad-v2-max-height);
-  min-height: 50vh;
+  height: var(--eo-launchpad-v2-max-height);
+  /* min-height: 50vh; */
   /* Chrome >= 79 */
-  min-height: min(500px, var(--eo-launchpad-v2-max-height));
+  /* min-height: min(500px, var(--eo-launchpad-v2-max-height)); */
   background-color: var(--eo-launchpad-v2-background);
   border: 1px solid var(--color-text-divider-line);
   border-radius: 6px;
@@ -71,7 +71,6 @@
   flex-direction: column;
   background: var(--color-fill-bg-base-3);
   min-width: 0;
-  background-image: url("../images/launchpad-sidebar.png");
   background-size: 205px 205px;
   background-repeat: no-repeat;
   background-position: left 52px bottom 27px;
@@ -137,13 +136,22 @@
   color: var(--left-sidebar-item-collapsed-icon-color);
 }
 
+.union {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
 .quick-nav,
 .platform-nav {
   display: flex;
   flex-direction: column;
   padding: 20px 0 24px;
-  overflow: hidden;
-  flex: 1;
+}
+
+.platform-nav {
+  padding: 0 0 24px;
 }
 
 .quick-nav-label,
@@ -157,7 +165,6 @@
 .quick-nav-menu,
 .platform-nav-menu {
   flex: 1;
-  overflow-y: auto;
 }
 
 .scenario-nav > eo-link,
