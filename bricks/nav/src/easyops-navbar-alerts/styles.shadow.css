@@ -29,9 +29,9 @@
 }
 
 .info {
-  background-color: var(--theme-blue-background);
+  background-color: var(--palette-blue-1);
 }
 
 .warning {
-  background-color: var(--color-warning-bg);
+  background-color: var(--palette-amber-1);
 }
