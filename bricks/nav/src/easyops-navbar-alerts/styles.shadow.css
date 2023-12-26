@@ -29,7 +29,7 @@
 }
 
 .info {
-  background-color: var(--color-info-bg);
+  background-color: var(--theme-blue-background);
 }
 
 .warning {
