@@ -41,7 +41,7 @@
     "@next-core/i18n": "^1.0.35",
     "@next-core/react-element": "^1.0.18",
     "@next-core/runtime": "^1.28.2",
-    "@next-core/theme": "^1.4.6",
+    "@next-core/theme": "^1.4.7",
     "@next-core/types": "^1.7.3",
     "@next-core/utils": "^1.6.7",
     "@next-shared/general": "^0.8.7",
