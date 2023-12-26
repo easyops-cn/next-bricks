@@ -1,0 +1,1 @@
+import "./diagram/index.js";
