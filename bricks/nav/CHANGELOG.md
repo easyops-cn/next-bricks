@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.10.3...@next-bricks/nav@0.10.4) (2023-12-26)
+
+
+### Bug Fixes
+
+* rename feature flag ([b349e50](https://github.com/easyops-cn/next-bricks/commit/b349e5099961f683af20d5d05901c6e61ca4db33))
+
+
+
+
+
 ## [0.10.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.10.2...@next-bricks/nav@0.10.3) (2023-12-26)
 
 
