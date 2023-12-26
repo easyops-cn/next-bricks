@@ -161,7 +161,7 @@ export function useLaunchpadInfo(active?: boolean) {
   useEffect(() => {
     if (
       active &&
-      getRuntime()?.getFeatureFlags()["launchpad-show-app-category"]
+      getRuntime()?.getFeatureFlags()["launchpad-show-platform-category"]
     ) {
       const startFetchPlatformCategories = async (): Promise<void> => {
         try {

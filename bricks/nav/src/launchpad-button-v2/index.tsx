@@ -99,7 +99,7 @@ export function EoLaunchpadButtonV2Component({ host }: { host: HTMLElement }) {
   useEffect(() => {
     deferredLaunchpadInfo.schedulePrefetch();
     deferredFavorites.schedulePrefetch();
-    getRuntime()?.getFeatureFlags()["launchpad-show-app-category"] &&
+    getRuntime()?.getFeatureFlags()["launchpad-show-platform-category"] &&
       deferredPlatformCategories.schedulePrefetch();
   }, []);
 
