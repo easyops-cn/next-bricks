@@ -24,8 +24,18 @@ export function Launchpad({ active }: { active?: boolean }) {
   }, []);
   const [platform, setPlatform] = useState("#all");
 
-  const showAppCategory = React.useMemo(
-    () => getRuntime()?.getFeatureFlags()["launchpad-show-app-category"],
+  const showPlatformCategory = React.useMemo(
+    () => getRuntime()?.getFeatureFlags()["launchpad-show-platform-category"],
+    []
+  );
+
+  const showScenarioCenter = React.useMemo(
+    () => getRuntime()?.getFeatureFlags()["launchpad-show-scenario-center"],
+    []
+  );
+
+  const showSolutionCenter = React.useMemo(
+    () => getRuntime()?.getFeatureFlags()["launchpad-show-solution-center"],
     []
   );
 
@@ -98,7 +108,7 @@ export function Launchpad({ active }: { active?: boolean }) {
               </ul>
             </div>
 
-            {showAppCategory && (
+            {showPlatformCategory && (
               <div className="platform-nav">
                 <div className="platform-nav-label">平台</div>
                 <ul className="sidebar-menu platform-nav-menu">
@@ -114,21 +124,22 @@ export function Launchpad({ active }: { active?: boolean }) {
               </div>
             )}
           </div>
-          {showAppCategory && (
-            <>
-              <div className="scenario-nav">
-                <WrappedLink type="plain" url={"/portal/scenario"}>
-                  <div className="scenario-nav-label">场景中心</div>
-                  <WrappedIcon lib="antd" icon="right" theme="outlined" />
-                </WrappedLink>
-              </div>
-              <div className="solution-nav">
-                <WrappedLink type="plain" url={"/portal/solution"}>
-                  <div className="solution-nav-label">解决方案</div>
-                  <WrappedIcon lib="antd" icon="right" theme="outlined" />
-                </WrappedLink>
-              </div>
-            </>
+          {showScenarioCenter && (
+            <div className="scenario-nav">
+              <WrappedLink type="plain" url={"/portal/scenario"}>
+                <div className="scenario-nav-label">场景中心</div>
+                <WrappedIcon lib="antd" icon="right" theme="outlined" />
+              </WrappedLink>
+            </div>
+          )}
+
+          {showSolutionCenter && (
+            <div className="solution-nav">
+              <WrappedLink type="plain" url={"/portal/solution"}>
+                <div className="solution-nav-label">解决方案</div>
+                <WrappedIcon lib="antd" icon="right" theme="outlined" />
+              </WrappedLink>
+            </div>
           )}
         </div>
         <div className={classNames("content", { loading })}>

@@ -17,7 +17,9 @@ jest.mock("@next-api-sdk/cmdb-sdk");
 const getFeatureFlags = jest.fn();
 jest.spyOn(runtime, "getRuntime").mockReturnValue({
   getFeatureFlags: getFeatureFlags.mockReturnValue({
-    "launchpad-show-app-category": true,
+    "launchpad-show-platform-category": true,
+    "launchpad-show-scenario-center": true,
+    "launchpad-show-solution-center": true,
   }),
 } as any);
 
