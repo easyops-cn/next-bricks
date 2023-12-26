@@ -1,3 +1,7 @@
+:host {
+  --eo-popover-arrow-color: var(--color-fill-bg-container-4);
+}
+
 sl-popup::part(popup) {
   z-index: 1030;
 }
@@ -16,4 +20,15 @@ sl-popup[data-current-placement^="left"]::part(popup) {
 
 sl-popup[data-current-placement^="right"]::part(popup) {
   transform-origin: left;
+}
+
+sl-popup::part(popup) {
+  background: var(--color-fill-bg-container-4);
+  box-shadow: var(--base-shadow);
+  border-radius: var(--medius-border-radius);
+}
+
+sl-popup::part(arrow) {
+  background-color: var(--eo-popover-arrow-color);
+  z-index: 0;
 }

@@ -133,6 +133,7 @@ function SubMenuItemCom({
         subprime: !topData,
         "overflow-menu-item": hidden,
       })}
+      arrow={false}
       trigger="hover"
       placement={topData ? "bottom-start" : "right-start"}
       distance={0}
@@ -233,6 +234,7 @@ function ThreeLevelMenuCom({
       className={classnames("three-level-menu-popover", "popover", {
         "overflow-menu-item": hidden,
       })}
+      arrow={false}
       trigger={"hover"}
       placement={placement}
       distance={0}
@@ -296,6 +298,7 @@ function SitMapMenCom({
       distance={0}
       key={item.key}
       strategy="fixed"
+      arrow={false}
       anchorDisplay={anchorDisplay}
       beforeVisibleChange={handleVisibleChange}
     >

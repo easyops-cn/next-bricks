@@ -145,6 +145,7 @@ export function EoMiniActionsComponent(props: EoMiniActionsComponentProps) {
         <WrappedPopover
           placement="bottom-start"
           strategy="fixed"
+          arrow={false}
           active={dropdownVisible}
           beforeVisibleChange={handlePopoverVisibleChange}
         >

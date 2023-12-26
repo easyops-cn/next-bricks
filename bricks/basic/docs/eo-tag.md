@@ -109,6 +109,10 @@
     textContent: " 深蓝色 "
 - brick: eo-tag
   properties:
+    color: grayblue
+    textContent: " 灰蓝色 "
+- brick: eo-tag
+  properties:
     color: cyan
     textContent: " 浅蓝色 "
 - brick: eo-tag
@@ -146,6 +150,10 @@
   properties:
     color: geekblue-inverse
     textContent: " 深蓝色 "
+- brick: eo-tag
+  properties:
+    color: grayblue-inverse
+    textContent: " 灰蓝色 "
 - brick: eo-tag
   properties:
     color: cyan-inverse

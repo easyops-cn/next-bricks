@@ -24,8 +24,6 @@
   .example-panel {
     width: 100px;
     height: 100px;
-    box-shadow: var(--base-shadow);
-    background: var(--card-default-background);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -202,8 +200,6 @@
        .example-panel {
          width: 100px;
          height: 100px;
-         box-shadow: var(--base-shadow);
-         background: var(--card-default-background);
          display: flex;
          align-items: center;
          justify-content: center;
@@ -264,6 +260,44 @@
        }
 ```
 
+### Custom Style
+
+```html preview
+<div class="example">
+  <eo-popover trigger="click" placement="bottom">
+    <eo-button slot="anchor">Normal</eo-button>
+    <div class="example-panel box1">I'm popover</div>
+  </eo-popover>
+
+  <eo-popover
+    trigger="click"
+    placement="bottom"
+    arrow="true"
+    arrow-color="pink"
+  >
+    <eo-button slot="anchor">Custom Style</eo-button>
+    <div class="example-panel box2">I'm popover</div>
+  </eo-popover>
+</div>
+
+<style>
+  .example {
+    height: 132px;
+  }
+  .example-panel {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--medius-border-radius);
+  }
+  .box2 {
+    background: pink;
+  }
+</style>
+```
+
 ### Disabled
 
 ```html preview
@@ -281,8 +315,6 @@
   .example-panel {
     width: 100px;
     height: 100px;
-    box-shadow: var(--base-shadow);
-    background: var(--card-default-background);
     display: flex;
     align-items: center;
     justify-content: center;

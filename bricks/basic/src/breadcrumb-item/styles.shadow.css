@@ -24,7 +24,7 @@ eo-link {
 }
 
 eo-link:hover {
-  text-decoration: underline;
+  color: var(--antd-btn-link-hover-color);
 }
 
 /* affix */

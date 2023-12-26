@@ -317,3 +317,11 @@ button {
 :host([has-slot]):host([shape="circle"]) button {
   padding: 4px 10px;
 }
+
+:host([has-slot]):host([size="small"]) button {
+  padding: 4px 14px;
+}
+
+:host([has-slot]):host([size="xs"]) button {
+  padding: 4px 12px;
+}

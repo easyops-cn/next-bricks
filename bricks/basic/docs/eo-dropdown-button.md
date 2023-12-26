@@ -77,29 +77,6 @@
       - text: Item 2
 ```
 
-### Shape
-
-```yaml preview minHeight="160px"
-- brick: eo-dropdown-button
-  properties:
-    btnText: "Hello world"
-    shape: round
-    actions:
-      - text: Item 1
-      - text: Item 2
-- brick: eo-dropdown-button
-  properties:
-    btnText: ""
-    shape: circle
-    icon:
-      icon: search
-      lib: antd
-      theme: outlined
-    actions:
-      - text: Item 1
-      - text: Item 2
-```
-
 ### Disabled
 
 ```yaml preview minHeight="160px"
@@ -114,9 +91,9 @@
     btnText: ""
     shape: circle
     icon:
-      icon: search
+      icon: setting
       lib: antd
-      theme: outlined
+      theme: filled
     actions:
       - text: Item 1
         disabled: true

@@ -39,8 +39,6 @@
 ```html preview gap
 <eo-button>Square</eo-button>
 
-<eo-button shape="round">Round</eo-button>
-
 <eo-button shape="circle">X</eo-button>
 ```
 
@@ -107,18 +105,21 @@
       properties:
         icon:
           lib: antd
-          icon: bell
+          icon: setting
+          theme: filled
     - brick: eo-button
       properties:
         icon:
           lib: antd
-          icon: bell
+          icon: setting
+          theme: filled
         type: primary
     - brick: eo-button
       properties:
         icon:
           lib: antd
-          icon: bell
+          icon: setting
+          theme: filled
         shape: circle
 ```
 
