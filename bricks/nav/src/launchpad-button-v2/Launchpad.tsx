@@ -84,20 +84,21 @@ export function Launchpad({ active }: { active?: boolean }) {
         }}
       >
         <div className="sidebar">
-          <div className="quick-nav">
-            <div className="quick-nav-label">快捷访问</div>
-            {/* <Loading loading={loading || loadingFavorites} /> */}
-            <ul className="sidebar-menu quick-nav-menu">
-              {favorites.map((item, index) => (
-                <SidebarMenuItem
-                  key={index}
-                  item={item as SidebarMenuItemData}
-                />
-              ))}
-            </ul>
-          </div>
-          {showAppCategory && (
-            <>
+          <div className="union">
+            <div className="quick-nav">
+              <div className="quick-nav-label">快捷访问</div>
+              {/* <Loading loading={loading || loadingFavorites} /> */}
+              <ul className="sidebar-menu quick-nav-menu">
+                {favorites.map((item, index) => (
+                  <SidebarMenuItem
+                    key={index}
+                    item={item as SidebarMenuItemData}
+                  />
+                ))}
+              </ul>
+            </div>
+
+            {showAppCategory && (
               <div className="platform-nav">
                 <div className="platform-nav-label">平台</div>
                 <ul className="sidebar-menu platform-nav-menu">
@@ -111,6 +112,10 @@ export function Launchpad({ active }: { active?: boolean }) {
                   ))}
                 </ul>
               </div>
+            )}
+          </div>
+          {showAppCategory && (
+            <>
               <div className="scenario-nav">
                 <WrappedLink type="plain" url={"/portal/scenario"}>
                   <div className="scenario-nav-label">场景中心</div>
