@@ -20,6 +20,7 @@ export interface EoSidebarMenuItemProps {
   icon?: GeneralIconProps;
   target?: LinkProps["target"];
   selected?: boolean;
+  inSubmenu?: boolean;
   menuCollapsed?: boolean;
 }
 
@@ -64,6 +65,12 @@ class EoSidebarMenuItem
    */
   @property({ type: Boolean })
   accessor selected: boolean | undefined;
+
+  /**
+   * 是否在二级菜单中
+   */
+  @property({ type: Boolean })
+  accessor inSubmenu: boolean | undefined;
 
   /**
    * 菜单整体是否收起状态

@@ -1,3 +1,9 @@
+.tag-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .tag-circle {
   font-size: 10px;
   margin-right: 6px;

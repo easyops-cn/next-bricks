@@ -40,7 +40,6 @@ interface DropButtonProps {
 const defaultIcon: GeneralIconProps = {
   lib: "antd",
   icon: "setting",
-  theme: "filled",
 };
 
 /**

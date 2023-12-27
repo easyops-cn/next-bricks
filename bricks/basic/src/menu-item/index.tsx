@@ -83,6 +83,7 @@ function MenuItemComponent({ icon, disabled, active }: MenuComponentProps) {
     >
       {icon && (
         <WrappedIcon
+          part="menu-item-icon"
           className="menu-item-icon"
           {...(icon as GeneralIconProps)}
         />

@@ -20,7 +20,7 @@ eo-menu-item::part(menu-item) {
 }
 
 eo-menu-item:not([disabled]):hover::part(menu-item) {
-  background-color: var(--antd-item-hover-bg);
+  background-color: var(--left-sidebar-item-hover-bg);
 }
 
 eo-tooltip {

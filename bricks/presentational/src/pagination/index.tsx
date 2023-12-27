@@ -281,7 +281,7 @@ export function EoPaginationComponent(props: EoPaginationComponentProps) {
       </div>
       {showSizeChanger && (
         <div className="pagination-size-changer">
-          <WrappedPopover placement="bottom" distance={4}>
+          <WrappedPopover placement="bottom" arrow={false} distance={4}>
             <div className="pagination-size-selection" slot="anchor">
               {t(K.PAGE_SIZE, { count: paginationData.pageSize })}
               <WrappedIcon lib="antd" theme="filled" icon="caret-down" />

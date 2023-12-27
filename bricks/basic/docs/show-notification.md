@@ -86,7 +86,6 @@ children:
           - message: It works!
             title: 标题
             placement: topRight
-            styleType: rectAngle
             icon:
               icon: star
               theme: outlined

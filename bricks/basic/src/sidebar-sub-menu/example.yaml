@@ -90,7 +90,3 @@
           title: 调用关系
           type: group
           key: "3"
-      icon:
-        category: model
-        icon: docker-image
-        lib: easyops

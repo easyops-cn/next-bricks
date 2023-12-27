@@ -9,6 +9,7 @@
 .dialog::part(panel) {
   position: relative;
   top: 100px;
+  border-radius: 6px;
 }
 
 .body {
@@ -45,6 +46,12 @@
 
 .danger {
   color: var(--sl-color-danger-600);
+}
+
+sl-dialog::part(footer) {
+  background: var(--color-fill-bg-base-3);
+  padding: 14px 20px;
+  border-radius: 0 0 6px 6px;
 }
 
 sl-dialog > eo-button[slot="footer"]:not(:first-of-type) {

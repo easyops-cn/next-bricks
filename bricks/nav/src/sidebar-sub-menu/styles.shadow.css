@@ -47,6 +47,11 @@
     margin-bottom: 4px;
   }
 
+  .menu-item::part(menu-item-icon),
+  .menu-sub-item::part(menu-item-icon) {
+    color: var(--color-secondary-text);
+  }
+
   .menu-item-link {
     width: 100%;
     color: var(--color-secondary-text);
@@ -67,7 +72,7 @@
   }
 
   .menu-item:hover {
-    background: var(--sub-menu-brick-item-hover-bg);
+    background: var(--third-menu-item-hover-bg);
     color: var(--color-header-text);
 
     .menu-item-text {
@@ -81,7 +86,7 @@
   }
 
   .menu-item-text.item-has-icon {
-    margin-left: 10px;
+    margin-left: 6px;
   }
 
   .menu-item[active] {

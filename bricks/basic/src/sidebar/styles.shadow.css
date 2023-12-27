@@ -89,7 +89,7 @@
 }
 
 .menu-title-icon {
-  color: rgb(87, 104, 156, 1);
+  color: var(--left-sidebar-item-collapsed-icon-color);
 }
 
 .menu-title-point {

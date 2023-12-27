@@ -5,7 +5,7 @@ import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import { symbolUseInGroup } from "../breadcrumb-item/index.js";
 
-const { defineElement, property } = createDecorators();
+const { defineElement } = createDecorators();
 
 /**
  * 面包屑容器

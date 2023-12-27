@@ -204,12 +204,14 @@ NodeList [
         sub 1
       </span>
       <eo-sidebar-menu-item
+        in-submenu=""
         menu-collapsed=""
         selected=""
       >
         inner 1
       </eo-sidebar-menu-item>
       <eo-sidebar-menu-item
+        in-submenu=""
         menu-collapsed=""
       >
         inner 2

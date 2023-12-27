@@ -82,7 +82,7 @@ class Popover extends ReactNextElement implements PopoverProps {
 
   /**
    * 弹出层是否显示箭头
-   * @default false
+   * @default true
    */
   @property({
     type: Boolean,
@@ -157,7 +157,7 @@ class Popover extends ReactNextElement implements PopoverProps {
         curElement={this}
         trigger={this.trigger ?? "click"}
         placement={this.placement ?? "bottom"}
-        arrow={this.arrow}
+        arrow={this.arrow ?? true}
         arrowColor={this.arrowColor}
         strategy={this.strategy}
         sync={this.sync}
@@ -359,7 +359,10 @@ function PopoverComponent(props: PopoverComponentProps) {
 
   useEffect(() => {
     if (popoverRef.current && arrowColor) {
-      popoverRef.current.style.setProperty("--arrow-color", arrowColor);
+      popoverRef.current.style.setProperty(
+        "--eo-popover-arrow-color",
+        arrowColor
+      );
     }
   }, [arrowColor]);
 

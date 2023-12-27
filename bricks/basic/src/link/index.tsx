@@ -252,7 +252,7 @@ export function LinkComponent({
         target={target}
         ref={linkRef}
       >
-        {icon && <WrappedIcon part="icon" {...icon} />}
+        {icon && <WrappedIcon className="prefix-icon" part="icon" {...icon} />}
         <slot />
       </a>
       {showExternalIcon && (

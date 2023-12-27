@@ -32,7 +32,7 @@ class EoSidebarMenuGroup
    * 是否允许折叠
    */
   @property({ type: Boolean })
-  accessor collapsable: boolean = true;
+  accessor collapsable: boolean | undefined;
 
   /**
    * 是否折叠
@@ -76,7 +76,12 @@ interface EoSidebarMenuGroupComponentProps extends EoSidebarMenuGroupProps {
 export function EoSidebarMenuGroupComponent(
   props: EoSidebarMenuGroupComponentProps
 ) {
-  const { collapsable, collapsed, menuCollapsed, onCollapseChange } = props;
+  const {
+    collapsable = true,
+    collapsed,
+    menuCollapsed,
+    onCollapseChange,
+  } = props;
 
   const [slotRef] = useUpdateMenuCollapsedState(menuCollapsed);
 

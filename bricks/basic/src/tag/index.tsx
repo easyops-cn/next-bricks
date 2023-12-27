@@ -28,6 +28,8 @@ export enum TagColor {
   "cyan-inverse" = "cyan-inverse",
   geekblue = "geekblue",
   "geekblue-inverse" = "geekblue-inverse",
+  grayblue = "grayblue",
+  "grayblue-inverse" = "grayblue-inverse",
   gray = "gray",
   "gray-inverse" = "gray-inverse",
   green = "green",
@@ -247,6 +249,7 @@ function TagComponent(props: TagComponentProps) {
         checkable,
         checked,
         disabled,
+        closable,
       })}
       style={{
         ...(!useDefineColor && color

@@ -115,8 +115,10 @@ const WrappedSidebarMenuSubmenu = wrapBrick<
   EoSidebarMenuSubmenuProps
 >("eo-sidebar-menu-submenu");
 
-function MenuSimpleItem(props: SidebarMenuSimpleItem & { id?: string }) {
-  const { to, href, target, icon, text, id } = props;
+function MenuSimpleItem(
+  props: SidebarMenuSimpleItem & { id?: string; inSubmenu?: boolean }
+) {
+  const { to, href, target, icon, text, id, inSubmenu } = props;
   const { selectedKeys } = useContext(SidebarMenuContext);
 
   return (
@@ -125,6 +127,7 @@ function MenuSimpleItem(props: SidebarMenuSimpleItem & { id?: string }) {
       href={href}
       target={target as any}
       icon={icon}
+      inSubmenu={inSubmenu}
       selected={selectedKeys.includes(id!)}
     >
       {text}
@@ -132,8 +135,10 @@ function MenuSimpleItem(props: SidebarMenuSimpleItem & { id?: string }) {
   );
 }
 
-function MenuGroup(props: SidebarMenuGroup & { id?: string; top?: boolean }) {
-  const { title, items, id, top } = props;
+function MenuGroup(
+  props: SidebarMenuGroup & { id?: string; top?: boolean; inSubmenu?: boolean }
+) {
+  const { title, items, id, top, inSubmenu } = props;
   const { matchedKeys } = useContext(SidebarMenuContext);
   const isSelected = id && matchedKeys.includes(id);
 
@@ -143,7 +148,13 @@ function MenuGroup(props: SidebarMenuGroup & { id?: string; top?: boolean }) {
         <span slot="title">{title}</span>
         {props.items.map((item) => {
           return (
-            <MenuItem key={item.key} {...item} id={item.key} top={false} />
+            <MenuItem
+              key={item.key}
+              {...item}
+              id={item.key}
+              top={false}
+              inSubmenu={inSubmenu}
+            />
           );
         })}
       </WrappedSidebarMenuGroup>
@@ -167,7 +178,13 @@ function MenuSubmenu(props: SidebarMenuGroup & { id?: string }) {
         <span slot="title">{title}</span>
         {props.items.map((item) => {
           return (
-            <MenuItem key={item.key} {...item} id={item.key} top={false} />
+            <MenuItem
+              key={item.key}
+              {...item}
+              id={item.key}
+              top={false}
+              inSubmenu={true}
+            />
           );
         })}
       </WrappedSidebarMenuSubmenu>
@@ -176,7 +193,9 @@ function MenuSubmenu(props: SidebarMenuGroup & { id?: string }) {
   return null;
 }
 
-function MenuItem(props: SidebarMenuItem & { id?: string; top?: boolean }) {
+function MenuItem(
+  props: SidebarMenuItem & { id?: string; top?: boolean; inSubmenu?: boolean }
+) {
   if (props.type === "subMenu") {
     return <MenuSubmenu {...props} />;
   } else if (props.type === "group") {

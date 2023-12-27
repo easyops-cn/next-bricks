@@ -67,6 +67,10 @@ eo-icon {
   line-height: 1em;
 }
 
+.prefix-icon {
+  margin-right: 4px;
+}
+
 .external-icon {
   margin-left: 6px;
   color: var(--color-disabled-text);

@@ -1,14 +1,19 @@
+:host {
+  display: inline-block;
+}
+:host([hidden]) {
+  display: none;
+}
+
 .tag {
   display: inline-block;
   box-sizing: border-box;
-  margin: 0px 8px 0px 0px;
-  padding: 0px 9px;
   color: var(--antd-text-color);
   list-style: none;
   height: auto;
   font-size: 12px;
   line-height: 20px;
-  border-radius: 12px;
+  border-radius: var(--small-border-radius);
   white-space: nowrap;
   background: var(--antd-background-color-light);
   opacity: 1;
@@ -31,6 +36,13 @@
   cursor: pointer;
   background-color: var(--antd-tag-checkable-bg);
   color: var(--antd-tag-checkable-color);
+}
+
+.tag:not([class*="disabled"]).closable:hover {
+  background: var(--color-text-divider-line);
+  .close-icon {
+    color: var(--color-normal-text);
+  }
 }
 
 .tag.checkable:not(.checked, .disabled):hover {
@@ -56,16 +68,24 @@
 .tag.small {
   font-size: 12px;
   list-style: 20px;
+  line-height: 14px;
+  height: 18px;
+  padding: 0px 8px;
 }
 
 .tag.medium {
   font-size: 14px;
   list-style: 22px;
+  height: 24px;
+  padding: 0px 8px;
 }
 
 .tag.large {
   font-size: 16px;
   list-style: 24px;
+  line-height: 28px;
+  height: 30px;
+  padding: 0px 16px;
 }
 /* Size */
 
@@ -101,6 +121,16 @@
 .color-geekblue-inverse {
   color: var(--tag-inverse-text-color);
   background: var(--tag-geekblue-inverse-color);
+}
+
+.color-grayblue {
+  color: var(--tag-grayblue-color);
+  background: var(--tag-grayblue-background);
+}
+
+.color-grayblue-inverse {
+  color: var(--tag-inverse-text-color);
+  background: var(--tag-grayblue-color);
 }
 
 .color-gray {

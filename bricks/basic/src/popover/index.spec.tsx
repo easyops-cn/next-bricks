@@ -82,7 +82,8 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
 <sl-popup
-  distance="0"
+  arrow=""
+  distance="6"
   exportparts="popup"
   placement="bottom"
   shift=""
@@ -92,7 +93,7 @@ describe("basic.general-popover", () => {
   <slot
     name="anchor"
     slot="anchor"
-    style="padding: 0px; margin: 0px; display: inline-block;"
+    style="padding: 6px; margin: -6px; display: inline-block;"
   />
   <slot
     hidden=""
@@ -113,22 +114,23 @@ describe("basic.general-popover", () => {
     );
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
-    <sl-popup
-      distance="0"
-      exportparts="popup"
-      placement="bottom"
-      shift=""
-      shiftpadding="24"
-      trigger="click"
-    >
-      <slot
-        name="anchor"
-        slot="anchor"
-        style="padding: 0px; margin: 0px; display: inline-block;"
-      />
-      <slot />
-    </sl-popup>
-    `);
+<sl-popup
+  arrow=""
+  distance="6"
+  exportparts="popup"
+  placement="bottom"
+  shift=""
+  shiftpadding="24"
+  trigger="click"
+>
+  <slot
+    name="anchor"
+    slot="anchor"
+    style="padding: 6px; margin: -6px; display: inline-block;"
+  />
+  <slot />
+</sl-popup>
+`);
 
     await act(async () => {
       document.body?.click();
@@ -143,24 +145,25 @@ describe("basic.general-popover", () => {
     );
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
-    <sl-popup
-      distance="0"
-      exportparts="popup"
-      placement="bottom"
-      shift=""
-      shiftpadding="24"
-      trigger="click"
-    >
-      <slot
-        name="anchor"
-        slot="anchor"
-        style="padding: 0px; margin: 0px; display: inline-block;"
-      />
-      <slot
-        hidden=""
-      />
-    </sl-popup>
-    `);
+<sl-popup
+  arrow=""
+  distance="6"
+  exportparts="popup"
+  placement="bottom"
+  shift=""
+  shiftpadding="24"
+  trigger="click"
+>
+  <slot
+    name="anchor"
+    slot="anchor"
+    style="padding: 6px; margin: -6px; display: inline-block;"
+  />
+  <slot
+    hidden=""
+  />
+</sl-popup>
+`);
 
     act(() => {
       document.body.removeChild(element);
@@ -200,7 +203,8 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
 <sl-popup
-  distance="0"
+  arrow=""
+  distance="6"
   exportparts="popup"
   placement="bottom"
   shift=""
@@ -211,7 +215,7 @@ describe("basic.general-popover", () => {
   <slot
     name="anchor"
     slot="anchor"
-    style="padding: 0px; margin: 0px; display: inline-block;"
+    style="padding: 6px; margin: -6px; display: inline-block;"
   />
   <slot
     hidden=""
@@ -228,7 +232,8 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
 <sl-popup
-  distance="0"
+  arrow=""
+  distance="6"
   exportparts="popup"
   placement="bottom"
   shift=""
@@ -239,7 +244,7 @@ describe("basic.general-popover", () => {
   <slot
     name="anchor"
     slot="anchor"
-    style="padding: 0px; margin: 0px; display: inline-block;"
+    style="padding: 6px; margin: -6px; display: inline-block;"
   />
   <slot
     hidden=""
@@ -261,7 +266,8 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
 <sl-popup
-  distance="0"
+  arrow=""
+  distance="6"
   exportparts="popup"
   placement="bottom"
   shift=""
@@ -272,7 +278,7 @@ describe("basic.general-popover", () => {
   <slot
     name="anchor"
     slot="anchor"
-    style="padding: 0px; margin: 0px; display: inline-block;"
+    style="padding: 6px; margin: -6px; display: inline-block;"
   />
   <slot />
 </sl-popup>
@@ -292,7 +298,8 @@ describe("basic.general-popover", () => {
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
 <sl-popup
-  distance="0"
+  arrow=""
+  distance="6"
   exportparts="popup"
   placement="bottom"
   shift=""
@@ -303,7 +310,7 @@ describe("basic.general-popover", () => {
   <slot
     name="anchor"
     slot="anchor"
-    style="padding: 0px; margin: 0px; display: inline-block;"
+    style="padding: 6px; margin: -6px; display: inline-block;"
   />
   <slot
     hidden=""
@@ -360,7 +367,7 @@ describe("basic.general-popover", () => {
     expect(
       (
         element.shadowRoot?.querySelector("sl-popup") as HTMLElement
-      ).style.getPropertyValue("--arrow-color")
+      ).style.getPropertyValue("--eo-popover-arrow-color")
     ).toBe("pink");
 
     act(() => {
