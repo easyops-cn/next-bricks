@@ -39,9 +39,9 @@
 }
 
 .tag:not([class*="disabled"]).closable:hover {
-  background: #e8e8e8;
+  background: var(--color-text-divider-line);
   .close-icon {
-    color: #595959;
+    color: var(--color-normal-text);
   }
 }
 

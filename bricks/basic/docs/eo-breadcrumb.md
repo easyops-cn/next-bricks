@@ -43,7 +43,7 @@ children:
   - brick: span
     slot: separator
     properties:
-      textContent: "/"
+      textContent: ">"
   - brick: eo-breadcrumb-item
     properties:
       textContent: 事件中心
@@ -56,18 +56,9 @@ children:
           icon: monitor-alarm-notice
           style:
             font-size: 14px
-      - brick: span
-        slot: separator
-        properties:
-          textContent: ">"
   - brick: eo-breadcrumb-item
     properties:
       textContent: 告警规则
-    children:
-      - brick: span
-        slot: separator
-        properties:
-          textContent: ">"
   - brick: eo-breadcrumb-item
     properties:
       textContent: 编辑
