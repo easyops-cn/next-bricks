@@ -34,10 +34,10 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-core/element": "^1.1.8",
+    "@next-core/element": "^1.2.0",
     "@next-core/i18n": "^1.0.35",
-    "@next-core/react-element": "^1.0.18",
-    "@next-core/react-runtime": "^1.1.43",
+    "@next-core/react-element": "^1.0.19",
+    "@next-core/react-runtime": "^1.1.44",
     "@next-core/types": "^1.7.3",
     "@next-core/utils": "^1.6.7",
     "@next-shared/datetime": "^0.1.10",

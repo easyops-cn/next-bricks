@@ -34,9 +34,9 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-core/element": "^1.1.8",
+    "@next-core/element": "^1.2.0",
     "@next-core/i18n": "^1.0.35",
-    "@next-core/react-element": "^1.0.18",
+    "@next-core/react-element": "^1.0.19",
     "@next-core/theme": "^1.4.7",
     "react": "0.0.0-experimental-ee8509801-20230117"
   },

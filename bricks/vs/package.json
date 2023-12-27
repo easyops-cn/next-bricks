@@ -35,10 +35,10 @@
   },
   "dependencies": {
     "@next-core/cook": "^2.2.10",
-    "@next-core/element": "^1.1.8",
+    "@next-core/element": "^1.2.0",
     "@next-core/monaco-contributions": "^0.3.4",
-    "@next-core/react-element": "^1.0.18",
-    "@next-core/react-runtime": "^1.1.43",
+    "@next-core/react-element": "^1.0.19",
+    "@next-core/react-runtime": "^1.1.44",
     "@next-core/theme": "^1.4.7",
     "@next-shared/form": "^0.5.1",
     "monaco-editor": "^0.39.0",
