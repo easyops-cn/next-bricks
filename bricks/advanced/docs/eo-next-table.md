@@ -23,19 +23,6 @@
       - dataIndex: name
         key: name
         title: Name
-        headerBrick:
-          useBrick:
-            brick: span
-            properties:
-              style:
-                color: red
-              textContent: <% DATA.title %>
-        useBrick:
-          - brick: span
-            properties:
-              style:
-                color: pink
-              textContent: <% DATA.cellData %>
       - dataIndex: age
         key: age
         title: Age
@@ -47,6 +34,40 @@
         title: Long Column Long Column Long Column Long Column
         width: 200
         ellipsis: true
+      - dataIndex: operator
+        key: operator
+        title: 操作
+        width: 200
+        useBrick:
+          - brick: div
+            properties:
+              style:
+                display: flex
+                gap: 4px
+            children:
+              - brick: eo-button
+                properties:
+                  type: link
+                  icon:
+                    lib: antd
+                    icon: edit
+                events:
+                  click:
+                    - action: message.info
+                      args:
+                        - <% DATA.rowData.name %>
+              - brick: eo-button
+                properties:
+                  type: link
+                  danger: true
+                  icon:
+                    lib: antd
+                    icon: delete
+                events:
+                  click:
+                    - action: message.error
+                      args:
+                        - <% JSON.stringify(DATA) %>
     dataSource:
       pageSize: 5
       page: 1
@@ -100,7 +121,7 @@
           address: Taiwan
 ```
 
-### Fixed & Scroll
+### Fixed & Scroll & useBrick
 
 ```yaml preview
 - brick: eo-next-table
@@ -417,9 +438,38 @@
             textContent: "<% DATA.expanded ? '点击收起' : '点击展开' %>"
       expandedRowBrick:
         useBrick:
-          brick: div
+          brick: eo-next-table
           properties:
-            textContent: <% DATA.rowData.name %>
+            pagination: false
+            bordered: true
+            columns:
+              - dataIndex: title
+                key: title
+                title: 标题
+              - dataIndex: description
+                key: description
+                title: 描述
+              - dataIndex: operator
+                key: operator
+                title: 操作
+                useBrick:
+                  - brick: div
+                    properties:
+                      style:
+                        display: flex
+                        gap: 4px
+                    children:
+                      - brick: eo-button
+                        properties:
+                          type: link
+                          textContent: 操作
+                        events:
+                          click:
+                            - action: message.info
+                              args:
+                                - <% `id:${DATA.rowData.id}` %>
+            dataSource:
+              list: <% DATA.rowData.info %>
     pagination:
       pageSizeOptions:
         - 5
@@ -443,6 +493,13 @@
           name: Jack
           age: 18
           address: Guangzhou
+          info:
+            - title: 测试1
+              description: 这是一串描述
+              id: 1
+            - title: 测试2
+              description: 这是一串描述
+              id: 2
         - key: 1
           name: Alex
           age: 20
@@ -451,6 +508,13 @@
           name: Lucy
           age: 16
           address: Yunnan
+          info:
+            - title: 测试3
+              description: 这是一串描述
+              id: 3
+            - title: 测试4
+              description: 这是一串描述
+              id: 4
         - key: 3
           name: Sam
           age: 28

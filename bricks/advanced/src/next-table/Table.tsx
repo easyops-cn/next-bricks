@@ -22,7 +22,7 @@ import {
   ReactUseMultipleBricks,
   useCurrentTheme,
 } from "@next-core/react-runtime";
-import { ColumnTitleProps, RowSelectMethod } from "antd/es/table/interface.js";
+import { RowSelectMethod } from "antd/es/table/interface.js";
 import type { TableProps } from "antd/es/table";
 import { i18n } from "@next-core/i18n";
 import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
@@ -88,6 +88,7 @@ interface NextTableComponentProps {
   searchFields?: (string | string[])[];
   size?: TableProps<RecordType>["size"];
   showHeader?: boolean;
+  bordered?: boolean;
   scrollConfig?: TableProps<RecordType>["scroll"];
   optimizedColumns?: (string | number)[];
   onPageChange?: (detail: { page: number; pageSize: number }) => void;
@@ -131,6 +132,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
     searchFields,
     size,
     showHeader,
+    bordered,
     scrollConfig,
     optimizedColumns,
     onPageChange,
@@ -243,8 +245,8 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                       multiple: col.sortPriority,
                     }
                   : frontSearch
-                  ? comparator
-                  : true,
+                    ? comparator
+                    : true,
                 sortOrder: curSort ? curSort.order : null,
               }
             : {}),
@@ -268,7 +270,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
             }
             return <>{value}</>;
           },
-          title(props: ColumnTitleProps<RecordType>) {
+          title() {
             if (col.headerBrick?.useBrick) {
               const data = {
                 title: col.title,
@@ -282,7 +284,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
             }
             return <>{col.title}</>;
           },
-          onCell(record: RecordType, index?: number) {
+          onCell(record: RecordType) {
             return {
               colSpan: col.cellColSpanKey
                 ? record[col.cellColSpanKey]
@@ -385,8 +387,15 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
           currentTheme === "dark-v2"
             ? theme.darkAlgorithm
             : theme.defaultAlgorithm,
+        components: {
+          Table: {
+            headerBorderRadius: 0,
+            headerSplitColor: "none",
+            borderColor: bordered ? "#f0f0f0" : "none",
+          },
+        },
       }}
-      getPopupContainer={(trigger) => shadowRoot as unknown as HTMLElement}
+      getPopupContainer={() => shadowRoot as unknown as HTMLElement}
     >
       <StyleProvider container={shadowRoot as ShadowRoot} cache={styleCache}>
         <DndContext
@@ -413,6 +422,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
               dataSource={list}
               size={size}
               showHeader={showHeader}
+              bordered={bordered}
               scroll={scrollConfig}
               pagination={
                 paginationConfig === false
@@ -604,11 +614,11 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                             order: v.order,
                           }))
                       : sorter.order
-                      ? {
-                          columnKey: sorter.columnKey as string | number,
-                          order: sorter.order,
-                        }
-                      : undefined;
+                        ? {
+                            columnKey: sorter.columnKey as string | number,
+                            order: sorter.order,
+                          }
+                        : undefined;
                     setSort(newSort);
                     onSort?.(newSort);
                   }

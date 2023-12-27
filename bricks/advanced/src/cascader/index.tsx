@@ -14,6 +14,7 @@ import { StyleProvider, createCache } from "@ant-design/cssinjs";
 import type { FormItem, FormItemProps } from "@next-bricks/form/form-item";
 import { FormItemElementBase } from "@next-shared/form";
 import { useCurrentTheme } from "@next-core/react-runtime";
+import styleText from "./styles.shadow.css";
 
 const { defineElement, property, event } = createDecorators();
 
@@ -49,6 +50,7 @@ export interface CascaderProps
  */
 @defineElement("eo-cascader", {
   alias: ["advanced.general-cascader"],
+  styleTexts: [styleText],
 })
 class CascaderBrick extends FormItemElementBase implements CascaderProps {
   @property()

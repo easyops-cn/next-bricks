@@ -12,15 +12,71 @@
 }
 
 .pagination-total-text {
-  color: var(--antd-pagination-total-text);
+  color: var(--color-secondary-text);
 }
 
 .pagination-total-number {
   font-weight: var(--font-weight-400);
-  color: var(--antd-pagination-total-strong-text);
+  color: var(--color-normal-text);
 }
 
 .select-info {
   display: flex;
   gap: 10px;
+}
+
+.ant-pagination-total-text {
+  position: absolute;
+  left: 0;
+}
+
+.ant-pagination-options {
+  order: -1;
+  padding-right: 12px;
+}
+
+.ant-table-wrapper .ant-table-thead .ant-table-cell {
+  padding: var(--eo-table-head-cell-padding);
+}
+
+.ant-table-wrapper
+  .ant-table-container
+  table
+  > thead
+  > tr:first-child
+  > *:first-child,
+.ant-table-tbody .ant-table-row .ant-table-cell:first-child {
+  padding-left: 16px;
+}
+
+.ant-table-wrapper
+  .ant-table-container
+  table
+  > thead
+  > tr:first-child
+  > *:last-child,
+.ant-table-tbody .ant-table-row .ant-table-cell:last-child {
+  padding-right: 16px;
+}
+
+.ant-table-wrapper .ant-table-tbody .ant-table-cell {
+  padding: var(--eo-table-body-cell-padding);
+}
+
+.ant-table-ping-left .ant-table-cell-fix-left-last::after {
+  box-shadow: var(--left-slide-shadow);
+}
+
+.ant-table-ping-right .ant-table-cell-fix-right-first::after {
+  box-shadow: var(--right-slide-shadow);
+}
+
+.ant-pagination-options .ant-select .ant-select-selector {
+  border: none;
+  box-shadow: none !important;
+  color: var(--color-normal-text);
+}
+
+.ant-pagination .ant-pagination-item:not(.ant-pagination-item-active) a {
+  color: var(--color-normal-text);
 }

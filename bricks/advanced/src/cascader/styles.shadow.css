@@ -1,0 +1,11 @@
+.ant-select-single .ant-select-selector {
+  border-radius: var(--medius-border-radius);
+}
+
+.ant-select-dropdown {
+  border-radius: var(--medius-border-radius);
+}
+
+.ant-cascader-dropdown .ant-cascader-menu-item {
+  border-radius: var(--small-border-radius);
+}

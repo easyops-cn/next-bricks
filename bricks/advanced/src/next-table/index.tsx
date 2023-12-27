@@ -15,6 +15,7 @@ import {
 } from "./interface.js";
 import { RowSelectMethod } from "antd/es/table/interface.js";
 import type { TableProps } from "antd/es/table";
+import "./host-context.css";
 
 const { defineElement, property, method, event } = createDecorators();
 
@@ -161,6 +162,11 @@ class EoNextTable extends ReactNextElement {
   accessor showHeader: boolean = true;
 
   /**
+   * 是否显示边框
+   */
+  accessor bordered: boolean | undefined;
+
+  /**
    * 滚动配置
    */
   @property({
@@ -305,6 +311,7 @@ class EoNextTable extends ReactNextElement {
         searchFields={this.searchFields}
         size={this.size}
         showHeader={this.showHeader}
+        bordered={this.bordered}
         scrollConfig={this.scrollConfig}
         optimizedColumns={this.optimizedColumns}
         onPageChange={this.#handlePageChange}
