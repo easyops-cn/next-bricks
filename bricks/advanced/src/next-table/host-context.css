@@ -1,0 +1,20 @@
+:root {
+  --eo-table-head-cell-padding: 14px 12px;
+  --eo-table-body-cell-padding: 12px 12px;
+}
+
+html[data-ui="v8-2"] {
+  --eo-table-head-cell-padding: 8px 12px;
+
+  eo-next-table[size="large"] {
+    --eo-table-body-cell-padding: 10px 12px;
+  }
+
+  eo-next-table[size="middle"] {
+    --eo-table-body-cell-padding: 8px 12px;
+  }
+
+  eo-next-table[size="small"] {
+    --eo-table-body-cell-padding: 4px 12px;
+  }
+}
