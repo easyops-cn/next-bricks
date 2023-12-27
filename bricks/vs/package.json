@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/vs",
-  "version": "0.8.5",
+  "version": "0.8.6",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/vs",
   "repository": {
     "type": "git",
@@ -40,7 +40,7 @@
     "@next-core/react-element": "^1.0.19",
     "@next-core/react-runtime": "^1.1.44",
     "@next-core/theme": "^1.4.7",
-    "@next-shared/form": "^0.5.1",
+    "@next-shared/form": "^0.5.2",
     "monaco-editor": "^0.39.0",
     "monaco-editor-webpack-plugin": "^7.0.1",
     "react": "0.0.0-experimental-ee8509801-20230117"

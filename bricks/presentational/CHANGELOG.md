@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.23.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.22.0...@next-bricks/presentational@0.23.0) (2023-12-27)
+
+
+### Features
+
+* popover add default background ([6f900f4](https://github.com/easyops-cn/next-bricks/commit/6f900f4c24dc1ff8bca35d6b1d91f184edd83791))
+
+
+
+
+
 # [0.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.21.2...@next-bricks/presentational@0.22.0) (2023-12-25)
 
 
