@@ -24,7 +24,7 @@ import { UseBrickConf, UseSingleBrickConf } from "@next-core/types";
 import styleText from "./dynamic-form-item.shadow.css";
 import "@next-core/theme";
 import { isEqual, flatten, omit, isEmpty } from "lodash";
-import { FormItemElementBase, MessageBody } from "@next-shared/form";
+import { FormItemElementBase } from "@next-shared/form";
 import { K, NS, locales } from "./i18n.js";
 import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
 import classNames from "classnames";
@@ -380,7 +380,10 @@ export function DynamicFormItemComponent(props: DynamicFormItemProps) {
               {!isEmpty(bricks) && (
                 <WrappedForm
                   layout="vertical"
-                  formStyle={{ flexDirection: "row", alignItems: "flex-start" }}
+                  formStyle={{
+                    flexDirection: "row",
+                    alignItems: "flex-start",
+                  }}
                   className="dynamic-form"
                   values={value}
                   defaultEmitValuesChange={false}

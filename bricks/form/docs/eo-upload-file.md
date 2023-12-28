@@ -13,7 +13,7 @@ properties:
   maxCount: 2
   multiple: true
   accept: image/*
-  draggableUploadTip: 支持上传图片
+  draggableUploadTip: 支持上传2张图片
 events:
   change:
     - action: console.log
