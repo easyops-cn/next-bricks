@@ -23,6 +23,16 @@
       - Shanghai
       - Guangzhou
       - Shenzhen
+      - Tianjin
+      - Hanzhou
+      - Xi'an
+      - Fuzhou
+      - Nanchan
+      - Changsha
+      - Shenyang
+      - Jinan
+      - Guiyang
+      - Wuhan
 ```
 
 ### Value

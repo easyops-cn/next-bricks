@@ -334,12 +334,10 @@ function CheckboxComponent(props: CheckboxProps) {
       <div
         style={{
           position: "relative",
-          display: "flex",
-          alignItems: "center",
           minHeight: "32px",
         }}
       >
-        <div className="checkbox-wrapper" part="checkbox-wrapper">
+        <div className="checkboxWrapper" part="checkbox-wrapper">
           {props.options?.map((item: CheckboxOptionType) => {
             const disabled = item.disabled || props.disabled;
             return (
@@ -407,9 +405,9 @@ function CheckboxComponent(props: CheckboxProps) {
           checkOptions.length === newOptionsKeys.length
             ? "all"
             : checkOptions.length > 0 &&
-              checkOptions.length !== newOptionsKeys.length
-            ? "part"
-            : "none";
+                checkOptions.length !== newOptionsKeys.length
+              ? "part"
+              : "none";
         return {
           ...option,
           options: newOptions,
