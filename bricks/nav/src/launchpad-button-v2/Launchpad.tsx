@@ -110,7 +110,7 @@ export function Launchpad({ active }: { active?: boolean }) {
 
             {showPlatformCategory && (
               <div className="platform-nav">
-                <div className="platform-nav-label">平台</div>
+                <div className="platform-nav-label">平台底座</div>
                 <ul className="sidebar-menu platform-nav-menu">
                   {platformCategories.map((item, index) => (
                     <PlatformCategorySidebarMenuItem
