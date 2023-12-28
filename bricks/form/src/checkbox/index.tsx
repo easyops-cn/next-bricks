@@ -334,6 +334,8 @@ function CheckboxComponent(props: CheckboxProps) {
       <div
         style={{
           position: "relative",
+          display: "flex",
+          alignItems: "center",
           minHeight: "32px",
         }}
       >
@@ -417,7 +419,7 @@ function CheckboxComponent(props: CheckboxProps) {
       });
     }, [optionGroups, props.value]);
     return (
-      <div>
+      <div className="collapse-wrapper">
         {" "}
         {_optionGroups?.map((i) => (
           <div key={i.key}>

@@ -32,7 +32,7 @@ describe("form.general-button", () => {
     expect(element.shadowRoot?.childNodes.length).toBe(2);
 
     expect(
-      element.shadowRoot?.querySelector(".checkbox-wrapper")?.childNodes.length
+      element.shadowRoot?.querySelector(".checkboxWrapper")?.childNodes.length
     ).toBe(2);
     expect(element.value).toBe(undefined);
 

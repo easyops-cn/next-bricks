@@ -69,9 +69,6 @@
         value: 0
       - label: Shanghai
         value: 1
-        icon:
-          icon: "bar-chart"
-          lib: "antd"
       - label: Guangzhou
         value: 2
       - label: Shenzhen
@@ -205,9 +202,6 @@
       - label: Shanghai
         value: 1
         checkboxColor: orange
-        icon:
-          icon: "bar-chart"
-          lib: "antd"
       - label: Guangzhou
         value: 2
         checkboxColor: blue
@@ -259,9 +253,6 @@
         value: 0
       - label: Shanghai
         value: 1
-        icon:
-          icon: "bar-chart"
-          lib: "antd"
       - label: Guangzhou
         value: 2
       - label: Shenzhen
