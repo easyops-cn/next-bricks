@@ -34,6 +34,14 @@
           "{projectRoot}/src/easyops-icon/generated",
           "{projectRoot}/src/fa-icon/generated"
         ]
+      },
+      "build:main": {
+        "inputs": [
+          "prod",
+          "global",
+          "{workspaceRoot}/shared/common-bricks/common-bricks.json",
+          "{workspaceRoot}/shared/icons/src/**/*"
+        ]
       }
     }
   },
