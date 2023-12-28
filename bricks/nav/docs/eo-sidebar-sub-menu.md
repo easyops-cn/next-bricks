@@ -16,8 +16,8 @@
         - exact: true
           icon:
             lib: easyops
-            category: second-menu
-            icon: jvm-info-second-menu
+            category: third-menu
+            icon: advanced-settings-third-menu
           text: 测试标题
           to: /developers/brick-book/atom/sub-menu
           type: default
@@ -25,15 +25,15 @@
         - items:
             - icon:
                 lib: easyops
-                category: second-menu
-                icon: lvs-second-menu
+                category: third-menu
+                icon: application-activity-third-menu
               text: 主机测试兼容复杂场景
               to: /developers/brick-book/atom/sub-menu/1
               key: "1.0"
             - icon:
                 lib: easyops
-                category: second-menu
-                icon: my-task-second-menu
+                category: third-menu
+                icon: dashboard-third-menu
               text: Docker
               to: /developers/brick-book/atom/sub-menu/2
               key: "1.1"
@@ -43,22 +43,22 @@
         - items:
             - icon:
                 lib: easyops
-                category: second-menu
-                icon: tool-task-second-menu
+                category: third-menu
+                icon: host-instance-maintenance-third-menu
               text: 开发负责人
               to: /developers/brick-book/atom/sub-menu/3
               key: "2.0"
             - icon:
                 lib: easyops
-                category: second-menu
-                icon: webhook-push-strategy-second-menu
+                category: third-menu
+                icon: inspection-overview-third-menu
               text: 运维负责人
               to: /developers/brick-book/atom/sub-menu/4
               key: "2.1"
             - icon:
                 lib: easyops
-                category: second-menu
-                icon: session-management-info-second-menu
+                category: third-menu
+                icon: job-management-third-menu
               text: 测试负责人
               to: /developers/brick-book/atom/sub-menu/5
               key: "2.2"
@@ -68,26 +68,8 @@
         - items:
             - icon:
                 lib: easyops
-                category: second-menu
-                icon: oceanbase-second-menu
-              items:
-                - items:
-                    - text: 被调方
-                      to: /developers/brick-book/atom/sub-menu/6
-                      key: 3.0.0.0
-                  title: 被调方
-                  type: subMenu
-                  key: 3.0.0
-                - text: 被调方
-                  to: /developers/brick-book/atom/sub-menu/7
-                  key: 3.0.1
-              title: 被调方
-              type: subMenu
-              key: "3.0"
-            - icon:
-                lib: easyops
-                category: second-menu
-                icon: package-management-second-menu
+                category: third-menu
+                icon: plugin-market-third-menu
               items:
                 - text: 被调方
                   to: /developers/brick-book/atom/sub-menu/8

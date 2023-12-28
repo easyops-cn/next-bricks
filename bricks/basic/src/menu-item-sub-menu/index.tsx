@@ -18,6 +18,7 @@ export interface EoMenuSubMenuProps {
   label?: string;
   icon?: GeneralIconProps;
   titleStyle?: React.CSSProperties;
+  bodyStyle?: React.CSSProperties;
   collapsed?: boolean;
 }
 
@@ -48,6 +49,14 @@ class EoMenuItemSubMenu extends ReactNextElement {
   accessor titleStyle: React.CSSProperties | undefined;
 
   /**
+   * body样式
+   */
+  @property({
+    attribute: false,
+  })
+  accessor bodyStyle: React.CSSProperties | undefined;
+
+  /**
    * 是否为折叠状态
    */
   @property({
@@ -60,6 +69,7 @@ class EoMenuItemSubMenu extends ReactNextElement {
       <EoMenuItemSubMenuComponent
         icon={this.icon}
         titleStyle={this.titleStyle}
+        bodyStyle={this.bodyStyle}
         collapsed={this.collapsed}
       />
     );
@@ -67,7 +77,7 @@ class EoMenuItemSubMenu extends ReactNextElement {
 }
 
 export function EoMenuItemSubMenuComponent(props: EoMenuSubMenuProps) {
-  const { icon, titleStyle } = props;
+  const { icon, titleStyle, bodyStyle } = props;
   const titleRef = useRef<HTMLDivElement>(null);
   const [collapsed, setCollapsed] = useState(props.collapsed);
 
@@ -107,7 +117,7 @@ export function EoMenuItemSubMenuComponent(props: EoMenuSubMenuProps) {
         <i className="sub-menu-item-arrow" part="sub-menu-item-arrow" />
       </div>
 
-      <div className="content">
+      <div className="content" style={bodyStyle}>
         <slot />
       </div>
     </div>

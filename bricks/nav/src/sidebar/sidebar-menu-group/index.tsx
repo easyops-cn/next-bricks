@@ -32,7 +32,7 @@ class EoSidebarMenuGroup
    * 是否允许折叠
    */
   @property({ type: Boolean })
-  accessor collapsable: boolean | undefined;
+  accessor collapsable: boolean = false;
 
   /**
    * 是否折叠
