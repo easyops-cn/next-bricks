@@ -93,6 +93,9 @@
         value: 2
       - label: Shenzhen
         value: 3
+    value:
+      - 0
+      - 2
 - brick: div
   properties:
     style:
@@ -100,6 +103,8 @@
 - brick: eo-checkbox
   properties:
     disabled: true
+    value:
+      - 1
     options:
       - label: Beijing
         value: 0
@@ -119,26 +124,30 @@
     label: Default
     type: default
     options:
-      - label: Beijing
+      - label: Python
         value: 0
         icon:
-          icon: "search"
-          lib: "antd"
-      - label: Shanghai
+          lib: easyops
+          category: colored-common
+          icon: python
+      - label: Javascript
         value: 1
         icon:
-          icon: "plus"
-          lib: "antd"
-      - label: Guangzhou
+          lib: easyops
+          category: program-language
+          icon: javascript
+      - label: Powershell
         value: 2
         icon:
-          icon: "edit"
-          lib: "antd"
-      - label: Shenzhen
+          lib: easyops
+          category: colored-common
+          icon: powershell
+      - label: Shell
         value: 3
         icon:
-          icon: "delete"
-          lib: "antd"
+          lib: easyops
+          category: colored-common
+          icon: shell
 - brick: div
   properties:
     style:
@@ -148,26 +157,30 @@
     label: Icon
     type: icon
     options:
-      - label: Beijing
+      - label: Python
         value: 0
         icon:
-          icon: "search"
-          lib: "antd"
-      - label: Shanghai
+          lib: easyops
+          category: colored-common
+          icon: python
+      - label: Javascript
         value: 1
         icon:
-          icon: "plus"
-          lib: "antd"
-      - label: Guangzhou
+          lib: easyops
+          category: program-language
+          icon: javascript
+      - label: Powershell
         value: 2
         icon:
-          icon: "edit"
-          lib: "antd"
-      - label: Shenzhen
+          lib: easyops
+          category: colored-common
+          icon: powershell
+      - label: Shell
         value: 3
         icon:
-          icon: "delete"
-          lib: "antd"
+          lib: easyops
+          category: colored-common
+          icon: shell
 ```
 
 ### checkboxColor
