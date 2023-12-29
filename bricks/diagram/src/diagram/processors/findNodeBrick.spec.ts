@@ -1,8 +1,15 @@
+import { describe, test, expect } from "@jest/globals";
 import { findNodeBrick } from "./findNodeBrick";
-import { GraphViewNodeBrick, GraphNode } from "../interfaces";
+import { NodeBrickConf, DiagramNode } from "../interfaces";
 
 describe("findNodeBrick", () => {
-  it.each<[GraphNode, Pick<GraphViewNodeBrick, "nodeType" | "if">[], number]>([
+  test.each<
+    [
+      node: DiagramNode,
+      nodeBricks: Pick<NodeBrickConf, "nodeType" | "if">[],
+      brickIndex: number,
+    ]
+  >([
     [
       {
         id: "1",
@@ -64,7 +71,7 @@ describe("findNodeBrick", () => {
       1,
     ],
   ])("findNodeBrick(%j, %j) should work", (node, nodeBricks, brickIndex) => {
-    expect(findNodeBrick(node, nodeBricks as GraphViewNodeBrick[])).toBe(
+    expect(findNodeBrick(node, nodeBricks as NodeBrickConf[])).toBe(
       nodeBricks[brickIndex]
     );
   });

@@ -1,5 +1,5 @@
 import { minBy } from "lodash";
-import type { DiagramNode, RenderedEdge, RenderedNode } from "./interfaces";
+import type { DiagramNode, RenderedEdge, RenderedNode } from "../interfaces";
 
 export type KeyboardAction =
   | KeyboardActionSwitchActiveNode
@@ -44,61 +44,25 @@ export function handleKeyboard(
   switch (key) {
     case "ArrowLeft":
     case 37: {
-      const candidates = renderedNodes.filter(
-        (node) =>
-          node !== activeNode &&
-          node.x < activeNode.x &&
-          activeNode.x - node.x > Math.abs(activeNode.y - node.y)
-      );
-      node = minBy(
-        candidates,
-        (node) => (activeNode.y - node.y) ** 2 + (activeNode.x - node.x) ** 2
-      );
+      node = moveOnX(renderedNodes, activeNode, -1);
       action = "switch-active-node";
       break;
     }
     case "ArrowUp":
     case 38: {
-      const candidateEdges = renderedEdges.filter(
-        ({ data }) =>
-          data.target === activeNodeId && data.source !== activeNodeId
-      );
-      const candidates = candidateEdges
-        .map(({ data: { source } }) =>
-          renderedNodes.find((node) => node.id === source)
-        )
-        .filter((node) => node && node.y < activeNode.y) as RenderedNode[];
-      node = minBy(candidates, (node) => Math.abs(activeNode.x - node.x));
+      node = moveOnY(renderedNodes, renderedEdges, activeNode, -1);
       action = "switch-active-node";
       break;
     }
     case "ArrowRight":
     case 39: {
-      const candidates = renderedNodes.filter(
-        (node) =>
-          node !== activeNode &&
-          node.x > activeNode.x &&
-          node.x - activeNode.x > Math.abs(activeNode.y - node.y)
-      );
-      node = minBy(candidates, (node) => Math.abs(activeNode.y - node.y));
+      node = moveOnX(renderedNodes, activeNode, 1);
       action = "switch-active-node";
       break;
     }
     case "ArrowDown":
     case 40: {
-      const candidateEdges = renderedEdges.filter(
-        ({ data }) =>
-          data.source === activeNodeId && data.target !== activeNodeId
-      );
-      const candidates = candidateEdges
-        .map(({ data: { target } }) =>
-          renderedNodes.find((node) => node.id === target)
-        )
-        .filter((node) => node && node.y > activeNode.y) as RenderedNode[];
-      node = minBy(
-        candidates,
-        (node) => (activeNode.y - node.y) ** 2 + (activeNode.x - node.x) ** 2
-      );
+      node = moveOnY(renderedNodes, renderedEdges, activeNode, 1);
       action = "switch-active-node";
       break;
     }
@@ -116,4 +80,44 @@ export function handleKeyboard(
     event.stopPropagation();
     return { action, node: node?.data } as KeyboardAction;
   }
+}
+
+function moveOnX(
+  renderedNodes: RenderedNode[],
+  activeNode: RenderedNode,
+  direction: 1 | -1
+) {
+  let diff: number;
+  const candidates = renderedNodes.filter(
+    (node) =>
+      node !== activeNode &&
+      ((diff = (node.x - activeNode.x) * direction), diff > 0) &&
+      diff > Math.abs(activeNode.y - node.y)
+  );
+  return minBy(
+    candidates,
+    (node) => (activeNode.y - node.y) ** 2 + (activeNode.x - node.x) ** 2
+  );
+}
+
+function moveOnY(
+  renderedNodes: RenderedNode[],
+  renderedEdges: RenderedEdge[],
+  activeNode: RenderedNode,
+  direction: 1 | -1
+) {
+  const from = direction === 1 ? "source" : "target";
+  const to = direction === 1 ? "target" : "source";
+  const candidateEdges = renderedEdges.filter(
+    ({ data }) => data[from] === activeNode.id && data[to] !== activeNode.id
+  );
+  const candidates = candidateEdges
+    .map(({ data }) => renderedNodes.find((node) => node.id === data[to]))
+    .filter(
+      (node) => node && (node.y - activeNode.y) * direction > 0
+    ) as RenderedNode[];
+  return minBy(
+    candidates,
+    (node) => (activeNode.y - node.y) ** 2 + (activeNode.x - node.x) ** 2
+  );
 }

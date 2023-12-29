@@ -1,5 +1,5 @@
 import { checkIfByTransform } from "@next-core/runtime";
-import { NodeBrickConf, DiagramNode } from "./interfaces";
+import { NodeBrickConf, DiagramNode } from "../interfaces";
 
 export function findNodeBrick(
   node: DiagramNode,

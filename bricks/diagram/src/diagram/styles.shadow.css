@@ -20,6 +20,10 @@
   opacity: 0;
 }
 
+.diagram:focus {
+  outline: none;
+}
+
 .ready {
   opacity: 1;
 }

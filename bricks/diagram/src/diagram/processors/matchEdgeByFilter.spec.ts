@@ -1,8 +1,9 @@
+import { describe, test, expect } from "@jest/globals";
 import { matchEdgeByFilter } from "./matchEdgeByFilter";
 import type { DiagramEdge, LineConf } from "../interfaces";
 
 describe("matchEdgeByFilter", () => {
-  it.each<[DiagramEdge, LineConf, boolean]>([
+  test.each<[DiagramEdge, LineConf, boolean]>([
     [
       {
         source: "1",

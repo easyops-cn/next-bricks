@@ -52,7 +52,7 @@ export type RefRepository = Map<DiagramNodeId, HTMLElement>;
 export interface NodeBrickConf {
   useBrick: UseSingleBrickConf;
   nodeType?: string | string[];
-  if?: string | boolean;
+  if?: string | boolean | null;
 }
 
 export interface NodePosition {

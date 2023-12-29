@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-// import { getRuntime } from "@next-core/runtime";
 import { ReactUseBrick } from "@next-core/react-runtime";
 import type {
   DiagramNode,
@@ -7,12 +6,11 @@ import type {
   NodeBrickConf,
   RefRepository,
 } from "./interfaces";
-import { findNodeBrick } from "./findNodeBrick";
+import { findNodeBrick } from "./processors/findNodeBrick";
 
 export interface NodeComponentGroupProps {
   nodes?: DiagramNode[];
   nodeBricks?: NodeBrickConf[];
-  // nodePositions?: Map<DiagramNodeId, NodePosition>;
   onRendered?: (refRepository: RefRepository | null) => void;
 }
 
@@ -50,36 +48,32 @@ export function NodeComponentGroup({
     [refRepository]
   );
 
-  // useEffect(() => {
-  //   setRendered(false);
-  // }, [nodes]);
-
   useEffect(() => {
     // All nodes have been rendered.
-    // setRendered(renderedIds.length >= (nodes?.length ?? 0));
     setRendered(!nodes?.some((node) => !renderedIds.includes(node.id)));
   }, [nodes, renderedIds]);
 
-  useEffect(() => {
-    onRendered?.(rendered ? refRepository : null);
-  }, [/* onRendered, */ refRepository, rendered]);
+  useEffect(
+    () => {
+      onRendered?.(rendered ? refRepository : null);
+    },
+    // Dot not re-run effect when `onRendered` changed.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [/* onRendered, */ refRepository, rendered]
+  );
 
   return (
     <React.Fragment>
-      {nodes?.map((node) => {
-        // const position = nodePositions?.get(node.id);
-        return (
-          <div key={node.id} className="node">
-            <NodeComponent
-              nodeBricks={nodeBricks}
-              node={node}
-              // refRepository={refRepository}
-              onRendered={handleRenderer}
-              onUnmount={handleUnmount}
-            />
-          </div>
-        );
-      })}
+      {nodes?.map((node) => (
+        <div key={node.id} className="node">
+          <NodeComponent
+            nodeBricks={nodeBricks}
+            node={node}
+            onRendered={handleRenderer}
+            onUnmount={handleUnmount}
+          />
+        </div>
+      ))}
     </React.Fragment>
   );
 }
@@ -87,7 +81,6 @@ export function NodeComponentGroup({
 export interface NodeComponentProps {
   node: DiagramNode;
   nodeBricks?: NodeBrickConf[];
-  // refRepository?: RefRepository;
   onRendered?: (id: DiagramNodeId, element: HTMLElement | null) => void;
   onUnmount?: (id: DiagramNodeId) => void;
 }
@@ -95,7 +88,6 @@ export interface NodeComponentProps {
 export function NodeComponent({
   node,
   nodeBricks,
-  // refRepository,
   onRendered,
   onUnmount,
 }: NodeComponentProps): JSX.Element | null {
@@ -103,24 +95,20 @@ export function NodeComponent({
     () => findNodeBrick(node, nodeBricks)?.useBrick,
     [node, nodeBricks]
   );
-  // const migrateV3 = getRuntime().version >= 3;
   const memoizedData = useMemo(() => ({ node }), [node]);
 
-  // Todo(steve)
-  // istanbul ignore next
   useEffect(() => {
-    if (/* !migrateV3 || */ !useBrick) {
-      // Wait a micro task to let `useBrick` to be rendered.
-      Promise.resolve().then(() => {
+    if (!useBrick) {
+      // Keep the same time delay for reporting rendered.
+      setTimeout(() => {
         onRendered?.(node.id, null);
       });
     }
-  }, [/* migrateV3, */ node.id, onRendered, useBrick]);
+  }, [node.id, onRendered, useBrick]);
 
   useEffect(
     () => {
       return () => {
-        // refRepository?.delete(node.id);
         onUnmount?.(node.id);
       };
     },
@@ -132,27 +120,21 @@ export function NodeComponent({
   const refCallback = useCallback(
     (element: HTMLElement | null) => {
       if (element) {
-        // refRepository?.set(node.id, element);
-        // if (migrateV3) {
         // Todo: correctly wait for `useBrick` in v3 to be rendered (after layout)
         // Wait a macro task to let `useBrick` to be rendered.
         setTimeout(() => {
           onRendered?.(node.id, element);
-        }, 1);
-        // }
+        });
       }
     },
-    [/* migrateV3, */ node.id, onRendered /* , refRepository */]
+    [node.id, onRendered]
   );
 
   const ignoredCallback = useCallback(() => {
-    // if (migrateV3) {
-    // Todo: correctly wait for `useBrick` in v3 to be rendered (after layout)
     setTimeout(() => {
       onRendered?.(node.id, null);
-    }, 1);
-    // }
-  }, [/* migrateV3, */ node.id, onRendered]);
+    });
+  }, [node.id, onRendered]);
 
   if (!useBrick) {
     return null;

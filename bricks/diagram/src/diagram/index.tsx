@@ -1,13 +1,10 @@
 import React, {
-  createRef,
-  forwardRef,
   useCallback,
   useEffect,
-  useImperativeHandle,
+  useMemo,
   useRef,
   useState,
 } from "react";
-import { findIndex } from "lodash";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
@@ -30,16 +27,13 @@ import type {
 } from "./interfaces";
 import { NodeComponentGroup } from "./NodeComponent";
 import { curveLine } from "./lines/curveLine";
-import { matchEdgeByFilter } from "./lines/matchEdgeByFilter";
-import {
-  DEFAULT_LINE_CURVE_TYPE,
-  DEFAULT_LINE_STROKE_COLOR,
-  DEFAULT_LINE_STROKE_WIDTH,
-} from "./constants";
+import { handleKeyboard } from "./processors/handleKeyboard";
+import { getCenterOffsets } from "./processors/getCenterOffsets";
+import { getRenderedLinesAndMarkers } from "./processors/getRenderedLinesAndMarkers";
 import styleText from "./styles.shadow.css";
-import { handleKeyboard } from "./handleKeyboard";
+import { uniqueId } from "lodash";
 
-const { defineElement, property, event, method } = createDecorators();
+const { defineElement, property, event } = createDecorators();
 
 export interface EoDiagramProps {
   layout?: "dagre";
@@ -58,8 +52,6 @@ export interface EoDiagramProps {
 export interface DiagramHandler {
   moveIntoView(id: string): void;
 }
-
-export const EoDiagramComponent = forwardRef(LegacyDiagramComponent);
 
 /**
  * 构件 `eo-diagram`
@@ -109,21 +101,13 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
     this.#nodeDelete.emit(node);
   };
 
-  @method()
-  moveIntoView(id: string) {
-    this.#diagramHandler.current?.moveIntoView(id);
-  }
-
   #handleSwitchActiveNode = (id: string | undefined) => {
     this.activeNodeId = id;
   };
 
-  #diagramHandler = createRef<DiagramHandler>();
-
   render() {
     return (
       <EoDiagramComponent
-        ref={this.#diagramHandler}
         layout={this.layout}
         nodes={this.nodes}
         edges={this.edges}
@@ -140,22 +124,19 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
   }
 }
 
-function LegacyDiagramComponent(
-  {
-    layout,
-    nodes,
-    edges,
-    nodeBricks,
-    lines,
-    layoutOptions,
-    activeNodeId,
-    disableKeyboardAction,
-    onActiveNodeChange,
-    onSwitchActiveNode,
-    onNodeDelete,
-  }: EoDiagramProps,
-  ref: React.Ref<DiagramHandler>
-) {
+export function EoDiagramComponent({
+  layout,
+  nodes,
+  edges,
+  nodeBricks,
+  lines,
+  layoutOptions,
+  activeNodeId,
+  disableKeyboardAction,
+  onActiveNodeChange,
+  onSwitchActiveNode,
+  onNodeDelete,
+}: EoDiagramProps) {
   // const [nodePositions, setNodePositions] = useState<Map<DiagramNodeId, NodePosition> | undefined>();
   const [graph, setGraph] = useState<dagre.graphlib.Graph<RenderedNode> | null>(
     null
@@ -169,6 +150,19 @@ function LegacyDiagramComponent(
   const [renderedEdges, setRenderedEdges] = useState<RenderedEdge[]>([]);
   const [renderedLines, setRenderedLines] = useState<RenderedLine[]>([]);
   const [markers, setMarkers] = useState<LineMarker[]>([]);
+
+  const draggerRef = useRef<HTMLDivElement>(null);
+  const [grabbing, setGrabbing] = useState(false);
+  const [transform, setTransform] = useState<TransformLiteral>({
+    k: 1,
+    x: 0,
+    y: 0,
+  });
+
+  const rootRef = useRef<HTMLDivElement>(null);
+  const nodesRef = useRef<HTMLDivElement>(null);
+  const [offsets, setOffsets] = useState<[x: number, y: number]>([0, 0]);
+  const [centered, setCentered] = useState(false);
 
   const nodePadding = layoutOptions?.nodePadding ?? 0;
 
@@ -220,7 +214,7 @@ function LegacyDiagramComponent(
   }, [edges, nodes]);
 
   useEffect(() => {
-    if (!graph || !refRepository) {
+    if (!graph || !refRepository || graph.nodeCount() === 0) {
       return;
     }
 
@@ -267,47 +261,17 @@ function LegacyDiagramComponent(
   }, [graph, refRepository, renderId, nodePadding]);
 
   useEffect(() => {
-    const renderedLines: RenderedLine[] = [];
-    const markers: LineMarker[] = [];
-    for (const renderedEdge of renderedEdges) {
-      const lineConf = lines?.find((line) =>
-        matchEdgeByFilter(renderedEdge.data, line)
-      );
-      if (lineConf?.draw === false) {
-        continue;
-      }
-      const line: RenderedLine["line"] = Object.assign(
-        {
-          strokeColor: DEFAULT_LINE_STROKE_COLOR,
-          strokeWidth: DEFAULT_LINE_STROKE_WIDTH,
-          curveType: DEFAULT_LINE_CURVE_TYPE,
-        },
-        lineConf
-      );
-
-      let markerIndex: number | undefined;
-      if (line.arrow) {
-        const marker: LineMarker = {
-          strokeColor: line.strokeColor,
-        };
-        markerIndex = findIndex(markers, marker);
-        if (markerIndex === -1) {
-          markerIndex = markers.push(marker) - 1;
-        }
-      }
-
-      renderedLines.push({
-        ...renderedEdge,
-        line,
-        markerIndex,
-      });
-    }
+    const { renderedLines, markers } = getRenderedLinesAndMarkers(
+      renderedEdges,
+      lines
+    );
     setRenderedLines(renderedLines);
     setMarkers(markers);
   }, [lines, renderedEdges]);
 
   useEffect(() => {
-    if (disableKeyboardAction) {
+    const root = rootRef.current;
+    if (!root || disableKeyboardAction) {
       return;
     }
     const onKeydown = (event: KeyboardEvent) => {
@@ -323,9 +287,9 @@ function LegacyDiagramComponent(
         onSwitchActiveNode?.(action.node.id);
       }
     };
-    window.addEventListener("keydown", onKeydown);
+    root.addEventListener("keydown", onKeydown);
     return () => {
-      window.removeEventListener("keydown", onKeydown);
+      root.removeEventListener("keydown", onKeydown);
     };
   }, [
     activeNodeId,
@@ -346,19 +310,6 @@ function LegacyDiagramComponent(
     },
     []
   );
-
-  const draggerRef = useRef<HTMLDivElement>(null);
-  const [grabbing, setGrabbing] = useState(false);
-  const [transform, setTransform] = useState<TransformLiteral>({
-    k: 1,
-    x: 0,
-    y: 0,
-  });
-
-  const rootRef = useRef<HTMLDivElement>(null);
-  const nodesRef = useRef<HTMLDivElement>(null);
-  const [offsets, setOffsets] = useState<[x: number, y: number]>([0, 0]);
-  const [centered, setCentered] = useState(false);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -397,63 +348,13 @@ function LegacyDiagramComponent(
     if (renderedNodes.length === 0 || !root || centered) {
       return;
     }
-
-    let left = Infinity;
-    let top = Infinity;
-    let right = -Infinity;
-    let bottom = -Infinity;
-    for (const node of renderedNodes) {
-      const hw = node.width / 2;
-      const hh = node.height / 2;
-      const l = node.x - hw;
-      const r = node.x + hw;
-      const t = node.y - hh;
-      const b = node.y + hh;
-      if (l < left) {
-        left = l;
-      }
-      if (r > right) {
-        right = r;
-      }
-      if (t < top) {
-        top = t;
-      }
-      if (b > bottom) {
-        bottom = b;
-      }
-    }
-
-    const width = right - left;
-    const height = bottom - top;
-
-    const rootWidth = root.clientWidth;
-    const rootHeight = root.clientHeight;
-
-    setOffsets([
-      (rootWidth - width) / 2 - top,
-      (rootHeight - height) / 2 - left,
-    ]);
+    setOffsets(
+      getCenterOffsets(renderedNodes, [root.clientWidth, root.clientHeight])
+    );
     setCentered(true);
   }, [centered, renderedNodes]);
 
-  useImperativeHandle(ref, () => ({
-    moveIntoView(id: string) {
-      const root = rootRef.current;
-      const node = renderedNodes.find((node) => node.id === id);
-      if (!root || !node || !refRepository?.get(id)) {
-        return;
-      }
-      const left = node.x - node.width / 2 + transform.x + offsets[0];
-      const right = root.clientWidth - (left + node.width);
-      const top = node.y - node.height / 2 + transform.y + offsets[1];
-      const bottom = root.clientHeight - (top + node.height);
-      const deltaX = right < 0 ? right : left < 0 ? left : 0;
-      const deltaY = bottom < 0 ? bottom : top < 0 ? top : 0;
-      if (deltaX !== 0 || deltaY !== 0) {
-        setTransform({ k: transform.k, x: deltaX, y: deltaY });
-      }
-    },
-  }));
+  const markerPrefix = useMemo(() => `${uniqueId("diagram-line-arrow-")}-`, []);
 
   if (layout !== "dagre") {
     return <div>{`Diagram layout not supported: "${layout}"`}</div>;
@@ -462,6 +363,7 @@ function LegacyDiagramComponent(
   return (
     <div
       className={classNames("diagram", { ready: nodesReady && centered })}
+      tabIndex={-1}
       ref={rootRef}
     >
       <svg width="100%" height="100%" className="lines">
@@ -469,7 +371,7 @@ function LegacyDiagramComponent(
           {markers.map(({ strokeColor }, index) => (
             <marker
               key={index}
-              id={`diagram-line-arrow-${index}`}
+              id={`${markerPrefix}${index}`}
               viewBox="0 0 6 6"
               refX={3}
               refY={3}
@@ -496,21 +398,18 @@ function LegacyDiagramComponent(
               key={index}
               stroke={line.strokeColor}
               strokeWidth={line.strokeWidth}
-              d={curveLine(points, line.arrow ? 5 : 0, line.curveType)}
+              d={curveLine(points, line.arrow ? -5 : 0, line.curveType)}
               fill="none"
               markerEnd={
                 markerIndex === undefined
                   ? undefined
-                  : `url(#diagram-line-arrow-${markerIndex})`
+                  : `url(#${markerPrefix}${markerIndex})`
               }
             />
           ))}
         </g>
       </svg>
-      <div
-        className={classNames("dragger", { grabbing })}
-        ref={draggerRef}
-      ></div>
+      <div className={classNames("dragger", { grabbing })} ref={draggerRef} />
       <div
         className="nodes"
         ref={nodesRef}

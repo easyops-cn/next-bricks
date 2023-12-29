@@ -1,3 +1,4 @@
+import { describe, test, expect } from "@jest/globals";
 import { curveLine } from "./curveLine";
 
 describe("curveLine", () => {
@@ -37,53 +38,47 @@ describe("curveLine", () => {
       y: 33.61290322580645,
     },
   ];
-  it.each([[point1], [point2]])("curveLine(%j) should work", (point) => {
-    expect(curveLine(point, [10, 10], 5)).toMatchSnapshot();
+  test.each([[point1], [point2]])("curveLine(%j) should work", (point) => {
+    expect(curveLine(point, 5)).toMatchSnapshot();
   });
 
   test("no points", () => {
-    expect(curveLine(null as any, [10, 10], 5)).toEqual("");
+    expect(curveLine(null as any, 5)).toEqual("");
   });
 
   test("curveBasis", () => {
-    expect(curveLine(point1, [10, 10], 5, "curveBasis")).toMatchInlineSnapshot(
-      `"M808.1675392670157,211L822.6396160558464,202.08333333333334C837.1116928446772,193.16666666666666,866.0558464223386,175.33333333333334,897.0681828145333,153.02439195555584C928.0805192067279,130.71545057777834,961.1610384134559,103.93090115555668,977.7012980168198,90.53862644444585L994.2415576201838,77.14635173333502"`
+    expect(curveLine(point1, 5, "curveBasis")).toMatchInlineSnapshot(
+      `"M818.168,221L832.64,212.083C847.112,203.167,876.056,185.333,908.363,161.976C940.671,138.618,976.342,109.736,994.178,95.295L1012.013,80.854"`
     );
   });
 
   test("curveBumpX", () => {
-    expect(curveLine(point1, [10, 10], 5, "curveBumpX")).toMatchInlineSnapshot(
-      `"M808.1675392670157,211C851.5837696335079,211,851.5837696335079,157.5,895,157.5C944.6207788100919,157.5,944.6207788100919,77.14635173333502,994.2415576201838,77.14635173333502"`
+    expect(curveLine(point1, 5, "curveBumpX")).toMatchInlineSnapshot(
+      `"M818.168,221C861.584,221,861.584,167.5,905,167.5C958.507,167.5,958.507,80.854,1012.013,80.854"`
     );
   });
 
   test("curveBumpY", () => {
-    expect(curveLine(point1, [10, 10], 5, "curveBumpY")).toMatchInlineSnapshot(
-      `"M808.1675392670157,211C808.1675392670157,184.25,895,184.25,895,157.5C895,117.32317586666751,994.2415576201838,117.32317586666751,994.2415576201838,77.14635173333502"`
+    expect(curveLine(point1, 5, "curveBumpY")).toMatchInlineSnapshot(
+      `"M818.168,221C818.168,194.25,905,194.25,905,167.5C905,124.177,1012.013,124.177,1012.013,80.854"`
     );
   });
 
   test("curveMonotoneX", () => {
-    expect(
-      curveLine(point1, [10, 10], 5, "curveMonotoneX")
-    ).toMatchInlineSnapshot(
-      `"M808.1675392670157,211C837.1116928446771,194.47379066091165,866.0558464223386,177.94758132182332,895,157.5C928.0805192067279,134.13028546221668,961.1610384134559,105.63831859777585,994.2415576201838,77.14635173333502"`
+    expect(curveLine(point1, 5, "curveMonotoneX")).toMatchInlineSnapshot(
+      `"M818.168,221C847.112,204.421,876.056,187.843,905,167.5C940.671,142.429,976.342,111.641,1012.013,80.854"`
     );
   });
 
   test("curveMonotoneY", () => {
-    expect(
-      curveLine(point1, [10, 10], 5, "curveMonotoneY")
-    ).toMatchInlineSnapshot(
-      `"M808.1675392670157,211C838.4944055596437,193.16666666666666,868.8212718522716,175.33333333333334,895,157.5C934.3188096009571,130.71545057777834,964.2801836105705,103.93090115555668,994.2415576201838,77.14635173333502"`
+    expect(curveLine(point1, 5, "curveMonotoneY")).toMatchInlineSnapshot(
+      `"M818.168,221C848.432,203.167,878.697,185.333,905,167.5C947.599,138.618,979.806,109.736,1012.013,80.854"`
     );
   });
 
   test("curveNatural", () => {
-    expect(
-      curveLine(point1, [10, 10], 5, "curveNatural")
-    ).toMatchInlineSnapshot(
-      `"M808.1675392670157,211C836.0776014374105,195.40447068888875,863.9876636078053,179.8089413777775,895,157.5C926.0123363921947,135.1910586222225,960.1269470061893,106.16870517777876,994.2415576201838,77.14635173333502"`
+    expect(curveLine(point1, 5, "curveNatural")).toMatchInlineSnapshot(
+      `"M818.168,221C845.43,205.929,872.692,190.858,905,167.5C937.308,144.142,974.661,112.498,1012.013,80.854"`
     );
   });
 });

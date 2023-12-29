@@ -99,6 +99,8 @@ children:
       layout: dagre
       nodes: <%= CTX.nodes %>
       edges: <%= CTX.edges %>
+      lines:
+        - arrow: true
       activeNodeId: <%= CTX.activeNodeId %>
       nodeBricks:
         - useBrick:
@@ -106,17 +108,15 @@ children:
             brick: div
             properties:
               style: |
-                <%
+                <%=
                   {
-                    // width: `${100 + Math.round(Math.random() * 100)}px`,
-                    // height: `${50 + Math.round(Math.random() * 50)}px`,
                     width: "180px",
                     height: "100px",
                     border: "2px solid green",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    outline: DATA.active ? "2px solid cyan" : "none",
+                    outline: DATA.node.id === CTX.activeNodeId ? "2px solid orange" : "none",
                     outlineOffset: "2px",
                   }
                 %>
@@ -130,13 +130,13 @@ children:
                 args:
                   - activeNodeId
                   - <% DATA.node.id %>
-      events:
-        activeNode.change:
-          action: context.replace
-          if: <% CTX.activeNodeId !== EVENT.detail.id %>
-          args:
-            - activeNodeId
-            - <% EVENT.detail.id %>
+    events:
+      activeNode.change:
+        action: context.replace
+        if: <% CTX.activeNodeId !== EVENT.detail.id %>
+        args:
+          - activeNodeId
+          - <% EVENT.detail?.id %>
 ```
 
 ### Page Architecture
@@ -153,6 +153,7 @@ properties:
 context:
   - name: activeNodeId
   - name: tempNodeId
+  - name: targetNode
   - name: editingLabelNodes
     value: []
   - name: nodes
@@ -332,4 +333,37 @@ children:
           args:
             - activeNodeId
             - <% EVENT.detail?.id %>
+      node.delete:
+        - action: context.replace
+          args:
+            - targetNode
+            - <% EVENT.detail %>
+        - useProvider: basic.show-dialog
+          args:
+          - type: delete
+            title: Delete Confirm
+            content: Please enter {{ expect }} to delete the node.
+            expect: <% EVENT.detail.name || "未命名" %>
+          callback:
+            success:
+            - action: context.replace
+              args:
+                - nodes
+                - |-
+                  <%
+                    CTX.nodes.filter(
+                      ({ id }) => id !== CTX.targetNode.id
+                    )
+                  %>
+            - action: context.replace
+              args:
+                - edges
+                - |-
+                  <%
+                    CTX.edges.filter(
+                      ({ source, target }) =>
+                        source !== CTX.targetNode.id &&
+                        target !== CTX.targetNode.id
+                    )
+                  %>
 ```
