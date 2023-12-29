@@ -26,6 +26,7 @@ export function getLegacyRuntime(): {
         case "toggleLaunchpadEffect":
         case "applyPageTitle":
         case "getNavConfig":
+        case "version":
           return Reflect.get(...args);
         case "getFeatureFlags":
         case "getMiscSettings":

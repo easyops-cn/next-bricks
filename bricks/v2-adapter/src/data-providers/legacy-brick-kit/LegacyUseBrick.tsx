@@ -79,7 +79,7 @@ export function ReactUseBrick({
       }
       refCallback?.(element);
     },
-    [renderResult]
+    [refCallback, renderResult]
   );
 
   if (!renderResult) {
