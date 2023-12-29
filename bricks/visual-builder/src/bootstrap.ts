@@ -5,3 +5,4 @@ import "./workbench-action-list/index.js";
 import "./workbench-tree/index.js";
 import "./data-providers/inject-preview-agent.js";
 import "./workbench-history-action/index.js";
+import "./page-arch-node/index.js";
