@@ -77,7 +77,7 @@ export function EoSidebarMenuGroupComponent(
   props: EoSidebarMenuGroupComponentProps
 ) {
   const {
-    collapsable = true,
+    collapsable = false,
     collapsed,
     menuCollapsed,
     onCollapseChange,

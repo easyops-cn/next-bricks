@@ -111,10 +111,17 @@ export function EoSidebarSubMenuComponent(props: SidebarSubMenuProps) {
     return ((item.key?.split(".")?.length as number) - 1) * 16;
   }, []);
 
-  const renderSimpleMenuItem = (item: SidebarMenuSimpleItem) => {
+  const renderSimpleMenuItem = (
+    item: SidebarMenuSimpleItem,
+    options?: {
+      inSubmenu?: boolean;
+    }
+  ) => {
     return (
       <WrappedMenuItem
-        className="menu-item"
+        className={classNames("menu-item", {
+          "in-submenu": options?.inSubmenu,
+        })}
         style={{ paddingLeft: getMenuItemIndent(item) || 16 }}
         icon={item.icon}
         active={item.key ? selectedKey.includes(item.key) : false}
@@ -147,12 +154,15 @@ export function EoSidebarSubMenuComponent(props: SidebarSubMenuProps) {
           className="menu-sub-item"
           icon={item.icon}
           titleStyle={{ paddingLeft: getMenuItemIndent(item) }}
+          bodyStyle={{ paddingLeft: getMenuItemIndent(item) / 2 }}
           collapsed={!openedKeys.includes(item.key!)}
         >
           <span slot="title">{item.title}</span>
           {item.items.map((innerItem) => (
             <React.Fragment key={innerItem.key}>
-              {renderMenuItem(innerItem)}
+              {renderMenuItem(innerItem, {
+                inSubmenu: true,
+              })}
             </React.Fragment>
           ))}
         </WrapperMenuItemSubMenu>
@@ -179,12 +189,19 @@ export function EoSidebarSubMenuComponent(props: SidebarSubMenuProps) {
     }
   };
 
-  function renderMenuItem(item: SidebarMenuItem) {
+  function renderMenuItem(
+    item: SidebarMenuItem,
+    options?:
+      | {
+          inSubmenu?: boolean;
+        }
+      | undefined
+  ) {
     return isSubMenu(item as SidebarMenuGroup)
       ? renderSubMenuItem(item as SidebarMenuGroup)
       : isGroup(item)
         ? renderGroupMenuItem(item)
-        : renderSimpleMenuItem(item);
+        : renderSimpleMenuItem(item, options);
   }
 
   return (
