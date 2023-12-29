@@ -336,7 +336,7 @@ function CheckboxComponent(props: CheckboxProps) {
           position: "relative",
           display: "flex",
           alignItems: "center",
-          minHeight: "32px",
+          minHeight: "30px",
         }}
       >
         <div className="checkboxWrapper" part="checkbox-wrapper">

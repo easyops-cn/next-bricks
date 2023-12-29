@@ -685,9 +685,6 @@ export function SelectComponent(props: SelectProps) {
                 key={option.value as number}
                 color={disabled ? "#ddd" : undefined}
                 closable={option.closable ?? true}
-                tagStyle={{
-                  borderRadius: 4,
-                }}
                 checkable={false}
                 onClose={() => handleMultipleItemClose(option.value)}
               >
@@ -771,21 +768,24 @@ export function SelectComponent(props: SelectProps) {
         })}
         onClick={() => !item.disabled && handleChange(item)}
         onMouseOver={() => setFocusOptionItem(item)}
+        onMouseLeave={() => setFocusOptionItem({} as any)}
       >
         <div className="select-item-option-content">
           <div className="option">
             <span className="label">{item.label}</span>
             {suffix && <ReactUseBrick useBrick={suffix} data={item} />}
           </div>
-          <div className="is-checked">
-            <WrappedIcon
-              {...{
-                lib: "antd",
-                icon: "check",
-                theme: "outlined",
-              }}
-            />
-          </div>
+          {multiple && (
+            <div className="is-checked">
+              <WrappedIcon
+                {...{
+                  lib: "antd",
+                  icon: "check",
+                  theme: "outlined",
+                }}
+              />
+            </div>
+          )}
         </div>
       </div>
     );
@@ -828,6 +828,7 @@ export function SelectComponent(props: SelectProps) {
     focusOptionItem,
     value,
     suffix,
+    multiple,
     handleChange,
   ]);
 
