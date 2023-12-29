@@ -1,0 +1,40 @@
+.ant-picker {
+  border-radius: var(--small-border-radius);
+  height: 30px;
+}
+
+.ant-picker-dropdown .ant-picker-panel-container {
+  border: var(--medius-border-radius);
+}
+
+.ant-picker-dropdown .ant-picker-panel > .ant-picker-time-panel {
+  padding-top: 0;
+}
+
+.ant-picker-dropdown
+  .ant-picker-time-panel-column
+  > li.ant-picker-time-panel-cell {
+  margin-inline: 0;
+}
+
+.ant-picker-dropdown
+  .ant-picker-time-panel-column
+  > li.ant-picker-time-panel-cell
+  .ant-picker-time-panel-cell-inner {
+  width: auto;
+  border-radius: 0;
+}
+
+.ant-picker-dropdown .ant-picker-time-panel-column {
+  margin: 0;
+}
+
+.ant-picker-dropdown .ant-picker-ranges {
+  margin-top: 0px;
+  padding: 3px 10px;
+  background-color: var(--color-fill-bg-base-3);
+}
+
+.ant-btn {
+  box-shadow: none;
+}

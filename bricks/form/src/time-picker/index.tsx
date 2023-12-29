@@ -3,6 +3,7 @@ import { createDecorators, EventEmitter } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
+import fixStyleText from "./fix-style.shadow.css";
 import { TimePicker, ConfigProvider, theme } from "antd";
 import { useCurrentTheme } from "@next-core/react-runtime";
 import { FormItemElementBase } from "@next-shared/form";
@@ -39,7 +40,7 @@ interface EoTimePickerProps extends FormItemProps {
  */
 export
 @defineElement("eo-time-picker", {
-  styleTexts: [styleText],
+  styleTexts: [styleText, fixStyleText],
 })
 class EoTimePicker extends FormItemElementBase {
   /**

@@ -25,6 +25,7 @@
   border-bottom-width: 1px;
   align-items: center;
   color: var(--text-color-disabled);
+  box-sizing: border-box;
 }
 
 .timeRange .ant-picker:first-child {
