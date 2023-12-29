@@ -12,6 +12,7 @@ import type {
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
 import styleText from "./styles.shadow.css";
+import fixStyleText from "../time-picker/fix-style.shadow.css";
 import { i18n, initializeI18n } from "@next-core/i18n";
 import { K, NS, locales } from "./i18n.js";
 import { omit, isEmpty, uniqueId, difference } from "lodash";
@@ -77,7 +78,7 @@ type RealTimeRangePickerProps = Omit<
  */
 export
 @defineElement("eo-time-range-picker", {
-  styleTexts: [styleText],
+  styleTexts: [styleText, fixStyleText],
 })
 class EoTimeRangePicker extends FormItemElementBase {
   /**
