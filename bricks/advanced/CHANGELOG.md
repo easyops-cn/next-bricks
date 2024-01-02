@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.19.1...@next-bricks/advanced@0.20.0) (2024-01-02)
+
+
+### Features
+
+* update wokrbench style & launchpad add readonly mode ([c8b026d](https://github.com/easyops-cn/next-bricks/commit/c8b026de1617cf2726b8333eb78a6f78017f7b22))
+
+
+
+
+
 ## [0.19.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.19.0...@next-bricks/advanced@0.19.1) (2024-01-02)
 
 **Note:** Version bump only for package @next-bricks/advanced

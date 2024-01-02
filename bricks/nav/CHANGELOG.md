@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.0.1...@next-bricks/nav@1.1.0) (2024-01-02)
+
+
+### Features
+
+* launchpad支持开放平台跳转 ([96b69e5](https://github.com/easyops-cn/next-bricks/commit/96b69e549d4df378938329e5ec62f153ca816602))
+* update wokrbench style & launchpad add readonly mode ([c8b026d](https://github.com/easyops-cn/next-bricks/commit/c8b026de1617cf2726b8333eb78a6f78017f7b22))
+
+
+
+
+
 ## [1.0.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@0.11.1...@next-bricks/nav@1.0.1) (2024-01-02)
 
 **Note:** Version bump only for package @next-bricks/nav
