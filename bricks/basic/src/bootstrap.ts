@@ -36,3 +36,4 @@ import "./easyops-avatar/index.js";
 import "./data-providers/lock-body-scroll/lock-body-scroll.js";
 import "./data-providers/set-theme-by-apps.js";
 import "./avatar-group/index.js";
+import "./actions/index.js";

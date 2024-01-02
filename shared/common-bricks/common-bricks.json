@@ -29,7 +29,8 @@
     "eo-page-title",
     "eo-counter-badge",
     "eo-easyops-avatar",
-    "eo-avatar-group"
+    "eo-avatar-group",
+    "eo-actions"
   ],
   "icons": [
     "eo-antd-icon",
