@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.10.8...@next-bricks/visual-builder@1.1.0) (2024-01-02)
+
+
+### Features
+
+* diagram node for page arch ([96c4863](https://github.com/easyops-cn/next-bricks/commit/96c4863858e4a770543c64db0ada7f6db0fd4fcb))
+
+
+
+
+
 ## [0.10.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@0.10.7...@next-bricks/visual-builder@0.10.8) (2023-12-27)
 
 **Note:** Version bump only for package @next-bricks/visual-builder

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.28.0...@next-shared/common-bricks@0.29.0) (2024-01-02)
+
+
+### Features
+
+* initialize new brick: eo-diagram ([4797305](https://github.com/easyops-cn/next-bricks/commit/4797305545094a0e149925c6f5b130443a54101e))
+
+
+
+
+
 # [0.28.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.27.1...@next-shared/common-bricks@0.28.0) (2023-12-13)
 
 
