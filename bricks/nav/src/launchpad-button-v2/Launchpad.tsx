@@ -39,6 +39,11 @@ export function Launchpad({ active }: { active?: boolean }) {
     []
   );
 
+  const showOpenPlatform = React.useMemo(
+    () => getRuntime()?.getFeatureFlags()["launchpad-show-open-platform"],
+    []
+  );
+
   const {
     loading,
     q,
@@ -125,18 +130,27 @@ export function Launchpad({ active }: { active?: boolean }) {
             )}
           </div>
           {showScenarioCenter && (
-            <div className="scenario-nav">
+            <div className="jump-nav">
               <WrappedLink type="plain" url={"/portal/scenario"}>
-                <div className="scenario-nav-label">场景中心</div>
+                <div className="jump-nav-label">场景中心</div>
                 <WrappedIcon lib="antd" icon="right" theme="outlined" />
               </WrappedLink>
             </div>
           )}
 
           {showSolutionCenter && (
-            <div className="solution-nav">
+            <div className="jump-nav">
               <WrappedLink type="plain" url={"/portal/solution"}>
-                <div className="solution-nav-label">解决方案</div>
+                <div className="jump-nav-label">解决方案</div>
+                <WrappedIcon lib="antd" icon="right" theme="outlined" />
+              </WrappedLink>
+            </div>
+          )}
+
+          {showOpenPlatform && (
+            <div className="jump-nav">
+              <WrappedLink type="plain" url={"/developers"}>
+                <div className="jump-nav-label">开放平台</div>
                 <WrappedIcon lib="antd" icon="right" theme="outlined" />
               </WrappedLink>
             </div>

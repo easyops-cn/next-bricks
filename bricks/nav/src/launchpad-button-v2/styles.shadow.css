@@ -82,8 +82,7 @@
 
 .quick-nav-label,
 .platform-nav-label,
-.solution-nav-label,
-.scenario-nav-label,
+.jump-nav-label,
 .menu-group-label,
 .menu-item-label,
 .recent-visits span {
@@ -167,28 +166,24 @@
   flex: 1;
 }
 
-.scenario-nav > eo-link,
-.solution-nav > eo-link {
+.jump-nav > eo-link {
   display: block;
   cursor: pointer;
 }
-.scenario-nav > eo-link::part(link),
-.solution-nav > eo-link::part(link) {
+.jump-nav > eo-link::part(link) {
   padding: 10px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.solution-nav-label,
-.scenario-nav-label {
+.jump-nav-label {
   flex: 1;
   color: var(--color-header-text);
   font-weight: 500;
 }
 
-.solution-nav > eo-icon,
-.scenario-nav > eo-icon {
+.jump-nav > eo-icon {
   font-size: 14px;
   color: var(--text-color-default);
 }
