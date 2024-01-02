@@ -12,7 +12,7 @@ import "./host-context.css";
 
 export const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
-const { defineElement } = createDecorators();
+const { defineElement, property } = createDecorators();
 
 /**
  * launchpad 搜索
@@ -23,12 +23,26 @@ export
   styleTexts: [styleText],
 })
 class EoSearchLaunchpad extends ReactNextElement {
+  /**
+   * 简约模式
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor readonly: boolean | undefined;
+
   render() {
-    return <EoSearchLaunchpadComponent />;
+    return <EoSearchLaunchpadComponent readonly={this.readonly} />;
   }
 }
 
-export function EoSearchLaunchpadComponent() {
+interface EoSearchLaunchpadComponentProps {
+  readonly?: boolean;
+}
+
+export function EoSearchLaunchpadComponent({
+  readonly,
+}: EoSearchLaunchpadComponentProps) {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const handleClickSearchBox = useCallback(() => {
     searchInputRef.current?.focus();
@@ -64,6 +78,7 @@ export function EoSearchLaunchpadComponent() {
       value={{
         searching,
         loadingFavorites,
+        readonly,
         pushRecentVisit,
         toggleStar,
         isStarred,
