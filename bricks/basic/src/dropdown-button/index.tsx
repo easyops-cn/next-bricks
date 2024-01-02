@@ -8,9 +8,8 @@ import type {
   EoDropdownActions,
   DropdownActionsEvents,
   DropdownActionsEventsMapping,
-  Action,
-  SimpleAction,
 } from "../dropdown-actions/index.js";
+import type { Action, SimpleAction } from "../actions";
 import type { ButtonType, ComponentSize, Shape } from "../interface.js";
 import styleText from "./dropdown-button.shadow.css";
 

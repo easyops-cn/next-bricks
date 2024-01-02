@@ -184,6 +184,7 @@ export function PageArchNodeComponent({
           onChange={handleInputChange}
           onKeyDown={handleInputKeydown}
           onBlur={handleInputBlur}
+          onContextMenu={(e) => e.stopPropagation()}
         />
         <div className="label" onDoubleClick={handleEditLabel}>
           {currentLabel}

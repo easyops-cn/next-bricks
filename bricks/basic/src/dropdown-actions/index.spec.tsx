@@ -15,6 +15,13 @@ class MockEoPopover extends HTMLElement {
 
 customElements.define("eo-popover", MockEoPopover);
 
+customElements.define(
+  "eo-actions",
+  class extends HTMLElement {
+    actions: unknown[] | undefined;
+  }
+);
+
 describe("eo-dropdown-actions", () => {
   test("basic usage", async () => {
     const onActionClick = jest.fn();
@@ -52,7 +59,9 @@ describe("eo-dropdown-actions", () => {
         type: "divider",
       },
     ];
-    element.addEventListener("action.click", onActionClick);
+    element.addEventListener("action.click", (e: Event) =>
+      onActionClick((e as CustomEvent).detail)
+    );
 
     expect(element.shadowRoot).toBeFalsy();
 
@@ -70,39 +79,19 @@ describe("eo-dropdown-actions", () => {
       element.shadowRoot?.querySelector("eo-popover")?.hasAttribute("active")
     ).toBeTruthy();
 
-    expect(element.shadowRoot?.querySelectorAll("eo-menu-item")).toHaveLength(
-      3
-    );
-    expect(
-      element.shadowRoot?.querySelectorAll(".menu-item-divider")
-    ).toHaveLength(1);
-
-    expect(
-      element.shadowRoot?.querySelectorAll("eo-menu-item")[0].parentElement
-        ?.tagName
-    ).toBe("EO-LINK");
-    expect(
-      element.shadowRoot?.querySelectorAll("eo-menu-item")[1].parentElement
-        ?.tagName
-    ).not.toBe("EO-LINK");
-    expect(
-      element.shadowRoot
-        ?.querySelectorAll("eo-menu-item")[2]
-        .classList.contains("menu-item-danger")
-    ).toBeTruthy();
+    expect(element.shadowRoot?.querySelectorAll("eo-actions")).toHaveLength(1);
 
     act(() => {
-      fireEvent.click(
-        element.shadowRoot?.querySelectorAll("eo-menu-item")[0] as HTMLElement
+      fireEvent(
+        element.shadowRoot!.querySelector("eo-actions")!,
+        new CustomEvent("action.click", { detail: element.actions![1] })
       );
     });
-    expect(onActionClick).lastCalledWith(
+    expect(onActionClick).toBeCalledWith(
       expect.objectContaining({
-        detail: {
-          text: "a",
-          event: "a.click",
-          url: "/test",
-        },
+        text: "a",
+        event: "a.click",
+        url: "/test",
       })
     );
     expect(
