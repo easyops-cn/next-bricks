@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.0.2...@next-bricks/basic@1.1.0) (2024-01-02)
+
+
+### Bug Fixes
+
+* use fit-content ([e42f29a](https://github.com/easyops-cn/next-bricks/commit/e42f29ac7ede151e0d5a0b85b6ddf27b4eef0841))
+
+
+### Features
+
+* new brick: eo-actions ([4046665](https://github.com/easyops-cn/next-bricks/commit/4046665965e7ff3c616b5f11e1ff7a764ac5bb27))
+* new brick: eo-context-menu ([289e5a1](https://github.com/easyops-cn/next-bricks/commit/289e5a18881b6788587f48e13414fe0f9080079e))
+
+
+
+
+
 ## [1.0.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.0.1...@next-bricks/basic@1.0.2) (2024-01-02)
 
 **Note:** Version bump only for package @next-bricks/basic

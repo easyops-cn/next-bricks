@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.1.1...@next-bricks/visual-builder@1.1.2) (2024-01-02)
+
+
+### Bug Fixes
+
+* stop propagation of context-menu event ([2a15cba](https://github.com/easyops-cn/next-bricks/commit/2a15cba30d223096d5fc0598fc9a2f2c4d2f6b9d))
+
+
+
+
+
 ## [1.1.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.1.0...@next-bricks/visual-builder@1.1.1) (2024-01-02)
 
 **Note:** Version bump only for package @next-bricks/visual-builder

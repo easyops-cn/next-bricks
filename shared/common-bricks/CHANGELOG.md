@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.29.0...@next-shared/common-bricks@0.30.0) (2024-01-02)
+
+
+### Features
+
+* new brick: eo-actions ([4046665](https://github.com/easyops-cn/next-bricks/commit/4046665965e7ff3c616b5f11e1ff7a764ac5bb27))
+* new brick: eo-context-menu ([289e5a1](https://github.com/easyops-cn/next-bricks/commit/289e5a18881b6788587f48e13414fe0f9080079e))
+
+
+
+
+
 # [0.29.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.28.0...@next-shared/common-bricks@0.29.0) (2024-01-02)
 
 
