@@ -29,6 +29,7 @@ const WrappedPopover = wrapBrick<
   onVisibleChange: "visible.change",
   beforeVisibleChange: "before.visible.change",
 });
+
 const WrappedActions = wrapBrick<
   EoActions,
   ActionsProps,

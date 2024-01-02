@@ -30,7 +30,8 @@
     "eo-counter-badge",
     "eo-easyops-avatar",
     "eo-avatar-group",
-    "eo-actions"
+    "eo-actions",
+    "eo-context-menu"
   ],
   "icons": [
     "eo-antd-icon",
