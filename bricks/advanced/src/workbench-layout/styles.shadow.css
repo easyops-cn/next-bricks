@@ -91,11 +91,11 @@
     }
 
     .delete-icon:hover {
-      color: var(--color-warning);
+      color: var(--color-error);
     }
 
     .delete-icon:active {
-      color: var(--color-warning-active);
+      color: var(--color-error-active);
     }
   }
 }

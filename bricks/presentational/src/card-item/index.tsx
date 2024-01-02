@@ -16,6 +16,7 @@ import type {
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import classNames from "classnames";
+import "./host-contenxt.css";
 
 const { defineElement, property } = createDecorators();
 

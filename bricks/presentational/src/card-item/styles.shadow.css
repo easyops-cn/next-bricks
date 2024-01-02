@@ -1,49 +1,10 @@
 :host {
   display: flex;
   flex-direction: column;
-  --local-card-border: 1px solid var(--card-item-border-color);
-  --local-cover-border-bottom: 1px solid var(--card-item-border-color);
-  --local-box-shadow: 0 0 0 1px var(--card-item-border-color);
-  --local-card-hovered-border: none;
-  --local-card-background-color: var(--card-item-bg);
-  --local-cover-background-color: var(--color-fill-bg-base-3);
-  --local-card-hovered-background-color: var(--card-item-hover-bg);
-  --local-card-hovered-box-shadow: var(--card-item-hover-shadow);
-  --local-card-title-color: var(--text-color-title);
-  --local-card-hovered-title-color: var(--color-brand);
-  --local-card-description-color: var(--text-color-secondary);
 }
 
 :host([hidden]) {
   display: none;
-}
-
-:host([style-type="grayish"]) {
-  --local-card-border: 1px solid transparent;
-  --local-box-shadow: 0 0 0 1px transparent;
-  --local-card-hovered-border: 1px solid transparent;
-  --local-card-background-color: #f6f8fa;
-  --local-card-hovered-background-color: var(--color-fill-bg-container-1);
-  --local-card-hovered-box-shadow: 0px 2px 12px 0px rgba(0, 0, 0, 0.06);
-  --local-card-title-color: var(--color-header-text);
-  --local-card-hovered-title-color: var(--color-brand);
-  --local-card-description-color: var(--color-secondary-text);
-  --local-card-icon-box-shadow: 0px 2px 4px 0px rgba(26, 122, 255, 0.08);
-  --local-card-hovered-icon-box-shadow: none;
-  --local-card-icon-background-color: var(--color-fill-bg-container-1);
-  --local-card-hovered-icon-background-color: var(--palette-blue-1);
-  --local-card-icon-color: var(--palette-gray-blue-6);
-}
-
-:host-context(html[data-theme="dark-v2"]):host([style-type="grayish"]),
-:host-context(html[data-override-theme="dark-v2"]):host(
-    [style-type="grayish"]
-  ) {
-  --local-card-hovered-border: 1px solid rgba(255, 255, 255, 0.12);
-  --local-card-background-color: rgb(255 255 255 / 8%);
-  --local-card-hovered-box-shadow: none;
-  --local-card-icon-box-shadow: none;
-  --local-card-hovered-icon-background-color: var(--palette-blue-2);
 }
 
 *,

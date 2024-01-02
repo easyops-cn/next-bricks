@@ -40,7 +40,7 @@ export interface MenuItemProps {
 }
 
 function MenuItem({ item }: MenuItemProps) {
-  const { loadingFavorites, pushRecentVisit, toggleStar, isStarred } =
+  const { loadingFavorites, readonly, pushRecentVisit, toggleStar, isStarred } =
     useLaunchpadContext();
 
   const starred = useMemo(() => isStarred(item), [isStarred, item]);
@@ -87,14 +87,16 @@ function MenuItem({ item }: MenuItemProps) {
         />
         <span className="menu-item-label">{item.name}</span>
       </WrappedLink>
-      <WrappedIcon
-        lib="fa"
-        prefix={starred ? "fas" : "far"}
-        icon="star"
-        className="menu-item-star"
-        title={starred ? "取消收藏" : "收藏"}
-        onClick={handleStarClick}
-      />
+      {!readonly && (
+        <WrappedIcon
+          lib="fa"
+          prefix={starred ? "fas" : "far"}
+          icon="star"
+          className="menu-item-star"
+          title={starred ? "取消收藏" : "收藏"}
+          onClick={handleStarClick}
+        />
+      )}
     </li>
   );
 }
@@ -104,7 +106,7 @@ export interface SidebarMenuItemProps {
 }
 
 export function SidebarMenuItem({ item }: SidebarMenuItemProps) {
-  const { pushRecentVisit, toggleStar } = useLaunchpadContext();
+  const { readonly, pushRecentVisit, toggleStar } = useLaunchpadContext();
 
   const handleClick = useCallback(() => {
     if (item.type !== "link") {
@@ -145,12 +147,14 @@ export function SidebarMenuItem({ item }: SidebarMenuItemProps) {
         />
         <span className="menu-item-label">{item.name}</span>
       </WrappedLink>
-      <WrappedIcon
-        lib="fa"
-        icon="xmark"
-        className="menu-item-remove"
-        onClick={handleRemoveStar}
-      />
+      {!readonly && (
+        <WrappedIcon
+          lib="fa"
+          icon="xmark"
+          className="menu-item-remove"
+          onClick={handleRemoveStar}
+        />
+      )}
     </li>
   );
 }

@@ -8,7 +8,7 @@ import { LaunchpadsContext } from "../launchpad-button-v2/LaunchpadContext";
 import { SidebarMenuItem } from "../launchpad-button-v2/MenuGroup";
 import { SidebarMenuItemData } from "../launchpad-button-v2/interfaces";
 
-const { defineElement } = createDecorators();
+const { defineElement, property } = createDecorators();
 
 /**
  * 快捷访问
@@ -19,12 +19,23 @@ export
   styleTexts: [styleText],
 })
 class EoLaunchpadQuickAccess extends ReactNextElement {
+  @property({
+    type: Boolean,
+  })
+  accessor readonly: boolean | undefined;
+
   render() {
-    return <EoLaunchpadQuickAccessComponent />;
+    return <EoLaunchpadQuickAccessComponent readonly={this.readonly} />;
   }
 }
 
-export function EoLaunchpadQuickAccessComponent() {
+interface EoLaunchpadQuickAccessComponentProps {
+  readonly?: boolean;
+}
+
+export function EoLaunchpadQuickAccessComponent({
+  readonly,
+}: EoLaunchpadQuickAccessComponentProps) {
   const {
     favorites,
     loadingFavorites,
@@ -38,6 +49,7 @@ export function EoLaunchpadQuickAccessComponent() {
       value={{
         searching: false,
         loadingFavorites,
+        readonly,
         pushRecentVisit,
         toggleStar,
         isStarred,

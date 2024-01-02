@@ -4,6 +4,7 @@ import type { MenuItemDataLink, MenuItemDataNormal } from "./interfaces";
 export interface LaunchpadContextData {
   searching: boolean;
   loadingFavorites: boolean;
+  readonly?: boolean;
   pushRecentVisit(item: MenuItemDataNormal): void;
   toggleStar(item: MenuItemDataNormal | MenuItemDataLink): void;
   isStarred(item: MenuItemDataNormal): boolean;
