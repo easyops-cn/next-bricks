@@ -17,7 +17,7 @@
   margin: 2px 4px;
   padding: 5px 12px;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: var(--medius-border-radius);
   .label {
     line-height: 22px;
   }
@@ -41,8 +41,7 @@
   padding: 5px 12px;
 }
 .selectedOption {
-  color: var(--color-brand);
-  background-color: var(--top-menu-item-selected-bg);
+  background-color: var(--color-info-icon-bg);
 }
 
 .dropDownWrapper {
@@ -56,5 +55,5 @@
   z-index: 1050;
   margin-top: 5px;
   padding: 4px 2px;
-  border-radius: 4px;
+  border-radius: var(--small-border-radius);
 }

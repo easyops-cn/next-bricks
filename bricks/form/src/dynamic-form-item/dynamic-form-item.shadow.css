@@ -16,18 +16,26 @@
   line-height: 12px;
   padding: 2px;
   margin-left: 8px;
+  color: var(--color-secondary-text);
 }
+.remove-btn:hover {
+  color: var(--color-auxiliary-text);
+}
+.remove-btn:active {
+  color: var(--color-strong-text);
+}
+
 .remove-btn-wrapper {
   padding-top: 4px;
 }
 
 .dynamic-form > *:not(.remove-btn-wrapper) {
   flex: 1;
-  margin-right: 4px;
+  margin-right: 8px;
 }
 
 .add-btn {
-  width: calc(100% - 34px);
+  width: calc(100% - 38px);
 }
 .add-btn-wrapper-disabled {
   cursor: not-allowed;

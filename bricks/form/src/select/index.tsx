@@ -29,8 +29,7 @@ import { isEmpty, groupBy, isNil, debounce } from "lodash";
 import { UseSingleBrickConf } from "@next-core/types";
 import { ReactUseBrick } from "@next-core/react-runtime";
 import { handleHttpError, fetchByProvider } from "@next-core/runtime";
-import { unwrapProvider } from "@next-core/utils/general";
-import type { getIllustration as _getIllustration } from "@next-bricks/illustrations/data-providers/get-illustration";
+import Empty from "./empty.svg";
 
 interface UseBackendConf {
   provider: string;
@@ -46,10 +45,6 @@ const WrappedTag = wrapBrick<Tag, TagProps, TagEvents, TagMapEvents>("eo-tag", {
 });
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
-
-const getIllustration = unwrapProvider<typeof _getIllustration>(
-  "illustrations.get-illustration"
-);
 
 const isSearchable = (value: UseBackendConf): value is UseBackendConf => {
   return typeof value?.provider === "string";
@@ -355,10 +350,6 @@ export function SelectComponent(props: SelectProps) {
     () => mode && ["multiple", "tags"].includes(mode),
     [mode]
   );
-  const emptySrc = getIllustration({
-    category: "easyops2",
-    name: "search-empty",
-  });
   const selectRef = useRef<HTMLDivElement>(null);
   const inputSpanRef = useRef<HTMLSpanElement>(null);
   const shouldTriggerOnValueChangeArgs = useRef(true);
@@ -694,9 +685,6 @@ export function SelectComponent(props: SelectProps) {
                 key={option.value as number}
                 color={disabled ? "#ddd" : undefined}
                 closable={option.closable ?? true}
-                tagStyle={{
-                  borderRadius: 4,
-                }}
                 checkable={false}
                 onClose={() => handleMultipleItemClose(option.value)}
               >
@@ -780,21 +768,24 @@ export function SelectComponent(props: SelectProps) {
         })}
         onClick={() => !item.disabled && handleChange(item)}
         onMouseOver={() => setFocusOptionItem(item)}
+        onMouseLeave={() => setFocusOptionItem({} as any)}
       >
         <div className="select-item-option-content">
           <div className="option">
             <span className="label">{item.label}</span>
             {suffix && <ReactUseBrick useBrick={suffix} data={item} />}
           </div>
-          <div className="is-checked">
-            <WrappedIcon
-              {...{
-                lib: "antd",
-                icon: "check",
-                theme: "outlined",
-              }}
-            />
-          </div>
+          {multiple && (
+            <div className="is-checked">
+              <WrappedIcon
+                {...{
+                  lib: "antd",
+                  icon: "check",
+                  theme: "outlined",
+                }}
+              />
+            </div>
+          )}
         </div>
       </div>
     );
@@ -827,17 +818,17 @@ export function SelectComponent(props: SelectProps) {
       )
     ) : (
       <div className="empty-tips">
-        <img src={emptySrc} />
+        <Empty />
         <span>暂无数据</span>
       </div>
     );
   }, [
     renderOptions,
     props.groupBy,
-    emptySrc,
     focusOptionItem,
     value,
     suffix,
+    multiple,
     handleChange,
   ]);
 

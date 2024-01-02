@@ -119,7 +119,7 @@
           options:
             - abc1
             - abc2
-            - abc2
+            - abc3
             - abc4
 ```
 

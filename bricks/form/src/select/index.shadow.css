@@ -13,7 +13,7 @@
 .select-selector {
   position: relative;
   border: 1px solid var(--antd-border-color-base);
-  border-radius: 3px;
+  border-radius: var(--small-border-radius);
   box-sizing: border-box;
   background-color: var(--antd-component-background);
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -42,7 +42,11 @@
   flex: auto;
   flex-wrap: wrap;
   max-width: 100%;
-  padding-left: 12px;
+  padding-left: 10px;
+}
+
+.select-multiple .select-selection-overflow {
+  padding-left: 4px;
 }
 
 .selected-item {
@@ -78,10 +82,14 @@
 
 .select-single .select-selection-search {
   position: absolute;
-  top: 0;
+  top: -2px;
   right: 25px;
   bottom: 0;
-  left: 11px;
+  left: 10px;
+}
+
+.select-multiple .select-selection-search {
+  left: 4px;
 }
 
 .select-single-item {
@@ -188,14 +196,14 @@
   width: 100%;
   z-index: 1050;
   box-sizing: border-box;
-  padding: 4px 2px;
+  padding: 2px;
   overflow: hidden;
   font-size: 14px;
   font-variant: initial;
-  background-color: var(--antd-select-dropdown-bg);
-  border-radius: 4px;
+  background-color: var(--color-fill-bg-container-4);
+  border-radius: var(--medius-border-radius);
   outline: none;
-  box-shadow: var(--antd-box-shadow-base);
+  box-shadow: var(--feedback-container-shadow);
 }
 
 .dropdown-list {
@@ -224,7 +232,7 @@
 
 .select-item-option {
   display: flex;
-  border-radius: 6px;
+  border-radius: var(--medius-border-radius);
   margin: 2px;
 }
 
@@ -264,8 +272,7 @@
 }
 
 .select-option-selected {
-  color: var(--color-brand);
-  background-color: var(--top-menu-item-selected-bg);
+  background-color: var(--color-info-icon-bg);
 }
 
 .select-option-hover {
@@ -277,6 +284,7 @@
   position: absolute;
   right: 0px;
   top: 0;
+  color: var(--color-brand);
 }
 
 .select-option-selected .is-checked {
@@ -284,7 +292,7 @@
 }
 
 .input-item {
-  min-height: 30px;
+  min-height: 28px;
   display: flex;
   align-items: center;
 }
@@ -296,14 +304,13 @@
   align-items: center;
   font-size: 14px;
   color: var(--palette-gray-8);
-}
-
-.empty-tips > img {
-  width: 180px;
+  padding: 20px;
 }
 
 .empty-tips > span {
-  margin-left: -8px;
+  margin-left: -4px;
+  margin-top: 8px;
+  color: var(--color-secondary-text);
 }
 
 .select-group-wrapper {
