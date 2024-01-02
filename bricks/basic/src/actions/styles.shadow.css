@@ -1,6 +1,6 @@
 :host {
   display: block;
-  width: max-content;
+  width: fit-content;
 }
 
 :host([hidden]) {
