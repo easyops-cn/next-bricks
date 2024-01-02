@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from "react";
 import { pick } from "lodash";
 import classNames from "classnames";
 import { checkIfByTransform } from "@next-core/runtime";
-import type { SimpleAction } from "@next-bricks/basic/dropdown-actions";
+import type { SimpleAction } from "@next-bricks/basic/actions";
 import {
   WrappedDropdownActions,
   WrappedIcon,
