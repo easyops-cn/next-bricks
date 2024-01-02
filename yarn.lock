@@ -1123,10 +1123,10 @@
   resolved "https://registry.yarnpkg.com/@babel/regjsgen/-/regjsgen-0.8.0.tgz#f0ba69b075e1f05fb2825b7fad991e7adbb18310"
   integrity sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==
 
-"@babel/runtime@^7.1.2", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.4", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.0", "@babel/runtime@^7.16.7", "@babel/runtime@^7.18.0", "@babel/runtime@^7.18.3", "@babel/runtime@^7.20.0", "@babel/runtime@^7.20.6", "@babel/runtime@^7.20.7", "@babel/runtime@^7.21.0", "@babel/runtime@^7.22.5", "@babel/runtime@^7.23.2", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
-  version "7.23.6"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.23.6.tgz#c05e610dc228855dc92ef1b53d07389ed8ab521d"
-  integrity sha512-zHd0eUrf5GZoOWVCXp6koAKQTfZV07eit6bGPmJgnZdnSAvvZee6zniW2XMF7Cmc4ISOOnPy3QaSiIJGJkVEDQ==
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.4", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.16.0", "@babel/runtime@^7.16.7", "@babel/runtime@^7.18.0", "@babel/runtime@^7.18.3", "@babel/runtime@^7.20.0", "@babel/runtime@^7.20.6", "@babel/runtime@^7.20.7", "@babel/runtime@^7.21.0", "@babel/runtime@^7.22.5", "@babel/runtime@^7.23.2", "@babel/runtime@^7.23.7", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
+  version "7.23.7"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.23.7.tgz#dd7c88deeb218a0f8bd34d5db1aa242e0f203193"
+  integrity sha512-w06OXVOFso7LcbzMiDGt+3X7Rh7Ho8MmgPoWU3rarH+8upf+wSU/grlGbWzQyr3DkdN6ZeuMFjpdwW0Q+HxobA==
   dependencies:
     regenerator-runtime "^0.14.0"
 
@@ -2263,16 +2263,17 @@
   dependencies:
     "@next-core/http" "^1.0.0"
 
-"@next-core/babel-preset-next@^1.0.11":
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/@next-core/babel-preset-next/-/babel-preset-next-1.0.11.tgz#1345283ff28c041a532f7b97b60e7dad45a4a1ab"
-  integrity sha512-tRWV6m2tFL+98V5A+JgAkpq091RN8plzXTmUBMCHgxsnBH5ECA14UHfv+nzz2hWFIzuGabp7vNkoG3etBzbV8A==
+"@next-core/babel-preset-next@^1.0.12":
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/@next-core/babel-preset-next/-/babel-preset-next-1.0.12.tgz#a59ec513ceea5d78f97a003198d7f62b361b545e"
+  integrity sha512-W9F3U9bD4zWxM2yoQIjSdihglUJAsCUhtOn4YPLWXNgnfBziQQslrTHRzwH2FQLJMSdfO1COLpKaoauf6Bwd+g==
   dependencies:
     "@babel/plugin-proposal-decorators" "^7.23.7"
     "@babel/plugin-transform-runtime" "^7.23.7"
     "@babel/preset-env" "^7.23.7"
     "@babel/preset-react" "^7.23.3"
     "@babel/preset-typescript" "^7.23.3"
+    "@babel/runtime" "^7.23.7"
 
 "@next-core/brick-container@^3.10.14":
   version "3.10.14"
