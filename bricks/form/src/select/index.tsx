@@ -29,7 +29,7 @@ import { isEmpty, groupBy, isNil, debounce } from "lodash";
 import { UseSingleBrickConf } from "@next-core/types";
 import { ReactUseBrick } from "@next-core/react-runtime";
 import { handleHttpError, fetchByProvider } from "@next-core/runtime";
-import { Empty } from "./empty";
+import Empty from "./empty.svg";
 
 interface UseBackendConf {
   provider: string;
