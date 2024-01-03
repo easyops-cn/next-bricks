@@ -121,4 +121,20 @@ describe("matchMenuItem", () => {
     );
     expect(matchMenuItem(item, pathname, "?clusterId=xyz")).toBe(false);
   });
+
+  it("matchMenuItem with activeMatchSearch and activeIncludes", () => {
+    const item = {
+      text: "mysql资源管理",
+      to: "/mysql-resource/detail?appId=default",
+      exact: false,
+      activeMatchSearch: true,
+      activeIncludes: ["/mysql-resource/detail?appId="],
+    };
+    const pathname = "/mysql-resource/detail";
+    expect(matchMenuItem(item, pathname, "")).toBe(true);
+    expect(matchMenuItem(item, pathname, "?appId=default")).toBe(true);
+    expect(matchMenuItem(item, pathname, "?appId=")).toBe(true);
+    expect(matchMenuItem(item, pathname, "?appId=other")).toBe(false);
+    expect(matchMenuItem(item, pathname, "?k=1")).toBe(true);
+  });
 });

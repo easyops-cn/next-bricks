@@ -49,7 +49,7 @@ export interface SidebarMenuSimpleItem {
   activeExcludes?: string[];
 
   /** 设置匹配高亮菜单项时是否还对 search 参数进行比较。 */
-  activeMatchSearch?: boolean;
+  activeMatchSearch?: boolean | Record<string, string | null>;
 
   /** @internal */
   key?: string;
