@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.10](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.9...@next-shared/general@0.8.10) (2024-01-03)
+
+
+### Bug Fixes
+
+* fix menu active match ([d308400](https://github.com/easyops-cn/next-bricks/commit/d30840059758894eb29173e1167e5c25971306a7))
+
+
+
+
+
 ## [0.8.9](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.8...@next-shared/general@0.8.9) (2024-01-02)
 
 **Note:** Version bump only for package @next-shared/general
