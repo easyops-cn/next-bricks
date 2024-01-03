@@ -173,7 +173,8 @@
     "eo-sidebar-menu",
     "eo-sidebar-menu-submenu",
     "eo-frame-breadcrumb",
-    "eo-sidebar-sub-menu"
+    "eo-sidebar-sub-menu",
+    "eo-directory"
   ],
   "diagram": ["eo-diagram"]
 }

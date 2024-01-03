@@ -14,3 +14,4 @@ import "./sidebar/sidebar-menu-submenu/index.js";
 import "./sidebar/sidebar-menu/index.js";
 import "./sidebar/index.js";
 import "./sidebar-sub-menu/index.js";
+import "./directory/index.js";
