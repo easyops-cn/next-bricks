@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.1.2...@next-bricks/diagram@0.2.0) (2024-01-03)
+
+
+### Features
+
+* show external label ([3845d31](https://github.com/easyops-cn/next-bricks/commit/3845d31134bb0c87bb12c30d2a31562100060e0c))
+
+
+
+
+
 ## [0.1.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.1.1...@next-bricks/diagram@0.1.2) (2024-01-03)
 
 **Note:** Version bump only for package @next-bricks/diagram
