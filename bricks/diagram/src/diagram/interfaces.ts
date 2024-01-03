@@ -81,4 +81,9 @@ export interface TransformLiteral {
 
 export interface LayoutOptionsDagre {
   nodePadding?: number;
+  rankdir?: "TB" | "BT" | "LR" | "RL";
+  ranksep?: number;
+  edgesep?: number;
+  nodesep?: number;
+  align?: "UL" | "UR" | "DL" | "DR";
 }

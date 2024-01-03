@@ -18,10 +18,14 @@ const autoFocusedSets = new Set<string>();
 export interface PageArchNodeProps {
   label?: string;
   type?: PageArchNodeType;
+  active?: boolean;
+  external?: ExternalData;
   autoFocusOnce?: string;
-  onLabelEditingChange?(value: boolean): void;
-  onLabelChange?(value: string): void;
-  onChildAppend?(): void;
+}
+
+export interface ExternalData {
+  label: string;
+  id: string;
 }
 
 export type PageArchNodeType = "page" | "board";
@@ -40,9 +44,13 @@ class PageArchNode extends ReactNextElement implements PageArchNodeProps {
   @property()
   accessor type: PageArchNodeType | undefined;
 
+  @property({ attribute: false })
+  accessor external: ExternalData | undefined;
+
+  @property({ type: Boolean })
+
   // @property()
   // accessor thumbnail: string | undefined;
-
   @property({ type: Boolean, render: false })
   accessor active: boolean | undefined;
 
@@ -70,28 +78,46 @@ class PageArchNode extends ReactNextElement implements PageArchNodeProps {
     this.#childAppend.emit();
   };
 
+  @event({ type: "external.click" })
+  accessor #externalClick: EventEmitter<ExternalData>;
+
+  #handleExternalClick = (data: ExternalData) => {
+    this.#externalClick.emit(data);
+  };
+
   render() {
     return (
       <PageArchNodeComponent
         label={this.label}
         type={this.type}
+        external={this.external}
         autoFocusOnce={this.autoFocusOnce}
         onLabelEditingChange={this.#handleLabelEditingChange}
         onLabelChange={this.#handleLabelChange}
         onChildAppend={this.#handleChildAppend}
+        onExternalClick={this.#handleExternalClick}
       />
     );
   }
 }
 
+export interface PageArchNodeComponentProps extends PageArchNodeProps {
+  onLabelEditingChange?(value: boolean): void;
+  onLabelChange?(value: string): void;
+  onChildAppend?(): void;
+  onExternalClick?(data: ExternalData): void;
+}
+
 export function PageArchNodeComponent({
   label,
   type: _type,
+  external,
   autoFocusOnce,
   onLabelEditingChange,
   onLabelChange,
   onChildAppend,
-}: PageArchNodeProps) {
+  onExternalClick,
+}: PageArchNodeComponentProps) {
   const type = _type === "board" ? "board" : "page";
   const [currentLabel, setCurrentLabel] = useState(label);
   const [editingLabel, setEditingLabel] = useState(false);
@@ -172,6 +198,14 @@ export function PageArchNodeComponent({
     [onChildAppend]
   );
 
+  const handleExternalClick = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      onExternalClick?.(external);
+    },
+    [external, onExternalClick]
+  );
+
   return (
     <>
       <div
@@ -196,6 +230,16 @@ export function PageArchNodeComponent({
         ) : (
           <div className="thumbnail-container">
             <WrappedIcon lib="antd" icon="ellipsis" />
+            {external && (
+              <div
+                className="external"
+                onClick={handleExternalClick}
+                onDoubleClick={(e) => e.stopPropagation()}
+              >
+                <WrappedIcon lib="antd" icon="desktop" />
+                <span className="external-label">{external.label}</span>
+              </div>
+            )}
           </div>
         )}
       </div>
