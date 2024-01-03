@@ -80,7 +80,8 @@ function getMatchOfSearch(
   const current = new URLSearchParams(currentSearch);
   const to = new URLSearchParams(toSearch);
   for (const [key, value] of to.entries()) {
-    if (current.get(key) !== value) {
+    // Allow `?k=` to match `?` (when `k` doesn't exist)
+    if ((current.get(key) ?? "") !== value) {
       return false;
     }
   }
@@ -102,6 +103,10 @@ export function matchMenuItem(
     path: escapedPath,
     exact: item.exact,
   });
+
+  if (match && item.activeMatchSearch) {
+    match = getMatchOfSearch(search, to.search);
+  }
 
   if (!match && Array.isArray(item.activeIncludes)) {
     for (const include of item.activeIncludes) {
@@ -136,10 +141,6 @@ export function matchMenuItem(
         break;
       }
     }
-  }
-
-  if (match && (item as any).activeMatchSearch) {
-    match = getMatchOfSearch(search, to.search);
   }
 
   return match;
