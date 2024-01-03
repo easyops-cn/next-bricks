@@ -81,6 +81,7 @@
   color: var(--palette-gray-5);
   font-size: 36px;
   width: 100%;
+  position: relative;
 }
 
 .icon-container {
@@ -122,4 +123,33 @@
 .add-button:hover {
   background: var(--palette-blue-5);
   color: var(--palette-gray-2);
+}
+
+.external {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--palette-purple-4);
+  font-size: 12px;
+  line-height: 20px;
+  height: 22px;
+  cursor: pointer;
+  color: var(--palette-gray-1);
+  border-radius: 9999px;
+  right: 4px;
+  max-width: fit-content;
+}
+
+.external-label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.external:hover {
+  background: var(--palette-purple-5);
 }

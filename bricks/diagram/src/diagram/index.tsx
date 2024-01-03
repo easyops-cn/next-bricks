@@ -12,6 +12,7 @@ import dagre from "@dagrejs/dagre";
 import { select } from "d3-selection";
 import { zoom } from "d3-zoom";
 import classNames from "classnames";
+import { pick, uniqueId } from "lodash";
 import type {
   DiagramEdge,
   DiagramNode,
@@ -31,7 +32,6 @@ import { handleKeyboard } from "./processors/handleKeyboard";
 import { getCenterOffsets } from "./processors/getCenterOffsets";
 import { getRenderedLinesAndMarkers } from "./processors/getRenderedLinesAndMarkers";
 import styleText from "./styles.shadow.css";
-import { uniqueId } from "lodash";
 
 const { defineElement, property, event } = createDecorators();
 
@@ -164,7 +164,25 @@ export function EoDiagramComponent({
   const [offsets, setOffsets] = useState<[x: number, y: number]>([0, 0]);
   const [centered, setCentered] = useState(false);
 
-  const nodePadding = layoutOptions?.nodePadding ?? 0;
+  const fixedOptions = useMemo(
+    () => ({
+      rankdir: "TB",
+      ranksep: 50,
+      edgesep: 10,
+      nodesep: 50,
+      // align: undefined,
+      nodePadding: 0,
+      ...layoutOptions,
+    }),
+    [layoutOptions]
+  );
+
+  const { nodePadding } = fixedOptions;
+  const dagreGraphOptions = useMemo(
+    () =>
+      pick(fixedOptions, ["rankdir", "ranksep", "edgesep", "nodesep", "align"]),
+    [fixedOptions]
+  );
 
   useEffect(() => {
     const nextActiveNode = activeNodeId
@@ -179,13 +197,7 @@ export function EoDiagramComponent({
       const newGraph = new dagre.graphlib.Graph<RenderedNode>();
 
       // Set an object for the graph label
-      newGraph.setGraph({
-        ranksep: 50,
-        nodesep: 20,
-        // padding: 15,
-        rankdir: "TB",
-        // acyclicer: "greedy",
-      });
+      newGraph.setGraph(dagreGraphOptions);
 
       // Default to assigning a new object as a label for each new edge.
       newGraph.setDefaultEdgeLabel(function () {
@@ -211,7 +223,7 @@ export function EoDiagramComponent({
 
       return newGraph;
     });
-  }, [edges, nodes]);
+  }, [edges, nodes, dagreGraphOptions]);
 
   useEffect(() => {
     if (!graph || !refRepository || graph.nodeCount() === 0) {

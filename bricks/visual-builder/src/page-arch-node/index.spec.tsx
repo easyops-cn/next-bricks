@@ -121,6 +121,7 @@ describe("visual-builder.page-arch-node", () => {
     });
     expect(element.shadowRoot?.childNodes.length).toBe(0);
   });
+
   test("type board", async () => {
     const element = document.createElement(
       "visual-builder.page-arch-node"
@@ -145,6 +146,44 @@ describe("visual-builder.page-arch-node", () => {
         ?.querySelector(".node")
         ?.classList.contains("editing-label")
     ).toBe(true);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("external", async () => {
+    const element = document.createElement(
+      "visual-builder.page-arch-node"
+    ) as PageArchNode;
+    element.type = "page";
+    element.label = "Link c";
+    element.external = {
+      label: "External X",
+      id: "x",
+    };
+    const onExternalClick = jest.fn();
+    element.addEventListener("external.click", (e) =>
+      onExternalClick((e as CustomEvent).detail)
+    );
+    const onClick = jest.fn();
+    element.addEventListener("click", onClick);
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+    expect(
+      element.shadowRoot?.querySelector(".external-label")?.textContent
+    ).toBe("External X");
+
+    act(() => {
+      fireEvent.click(element.shadowRoot!.querySelector(".external"));
+    });
+    expect(onExternalClick).toBeCalledWith({
+      label: "External X",
+      id: "x",
+    });
+    expect(onClick).not.toBeCalled();
 
     act(() => {
       document.body.removeChild(element);

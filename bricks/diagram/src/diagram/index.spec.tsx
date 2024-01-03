@@ -135,16 +135,16 @@ describe("eo-diagram", () => {
       </marker>
     </defs>
     <g
-      transform="translate(-20 -35) scale(1)"
+      transform="translate(-35 -35) scale(1)"
     >
       <path
-        d="M17.5,10L15.417,14.167C13.333,18.333,9.167,26.667,7.083,35C5,43.333,5,51.667,5,55.833L5,60"
+        d="M30,10L25.833,14.167C21.667,18.333,13.333,26.667,9.167,35C5,43.333,5,51.667,5,55.833L5,60"
         fill="none"
         stroke="gray"
         stroke-width="1"
       />
       <path
-        d="M22.5,10L24.583,14.167C26.667,18.333,30.833,26.667,32.917,34.167C35,41.667,35,48.333,35,51.667L35,55"
+        d="M40,10L44.167,14.167C48.333,18.333,56.667,26.667,60.833,34.167C65,41.667,65,48.333,65,51.667L65,55"
         fill="none"
         marker-end="url(#diagram-line-arrow-2-0)"
         stroke="blue"
@@ -157,7 +157,7 @@ describe("eo-diagram", () => {
   />
   <div
     class="nodes"
-    style="left: -20px; top: -35px;"
+    style="left: -35px; top: -35px;"
   >
     <div
       class="node"
