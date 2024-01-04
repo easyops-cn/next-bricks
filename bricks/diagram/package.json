@@ -40,7 +40,7 @@
     "@next-core/react-element": "^1.0.20",
     "@next-core/react-runtime": "^1.1.45",
     "@next-core/runtime": "^1.29.1",
-    "@next-core/theme": "^1.4.7",
+    "@next-core/theme": "^1.4.8",
     "classnames": "^2.3.2",
     "d3-drag": "^3.0.0",
     "d3-selection": "^3.0.0",
