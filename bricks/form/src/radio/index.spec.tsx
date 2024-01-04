@@ -32,7 +32,7 @@ describe("form.general-button", () => {
     expect(element.shadowRoot?.childNodes.length).toBe(2);
 
     expect(
-      element.shadowRoot?.querySelector(".radioGruop")?.childNodes.length
+      element.shadowRoot?.querySelector(".radio-group")?.childNodes.length
     ).toBe(2);
     expect(element.value).toBe(undefined);
 

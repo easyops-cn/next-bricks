@@ -22,6 +22,7 @@ import type {
 } from "@next-bricks/icons/general-icon";
 import { formatOptions } from "../utils/formatOptions.js";
 import { isBoolean, isEqual } from "lodash";
+import "./host-context.css";
 
 const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
@@ -119,7 +120,7 @@ class Radio extends FormItemElementBase {
    * @default "default"
    */
   @property()
-  accessor type: RadioType | undefined;
+  accessor type: RadioType = "default";
 
   /**
    * UI样式
@@ -252,14 +253,12 @@ export function RadioComponent(props: RadioComponentProps) {
   return (
     <WrappedFormItem {...props}>
       <div
-        className={classNames("radioGruop", {
-          dashboardRadioContainer: props.ui === "dashboard",
+        className={classNames("radio-group", {
+          dashboard: props.ui === "dashboard",
         })}
       >
-        {options?.map((item: any, index: number) => {
+        {options?.map((item: any) => {
           const icon = item.icon;
-          const iconName = icon?.icon;
-          const iconLib = icon?.lib;
           const iconStyle: CSSProperties = icon?.iconStyle;
           const key = isBoolean(item.value)
             ? item.value.toString()
@@ -269,39 +268,33 @@ export function RadioComponent(props: RadioComponentProps) {
             <label
               htmlFor={key}
               style={customStyle}
-              className={classNames({
-                disabledIconRadio: isDisabled,
-                disabledCustomRadio: isDisabled,
-                iconRadio: type === "icon",
-                customRadio: type === "custom",
-                specialIconRadio:
-                  type === "icon-circle" || type === "icon-square",
-                defaultRadio: ![
-                  "button",
-                  "icon",
-                  "custom",
-                  "icon-square",
-                  "icon-circle",
-                ].includes(type as string),
-                buttonRadio: type === "button",
+              className={classNames("radio-item", {
+                disabled: isDisabled,
+                checked: value === item.value,
                 [size || "medium"]: type === "button",
               })}
               key={key}
               onClick={(e) => !isDisabled && handleChange(e, item)}
             >
-              <input
-                type="radio"
-                name={name}
-                disabled={isDisabled}
-                checked={value === item.value}
-                onChange={(e) => !isDisabled && handleChange(e, item)}
-              />
+              <span className="raido">
+                <input
+                  type="radio"
+                  name={name}
+                  disabled={isDisabled}
+                  checked={value === item.value}
+                  onChange={(e) => !isDisabled && handleChange(e, item)}
+                />
+                <span
+                  className={classNames("radio-inner", {
+                    checked: value === item.value,
+                  })}
+                ></span>
+              </span>
               {type === "icon" ? (
-                <div className={classNames({ content: true })}>
+                <div className="content">
                   {icon && (
                     <WrappedGeneralIcon
-                      icon={iconName}
-                      lib={iconLib}
+                      {...(item?.icon ?? {})}
                       style={{
                         fontSize: "32px",
                         ...iconStyle,
@@ -311,7 +304,7 @@ export function RadioComponent(props: RadioComponentProps) {
                   <div>{item.label}</div>
                 </div>
               ) : type === "custom" ? (
-                <div className={"customContent"}>
+                <div className="custom-content">
                   {props.useBrick && (
                     <ReactUseBrick
                       useBrick={props.useBrick}
@@ -322,20 +315,19 @@ export function RadioComponent(props: RadioComponentProps) {
               ) : type === "icon-circle" || type === "icon-square" ? (
                 <div
                   className={classNames({
-                    iconContent:
+                    "icon-content":
                       type === "icon-circle" || type === "icon-square",
                   })}
                 >
                   {item.icon && (
                     <div
                       className={classNames({
-                        circleIcon: type === "icon-circle",
-                        squareIcon: type === "icon-square",
+                        "circle-icon": type === "icon-circle",
+                        "square-icon": type === "icon-square",
                       })}
                     >
                       <WrappedGeneralIcon
-                        icon={iconName}
-                        lib={iconLib}
+                        {...(item?.icon ?? {})}
                         style={{
                           fontSize: "46px",
                           ...iconStyle,
@@ -347,16 +339,14 @@ export function RadioComponent(props: RadioComponentProps) {
                 </div>
               ) : type === "button" ? (
                 <div
-                  className={classNames("buttonContent", {
-                    buttonRadioCheck: value === item.value,
-                    disabledButtonRadio: isDisabled,
+                  className={classNames("button-content", {
+                    disabled: isDisabled,
                   })}
                 >
                   <span>
                     {icon && (
                       <WrappedGeneralIcon
-                        icon={iconName}
-                        lib={iconLib}
+                        {...(item?.icon ?? {})}
                         style={{
                           fontSize: "22px",
                           marginRight: "4px",
@@ -369,11 +359,10 @@ export function RadioComponent(props: RadioComponentProps) {
                   </span>
                 </div>
               ) : (
-                <span className={classNames({ content: true })}>
+                <span className="content">
                   {icon && (
                     <WrappedGeneralIcon
-                      icon={iconName}
-                      lib={iconLib}
+                      {...(item?.icon ?? {})}
                       style={{
                         fontSize: "22px",
                         marginRight: "8px",

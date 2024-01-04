@@ -1,0 +1,10 @@
+:root {
+  --radio-dashboard-selected-bg: #ffffff;
+  --radio-dashboard-disabled-bg: #e8e8e8;
+}
+
+html[data-theme="dark"],
+html[data-theme="dark-v2"] {
+  --radio-dashboard-selected-bg: #414145;
+  --radio-dashboard-disabled-bg: #3d3d43;
+}

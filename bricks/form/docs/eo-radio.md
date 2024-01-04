@@ -56,9 +56,6 @@
         value: 0
       - label: Shanghai
         value: 1
-        icon:
-          icon: "bar-chart"
-          lib: "antd"
       - label: Guangzhou
         value: 2
       - label: Shenzhen
@@ -74,34 +71,162 @@
 ### Disabled
 
 ```yaml preview
-- brick: eo-radio
+- brick: eo-flex-layout
   properties:
-    options:
-      - label: Beijing
+    gap: 20px
+    flexDirection: column
+  children:
+    - brick: eo-radio
+      properties:
+        value: 0
+        options:
+          - label: Beijing
+            value: 0
+            disabled: true
+          - label: Shanghai
+            value: 1
+          - label: Guangzhou
+            value: 2
+          - label: Shenzhen
+            value: 3
+    - brick: eo-radio
+      properties:
+        disabled: true
+        value: 1
+        options:
+          - label: Beijing
+            value: 0
+          - label: Shanghai
+            value: 1
+          - label: Guangzhou
+            value: 2
+          - label: Shenzhen
+            value: 3
+    - brick: eo-radio
+      properties:
+        label: Icon
+        type: default
+        disabled: true
+        value: 0
+        options:
+          - label: Python
+            value: 0
+            icon:
+              lib: easyops
+              category: colored-common
+              icon: python
+          - label: Javascript
+            value: 1
+            icon:
+              lib: easyops
+              category: program-language
+              icon: javascript
+          - label: Powershell
+            value: 2
+            icon:
+              lib: easyops
+              category: colored-common
+              icon: powershell
+          - label: Shell
+            value: 3
+            icon:
+              lib: easyops
+              category: colored-common
+              icon: shell
+    - brick: eo-radio
+      properties:
+        label: Button
+        type: button
+        value: Shanghai
+        disabled: true
+        value: Beijing
+        options:
+          - Beijing
+          - Shanghai
+          - Guangzhou
+          - Shenzhen
+    - brick: eo-radio
+      properties:
+        label: dashboard
+        type: button
+        ui: dashboard
+        value: Shanghai
+        options:
+          - label: Beijing
+            value: Beijing
+          - label: Shanghai
+            value: Shanghai
+            disabled: true
+          - label: Guangzhou
+            value: Guangzhou
+          - label: Shenzhen
+            value: Shenzhen
+    - brick: eo-radio
+      properties:
+        label: Icon
+        type: icon
+        value: 1
+        disabled: true
+        options:
+          - label: Beijing
+            value: 0
+            icon:
+              icon: "area-chart"
+              lib: "antd"
+          - label: Shanghai
+            value: 1
+            icon:
+              icon: "bar-chart"
+              lib: "antd"
+          - label: Guangzhou
+            value: 2
+            icon:
+              icon: "area-chart"
+              lib: "antd"
+    - brick: eo-radio
+      properties:
+        label: Icon Cricle
+        type: icon-circle
         value: 0
         disabled: true
-      - label: Shanghai
-        value: 1
-      - label: Guangzhou
+        options:
+          - label: Beijing
+            value: 0
+            icon:
+              icon: "area-chart"
+              lib: "antd"
+          - label: Shanghai
+            value: 1
+            icon:
+              icon: "bar-chart"
+              lib: "antd"
+          - label: Guangzhou
+            value: 2
+            icon:
+              icon: "area-chart"
+              lib: "antd"
+    - brick: eo-radio
+      properties:
+        label: Icon Square
+        type: icon-square
         value: 2
-      - label: Shenzhen
-        value: 3
-- brick: div
-  properties:
-    style:
-      height: 20px
-- brick: eo-radio
-  properties:
-    disabled: true
-    options:
-      - label: Beijing
-        value: 0
-      - label: Shanghai
-        value: 1
-      - label: Guangzhou
-        value: 2
-      - label: Shenzhen
-        value: 3
+        disabled: true
+        options:
+          - label: Beijing
+            value: 0
+            icon:
+              icon: "area-chart"
+              lib: "antd"
+          - label: Shanghai
+            value: 1
+            icon:
+              icon: "bar-chart"
+              lib: "antd"
+          - label: Guangzhou
+            value: 2
+            icon:
+              icon: "area-chart"
+              lib: "antd"
 ```
 
 ### Size(Only use when type was button)
@@ -150,89 +275,138 @@
 ### Type
 
 ```yaml preview
-- brick: eo-radio
+- brick: eo-flex-layout
   properties:
-    label: Default
-    type: default
-    value: Beijing
-    options:
-      - Beijing
-      - Shanghai
-      - Guangzhou
-      - Shenzhen
-- brick: eo-radio
-  properties:
-    label: Button
-    type: button
-    value: Shanghai
-    options:
-      - Beijing
-      - Shanghai
-      - Guangzhou
-      - Shenzhen
-- brick: eo-radio
-  properties:
-    label: Icon
-    type: icon
-    value: 1
-    options:
-      - label: Beijing
-        value: 0
-        icon:
-          icon: "area-chart"
-          lib: "antd"
-      - label: Shanghai
+    gap: 20px
+    flexDirection: column
+  children:
+    - brick: eo-radio
+      properties:
+        label: Default
+        type: default
+        value: Beijing
+        options:
+          - Beijing
+          - Shanghai
+          - Guangzhou
+          - Shenzhen
+    - brick: eo-radio
+      properties:
+        label: Icon
+        type: default
+        options:
+          - label: Python
+            value: 0
+            icon:
+              lib: easyops
+              category: colored-common
+              icon: python
+          - label: Javascript
+            value: 1
+            icon:
+              lib: easyops
+              category: program-language
+              icon: javascript
+          - label: Powershell
+            value: 2
+            icon:
+              lib: easyops
+              category: colored-common
+              icon: powershell
+          - label: Shell
+            value: 3
+            icon:
+              lib: easyops
+              category: colored-common
+              icon: shell
+    - brick: eo-radio
+      properties:
+        label: Button
+        type: button
+        value: Shanghai
+        options:
+          - Beijing
+          - Shanghai
+          - Guangzhou
+          - Shenzhen
+    - brick: eo-radio
+      properties:
+        label: dashboard
+        type: button
+        ui: dashboard
+        value: Shanghai
+        options:
+          - label: Beijing
+            value: Beijing
+          - label: Shanghai
+            value: Shanghai
+          - label: Guangzhou
+            value: Guangzhou
+          - label: Shenzhen
+            value: Shenzhen
+    - brick: eo-radio
+      properties:
+        label: Icon
+        type: icon
         value: 1
-        icon:
-          icon: "bar-chart"
-          lib: "antd"
-      - label: Guangzhou
-        value: 2
-        icon:
-          icon: "area-chart"
-          lib: "antd"
-- brick: eo-radio
-  properties:
-    label: Icon Cricle
-    type: icon-circle
-    value: 0
-    options:
-      - label: Beijing
+        options:
+          - label: Beijing
+            value: 0
+            icon:
+              icon: "area-chart"
+              lib: "antd"
+          - label: Shanghai
+            value: 1
+            icon:
+              icon: "bar-chart"
+              lib: "antd"
+          - label: Guangzhou
+            value: 2
+            icon:
+              icon: "area-chart"
+              lib: "antd"
+    - brick: eo-radio
+      properties:
+        label: Icon Cricle
+        type: icon-circle
         value: 0
-        icon:
-          icon: "area-chart"
-          lib: "antd"
-      - label: Shanghai
-        value: 1
-        icon:
-          icon: "bar-chart"
-          lib: "antd"
-      - label: Guangzhou
+        options:
+          - label: Beijing
+            value: 0
+            icon:
+              icon: "area-chart"
+              lib: "antd"
+          - label: Shanghai
+            value: 1
+            icon:
+              icon: "bar-chart"
+              lib: "antd"
+          - label: Guangzhou
+            value: 2
+            icon:
+              icon: "area-chart"
+              lib: "antd"
+    - brick: eo-radio
+      properties:
+        label: Icon Square
+        type: icon-square
         value: 2
-        icon:
-          icon: "area-chart"
-          lib: "antd"
-- brick: eo-radio
-  properties:
-    label: Icon Square
-    type: icon-square
-    value: 2
-    options:
-      - label: Beijing
-        value: 0
-        icon:
-          icon: "area-chart"
-          lib: "antd"
-      - label: Shanghai
-        value: 1
-        icon:
-          icon: "bar-chart"
-          lib: "antd"
-      - label: Guangzhou
-        value: 2
-        icon:
-          icon: "area-chart"
-          lib: "antd"
+        options:
+          - label: Beijing
+            value: 0
+            icon:
+              icon: "area-chart"
+              lib: "antd"
+          - label: Shanghai
+            value: 1
+            icon:
+              icon: "bar-chart"
+              lib: "antd"
+          - label: Guangzhou
+            value: 2
+            icon:
+              icon: "area-chart"
+              lib: "antd"
 ```
 
 ### Event
@@ -246,9 +420,6 @@
         value: 0
       - label: Shanghai
         value: 1
-        icon:
-          icon: "bar-chart"
-          lib: "antd"
       - label: Guangzhou
         value: 2
       - label: Shenzhen
@@ -274,9 +445,6 @@
               value: 0
             - label: Shanghai
               value: 1
-              icon:
-                icon: "bar-chart"
-                lib: "antd"
             - label: Guangzhou
               value: 2
             - label: Shenzhen
