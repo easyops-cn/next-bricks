@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.2.0...@next-bricks/diagram@0.3.0) (2024-01-04)
+
+
+### Features
+
+* diagram line label ([d9b43a6](https://github.com/easyops-cn/next-bricks/commit/d9b43a689acd1932067d7488276b299e43954017))
+* show text on line ([91fddf8](https://github.com/easyops-cn/next-bricks/commit/91fddf8b62c02d684ae83450135e877ae5b81788))
+
+
+
+
+
 # [0.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.1.2...@next-bricks/diagram@0.2.0) (2024-01-03)
 
 

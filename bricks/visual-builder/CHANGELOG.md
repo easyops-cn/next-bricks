@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.2.0...@next-bricks/visual-builder@1.3.0) (2024-01-04)
+
+
+### Features
+
+* diagram line label ([d9b43a6](https://github.com/easyops-cn/next-bricks/commit/d9b43a689acd1932067d7488276b299e43954017))
+
+
+
+
+
 # [1.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.1.3...@next-bricks/visual-builder@1.2.0) (2024-01-03)
 
 
