@@ -604,6 +604,7 @@ export function LegacyEoDiagramComponent(
                     )
                   : undefined
               }
+              style={{ cursor: line.cursor }}
             >
               <path
                 ref={(element) => linePathsRef.current.set(line.$id, element)}

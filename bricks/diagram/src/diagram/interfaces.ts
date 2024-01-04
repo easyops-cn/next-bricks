@@ -96,6 +96,7 @@ export interface LineConf {
   arrow?: boolean;
   text?: TextOptions;
   label?: LineLabelConf;
+  cursor?: React.CSSProperties["cursor"];
 }
 
 export interface LineLabelConf {
