@@ -40,61 +40,69 @@ describe("getRenderedLinesAndMarkers", () => {
       undefined
     );
     expect(renderedLines).toMatchInlineSnapshot(`
-      [
-        {
-          "data": {
-            "source": "a",
-            "target": "b",
-            "type": "menu",
-          },
-          "line": {
-            "curveType": "curveBasis",
-            "strokeColor": "var(--palette-gray-5)",
-            "strokeWidth": 1,
-          },
-          "markerIndex": undefined,
-        },
-        {
-          "data": {
-            "source": "a",
-            "target": "c",
-            "type": "menu",
-          },
-          "line": {
-            "curveType": "curveBasis",
-            "strokeColor": "var(--palette-gray-5)",
-            "strokeWidth": 1,
-          },
-          "markerIndex": undefined,
-        },
-        {
-          "data": {
-            "source": "b",
-            "target": "d",
-            "type": "link",
-          },
-          "line": {
-            "curveType": "curveBasis",
-            "strokeColor": "var(--palette-gray-5)",
-            "strokeWidth": 1,
-          },
-          "markerIndex": undefined,
-        },
-        {
-          "data": {
-            "source": "b",
-            "target": "e",
-            "type": "link",
-          },
-          "line": {
-            "curveType": "curveBasis",
-            "strokeColor": "var(--palette-gray-5)",
-            "strokeWidth": 1,
-          },
-          "markerIndex": undefined,
-        },
-      ]
-    `);
+[
+  {
+    "data": {
+      "source": "a",
+      "target": "b",
+      "type": "menu",
+    },
+    "line": {
+      "$id": "line-1",
+      "curveType": "curveBasis",
+      "label": undefined,
+      "strokeColor": "var(--palette-gray-5)",
+      "strokeWidth": 1,
+    },
+    "markerIndex": undefined,
+  },
+  {
+    "data": {
+      "source": "a",
+      "target": "c",
+      "type": "menu",
+    },
+    "line": {
+      "$id": "line-2",
+      "curveType": "curveBasis",
+      "label": undefined,
+      "strokeColor": "var(--palette-gray-5)",
+      "strokeWidth": 1,
+    },
+    "markerIndex": undefined,
+  },
+  {
+    "data": {
+      "source": "b",
+      "target": "d",
+      "type": "link",
+    },
+    "line": {
+      "$id": "line-3",
+      "curveType": "curveBasis",
+      "label": undefined,
+      "strokeColor": "var(--palette-gray-5)",
+      "strokeWidth": 1,
+    },
+    "markerIndex": undefined,
+  },
+  {
+    "data": {
+      "source": "b",
+      "target": "e",
+      "type": "link",
+    },
+    "line": {
+      "$id": "line-4",
+      "curveType": "curveBasis",
+      "label": undefined,
+      "strokeColor": "var(--palette-gray-5)",
+      "strokeWidth": 1,
+    },
+    "markerIndex": undefined,
+  },
+]
+`);
     expect(markers).toEqual([]);
   });
 
@@ -107,67 +115,75 @@ describe("getRenderedLinesAndMarkers", () => {
       ]
     );
     expect(renderedLines).toMatchInlineSnapshot(`
-      [
-        {
-          "data": {
-            "source": "a",
-            "target": "b",
-            "type": "menu",
-          },
-          "line": {
-            "curveType": "curveBasis",
-            "edgeType": "menu",
-            "strokeColor": "gray",
-            "strokeWidth": 1,
-          },
-          "markerIndex": undefined,
-        },
-        {
-          "data": {
-            "source": "a",
-            "target": "c",
-            "type": "menu",
-          },
-          "line": {
-            "curveType": "curveBasis",
-            "edgeType": "menu",
-            "strokeColor": "gray",
-            "strokeWidth": 1,
-          },
-          "markerIndex": undefined,
-        },
-        {
-          "data": {
-            "source": "b",
-            "target": "d",
-            "type": "link",
-          },
-          "line": {
-            "arrow": true,
-            "curveType": "curveBasis",
-            "edgeType": "link",
-            "strokeColor": "blue",
-            "strokeWidth": 1,
-          },
-          "markerIndex": 0,
-        },
-        {
-          "data": {
-            "source": "b",
-            "target": "e",
-            "type": "link",
-          },
-          "line": {
-            "arrow": true,
-            "curveType": "curveBasis",
-            "edgeType": "link",
-            "strokeColor": "blue",
-            "strokeWidth": 1,
-          },
-          "markerIndex": 0,
-        },
-      ]
-    `);
+[
+  {
+    "data": {
+      "source": "a",
+      "target": "b",
+      "type": "menu",
+    },
+    "line": {
+      "$id": "line-5",
+      "curveType": "curveBasis",
+      "edgeType": "menu",
+      "label": undefined,
+      "strokeColor": "gray",
+      "strokeWidth": 1,
+    },
+    "markerIndex": undefined,
+  },
+  {
+    "data": {
+      "source": "a",
+      "target": "c",
+      "type": "menu",
+    },
+    "line": {
+      "$id": "line-6",
+      "curveType": "curveBasis",
+      "edgeType": "menu",
+      "label": undefined,
+      "strokeColor": "gray",
+      "strokeWidth": 1,
+    },
+    "markerIndex": undefined,
+  },
+  {
+    "data": {
+      "source": "b",
+      "target": "d",
+      "type": "link",
+    },
+    "line": {
+      "$id": "line-7",
+      "arrow": true,
+      "curveType": "curveBasis",
+      "edgeType": "link",
+      "label": undefined,
+      "strokeColor": "blue",
+      "strokeWidth": 1,
+    },
+    "markerIndex": 0,
+  },
+  {
+    "data": {
+      "source": "b",
+      "target": "e",
+      "type": "link",
+    },
+    "line": {
+      "$id": "line-8",
+      "arrow": true,
+      "curveType": "curveBasis",
+      "edgeType": "link",
+      "label": undefined,
+      "strokeColor": "blue",
+      "strokeWidth": 1,
+    },
+    "markerIndex": 0,
+  },
+]
+`);
     expect(markers).toEqual([{ strokeColor: "blue" }]);
   });
 

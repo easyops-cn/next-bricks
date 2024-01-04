@@ -18,12 +18,13 @@ import type {
   DiagramNode,
   LayoutOptionsDagre,
   LineConf,
-  LineMarker,
   NodeBrickConf,
+  PositionTuple,
   RefRepository,
   RenderedEdge,
-  RenderedLine,
+  RenderedLineLabel,
   RenderedNode,
+  LineTextClipPath,
   TransformLiteral,
 } from "./interfaces";
 import { NodeComponentGroup } from "./NodeComponent";
@@ -32,6 +33,7 @@ import { handleKeyboard } from "./processors/handleKeyboard";
 import { getCenterOffsets } from "./processors/getCenterOffsets";
 import { getRenderedLinesAndMarkers } from "./processors/getRenderedLinesAndMarkers";
 import styleText from "./styles.shadow.css";
+import { LineLabelComponentGroup } from "./LineLabelComponent";
 
 const { defineElement, property, event } = createDecorators();
 
@@ -59,9 +61,11 @@ export interface DiagramHandler {
 export
 @defineElement("eo-diagram", {
   styleTexts: [styleText],
-  // shadowOptions: false
 })
 class EoDiagram extends ReactNextElement implements EoDiagramProps {
+  /**
+   * @required
+   */
   @property({ type: String })
   accessor layout: "dagre" | undefined;
 
@@ -142,14 +146,20 @@ export function EoDiagramComponent({
     null
   );
   const [nodesReady, setNodesReady] = useState(false);
-  const [renderId, setRenderId] = useState(0);
-  const [refRepository, setRefRepository] = useState<RefRepository | null>(
-    null
-  );
+  const [nodesRenderId, setNodesRenderId] = useState(0);
+  const [nodesRefRepository, setNodesRefRepository] =
+    useState<RefRepository | null>(null);
+  // const [lineLabelsReady, setLineLabelsReady] = useState(false);
+  const [lineLabelsRenderId, setLineLabelsRenderId] = useState(0);
+  const [lineLabelsRefRepository, setLineLabelsRefRepository] =
+    useState<RefRepository | null>(null);
   const [renderedNodes, setRenderedNodes] = useState<RenderedNode[]>([]);
   const [renderedEdges, setRenderedEdges] = useState<RenderedEdge[]>([]);
-  const [renderedLines, setRenderedLines] = useState<RenderedLine[]>([]);
-  const [markers, setMarkers] = useState<LineMarker[]>([]);
+  // const [renderedLines, setRenderedLines] = useState<RenderedLine[]>([]);
+  const [renderedLineLabels, setRenderedLineLabels] = useState<
+    RenderedLineLabel[]
+  >([]);
+  // const [markers, setMarkers] = useState<LineMarker[]>([]);
 
   const draggerRef = useRef<HTMLDivElement>(null);
   const [grabbing, setGrabbing] = useState(false);
@@ -159,9 +169,12 @@ export function EoDiagramComponent({
     y: 0,
   });
 
+  const linePathsRef = useRef(new Map<string, SVGPathElement | null>());
+  // const lineLabelsRef = useRef(new Map<string, HTMLDivElement | null>());
+
   const rootRef = useRef<HTMLDivElement>(null);
   const nodesRef = useRef<HTMLDivElement>(null);
-  const [offsets, setOffsets] = useState<[x: number, y: number]>([0, 0]);
+  const [offsets, setOffsets] = useState<PositionTuple>([0, 0]);
   const [centered, setCentered] = useState(false);
 
   const fixedOptions = useMemo(
@@ -226,7 +239,7 @@ export function EoDiagramComponent({
   }, [edges, nodes, dagreGraphOptions]);
 
   useEffect(() => {
-    if (!graph || !refRepository || graph.nodeCount() === 0) {
+    if (!graph || !nodesRefRepository || graph.nodeCount() === 0) {
       return;
     }
 
@@ -237,7 +250,7 @@ export function EoDiagramComponent({
         console.error("Diagram node not found: %s", id);
         continue;
       }
-      const element = refRepository.get(id);
+      const element = nodesRefRepository.get(id);
       node.width = (element?.offsetWidth ?? 10) + nodePadding * 2;
       node.height = (element?.offsetHeight ?? 10) + nodePadding * 2;
     }
@@ -257,7 +270,7 @@ export function EoDiagramComponent({
       const y = node.y - node.height / 2 + nodePadding;
       // positions.set(v, { x, y });
 
-      const nodeContainer = refRepository.get(v)?.parentElement;
+      const nodeContainer = nodesRefRepository.get(v)?.parentElement;
       if (nodeContainer) {
         nodeContainer.style.left = `${x}px`;
         nodeContainer.style.top = `${y}px`;
@@ -270,16 +283,21 @@ export function EoDiagramComponent({
     setRenderedEdges(graph.edges().map((e) => graph.edge(e) as RenderedEdge));
 
     // setNodePositions(positions);
-  }, [graph, refRepository, renderId, nodePadding]);
+  }, [graph, nodesRefRepository, nodesRenderId, nodePadding]);
 
-  useEffect(() => {
+  const { renderedLines, markers } = useMemo(
+    () => getRenderedLinesAndMarkers(renderedEdges, lines),
+    [lines, renderedEdges]
+  );
+
+  /* useEffect(() => {
     const { renderedLines, markers } = getRenderedLinesAndMarkers(
       renderedEdges,
       lines
     );
     setRenderedLines(renderedLines);
     setMarkers(markers);
-  }, [lines, renderedEdges]);
+  }, [lines, renderedEdges]); */
 
   useEffect(() => {
     const root = rootRef.current;
@@ -315,10 +333,21 @@ export function EoDiagramComponent({
   const handleNodesRendered = useCallback(
     (refRepository: RefRepository | null) => {
       if (refRepository) {
-        setRenderId((previous) => previous + 1);
-        setRefRepository(refRepository);
+        setNodesRenderId((previous) => previous + 1);
+        setNodesRefRepository(refRepository);
       }
       setNodesReady((previous) => previous || !!refRepository);
+    },
+    []
+  );
+
+  const handleLineLabelsRendered = useCallback(
+    (refRepository: RefRepository | null) => {
+      if (refRepository) {
+        setLineLabelsRenderId((previous) => previous + 1);
+        setLineLabelsRefRepository(refRepository);
+      }
+      // setLineLabelsReady((previous) => previous || !!refRepository);
     },
     []
   );
@@ -366,7 +395,86 @@ export function EoDiagramComponent({
     setCentered(true);
   }, [centered, renderedNodes]);
 
-  const markerPrefix = useMemo(() => `${uniqueId("diagram-line-arrow-")}-`, []);
+  const defPrefix = useMemo(() => `${uniqueId("diagram-")}-`, []);
+  const markerPrefix = `${defPrefix}line-arrow-`;
+  const clipPathPrefix = `${defPrefix}clip-path-`;
+
+  useEffect(() => {
+    setRenderedLineLabels((previous) =>
+      previous.length === 0 && renderedLines.length === 0
+        ? previous
+        : (renderedLines
+            .map(({ line: { text, label, $id }, data: edge }) => {
+              const path = linePathsRef.current.get($id);
+              if ((!text && !label) || !path || !path.getAttribute("d")) {
+                return;
+              }
+
+              // istanbul ignore next
+              const { x, y, width, height } =
+                process.env.NODE_ENV === "test"
+                  ? { x: 10, y: 20, width: 300, height: 400 }
+                  : path.getBBox();
+              // Make redundant extra padding.
+              const padding = 1000;
+              const left = x - padding;
+              const top = y - padding;
+              const right = x + width + padding;
+              const bottom = y + height + padding;
+
+              // istanbul ignore next
+              const point =
+                process.env.NODE_ENV === "test"
+                  ? { x: 50, y: 50 }
+                  : path.getPointAtLength(path.getTotalLength() / 2);
+              return {
+                text,
+                label,
+                edge,
+                position: [point.x, point.y],
+                lineRect: { left, top, right, bottom },
+                id: $id,
+              };
+            })
+            .filter(Boolean) as RenderedLineLabel[])
+    );
+  }, [renderedLines]);
+
+  const [clipPathList, setClipPathList] = React.useState<LineTextClipPath[]>(
+    []
+  );
+
+  useEffect(() => {
+    if (!lineLabelsRefRepository) {
+      return;
+    }
+    setClipPathList(
+      renderedLineLabels
+        .map(({ id }) => {
+          const element = lineLabelsRefRepository?.get(id);
+          if (!element) {
+            return;
+          }
+          const { offsetWidth, offsetHeight } = element;
+          // Do not clip when the label takes no space.
+          if (
+            process.env.NODE_ENV !== "test" &&
+            (offsetWidth === 0 || offsetHeight === 0)
+          ) {
+            return;
+          }
+          const padding = 3;
+          return {
+            x0: element.offsetLeft - offsetWidth / 2 - padding,
+            y0: element.offsetTop - offsetHeight / 2 - padding,
+            w: offsetWidth + padding * 2,
+            h: offsetHeight + padding * 2,
+            id,
+          };
+        })
+        .filter(Boolean) as LineTextClipPath[]
+    );
+  }, [lineLabelsRenderId, lineLabelsRefRepository, renderedLineLabels]);
 
   if (layout !== "dagre") {
     return <div>{`Diagram layout not supported: "${layout}"`}</div>;
@@ -399,15 +507,42 @@ export function EoDiagramComponent({
               />
             </marker>
           ))}
+          {clipPathList.map(({ x0, y0, w, h, id }) => {
+            const lineText = renderedLineLabels.find((item) => item.id === id);
+            if (!lineText) {
+              return;
+            }
+            const { left, top, right, bottom } = lineText.lineRect;
+            // https://css-tricks.com/cutting-inner-part-element-using-clip-path/
+            return (
+              <clipPath key={id} id={`${clipPathPrefix}${id}`}>
+                <polygon
+                  points={[
+                    `${x0},${y0 + h}`,
+                    `${x0 + w},${y0 + h}`,
+                    `${x0 + w},${y0}`,
+                    `${x0},${y0}`,
+                    `${x0},${top}`,
+                    `${right},${top}`,
+                    `${right},${bottom}`,
+                    `${left},${bottom}`,
+                    `${left},${top}`,
+                    `${x0},${top}`,
+                  ].join(" ")}
+                />
+              </clipPath>
+            );
+          })}
         </defs>
         <g
           transform={`translate(${offsets[0] + transform.x} ${
             offsets[1] + transform.y
           }) scale(${transform.k})`}
         >
-          {renderedLines.map(({ points, line, markerIndex }, index) => (
+          {renderedLines.map(({ points, line, markerIndex }) => (
             <path
-              key={index}
+              ref={(element) => linePathsRef.current.set(line.$id, element)}
+              key={line.$id}
               stroke={line.strokeColor}
               strokeWidth={line.strokeWidth}
               d={curveLine(points, line.arrow ? -5 : 0, line.curveType)}
@@ -417,11 +552,28 @@ export function EoDiagramComponent({
                   ? undefined
                   : `url(#${markerPrefix}${markerIndex})`
               }
+              clipPath={
+                clipPathList.some((clip) => clip.id === line.$id)
+                  ? `url(#${clipPathPrefix}${line.$id})`
+                  : undefined
+              }
             />
           ))}
         </g>
       </svg>
       <div className={classNames("dragger", { grabbing })} ref={draggerRef} />
+      <div
+        className="line-labels"
+        style={{
+          left: offsets[0] + transform.x,
+          top: offsets[1] + transform.y,
+        }}
+      >
+        <LineLabelComponentGroup
+          labels={renderedLineLabels}
+          onRendered={handleLineLabelsRendered}
+        />
+      </div>
       <div
         className="nodes"
         ref={nodesRef}

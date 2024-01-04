@@ -244,6 +244,18 @@ children:
         - edgeType: link
           strokeColor: var(--theme-blue-color)
           arrow: true
+          text: |-
+            <%
+              DATA.edge.description
+                ? {
+                    content: DATA.edge.description,
+                    style: {
+                      color: "var(--color-secondary-text)",
+                      fontSize: "11px",
+                    },
+                  }
+                : null
+            %>
         - edgeType: menu
           strokeColor: var(--palette-gray-5)
           arrow: true
