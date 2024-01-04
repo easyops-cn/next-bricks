@@ -30,6 +30,7 @@
 
 .dragger,
 .lines,
+.line-labels,
 .nodes {
   position: absolute;
   top: 0;
@@ -49,4 +50,12 @@
 
 .grabbing {
   cursor: grabbing;
+}
+
+.line-label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  white-space: pre-line;
+  width: max-content;
+  text-align: center;
 }

@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { UseSingleBrickConf } from "@next-core/react-runtime";
 
 export interface DiagramNode {
@@ -37,9 +38,24 @@ export interface RenderedLine extends RenderedEdge {
     strokeColor: string;
     strokeWidth: number;
     curveType: "curveBasis";
+    $ref: string;
   };
   markerIndex: number | undefined;
 }
+
+export interface RenderedLineText {
+  text: TextOptions;
+  position: PositionTuple;
+  lineRect: {
+    left: number;
+    top: number;
+    right: number;
+    bottom: number;
+  };
+  $ref: string;
+}
+
+export type PositionTuple = [x: number, y: number];
 
 export interface LineMarker {
   strokeColor: string;
@@ -71,6 +87,12 @@ export interface LineConf {
   strokeWidth?: number;
   curveType?: "curveBasis";
   arrow?: boolean;
+  text?: TextOptions;
+}
+
+export interface TextOptions {
+  content: string;
+  style?: CSSProperties;
 }
 
 export interface TransformLiteral {
@@ -86,4 +108,15 @@ export interface LayoutOptionsDagre {
   edgesep?: number;
   nodesep?: number;
   align?: "UL" | "UR" | "DL" | "DR";
+}
+
+export interface LineTextClipPath extends SimpleRect {
+  $ref: string;
+}
+
+export interface SimpleRect {
+  x0: number;
+  y0: number;
+  w: number;
+  h: number;
 }

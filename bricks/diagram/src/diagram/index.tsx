@@ -20,10 +20,13 @@ import type {
   LineConf,
   LineMarker,
   NodeBrickConf,
+  PositionTuple,
   RefRepository,
   RenderedEdge,
   RenderedLine,
+  RenderedLineText,
   RenderedNode,
+  LineTextClipPath,
   TransformLiteral,
 } from "./interfaces";
 import { NodeComponentGroup } from "./NodeComponent";
@@ -59,9 +62,11 @@ export interface DiagramHandler {
 export
 @defineElement("eo-diagram", {
   styleTexts: [styleText],
-  // shadowOptions: false
 })
 class EoDiagram extends ReactNextElement implements EoDiagramProps {
+  /**
+   * @required
+   */
   @property({ type: String })
   accessor layout: "dagre" | undefined;
 
@@ -149,6 +154,9 @@ export function EoDiagramComponent({
   const [renderedNodes, setRenderedNodes] = useState<RenderedNode[]>([]);
   const [renderedEdges, setRenderedEdges] = useState<RenderedEdge[]>([]);
   const [renderedLines, setRenderedLines] = useState<RenderedLine[]>([]);
+  const [renderedLineTexts, setRenderedLineTexts] = useState<
+    RenderedLineText[]
+  >([]);
   const [markers, setMarkers] = useState<LineMarker[]>([]);
 
   const draggerRef = useRef<HTMLDivElement>(null);
@@ -159,9 +167,12 @@ export function EoDiagramComponent({
     y: 0,
   });
 
+  const linePathsRef = useRef(new Map<string, SVGPathElement | null>());
+  const lineTextsRef = useRef(new Map<string, HTMLDivElement | null>());
+
   const rootRef = useRef<HTMLDivElement>(null);
   const nodesRef = useRef<HTMLDivElement>(null);
-  const [offsets, setOffsets] = useState<[x: number, y: number]>([0, 0]);
+  const [offsets, setOffsets] = useState<PositionTuple>([0, 0]);
   const [centered, setCentered] = useState(false);
 
   const fixedOptions = useMemo(
@@ -366,7 +377,70 @@ export function EoDiagramComponent({
     setCentered(true);
   }, [centered, renderedNodes]);
 
-  const markerPrefix = useMemo(() => `${uniqueId("diagram-line-arrow-")}-`, []);
+  const defPrefix = useMemo(() => `${uniqueId("diagram-")}-`, []);
+  const markerPrefix = `${defPrefix}line-arrow-`;
+  const clipPathPrefix = `${defPrefix}clip-path-`;
+
+  useEffect(() => {
+    setRenderedLineTexts(
+      renderedLines
+        .map(({ line: { text, $ref } }) => {
+          const path = linePathsRef.current.get($ref);
+          if (!text || !path || !path.getAttribute("d")) {
+            return;
+          }
+
+          // istanbul ignore next
+          const { x, y, width, height } =
+            process.env.NODE_ENV === "test"
+              ? { x: 10, y: 20, width: 300, height: 400 }
+              : path.getBBox();
+          // Make redundant extra padding.
+          const padding = 1000;
+          const left = x - padding;
+          const top = y - padding;
+          const right = x + width + padding;
+          const bottom = y + height + padding;
+
+          // istanbul ignore next
+          const point =
+            process.env.NODE_ENV === "test"
+              ? { x: 50, y: 50 }
+              : path.getPointAtLength(path.getTotalLength() / 2);
+          return {
+            text,
+            position: [point.x, point.y],
+            lineRect: { left, top, right, bottom },
+            $ref,
+          };
+        })
+        .filter(Boolean) as RenderedLineText[]
+    );
+  }, [renderedLines]);
+
+  const [clipPathList, setClipPathList] = React.useState<LineTextClipPath[]>(
+    []
+  );
+
+  useEffect(() => {
+    setClipPathList(
+      [...lineTextsRef.current]
+        .map(([key, text]) => {
+          if (!text) {
+            return;
+          }
+          const padding = 3;
+          return {
+            x0: text.offsetLeft - text.offsetWidth / 2 - padding,
+            y0: text.offsetTop - text.offsetHeight / 2 - padding,
+            w: text.offsetWidth + padding * 2,
+            h: text.offsetHeight + padding * 2,
+            $ref: key,
+          };
+        })
+        .filter(Boolean) as LineTextClipPath[]
+    );
+  }, [renderedLineTexts]);
 
   if (layout !== "dagre") {
     return <div>{`Diagram layout not supported: "${layout}"`}</div>;
@@ -399,6 +473,34 @@ export function EoDiagramComponent({
               />
             </marker>
           ))}
+          {clipPathList.map((clip) => {
+            const lineText = renderedLineTexts.find(
+              (item) => item.$ref === clip.$ref
+            );
+            if (!lineText) {
+              return;
+            }
+            const { left, top, right, bottom } = lineText.lineRect;
+            // https://css-tricks.com/cutting-inner-part-element-using-clip-path/
+            return (
+              <clipPath key={clip.$ref} id={`${clipPathPrefix}${clip.$ref}`}>
+                <polygon
+                  points={[
+                    `${clip.x0},${clip.y0 + clip.h}`,
+                    `${clip.x0 + clip.w},${clip.y0 + clip.h}`,
+                    `${clip.x0 + clip.w},${clip.y0}`,
+                    `${clip.x0},${clip.y0}`,
+                    `${clip.x0},${top}`,
+                    `${right},${top}`,
+                    `${right},${bottom}`,
+                    `${left},${bottom}`,
+                    `${left},${top}`,
+                    `${clip.x0},${top}`,
+                  ].join(" ")}
+                />
+              </clipPath>
+            );
+          })}
         </defs>
         <g
           transform={`translate(${offsets[0] + transform.x} ${
@@ -407,6 +509,7 @@ export function EoDiagramComponent({
         >
           {renderedLines.map(({ points, line, markerIndex }, index) => (
             <path
+              ref={(element) => linePathsRef.current.set(line.$ref, element)}
               key={index}
               stroke={line.strokeColor}
               strokeWidth={line.strokeWidth}
@@ -417,11 +520,40 @@ export function EoDiagramComponent({
                   ? undefined
                   : `url(#${markerPrefix}${markerIndex})`
               }
+              clipPath={
+                clipPathList.some((clip) => clip.$ref === line.$ref)
+                  ? `url(#${clipPathPrefix}${line.$ref})`
+                  : undefined
+              }
             />
           ))}
         </g>
       </svg>
       <div className={classNames("dragger", { grabbing })} ref={draggerRef} />
+      <div
+        className="line-labels"
+        style={{
+          left: offsets[0] + transform.x,
+          top: offsets[1] + transform.y,
+        }}
+      >
+        {renderedLineTexts.map(({ text, position, $ref }, index) => (
+          <div
+            key={index}
+            ref={(element) => {
+              lineTextsRef.current.set($ref, element);
+            }}
+            className="line-label"
+            style={{
+              left: position[0],
+              top: position[1],
+              ...text.style,
+            }}
+          >
+            {text.content}
+          </div>
+        ))}
+      </div>
       <div
         className="nodes"
         ref={nodesRef}
