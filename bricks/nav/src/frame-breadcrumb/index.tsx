@@ -88,7 +88,9 @@ export function EoFrameBreadcrumbComponent(props: EoFrameBreadcrumbProps) {
   const currentApp = useCurrentApp();
   const curAppBreadcrumb = currentApp?.breadcrumb;
 
-  const currentAppBreadcrumbItems = curAppBreadcrumb?.items;
+  const currentAppBreadcrumbItems = curAppBreadcrumb?.items as Array<
+    BreadcrumbItemConf & { icon: GeneralIconProps }
+  >;
   const breadcrumbItems = props.breadcrumb?.length
     ? props.breadcrumb
     : navConfig?.breadcrumb;
@@ -102,14 +104,22 @@ export function EoFrameBreadcrumbComponent(props: EoFrameBreadcrumbProps) {
       {currentAppBreadcrumbItems?.map((item, index) => {
         return (
           <WrappedBreadcrumbItem key={index} url={item.to}>
-            {index === 0 && (
+            {item.icon ? (
               <WrappedIcon
                 className="breadcrumb-item-prefix-icon"
                 slot="prefix"
-                lib="antd"
-                icon="home"
-                theme="outlined"
+                {...item.icon}
               />
+            ) : (
+              index === 0 && (
+                <WrappedIcon
+                  className="breadcrumb-item-prefix-icon"
+                  slot="prefix"
+                  lib="antd"
+                  icon="home"
+                  theme="outlined"
+                />
+              )
             )}
             {item.text}
           </WrappedBreadcrumbItem>
