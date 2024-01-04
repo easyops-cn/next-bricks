@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.2.0...@next-bricks/nav@1.3.0) (2024-01-04)
+
+
+### Features
+
+* **breadcrumb:** show custom icon ([fadd67c](https://github.com/easyops-cn/next-bricks/commit/fadd67cdac2ca1f3808c6721d8185288eb6dabce))
+
+
+
+
+
 # [1.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.1.2...@next-bricks/nav@1.2.0) (2024-01-03)
 
 
