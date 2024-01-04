@@ -42,7 +42,8 @@ describe("getRenderedLinesAndMarkers", () => {
     expect(renderedLines).toMatchInlineSnapshot(`
 [
   {
-    "data": {
+    "d": "",
+    "edge": {
       "source": "a",
       "target": "b",
       "type": "menu",
@@ -50,6 +51,7 @@ describe("getRenderedLinesAndMarkers", () => {
     "line": {
       "$id": "line-1",
       "curveType": "curveBasis",
+      "interactStrokeWidth": 20,
       "label": undefined,
       "strokeColor": "var(--palette-gray-5)",
       "strokeWidth": 1,
@@ -57,7 +59,8 @@ describe("getRenderedLinesAndMarkers", () => {
     "markerIndex": undefined,
   },
   {
-    "data": {
+    "d": "",
+    "edge": {
       "source": "a",
       "target": "c",
       "type": "menu",
@@ -65,6 +68,7 @@ describe("getRenderedLinesAndMarkers", () => {
     "line": {
       "$id": "line-2",
       "curveType": "curveBasis",
+      "interactStrokeWidth": 20,
       "label": undefined,
       "strokeColor": "var(--palette-gray-5)",
       "strokeWidth": 1,
@@ -72,7 +76,8 @@ describe("getRenderedLinesAndMarkers", () => {
     "markerIndex": undefined,
   },
   {
-    "data": {
+    "d": "",
+    "edge": {
       "source": "b",
       "target": "d",
       "type": "link",
@@ -80,6 +85,7 @@ describe("getRenderedLinesAndMarkers", () => {
     "line": {
       "$id": "line-3",
       "curveType": "curveBasis",
+      "interactStrokeWidth": 20,
       "label": undefined,
       "strokeColor": "var(--palette-gray-5)",
       "strokeWidth": 1,
@@ -87,7 +93,8 @@ describe("getRenderedLinesAndMarkers", () => {
     "markerIndex": undefined,
   },
   {
-    "data": {
+    "d": "",
+    "edge": {
       "source": "b",
       "target": "e",
       "type": "link",
@@ -95,6 +102,7 @@ describe("getRenderedLinesAndMarkers", () => {
     "line": {
       "$id": "line-4",
       "curveType": "curveBasis",
+      "interactStrokeWidth": 20,
       "label": undefined,
       "strokeColor": "var(--palette-gray-5)",
       "strokeWidth": 1,
@@ -117,7 +125,8 @@ describe("getRenderedLinesAndMarkers", () => {
     expect(renderedLines).toMatchInlineSnapshot(`
 [
   {
-    "data": {
+    "d": "",
+    "edge": {
       "source": "a",
       "target": "b",
       "type": "menu",
@@ -126,6 +135,7 @@ describe("getRenderedLinesAndMarkers", () => {
       "$id": "line-5",
       "curveType": "curveBasis",
       "edgeType": "menu",
+      "interactStrokeWidth": 20,
       "label": undefined,
       "strokeColor": "gray",
       "strokeWidth": 1,
@@ -133,7 +143,8 @@ describe("getRenderedLinesAndMarkers", () => {
     "markerIndex": undefined,
   },
   {
-    "data": {
+    "d": "",
+    "edge": {
       "source": "a",
       "target": "c",
       "type": "menu",
@@ -142,6 +153,7 @@ describe("getRenderedLinesAndMarkers", () => {
       "$id": "line-6",
       "curveType": "curveBasis",
       "edgeType": "menu",
+      "interactStrokeWidth": 20,
       "label": undefined,
       "strokeColor": "gray",
       "strokeWidth": 1,
@@ -149,7 +161,8 @@ describe("getRenderedLinesAndMarkers", () => {
     "markerIndex": undefined,
   },
   {
-    "data": {
+    "d": "",
+    "edge": {
       "source": "b",
       "target": "d",
       "type": "link",
@@ -159,6 +172,7 @@ describe("getRenderedLinesAndMarkers", () => {
       "arrow": true,
       "curveType": "curveBasis",
       "edgeType": "link",
+      "interactStrokeWidth": 20,
       "label": undefined,
       "strokeColor": "blue",
       "strokeWidth": 1,
@@ -166,7 +180,8 @@ describe("getRenderedLinesAndMarkers", () => {
     "markerIndex": 0,
   },
   {
-    "data": {
+    "d": "",
+    "edge": {
       "source": "b",
       "target": "e",
       "type": "link",
@@ -176,6 +191,7 @@ describe("getRenderedLinesAndMarkers", () => {
       "arrow": true,
       "curveType": "curveBasis",
       "edgeType": "link",
+      "interactStrokeWidth": 20,
       "label": undefined,
       "strokeColor": "blue",
       "strokeWidth": 1,

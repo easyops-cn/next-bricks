@@ -48,10 +48,8 @@
   text-overflow: ellipsis;
 }
 
-.label.editing .label-text {
-  display: none;
-}
-
+.label.editing .label-text,
+.label.empty:not(.editing) .label-text,
 .label:not(.editing) .label-input {
   display: none;
 }

@@ -81,6 +81,17 @@ describe("diagram.editable-label", () => {
     expect(onLabelChange).toBeCalledTimes(1);
     expect(onLabelChange).toBeCalledWith("New Name");
 
+    expect(
+      element.shadowRoot?.querySelector(".label")?.classList.contains("editing")
+    ).toBe(false);
+
+    act(() => {
+      element.enableEditing();
+    });
+    expect(
+      element.shadowRoot?.querySelector(".label")?.classList.contains("editing")
+    ).toBe(true);
+
     act(() => {
       document.body.removeChild(element);
     });
