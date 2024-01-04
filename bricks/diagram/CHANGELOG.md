@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.3.0...@next-bricks/diagram@0.4.0) (2024-01-04)
+
+
+### Features
+
+* support interactable lines ([bb99f3f](https://github.com/easyops-cn/next-bricks/commit/bb99f3fe111b40b6ba7508509c856f25b0c2dc55))
+
+
+
+
+
 # [0.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.2.0...@next-bricks/diagram@0.3.0) (2024-01-04)
 
 
