@@ -160,6 +160,68 @@ describe("eo-frame-breadcrumb", () => {
     expect(element.shadowRoot?.childNodes.length).toBe(0);
   });
 
+  test("should render breadcrumb from current app with custom icon", async () => {
+    const element = document.createElement(
+      "eo-frame-breadcrumb"
+    ) as EoFrameBreadcrumb;
+    mockUseCurrentApp.mockReturnValueOnce({
+      localeName: "app-a",
+      menuIcon: {
+        icon: "app-icon",
+      },
+      breadcrumb: {
+        items: [
+          {
+            text: "current app 1",
+            to: "/test",
+            icon: {
+              lib: "antd",
+              icon: "edit",
+            },
+          },
+          {
+            text: "current app 2",
+          },
+        ],
+      },
+    });
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+
+    expect(element.shadowRoot?.querySelectorAll("eo-breadcrumb-item"))
+      .toMatchInlineSnapshot(`
+      NodeList [
+        <eo-breadcrumb-item
+          url="/test"
+        >
+          <eo-icon
+            class="breadcrumb-item-prefix-icon"
+            icon="edit"
+            lib="antd"
+            slot="prefix"
+          />
+          current app 1
+        </eo-breadcrumb-item>,
+        <eo-breadcrumb-item>
+          current app 2
+        </eo-breadcrumb-item>,
+        <eo-breadcrumb-item>
+          app-a
+        </eo-breadcrumb-item>,
+      ]
+    `);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
+
   test("should render breadcrumb from current app and without breadcrumb items", async () => {
     const element = document.createElement(
       "eo-frame-breadcrumb"
