@@ -2275,10 +2275,10 @@
     "@babel/preset-typescript" "^7.23.3"
     "@babel/runtime" "^7.23.7"
 
-"@next-core/brick-container@^3.10.15":
-  version "3.10.15"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.10.15.tgz#c678d89656157b29ff5b971efa90d85caa415e6c"
-  integrity sha512-6Xj3lEFwqO9BVTcXWF9vXwo/ToGkU/d0kR8rKO0ji2u4Dl1dzwHqwQB3rFCpNgceYQXCiMEeCek2sTcKwVLDFg==
+"@next-core/brick-container@^3.10.16":
+  version "3.10.16"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.10.16.tgz#73bf29327cf90e3e980f45238426c9d142648a7c"
+  integrity sha512-fRlC0Cwv50jSoWrsbzQb6BtIJaYP4NCSthi9SkYLnJOWgBVezw9WJGn3bSfn+mpC+Jh7i/ODRa2sW2+DDXJAOQ==
   dependencies:
     "@next-core/serve-helpers" "^1.2.2"
     body-parser "^1.20.1"
