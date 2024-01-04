@@ -1,0 +1,57 @@
+:host {
+  display: block;
+  --local-label-line-height: inherit;
+  --local-label-font-size: inherit;
+  --local-label-color: inherit;
+  --local-label-font-weight: inherit;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+:host([type="line"]) {
+  --local-label-line-height: 18px;
+  --local-label-font-size: 11px;
+  --local-label-color: var(--color-secondary-text);
+  --local-label-font-weight: 400;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.label {
+  max-width: 168px;
+  margin: -3px;
+}
+
+.label-text,
+.label-input {
+  width: 100%;
+  height: 24px;
+  padding: 3px;
+  border: none;
+  line-height: var(--local-label-line-height);
+  font-size: var(--local-label-font-size);
+  color: var(--local-label-color);
+  font-weight: var(--local-label-font-weight);
+  text-align: center;
+  font-family: inherit;
+  cursor: text;
+  user-select: text;
+}
+
+.label-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.label.editing .label-text {
+  display: none;
+}
+
+.label:not(.editing) .label-input {
+  display: none;
+}

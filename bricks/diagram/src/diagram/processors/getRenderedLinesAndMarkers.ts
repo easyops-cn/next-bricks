@@ -20,12 +20,12 @@ export function getRenderedLinesAndMarkers(
   const renderedLines: RenderedLine[] = [];
   const markers: LineMarker[] = [];
   for (const renderedEdge of renderedEdges) {
-    const lineConf = lines?.find((line) =>
-      matchEdgeByFilter(renderedEdge.data, line)
-    );
+    const { label, ...restLineConf } =
+      lines?.find((line) => matchEdgeByFilter(renderedEdge.data, line)) ?? {};
+
     const computedLineConf = __secret_internals.legacyDoTransform(
       { edge: renderedEdge.data },
-      lineConf
+      restLineConf
     ) as LineConf | undefined;
     if (computedLineConf?.draw === false) {
       continue;
@@ -35,7 +35,8 @@ export function getRenderedLinesAndMarkers(
       strokeWidth: DEFAULT_LINE_STROKE_WIDTH,
       curveType: DEFAULT_LINE_CURVE_TYPE,
       ...computedLineConf,
-      $ref: uniqueId("line-"),
+      label,
+      $id: uniqueId("line-"),
     };
 
     let markerIndex: number | undefined;
