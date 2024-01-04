@@ -1,4 +1,5 @@
 import { findIndex, uniqueId } from "lodash";
+import { __secret_internals } from "@next-core/runtime";
 import type {
   LineConf,
   LineMarker,
@@ -8,10 +9,11 @@ import type {
 import { matchEdgeByFilter } from "./matchEdgeByFilter";
 import {
   DEFAULT_LINE_CURVE_TYPE,
+  DEFAULT_LINE_INTERACT_STROKE_WIDTH,
   DEFAULT_LINE_STROKE_COLOR,
   DEFAULT_LINE_STROKE_WIDTH,
 } from "../constants";
-import { __secret_internals } from "@next-core/runtime";
+import { curveLine } from "../lines/curveLine";
 
 export function getRenderedLinesAndMarkers(
   renderedEdges: RenderedEdge[],
@@ -19,12 +21,12 @@ export function getRenderedLinesAndMarkers(
 ) {
   const renderedLines: RenderedLine[] = [];
   const markers: LineMarker[] = [];
-  for (const renderedEdge of renderedEdges) {
+  for (const { data, points } of renderedEdges) {
     const { label, ...restLineConf } =
-      lines?.find((line) => matchEdgeByFilter(renderedEdge.data, line)) ?? {};
+      lines?.find((line) => matchEdgeByFilter(data, line)) ?? {};
 
     const computedLineConf = __secret_internals.legacyDoTransform(
-      { edge: renderedEdge.data },
+      { edge: data },
       restLineConf
     ) as LineConf | undefined;
     if (computedLineConf?.draw === false) {
@@ -34,6 +36,7 @@ export function getRenderedLinesAndMarkers(
       strokeColor: DEFAULT_LINE_STROKE_COLOR,
       strokeWidth: DEFAULT_LINE_STROKE_WIDTH,
       curveType: DEFAULT_LINE_CURVE_TYPE,
+      interactStrokeWidth: DEFAULT_LINE_INTERACT_STROKE_WIDTH,
       ...computedLineConf,
       label,
       $id: uniqueId("line-"),
@@ -50,10 +53,13 @@ export function getRenderedLinesAndMarkers(
       }
     }
 
+    const d = curveLine(points, line.arrow ? -5 : 0, line.curveType);
+
     renderedLines.push({
-      ...renderedEdge,
       line,
+      d,
       markerIndex,
+      edge: data,
     });
   }
   return {

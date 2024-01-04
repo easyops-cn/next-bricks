@@ -1,5 +1,6 @@
 import { describe, test, expect, jest } from "@jest/globals";
 import { act } from "react-dom/test-utils";
+import { fireEvent } from "@testing-library/react";
 import "./";
 import type { EoDiagram } from "./index.js";
 
@@ -26,6 +27,9 @@ describe("eo-diagram", () => {
           class="diagram"
           tabindex="-1"
         >
+          <div
+            class="dragger"
+          />
           <svg
             class="lines"
             height="100%"
@@ -36,9 +40,6 @@ describe("eo-diagram", () => {
               transform="translate(0 0) scale(1)"
             />
           </svg>
-          <div
-            class="dragger"
-          />
           <div
             class="line-labels"
             style="left: 0px; top: 0px;"
@@ -84,6 +85,9 @@ describe("eo-diagram", () => {
         class="diagram"
         tabindex="-1"
       >
+        <div
+          class="dragger"
+        />
         <svg
           class="lines"
           height="100%"
@@ -94,9 +98,6 @@ describe("eo-diagram", () => {
             transform="translate(0 0) scale(1)"
           />
         </svg>
-        <div
-          class="dragger"
-        />
         <div
           class="line-labels"
           style="left: 0px; top: 0px;"
@@ -124,6 +125,9 @@ describe("eo-diagram", () => {
         class="diagram ready"
         tabindex="-1"
       >
+        <div
+          class="dragger"
+        />
         <svg
           class="lines"
           height="100%"
@@ -157,25 +161,30 @@ describe("eo-diagram", () => {
           <g
             transform="translate(-35 -35) scale(1)"
           >
-            <path
-              d="M30,10L25.833,14.167C21.667,18.333,13.333,26.667,9.167,35C5,43.333,5,51.667,5,55.833L5,60"
-              fill="none"
-              stroke="gray"
-              stroke-width="1"
-            />
-            <path
-              clip-path="url(#diagram-2-clip-path-line-4)"
-              d="M40,10L44.167,14.167C48.333,18.333,56.667,26.667,60.833,34.167C65,41.667,65,48.333,65,51.667L65,55"
-              fill="none"
-              marker-end="url(#diagram-2-line-arrow-0)"
-              stroke="blue"
-              stroke-width="1"
-            />
+            <g
+              class="line"
+            >
+              <path
+                d="M30,10L25.833,14.167C21.667,18.333,13.333,26.667,9.167,35C5,43.333,5,51.667,5,55.833L5,60"
+                fill="none"
+                stroke="gray"
+                stroke-width="1"
+              />
+            </g>
+            <g
+              class="line"
+            >
+              <path
+                clip-path="url(#diagram-2-clip-path-line-4)"
+                d="M40,10L44.167,14.167C48.333,18.333,56.667,26.667,60.833,34.167C65,41.667,65,48.333,65,51.667L65,55"
+                fill="none"
+                marker-end="url(#diagram-2-line-arrow-0)"
+                stroke="blue"
+                stroke-width="1"
+              />
+            </g>
           </g>
         </svg>
-        <div
-          class="dragger"
-        />
         <div
           class="line-labels"
           style="left: -35px; top: -35px;"
@@ -223,6 +232,7 @@ describe("eo-diagram", () => {
         edgeType: "link",
         arrow: true,
         strokeColor: "blue",
+        interactable: true,
         label: {
           if: "<% !!DATA.edge.description %>",
           useBrick: {
@@ -234,6 +244,10 @@ describe("eo-diagram", () => {
         },
       },
     ];
+    const onLineDoubleClick = jest.fn();
+    element.addEventListener("line.dblclick", (e) =>
+      onLineDoubleClick((e as CustomEvent).detail)
+    );
 
     act(() => {
       document.body.appendChild(element);
@@ -247,6 +261,9 @@ describe("eo-diagram", () => {
         class="diagram ready"
         tabindex="-1"
       >
+        <div
+          class="dragger"
+        />
         <svg
           class="lines"
           height="100%"
@@ -280,25 +297,36 @@ describe("eo-diagram", () => {
           <g
             transform="translate(-35 -35) scale(1)"
           >
-            <path
-              d="M30,10L25.833,14.167C21.667,18.333,13.333,26.667,9.167,35C5,43.333,5,51.667,5,55.833L5,60"
-              fill="none"
-              stroke="gray"
-              stroke-width="1"
-            />
-            <path
-              clip-path="url(#diagram-5-clip-path-line-7)"
-              d="M40,10L44.167,14.167C48.333,18.333,56.667,26.667,60.833,34.167C65,41.667,65,48.333,65,51.667L65,55"
-              fill="none"
-              marker-end="url(#diagram-5-line-arrow-0)"
-              stroke="blue"
-              stroke-width="1"
-            />
+            <g
+              class="line"
+            >
+              <path
+                d="M30,10L25.833,14.167C21.667,18.333,13.333,26.667,9.167,35C5,43.333,5,51.667,5,55.833L5,60"
+                fill="none"
+                stroke="gray"
+                stroke-width="1"
+              />
+            </g>
+            <g
+              class="line interactable"
+            >
+              <path
+                clip-path="url(#diagram-5-clip-path-line-7)"
+                d="M40,10L44.167,14.167C48.333,18.333,56.667,26.667,60.833,34.167C65,41.667,65,48.333,65,51.667L65,55"
+                fill="none"
+                marker-end="url(#diagram-5-line-arrow-0)"
+                stroke="blue"
+                stroke-width="1"
+              />
+              <path
+                d="M40,10L44.167,14.167C48.333,18.333,56.667,26.667,60.833,34.167C65,41.667,65,48.333,65,51.667L65,55"
+                fill="none"
+                stroke="transparent"
+                stroke-width="20"
+              />
+            </g>
           </g>
         </svg>
-        <div
-          class="dragger"
-        />
         <div
           class="line-labels"
           style="left: -35px; top: -35px;"
@@ -328,6 +356,16 @@ describe("eo-diagram", () => {
         </div>
       </div>
     `);
+
+    fireEvent.dblClick(
+      element.shadowRoot!.querySelector(".line.interactable")!
+    );
+    expect(onLineDoubleClick).toBeCalledWith({
+      id: "line-7",
+      edge: expect.objectContaining({ source: "a", target: "c" }),
+    });
+
+    element.callOnLineLabel("line-7", "addEventListener", "click", jest.fn());
 
     act(() => {
       document.body.removeChild(element);

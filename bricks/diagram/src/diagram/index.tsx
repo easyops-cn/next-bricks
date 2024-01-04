@@ -1,6 +1,9 @@
 import React, {
+  createRef,
+  forwardRef,
   useCallback,
   useEffect,
+  useImperativeHandle,
   useMemo,
   useRef,
   useState,
@@ -26,16 +29,16 @@ import type {
   RenderedNode,
   LineTextClipPath,
   TransformLiteral,
+  LineTarget,
 } from "./interfaces";
 import { NodeComponentGroup } from "./NodeComponent";
-import { curveLine } from "./lines/curveLine";
 import { handleKeyboard } from "./processors/handleKeyboard";
 import { getCenterOffsets } from "./processors/getCenterOffsets";
 import { getRenderedLinesAndMarkers } from "./processors/getRenderedLinesAndMarkers";
 import styleText from "./styles.shadow.css";
 import { LineLabelComponentGroup } from "./LineLabelComponent";
 
-const { defineElement, property, event } = createDecorators();
+const { defineElement, property, event, method } = createDecorators();
 
 export interface EoDiagramProps {
   layout?: "dagre";
@@ -46,14 +49,17 @@ export interface EoDiagramProps {
   layoutOptions?: LayoutOptionsDagre;
   activeNodeId?: string;
   disableKeyboardAction?: boolean;
-  onActiveNodeChange?(node: DiagramNode | undefined): void;
-  onSwitchActiveNode?(id: string | undefined): void;
-  onNodeDelete?(node: DiagramNode): void;
+}
+
+export interface DiagramRef {
+  callOnLineLabel(id: string, method: string, ...args: unknown[]): void;
 }
 
 export interface DiagramHandler {
   moveIntoView(id: string): void;
 }
+
+export const EoDiagramComponent = forwardRef(LegacyEoDiagramComponent);
 
 /**
  * 构件 `eo-diagram`
@@ -105,13 +111,28 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
     this.#nodeDelete.emit(node);
   };
 
+  @event({ type: "line.dblclick" })
+  accessor #lineDoubleClick!: EventEmitter<LineTarget>;
+
+  #handleLineDoubleClick = (line: LineTarget) => {
+    this.#lineDoubleClick.emit(line);
+  };
+
   #handleSwitchActiveNode = (id: string | undefined) => {
     this.activeNodeId = id;
   };
 
+  #diagramRef = createRef<DiagramRef>();
+
+  @method()
+  callOnLineLabel(id: string, method: string, ...args: unknown[]) {
+    this.#diagramRef.current?.callOnLineLabel(id, method, ...args);
+  }
+
   render() {
     return (
       <EoDiagramComponent
+        ref={this.#diagramRef}
         layout={this.layout}
         nodes={this.nodes}
         edges={this.edges}
@@ -123,24 +144,36 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
         onActiveNodeChange={this.#handleActiveNodeChange}
         onSwitchActiveNode={this.#handleSwitchActiveNode}
         onNodeDelete={this.#handleNodeDelete}
+        onLineDoubleClick={this.#handleLineDoubleClick}
       />
     );
   }
 }
 
-export function EoDiagramComponent({
-  layout,
-  nodes,
-  edges,
-  nodeBricks,
-  lines,
-  layoutOptions,
-  activeNodeId,
-  disableKeyboardAction,
-  onActiveNodeChange,
-  onSwitchActiveNode,
-  onNodeDelete,
-}: EoDiagramProps) {
+export interface EoDiagramComponentProps extends EoDiagramProps {
+  onActiveNodeChange?(node: DiagramNode | undefined): void;
+  onSwitchActiveNode?(id: string | undefined): void;
+  onNodeDelete?(node: DiagramNode): void;
+  onLineDoubleClick?(line: LineTarget): void;
+}
+
+export function LegacyEoDiagramComponent(
+  {
+    layout,
+    nodes,
+    edges,
+    nodeBricks,
+    lines,
+    layoutOptions,
+    activeNodeId,
+    disableKeyboardAction,
+    onActiveNodeChange,
+    onSwitchActiveNode,
+    onNodeDelete,
+    onLineDoubleClick,
+  }: EoDiagramComponentProps,
+  ref: React.Ref<DiagramRef>
+) {
   // const [nodePositions, setNodePositions] = useState<Map<DiagramNodeId, NodePosition> | undefined>();
   const [graph, setGraph] = useState<dagre.graphlib.Graph<RenderedNode> | null>(
     null
@@ -176,6 +209,15 @@ export function EoDiagramComponent({
   const nodesRef = useRef<HTMLDivElement>(null);
   const [offsets, setOffsets] = useState<PositionTuple>([0, 0]);
   const [centered, setCentered] = useState(false);
+
+  useImperativeHandle(ref, () => ({
+    callOnLineLabel(id, method, ...args) {
+      (
+        lineLabelsRefRepository?.get(id)
+          ?.firstElementChild as unknown as Record<string, Function>
+      )?.[method](...args);
+    },
+  }));
 
   const fixedOptions = useMemo(
     () => ({
@@ -404,7 +446,7 @@ export function EoDiagramComponent({
       previous.length === 0 && renderedLines.length === 0
         ? previous
         : (renderedLines
-            .map(({ line: { text, label, $id }, data: edge }) => {
+            .map(({ line: { text, label, $id }, edge }) => {
               const path = linePathsRef.current.get($id);
               if ((!text && !label) || !path || !path.getAttribute("d")) {
                 return;
@@ -486,6 +528,7 @@ export function EoDiagramComponent({
       tabIndex={-1}
       ref={rootRef}
     >
+      <div className={classNames("dragger", { grabbing })} ref={draggerRef} />
       <svg width="100%" height="100%" className="lines">
         <defs>
           {markers.map(({ strokeColor }, index) => (
@@ -539,29 +582,53 @@ export function EoDiagramComponent({
             offsets[1] + transform.y
           }) scale(${transform.k})`}
         >
-          {renderedLines.map(({ points, line, markerIndex }) => (
-            <path
-              ref={(element) => linePathsRef.current.set(line.$id, element)}
+          {renderedLines.map(({ line, d, markerIndex, edge }) => (
+            <g
+              className={classNames("line", {
+                interactable: line.interactable,
+              })}
               key={line.$id}
-              stroke={line.strokeColor}
-              strokeWidth={line.strokeWidth}
-              d={curveLine(points, line.arrow ? -5 : 0, line.curveType)}
-              fill="none"
-              markerEnd={
-                markerIndex === undefined
-                  ? undefined
-                  : `url(#${markerPrefix}${markerIndex})`
-              }
-              clipPath={
-                clipPathList.some((clip) => clip.id === line.$id)
-                  ? `url(#${clipPathPrefix}${line.$id})`
+              onDoubleClick={
+                line.interactable
+                  ? (e) => (
+                      e.preventDefault(),
+                      e.stopPropagation(),
+                      onLineDoubleClick?.({ id: line.$id, edge: edge })
+                    )
                   : undefined
               }
-            />
+            >
+              <path
+                ref={(element) => linePathsRef.current.set(line.$id, element)}
+                stroke={line.strokeColor}
+                strokeWidth={line.strokeWidth}
+                d={d}
+                fill="none"
+                markerEnd={
+                  markerIndex === undefined
+                    ? undefined
+                    : `url(#${markerPrefix}${markerIndex})`
+                }
+                clipPath={
+                  clipPathList.some((clip) => clip.id === line.$id)
+                    ? `url(#${clipPathPrefix}${line.$id})`
+                    : undefined
+                }
+              />
+              {line.interactable && (
+                <path
+                  // This `path` is made for expanding interaction area of graph lines.
+                  // 保证此path在svg上层，从而扩大触发区域
+                  d={d}
+                  fill="none"
+                  stroke="transparent"
+                  strokeWidth={line.interactStrokeWidth ?? 5}
+                />
+              )}
+            </g>
           ))}
         </g>
       </svg>
-      <div className={classNames("dragger", { grabbing })} ref={draggerRef} />
       <div
         className="line-labels"
         style={{

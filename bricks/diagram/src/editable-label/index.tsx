@@ -1,11 +1,19 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  createRef,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import classNames from "classnames";
 import styleText from "./styles.shadow.css";
 
-const { defineElement, property, event } = createDecorators();
+const { defineElement, property, event, method } = createDecorators();
 
 export interface EditableLabelProps {
   label?: string;
@@ -13,6 +21,12 @@ export interface EditableLabelProps {
 }
 
 export type LabelType = "line" | "default";
+
+export interface EditableLabelRef {
+  enableEditing(): void;
+}
+
+export const EditableLabelComponent = forwardRef(LegacyEditableLabelComponent);
 
 /**
  * 构件 `diagram.editable-label`
@@ -35,9 +49,17 @@ class EditableLabel extends ReactNextElement implements EditableLabelProps {
     this.#labelChange.emit(value);
   };
 
+  @method()
+  enableEditing() {
+    this.#editableLabelRef.current?.enableEditing();
+  }
+
+  #editableLabelRef = createRef<EditableLabelRef>();
+
   render() {
     return (
       <EditableLabelComponent
+        ref={this.#editableLabelRef}
         label={this.label}
         onLabelChange={this.#handleLabelChange}
       />
@@ -49,15 +71,21 @@ export interface EditableLabelComponentProps extends EditableLabelProps {
   onLabelChange?(value: string): void;
 }
 
-export function EditableLabelComponent({
-  label: _label,
-  onLabelChange,
-}: EditableLabelComponentProps) {
+export function LegacyEditableLabelComponent(
+  { label: _label, onLabelChange }: EditableLabelComponentProps,
+  ref: React.Ref<EditableLabelRef>
+) {
   const label = _label ?? "";
   const [currentLabel, setCurrentLabel] = useState<string>(label);
   const [editingLabel, setEditingLabel] = useState(false);
   const [shouldEmitLabelChange, setShouldEmitLabelChange] = useState(false);
   const labelInputRef = useRef<HTMLInputElement>(null);
+
+  useImperativeHandle(ref, () => ({
+    enableEditing() {
+      setEditingLabel(true);
+    },
+  }));
 
   useEffect(() => {
     setCurrentLabel(label);
@@ -108,7 +136,12 @@ export function EditableLabelComponent({
   }, [currentLabel, onLabelChange, shouldEmitLabelChange]);
 
   return (
-    <div className={classNames("label", { editing: editingLabel })}>
+    <div
+      className={classNames("label", {
+        editing: editingLabel,
+        empty: !currentLabel,
+      })}
+    >
       <input
         className="label-input"
         value={currentLabel}

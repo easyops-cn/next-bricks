@@ -33,14 +33,17 @@ export interface RenderedEdge {
   data: DiagramEdge;
 }
 
-export interface RenderedLine extends RenderedEdge {
+export interface RenderedLine {
   line: LineConf & {
     strokeColor: string;
     strokeWidth: number;
-    curveType: "curveBasis";
+    interactStrokeWidth: number;
+    curveType: string;
     $id: string;
   };
+  d: string;
   markerIndex: number | undefined;
+  edge: DiagramEdge;
 }
 
 export interface RenderedLineLabel {
@@ -87,6 +90,8 @@ export interface LineConf {
   type?: "auto";
   strokeColor?: string;
   strokeWidth?: number;
+  interactable?: boolean;
+  interactStrokeWidth?: number;
   curveType?: "curveBasis";
   arrow?: boolean;
   text?: TextOptions;
@@ -127,4 +132,9 @@ export interface SimpleRect {
   y0: number;
   w: number;
   h: number;
+}
+
+export interface LineTarget {
+  id: string;
+  edge: DiagramEdge;
 }

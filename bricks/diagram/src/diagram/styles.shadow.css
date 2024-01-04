@@ -59,3 +59,11 @@
   width: max-content;
   text-align: center;
 }
+
+.lines {
+  pointer-events: none;
+}
+
+.line.interactable {
+  pointer-events: auto;
+}
