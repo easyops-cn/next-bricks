@@ -422,7 +422,14 @@ export function LegacyEoDiagramComponent(
     select(root).on("wheel.zoom", (e) => {
       e.stopPropagation();
       e.preventDefault();
-      zoomer.translateBy(select(dragger), e.wheelDeltaX / 5, e.wheelDeltaY / 5);
+      // Mac OS trackpad pinch event is emitted as a wheel.zoom and d3.event.ctrlKey set to true
+      if (!e.ctrlKey) {
+        zoomer.translateBy(
+          select(dragger),
+          e.wheelDeltaX / 5,
+          e.wheelDeltaY / 5
+        );
+      }
     });
   }, [onSwitchActiveNode]);
 
