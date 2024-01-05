@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.5.0...@next-bricks/diagram@0.5.1) (2024-01-05)
+
+
+### Bug Fixes
+
+* **editable-label:** dispatch label.editing.change ([95557e7](https://github.com/easyops-cn/next-bricks/commit/95557e7912dd8e4fd16d3d84b08a6c08615b776e))
+
+
+
+
+
 # [0.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.4.1...@next-bricks/diagram@0.5.0) (2024-01-05)
 
 
