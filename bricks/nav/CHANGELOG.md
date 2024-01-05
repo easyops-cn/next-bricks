@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.3.0...@next-bricks/nav@1.4.0) (2024-01-05)
+
+
+### Features
+
+* sidebar and navMenu render in firstTime ([f1b8fa7](https://github.com/easyops-cn/next-bricks/commit/f1b8fa728e40126634577f628faf6525a10383d7))
+
+
+
+
+
 # [1.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.2.0...@next-bricks/nav@1.3.0) (2024-01-04)
 
 
