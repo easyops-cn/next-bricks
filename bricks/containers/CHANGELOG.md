@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.0.3...@next-bricks/containers@1.0.4) (2024-01-05)
+
+
+### Bug Fixes
+
+* fix card implementation of fill container ([ccf911a](https://github.com/easyops-cn/next-bricks/commit/ccf911a9e7aac8c353b3b9a1e8b22d4afece0e85))
+
+
+
+
+
 ## [1.0.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.0.2...@next-bricks/containers@1.0.3) (2024-01-03)
 
 **Note:** Version bump only for package @next-bricks/containers
