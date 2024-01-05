@@ -116,13 +116,27 @@ export interface TransformLiteral {
 }
 
 export interface LayoutOptionsDagre {
-  nodePadding?: number;
+  nodePadding?: PartialRectTuple;
   rankdir?: "TB" | "BT" | "LR" | "RL";
   ranksep?: number;
   edgesep?: number;
   nodesep?: number;
   align?: "UL" | "UR" | "DL" | "DR";
 }
+
+export type PartialRectTuple =
+  | number
+  | [all: number]
+  | [vertical: number, horizontal: number]
+  | [top: number, horizontal: number, bottom: number]
+  | [top: number, right: number, bottom: number, left: number];
+
+export type FullRectTuple = [
+  top: number,
+  right: number,
+  bottom: number,
+  left: number,
+];
 
 export interface LineTextClipPath extends SimpleRect {
   id: string;

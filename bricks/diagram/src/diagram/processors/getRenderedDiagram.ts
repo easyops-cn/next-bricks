@@ -1,5 +1,11 @@
 import dagre from "@dagrejs/dagre";
-import type { RefRepository, RenderedEdge, RenderedNode } from "../interfaces";
+import type {
+  PartialRectTuple,
+  RefRepository,
+  RenderedEdge,
+  RenderedNode,
+} from "../interfaces";
+import { extractPartialRectTuple } from "./extractPartialRectTuple";
 
 export interface RenderedDiagram {
   nodes: RenderedNode[];
@@ -13,11 +19,13 @@ export function getRenderedDiagram({
 }: {
   graph: dagre.graphlib.Graph<RenderedNode> | null;
   nodesRefRepository: RefRepository | null;
-  nodePadding: number;
+  nodePadding: PartialRectTuple;
 }): RenderedDiagram | null {
   if (!graph || !nodesRefRepository || graph.nodeCount() === 0) {
     return null;
   }
+
+  const paddings = extractPartialRectTuple(nodePadding);
 
   for (const id of graph.nodes()) {
     const node = graph.node(id);
@@ -27,8 +35,8 @@ export function getRenderedDiagram({
       continue;
     }
     const element = nodesRefRepository.get(id);
-    node.width = (element?.offsetWidth ?? 10) + nodePadding * 2;
-    node.height = (element?.offsetHeight ?? 10) + nodePadding * 2;
+    node.width = (element?.offsetWidth ?? 10) + paddings[1] + paddings[3];
+    node.height = (element?.offsetHeight ?? 10) + paddings[0] + paddings[2];
   }
 
   dagre.layout(graph);
@@ -42,8 +50,8 @@ export function getRenderedDiagram({
       continue;
     }
     renderedNodes.push(node);
-    const x = node.x - node.width / 2 + nodePadding;
-    const y = node.y - node.height / 2 + nodePadding;
+    const x = node.x - node.width / 2 + paddings[3];
+    const y = node.y - node.height / 2 + paddings[0];
     // positions.set(v, { x, y });
 
     const nodeContainer = nodesRefRepository.get(v)?.parentElement;
