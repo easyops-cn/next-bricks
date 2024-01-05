@@ -67,3 +67,20 @@
 .line.interactable {
   pointer-events: auto;
 }
+
+.connect-line {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.connect-line:not(.connecting) {
+  display: none;
+}
+
+/* .line:not(.active) .active-bg {
+  display: none;
+} */

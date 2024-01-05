@@ -1,9 +1,9 @@
-import type { RenderedNode } from "../interfaces";
+import type { PositionTuple, RenderedNode } from "../interfaces";
 
 export function getCenterOffsets(
   renderedNodes: RenderedNode[],
   [canvasWidth, canvasHeight]: [canvasWidth: number, canvasHeight: number]
-): [offsetX: number, offsetY: number] {
+): PositionTuple {
   let left = Infinity;
   let top = Infinity;
   let right = -Infinity;

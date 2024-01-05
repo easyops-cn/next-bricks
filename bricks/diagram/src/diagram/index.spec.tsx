@@ -3,8 +3,10 @@ import { act } from "react-dom/test-utils";
 import { fireEvent } from "@testing-library/react";
 import "./";
 import type { EoDiagram } from "./index.js";
+import { handleDiagramMouseDown } from "./processors/handleDiagramMouseDown";
 
 jest.mock("@next-core/theme", () => ({}));
+jest.mock("./processors/handleDiagramMouseDown");
 
 describe("eo-diagram", () => {
   test("empty nodes", async () => {
@@ -48,6 +50,32 @@ describe("eo-diagram", () => {
             class="nodes"
             style="left: 0px; top: 0px;"
           />
+          <svg
+            class="connect-line"
+            height="100%"
+            width="100%"
+          >
+            <defs>
+              <marker
+                id="diagram-1-line-arrow-connect-line"
+                markerHeight="6"
+                markerWidth="6"
+                orient="auto"
+                refX="3"
+                refY="3"
+                viewBox="0 0 6 6"
+              >
+                <path
+                  d="M 0.5 0.5 L 5.5 3 L 0.5 5.5 z"
+                  stroke-width="1"
+                />
+              </marker>
+            </defs>
+            <path
+              d=""
+              fill="none"
+            />
+          </svg>
         </div>,
       ]
     `);
@@ -75,6 +103,15 @@ describe("eo-diagram", () => {
         text: "<% DATA.edge.description ? {content: DATA.edge.description} : null %>" as any,
       },
     ];
+    element.activeNodeId = "b";
+    const onNodeDelete = jest.fn();
+    element.addEventListener("node.delete", (e) =>
+      onNodeDelete((e as CustomEvent).detail)
+    );
+    const onActiveNodeChange = jest.fn();
+    element.addEventListener("activeNode.change", (e) =>
+      onActiveNodeChange((e as CustomEvent).detail)
+    );
 
     act(() => {
       document.body.appendChild(element);
@@ -116,6 +153,32 @@ describe("eo-diagram", () => {
             class="node"
           />
         </div>
+        <svg
+          class="connect-line"
+          height="100%"
+          width="100%"
+        >
+          <defs>
+            <marker
+              id="diagram-2-line-arrow-connect-line"
+              markerHeight="6"
+              markerWidth="6"
+              orient="auto"
+              refX="3"
+              refY="3"
+              viewBox="0 0 6 6"
+            >
+              <path
+                d="M 0.5 0.5 L 5.5 3 L 0.5 5.5 z"
+                stroke-width="1"
+              />
+            </marker>
+          </defs>
+          <path
+            d=""
+            fill="none"
+          />
+        </svg>
       </div>
     `);
 
@@ -210,8 +273,59 @@ describe("eo-diagram", () => {
             class="node"
           />
         </div>
+        <svg
+          class="connect-line"
+          height="100%"
+          width="100%"
+        >
+          <defs>
+            <marker
+              id="diagram-2-line-arrow-connect-line"
+              markerHeight="6"
+              markerWidth="6"
+              orient="auto"
+              refX="3"
+              refY="3"
+              viewBox="0 0 6 6"
+            >
+              <path
+                d="M 0.5 0.5 L 5.5 3 L 0.5 5.5 z"
+                stroke-width="1"
+              />
+            </marker>
+          </defs>
+          <path
+            d=""
+            fill="none"
+          />
+        </svg>
       </div>
     `);
+
+    fireEvent.mouseDown(element.shadowRoot!.querySelector(".diagram")!);
+    expect(handleDiagramMouseDown).toBeCalled();
+
+    // `Enter` keydown is ignored
+    fireEvent.keyDown(element.shadowRoot!.querySelector(".diagram")!, {
+      key: "Enter",
+    });
+    expect(onNodeDelete).not.toBeCalled();
+    expect(onActiveNodeChange).not.toBeCalled();
+
+    fireEvent.keyDown(element.shadowRoot!.querySelector(".diagram")!, {
+      key: "Backspace",
+    });
+    expect(onNodeDelete).toBeCalledWith({ id: "b" });
+
+    fireEvent.keyDown(element.shadowRoot!.querySelector(".diagram")!, {
+      key: "ArrowUp",
+    });
+    await act(() => (global as any).flushPromises());
+    expect(onActiveNodeChange).toBeCalledWith({ id: "a" });
+
+    element.activeNodeId = undefined;
+    await act(() => (global as any).flushPromises());
+    expect(onActiveNodeChange).toBeCalledWith(null);
 
     act(() => {
       document.body.removeChild(element);
@@ -354,6 +468,32 @@ describe("eo-diagram", () => {
             class="node"
           />
         </div>
+        <svg
+          class="connect-line"
+          height="100%"
+          width="100%"
+        >
+          <defs>
+            <marker
+              id="diagram-5-line-arrow-connect-line"
+              markerHeight="6"
+              markerWidth="6"
+              orient="auto"
+              refX="3"
+              refY="3"
+              viewBox="0 0 6 6"
+            >
+              <path
+                d="M 0.5 0.5 L 5.5 3 L 0.5 5.5 z"
+                stroke-width="1"
+              />
+            </marker>
+          </defs>
+          <path
+            d=""
+            fill="none"
+          />
+        </svg>
       </div>
     `);
 

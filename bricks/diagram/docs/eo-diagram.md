@@ -244,18 +244,28 @@ children:
         - edgeType: link
           strokeColor: var(--theme-blue-color)
           arrow: true
-          text: |-
-            <%
-              DATA.edge.description
-                ? {
-                    content: DATA.edge.description,
-                    style: {
-                      color: "var(--color-secondary-text)",
-                      fontSize: "11px",
-                    },
-                  }
-                : null
-            %>
+          interactable: true
+          label:
+            useBrick:
+              brick: diagram.editable-label
+              properties:
+                label: <% DATA.edge.description %>
+                type: line
+              events:
+                label.change:
+                  if: <% (DATA.edge.description || "") !== (EVENT.detail || "") %>
+                  action: context.replace
+                  args:
+                    - edges
+                    - |-
+                      <%
+                        CTX.edges.map((edge) =>
+                          edge.source === DATA.edge.source &&
+                          edge.target === DATA.edge.target
+                            ? { ...edge, description: EVENT.detail }
+                            : edge
+                        )
+                      %>
         - edgeType: menu
           strokeColor: var(--palette-gray-5)
           arrow: true
@@ -263,6 +273,14 @@ children:
         nodePadding: 10
       activeNodeId: <%= CTX.activeNodeId %>
       disableKeyboardAction: <%= CTX.editingLabelNodes.length > 0 %>
+      nodesConnect:
+        arrow: true
+        strokeColor: |-
+          <%
+            DATA.source.type === "board"
+              ? "var(--palette-gray-5)"
+              : "var(--theme-blue-color)"
+          %>
       nodeBricks:
         - useBrick:
             brick: visual-builder.page-arch-node
@@ -378,4 +396,34 @@ children:
                         target !== CTX.targetNode.id
                     )
                   %>
+      line.dblclick:
+        target: _self
+        method: callOnLineLabel
+        args:
+          - <% EVENT.detail.id %>
+          - enableEditing
+      nodes.connect:
+        if: |-
+          <%
+            EVENT.detail.target.type !== "board" &&
+            !CTX.edges.some(
+              (edge) =>
+                edge.source === EVENT.detail.source.id &&
+                edge.target === EVENT.detail.target.id
+            )
+          %>
+        action: context.replace
+        args:
+          - edges
+          - |-
+            <%
+              CTX.edges.concat({
+                source: EVENT.detail.source.id,
+                target: EVENT.detail.target.id,
+                type:
+                  EVENT.detail.source.type === "board"
+                    ? "menu"
+                    : "link",
+              })
+            %>
 ```

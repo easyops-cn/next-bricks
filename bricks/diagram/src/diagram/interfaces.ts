@@ -96,10 +96,11 @@ export interface LineConf {
   arrow?: boolean;
   text?: TextOptions;
   label?: LineLabelConf;
+  cursor?: React.CSSProperties["cursor"];
 }
 
 export interface LineLabelConf {
-  if?: string | boolean;
+  if?: string | boolean | null;
   useBrick: UseSingleBrickConf;
 }
 
@@ -137,4 +138,22 @@ export interface SimpleRect {
 export interface LineTarget {
   id: string;
   edge: DiagramEdge;
+}
+
+export interface ConnectLineDetail {
+  source: DiagramNode;
+  target: DiagramNode;
+}
+
+export interface NodesConnectOptions {
+  sourceType?: string | string[];
+  if?: string | boolean | null;
+  strokeColor?: string;
+  strokeWidth?: number;
+  arrow?: boolean;
+}
+
+export interface ConnectLineState {
+  from: PositionTuple;
+  options: NodesConnectOptions;
 }
