@@ -139,6 +139,7 @@ interface EoSidebarComponentProps extends EoSidebarProps {
 export function EoSidebarComponent(props: EoSidebarComponentProps) {
   const { t } = useTranslation(NS);
   const {
+    menu,
     hiddenFixedIcon,
     position,
     onActualWidthChange,
@@ -166,26 +167,17 @@ export function EoSidebarComponent(props: EoSidebarComponentProps) {
       storage.getItem(SIDE_BAR_EXPAND_STATE) ||
       ExpandedState.Collapsed
   );
-  const [menu, setMenu] = useState<SidebarMenuType>();
-  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
-  const [openedKeys, setOpenedKeys] = useState<string[]>([]);
-  const [matchedKeys, setmatchedKeys] = useState<string[]>([]);
 
   const titleIcon = showUserDefinedIcon ? menu?.icon : currentApp?.menuIcon;
 
-  useEffect(() => {
-    const { selectedKeys, openedKeys, matchedKeys } =
-      initMenuItemAndMatchCurrentPathKeys(
-        props.menu?.menuItems ?? [],
-        pathname,
-        search,
-        ""
-      );
-    setMenu(props.menu);
-    setSelectedKeys(selectedKeys);
-    setOpenedKeys(openedKeys);
-    setmatchedKeys(matchedKeys);
-  }, [props.menu, pathname, search]);
+  const { selectedKeys, openedKeys, matchedKeys } = useMemo(() => {
+    return initMenuItemAndMatchCurrentPathKeys(
+      menu?.menuItems ?? [],
+      pathname,
+      search,
+      ""
+    );
+  }, [menu?.menuItems, pathname, search]);
 
   useEffect(() => {
     const unListen: UnregisterCallback = history.listen((location) => {
