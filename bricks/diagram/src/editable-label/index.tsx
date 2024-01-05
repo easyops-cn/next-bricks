@@ -42,6 +42,13 @@ class EditableLabel extends ReactNextElement implements EditableLabelProps {
   @property({ render: false })
   accessor type: LabelType | undefined;
 
+  @event({ type: "label.editing.change" })
+  accessor #labelEditingChange!: EventEmitter<boolean>;
+
+  #handleLabelEditingChange = (value: boolean) => {
+    this.#labelEditingChange.emit(value);
+  };
+
   @event({ type: "label.change" })
   accessor #labelChange!: EventEmitter<string>;
 
@@ -61,6 +68,7 @@ class EditableLabel extends ReactNextElement implements EditableLabelProps {
       <EditableLabelComponent
         ref={this.#editableLabelRef}
         label={this.label}
+        onLabelEditingChange={this.#handleLabelEditingChange}
         onLabelChange={this.#handleLabelChange}
       />
     );
@@ -68,16 +76,22 @@ class EditableLabel extends ReactNextElement implements EditableLabelProps {
 }
 
 export interface EditableLabelComponentProps extends EditableLabelProps {
+  onLabelEditingChange?(value: boolean): void;
   onLabelChange?(value: string): void;
 }
 
 export function LegacyEditableLabelComponent(
-  { label: _label, onLabelChange }: EditableLabelComponentProps,
+  {
+    label: _label,
+    onLabelChange,
+    onLabelEditingChange,
+  }: EditableLabelComponentProps,
   ref: React.Ref<EditableLabelRef>
 ) {
   const label = _label ?? "";
   const [currentLabel, setCurrentLabel] = useState<string>(label);
   const [editingLabel, setEditingLabel] = useState(false);
+  const editingLabelInitialized = useRef(false);
   const [shouldEmitLabelChange, setShouldEmitLabelChange] = useState(false);
   const labelInputRef = useRef<HTMLInputElement>(null);
 
@@ -105,6 +119,14 @@ export function LegacyEditableLabelComponent(
       labelInputRef.current?.select();
     }
   }, [editingLabel]);
+
+  useEffect(() => {
+    if (editingLabelInitialized.current) {
+      onLabelEditingChange?.(editingLabel);
+    } else {
+      editingLabelInitialized.current = true;
+    }
+  }, [editingLabel, onLabelEditingChange]);
 
   const handleInputChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
