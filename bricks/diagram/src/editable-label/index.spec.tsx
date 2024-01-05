@@ -13,6 +13,10 @@ describe("diagram.editable-label", () => {
     ) as EditableLabel;
     element.type = "line";
     element.label = "Relation A";
+    const onLabelEditingChange = jest.fn();
+    element.addEventListener("label.editing.change", (e) =>
+      onLabelEditingChange((e as CustomEvent).detail)
+    );
     const onLabelChange = jest.fn();
     element.addEventListener("label.change", (e) =>
       onLabelChange((e as CustomEvent).detail)
@@ -54,6 +58,8 @@ describe("diagram.editable-label", () => {
     expect(
       element.shadowRoot?.querySelector(".label")?.classList.contains("editing")
     ).toBe(true);
+    expect(onLabelEditingChange).toBeCalledTimes(1);
+    expect(onLabelEditingChange).toBeCalledWith(true);
 
     // Rename label
     act(() => {
@@ -84,6 +90,8 @@ describe("diagram.editable-label", () => {
     expect(
       element.shadowRoot?.querySelector(".label")?.classList.contains("editing")
     ).toBe(false);
+    expect(onLabelEditingChange).toBeCalledTimes(2);
+    expect(onLabelEditingChange).toBeCalledWith(false);
 
     act(() => {
       element.enableEditing();
