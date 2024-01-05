@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.5.1...@next-bricks/diagram@0.5.2) (2024-01-05)
+
+
+### Bug Fixes
+
+* export partial rect tuple ([9a2fc6a](https://github.com/easyops-cn/next-bricks/commit/9a2fc6af79231207331d4faf69285a6ad3ab69a4))
+
+
+
+
+
 ## [0.5.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.5.0...@next-bricks/diagram@0.5.1) (2024-01-05)
 
 

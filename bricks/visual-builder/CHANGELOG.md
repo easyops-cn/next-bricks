@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.4.0...@next-bricks/visual-builder@1.4.1) (2024-01-05)
+
+
+### Bug Fixes
+
+* set notSynced and disableChildAppend ([1b29b55](https://github.com/easyops-cn/next-bricks/commit/1b29b55e33fef4633e57edf7e93878650213b18e))
+
+
+
+
+
 # [1.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.3.1...@next-bricks/visual-builder@1.4.0) (2024-01-05)
 
 
