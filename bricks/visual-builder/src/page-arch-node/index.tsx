@@ -206,6 +206,10 @@ export function PageArchNodeComponent({
     [external, onExternalClick]
   );
 
+  const stopPropagation = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+  }, []);
+
   return (
     <>
       <div
@@ -218,9 +222,14 @@ export function PageArchNodeComponent({
           onChange={handleInputChange}
           onKeyDown={handleInputKeydown}
           onBlur={handleInputBlur}
-          onContextMenu={(e) => e.stopPropagation()}
+          onContextMenu={stopPropagation}
+          onMouseDown={stopPropagation}
         />
-        <div className="label" onDoubleClick={handleEditLabel}>
+        <div
+          className="label"
+          onDoubleClick={handleEditLabel}
+          onMouseDown={stopPropagation}
+        >
           {currentLabel}
         </div>
         {type === "board" ? (
@@ -234,7 +243,8 @@ export function PageArchNodeComponent({
               <div
                 className="external"
                 onClick={handleExternalClick}
-                onDoubleClick={(e) => e.stopPropagation()}
+                onDoubleClick={stopPropagation}
+                onMouseDown={stopPropagation}
               >
                 <WrappedIcon lib="antd" icon="desktop" />
                 <span className="external-label">{external.label}</span>
@@ -243,7 +253,12 @@ export function PageArchNodeComponent({
           </div>
         )}
       </div>
-      <div className="add-button" role="button" onClick={handleChildAppend}>
+      <div
+        className="add-button"
+        role="button"
+        onClick={handleChildAppend}
+        onMouseDown={stopPropagation}
+      >
         <WrappedIcon lib="fa" icon="plus" />
       </div>
     </>

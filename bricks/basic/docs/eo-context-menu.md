@@ -4,7 +4,7 @@
 
 ### Basic
 
-```yaml preview
+```yaml preview minHeight="200px"
 - brick: button
   properties:
     textContent: Right-click Me

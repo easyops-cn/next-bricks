@@ -273,6 +273,14 @@ children:
         nodePadding: 10
       activeNodeId: <%= CTX.activeNodeId %>
       disableKeyboardAction: <%= CTX.editingLabelNodes.length > 0 %>
+      nodesConnect:
+        arrow: true
+        strokeColor: |-
+          <%
+            DATA.source.type === "board"
+              ? "var(--palette-gray-5)"
+              : "var(--theme-blue-color)"
+          %>
       nodeBricks:
         - useBrick:
             brick: visual-builder.page-arch-node
@@ -394,4 +402,28 @@ children:
         args:
           - <% EVENT.detail.id %>
           - enableEditing
+      nodes.connect:
+        if: |-
+          <%
+            EVENT.detail.target.type !== "board" &&
+            !CTX.edges.some(
+              (edge) =>
+                edge.source === EVENT.detail.source.id &&
+                edge.target === EVENT.detail.target.id
+            )
+          %>
+        action: context.replace
+        args:
+          - edges
+          - |-
+            <%
+              CTX.edges.concat({
+                source: EVENT.detail.source.id,
+                target: EVENT.detail.target.id,
+                type:
+                  EVENT.detail.source.type === "board"
+                    ? "menu"
+                    : "link",
+              })
+            %>
 ```
