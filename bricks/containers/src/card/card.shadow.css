@@ -2,6 +2,12 @@
   --eo-card-border-color: none;
   --eo-card-box-shadow: none;
   --eo-card-header-border-bottom: 1px solid var(--card-border-color-split);
+
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
 }
 
 :host([outline="border"]) {
@@ -31,6 +37,16 @@
   border: var(--eo-card-border-color);
   border-radius: var(--eo-card-border-radius);
   box-shadow: var(--eo-card-box-shadow);
+}
+
+:host([fill-vertical]) .card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+:host([fill-vertical]) .card-body {
+  flex: 1;
 }
 
 .card-head {

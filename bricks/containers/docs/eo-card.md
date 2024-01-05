@@ -9,26 +9,25 @@
 ### Fill Vertical
 
 ```yaml preview
-- brick: div
-  properties:
-    style:
-      width: 100%
-      height: 200px
-      background: "#ddd"
-      padding: 20px
-  slots:
-    "":
-      bricks:
-        - brick: eo-card
-          properties:
-            cardTitle: 卡片标题
-            fillVertical: true
-          slots:
-            "":
-              bricks:
-                - brick: div
-                  properties:
-                    textContent: Content
+brick: div
+properties:
+  style:
+    height: 300px
+children:
+  - brick: eo-card
+    properties:
+      cardTitle: Hello
+      fillVertical: true
+      style:
+        height: 100%
+        display: block
+    children:
+      - brick: div
+        properties:
+          textContent: World
+          style:
+            background: lightgreen
+            height: 100%
 ```
 
 ### Vertical Center
