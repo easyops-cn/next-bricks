@@ -1,9 +1,15 @@
 :host {
+  --local-node-outline-style: solid;
+
   display: block;
 }
 
 :host([hidden]) {
   display: none;
+}
+
+:host([not-synced]) {
+  --local-node-outline-style: dashed;
 }
 
 * {
@@ -72,7 +78,7 @@
 
 .thumbnail-container {
   height: 98px;
-  outline: 1px solid var(--palette-gray-4);
+  outline: 1px var(--local-node-outline-style) var(--palette-gray-4);
   opacity: 1;
   border: 4px solid transparent;
   border-radius: 4px;
@@ -95,12 +101,12 @@
 
 :host([active]) .thumbnail-container,
 :host([active]) .icon-container {
-  outline: 2px solid var(--palette-blue-3);
+  outline: 2px var(--local-node-outline-style) var(--palette-blue-3);
 }
 
 :host(:not([active])) .node:hover .thumbnail-container,
 :host(:not([active])) .node:hover .icon-container {
-  outline: 1px solid var(--palette-blue-3);
+  outline: 1px var(--local-node-outline-style) var(--palette-blue-3);
 }
 
 .add-button {
@@ -115,6 +121,8 @@
   cursor: pointer;
 }
 
+:host([not-synced]) .add-button,
+:host([disable-child-append]) .add-button,
 :host(:not([active])) .add-button {
   display: none;
 }

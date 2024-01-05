@@ -21,6 +21,8 @@ export interface PageArchNodeProps {
   active?: boolean;
   external?: ExternalData;
   autoFocusOnce?: string;
+  notSynced?: boolean;
+  disableChildAppend?: boolean;
 }
 
 export interface ExternalData {
@@ -47,12 +49,17 @@ class PageArchNode extends ReactNextElement implements PageArchNodeProps {
   @property({ attribute: false })
   accessor external: ExternalData | undefined;
 
-  @property({ type: Boolean })
-
   // @property()
   // accessor thumbnail: string | undefined;
+
   @property({ type: Boolean, render: false })
   accessor active: boolean | undefined;
+
+  @property({ type: Boolean, render: false })
+  accessor notSynced: boolean | undefined;
+
+  @property({ type: Boolean, render: false })
+  accessor disableChildAppend: boolean | undefined;
 
   @property()
   accessor autoFocusOnce: string | undefined;
