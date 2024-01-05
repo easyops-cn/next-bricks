@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.4.1...@next-bricks/diagram@0.5.0) (2024-01-05)
+
+
+### Bug Fixes
+
+* ignore mock trackpad pinch event ([8224cd5](https://github.com/easyops-cn/next-bricks/commit/8224cd562820cbae7a8c91f5f449d61b3090afe8))
+* set line cursor ([32f5578](https://github.com/easyops-cn/next-bricks/commit/32f5578255280749ee419499d2bd7227db7faaf3))
+
+
+### Features
+
+* support manually connect line ([8882693](https://github.com/easyops-cn/next-bricks/commit/8882693042bcc13a3e98d6bda5609b9ff5634fa2))
+
+
+
+
+
 ## [0.4.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.4.0...@next-bricks/diagram@0.4.1) (2024-01-05)
 
 **Note:** Version bump only for package @next-bricks/diagram

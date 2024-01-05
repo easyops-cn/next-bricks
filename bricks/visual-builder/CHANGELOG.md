@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.3.1...@next-bricks/visual-builder@1.4.0) (2024-01-05)
+
+
+### Features
+
+* support manually connect line ([8882693](https://github.com/easyops-cn/next-bricks/commit/8882693042bcc13a3e98d6bda5609b9ff5634fa2))
+
+
+
+
+
 ## [1.3.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.3.0...@next-bricks/visual-builder@1.3.1) (2024-01-05)
 
 **Note:** Version bump only for package @next-bricks/visual-builder
