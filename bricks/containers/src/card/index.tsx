@@ -70,15 +70,16 @@ class Card extends ReactNextElement implements CardProps {
   accessor headerIcon: GeneralIconProps | undefined;
 
   /**
-   * 自动撑满父容器
+   * 自动撑满父容器。注意不可以同时使用 `fillVertical` 和 `verticalCenter`
    */
   @property({
     type: Boolean,
+    render: false,
   })
   accessor fillVertical: boolean | undefined;
 
   /**
-   * 垂直居中
+   * 垂直居中。注意不可以同时使用 `fillVertical` 和 `verticalCenter`
    */
   @property({
     type: Boolean,
@@ -135,7 +136,6 @@ class Card extends ReactNextElement implements CardProps {
     return (
       <CardComponent
         cardTitle={this.cardTitle}
-        fillVertical={this.fillVertical}
         verticalCenter={this.verticalCenter}
         hasExtraSlot={this.hasExtraSlot}
         operationButtons={this.operationButtons}
@@ -149,7 +149,6 @@ class Card extends ReactNextElement implements CardProps {
 
 export function CardComponent({
   cardTitle,
-  fillVertical,
   verticalCenter,
   hasExtraSlot,
   operationButtons,
@@ -205,7 +204,6 @@ export function CardComponent({
     <div
       className="card"
       style={{
-        ...(fillVertical ? { height: "100%" } : {}),
         ...(verticalCenter
           ? { display: "grid", gridTemplate: "50px auto/auto" }
           : {}),
@@ -228,9 +226,7 @@ export function CardComponent({
             : {}),
         }}
       >
-        <div>
-          <slot></slot>
-        </div>
+        <slot></slot>
       </div>
     </div>
   );
