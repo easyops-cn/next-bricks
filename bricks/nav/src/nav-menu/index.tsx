@@ -372,23 +372,20 @@ function NavMenuComponent(props: NavMenuProps) {
   );
   const { pathname, search } = location;
 
-  const [selectedKey, setSelectedKey] = useState<string[]>([]);
-
-  const setSelected = async (): Promise<void> => {
+  const selectedKey = useMemo(() => {
     const { selectedKeys } = initMenuItemAndMatchCurrentPathKeys(
       menu?.menuItems ?? [],
       pathname,
       search,
       ""
     );
-    setSelectedKey(selectedKeys);
-  };
+    return selectedKeys;
+  }, [menu?.menuItems, pathname, search]);
 
   useEffect(() => {
     const unListen: UnregisterCallback = history.listen((location) => {
       setLocation(location);
     });
-    setSelected();
     return unListen;
   }, []);
 
