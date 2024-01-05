@@ -20,13 +20,12 @@ children:
       fillVertical: true
       style:
         height: 100%
-        display: block
     children:
       - brick: div
         properties:
           textContent: World
           style:
-            background: lightgreen
+            background: var(--palette-green-2)
             height: 100%
 ```
 
