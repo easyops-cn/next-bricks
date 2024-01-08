@@ -1,0 +1,38 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.directory-container {
+  background-color: var(--color-fill-global-bg-3);
+  padding: 20px 12px 24px 20px;
+
+  .directory-title-container {
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+
+    .directory-title {
+      font-size: 16px;
+      color: var(--text-color-title);
+      line-height: 24px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .directory-search {
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .tree > *:not(:last-child) {
+    margin-bottom: 8px;
+  }
+}

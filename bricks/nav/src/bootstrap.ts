@@ -15,3 +15,6 @@ import "./sidebar/sidebar-menu/index.js";
 import "./sidebar/index.js";
 import "./sidebar-sub-menu/index.js";
 import "./directory/index.js";
+import "./directory-tree/index.js";
+import "./directory-tree/directory-tree-leaf/index.js";
+import "./directory-tree/directory-tree-internal-node/index.js";
