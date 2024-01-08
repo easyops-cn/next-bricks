@@ -81,18 +81,39 @@ describe("handleKeyboard", () => {
     },
   ] as RenderedEdge[];
 
-  test("delete", () => {
+  test("delete node", () => {
     const action = handleKeyboard(
       new KeyboardEvent("keydown", { key: "Backspace" }),
       {
         renderedNodes,
         renderedEdges,
-        activeNodeId: "a",
+        activeTarget: {
+          type: "node",
+          nodeId: "a",
+        },
       }
     );
     expect(action).toEqual({
       action: "delete-node",
       node: { id: "a" },
+    });
+  });
+
+  test("delete edge", () => {
+    const action = handleKeyboard(
+      new KeyboardEvent("keydown", { key: "Backspace" }),
+      {
+        renderedNodes,
+        renderedEdges,
+        activeTarget: {
+          type: "edge",
+          edge: { source: "a", target: "b" },
+        },
+      }
+    );
+    expect(action).toEqual({
+      action: "delete-edge",
+      edge: { source: "a", target: "b" },
     });
   });
 
@@ -111,12 +132,30 @@ describe("handleKeyboard", () => {
     const action = handleKeyboard(new KeyboardEvent("keydown", { key }), {
       renderedNodes,
       renderedEdges,
-      activeNodeId,
+      activeTarget: {
+        type: "node",
+        nodeId: activeNodeId,
+      },
     });
     expect(action).toEqual({
       action: "switch-active-node",
       node: resultNodeId ? { id: resultNodeId } : undefined,
     });
+  });
+
+  test("node actions but with active edge", () => {
+    const action = handleKeyboard(
+      new KeyboardEvent("keydown", { key: "ArrowDown" }),
+      {
+        renderedNodes,
+        renderedEdges,
+        activeTarget: {
+          type: "edge",
+          edge: { source: "a", target: "b" },
+        },
+      }
+    );
+    expect(action).toBe(undefined);
   });
 
   test("no active node", () => {
@@ -125,10 +164,10 @@ describe("handleKeyboard", () => {
       {
         renderedNodes,
         renderedEdges,
-        activeNodeId: undefined,
+        activeTarget: undefined,
       }
     );
-    expect(action).toEqual(undefined);
+    expect(action).toBe(undefined);
   });
 
   test("unknown key", () => {
@@ -137,9 +176,12 @@ describe("handleKeyboard", () => {
       {
         renderedNodes,
         renderedEdges,
-        activeNodeId: "a",
+        activeTarget: {
+          type: "node",
+          nodeId: "a",
+        },
       }
     );
-    expect(action).toEqual(undefined);
+    expect(action).toBe(undefined);
   });
 });

@@ -37,7 +37,46 @@ describe("eo-diagram", () => {
             height="100%"
             width="100%"
           >
-            <defs />
+            <defs>
+              <marker
+                id="diagram-1-active-line-start"
+                markerHeight="8"
+                markerWidth="8"
+                orient="auto"
+                refX="4"
+                refY="4"
+                viewBox="0 0 8 8"
+              >
+                <path
+                  d="M 0.5 0.5 H 7.5 V 7.5 H 0.5 Z"
+                  fill="var(--palette-gray-1)"
+                  stroke="var(--palette-gray-7)"
+                  stroke-width="1"
+                />
+              </marker>
+              <marker
+                id="diagram-1-active-line-end"
+                markerHeight="8"
+                markerWidth="14"
+                orient="auto"
+                refX="3"
+                refY="4"
+                viewBox="0 0 14 8"
+              >
+                <path
+                  d="M 0.5 1.5 L 5.5 4 L 0.5 6.5 z"
+                  fill="var(--palette-blue-3)"
+                  stroke="var(--palette-blue-3)"
+                  stroke-width="1"
+                />
+                <path
+                  d="M 6.5 0.5 H 13.5 V 7.5 H 6.5 Z"
+                  fill="var(--palette-gray-1)"
+                  stroke="var(--palette-gray-7)"
+                  stroke-width="1"
+                />
+              </marker>
+            </defs>
             <g
               transform="translate(0 0) scale(1)"
             />
@@ -103,14 +142,18 @@ describe("eo-diagram", () => {
         text: "<% DATA.edge.description ? {content: DATA.edge.description} : null %>" as any,
       },
     ];
-    element.activeNodeId = "b";
+    element.activeTarget = { type: "node", nodeId: "b" };
     const onNodeDelete = jest.fn();
     element.addEventListener("node.delete", (e) =>
       onNodeDelete((e as CustomEvent).detail)
     );
-    const onActiveNodeChange = jest.fn();
-    element.addEventListener("activeNode.change", (e) =>
-      onActiveNodeChange((e as CustomEvent).detail)
+    const onEdgeDelete = jest.fn();
+    element.addEventListener("edge.delete", (e) =>
+      onEdgeDelete((e as CustomEvent).detail)
+    );
+    const onActiveTargetChange = jest.fn();
+    element.addEventListener("activeTarget.change", (e) =>
+      onActiveTargetChange((e as CustomEvent).detail)
     );
 
     act(() => {
@@ -130,7 +173,46 @@ describe("eo-diagram", () => {
           height="100%"
           width="100%"
         >
-          <defs />
+          <defs>
+            <marker
+              id="diagram-2-active-line-start"
+              markerHeight="8"
+              markerWidth="8"
+              orient="auto"
+              refX="4"
+              refY="4"
+              viewBox="0 0 8 8"
+            >
+              <path
+                d="M 0.5 0.5 H 7.5 V 7.5 H 0.5 Z"
+                fill="var(--palette-gray-1)"
+                stroke="var(--palette-gray-7)"
+                stroke-width="1"
+              />
+            </marker>
+            <marker
+              id="diagram-2-active-line-end"
+              markerHeight="8"
+              markerWidth="14"
+              orient="auto"
+              refX="3"
+              refY="4"
+              viewBox="0 0 14 8"
+            >
+              <path
+                d="M 0.5 1.5 L 5.5 4 L 0.5 6.5 z"
+                fill="var(--palette-blue-3)"
+                stroke="var(--palette-blue-3)"
+                stroke-width="1"
+              />
+              <path
+                d="M 6.5 0.5 H 13.5 V 7.5 H 6.5 Z"
+                fill="var(--palette-gray-1)"
+                stroke="var(--palette-gray-7)"
+                stroke-width="1"
+              />
+            </marker>
+          </defs>
           <g
             transform="translate(0 0) scale(1)"
           />
@@ -220,6 +302,44 @@ describe("eo-diagram", () => {
                 points="-3,3 3,3 3,-3 -3,-3 -3,-980 1310,-980 1310,1420 -990,1420 -990,-980 -3,-980"
               />
             </clippath>
+            <marker
+              id="diagram-2-active-line-start"
+              markerHeight="8"
+              markerWidth="8"
+              orient="auto"
+              refX="4"
+              refY="4"
+              viewBox="0 0 8 8"
+            >
+              <path
+                d="M 0.5 0.5 H 7.5 V 7.5 H 0.5 Z"
+                fill="var(--palette-gray-1)"
+                stroke="var(--palette-gray-7)"
+                stroke-width="1"
+              />
+            </marker>
+            <marker
+              id="diagram-2-active-line-end"
+              markerHeight="8"
+              markerWidth="14"
+              orient="auto"
+              refX="3"
+              refY="4"
+              viewBox="0 0 14 8"
+            >
+              <path
+                d="M 0.5 1.5 L 5.5 4 L 0.5 6.5 z"
+                fill="var(--palette-blue-3)"
+                stroke="var(--palette-blue-3)"
+                stroke-width="1"
+              />
+              <path
+                d="M 6.5 0.5 H 13.5 V 7.5 H 6.5 Z"
+                fill="var(--palette-gray-1)"
+                stroke="var(--palette-gray-7)"
+                stroke-width="1"
+              />
+            </marker>
           </defs>
           <g
             transform="translate(-35 -35) scale(1)"
@@ -233,6 +353,15 @@ describe("eo-diagram", () => {
                 stroke="gray"
                 stroke-width="1"
               />
+              <path
+                class="active-bg"
+                d="M30,10L25.833,14.167C21.667,18.333,13.333,26.667,9.167,35C5,43.333,5,51.667,5,55.833L5,60"
+                fill="none"
+                marker-end="url(#diagram-2-active-line-end)"
+                marker-start="url(#diagram-2-active-line-start)"
+                stroke="var(--palette-blue-3)"
+                stroke-width="1"
+              />
             </g>
             <g
               class="line"
@@ -243,6 +372,16 @@ describe("eo-diagram", () => {
                 fill="none"
                 marker-end="url(#diagram-2-line-arrow-0)"
                 stroke="blue"
+                stroke-width="1"
+              />
+              <path
+                class="active-bg"
+                clip-path="url(#diagram-2-clip-path-line-4)"
+                d="M40,10L44.167,14.167C48.333,18.333,56.667,26.667,60.833,34.167C65,41.667,65,48.333,65,51.667L65,55"
+                fill="none"
+                marker-end="url(#diagram-2-active-line-end)"
+                marker-start="url(#diagram-2-active-line-start)"
+                stroke="var(--palette-blue-3)"
                 stroke-width="1"
               />
             </g>
@@ -310,7 +449,7 @@ describe("eo-diagram", () => {
       key: "Enter",
     });
     expect(onNodeDelete).not.toBeCalled();
-    expect(onActiveNodeChange).not.toBeCalled();
+    expect(onActiveTargetChange).not.toBeCalled();
 
     fireEvent.keyDown(element.shadowRoot!.querySelector(".diagram")!, {
       key: "Backspace",
@@ -321,11 +460,18 @@ describe("eo-diagram", () => {
       key: "ArrowUp",
     });
     await act(() => (global as any).flushPromises());
-    expect(onActiveNodeChange).toBeCalledWith({ id: "a" });
+    expect(onActiveTargetChange).toBeCalledWith({ type: "node", nodeId: "a" });
 
-    element.activeNodeId = undefined;
+    element.activeTarget = { type: "edge", edge: { source: "a", target: "b" } };
     await act(() => (global as any).flushPromises());
-    expect(onActiveNodeChange).toBeCalledWith(null);
+    fireEvent.keyDown(element.shadowRoot!.querySelector(".diagram")!, {
+      key: "Delete",
+    });
+    expect(onEdgeDelete).toBeCalledWith({ source: "a", target: "b" });
+
+    element.activeTarget = null;
+    await act(() => (global as any).flushPromises());
+    expect(onActiveTargetChange).toBeCalledWith(null);
 
     act(() => {
       document.body.removeChild(element);
@@ -358,6 +504,10 @@ describe("eo-diagram", () => {
         },
       },
     ];
+    const onLineClick = jest.fn();
+    element.addEventListener("line.click", (e) =>
+      onLineClick((e as CustomEvent).detail)
+    );
     const onLineDoubleClick = jest.fn();
     element.addEventListener("line.dblclick", (e) =>
       onLineDoubleClick((e as CustomEvent).detail)
@@ -407,6 +557,44 @@ describe("eo-diagram", () => {
                 points="-3,3 3,3 3,-3 -3,-3 -3,-980 1310,-980 1310,1420 -990,1420 -990,-980 -3,-980"
               />
             </clippath>
+            <marker
+              id="diagram-5-active-line-start"
+              markerHeight="8"
+              markerWidth="8"
+              orient="auto"
+              refX="4"
+              refY="4"
+              viewBox="0 0 8 8"
+            >
+              <path
+                d="M 0.5 0.5 H 7.5 V 7.5 H 0.5 Z"
+                fill="var(--palette-gray-1)"
+                stroke="var(--palette-gray-7)"
+                stroke-width="1"
+              />
+            </marker>
+            <marker
+              id="diagram-5-active-line-end"
+              markerHeight="8"
+              markerWidth="14"
+              orient="auto"
+              refX="3"
+              refY="4"
+              viewBox="0 0 14 8"
+            >
+              <path
+                d="M 0.5 1.5 L 5.5 4 L 0.5 6.5 z"
+                fill="var(--palette-blue-3)"
+                stroke="var(--palette-blue-3)"
+                stroke-width="1"
+              />
+              <path
+                d="M 6.5 0.5 H 13.5 V 7.5 H 6.5 Z"
+                fill="var(--palette-gray-1)"
+                stroke="var(--palette-gray-7)"
+                stroke-width="1"
+              />
+            </marker>
           </defs>
           <g
             transform="translate(-35 -35) scale(1)"
@@ -420,10 +608,25 @@ describe("eo-diagram", () => {
                 stroke="gray"
                 stroke-width="1"
               />
+              <path
+                class="active-bg"
+                d="M30,10L25.833,14.167C21.667,18.333,13.333,26.667,9.167,35C5,43.333,5,51.667,5,55.833L5,60"
+                fill="none"
+                marker-end="url(#diagram-5-active-line-end)"
+                marker-start="url(#diagram-5-active-line-start)"
+                stroke="var(--palette-blue-3)"
+                stroke-width="1"
+              />
             </g>
             <g
               class="line interactable"
             >
+              <path
+                d="M40,10L44.167,14.167C48.333,18.333,56.667,26.667,60.833,34.167C65,41.667,65,48.333,65,51.667L65,55"
+                fill="none"
+                stroke="transparent"
+                stroke-width="20"
+              />
               <path
                 clip-path="url(#diagram-5-clip-path-line-7)"
                 d="M40,10L44.167,14.167C48.333,18.333,56.667,26.667,60.833,34.167C65,41.667,65,48.333,65,51.667L65,55"
@@ -433,10 +636,14 @@ describe("eo-diagram", () => {
                 stroke-width="1"
               />
               <path
+                class="active-bg"
+                clip-path="url(#diagram-5-clip-path-line-7)"
                 d="M40,10L44.167,14.167C48.333,18.333,56.667,26.667,60.833,34.167C65,41.667,65,48.333,65,51.667L65,55"
                 fill="none"
-                stroke="transparent"
-                stroke-width="20"
+                marker-end="url(#diagram-5-active-line-end)"
+                marker-start="url(#diagram-5-active-line-start)"
+                stroke="var(--palette-blue-3)"
+                stroke-width="1"
               />
             </g>
           </g>
@@ -496,6 +703,12 @@ describe("eo-diagram", () => {
         </svg>
       </div>
     `);
+
+    fireEvent.click(element.shadowRoot!.querySelector(".line.interactable")!);
+    expect(onLineClick).toBeCalledWith({
+      id: "line-7",
+      edge: expect.objectContaining({ source: "a", target: "c" }),
+    });
 
     fireEvent.dblClick(
       element.shadowRoot!.querySelector(".line.interactable")!

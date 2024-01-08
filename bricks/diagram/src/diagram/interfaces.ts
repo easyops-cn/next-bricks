@@ -171,3 +171,15 @@ export interface ConnectLineState {
   from: PositionTuple;
   options: NodesConnectOptions;
 }
+
+export type ActiveTarget = ActiveTargetOfNode | ActiveTargetOfEdge;
+
+export interface ActiveTargetOfNode {
+  type: "node";
+  nodeId: string;
+}
+
+export interface ActiveTargetOfEdge {
+  type: "edge";
+  edge: DiagramEdge;
+}

@@ -18,7 +18,14 @@ export function ConnectLineComponent({
     <svg
       width="100%"
       height="100%"
-      className={classNames("connect-line", { connecting: !!connectLineState })}
+      className={classNames("connect-line", {
+        connecting:
+          !!connectLineState &&
+          // Do not show when the distance of mouse move is less than 5px
+          (connectLineTo[0] - connectLineState.from[0]) ** 2 +
+            (connectLineTo[1] - connectLineState.from[1]) ** 2 >
+            25,
+      })}
     >
       <defs>
         <MarkerComponent

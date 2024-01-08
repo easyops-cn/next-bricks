@@ -151,10 +151,13 @@ properties:
     top: 0px
     left: 0px
 context:
-  - name: activeNodeId
+  - name: activeTarget
+    value: null
   - name: tempNodeId
   - name: targetNode
   - name: editingLabelNodes
+    value: []
+  - name: editingLabelEdges
     value: []
   - name: nodes
     value:
@@ -266,13 +269,35 @@ children:
                             : edge
                         )
                       %>
+                label.editing.change:
+                  action: context.replace
+                  args:
+                    - editingLabelEdges
+                    - |-
+                      <%
+                        EVENT.detail
+                          ? CTX.editingLabelEdges.concat(
+                              `${DATA.edge.source}-:-${DATA.edge.target}`
+                            )
+                          : CTX.editingLabelEdges.filter(
+                              (id) =>
+                                id !== `${DATA.edge.source}-:-${DATA.edge.target}`
+                            )
+                      %>
+                click:
+                  action: context.replace
+                  args:
+                    - activeTarget
+                    - type: edge
+                      edge: <% DATA.edge %>
         - edgeType: menu
           strokeColor: var(--palette-gray-5)
           arrow: true
+          interactable: true
       layoutOptions:
         nodePadding: 10
-      activeNodeId: <%= CTX.activeNodeId %>
-      disableKeyboardAction: <%= CTX.editingLabelNodes.length > 0 %>
+      activeTarget: <%= CTX.activeTarget %>
+      disableKeyboardAction: <%= CTX.editingLabelNodes.length > 0 || CTX.editingLabelEdges.length > 0 %>
       nodesConnect:
         arrow: true
         strokeColor: |-
@@ -289,13 +314,14 @@ children:
               type: <% DATA.node.type %>
               autoFocusOnce: |
                 <% DATA.node.$temp ? DATA.node.id : undefined %>
-              active: <%= CTX.activeNodeId === DATA.node.id %>
+              active: <%= CTX.activeTarget?.type === "node" && CTX.activeTarget.nodeId === DATA.node.id %>
             events:
               click:
                 action: context.replace
                 args:
-                  - activeNodeId
-                  - <% DATA.node.id %>
+                  - activeTarget
+                  - type: node
+                    nodeId: <% DATA.node.id %>
               label.editing.change:
                 action: context.replace
                 args:
@@ -352,17 +378,30 @@ children:
                       <% CTX.edges.concat({ source: DATA.node.id, target: CTX.tempNodeId, name: "未命名", type: "link", $temp: true }) %>
                 - action: context.replace
                   args:
-                    - activeNodeId
-                    - <% CTX.tempNodeId %>
+                    - activeTarget
+                    - type: node
+                      nodeId: <% CTX.tempNodeId %>
     events:
-      activeNode.change:
+      activeTarget.change:
         - action: context.replace
           # Take reaction only if the active node has been changed
           # Otherwise it may cause infinite loop
-          if: <% CTX.activeNodeId !== EVENT.detail?.id %>
+          if: |
+            <%
+              ((newTarget, previousTarget) =>
+                (newTarget
+                  ? !previousTarget ||
+                    newTarget.type !== previousTarget.type ||
+                    (newTarget.type === "node"
+                      ? newTarget.nodeId !== previousTarget.nodeId
+                      : newTarget.edge.source !== previousTarget.edge.source ||
+                        newTarget.edge.target !== previousTarget.edge.target)
+                : !!previousTarget)
+              )(EVENT.detail, CTX.activeTarget)
+            %>
           args:
-            - activeNodeId
-            - <% EVENT.detail?.id %>
+            - activeTarget
+            - <% EVENT.detail %>
       node.delete:
         - action: context.replace
           args:
@@ -396,6 +435,24 @@ children:
                         target !== CTX.targetNode.id
                     )
                   %>
+      edge.delete:
+        action: context.replace
+        args:
+          - edges
+          - |-
+            <%
+              CTX.edges.filter(
+                ({ source, target }) =>
+                  source !== EVENT.detail.source ||
+                  target !== EVENT.detail.target
+              )
+            %>
+      line.click:
+        action: context.replace
+        args:
+          - activeTarget
+          - type: edge
+            edge: <% EVENT.detail.edge %>
       line.dblclick:
         target: _self
         method: callOnLineLabel
