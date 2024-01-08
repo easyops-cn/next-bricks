@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.5.2...@next-bricks/diagram@0.6.0) (2024-01-08)
+
+
+### Bug Fixes
+
+* do not show connect line when the distance is small ([e60b0bc](https://github.com/easyops-cn/next-bricks/commit/e60b0bc933456e962a7bd976698469ec07dfe3a3))
+
+
+### Features
+
+* select line ([6bcf81f](https://github.com/easyops-cn/next-bricks/commit/6bcf81fb015a184457cfab4f394c0dd9fbf0d19b))
+
+
+
+
+
 ## [0.5.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.5.1...@next-bricks/diagram@0.5.2) (2024-01-05)
 
 
