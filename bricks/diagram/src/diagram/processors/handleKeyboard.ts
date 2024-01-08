@@ -1,9 +1,16 @@
 import { minBy } from "lodash";
-import type { DiagramNode, RenderedEdge, RenderedNode } from "../interfaces";
+import type {
+  ActiveTarget,
+  DiagramEdge,
+  DiagramNode,
+  RenderedEdge,
+  RenderedNode,
+} from "../interfaces";
 
 export type KeyboardAction =
   | KeyboardActionSwitchActiveNode
-  | KeyboardActionDeleteNode;
+  | KeyboardActionDeleteNode
+  | KeyboardActionDeleteEdge;
 
 export interface KeyboardActionSwitchActiveNode {
   action: "switch-active-node";
@@ -15,23 +22,31 @@ export interface KeyboardActionDeleteNode {
   node: DiagramNode;
 }
 
+export interface KeyboardActionDeleteEdge {
+  action: "delete-edge";
+  edge: DiagramEdge;
+}
+
 export function handleKeyboard(
   event: KeyboardEvent,
   {
     renderedNodes,
     renderedEdges,
-    activeNodeId,
+    activeTarget,
   }: {
     renderedNodes: RenderedNode[];
     renderedEdges: RenderedEdge[];
-    activeNodeId: string | undefined;
+    activeTarget: ActiveTarget | null | undefined;
   }
 ): KeyboardAction | undefined {
-  const activeNode = activeNodeId
-    ? renderedNodes.find((node) => node.id === activeNodeId)
-    : undefined;
+  const activeNode =
+    activeTarget?.type === "node"
+      ? renderedNodes.find((node) => node.id === activeTarget.nodeId)
+      : undefined;
+  const activeEdge =
+    activeTarget?.type === "edge" ? activeTarget.edge : undefined;
 
-  if (!activeNode) {
+  if (!activeNode && !activeEdge) {
     return;
   }
 
@@ -41,44 +56,57 @@ export function handleKeyboard(
     /* istanbul ignore next: compatibility */ event.which;
   let action: KeyboardAction["action"] | undefined;
   let node: RenderedNode | undefined;
+  let edge: DiagramEdge | undefined;
+
   switch (key) {
-    case "ArrowLeft":
-    case 37: {
-      node = moveOnX(renderedNodes, activeNode, -1);
-      action = "switch-active-node";
-      break;
-    }
-    case "ArrowUp":
-    case 38: {
-      node = moveOnY(renderedNodes, renderedEdges, activeNode, -1);
-      action = "switch-active-node";
-      break;
-    }
-    case "ArrowRight":
-    case 39: {
-      node = moveOnX(renderedNodes, activeNode, 1);
-      action = "switch-active-node";
-      break;
-    }
-    case "ArrowDown":
-    case 40: {
-      node = moveOnY(renderedNodes, renderedEdges, activeNode, 1);
-      action = "switch-active-node";
-      break;
-    }
     case "Backspace":
     case 8:
     case "Delete":
     case 46: {
-      action = "delete-node";
-      node = activeNode;
+      if (activeNode) {
+        action = "delete-node";
+        node = activeNode;
+      } else {
+        action = "delete-edge";
+        edge = activeEdge;
+      }
       break;
     }
+    default:
+      if (!activeNode) {
+        return;
+      }
+      switch (key) {
+        case "ArrowLeft":
+        case 37: {
+          node = moveOnX(renderedNodes, activeNode, -1);
+          action = "switch-active-node";
+          break;
+        }
+        case "ArrowUp":
+        case 38: {
+          node = moveOnY(renderedNodes, renderedEdges, activeNode, -1);
+          action = "switch-active-node";
+          break;
+        }
+        case "ArrowRight":
+        case 39: {
+          node = moveOnX(renderedNodes, activeNode, 1);
+          action = "switch-active-node";
+          break;
+        }
+        case "ArrowDown":
+        case 40: {
+          node = moveOnY(renderedNodes, renderedEdges, activeNode, 1);
+          action = "switch-active-node";
+          break;
+        }
+      }
   }
   if (action) {
     event.preventDefault();
     event.stopPropagation();
-    return { action, node: node?.data } as KeyboardAction;
+    return { action, node: node?.data, edge } as KeyboardAction;
   }
 }
 

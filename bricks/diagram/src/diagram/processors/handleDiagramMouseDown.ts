@@ -11,6 +11,7 @@ import type {
   NodesConnectOptions,
   PositionTuple,
   RefRepository,
+  ActiveTarget,
 } from "../interfaces";
 
 export function handleDiagramMouseDown(
@@ -21,7 +22,7 @@ export function handleDiagramMouseDown(
     nodesConnect,
     setConnectLineState,
     setConnectLineTo,
-    onSwitchActiveNode,
+    onSwitchActiveTarget,
     onNodesConnect,
   }: {
     nodes: DiagramNode[] | undefined;
@@ -31,7 +32,7 @@ export function handleDiagramMouseDown(
       value: React.SetStateAction<ConnectLineState | null>
     ) => void;
     setConnectLineTo: (value: React.SetStateAction<PositionTuple>) => void;
-    onSwitchActiveNode?(id: string | undefined): void;
+    onSwitchActiveTarget?(target: ActiveTarget | null): void;
     onNodesConnect?(detail: ConnectLineDetail): void;
   }
 ) {
@@ -79,7 +80,7 @@ export function handleDiagramMouseDown(
     },
   });
   setConnectLineTo([event.clientX, event.clientY]);
-  onSwitchActiveNode?.(source.id);
+  onSwitchActiveTarget?.({ type: "node", nodeId: source.id });
   const onMouseMove = (e: MouseEvent) => {
     setConnectLineTo([e.clientX, e.clientY]);
   };

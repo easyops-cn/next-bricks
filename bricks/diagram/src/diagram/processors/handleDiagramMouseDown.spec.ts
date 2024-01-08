@@ -6,12 +6,12 @@ import { handleDiagramMouseDown } from "./handleDiagramMouseDown";
 describe("handleDiagramMouseDown", () => {
   const setConnectLineState = jest.fn();
   const setConnectLineTo = jest.fn();
-  const onSwitchActiveNode = jest.fn();
+  const onSwitchActiveTarget = jest.fn();
   const onNodesConnect = jest.fn();
   const methods = {
     setConnectLineState,
     setConnectLineTo,
-    onSwitchActiveNode,
+    onSwitchActiveTarget,
     onNodesConnect,
   };
 
@@ -64,7 +64,7 @@ describe("handleDiagramMouseDown", () => {
       },
     });
     expect(setConnectLineTo).toBeCalledWith([10, 20]);
-    expect(onSwitchActiveNode).toBeCalledWith("b");
+    expect(onSwitchActiveTarget).toBeCalledWith({ type: "node", nodeId: "b" });
 
     fireEvent.mouseMove(document, { clientX: 300, clientY: 400 });
     expect(setConnectLineTo).toBeCalledWith([300, 400]);

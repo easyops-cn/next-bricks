@@ -33,6 +33,7 @@ import type {
   ConnectLineDetail,
   NodesConnectOptions,
   ConnectLineState,
+  ActiveTarget,
 } from "./interfaces";
 import { NodeComponentGroup } from "./NodeComponent";
 import { handleKeyboard } from "./processors/handleKeyboard";
@@ -60,9 +61,7 @@ export interface EoDiagramProps {
   lines?: LineConf[];
   layoutOptions?: LayoutOptionsDagre;
   nodesConnect?: NodesConnectOptions;
-  // activeType?: "node" | "edge";
-  activeNodeId?: string;
-  // activeEdge?: DiagramEdge;
+  activeTarget?: ActiveTarget | null;
   disableKeyboardAction?: boolean;
 }
 
@@ -105,14 +104,8 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
   @property({ attribute: false })
   accessor layoutOptions: LayoutOptionsDagre | undefined;
 
-  // @property({ type: String })
-  // accessor activeType: "node" | "edge" | undefined;
-
-  @property({ type: String })
-  accessor activeNodeId: string | undefined;
-
-  // @property({ attribute: false })
-  // accessor activeEdge: DiagramEdge | undefined;
+  @property({ attribute: false })
+  accessor activeTarget: ActiveTarget | null | undefined;
 
   @property({ type: Boolean })
   accessor disableKeyboardAction: boolean | undefined;
@@ -120,12 +113,11 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
   @property({ attribute: false })
   accessor nodesConnect: NodesConnectOptions | undefined;
 
-  @event({ type: "activeNode.change" })
-  accessor #activeNodeChangeEvent!: EventEmitter<DiagramNode | undefined>;
+  @event({ type: "activeTarget.change" })
+  accessor #activeTargetChangeEvent!: EventEmitter<ActiveTarget | null>;
 
-  #handleActiveNodeChange = (node: DiagramNode | undefined) => {
-    // this.activeNodeId = node?.id;
-    this.#activeNodeChangeEvent.emit(node);
+  #handleActiveTargetChange = (target: ActiveTarget | null) => {
+    this.#activeTargetChangeEvent.emit(target);
   };
 
   @event({ type: "node.delete" })
@@ -133,6 +125,20 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
 
   #handleNodeDelete = (node: DiagramNode) => {
     this.#nodeDelete.emit(node);
+  };
+
+  @event({ type: "edge.delete" })
+  accessor #edgeDelete!: EventEmitter<DiagramEdge>;
+
+  #handleEdgeDelete = (edge: DiagramEdge) => {
+    this.#edgeDelete.emit(edge);
+  };
+
+  @event({ type: "line.click" })
+  accessor #lineClick!: EventEmitter<LineTarget>;
+
+  #handleLineClick = (line: LineTarget) => {
+    this.#lineClick.emit(line);
   };
 
   @event({ type: "line.dblclick" })
@@ -149,8 +155,8 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
     this.#nodesConnect.emit(detail);
   };
 
-  #handleSwitchActiveNode = (id: string | undefined) => {
-    this.activeNodeId = id;
+  #handleSwitchActiveTarget = (target: ActiveTarget | null) => {
+    this.activeTarget = target;
   };
 
   #diagramRef = createRef<DiagramRef>();
@@ -171,13 +177,13 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
         lines={this.lines}
         layoutOptions={this.layoutOptions}
         nodesConnect={this.nodesConnect}
-        // activeType={this.activeType}
-        activeNodeId={this.activeNodeId}
-        // activeEdge={this.activeEdge}
+        activeTarget={this.activeTarget}
         disableKeyboardAction={this.disableKeyboardAction}
-        onActiveNodeChange={this.#handleActiveNodeChange}
-        onSwitchActiveNode={this.#handleSwitchActiveNode}
+        onActiveTargetChange={this.#handleActiveTargetChange}
+        onSwitchActiveTarget={this.#handleSwitchActiveTarget}
         onNodeDelete={this.#handleNodeDelete}
+        onEdgeDelete={this.#handleEdgeDelete}
+        onLineClick={this.#handleLineClick}
         onLineDoubleClick={this.#handleLineDoubleClick}
         onNodesConnect={this.#handleNodesConnect}
       />
@@ -186,9 +192,11 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
 }
 
 export interface EoDiagramComponentProps extends EoDiagramProps {
-  onActiveNodeChange?(node: DiagramNode | undefined): void;
-  onSwitchActiveNode?(id: string | undefined): void;
+  onActiveTargetChange?(target: ActiveTarget | null): void;
+  onSwitchActiveTarget?(target: ActiveTarget | null): void;
   onNodeDelete?(node: DiagramNode): void;
+  onEdgeDelete?(edge: DiagramEdge): void;
+  onLineClick?(line: LineTarget): void;
   onLineDoubleClick?(line: LineTarget): void;
   onNodesConnect?(detail: ConnectLineDetail): void;
 }
@@ -202,13 +210,13 @@ export function LegacyEoDiagramComponent(
     lines,
     layoutOptions,
     nodesConnect,
-    // activeType,
-    activeNodeId,
-    // activeEdge,
+    activeTarget,
     disableKeyboardAction,
-    onActiveNodeChange,
-    onSwitchActiveNode,
+    onActiveTargetChange,
+    onSwitchActiveTarget,
     onNodeDelete,
+    onEdgeDelete,
+    onLineClick,
     onLineDoubleClick,
     onNodesConnect,
   }: EoDiagramComponentProps,
@@ -267,7 +275,7 @@ export function LegacyEoDiagramComponent(
         nodesConnect,
         setConnectLineState,
         setConnectLineTo,
-        onSwitchActiveNode,
+        onSwitchActiveTarget,
         onNodesConnect,
       });
     },
@@ -276,7 +284,7 @@ export function LegacyEoDiagramComponent(
       nodesConnect,
       nodesRefRepository,
       onNodesConnect,
-      onSwitchActiveNode,
+      onSwitchActiveTarget,
     ]
   );
 
@@ -300,17 +308,14 @@ export function LegacyEoDiagramComponent(
     [fixedOptions]
   );
 
-  const activeNodeChangeInitialized = useRef(false);
+  const activeTargetChangeInitialized = useRef(false);
   useEffect(() => {
-    if (!activeNodeChangeInitialized.current) {
-      activeNodeChangeInitialized.current = true;
+    if (!activeTargetChangeInitialized.current) {
+      activeTargetChangeInitialized.current = true;
       return;
     }
-    const nextActiveNode = activeNodeId
-      ? nodes?.find((node) => node.id === activeNodeId)
-      : undefined;
-    onActiveNodeChange?.(nextActiveNode);
-  }, [nodes, activeNodeId, onActiveNodeChange]);
+    onActiveTargetChange?.(activeTarget ?? null);
+  }, [nodes, activeTarget, onActiveTargetChange]);
 
   useEffect(() => {
     setGraph((previousGraph) =>
@@ -344,13 +349,15 @@ export function LegacyEoDiagramComponent(
       const action = handleKeyboard(event, {
         renderedNodes,
         renderedEdges,
-        activeNodeId,
+        activeTarget,
       });
 
       if (action?.action === "delete-node") {
         onNodeDelete?.(action.node);
+      } else if (action?.action === "delete-edge") {
+        onEdgeDelete?.(action.edge);
       } else if (action?.action === "switch-active-node" && action.node) {
-        onSwitchActiveNode?.(action.node.id);
+        onSwitchActiveTarget?.({ type: "node", nodeId: action.node.id });
       }
     };
     root.addEventListener("keydown", onKeydown);
@@ -358,12 +365,13 @@ export function LegacyEoDiagramComponent(
       root.removeEventListener("keydown", onKeydown);
     };
   }, [
-    activeNodeId,
+    activeTarget,
     renderedNodes,
     renderedEdges,
     disableKeyboardAction,
-    onSwitchActiveNode,
+    onSwitchActiveTarget,
     onNodeDelete,
+    onEdgeDelete,
   ]);
 
   const handleNodesRendered = useCallback(
@@ -408,7 +416,7 @@ export function LegacyEoDiagramComponent(
       .on("end", () => {
         setGrabbing(false);
         if (!moved) {
-          onSwitchActiveNode?.(undefined);
+          onSwitchActiveTarget?.(null);
         }
       });
     select(dragger).call(zoomer);
@@ -425,7 +433,7 @@ export function LegacyEoDiagramComponent(
         );
       }
     });
-  }, [onSwitchActiveNode]);
+  }, [onSwitchActiveTarget]);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -441,6 +449,7 @@ export function LegacyEoDiagramComponent(
   const defPrefix = useMemo(() => `${uniqueId("diagram-")}-`, []);
   const markerPrefix = `${defPrefix}line-arrow-`;
   const clipPathPrefix = `${defPrefix}clip-path-`;
+  const activeLineMarkerPrefix = `${defPrefix}active-line-`;
 
   useEffect(() => {
     setRenderedLineLabels((previous) =>
@@ -492,6 +501,44 @@ export function LegacyEoDiagramComponent(
               renderedLineLabels={renderedLineLabels}
             />
           ))}
+          <marker
+            id={`${activeLineMarkerPrefix}start`}
+            viewBox="0 0 8 8"
+            refX={4}
+            refY={4}
+            markerWidth={8}
+            markerHeight={8}
+            orient="auto"
+          >
+            <path
+              d="M 0.5 0.5 H 7.5 V 7.5 H 0.5 Z"
+              stroke="var(--palette-gray-7)"
+              strokeWidth={1}
+              fill="var(--palette-gray-1)"
+            />
+          </marker>
+          <marker
+            id={`${activeLineMarkerPrefix}end`}
+            viewBox="0 0 14 8"
+            refX={3}
+            refY={4}
+            markerWidth={14}
+            markerHeight={8}
+            orient="auto"
+          >
+            <path
+              d="M 0.5 1.5 L 5.5 4 L 0.5 6.5 z"
+              stroke="var(--palette-blue-3)"
+              strokeWidth={1}
+              fill="var(--palette-blue-3)"
+            />
+            <path
+              d="M 6.5 0.5 H 13.5 V 7.5 H 6.5 Z"
+              stroke="var(--palette-gray-7)"
+              strokeWidth={1}
+              fill="var(--palette-gray-1)"
+            />
+          </marker>
         </defs>
         <g
           transform={`translate(${rootOffsets[0]} ${rootOffsets[1]}) scale(${transform.k})`}
@@ -504,6 +551,11 @@ export function LegacyEoDiagramComponent(
               clipPathList={clipPathList}
               markerPrefix={markerPrefix}
               clipPathPrefix={clipPathPrefix}
+              activeLineMarkerPrefix={activeLineMarkerPrefix}
+              activeEdge={
+                activeTarget?.type === "edge" ? activeTarget.edge : null
+              }
+              onLineClick={onLineClick}
               onLineDoubleClick={onLineDoubleClick}
             />
           ))}
