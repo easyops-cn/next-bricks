@@ -47,23 +47,17 @@ class EoDirectoryTreeInternalNode extends ReactNextElement {
 
   /**
    * 展开事件
-   * @detail 当前展开状态
+   * @detail 展开状态
    */
   @event({ type: "expand" })
   accessor #expandEvent!: EventEmitter<boolean>;
-  #handleExpand = (expanded: boolean) => {
-    this.#expandEvent.emit(expanded);
-  };
-
-  toggleExpanded = () => {
-    this.expanded = !this.expanded;
-    return !!this.expanded;
+  #handleExpand = () => {
+    this.#expandEvent.emit(!this.expanded);
   };
 
   render() {
     return (
       <EoDirectoryTreeInternalNodeComponent
-        element={this}
         depth={this.depth}
         expanded={this.expanded}
         onExpand={this.#handleExpand}
@@ -74,21 +68,20 @@ class EoDirectoryTreeInternalNode extends ReactNextElement {
 
 export interface EoDirectoryTreeInternalNodeComponentProps
   extends EoDirectoryTreeInternalNodeProps {
-  element: EoDirectoryTreeInternalNode;
-  onExpand: (expanded: boolean) => void;
+  onExpand: () => void;
 }
 
 export function EoDirectoryTreeInternalNodeComponent(
   props: EoDirectoryTreeInternalNodeComponentProps
 ) {
-  const { element, depth, onExpand } = props;
+  const { depth, onExpand } = props;
 
   const expandableContentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const expandableContent = expandableContentRef.current;
     const handleExpand = () => {
-      onExpand(element.toggleExpanded());
+      onExpand();
     };
 
     expandableContent?.addEventListener("click", handleExpand);
@@ -96,7 +89,7 @@ export function EoDirectoryTreeInternalNodeComponent(
     return () => {
       expandableContent?.removeEventListener("click", handleExpand);
     };
-  }, [element, onExpand]);
+  }, [onExpand]);
 
   return (
     <>

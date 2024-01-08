@@ -46,7 +46,6 @@ class EoDirectoryTreeLeaf extends ReactNextElement {
 
   /**
    * 选择事件
-   * @detail
    */
   @event({ type: "select" })
   accessor #selectEvent!: EventEmitter<void>;

@@ -41,7 +41,6 @@ describe("eo-directory-tree-internal-node", () => {
         detail: true,
       })
     );
-    expect(element.expanded).toBe(true);
 
     act(() => {
       document.body.removeChild(element);

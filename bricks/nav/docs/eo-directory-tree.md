@@ -16,6 +16,7 @@ events:
       args:
         - <% EVENT.detail %>
 properties:
+  id: directory-tree
   style:
     width: 400px
   directoryTitle: 目录名称标题
@@ -55,27 +56,25 @@ properties:
 children:
   - slot: toolbar
     brick: eo-mini-actions
+    events:
+      expand.all:
+        - target: "#directory-tree"
+          method: expandAll
+      collapse.all:
+        - target: "#directory-tree"
+          method: collapseAll
     properties:
       actions:
         - icon:
             lib: antd
+            icon: down
             theme: outlined
-            icon: star
           isDropdown: false
-          event: collect
+          event: expand.all
         - icon:
             lib: antd
-            icon: copy
+            icon: up
             theme: outlined
-          text: 复制链接
-          isDropdown: true
-          event: copy
-        - icon:
-            lib: antd
-            icon: download
-            theme: outlined
-          text: 下载
-          isDropdown: true
-          disabled: true
-          event: download
+          isDropdown: false
+          event: collapse.all
 ```
