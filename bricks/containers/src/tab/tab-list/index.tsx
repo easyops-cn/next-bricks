@@ -10,6 +10,7 @@ import type {
 } from "../tab-group/index.js";
 import type { TabItem, TabItemProps } from "../tab-item/index.js";
 import { TabType } from "../../interface.js";
+import styleText from "./tab-list.shadow.css";
 
 const { defineElement, property, event } = createDecorators();
 
@@ -48,6 +49,7 @@ export interface TabListEventsMapping {
  */
 @defineElement("eo-tab-list", {
   alias: ["containers.tab-list"],
+  styleTexts: [styleText],
 })
 class TabList extends ReactNextElement {
   /**
@@ -139,17 +141,18 @@ function TabListElement({
       outline={outline}
       onTabSelect={(e) => onTabSelect?.(e.detail)}
     >
-      {tabs.map((tab) => (
-        <WrappedTabItem
-          type={type}
-          slot="nav"
-          key={tab.panel}
-          active={activePanel === tab.panel}
-          {...tab}
-        >
-          {tab.text}
-        </WrappedTabItem>
-      ))}
+      <div className="tabs-wrapper" slot="nav">
+        {tabs.map((tab) => (
+          <WrappedTabItem
+            type={type}
+            key={tab.panel}
+            active={activePanel === tab.panel}
+            {...tab}
+          >
+            {tab.text}
+          </WrappedTabItem>
+        ))}
+      </div>
       <slot name="extra" slot="extra" />
       {tabs?.map((tab) => (
         <slot key={tab.panel} name={tab.panel} slot={tab.panel} />

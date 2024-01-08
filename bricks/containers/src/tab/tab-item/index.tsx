@@ -44,7 +44,7 @@ class TabItem extends ReactNextElement {
    * @default "default"
    */
   @property()
-  accessor type: TabType;
+  accessor type: TabType = "default";
 
   /**
    * @default
@@ -141,18 +141,26 @@ function TabItemElement({
       hidden={hidden}
       aria-selected={active}
       onClick={handleTabSelect}
+      part="tab-item"
       style={
         {
-          "--tab-item-default-color":
-            panelColor ?? "var(--antd-tabs-title-color)",
-          "--tab-item-active-color":
-            panelColor ?? "var(--antd-tabs-title-selected-color)",
+          "--tab-item-default-color": panelColor ?? "var(--color-normal-text)",
+          "--tab-item-active-color": panelColor ?? "var(--color-brand)",
         } as React.CSSProperties
       }
     >
       {icon && <WrappedIcon className="tab-item-icon" {...icon} />}
       <slot />
-      {badgeConf && <WrappedBadge {...badgeConf} className="tab-item-badge" />}
+      {badgeConf && (
+        <WrappedBadge
+          {...{
+            color: "var(--color-fill-bg-base-1)",
+            fontColor: "var(--color-normal-text)",
+            ...badgeConf,
+          }}
+          className="tab-item-badge"
+        />
+      )}
     </div>
   );
 }
