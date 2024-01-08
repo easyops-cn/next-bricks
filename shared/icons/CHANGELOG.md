@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.1.2...@next-shared/icons@0.2.0) (2024-01-08)
+
+
+### Features
+
+* agent管理菜单调整 ([9738eb8](https://github.com/easyops-cn/next-bricks/commit/9738eb8440c5dc1b793fd810a4c44fba44440550))
+
+
+
+
+
 ## [0.1.2](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.1.1...@next-shared/icons@0.1.2) (2023-12-27)
 
 **Note:** Version bump only for package @next-shared/icons
