@@ -18,6 +18,7 @@ export interface BadgeProps {
   offset?: [number, number];
   showZero?: boolean;
   color?: string;
+  fontColor?: string;
   icon?: GeneralIconProps;
 }
 const { defineElement, property } = createDecorators();
@@ -42,10 +43,16 @@ class EoCounterBadge extends ReactNextElement {
   accessor icon: GeneralIconProps | undefined;
 
   /**
-   * 徽标的颜色。
+   * 徽标的背景颜色。
    */
   @property()
   accessor color: string | undefined;
+
+  /**
+   * 微标的字体颜色
+   */
+  @property()
+  accessor fontColor: string | undefined;
 
   /**
    * 展示的数字，大于 overflowCount 时显示为 ${overflowCount}+，为 0 时隐藏
@@ -97,6 +104,7 @@ class EoCounterBadge extends ReactNextElement {
         overflowCount={this.overflowCount}
         offset={this.offset}
         color={this.color}
+        fontColor={this.fontColor}
         icon={this.icon}
       />
     );
@@ -107,6 +115,7 @@ export function EoCounterBadgeComponent(props: BadgeProps) {
   const {
     overflowCount = 99,
     color = "var(--theme-red-color)",
+    fontColor = "#ffffff",
     count = 0,
     showZero,
     dot,
@@ -153,6 +162,7 @@ export function EoCounterBadgeComponent(props: BadgeProps) {
           className={classnames("countContent", { badgeDot: dot })}
           style={{
             background: color,
+            color: fontColor,
             marginTop: offset[1],
             right: -offset[0],
           }}

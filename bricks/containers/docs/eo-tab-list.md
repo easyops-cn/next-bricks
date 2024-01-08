@@ -15,10 +15,6 @@
         panel: Create
       - text: Edit
         panel: Edit
-        icon:
-          lib: "antd"
-          icon: "edit"
-          theme: "filled"
       - text: "Delete"
         panel: "Delete"
       - text: "Query"
@@ -52,61 +48,218 @@
             textContent: Panel Setting
 ```
 
-### Panel Type
+### Type & Disabled
 
 ```yaml preview
-- brick: eo-tab-list
+- brick: eo-flex-layout
   properties:
-    type: panel
-    tabs:
-      - text: Tab 1
-        panel: tab-1
-      - text: Tab 2
-        panel: tab-2
-        icon:
-          lib: "antd"
-          icon: "edit"
-          theme: "filled"
-  slots:
-    tab-1:
-      bricks:
+    gap: 10px
+    flexDirection: column
+  children:
+    - brick: style
+      properties:
+        textContent: |
+          .title {
+            font-size: 16px;
+            color: var(--normal-color-text);
+          }
+    - brick: div
+      properties:
+        textContent: "Default Type"
+        className: title
+    - brick: eo-tab-list
+      properties:
+        tabs:
+          - text: Tab 1
+            panel: tab-1
+          - text: Tab 2
+            panel: tab-2
+          - text: Tab 3
+            panel: tab-3
+            disabled: true
+      children:
         - brick: div
+          slot: tab-1
           properties:
             textContent: Tab 1 Content
-    tab-2:
-      bricks:
         - brick: div
+          slot: tab-2
           properties:
-            textContent: Tab 2
+            textContent: Tab 2 Content
+        - brick: div
+          slot: tab-3
+          properties:
+            textContent: Tab 3 Content
+    - brick: div
+      properties:
+        textContent: "Panel Type"
+        className: title
+    - brick: eo-tab-list
+      properties:
+        type: panel
+        tabs:
+          - text: Tab 1
+            panel: tab-1
+          - text: Tab 2
+            panel: tab-2
+          - text: Tab 3
+            panel: tab-3
+            disabled: true
+      children:
+        - brick: div
+          slot: tab-1
+          properties:
+            textContent: Tab 1 Content
+        - brick: div
+          slot: tab-2
+          properties:
+            textContent: Tab 2 Content
+        - brick: div
+          slot: tab-3
+          properties:
+            textContent: Tab 3 Content
+    - brick: div
+      properties:
+        textContent: "Capsule Type"
+        className: title
+    - brick: eo-tab-list
+      properties:
+        type: capsule
+        tabs:
+          - text: Tab 1
+            panel: tab-1
+          - text: Tab 2
+            panel: tab-2
+          - text: Tab 3
+            panel: tab-3
+            disabled: true
+      children:
+        - brick: div
+          slot: tab-1
+          properties:
+            textContent: Tab 1 Content
+        - brick: div
+          slot: tab-2
+          properties:
+            textContent: Tab 2 Content
+        - brick: div
+          slot: tab-3
+          properties:
+            textContent: Tab 3 Content
+    - brick: div
+      properties:
+        textContent: "Text Type"
+        className: title
+    - brick: eo-tab-list
+      properties:
+        type: text
+        tabs:
+          - text: Tab 1
+            panel: tab-1
+          - text: Tab 2
+            panel: tab-2
+          - text: Tab 3
+            panel: tab-3
+            disabled: true
+      children:
+        - brick: div
+          slot: tab-1
+          properties:
+            textContent: Tab 1 Content
+        - brick: div
+          slot: tab-2
+          properties:
+            textContent: Tab 2 Content
+        - brick: div
+          slot: tab-3
+          properties:
+            textContent: Tab 3 Content
 ```
 
 ### With Badge
 
 ```yaml preview
-- brick: eo-tab-list
+- brick: eo-flex-layout
   properties:
-    tabs:
-      - text: Tab 1
-        panel: tab-1
-        badgeConf:
-          count: 100
-      - text: Tab 2
-        panel: tab-2
-        icon:
-          lib: "antd"
-          icon: "edit"
-          theme: "filled"
-  slots:
-    tab-1:
-      bricks:
+    gap: 10px
+    flexDirection: column
+  children:
+    - brick: style
+      properties:
+        textContent: |
+          .title {
+            font-size: 16px;
+            color: var(--normal-color-text);
+          }
+    - brick: div
+      properties:
+        textContent: "Default Badge"
+        className: title
+    - brick: eo-tab-list
+      properties:
+        tabs:
+          - text: Tab 1
+            panel: tab-1
+            badgeConf:
+              count: 1
+          - text: Tab 2
+            panel: tab-2
+            badgeConf:
+              count: 10
+          - text: Tab 3
+            panel: tab-3
+            badgeConf:
+              count: 100
+      children:
         - brick: div
+          slot: tab-1
           properties:
             textContent: Tab 1 Content
-    tab-2:
-      bricks:
         - brick: div
+          slot: tab-2
           properties:
-            textContent: Tab 2
+            textContent: Tab 2 Content
+        - brick: div
+          slot: tab-3
+          properties:
+            textContent: Tab 3 Content
+    - brick: div
+      properties:
+        textContent: "Custom Badge"
+        className: title
+    - brick: eo-tab-list
+      properties:
+        type: panel
+        tabs:
+          - text: Tab 1
+            panel: tab-1
+            badgeConf:
+              count: 1
+              color: var(--palette-yellow-4)
+              fontColor: var(--normal-text-color)
+          - text: Tab 2
+            panel: tab-2
+            badgeConf:
+              count: 20
+              color: var(--palette-red-4)
+              fontColor: "#fff"
+          - text: Tab 3
+            panel: tab-3
+            badgeConf:
+              count: 100
+      children:
+        - brick: div
+          slot: tab-1
+          properties:
+            textContent: Tab 1 Content
+        - brick: div
+          slot: tab-2
+          properties:
+            textContent: Tab 2 Content
+        - brick: div
+          slot: tab-3
+          properties:
+            textContent: Tab 3 Content
 ```
 
 ### ActivePanel & Extra
@@ -118,19 +271,28 @@
     tabs:
       - text: Create
         panel: Create
+        icon:
+          lib: antd
+          icon: file
       - text: Edit
         panel: Edit
         icon:
           lib: "antd"
           icon: "edit"
-          theme: "filled"
       - text: "Delete"
         panel: "Delete"
+        icon:
+          lib: "antd"
+          icon: "delete"
         disabled: true
       - text: "Query"
         panel: "Query"
         hidden: true
-      - Setting
+      - text: "Setting"
+        panel: "Setting"
+        icon:
+          lib: "antd"
+          icon: "setting"
   slots:
     Create:
       bricks:
@@ -159,7 +321,7 @@
             textContent: Panel Setting
     extra:
       bricks:
-        - brick: basic.general-button
+        - brick: eo-button
           properties:
             textContent: Extra Button
 ```

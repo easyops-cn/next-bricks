@@ -18,6 +18,6 @@ export type Placement = "left" | "right" | "top" | "bottom";
 
 /* ============== Tab Type Start ============== */
 
-export type TabType = "default" | "panel";
+export type TabType = "default" | "panel" | "capsule" | "text";
 
 /* ============== Tab Type Start ============== */
