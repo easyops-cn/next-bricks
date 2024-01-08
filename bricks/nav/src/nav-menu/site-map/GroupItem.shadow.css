@@ -19,7 +19,7 @@
     }
   }
   .item-link::part(link) {
-    padding: 8px 12px;
+    padding: 8px 12px 8px 24px;
     display: flex;
     gap: 4px;
     color: var(--color-header-text);
@@ -30,7 +30,7 @@
   }
 
   .title {
-    padding: 8px 16px;
+    padding: 8px 16px 8px 24px;
     font-size: 16px;
     font-weight: 500;
     position: relative;
@@ -40,7 +40,7 @@
       width: 6px;
       height: 6px;
       top: 17px;
-      left: 1px;
+      left: 9px;
       transform: rotate(45deg);
       background: var(--color-secondary-text);
     }

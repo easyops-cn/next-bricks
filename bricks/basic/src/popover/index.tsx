@@ -372,6 +372,7 @@ function PopoverComponent(props: PopoverComponentProps) {
       ref={popoverRef}
       {...omit(props, ["active", "curElement", "onVisibleChange"])}
       shift
+      flip
       shiftPadding={24}
       distance={distance}
     >
