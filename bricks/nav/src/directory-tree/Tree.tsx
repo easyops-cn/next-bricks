@@ -54,7 +54,7 @@ function TreeLeaf(props: TreeLeafProps) {
         onSelect({ keys, node: nodeData });
       }}
     >
-      <span>{data.title}</span>
+      <span title={data.title}>{data.title}</span>
       {suffixBrick?.useBrick && (
         <div slot="suffix">
           <ReactUseMultipleBricks
@@ -93,7 +93,9 @@ function TreeInternalNode(props: TreeInternalNodeProps) {
         onExpand({ keys, node: nodeData });
       }}
     >
-      <span slot="label">{data.title}</span>
+      <span slot="label" title={data.title}>
+        {data.title}
+      </span>
       {suffixBrick?.useBrick && (
         <div slot="suffix">
           <ReactUseMultipleBricks

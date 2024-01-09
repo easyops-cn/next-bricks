@@ -82,7 +82,9 @@ describe("eo-directory-tree", () => {
   <eo-directory-tree-leaf
     depth="0"
   >
-    <span>
+    <span
+      title="第一层级 - 0"
+    >
       第一层级 - 0
     </span>
   </eo-directory-tree-leaf>
@@ -91,13 +93,16 @@ describe("eo-directory-tree", () => {
   >
     <span
       slot="label"
+      title="第一层级 - 1"
     >
       第一层级 - 1
     </span>
     <eo-directory-tree-leaf
       depth="1"
     >
-      <span>
+      <span
+        title="第二层级 - 0"
+      >
         第二层级 - 0
       </span>
     </eo-directory-tree-leaf>
@@ -106,27 +111,34 @@ describe("eo-directory-tree", () => {
     >
       <span
         slot="label"
+        title="第二层级 - 1"
       >
         第二层级 - 1
       </span>
       <eo-directory-tree-leaf
         depth="2"
       >
-        <span>
+        <span
+          title="第三层级 - 0"
+        >
           第三层级 - 0
         </span>
       </eo-directory-tree-leaf>
       <eo-directory-tree-leaf
         depth="2"
       >
-        <span>
+        <span
+          title="第三层级 - 1"
+        >
           第三层级 - 1
         </span>
       </eo-directory-tree-leaf>
       <eo-directory-tree-leaf
         depth="2"
       >
-        <span>
+        <span
+          title="第三层级 - 2"
+        >
           第三层级 - 2
         </span>
       </eo-directory-tree-leaf>
@@ -134,7 +146,9 @@ describe("eo-directory-tree", () => {
     <eo-directory-tree-leaf
       depth="1"
     >
-      <span>
+      <span
+        title="第二层级 - 3"
+      >
         第二层级 - 3
       </span>
     </eo-directory-tree-leaf>
@@ -142,21 +156,27 @@ describe("eo-directory-tree", () => {
   <eo-directory-tree-leaf
     depth="0"
   >
-    <span>
+    <span
+      title="第一层级 - 2"
+    >
       第一层级 - 2
     </span>
   </eo-directory-tree-leaf>
   <eo-directory-tree-leaf
     depth="0"
   >
-    <span>
+    <span
+      title="第一层级 - 3"
+    >
       第一层级 - 3
     </span>
   </eo-directory-tree-leaf>
   <eo-directory-tree-leaf
     depth="0"
   >
-    <span>
+    <span
+      title="第一层级 - 4"
+    >
       第一层级 - 4
     </span>
   </eo-directory-tree-leaf>
@@ -211,13 +231,16 @@ describe("eo-directory-tree", () => {
   >
     <span
       slot="label"
+      title="第一层级 - 1"
     >
       第一层级 - 1
     </span>
     <eo-directory-tree-leaf
       depth="1"
     >
-      <span>
+      <span
+        title="第二层级 - 0"
+      >
         第二层级 - 0
       </span>
     </eo-directory-tree-leaf>
@@ -226,27 +249,34 @@ describe("eo-directory-tree", () => {
     >
       <span
         slot="label"
+        title="第二层级 - 1"
       >
         第二层级 - 1
       </span>
       <eo-directory-tree-leaf
         depth="2"
       >
-        <span>
+        <span
+          title="第三层级 - 0"
+        >
           第三层级 - 0
         </span>
       </eo-directory-tree-leaf>
       <eo-directory-tree-leaf
         depth="2"
       >
-        <span>
+        <span
+          title="第三层级 - 1"
+        >
           第三层级 - 1
         </span>
       </eo-directory-tree-leaf>
       <eo-directory-tree-leaf
         depth="2"
       >
-        <span>
+        <span
+          title="第三层级 - 2"
+        >
           第三层级 - 2
         </span>
       </eo-directory-tree-leaf>
@@ -254,7 +284,9 @@ describe("eo-directory-tree", () => {
     <eo-directory-tree-leaf
       depth="1"
     >
-      <span>
+      <span
+        title="第二层级 - 3"
+      >
         第二层级 - 3
       </span>
     </eo-directory-tree-leaf>
