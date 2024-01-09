@@ -10,7 +10,11 @@ import {
   SearchEventsMap,
 } from "@next-bricks/form/search";
 import { Tree } from "./Tree";
-import { getAllExpandableKeys, searchTree } from "./utils";
+import {
+  getAllExpandableKeys,
+  getExpandableKeysAccordingToSelectedKeys,
+  searchTree,
+} from "./utils";
 import { DirectoryTreeContext } from "./DirectoryTreeContext";
 import { UseBrickConf } from "@next-core/types";
 
@@ -135,6 +139,17 @@ class EoDirectoryTree extends ReactNextElement {
   }
 
   /**
+   * 根据选择项展开
+   */
+  @method()
+  expandAccordingToSelectedKeys() {
+    this.expandedKeys = getExpandableKeysAccordingToSelectedKeys(
+      this.data,
+      new Set(this.selectedKeys)
+    );
+  }
+
+  /**
    * 展开事件
    * @detail keys - 展开的 keys
    */
@@ -212,7 +227,9 @@ export function EoDirectoryTreeComponent(props: EoDirectoryTreeComponentProps) {
 
   const searchResult = useMemo(() => {
     const result = searchTree(data, q, (searchFields || []).concat("title"));
-    element.expandedKeys = result.expandedKeys;
+    if (q) {
+      element.expandedKeys = result.expandedKeys;
+    }
     return result;
   }, [data, q, searchFields]);
 

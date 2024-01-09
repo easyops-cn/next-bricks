@@ -294,6 +294,85 @@ describe("eo-directory-tree", () => {
 </div>
 `);
 
+    await act(async () => {
+      element.selectedKeys = ["1-1-0"];
+      element.expandAccordingToSelectedKeys();
+    });
+    expect(element.shadowRoot?.querySelector(".tree")).toMatchInlineSnapshot(`
+<div
+  class="tree"
+>
+  <eo-directory-tree-internal-node
+    depth="0"
+    expanded=""
+  >
+    <span
+      slot="label"
+      title="第一层级 - 1"
+    >
+      第一层级 - 1
+    </span>
+    <eo-directory-tree-leaf
+      depth="1"
+    >
+      <span
+        title="第二层级 - 0"
+      >
+        第二层级 - 0
+      </span>
+    </eo-directory-tree-leaf>
+    <eo-directory-tree-internal-node
+      depth="1"
+      expanded=""
+    >
+      <span
+        slot="label"
+        title="第二层级 - 1"
+      >
+        第二层级 - 1
+      </span>
+      <eo-directory-tree-leaf
+        depth="2"
+        selected=""
+      >
+        <span
+          title="第三层级 - 0"
+        >
+          第三层级 - 0
+        </span>
+      </eo-directory-tree-leaf>
+      <eo-directory-tree-leaf
+        depth="2"
+      >
+        <span
+          title="第三层级 - 1"
+        >
+          第三层级 - 1
+        </span>
+      </eo-directory-tree-leaf>
+      <eo-directory-tree-leaf
+        depth="2"
+      >
+        <span
+          title="第三层级 - 2"
+        >
+          第三层级 - 2
+        </span>
+      </eo-directory-tree-leaf>
+    </eo-directory-tree-internal-node>
+    <eo-directory-tree-leaf
+      depth="1"
+    >
+      <span
+        title="第二层级 - 3"
+      >
+        第二层级 - 3
+      </span>
+    </eo-directory-tree-leaf>
+  </eo-directory-tree-internal-node>
+</div>
+`);
+
     act(() => {
       document.body.removeChild(element);
     });
