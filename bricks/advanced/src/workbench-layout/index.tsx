@@ -12,7 +12,6 @@ import { ReactUseBrick } from "@next-core/react-runtime";
 import {
   ItemCallback,
   Layout,
-  Layouts,
   Responsive,
   WidthProvider,
 } from "react-grid-layout";
@@ -164,43 +163,52 @@ export function EoWorkbenchLayoutComponent({
     }
   };
 
-  const handleLayoutChange = useCallback(
-    (currentLayout: Layout[], allLayouts: Layouts) => {
-      if (!layoutCacheRef.current) {
-        layoutCacheRef.current = currentLayout;
-      }
-      let isAllowAction = true;
-      for (let t = 0; t < currentLayout.length; t++) {
-        const { x, w } = currentLayout[t];
-        if (w > 1 && x > 0) {
-          isAllowAction = false;
-          break;
-        }
-      }
-      if (!isAllowAction) {
-        setLayouts(
-          (items) =>
-            items?.map((item) => {
-              const matchLayout = layoutCacheRef.current?.find(
-                (layout) => getRealKey(layout.i) === getRealKey(item.i)
-              );
-              // should update key to refresh layout
-              const key = `${getRealKey(item.i)}:${Math.random()}`;
-              return {
-                ...matchLayout,
-                i: key,
-              } as Layout;
-            })
-        );
-        return;
-      }
-
+  const handleLayoutChange = useCallback((currentLayout: Layout[]) => {
+    if (!layoutCacheRef.current) {
       layoutCacheRef.current = currentLayout;
-    },
-    []
-  );
+    }
+    let isAllowAction = true;
+    for (let t = 0; t < currentLayout.length; t++) {
+      const { x, w, y, h, i, minH } = currentLayout[t];
+      if (w > 1 && x > 0) {
+        isAllowAction = false;
+        break;
+      }
+      if (w === 1 && x < 2) {
+        const matchItem = currentLayout.find(
+          (item) => item.i !== i && item.w === 1 && item.y === y && x < 2
+        );
+        if (matchItem) {
+          currentLayout[t].minH = currentLayout[t].minH ?? h;
+          currentLayout[t].h = Math.max(matchItem.h, h);
+        }
+      } else {
+        currentLayout[t].h = minH ?? h;
+        currentLayout[t].minH = undefined;
+      }
+    }
+    if (!isAllowAction) {
+      setLayouts(
+        (items) =>
+          items?.map((item) => {
+            const matchLayout = layoutCacheRef.current?.find(
+              (layout) => getRealKey(layout.i) === getRealKey(item.i)
+            );
+            // should update key to refresh layout
+            const key = `${getRealKey(item.i)}:${Math.random()}`;
+            return {
+              ...matchLayout,
+              i: key,
+            } as Layout;
+          })
+      );
+      return;
+    }
 
-  const handleBreakpointChange = (newBreakpoint: string, newCols: number) => {
+    layoutCacheRef.current = currentLayout;
+  }, []);
+
+  const handleBreakpointChange = (_newBreakpoint: string, newCols: number) => {
     setCols(newCols);
   };
 
