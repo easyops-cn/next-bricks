@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { wrapBrick } from "@next-core/react-element";
 import { ReactUseMultipleBricks } from "@next-core/react-runtime";
 import {
@@ -43,7 +43,10 @@ function TreeLeaf(props: TreeLeafProps) {
   const { data, index, depth } = props;
   const { selectedKeysSet, onSelect, suffixBrick } = useDirectoryTreeContext();
 
-  const nodeData = { data, index, depth };
+  const nodeData = useMemo(
+    () => ({ data, index, depth }),
+    [data, index, depth]
+  );
 
   return (
     <WrappedTreeLeaf
@@ -77,7 +80,10 @@ function TreeInternalNode(props: TreeInternalNodeProps) {
   const { data, index, depth } = props;
   const { expandedKeysSet, onExpand, suffixBrick } = useDirectoryTreeContext();
 
-  const nodeData = { data, index, depth };
+  const nodeData = useMemo(
+    () => ({ data, index, depth }),
+    [data, index, depth]
+  );
 
   return (
     <WrappedTreeInternalNode
