@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.2.1...@next-bricks/basic@1.2.2) (2024-01-09)
+
+
+### Bug Fixes
+
+* mini actions use eo-action ([3054e19](https://github.com/easyops-cn/next-bricks/commit/3054e19da9494a8cbbc7c125a2e907ba3a54099c))
+
+
+
+
+
 ## [1.2.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.2.0...@next-bricks/basic@1.2.1) (2024-01-08)
 
 **Note:** Version bump only for package @next-bricks/basic
