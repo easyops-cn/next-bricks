@@ -58,39 +58,3 @@ eo-icon {
   background: var(--antd-item-hover-bg);
   color: var(--color-brand);
 }
-
-.dropdown-container {
-  padding: 4px;
-  background: var(--antd-dropdown-menu-bg);
-  box-shadow: var(--connected-overlay-shadow);
-  border-radius: var(--larger-border-radius);
-  overflow: auto;
-}
-
-.dropdown-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 5px 8px 5px 4px;
-  border-radius: var(--larger-border-radius);
-  color: var(--text-color-default);
-  cursor: pointer;
-}
-
-.dropdown-item:not(.disabled):hover {
-  background: var(--menu-submenu-group-active-bg);
-}
-
-.dropdown-item.disabled {
-  color: var(--text-color-disabled);
-  cursor: not-allowed;
-}
-
-.dropdown-item-icon {
-  font-size: 16px;
-}
-
-.dropdown-item-text {
-  font-size: 14px;
-  line-height: 22px;
-}

@@ -11,6 +11,14 @@ import type {
   PopoverEvents,
   PopoverEventsMapping,
 } from "../popover/index.jsx";
+import type {
+  SimpleAction,
+  Divider,
+  ActionsEvents,
+  ActionsEventsMapping,
+  ActionsProps,
+  EoActions,
+} from "../actions";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import classNames from "classnames";
@@ -27,22 +35,28 @@ const WrappedPopover = wrapBrick<
   onVisibleChange: "visible.change",
   beforeVisibleChange: "before.visible.change",
 });
+const WrappedActions = wrapBrick<
+  EoActions,
+  ActionsProps,
+  ActionsEvents,
+  ActionsEventsMapping
+>("eo-actions", {
+  onActionClick: "action.click",
+});
 
-export interface ActionType {
-  icon?: GeneralIconProps;
+export interface SimpleActionType extends Omit<SimpleAction, "text"> {
   text?: string;
   isDropdown?: boolean;
-  event?: string;
-  disabled?: boolean;
-  hidden?: boolean;
 }
+
+export type ActionType = SimpleActionType & Divider;
 
 export interface EoMiniActionsProps {
   actions?: ActionType[];
 }
 
 export interface EoMiniActionsEvents {
-  "action.click": CustomEvent<ActionType>;
+  "action.click": CustomEvent<SimpleActionType>;
 }
 
 export interface EoMiniActionsEventsMapping {
@@ -71,9 +85,9 @@ class EoMiniActions extends ReactNextElement implements EoMiniActionsProps {
    * @detail 该按钮配置
    */
   @event({ type: "action.click" })
-  accessor #actionClickEvent!: EventEmitter<ActionType>;
+  accessor #actionClickEvent!: EventEmitter<SimpleActionType>;
 
-  #handleActionClick = (action: ActionType) => {
+  #handleActionClick = (action: SimpleActionType) => {
     if (!action.disabled && action.event) {
       this.dispatchEvent(new CustomEvent(action.event));
       this.#actionClickEvent.emit(action);
@@ -91,7 +105,7 @@ class EoMiniActions extends ReactNextElement implements EoMiniActionsProps {
 }
 
 interface EoMiniActionsComponentProps extends EoMiniActionsProps {
-  onActionClick: (action: ActionType) => void;
+  onActionClick: (action: SimpleActionType) => void;
 }
 
 export function EoMiniActionsComponent(props: EoMiniActionsComponentProps) {
@@ -100,14 +114,14 @@ export function EoMiniActionsComponent(props: EoMiniActionsComponentProps) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const [outSideActions, dropdownActions] = useMemo(() => {
-    const _outSideActions: ActionType[] = [];
+    const _outSideActions: SimpleActionType[] = [];
     const _dropdownActions: ActionType[] = [];
 
     actions?.forEach((action) => {
       if (action.hidden) return;
       if (action.isDropdown) {
         _dropdownActions.push(action);
-      } else {
+      } else if (action.type !== "divider") {
         _outSideActions.push(action);
       }
     });
@@ -119,7 +133,7 @@ export function EoMiniActionsComponent(props: EoMiniActionsComponentProps) {
     setDropdownVisible(event.detail);
   };
 
-  const handleActionClick = (action: ActionType) => {
+  const handleActionClick = (action: SimpleActionType) => {
     if (!action.disabled) {
       setDropdownVisible(false);
       onActionClick?.(action);
@@ -162,28 +176,13 @@ export function EoMiniActionsComponent(props: EoMiniActionsComponentProps) {
               icon="more"
             />
           </div>
-          <div
-            className="dropdown-container"
+          <WrappedActions
             style={{ minWidth: "max-content" }}
-          >
-            {dropdownActions.map((action, i) => {
-              return (
-                <div
-                  className={classNames("dropdown-item", {
-                    disabled: action.disabled,
-                  })}
-                  key={i}
-                  onClick={() => handleActionClick(action)}
-                >
-                  <WrappedIcon
-                    className="dropdown-item-icon"
-                    {...action.icon!}
-                  />
-                  <div className="dropdown-item-text">{action.text}</div>
-                </div>
-              );
-            })}
-          </div>
+            actions={dropdownActions}
+            onActionClick={(e) => {
+              handleActionClick(e.detail);
+            }}
+          />
         </WrappedPopover>
       )}
     </div>

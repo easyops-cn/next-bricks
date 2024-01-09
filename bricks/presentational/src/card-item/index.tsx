@@ -11,6 +11,7 @@ import type {
   EoMiniActionsProps,
   EoMiniActionsEvents,
   EoMiniActionsEventsMapping,
+  SimpleActionType,
   ActionType,
 } from "@next-bricks/basic/mini-actions";
 import "@next-core/theme";
@@ -190,7 +191,7 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
   })
   accessor hasExpandedArea2: boolean | undefined;
 
-  #handleActionClick = (action: ActionType) => {
+  #handleActionClick = (action: SimpleActionType) => {
     this.dispatchEvent(new CustomEvent(action.event));
   };
 
@@ -238,7 +239,7 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
 
 interface EoCardItemComponentProps extends EoCardItemProps {
   callback?: Ref<HTMLDivElement>;
-  onActionClick?: (action: ActionType) => void;
+  onActionClick?: (action: SimpleActionType) => void;
 }
 
 export function EoCardItemComponent(props: EoCardItemComponentProps) {
@@ -261,7 +262,7 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
   } = props;
 
   const handleActionClick = useCallback(
-    (event: CustomEvent<ActionType>) => {
+    (event: CustomEvent<SimpleActionType>) => {
       onActionClick?.(event.detail);
     },
     [onActionClick]
