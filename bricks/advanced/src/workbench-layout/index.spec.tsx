@@ -152,7 +152,7 @@ describe("eo-workbench-layout", () => {
                 x: 0,
                 y: 0,
                 w: 1,
-                h: 1,
+                h: 2,
               },
             },
           ],
@@ -173,8 +173,26 @@ describe("eo-workbench-layout", () => {
       expect.objectContaining({
         detail: [
           { w: 2, h: 1, x: 0, y: 0, i: "card-1", moved: false, static: false },
-          { w: 1, h: 1, x: 0, y: 1, i: "card-2", moved: false, static: false },
-          { w: 1, h: 1, x: 1, y: 1, i: "card-3", moved: false, static: false },
+          {
+            w: 1,
+            h: 2,
+            x: 0,
+            y: 1,
+            i: "card-2",
+            minH: 1,
+            moved: false,
+            static: false,
+          },
+          {
+            w: 1,
+            h: 2,
+            x: 1,
+            y: 1,
+            i: "card-3",
+            minH: 2,
+            moved: false,
+            static: false,
+          },
         ],
       })
     );
