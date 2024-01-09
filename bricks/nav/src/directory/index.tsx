@@ -1,6 +1,7 @@
 import React from "react";
 import { createDecorators, EventEmitter } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
+import { ReactUseMultipleBricks } from "@next-core/react-runtime";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import type {
@@ -9,6 +10,7 @@ import type {
 } from "@next-bricks/icons/general-icon";
 import classNames from "classnames";
 import type { EoTooltip, ToolTipProps } from "@next-bricks/basic/tooltip";
+import { UseBrickConf } from "@next-core/types";
 
 const { defineElement, property, event } = createDecorators();
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
@@ -23,6 +25,14 @@ export
 })
 class EoDirectory extends ReactNextElement implements EoDirectoryProps {
   /**
+   * 设置定位方式：静态定位或固定定位。
+   *
+   * @default "fixed"
+   */
+  @property()
+  accessor position: "static" | "fixed" = "fixed";
+
+  /**
    * 目录标题
    */
   @property()
@@ -35,6 +45,14 @@ class EoDirectory extends ReactNextElement implements EoDirectoryProps {
    */
   @property({ attribute: false })
   accessor menuItems: MenuItem[] = [];
+
+  /**
+   * 后缀 useBrick
+   */
+  @property({
+    attribute: false,
+  })
+  accessor suffixBrick: { useBrick: UseBrickConf } | undefined;
 
   /**
    * 默认选中高亮的菜单项
@@ -69,11 +87,14 @@ class EoDirectory extends ReactNextElement implements EoDirectoryProps {
         suffixIconClick={this.#suffixIconClick}
         menuItemClick={this.#menuItemClick}
         defaultSelectedKeys={this.defaultSelectedKeys}
+        suffixBrick={this.suffixBrick}
       />
     );
   }
 }
 export interface EoDirectoryProps {
+  position?: "static" | "fixed";
+  suffixBrick?: { useBrick: UseBrickConf };
   directoryTitle: string | undefined;
   menuItems: MenuItem[];
   menuItemClick?: (data: MenuItemClickEventDetail) => void;
@@ -106,13 +127,16 @@ export function EoDirectoryComponent(props: EoDirectoryProps) {
     menuItemClick,
     suffixIconClick,
     defaultSelectedKeys,
+    suffixBrick,
   } = props;
 
   return (
     <div className="directory-container">
-      <div className="directory-title" title={directoryTitle}>
-        {directoryTitle}
-      </div>
+      {directoryTitle && (
+        <div className="directory-title" title={directoryTitle}>
+          {directoryTitle}
+        </div>
+      )}
       <div className="directory-menu-list">
         {menuItems.map((item, index) => {
           return (
@@ -135,6 +159,12 @@ export function EoDirectoryComponent(props: EoDirectoryProps) {
                 >
                   {item.title}
                 </span>
+                {suffixBrick?.useBrick ? (
+                  <ReactUseMultipleBricks
+                    useBrick={suffixBrick.useBrick}
+                    data={{ data: item }}
+                  />
+                ) : null}
                 {item.suffixIcon && (
                   <WrappedTooltip
                     content={item.suffixIconTooltip}
