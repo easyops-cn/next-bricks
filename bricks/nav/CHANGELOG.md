@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.4.0...@next-bricks/nav@1.5.0) (2024-01-09)
+
+
+### Features
+
+* eo-directory-tree ([1c66974](https://github.com/easyops-cn/next-bricks/commit/1c669747b2d56bc90de1f2f8eea1a0ee31643c6a))
+* eo-directory-tree ([734efd9](https://github.com/easyops-cn/next-bricks/commit/734efd9cd61bbfdfc442275e53a57c939004eeee))
+
+
+
+
+
 # [1.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.3.0...@next-bricks/nav@1.4.0) (2024-01-05)
 
 
