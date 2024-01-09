@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.6.0...@next-bricks/diagram@0.7.0) (2024-01-09)
+
+
+### Features
+
+* support zoom ([d9ace66](https://github.com/easyops-cn/next-bricks/commit/d9ace665f4a4c34705fedeaf5bfc449810deb762))
+
+
+
+
+
 # [0.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.5.2...@next-bricks/diagram@0.6.0) (2024-01-08)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.5.0...@next-bricks/nav@1.6.0) (2024-01-09)
+
+
+### Features
+
+* eo-directory support suffixBrick ([db242fc](https://github.com/easyops-cn/next-bricks/commit/db242fcf8366bc6ad9eb2403072d88fcccb9a2ec))
+
+
+
+
+
 # [1.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.4.0...@next-bricks/nav@1.5.0) (2024-01-09)
 
 
