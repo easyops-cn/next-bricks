@@ -22,6 +22,8 @@ properties:
   directoryTitle: 目录名称标题
   placeholder: 输入关键词
   searchable: true
+  selectedKeys:
+    - "1-1-1"
   suffixBrick:
     useBrick:
       if: <% !Array.isArray(DATA.data.children) %>
@@ -63,6 +65,9 @@ children:
       collapse.all:
         - target: "#directory-tree"
           method: collapseAll
+      aim:
+        - target: "#directory-tree"
+          method: expandAccordingToSelectedKeys
     properties:
       actions:
         - icon:
@@ -77,4 +82,10 @@ children:
             theme: outlined
           isDropdown: false
           event: collapse.all
+        - icon:
+            lib: antd
+            icon: aim
+            theme: outlined
+          isDropdown: false
+          event: aim
 ```

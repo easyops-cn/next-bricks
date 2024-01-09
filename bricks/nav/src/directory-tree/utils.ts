@@ -16,6 +16,32 @@ export function getAllExpandableKeys(data: TreeItem[]): string[] {
   }, [] as string[]);
 }
 
+export function getExpandableKeysAccordingToSelectedKeys(
+  data: TreeItem[],
+  selectedKeysSet: Set<string>
+): string[] {
+  return data.reduce((pre, cur) => {
+    const isLeaf = !Array.isArray(cur.children);
+
+    if (!isLeaf) {
+      const childrenMatched = cur.children?.some((child) =>
+        selectedKeysSet.has(child.key)
+      );
+      const childrenExpandableKeys = getExpandableKeysAccordingToSelectedKeys(
+        cur.children as TreeItem[],
+        selectedKeysSet
+      );
+
+      const keys = childrenExpandableKeys.concat(
+        childrenMatched || childrenExpandableKeys.length ? [cur.key] : []
+      );
+      return pre.concat(keys);
+    } else {
+      return pre;
+    }
+  }, [] as string[]);
+}
+
 export function searchTree(
   data: TreeItem[],
   q: string,
