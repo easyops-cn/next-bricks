@@ -61,6 +61,7 @@ export interface RenderedLineLabel {
 }
 
 export type PositionTuple = [x: number, y: number];
+export type RangeTuple = [min: number, max: number];
 
 export interface LineMarker {
   strokeColor: string;

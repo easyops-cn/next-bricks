@@ -295,7 +295,7 @@ children:
           arrow: true
           interactable: true
       layoutOptions:
-        nodePadding: 10
+        nodePadding: [4, 10, 10]
       activeTarget: <%= CTX.activeTarget %>
       disableKeyboardAction: <%= CTX.editingLabelNodes.length > 0 || CTX.editingLabelEdges.length > 0 %>
       nodesConnect:

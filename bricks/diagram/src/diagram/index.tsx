@@ -13,7 +13,7 @@ import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import dagre from "@dagrejs/dagre";
 import { select } from "d3-selection";
-import { zoom } from "d3-zoom";
+import { ZoomTransform, zoom } from "d3-zoom";
 import classNames from "classnames";
 import { pick, uniqueId } from "lodash";
 import type {
@@ -34,10 +34,11 @@ import type {
   NodesConnectOptions,
   ConnectLineState,
   ActiveTarget,
+  RangeTuple,
 } from "./interfaces";
 import { NodeComponentGroup } from "./NodeComponent";
 import { handleKeyboard } from "./processors/handleKeyboard";
-import { getCenterOffsets } from "./processors/getCenterOffsets";
+import { transformToCenter } from "./processors/transformToCenter";
 import { getRenderedLinesAndMarkers } from "./processors/getRenderedLinesAndMarkers";
 import { LineLabelComponentGroup } from "./LineLabelComponent";
 import { LineComponent } from "./LineComponent";
@@ -48,8 +49,9 @@ import { getClipPathList } from "./processors/getClipPathList";
 import { getRenderedLineLabels } from "./processors/getRenderedLineLabels";
 import { getRenderedDiagram } from "./processors/getRenderedDiagram";
 import { getDagreGraph } from "./processors/getDagreGraph";
-import { handleDiagramMouseDown } from "./processors/handleDiagramMouseDown";
+import { handleNodesMouseDown } from "./processors/handleNodesMouseDown";
 import styleText from "./styles.shadow.css";
+import { DEFAULT_SCALE_RANGE_MAX, DEFAULT_SCALE_RANGE_MIN } from "./constants";
 
 const { defineElement, property, event, method } = createDecorators();
 
@@ -63,14 +65,13 @@ export interface EoDiagramProps {
   nodesConnect?: NodesConnectOptions;
   activeTarget?: ActiveTarget | null;
   disableKeyboardAction?: boolean;
+  zoomable?: boolean;
+  scrollable?: boolean;
+  scaleRange?: RangeTuple;
 }
 
 export interface DiagramRef {
   callOnLineLabel(id: string, method: string, ...args: unknown[]): void;
-}
-
-export interface DiagramHandler {
-  moveIntoView(id: string): void;
 }
 
 export const EoDiagramComponent = forwardRef(LegacyEoDiagramComponent);
@@ -112,6 +113,15 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
 
   @property({ attribute: false })
   accessor nodesConnect: NodesConnectOptions | undefined;
+
+  @property({ type: Boolean })
+  accessor zoomable: boolean | undefined = true;
+
+  @property({ type: Boolean })
+  accessor scrollable: boolean | undefined = true;
+
+  @property({ attribute: false })
+  accessor scaleRange: RangeTuple | undefined;
 
   @event({ type: "activeTarget.change" })
   accessor #activeTargetChangeEvent!: EventEmitter<ActiveTarget | null>;
@@ -179,6 +189,9 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
         nodesConnect={this.nodesConnect}
         activeTarget={this.activeTarget}
         disableKeyboardAction={this.disableKeyboardAction}
+        zoomable={this.zoomable}
+        scrollable={this.scrollable}
+        scaleRange={this.scaleRange}
         onActiveTargetChange={this.#handleActiveTargetChange}
         onSwitchActiveTarget={this.#handleSwitchActiveTarget}
         onNodeDelete={this.#handleNodeDelete}
@@ -212,6 +225,9 @@ export function LegacyEoDiagramComponent(
     nodesConnect,
     activeTarget,
     disableKeyboardAction,
+    zoomable,
+    scrollable,
+    scaleRange: _scaleRange,
     onActiveTargetChange,
     onSwitchActiveTarget,
     onNodeDelete,
@@ -239,7 +255,6 @@ export function LegacyEoDiagramComponent(
     RenderedLineLabel[]
   >([]);
 
-  const draggerRef = useRef<HTMLDivElement>(null);
   const [grabbing, setGrabbing] = useState(false);
   const [transform, setTransform] = useState<TransformLiteral>({
     k: 1,
@@ -251,7 +266,6 @@ export function LegacyEoDiagramComponent(
 
   const rootRef = useRef<HTMLDivElement>(null);
   const nodesRef = useRef<HTMLDivElement>(null);
-  const [offsets, setOffsets] = useState<PositionTuple>([0, 0]);
   const [centered, setCentered] = useState(false);
 
   const [connectLineTo, setConnectLineTo] = useState<PositionTuple>([0, 0]);
@@ -267,9 +281,9 @@ export function LegacyEoDiagramComponent(
     },
   }));
 
-  const onDiagramMouseDown = useCallback(
-    (event: React.MouseEvent) => {
-      handleDiagramMouseDown(event, {
+  useEffect(() => {
+    const onNodesMouseDown = (event: MouseEvent) => {
+      handleNodesMouseDown(event, {
         nodes,
         nodesRefRepository,
         nodesConnect,
@@ -278,15 +292,21 @@ export function LegacyEoDiagramComponent(
         onSwitchActiveTarget,
         onNodesConnect,
       });
-    },
-    [
-      nodes,
-      nodesConnect,
-      nodesRefRepository,
-      onNodesConnect,
-      onSwitchActiveTarget,
-    ]
-  );
+    };
+    // Bind mousedown event manually, since the React event handler can't work with
+    // d3-zoom inside shadow DOM.
+    const nodesContainer = nodesRef.current;
+    nodesContainer?.addEventListener("mousedown", onNodesMouseDown);
+    return () => {
+      nodesContainer?.removeEventListener("mousedown", onNodesMouseDown);
+    };
+  }, [
+    nodes,
+    nodesConnect,
+    nodesRefRepository,
+    onNodesConnect,
+    onSwitchActiveTarget,
+  ]);
 
   const fixedOptions = useMemo(
     () => ({
@@ -396,20 +416,24 @@ export function LegacyEoDiagramComponent(
     []
   );
 
+  const scaleRange = useMemo(
+    () =>
+      _scaleRange ??
+      ([DEFAULT_SCALE_RANGE_MIN, DEFAULT_SCALE_RANGE_MAX] as RangeTuple),
+    [_scaleRange]
+  );
+
+  const zoomer = useMemo(() => zoom<HTMLDivElement, unknown>(), []);
+
   useEffect(() => {
-    const root = rootRef.current;
-    const dragger = draggerRef.current as Element;
-    if (!root || !dragger) {
-      return;
-    }
     let moved = false;
-    const zoomer = zoom()
-      .scaleExtent([1, 1])
+    zoomer
+      .scaleExtent(zoomable ? scaleRange : [1, 1])
       .on("start", () => {
         moved = false;
         setGrabbing(true);
       })
-      .on("zoom", (e) => {
+      .on("zoom", (e: { transform: TransformLiteral }) => {
         moved = true;
         setTransform(e.transform);
       })
@@ -419,32 +443,66 @@ export function LegacyEoDiagramComponent(
           onSwitchActiveTarget?.(null);
         }
       });
-    select(dragger).call(zoomer);
+  }, [onSwitchActiveTarget, scaleRange, zoomable, zoomer]);
 
-    select(root).on("wheel.zoom", (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-      // Mac OS trackpad pinch event is emitted as a wheel.zoom and d3.event.ctrlKey set to true
-      if (!e.ctrlKey) {
-        zoomer.translateBy(
-          select(dragger),
-          e.wheelDeltaX / 5,
-          e.wheelDeltaY / 5
-        );
-      }
-    });
-  }, [onSwitchActiveTarget]);
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) {
+      return;
+    }
+
+    const rootSelection = select(root);
+
+    if (zoomable || scrollable) {
+      // Do not override default d3 zoom handler.
+      // Only handles *panning*
+      rootSelection.on(
+        "wheel.zoom.custom",
+        (e: WheelEvent & { wheelDeltaX: number; wheelDeltaY: number }) => {
+          // Mac OS trackpad pinch event is emitted as a wheel.zoom and d3.event.ctrlKey set to true
+          if (!e.ctrlKey) {
+            // Stop immediate propagation for default d3 zoom handler
+            e.stopImmediatePropagation();
+            if (scrollable) {
+              e.preventDefault();
+              zoomer.translateBy(
+                rootSelection,
+                e.wheelDeltaX / 5,
+                e.wheelDeltaY / 5
+              );
+            }
+          }
+          // zoomer.scaleBy(rootSelection, Math.pow(2, defaultWheelDelta(e)))
+        }
+      );
+    } else {
+      rootSelection.on(".zoom", null);
+    }
+
+    rootSelection
+      .on("wheel", (e: WheelEvent) => e.preventDefault())
+      .call(zoomer)
+      .on("dblclick.zoom", null);
+
+    return () => {
+      rootSelection.on(".zoom", null);
+      rootSelection.on(".zoom.custom", null);
+    };
+  }, [scrollable, zoomable, zoomer]);
 
   useEffect(() => {
     const root = rootRef.current;
     if (renderedNodes.length === 0 || !root || centered) {
       return;
     }
-    setOffsets(
-      getCenterOffsets(renderedNodes, [root.clientWidth, root.clientHeight])
-    );
+    const { k, x, y } = transformToCenter(renderedNodes, {
+      canvasWidth: root.clientWidth,
+      canvasHeight: root.clientHeight,
+      scaleRange: zoomable ? scaleRange : undefined,
+    });
+    zoomer.transform(select(root), new ZoomTransform(k, x, y));
     setCentered(true);
-  }, [centered, renderedNodes]);
+  }, [centered, renderedNodes, scaleRange, zoomable, zoomer]);
 
   const defPrefix = useMemo(() => `${uniqueId("diagram-")}-`, []);
   const markerPrefix = `${defPrefix}line-arrow-`;
@@ -474,16 +532,15 @@ export function LegacyEoDiagramComponent(
     return <div>{`Diagram layout not supported: "${layout}"`}</div>;
   }
 
-  const rootOffsets = [offsets[0] + transform.x, offsets[1] + transform.y];
-
   return (
     <div
-      className={classNames("diagram", { ready: nodesReady && centered })}
+      className={classNames("diagram", {
+        ready: nodesReady && centered,
+        grabbing,
+      })}
       tabIndex={-1}
       ref={rootRef}
-      onMouseDown={onDiagramMouseDown}
     >
-      <div className={classNames("dragger", { grabbing })} ref={draggerRef} />
       <svg width="100%" height="100%" className="lines">
         <defs>
           {markers.map(({ strokeColor }, index) => (
@@ -541,7 +598,7 @@ export function LegacyEoDiagramComponent(
           </marker>
         </defs>
         <g
-          transform={`translate(${rootOffsets[0]} ${rootOffsets[1]}) scale(${transform.k})`}
+          transform={`translate(${transform.x} ${transform.y}) scale(${transform.k})`}
         >
           {renderedLines.map((line) => (
             <LineComponent
@@ -564,8 +621,9 @@ export function LegacyEoDiagramComponent(
       <div
         className="line-labels"
         style={{
-          left: rootOffsets[0],
-          top: rootOffsets[1],
+          left: transform.x,
+          top: transform.y,
+          transform: `scale(${transform.k})`,
         }}
       >
         <LineLabelComponentGroup
@@ -577,8 +635,9 @@ export function LegacyEoDiagramComponent(
         className="nodes"
         ref={nodesRef}
         style={{
-          left: rootOffsets[0],
-          top: rootOffsets[1],
+          left: transform.x,
+          top: transform.y,
+          transform: `scale(${transform.k})`,
         }}
       >
         <NodeComponentGroup

@@ -3,10 +3,14 @@ import { act } from "react-dom/test-utils";
 import { fireEvent } from "@testing-library/react";
 import "./";
 import type { EoDiagram } from "./index.js";
-import { handleDiagramMouseDown } from "./processors/handleDiagramMouseDown";
+import { handleNodesMouseDown } from "./processors/handleNodesMouseDown";
 
 jest.mock("@next-core/theme", () => ({}));
-jest.mock("./processors/handleDiagramMouseDown");
+jest.mock("./processors/handleNodesMouseDown", () => ({
+  handleNodesMouseDown: jest.fn((event: MouseEvent) => {
+    event.stopPropagation();
+  }),
+}));
 
 describe("eo-diagram", () => {
   test("empty nodes", async () => {
@@ -29,9 +33,6 @@ describe("eo-diagram", () => {
           class="diagram"
           tabindex="-1"
         >
-          <div
-            class="dragger"
-          />
           <svg
             class="lines"
             height="100%"
@@ -83,11 +84,11 @@ describe("eo-diagram", () => {
           </svg>
           <div
             class="line-labels"
-            style="left: 0px; top: 0px;"
+            style="left: 0px; top: 0px; transform: scale(1);"
           />
           <div
             class="nodes"
-            style="left: 0px; top: 0px;"
+            style="left: 0px; top: 0px; transform: scale(1);"
           />
           <svg
             class="connect-line"
@@ -165,9 +166,6 @@ describe("eo-diagram", () => {
         class="diagram"
         tabindex="-1"
       >
-        <div
-          class="dragger"
-        />
         <svg
           class="lines"
           height="100%"
@@ -219,11 +217,11 @@ describe("eo-diagram", () => {
         </svg>
         <div
           class="line-labels"
-          style="left: 0px; top: 0px;"
+          style="left: 0px; top: 0px; transform: scale(1);"
         />
         <div
           class="nodes"
-          style="left: 0px; top: 0px;"
+          style="left: 0px; top: 0px; transform: scale(1);"
         >
           <div
             class="node"
@@ -270,9 +268,6 @@ describe("eo-diagram", () => {
         class="diagram ready"
         tabindex="-1"
       >
-        <div
-          class="dragger"
-        />
         <svg
           class="lines"
           height="100%"
@@ -342,7 +337,7 @@ describe("eo-diagram", () => {
             </marker>
           </defs>
           <g
-            transform="translate(-35 -35) scale(1)"
+            transform="translate(-17.5 -17.5) scale(0.5)"
           >
             <g
               class="line"
@@ -389,7 +384,7 @@ describe("eo-diagram", () => {
         </svg>
         <div
           class="line-labels"
-          style="left: -35px; top: -35px;"
+          style="left: -17.5px; top: -17.5px; transform: scale(0.5);"
         >
           <div
             class="line-label"
@@ -400,7 +395,7 @@ describe("eo-diagram", () => {
         </div>
         <div
           class="nodes"
-          style="left: -35px; top: -35px;"
+          style="left: -17.5px; top: -17.5px; transform: scale(0.5);"
         >
           <div
             class="node"
@@ -441,8 +436,8 @@ describe("eo-diagram", () => {
       </div>
     `);
 
-    fireEvent.mouseDown(element.shadowRoot!.querySelector(".diagram")!);
-    expect(handleDiagramMouseDown).toBeCalled();
+    fireEvent.mouseDown(element.shadowRoot!.querySelector(".nodes")!);
+    expect(handleNodesMouseDown).toBeCalled();
 
     // `Enter` keydown is ignored
     fireEvent.keyDown(element.shadowRoot!.querySelector(".diagram")!, {
@@ -525,9 +520,6 @@ describe("eo-diagram", () => {
         class="diagram ready"
         tabindex="-1"
       >
-        <div
-          class="dragger"
-        />
         <svg
           class="lines"
           height="100%"
@@ -597,7 +589,7 @@ describe("eo-diagram", () => {
             </marker>
           </defs>
           <g
-            transform="translate(-35 -35) scale(1)"
+            transform="translate(-17.5 -17.5) scale(0.5)"
           >
             <g
               class="line"
@@ -650,7 +642,7 @@ describe("eo-diagram", () => {
         </svg>
         <div
           class="line-labels"
-          style="left: -35px; top: -35px;"
+          style="left: -17.5px; top: -17.5px; transform: scale(0.5);"
         >
           <div
             class="line-label"
@@ -663,7 +655,7 @@ describe("eo-diagram", () => {
         </div>
         <div
           class="nodes"
-          style="left: -35px; top: -35px;"
+          style="left: -17.5px; top: -17.5px; transform: scale(0.5);"
         >
           <div
             class="node"
