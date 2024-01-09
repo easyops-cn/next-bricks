@@ -2,9 +2,16 @@ import { describe, test, expect, jest } from "@jest/globals";
 import { fireEvent } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import "./index.jsx";
-import { EoMiniActions } from "./index.jsx";
+import { ActionType, EoMiniActions } from "./index.jsx";
 
 jest.mock("@next-core/theme", () => ({}));
+
+customElements.define(
+  "eo-actions",
+  class extends HTMLElement {
+    actions: unknown[] | undefined;
+  }
+);
 
 describe("eo-mini-actions", () => {
   test("basic usage", async () => {
@@ -40,7 +47,7 @@ describe("eo-mini-actions", () => {
         disabled: true,
         event: "download",
       },
-    ];
+    ] as ActionType[];
     const collectClick = jest.fn();
     const copyClick = jest.fn();
     const downloadClick = jest.fn();
@@ -60,9 +67,7 @@ describe("eo-mini-actions", () => {
     expect(
       element.shadowRoot?.querySelectorAll(".button-dropdown-item")
     ).toHaveLength(1);
-    expect(element.shadowRoot?.querySelectorAll(".dropdown-item")).toHaveLength(
-      2
-    );
+    expect(element.shadowRoot?.querySelectorAll("eo-actions")).toHaveLength(1);
 
     act(() => {
       fireEvent.click(
@@ -72,15 +77,19 @@ describe("eo-mini-actions", () => {
     expect(collectClick).toHaveBeenCalled();
 
     act(() => {
-      fireEvent.click(
-        element.shadowRoot?.querySelectorAll(".dropdown-item")[0] as Element
+      fireEvent(
+        element.shadowRoot!.querySelector("eo-actions")!,
+        new CustomEvent("action.click", { detail: { event: "copy" } })
       );
     });
     expect(copyClick).toHaveBeenCalled();
 
     act(() => {
-      fireEvent.click(
-        element.shadowRoot?.querySelectorAll(".dropdown-item")[1] as Element
+      fireEvent(
+        element.shadowRoot!.querySelector("eo-actions")!,
+        new CustomEvent("action.click", {
+          detail: { event: "download", disabled: true },
+        })
       );
     });
     expect(downloadClick).not.toHaveBeenCalled();
