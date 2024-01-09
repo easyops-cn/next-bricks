@@ -101,6 +101,10 @@ describe("diagram.editable-label", () => {
     ).toBe(true);
 
     act(() => {
+      fireEvent.dblClick(element.shadowRoot!.querySelector(".label")!);
+    });
+
+    act(() => {
       document.body.removeChild(element);
     });
     expect(element.shadowRoot?.childNodes.length).toBe(0);

@@ -1,9 +1,8 @@
 import { describe, test, expect, jest } from "@jest/globals";
-import type React from "react";
-import { fireEvent } from "@testing-library/react";
-import { handleDiagramMouseDown } from "./handleDiagramMouseDown";
+import { fireEvent } from "@testing-library/dom";
+import { handleNodesMouseDown } from "./handleNodesMouseDown";
 
-describe("handleDiagramMouseDown", () => {
+describe("handleNodesMouseDown", () => {
   const setConnectLineState = jest.fn();
   const setConnectLineTo = jest.fn();
   const onSwitchActiveTarget = jest.fn();
@@ -14,9 +13,10 @@ describe("handleDiagramMouseDown", () => {
     onSwitchActiveTarget,
     onNodesConnect,
   };
+  const noopMouseDown = new MouseEvent("mousedown");
 
   test("no nodesConnect", () => {
-    handleDiagramMouseDown({} as React.MouseEvent, {
+    handleNodesMouseDown(noopMouseDown, {
       nodes: [],
       nodesConnect: undefined,
       nodesRefRepository: null,
@@ -26,7 +26,7 @@ describe("handleDiagramMouseDown", () => {
   });
 
   test("no nodesRefRepository", () => {
-    handleDiagramMouseDown({} as React.MouseEvent, {
+    handleNodesMouseDown(noopMouseDown, {
       nodes: [],
       nodesConnect: {},
       nodesRefRepository: null,
@@ -40,22 +40,20 @@ describe("handleDiagramMouseDown", () => {
     const nodeB = document.createElement("div");
     document.body.append(nodeA);
     document.body.append(nodeB);
-    handleDiagramMouseDown(
-      {
-        target: nodeB,
-        clientX: 10,
-        clientY: 20,
-      } as unknown as React.MouseEvent,
-      {
-        nodes: [{ id: "a" }, { id: "b" }],
-        nodesConnect: {},
-        nodesRefRepository: new Map([
-          ["a", nodeA],
-          ["b", nodeB],
-        ]),
-        ...methods,
-      }
-    );
+    const mousedown = new MouseEvent("mousedown", { clientX: 10, clientY: 20 });
+    Object.defineProperty(mousedown, "target", {
+      value: nodeB,
+      enumerable: true,
+    });
+    handleNodesMouseDown(mousedown, {
+      nodes: [{ id: "a" }, { id: "b" }],
+      nodesConnect: {},
+      nodesRefRepository: new Map([
+        ["a", nodeA],
+        ["b", nodeB],
+      ]),
+      ...methods,
+    });
     expect(setConnectLineState).toBeCalledWith({
       from: [10, 20],
       options: {
@@ -95,24 +93,26 @@ describe("handleDiagramMouseDown", () => {
       ]),
       ...methods,
     };
-    handleDiagramMouseDown(
-      {
-        target: nodeA,
-        clientX: 10,
-        clientY: 20,
-      } as unknown as React.MouseEvent,
-      config
-    );
+    const mousedownA = new MouseEvent("mousedown", {
+      clientX: 10,
+      clientY: 20,
+    });
+    Object.defineProperty(mousedownA, "target", {
+      value: nodeA,
+      enumerable: true,
+    });
+    handleNodesMouseDown(mousedownA, config);
     expect(setConnectLineState).not.toBeCalled();
 
-    handleDiagramMouseDown(
-      {
-        target: nodeB,
-        clientX: 10,
-        clientY: 20,
-      } as unknown as React.MouseEvent,
-      config
-    );
+    const mousedownB = new MouseEvent("mousedown", {
+      clientX: 10,
+      clientY: 20,
+    });
+    Object.defineProperty(mousedownB, "target", {
+      value: nodeB,
+      enumerable: true,
+    });
+    handleNodesMouseDown(mousedownB, config);
     expect(setConnectLineState).toBeCalledTimes(1);
 
     // It will be ignored if mouseup on the same node.
@@ -137,24 +137,26 @@ describe("handleDiagramMouseDown", () => {
       ]),
       ...methods,
     };
-    handleDiagramMouseDown(
-      {
-        target: nodeB,
-        clientX: 10,
-        clientY: 20,
-      } as unknown as React.MouseEvent,
-      config
-    );
+    const mousedownB = new MouseEvent("mousedown", {
+      clientX: 10,
+      clientY: 20,
+    });
+    Object.defineProperty(mousedownB, "target", {
+      value: nodeB,
+      enumerable: true,
+    });
+    handleNodesMouseDown(mousedownB, config);
     expect(setConnectLineState).not.toBeCalled();
 
-    handleDiagramMouseDown(
-      {
-        target: nodeA,
-        clientX: 10,
-        clientY: 20,
-      } as unknown as React.MouseEvent,
-      config
-    );
+    const mousedownA = new MouseEvent("mousedown", {
+      clientX: 10,
+      clientY: 20,
+    });
+    Object.defineProperty(mousedownA, "target", {
+      value: nodeA,
+      enumerable: true,
+    });
+    handleNodesMouseDown(mousedownA, config);
     expect(setConnectLineState).toBeCalledTimes(1);
   });
 });

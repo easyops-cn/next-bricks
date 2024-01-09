@@ -14,8 +14,8 @@ import type {
   ActiveTarget,
 } from "../interfaces";
 
-export function handleDiagramMouseDown(
-  event: React.MouseEvent,
+export function handleNodesMouseDown(
+  event: MouseEvent,
   {
     nodes,
     nodesRefRepository,
@@ -67,6 +67,8 @@ export function handleDiagramMouseDown(
   } else if (!checkIfByTransform(nodesConnect, { source })) {
     return;
   }
+
+  event.stopPropagation();
 
   setConnectLineState({
     from: [event.clientX, event.clientY],

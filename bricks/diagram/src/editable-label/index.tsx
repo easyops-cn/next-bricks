@@ -157,12 +157,18 @@ export function LegacyEditableLabelComponent(
     }
   }, [currentLabel, onLabelChange, shouldEmitLabelChange]);
 
+  const stopPropagation = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+  }, []);
+
   return (
     <div
       className={classNames("label", {
         editing: editingLabel,
         empty: !currentLabel,
       })}
+      onDoubleClick={stopPropagation}
+      onMouseDown={stopPropagation}
     >
       <input
         className="label-input"
