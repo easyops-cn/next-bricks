@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.6.1...@next-bricks/nav@1.7.0) (2024-01-09)
+
+
+### Features
+
+* eo-directory-tree support getExpandableKeysAccordingToSelectedKeys ([3bbc44c](https://github.com/easyops-cn/next-bricks/commit/3bbc44c3d7a75882ed7c5e9262b1f2247019d2da))
+
+
+
+
+
 ## [1.6.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.6.0...@next-bricks/nav@1.6.1) (2024-01-09)
 
 
