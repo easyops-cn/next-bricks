@@ -98,11 +98,11 @@ export function EoDirectoryTreeLeafComponent(
         }}
       />
       <div className="tree-item-content">
+        <div className="tree-item-expand-button"></div>
         <div
           className="tree-item-selectable-content"
           ref={selectableContentRef}
         >
-          <div className="tree-item-expand-button"></div>
           <div className="tree-item-label">
             <slot />
           </div>

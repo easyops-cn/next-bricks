@@ -21,13 +21,13 @@
     display: flex;
     align-items: center;
     border-radius: 3px;
-    cursor: pointer;
 
     .tree-item-expandable-content {
       min-width: 0;
       flex: 1;
       display: flex;
       align-items: center;
+      cursor: pointer;
 
       .tree-item-expand-button {
         position: relative;
