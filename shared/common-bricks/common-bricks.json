@@ -174,7 +174,10 @@
     "eo-sidebar-menu-submenu",
     "eo-frame-breadcrumb",
     "eo-sidebar-sub-menu",
-    "eo-directory"
+    "eo-directory",
+    "eo-directory-tree",
+    "eo-directory-tree-leaf",
+    "eo-directory-tree-internal-node"
   ],
   "diagram": ["eo-diagram"]
 }
