@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.6.0...@next-bricks/nav@1.6.1) (2024-01-09)
+
+
+### Bug Fixes
+
+* eo-directory-tree 重复渲染 useBrick ([0dc0a73](https://github.com/easyops-cn/next-bricks/commit/0dc0a73bb5c7476dccd9e61b99a56f6dc36fb0e3))
+
+
+
+
+
 # [1.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.5.0...@next-bricks/nav@1.6.0) (2024-01-09)
 
 
