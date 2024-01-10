@@ -200,7 +200,7 @@ eo-menu-item {
 .sub-menu-sit-map-wrapper {
   box-sizing: border-box;
   width: calc(100vw);
-  padding: 0 120px 24px;
+  padding: 0 60px 24px;
   max-height: 520px;
   background-color: var(--antd-dropdown-menu-bg);
   border-radius: 6px;

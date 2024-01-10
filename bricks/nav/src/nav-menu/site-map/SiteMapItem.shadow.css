@@ -17,7 +17,7 @@
   .search-panel {
     .title {
       display: inline-block;
-      padding: 2px 16px;
+      padding: 2px 16px 2px 24px;
       font-weight: 500;
       line-height: 24px;
       position: relative;
@@ -27,7 +27,7 @@
         width: 6px;
         height: 6px;
         top: 10px;
-        left: 1px;
+        left: 9px;
         border-radius: 50%;
         background: var(--color-secondary-text);
       }
