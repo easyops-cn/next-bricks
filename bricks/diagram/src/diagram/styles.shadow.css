@@ -26,7 +26,14 @@
 
 .ready {
   opacity: 1;
+}
+
+.ready.pannable {
   cursor: grab;
+}
+
+.pannable.grabbing {
+  cursor: grabbing;
 }
 
 .lines,
@@ -47,10 +54,6 @@
   visibility: hidden;
 }
 
-.grabbing {
-  cursor: grabbing;
-}
-
 .line-label {
   position: absolute;
   transform: translate(-50%, -50%);
@@ -65,6 +68,7 @@
 
 .line.interactable {
   pointer-events: auto;
+  cursor: default;
 }
 
 .connect-line {

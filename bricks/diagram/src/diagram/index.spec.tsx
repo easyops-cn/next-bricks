@@ -30,7 +30,7 @@ describe("eo-diagram", () => {
           styles.shadow.css
         </style>,
         <div
-          class="diagram"
+          class="diagram pannable"
           tabindex="-1"
         >
           <svg
@@ -163,7 +163,7 @@ describe("eo-diagram", () => {
     expect(element.shadowRoot?.querySelectorAll(".node").length).toBe(3);
     expect(element.shadowRoot?.childNodes[1]).toMatchInlineSnapshot(`
       <div
-        class="diagram"
+        class="diagram pannable"
         tabindex="-1"
       >
         <svg
@@ -265,7 +265,7 @@ describe("eo-diagram", () => {
     await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
     expect(element.shadowRoot?.childNodes[1]).toMatchInlineSnapshot(`
       <div
-        class="diagram ready"
+        class="diagram ready pannable"
         tabindex="-1"
       >
         <svg
@@ -499,6 +499,7 @@ describe("eo-diagram", () => {
         },
       },
     ];
+    element.pannable = false;
     const onLineClick = jest.fn();
     element.addEventListener("line.click", (e) =>
       onLineClick((e as CustomEvent).detail)
@@ -711,6 +712,10 @@ describe("eo-diagram", () => {
     });
 
     element.callOnLineLabel("line-7", "addEventListener", "click", jest.fn());
+
+    element.zoomable = false;
+    element.scrollable = false;
+    await act(() => (global as any).flushPromises());
 
     act(() => {
       document.body.removeChild(element);

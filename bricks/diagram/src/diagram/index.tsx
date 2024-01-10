@@ -67,6 +67,7 @@ export interface EoDiagramProps {
   disableKeyboardAction?: boolean;
   zoomable?: boolean;
   scrollable?: boolean;
+  pannable?: boolean;
   scaleRange?: RangeTuple;
 }
 
@@ -119,6 +120,9 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
 
   @property({ type: Boolean })
   accessor scrollable: boolean | undefined = true;
+
+  @property({ type: Boolean })
+  accessor pannable: boolean | undefined = true;
 
   @property({ attribute: false })
   accessor scaleRange: RangeTuple | undefined;
@@ -191,6 +195,7 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
         disableKeyboardAction={this.disableKeyboardAction}
         zoomable={this.zoomable}
         scrollable={this.scrollable}
+        pannable={this.pannable}
         scaleRange={this.scaleRange}
         onActiveTargetChange={this.#handleActiveTargetChange}
         onSwitchActiveTarget={this.#handleSwitchActiveTarget}
@@ -227,6 +232,7 @@ export function LegacyEoDiagramComponent(
     disableKeyboardAction,
     zoomable,
     scrollable,
+    pannable,
     scaleRange: _scaleRange,
     onActiveTargetChange,
     onSwitchActiveTarget,
@@ -453,6 +459,18 @@ export function LegacyEoDiagramComponent(
 
     const rootSelection = select(root);
 
+    const unsetZoom = () => {
+      rootSelection
+        .on(".zoom", null)
+        .on(".zoom.custom", null)
+        .on("wheel", null);
+    };
+
+    if (!(zoomable || scrollable || pannable)) {
+      unsetZoom();
+      return;
+    }
+
     if (zoomable || scrollable) {
       // Do not override default d3 zoom handler.
       // Only handles *panning*
@@ -475,20 +493,23 @@ export function LegacyEoDiagramComponent(
           // zoomer.scaleBy(rootSelection, Math.pow(2, defaultWheelDelta(e)))
         }
       );
-    } else {
-      rootSelection.on(".zoom", null);
     }
 
     rootSelection
-      .on("wheel", (e: WheelEvent) => e.preventDefault())
       .call(zoomer)
+      .on("wheel", (e: WheelEvent) => e.preventDefault())
       .on("dblclick.zoom", null);
 
-    return () => {
-      rootSelection.on(".zoom", null);
-      rootSelection.on(".zoom.custom", null);
-    };
-  }, [scrollable, zoomable, zoomer]);
+    if (!pannable) {
+      rootSelection
+        .on("mousedown.zoom", null)
+        .on("touchstart.zoom", null)
+        .on("touchmove.zoom", null)
+        .on("touchend.zoom", null);
+    }
+
+    return unsetZoom;
+  }, [pannable, scrollable, zoomable, zoomer]);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -537,6 +558,7 @@ export function LegacyEoDiagramComponent(
       className={classNames("diagram", {
         ready: nodesReady && centered,
         grabbing,
+        pannable,
       })}
       tabIndex={-1}
       ref={rootRef}
