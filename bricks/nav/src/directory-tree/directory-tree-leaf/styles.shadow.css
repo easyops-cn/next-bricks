@@ -7,6 +7,7 @@
 }
 
 .tree-item {
+  min-height: 24px;
   display: flex;
   align-items: center;
   user-select: none;
@@ -27,7 +28,8 @@
     align-items: center;
 
     .tree-item-expand-button {
-      width: 16px;
+      margin-right: 4px;
+      width: 10px;
       flex-shrink: 0;
     }
 

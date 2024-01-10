@@ -97,61 +97,6 @@ describe("eo-directory-tree", () => {
     >
       第一层级 - 1
     </span>
-    <eo-directory-tree-leaf
-      depth="1"
-    >
-      <span
-        title="第二层级 - 0"
-      >
-        第二层级 - 0
-      </span>
-    </eo-directory-tree-leaf>
-    <eo-directory-tree-internal-node
-      depth="1"
-    >
-      <span
-        slot="label"
-        title="第二层级 - 1"
-      >
-        第二层级 - 1
-      </span>
-      <eo-directory-tree-leaf
-        depth="2"
-      >
-        <span
-          title="第三层级 - 0"
-        >
-          第三层级 - 0
-        </span>
-      </eo-directory-tree-leaf>
-      <eo-directory-tree-leaf
-        depth="2"
-      >
-        <span
-          title="第三层级 - 1"
-        >
-          第三层级 - 1
-        </span>
-      </eo-directory-tree-leaf>
-      <eo-directory-tree-leaf
-        depth="2"
-      >
-        <span
-          title="第三层级 - 2"
-        >
-          第三层级 - 2
-        </span>
-      </eo-directory-tree-leaf>
-    </eo-directory-tree-internal-node>
-    <eo-directory-tree-leaf
-      depth="1"
-    >
-      <span
-        title="第二层级 - 3"
-      >
-        第二层级 - 3
-      </span>
-    </eo-directory-tree-leaf>
   </eo-directory-tree-internal-node>
   <eo-directory-tree-leaf
     depth="0"
@@ -183,7 +128,7 @@ describe("eo-directory-tree", () => {
 </div>
 `);
 
-    act(() => {
+    await act(async () => {
       fireEvent(
         element.shadowRoot?.querySelectorAll(
           "eo-directory-tree-leaf"
@@ -199,7 +144,7 @@ describe("eo-directory-tree", () => {
       })
     );
 
-    act(() => {
+    await act(async () => {
       fireEvent(
         element.shadowRoot?.querySelectorAll(
           "eo-directory-tree-internal-node"
@@ -215,7 +160,7 @@ describe("eo-directory-tree", () => {
       })
     );
 
-    act(() => {
+    await act(async () => {
       fireEvent(
         element.shadowRoot?.querySelector(".directory-search") as HTMLElement,
         new CustomEvent("search", { detail: "第二层级" })
@@ -235,62 +180,35 @@ describe("eo-directory-tree", () => {
     >
       第一层级 - 1
     </span>
-    <eo-directory-tree-leaf
-      depth="1"
-    >
-      <span
-        title="第二层级 - 0"
-      >
-        第二层级 - 0
-      </span>
-    </eo-directory-tree-leaf>
-    <eo-directory-tree-internal-node
-      depth="1"
-    >
-      <span
-        slot="label"
-        title="第二层级 - 1"
-      >
-        第二层级 - 1
-      </span>
-      <eo-directory-tree-leaf
-        depth="2"
-      >
-        <span
-          title="第三层级 - 0"
-        >
-          第三层级 - 0
-        </span>
-      </eo-directory-tree-leaf>
-      <eo-directory-tree-leaf
-        depth="2"
-      >
-        <span
-          title="第三层级 - 1"
-        >
-          第三层级 - 1
-        </span>
-      </eo-directory-tree-leaf>
-      <eo-directory-tree-leaf
-        depth="2"
-      >
-        <span
-          title="第三层级 - 2"
-        >
-          第三层级 - 2
-        </span>
-      </eo-directory-tree-leaf>
-    </eo-directory-tree-internal-node>
-    <eo-directory-tree-leaf
-      depth="1"
-    >
-      <span
-        title="第二层级 - 3"
-      >
-        第二层级 - 3
-      </span>
-    </eo-directory-tree-leaf>
   </eo-directory-tree-internal-node>
+  <eo-directory-tree-leaf
+    depth="1"
+  >
+    <span
+      title="第二层级 - 0"
+    >
+      第二层级 - 0
+    </span>
+  </eo-directory-tree-leaf>
+  <eo-directory-tree-internal-node
+    depth="1"
+  >
+    <span
+      slot="label"
+      title="第二层级 - 1"
+    >
+      第二层级 - 1
+    </span>
+  </eo-directory-tree-internal-node>
+  <eo-directory-tree-leaf
+    depth="1"
+  >
+    <span
+      title="第二层级 - 3"
+    >
+      第二层级 - 3
+    </span>
+  </eo-directory-tree-leaf>
 </div>
 `);
 
@@ -312,64 +230,64 @@ describe("eo-directory-tree", () => {
     >
       第一层级 - 1
     </span>
-    <eo-directory-tree-leaf
-      depth="1"
-    >
-      <span
-        title="第二层级 - 0"
-      >
-        第二层级 - 0
-      </span>
-    </eo-directory-tree-leaf>
-    <eo-directory-tree-internal-node
-      depth="1"
-      expanded=""
-    >
-      <span
-        slot="label"
-        title="第二层级 - 1"
-      >
-        第二层级 - 1
-      </span>
-      <eo-directory-tree-leaf
-        depth="2"
-        selected=""
-      >
-        <span
-          title="第三层级 - 0"
-        >
-          第三层级 - 0
-        </span>
-      </eo-directory-tree-leaf>
-      <eo-directory-tree-leaf
-        depth="2"
-      >
-        <span
-          title="第三层级 - 1"
-        >
-          第三层级 - 1
-        </span>
-      </eo-directory-tree-leaf>
-      <eo-directory-tree-leaf
-        depth="2"
-      >
-        <span
-          title="第三层级 - 2"
-        >
-          第三层级 - 2
-        </span>
-      </eo-directory-tree-leaf>
-    </eo-directory-tree-internal-node>
-    <eo-directory-tree-leaf
-      depth="1"
-    >
-      <span
-        title="第二层级 - 3"
-      >
-        第二层级 - 3
-      </span>
-    </eo-directory-tree-leaf>
   </eo-directory-tree-internal-node>
+  <eo-directory-tree-leaf
+    depth="1"
+  >
+    <span
+      title="第二层级 - 0"
+    >
+      第二层级 - 0
+    </span>
+  </eo-directory-tree-leaf>
+  <eo-directory-tree-internal-node
+    depth="1"
+    expanded=""
+  >
+    <span
+      slot="label"
+      title="第二层级 - 1"
+    >
+      第二层级 - 1
+    </span>
+  </eo-directory-tree-internal-node>
+  <eo-directory-tree-leaf
+    depth="2"
+    selected=""
+  >
+    <span
+      title="第三层级 - 0"
+    >
+      第三层级 - 0
+    </span>
+  </eo-directory-tree-leaf>
+  <eo-directory-tree-leaf
+    depth="2"
+  >
+    <span
+      title="第三层级 - 1"
+    >
+      第三层级 - 1
+    </span>
+  </eo-directory-tree-leaf>
+  <eo-directory-tree-leaf
+    depth="2"
+  >
+    <span
+      title="第三层级 - 2"
+    >
+      第三层级 - 2
+    </span>
+  </eo-directory-tree-leaf>
+  <eo-directory-tree-leaf
+    depth="1"
+  >
+    <span
+      title="第二层级 - 3"
+    >
+      第二层级 - 3
+    </span>
+  </eo-directory-tree-leaf>
 </div>
 `);
 

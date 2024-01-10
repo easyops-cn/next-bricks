@@ -1,5 +1,5 @@
 import { get, isNil } from "lodash";
-import { TreeItem } from "./index";
+import { TreeData, TreeItem } from "./index";
 
 export function getAllExpandableKeys(data: TreeItem[]): string[] {
   return data.reduce((pre, cur) => {
@@ -121,4 +121,43 @@ function getSearchKeywords(value: unknown): string[] {
   }
 
   return result.flat(Infinity).filter(Boolean) as string[];
+}
+
+export function getFlattenTreeData(
+  treeItems: TreeItem[],
+  expandedKeysSet: Set<string>
+) {
+  const flattenList: TreeData[] = [];
+
+  function dig(list: TreeItem[], parent?: TreeData): TreeData[] {
+    return list.map((treeItem, index) => {
+      const pos = parent ? `${parent.pos}-${index}` : String(index);
+
+      const flattenData: TreeData = {
+        title: treeItem.title,
+        key: treeItem.key,
+        pos,
+        depth: pos.split("-").length - 1,
+        index,
+        data: treeItem,
+        parent,
+      };
+
+      flattenList.push(flattenData);
+
+      if (Array.isArray(treeItem.children)) {
+        flattenData.children = expandedKeysSet.has(treeItem.key)
+          ? dig(treeItem.children, flattenData)
+          : [];
+      } else {
+        flattenData.children = undefined;
+      }
+
+      return flattenData;
+    });
+  }
+
+  dig(treeItems);
+
+  return flattenList;
 }

@@ -14,7 +14,7 @@ import {
   EoDirectoryTreeInternalNodeProps,
 } from "./directory-tree-internal-node";
 import { useDirectoryTreeContext } from "./DirectoryTreeContext";
-import { TreeItem } from "./";
+import { TreeData } from "./";
 
 const WrappedTreeLeaf = wrapBrick<
   EoDirectoryTreeLeaf,
@@ -34,13 +34,12 @@ const WrappedTreeInternalNode = wrapBrick<
 });
 
 interface TreeLeafProps {
-  data: TreeItem;
-  index: number;
-  depth: number;
+  treeData: TreeData;
 }
 
 function TreeLeaf(props: TreeLeafProps) {
-  const { data, index, depth } = props;
+  const { treeData } = props;
+  const { data, index, depth } = treeData;
   const { selectedKeysSet, onSelect, suffixBrick } = useDirectoryTreeContext();
 
   const nodeData = useMemo(
@@ -71,13 +70,12 @@ function TreeLeaf(props: TreeLeafProps) {
 }
 
 interface TreeInternalNodeProps {
-  data: TreeItem;
-  index: number;
-  depth: number;
+  treeData: TreeData;
 }
 
 function TreeInternalNode(props: TreeInternalNodeProps) {
-  const { data, index, depth } = props;
+  const { treeData } = props;
+  const { data, index, depth } = treeData;
   const { expandedKeysSet, onExpand, suffixBrick } = useDirectoryTreeContext();
 
   const nodeData = useMemo(
@@ -110,40 +108,33 @@ function TreeInternalNode(props: TreeInternalNodeProps) {
           />
         </div>
       )}
-      {data.children?.map((v, index) => {
-        return (
-          <TreeNode key={v.key} data={v} index={index} depth={depth + 1} />
-        );
-      })}
     </WrappedTreeInternalNode>
   );
 }
 
 interface TreeNodeProps {
-  data: TreeItem;
-  index: number;
-  depth: number;
+  treeData: TreeData;
 }
 
 function TreeNode(props: TreeNodeProps) {
-  const { data, index, depth } = props;
-  const isLeaf = !Array.isArray(data.children);
+  const { treeData } = props;
+  const isLeaf = !Array.isArray(treeData.children);
 
   return isLeaf ? (
-    <TreeLeaf data={data} index={index} depth={depth} />
+    <TreeLeaf treeData={treeData} />
   ) : (
-    <TreeInternalNode data={data} index={index} depth={depth} />
+    <TreeInternalNode treeData={treeData} />
   );
 }
 
 interface TreeProps {
-  data: TreeItem[];
+  treeData: TreeData[];
 }
 
 export function Tree(props: TreeProps) {
-  const { data } = props;
+  const { treeData } = props;
 
-  return data?.map((v, i) => {
-    return <TreeNode key={v.key} data={v} index={i} depth={0} />;
+  return treeData.map((v) => {
+    return <TreeNode key={v.key} treeData={v} />;
   });
 }

@@ -11,6 +11,7 @@ import {
 } from "@next-bricks/form/search";
 import { Tree } from "./Tree";
 import {
+  getFlattenTreeData,
   getAllExpandableKeys,
   getExpandableKeysAccordingToSelectedKeys,
   searchTree,
@@ -30,6 +31,9 @@ const WrappedSearch = wrapBrick<
   onSearch: "search",
 });
 
+/**
+ * 传入的 data 类型
+ */
 export interface TreeItem {
   key: string;
   title: string;
@@ -37,6 +41,23 @@ export interface TreeItem {
   [key: string]: any;
 }
 
+/**
+ * 内部格式化后的类型
+ */
+export interface TreeData {
+  title: string;
+  key: string;
+  pos: string;
+  depth: number;
+  index: number;
+  data: TreeItem;
+  parent?: TreeData;
+  children?: TreeData[];
+}
+
+/**
+ * useBrick、事件使用的类型
+ */
 export interface NodeData {
   depth: number;
   index: number;
@@ -219,19 +240,22 @@ export function EoDirectoryTreeComponent(props: EoDirectoryTreeComponentProps) {
   );
 
   const [q, setQ] = useState("");
-  const searching = useMemo(() => !!q, [q]);
 
   const handleSearch = (e: CustomEvent<string>) => {
     setQ(e.detail);
   };
 
-  const searchResult = useMemo(() => {
+  const searchedData = useMemo(() => {
     const result = searchTree(data, q, (searchFields || []).concat("title"));
     if (q) {
       element.expandedKeys = result.expandedKeys;
     }
-    return result;
+    return result.data;
   }, [data, q, searchFields]);
+
+  const treeData = useMemo(() => {
+    return getFlattenTreeData(searchedData, expandedKeysSet);
+  }, [searchedData, expandedKeysSet]);
 
   return (
     <DirectoryTreeContext.Provider
@@ -263,7 +287,7 @@ export function EoDirectoryTreeComponent(props: EoDirectoryTreeComponentProps) {
           />
         )}
         <div className="tree">
-          <Tree data={searching ? searchResult.data : data} />
+          <Tree treeData={treeData} />
         </div>
       </div>
     </DirectoryTreeContext.Provider>
