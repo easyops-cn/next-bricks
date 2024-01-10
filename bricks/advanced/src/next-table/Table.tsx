@@ -20,6 +20,7 @@ import { Table, ConfigProvider, theme } from "antd";
 import { StyleProvider, createCache } from "@ant-design/cssinjs";
 import {
   ReactUseMultipleBricks,
+  UseSingleBrickConf,
   useCurrentTheme,
 } from "@next-core/react-runtime";
 import { RowSelectMethod } from "antd/es/table/interface.js";
@@ -264,9 +265,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                 rowData: record,
                 columnIndex: index,
               };
-              return (
-                <ReactUseMultipleBricks useBrick={col.useBrick} data={data} />
-              );
+              return <CacheUseBrickItem useBrick={col.useBrick} data={data} />;
             }
             return <>{value}</>;
           },
@@ -276,7 +275,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                 title: col.title,
               };
               return (
-                <ReactUseMultipleBricks
+                <CacheUseBrickItem
                   useBrick={col.headerBrick.useBrick}
                   data={data}
                 />
@@ -536,7 +535,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                               expanded,
                             };
                             return (
-                              <ReactUseMultipleBricks
+                              <CacheUseBrickItem
                                 useBrick={
                                   expandConfig.expandedRowBrick!.useBrick
                                 }
@@ -558,7 +557,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                                   expandable && onExpand(record, e)
                                 }
                               >
-                                <ReactUseMultipleBricks
+                                <CacheUseBrickItem
                                   useBrick={
                                     expandConfig.expandIconBrick!.useBrick
                                   }
@@ -631,3 +630,16 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
     </ConfigProvider>
   );
 });
+
+function CacheUseBrickItem(props: {
+  useBrick: UseSingleBrickConf | UseSingleBrickConf[];
+  data: any;
+}): React.ReactNode {
+  const [cacheData, setCacheData] = useState<any>(props.data);
+
+  useEffect(() => {
+    setCacheData(props.data);
+  }, [Object.values(props.data)]);
+
+  return <ReactUseMultipleBricks useBrick={props.useBrick} data={cacheData} />;
+}

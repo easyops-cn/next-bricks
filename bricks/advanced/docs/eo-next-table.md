@@ -364,6 +364,12 @@
       - dataIndex: age
         key: age
         title: Age
+        useBrick:
+          - brick: eo-tag
+            properties:
+              color: |
+                <% DATA.cellData > 18 ? "green" : "red" %>
+              textContent: <% DATA.cellData %>
       - dataIndex: address
         key: address
         title: Address
