@@ -251,3 +251,167 @@ properties:
       icon: monitor
     size: 20
 ```
+
+### Tag
+
+```yaml preview
+- brick: div
+  properties:
+    textContent: Text Tag
+    style:
+      marginBottom: 10px
+- brick: eo-grid-layout
+  properties:
+    gap: 16px
+    columns: 4
+  children:
+    - brick: eo-card-item
+      properties:
+        tagConfig:
+          text: 禁用
+          bgColor: gray
+        cardTitle: 资源监控微应用
+        description: 资源监控微应用相关前后台
+    - brick: eo-card-item
+      properties:
+        tagConfig:
+          text: 蓝色
+          bgColor: blue
+        cardTitle: 资源监控微应用
+        description: 资源监控微应用相关前后台
+    - brick: eo-card-item
+      properties:
+        tagConfig:
+          text: 绿色
+          bgColor: green
+        cardTitle: 资源监控微应用
+        description: 资源监控微应用相关前后台
+    - brick: eo-card-item
+      properties:
+        tagConfig:
+          text: 黄色
+          bgColor: yellow
+        cardTitle: 资源监控微应用
+        description: 资源监控微应用相关前后台
+    - brick: eo-card-item
+      properties:
+        tagConfig:
+          text: 红色
+          bgColor: red
+        cardTitle: 资源监控微应用
+        description: 资源监控微应用相关前后台
+    - brick: eo-card-item
+      properties:
+        tagConfig:
+          text: 青色
+          bgColor: cyan
+        cardTitle: 资源监控微应用
+        description: 资源监控微应用相关前后台
+    - brick: eo-card-item
+      properties:
+        tagConfig:
+          text: 灰蓝色
+          bgColor: grayblue
+        cardTitle: 资源监控微应用
+        description: 资源监控微应用相关前后台
+    - brick: eo-card-item
+      properties:
+        tagConfig:
+          text: 紫色
+          bgColor: purple
+        cardTitle: 资源监控微应用
+        description: 资源监控微应用相关前后台
+    - brick: eo-card-item
+      properties:
+        tagConfig:
+          text: 自定义
+          bgColor: "rgb(228 236 183)"
+          color: "#000"
+        cardTitle: 资源监控微应用
+        description: 资源监控微应用相关前后台
+- brick: div
+  properties:
+    textContent: Icon Tag
+    style:
+      margin: 10px
+- brick: eo-grid-layout
+  properties:
+    gap: 16px
+    columns: 4
+  children:
+    - brick: eo-card-item
+      properties:
+        tagConfig:
+          icon:
+            lib: antd
+            icon: info-circle
+            theme: outlined
+          bgColor: blue
+        cardTitle: 资源监控微应用
+        description: 资源监控微应用相关前后台
+        url: /test
+        target: _blank
+    - brick: eo-card-item
+      properties:
+        tagConfig:
+          icon:
+            lib: antd
+            icon: check-circle
+            theme: outlined
+          bgColor: green
+        cardTitle: 资源监控微应用
+        description: 资源监控微应用相关前后台
+        url: /test
+        target: _blank
+    - brick: eo-card-item
+      properties:
+        tagConfig:
+          icon:
+            lib: antd
+            icon: info-circle
+            theme: outlined
+          bgColor: yellow
+        cardTitle: 资源监控微应用
+        description: 资源监控微应用相关前后台
+        url: /test
+        target: _blank
+    - brick: eo-card-item
+      properties:
+        tagConfig:
+          icon:
+            lib: antd
+            icon: close-circle
+            theme: outlined
+          bgColor: red
+        cardTitle: 资源监控微应用
+        description: 资源监控微应用相关前后台
+        url: /test
+        target: _blank
+    - brick: eo-card-item
+      events:
+        tag.click:
+          - action: message.success
+            args:
+              - 收藏成功
+          - target: _self
+            properties:
+              tagConfig:
+                icon:
+                  lib: antd
+                  icon: star
+                  theme: filled
+                  startColor: yellow
+                  endColor: yellow
+                bgColor: blue
+      properties:
+        tagConfig:
+          icon:
+            lib: antd
+            icon: star
+            theme: filled
+          bgColor: blue
+        cardTitle: 资源监控微应用
+        description: 资源监控微应用相关前后台
+        url: /test
+        target: _blank
+```

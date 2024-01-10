@@ -1,5 +1,5 @@
 import React, { CSSProperties, Ref, useCallback, useMemo } from "react";
-import { createDecorators } from "@next-core/element";
+import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import type { Link, LinkProps } from "@next-bricks/basic/link";
 import type {
@@ -19,7 +19,7 @@ import styleText from "./styles.shadow.css";
 import classNames from "classnames";
 import "./host-contenxt.css";
 
-const { defineElement, property } = createDecorators();
+const { defineElement, property, event } = createDecorators();
 
 const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
@@ -49,6 +49,26 @@ interface ImgAvatar {
   bgColor?: string;
 }
 
+interface TagConfig {
+  text?: string;
+  icon?: GeneralIconProps;
+  bgColor?: string;
+  color?: string;
+}
+
+export enum TagColor {
+  blue = "blue",
+  cyan = "cyan",
+  geekblue = "geekblue",
+  grayblue = "grayblue",
+  gray = "gray",
+  green = "green",
+  orange = "orange",
+  purple = "purple",
+  red = "red",
+  yellow = "yellow",
+}
+
 export interface EoCardItemProps {
   hasHeader?: boolean;
   cardTitle: string;
@@ -65,6 +85,7 @@ export interface EoCardItemProps {
   hasCover?: boolean;
   coverImage?: string;
   coverColor?: string;
+  tagConfig?: TagConfig;
   avatarPosition?: "content" | "cover";
 }
 
@@ -173,6 +194,11 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
   @property()
   accessor avatarPosition: "content" | "cover";
 
+  @property({
+    attribute: false,
+  })
+  accessor tagConfig: TagConfig | undefined;
+
   /**
    * 是否有扩展区域 1
    * @internal
@@ -193,6 +219,16 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
 
   #handleActionClick = (action: SimpleActionType) => {
     this.dispatchEvent(new CustomEvent(action.event));
+  };
+
+  /**
+   * 徽标点击事件
+   */
+  @event({ type: "tag.click" })
+  accessor #tagClickEvent!: EventEmitter<void>;
+
+  #handleTagClick = () => {
+    this.#tagClickEvent.emit();
   };
 
   #renderCallback = () => {
@@ -227,11 +263,13 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
         url={this.url}
         target={this.target}
         callback={this.#renderCallback}
-        onActionClick={this.#handleActionClick}
         hasCover={this.hasCover}
         coverImage={this.coverImage}
         coverColor={this.coverColor}
+        tagConfig={this.tagConfig}
         avatarPosition={this.avatarPosition}
+        onActionClick={this.#handleActionClick}
+        onTagClick={this.#handleTagClick}
       />
     );
   }
@@ -240,6 +278,7 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
 interface EoCardItemComponentProps extends EoCardItemProps {
   callback?: Ref<HTMLDivElement>;
   onActionClick?: (action: SimpleActionType) => void;
+  onTagClick?: () => void;
 }
 
 export function EoCardItemComponent(props: EoCardItemComponentProps) {
@@ -258,7 +297,9 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
     coverImage,
     coverColor,
     avatarPosition,
+    tagConfig,
     onActionClick,
+    onTagClick,
   } = props;
 
   const handleActionClick = useCallback(
@@ -327,6 +368,16 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
     }
   }, [avatar]);
 
+  const useDefineColor = useMemo(() => {
+    return Object.values(TagColor).includes(tagConfig?.bgColor as TagColor);
+  }, [tagConfig]);
+
+  const handleTagClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    onTagClick?.();
+  };
+
   // const shouldRenderCover = useMemo(() => {
   //   return coverColor || coverImage;
   // }, [coverColor, coverImage]);
@@ -362,6 +413,30 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
             <div className="card-title">{cardTitle}</div>
             <div className="card-description">{description}</div>
           </div>
+          {tagConfig && (
+            <div
+              className={classNames("card-tag", {
+                [`color-${tagConfig.bgColor}`]: useDefineColor,
+                "icon-tag": tagConfig.text ? false : tagConfig.icon,
+                "text-tag": tagConfig.text,
+              })}
+              style={{
+                ...(useDefineColor
+                  ? {}
+                  : {
+                      color: tagConfig.color,
+                      background: tagConfig.bgColor,
+                    }),
+              }}
+              onClick={handleTagClick}
+            >
+              {tagConfig.text ? (
+                tagConfig.text
+              ) : tagConfig.icon ? (
+                <WrappedIcon {...tagConfig.icon} />
+              ) : null}
+            </div>
+          )}
         </div>
         <div className="card-expanded-area-1">
           <slot name="expanded-area-1" />
