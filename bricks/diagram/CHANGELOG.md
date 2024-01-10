@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.7.0...@next-bricks/diagram@0.8.0) (2024-01-10)
+
+
+### Features
+
+* allow diagram to toggle pannable ([20ede8c](https://github.com/easyops-cn/next-bricks/commit/20ede8c2365c34414b44fa7ff0985cd4537f8a95))
+
+
+
+
+
 # [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.6.0...@next-bricks/diagram@0.7.0) (2024-01-09)
 
 
