@@ -35,6 +35,7 @@ eo-icon {
   height: 22px;
   cursor: pointer;
   border-radius: var(--medius-border-radius);
+  color: var(--text-color-default);
 }
 
 .button-item:not(.disabled):hover {

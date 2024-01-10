@@ -7,9 +7,14 @@
 }
 
 .tree-item {
+  min-height: 24px;
   display: flex;
   align-items: center;
   user-select: none;
+
+  &:hover .tree-item-label {
+    color: var(--palette-blue-4);
+  }
 
   .tree-item-indentation {
     flex-shrink: 0;
@@ -31,10 +36,13 @@
 
       .tree-item-expand-button {
         position: relative;
-        width: 16px;
+        width: 10px;
         flex-shrink: 0;
+        margin-right: 4px;
 
         .tree-item-expand-arrow {
+          width: 10px;
+          height: 10px;
           position: absolute;
           left: 50%;
           right: 50%;
