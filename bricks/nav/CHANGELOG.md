@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.7.0...@next-bricks/nav@1.7.1) (2024-01-10)
+
+
+### Bug Fixes
+
+* sit-map 菜单样式 ([d435859](https://github.com/easyops-cn/next-bricks/commit/d4358597864d47f1c786ce51e1e414decd84eb6b))
+
+
+
+
+
 # [1.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.6.1...@next-bricks/nav@1.7.0) (2024-01-09)
 
 
