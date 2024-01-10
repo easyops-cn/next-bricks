@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.1.2...@next-bricks/presentational@1.2.0) (2024-01-10)
+
+
+### Features
+
+* card item add tag ([b46c9f9](https://github.com/easyops-cn/next-bricks/commit/b46c9f94ef2abe451be78cafbb9d0012bef0de06))
+
+
+
+
+
 ## [1.1.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.1.1...@next-bricks/presentational@1.1.2) (2024-01-09)
 
 
