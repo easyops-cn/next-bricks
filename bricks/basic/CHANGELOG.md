@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.2.3...@next-bricks/basic@1.2.4) (2024-01-10)
+
+
+### Bug Fixes
+
+* eo-directory-tree not render collapsed item ([948dd7c](https://github.com/easyops-cn/next-bricks/commit/948dd7c3602644c8e746033827f87aaad31f2b8e))
+
+
+
+
+
 ## [1.2.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.2.2...@next-bricks/basic@1.2.3) (2024-01-10)
 
 
