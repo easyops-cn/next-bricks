@@ -16,12 +16,22 @@ describe("eo-card-item", () => {
   test("basic usage", async () => {
     const element = document.createElement("eo-card-item") as EoCardItem;
     const onActionClick = jest.fn();
+    const onTagClick = jest.fn();
     element.hasHeader = true;
     element.avatar = {
       icon: {
         lib: "easyops",
         category: "default",
         icon: "monitor",
+      },
+    };
+
+    element.tagConfig = {
+      text: "蓝色",
+      bgColor: "blue",
+      icon: {
+        lib: "antd",
+        icon: "edit",
       },
     };
 
@@ -98,6 +108,46 @@ describe("eo-card-item", () => {
     ).toBeTruthy();
     expect(
       element.shadowRoot?.querySelector(".card-cover-wrapper .card-avatar")
+    ).toBeTruthy();
+
+    expect(element.shadowRoot?.querySelector(".card-tag").className).toBe(
+      "card-tag color-blue text-tag"
+    );
+    expect(
+      element.shadowRoot.querySelector(".card-tag").querySelector("eo-icon")
+    ).toBeFalsy();
+
+    act(() => {
+      element.addEventListener("tag.click", onTagClick);
+      (element.shadowRoot.querySelector(".card-tag") as HTMLElement).click();
+    });
+
+    expect(onTagClick).toBeCalledTimes(1);
+
+    await act(async () => {
+      element.tagConfig = {
+        color: "rgb(209, 210, 211)",
+        bgColor: "rgb(123,123,123)",
+        icon: {
+          lib: "antd",
+          icon: "edit",
+        },
+      };
+    });
+
+    expect(element.shadowRoot?.querySelector(".card-tag").className).toBe(
+      "card-tag icon-tag"
+    );
+    expect(
+      (element.shadowRoot?.querySelector(".card-tag") as HTMLElement).style
+        .color
+    ).toBe("rgb(209, 210, 211)");
+    expect(
+      (element.shadowRoot?.querySelector(".card-tag") as HTMLElement).style
+        .background
+    ).toBe("rgb(123, 123, 123)");
+    expect(
+      element.shadowRoot.querySelector(".card-tag").querySelector("eo-icon")
     ).toBeTruthy();
 
     act(() => {
