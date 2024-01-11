@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.21.0...@next-bricks/advanced@0.22.0) (2024-01-11)
+
+
+### Bug Fixes
+
+* **table:**  re-render useBrick ([a6a978d](https://github.com/easyops-cn/next-bricks/commit/a6a978dbb02a78d1210b92d591b3ed25c4667cfd))
+
+
+### Features
+
+* **Table:** add unit test ([56cabce](https://github.com/easyops-cn/next-bricks/commit/56cabce8a6e634df334e171a5f2a0c0b62ae0c6a))
+
+
+
+
+
 # [0.21.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.20.2...@next-bricks/advanced@0.21.0) (2024-01-09)
 
 
