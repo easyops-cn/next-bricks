@@ -74,23 +74,37 @@ export function EoDirectoryTreeLeafComponent(
 ) {
   const { depth, onSelect } = props;
 
-  const selectableContentRef = useRef<HTMLDivElement>(null);
+  const treeItemRef = useRef<HTMLDivElement>(null);
+  const suffixRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const selectableContent = selectableContentRef.current;
+    const treeItem = treeItemRef.current;
     const handleSelect = () => {
       onSelect();
     };
 
-    selectableContent?.addEventListener("click", handleSelect);
+    treeItem?.addEventListener("click", handleSelect);
 
     return () => {
-      selectableContent?.removeEventListener("click", handleSelect);
+      treeItem?.removeEventListener("click", handleSelect);
     };
   }, [onSelect]);
 
+  useEffect(() => {
+    const suffix = suffixRef.current;
+    const handleSuffixClick = (e: MouseEvent) => {
+      e.stopPropagation();
+    };
+
+    suffix?.addEventListener("click", handleSuffixClick);
+
+    return () => {
+      suffix?.removeEventListener("click", handleSuffixClick);
+    };
+  }, []);
+
   return (
-    <div className="tree-item">
+    <div className="tree-item" ref={treeItemRef}>
       <div
         className="tree-item-indentation"
         style={{
@@ -99,17 +113,12 @@ export function EoDirectoryTreeLeafComponent(
       />
       <div className="tree-item-content">
         <div className="tree-item-expand-button"></div>
-        <div
-          className="tree-item-selectable-content"
-          ref={selectableContentRef}
-        >
-          <div className="tree-item-label">
-            <slot />
-          </div>
+        <div className="tree-item-label">
+          <slot />
         </div>
-        <div className="tree-item-suffix">
-          <slot name="suffix" />
-        </div>
+      </div>
+      <div className="tree-item-suffix" ref={suffixRef}>
+        <slot name="suffix" />
       </div>
     </div>
   );

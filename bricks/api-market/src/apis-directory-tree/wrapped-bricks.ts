@@ -40,6 +40,7 @@ export const WrappedTreeInternalNode = wrapBrick<
   EoDirectoryTreeInternalNodeEventsMap
 >("eo-directory-tree-internal-node", {
   onExpand: "expand",
+  onSelect: "select",
 });
 export const WrappedTag = wrapBrick<Tag, TagProps>("eo-tag");
 export const WrappedMiniActions = wrapBrick<
