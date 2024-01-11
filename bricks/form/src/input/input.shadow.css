@@ -12,7 +12,6 @@
   box-sizing: border-box;
 }
 
-/* input-addon-wrapper */
 .input-addon-wrapper {
   display: table;
   width: 100%;
@@ -121,6 +120,7 @@
   color: inherit;
   background-color: transparent;
   cursor: inherit;
+  width: 100%;
 }
 
 .input::placeholder {
