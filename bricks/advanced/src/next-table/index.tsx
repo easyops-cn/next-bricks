@@ -4,7 +4,8 @@ import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import { NextTableComponent, NextTableComponentRef } from "./Table.js";
-import {
+import type {
+  CellConfig,
   Column,
   DataSource,
   ExpandableType,
@@ -44,6 +45,14 @@ class EoNextTable extends ReactNextElement {
     attribute: false,
   })
   accessor columns: Column[] | undefined;
+
+  /**
+   * 单元格
+   */
+  @property({
+    attribute: false,
+  })
+  accessor cell: CellConfig | undefined;
 
   /**
    * 数据源
@@ -296,6 +305,7 @@ class EoNextTable extends ReactNextElement {
         shadowRoot={this.shadowRoot}
         rowKey={this.rowKey}
         columns={this.columns}
+        cell={this.cell}
         dataSource={this.dataSource}
         frontSearch={this.frontSearch}
         pagination={this.pagination}

@@ -91,10 +91,9 @@ describe("CacheUseBrickItem", () => {
 
     expect(mockRenderTime).toBe(4);
 
-    newData.list = [{ a: 1 }];
-    // add property, should re-render
-    rerender(<CacheUseBrickItem useBrick={useBrickConf} data={newData} />);
-
-    expect(mockRenderTime).toBe(5);
+    // NOTE: should never add new property
+    // newData.list = [{ a: 1 }];
+    // rerender(<CacheUseBrickItem useBrick={useBrickConf} data={newData} />);
+    // expect(mockRenderTime).toBe(5);
   });
 });

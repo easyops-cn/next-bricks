@@ -15,6 +15,7 @@ import {
   RowSelectionType,
   ExpandableType,
   Sort,
+  CellConfig,
 } from "./interface.js";
 import { Table, ConfigProvider, theme } from "antd";
 import { StyleProvider, createCache } from "@ant-design/cssinjs";
@@ -71,6 +72,7 @@ interface NextTableComponentProps {
   shadowRoot: ShadowRoot | null;
   rowKey: string;
   columns?: Column[];
+  cell?: CellConfig;
   dataSource?: DataSource;
   frontSearch?: boolean;
   pagination?: PaginationType;
@@ -118,6 +120,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
     shadowRoot,
     rowKey,
     columns,
+    cell,
     dataSource,
     frontSearch,
     pagination,
@@ -256,29 +259,39 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
               }
             : {}),
           render(value: any, record: RecordType, index: number) {
-            if (col.useBrick) {
-              const data = {
-                cellData: value,
-                rowData: record,
-                columnIndex: index,
-              };
-              return <CacheUseBrickItem useBrick={col.useBrick} data={data} />;
-            }
-            return <>{value}</>;
+            const data = {
+              cellData: value,
+              rowData: record,
+              /**
+               * @deprecated wrong naming, it's actually `rowIndex`
+               */
+              columnIndex: index,
+              rowIndex: index,
+              columnKey: col.key,
+            };
+            return cell?.useBrick ? (
+              <CacheUseBrickItem useBrick={cell.useBrick} data={data} />
+            ) : col.useBrick ? (
+              <CacheUseBrickItem useBrick={col.useBrick} data={data} />
+            ) : (
+              <>{value}</>
+            );
           },
           title() {
-            if (col.headerBrick?.useBrick) {
-              const data = {
-                title: col.title,
-              };
-              return (
-                <CacheUseBrickItem
-                  useBrick={col.headerBrick.useBrick}
-                  data={data}
-                />
-              );
-            }
-            return <>{col.title}</>;
+            const data = {
+              title: col.title,
+              columnKey: col.key,
+            };
+            return cell?.header?.useBrick ? (
+              <CacheUseBrickItem useBrick={cell.header.useBrick} data={data} />
+            ) : col.headerBrick?.useBrick ? (
+              <CacheUseBrickItem
+                useBrick={col.headerBrick.useBrick}
+                data={data}
+              />
+            ) : (
+              <>{col.title}</>
+            );
           },
           onCell(record: RecordType) {
             return {
@@ -301,7 +314,15 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
           },
         };
       });
-  }, [columns, hiddenColumns, multiSort, sort, frontSearch, optimizedColumns]);
+  }, [
+    cell,
+    columns,
+    hiddenColumns,
+    multiSort,
+    sort,
+    frontSearch,
+    optimizedColumns,
+  ]);
 
   const rowSelectionConfig = useMemo(() => {
     if (rowSelection === false || isNil(rowSelection)) {

@@ -25,9 +25,7 @@ export interface Column
   > {
   key?: string | number;
   /** 表头自定义展示构件 */
-  headerBrick?: {
-    useBrick: UseBrickConf;
-  };
+  headerBrick?: WithUseBrick;
   /** 内容自定义展示构件 */
   useBrick?: UseBrickConf;
   /** 记录表格列合并的值的 key */
@@ -44,6 +42,14 @@ export interface Column
   cellStyle?: CSSProperties;
   /** 头部单元格样式 */
   headerStyle?: CSSProperties;
+}
+
+export interface CellConfig extends WithUseBrick {
+  header?: WithUseBrick;
+}
+
+export interface WithUseBrick {
+  useBrick?: UseBrickConf;
 }
 
 export interface DataSource {

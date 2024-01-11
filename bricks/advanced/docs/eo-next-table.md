@@ -928,3 +928,49 @@
                   age: 16
                   address: Taiwan
 ```
+
+### Dynamic Columns
+
+```yaml preview
+brick: eo-next-table
+properties:
+  cell:
+    useBrick:
+      - if: <% DATA.columnKey !== '01-13' %>
+        brick: em
+        properties:
+          textContent: <% DATA.cellData %>
+      - if: <% DATA.columnKey === '01-13' %>
+        brick: del
+        properties:
+          textContent: <% DATA.cellData %>
+    header:
+      useBrick:
+        brick: em
+        properties:
+          textContent: <% DATA.title %>
+  # Dynamic columns, such as by dates
+  columns: <% CTX.dates %>
+  dataSource:
+    list:
+      - "01-11": "abc"
+        "01-12": "def"
+        "01-13": "ghi"
+        "01-14": "jkl"
+      - "01-11": "123"
+        "01-12": "345"
+        "01-13": "789"
+        "01-14": "-"
+context:
+  - name: dates
+    value: |
+      <%
+        new Array(4).fill(null).map(
+          (d, i) => moment('2023-01-11').add(i, 'days').format('MM-DD')
+        ).map((key) => ({
+          dataIndex: key,
+          key,
+          title: key,
+        }))
+      %>
+```
