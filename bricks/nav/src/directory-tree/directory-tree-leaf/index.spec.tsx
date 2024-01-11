@@ -27,9 +27,7 @@ describe("eo-directory-tree-leaf", () => {
 
     act(() => {
       fireEvent.click(
-        element.shadowRoot?.querySelector(
-          ".tree-item-selectable-content"
-        ) as HTMLDivElement
+        element.shadowRoot?.querySelector(".tree-item") as HTMLDivElement
       );
     });
     expect(onSelect).toBeCalled();

@@ -11,14 +11,18 @@ const { defineElement, property, event } = createDecorators();
 export interface EoDirectoryTreeInternalNodeProps {
   depth: number;
   expanded?: boolean;
+  selectable?: boolean;
+  selected?: boolean;
 }
 
 export interface EoDirectoryTreeInternalNodeEvents {
   expand: CustomEvent<boolean>;
+  select: CustomEvent<void>;
 }
 
 export interface EoDirectoryTreeInternalNodeEventsMap {
   onExpand: "expand";
+  onSelect: "select";
 }
 
 /**
@@ -46,6 +50,22 @@ class EoDirectoryTreeInternalNode extends ReactNextElement {
   accessor expanded: boolean | undefined;
 
   /**
+   * 可选择
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor selectable: boolean | undefined;
+
+  /**
+   * 是否选中
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor selected: boolean | undefined;
+
+  /**
    * 展开事件
    * @detail 展开状态
    */
@@ -55,12 +75,23 @@ class EoDirectoryTreeInternalNode extends ReactNextElement {
     this.#expandEvent.emit(!this.expanded);
   };
 
+  /**
+   * 选择事件
+   */
+  @event({ type: "select" })
+  accessor #selectEvent!: EventEmitter<void>;
+  #handleSelect = () => {
+    this.#selectEvent.emit();
+  };
+
   render() {
     return (
       <EoDirectoryTreeInternalNodeComponent
         depth={this.depth}
+        selectable={this.selectable}
         expanded={this.expanded}
         onExpand={this.#handleExpand}
+        onSelect={this.#handleSelect}
       />
     );
   }
@@ -69,31 +100,67 @@ class EoDirectoryTreeInternalNode extends ReactNextElement {
 export interface EoDirectoryTreeInternalNodeComponentProps
   extends EoDirectoryTreeInternalNodeProps {
   onExpand: () => void;
+  onSelect: () => void;
 }
 
 export function EoDirectoryTreeInternalNodeComponent(
   props: EoDirectoryTreeInternalNodeComponentProps
 ) {
-  const { depth, onExpand } = props;
+  const { depth, selectable, onExpand, onSelect } = props;
 
-  const expandableContentRef = useRef<HTMLDivElement>(null);
+  const treeItemRef = useRef<HTMLDivElement>(null);
+  const expandBottomRef = useRef<HTMLDivElement>(null);
+  const suffixRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const expandableContent = expandableContentRef.current;
-    const handleExpand = () => {
-      onExpand();
+    if (selectable) {
+      const treeItem = treeItemRef.current;
+      const expandBottom = expandBottomRef.current;
+      const handleSelect = () => {
+        onSelect();
+      };
+      const handleExpand = (e: MouseEvent) => {
+        e.stopPropagation();
+        onExpand();
+      };
+
+      treeItem?.addEventListener("click", handleSelect);
+      expandBottom?.addEventListener("click", handleExpand);
+
+      return () => {
+        treeItem?.removeEventListener("click", handleSelect);
+        expandBottom?.removeEventListener("click", handleExpand);
+      };
+    } else {
+      const treeItem = treeItemRef.current;
+      const handleExpand = () => {
+        onExpand();
+      };
+
+      treeItem?.addEventListener("click", handleExpand);
+
+      return () => {
+        treeItem?.removeEventListener("click", handleExpand);
+      };
+    }
+  }, [selectable, onSelect, onExpand]);
+
+  useEffect(() => {
+    const suffix = suffixRef.current;
+    const handleSuffixClick = (e: MouseEvent) => {
+      e.stopPropagation();
     };
 
-    expandableContent?.addEventListener("click", handleExpand);
+    suffix?.addEventListener("click", handleSuffixClick);
 
     return () => {
-      expandableContent?.removeEventListener("click", handleExpand);
+      suffix?.removeEventListener("click", handleSuffixClick);
     };
-  }, [onExpand]);
+  }, []);
 
   return (
     <>
-      <div className="tree-item">
+      <div className="tree-item" ref={treeItemRef}>
         <div
           className="tree-item-indentation"
           style={{
@@ -101,20 +168,15 @@ export function EoDirectoryTreeInternalNodeComponent(
           }}
         />
         <div className="tree-item-content">
-          <div
-            className="tree-item-expandable-content"
-            ref={expandableContentRef}
-          >
-            <div className="tree-item-expand-button">
-              <Arrow className="tree-item-expand-arrow" />
-            </div>
-            <div className="tree-item-label">
-              <slot name="label" />
-            </div>
+          <div className="tree-item-expand-button" ref={expandBottomRef}>
+            <Arrow className="tree-item-expand-arrow" />
           </div>
-          <div className="tree-item-suffix">
-            <slot name="suffix" />
+          <div className="tree-item-label">
+            <slot name="label" />
           </div>
+        </div>
+        <div className="tree-item-suffix" ref={suffixRef}>
+          <slot name="suffix" />
         </div>
       </div>
       <div className="tree-item-children">
