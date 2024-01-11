@@ -18,10 +18,7 @@ import {
 } from "./interface.js";
 import { Table, ConfigProvider, theme } from "antd";
 import { StyleProvider, createCache } from "@ant-design/cssinjs";
-import {
-  ReactUseMultipleBricks,
-  useCurrentTheme,
-} from "@next-core/react-runtime";
+import { useCurrentTheme } from "@next-core/react-runtime";
 import { RowSelectMethod } from "antd/es/table/interface.js";
 import type { TableProps } from "antd/es/table";
 import { i18n } from "@next-core/i18n";
@@ -64,6 +61,7 @@ import { DraggableRow, Row } from "./Row.js";
 import type { Locale } from "antd/es/locale";
 import enUS from "antd/locale/en_US.js";
 import zhCN from "antd/locale/zh_CN.js";
+import { CacheUseBrickItem } from "./CacheUseBrickItem.js";
 
 initializeReactI18n(NS, locales);
 
@@ -264,9 +262,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                 rowData: record,
                 columnIndex: index,
               };
-              return (
-                <ReactUseMultipleBricks useBrick={col.useBrick} data={data} />
-              );
+              return <CacheUseBrickItem useBrick={col.useBrick} data={data} />;
             }
             return <>{value}</>;
           },
@@ -276,7 +272,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                 title: col.title,
               };
               return (
-                <ReactUseMultipleBricks
+                <CacheUseBrickItem
                   useBrick={col.headerBrick.useBrick}
                   data={data}
                 />
@@ -536,7 +532,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                               expanded,
                             };
                             return (
-                              <ReactUseMultipleBricks
+                              <CacheUseBrickItem
                                 useBrick={
                                   expandConfig.expandedRowBrick!.useBrick
                                 }
@@ -558,7 +554,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                                   expandable && onExpand(record, e)
                                 }
                               >
-                                <ReactUseMultipleBricks
+                                <CacheUseBrickItem
                                   useBrick={
                                     expandConfig.expandIconBrick!.useBrick
                                   }
