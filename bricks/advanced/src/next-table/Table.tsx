@@ -18,11 +18,7 @@ import {
 } from "./interface.js";
 import { Table, ConfigProvider, theme } from "antd";
 import { StyleProvider, createCache } from "@ant-design/cssinjs";
-import {
-  ReactUseMultipleBricks,
-  UseSingleBrickConf,
-  useCurrentTheme,
-} from "@next-core/react-runtime";
+import { useCurrentTheme } from "@next-core/react-runtime";
 import { RowSelectMethod } from "antd/es/table/interface.js";
 import type { TableProps } from "antd/es/table";
 import { i18n } from "@next-core/i18n";
@@ -65,6 +61,7 @@ import { DraggableRow, Row } from "./Row.js";
 import type { Locale } from "antd/es/locale";
 import enUS from "antd/locale/en_US.js";
 import zhCN from "antd/locale/zh_CN.js";
+import { CacheUseBrickItem } from "./CacheUseBrickItem.js";
 
 initializeReactI18n(NS, locales);
 
@@ -630,16 +627,3 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
     </ConfigProvider>
   );
 });
-
-function CacheUseBrickItem(props: {
-  useBrick: UseSingleBrickConf | UseSingleBrickConf[];
-  data: any;
-}): React.ReactNode {
-  const [cacheData, setCacheData] = useState<any>(props.data);
-
-  useEffect(() => {
-    setCacheData(props.data);
-  }, [Object.values(props.data)]);
-
-  return <ReactUseMultipleBricks useBrick={props.useBrick} data={cacheData} />;
-}
