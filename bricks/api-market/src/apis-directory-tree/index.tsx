@@ -12,7 +12,7 @@ import {
 } from "./utils";
 import { DirectoryTreeContext } from "./DirectoryTreeContext";
 import { WrappedSearch } from "./wrapped-bricks";
-import { SimpleActionType } from "@next-bricks/basic/mini-actions";
+import type { SimpleActionType } from "@next-bricks/basic/mini-actions";
 
 const { defineElement, property, method, event } = createDecorators();
 
