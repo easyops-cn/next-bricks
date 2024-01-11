@@ -1543,3 +1543,128 @@ describe("draggable", () => {
     expect(document.body.contains(element)).toBeFalsy();
   });
 });
+
+describe("define cell brick", () => {
+  const columns = new Array(3).fill(null).map((d, key) => ({
+    dataIndex: key,
+    key,
+    title: key,
+  }));
+
+  test("cell brick", async () => {
+    const element = document.createElement("eo-next-table") as EoNextTable;
+    element.columns = columns;
+    element.dataSource = {
+      list: [
+        { 0: "A", 1: "B", 2: "C" },
+        { 0: "X", 1: "Y", 2: "Z" },
+      ],
+    };
+    element.cell = {
+      useBrick: [
+        {
+          if: "<% DATA.columnKey % 2 === 0 %>",
+          brick: "em",
+          properties: { textContent: "<% DATA.cellData %>" },
+        },
+        {
+          if: "<% DATA.columnKey % 2 === 1 %>",
+          brick: "del",
+          properties: { textContent: "<% DATA.cellData %>" },
+        },
+      ],
+    };
+    element.rowKey = "0";
+
+    await act(async () => {
+      document.body.appendChild(element);
+    });
+
+    expect(element.shadowRoot?.querySelectorAll("em")).toMatchInlineSnapshot(`
+      NodeList [
+        <em>
+          A
+        </em>,
+        <em>
+          C
+        </em>,
+        <em>
+          X
+        </em>,
+        <em>
+          Z
+        </em>,
+      ]
+    `);
+
+    expect(element.shadowRoot?.querySelectorAll("del")).toMatchInlineSnapshot(`
+      NodeList [
+        <del>
+          B
+        </del>,
+        <del>
+          Y
+        </del>,
+      ]
+    `);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("cell header brick", async () => {
+    const element = document.createElement("eo-next-table") as EoNextTable;
+    element.columns = columns;
+    element.dataSource = {
+      list: [
+        { 0: "A", 1: "B", 2: "C" },
+        { 0: "X", 1: "Y", 2: "Z" },
+      ],
+    };
+    element.cell = {
+      header: {
+        useBrick: [
+          {
+            if: "<% DATA.columnKey % 2 === 0 %>",
+            brick: "em",
+            properties: { textContent: "<% DATA.title %>" },
+          },
+          {
+            if: "<% DATA.columnKey % 2 === 1 %>",
+            brick: "del",
+            properties: { textContent: "<% DATA.title %>" },
+          },
+        ],
+      },
+    };
+    element.rowKey = "0";
+
+    await act(async () => {
+      document.body.appendChild(element);
+    });
+
+    expect(element.shadowRoot?.querySelectorAll("em")).toMatchInlineSnapshot(`
+      NodeList [
+        <em>
+          0
+        </em>,
+        <em>
+          2
+        </em>,
+      ]
+    `);
+
+    expect(element.shadowRoot?.querySelectorAll("del")).toMatchInlineSnapshot(`
+      NodeList [
+        <del>
+          1
+        </del>,
+      ]
+    `);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+});
