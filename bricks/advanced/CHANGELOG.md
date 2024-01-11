@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.23.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.22.0...@next-bricks/advanced@0.23.0) (2024-01-11)
+
+
+### Features
+
+* **next-table:** allow set cell brick for dynamic columns ([46bc3a8](https://github.com/easyops-cn/next-bricks/commit/46bc3a8dda57d3684a3970c5dd8788eac0c3def4))
+
+
+
+
+
 # [0.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.21.0...@next-bricks/advanced@0.22.0) (2024-01-11)
 
 
