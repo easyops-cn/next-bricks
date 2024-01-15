@@ -1,51 +1,42 @@
-import dagre from "@dagrejs/dagre";
 import type {
   PartialRectTuple,
   RefRepository,
-  RenderedEdge,
+  RenderedDiagram,
   RenderedNode,
+  UnifiedGraph,
 } from "../interfaces";
 import { extractPartialRectTuple } from "./extractPartialRectTuple";
-
-export interface RenderedDiagram {
-  nodes: RenderedNode[];
-  edges: RenderedEdge[];
-}
 
 export function getRenderedDiagram({
   graph,
   nodesRefRepository,
   nodePadding,
 }: {
-  graph: dagre.graphlib.Graph<RenderedNode> | null;
+  graph: UnifiedGraph | null;
   nodesRefRepository: RefRepository | null;
   nodePadding: PartialRectTuple;
 }): RenderedDiagram | null {
-  if (!graph || !nodesRefRepository || graph.nodeCount() === 0) {
+  if (!graph || !nodesRefRepository || graph.isEmpty()) {
     return null;
   }
 
   const paddings = extractPartialRectTuple(nodePadding);
 
-  for (const id of graph.nodes()) {
-    const node = graph.node(id);
+  for (const node of graph.getNodes()) {
     if (!node) {
-      // eslint-disable-next-line no-console
-      console.error("Diagram node not found: %s", id);
       continue;
     }
-    const element = nodesRefRepository.get(id);
+    const element = nodesRefRepository.get(node.id);
     node.width = (element?.offsetWidth ?? 10) + paddings[1] + paddings[3];
     node.height = (element?.offsetHeight ?? 10) + paddings[0] + paddings[2];
   }
 
-  dagre.layout(graph);
+  graph.applyLayout();
 
   // const positions = new Map<DiagramNodeId, NodePosition>();
   const renderedNodes: RenderedNode[] = [];
 
-  for (const v of graph.nodes()) {
-    const node = graph.node(v);
+  for (const node of graph.getNodes()) {
     if (!node) {
       continue;
     }
@@ -54,7 +45,7 @@ export function getRenderedDiagram({
     const y = node.y - node.height / 2 + paddings[0];
     // positions.set(v, { x, y });
 
-    const nodeContainer = nodesRefRepository.get(v)?.parentElement;
+    const nodeContainer = nodesRefRepository.get(node.id)?.parentElement;
     if (nodeContainer) {
       nodeContainer.style.left = `${x}px`;
       nodeContainer.style.top = `${y}px`;
@@ -64,6 +55,6 @@ export function getRenderedDiagram({
 
   return {
     nodes: renderedNodes,
-    edges: graph.edges().map((e) => graph.edge(e) as RenderedEdge),
+    edges: graph.getEdges(),
   };
 }

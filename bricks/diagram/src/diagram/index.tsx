@@ -11,11 +11,10 @@ import React, {
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
-import dagre from "@dagrejs/dagre";
 import { select } from "d3-selection";
 import { ZoomTransform, zoom } from "d3-zoom";
 import classNames from "classnames";
-import { pick, uniqueId } from "lodash";
+import { uniqueId } from "lodash";
 import type {
   DiagramEdge,
   DiagramNode,
@@ -24,9 +23,7 @@ import type {
   NodeBrickConf,
   PositionTuple,
   RefRepository,
-  RenderedEdge,
   RenderedLineLabel,
-  RenderedNode,
   LineTextClipPath,
   TransformLiteral,
   LineTarget,
@@ -47,16 +44,15 @@ import { ClipPathComponent } from "./ClipPathComponent";
 import { ConnectLineComponent } from "./ConnectLineComponent";
 import { getClipPathList } from "./processors/getClipPathList";
 import { getRenderedLineLabels } from "./processors/getRenderedLineLabels";
-import { getRenderedDiagram } from "./processors/getRenderedDiagram";
-import { getDagreGraph } from "./processors/getDagreGraph";
 import { handleNodesMouseDown } from "./processors/handleNodesMouseDown";
-import styleText from "./styles.shadow.css";
 import { DEFAULT_SCALE_RANGE_MAX, DEFAULT_SCALE_RANGE_MIN } from "./constants";
+import { useRenderedDiagram } from "./hooks/useRenderedDiagram";
+import styleText from "./styles.shadow.css";
 
 const { defineElement, property, event, method } = createDecorators();
 
 export interface EoDiagramProps {
-  layout?: "dagre";
+  layout?: "dagre" | "force";
   nodes?: DiagramNode[];
   edges?: DiagramEdge[];
   nodeBricks?: NodeBrickConf[];
@@ -89,7 +85,7 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
    * @required
    */
   @property({ type: String })
-  accessor layout: "dagre" | undefined;
+  accessor layout: "dagre" | "force" | undefined;
 
   @property({ attribute: false })
   accessor nodes: DiagramNode[] | undefined;
@@ -244,9 +240,6 @@ export function LegacyEoDiagramComponent(
   }: EoDiagramComponentProps,
   ref: React.Ref<DiagramRef>
 ) {
-  const [graph, setGraph] = useState<dagre.graphlib.Graph<RenderedNode> | null>(
-    null
-  );
   const [nodesReady, setNodesReady] = useState(false);
   const [nodesRenderId, setNodesRenderId] = useState(0);
   const [nodesRefRepository, setNodesRefRepository] =
@@ -255,8 +248,6 @@ export function LegacyEoDiagramComponent(
   const [lineLabelsRenderId, setLineLabelsRenderId] = useState(0);
   const [lineLabelsRefRepository, setLineLabelsRefRepository] =
     useState<RefRepository | null>(null);
-  const [renderedNodes, setRenderedNodes] = useState<RenderedNode[]>([]);
-  const [renderedEdges, setRenderedEdges] = useState<RenderedEdge[]>([]);
   const [renderedLineLabels, setRenderedLineLabels] = useState<
     RenderedLineLabel[]
   >([]);
@@ -314,25 +305,14 @@ export function LegacyEoDiagramComponent(
     onSwitchActiveTarget,
   ]);
 
-  const fixedOptions = useMemo(
-    () => ({
-      rankdir: "TB",
-      ranksep: 50,
-      edgesep: 10,
-      nodesep: 50,
-      // align: undefined,
-      nodePadding: 0,
-      ...layoutOptions,
-    }),
-    [layoutOptions]
-  );
-
-  const { nodePadding } = fixedOptions;
-  const dagreGraphOptions = useMemo(
-    () =>
-      pick(fixedOptions, ["rankdir", "ranksep", "edgesep", "nodesep", "align"]),
-    [fixedOptions]
-  );
+  const { nodes: renderedNodes, edges: renderedEdges } = useRenderedDiagram({
+    layout,
+    nodes,
+    edges,
+    nodesRefRepository,
+    layoutOptions,
+    nodesRenderId,
+  });
 
   const activeTargetChangeInitialized = useRef(false);
   useEffect(() => {
@@ -342,24 +322,6 @@ export function LegacyEoDiagramComponent(
     }
     onActiveTargetChange?.(activeTarget ?? null);
   }, [nodes, activeTarget, onActiveTargetChange]);
-
-  useEffect(() => {
-    setGraph((previousGraph) =>
-      getDagreGraph(previousGraph, nodes, edges, dagreGraphOptions)
-    );
-  }, [edges, nodes, dagreGraphOptions]);
-
-  useEffect(() => {
-    const renderedDiagram = getRenderedDiagram({
-      graph,
-      nodesRefRepository,
-      nodePadding,
-    });
-    if (renderedDiagram) {
-      setRenderedNodes(renderedDiagram.nodes);
-      setRenderedEdges(renderedDiagram.edges);
-    }
-  }, [graph, nodesRefRepository, nodesRenderId, nodePadding]);
 
   const { renderedLines, markers } = useMemo(
     () => getRenderedLinesAndMarkers(renderedEdges, lines),
@@ -549,7 +511,7 @@ export function LegacyEoDiagramComponent(
     );
   }, [lineLabelsRenderId, lineLabelsRefRepository, renderedLineLabels]);
 
-  if (layout !== "dagre") {
+  if (layout !== "dagre" && layout !== "force") {
     return <div>{`Diagram layout not supported: "${layout}"`}</div>;
   }
 

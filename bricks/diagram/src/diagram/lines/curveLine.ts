@@ -15,7 +15,7 @@ import type { CurveType, NodePosition } from "../interfaces";
  * Generate Line from points
  */
 export function curveLine(
-  points: Array<NodePosition>,
+  points: Array<NodePosition> | undefined,
   arrowOffset: number,
   curveType?: CurveType
 ): string {

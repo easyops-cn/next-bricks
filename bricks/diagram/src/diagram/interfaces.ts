@@ -29,8 +29,13 @@ export interface RenderedNode {
 }
 
 export interface RenderedEdge {
-  points: NodePosition[];
+  points?: NodePosition[];
   data: DiagramEdge;
+}
+
+export interface RenderedDiagram {
+  nodes: RenderedNode[];
+  edges: RenderedEdge[];
 }
 
 export interface RenderedLine {
@@ -183,4 +188,13 @@ export interface ActiveTargetOfNode {
 export interface ActiveTargetOfEdge {
   type: "edge";
   edge: DiagramEdge;
+}
+
+export interface UnifiedGraph {
+  layout: string;
+  isEmpty(): boolean;
+  getNode(id: string): RenderedNode | undefined;
+  getNodes(): (RenderedNode | undefined)[];
+  getEdges(): RenderedEdge[];
+  applyLayout(): void;
 }

@@ -1,26 +1,32 @@
 import dagre from "@dagrejs/dagre";
-import type { DiagramEdge, DiagramNode, RenderedNode } from "../interfaces";
+import type {
+  DiagramEdge,
+  DiagramNode,
+  RenderedEdge,
+  RenderedNode,
+  UnifiedGraph,
+} from "../interfaces";
 
 export function getDagreGraph(
-  previousGraph: dagre.graphlib.Graph<RenderedNode> | null,
+  previousGraph: UnifiedGraph | null,
   nodes: DiagramNode[] | undefined,
   edges: DiagramEdge[] | undefined,
   dagreGraphOptions: dagre.GraphLabel
-) {
+): UnifiedGraph {
   // Create a new directed graph
-  const newGraph = new dagre.graphlib.Graph<RenderedNode>();
+  const graph = new dagre.graphlib.Graph<RenderedNode>();
 
   // Set an object for the graph label
-  newGraph.setGraph(dagreGraphOptions);
+  graph.setGraph(dagreGraphOptions);
 
   // Default to assigning a new object as a label for each new edge.
-  newGraph.setDefaultEdgeLabel(function () {
+  graph.setDefaultEdgeLabel(function () {
     return {};
   });
 
   for (const node of nodes ?? []) {
-    const previousNode = previousGraph?.node(node.id);
-    newGraph.setNode(
+    const previousNode = previousGraph?.getNode(node.id);
+    graph.setNode(
       node.id,
       previousNode?.data === node
         ? previousNode
@@ -32,8 +38,32 @@ export function getDagreGraph(
   }
 
   for (const edge of edges ?? []) {
-    newGraph.setEdge(edge.source, edge.target, { data: edge });
+    graph.setEdge(edge.source, edge.target, { data: edge });
   }
 
-  return newGraph;
+  return {
+    layout: "dagre",
+    isEmpty() {
+      return graph.nodeCount() === 0;
+    },
+    getNodes() {
+      return graph.nodes().map((id) => {
+        const node = graph.node(id);
+        if (!node) {
+          // eslint-disable-next-line no-console
+          console.error("Diagram node not found: %s", id);
+        }
+        return node;
+      });
+    },
+    getEdges() {
+      return graph.edges().map((e) => graph.edge(e) as RenderedEdge);
+    },
+    applyLayout() {
+      dagre.layout(graph);
+    },
+    getNode(id) {
+      return graph.node(id);
+    },
+  };
 }
