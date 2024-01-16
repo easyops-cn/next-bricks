@@ -11,11 +11,10 @@ import React, {
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
-import dagre from "@dagrejs/dagre";
 import { select } from "d3-selection";
 import { ZoomTransform, zoom } from "d3-zoom";
 import classNames from "classnames";
-import { pick, uniqueId } from "lodash";
+import { uniqueId } from "lodash";
 import type {
   DiagramEdge,
   DiagramNode,
@@ -24,9 +23,7 @@ import type {
   NodeBrickConf,
   PositionTuple,
   RefRepository,
-  RenderedEdge,
   RenderedLineLabel,
-  RenderedNode,
   LineTextClipPath,
   TransformLiteral,
   LineTarget,
@@ -35,11 +32,13 @@ import type {
   ConnectLineState,
   ActiveTarget,
   RangeTuple,
+  LineLabel,
 } from "./interfaces";
 import { NodeComponentGroup } from "./NodeComponent";
 import { handleKeyboard } from "./processors/handleKeyboard";
 import { transformToCenter } from "./processors/transformToCenter";
-import { getRenderedLinesAndMarkers } from "./processors/getRenderedLinesAndMarkers";
+import { getRenderedLines } from "./processors/getRenderedLines";
+import { normalizeLinesAndMarkers } from "./processors/normalizeLinesAndMarkers";
 import { LineLabelComponentGroup } from "./LineLabelComponent";
 import { LineComponent } from "./LineComponent";
 import { MarkerComponent } from "./MarkerComponent";
@@ -47,16 +46,15 @@ import { ClipPathComponent } from "./ClipPathComponent";
 import { ConnectLineComponent } from "./ConnectLineComponent";
 import { getClipPathList } from "./processors/getClipPathList";
 import { getRenderedLineLabels } from "./processors/getRenderedLineLabels";
-import { getRenderedDiagram } from "./processors/getRenderedDiagram";
-import { getDagreGraph } from "./processors/getDagreGraph";
 import { handleNodesMouseDown } from "./processors/handleNodesMouseDown";
-import styleText from "./styles.shadow.css";
 import { DEFAULT_SCALE_RANGE_MAX, DEFAULT_SCALE_RANGE_MIN } from "./constants";
+import { useRenderedDiagram } from "./hooks/useRenderedDiagram";
+import styleText from "./styles.shadow.css";
 
 const { defineElement, property, event, method } = createDecorators();
 
 export interface EoDiagramProps {
-  layout?: "dagre";
+  layout?: "dagre" | "force";
   nodes?: DiagramNode[];
   edges?: DiagramEdge[];
   nodeBricks?: NodeBrickConf[];
@@ -89,7 +87,7 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
    * @required
    */
   @property({ type: String })
-  accessor layout: "dagre" | undefined;
+  accessor layout: "dagre" | "force" | undefined;
 
   @property({ attribute: false })
   accessor nodes: DiagramNode[] | undefined;
@@ -244,19 +242,14 @@ export function LegacyEoDiagramComponent(
   }: EoDiagramComponentProps,
   ref: React.Ref<DiagramRef>
 ) {
-  const [graph, setGraph] = useState<dagre.graphlib.Graph<RenderedNode> | null>(
-    null
-  );
   const [nodesReady, setNodesReady] = useState(false);
   const [nodesRenderId, setNodesRenderId] = useState(0);
   const [nodesRefRepository, setNodesRefRepository] =
     useState<RefRepository | null>(null);
-  // const [lineLabelsReady, setLineLabelsReady] = useState(false);
+  const [lineLabelsReady, setLineLabelsReady] = useState(false);
   const [lineLabelsRenderId, setLineLabelsRenderId] = useState(0);
   const [lineLabelsRefRepository, setLineLabelsRefRepository] =
     useState<RefRepository | null>(null);
-  const [renderedNodes, setRenderedNodes] = useState<RenderedNode[]>([]);
-  const [renderedEdges, setRenderedEdges] = useState<RenderedEdge[]>([]);
   const [renderedLineLabels, setRenderedLineLabels] = useState<
     RenderedLineLabel[]
   >([]);
@@ -314,24 +307,37 @@ export function LegacyEoDiagramComponent(
     onSwitchActiveTarget,
   ]);
 
-  const fixedOptions = useMemo(
-    () => ({
-      rankdir: "TB",
-      ranksep: 50,
-      edgesep: 10,
-      nodesep: 50,
-      // align: undefined,
-      nodePadding: 0,
-      ...layoutOptions,
-    }),
-    [layoutOptions]
+  const { normalizedLines, normalizedLinesMap, markers } = useMemo(
+    () => normalizeLinesAndMarkers(edges, lines),
+    [edges, lines]
   );
 
-  const { nodePadding } = fixedOptions;
-  const dagreGraphOptions = useMemo(
-    () =>
-      pick(fixedOptions, ["rankdir", "ranksep", "edgesep", "nodesep", "align"]),
-    [fixedOptions]
+  const lineLabels = useMemo(() => {
+    return normalizedLines
+      .map(({ line: { text, label, $id }, edge }) => {
+        if (!text && !label) {
+          return;
+        }
+        return { text, label, id: $id, edge };
+      })
+      .filter(Boolean) as LineLabel[];
+  }, [normalizedLines]);
+
+  const { nodes: renderedNodes, edges: renderedEdges } = useRenderedDiagram({
+    layout,
+    nodes,
+    edges,
+    nodesRefRepository,
+    lineLabelsRefRepository,
+    normalizedLinesMap,
+    layoutOptions,
+    nodesRenderId,
+    lineLabelsRenderId,
+  });
+
+  const renderedLines = useMemo(
+    () => getRenderedLines(renderedEdges, normalizedLines),
+    [normalizedLines, renderedEdges]
   );
 
   const activeTargetChangeInitialized = useRef(false);
@@ -342,29 +348,6 @@ export function LegacyEoDiagramComponent(
     }
     onActiveTargetChange?.(activeTarget ?? null);
   }, [nodes, activeTarget, onActiveTargetChange]);
-
-  useEffect(() => {
-    setGraph((previousGraph) =>
-      getDagreGraph(previousGraph, nodes, edges, dagreGraphOptions)
-    );
-  }, [edges, nodes, dagreGraphOptions]);
-
-  useEffect(() => {
-    const renderedDiagram = getRenderedDiagram({
-      graph,
-      nodesRefRepository,
-      nodePadding,
-    });
-    if (renderedDiagram) {
-      setRenderedNodes(renderedDiagram.nodes);
-      setRenderedEdges(renderedDiagram.edges);
-    }
-  }, [graph, nodesRefRepository, nodesRenderId, nodePadding]);
-
-  const { renderedLines, markers } = useMemo(
-    () => getRenderedLinesAndMarkers(renderedEdges, lines),
-    [lines, renderedEdges]
-  );
 
   useEffect(() => {
     const root = rootRef.current;
@@ -417,7 +400,7 @@ export function LegacyEoDiagramComponent(
         setLineLabelsRenderId((previous) => previous + 1);
         setLineLabelsRefRepository(refRepository);
       }
-      // setLineLabelsReady((previous) => previous || !!refRepository);
+      setLineLabelsReady((previous) => previous || !!refRepository);
     },
     []
   );
@@ -544,12 +527,20 @@ export function LegacyEoDiagramComponent(
     if (!lineLabelsRefRepository) {
       return;
     }
+    for (const { id, position } of renderedLineLabels) {
+      const label = lineLabelsRefRepository.get(id);
+      if (label) {
+        label.style.left = `${position[0]}px`;
+        label.style.top = `${position[1]}px`;
+        label.style.visibility = "visible";
+      }
+    }
     setClipPathList(
       getClipPathList(renderedLineLabels, lineLabelsRefRepository)
     );
   }, [lineLabelsRenderId, lineLabelsRefRepository, renderedLineLabels]);
 
-  if (layout !== "dagre") {
+  if (layout !== "dagre" && layout !== "force") {
     return <div>{`Diagram layout not supported: "${layout}"`}</div>;
   }
 
@@ -641,7 +632,7 @@ export function LegacyEoDiagramComponent(
         </g>
       </svg>
       <div
-        className="line-labels"
+        className={classNames("line-labels", { ready: lineLabelsReady })}
         style={{
           left: transform.x,
           top: transform.y,
@@ -649,7 +640,7 @@ export function LegacyEoDiagramComponent(
         }}
       >
         <LineLabelComponentGroup
-          labels={renderedLineLabels}
+          labels={lineLabels}
           onRendered={handleLineLabelsRendered}
         />
       </div>

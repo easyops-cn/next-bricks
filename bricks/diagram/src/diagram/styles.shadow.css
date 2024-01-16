@@ -24,18 +24,6 @@
   outline: none;
 }
 
-.ready {
-  opacity: 1;
-}
-
-.ready.pannable {
-  cursor: grab;
-}
-
-.pannable.grabbing {
-  cursor: grabbing;
-}
-
 .lines,
 .line-labels,
 .nodes {
@@ -44,18 +32,34 @@
   left: 0;
 }
 
+.line-labels {
+  opacity: 0;
+}
+
+.ready {
+  opacity: 1;
+}
+
+.diagram.ready.pannable {
+  cursor: grab;
+}
+
+.diagram.pannable.grabbing {
+  cursor: grabbing;
+}
+
 .nodes,
 .lines {
   transform-origin: 0 0;
 }
 
-.node {
+.node,
+.line-label {
   position: absolute;
   visibility: hidden;
 }
 
 .line-label {
-  position: absolute;
   transform: translate(-50%, -50%);
   white-space: pre-line;
   width: max-content;

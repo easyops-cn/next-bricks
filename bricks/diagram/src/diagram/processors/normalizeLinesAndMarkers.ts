@@ -1,10 +1,10 @@
 import { findIndex, uniqueId } from "lodash";
 import { __secret_internals } from "@next-core/runtime";
 import type {
+  DiagramEdge,
   LineConf,
   LineMarker,
-  RenderedEdge,
-  RenderedLine,
+  NormalizedLine,
 } from "../interfaces";
 import { matchEdgeByFilter } from "./matchEdgeByFilter";
 import {
@@ -13,34 +13,36 @@ import {
   DEFAULT_LINE_STROKE_COLOR,
   DEFAULT_LINE_STROKE_WIDTH,
 } from "../constants";
-import { curveLine } from "../lines/curveLine";
 
-export function getRenderedLinesAndMarkers(
-  renderedEdges: RenderedEdge[],
+export function normalizeLinesAndMarkers(
+  edges: DiagramEdge[] | undefined,
   lines: LineConf[] | undefined
 ) {
-  const renderedLines: RenderedLine[] = [];
+  const normalizedLines: NormalizedLine[] = [];
+  const normalizedLinesMap = new WeakMap<DiagramEdge, string>();
   const markers: LineMarker[] = [];
-  for (const { data, points } of renderedEdges) {
+  for (const edge of edges ?? []) {
     const { label, ...restLineConf } =
-      lines?.find((line) => matchEdgeByFilter(data, line)) ?? {};
+      lines?.find((line) => matchEdgeByFilter(edge, line)) ?? {};
 
     const computedLineConf = __secret_internals.legacyDoTransform(
-      { edge: data },
+      { edge },
       restLineConf
     ) as LineConf | undefined;
     if (computedLineConf?.draw === false) {
       continue;
     }
-    const line: RenderedLine["line"] = {
+    const id = uniqueId("line-");
+    const line: NormalizedLine["line"] = {
       strokeColor: DEFAULT_LINE_STROKE_COLOR,
       strokeWidth: DEFAULT_LINE_STROKE_WIDTH,
       curveType: DEFAULT_LINE_CURVE_TYPE,
       interactStrokeWidth: DEFAULT_LINE_INTERACT_STROKE_WIDTH,
       ...computedLineConf,
       label,
-      $id: uniqueId("line-"),
+      $id: id,
     };
+    normalizedLinesMap.set(edge, id);
 
     let markerIndex: number | undefined;
     if (line.arrow) {
@@ -53,17 +55,15 @@ export function getRenderedLinesAndMarkers(
       }
     }
 
-    const d = curveLine(points, line.arrow ? -5 : 0, line.curveType);
-
-    renderedLines.push({
+    normalizedLines.push({
       line,
-      d,
       markerIndex,
-      edge: data,
+      edge,
     });
   }
   return {
-    renderedLines,
+    normalizedLines,
+    normalizedLinesMap,
     markers,
   };
 }

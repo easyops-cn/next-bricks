@@ -83,7 +83,7 @@ describe("eo-diagram", () => {
             />
           </svg>
           <div
-            class="line-labels"
+            class="line-labels ready"
             style="left: 0px; top: 0px; transform: scale(1);"
           />
           <div
@@ -143,6 +143,14 @@ describe("eo-diagram", () => {
         text: "<% DATA.edge.description ? {content: DATA.edge.description} : null %>" as any,
       },
     ];
+    element.nodeBricks = [
+      {
+        useBrick: {
+          brick: "span",
+          properties: { textContent: "<% DATA.node.id %>" },
+        },
+      },
+    ];
     element.activeTarget = { type: "node", nodeId: "b" };
     const onNodeDelete = jest.fn();
     element.addEventListener("node.delete", (e) =>
@@ -173,7 +181,23 @@ describe("eo-diagram", () => {
         >
           <defs>
             <marker
-              id="diagram-2-active-line-start"
+              id="diagram-4-line-arrow-0"
+              markerHeight="6"
+              markerWidth="6"
+              orient="auto"
+              refX="3"
+              refY="3"
+              viewBox="0 0 6 6"
+            >
+              <path
+                d="M 0.5 0.5 L 5.5 3 L 0.5 5.5 z"
+                fill="blue"
+                stroke="blue"
+                stroke-width="1"
+              />
+            </marker>
+            <marker
+              id="diagram-4-active-line-start"
               markerHeight="8"
               markerWidth="8"
               orient="auto"
@@ -189,7 +213,7 @@ describe("eo-diagram", () => {
               />
             </marker>
             <marker
-              id="diagram-2-active-line-end"
+              id="diagram-4-active-line-end"
               markerHeight="8"
               markerWidth="14"
               orient="auto"
@@ -216,9 +240,15 @@ describe("eo-diagram", () => {
           />
         </svg>
         <div
-          class="line-labels"
+          class="line-labels ready"
           style="left: 0px; top: 0px; transform: scale(1);"
-        />
+        >
+          <div
+            class="line-label"
+          >
+            Go
+          </div>
+        </div>
         <div
           class="nodes"
           style="left: 0px; top: 0px; transform: scale(1);"
@@ -240,7 +270,7 @@ describe("eo-diagram", () => {
         >
           <defs>
             <marker
-              id="diagram-2-line-arrow-connect-line"
+              id="diagram-4-line-arrow-connect-line"
               markerHeight="6"
               markerWidth="6"
               orient="auto"
@@ -265,7 +295,7 @@ describe("eo-diagram", () => {
     await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
     expect(element.shadowRoot?.childNodes[1]).toMatchInlineSnapshot(`
       <div
-        class="diagram ready pannable"
+        class="diagram pannable"
         tabindex="-1"
       >
         <svg
@@ -275,7 +305,7 @@ describe("eo-diagram", () => {
         >
           <defs>
             <marker
-              id="diagram-2-line-arrow-0"
+              id="diagram-4-line-arrow-0"
               markerHeight="6"
               markerWidth="6"
               orient="auto"
@@ -290,15 +320,8 @@ describe("eo-diagram", () => {
                 stroke-width="1"
               />
             </marker>
-            <clippath
-              id="diagram-2-clip-path-line-4"
-            >
-              <polygon
-                points="-3,3 3,3 3,-3 -3,-3 -3,-980 1310,-980 1310,1420 -990,1420 -990,-980 -3,-980"
-              />
-            </clippath>
             <marker
-              id="diagram-2-active-line-start"
+              id="diagram-4-active-line-start"
               markerHeight="8"
               markerWidth="8"
               orient="auto"
@@ -314,7 +337,7 @@ describe("eo-diagram", () => {
               />
             </marker>
             <marker
-              id="diagram-2-active-line-end"
+              id="diagram-4-active-line-end"
               markerHeight="8"
               markerWidth="14"
               orient="auto"
@@ -337,75 +360,44 @@ describe("eo-diagram", () => {
             </marker>
           </defs>
           <g
-            transform="translate(-17.5 -17.5) scale(0.5)"
-          >
-            <g
-              class="line"
-            >
-              <path
-                d="M30,10L25.833,14.167C21.667,18.333,13.333,26.667,9.167,35C5,43.333,5,51.667,5,55.833L5,60"
-                fill="none"
-                stroke="gray"
-                stroke-width="1"
-              />
-              <path
-                class="active-bg"
-                d="M30,10L25.833,14.167C21.667,18.333,13.333,26.667,9.167,35C5,43.333,5,51.667,5,55.833L5,60"
-                fill="none"
-                marker-end="url(#diagram-2-active-line-end)"
-                marker-start="url(#diagram-2-active-line-start)"
-                stroke="var(--palette-blue-3)"
-                stroke-width="1"
-              />
-            </g>
-            <g
-              class="line"
-            >
-              <path
-                clip-path="url(#diagram-2-clip-path-line-4)"
-                d="M40,10L44.167,14.167C48.333,18.333,56.667,26.667,60.833,34.167C65,41.667,65,48.333,65,51.667L65,55"
-                fill="none"
-                marker-end="url(#diagram-2-line-arrow-0)"
-                stroke="blue"
-                stroke-width="1"
-              />
-              <path
-                class="active-bg"
-                clip-path="url(#diagram-2-clip-path-line-4)"
-                d="M40,10L44.167,14.167C48.333,18.333,56.667,26.667,60.833,34.167C65,41.667,65,48.333,65,51.667L65,55"
-                fill="none"
-                marker-end="url(#diagram-2-active-line-end)"
-                marker-start="url(#diagram-2-active-line-start)"
-                stroke="var(--palette-blue-3)"
-                stroke-width="1"
-              />
-            </g>
-          </g>
+            transform="translate(0 0) scale(1)"
+          />
         </svg>
         <div
-          class="line-labels"
-          style="left: -17.5px; top: -17.5px; transform: scale(0.5);"
+          class="line-labels ready"
+          style="left: 0px; top: 0px; transform: scale(1);"
         >
           <div
             class="line-label"
-            style="left: 50px; top: 50px;"
           >
             Go
           </div>
         </div>
         <div
           class="nodes"
-          style="left: -17.5px; top: -17.5px; transform: scale(0.5);"
+          style="left: 0px; top: 0px; transform: scale(1);"
         >
           <div
             class="node"
-          />
+          >
+            <span>
+              a
+            </span>
+          </div>
           <div
             class="node"
-          />
+          >
+            <span>
+              b
+            </span>
+          </div>
           <div
             class="node"
-          />
+          >
+            <span>
+              c
+            </span>
+          </div>
         </div>
         <svg
           class="connect-line"
@@ -414,7 +406,7 @@ describe("eo-diagram", () => {
         >
           <defs>
             <marker
-              id="diagram-2-line-arrow-connect-line"
+              id="diagram-4-line-arrow-connect-line"
               markerHeight="6"
               markerWidth="6"
               orient="auto"
@@ -435,6 +427,8 @@ describe("eo-diagram", () => {
         </svg>
       </div>
     `);
+
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
 
     fireEvent.mouseDown(element.shadowRoot!.querySelector(".nodes")!);
     expect(handleNodesMouseDown).toBeCalled();
@@ -528,7 +522,7 @@ describe("eo-diagram", () => {
         >
           <defs>
             <marker
-              id="diagram-5-line-arrow-0"
+              id="diagram-7-line-arrow-0"
               markerHeight="6"
               markerWidth="6"
               orient="auto"
@@ -544,14 +538,14 @@ describe("eo-diagram", () => {
               />
             </marker>
             <clippath
-              id="diagram-5-clip-path-line-7"
+              id="diagram-7-clip-path-line-6"
             >
               <polygon
                 points="-3,3 3,3 3,-3 -3,-3 -3,-980 1310,-980 1310,1420 -990,1420 -990,-980 -3,-980"
               />
             </clippath>
             <marker
-              id="diagram-5-active-line-start"
+              id="diagram-7-active-line-start"
               markerHeight="8"
               markerWidth="8"
               orient="auto"
@@ -567,7 +561,7 @@ describe("eo-diagram", () => {
               />
             </marker>
             <marker
-              id="diagram-5-active-line-end"
+              id="diagram-7-active-line-end"
               markerHeight="8"
               markerWidth="14"
               orient="auto"
@@ -605,8 +599,8 @@ describe("eo-diagram", () => {
                 class="active-bg"
                 d="M30,10L25.833,14.167C21.667,18.333,13.333,26.667,9.167,35C5,43.333,5,51.667,5,55.833L5,60"
                 fill="none"
-                marker-end="url(#diagram-5-active-line-end)"
-                marker-start="url(#diagram-5-active-line-start)"
+                marker-end="url(#diagram-7-active-line-end)"
+                marker-start="url(#diagram-7-active-line-start)"
                 stroke="var(--palette-blue-3)"
                 stroke-width="1"
               />
@@ -621,20 +615,20 @@ describe("eo-diagram", () => {
                 stroke-width="20"
               />
               <path
-                clip-path="url(#diagram-5-clip-path-line-7)"
+                clip-path="url(#diagram-7-clip-path-line-6)"
                 d="M40,10L44.167,14.167C48.333,18.333,56.667,26.667,60.833,34.167C65,41.667,65,48.333,65,51.667L65,55"
                 fill="none"
-                marker-end="url(#diagram-5-line-arrow-0)"
+                marker-end="url(#diagram-7-line-arrow-0)"
                 stroke="blue"
                 stroke-width="1"
               />
               <path
                 class="active-bg"
-                clip-path="url(#diagram-5-clip-path-line-7)"
+                clip-path="url(#diagram-7-clip-path-line-6)"
                 d="M40,10L44.167,14.167C48.333,18.333,56.667,26.667,60.833,34.167C65,41.667,65,48.333,65,51.667L65,55"
                 fill="none"
-                marker-end="url(#diagram-5-active-line-end)"
-                marker-start="url(#diagram-5-active-line-start)"
+                marker-end="url(#diagram-7-active-line-end)"
+                marker-start="url(#diagram-7-active-line-start)"
                 stroke="var(--palette-blue-3)"
                 stroke-width="1"
               />
@@ -642,12 +636,12 @@ describe("eo-diagram", () => {
           </g>
         </svg>
         <div
-          class="line-labels"
+          class="line-labels ready"
           style="left: -17.5px; top: -17.5px; transform: scale(0.5);"
         >
           <div
             class="line-label"
-            style="left: 50px; top: 50px;"
+            style="left: 50px; top: 50px; visibility: visible;"
           >
             <div>
               Go
@@ -675,7 +669,7 @@ describe("eo-diagram", () => {
         >
           <defs>
             <marker
-              id="diagram-5-line-arrow-connect-line"
+              id="diagram-7-line-arrow-connect-line"
               markerHeight="6"
               markerWidth="6"
               orient="auto"
@@ -699,7 +693,7 @@ describe("eo-diagram", () => {
 
     fireEvent.click(element.shadowRoot!.querySelector(".line.interactable")!);
     expect(onLineClick).toBeCalledWith({
-      id: "line-7",
+      id: "line-6",
       edge: expect.objectContaining({ source: "a", target: "c" }),
     });
 
@@ -707,11 +701,11 @@ describe("eo-diagram", () => {
       element.shadowRoot!.querySelector(".line.interactable")!
     );
     expect(onLineDoubleClick).toBeCalledWith({
-      id: "line-7",
+      id: "line-6",
       edge: expect.objectContaining({ source: "a", target: "c" }),
     });
 
-    element.callOnLineLabel("line-7", "addEventListener", "click", jest.fn());
+    element.callOnLineLabel("line-6", "addEventListener", "click", jest.fn());
 
     element.zoomable = false;
     element.scrollable = false;
@@ -722,16 +716,16 @@ describe("eo-diagram", () => {
     });
   });
 
-  test("not dagre layout", async () => {
+  test("unknown layout", async () => {
     const element = document.createElement("eo-diagram") as EoDiagram;
-    element.layout = "force" as any;
+    element.layout = "unknown" as any;
 
     act(() => {
       document.body.appendChild(element);
     });
     expect(element.shadowRoot?.childNodes[1]).toMatchInlineSnapshot(`
       <div>
-        Diagram layout not supported: "force"
+        Diagram layout not supported: "unknown"
       </div>
     `);
 
