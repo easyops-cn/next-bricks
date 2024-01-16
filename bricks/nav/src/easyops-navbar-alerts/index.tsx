@@ -42,7 +42,7 @@ interface SlowRenderInfo {
 const storage = new JsonStorage(localStorage);
 
 export function EasyopsNavbarAlertsComponent() {
-  const [licenseDaysLeft, setLicenseDaysLeft] = useState<number | null>(null);
+  const [licenseHide, setLienceseHide] = useState<boolean>(false);
   const [slowRender, setSlowRender] = useState<SlowRenderInfo | null>(null);
   const currentApp = useCurrentApp();
   const licenseDismissedKey = useMemo(() => {
@@ -50,10 +50,13 @@ export function EasyopsNavbarAlertsComponent() {
     return `license:${authInfo.org}`;
   }, []);
 
-  useEffect(() => {
+  const licenseDaysLeft = useMemo(() => {
     const authInfo = auth.getAuth();
     const validDaysLeft = authInfo.license?.validDaysLeft;
     let dismissExpireAt: number;
+    if (licenseHide) {
+      return null;
+    }
     if (
       validDaysLeft &&
       validDaysLeft <= 15 &&
@@ -61,9 +64,10 @@ export function EasyopsNavbarAlertsComponent() {
       ((dismissExpireAt = storage.getItem(licenseDismissedKey)),
       !dismissExpireAt || moment().unix() > dismissExpireAt)
     ) {
-      setLicenseDaysLeft(validDaysLeft);
+      return validDaysLeft;
     }
-  }, [licenseDismissedKey]);
+    return null;
+  }, [licenseDismissedKey, licenseHide]);
 
   useEffect(() => {
     const handelRouteRender = (e: Event): void => {
@@ -90,7 +94,7 @@ export function EasyopsNavbarAlertsComponent() {
   const handleLicenseAlertDismiss = useCallback(() => {
     // 一天内不再显示。
     storage.setItem(licenseDismissedKey, moment().unix() + 86400);
-    setLicenseDaysLeft(null);
+    setLienceseHide(true);
   }, [licenseDismissedKey]);
 
   return (
