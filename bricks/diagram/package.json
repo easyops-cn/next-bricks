@@ -43,6 +43,7 @@
     "@next-core/theme": "^1.4.8",
     "classnames": "^2.3.2",
     "d3-drag": "^3.0.0",
+    "d3-force": "^3.0.0",
     "d3-selection": "^3.0.0",
     "d3-shape": "^3.2.0",
     "d3-zoom": "^3.0.0",

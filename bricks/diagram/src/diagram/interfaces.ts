@@ -14,11 +14,6 @@ export interface DiagramEdge {
   [key: string]: unknown;
 }
 
-export interface RenderedGraph {
-  nodes: RenderedNode[];
-  edges: RenderedEdge[];
-}
-
 export interface RenderedNode {
   id: DiagramNodeId;
   x: number;
@@ -29,11 +24,20 @@ export interface RenderedNode {
 }
 
 export interface RenderedEdge {
-  points: NodePosition[];
+  id?: string;
+  points?: NodePosition[];
   data: DiagramEdge;
+  labelpos?: "c" | "l" | "r";
+  width?: number;
+  height?: number;
 }
 
-export interface RenderedLine {
+export interface RenderedDiagram {
+  nodes: RenderedNode[];
+  edges: RenderedEdge[];
+}
+
+export interface NormalizedLine {
   line: LineConf & {
     strokeColor: string;
     strokeWidth: number;
@@ -41,9 +45,19 @@ export interface RenderedLine {
     curveType: string;
     $id: string;
   };
-  d: string;
   markerIndex: number | undefined;
   edge: DiagramEdge;
+}
+
+export interface LineLabel {
+  text?: TextOptions;
+  label?: LineLabelConf;
+  id: string;
+  edge: DiagramEdge;
+}
+
+export interface RenderedLine extends NormalizedLine {
+  d: string;
 }
 
 export interface RenderedLineLabel {
@@ -183,4 +197,17 @@ export interface ActiveTargetOfNode {
 export interface ActiveTargetOfEdge {
   type: "edge";
   edge: DiagramEdge;
+}
+
+export interface UnifiedGraph {
+  layout: string;
+  getNode(id: string): RenderedNode | undefined;
+  applyLayout(context: ApplyLayoutContext): RenderedDiagram | null;
+}
+
+export interface ApplyLayoutContext {
+  nodesRefRepository: RefRepository;
+  lineLabelsRefRepository: RefRepository;
+  normalizedLinesMap: WeakMap<DiagramEdge, string>;
+  nodePaddings: FullRectTuple;
 }

@@ -4,14 +4,14 @@ import { checkIfByTransform } from "@next-core/runtime";
 import type {
   DiagramEdge,
   LineLabelConf,
-  PositionTuple,
+  // PositionTuple,
   RefRepository,
-  RenderedLineLabel,
+  LineLabel,
   TextOptions,
 } from "./interfaces";
 
 export interface LineLabelComponentGroupProps {
-  labels?: RenderedLineLabel[];
+  labels?: LineLabel[];
   onRendered?: (refRepository: RefRepository | null) => void;
 }
 
@@ -64,15 +64,15 @@ export function LineLabelComponentGroup({
 
   return (
     <React.Fragment>
-      {labels?.map(({ text, label, position, id, edge }) =>
+      {labels?.map(({ text, label, /* position, */ id, edge }) =>
         label ? (
           <div
             key={id}
             className="line-label"
-            style={{
-              left: position[0],
-              top: position[1],
-            }}
+            // style={{
+            //   left: position[0],
+            //   top: position[1],
+            // }}
           >
             <LineLabelComponent
               id={id}
@@ -87,7 +87,7 @@ export function LineLabelComponentGroup({
             key={id}
             id={id}
             text={text!}
-            position={position}
+            // position={position}
             onRendered={handleRenderer}
           />
         )
@@ -99,7 +99,7 @@ export function LineLabelComponentGroup({
 export interface LineTextComponentProps {
   id: string;
   text: TextOptions;
-  position: PositionTuple;
+  // position: PositionTuple;
   onRendered?: (id: string, element: HTMLElement | null) => void;
   // onUnmount?: (id: string) => void;
 }
@@ -107,7 +107,7 @@ export interface LineTextComponentProps {
 export function LineTextComponent({
   id,
   text,
-  position,
+  // position,
   onRendered /* , onUnmount */,
 }: LineTextComponentProps): JSX.Element {
   const refCallback = useCallback(
@@ -121,11 +121,12 @@ export function LineTextComponent({
     <div
       className="line-label"
       ref={refCallback}
-      style={{
-        left: position[0],
-        top: position[1],
-        ...text!.style,
-      }}
+      // style={{
+      //   left: position[0],
+      //   top: position[1],
+      //   ...text!.style,
+      // }}
+      style={text.style}
     >
       {text!.content}
     </div>

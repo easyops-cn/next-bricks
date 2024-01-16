@@ -1,26 +1,34 @@
 import dagre from "@dagrejs/dagre";
-import type { DiagramEdge, DiagramNode, RenderedNode } from "../interfaces";
+import type {
+  DiagramEdge,
+  DiagramNode,
+  RenderedEdge,
+  RenderedNode,
+  UnifiedGraph,
+} from "../interfaces";
+import { adjustNodesSize } from "./adjustNodesSize";
+import { adjustNodesPosition } from "./adjustNodesPosition";
 
 export function getDagreGraph(
-  previousGraph: dagre.graphlib.Graph<RenderedNode> | null,
+  previousGraph: UnifiedGraph | null,
   nodes: DiagramNode[] | undefined,
   edges: DiagramEdge[] | undefined,
   dagreGraphOptions: dagre.GraphLabel
-) {
+): UnifiedGraph {
   // Create a new directed graph
-  const newGraph = new dagre.graphlib.Graph<RenderedNode>();
+  const graph = new dagre.graphlib.Graph<RenderedNode>();
 
   // Set an object for the graph label
-  newGraph.setGraph(dagreGraphOptions);
+  graph.setGraph(dagreGraphOptions);
 
   // Default to assigning a new object as a label for each new edge.
-  newGraph.setDefaultEdgeLabel(function () {
+  graph.setDefaultEdgeLabel(function () {
     return {};
   });
 
   for (const node of nodes ?? []) {
-    const previousNode = previousGraph?.node(node.id);
-    newGraph.setNode(
+    const previousNode = previousGraph?.getNode(node.id);
+    graph.setNode(
       node.id,
       previousNode?.data === node
         ? previousNode
@@ -32,8 +40,59 @@ export function getDagreGraph(
   }
 
   for (const edge of edges ?? []) {
-    newGraph.setEdge(edge.source, edge.target, { data: edge });
+    graph.setEdge(edge.source, edge.target, { data: edge });
   }
 
-  return newGraph;
+  return {
+    layout: "dagre",
+    getNode(id) {
+      return graph.node(id);
+    },
+    applyLayout({
+      nodesRefRepository,
+      lineLabelsRefRepository,
+      nodePaddings,
+      normalizedLinesMap,
+    }) {
+      const renderedNodes: RenderedNode[] = [];
+      for (const id of graph.nodes()) {
+        const node = graph.node(id);
+        if (node) {
+          renderedNodes.push(node);
+        } else {
+          // eslint-disable-next-line no-console
+          console.error("Diagram node not found: %s", id);
+        }
+      }
+
+      if (renderedNodes.length === 0) {
+        return null;
+      }
+
+      adjustNodesSize(renderedNodes, nodesRefRepository, nodePaddings);
+
+      const renderedEdges = graph
+        .edges()
+        .map((e) => graph.edge(e) as RenderedEdge);
+      for (const edge of renderedEdges) {
+        const edgeId = normalizedLinesMap.get(edge.data);
+        if (edgeId) {
+          const element = lineLabelsRefRepository.get(edgeId);
+          if (element) {
+            edge.labelpos = "c";
+            edge.width = element.offsetWidth;
+            edge.height = element.offsetHeight;
+          }
+        }
+      }
+      dagre.layout(graph);
+
+      adjustNodesPosition(renderedNodes, nodesRefRepository, nodePaddings);
+
+      return {
+        nodes: renderedNodes,
+        edges: renderedEdges,
+      };
+    },
+  };
 }
