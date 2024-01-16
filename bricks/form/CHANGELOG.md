@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.1.2...@next-bricks/form@1.2.0) (2024-01-16)
+
+
+### Features
+
+* **upload-image:** add max count ([e04fc4e](https://github.com/easyops-cn/next-bricks/commit/e04fc4ec1ebe5846faba6f27b8c9b700e47c4d47))
+
+
+
+
+
 ## [1.1.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.1.1...@next-bricks/form@1.1.2) (2024-01-11)
 
 
