@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/shoelace@1.0.3...@next-bricks/shoelace@1.0.4) (2024-01-16)
+
+
+### Bug Fixes
+
+* fix navbars alert re-render and fix shoelace common.css ([ecc4807](https://github.com/easyops-cn/next-bricks/commit/ecc48078c98f2cd8071bd49949aaeee1726fe26f))
+
+
+
+
+
 ## [1.0.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/shoelace@1.0.2...@next-bricks/shoelace@1.0.3) (2024-01-03)
 
 **Note:** Version bump only for package @next-bricks/shoelace
