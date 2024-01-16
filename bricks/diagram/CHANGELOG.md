@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.8.0...@next-bricks/diagram@0.8.1) (2024-01-16)
+
+
+### Bug Fixes
+
+* avoid line labels overlap ([93dc460](https://github.com/easyops-cn/next-bricks/commit/93dc4603bfe87fb962cd826d5240cacd809fcdb4))
+
+
+
+
+
 # [0.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.7.0...@next-bricks/diagram@0.8.0) (2024-01-10)
 
 
