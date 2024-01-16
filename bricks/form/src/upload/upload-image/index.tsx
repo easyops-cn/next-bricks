@@ -34,6 +34,7 @@ export interface UploadImageProps {
   message?: Record<string, string>;
   value?: ImageData[];
   bucketName: string;
+  maxCount?: number;
   multiple?: boolean;
   limitSize?: number;
 }
@@ -74,6 +75,14 @@ class UploadImage extends FormItemElementBase implements UploadImageProps {
    */
   @property()
   accessor bucketName!: string;
+
+  /**
+   * 最大上传数量
+   */
+  @property({
+    type: Number,
+  })
+  accessor maxCount: number | undefined;
 
   /**
    * 是否支持选定的多张图片
@@ -127,6 +136,7 @@ class UploadImage extends FormItemElementBase implements UploadImageProps {
         value={this.value}
         required={this.required}
         message={this.message}
+        maxCount={this.maxCount}
         bucketName={this.bucketName}
         multiple={this.multiple}
         limitSize={this.limitSize}
@@ -162,7 +172,7 @@ interface UploadImageComponentProps extends UploadImageProps, FormItemProps {
 }
 
 export function UploadImageComponent(props: UploadImageComponentProps) {
-  const { value, bucketName, multiple, onChange, limitSize } = props;
+  const { value, bucketName, multiple, maxCount, onChange, limitSize } = props;
   const { t } = useTranslation(NS);
   const wrapBrickImageRef = useRef<Image>(null);
 
@@ -189,15 +199,7 @@ export function UploadImageComponent(props: UploadImageComponentProps) {
     actions: ItemActions,
     index: number
   ) => {
-    const {
-      uid,
-      file,
-      url,
-      name,
-      userData,
-      status = "done",
-      errors,
-    } = fileData;
+    const { uid, url, name, userData, status = "done", errors } = fileData;
 
     return (
       <div
@@ -266,6 +268,7 @@ export function UploadImageComponent(props: UploadImageComponentProps) {
         action={`${getBasePath()}api/gateway/object_store.object_store.PutObject/api/v1/objectStore/bucket/${bucketName}/object`}
         method="PUT"
         accept="image/*"
+        maxCount={maxCount}
         multiple={multiple}
         limitSize={limitSize}
         beforeUploadValidators={[(file) => imageValidator(file)]}
