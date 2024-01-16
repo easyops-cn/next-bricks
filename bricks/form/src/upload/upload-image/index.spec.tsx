@@ -78,6 +78,83 @@ describe("form.upload-image", () => {
       );
     });
 
+    expect(element.shadowRoot?.querySelectorAll(".image-item").length).toBe(2);
+    expect(element.shadowRoot?.querySelectorAll("eo-image").length).toBe(1);
+
+    expect(
+      element.shadowRoot
+        ?.querySelectorAll(".delete-icon")[0]
+        .getAttribute("icon")
+    ).toBe("delete");
+    expect(
+      element.shadowRoot
+        ?.querySelectorAll(".delete-icon")[1]
+        .getAttribute("icon")
+    ).toBe("close");
+
+    act(() => {
+      fireEvent.click(
+        element.shadowRoot?.querySelectorAll(
+          ".delete-icon"
+        )[1] as HTMLInputElement
+      );
+    });
+
+    expect(element.shadowRoot?.querySelectorAll(".image-item").length).toBe(1);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
+
+  test("max count", async () => {
+    const element = document.createElement("form.upload-image") as UploadImage;
+    element.maxCount = 1;
+    const files1 = [new File([""], "success1.png", { type: "image/png" })];
+    const files2 = [new File([""], "success2.png", { type: "image/png" })];
+    const onChange = jest.fn();
+    element.addEventListener("change", onChange);
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+
+    act(() => {
+      fireEvent.change(
+        element.shadowRoot?.querySelector("input") as HTMLInputElement,
+        { target: { files: files1 } }
+      );
+    });
+    await waitFor(() => {
+      expect(onChange).toBeCalledWith(
+        expect.objectContaining({
+          detail: expect.arrayContaining([
+            expect.objectContaining({ status: "done", file: files1[0] }),
+          ]),
+        })
+      );
+    });
+
+    act(() => {
+      fireEvent.change(
+        element.shadowRoot?.querySelector("input") as HTMLInputElement,
+        { target: { files: files2 } }
+      );
+    });
+    await waitFor(() => {
+      expect(onChange).toBeCalledWith(
+        expect.objectContaining({
+          detail: expect.arrayContaining([
+            expect.objectContaining({ status: "done", file: files2[0] }),
+          ]),
+        })
+      );
+    });
+
     expect(element.shadowRoot?.querySelectorAll("eo-image").length).toBe(1);
 
     act(() => {
