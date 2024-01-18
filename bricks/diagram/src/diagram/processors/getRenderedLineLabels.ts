@@ -1,4 +1,9 @@
-import type { RenderedLine, RenderedLineLabel } from "../interfaces";
+import type {
+  LineLabelConf,
+  RenderedLine,
+  RenderedLineLabel,
+  TextOptions,
+} from "../interfaces";
 
 export function getRenderedLineLabels(
   previous: RenderedLineLabel[],
@@ -8,11 +13,21 @@ export function getRenderedLineLabels(
   if (previous.length === 0 && renderedLines.length === 0) {
     return previous;
   }
-  return renderedLines
-    .map(({ line: { text, label, $id }, edge }) => {
+  return renderedLines.flatMap(
+    ({ line: { text, label, $id }, edge, labelSize, angle }) => {
       const path = linePaths.get($id);
       if ((!text && !label) || !path || !path.getAttribute("d")) {
-        return;
+        return [] as RenderedLineLabel[];
+      }
+
+      let key: "label" | "text";
+      let list: LineLabelConf[] | TextOptions[];
+      if (label) {
+        key = "label";
+        list = ([] as LineLabelConf[]).concat(label);
+      } else {
+        key = "text";
+        list = ([] as TextOptions[]).concat(text!);
       }
 
       // istanbul ignore next
@@ -28,18 +43,36 @@ export function getRenderedLineLabels(
       const bottom = y + height + padding;
 
       // istanbul ignore next
-      const point =
-        process.env.NODE_ENV === "test"
-          ? { x: 50, y: 50 }
-          : path.getPointAtLength(path.getTotalLength() / 2);
-      return {
-        text,
-        label,
-        edge,
-        position: [point.x, point.y],
-        lineRect: { left, top, right, bottom },
-        id: $id,
-      };
-    })
-    .filter(Boolean) as RenderedLineLabel[];
+      const pathLength =
+        process.env.NODE_ENV === "test" ? 50 : path.getTotalLength();
+
+      return list.map<RenderedLineLabel>((item) => {
+        const placement = item.placement ?? "center";
+        const offset = 0;
+        // istanbul ignore next
+        const point =
+          process.env.NODE_ENV === "test"
+            ? { x: 50, y: 50 }
+            : path.getPointAtLength(
+                placement === "start"
+                  ? Math.min(offset, pathLength / 2)
+                  : placement === "end"
+                    ? Math.max(pathLength - offset, pathLength / 2)
+                    : pathLength / 2
+              );
+
+        return {
+          [key as "label"]: item as LineLabelConf,
+          edge,
+          position: [point.x, point.y],
+          lineRect: { left, top, right, bottom },
+          id: `${$id}-${placement}`,
+          lineId: $id,
+          placement,
+          angle,
+          size: labelSize?.[placement],
+        };
+      });
+    }
+  );
 }

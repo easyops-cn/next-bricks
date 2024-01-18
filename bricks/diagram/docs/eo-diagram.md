@@ -484,3 +484,215 @@ children:
               })
             %>
 ```
+
+### Force
+
+```yaml preview minHeight="600px"
+brick: div
+properties:
+  style:
+    position: fixed
+    height: 100vh
+    width: 100vw
+    top: 0px
+    left: 0px
+context:
+  - name: activeTarget
+    value: null
+  - name: nodes
+    value:
+      - id: 产品评价
+      - id: 产品线
+      - id: 用户角色
+      - id: 模型视图
+      - id: 产品
+      - id: 业务场景
+      - id: 业务规则
+      - id: 模型
+      - id: 产品模块
+      - id: 产品价值点
+      - id: 工作流
+      - id: 测试用例
+      - id: 功能点
+      # - id: 其他
+  - name: edges
+    value:
+      - source: 产品
+        target: 产品评价
+        sourceConstraints:
+          required: true
+        targetConstraints:
+          multiple: true
+      - source: 产品
+        target: 产品线
+        sourceConstraints:
+          multiple: true
+        targetConstraints:
+          required: true
+      - source: 产品
+        target: 用户角色
+        sourceConstraints:
+          multiple: true
+        targetConstraints:
+          multiple: true
+      - source: 产品
+        target: 模型视图
+        sourceConstraints:
+          required: true
+        targetConstraints:
+          multiple: true
+      - source: 产品
+        target: 业务场景
+        sourceConstraints:
+          required: true
+        targetConstraints:
+          multiple: true
+      - source: 业务场景
+        target: 业务场景
+      - source: 业务场景
+        target: 业务规则
+        sourceConstraints:
+          required: true
+        targetConstraints:
+          multiple: true
+      - source: 业务场景
+        target: 用户角色
+        sourceConstraints:
+          multiple: true
+        targetConstraints:
+          multiple: true
+      - source: 产品
+        target: 模型
+        sourceConstraints:
+          required: true
+        targetConstraints:
+          multiple: true
+      - source: 产品
+        target: 产品模块
+        sourceConstraints:
+          required: true
+        targetConstraints:
+          multiple: true
+      - source: 产品
+        target: 产品价值点
+        sourceConstraints:
+          required: true
+        targetConstraints:
+          multiple: true
+      - source: 业务场景
+        target: 产品价值点
+      - source: 业务场景
+        target: 工作流
+      - source: 业务规则
+        target: 工作流
+      - source: 产品
+        target: 产品模块
+        sourceConstraints:
+          required: true
+        targetConstraints:
+          multiple: true
+      - source: 产品模块
+        target: 产品模块
+      - source: 产品模块
+        target: 测试用例
+        sourceConstraints:
+          multiple: true
+        targetConstraints:
+          multiple: true
+      - source: 产品模块
+        target: 功能点
+        sourceConstraints:
+          required: true
+        targetConstraints:
+          multiple: true
+      - source: 测试用例
+        target: 功能点
+        sourceConstraints:
+          multiple: true
+        targetConstraints:
+          multiple: true
+      # - source: 产品线
+      #   target: 模型视图
+children:
+  - brick: eo-diagram
+    properties:
+      layout: force
+      nodes: <%= CTX.nodes %>
+      edges: <%= CTX.edges %>
+      activeTarget: <%= CTX.activeTarget %>
+      layoutOptions:
+        nodePadding: 5
+        dummyNodesOnEdges: 1
+        collide:
+          dummyRadius: 10
+          radiusDiff: 32
+        # rankdir: LR
+        # acyclicer: greedy
+        # align: DL
+      lines:
+        - arrow: false
+          # curveType: curveLinear
+          # interactable: true
+          text:
+            - content: |
+                <% DATA.edge.sourceConstraints ? `${DATA.edge.sourceConstraints.required ? "1" : "0"}${DATA.edge.sourceConstraints.multiple ? "..*" : ""}` : "0..1" %>
+              style:
+                color: rgba(128,128,128,0.8)
+              placement: start
+            - content: |
+                <% DATA.edge.targetConstraints ? `${DATA.edge.targetConstraints.required ? "1" : "0"}${DATA.edge.targetConstraints.multiple ? "..*" : ""}` : "0..1" %>
+              style:
+                color: rgba(128,128,128,0.8)
+              placement: end
+      nodeBricks:
+        - useBrick:
+            # if: <% DATA.node.id !== "kbacon" %>
+            brick: div
+            properties:
+              style: |
+                <%=
+                  {
+                    width: "120px",
+                    height: "60px",
+                    border: "2px solid green",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    outline: CTX.activeTarget?.type === "node" && DATA.node.id === CTX.activeTarget.nodeId ? "2px solid orange" : "none",
+                    outlineOffset: "2px",
+                    cursor: "pointer",
+                  }
+                %>
+            children:
+              - brick: span
+                properties:
+                  textContent: <% DATA.node.id %>
+            events:
+              click:
+                action: context.replace
+                args:
+                  - activeTarget
+                  - type: node
+                    nodeId: <% DATA.node.id %>
+    events:
+      activeNode.change:
+        action: context.replace
+        # Take reaction only if the active node has been changed
+        # Otherwise it may cause infinite loop
+        if: |
+          <%
+            ((newTarget, previousTarget) =>
+              (newTarget
+                ? !previousTarget ||
+                  newTarget.type !== previousTarget.type ||
+                  (newTarget.type === "node"
+                    ? newTarget.nodeId !== previousTarget.nodeId
+                    : newTarget.edge.source !== previousTarget.edge.source ||
+                      newTarget.edge.target !== previousTarget.edge.target)
+              : !!previousTarget)
+            )(EVENT.detail, CTX.activeTarget)
+          %>
+        args:
+          - activeTarget
+          - <% EVENT.detail %>
+```

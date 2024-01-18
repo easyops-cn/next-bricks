@@ -30,7 +30,7 @@ export function LineComponent({
   onLineClick,
   onLineDoubleClick,
 }: LineComponentProps): JSX.Element {
-  const clipPath = clipPathList.some((clip) => clip.id === line.$id)
+  const clipPath = clipPathList.some((clip) => clip.lineId === line.$id)
     ? `url(#${clipPathPrefix}${line.$id})`
     : undefined;
   return (

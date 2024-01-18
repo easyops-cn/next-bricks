@@ -18,7 +18,7 @@ import { uniqueId } from "lodash";
 import type {
   DiagramEdge,
   DiagramNode,
-  LayoutOptionsDagre,
+  LayoutOptions,
   LineConf,
   NodeBrickConf,
   PositionTuple,
@@ -33,6 +33,8 @@ import type {
   ActiveTarget,
   RangeTuple,
   LineLabel,
+  LineLabelConf,
+  TextOptions,
 } from "./interfaces";
 import { NodeComponentGroup } from "./NodeComponent";
 import { handleKeyboard } from "./processors/handleKeyboard";
@@ -49,6 +51,7 @@ import { getRenderedLineLabels } from "./processors/getRenderedLineLabels";
 import { handleNodesMouseDown } from "./processors/handleNodesMouseDown";
 import { DEFAULT_SCALE_RANGE_MAX, DEFAULT_SCALE_RANGE_MIN } from "./constants";
 import { useRenderedDiagram } from "./hooks/useRenderedDiagram";
+import { adjustLineLabels } from "./processors/adjustLineLabels";
 import styleText from "./styles.shadow.css";
 
 const { defineElement, property, event, method } = createDecorators();
@@ -59,7 +62,7 @@ export interface EoDiagramProps {
   edges?: DiagramEdge[];
   nodeBricks?: NodeBrickConf[];
   lines?: LineConf[];
-  layoutOptions?: LayoutOptionsDagre;
+  layoutOptions?: LayoutOptions;
   nodesConnect?: NodesConnectOptions;
   activeTarget?: ActiveTarget | null;
   disableKeyboardAction?: boolean;
@@ -102,7 +105,7 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
   accessor lines: LineConf[] | undefined;
 
   @property({ attribute: false })
-  accessor layoutOptions: LayoutOptionsDagre | undefined;
+  accessor layoutOptions: LayoutOptions | undefined;
 
   @property({ attribute: false })
   accessor activeTarget: ActiveTarget | null | undefined;
@@ -313,14 +316,27 @@ export function LegacyEoDiagramComponent(
   );
 
   const lineLabels = useMemo(() => {
-    return normalizedLines
-      .map(({ line: { text, label, $id }, edge }) => {
-        if (!text && !label) {
-          return;
-        }
-        return { text, label, id: $id, edge };
-      })
-      .filter(Boolean) as LineLabel[];
+    return normalizedLines.flatMap(({ line: { text, label, $id }, edge }) => {
+      if (!text && !label) {
+        return [] as LineLabel[];
+      }
+
+      let key: "label" | "text";
+      let list: LineLabelConf[] | TextOptions[];
+      if (label) {
+        key = "label";
+        list = ([] as LineLabelConf[]).concat(label);
+      } else {
+        key = "text";
+        list = ([] as TextOptions[]).concat(text!);
+      }
+
+      return list.map<LineLabel>((item) => ({
+        [key as "label"]: item as LineLabelConf,
+        id: `${$id}-${item.placement ?? "center"}`,
+        edge,
+      }));
+    });
   }, [normalizedLines]);
 
   const { nodes: renderedNodes, edges: renderedEdges } = useRenderedDiagram({
@@ -527,14 +543,7 @@ export function LegacyEoDiagramComponent(
     if (!lineLabelsRefRepository) {
       return;
     }
-    for (const { id, position } of renderedLineLabels) {
-      const label = lineLabelsRefRepository.get(id);
-      if (label) {
-        label.style.left = `${position[0]}px`;
-        label.style.top = `${position[1]}px`;
-        label.style.visibility = "visible";
-      }
-    }
+    adjustLineLabels(renderedLineLabels, lineLabelsRefRepository);
     setClipPathList(
       getClipPathList(renderedLineLabels, lineLabelsRefRepository)
     );
@@ -565,7 +574,7 @@ export function LegacyEoDiagramComponent(
           ))}
           {clipPathList.map((clipPath) => (
             <ClipPathComponent
-              key={clipPath.id}
+              key={clipPath.lineId}
               clipPath={clipPath}
               clipPathPrefix={clipPathPrefix}
               renderedLineLabels={renderedLineLabels}

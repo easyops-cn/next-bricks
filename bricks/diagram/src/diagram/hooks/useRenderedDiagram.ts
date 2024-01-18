@@ -1,16 +1,16 @@
-import { useEffect, useMemo, useState } from "react";
-import { pick } from "lodash";
+import { useEffect, useState } from "react";
 import type {
   DiagramEdge,
   DiagramNode,
+  LayoutOptions,
   LayoutOptionsDagre,
+  LayoutOptionsForce,
   RefRepository,
   RenderedDiagram,
   UnifiedGraph,
 } from "../interfaces";
 import { getDagreGraph } from "../processors/getDagreGraph";
 import { getForceGraph } from "../processors/getForceGraph";
-import { extractPartialRectTuple } from "../processors/extractPartialRectTuple";
 
 export function useRenderedDiagram({
   layout,
@@ -31,7 +31,7 @@ export function useRenderedDiagram({
   normalizedLinesMap: WeakMap<DiagramEdge, string>;
   nodesRenderId: number;
   lineLabelsRenderId: number;
-  layoutOptions?: LayoutOptionsDagre;
+  layoutOptions?: LayoutOptions;
 }) {
   const [graph, setGraph] = useState<UnifiedGraph | null>(null);
 
@@ -40,21 +40,6 @@ export function useRenderedDiagram({
     edges: [],
   });
 
-  const fixedOptions = useMemo(
-    () => ({
-      rankdir: "TB",
-      ranksep: 50,
-      edgesep: 10,
-      nodesep: 50,
-      // align: undefined,
-      nodePadding: 0,
-      ...layoutOptions,
-    }),
-    [layoutOptions]
-  );
-
-  const { nodePadding } = fixedOptions;
-
   useEffect(() => {
     setGraph((previousGraph) =>
       layout === "dagre"
@@ -62,30 +47,27 @@ export function useRenderedDiagram({
             previousGraph,
             nodes,
             edges,
-            pick(fixedOptions, [
-              "rankdir",
-              "ranksep",
-              "edgesep",
-              "nodesep",
-              "align",
-            ])
+            layoutOptions as LayoutOptionsDagre
           )
         : layout === "force"
-          ? getForceGraph(previousGraph, nodes, edges)
+          ? getForceGraph(
+              previousGraph,
+              nodes,
+              edges,
+              layoutOptions as LayoutOptionsForce
+            )
           : null
     );
-  }, [edges, nodes, fixedOptions, layout]);
+  }, [edges, nodes, layout, layoutOptions]);
 
   useEffect(() => {
     if (!nodesRefRepository || !lineLabelsRefRepository) {
       return;
     }
-    const nodePaddings = extractPartialRectTuple(nodePadding);
     const renderedDiagram = graph?.applyLayout({
       nodesRefRepository,
       lineLabelsRefRepository,
       normalizedLinesMap,
-      nodePaddings,
     });
     if (renderedDiagram) {
       setRenderedDiagram(renderedDiagram);
@@ -96,7 +78,6 @@ export function useRenderedDiagram({
     lineLabelsRefRepository,
     nodesRenderId,
     lineLabelsRenderId,
-    nodePadding,
     normalizedLinesMap,
   ]);
 

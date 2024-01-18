@@ -39,7 +39,7 @@ describe("curveLine", () => {
     },
   ];
   test.each([[point1], [point2]])("curveLine(%j) should work", (point) => {
-    expect(curveLine(point, 5)).toMatchSnapshot();
+    expect(curveLine(point, 5, "curveLinear")).toMatchSnapshot();
   });
 
   test("no points", () => {

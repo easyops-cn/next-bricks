@@ -30,6 +30,8 @@ export function getRenderedLines(
         line,
         edge,
         d,
+        angle: renderedEdge.angle,
+        labelSize: renderedEdge.labelSize,
       };
     })
     .filter(Boolean) as RenderedLine[];
