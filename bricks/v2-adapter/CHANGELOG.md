@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@1.0.4...@next-bricks/v2-adapter@1.0.5) (2024-01-18)
+
+
+### Bug Fixes
+
+* manually use batched updates for legacy use-brick ([63e1508](https://github.com/easyops-cn/next-bricks/commit/63e1508028003fbe8788077be21cf53b8f4381ef))
+
+
+
+
+
 ## [1.0.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@1.0.3...@next-bricks/v2-adapter@1.0.4) (2024-01-05)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
