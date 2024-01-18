@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.8.1...@next-bricks/diagram@0.9.0) (2024-01-18)
+
+
+### Features
+
+* support line labels on start and end ([344d1c6](https://github.com/easyops-cn/next-bricks/commit/344d1c6c63c475b891294e9023d97ede1bdd5068))
+
+
+
+
+
 ## [0.8.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.8.0...@next-bricks/diagram@0.8.1) (2024-01-16)
 
 
