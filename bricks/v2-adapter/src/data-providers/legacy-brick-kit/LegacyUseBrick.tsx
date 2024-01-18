@@ -3,7 +3,7 @@
 import type React from "react";
 import type { UseSingleBrickConf } from "@next-core/types";
 import { __secret_internals, handleHttpError } from "@next-core/runtime";
-import { getLegacyReact } from "../dll.js";
+import { getLegacyReact, getLegacyReactDOM } from "../dll.js";
 
 export interface ReactUseBrickProps {
   useBrick: UseSingleBrickConf;
@@ -21,6 +21,7 @@ export function ReactUseBrick({
   ignoredCallback,
 }: ReactUseBrickProps): React.ReactElement | null {
   const LegacyReact = getLegacyReact();
+  const LegacyReactDOM = getLegacyReactDOM();
   const [renderResult, setRenderResult] =
     LegacyReact.useState<__secret_internals.RenderUseBrickResult | null>(null);
   const mountResult =
@@ -43,8 +44,11 @@ export function ReactUseBrick({
         if (ignore) {
           return;
         }
-        setRenderResult(newRender);
-        setRenderKey(getUniqueId(IdCounterRef));
+        // In React 17 and earlier, state updates are not batched in async callback.
+        LegacyReactDOM.unstable_batchedUpdates(() => {
+          setRenderKey(getUniqueId(IdCounterRef));
+          setRenderResult(newRender);
+        });
       } catch (error) {
         if (isTheSameRender(initialRenderId)) {
           // eslint-disable-next-line no-console
