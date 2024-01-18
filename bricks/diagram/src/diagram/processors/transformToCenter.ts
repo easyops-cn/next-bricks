@@ -46,8 +46,8 @@ export function transformToCenter(
         )
       : 1;
 
-  const x = (canvasWidth - width * scale) / 2 - left;
-  const y = (canvasHeight - height * scale) / 2 - top;
+  const x = (canvasWidth - width * scale) / 2 - left * scale;
+  const y = (canvasHeight - height * scale) / 2 - top * scale;
 
   return { x, y, k: scale };
 }
