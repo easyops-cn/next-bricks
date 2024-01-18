@@ -64,6 +64,7 @@
   white-space: pre-line;
   width: max-content;
   text-align: center;
+  line-height: 1;
 }
 
 .lines {

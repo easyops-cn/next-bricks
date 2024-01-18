@@ -1,20 +1,41 @@
 import dagre from "@dagrejs/dagre";
+import { pick } from "lodash";
 import type {
   DiagramEdge,
   DiagramNode,
+  LayoutOptionsDagre,
   RenderedEdge,
   RenderedNode,
   UnifiedGraph,
 } from "../interfaces";
 import { adjustNodesSize } from "./adjustNodesSize";
 import { adjustNodesPosition } from "./adjustNodesPosition";
+import { extractPartialRectTuple } from "./extractPartialRectTuple";
 
 export function getDagreGraph(
   previousGraph: UnifiedGraph | null,
   nodes: DiagramNode[] | undefined,
   edges: DiagramEdge[] | undefined,
-  dagreGraphOptions: dagre.GraphLabel
+  dagreLayoutOptions: LayoutOptionsDagre | undefined
 ): UnifiedGraph {
+  const { nodePadding, ...dagreGraphOptions } = {
+    nodePadding: 0,
+    rankdir: "TB",
+    ranksep: 50,
+    edgesep: 10,
+    nodesep: 50,
+    // align: undefined,
+    ...pick(dagreLayoutOptions, [
+      "nodePadding",
+      "rankdir",
+      "ranksep",
+      "edgesep",
+      "nodesep",
+      "align",
+    ]),
+  };
+  const nodePaddings = extractPartialRectTuple(nodePadding);
+
   // Create a new directed graph
   const graph = new dagre.graphlib.Graph<RenderedNode>();
 
@@ -51,7 +72,6 @@ export function getDagreGraph(
     applyLayout({
       nodesRefRepository,
       lineLabelsRefRepository,
-      nodePaddings,
       normalizedLinesMap,
     }) {
       const renderedNodes: RenderedNode[] = [];
@@ -75,13 +95,22 @@ export function getDagreGraph(
         .edges()
         .map((e) => graph.edge(e) as RenderedEdge);
       for (const edge of renderedEdges) {
-        const edgeId = normalizedLinesMap.get(edge.data);
-        if (edgeId) {
-          const element = lineLabelsRefRepository.get(edgeId);
-          if (element) {
-            edge.labelpos = "c";
-            edge.width = element.offsetWidth;
-            edge.height = element.offsetHeight;
+        const lineId = normalizedLinesMap.get(edge.data);
+        if (lineId) {
+          for (const placement of ["center", "start", "end"] as const) {
+            const element = lineLabelsRefRepository.get(
+              `${lineId}-${placement}`
+            );
+            if (element) {
+              const { offsetWidth, offsetHeight } = element;
+              if (placement === "center") {
+                edge.labelpos = "c";
+                edge.width = offsetWidth;
+                edge.height = offsetHeight;
+              }
+              edge.labelSize ??= {};
+              edge.labelSize[placement] = [offsetWidth, offsetHeight];
+            }
           }
         }
       }

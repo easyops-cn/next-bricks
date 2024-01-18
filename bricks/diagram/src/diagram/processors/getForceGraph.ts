@@ -10,29 +10,65 @@ import {
   type SimulationNodeDatum,
   type SimulationLinkDatum,
 } from "d3-force";
+import { pick } from "lodash";
 import type {
   DiagramEdge,
   DiagramNode,
+  ForceCollideOptions,
+  LabelSize,
+  LayoutOptionsForce,
   RenderedNode,
   UnifiedGraph,
 } from "../interfaces";
 import { adjustNodesSize } from "./adjustNodesSize";
 import { adjustNodesPosition } from "./adjustNodesPosition";
+import { getDirectLinePoints } from "../lines/getDirectLinePoints";
+import { extractPartialRectTuple } from "./extractPartialRectTuple";
 
-interface ForceNode extends SimulationNodeDatum {
+interface NormalNode extends SimulationNodeDatum {
+  dummy?: false;
   id: string;
   data: DiagramNode;
   width: number;
   height: number;
 }
 
-type ForceLink = SimulationLinkDatum<ForceNode>;
+interface DummyNode extends SimulationNodeDatum {
+  dummy: true;
+  id: string;
+}
+
+type ForceNode = NormalNode | DummyNode;
+
+type ForceLink = SimulationLinkDatum<ForceNode> & {
+  dummy?: boolean;
+};
 
 export function getForceGraph(
   previousGraph: UnifiedGraph | null,
   nodes: DiagramNode[] | undefined,
-  edges: DiagramEdge[] | undefined
+  edges: DiagramEdge[] | undefined,
+  forceLayoutOptions: LayoutOptionsForce
 ): UnifiedGraph {
+  const { nodePadding, dummyNodesOnEdges, collide } = {
+    nodePadding: 0,
+    dummyNodesOnEdges: 0,
+    ...pick(forceLayoutOptions, ["nodePadding", "dummyNodesOnEdges"]),
+    collide:
+      forceLayoutOptions?.collide !== false
+        ? ({
+            dummyRadius: 1,
+            radiusDiff: 5,
+            strength: 1,
+            iterations: 1,
+            ...(forceLayoutOptions?.collide === true
+              ? null
+              : (forceLayoutOptions?.collide as ForceCollideOptions)),
+          } as Required<ForceCollideOptions>)
+        : (false as const),
+  };
+  const nodePaddings = extractPartialRectTuple(nodePadding);
+
   const renderedNodes: RenderedNode[] = [];
   for (const node of nodes ?? []) {
     const previousNode = previousGraph?.getNode(node.id);
@@ -53,32 +89,63 @@ export function getForceGraph(
   return {
     layout: "force",
     getNode,
-    applyLayout({ nodesRefRepository, nodePaddings }) {
+    applyLayout({
+      nodesRefRepository,
+      lineLabelsRefRepository,
+      normalizedLinesMap,
+    }) {
       if (renderedNodes.length === 0) {
         return null;
       }
 
       adjustNodesSize(renderedNodes, nodesRefRepository, nodePaddings);
 
-      const simulation = forceSimulation<ForceNode>(renderedNodes)
-        .force("x", forceX() /* .strength(0.1) */)
-        .force("y", forceY() /* .strength(0.4) */)
-        // .force("center", forceCenter(640, 648))
-        .force(
-          "link",
-          forceLink<ForceNode, ForceLink>(
-            edges?.map((edge) => ({ ...edge })) ?? []
-          ).id((d) => d.id)
-        )
-        .force(
+      const forceNodes = renderedNodes.slice();
+      const forceLinks: ForceLink[] = [];
+
+      for (const edge of edges ?? []) {
+        forceLinks.push({ ...edge });
+        if (dummyNodesOnEdges > 0) {
+          forceNodes.push(
+            ...(getDummyNodes(
+              edge,
+              dummyNodesOnEdges
+            ) as Partial<RenderedNode>[] as RenderedNode[])
+          );
+          forceLinks.push(...getDummyEdges(edge, dummyNodesOnEdges));
+        }
+      }
+
+      const linkSimulation = forceLink<ForceNode, ForceLink>(forceLinks).id(
+        (d) => d.id
+      );
+
+      if (dummyNodesOnEdges > 0) {
+        linkSimulation
+          .distance((l) => (l.dummy ? 30 / (dummyNodesOnEdges + 1) : 30))
+          .strength((l) => (l.dummy ? 0.5 : 1));
+      }
+
+      const simulation = forceSimulation<ForceNode>(forceNodes)
+        .force("link", linkSimulation)
+        .force("x", forceX())
+        .force("y", forceY())
+        .force("charge", forceManyBody());
+
+      if (collide) {
+        simulation.force(
           "collide",
           forceCollide<ForceNode>()
-            .radius(
-              (d) => Math.sqrt((d.width + 10) ** 2 + (d.height + 10) ** 2) / 2
+            .radius((d) =>
+              d.dummy
+                ? collide.dummyRadius
+                : Math.sqrt(d.width ** 2 + d.height ** 2) / 2 +
+                  collide.radiusDiff
             )
-            .strength(1)
-        )
-        .force("charge", forceManyBody().strength(30));
+            .strength(collide.strength)
+            .iterations(collide.iterations)
+        );
+      }
 
       simulation.stop();
       manuallyTickToTheEnd(simulation);
@@ -89,67 +156,35 @@ export function getForceGraph(
         edges?.map((edge) => {
           const source = getNode(edge.source)!;
           const target = getNode(edge.target)!;
-
-          // Ignore if two nodes overlap.
-          const left = Math.min(
-            source.x - source.width / 2,
-            target.x - target.width / 2
-          );
-          const right = Math.max(
-            source.x + source.width / 2,
-            target.x + target.width / 2
-          );
-          const top = Math.min(
-            source.y - source.height / 2,
-            target.y - target.height / 2
-          );
-          const bottom = Math.max(
-            source.y + source.height / 2,
-            target.y + target.height / 2
-          );
-          if (
-            right - left < source.width + target.width &&
-            bottom - top < source.height + target.height
-          ) {
-            return { data: edge };
+          const points = getDirectLinePoints(source, target);
+          let angle: number | undefined;
+          if (points) {
+            const start = points[0];
+            const end = points[points.length - 1];
+            angle = Math.atan2(end.y - start.y, end.x - start.x);
           }
 
-          const dx = target.x - source.x;
-          const dy = target.y - source.y;
-
-          let x0: number, y0: number, x1: number, y1: number;
-          const directionX = dx > 0 ? 1 : -1;
-          if (dy !== 0) {
-            const deltaRadio = Math.abs(dx / dy);
-            const directionY = dy > 0 ? 1 : -1;
-            const sourceRadio = source.width / source.height;
-            if (deltaRadio < sourceRadio) {
-              x0 = source.x + ((deltaRadio * source.height) / 2) * directionX;
-              y0 = source.y + (source.height / 2) * directionY;
-            } else {
-              x0 = source.x + (source.width / 2) * directionX;
-              y0 = source.y + (source.width / 2 / deltaRadio) * directionY;
+          const lineId = normalizedLinesMap.get(edge);
+          const labelSize: LabelSize = {};
+          if (lineId) {
+            for (const placement of ["center", "start", "end"] as const) {
+              const element = lineLabelsRefRepository.get(
+                `${lineId}-${placement}`
+              );
+              if (element) {
+                labelSize[placement] = [
+                  element.offsetWidth,
+                  element.offsetHeight,
+                ];
+              }
             }
-            const targetRadio = target.width / target.height;
-            if (deltaRadio < targetRadio) {
-              x1 = target.x - ((deltaRadio * target.height) / 2) * directionX;
-              y1 = target.y - (target.height / 2) * directionY;
-            } else {
-              x1 = target.x - (target.width / 2) * directionX;
-              y1 = target.y - (target.width / 2 / deltaRadio) * directionY;
-            }
-          } else {
-            x0 = source.x + (source.width / 2) * directionX;
-            x1 = target.x - (target.width / 2) * directionX;
-            y0 = y1 = source.y;
           }
 
           return {
             data: edge,
-            points: [
-              { x: x0, y: y0 },
-              { x: x1, y: y1 },
-            ],
+            points,
+            angle,
+            labelSize,
           };
         }) ?? [];
 
@@ -167,4 +202,21 @@ function manuallyTickToTheEnd(
       Math.log(simulation.alphaMin()) / Math.log(1 - simulation.alphaDecay())
     )
   );
+}
+
+function getDummyNodes(edge: DiagramEdge, count: number): DummyNode[] {
+  return new Array(count).fill(null).map<DummyNode>((v, i) => ({
+    dummy: true,
+    id: `$dummy-${edge.source}-${edge.target}-${i}`,
+  }));
+}
+
+function getDummyEdges(edge: DiagramEdge, count: number): ForceLink[] {
+  return new Array(count + 1).fill(null).map<ForceLink>((v, i) => ({
+    dummy: true,
+    source:
+      i === 0 ? edge.source : `$dummy-${edge.source}-${edge.target}-${i - 1}`,
+    target:
+      i === count ? edge.target : `$dummy-${edge.source}-${edge.target}-${i}`,
+  }));
 }

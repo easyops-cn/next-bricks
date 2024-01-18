@@ -12,15 +12,17 @@ export function ClipPathComponent({
   clipPathPrefix,
   renderedLineLabels,
 }: ClipPathComponentProps): JSX.Element | null {
-  const { x0, y0, w, h, id } = clipPath;
-  const lineText = renderedLineLabels.find((item) => item.id === id);
+  const { x0, y0, w, h, lineId } = clipPath;
+  const lineText = renderedLineLabels.find(
+    (item) => item.lineId === lineId && item.placement === "center"
+  );
   if (!lineText) {
     return null;
   }
   const { left, top, right, bottom } = lineText.lineRect;
   // https://css-tricks.com/cutting-inner-part-element-using-clip-path/
   return (
-    <clipPath key={id} id={`${clipPathPrefix}${id}`}>
+    <clipPath key={lineId} id={`${clipPathPrefix}${lineId}`}>
       <polygon
         points={[
           `${x0},${y0 + h}`,

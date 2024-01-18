@@ -9,8 +9,11 @@ export function getClipPathList(
   lineLabelsRefRepository: RefRepository
 ) {
   return renderedLineLabels
-    .map(({ id }) => {
-      const element = lineLabelsRefRepository?.get(id);
+    .map(({ id, lineId, placement }) => {
+      if (!lineLabelsRefRepository || placement !== "center") {
+        return;
+      }
+      const element = lineLabelsRefRepository.get(id);
       if (!element) {
         return;
       }
@@ -28,7 +31,7 @@ export function getClipPathList(
         y0: element.offsetTop - offsetHeight / 2 - padding,
         w: offsetWidth + padding * 2,
         h: offsetHeight + padding * 2,
-        id,
+        lineId,
       };
     })
     .filter(Boolean) as LineTextClipPath[];

@@ -25,11 +25,19 @@ export interface RenderedNode {
 
 export interface RenderedEdge {
   id?: string;
-  points?: NodePosition[];
+  points?: NodePosition[] | null;
   data: DiagramEdge;
+  angle?: number;
   labelpos?: "c" | "l" | "r";
   width?: number;
   height?: number;
+  labelSize?: LabelSize;
+}
+
+export interface LabelSize {
+  center?: SizeTuple;
+  start?: SizeTuple;
+  end?: SizeTuple;
 }
 
 export interface RenderedDiagram {
@@ -58,6 +66,8 @@ export interface LineLabel {
 
 export interface RenderedLine extends NormalizedLine {
   d: string;
+  angle?: number;
+  labelSize?: LabelSize;
 }
 
 export interface RenderedLineLabel {
@@ -72,9 +82,14 @@ export interface RenderedLineLabel {
     bottom: number;
   };
   id: string;
+  lineId: string;
+  placement: string;
+  angle?: number;
+  size?: SizeTuple;
 }
 
 export type PositionTuple = [x: number, y: number];
+export type SizeTuple = [width: number, height: number];
 export type RangeTuple = [min: number, max: number];
 
 export interface LineMarker {
@@ -109,20 +124,24 @@ export interface LineConf {
   interactStrokeWidth?: number;
   curveType?: "curveBasis";
   arrow?: boolean;
-  text?: TextOptions;
-  label?: LineLabelConf;
+  text?: TextOptions | TextOptions[];
+  label?: LineLabelConf | LineLabelConf[];
   cursor?: React.CSSProperties["cursor"];
 }
 
 export interface LineLabelConf {
   if?: string | boolean | null;
   useBrick: UseSingleBrickConf;
+  placement?: LineLabelPlacement;
 }
 
 export interface TextOptions {
   content: string;
   style?: CSSProperties;
+  placement?: LineLabelPlacement;
 }
+
+export type LineLabelPlacement = "center" | "start" | "end";
 
 export interface TransformLiteral {
   k: number;
@@ -130,13 +149,30 @@ export interface TransformLiteral {
   y: number;
 }
 
-export interface LayoutOptionsDagre {
-  nodePadding?: PartialRectTuple;
+export type LayoutOptions = LayoutOptionsDagre | LayoutOptionsForce;
+
+export interface LayoutOptionsDagre extends BaseLayoutOptions {
   rankdir?: "TB" | "BT" | "LR" | "RL";
   ranksep?: number;
   edgesep?: number;
   nodesep?: number;
   align?: "UL" | "UR" | "DL" | "DR";
+}
+
+export interface LayoutOptionsForce extends BaseLayoutOptions {
+  dummyNodesOnEdges?: number;
+  collide?: boolean | ForceCollideOptions;
+}
+
+export interface ForceCollideOptions {
+  dummyRadius?: number;
+  radiusDiff?: number;
+  strength?: number;
+  iterations?: number;
+}
+
+export interface BaseLayoutOptions {
+  nodePadding?: PartialRectTuple;
 }
 
 export type PartialRectTuple =
@@ -154,7 +190,7 @@ export type FullRectTuple = [
 ];
 
 export interface LineTextClipPath extends SimpleRect {
-  id: string;
+  lineId: string;
 }
 
 export interface SimpleRect {
@@ -209,5 +245,4 @@ export interface ApplyLayoutContext {
   nodesRefRepository: RefRepository;
   lineLabelsRefRepository: RefRepository;
   normalizedLinesMap: WeakMap<DiagramEdge, string>;
-  nodePaddings: FullRectTuple;
 }
