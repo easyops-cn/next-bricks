@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.4](https://github.com/easyops-cn/next-bricks/compare/@next-shared/form@0.5.3...@next-shared/form@0.5.4) (2024-01-19)
+
+
+### Bug Fixes
+
+* **formStore:** fix pattern validate error ([ab49c76](https://github.com/easyops-cn/next-bricks/commit/ab49c7624329f65cee0ed2e0be6d7e5be8696c70))
+
+
+
+
+
 ## [0.5.3](https://github.com/easyops-cn/next-bricks/compare/@next-shared/form@0.5.2...@next-shared/form@0.5.3) (2024-01-02)
 
 **Note:** Version bump only for package @next-shared/form
