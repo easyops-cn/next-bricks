@@ -189,7 +189,7 @@ export class FormStore extends PubSub {
         return messageBody(message?.required || `${label}为必填项`);
       }
 
-      if (pattern) {
+      if (pattern && value) {
         const reg = new RegExp(pattern);
         if (!reg.test(value)) {
           return messageBody(
