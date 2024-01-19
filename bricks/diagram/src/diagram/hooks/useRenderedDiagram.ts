@@ -5,17 +5,25 @@ import type {
   LayoutOptions,
   LayoutOptionsDagre,
   LayoutOptionsForce,
+  ManualLayoutStatus,
+  NodeMovement,
   RefRepository,
   RenderedDiagram,
   UnifiedGraph,
+  UserViewNodesMap,
 } from "../interfaces";
 import { getDagreGraph } from "../processors/getDagreGraph";
 import { getForceGraph } from "../processors/getForceGraph";
+import { getManualGraph } from "../processors/getManualGraph";
 
 export function useRenderedDiagram({
-  layout,
+  layout: originalLayout,
   nodes,
   edges,
+  manualLayoutStatus,
+  userViewReady,
+  userViewNodesMap,
+  nodeMovement,
   nodesRefRepository,
   lineLabelsRefRepository,
   normalizedLinesMap,
@@ -26,6 +34,10 @@ export function useRenderedDiagram({
   layout: "dagre" | "force" | undefined;
   nodes: DiagramNode[] | undefined;
   edges: DiagramEdge[] | undefined;
+  manualLayoutStatus: ManualLayoutStatus;
+  userViewReady: boolean;
+  userViewNodesMap: UserViewNodesMap | null;
+  nodeMovement: NodeMovement | null;
   nodesRefRepository: RefRepository | null;
   lineLabelsRefRepository: RefRepository | null;
   normalizedLinesMap: WeakMap<DiagramEdge, string>;
@@ -33,6 +45,7 @@ export function useRenderedDiagram({
   lineLabelsRenderId: number;
   layoutOptions?: LayoutOptions;
 }) {
+  const layout = manualLayoutStatus === "initial" ? originalLayout : "manual";
   const [graph, setGraph] = useState<UnifiedGraph | null>(null);
 
   const [renderedDiagram, setRenderedDiagram] = useState<RenderedDiagram>({
@@ -41,6 +54,9 @@ export function useRenderedDiagram({
   });
 
   useEffect(() => {
+    if (!userViewReady) {
+      return;
+    }
     setGraph((previousGraph) =>
       layout === "dagre"
         ? getDagreGraph(
@@ -54,26 +70,38 @@ export function useRenderedDiagram({
               previousGraph,
               nodes,
               edges,
+              userViewNodesMap,
               layoutOptions as LayoutOptionsForce
             )
-          : null
+          : layout === "manual"
+            ? getManualGraph(previousGraph, nodes, edges, layoutOptions)
+            : null
     );
-  }, [edges, nodes, layout, layoutOptions]);
+  }, [edges, nodes, layout, layoutOptions, userViewReady, userViewNodesMap]);
 
   useEffect(() => {
-    if (!nodesRefRepository || !lineLabelsRefRepository) {
+    if (
+      !nodesRefRepository ||
+      !lineLabelsRefRepository ||
+      layout !== graph?.layout
+    ) {
       return;
     }
     const renderedDiagram = graph?.applyLayout({
+      manualLayoutStatus,
       nodesRefRepository,
       lineLabelsRefRepository,
       normalizedLinesMap,
+      nodeMovement,
     });
     if (renderedDiagram) {
       setRenderedDiagram(renderedDiagram);
     }
   }, [
+    layout,
+    manualLayoutStatus,
     graph,
+    nodeMovement,
     nodesRefRepository,
     lineLabelsRefRepository,
     nodesRenderId,

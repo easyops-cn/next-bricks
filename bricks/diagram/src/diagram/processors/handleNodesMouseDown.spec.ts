@@ -5,20 +5,25 @@ import { handleNodesMouseDown } from "./handleNodesMouseDown";
 describe("handleNodesMouseDown", () => {
   const setConnectLineState = jest.fn();
   const setConnectLineTo = jest.fn();
+  const setManualLayoutStatus = jest.fn();
+  const setNodeMovement = jest.fn();
   const onSwitchActiveTarget = jest.fn();
   const onNodesConnect = jest.fn();
   const methods = {
     setConnectLineState,
     setConnectLineTo,
+    setManualLayoutStatus,
+    setNodeMovement,
     onSwitchActiveTarget,
     onNodesConnect,
   };
   const noopMouseDown = new MouseEvent("mousedown");
 
-  test("no nodesConnect", () => {
+  test("no connectNodes", () => {
     handleNodesMouseDown(noopMouseDown, {
       nodes: [],
-      nodesConnect: undefined,
+      connectNodes: undefined,
+      dragNodes: undefined,
       nodesRefRepository: null,
       ...methods,
     });
@@ -28,14 +33,15 @@ describe("handleNodesMouseDown", () => {
   test("no nodesRefRepository", () => {
     handleNodesMouseDown(noopMouseDown, {
       nodes: [],
-      nodesConnect: {},
+      connectNodes: {},
+      dragNodes: undefined,
       nodesRefRepository: null,
       ...methods,
     });
     expect(setConnectLineState).not.toBeCalled();
   });
 
-  test("default nodesConnect", () => {
+  test("default connectNodes", () => {
     const nodeA = document.createElement("div");
     const nodeB = document.createElement("div");
     document.body.append(nodeA);
@@ -47,7 +53,8 @@ describe("handleNodesMouseDown", () => {
     });
     handleNodesMouseDown(mousedown, {
       nodes: [{ id: "a" }, { id: "b" }],
-      nodesConnect: {},
+      connectNodes: {},
+      dragNodes: undefined,
       nodesRefRepository: new Map([
         ["a", nodeA],
         ["b", nodeB],
@@ -86,7 +93,8 @@ describe("handleNodesMouseDown", () => {
         { id: "a", type: "board" },
         { id: "b", type: "page" },
       ],
-      nodesConnect: { sourceType: "page" },
+      connectNodes: { sourceType: "page" },
+      dragNodes: undefined,
       nodesRefRepository: new Map([
         ["a", nodeA],
         ["b", nodeB],
@@ -130,7 +138,8 @@ describe("handleNodesMouseDown", () => {
         { id: "a", type: "board" },
         { id: "b", type: "page" },
       ],
-      nodesConnect: { if: '<% DATA.source.type === "board" %>' },
+      connectNodes: { if: '<% DATA.source.type === "board" %>' },
+      dragNodes: undefined,
       nodesRefRepository: new Map([
         ["a", nodeA],
         ["b", nodeB],
@@ -158,5 +167,41 @@ describe("handleNodesMouseDown", () => {
     });
     handleNodesMouseDown(mousedownA, config);
     expect(setConnectLineState).toBeCalledTimes(1);
+  });
+
+  test("default dragNodes", () => {
+    const nodeA = document.createElement("div");
+    const nodeB = document.createElement("div");
+    document.body.append(nodeA);
+    document.body.append(nodeB);
+    const mousedown = new MouseEvent("mousedown", { clientX: 10, clientY: 20 });
+    Object.defineProperty(mousedown, "target", {
+      value: nodeB,
+      enumerable: true,
+    });
+    handleNodesMouseDown(mousedown, {
+      nodes: [{ id: "a" }, { id: "b" }],
+      connectNodes: undefined,
+      dragNodes: {},
+      nodesRefRepository: new Map([
+        ["a", nodeA],
+        ["b", nodeB],
+      ]),
+      ...methods,
+    });
+    expect(onSwitchActiveTarget).toBeCalledWith({ type: "node", nodeId: "b" });
+
+    fireEvent.mouseMove(document, { clientX: 12, clientY: 22 });
+    expect(setManualLayoutStatus).not.toBeCalled();
+
+    fireEvent.mouseMove(document, { clientX: 20, clientY: 50 });
+    expect(setManualLayoutStatus).toBeCalledWith("started");
+    expect(setNodeMovement).toBeCalledWith({ id: "b", move: [10, 30] });
+
+    fireEvent.mouseUp(nodeA);
+    expect(setNodeMovement).toHaveBeenLastCalledWith(null);
+    expect(setManualLayoutStatus).toBeCalledWith("finished");
+
+    document.body.replaceChildren();
   });
 });

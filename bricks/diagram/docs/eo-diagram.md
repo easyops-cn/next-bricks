@@ -14,7 +14,8 @@ properties:
     top: 0px
     left: 0px
 context:
-  - name: activeNodeId
+  - name: activeTarget
+    value: null
   - name: nodes
     value:
       - id: kspacey
@@ -101,7 +102,7 @@ children:
       edges: <%= CTX.edges %>
       lines:
         - arrow: true
-      activeNodeId: <%= CTX.activeNodeId %>
+      activeTarget: <%= CTX.activeTarget %>
       nodeBricks:
         - useBrick:
             # if: <% DATA.node.id !== "kbacon" %>
@@ -116,7 +117,7 @@ children:
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    outline: DATA.node.id === CTX.activeNodeId ? "2px solid orange" : "none",
+                    outline: CTX.activeTarget?.type === "node" && CTX.activeTarget.nodeId === DATA.node.id ? "2px solid orange" : "none",
                     outlineOffset: "2px",
                   }
                 %>
@@ -128,15 +129,30 @@ children:
               click:
                 action: context.replace
                 args:
-                  - activeNodeId
-                  - <% DATA.node.id %>
+                  - activeTarget
+                  - type: node
+                    nodeId: <% DATA.node.id %>
     events:
-      activeNode.change:
-        action: context.replace
-        if: <% CTX.activeNodeId !== EVENT.detail.id %>
-        args:
-          - activeNodeId
-          - <% EVENT.detail?.id %>
+      activeTarget.change:
+        - action: context.replace
+          # Take reaction only if the active node has been changed
+          # Otherwise it may cause infinite loop
+          if: |
+            <%
+              ((newTarget, previousTarget) =>
+                (newTarget
+                  ? !previousTarget ||
+                    newTarget.type !== previousTarget.type ||
+                    (newTarget.type === "node"
+                      ? newTarget.nodeId !== previousTarget.nodeId
+                      : newTarget.edge.source !== previousTarget.edge.source ||
+                        newTarget.edge.target !== previousTarget.edge.target)
+                : !!previousTarget)
+              )(EVENT.detail, CTX.activeTarget)
+            %>
+          args:
+            - activeTarget
+            - <% EVENT.detail %>
 ```
 
 ### Page Architecture
@@ -298,7 +314,7 @@ children:
         nodePadding: [4, 10, 10]
       activeTarget: <%= CTX.activeTarget %>
       disableKeyboardAction: <%= CTX.editingLabelNodes.length > 0 || CTX.editingLabelEdges.length > 0 %>
-      nodesConnect:
+      connectNodes:
         arrow: true
         strokeColor: |-
           <%
@@ -617,6 +633,7 @@ children:
   - brick: eo-diagram
     properties:
       layout: force
+      dragNodes: {}
       nodes: <%= CTX.nodes %>
       edges: <%= CTX.edges %>
       activeTarget: <%= CTX.activeTarget %>
@@ -652,9 +669,11 @@ children:
               style: |
                 <%=
                   {
-                    width: "120px",
-                    height: "60px",
-                    border: "2px solid green",
+                    width: "160px",
+                    height: "50px",
+                    background: "var(--palette-green-1)",
+                    border: "1px solid var(--palette-gray-4)",
+                    borderRadius: "8px",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",

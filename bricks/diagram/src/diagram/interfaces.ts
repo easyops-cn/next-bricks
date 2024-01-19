@@ -18,6 +18,8 @@ export interface RenderedNode {
   id: DiagramNodeId;
   x: number;
   y: number;
+  x0?: number;
+  y0?: number;
   width: number;
   height: number;
   data: DiagramNode;
@@ -210,17 +212,24 @@ export interface ConnectLineDetail {
   target: DiagramNode;
 }
 
-export interface NodesConnectOptions {
-  sourceType?: string | string[];
-  if?: string | boolean | null;
+export interface ConnectNodesOptions extends NodesFilterOptions {
   strokeColor?: string;
   strokeWidth?: number;
   arrow?: boolean;
 }
 
+export interface DragNodesOptions extends NodesFilterOptions {
+  save?: UserViewQuery;
+}
+
+export interface NodesFilterOptions {
+  sourceType?: string | string[];
+  if?: string | boolean | null;
+}
+
 export interface ConnectLineState {
   from: PositionTuple;
-  options: NodesConnectOptions;
+  options: ConnectNodesOptions;
 }
 
 export type ActiveTarget = ActiveTargetOfNode | ActiveTargetOfEdge;
@@ -242,7 +251,32 @@ export interface UnifiedGraph {
 }
 
 export interface ApplyLayoutContext {
+  manualLayoutStatus: ManualLayoutStatus;
   nodesRefRepository: RefRepository;
   lineLabelsRefRepository: RefRepository;
   normalizedLinesMap: WeakMap<DiagramEdge, string>;
+  nodeMovement?: NodeMovement | null;
 }
+
+export interface NodeMovement {
+  id: string;
+  move: PositionTuple;
+}
+
+export type ManualLayoutStatus = "initial" | "started" | "finished";
+
+export interface UserView {
+  instanceId?: string;
+  nodes?: NodeUserView[];
+}
+
+export interface NodeUserView extends NodePosition {
+  id: string;
+}
+
+export interface UserViewQuery {
+  namespace: string;
+  key: string;
+}
+
+export type UserViewNodesMap = Map<string, NodeUserView>;
