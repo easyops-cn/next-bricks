@@ -22,6 +22,18 @@ function SuffixActions(props: SuffixActionsProps) {
       {
         icon: {
           lib: "antd",
+          icon: "plus-circle",
+          theme: "outlined",
+        },
+        text: "新建接口",
+        hidden:
+          treeData.data.key.split("-").length >= 3 &&
+          treeData.data.type === "group",
+        event: "create-api",
+      },
+      {
+        icon: {
+          lib: "antd",
           icon: "plus",
           theme: "outlined",
         },
@@ -165,7 +177,7 @@ function TreeInternalNode(props: TreeInternalNodeProps) {
       }}
     >
       <span slot="label" title={data.title}>
-        {data.title}
+        {data.title} <span>({data.children?.length})</span>
       </span>
       <div slot="suffix">
         <SuffixComponent treeData={treeData} />

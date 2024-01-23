@@ -114,6 +114,12 @@ describe("api-market.apis-directory-tree", () => {
       title="第一层级 - 1"
     >
       第一层级 - 1
+       
+      <span>
+        (
+        3
+        )
+      </span>
     </span>
     <div
       slot="suffix"
@@ -209,6 +215,12 @@ describe("api-market.apis-directory-tree", () => {
       title="第一层级 - 1"
     >
       第一层级 - 1
+       
+      <span>
+        (
+        3
+        )
+      </span>
     </span>
     <div
       slot="suffix"
@@ -226,7 +238,7 @@ describe("api-market.apis-directory-tree", () => {
       slot="suffix"
     >
       <eo-mini-actions
-        actions="[object Object],[object Object],[object Object]"
+        actions="[object Object],[object Object],[object Object],[object Object]"
       />
     </div>
   </eo-directory-tree-leaf>
@@ -238,12 +250,18 @@ describe("api-market.apis-directory-tree", () => {
       title="第二层级 - 1"
     >
       第二层级 - 1
+       
+      <span>
+        (
+        3
+        )
+      </span>
     </span>
     <div
       slot="suffix"
     >
       <eo-mini-actions
-        actions="[object Object],[object Object],[object Object]"
+        actions="[object Object],[object Object],[object Object],[object Object]"
       />
     </div>
   </eo-directory-tree-internal-node>
@@ -259,7 +277,7 @@ describe("api-market.apis-directory-tree", () => {
       slot="suffix"
     >
       <eo-mini-actions
-        actions="[object Object],[object Object],[object Object]"
+        actions="[object Object],[object Object],[object Object],[object Object]"
       />
     </div>
   </eo-directory-tree-leaf>
@@ -283,6 +301,12 @@ describe("api-market.apis-directory-tree", () => {
       title="第一层级 - 1"
     >
       第一层级 - 1
+       
+      <span>
+        (
+        3
+        )
+      </span>
     </span>
     <div
       slot="suffix"
@@ -300,7 +324,7 @@ describe("api-market.apis-directory-tree", () => {
       slot="suffix"
     >
       <eo-mini-actions
-        actions="[object Object],[object Object],[object Object]"
+        actions="[object Object],[object Object],[object Object],[object Object]"
       />
     </div>
   </eo-directory-tree-leaf>
@@ -313,12 +337,18 @@ describe("api-market.apis-directory-tree", () => {
       title="第二层级 - 1"
     >
       第二层级 - 1
+       
+      <span>
+        (
+        3
+        )
+      </span>
     </span>
     <div
       slot="suffix"
     >
       <eo-mini-actions
-        actions="[object Object],[object Object],[object Object]"
+        actions="[object Object],[object Object],[object Object],[object Object]"
       />
     </div>
   </eo-directory-tree-internal-node>
@@ -389,7 +419,7 @@ describe("api-market.apis-directory-tree", () => {
       slot="suffix"
     >
       <eo-mini-actions
-        actions="[object Object],[object Object],[object Object]"
+        actions="[object Object],[object Object],[object Object],[object Object]"
       />
     </div>
   </eo-directory-tree-leaf>
@@ -412,6 +442,12 @@ describe("api-market.apis-directory-tree", () => {
       title="第一层级 - 1"
     >
       第一层级 - 1
+       
+      <span>
+        (
+        3
+        )
+      </span>
     </span>
     <div
       slot="suffix"
@@ -429,7 +465,7 @@ describe("api-market.apis-directory-tree", () => {
       slot="suffix"
     >
       <eo-mini-actions
-        actions="[object Object],[object Object],[object Object]"
+        actions="[object Object],[object Object],[object Object],[object Object]"
       />
     </div>
   </eo-directory-tree-leaf>
@@ -442,12 +478,18 @@ describe("api-market.apis-directory-tree", () => {
       title="第二层级 - 1"
     >
       第二层级 - 1
+       
+      <span>
+        (
+        3
+        )
+      </span>
     </span>
     <div
       slot="suffix"
     >
       <eo-mini-actions
-        actions="[object Object],[object Object],[object Object]"
+        actions="[object Object],[object Object],[object Object],[object Object]"
       />
     </div>
   </eo-directory-tree-internal-node>
@@ -518,7 +560,7 @@ describe("api-market.apis-directory-tree", () => {
       slot="suffix"
     >
       <eo-mini-actions
-        actions="[object Object],[object Object],[object Object]"
+        actions="[object Object],[object Object],[object Object],[object Object]"
       />
     </div>
   </eo-directory-tree-leaf>
@@ -540,6 +582,12 @@ describe("api-market.apis-directory-tree", () => {
       title="第一层级 - 1"
     >
       第一层级 - 1
+       
+      <span>
+        (
+        3
+        )
+      </span>
     </span>
     <div
       slot="suffix"
