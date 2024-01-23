@@ -26,6 +26,7 @@ function SuffixActions(props: SuffixActionsProps) {
           theme: "outlined",
         },
         text: "新建接口",
+        disabled: treeData.data.isPublic,
         hidden:
           treeData.data.key.split("-").length >= 3 &&
           treeData.data.type === "group",
@@ -38,6 +39,7 @@ function SuffixActions(props: SuffixActionsProps) {
           theme: "outlined",
         },
         text: "新建子目录",
+        disabled: treeData.data.isPublic,
         hidden:
           treeData.data.key.split("-").length >= 2 &&
           treeData.data.type === "group",
@@ -50,6 +52,7 @@ function SuffixActions(props: SuffixActionsProps) {
           icon: "edit",
           theme: "outlined",
         },
+        disabled: treeData.data.isPublic,
         isDropdown: true,
         text: "重命名",
         event: "rename-directory",
@@ -61,6 +64,7 @@ function SuffixActions(props: SuffixActionsProps) {
           theme: "outlined",
         },
         text: "删除",
+        disabled: treeData.data.isPublic,
         isDropdown: true,
         danger: true,
         event: "delete-directory",
