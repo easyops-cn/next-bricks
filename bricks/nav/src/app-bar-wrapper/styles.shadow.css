@@ -12,7 +12,7 @@
 
 .app-bar {
   position: relative;
-  z-index: 1000;
+  z-index: 999;
   box-shadow: var(--top-nav-shadow);
 }
 
