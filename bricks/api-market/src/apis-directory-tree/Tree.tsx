@@ -35,6 +35,19 @@ function SuffixActions(props: SuffixActionsProps) {
       {
         icon: {
           lib: "antd",
+          icon: "upload",
+        },
+        text: "导入接口",
+        hidden:
+          treeData.data.key.split("-").length >= 3 &&
+          treeData.data.type === "group",
+        disabled: treeData.data.isPublic,
+        event: "import-api",
+        isDropdown: true,
+      },
+      {
+        icon: {
+          lib: "antd",
           icon: "plus",
           theme: "outlined",
         },
