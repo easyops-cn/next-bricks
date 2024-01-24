@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/api-market@0.1.4...@next-bricks/api-market@0.1.5) (2024-01-24)
+
+
+### Bug Fixes
+
+* support import action ([0d82694](https://github.com/easyops-cn/next-bricks/commit/0d82694d7b0ffd4544631bcf58a7a0e512e59f7c))
+
+
+
+
+
 ## [0.1.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/api-market@0.1.3...@next-bricks/api-market@0.1.4) (2024-01-23)
 
 
