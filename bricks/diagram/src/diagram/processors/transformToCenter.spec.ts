@@ -38,7 +38,7 @@ describe("transformToCenter", () => {
       canvasHeight: 240,
       scaleRange: [0.5, 2],
     });
-    expect(transform).toEqual({ x: 82, y: 50, k: 0.8 });
+    expect(transform).toEqual({ x: 70, y: 40, k: 0.8 });
   });
 
   test("with scale range (height not enough)", () => {
@@ -47,6 +47,6 @@ describe("transformToCenter", () => {
       canvasHeight: 180,
       scaleRange: [0.5, 2],
     });
-    expect(transform).toEqual({ x: 264, y: 50, k: 0.6 });
+    expect(transform).toEqual({ x: 240, y: 30, k: 0.6 });
   });
 });

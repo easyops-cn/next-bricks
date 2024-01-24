@@ -8,10 +8,14 @@ import type {
   ConnectLineState,
   DiagramNode,
   ConnectLineDetail,
-  NodesConnectOptions,
+  ConnectNodesOptions,
   PositionTuple,
   RefRepository,
   ActiveTarget,
+  DragNodesOptions,
+  NodesFilterOptions,
+  NodeMovement,
+  ManualLayoutStatus,
 } from "../interfaces";
 
 export function handleNodesMouseDown(
@@ -19,19 +23,27 @@ export function handleNodesMouseDown(
   {
     nodes,
     nodesRefRepository,
-    nodesConnect,
+    connectNodes,
+    dragNodes,
     setConnectLineState,
     setConnectLineTo,
+    setManualLayoutStatus,
+    setNodeMovement,
     onSwitchActiveTarget,
     onNodesConnect,
   }: {
     nodes: DiagramNode[] | undefined;
-    nodesConnect: NodesConnectOptions | undefined;
+    connectNodes: ConnectNodesOptions | undefined;
+    dragNodes: DragNodesOptions | undefined;
     nodesRefRepository: RefRepository | null;
     setConnectLineState: (
       value: React.SetStateAction<ConnectLineState | null>
     ) => void;
     setConnectLineTo: (value: React.SetStateAction<PositionTuple>) => void;
+    setManualLayoutStatus: (
+      value: React.SetStateAction<ManualLayoutStatus>
+    ) => void;
+    setNodeMovement: (value: React.SetStateAction<NodeMovement | null>) => void;
     onSwitchActiveTarget?(target: ActiveTarget | null): void;
     onNodesConnect?(detail: ConnectLineDetail): void;
   }
@@ -46,7 +58,7 @@ export function handleNodesMouseDown(
     }
   }
 
-  if (!nodesConnect) {
+  if (!connectNodes && !dragNodes) {
     return;
   }
 
@@ -58,44 +70,79 @@ export function handleNodesMouseDown(
     return;
   }
 
-  if (nodesConnect.sourceType) {
-    if (
-      !([] as unknown[]).concat(nodesConnect.sourceType).includes(source.type)
-    ) {
-      return;
-    }
-  } else if (!checkIfByTransform(nodesConnect, { source })) {
+  if (!nodeMatched(connectNodes || dragNodes!, source)) {
     return;
   }
 
   event.stopPropagation();
+  const from: PositionTuple = [event.clientX, event.clientY];
 
-  setConnectLineState({
-    from: [event.clientX, event.clientY],
-    options: {
-      strokeColor: DEFAULT_LINE_STROKE_COLOR,
-      strokeWidth: DEFAULT_LINE_STROKE_WIDTH,
-      ...(__secret_internals.legacyDoTransform(
-        { source },
-        nodesConnect
-      ) as NodesConnectOptions),
-    },
-  });
-  setConnectLineTo([event.clientX, event.clientY]);
+  if (connectNodes) {
+    setConnectLineState({
+      from,
+      options: {
+        strokeColor: DEFAULT_LINE_STROKE_COLOR,
+        strokeWidth: DEFAULT_LINE_STROKE_WIDTH,
+        ...(__secret_internals.legacyDoTransform(
+          { source },
+          connectNodes
+        ) as ConnectNodesOptions),
+      },
+    });
+    setConnectLineTo(from);
+
+    onSwitchActiveTarget?.({ type: "node", nodeId: source.id });
+
+    const onMouseMove = (e: MouseEvent) => {
+      setConnectLineTo([e.clientX, e.clientY]);
+    };
+    const onMouseUp = (e: MouseEvent) => {
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
+      setConnectLineState(null);
+      const eventTargets = e.composedPath();
+      const target = findNode((element) => eventTargets.includes(element));
+      if (target && source !== target) {
+        onNodesConnect?.({ source, target });
+      }
+    };
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
+    return;
+  }
+
+  // Drag node
   onSwitchActiveTarget?.({ type: "node", nodeId: source.id });
+
+  let moved = false;
   const onMouseMove = (e: MouseEvent) => {
-    setConnectLineTo([e.clientX, e.clientY]);
+    const movement: PositionTuple = [e.clientX - from[0], e.clientY - from[1]];
+    if (!moved) {
+      moved = movement[0] ** 2 + movement[1] ** 2 >= 9;
+      if (moved) {
+        setManualLayoutStatus("started");
+      }
+    }
+    if (moved) {
+      setNodeMovement({ id: source.id, move: movement });
+    }
   };
-  const onMouseUp = (e: MouseEvent) => {
+  const onMouseUp = () => {
+    moved = false;
     document.removeEventListener("mousemove", onMouseMove);
     document.removeEventListener("mouseup", onMouseUp);
-    setConnectLineState(null);
-    const eventTargets = e.composedPath();
-    const target = findNode((element) => eventTargets.includes(element));
-    if (target && source !== target) {
-      onNodesConnect?.({ source, target });
-    }
+    setNodeMovement(null);
+    setManualLayoutStatus("finished");
   };
   document.addEventListener("mousemove", onMouseMove);
   document.addEventListener("mouseup", onMouseUp);
+}
+
+function nodeMatched(
+  options: NodesFilterOptions,
+  source: DiagramNode
+): boolean {
+  return options.sourceType
+    ? ([] as unknown[]).concat(options.sourceType).includes(source.type)
+    : checkIfByTransform(options, { source });
 }

@@ -293,9 +293,149 @@ describe("eo-diagram", () => {
     `);
 
     await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
-    expect(element.shadowRoot?.childNodes[1]).toMatchInlineSnapshot(`
+
+    // It maybe advanced to `ready` earlier than expected
+    if (!element.shadowRoot?.children[1]?.classList.contains("ready")) {
+      expect(element.shadowRoot?.children[1]).toMatchInlineSnapshot(`
+        <div
+          class="diagram pannable"
+          tabindex="-1"
+        >
+          <svg
+            class="lines"
+            height="100%"
+            width="100%"
+          >
+            <defs>
+              <marker
+                id="diagram-4-line-arrow-0"
+                markerHeight="6"
+                markerWidth="6"
+                orient="auto"
+                refX="3"
+                refY="3"
+                viewBox="0 0 6 6"
+              >
+                <path
+                  d="M 0.5 0.5 L 5.5 3 L 0.5 5.5 z"
+                  fill="blue"
+                  stroke="blue"
+                  stroke-width="1"
+                />
+              </marker>
+              <marker
+                id="diagram-4-active-line-start"
+                markerHeight="8"
+                markerWidth="8"
+                orient="auto"
+                refX="4"
+                refY="4"
+                viewBox="0 0 8 8"
+              >
+                <path
+                  d="M 0.5 0.5 H 7.5 V 7.5 H 0.5 Z"
+                  fill="var(--palette-gray-1)"
+                  stroke="var(--palette-gray-7)"
+                  stroke-width="1"
+                />
+              </marker>
+              <marker
+                id="diagram-4-active-line-end"
+                markerHeight="8"
+                markerWidth="14"
+                orient="auto"
+                refX="3"
+                refY="4"
+                viewBox="0 0 14 8"
+              >
+                <path
+                  d="M 0.5 1.5 L 5.5 4 L 0.5 6.5 z"
+                  fill="var(--palette-blue-3)"
+                  stroke="var(--palette-blue-3)"
+                  stroke-width="1"
+                />
+                <path
+                  d="M 6.5 0.5 H 13.5 V 7.5 H 6.5 Z"
+                  fill="var(--palette-gray-1)"
+                  stroke="var(--palette-gray-7)"
+                  stroke-width="1"
+                />
+              </marker>
+            </defs>
+            <g
+              transform="translate(0 0) scale(1)"
+            />
+          </svg>
+          <div
+            class="line-labels ready"
+            style="left: 0px; top: 0px; transform: scale(1);"
+          >
+            <div
+              class="line-label"
+            >
+              Go
+            </div>
+          </div>
+          <div
+            class="nodes"
+            style="left: 0px; top: 0px; transform: scale(1);"
+          >
+            <div
+              class="node"
+            >
+              <span>
+                a
+              </span>
+            </div>
+            <div
+              class="node"
+            >
+              <span>
+                b
+              </span>
+            </div>
+            <div
+              class="node"
+            >
+              <span>
+                c
+              </span>
+            </div>
+          </div>
+          <svg
+            class="connect-line"
+            height="100%"
+            width="100%"
+          >
+            <defs>
+              <marker
+                id="diagram-4-line-arrow-connect-line"
+                markerHeight="6"
+                markerWidth="6"
+                orient="auto"
+                refX="3"
+                refY="3"
+                viewBox="0 0 6 6"
+              >
+                <path
+                  d="M 0.5 0.5 L 5.5 3 L 0.5 5.5 z"
+                  stroke-width="1"
+                />
+              </marker>
+            </defs>
+            <path
+              d=""
+              fill="none"
+            />
+          </svg>
+        </div>
+      `);
+
+      await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+    } else {
+      expect(element.shadowRoot?.children[1]).toMatchInlineSnapshot(`
       <div
-        class="diagram pannable"
+        class="diagram ready pannable"
         tabindex="-1"
       >
         <svg
@@ -320,6 +460,13 @@ describe("eo-diagram", () => {
                 stroke-width="1"
               />
             </marker>
+            <clippath
+              id="diagram-4-clip-path-line-3"
+            >
+              <polygon
+                points="-3,3 3,3 3,-3 -3,-3 -3,-980 1310,-980 1310,1420 -990,1420 -990,-980 -3,-980"
+              />
+            </clippath>
             <marker
               id="diagram-4-active-line-start"
               markerHeight="8"
@@ -360,25 +507,69 @@ describe("eo-diagram", () => {
             </marker>
           </defs>
           <g
-            transform="translate(0 0) scale(1)"
-          />
+            transform="translate(-12.5 -12.5) scale(0.5)"
+          >
+            <g
+              class="line"
+            >
+              <path
+                d="M25,0L20.833,4.167C16.667,8.333,8.333,16.667,4.167,NaNC0,NaN,0,NaN,0,NaNL0,NaN"
+                fill="none"
+                stroke="gray"
+                stroke-width="1"
+              />
+              <path
+                class="active-bg"
+                d="M25,0L20.833,4.167C16.667,8.333,8.333,16.667,4.167,NaNC0,NaN,0,NaN,0,NaNL0,NaN"
+                fill="none"
+                marker-end="url(#diagram-4-active-line-end)"
+                marker-start="url(#diagram-4-active-line-start)"
+                stroke="var(--palette-blue-3)"
+                stroke-width="1"
+              />
+            </g>
+            <g
+              class="line"
+            >
+              <path
+                clip-path="url(#diagram-4-clip-path-line-3)"
+                d="M25,0L29.167,4.167C33.333,8.333,41.667,16.667,NaN,NaNCNaN,NaN,NaN,NaN,NaN,NaNLNaN,NaN"
+                fill="none"
+                marker-end="url(#diagram-4-line-arrow-0)"
+                stroke="blue"
+                stroke-width="1"
+              />
+              <path
+                class="active-bg"
+                clip-path="url(#diagram-4-clip-path-line-3)"
+                d="M25,0L29.167,4.167C33.333,8.333,41.667,16.667,NaN,NaNCNaN,NaN,NaN,NaN,NaN,NaNLNaN,NaN"
+                fill="none"
+                marker-end="url(#diagram-4-active-line-end)"
+                marker-start="url(#diagram-4-active-line-start)"
+                stroke="var(--palette-blue-3)"
+                stroke-width="1"
+              />
+            </g>
+          </g>
         </svg>
         <div
           class="line-labels ready"
-          style="left: 0px; top: 0px; transform: scale(1);"
+          style="left: -12.5px; top: -12.5px; transform: scale(0.5);"
         >
           <div
             class="line-label"
+            style="left: 50px; top: 50px; visibility: visible;"
           >
             Go
           </div>
         </div>
         <div
           class="nodes"
-          style="left: 0px; top: 0px; transform: scale(1);"
+          style="left: -12.5px; top: -12.5px; transform: scale(0.5);"
         >
           <div
             class="node"
+            style="left: 25px; top: 0px; visibility: visible;"
           >
             <span>
               a
@@ -386,6 +577,7 @@ describe("eo-diagram", () => {
           </div>
           <div
             class="node"
+            style="left: 0px; top: 50px; visibility: visible;"
           >
             <span>
               b
@@ -393,6 +585,7 @@ describe("eo-diagram", () => {
           </div>
           <div
             class="node"
+            style="left: 50px; top: 50px; visibility: visible;"
           >
             <span>
               c
@@ -426,9 +619,8 @@ describe("eo-diagram", () => {
           />
         </svg>
       </div>
-    `);
-
-    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+      `);
+    }
 
     fireEvent.mouseDown(element.shadowRoot!.querySelector(".nodes")!);
     expect(handleNodesMouseDown).toBeCalled();

@@ -15,15 +15,15 @@ import type {
   DiagramEdge,
   DiagramNode,
   ForceCollideOptions,
-  LabelSize,
   LayoutOptionsForce,
   RenderedNode,
   UnifiedGraph,
+  UserViewNodesMap,
 } from "../interfaces";
 import { adjustNodesSize } from "./adjustNodesSize";
 import { adjustNodesPosition } from "./adjustNodesPosition";
-import { getDirectLinePoints } from "../lines/getDirectLinePoints";
 import { extractPartialRectTuple } from "./extractPartialRectTuple";
+import { getRenderedEdges } from "./getRenderedEdges";
 
 interface NormalNode extends SimulationNodeDatum {
   dummy?: false;
@@ -48,7 +48,8 @@ export function getForceGraph(
   previousGraph: UnifiedGraph | null,
   nodes: DiagramNode[] | undefined,
   edges: DiagramEdge[] | undefined,
-  forceLayoutOptions: LayoutOptionsForce
+  userViewNodesMap: UserViewNodesMap | null,
+  forceLayoutOptions: LayoutOptionsForce | undefined
 ): UnifiedGraph {
   const { nodePadding, dummyNodesOnEdges, collide } = {
     nodePadding: 0,
@@ -72,14 +73,20 @@ export function getForceGraph(
   const renderedNodes: RenderedNode[] = [];
   for (const node of nodes ?? []) {
     const previousNode = previousGraph?.getNode(node.id);
-    renderedNodes.push(
-      previousNode?.data === node
-        ? previousNode
-        : ({
-            id: node.id,
-            data: node,
-          } as RenderedNode)
-    );
+    if (previousNode?.data === node) {
+      renderedNodes.push(previousNode);
+    } else {
+      const renderedNode = {
+        id: node.id,
+        data: node,
+      } as RenderedNode & { fx?: number; fy?: number };
+      const userViewNode = userViewNodesMap?.get(node.id);
+      if (userViewNode) {
+        renderedNode.fx = userViewNode.x;
+        renderedNode.fy = userViewNode.y;
+      }
+      renderedNodes.push(renderedNode);
+    }
   }
 
   function getNode(id: string) {
@@ -152,41 +159,11 @@ export function getForceGraph(
 
       adjustNodesPosition(renderedNodes, nodesRefRepository, nodePaddings);
 
-      const renderedEdges =
-        edges?.map((edge) => {
-          const source = getNode(edge.source)!;
-          const target = getNode(edge.target)!;
-          const points = getDirectLinePoints(source, target);
-          let angle: number | undefined;
-          if (points) {
-            const start = points[0];
-            const end = points[points.length - 1];
-            angle = Math.atan2(end.y - start.y, end.x - start.x);
-          }
-
-          const lineId = normalizedLinesMap.get(edge);
-          const labelSize: LabelSize = {};
-          if (lineId) {
-            for (const placement of ["center", "start", "end"] as const) {
-              const element = lineLabelsRefRepository.get(
-                `${lineId}-${placement}`
-              );
-              if (element) {
-                labelSize[placement] = [
-                  element.offsetWidth,
-                  element.offsetHeight,
-                ];
-              }
-            }
-          }
-
-          return {
-            data: edge,
-            points,
-            angle,
-            labelSize,
-          };
-        }) ?? [];
+      const renderedEdges = getRenderedEdges(edges, {
+        getNode,
+        normalizedLinesMap,
+        lineLabelsRefRepository,
+      });
 
       return { nodes: renderedNodes, edges: renderedEdges };
     },

@@ -28,13 +28,16 @@ import type {
   TransformLiteral,
   LineTarget,
   ConnectLineDetail,
-  NodesConnectOptions,
+  ConnectNodesOptions,
   ConnectLineState,
   ActiveTarget,
   RangeTuple,
   LineLabel,
   LineLabelConf,
   TextOptions,
+  DragNodesOptions,
+  NodeMovement,
+  ManualLayoutStatus,
 } from "./interfaces";
 import { NodeComponentGroup } from "./NodeComponent";
 import { handleKeyboard } from "./processors/handleKeyboard";
@@ -53,6 +56,7 @@ import { DEFAULT_SCALE_RANGE_MAX, DEFAULT_SCALE_RANGE_MIN } from "./constants";
 import { useRenderedDiagram } from "./hooks/useRenderedDiagram";
 import { adjustLineLabels } from "./processors/adjustLineLabels";
 import styleText from "./styles.shadow.css";
+import { useUserView } from "./hooks/useUserView";
 
 const { defineElement, property, event, method } = createDecorators();
 
@@ -63,7 +67,8 @@ export interface EoDiagramProps {
   nodeBricks?: NodeBrickConf[];
   lines?: LineConf[];
   layoutOptions?: LayoutOptions;
-  nodesConnect?: NodesConnectOptions;
+  connectNodes?: ConnectNodesOptions;
+  dragNodes?: DragNodesOptions;
   activeTarget?: ActiveTarget | null;
   disableKeyboardAction?: boolean;
   zoomable?: boolean;
@@ -114,7 +119,16 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
   accessor disableKeyboardAction: boolean | undefined;
 
   @property({ attribute: false })
-  accessor nodesConnect: NodesConnectOptions | undefined;
+  accessor connectNodes: ConnectNodesOptions | undefined;
+
+  /**
+   * @deprecated use `connectNodes` instead
+   */
+  @property({ attribute: false })
+  accessor nodesConnect: ConnectNodesOptions | undefined;
+
+  @property({ attribute: false })
+  accessor dragNodes: DragNodesOptions | undefined;
 
   @property({ type: Boolean })
   accessor zoomable: boolean | undefined = true;
@@ -164,10 +178,10 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
   };
 
   @event({ type: "nodes.connect" })
-  accessor #nodesConnect!: EventEmitter<ConnectLineDetail>;
+  accessor #connectNodes!: EventEmitter<ConnectLineDetail>;
 
   #handleNodesConnect = (detail: ConnectLineDetail) => {
-    this.#nodesConnect.emit(detail);
+    this.#connectNodes.emit(detail);
   };
 
   #handleSwitchActiveTarget = (target: ActiveTarget | null) => {
@@ -191,7 +205,8 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
         nodeBricks={this.nodeBricks}
         lines={this.lines}
         layoutOptions={this.layoutOptions}
-        nodesConnect={this.nodesConnect}
+        connectNodes={this.connectNodes ?? this.nodesConnect}
+        dragNodes={this.dragNodes}
         activeTarget={this.activeTarget}
         disableKeyboardAction={this.disableKeyboardAction}
         zoomable={this.zoomable}
@@ -228,7 +243,8 @@ export function LegacyEoDiagramComponent(
     nodeBricks,
     lines,
     layoutOptions,
-    nodesConnect,
+    connectNodes,
+    dragNodes,
     activeTarget,
     disableKeyboardAction,
     zoomable,
@@ -270,9 +286,16 @@ export function LegacyEoDiagramComponent(
   const nodesRef = useRef<HTMLDivElement>(null);
   const [centered, setCentered] = useState(false);
 
+  const { userViewReady, userViewNodesMap, saveUserView } = useUserView(
+    dragNodes?.save
+  );
+
   const [connectLineTo, setConnectLineTo] = useState<PositionTuple>([0, 0]);
   const [connectLineState, setConnectLineState] =
     useState<ConnectLineState | null>(null);
+  const [manualLayoutStatus, setManualLayoutStatus] =
+    useState<ManualLayoutStatus>("initial");
+  const [nodeMovement, setNodeMovement] = useState<NodeMovement | null>(null);
 
   useImperativeHandle(ref, () => ({
     callOnLineLabel(id, method, ...args) {
@@ -288,9 +311,12 @@ export function LegacyEoDiagramComponent(
       handleNodesMouseDown(event, {
         nodes,
         nodesRefRepository,
-        nodesConnect,
+        connectNodes,
+        dragNodes,
         setConnectLineState,
         setConnectLineTo,
+        setManualLayoutStatus,
+        setNodeMovement,
         onSwitchActiveTarget,
         onNodesConnect,
       });
@@ -304,7 +330,8 @@ export function LegacyEoDiagramComponent(
     };
   }, [
     nodes,
-    nodesConnect,
+    connectNodes,
+    dragNodes,
     nodesRefRepository,
     onNodesConnect,
     onSwitchActiveTarget,
@@ -343,6 +370,10 @@ export function LegacyEoDiagramComponent(
     layout,
     nodes,
     edges,
+    manualLayoutStatus,
+    userViewReady,
+    userViewNodesMap,
+    nodeMovement,
     nodesRefRepository,
     lineLabelsRefRepository,
     normalizedLinesMap,
@@ -350,6 +381,23 @@ export function LegacyEoDiagramComponent(
     nodesRenderId,
     lineLabelsRenderId,
   });
+
+  useEffect(
+    () => {
+      if (manualLayoutStatus === "finished") {
+        saveUserView(
+          renderedNodes.map((node) => ({
+            id: node.id,
+            x: node.x,
+            y: node.y,
+          }))
+        );
+      }
+    },
+    // Only save user view when manual layout is just finished.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [manualLayoutStatus]
+  );
 
   const renderedLines = useMemo(
     () => getRenderedLines(renderedEdges, normalizedLines),
