@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.10.0...@next-bricks/diagram@0.10.1) (2024-01-24)
+
+
+### Bug Fixes
+
+* respect the scale when move nodes ([5d12f86](https://github.com/easyops-cn/next-bricks/commit/5d12f864931a01c73c178002d3f2735326f602f2))
+
+
+
+
+
 # [0.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.9.0...@next-bricks/diagram@0.10.0) (2024-01-24)
 
 
