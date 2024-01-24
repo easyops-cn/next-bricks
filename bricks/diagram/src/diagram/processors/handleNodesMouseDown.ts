@@ -25,6 +25,7 @@ export function handleNodesMouseDown(
     nodesRefRepository,
     connectNodes,
     dragNodes,
+    scale,
     setConnectLineState,
     setConnectLineTo,
     setManualLayoutStatus,
@@ -36,6 +37,7 @@ export function handleNodesMouseDown(
     connectNodes: ConnectNodesOptions | undefined;
     dragNodes: DragNodesOptions | undefined;
     nodesRefRepository: RefRepository | null;
+    scale: number;
     setConnectLineState: (
       value: React.SetStateAction<ConnectLineState | null>
     ) => void;
@@ -116,7 +118,11 @@ export function handleNodesMouseDown(
 
   let moved = false;
   const onMouseMove = (e: MouseEvent) => {
-    const movement: PositionTuple = [e.clientX - from[0], e.clientY - from[1]];
+    // Respect the scale
+    const movement: PositionTuple = [
+      (e.clientX - from[0]) / scale,
+      (e.clientY - from[1]) / scale,
+    ];
     if (!moved) {
       moved = movement[0] ** 2 + movement[1] ** 2 >= 9;
       if (moved) {
