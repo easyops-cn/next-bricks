@@ -535,30 +535,40 @@ context:
     value:
       - source: 产品
         target: 产品评价
+        sourceName: 评价列表
+        targetName: 所属产品
         sourceConstraints:
           required: true
         targetConstraints:
           multiple: true
       - source: 产品
         target: 产品线
+        sourceName: 所属产品线
+        targetName: 产品列表
         sourceConstraints:
           multiple: true
         targetConstraints:
           required: true
       - source: 产品
         target: 用户角色
+        sourceName: 负责人
+        targetName: 负责的产品
         sourceConstraints:
           multiple: true
         targetConstraints:
           multiple: true
       - source: 产品
         target: 模型视图
+        sourceName: 模型视图列表
+        targetName: 所属产品
         sourceConstraints:
           required: true
         targetConstraints:
           multiple: true
       - source: 产品
         target: 业务场景
+        sourceName: 业务场景列表
+        targetName: 所属产品
         sourceConstraints:
           required: true
         targetConstraints:
@@ -567,62 +577,74 @@ context:
         target: 业务场景
       - source: 业务场景
         target: 业务规则
+        sourceName: 业务规则列表
+        targetName: 所属业务场景
         sourceConstraints:
           required: true
         targetConstraints:
           multiple: true
       - source: 业务场景
         target: 用户角色
+        sourceName: 负责人
+        targetName: 负责的业务场景
         sourceConstraints:
           multiple: true
         targetConstraints:
           multiple: true
       - source: 产品
         target: 模型
+        sourceName: 模型列表
+        targetName: 关联的产品
         sourceConstraints:
           required: true
         targetConstraints:
           multiple: true
       - source: 产品
         target: 产品模块
+        sourceName: 模块列表
+        targetName: 所属产品
         sourceConstraints:
           required: true
         targetConstraints:
           multiple: true
       - source: 产品
         target: 产品价值点
+        sourceName: 价值点列表
+        targetName: 所属产品
         sourceConstraints:
           required: true
         targetConstraints:
           multiple: true
       - source: 业务场景
         target: 产品价值点
+        sourceName: 价值点列表
+        targetName: 关联的业务场景
       - source: 业务场景
         target: 工作流
       - source: 业务规则
         target: 工作流
-      - source: 产品
-        target: 产品模块
-        sourceConstraints:
-          required: true
-        targetConstraints:
-          multiple: true
       - source: 产品模块
         target: 产品模块
       - source: 产品模块
         target: 测试用例
+        sourceName: 测试用例列表
+        targetName: 所属产品模块
         sourceConstraints:
           multiple: true
         targetConstraints:
           multiple: true
       - source: 产品模块
         target: 功能点
+        sourceName: 功能点列表
+        targetName: 所属产品模块
         sourceConstraints:
           required: true
         targetConstraints:
           multiple: true
       - source: 测试用例
         target: 功能点
+        sourceName: 关联的功能点
+        targetName: 关联的测试用例
         sourceConstraints:
           multiple: true
         targetConstraints:
@@ -638,29 +660,32 @@ children:
       edges: <%= CTX.edges %>
       activeTarget: <%= CTX.activeTarget %>
       layoutOptions:
-        nodePadding: 5
+        # nodePadding: 5
         dummyNodesOnEdges: 1
         collide:
           dummyRadius: 10
-          radiusDiff: 32
+          radiusDiff: 40
         # rankdir: LR
         # acyclicer: greedy
         # align: DL
       lines:
-        - arrow: false
+        - arrow: true
           # curveType: curveLinear
           # interactable: true
           text:
-            - content: |
-                <% DATA.edge.sourceConstraints ? `${DATA.edge.sourceConstraints.required ? "1" : "0"}${DATA.edge.sourceConstraints.multiple ? "..*" : ""}` : "0..1" %>
+            - content: <% DATA.edge.sourceName %>
               style:
-                color: rgba(128,128,128,0.8)
-              placement: start
-            - content: |
-                <% DATA.edge.targetConstraints ? `${DATA.edge.targetConstraints.required ? "1" : "0"}${DATA.edge.targetConstraints.multiple ? "..*" : ""}` : "0..1" %>
-              style:
-                color: rgba(128,128,128,0.8)
-              placement: end
+                color: var(--palette-gray-6)
+            # - placement: start
+            #   content: <% DATA.edge.sourceName %>
+            #   style:
+            #     color: var(--palette-gray-6)
+            #     padding: 5px
+            # - placement: end
+            #   content: <% DATA.edge.targetName %>
+            #   style:
+            #     color: var(--palette-gray-6)
+            #     padding: 5px
       nodeBricks:
         - useBrick:
             # if: <% DATA.node.id !== "kbacon" %>
@@ -677,9 +702,10 @@ children:
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    outline: CTX.activeTarget?.type === "node" && DATA.node.id === CTX.activeTarget.nodeId ? "2px solid orange" : "none",
+                    // outline: CTX.activeTarget?.type === "node" && DATA.node.id === CTX.activeTarget.nodeId ? "2px solid orange" : "none",
                     outlineOffset: "2px",
                     cursor: "pointer",
+                    userSelect: "none",
                   }
                 %>
             children:

@@ -25,6 +25,7 @@ describe("handleNodesMouseDown", () => {
       connectNodes: undefined,
       dragNodes: undefined,
       nodesRefRepository: null,
+      scale: 1,
       ...methods,
     });
     expect(setConnectLineState).not.toBeCalled();
@@ -36,6 +37,7 @@ describe("handleNodesMouseDown", () => {
       connectNodes: {},
       dragNodes: undefined,
       nodesRefRepository: null,
+      scale: 1,
       ...methods,
     });
     expect(setConnectLineState).not.toBeCalled();
@@ -59,6 +61,7 @@ describe("handleNodesMouseDown", () => {
         ["a", nodeA],
         ["b", nodeB],
       ]),
+      scale: 1,
       ...methods,
     });
     expect(setConnectLineState).toBeCalledWith({
@@ -99,6 +102,7 @@ describe("handleNodesMouseDown", () => {
         ["a", nodeA],
         ["b", nodeB],
       ]),
+      scale: 1,
       ...methods,
     };
     const mousedownA = new MouseEvent("mousedown", {
@@ -144,6 +148,7 @@ describe("handleNodesMouseDown", () => {
         ["a", nodeA],
         ["b", nodeB],
       ]),
+      scale: 1,
       ...methods,
     };
     const mousedownB = new MouseEvent("mousedown", {
@@ -187,16 +192,17 @@ describe("handleNodesMouseDown", () => {
         ["a", nodeA],
         ["b", nodeB],
       ]),
+      scale: 0.75,
       ...methods,
     });
     expect(onSwitchActiveTarget).toBeCalledWith({ type: "node", nodeId: "b" });
 
-    fireEvent.mouseMove(document, { clientX: 12, clientY: 22 });
+    fireEvent.mouseMove(document, { clientX: 11, clientY: 22 });
     expect(setManualLayoutStatus).not.toBeCalled();
 
-    fireEvent.mouseMove(document, { clientX: 20, clientY: 50 });
+    fireEvent.mouseMove(document, { clientX: 25, clientY: 50 });
     expect(setManualLayoutStatus).toBeCalledWith("started");
-    expect(setNodeMovement).toBeCalledWith({ id: "b", move: [10, 30] });
+    expect(setNodeMovement).toBeCalledWith({ id: "b", move: [20, 40] });
 
     fireEvent.mouseUp(nodeA);
     expect(setNodeMovement).toHaveBeenLastCalledWith(null);
