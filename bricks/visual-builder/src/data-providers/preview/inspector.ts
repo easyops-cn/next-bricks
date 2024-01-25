@@ -27,7 +27,7 @@ function registerListeners(): void {
   window.addEventListener("mouseover", onMouseEvent, true);
   window.addEventListener("mouseup", onMouseEvent, true);
   window.addEventListener("pointerdown", onPointerDown, true);
-  window.addEventListener("pointerover", onPointerOver, true);
+  window.addEventListener("pointermove", onPointerMove, true);
   window.addEventListener("pointerup", onMouseEvent, true);
   window.addEventListener("pointerleave", onPointerLeave, true);
   window.addEventListener("contextmenu", onContextMenu, true);
@@ -39,7 +39,7 @@ function unregisterListeners(): void {
   window.removeEventListener("mouseover", onMouseEvent, true);
   window.removeEventListener("mouseup", onMouseEvent, true);
   window.removeEventListener("pointerdown", onPointerDown, true);
-  window.removeEventListener("pointerover", onPointerOver, true);
+  window.removeEventListener("pointermove", onPointerMove, true);
   window.removeEventListener("pointerup", onMouseEvent, true);
   window.removeEventListener("pointerleave", onPointerLeave, true);
   window.removeEventListener("contextmenu", onContextMenu, true);
@@ -48,7 +48,7 @@ function unregisterListeners(): void {
 function onClick(event: MouseEvent): void {
   event.preventDefault();
   event.stopPropagation();
-  selectBrick(event.target as HTMLElement);
+  selectBrick(event.composedPath());
 }
 
 function onMouseEvent(event: MouseEvent): void {
@@ -57,9 +57,9 @@ function onMouseEvent(event: MouseEvent): void {
 }
 
 const hoverOnBrick = throttle(
-  (e: MouseEvent) => {
-    const brick = e.target as HTMLElement;
-    const iidList = getPossibleBrickIidList(brick);
+  (eventTargets: EventTarget[]) => {
+    const iidList = getPossibleBrickTargets(eventTargets);
+
     if (iidList.length > 0) {
       window.parent.postMessage(
         {
@@ -78,13 +78,13 @@ const hoverOnBrick = throttle(
 function onPointerDown(event: MouseEvent): void {
   event.preventDefault();
   event.stopPropagation();
-  hoverOnBrick(event);
+  hoverOnBrick(event.composedPath());
 }
 
-function onPointerOver(event: MouseEvent): void {
+function onPointerMove(event: MouseEvent): void {
   event.preventDefault();
   event.stopPropagation();
-  hoverOnBrick(event);
+  hoverOnBrick(event.composedPath());
 }
 
 function onPointerLeave(event: MouseEvent): void {
@@ -103,20 +103,20 @@ function onPointerLeave(event: MouseEvent): void {
 function onContextMenu(event: MouseEvent): void {
   event.preventDefault();
   event.stopPropagation();
-  contextMenuOnBrick(event.target as HTMLElement, {
+  contextMenuOnBrick(event.composedPath(), {
     x: event.clientX,
     y: event.clientY,
   });
 }
 
 function contextMenuOnBrick(
-  brick: HTMLElement,
+  eventTargets: EventTarget[],
   position: {
     x: number;
     y: number;
   }
 ): void {
-  const iidList = getPossibleBrickIidList(brick);
+  const iidList = getPossibleBrickTargets(eventTargets);
   if (iidList.length > 0) {
     window.parent.postMessage(
       {
@@ -130,8 +130,8 @@ function contextMenuOnBrick(
   }
 }
 
-function selectBrick(brick: HTMLElement): void {
-  const iidList = getPossibleBrickIidList(brick);
+function selectBrick(eventTargets: EventTarget[]): void {
+  const iidList = getPossibleBrickTargets(eventTargets);
   if (iidList.length > 0) {
     window.parent.postMessage(
       {
@@ -155,4 +155,17 @@ export function getPossibleBrickIidList(brick: HTMLElement): string[] {
     cursor = cursor.parentElement;
   }
   return iidList;
+}
+
+export function getPossibleBrickTargets(eventTargets: EventTarget[]) {
+  const targets: string[] = [];
+  for (const target of eventTargets) {
+    if (
+      target instanceof HTMLElement &&
+      typeof target.dataset.iid === "string"
+    ) {
+      targets.push(target.dataset.iid);
+    }
+  }
+  return targets;
 }

@@ -36,5 +36,9 @@ describe("visual-builder.workbench-pane", () => {
     expect((spyOnDispatchEvent.mock.calls[0][0] as CustomEvent).type).toEqual(
       "active.change"
     );
+
+    act(() => {
+      document.body.removeChild(element);
+    });
   });
 });

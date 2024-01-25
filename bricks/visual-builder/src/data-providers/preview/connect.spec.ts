@@ -84,15 +84,25 @@ window.parent = {
 
 const addEventListener = jest.spyOn(window, "addEventListener");
 
-// Workaround for build error
-const CE = customElements;
-CE.define(
+customElements.define(
   "eo-page-view",
   class extends HTMLElement {
     connectedCallback() {
       const shadowRoot = this.attachShadow({ mode: "open" });
       const content = document.createElement("div");
       content.className = "content";
+      shadowRoot.appendChild(content);
+    }
+  }
+);
+
+customElements.define(
+  "eo-with-brick-in-shadow",
+  class extends HTMLElement {
+    connectedCallback() {
+      const shadowRoot = this.attachShadow({ mode: "open" });
+      const content = document.createElement("div");
+      content.dataset.iid = "i-02";
       shadowRoot.appendChild(content);
     }
   }
@@ -704,6 +714,44 @@ describe("connect", () => {
     expect(
       runtime.__secret_internals.setRealTimeDataInspectRoot
     ).toHaveBeenCalledTimes(2);
+  });
+
+  it("should handle bricks in shadow DOM", async () => {
+    const withBrickInShadow = document.createElement("eo-with-brick-in-shadow");
+    document.body.appendChild(withBrickInShadow);
+
+    connect("http://localhost:8081", {
+      routePath: "/a",
+      routeExact: true,
+      appId: "my-app",
+    });
+
+    expect(parentPostMessage).toBeCalledTimes(3);
+
+    const listener = addEventListener.mock.calls[0][1] as EventListener;
+
+    // Hover on brick.
+    listener({
+      origin: "http://localhost:8081",
+      data: {
+        sender: "preview-container",
+        type: "hover-on-brick",
+        forwardedFor: "builder",
+        iid: "i-02",
+      },
+    } as any);
+    expect(parentPostMessage).toBeCalledTimes(4);
+    expect(parentPostMessage).toHaveBeenNthCalledWith(
+      4,
+      {
+        sender: "previewer",
+        type: "highlight-brick",
+        highlightType: "hover",
+        outlines: [{ width: 0, height: 0, left: 0, top: 0 }],
+        iid: "i-02",
+      },
+      "http://localhost:8081"
+    );
   });
 
   it("should handle content scroll", async () => {

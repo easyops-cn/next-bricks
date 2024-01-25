@@ -1,17 +1,18 @@
 import React from "react";
 import { createDecorators } from "@next-core/element";
 import type { Link, LinkProps } from "@next-bricks/basic/link";
-import { GeneralIcon, GeneralIconProps } from "@next-bricks/icons/general-icon";
+import type {
+  GeneralIcon,
+  GeneralIconProps,
+} from "@next-bricks/icons/general-icon";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import styleText from "./workbench-action.shadow.css";
 import classNames from "classnames";
 
 const { defineElement, property } = createDecorators();
 
-const WrapLink = wrapBrick<Link, LinkProps>("basic.general-link");
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrapLink = wrapBrick<Link, LinkProps>("eo-link");
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 export interface WorkbenchActionProps {
   icon?: GeneralIconProps;
@@ -24,6 +25,7 @@ export interface WorkbenchActionProps {
 /**
  * @insider
  */
+export
 @defineElement("visual-builder.workbench-action", {
   styleTexts: [styleText],
 })
@@ -75,5 +77,3 @@ function WorkbenchActionComponent({
     </WrapLink>
   );
 }
-
-export { WorkbenchAction };
