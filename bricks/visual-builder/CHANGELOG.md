@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.4.1...@next-bricks/visual-builder@1.4.2) (2024-01-25)
+
+
+### Bug Fixes
+
+* inspect useBrick in shadow DOM ([3160b93](https://github.com/easyops-cn/next-bricks/commit/3160b93be6f61dece2c9eb64dca4ac81fa1c7258))
+
+
+
+
+
 ## [1.4.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.4.0...@next-bricks/visual-builder@1.4.1) (2024-01-05)
 
 
