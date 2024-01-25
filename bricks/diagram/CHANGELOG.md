@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.10.1...@next-bricks/diagram@0.10.2) (2024-01-25)
+
+
+### Bug Fixes
+
+* observe line-labels resize ([9dede17](https://github.com/easyops-cn/next-bricks/commit/9dede176085551c62bbfd14f875a96095e1e5853))
+
+
+
+
+
 ## [0.10.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.10.0...@next-bricks/diagram@0.10.1) (2024-01-24)
 
 
