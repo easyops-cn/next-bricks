@@ -79,7 +79,7 @@ export function WorkbenchTree({
   allowDragToInside,
   dropEmit,
 }: WorkbenchTreeProps): ReactElement {
-  const [q, setQ] = useState<string>(null);
+  const [q, setQ] = useState<string>("");
   const [isDragging, setIsDragging] = useState<boolean>(isDrag);
   const [curNode, setCurNode] = useState<WorkbenchNodeData>();
   const [curElement, setCurElement] = useState<HTMLElement>();
@@ -439,7 +439,6 @@ function TreeNode({
   const {
     hoverKey,
     activeKey,
-    isTransformName,
     basePaddingLeft,
     showMatchedNodeOnly,
     fixedActionsFor,

@@ -98,6 +98,10 @@ describe("visual-builder.workbench-action-list", () => {
       element.shadowRoot.querySelectorAll("visual-builder\\.workbench-action")
         .length
     ).toEqual(3);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
   });
 
   test("render WorkbenchActionListComponent", () => {
@@ -188,11 +192,17 @@ describe("visual-builder.workbench-action-list", () => {
 
     act(() => {
       const history = getHistory();
-      history.push("/viusal-builder/images");
+      history.push("/visual-builder/images");
     });
+    rerender(<WorkbenchActionListComponent appId="new-test" menu={menu} />);
 
-    expect(
-      (initMenuItemAndMatchCurrentPathKeys as jest.Mock).mock.calls[2][1]
-    ).toEqual("/viusal-builder/images");
+    expect(initMenuItemAndMatchCurrentPathKeys).toBeCalledTimes(2);
+    expect(initMenuItemAndMatchCurrentPathKeys).toHaveBeenNthCalledWith(
+      2,
+      expect.anything(),
+      "/visual-builder/images",
+      "",
+      ""
+    );
   });
 });

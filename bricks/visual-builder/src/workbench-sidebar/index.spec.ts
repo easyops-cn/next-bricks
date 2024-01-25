@@ -1,5 +1,4 @@
 import { describe, test, expect } from "@jest/globals";
-import { fireEvent } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import "./index.js";
 import { WorkbenchSidebar } from "./index.js";
@@ -31,5 +30,9 @@ describe("visual-builder.workbench-sidebar", () => {
 
     expect(span1.style.flex).toEqual("1");
     expect(span2.style.flex).toEqual("0 1 auto");
+
+    act(() => {
+      document.body.removeChild(element);
+    });
   });
 });

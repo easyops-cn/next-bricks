@@ -634,9 +634,7 @@ function getBrickOutlines(iid: string, alias?: string): BrickOutline[] {
     return [];
   }
   const isRoot = iid.includes("#");
-  const elements = document.querySelectorAll<HTMLElement>(
-    isRoot ? iid : `[data-iid="${iid}"]`
-  );
+  const elements = getElementsIncludingInShadowDOM(iid, isRoot);
   const outlines = getOutlines(elements, alias);
   return isRoot
     ? outlines.map((item) => ({
@@ -646,11 +644,38 @@ function getBrickOutlines(iid: string, alias?: string): BrickOutline[] {
     : outlines;
 }
 
-function getOutlines(
-  elements: NodeListOf<HTMLElement>,
-  alias?: string
-): BrickOutline[] {
-  return [...elements].map((element) => {
+function getElementsIncludingInShadowDOM(
+  iid: string,
+  isRoot: boolean
+): HTMLElement[] {
+  const elements: HTMLElement[] = [];
+
+  function walk(root: Document | ShadowRoot) {
+    const candidates = root.querySelectorAll<HTMLElement>(
+      isRoot ? iid : `[data-iid="${iid}"]`
+    );
+    elements.push(...candidates);
+
+    // If elements are found in the document, we should stop searching in shadow DOM.
+    if (root === document && candidates.length > 0) {
+      return;
+    }
+
+    // These useBrick in v3 bricks will be inside shadow DOM.
+    for (const item of root.querySelectorAll("*")) {
+      if (item.shadowRoot) {
+        walk(item.shadowRoot);
+      }
+    }
+  }
+
+  walk(document);
+
+  return elements;
+}
+
+function getOutlines(elements: HTMLElement[], alias?: string): BrickOutline[] {
+  return elements.map((element) => {
     const hasContentScroll = contentScrollHost?.contains(element);
     const { width, height, left, top } = element.getBoundingClientRect();
     return {
