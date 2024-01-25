@@ -1,6 +1,6 @@
 import { describe, test, expect } from "@jest/globals";
 import { handleKeyboard } from "./handleKeyboard";
-import type { RenderedEdge, RenderedNode } from "../interfaces";
+import type { RenderedNode } from "../interfaces";
 
 describe("handleKeyboard", () => {
   // Nodes map:
@@ -63,30 +63,11 @@ describe("handleKeyboard", () => {
     },
   ] as unknown as RenderedNode[];
 
-  const renderedEdges = [
-    {
-      data: { source: "a", target: "b" },
-    },
-    {
-      data: { source: "a", target: "c" },
-    },
-    {
-      data: { source: "b", target: "d" },
-    },
-    {
-      data: { source: "b", target: "e" },
-    },
-    {
-      data: { source: "b", target: "f" },
-    },
-  ] as RenderedEdge[];
-
   test("delete node", () => {
     const action = handleKeyboard(
       new KeyboardEvent("keydown", { key: "Backspace" }),
       {
         renderedNodes,
-        renderedEdges,
         activeTarget: {
           type: "node",
           nodeId: "a",
@@ -104,7 +85,6 @@ describe("handleKeyboard", () => {
       new KeyboardEvent("keydown", { key: "Backspace" }),
       {
         renderedNodes,
-        renderedEdges,
         activeTarget: {
           type: "edge",
           edge: { source: "a", target: "b" },
@@ -124,14 +104,13 @@ describe("handleKeyboard", () => {
     ["b", "ArrowRight", "c"],
     ["b", "ArrowUp", "a"],
     ["c", "ArrowUp", "a"],
-    ["c", "ArrowDown", undefined],
+    ["c", "ArrowDown", "f"],
     ["b", "ArrowDown", "e"],
-    ["f", "ArrowUp", "b"],
+    ["f", "ArrowUp", "c"],
     ["f", "ArrowLeft", "e"],
   ])("switch active node", (activeNodeId, key, resultNodeId) => {
     const action = handleKeyboard(new KeyboardEvent("keydown", { key }), {
       renderedNodes,
-      renderedEdges,
       activeTarget: {
         type: "node",
         nodeId: activeNodeId,
@@ -148,7 +127,6 @@ describe("handleKeyboard", () => {
       new KeyboardEvent("keydown", { key: "ArrowDown" }),
       {
         renderedNodes,
-        renderedEdges,
         activeTarget: {
           type: "edge",
           edge: { source: "a", target: "b" },
@@ -163,7 +141,6 @@ describe("handleKeyboard", () => {
       new KeyboardEvent("keydown", { key: "Backspace" }),
       {
         renderedNodes,
-        renderedEdges,
         activeTarget: undefined,
       }
     );
@@ -175,7 +152,6 @@ describe("handleKeyboard", () => {
       new KeyboardEvent("keydown", { key: "Escape" }),
       {
         renderedNodes,
-        renderedEdges,
         activeTarget: {
           type: "node",
           nodeId: "a",

@@ -134,25 +134,10 @@ children:
                     nodeId: <% DATA.node.id %>
     events:
       activeTarget.change:
-        - action: context.replace
-          # Take reaction only if the active node has been changed
-          # Otherwise it may cause infinite loop
-          if: |
-            <%
-              ((newTarget, previousTarget) =>
-                (newTarget
-                  ? !previousTarget ||
-                    newTarget.type !== previousTarget.type ||
-                    (newTarget.type === "node"
-                      ? newTarget.nodeId !== previousTarget.nodeId
-                      : newTarget.edge.source !== previousTarget.edge.source ||
-                        newTarget.edge.target !== previousTarget.edge.target)
-                : !!previousTarget)
-              )(EVENT.detail, CTX.activeTarget)
-            %>
-          args:
-            - activeTarget
-            - <% EVENT.detail %>
+        action: context.replace
+        args:
+          - activeTarget
+          - <% EVENT.detail %>
 ```
 
 ### Page Architecture
@@ -399,25 +384,10 @@ children:
                       nodeId: <% CTX.tempNodeId %>
     events:
       activeTarget.change:
-        - action: context.replace
-          # Take reaction only if the active node has been changed
-          # Otherwise it may cause infinite loop
-          if: |
-            <%
-              ((newTarget, previousTarget) =>
-                (newTarget
-                  ? !previousTarget ||
-                    newTarget.type !== previousTarget.type ||
-                    (newTarget.type === "node"
-                      ? newTarget.nodeId !== previousTarget.nodeId
-                      : newTarget.edge.source !== previousTarget.edge.source ||
-                        newTarget.edge.target !== previousTarget.edge.target)
-                : !!previousTarget)
-              )(EVENT.detail, CTX.activeTarget)
-            %>
-          args:
-            - activeTarget
-            - <% EVENT.detail %>
+        action: context.replace
+        args:
+          - activeTarget
+          - <% EVENT.detail %>
       node.delete:
         - action: context.replace
           args:
@@ -669,23 +639,15 @@ children:
         # acyclicer: greedy
         # align: DL
       lines:
-        - arrow: true
-          # curveType: curveLinear
-          # interactable: true
-          text:
-            - content: <% DATA.edge.sourceName %>
-              style:
-                color: var(--palette-gray-6)
-            # - placement: start
-            #   content: <% DATA.edge.sourceName %>
-            #   style:
-            #     color: var(--palette-gray-6)
-            #     padding: 5px
-            # - placement: end
-            #   content: <% DATA.edge.targetName %>
-            #   style:
-            #     color: var(--palette-gray-6)
-            #     padding: 5px
+        - label:
+            - useBrick:
+                brick: span
+                properties:
+                  hidden: <%= CTX.activeTarget?.type !== "node" || (DATA.edge.source !== CTX.activeTarget.nodeId && DATA.edge.target !== CTX.activeTarget.nodeId) %>
+                  textContent: |
+                    <%= DATA.edge.source === CTX.activeTarget?.nodeId ? DATA.edge.sourceName : DATA.edge.target === CTX.activeTarget?.nodeId ? DATA.edge.targetName : "" %>
+                  style:
+                    color: var(--palette-gray-6)
       nodeBricks:
         - useBrick:
             # if: <% DATA.node.id !== "kbacon" %>
@@ -702,7 +664,7 @@ children:
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    // outline: CTX.activeTarget?.type === "node" && DATA.node.id === CTX.activeTarget.nodeId ? "2px solid orange" : "none",
+                    outline: CTX.activeTarget?.type === "node" && DATA.node.id === CTX.activeTarget.nodeId ? "2px solid orange" : "none",
                     outlineOffset: "2px",
                     cursor: "pointer",
                     userSelect: "none",
@@ -720,23 +682,8 @@ children:
                   - type: node
                     nodeId: <% DATA.node.id %>
     events:
-      activeNode.change:
+      activeTarget.change:
         action: context.replace
-        # Take reaction only if the active node has been changed
-        # Otherwise it may cause infinite loop
-        if: |
-          <%
-            ((newTarget, previousTarget) =>
-              (newTarget
-                ? !previousTarget ||
-                  newTarget.type !== previousTarget.type ||
-                  (newTarget.type === "node"
-                    ? newTarget.nodeId !== previousTarget.nodeId
-                    : newTarget.edge.source !== previousTarget.edge.source ||
-                      newTarget.edge.target !== previousTarget.edge.target)
-              : !!previousTarget)
-            )(EVENT.detail, CTX.activeTarget)
-          %>
         args:
           - activeTarget
           - <% EVENT.detail %>

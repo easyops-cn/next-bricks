@@ -3,14 +3,29 @@ import { act } from "react-dom/test-utils";
 import { fireEvent } from "@testing-library/react";
 import "./";
 import type { EoDiagram } from "./index.js";
-import { handleNodesMouseDown } from "./processors/handleNodesMouseDown";
+import * as _handleNodesMouseDown from "./processors/handleNodesMouseDown";
 
 jest.mock("@next-core/theme", () => ({}));
-jest.mock("./processors/handleNodesMouseDown", () => ({
-  handleNodesMouseDown: jest.fn((event: MouseEvent) => {
-    event.stopPropagation();
-  }),
-}));
+jest.mock("d3-drag");
+jest.mock(
+  "resize-observer-polyfill",
+  () =>
+    class {
+      #callback: ResizeObserverCallback;
+      constructor(callback: ResizeObserverCallback) {
+        this.#callback = callback;
+      }
+      disconnect() {}
+      observe() {
+        (this.#callback as () => void)();
+      }
+      unobserve() {}
+    }
+);
+const handleNodesMouseDown = jest.spyOn(
+  _handleNodesMouseDown,
+  "handleNodesMouseDown"
+);
 
 describe("eo-diagram", () => {
   test("empty nodes", async () => {
@@ -152,6 +167,7 @@ describe("eo-diagram", () => {
       },
     ];
     element.activeTarget = { type: "node", nodeId: "b" };
+    element.connectNodes = {};
     const onNodeDelete = jest.fn();
     element.addEventListener("node.delete", (e) =>
       onNodeDelete((e as CustomEvent).detail)
@@ -643,16 +659,31 @@ describe("eo-diagram", () => {
     await act(() => (global as any).flushPromises());
     expect(onActiveTargetChange).toBeCalledWith({ type: "node", nodeId: "a" });
 
+    const nodeA =
+      element.shadowRoot!.querySelectorAll(".node")[0]!.firstElementChild!;
+    act(() => {
+      fireEvent.mouseDown(nodeA);
+    });
+    expect(onActiveTargetChange).toBeCalledTimes(1);
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+    act(() => {
+      fireEvent.mouseUp(nodeA);
+    });
+
     element.activeTarget = { type: "edge", edge: { source: "a", target: "b" } };
     await act(() => (global as any).flushPromises());
     fireEvent.keyDown(element.shadowRoot!.querySelector(".diagram")!, {
       key: "Delete",
     });
+    expect(onActiveTargetChange).toHaveBeenNthCalledWith(2, {
+      type: "edge",
+      edge: { source: "a", target: "b" },
+    });
     expect(onEdgeDelete).toBeCalledWith({ source: "a", target: "b" });
 
     element.activeTarget = null;
     await act(() => (global as any).flushPromises());
-    expect(onActiveTargetChange).toBeCalledWith(null);
+    expect(onActiveTargetChange).toHaveBeenNthCalledWith(3, null);
 
     act(() => {
       document.body.removeChild(element);

@@ -15,6 +15,7 @@ import { select } from "d3-selection";
 import { ZoomTransform, zoom } from "d3-zoom";
 import classNames from "classnames";
 import { uniqueId } from "lodash";
+import ResizeObserver from "resize-observer-polyfill";
 import type {
   DiagramEdge,
   DiagramNode,
@@ -57,6 +58,7 @@ import { useRenderedDiagram } from "./hooks/useRenderedDiagram";
 import { adjustLineLabels } from "./processors/adjustLineLabels";
 import styleText from "./styles.shadow.css";
 import { useUserView } from "./hooks/useUserView";
+import { sameTarget } from "./processors/sameTarget";
 
 const { defineElement, property, event, method } = createDecorators();
 
@@ -185,7 +187,9 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
   };
 
   #handleSwitchActiveTarget = (target: ActiveTarget | null) => {
-    this.activeTarget = target;
+    if (!sameTarget(target, this.activeTarget)) {
+      this.activeTarget = target;
+    }
   };
 
   #diagramRef = createRef<DiagramRef>();
@@ -245,7 +249,7 @@ export function LegacyEoDiagramComponent(
     layoutOptions,
     connectNodes,
     dragNodes,
-    activeTarget,
+    activeTarget: _activeTarget,
     disableKeyboardAction,
     zoomable,
     scrollable,
@@ -406,13 +410,24 @@ export function LegacyEoDiagramComponent(
     [normalizedLines, renderedEdges]
   );
 
+  const newActiveTarget = _activeTarget ?? null;
+  const [activeTarget, setActiveTarget] = useState<ActiveTarget | null>(
+    newActiveTarget
+  );
+
+  useEffect(() => {
+    setActiveTarget((previous) =>
+      sameTarget(previous, newActiveTarget) ? previous : newActiveTarget
+    );
+  }, [newActiveTarget]);
+
   const activeTargetChangeInitialized = useRef(false);
   useEffect(() => {
     if (!activeTargetChangeInitialized.current) {
       activeTargetChangeInitialized.current = true;
       return;
     }
-    onActiveTargetChange?.(activeTarget ?? null);
+    onActiveTargetChange?.(activeTarget);
   }, [nodes, activeTarget, onActiveTargetChange]);
 
   useEffect(() => {
@@ -423,7 +438,6 @@ export function LegacyEoDiagramComponent(
     const onKeydown = (event: KeyboardEvent) => {
       const action = handleKeyboard(event, {
         renderedNodes,
-        renderedEdges,
         activeTarget,
       });
 
@@ -442,7 +456,6 @@ export function LegacyEoDiagramComponent(
   }, [
     activeTarget,
     renderedNodes,
-    renderedEdges,
     disableKeyboardAction,
     onSwitchActiveTarget,
     onNodeDelete,
@@ -593,10 +606,21 @@ export function LegacyEoDiagramComponent(
     if (!lineLabelsRefRepository) {
       return;
     }
+    const updateClipPathList = () => {
+      setClipPathList(
+        getClipPathList(renderedLineLabels, lineLabelsRefRepository)
+      );
+    };
+
     adjustLineLabels(renderedLineLabels, lineLabelsRefRepository);
-    setClipPathList(
-      getClipPathList(renderedLineLabels, lineLabelsRefRepository)
-    );
+
+    const observer = new ResizeObserver(updateClipPathList);
+    for (const lineLabel of lineLabelsRefRepository.values()) {
+      observer.observe(lineLabel);
+    }
+    return () => {
+      observer.disconnect();
+    };
   }, [lineLabelsRenderId, lineLabelsRefRepository, renderedLineLabels]);
 
   if (layout !== "dagre" && layout !== "force") {

@@ -3,7 +3,6 @@ import type {
   ActiveTarget,
   DiagramEdge,
   DiagramNode,
-  RenderedEdge,
   RenderedNode,
 } from "../interfaces";
 
@@ -31,11 +30,9 @@ export function handleKeyboard(
   event: KeyboardEvent,
   {
     renderedNodes,
-    renderedEdges,
     activeTarget,
   }: {
     renderedNodes: RenderedNode[];
-    renderedEdges: RenderedEdge[];
     activeTarget: ActiveTarget | null | undefined;
   }
 ): KeyboardAction | undefined {
@@ -79,25 +76,25 @@ export function handleKeyboard(
       switch (key) {
         case "ArrowLeft":
         case 37: {
-          node = moveOnX(renderedNodes, activeNode, -1);
+          node = moveOnAxis("x", renderedNodes, activeNode, -1);
           action = "switch-active-node";
           break;
         }
         case "ArrowUp":
         case 38: {
-          node = moveOnY(renderedNodes, renderedEdges, activeNode, -1);
+          node = moveOnAxis("y", renderedNodes, activeNode, -1);
           action = "switch-active-node";
           break;
         }
         case "ArrowRight":
         case 39: {
-          node = moveOnX(renderedNodes, activeNode, 1);
+          node = moveOnAxis("x", renderedNodes, activeNode, 1);
           action = "switch-active-node";
           break;
         }
         case "ArrowDown":
         case 40: {
-          node = moveOnY(renderedNodes, renderedEdges, activeNode, 1);
+          node = moveOnAxis("y", renderedNodes, activeNode, 1);
           action = "switch-active-node";
           break;
         }
@@ -110,42 +107,24 @@ export function handleKeyboard(
   }
 }
 
-function moveOnX(
+function moveOnAxis(
+  axis: "x" | "y",
   renderedNodes: RenderedNode[],
   activeNode: RenderedNode,
   direction: 1 | -1
 ) {
+  const oppositeAxis = axis === "x" ? "y" : "x";
   let diff: number;
   const candidates = renderedNodes.filter(
     (node) =>
       node !== activeNode &&
-      ((diff = (node.x - activeNode.x) * direction), diff > 0) &&
-      diff > Math.abs(activeNode.y - node.y)
+      ((diff = (node[axis] - activeNode[axis]) * direction), diff > 0) &&
+      diff > Math.abs(activeNode[oppositeAxis] - node[oppositeAxis])
   );
   return minBy(
     candidates,
-    (node) => (activeNode.y - node.y) ** 2 + (activeNode.x - node.x) ** 2
-  );
-}
-
-function moveOnY(
-  renderedNodes: RenderedNode[],
-  renderedEdges: RenderedEdge[],
-  activeNode: RenderedNode,
-  direction: 1 | -1
-) {
-  const from = direction === 1 ? "source" : "target";
-  const to = direction === 1 ? "target" : "source";
-  const candidateEdges = renderedEdges.filter(
-    ({ data }) => data[from] === activeNode.id && data[to] !== activeNode.id
-  );
-  const candidates = candidateEdges
-    .map(({ data }) => renderedNodes.find((node) => node.id === data[to]))
-    .filter(
-      (node) => node && (node.y - activeNode.y) * direction > 0
-    ) as RenderedNode[];
-  return minBy(
-    candidates,
-    (node) => (activeNode.y - node.y) ** 2 + (activeNode.x - node.x) ** 2
+    (node) =>
+      (activeNode[oppositeAxis] - node[oppositeAxis]) ** 2 +
+      (activeNode[axis] - node[axis]) ** 2
   );
 }
