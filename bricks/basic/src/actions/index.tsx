@@ -2,8 +2,15 @@ import React, { useMemo } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
-import classNames from "classnames";
+import classnames from "classnames";
 import { GeneralIconProps } from "@next-bricks/icons/general-icon";
+import type {
+  Popover,
+  PopoverEvents,
+  PopoverEventsMapping,
+  PopoverProps,
+  Placement,
+} from "../popover/index.jsx";
 import { Target } from "../interface";
 import type { EoTooltip, ToolTipProps } from "../tooltip";
 import type { Link, LinkProps } from "../link";
@@ -17,6 +24,75 @@ const WrappedTooltip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");
 const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 const WrappedMenu = wrapBrick<Menu, unknown>("eo-menu");
 const WrappedMenuItem = wrapBrick<MenuItem, MenuComponentProps>("eo-menu-item");
+const WrappedPopover = wrapBrick<
+  Popover,
+  PopoverProps,
+  PopoverEvents,
+  PopoverEventsMapping
+>("eo-popover", {
+  onVisibleChange: "visible.change",
+  beforeVisibleChange: "before.visible.change",
+});
+
+interface SubMenuItemComProps {
+  index: number;
+  action: SubeMenuAction;
+  checkedKeys: string[] | undefined;
+  onSubMenuClick: (action: SimpleAction) => void;
+}
+
+function SubMenuItemCom({
+  index,
+  action,
+  checkedKeys,
+  onSubMenuClick,
+}: SubMenuItemComProps) {
+  return (
+    <WrappedPopover
+      data-index={index}
+      className="popover"
+      trigger="click"
+      arrow={false}
+      placement={action.placement || "right-start"}
+      distance={4}
+      anchorDisplay="block"
+      strategy="fixed"
+    >
+      <WrappedMenuItem
+        slot="anchor"
+        className={classnames("sub-menu-item-label", {
+          "menu-item-danger": action.danger,
+        })}
+        icon={action.icon}
+        disabled={action.disabled}
+      >
+        {action.text}
+      </WrappedMenuItem>
+      <div className="sub-menu-wrapper">
+        {action?.items.map(
+          (innerItem: SubeMenuItemAction, innerIndex: number) => (
+            <React.Fragment key={innerIndex}>
+              <WrappedMenuItem
+                className={classnames({
+                  "menu-item-danger": innerItem.danger,
+                  "menu-item-selected": checkedKeys?.includes(innerItem?.key),
+                })}
+                icon={innerItem.icon}
+                disabled={innerItem.disabled}
+                onClick={(e: React.MouseEvent) => {
+                  e.stopPropagation();
+                  onSubMenuClick?.(innerItem);
+                }}
+              >
+                {innerItem.text}
+              </WrappedMenuItem>
+            </React.Fragment>
+          )
+        )}
+      </div>
+    </WrappedPopover>
+  );
+}
 
 export interface SimpleAction {
   text: string;
@@ -31,15 +107,24 @@ export interface SimpleAction {
   danger?: boolean;
 }
 
+export interface SubeMenuItemAction extends SimpleAction {
+  key: string;
+}
+
+export interface SubeMenuAction extends SimpleAction {
+  items: SubeMenuItemAction[];
+  placement?: Placement;
+}
+
 export interface Divider {
   type: "divider";
   hidden?: boolean;
 }
-
-export type Action = SimpleAction | Divider;
+export type Action = SimpleAction | Divider | SubeMenuAction;
 
 export interface ActionsProps {
   actions?: Action[];
+  checkedKeys?: string[];
 }
 
 export interface ActionsEvents {
@@ -69,6 +154,14 @@ class EoActions extends ReactNextElement implements ActionsProps {
   accessor actions: Action[] | undefined;
 
   /**
+   * actions选中项配置
+   */
+  @property({
+    attribute: false,
+  })
+  accessor checkedKeys: string[] = [];
+
+  /**
    * 点击按钮时触发
    * @detail 该按钮配置
    */
@@ -87,6 +180,7 @@ class EoActions extends ReactNextElement implements ActionsProps {
       <EoActionsComponent
         actions={this.actions}
         onActionClick={this.#handleActionClick}
+        checkedKeys={this.checkedKeys}
       />
     );
   }
@@ -98,6 +192,7 @@ export interface ActionsComponentProps extends ActionsProps {
 
 export function EoActionsComponent({
   actions,
+  checkedKeys,
   onActionClick,
 }: ActionsComponentProps) {
   const filteredActions = useMemo(() => {
@@ -108,16 +203,25 @@ export function EoActionsComponent({
     <>
       {filteredActions?.length ? (
         <WrappedMenu>
-          {filteredActions.map((action, index) => {
+          {filteredActions.map((action: Action, index) => {
             if (isDivider(action)) {
               if (index === 0 || index === filteredActions.length - 1) {
                 return null;
               }
               return <div key={index} className="menu-item-divider" />;
             } else {
-              const menuItem = (
+              const menuItem = (action as SubeMenuAction)?.items?.length ? (
+                <SubMenuItemCom
+                  index={index}
+                  action={action as SubeMenuAction}
+                  checkedKeys={checkedKeys}
+                  onSubMenuClick={(action: SimpleAction) => {
+                    onActionClick?.(action);
+                  }}
+                ></SubMenuItemCom>
+              ) : (
                 <WrappedMenuItem
-                  className={classNames({
+                  className={classnames({
                     "menu-item-danger": action.danger,
                   })}
                   icon={action.icon}

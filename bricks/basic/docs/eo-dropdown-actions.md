@@ -38,6 +38,15 @@
           icon: "delete"
         event: "delete2"
         tooltip: No permission
+      - text: switch org
+        icon:
+          lib: "antd"
+          icon: "swap"
+        items:
+          - text: org1
+            event: "org1.click"
+          - text: org2
+            event: "org2.click"
   events:
     query:
       - action: message.success
