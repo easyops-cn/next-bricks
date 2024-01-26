@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.2.4...@next-bricks/basic@1.3.0) (2024-01-26)
+
+
+### Features
+
+* eo-actions support subMenu ([da218d6](https://github.com/easyops-cn/next-bricks/commit/da218d6530fd30a3f6c5a14d66a370e62fce44a2))
+
+
+
+
+
 ## [1.2.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.2.3...@next-bricks/basic@1.2.4) (2024-01-10)
 
 
