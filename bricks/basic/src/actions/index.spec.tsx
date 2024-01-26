@@ -10,6 +10,7 @@ describe("eo-actions", () => {
   test("basic usage", async () => {
     const onActionClick = jest.fn();
     const element = document.createElement("eo-actions") as EoActions;
+    element.checkedKeys = ["f"];
     element.actions = [
       {
         type: "divider",
@@ -40,6 +41,21 @@ describe("eo-actions", () => {
       {
         type: "divider",
       },
+      {
+        text: "e",
+        items: [
+          {
+            text: "f",
+            key: "f",
+            event: "f.click",
+          },
+          {
+            text: "g",
+            key: "g",
+            event: "g.click",
+          },
+        ],
+      },
     ];
     element.addEventListener("action.click", onActionClick);
 
@@ -50,11 +66,13 @@ describe("eo-actions", () => {
     });
 
     expect(element.shadowRoot?.querySelectorAll("eo-menu-item")).toHaveLength(
-      3
+      6
     );
     expect(
       element.shadowRoot?.querySelectorAll(".menu-item-divider")
-    ).toHaveLength(1);
+    ).toHaveLength(2);
+
+    expect(element.shadowRoot?.querySelectorAll(".popover")).toHaveLength(1);
 
     expect(
       element.shadowRoot?.querySelectorAll("eo-menu-item")[0].parentElement
@@ -84,6 +102,13 @@ describe("eo-actions", () => {
         },
       })
     );
+
+    act(() => {
+      fireEvent.click(
+        element.shadowRoot?.querySelectorAll("eo-menu-item")[5] as HTMLElement
+      );
+    });
+    expect(onActionClick).toBeCalled();
 
     act(() => {
       document.body.removeChild(element);

@@ -76,6 +76,14 @@ class EoDropdownActions
   accessor actions: Action[] | undefined;
 
   /**
+   * actions选中项配置
+   */
+  @property({
+    attribute: false,
+  })
+  accessor checkedKeys: string[] = [];
+
+  /**
    * 是否禁用
    */
   @property({
@@ -115,6 +123,7 @@ class EoDropdownActions
         disabled={this.disabled}
         handleActionClick={this.#handleClick}
         onVisibleChange={this.#handleVisibleChange}
+        checkedKeys={this.checkedKeys}
       />
     );
   }
@@ -123,10 +132,12 @@ class EoDropdownActions
 interface DropdownActionsComponentProps extends DropdownActionsProps {
   handleActionClick?: (action: SimpleAction) => void;
   onVisibleChange?: (event: boolean) => void;
+  checkedKeys?: string[];
 }
 
 export function EoDropdownActionsComponent({
   actions,
+  checkedKeys,
   disabled,
   handleActionClick,
   onVisibleChange,
@@ -155,7 +166,11 @@ export function EoDropdownActionsComponent({
       }}
     >
       <slot slot="anchor" />
-      <WrappedActions actions={actions} onActionClick={onActionClick} />
+      <WrappedActions
+        actions={actions}
+        onActionClick={onActionClick}
+        checkedKeys={checkedKeys}
+      />
     </WrappedPopover>
   );
 }
