@@ -705,8 +705,15 @@ export function LegacyEoDiagramComponent(
               markerPrefix={markerPrefix}
               clipPathPrefix={clipPathPrefix}
               activeLineMarkerPrefix={activeLineMarkerPrefix}
-              activeEdge={
-                activeTarget?.type === "edge" ? activeTarget.edge : null
+              active={
+                activeTarget?.type === "edge" &&
+                activeTarget.edge.source === line.edge.source &&
+                activeTarget.edge.target === line.edge.target
+              }
+              activeRelated={
+                activeTarget?.type === "node" &&
+                (line.edge.source === activeTarget.nodeId ||
+                  line.edge.target === activeTarget.nodeId)
               }
               onLineClick={onLineClick}
               onLineDoubleClick={onLineDoubleClick}

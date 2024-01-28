@@ -34,6 +34,8 @@ describe("normalizeLinesAndMarkers", () => {
     expect(normalizedLines).toMatchInlineSnapshot(`
       [
         {
+          "activeMarkerIndex": undefined,
+          "activeRelatedMarkerIndex": undefined,
           "edge": {
             "source": "a",
             "target": "b",
@@ -50,6 +52,8 @@ describe("normalizeLinesAndMarkers", () => {
           "markerIndex": undefined,
         },
         {
+          "activeMarkerIndex": undefined,
+          "activeRelatedMarkerIndex": undefined,
           "edge": {
             "source": "a",
             "target": "c",
@@ -66,6 +70,8 @@ describe("normalizeLinesAndMarkers", () => {
           "markerIndex": undefined,
         },
         {
+          "activeMarkerIndex": undefined,
+          "activeRelatedMarkerIndex": undefined,
           "edge": {
             "source": "b",
             "target": "d",
@@ -82,6 +88,8 @@ describe("normalizeLinesAndMarkers", () => {
           "markerIndex": undefined,
         },
         {
+          "activeMarkerIndex": undefined,
+          "activeRelatedMarkerIndex": undefined,
           "edge": {
             "source": "b",
             "target": "e",
@@ -105,11 +113,21 @@ describe("normalizeLinesAndMarkers", () => {
   test("colored lines with filter", () => {
     const { normalizedLines, markers } = normalizeLinesAndMarkers(edges, [
       { edgeType: "menu", strokeColor: "gray" },
-      { edgeType: "link", arrow: true, strokeColor: "blue" },
+      {
+        edgeType: "link",
+        arrow: true,
+        strokeColor: "blue",
+        overrides: {
+          active: { strokeColor: "red" },
+          activeRelated: { strokeColor: "purple" },
+        },
+      },
     ]);
     expect(normalizedLines).toMatchInlineSnapshot(`
       [
         {
+          "activeMarkerIndex": undefined,
+          "activeRelatedMarkerIndex": undefined,
           "edge": {
             "source": "a",
             "target": "b",
@@ -127,6 +145,8 @@ describe("normalizeLinesAndMarkers", () => {
           "markerIndex": undefined,
         },
         {
+          "activeMarkerIndex": undefined,
+          "activeRelatedMarkerIndex": undefined,
           "edge": {
             "source": "a",
             "target": "c",
@@ -144,6 +164,8 @@ describe("normalizeLinesAndMarkers", () => {
           "markerIndex": undefined,
         },
         {
+          "activeMarkerIndex": 1,
+          "activeRelatedMarkerIndex": 2,
           "edge": {
             "source": "b",
             "target": "d",
@@ -156,12 +178,22 @@ describe("normalizeLinesAndMarkers", () => {
             "edgeType": "link",
             "interactStrokeWidth": 20,
             "label": undefined,
+            "overrides": {
+              "active": {
+                "strokeColor": "red",
+              },
+              "activeRelated": {
+                "strokeColor": "purple",
+              },
+            },
             "strokeColor": "blue",
             "strokeWidth": 1,
           },
           "markerIndex": 0,
         },
         {
+          "activeMarkerIndex": 1,
+          "activeRelatedMarkerIndex": 2,
           "edge": {
             "source": "b",
             "target": "e",
@@ -174,6 +206,14 @@ describe("normalizeLinesAndMarkers", () => {
             "edgeType": "link",
             "interactStrokeWidth": 20,
             "label": undefined,
+            "overrides": {
+              "active": {
+                "strokeColor": "red",
+              },
+              "activeRelated": {
+                "strokeColor": "purple",
+              },
+            },
             "strokeColor": "blue",
             "strokeWidth": 1,
           },
@@ -181,7 +221,11 @@ describe("normalizeLinesAndMarkers", () => {
         },
       ]
     `);
-    expect(markers).toEqual([{ strokeColor: "blue" }]);
+    expect(markers).toEqual([
+      { strokeColor: "blue" },
+      { strokeColor: "red" },
+      { strokeColor: "purple" },
+    ]);
   });
 
   test("no draw", () => {
