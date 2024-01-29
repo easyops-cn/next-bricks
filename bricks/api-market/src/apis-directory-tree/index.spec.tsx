@@ -238,7 +238,7 @@ describe("api-market.apis-directory-tree", () => {
       slot="suffix"
     >
       <eo-mini-actions
-        actions="[object Object],[object Object],[object Object],[object Object],[object Object]"
+        actions="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
       />
     </div>
   </eo-directory-tree-leaf>
@@ -261,7 +261,7 @@ describe("api-market.apis-directory-tree", () => {
       slot="suffix"
     >
       <eo-mini-actions
-        actions="[object Object],[object Object],[object Object],[object Object],[object Object]"
+        actions="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
       />
     </div>
   </eo-directory-tree-internal-node>
@@ -277,7 +277,7 @@ describe("api-market.apis-directory-tree", () => {
       slot="suffix"
     >
       <eo-mini-actions
-        actions="[object Object],[object Object],[object Object],[object Object],[object Object]"
+        actions="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
       />
     </div>
   </eo-directory-tree-leaf>
@@ -324,7 +324,7 @@ describe("api-market.apis-directory-tree", () => {
       slot="suffix"
     >
       <eo-mini-actions
-        actions="[object Object],[object Object],[object Object],[object Object],[object Object]"
+        actions="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
       />
     </div>
   </eo-directory-tree-leaf>
@@ -348,7 +348,7 @@ describe("api-market.apis-directory-tree", () => {
       slot="suffix"
     >
       <eo-mini-actions
-        actions="[object Object],[object Object],[object Object],[object Object],[object Object]"
+        actions="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
       />
     </div>
   </eo-directory-tree-internal-node>
@@ -419,7 +419,7 @@ describe("api-market.apis-directory-tree", () => {
       slot="suffix"
     >
       <eo-mini-actions
-        actions="[object Object],[object Object],[object Object],[object Object],[object Object]"
+        actions="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
       />
     </div>
   </eo-directory-tree-leaf>
@@ -465,7 +465,7 @@ describe("api-market.apis-directory-tree", () => {
       slot="suffix"
     >
       <eo-mini-actions
-        actions="[object Object],[object Object],[object Object],[object Object],[object Object]"
+        actions="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
       />
     </div>
   </eo-directory-tree-leaf>
@@ -489,7 +489,7 @@ describe("api-market.apis-directory-tree", () => {
       slot="suffix"
     >
       <eo-mini-actions
-        actions="[object Object],[object Object],[object Object],[object Object],[object Object]"
+        actions="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
       />
     </div>
   </eo-directory-tree-internal-node>
@@ -560,7 +560,7 @@ describe("api-market.apis-directory-tree", () => {
       slot="suffix"
     >
       <eo-mini-actions
-        actions="[object Object],[object Object],[object Object],[object Object],[object Object]"
+        actions="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
       />
     </div>
   </eo-directory-tree-leaf>

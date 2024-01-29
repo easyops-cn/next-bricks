@@ -29,6 +29,16 @@ describe("eo-mini-actions", () => {
       {
         icon: {
           lib: "antd",
+          theme: "outlined",
+          icon: "edit",
+        },
+        isDropdown: false,
+        event: "edit",
+        tooltip: "edit",
+      },
+      {
+        icon: {
+          lib: "antd",
           icon: "copy",
           theme: "outlined",
         },
@@ -62,7 +72,7 @@ describe("eo-mini-actions", () => {
     });
     expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
     expect(element.shadowRoot?.querySelectorAll(".button-item")).toHaveLength(
-      2
+      3
     );
     expect(
       element.shadowRoot?.querySelectorAll(".button-dropdown-item")
