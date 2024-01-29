@@ -23,6 +23,9 @@ import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import classNames from "classnames";
 
+import type { EoTooltip, ToolTipProps } from "../tooltip/index.jsx";
+const WrappedTooltip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");
+
 const { defineElement, property, event } = createDecorators();
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
@@ -151,7 +154,17 @@ export function EoMiniActionsComponent(props: EoMiniActionsComponentProps) {
             })}
             onClick={() => handleActionClick(action)}
           >
-            <WrappedIcon className="button-item-icon" {...action.icon!} />
+            {action.tooltip ? (
+              <WrappedTooltip
+                className="button-item-tooltip"
+                key={i}
+                content={action.tooltip}
+              >
+                <WrappedIcon className="button-item-icon" {...action.icon!} />
+              </WrappedTooltip>
+            ) : (
+              <WrappedIcon className="button-item-icon" {...action.icon!} />
+            )}
           </div>
         );
       })}

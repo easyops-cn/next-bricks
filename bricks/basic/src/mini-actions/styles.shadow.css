@@ -38,6 +38,11 @@ eo-icon {
   color: var(--text-color-default);
 }
 
+.button-item-tooltip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .button-item:not(.disabled):hover {
   background: var(--antd-item-hover-bg);
 }

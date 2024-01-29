@@ -31,6 +31,7 @@ function SuffixActions(props: SuffixActionsProps) {
           treeData.data.key.split("-").length >= 3 &&
           treeData.data.type === "group",
         event: "create-api",
+        tooltip: "新建接口",
       },
       {
         icon: {
@@ -43,6 +44,10 @@ function SuffixActions(props: SuffixActionsProps) {
           treeData.data.type === "group",
         disabled: treeData.data.isPublic,
         event: "import-api",
+        isDropdown: true,
+      },
+      {
+        type: "divider",
         isDropdown: true,
       },
       {
@@ -67,7 +72,7 @@ function SuffixActions(props: SuffixActionsProps) {
         },
         disabled: treeData.data.isPublic,
         isDropdown: true,
-        text: "重命名",
+        text: "目录重命名",
         event: "rename-directory",
       },
       {
@@ -76,7 +81,7 @@ function SuffixActions(props: SuffixActionsProps) {
           icon: "delete",
           theme: "outlined",
         },
-        text: "删除",
+        text: "删除目录",
         disabled: treeData.data.isPublic,
         isDropdown: true,
         danger: true,
