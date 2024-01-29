@@ -123,12 +123,6 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
   @property({ attribute: false })
   accessor connectNodes: ConnectNodesOptions | undefined;
 
-  /**
-   * @deprecated use `connectNodes` instead
-   */
-  @property({ attribute: false })
-  accessor nodesConnect: ConnectNodesOptions | undefined;
-
   @property({ attribute: false })
   accessor dragNodes: DragNodesOptions | undefined;
 
@@ -209,7 +203,7 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
         nodeBricks={this.nodeBricks}
         lines={this.lines}
         layoutOptions={this.layoutOptions}
-        connectNodes={this.connectNodes ?? this.nodesConnect}
+        connectNodes={this.connectNodes}
         dragNodes={this.dragNodes}
         activeTarget={this.activeTarget}
         disableKeyboardAction={this.disableKeyboardAction}
