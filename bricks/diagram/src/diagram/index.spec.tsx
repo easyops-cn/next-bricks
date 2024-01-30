@@ -453,8 +453,9 @@ describe("eo-diagram", () => {
       `);
 
       await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
-    } else {
-      expect(element.shadowRoot?.children[1]).toMatchInlineSnapshot(`
+    }
+
+    expect(element.shadowRoot?.children[1]).toMatchInlineSnapshot(`
       <div
         class="diagram ready pannable"
         tabindex="-1"
@@ -469,9 +470,10 @@ describe("eo-diagram", () => {
               id="diagram-4-line-arrow-0"
               markerHeight="6"
               markerWidth="6"
-              orient="auto"
-              refX="3"
+              orient="auto-start-reverse"
+              refX="5"
               refY="3"
+              stroke-linejoin="round"
               viewBox="0 0 6 6"
             >
               <path
@@ -481,13 +483,28 @@ describe("eo-diagram", () => {
                 stroke-width="1"
               />
             </marker>
-            <clippath
-              id="diagram-4-clip-path-line-3"
+            <mask
+              height="2400"
+              id="diagram-4-mask-line-3"
+              width="2300"
+              x="-990"
+              y="-980"
             >
-              <polygon
-                points="-3,3 3,3 3,-3 -3,-3 -3,-980 1310,-980 1310,1420 -990,1420 -990,-980 -3,-980"
+              <rect
+                fill="white"
+                height="2400"
+                width="2300"
+                x="-990"
+                y="-980"
               />
-            </clippath>
+              <rect
+                fill="black"
+                height="6"
+                width="6"
+                x="-3"
+                y="-3"
+              />
+            </mask>
             <marker
               id="diagram-4-active-line-start"
               markerHeight="8"
@@ -528,20 +545,20 @@ describe("eo-diagram", () => {
             </marker>
           </defs>
           <g
-            transform="translate(-12.5 -12.5) scale(0.5)"
+            transform="translate(-17.5 -17.5) scale(0.5)"
           >
             <g
-              class="line"
+              class="line active-related"
             >
               <path
-                d="M25,0L20.833,4.167C16.667,8.333,8.333,16.667,4.167,NaNC0,NaN,0,NaN,0,NaNL0,NaN"
+                d="M30,10L25.833,14.167C21.667,18.333,13.333,26.667,9.167,35C5,43.333,5,51.667,5,55.833L5,60"
                 fill="none"
                 stroke="gray"
                 stroke-width="1"
               />
               <path
                 class="active-bg"
-                d="M25,0L20.833,4.167C16.667,8.333,8.333,16.667,4.167,NaNC0,NaN,0,NaN,0,NaNL0,NaN"
+                d="M30,10L25.833,14.167C21.667,18.333,13.333,26.667,9.167,35C5,43.333,5,51.667,5,55.833L5,60"
                 fill="none"
                 marker-end="url(#diagram-4-active-line-end)"
                 marker-start="url(#diagram-4-active-line-start)"
@@ -553,20 +570,20 @@ describe("eo-diagram", () => {
               class="line"
             >
               <path
-                clip-path="url(#diagram-4-clip-path-line-3)"
-                d="M25,0L29.167,4.167C33.333,8.333,41.667,16.667,NaN,NaNCNaN,NaN,NaN,NaN,NaN,NaNLNaN,NaN"
+                d="M40,10L44.167,14.167C48.333,18.333,56.667,26.667,60.833,34.833C65,43,65,51,65,55L65,59"
                 fill="none"
                 marker-end="url(#diagram-4-line-arrow-0)"
+                mask="url(#diagram-4-mask-line-3)"
                 stroke="blue"
                 stroke-width="1"
               />
               <path
                 class="active-bg"
-                clip-path="url(#diagram-4-clip-path-line-3)"
-                d="M25,0L29.167,4.167C33.333,8.333,41.667,16.667,NaN,NaNCNaN,NaN,NaN,NaN,NaN,NaNLNaN,NaN"
+                d="M40,10L44.167,14.167C48.333,18.333,56.667,26.667,60.833,34.833C65,43,65,51,65,55L65,59"
                 fill="none"
                 marker-end="url(#diagram-4-active-line-end)"
                 marker-start="url(#diagram-4-active-line-start)"
+                mask="url(#diagram-4-mask-line-3)"
                 stroke="var(--palette-blue-3)"
                 stroke-width="1"
               />
@@ -575,7 +592,7 @@ describe("eo-diagram", () => {
         </svg>
         <div
           class="line-labels ready"
-          style="left: -12.5px; top: -12.5px; transform: scale(0.5);"
+          style="left: -17.5px; top: -17.5px; transform: scale(0.5);"
         >
           <div
             class="line-label"
@@ -586,11 +603,11 @@ describe("eo-diagram", () => {
         </div>
         <div
           class="nodes"
-          style="left: -12.5px; top: -12.5px; transform: scale(0.5);"
+          style="left: -17.5px; top: -17.5px; transform: scale(0.5);"
         >
           <div
             class="node"
-            style="left: 25px; top: 0px; visibility: visible;"
+            style="left: 30px; top: 0px; visibility: visible;"
           >
             <span>
               a
@@ -598,7 +615,7 @@ describe("eo-diagram", () => {
           </div>
           <div
             class="node"
-            style="left: 0px; top: 50px; visibility: visible;"
+            style="left: 0px; top: 60px; visibility: visible;"
           >
             <span>
               b
@@ -606,7 +623,7 @@ describe("eo-diagram", () => {
           </div>
           <div
             class="node"
-            style="left: 50px; top: 50px; visibility: visible;"
+            style="left: 60px; top: 60px; visibility: visible;"
           >
             <span>
               c
@@ -623,9 +640,10 @@ describe("eo-diagram", () => {
               id="diagram-4-line-arrow-connect-line"
               markerHeight="6"
               markerWidth="6"
-              orient="auto"
-              refX="3"
+              orient="auto-start-reverse"
+              refX="5"
               refY="3"
+              stroke-linejoin="round"
               viewBox="0 0 6 6"
             >
               <path
@@ -640,8 +658,7 @@ describe("eo-diagram", () => {
           />
         </svg>
       </div>
-      `);
-    }
+    `);
 
     fireEvent.mouseDown(element.shadowRoot!.querySelector(".nodes")!);
     expect(handleNodesMouseDown).toBeCalled();

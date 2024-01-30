@@ -17,6 +17,7 @@ export function LineMaskComponent({
   const lineText = renderedLineLabels.find(
     (item) => item.lineId === lineId && item.placement === "center"
   );
+  // istanbul ignore next
   if (!lineText) {
     return null;
   }
@@ -25,14 +26,14 @@ export function LineMaskComponent({
   return (
     <mask
       id={`${maskPrefix}${lineId}`}
-      x={bgRect.x}
-      y={bgRect.y}
+      x={bgRect.left}
+      y={bgRect.top}
       width={bgRect.width}
       height={bgRect.height}
     >
       <rect
-        x={bgRect.x}
-        y={bgRect.y}
+        x={bgRect.left}
+        y={bgRect.top}
         width={bgRect.width}
         height={bgRect.height}
         // Everything under a white pixel will be visible
@@ -41,8 +42,8 @@ export function LineMaskComponent({
       {rects.map((rect, index) => (
         <rect
           key={index}
-          x={rect.x}
-          y={rect.y}
+          x={rect.left}
+          y={rect.top}
           width={rect.width}
           height={rect.height}
           // Everything under a black pixel will be invisible
@@ -55,8 +56,8 @@ export function LineMaskComponent({
 
 function getRectWithPadding(rect: SimpleRect, padding: number): SimpleRect {
   return {
-    x: rect.x - padding,
-    y: rect.y - padding,
+    left: rect.left - padding,
+    top: rect.top - padding,
     width: rect.width + padding * 2,
     height: rect.height + padding * 2,
   };

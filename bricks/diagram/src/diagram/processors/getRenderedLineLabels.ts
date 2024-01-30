@@ -31,10 +31,14 @@ export function getRenderedLineLabels(
       }
 
       // istanbul ignore next
-      const { x, y, width, height } =
-        process.env.NODE_ENV === "test"
-          ? { x: 10, y: 20, width: 300, height: 400 }
-          : path.getBBox();
+      const {
+        x: left,
+        y: top,
+        width,
+        height,
+      } = process.env.NODE_ENV === "test"
+        ? { x: 10, y: 20, width: 300, height: 400 }
+        : path.getBBox();
 
       // istanbul ignore next
       const pathLength =
@@ -59,7 +63,7 @@ export function getRenderedLineLabels(
           [key as "label"]: item as LineLabelConf,
           edge,
           position: [point.x, point.y],
-          lineRect: { x, y, width, height },
+          lineRect: { left, top, width, height },
           id: `${$id}-${placement}`,
           lineId: $id,
           placement,

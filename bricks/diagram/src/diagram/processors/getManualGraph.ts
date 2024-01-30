@@ -78,7 +78,6 @@ export function getManualGraph(
       adjustNodesPosition(renderedNodes, nodesRefRepository, nodePaddings);
 
       const renderedEdges = getRenderedEdges(edges, {
-        getNode,
         normalizedLinesMap,
         lineLabelsRefRepository,
       });

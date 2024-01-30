@@ -8,8 +8,12 @@ export function adjustNodesSize(
   for (const node of nodes) {
     const element = nodesRefRepository.get(node.id);
     node.width =
-      (element?.offsetWidth ?? 10) + nodePaddings[1] + nodePaddings[3];
+      Math.max(element?.offsetWidth ?? 0, 10) +
+      nodePaddings[1] +
+      nodePaddings[3];
     node.height =
-      (element?.offsetHeight ?? 10) + nodePaddings[0] + nodePaddings[2];
+      Math.max(element?.offsetHeight ?? 0, 10) +
+      nodePaddings[0] +
+      nodePaddings[2];
   }
 }

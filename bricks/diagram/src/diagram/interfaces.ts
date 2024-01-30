@@ -14,22 +14,22 @@ export interface DiagramEdge {
   [key: string]: unknown;
 }
 
-export interface RenderedNode {
+export interface RenderedNode extends NodeRect {
   id: DiagramNodeId;
-  x: number;
-  y: number;
   x0?: number;
   y0?: number;
+  data: DiagramNode;
+}
+
+export interface NodeRect extends NodePosition {
   width: number;
   height: number;
-  data: DiagramNode;
 }
 
 export interface RenderedEdge {
   id?: string;
   points?: NodePosition[] | null;
   data: DiagramEdge;
-  angle?: number;
   labelpos?: "c" | "l" | "r";
   width?: number;
   height?: number;
@@ -52,13 +52,17 @@ export interface NormalizedLine {
     strokeColor: string;
     strokeWidth: number;
     interactStrokeWidth: number;
-    curveType: string;
+    type: LineType;
+    curveType: CurveType;
     overrides?: LineConfOverrides;
     $id: string;
   };
   markers: NormalizedLineMarker[];
   edge: DiagramEdge;
 }
+
+export type LineType = "auto" | "curve" | "straight" | "polyline";
+export type NormalizedLineType = LineType;
 
 export interface NormalizedLineMarker {
   index: number;
@@ -127,9 +131,9 @@ export interface LineConf extends LineConfOverridable {
   edgeType?: string | string[];
   if?: string | boolean | null;
   draw?: boolean;
-  type?: "auto";
+  type?: LineType;
   interactable?: boolean;
-  curveType?: "curveBasis";
+  curveType?: CurveType;
   arrow?: boolean;
   text?: TextOptions | TextOptions[];
   label?: LineLabelConf | LineLabelConf[];
@@ -214,6 +218,8 @@ export type FullRectTuple = [
   left: number,
 ];
 
+export type Direction = "top" | "right" | "bottom" | "left";
+
 export interface LineLabelRect extends SimpleRect {
   lineId: string;
 }
@@ -221,8 +227,8 @@ export interface LineLabelRect extends SimpleRect {
 export type LineMaskRects = Map<string, SimpleRect[]>;
 
 export interface SimpleRect {
-  x: number;
-  y: number;
+  left: number;
+  top: number;
   width: number;
   height: number;
 }

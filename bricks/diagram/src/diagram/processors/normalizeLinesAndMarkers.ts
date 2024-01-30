@@ -39,8 +39,12 @@ export function normalizeLinesAndMarkers(
     const line: NormalizedLine["line"] = {
       strokeColor: DEFAULT_LINE_STROKE_COLOR,
       strokeWidth: DEFAULT_LINE_STROKE_WIDTH,
-      curveType: DEFAULT_LINE_CURVE_TYPE,
+      curveType:
+        computedLineConf?.type === "polyline"
+          ? "curveLinear"
+          : DEFAULT_LINE_CURVE_TYPE,
       interactStrokeWidth: DEFAULT_LINE_INTERACT_STROKE_WIDTH,
+      type: "auto",
       ...computedLineConf,
       label,
       $id: id,
@@ -56,18 +60,19 @@ export function normalizeLinesAndMarkers(
       const placement = _placement ?? "end";
 
       let type: LineMarkerType;
-      let offset: number;
+      let offsetUnit: number;
 
       switch (_type) {
         case "0..1":
         case "0..N":
-          offset = 0;
+          offsetUnit = 21;
           type = _type;
           break;
         default:
-          offset = -1;
+          offsetUnit = 1;
           type = "arrow";
       }
+      const offset = offsetUnit * line.strokeWidth;
 
       const index = addMarker({ type, strokeColor: line.strokeColor }, markers);
       normalizedMarkers.push({
