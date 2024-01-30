@@ -56,10 +56,16 @@ export interface NormalizedLine {
     overrides?: LineConfOverrides;
     $id: string;
   };
-  markerIndex: number | undefined;
-  activeMarkerIndex: number | undefined;
-  activeRelatedMarkerIndex: number | undefined;
+  markers: NormalizedLineMarker[];
   edge: DiagramEdge;
+}
+
+export interface NormalizedLineMarker {
+  index: number;
+  placement: LineMarkerPlacement;
+  type: LineMarkerType;
+  variant: "default" | "active" | "active-related";
+  offset: number;
 }
 
 export interface LineLabel {
@@ -80,12 +86,7 @@ export interface RenderedLineLabel {
   label?: LineLabelConf;
   edge: DiagramEdge;
   position: PositionTuple;
-  lineRect: {
-    left: number;
-    top: number;
-    right: number;
-    bottom: number;
-  };
+  lineRect: SimpleRect;
   id: string;
   lineId: string;
   placement: string;
@@ -97,7 +98,11 @@ export type PositionTuple = [x: number, y: number];
 export type SizeTuple = [width: number, height: number];
 export type RangeTuple = [min: number, max: number];
 
+export type LineMarkerType = "arrow" | "0..1" | "0..N";
+export type LineMarkerPlacement = "start" | "end";
+
 export interface LineMarker {
+  type: LineMarkerType;
   strokeColor: string;
 }
 
@@ -130,6 +135,12 @@ export interface LineConf extends LineConfOverridable {
   label?: LineLabelConf | LineLabelConf[];
   cursor?: React.CSSProperties["cursor"];
   overrides?: LineConfOverrides;
+  markers?: LineMarkerConf[];
+}
+
+export interface LineMarkerConf {
+  placement?: LineMarkerPlacement;
+  type?: LineMarkerType;
 }
 
 export interface LineConfOverrides {
@@ -203,15 +214,17 @@ export type FullRectTuple = [
   left: number,
 ];
 
-export interface LineTextClipPath extends SimpleRect {
+export interface LineLabelRect extends SimpleRect {
   lineId: string;
 }
 
+export type LineMaskRects = Map<string, SimpleRect[]>;
+
 export interface SimpleRect {
-  x0: number;
-  y0: number;
-  w: number;
-  h: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 }
 
 export interface LineTarget {

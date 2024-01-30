@@ -115,9 +115,10 @@ describe("eo-diagram", () => {
                 id="diagram-1-line-arrow-connect-line"
                 markerHeight="6"
                 markerWidth="6"
-                orient="auto"
-                refX="3"
+                orient="auto-start-reverse"
+                refX="5"
                 refY="3"
+                stroke-linejoin="round"
                 viewBox="0 0 6 6"
               >
                 <path
@@ -200,9 +201,10 @@ describe("eo-diagram", () => {
               id="diagram-4-line-arrow-0"
               markerHeight="6"
               markerWidth="6"
-              orient="auto"
-              refX="3"
+              orient="auto-start-reverse"
+              refX="5"
               refY="3"
+              stroke-linejoin="round"
               viewBox="0 0 6 6"
             >
               <path
@@ -289,9 +291,10 @@ describe("eo-diagram", () => {
               id="diagram-4-line-arrow-connect-line"
               markerHeight="6"
               markerWidth="6"
-              orient="auto"
-              refX="3"
+              orient="auto-start-reverse"
+              refX="5"
               refY="3"
+              stroke-linejoin="round"
               viewBox="0 0 6 6"
             >
               <path
@@ -327,9 +330,10 @@ describe("eo-diagram", () => {
                 id="diagram-4-line-arrow-0"
                 markerHeight="6"
                 markerWidth="6"
-                orient="auto"
-                refX="3"
+                orient="auto-start-reverse"
+                refX="5"
                 refY="3"
+                stroke-linejoin="round"
                 viewBox="0 0 6 6"
               >
                 <path
@@ -428,9 +432,10 @@ describe("eo-diagram", () => {
                 id="diagram-4-line-arrow-connect-line"
                 markerHeight="6"
                 markerWidth="6"
-                orient="auto"
-                refX="3"
+                orient="auto-start-reverse"
+                refX="5"
                 refY="3"
+                stroke-linejoin="round"
                 viewBox="0 0 6 6"
               >
                 <path
@@ -748,9 +753,10 @@ describe("eo-diagram", () => {
               id="diagram-7-line-arrow-0"
               markerHeight="6"
               markerWidth="6"
-              orient="auto"
-              refX="3"
+              orient="auto-start-reverse"
+              refX="5"
               refY="3"
+              stroke-linejoin="round"
               viewBox="0 0 6 6"
             >
               <path
@@ -760,13 +766,28 @@ describe("eo-diagram", () => {
                 stroke-width="1"
               />
             </marker>
-            <clippath
-              id="diagram-7-clip-path-line-6"
+            <mask
+              height="2400"
+              id="diagram-7-mask-line-6"
+              width="2300"
+              x="-990"
+              y="-980"
             >
-              <polygon
-                points="-3,3 3,3 3,-3 -3,-3 -3,-980 1310,-980 1310,1420 -990,1420 -990,-980 -3,-980"
+              <rect
+                fill="white"
+                height="2400"
+                width="2300"
+                x="-990"
+                y="-980"
               />
-            </clippath>
+              <rect
+                fill="black"
+                height="6"
+                width="6"
+                x="-3"
+                y="-3"
+              />
+            </mask>
             <marker
               id="diagram-7-active-line-start"
               markerHeight="8"
@@ -832,26 +853,26 @@ describe("eo-diagram", () => {
               class="line interactable"
             >
               <path
-                d="M40,10L44.167,14.167C48.333,18.333,56.667,26.667,60.833,34.167C65,41.667,65,48.333,65,51.667L65,55"
+                d="M40,10L44.167,14.167C48.333,18.333,56.667,26.667,60.833,34.833C65,43,65,51,65,55L65,59"
                 fill="none"
                 stroke="transparent"
                 stroke-width="20"
               />
               <path
-                clip-path="url(#diagram-7-clip-path-line-6)"
-                d="M40,10L44.167,14.167C48.333,18.333,56.667,26.667,60.833,34.167C65,41.667,65,48.333,65,51.667L65,55"
+                d="M40,10L44.167,14.167C48.333,18.333,56.667,26.667,60.833,34.833C65,43,65,51,65,55L65,59"
                 fill="none"
                 marker-end="url(#diagram-7-line-arrow-0)"
+                mask="url(#diagram-7-mask-line-6)"
                 stroke="blue"
                 stroke-width="1"
               />
               <path
                 class="active-bg"
-                clip-path="url(#diagram-7-clip-path-line-6)"
-                d="M40,10L44.167,14.167C48.333,18.333,56.667,26.667,60.833,34.167C65,41.667,65,48.333,65,51.667L65,55"
+                d="M40,10L44.167,14.167C48.333,18.333,56.667,26.667,60.833,34.833C65,43,65,51,65,55L65,59"
                 fill="none"
                 marker-end="url(#diagram-7-active-line-end)"
                 marker-start="url(#diagram-7-active-line-start)"
+                mask="url(#diagram-7-mask-line-6)"
                 stroke="var(--palette-blue-3)"
                 stroke-width="1"
               />
@@ -895,9 +916,10 @@ describe("eo-diagram", () => {
               id="diagram-7-line-arrow-connect-line"
               markerHeight="6"
               markerWidth="6"
-              orient="auto"
-              refX="3"
+              orient="auto-start-reverse"
+              refX="5"
               refY="3"
+              stroke-linejoin="round"
               viewBox="0 0 6 6"
             >
               <path

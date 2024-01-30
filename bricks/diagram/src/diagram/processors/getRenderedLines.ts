@@ -15,18 +15,22 @@ export function getRenderedLines(
     renderedMap.set(renderedEdge.data, renderedEdge);
   }
   return normalizedLines
-    .map(({ line, edge, ...rest }) => {
+    .map(({ line, edge, markers, ...rest }) => {
       const renderedEdge = renderedMap.get(edge);
       if (!renderedEdge) {
         return;
       }
+      const endMarker = markers.find(
+        (marker) => marker.variant === "default" && marker.placement === "end"
+      );
       const d = curveLine(
         renderedEdge.points,
-        line.arrow ? -5 : 0,
+        endMarker?.offset ?? 0,
         line.curveType
       );
       return {
         ...rest,
+        markers,
         line,
         edge,
         d,

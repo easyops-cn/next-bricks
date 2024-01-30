@@ -29,6 +29,7 @@ export function ConnectLineComponent({
     >
       <defs>
         <MarkerComponent
+          type="arrow"
           id={`${markerPrefix}connect-line`}
           strokeColor={connectLineState?.options.strokeColor}
         />

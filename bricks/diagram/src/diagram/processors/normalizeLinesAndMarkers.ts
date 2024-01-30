@@ -4,7 +4,10 @@ import type {
   DiagramEdge,
   LineConf,
   LineMarker,
+  LineMarkerConf,
+  LineMarkerType,
   NormalizedLine,
+  NormalizedLineMarker,
 } from "../interfaces";
 import { matchEdgeByFilter } from "./matchEdgeByFilter";
 import {
@@ -44,26 +47,68 @@ export function normalizeLinesAndMarkers(
     };
     normalizedLinesMap.set(edge, id);
 
-    let markerIndex: number | undefined;
-    let activeMarkerIndex: number | undefined;
-    let activeRelatedMarkerIndex: number | undefined;
-    if (line.arrow) {
-      markerIndex = addMarker(line.strokeColor, markers);
+    const normalizedMarkers: NormalizedLineMarker[] = [];
+
+    const lineMarkers: LineMarkerConf[] =
+      line.markers ?? (line.arrow ? [{ placement: "end", type: "arrow" }] : []);
+    for (const marker of lineMarkers) {
+      const { placement: _placement, type: _type } = marker;
+      const placement = _placement ?? "end";
+
+      let type: LineMarkerType;
+      let offset: number;
+
+      switch (_type) {
+        case "0..1":
+        case "0..N":
+          offset = 0;
+          type = _type;
+          break;
+        default:
+          offset = -1;
+          type = "arrow";
+      }
+
+      const index = addMarker({ type, strokeColor: line.strokeColor }, markers);
+      normalizedMarkers.push({
+        index,
+        placement,
+        type,
+        variant: "default",
+        offset,
+      });
 
       const activeStrokeColor =
         line.overrides?.active?.strokeColor ?? line.strokeColor;
-      activeMarkerIndex = addMarker(activeStrokeColor, markers);
-
+      const activeMarkerIndex = addMarker(
+        { type, strokeColor: activeStrokeColor },
+        markers
+      );
+      normalizedMarkers.push({
+        index: activeMarkerIndex,
+        placement,
+        type,
+        variant: "active",
+        offset,
+      });
       const activeRelatedStrokeColor =
         line.overrides?.activeRelated?.strokeColor ?? line.strokeColor;
-      activeRelatedMarkerIndex = addMarker(activeRelatedStrokeColor, markers);
+      const activeRelatedMarkerIndex = addMarker(
+        { type, strokeColor: activeRelatedStrokeColor },
+        markers
+      );
+      normalizedMarkers.push({
+        index: activeRelatedMarkerIndex,
+        placement,
+        type,
+        variant: "active-related",
+        offset,
+      });
     }
 
     normalizedLines.push({
       line,
-      markerIndex,
-      activeMarkerIndex,
-      activeRelatedMarkerIndex,
+      markers: normalizedMarkers,
       edge,
     });
   }
@@ -74,8 +119,7 @@ export function normalizeLinesAndMarkers(
   };
 }
 
-function addMarker(strokeColor: string, markers: LineMarker[]): number {
-  const marker: LineMarker = { strokeColor };
+function addMarker(marker: LineMarker, markers: LineMarker[]): number {
   let markerIndex = findIndex(markers, marker);
   if (markerIndex === -1) {
     markerIndex = markers.push(marker) - 1;

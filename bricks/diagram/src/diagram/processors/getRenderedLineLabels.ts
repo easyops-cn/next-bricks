@@ -35,12 +35,6 @@ export function getRenderedLineLabels(
         process.env.NODE_ENV === "test"
           ? { x: 10, y: 20, width: 300, height: 400 }
           : path.getBBox();
-      // Make redundant extra padding.
-      const padding = 1000;
-      const left = x - padding;
-      const top = y - padding;
-      const right = x + width + padding;
-      const bottom = y + height + padding;
 
       // istanbul ignore next
       const pathLength =
@@ -65,7 +59,7 @@ export function getRenderedLineLabels(
           [key as "label"]: item as LineLabelConf,
           edge,
           position: [point.x, point.y],
-          lineRect: { left, top, right, bottom },
+          lineRect: { x, y, width, height },
           id: `${$id}-${placement}`,
           lineId: $id,
           placement,
