@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.10.2...@next-bricks/diagram@0.11.0) (2024-01-30)
+
+
+### Features
+
+* drop nodesConnect ([e143756](https://github.com/easyops-cn/next-bricks/commit/e143756a442108d7d297a96edb4b9a2df5b1fb66))
+* overrides for active lines ([15e1f26](https://github.com/easyops-cn/next-bricks/commit/15e1f26ef212ecd55561521ec1e2244476591d48))
+
+
+
+
+
 ## [0.10.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.10.1...@next-bricks/diagram@0.10.2) (2024-01-25)
 
 
