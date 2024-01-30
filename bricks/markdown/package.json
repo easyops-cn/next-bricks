@@ -27,6 +27,8 @@
     "build": "npm run build:main",
     "build:main": "cross-env NODE_ENV=production build-next-bricks",
     "build:manifest": "cross-env NODE_ENV=production build-next-bricks --manifest-only",
+    "test": "cross-env NODE_ENV='test' test-next",
+    "test:ci": "cross-env NODE_ENV='test' CI=true test-next",
     "prepublishOnly": "cp package.json package.json.bak && npm pkg delete dependencies",
     "postpublish": "mv package.json.bak package.json"
   },
