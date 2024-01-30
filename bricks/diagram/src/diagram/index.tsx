@@ -25,7 +25,6 @@ import type {
   PositionTuple,
   RefRepository,
   RenderedLineLabel,
-  LineTextClipPath,
   TransformLiteral,
   LineTarget,
   ConnectLineDetail,
@@ -39,6 +38,7 @@ import type {
   DragNodesOptions,
   NodeMovement,
   ManualLayoutStatus,
+  LineMaskRects,
 } from "./interfaces";
 import { NodeComponentGroup } from "./NodeComponent";
 import { handleKeyboard } from "./processors/handleKeyboard";
@@ -48,9 +48,8 @@ import { normalizeLinesAndMarkers } from "./processors/normalizeLinesAndMarkers"
 import { LineLabelComponentGroup } from "./LineLabelComponent";
 import { LineComponent } from "./LineComponent";
 import { MarkerComponent } from "./MarkerComponent";
-import { ClipPathComponent } from "./ClipPathComponent";
+import { LineMaskComponent } from "./LineMaskComponent";
 import { ConnectLineComponent } from "./ConnectLineComponent";
-import { getClipPathList } from "./processors/getClipPathList";
 import { getRenderedLineLabels } from "./processors/getRenderedLineLabels";
 import { handleNodesMouseDown } from "./processors/handleNodesMouseDown";
 import { DEFAULT_SCALE_RANGE_MAX, DEFAULT_SCALE_RANGE_MIN } from "./constants";
@@ -59,6 +58,7 @@ import { adjustLineLabels } from "./processors/adjustLineLabels";
 import styleText from "./styles.shadow.css";
 import { useUserView } from "./hooks/useUserView";
 import { sameTarget } from "./processors/sameTarget";
+import { getLineMaskRects } from "./processors/getLineMaskRects";
 
 const { defineElement, property, event, method } = createDecorators();
 
@@ -583,7 +583,7 @@ export function LegacyEoDiagramComponent(
 
   const defPrefix = useMemo(() => `${uniqueId("diagram-")}-`, []);
   const markerPrefix = `${defPrefix}line-arrow-`;
-  const clipPathPrefix = `${defPrefix}clip-path-`;
+  const maskPrefix = `${defPrefix}mask-`;
   const activeLineMarkerPrefix = `${defPrefix}active-line-`;
 
   useEffect(() => {
@@ -592,23 +592,23 @@ export function LegacyEoDiagramComponent(
     );
   }, [renderedLines]);
 
-  const [clipPathList, setClipPathList] = React.useState<LineTextClipPath[]>(
-    []
+  const [lineMaskRects, setLineMaskRects] = React.useState<LineMaskRects>(
+    new Map()
   );
 
   useEffect(() => {
     if (!lineLabelsRefRepository) {
       return;
     }
-    const updateClipPathList = () => {
-      setClipPathList(
-        getClipPathList(renderedLineLabels, lineLabelsRefRepository)
+    const updateLineMaskRects = () => {
+      setLineMaskRects(
+        getLineMaskRects(renderedLineLabels, lineLabelsRefRepository)
       );
     };
 
     adjustLineLabels(renderedLineLabels, lineLabelsRefRepository);
 
-    const observer = new ResizeObserver(updateClipPathList);
+    const observer = new ResizeObserver(updateLineMaskRects);
     for (const lineLabel of lineLabelsRefRepository.values()) {
       observer.observe(lineLabel);
     }
@@ -633,18 +633,20 @@ export function LegacyEoDiagramComponent(
     >
       <svg width="100%" height="100%" className="lines">
         <defs>
-          {markers.map(({ strokeColor }, index) => (
+          {markers.map(({ type, strokeColor }, index) => (
             <MarkerComponent
               key={index}
               id={`${markerPrefix}${index}`}
+              type={type}
               strokeColor={strokeColor}
             />
           ))}
-          {clipPathList.map((clipPath) => (
-            <ClipPathComponent
-              key={clipPath.lineId}
-              clipPath={clipPath}
-              clipPathPrefix={clipPathPrefix}
+          {[...lineMaskRects].map(([lineId, rects]) => (
+            <LineMaskComponent
+              key={lineId}
+              lineId={lineId}
+              rects={rects}
+              maskPrefix={maskPrefix}
               renderedLineLabels={renderedLineLabels}
             />
           ))}
@@ -695,9 +697,9 @@ export function LegacyEoDiagramComponent(
               key={line.line.$id}
               line={line}
               linePaths={linePathsRef.current}
-              clipPathList={clipPathList}
+              lineMaskRects={lineMaskRects}
+              maskPrefix={maskPrefix}
               markerPrefix={markerPrefix}
-              clipPathPrefix={clipPathPrefix}
               activeLineMarkerPrefix={activeLineMarkerPrefix}
               active={
                 activeTarget?.type === "edge" &&

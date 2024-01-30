@@ -1,13 +1,13 @@
 import React from "react";
 import classNames from "classnames";
-import type { LineTarget, LineTextClipPath, RenderedLine } from "./interfaces";
+import type { LineTarget, RenderedLine, LineMaskRects } from "./interfaces";
 
 export interface LineComponentProps {
   line: RenderedLine;
   linePaths: Map<string, SVGPathElement | null>;
-  clipPathList: LineTextClipPath[];
+  lineMaskRects: LineMaskRects;
+  maskPrefix: string;
   markerPrefix: string;
-  clipPathPrefix: string;
   activeLineMarkerPrefix: string;
   active?: boolean;
   activeRelated?: boolean;
@@ -16,26 +16,19 @@ export interface LineComponentProps {
 }
 
 export function LineComponent({
-  line: {
-    line,
-    edge,
-    d,
-    markerIndex,
-    activeMarkerIndex,
-    activeRelatedMarkerIndex,
-  },
+  line: { line, edge, d, markers },
   linePaths,
-  clipPathList,
+  lineMaskRects,
+  maskPrefix,
   markerPrefix,
-  clipPathPrefix,
   activeLineMarkerPrefix,
   active,
   activeRelated,
   onLineClick,
   onLineDoubleClick,
 }: LineComponentProps): JSX.Element {
-  const clipPath = clipPathList.some((clip) => clip.lineId === line.$id)
-    ? `url(#${clipPathPrefix}${line.$id})`
+  const mask = lineMaskRects.has(line.$id)
+    ? `url(#${maskPrefix}${line.$id})`
     : undefined;
 
   const { strokeColor, strokeWidth, interactStrokeWidth } = {
@@ -47,11 +40,24 @@ export function LineComponent({
         : null),
   };
 
-  const finalMarkerIndex = active
-    ? activeMarkerIndex
+  const expectVariant = active
+    ? "active"
     : activeRelated
-      ? activeRelatedMarkerIndex
-      : markerIndex;
+      ? "active-related"
+      : "default";
+
+  let markerStart: string | undefined;
+  let markerEnd: string | undefined;
+
+  for (const marker of markers) {
+    if (marker.variant === expectVariant) {
+      if (marker.placement === "start") {
+        markerStart = `url(#${markerPrefix}${marker.index})`;
+      } else {
+        markerEnd = `url(#${markerPrefix}${marker.index})`;
+      }
+    }
+  }
 
   return (
     <g
@@ -93,12 +99,9 @@ export function LineComponent({
         strokeWidth={strokeWidth}
         d={d}
         fill="none"
-        markerEnd={
-          finalMarkerIndex === undefined
-            ? undefined
-            : `url(#${markerPrefix}${finalMarkerIndex})`
-        }
-        clipPath={clipPath}
+        markerStart={markerStart}
+        markerEnd={markerEnd}
+        mask={mask}
       />
       <path
         stroke="var(--palette-blue-3)"
@@ -108,7 +111,7 @@ export function LineComponent({
         className="active-bg"
         markerStart={`url(#${activeLineMarkerPrefix}start)`}
         markerEnd={`url(#${activeLineMarkerPrefix}end)`}
-        clipPath={clipPath}
+        mask={mask}
       />
     </g>
   );

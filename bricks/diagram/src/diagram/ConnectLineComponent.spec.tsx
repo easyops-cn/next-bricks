@@ -25,9 +25,10 @@ describe("ConnectLineComponent", () => {
               id="marker-connect-line"
               markerHeight="6"
               markerWidth="6"
-              orient="auto"
-              refX="3"
+              orient="auto-start-reverse"
+              refX="5"
               refY="3"
+              stroke-linejoin="round"
               viewBox="0 0 6 6"
             >
               <path
@@ -86,9 +87,10 @@ describe("ConnectLineComponent", () => {
               id="marker-connect-line"
               markerHeight="6"
               markerWidth="6"
-              orient="auto"
-              refX="3"
+              orient="auto-start-reverse"
+              refX="5"
               refY="3"
+              stroke-linejoin="round"
               viewBox="0 0 6 6"
             >
               <path
