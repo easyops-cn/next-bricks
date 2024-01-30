@@ -45,19 +45,25 @@ export function normalizeLinesAndMarkers(
     normalizedLinesMap.set(edge, id);
 
     let markerIndex: number | undefined;
+    let activeMarkerIndex: number | undefined;
+    let activeRelatedMarkerIndex: number | undefined;
     if (line.arrow) {
-      const marker: LineMarker = {
-        strokeColor: line.strokeColor,
-      };
-      markerIndex = findIndex(markers, marker);
-      if (markerIndex === -1) {
-        markerIndex = markers.push(marker) - 1;
-      }
+      markerIndex = addMarker(line.strokeColor, markers);
+
+      const activeStrokeColor =
+        line.overrides?.active?.strokeColor ?? line.strokeColor;
+      activeMarkerIndex = addMarker(activeStrokeColor, markers);
+
+      const activeRelatedStrokeColor =
+        line.overrides?.activeRelated?.strokeColor ?? line.strokeColor;
+      activeRelatedMarkerIndex = addMarker(activeRelatedStrokeColor, markers);
     }
 
     normalizedLines.push({
       line,
       markerIndex,
+      activeMarkerIndex,
+      activeRelatedMarkerIndex,
       edge,
     });
   }
@@ -66,4 +72,13 @@ export function normalizeLinesAndMarkers(
     normalizedLinesMap,
     markers,
   };
+}
+
+function addMarker(strokeColor: string, markers: LineMarker[]): number {
+  const marker: LineMarker = { strokeColor };
+  let markerIndex = findIndex(markers, marker);
+  if (markerIndex === -1) {
+    markerIndex = markers.push(marker) - 1;
+  }
+  return markerIndex;
 }

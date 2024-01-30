@@ -53,9 +53,12 @@ export interface NormalizedLine {
     strokeWidth: number;
     interactStrokeWidth: number;
     curveType: string;
+    overrides?: LineConfOverrides;
     $id: string;
   };
   markerIndex: number | undefined;
+  activeMarkerIndex: number | undefined;
+  activeRelatedMarkerIndex: number | undefined;
   edge: DiagramEdge;
 }
 
@@ -115,20 +118,29 @@ export interface NodePosition {
 
 export type CurveType = `curve${string}`;
 
-export interface LineConf {
+export interface LineConf extends LineConfOverridable {
   edgeType?: string | string[];
   if?: string | boolean | null;
   draw?: boolean;
   type?: "auto";
-  strokeColor?: string;
-  strokeWidth?: number;
   interactable?: boolean;
-  interactStrokeWidth?: number;
   curveType?: "curveBasis";
   arrow?: boolean;
   text?: TextOptions | TextOptions[];
   label?: LineLabelConf | LineLabelConf[];
   cursor?: React.CSSProperties["cursor"];
+  overrides?: LineConfOverrides;
+}
+
+export interface LineConfOverrides {
+  active?: LineConfOverridable;
+  activeRelated?: LineConfOverridable;
+}
+
+export interface LineConfOverridable {
+  strokeColor?: string;
+  strokeWidth?: number;
+  interactStrokeWidth?: number;
 }
 
 export interface LineLabelConf {

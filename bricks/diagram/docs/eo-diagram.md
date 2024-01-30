@@ -648,6 +648,9 @@ children:
                     <%= DATA.edge.source === CTX.activeTarget?.nodeId ? DATA.edge.sourceName : DATA.edge.target === CTX.activeTarget?.nodeId ? DATA.edge.targetName : "" %>
                   style:
                     color: var(--palette-gray-6)
+          overrides:
+            activeRelated:
+              strokeColor: var(--palette-blue-4)
       nodeBricks:
         - useBrick:
             # if: <% DATA.node.id !== "kbacon" %>

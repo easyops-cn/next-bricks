@@ -1,11 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import type {
-  DiagramEdge,
-  LineTarget,
-  LineTextClipPath,
-  RenderedLine,
-} from "./interfaces";
+import type { LineTarget, LineTextClipPath, RenderedLine } from "./interfaces";
 
 export interface LineComponentProps {
   line: RenderedLine;
@@ -14,33 +9,56 @@ export interface LineComponentProps {
   markerPrefix: string;
   clipPathPrefix: string;
   activeLineMarkerPrefix: string;
-  activeEdge: DiagramEdge | null;
+  active?: boolean;
+  activeRelated?: boolean;
   onLineClick?(line: LineTarget): void;
   onLineDoubleClick?(line: LineTarget): void;
 }
 
 export function LineComponent({
-  line: { line, d, markerIndex, edge },
+  line: {
+    line,
+    edge,
+    d,
+    markerIndex,
+    activeMarkerIndex,
+    activeRelatedMarkerIndex,
+  },
   linePaths,
   clipPathList,
   markerPrefix,
   clipPathPrefix,
   activeLineMarkerPrefix,
-  activeEdge,
+  active,
+  activeRelated,
   onLineClick,
   onLineDoubleClick,
 }: LineComponentProps): JSX.Element {
   const clipPath = clipPathList.some((clip) => clip.lineId === line.$id)
     ? `url(#${clipPathPrefix}${line.$id})`
     : undefined;
+
+  const { strokeColor, strokeWidth, interactStrokeWidth } = {
+    ...line,
+    ...(active
+      ? line.overrides?.active
+      : activeRelated
+        ? line.overrides?.activeRelated
+        : null),
+  };
+
+  const finalMarkerIndex = active
+    ? activeMarkerIndex
+    : activeRelated
+      ? activeRelatedMarkerIndex
+      : markerIndex;
+
   return (
     <g
       className={classNames("line", {
         interactable: line.interactable,
-        active:
-          activeEdge &&
-          edge.source === activeEdge.source &&
-          edge.target === activeEdge.target,
+        active,
+        "active-related": activeRelated,
       })}
       onClick={
         line.interactable
@@ -66,25 +84,25 @@ export function LineComponent({
           d={d}
           fill="none"
           stroke="transparent"
-          strokeWidth={line.interactStrokeWidth}
+          strokeWidth={interactStrokeWidth}
         />
       )}
       <path
         ref={(element) => linePaths.set(line.$id, element)}
-        stroke={line.strokeColor}
-        strokeWidth={line.strokeWidth}
+        stroke={strokeColor}
+        strokeWidth={strokeWidth}
         d={d}
         fill="none"
         markerEnd={
-          markerIndex === undefined
+          finalMarkerIndex === undefined
             ? undefined
-            : `url(#${markerPrefix}${markerIndex})`
+            : `url(#${markerPrefix}${finalMarkerIndex})`
         }
         clipPath={clipPath}
       />
       <path
         stroke="var(--palette-blue-3)"
-        strokeWidth={line.strokeWidth}
+        strokeWidth={strokeWidth}
         d={d}
         fill="none"
         className="active-bg"

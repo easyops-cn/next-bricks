@@ -123,12 +123,6 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
   @property({ attribute: false })
   accessor connectNodes: ConnectNodesOptions | undefined;
 
-  /**
-   * @deprecated use `connectNodes` instead
-   */
-  @property({ attribute: false })
-  accessor nodesConnect: ConnectNodesOptions | undefined;
-
   @property({ attribute: false })
   accessor dragNodes: DragNodesOptions | undefined;
 
@@ -209,7 +203,7 @@ class EoDiagram extends ReactNextElement implements EoDiagramProps {
         nodeBricks={this.nodeBricks}
         lines={this.lines}
         layoutOptions={this.layoutOptions}
-        connectNodes={this.connectNodes ?? this.nodesConnect}
+        connectNodes={this.connectNodes}
         dragNodes={this.dragNodes}
         activeTarget={this.activeTarget}
         disableKeyboardAction={this.disableKeyboardAction}
@@ -705,8 +699,15 @@ export function LegacyEoDiagramComponent(
               markerPrefix={markerPrefix}
               clipPathPrefix={clipPathPrefix}
               activeLineMarkerPrefix={activeLineMarkerPrefix}
-              activeEdge={
-                activeTarget?.type === "edge" ? activeTarget.edge : null
+              active={
+                activeTarget?.type === "edge" &&
+                activeTarget.edge.source === line.edge.source &&
+                activeTarget.edge.target === line.edge.target
+              }
+              activeRelated={
+                activeTarget?.type === "node" &&
+                (line.edge.source === activeTarget.nodeId ||
+                  line.edge.target === activeTarget.nodeId)
               }
               onLineClick={onLineClick}
               onLineDoubleClick={onLineDoubleClick}
