@@ -64,14 +64,14 @@ function EntityRelationZeroOrOneMarker({
     <marker
       id={id}
       viewBox="0 0 21 11"
-      refX={20.5}
+      refX={0.5}
       refY={5.5}
       markerWidth={21}
       markerHeight={11}
       orient="auto-start-reverse"
     >
       <path
-        d="M 5.5 5.5 m 5 0 a 5 5 0 1 0 -10 0 a 5 5 0 1 0 10 0 M 15.5 0.5 V 10.5"
+        d="M 5.5 5.5 m 5 0 a 5 5 0 1 0 -10 0 a 5 5 0 1 0 10 0 M 15.5 0.5 V 10.5 M 10.5 5.5 H 20.5"
         stroke={strokeColor}
         strokeWidth={1}
         fill="none"
@@ -88,14 +88,14 @@ function EntityRelationZeroOrManyMarker({
     <marker
       id={id}
       viewBox="0 0 21 11"
-      refX={20.5}
+      refX={0.5}
       refY={5.5}
       markerWidth={21}
       markerHeight={11}
       orient="auto-start-reverse"
     >
       <path
-        d="M 5.5 5.5 m 5 0 a 5 5 0 1 0 -10 0 a 5 5 0 1 0 10 0 M 20.5 0.5 L 10.5 5.5 L 20.5 10.5"
+        d="M 5.5 5.5 m 5 0 a 5 5 0 1 0 -10 0 a 5 5 0 1 0 10 0 M 20.5 0.5 L 10.5 5.5 L 20.5 10.5 M 10.5 5.5 H 20.5"
         stroke={strokeColor}
         strokeWidth={1}
         fill="none"

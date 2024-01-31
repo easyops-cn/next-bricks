@@ -400,8 +400,8 @@ export function LegacyEoDiagramComponent(
   );
 
   const renderedLines = useMemo(
-    () => getRenderedLines(renderedEdges, normalizedLines),
-    [normalizedLines, renderedEdges]
+    () => getRenderedLines(renderedEdges, renderedNodes, normalizedLines),
+    [normalizedLines, renderedNodes, renderedEdges]
   );
 
   const newActiveTarget = _activeTarget ?? null;

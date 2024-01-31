@@ -1,35 +1,13 @@
 import type { NodePosition, RenderedNode } from "../interfaces";
+import { doTwoNodesOverlap } from "../processors/doTwoNodesOverlap";
 
 export function getDirectLinePoints(
   source: RenderedNode,
   target: RenderedNode
 ): NodePosition[] | null {
   // Ignore if two nodes are the same.
-  if (source === target) {
-    return null;
-  }
-
   // Ignore if two nodes overlap.
-  const left = Math.min(
-    source.x - source.width / 2,
-    target.x - target.width / 2
-  );
-  const right = Math.max(
-    source.x + source.width / 2,
-    target.x + target.width / 2
-  );
-  const top = Math.min(
-    source.y - source.height / 2,
-    target.y - target.height / 2
-  );
-  const bottom = Math.max(
-    source.y + source.height / 2,
-    target.y + target.height / 2
-  );
-  if (
-    right - left < source.width + target.width &&
-    bottom - top < source.height + target.height
-  ) {
+  if (source === target || doTwoNodesOverlap(source, target, 0, 0)) {
     return null;
   }
 

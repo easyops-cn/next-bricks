@@ -16,8 +16,9 @@ import type { CurveType, NodePosition } from "../interfaces";
  */
 export function curveLine(
   points: Array<NodePosition> | null | undefined,
-  arrowOffset: number,
-  curveType?: CurveType
+  curveType: CurveType | undefined,
+  startOffset: number,
+  endOffset: number
 ): string {
   if (!Array.isArray(points)) {
     return "";
@@ -45,28 +46,49 @@ export function curveLine(
     default:
       curveFactory = curveBasis;
   }
-  let arrowOffsetX = 0;
-  let arrowOffsetY = 0;
-  if (arrowOffset) {
-    const { x: x0, y: y0 } = points[points.length - 2];
-    const { x: x1, y: y1 } = points[points.length - 1];
-    const distance = Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2));
-    const ratio = arrowOffset / distance;
-    arrowOffsetX = (x0 - x1) * ratio;
-    arrowOffsetY = (y0 - y1) * ratio;
-  }
-  const transformPoints = points;
+  const startOffsets = getOffsets(points[1], points[0], startOffset);
+  const endOffsets = getOffsets(
+    points[points.length - 2],
+    points[points.length - 1],
+    endOffset
+  );
   const lineFunction = line()
     .x(
       (d, index) =>
         (d as unknown as { x: number }).x -
-        (index === points.length - 1 ? arrowOffsetX : 0)
+        (index === 0
+          ? startOffsets.x
+          : index === points.length - 1
+            ? endOffsets.x
+            : 0)
     )
     .y(
       (d, index) =>
         (d as unknown as { y: number }).y -
-        (index === points.length - 1 ? arrowOffsetY : 0)
+        (index === 0
+          ? startOffsets.y
+          : index === points.length - 1
+            ? endOffsets.y
+            : 0)
     )
     .curve(curveFactory);
-  return lineFunction(transformPoints as unknown as Array<[number, number]>)!;
+  return lineFunction(points as unknown as Array<[number, number]>)!;
+}
+
+function getOffsets(
+  start: NodePosition,
+  end: NodePosition,
+  offset: number
+): NodePosition {
+  if (!offset) {
+    return { x: 0, y: 0 };
+  }
+  const { x: x0, y: y0 } = start;
+  const { x: x1, y: y1 } = end;
+  const distance = Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2));
+  const ratio = offset / distance;
+  return {
+    x: (x1 - x0) * ratio,
+    y: (y1 - y0) * ratio,
+  };
 }

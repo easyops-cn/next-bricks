@@ -20,6 +20,7 @@ export function getLineMaskRects(
     }
     const { offsetWidth, offsetHeight } = element;
     // Do not mask out when the label takes no space.
+    // istanbul ignore next
     if (
       process.env.NODE_ENV !== "test" &&
       (offsetWidth === 0 || offsetHeight === 0)
@@ -27,17 +28,15 @@ export function getLineMaskRects(
       continue;
     }
     const padding = 3;
-    let rects = map.get(lineId);
-    if (!rects) {
-      map.set(lineId, (rects = []));
-    }
-
-    rects.push({
-      x: element.offsetLeft - offsetWidth / 2 - padding,
-      y: element.offsetTop - offsetHeight / 2 - padding,
-      width: offsetWidth + padding * 2,
-      height: offsetHeight + padding * 2,
-    });
+    // Currently no other rects
+    map.set(lineId, [
+      {
+        left: element.offsetLeft - offsetWidth / 2 - padding,
+        top: element.offsetTop - offsetHeight / 2 - padding,
+        width: offsetWidth + padding * 2,
+        height: offsetHeight + padding * 2,
+      },
+    ]);
   }
 
   return map;

@@ -43,12 +43,12 @@ describe("MarkerComponent", () => {
         markerHeight="11"
         markerWidth="21"
         orient="auto-start-reverse"
-        refX="20.5"
+        refX="0.5"
         refY="5.5"
         viewBox="0 0 21 11"
       >
         <path
-          d="M 5.5 5.5 m 5 0 a 5 5 0 1 0 -10 0 a 5 5 0 1 0 10 0 M 15.5 0.5 V 10.5"
+          d="M 5.5 5.5 m 5 0 a 5 5 0 1 0 -10 0 a 5 5 0 1 0 10 0 M 15.5 0.5 V 10.5 M 10.5 5.5 H 20.5"
           fill="none"
           stroke="red"
           stroke-width="1"
@@ -69,12 +69,12 @@ describe("MarkerComponent", () => {
         markerHeight="11"
         markerWidth="21"
         orient="auto-start-reverse"
-        refX="20.5"
+        refX="0.5"
         refY="5.5"
         viewBox="0 0 21 11"
       >
         <path
-          d="M 5.5 5.5 m 5 0 a 5 5 0 1 0 -10 0 a 5 5 0 1 0 10 0 M 20.5 0.5 L 10.5 5.5 L 20.5 10.5"
+          d="M 5.5 5.5 m 5 0 a 5 5 0 1 0 -10 0 a 5 5 0 1 0 10 0 M 20.5 0.5 L 10.5 5.5 L 20.5 10.5 M 10.5 5.5 H 20.5"
           fill="none"
           stroke="blue"
           stroke-width="1"
