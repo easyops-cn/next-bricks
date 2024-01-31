@@ -57,12 +57,12 @@
   },
   "dependencies": {
     "@next-core/illustrations": "^0.11.26",
-    "@next-core/types": "^1.7.3",
-    "@next-core/utils": "^1.6.8",
+    "@next-core/types": "^1.8.0",
+    "@next-core/utils": "^1.6.9",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.20.2",
+    "@next-core/build-next-bricks": "^1.20.3",
     "@next-core/test-next": "^1.0.14"
   }
 }
