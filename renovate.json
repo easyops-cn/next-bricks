@@ -10,6 +10,7 @@
     {
       "excludePackagePatterns": ["^@next-core/", "^@next-dll/"],
       "excludePackageNames": ["@shoelace-style/shoelace"],
+      "matchManagers": ["npm"],
       "enabled": false
     },
     {
