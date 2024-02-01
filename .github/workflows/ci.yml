@@ -34,7 +34,7 @@ jobs:
       run: echo "::set-output name=dir::$(yarn cache dir)"
 
     - name: Cache for yarn
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
         key: node-cache-${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
@@ -42,7 +42,7 @@ jobs:
           node-cache-${{ runner.os }}-yarn-
 
     - name: Cache nx cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: .cache
         key: ${{ runner.os }}-nx-${{ hashFiles('yarn.lock', 'package.json', 'shared/common-bricks/common-bricks.json') }}-${{ hashFiles('**/package.json') }}
@@ -125,7 +125,7 @@ jobs:
       run: echo "::set-output name=dir::$(yarn cache dir)"
 
     - name: Cache for yarn
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
         key: docs-node-cache-${{ runner.os }}-yarn-v3-${{ hashFiles('yarn.lock') }}

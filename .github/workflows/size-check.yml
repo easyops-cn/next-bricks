@@ -27,7 +27,7 @@ jobs:
         cache: yarn
 
     - name: Cache nx cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: .cache
         key: ${{ runner.os }}-nx-${{ hashFiles('**/package.json') }}
@@ -39,7 +39,7 @@ jobs:
       run: echo "::set-output name=ver::$(cat package.json|grep '\"cypress\":'|awk -F '[:,\"]' '{print $5}')"
 
     - name: Cache for cypress
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ~/.cache/Cypress
         key: cypress-${{ runner.os }}-cypress-${{ steps.cypress-version.outputs.ver }}
