@@ -35,3 +35,4 @@ import "./v3-widget-mate/index.js";
 import "./easyops-avatar/index.js";
 import "./data-providers/lock-body-scroll/lock-body-scroll.js";
 import "./data-providers/set-theme-by-apps.js";
+import "./snapshot/index.js";
