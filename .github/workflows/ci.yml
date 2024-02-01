@@ -90,7 +90,7 @@ jobs:
         shopt -s globstar
         tar --exclude='*.map' --exclude='bricks/v2-adapter' --exclude='bricks/ui-test' --exclude='bricks/vb-experiment' --exclude='bricks/form-renderer' -cvf bricks.tar bricks/*/dist bricks/*/docs bricks/*/src/**/example.yaml bricks/*/src/**/example.html netlify.toml
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: brick-artifacts
         path: bricks.tar
