@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.2.1...@next-bricks/form@1.2.2) (2024-02-01)
+
+
+### Bug Fixes
+
+* radio change event only emit value ([9393373](https://github.com/easyops-cn/next-bricks/commit/93933734649fbfefefc91cf4977e0667d581b544))
+
+
+
+
+
 ## [1.2.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.2.0...@next-bricks/form@1.2.1) (2024-01-19)
 
 **Note:** Version bump only for package @next-bricks/form

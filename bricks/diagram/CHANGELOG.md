@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.11.0...@next-bricks/diagram@0.12.0) (2024-02-01)
+
+
+### Features
+
+* new line markers ([557aba7](https://github.com/easyops-cn/next-bricks/commit/557aba74c52dd6d172a8caabe203b63bd7688052))
+* support polyline ([7cdaaa1](https://github.com/easyops-cn/next-bricks/commit/7cdaaa1a742b4f5ac52dda3d3c30fbf3515c56be))
+
+
+
+
+
 # [0.11.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.10.2...@next-bricks/diagram@0.11.0) (2024-01-30)
 
 
