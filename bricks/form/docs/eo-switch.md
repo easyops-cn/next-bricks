@@ -46,7 +46,7 @@
     size: small
 ```
 
-### cheeckText、unCheckedText、checkedIcon、unCheckedIcon
+### Customizations
 
 ```yaml preview
 - brick: eo-switch

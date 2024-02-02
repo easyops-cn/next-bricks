@@ -126,7 +126,7 @@
       - Shenzhen
 ```
 
-### Tags & TokenSeparators & MaxTagCount
+### Tags
 
 ```yaml preview minHeight="250px"
 - brick: eo-select
