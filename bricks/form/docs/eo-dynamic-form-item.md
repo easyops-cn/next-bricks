@@ -93,7 +93,7 @@
             - Shenzhen
 ```
 
-### hideRemoveButton、disabledRemoveButton;hideAddButton、disabledAddButton
+### Hide or disable buttons
 
 ```yaml preview
 - brick: eo-dynamic-form-item

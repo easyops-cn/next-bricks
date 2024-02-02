@@ -229,7 +229,9 @@
               lib: "antd"
 ```
 
-### Size(Only use when type was button)
+### Size
+
+Used only when `type` is `button`.
 
 ```yaml preview
 - brick: eo-radio

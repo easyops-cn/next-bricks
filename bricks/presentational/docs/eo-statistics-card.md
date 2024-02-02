@@ -190,7 +190,7 @@ children:
       yField: temperature
 ```
 
-### Complex usage, show more information
+### Complex usage
 
 ```yaml preview
 brick: eo-statistics-card
