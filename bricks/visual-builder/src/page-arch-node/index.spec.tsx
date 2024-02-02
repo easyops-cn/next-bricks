@@ -24,6 +24,12 @@ describe("visual-builder.page-arch-node", () => {
     element.addEventListener("child.append", (e) =>
       onChildAppend((e as CustomEvent).detail)
     );
+    const onNodeClick = jest.fn();
+    element.addEventListener("node.click", onNodeClick);
+    const onNodeDoubleClick = jest.fn();
+    element.addEventListener("node.dblclick", onNodeDoubleClick);
+    const onNodeContextMenu = jest.fn();
+    element.addEventListener("node.contextmenu", onNodeContextMenu);
 
     expect(element.shadowRoot).toBeFalsy();
 
@@ -37,6 +43,7 @@ describe("visual-builder.page-arch-node", () => {
         </style>,
         <div
           class="node page"
+          style="height: 130px;"
         >
           <input
             class="label-input"
@@ -49,11 +56,16 @@ describe("visual-builder.page-arch-node", () => {
           </div>
           <div
             class="thumbnail-container"
+            style="height: 98px;"
           >
-            <eo-icon
-              icon="ellipsis"
-              lib="antd"
-            />
+            <div
+              class="thumbnail-placeholder"
+            >
+              <eo-icon
+                icon="ellipsis"
+                lib="antd"
+              />
+            </div>
           </div>
         </div>,
         <div
@@ -85,6 +97,11 @@ describe("visual-builder.page-arch-node", () => {
     expect(onLabelEditingChange).toBeCalledTimes(1);
     expect(onLabelEditingChange).toBeCalledWith(true);
 
+    act(() => {
+      fireEvent.dblClick(element.shadowRoot?.querySelector(".label-input"));
+    });
+    expect(onNodeDoubleClick).not.toBeCalled();
+
     // Rename label
     act(() => {
       fireEvent.change(element.shadowRoot?.querySelector(".label-input"), {
@@ -115,6 +132,22 @@ describe("visual-builder.page-arch-node", () => {
       fireEvent.click(element.shadowRoot?.querySelector(".add-button"));
     });
     expect(onChildAppend).toBeCalledTimes(1);
+    expect(onNodeClick).not.toBeCalled();
+
+    act(() => {
+      fireEvent.click(element.shadowRoot?.querySelector(".node"));
+    });
+    expect(onNodeClick).toBeCalledTimes(1);
+
+    act(() => {
+      fireEvent.dblClick(element.shadowRoot?.querySelector(".node"));
+    });
+    expect(onNodeDoubleClick).toBeCalledTimes(1);
+
+    act(() => {
+      fireEvent.contextMenu(element.shadowRoot?.querySelector(".node"));
+    });
+    expect(onNodeContextMenu).toBeCalledTimes(1);
 
     act(() => {
       document.body.removeChild(element);
@@ -166,8 +199,8 @@ describe("visual-builder.page-arch-node", () => {
     element.addEventListener("external.click", (e) =>
       onExternalClick((e as CustomEvent).detail)
     );
-    const onClick = jest.fn();
-    element.addEventListener("click", onClick);
+    const onNodeClick = jest.fn();
+    element.addEventListener("node.click", onNodeClick);
 
     act(() => {
       document.body.appendChild(element);
@@ -183,7 +216,122 @@ describe("visual-builder.page-arch-node", () => {
       label: "External X",
       id: "x",
     });
-    expect(onClick).not.toBeCalled();
+    expect(onNodeClick).not.toBeCalled();
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("sub-nodes event", async () => {
+    const element = document.createElement(
+      "visual-builder.page-arch-node"
+    ) as PageArchNode;
+    element.type = "page";
+    element.label = "Link c";
+    element.subNodes = [
+      {
+        label: "Sub Node A",
+        id: "a",
+      },
+    ];
+    const onNodeDoubleClick = jest.fn();
+    element.addEventListener("node.dblclick", onNodeDoubleClick);
+    const onNodeContextMenu = jest.fn();
+    element.addEventListener("node.contextmenu", onNodeContextMenu);
+    const onSubNodeDoubleClick = jest.fn();
+    element.addEventListener("subNode.dblclick", (e) => {
+      onSubNodeDoubleClick((e as CustomEvent).detail);
+    });
+    const onSubNodeContextMenu = jest.fn();
+    element.addEventListener("subNode.contextmenu", (e) => {
+      onSubNodeContextMenu((e as CustomEvent).detail);
+    });
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(
+      element.shadowRoot?.querySelector(".sub-nodes").childElementCount
+    ).toBe(1);
+    expect(
+      (element.shadowRoot?.querySelector(".node") as HTMLElement).style.height
+    ).toBe("130px");
+    expect(
+      (element.shadowRoot?.querySelector(".thumbnail-container") as HTMLElement)
+        .style.height
+    ).toBe("98px");
+
+    act(() => {
+      fireEvent.dblClick(element.shadowRoot!.querySelector(".sub-node"));
+    });
+    expect(onNodeDoubleClick).not.toBeCalled();
+    expect(onSubNodeDoubleClick).toBeCalledWith({
+      label: "Sub Node A",
+      id: "a",
+    });
+
+    act(() => {
+      fireEvent.contextMenu(element.shadowRoot!.querySelector(".sub-node"), {
+        clientX: 100,
+        clientY: 100,
+      });
+    });
+    expect(onNodeContextMenu).not.toBeCalled();
+    expect(onSubNodeContextMenu).toBeCalledWith({
+      node: {
+        label: "Sub Node A",
+        id: "a",
+      },
+      clientX: 100,
+      clientY: 100,
+    });
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("two rows of sub-nodes", async () => {
+    const element = document.createElement(
+      "visual-builder.page-arch-node"
+    ) as PageArchNode;
+    element.type = "page";
+    element.label = "Link c";
+    element.subNodes = [
+      {
+        label: "Sub Node A",
+        id: "a",
+      },
+      {
+        label: "Sub Node B",
+        id: "b",
+      },
+      {
+        label: "Sub Node C",
+        id: "c",
+      },
+      {
+        label: "Sub Node D",
+        id: "d",
+      },
+    ];
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(
+      element.shadowRoot?.querySelector(".sub-nodes").childElementCount
+    ).toBe(4);
+    expect(
+      (element.shadowRoot?.querySelector(".node") as HTMLElement).style.height
+    ).toBe("168px");
+    expect(
+      (element.shadowRoot?.querySelector(".thumbnail-container") as HTMLElement)
+        .style.height
+    ).toBe("136px");
 
     act(() => {
       document.body.removeChild(element);

@@ -70,7 +70,8 @@
 
 .add-button,
 .icon-container,
-.thumbnail-container {
+.thumbnail-container,
+.thumbnail-placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -82,11 +83,15 @@
   opacity: 1;
   border: 4px solid transparent;
   border-radius: 4px;
-  overflow: hidden;
-  color: var(--palette-gray-5);
-  font-size: 36px;
   width: 100%;
   position: relative;
+  flex-direction: column;
+}
+
+.thumbnail-placeholder {
+  color: var(--palette-gray-5);
+  font-size: 36px;
+  flex: 1;
 }
 
 .icon-container {
@@ -159,4 +164,57 @@
 
 .external:hover {
   background: var(--palette-purple-5);
+}
+
+.sub-nodes {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+  width: 100%;
+}
+
+.sub-node {
+  background-color: var(--palette-gray-2);
+  border-radius: 4px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 32px;
+}
+
+.sub-node-skeleton-title {
+  width: 18px;
+  height: 4px;
+  border-radius: 2px;
+  align-self: flex-start;
+  background-color: var(--palette-gray-4);
+}
+
+.sub-node-skeleton-content {
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--palette-gray-4);
+}
+
+.sub-node-skeleton-button {
+  width: 18px;
+  height: 4px;
+  border-radius: 2px;
+  align-self: flex-end;
+  background-color: var(--palette-blue-3);
+}
+
+.sub-node:hover {
+  background-color: var(--palette-gray-3);
+}
+
+.sub-node:hover .sub-node-skeleton-title,
+.sub-node:hover .sub-node-skeleton-content {
+  background-color: var(--palette-gray-5);
+}
+
+.sub-node:hover .sub-node-skeleton-button {
+  background-color: var(--palette-blue-4);
 }

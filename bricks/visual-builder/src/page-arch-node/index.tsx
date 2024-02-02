@@ -6,12 +6,14 @@ import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
+import type { EoTooltip, ToolTipProps } from "@next-bricks/basic/tooltip";
 import classNames from "classnames";
 import styleText from "./styles.shadow.css";
 
 const { defineElement, property, event } = createDecorators();
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
+const WrappedTooltip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");
 
 const autoFocusedSets = new Set<string>();
 
@@ -19,15 +21,25 @@ export interface PageArchNodeProps {
   label?: string;
   type?: PageArchNodeType;
   active?: boolean;
-  external?: ExternalData;
+  external?: ExtraNodeData;
+  subNodes?: ExtraNodeData[];
   autoFocusOnce?: string;
   notSynced?: boolean;
   disableChildAppend?: boolean;
 }
 
-export interface ExternalData {
+export interface ExtraNodeData {
   label: string;
   id: string;
+}
+
+export interface SubNodeContextMenuData extends ContextMenuDetail {
+  node: ExtraNodeData;
+}
+
+export interface ContextMenuDetail {
+  clientX: number;
+  clientY: number;
 }
 
 export type PageArchNodeType = "page" | "board";
@@ -47,7 +59,10 @@ class PageArchNode extends ReactNextElement implements PageArchNodeProps {
   accessor type: PageArchNodeType | undefined;
 
   @property({ attribute: false })
-  accessor external: ExternalData | undefined;
+  accessor external: ExtraNodeData | undefined;
+
+  @property({ attribute: false })
+  accessor subNodes: ExtraNodeData[] | undefined;
 
   // @property()
   // accessor thumbnail: string | undefined;
@@ -78,6 +93,27 @@ class PageArchNode extends ReactNextElement implements PageArchNodeProps {
     this.#labelChange.emit(value);
   };
 
+  @event({ type: "node.click" })
+  accessor #nodeClick: EventEmitter<void>;
+
+  #handleNodeClick = () => {
+    this.#nodeClick.emit();
+  };
+
+  @event({ type: "node.dblclick" })
+  accessor #nodeDoubleClick: EventEmitter<void>;
+
+  #handleNodeDoubleClick = () => {
+    this.#nodeDoubleClick.emit();
+  };
+
+  @event({ type: "node.contextmenu" })
+  accessor #nodeContextMenu: EventEmitter<ContextMenuDetail>;
+
+  #handleNodeContextMenu = (data: ContextMenuDetail) => {
+    this.#nodeContextMenu.emit(data);
+  };
+
   @event({ type: "child.append" })
   accessor #childAppend: EventEmitter<void>;
 
@@ -86,10 +122,24 @@ class PageArchNode extends ReactNextElement implements PageArchNodeProps {
   };
 
   @event({ type: "external.click" })
-  accessor #externalClick: EventEmitter<ExternalData>;
+  accessor #externalClick: EventEmitter<ExtraNodeData>;
 
-  #handleExternalClick = (data: ExternalData) => {
+  #handleExternalClick = (data: ExtraNodeData) => {
     this.#externalClick.emit(data);
+  };
+
+  @event({ type: "subNode.dblclick" })
+  accessor #subNodeDoubleClick: EventEmitter<ExtraNodeData>;
+
+  #handleSubNodeDoubleClick = (data: ExtraNodeData) => {
+    this.#subNodeDoubleClick.emit(data);
+  };
+
+  @event({ type: "subNode.contextmenu" })
+  accessor #subNodeContextMenu: EventEmitter<SubNodeContextMenuData>;
+
+  #handleSubNodeContextMenu = (data: SubNodeContextMenuData) => {
+    this.#subNodeContextMenu.emit(data);
   };
 
   render() {
@@ -98,11 +148,17 @@ class PageArchNode extends ReactNextElement implements PageArchNodeProps {
         label={this.label}
         type={this.type}
         external={this.external}
+        subNodes={this.subNodes}
         autoFocusOnce={this.autoFocusOnce}
         onLabelEditingChange={this.#handleLabelEditingChange}
         onLabelChange={this.#handleLabelChange}
+        onNodeClick={this.#handleNodeClick}
+        onNodeDoubleClick={this.#handleNodeDoubleClick}
+        onNodeContextMenu={this.#handleNodeContextMenu}
         onChildAppend={this.#handleChildAppend}
         onExternalClick={this.#handleExternalClick}
+        onSubNodeDoubleClick={this.#handleSubNodeDoubleClick}
+        onSubNodeContextMenu={this.#handleSubNodeContextMenu}
       />
     );
   }
@@ -111,19 +167,30 @@ class PageArchNode extends ReactNextElement implements PageArchNodeProps {
 export interface PageArchNodeComponentProps extends PageArchNodeProps {
   onLabelEditingChange?(value: boolean): void;
   onLabelChange?(value: string): void;
+  onNodeClick?(): void;
+  onNodeDoubleClick?(): void;
+  onNodeContextMenu?(data: ContextMenuDetail): void;
   onChildAppend?(): void;
-  onExternalClick?(data: ExternalData): void;
+  onExternalClick?(data: ExtraNodeData): void;
+  onSubNodeDoubleClick?(data: ExtraNodeData): void;
+  onSubNodeContextMenu?(data: SubNodeContextMenuData): void;
 }
 
 export function PageArchNodeComponent({
   label,
   type: _type,
   external,
+  subNodes,
   autoFocusOnce,
   onLabelEditingChange,
   onLabelChange,
+  onNodeClick,
+  onNodeDoubleClick,
+  onNodeContextMenu,
   onChildAppend,
   onExternalClick,
+  onSubNodeDoubleClick,
+  onSubNodeContextMenu,
 }: PageArchNodeComponentProps) {
   const type = _type === "board" ? "board" : "page";
   const [currentLabel, setCurrentLabel] = useState(label);
@@ -217,10 +284,24 @@ export function PageArchNodeComponent({
     e.stopPropagation();
   }, []);
 
+  // 32 + 8
+  const extraHeight = Math.max(0, Math.floor((subNodes?.length ?? 0) - 3)) * 38;
+
   return (
     <>
       <div
         className={classNames("node", type, { "editing-label": editingLabel })}
+        style={{ height: type === "board" ? 70 : 130 + extraHeight }}
+        onClick={onNodeClick}
+        onDoubleClick={onNodeDoubleClick}
+        onContextMenu={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          onNodeContextMenu?.({
+            clientX: e.clientX,
+            clientY: e.clientY,
+          });
+        }}
       >
         <input
           className="label-input"
@@ -229,6 +310,7 @@ export function PageArchNodeComponent({
           onChange={handleInputChange}
           onKeyDown={handleInputKeydown}
           onBlur={handleInputBlur}
+          onDoubleClick={stopPropagation}
           onContextMenu={stopPropagation}
           onMouseDown={stopPropagation}
         />
@@ -244,8 +326,15 @@ export function PageArchNodeComponent({
             <WrappedIcon lib="antd" icon="unordered-list" />
           </div>
         ) : (
-          <div className="thumbnail-container">
-            <WrappedIcon lib="antd" icon="ellipsis" />
+          <div
+            className="thumbnail-container"
+            style={{
+              height: 98 + extraHeight,
+            }}
+          >
+            <div className="thumbnail-placeholder">
+              <WrappedIcon lib="antd" icon="ellipsis" />
+            </div>
             {external && (
               <div
                 className="external"
@@ -257,6 +346,18 @@ export function PageArchNodeComponent({
                 <span className="external-label">{external.label}</span>
               </div>
             )}
+            {subNodes?.length ? (
+              <div className="sub-nodes">
+                {subNodes.map((subNode) => (
+                  <SubNode
+                    key={subNode.id}
+                    subNode={subNode}
+                    onSubNodeDoubleClick={onSubNodeDoubleClick}
+                    onSubNodeContextMenu={onSubNodeContextMenu}
+                  />
+                ))}
+              </div>
+            ) : null}
           </div>
         )}
       </div>
@@ -269,5 +370,42 @@ export function PageArchNodeComponent({
         <WrappedIcon lib="fa" icon="plus" />
       </div>
     </>
+  );
+}
+
+export interface SubNodeProps {
+  subNode: ExtraNodeData;
+  onSubNodeDoubleClick?(data: ExtraNodeData): void;
+  onSubNodeContextMenu?(data: SubNodeContextMenuData): void;
+}
+
+function SubNode({
+  subNode,
+  onSubNodeDoubleClick,
+  onSubNodeContextMenu,
+}: SubNodeProps) {
+  return (
+    <WrappedTooltip key={subNode.id} content={subNode.label}>
+      <div
+        className="sub-node"
+        onDoubleClick={(e) => {
+          e.stopPropagation();
+          onSubNodeDoubleClick?.(subNode);
+        }}
+        onContextMenu={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          onSubNodeContextMenu?.({
+            node: subNode,
+            clientX: e.clientX,
+            clientY: e.clientY,
+          });
+        }}
+      >
+        <div className="sub-node-skeleton-title"></div>
+        <div className="sub-node-skeleton-content"></div>
+        <div className="sub-node-skeleton-button"></div>
+      </div>
+    </WrappedTooltip>
   );
 }
