@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.4.3...@next-bricks/visual-builder@1.5.0) (2024-02-02)
+
+
+### Features
+
+* **page-arch:** support show sub-nodes ([fe5072f](https://github.com/easyops-cn/next-bricks/commit/fe5072f6b0be97615be9d03d1a3c99f1592c8979))
+
+
+
+
+
 ## [1.4.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.4.2...@next-bricks/visual-builder@1.4.3) (2024-02-01)
 
 **Note:** Version bump only for package @next-bricks/visual-builder
