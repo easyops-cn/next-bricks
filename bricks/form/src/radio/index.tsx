@@ -290,7 +290,7 @@ export function RadioComponent(props: RadioComponentProps) {
                 <div className="content">
                   {icon && (
                     <WrappedGeneralIcon
-                      {...(item?.icon ?? {})}
+                      {...icon}
                       style={{
                         fontSize: "32px",
                         ...iconStyle,
@@ -323,7 +323,7 @@ export function RadioComponent(props: RadioComponentProps) {
                       })}
                     >
                       <WrappedGeneralIcon
-                        {...(item?.icon ?? {})}
+                        {...icon}
                         style={{
                           fontSize: "46px",
                           ...iconStyle,
@@ -342,7 +342,7 @@ export function RadioComponent(props: RadioComponentProps) {
                   <span>
                     {icon && (
                       <WrappedGeneralIcon
-                        {...(item?.icon ?? {})}
+                        {...icon}
                         style={{
                           fontSize: "22px",
                           marginRight: "4px",
@@ -358,7 +358,7 @@ export function RadioComponent(props: RadioComponentProps) {
                 <span className="content">
                   {icon && (
                     <WrappedGeneralIcon
-                      {...(item?.icon ?? {})}
+                      {...icon}
                       style={{
                         fontSize: "22px",
                         marginRight: "8px",
