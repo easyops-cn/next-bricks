@@ -7,7 +7,7 @@ jest.mock("@next-core/theme", () => ({}));
 
 describe("form.general-button", () => {
   test("basic usage", async () => {
-    const element = document.createElement("form.general-radio") as Radio;
+    const element = document.createElement("eo-radio") as Radio;
     element.options = [
       {
         label: "a",
@@ -16,6 +16,10 @@ describe("form.general-button", () => {
       {
         label: "b",
         value: "b",
+        icon: {
+          lib: "antd",
+          icon: "close",
+        },
       },
     ];
 
@@ -107,5 +111,94 @@ describe("form.general-button", () => {
       document.body.removeChild(element);
     });
     expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
+
+  test("type icon with boolean values", () => {
+    const element = document.createElement("eo-radio") as Radio;
+    element.type = "icon";
+    element.options = [
+      {
+        label: "Yes",
+        value: true,
+        icon: {
+          lib: "antd",
+          icon: "check",
+        },
+      },
+      {
+        label: "No",
+        value: false,
+      },
+    ];
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(element.shadowRoot?.querySelectorAll(".content").length).toBe(2);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("type icon-square", () => {
+    const element = document.createElement("eo-radio") as Radio;
+    element.type = "icon-square";
+    element.options = [
+      {
+        label: "A",
+        value: "a",
+        icon: {
+          lib: "antd",
+          icon: "check",
+        },
+      },
+      {
+        label: "B",
+        value: "b",
+      },
+    ];
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(element.shadowRoot?.querySelectorAll(".square-icon").length).toBe(1);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("type button", () => {
+    const element = document.createElement("eo-radio") as Radio;
+    element.type = "button";
+    element.options = [
+      {
+        label: "A",
+        value: "a",
+        icon: {
+          lib: "antd",
+          icon: "check",
+        },
+      },
+      {
+        label: "B",
+        value: "b",
+      },
+    ];
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(element.shadowRoot?.querySelectorAll(".button-content").length).toBe(
+      2
+    );
+
+    act(() => {
+      document.body.removeChild(element);
+    });
   });
 });

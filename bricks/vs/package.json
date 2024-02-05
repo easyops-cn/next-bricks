@@ -34,11 +34,11 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-core/cook": "^2.2.11",
-    "@next-core/element": "^1.2.1",
+    "@next-core/cook": "^2.2.12",
+    "@next-core/element": "^1.2.2",
     "@next-core/monaco-contributions": "^0.3.4",
-    "@next-core/react-element": "^1.0.20",
-    "@next-core/react-runtime": "^1.1.47",
+    "@next-core/react-element": "^1.0.21",
+    "@next-core/react-runtime": "^1.1.50",
     "@next-core/theme": "^1.4.8",
     "@next-shared/form": "^0.5.4",
     "monaco-editor": "^0.39.0",
@@ -46,8 +46,8 @@
     "react": "0.0.0-experimental-ee8509801-20230117"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.20.3",
-    "@next-core/test-next": "^1.0.14",
+    "@next-core/build-next-bricks": "^1.20.4",
+    "@next-core/test-next": "^1.0.15",
     "resize-observer-polyfill": "^1.5.1"
   },
   "peerDependencies": {

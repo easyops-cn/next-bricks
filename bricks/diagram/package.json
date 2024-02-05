@@ -36,11 +36,11 @@
   "dependencies": {
     "@dagrejs/dagre": "^1.0.4",
     "@next-api-sdk/cmdb-sdk": "^1.1.0",
-    "@next-core/element": "^1.2.1",
-    "@next-core/i18n": "^1.0.37",
-    "@next-core/react-element": "^1.0.20",
-    "@next-core/react-runtime": "^1.1.47",
-    "@next-core/runtime": "^1.30.1",
+    "@next-core/element": "^1.2.2",
+    "@next-core/i18n": "^1.0.38",
+    "@next-core/react-element": "^1.0.21",
+    "@next-core/react-runtime": "^1.1.50",
+    "@next-core/runtime": "^1.30.4",
     "@next-core/theme": "^1.4.8",
     "classnames": "^2.3.2",
     "d3-drag": "^3.0.0",
@@ -52,8 +52,8 @@
     "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.20.3",
-    "@next-core/test-next": "^1.0.14"
+    "@next-core/build-next-bricks": "^1.20.4",
+    "@next-core/test-next": "^1.0.15"
   },
   "peerDependencies": {
     "@next-bricks/icons": "*"

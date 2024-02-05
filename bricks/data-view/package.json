@@ -34,12 +34,12 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-core/element": "^1.2.1",
-    "@next-core/i18n": "^1.0.37",
-    "@next-core/react-element": "^1.0.20",
-    "@next-core/react-runtime": "^1.1.47",
+    "@next-core/element": "^1.2.2",
+    "@next-core/i18n": "^1.0.38",
+    "@next-core/react-element": "^1.0.21",
+    "@next-core/react-runtime": "^1.1.50",
     "@next-core/types": "^1.8.0",
-    "@next-core/utils": "^1.6.9",
+    "@next-core/utils": "^1.6.10",
     "@next-shared/general": "^0.8.11",
     "@tweenjs/tween.js": "^19.0.0",
     "classnames": "^2.3.2",
@@ -49,8 +49,8 @@
     "three": "^0.150.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.20.3",
-    "@next-core/test-next": "^1.0.14"
+    "@next-core/build-next-bricks": "^1.20.4",
+    "@next-core/test-next": "^1.0.15"
   },
   "peerDependencies": {
     "@next-bricks/icons": "*"
