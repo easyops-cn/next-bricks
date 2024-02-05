@@ -166,7 +166,7 @@ export function EoAutoCompleteComponent(props: EoAutoCompleteComponentProps) {
   const {
     onChange,
     curElement,
-    inputStyle = { width: 200 },
+    inputStyle,
     disabled,
     placeholder,
     filterByCaption,

@@ -253,6 +253,19 @@ export function FormItemComponent(props: FormItemProps) {
       curElement.validateState = defaultValidateState.current.type;
     });
 
+    formInstance.setFieldsValueByInitData(name);
+
+    return () => {
+      formInstance.removeField(name);
+      formInstance.unsubscribe(`${name}.validate`);
+      formInstance.unsubscribe(`${name}.init.value`);
+      formInstance.unsubscribe(`${name}.reset.fields`);
+      formInstance.unsubscribe("reset.fields");
+    };
+  }, [curElement, formInstance, name, needValidate, trigger, valuePropsName]);
+
+  useEffect(() => {
+    if (!formInstance || !name || !curElement) return;
     formInstance.setField(name, {
       name,
       label,
@@ -265,21 +278,25 @@ export function FormItemComponent(props: FormItemProps) {
         validator,
       },
     });
-
     if (layout === "inline") curElement.style.display = "inline-block";
     if (size) {
       curElement.size = formElement.size || size;
     }
-    formInstance.setFieldsValueByInitData(name);
-
-    return () => {
-      formInstance.removeField(name);
-      formInstance.unsubscribe(`${name}.validate`);
-      formInstance.unsubscribe(`${name}.init.value`);
-      formInstance.unsubscribe(`${name}.reset.fields`);
-      formInstance.unsubscribe("reset.fields");
-    };
-  }, [curElement, formInstance, name]);
+  }, [
+    curElement,
+    formElement?.size,
+    formInstance,
+    label,
+    layout,
+    max,
+    message,
+    min,
+    name,
+    pattern,
+    required,
+    size,
+    validator,
+  ]);
 
   return (
     <div className={classNames("form-item", layout)}>
