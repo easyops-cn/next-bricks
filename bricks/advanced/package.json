@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/advanced",
-  "version": "0.23.1",
+  "version": "0.24.0",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/basic",
   "repository": {
     "type": "git",
@@ -47,15 +47,15 @@
     "@next-core/types": "^1.8.0",
     "antd": "^5.9.0",
     "classnames": "^2.3.2",
+    "html2canvas": "^1.4.1",
     "immutability-helper": "^3.1.1",
+    "jspdf": "^2.5.1",
     "lodash": "^4.17.21",
     "react": "0.0.0-experimental-ee8509801-20230117",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "0.0.0-experimental-ee8509801-20230117",
-    "react-grid-layout": "^1.4.3",
-    "html2canvas": "^1.4.1",
-    "jspdf": "^2.5.1"
+    "react-grid-layout": "^1.4.3"
   },
   "devDependencies": {
     "@next-core/build-next-bricks": "^1.20.4",
