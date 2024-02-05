@@ -21,7 +21,7 @@ const { yaml, preevaluate } = await init();
 self.onmessage = onMessage;
 
 function onMessage(message: MessageEvent): void {
-  const { token, data, id } = message.data;
+  const { token, data, id, init } = message.data;
   switch (token) {
     case "parse_yaml": {
       const result = parseYaml(data.value, data.links, data.markers);
@@ -29,6 +29,7 @@ function onMessage(message: MessageEvent): void {
         token: "parse_yaml",
         data: result,
         id,
+        init,
       });
       break;
     }

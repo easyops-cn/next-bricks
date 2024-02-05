@@ -8,7 +8,6 @@
 
 .complete-container {
   position: relative;
-  width: fit-content;
 }
 
 .optionContainer {
@@ -56,4 +55,8 @@
   margin-top: 5px;
   padding: 4px 2px;
   border-radius: var(--small-border-radius);
+}
+
+eo-input {
+  width: 100%;
 }
