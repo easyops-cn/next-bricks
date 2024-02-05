@@ -53,7 +53,9 @@
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "0.0.0-experimental-ee8509801-20230117",
-    "react-grid-layout": "^1.4.3"
+    "react-grid-layout": "^1.4.3",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1"
   },
   "devDependencies": {
     "@next-core/build-next-bricks": "^1.20.4",
