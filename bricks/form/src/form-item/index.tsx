@@ -260,7 +260,8 @@ export function FormItemComponent(props: FormItemProps) {
       formInstance.unsubscribe(`${name}.validate`);
       formInstance.unsubscribe(`${name}.init.value`);
       formInstance.unsubscribe(`${name}.reset.fields`);
-      formInstance.unsubscribe("reset.fields");
+      formInstance.unsubscribe(`reset.fields`);
+      formInstance.unsubscribe("reset.validate");
     };
   }, [curElement, formInstance, name, needValidate, trigger, valuePropsName]);
 
