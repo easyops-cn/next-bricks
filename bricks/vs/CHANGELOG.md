@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.0.7...@next-bricks/vs@1.1.0) (2024-02-05)
+
+
+### Features
+
+* update monaco-editor and auto-complete ([ce6a80d](https://github.com/easyops-cn/next-bricks/commit/ce6a80d6bf607360cf939586a0ed76f1c3733797))
+
+
+
+
+
 ## [1.0.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.0.6...@next-bricks/vs@1.0.7) (2024-02-05)
 
 **Note:** Version bump only for package @next-bricks/vs
