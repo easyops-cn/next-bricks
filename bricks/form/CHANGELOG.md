@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.3.0...@next-bricks/form@1.3.1) (2024-02-06)
+
+
+### Bug Fixes
+
+* **radio:**  form value only value ([9c5064a](https://github.com/easyops-cn/next-bricks/commit/9c5064a94db48c482d0c86c1ca29a39b0bbf1d4a))
+
+
+
+
+
 # [1.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.2.3...@next-bricks/form@1.3.0) (2024-02-05)
 
 
