@@ -233,4 +233,23 @@ children:
         completers:
           - label: instanceId
           - label: name
+- brick: vs.code-editor
+  events:
+    highlight.click:
+      - action: console.log
+  properties:
+    language: brick_next_yaml
+    value: |
+      <%
+        `${"<"}% CTX.a %${">"}`
+      %>
+    automaticLayout: fit-content
+    links:
+      - CTX
+      - FN
+    markers:
+      - token: CTX
+        params:
+          - a
+          - b
 ```

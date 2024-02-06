@@ -23,7 +23,7 @@ const findKeys = (
     });
     const matchWord = prefixLineWord.match(/^([\s|-]*)(\w+)(?=:)/);
     if (matchWord) {
-      const [_, wordspace, key] = matchWord;
+      const [, wordspace, key] = matchWord;
       if (wordspace.length === range.startColumn - 1) {
         curLevelKeys.unshift(key);
       }
@@ -106,8 +106,11 @@ export const isInEvaluateBody = (
     );
     const { keyList } = findKeys(model, word, position.lineNumber);
     if (
-      prefixParentKey === suffixParentKey &&
-      keyList.includes(prefixParentKey)
+      // value is object
+      (prefixParentKey === suffixParentKey &&
+        keyList.includes(prefixParentKey)) ||
+      // value is string
+      (prefixParentKey === "" && suffixParentKey === "")
     ) {
       return true;
     }
@@ -126,8 +129,7 @@ export const brickNextYAMLProviderCompletionItems = (
   return (
     model: monaco.editor.ITextModel,
     position: monaco.Position,
-    context: monaco.languages.CompletionContext,
-    _token: monaco.CancellationToken
+    context: monaco.languages.CompletionContext
   ): monaco.languages.ProviderResult<monaco.languages.CompletionList> => {
     if (id && id !== getEditorId())
       return {
