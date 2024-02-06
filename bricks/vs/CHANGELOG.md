@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.1.0...@next-bricks/vs@1.1.1) (2024-02-06)
+
+
+### Bug Fixes
+
+* **code-editor:** support string content ([d01f83b](https://github.com/easyops-cn/next-bricks/commit/d01f83b21e322c0aa2a6c60b31d5e7f39fc841b3))
+
+
+
+
+
 # [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.0.7...@next-bricks/vs@1.1.0) (2024-02-05)
 
 
