@@ -49,10 +49,7 @@ describe("form.general-button", () => {
 
     expect(mockChangeEvent).toBeCalledWith(
       expect.objectContaining({
-        detail: {
-          label: "a",
-          value: "a",
-        },
+        detail: "a",
       })
     );
     expect(element.value).toBe("a");
