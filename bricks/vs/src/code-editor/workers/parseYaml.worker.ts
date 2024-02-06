@@ -43,15 +43,18 @@ function parseYaml(value: string, links: string[], markers: Marker[]) {
   const tokens: Omit<Token & { token: string; property: string }, "source">[] =
     [];
   try {
+    const preValue = yaml.load(value);
+    const isString = typeof preValue === "string";
+
     parseValue = yaml.load(value, {
-      listener: map.listen(),
+      listener: map.listen(isString),
     });
 
     if (links || markers) {
       map.getTokens().forEach((item) => {
         const { startLineNumber, endLineNumber, startColumn } = item;
         const globalNodes: MemberExpression[] = [];
-        const result = preevaluate(item.source, {
+        const result = preevaluate(isString ? value : item.source, {
           hooks: {
             beforeVisit(node) {
               if (

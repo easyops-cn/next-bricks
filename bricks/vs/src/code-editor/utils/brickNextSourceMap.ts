@@ -14,6 +14,7 @@ class BrickNextYamlSourceMap {
   #recordsToken: Token[];
   #prefixPosition: number;
   #recordLastWord: string;
+  #isString: boolean = false;
 
   constructor() {
     this.#recordsToken = [];
@@ -21,22 +22,32 @@ class BrickNextYamlSourceMap {
     this.#recordLastWord = "";
   }
 
+  #isEvaluable(result: string): boolean {
+    return (
+      typeof result === "string" &&
+      /^\s*<%[~=]?\s/.test(result) &&
+      /\s%>\s*$/.test(result)
+    );
+  }
+
   private handleState(event: "open" | "close", state: State): void {
     if (event === "close") {
       const { line, position, lineStart, result } = state;
-      const curWord = state.input.substring(lineStart, position);
-      if (curWord.trim() === this.#recordLastWord.trim()) return;
-      this.#recordLastWord = curWord;
-      let startLineNumber = line + 1;
-      let endLineNumber = line + 1;
-      let startColumn = position - lineStart - result.length;
-      let endColumn = position - lineStart - state.lineIndent;
-      if (
-        typeof result === "string" &&
-        /^\s*<%[~=]?\s/.test(result) &&
-        /\s%>\s*$/.test(result)
-      ) {
+      if (!this.#isString) {
+        const curWord = state.input.substring(lineStart, position);
+        if (curWord.trim() === this.#recordLastWord.trim()) return;
+        this.#recordLastWord = curWord;
+      }
+      if (this.#isEvaluable(result)) {
         let source = result;
+        let startLineNumber = this.#isString ? 1 : line + 1;
+        let endLineNumber = this.#isString ? line : line + 1;
+        let startColumn = this.#isString
+          ? 0
+          : position - lineStart - result.length;
+        let endColumn = this.#isString
+          ? position
+          : position - lineStart - state.lineIndent;
         const wrapLength = result.match(/\n/g)?.length;
         if (wrapLength) {
           let nearWrapIndex = this.#prefixPosition;
@@ -73,7 +84,8 @@ class BrickNextYamlSourceMap {
     }
   }
 
-  public listen() {
+  public listen(isString: boolean = false) {
+    this.#isString = isString;
     return this.handleState.bind(this);
   }
 
