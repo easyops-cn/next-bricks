@@ -1,12 +1,30 @@
+.notificationWrapper {
+  position: fixed;
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
+}
+
+.notificationWrapper.center {
+  left: 50%;
+  transform: translateX(-50%);
+  top: 24px;
+}
+
+.notificationWrapper.topRight {
+  right: 24px;
+  top: 100px;
+}
+
 .notification::part(base) {
   border: var(--antd-message-border);
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 0px 6px 18px 0px rgba(0, 0, 0, 0.14) !important;
+  box-shadow: var(--feedback-container-shadow) !important;
   backdrop-filter: blur(20px);
   background: var(--color-fill-bg-container-3);
-  border-radius: 6px;
+  border-radius: var(--medius-border-radius);
 }
 
 .notification::part(icon) {
@@ -44,7 +62,7 @@
 }
 
 .topRight::part(icon) {
-  padding: 16px 0 0 24px;
+  padding: 18px 0 0 24px;
   align-items: flex-start;
 }
 
@@ -52,15 +70,34 @@
   padding: 12px 24px 0 0;
   align-items: flex-start;
   font-size: 14px;
+  color: var(--color-secondary-text);
+}
+
+.topRight::part(close-button__base):hover {
+  color: var(--color-normal-text);
 }
 
 .rectAngle::part(base) {
   border-radius: 0px;
 }
 .title {
-  font-size: 16px;
-  color: var(--antd-heading-color);
+  font-size: var(--title-font-size);
+  color: var(--color-header-text);
+  font-weight: var(--font-weight-500);
+  width: 220px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.message {
+  font-size: var(--normal-font-size);
+  color: var(--color-secondary-text);
+  font-weight: var(--font-weight-400);
+}
+
+.operateWrapper {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
 }
