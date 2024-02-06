@@ -173,9 +173,13 @@ class Radio extends FormItemElementBase {
     name: string;
   }>;
 
-  handleChange = (value: any): void => {
-    this.value = value;
-    this.#changeEvent.emit(value);
+  handleChange = (item: {
+    label: string;
+    value: any;
+    [key: string]: any;
+  }): void => {
+    this.value = item.value;
+    this.#changeEvent.emit(item);
   };
 
   #handleOptionsChange = (
@@ -243,7 +247,7 @@ export function RadioComponent(props: RadioComponentProps) {
   ): void => {
     e.stopPropagation();
     setValue((option as GeneralComplexOption)?.value as any);
-    props.onChange?.(option.value);
+    props.onChange?.(option);
   };
 
   return (
