@@ -72,6 +72,7 @@ const { defineElement, property, event } = createDecorators();
   alias: ["form.general-radio"],
 })
 class Radio extends FormItemElementBase {
+  #formatOptions: GeneralComplexOption[] | undefined;
   /**
    * 下拉框字段名
    */
@@ -155,11 +156,9 @@ class Radio extends FormItemElementBase {
   /**
    * 值变化事件
    */
-  @event({ type: "change" }) accessor #changeEvent!: EventEmitter<{
-    label: string;
-    value: any;
-    [key: string]: any;
-  }>;
+  @event({ type: "change" }) accessor #changeEvent!: EventEmitter<
+    GeneralComplexOption | undefined
+  >;
 
   /**
    * 选项列表变化事件
@@ -173,13 +172,11 @@ class Radio extends FormItemElementBase {
     name: string;
   }>;
 
-  handleChange = (item: {
-    label: string;
-    value: any;
-    [key: string]: any;
-  }): void => {
-    this.value = item.value;
-    this.#changeEvent.emit(item);
+  handleChange = (value: any): void => {
+    this.value = value;
+    this.#changeEvent.emit(
+      this.#formatOptions?.find((item) => item?.value === value)
+    );
   };
 
   #handleOptionsChange = (
@@ -194,6 +191,7 @@ class Radio extends FormItemElementBase {
   };
 
   render() {
+    this.#formatOptions = formatOptions(this.options);
     return (
       <RadioComponent
         curElement={this}
@@ -204,7 +202,7 @@ class Radio extends FormItemElementBase {
         ui={this.ui}
         disabled={this.disabled}
         size={this.size}
-        options={formatOptions(this.options)}
+        options={this.#formatOptions}
         type={this.type}
         value={this.value}
         required={this.required}
@@ -247,7 +245,7 @@ export function RadioComponent(props: RadioComponentProps) {
   ): void => {
     e.stopPropagation();
     setValue((option as GeneralComplexOption)?.value as any);
-    props.onChange?.(option);
+    props.onChange?.(option.value);
   };
 
   return (
