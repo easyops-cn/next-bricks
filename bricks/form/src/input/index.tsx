@@ -7,7 +7,6 @@ import React, {
   useImperativeHandle,
   type ChangeEvent,
   type MouseEvent,
-  type FocusEvent,
   type CSSProperties,
 } from "react";
 import { wrapBrick } from "@next-core/react-element";
@@ -23,6 +22,7 @@ import styleText from "./input.shadow.css";
 import { FormItemElementBase, MessageBody } from "@next-shared/form";
 import { FormItem, FormItemProps } from "../form-item/index.jsx";
 import { ComponentSize, InputType } from "../interface.js";
+import { useMergeRefs } from "@next-shared/hooks";
 
 const { defineElement, property, event, method } = createDecorators();
 
@@ -348,6 +348,20 @@ export const RCInput = forwardRef<RCInputRef, RCInputProps>((props, ref) => {
   const [value, setValue] = useState<string>();
   const [focused, setFocused] = useState<boolean>();
 
+  const searchInputRef = React.useCallback((element: HTMLInputElement) => {
+    if (element && autoFocus) {
+      Promise.resolve().then(() => {
+        try {
+          element.focus();
+        } catch (e) {
+          // Do nothing.
+        }
+      });
+    }
+  }, []);
+
+  const mergeInputRef = useMergeRefs([inputRef, searchInputRef]);
+
   useEffect(() => {
     setValue(props.value);
   }, [props.value]);
@@ -372,15 +386,15 @@ export const RCInput = forwardRef<RCInputRef, RCInputProps>((props, ref) => {
     onInputChange?.(e.target.value);
   };
 
-  const handleFocus = (e: FocusEvent<HTMLInputElement>) => {
+  const handleFocus = () => {
     setFocused(true);
   };
 
-  const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
+  const handleBlur = () => {
     setFocused(false);
   };
 
-  const handleClear = (e: MouseEvent<HTMLElement>) => {
+  const handleClear = () => {
     setValue("");
     onInputChange?.("");
   };
@@ -434,10 +448,9 @@ export const RCInput = forwardRef<RCInputRef, RCInputProps>((props, ref) => {
           <input
             part="input"
             placeholder={placeholder}
-            autoFocus={autoFocus}
             maxLength={maxLength}
             minLength={minLength}
-            ref={inputRef}
+            ref={mergeInputRef}
             className="input"
             type={type}
             disabled={disabled}

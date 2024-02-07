@@ -18,6 +18,7 @@ describe("form.general-search", () => {
     ) as GeneralSearch;
     element.value = "basic";
     element.clearable = true;
+    element.autoFocus = true;
     element.addEventListener("search", onSearch);
     element.addEventListener("blur", onBlur);
     element.addEventListener("change", onChange);
@@ -30,6 +31,8 @@ describe("form.general-search", () => {
     expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
 
     const input = element.shadowRoot?.querySelector("eo-input") as HTMLElement;
+
+    expect(input.hasAttribute("auto-focus")).toBeTruthy();
 
     act(() => {
       fireEvent.blur(input);

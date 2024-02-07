@@ -178,7 +178,8 @@ export function GeneralSearchComponent(props: SearchComponentProps) {
   return (
     <WrappedInput
       type="text"
-      autoFocus={autoFocus}
+      // React has special treatment for autoFocus. So we set the autofocus attribute to eo-input.
+      auto-focus={autoFocus}
       clearable={clearable}
       placeholder={placeholder}
       value={value}
