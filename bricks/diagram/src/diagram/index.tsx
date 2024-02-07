@@ -422,7 +422,7 @@ export function LegacyEoDiagramComponent(
       return;
     }
     onActiveTargetChange?.(activeTarget);
-  }, [nodes, activeTarget, onActiveTargetChange]);
+  }, [activeTarget, onActiveTargetChange]);
 
   useEffect(() => {
     const root = rootRef.current;
