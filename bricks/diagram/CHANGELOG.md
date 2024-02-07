@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.12.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.12.1...@next-bricks/diagram@0.12.2) (2024-02-07)
+
+
+### Bug Fixes
+
+* fix diagram infinite loop of active target events ([7d5cc4b](https://github.com/easyops-cn/next-bricks/commit/7d5cc4b4eb1399fe5883f2cf1c5c67add9cb9460))
+
+
+
+
+
 ## [0.12.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.12.0...@next-bricks/diagram@0.12.1) (2024-02-05)
 
 **Note:** Version bump only for package @next-bricks/diagram
