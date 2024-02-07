@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.3.3...@next-bricks/basic@1.4.0) (2024-02-07)
+
+
+### Bug Fixes
+
+* input in dialog sets autoFocus ([fd81a35](https://github.com/easyops-cn/next-bricks/commit/fd81a3521ad157a50c06b249ba9bf4aaf146a298))
+
+
+### Features
+
+* **show-notification:** support confirm to close ([70568ba](https://github.com/easyops-cn/next-bricks/commit/70568ba0f5d8c94407fb2b7f5e7b528f464cfe05))
+* **show-notification:** update doc ([08919d8](https://github.com/easyops-cn/next-bricks/commit/08919d8d3c0f645efb231ba6549e8cbb2eb724a3))
+
+
+
+
+
 ## [1.3.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.3.2...@next-bricks/basic@1.3.3) (2024-02-05)
 
 **Note:** Version bump only for package @next-bricks/basic

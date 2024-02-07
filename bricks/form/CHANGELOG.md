@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.3.1...@next-bricks/form@1.3.2) (2024-02-07)
+
+
+### Bug Fixes
+
+* autoFocus not work ([049ee81](https://github.com/easyops-cn/next-bricks/commit/049ee81857a0044981fcbd434243c1097a4e7036))
+
+
+
+
+
 ## [1.3.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.3.0...@next-bricks/form@1.3.1) (2024-02-06)
 
 
