@@ -101,15 +101,13 @@ describe("showNotification", () => {
         closable: true,
         icon: { lib: "antd", icon: "search" },
         duration: 3000,
-        hasOperate: true,
+        showConfirm: true,
         confirmText: "确认吗",
-        cancelText: "取消吗",
       });
     });
 
-    expect(document.querySelectorAll("eo-link").length).toBe(2);
+    expect(document.querySelectorAll("eo-link").length).toBe(1);
     expect(document.querySelectorAll("eo-link")[0].innerHTML).toBe("确认吗");
-    expect(document.querySelectorAll("eo-link")[1].innerHTML).toBe("取消吗");
     expect(
       document.querySelector("eo-icon[slot=icon]")?.getAttribute("icon")
     ).toBe("search");
@@ -134,11 +132,15 @@ describe("showNotification", () => {
         closable: true,
         icon: { lib: "antd", icon: "search" },
         duration: 3000,
-        hasOperate: true,
+        showConfirm: true,
+        showCancel: true,
         confirmText: "确认吗",
-        cancelText: "取消",
+        cancelText: "取消吗",
       });
     });
+
+    expect(document.querySelectorAll("eo-link").length).toBe(2);
+    expect(document.querySelectorAll("eo-link")[1].innerHTML).toBe("取消吗");
 
     act(() => {
       fireEvent.click(document.querySelector("eo-link[type=text]")!);

@@ -48,7 +48,7 @@ children:
 
 ### placement
 
-```yaml preview
+```yaml preview minHeight="500px"
 brick: div
 properties:
   style:
@@ -111,6 +111,86 @@ children:
           - message: It works!
             duration: 20000
             closable: true
+```
+
+### opertate
+
+```yaml preview minHeight="500px"
+brick: div
+properties:
+  style:
+    display: grid
+    gap: 1em
+children:
+  - brick: eo-button
+    properties:
+      textContent: Normal notification
+    events:
+      click:
+        useProvider: basic.show-notification
+        args:
+          - type: success
+            title: This is a overflow hidden test title!
+            message: |
+              This is a message test! This is a message test! This is a message test! This is a message test! This is a message test!
+            placement: topRight
+            closable: true
+            showConfirm: true
+            showCancel: true
+        callback:
+          success:
+            - action: message.success
+              args:
+                - You just confirm
+          error:
+            - action: message.info
+              args:
+                - You just canceled
+  - brick: eo-button
+    properties:
+      textContent: Custom Text Notification
+    events:
+      click:
+        useProvider: basic.show-notification
+        args:
+          - type: error
+            title: This is a overflow hidden test title!
+            message: |
+              This is a message test! This is a message test! This is a message test! This is a message test! This is a message test!
+            closable: true
+            showConfirm: true
+            showCancel: true
+            placement: topRight
+            confirmText: 自定义文本
+            cancelText: 取消文本
+        callback:
+          success:
+            - action: message.success
+              args:
+                - You just confirm
+          error:
+            - action: message.info
+              args:
+                - You just canceled
+  - brick: eo-button
+    properties:
+      textContent: hideCancel Notification
+    events:
+      click:
+        useProvider: basic.show-notification
+        args:
+          - type: warn
+            title: This is a overflow hidden test title!
+            message: |
+              This is a message test! This is a message test! This is a message test! This is a message test! This is a message test!
+            hasOperate: true
+            placement: topRight
+            showConfirm: true
+        callback:
+          success:
+            - action: message.success
+              args:
+                - You just confirm
 ```
 
 ## Usage in pro-code

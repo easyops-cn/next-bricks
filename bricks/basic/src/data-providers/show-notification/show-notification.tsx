@@ -23,7 +23,7 @@ initializeI18n(NS, locales);
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 
-interface NotificationOptions {
+export interface NotificationOptions {
   /** 通知类型 */
   type?: "success" | "error" | "warn" | "info";
   /** 默认三秒后自动关闭 */
@@ -40,12 +40,14 @@ interface NotificationOptions {
   icon?: GeneralIconProps;
   /**样式类型，默认圆角样式 */
   styleType?: "circleAngle" | "rectAngle";
-  /** 是否有操作区 */
-  hasOperate?: boolean;
   /** 确认文本 */
   confirmText?: string;
   /** 取消文本 */
   cancelText?: string;
+  /** 展示确认按钮 */
+  showConfirm?: boolean;
+  /** 展示取消按钮 */
+  showCancel?: boolean;
 }
 
 /**
@@ -65,7 +67,7 @@ export async function showNotification(
     newElement.className = classnames(
       `notification-wrapper-${placement}`,
       styles.notificationWrapper,
-      styles[options.placement ?? "center"]
+      styles[placement]
     );
 
     document.body.append(newElement);
@@ -94,7 +96,7 @@ export async function showNotification(
     };
 
     if (animations[placement]?.hide) {
-      const animation = container?.animate(
+      const animation = container.animate(
         animations[placement].hide,
         hideKeyframeAnimationOptions
       );
@@ -115,7 +117,7 @@ export async function showNotification(
   );
 
   if (animations[placement]?.active)
-    await container?.animate(
+    await container.animate(
       animations[placement].active,
       activeKeyframeAnimationOptions
     );
@@ -132,9 +134,10 @@ function NotificationComponent({
   icon,
   duration = 3000,
   styleType = "circleAngle",
-  hasOperate = false,
   confirmText,
   cancelText,
+  showConfirm = false,
+  showCancel = false,
   onOk,
   onCancel,
   onHide,
@@ -164,9 +167,9 @@ function NotificationComponent({
     return {
       variant,
       closable,
-      duration: hasOperate ? null : duration,
+      duration: showConfirm || showCancel ? null : duration,
     };
-  }, [closable, duration, type, hasOperate]);
+  }, [closable, duration, showCancel, showConfirm, type]);
 
   const iconProps = useMemo(() => {
     let defaultIcon;
@@ -219,14 +222,18 @@ function NotificationComponent({
       <WrappedIcon slot="icon" {...iconProps}></WrappedIcon>
       {title && <div className={styles.title}>{title}</div>}
       {message && <div className={styles.message}>{message}</div>}
-      {hasOperate && (
+      {(showConfirm || showCancel) && (
         <div className={styles.operateWrapper}>
-          <WrappedLink onClick={onOkClick}>
-            {confirmText ?? i18n.t(`${NS}:${K.OK}`)}
-          </WrappedLink>
-          <WrappedLink type="text" onClick={onCancelClick}>
-            {cancelText ?? i18n.t(`${NS}:${K.CANCEL}`)}
-          </WrappedLink>
+          {showConfirm && (
+            <WrappedLink onClick={onOkClick}>
+              {confirmText ?? i18n.t(`${NS}:${K.OK}`)}
+            </WrappedLink>
+          )}
+          {showCancel && (
+            <WrappedLink type="text" onClick={onCancelClick}>
+              {cancelText ?? i18n.t(`${NS}:${K.CANCEL}`)}
+            </WrappedLink>
+          )}
         </div>
       )}
     </WrappedSlAlert>

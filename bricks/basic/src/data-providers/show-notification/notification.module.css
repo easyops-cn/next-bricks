@@ -33,7 +33,7 @@
 }
 
 .notification::part(message) {
-  padding: 16px 24px 16px 15px;
+  padding: 16px;
 }
 
 .notification::part(close-button)::part(base) {
@@ -56,6 +56,11 @@
   color: var(--palette-amber-6);
 }
 
+.center::part(icon) {
+  align-items: start;
+  padding-top: 16px;
+}
+
 .topRight::part(base) {
   width: 28rem;
   margin-right: 16px;
@@ -66,14 +71,18 @@
   align-items: flex-start;
 }
 
-.topRight::part(close-button) {
+.notification::part(close-button) {
   padding: 12px 24px 0 0;
   align-items: flex-start;
   font-size: 14px;
+}
+
+.notification::part(close-button__base) {
+  padding: var(--sl-spacing-x-small) 0;
   color: var(--color-secondary-text);
 }
 
-.topRight::part(close-button__base):hover {
+.notification::part(close-button__base):hover {
   color: var(--color-normal-text);
 }
 
@@ -88,6 +97,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  margin-bottom: 8px;
 }
 
 .message {
@@ -98,6 +108,7 @@
 
 .operateWrapper {
   display: flex;
-  gap: 8px;
-  margin-top: 8px;
+  gap: 20px;
+  margin-top: 16px;
+  margin-bottom: 8px;
 }
