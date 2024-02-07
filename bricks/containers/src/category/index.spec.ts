@@ -33,6 +33,14 @@ describe("containers.general-category", () => {
       2
     );
 
+    expect(element.shadowRoot.querySelectorAll(".header-index").length).toBe(0);
+
+    await act(async () => {
+      await (element.showIndex = true);
+    });
+
+    expect(element.shadowRoot.querySelectorAll(".header-index").length).toBe(2);
+
     act(() => {
       document.body.removeChild(element);
     });

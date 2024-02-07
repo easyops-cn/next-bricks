@@ -17,6 +17,7 @@ export interface CategoryContainerProps {
   containerStyle?: React.CSSProperties;
   split?: boolean;
   headerMask?: boolean;
+  showIndex?: boolean;
 }
 
 /**
@@ -77,6 +78,14 @@ class Category extends ReactNextElement implements CategoryContainerProps {
   })
   accessor headerMask: boolean;
 
+  /**
+   * 是否显示序号
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor showIndex: boolean;
+
   render() {
     return (
       <CategoryElement
@@ -85,6 +94,7 @@ class Category extends ReactNextElement implements CategoryContainerProps {
         headerStyle={this.headerStyle}
         containerStyle={this.containerStyle}
         headerMask={this.headerMask}
+        showIndex={this.showIndex}
       />
     );
   }
@@ -94,36 +104,42 @@ function CategoryElement(props: CategoryContainerProps): React.ReactElement {
   const {
     categories,
     headerStyle,
+    showIndex,
     contentStyle,
     containerStyle,
     headerMask = true,
   } = props;
   return (
     <div className="category-container-wrapper" style={containerStyle}>
-      {categories?.map((categoryItem: categoryProps): React.ReactElement => {
-        return (
-          <div className="category-item" key={categoryItem.key}>
-            <div className="category-item-header" style={headerStyle}>
-              <div className="category-left-wrap">
-                {headerMask && <span className="header-mark" />}
-                <span className="header-title">
-                  {categoryItem.title}
-                  <slot
-                    id={`${categoryItem.key}-titleSlot`}
-                    name={`${categoryItem.key}.titleSuffix`}
-                  />
-                </span>
+      {categories?.map(
+        (categoryItem: categoryProps, index: number): React.ReactElement => {
+          return (
+            <div className="category-item" key={categoryItem.key}>
+              <div className="category-item-header" style={headerStyle}>
+                <div className="category-left-wrap">
+                  {headerMask && <span className="header-mark" />}
+                  {showIndex && (
+                    <span className="header-index">{index + 1}</span>
+                  )}
+                  <span className="header-title">
+                    {categoryItem.title}
+                    <slot
+                      id={`${categoryItem.key}-titleSlot`}
+                      name={`${categoryItem.key}.titleSuffix`}
+                    />
+                  </span>
+                </div>
+                <div className="header-right-wrap">
+                  <slot name="headerToolbar" />
+                </div>
               </div>
-              <div className="header-right-wrap">
-                <slot name="headerToolbar" />
+              <div className="category-item-content" style={contentStyle}>
+                <slot name={categoryItem.key} />
               </div>
             </div>
-            <div className="category-item-content" style={contentStyle}>
-              <slot name={categoryItem.key} />
-            </div>
-          </div>
-        );
-      })}
+          );
+        }
+      )}
     </div>
   );
 }

@@ -57,3 +57,16 @@
 .category-item-content {
   padding: var(--category-content-padding);
 }
+
+.header-index {
+  margin-right: 5px;
+  width: 18px;
+  height: 18px;
+  line-height: 18px;
+  background: var(--palette-blue-1);
+  text-align: center;
+  border-radius: 50%;
+  font-size: var(--auxiliary-font-size-small);
+  font-weight: var(--font-weight-500);
+  color: var(--palette-blue-6);
+}
