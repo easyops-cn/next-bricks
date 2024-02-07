@@ -38,7 +38,7 @@
     "@next-core/element": "^1.2.2",
     "@next-core/monaco-contributions": "^0.3.4",
     "@next-core/react-element": "^1.0.21",
-    "@next-core/react-runtime": "^1.1.50",
+    "@next-core/react-runtime": "^1.1.52",
     "@next-core/theme": "^1.4.8",
     "@next-shared/form": "^0.5.5",
     "monaco-editor": "^0.39.0",
@@ -46,7 +46,7 @@
     "react": "0.0.0-experimental-ee8509801-20230117"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.20.4",
+    "@next-core/build-next-bricks": "^1.20.5",
     "@next-core/test-next": "^1.0.15",
     "resize-observer-polyfill": "^1.5.1"
   },
