@@ -196,6 +196,7 @@ export function DialogComponent({
           <div style={contentStyle}>{parseTemplate(content, { expect })}</div>
           {expect && (
             <WrappedInput
+              auto-focus={true}
               className={styles.expectInput}
               onValueChange={(e) => setConfirmDisabled(e.detail !== expect)}
             />

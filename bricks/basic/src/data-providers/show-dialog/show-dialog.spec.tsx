@@ -175,44 +175,45 @@ describe("DialogComponent", () => {
       />
     );
     expect(asFragment()).toMatchInlineSnapshot(`
-      <DocumentFragment>
-        <sl-dialog
-          class="dialog"
-        >
-          <div
-            class="body"
-          >
-            <div
-              class="icon warning"
-            >
-              <eo-antd-icon />
-            </div>
-            <div
-              style="flex: 1;"
-            >
-              <div>
-                Are you sure?
-              </div>
-              <eo-input
-                class="expectInput"
-              />
-            </div>
-          </div>
-          <eo-button
-            slot="footer"
-          >
-            Cancel
-          </eo-button>
-          <eo-button
-            danger=""
-            disabled=""
-            slot="footer"
-          >
-            Delete
-          </eo-button>
-        </sl-dialog>
-      </DocumentFragment>
-    `);
+<DocumentFragment>
+  <sl-dialog
+    class="dialog"
+  >
+    <div
+      class="body"
+    >
+      <div
+        class="icon warning"
+      >
+        <eo-antd-icon />
+      </div>
+      <div
+        style="flex: 1;"
+      >
+        <div>
+          Are you sure?
+        </div>
+        <eo-input
+          auto-focus=""
+          class="expectInput"
+        />
+      </div>
+    </div>
+    <eo-button
+      slot="footer"
+    >
+      Cancel
+    </eo-button>
+    <eo-button
+      danger=""
+      disabled=""
+      slot="footer"
+    >
+      Delete
+    </eo-button>
+  </sl-dialog>
+</DocumentFragment>
+`);
     expect(container.querySelector("eo-antd-icon")).toHaveProperty(
       "icon",
       "exclamation-circle"
@@ -327,50 +328,51 @@ describe("DialogComponent", () => {
       />
     );
     expect(asFragment()).toMatchInlineSnapshot(`
-      <DocumentFragment>
-        <sl-dialog
-          class="dialog"
-        >
-          <div
-            class="body"
+<DocumentFragment>
+  <sl-dialog
+    class="dialog"
+  >
+    <div
+      class="body"
+    >
+      <div
+        class="icon warning"
+      >
+        <eo-antd-icon />
+      </div>
+      <div
+        style="flex: 1;"
+      >
+        <div>
+          Please enter 
+          <strong
+            class="strong"
           >
-            <div
-              class="icon warning"
-            >
-              <eo-antd-icon />
-            </div>
-            <div
-              style="flex: 1;"
-            >
-              <div>
-                Please enter 
-                <strong
-                  class="strong"
-                >
-                  cat.png
-                </strong>
-                 to delete the file.
-              </div>
-              <eo-input
-                class="expectInput"
-              />
-            </div>
-          </div>
-          <eo-button
-            slot="footer"
-          >
-            Cancel
-          </eo-button>
-          <eo-button
-            danger=""
-            disabled=""
-            slot="footer"
-          >
-            Delete
-          </eo-button>
-        </sl-dialog>
-      </DocumentFragment>
-    `);
+            cat.png
+          </strong>
+           to delete the file.
+        </div>
+        <eo-input
+          auto-focus=""
+          class="expectInput"
+        />
+      </div>
+    </div>
+    <eo-button
+      slot="footer"
+    >
+      Cancel
+    </eo-button>
+    <eo-button
+      danger=""
+      disabled=""
+      slot="footer"
+    >
+      Delete
+    </eo-button>
+  </sl-dialog>
+</DocumentFragment>
+`);
 
     rerender(
       <DialogComponent
@@ -380,60 +382,61 @@ describe("DialogComponent", () => {
       />
     );
     expect(asFragment()).toMatchInlineSnapshot(`
-      <DocumentFragment>
-        <sl-dialog
-          class="dialog"
-        >
-          <div
-            class="body"
+<DocumentFragment>
+  <sl-dialog
+    class="dialog"
+  >
+    <div
+      class="body"
+    >
+      <div
+        class="icon warning"
+      >
+        <eo-antd-icon />
+      </div>
+      <div
+        style="flex: 1;"
+      >
+        <div>
+          <strong
+            class="strong"
           >
-            <div
-              class="icon warning"
-            >
-              <eo-antd-icon />
-            </div>
-            <div
-              style="flex: 1;"
-            >
-              <div>
-                <strong
-                  class="strong"
-                >
-                  cat.png
-                </strong>
-                 Please enter 
-                <strong
-                  class="strong"
-                >
-                  cat.png
-                </strong>
-                 to delete the file. 
-                <strong
-                  class="strong"
-                >
-                  cat.png
-                </strong>
-              </div>
-              <eo-input
-                class="expectInput"
-              />
-            </div>
-          </div>
-          <eo-button
-            slot="footer"
+            cat.png
+          </strong>
+           Please enter 
+          <strong
+            class="strong"
           >
-            Cancel
-          </eo-button>
-          <eo-button
-            danger=""
-            disabled=""
-            slot="footer"
+            cat.png
+          </strong>
+           to delete the file. 
+          <strong
+            class="strong"
           >
-            Delete
-          </eo-button>
-        </sl-dialog>
-      </DocumentFragment>
-    `);
+            cat.png
+          </strong>
+        </div>
+        <eo-input
+          auto-focus=""
+          class="expectInput"
+        />
+      </div>
+    </div>
+    <eo-button
+      slot="footer"
+    >
+      Cancel
+    </eo-button>
+    <eo-button
+      danger=""
+      disabled=""
+      slot="footer"
+    >
+      Delete
+    </eo-button>
+  </sl-dialog>
+</DocumentFragment>
+`);
 
     rerender(
       <DialogComponent
@@ -443,44 +446,45 @@ describe("DialogComponent", () => {
       />
     );
     expect(asFragment()).toMatchInlineSnapshot(`
-      <DocumentFragment>
-        <sl-dialog
-          class="dialog"
-        >
-          <div
-            class="body"
-          >
-            <div
-              class="icon warning"
-            >
-              <eo-antd-icon />
-            </div>
-            <div
-              style="flex: 1;"
-            >
-              <div>
-                Please enter  to delete the file.
-              </div>
-              <eo-input
-                class="expectInput"
-              />
-            </div>
-          </div>
-          <eo-button
-            slot="footer"
-          >
-            Cancel
-          </eo-button>
-          <eo-button
-            danger=""
-            disabled=""
-            slot="footer"
-          >
-            Delete
-          </eo-button>
-        </sl-dialog>
-      </DocumentFragment>
-    `);
+<DocumentFragment>
+  <sl-dialog
+    class="dialog"
+  >
+    <div
+      class="body"
+    >
+      <div
+        class="icon warning"
+      >
+        <eo-antd-icon />
+      </div>
+      <div
+        style="flex: 1;"
+      >
+        <div>
+          Please enter  to delete the file.
+        </div>
+        <eo-input
+          auto-focus=""
+          class="expectInput"
+        />
+      </div>
+    </div>
+    <eo-button
+      slot="footer"
+    >
+      Cancel
+    </eo-button>
+    <eo-button
+      danger=""
+      disabled=""
+      slot="footer"
+    >
+      Delete
+    </eo-button>
+  </sl-dialog>
+</DocumentFragment>
+`);
 
     unmount();
   });
