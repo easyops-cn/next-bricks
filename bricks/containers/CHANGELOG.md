@@ -3,491 +3,268 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.0.9...@next-bricks/containers@1.0.10) (2024-02-08)
+
+### Features
+
+- **category:** add showIndex property ([5700bee](https://github.com/easyops-cn/next-bricks/commit/5700bee189ffe73790d49ae31a73542cf6a1801c))
+
 ## [1.0.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.0.8...@next-bricks/containers@1.0.9) (2024-02-07)
 
 **Note:** Version bump only for package @next-bricks/containers
-
-
-
-
 
 ## [1.0.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.0.7...@next-bricks/containers@1.0.8) (2024-02-05)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [1.0.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.0.6...@next-bricks/containers@1.0.7) (2024-02-01)
 
 **Note:** Version bump only for package @next-bricks/containers
-
-
-
-
 
 ## [1.0.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.0.5...@next-bricks/containers@1.0.6) (2024-01-08)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [1.0.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.0.4...@next-bricks/containers@1.0.5) (2024-01-05)
-
 
 ### Bug Fixes
 
-* **card:** refine fill vertical ([78b4bb1](https://github.com/easyops-cn/next-bricks/commit/78b4bb1722470a89b4a5365e9c94a88b4bb45fa2))
-
-
-
-
+- **card:** refine fill vertical ([78b4bb1](https://github.com/easyops-cn/next-bricks/commit/78b4bb1722470a89b4a5365e9c94a88b4bb45fa2))
 
 ## [1.0.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.0.3...@next-bricks/containers@1.0.4) (2024-01-05)
 
-
 ### Bug Fixes
 
-* fix card implementation of fill container ([ccf911a](https://github.com/easyops-cn/next-bricks/commit/ccf911a9e7aac8c353b3b9a1e8b22d4afece0e85))
-
-
-
-
+- fix card implementation of fill container ([ccf911a](https://github.com/easyops-cn/next-bricks/commit/ccf911a9e7aac8c353b3b9a1e8b22d4afece0e85))
 
 ## [1.0.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.0.2...@next-bricks/containers@1.0.3) (2024-01-03)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [1.0.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.0.1...@next-bricks/containers@1.0.2) (2024-01-02)
 
 **Note:** Version bump only for package @next-bricks/containers
-
-
-
-
 
 ## [1.0.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.25.1...@next-bricks/containers@1.0.1) (2024-01-02)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [0.25.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.25.0...@next-bricks/containers@0.25.1) (2023-12-27)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 # [0.25.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.24.11...@next-bricks/containers@0.25.0) (2023-12-25)
-
 
 ### Features
 
-* card add split prop ([55fe746](https://github.com/easyops-cn/next-bricks/commit/55fe7461c86076bb99f00e42bfe80b966917341e))
-
-
-
-
+- card add split prop ([55fe746](https://github.com/easyops-cn/next-bricks/commit/55fe7461c86076bb99f00e42bfe80b966917341e))
 
 ## [0.24.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.24.10...@next-bricks/containers@0.24.11) (2023-12-22)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [0.24.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.24.9...@next-bricks/containers@0.24.10) (2023-12-14)
 
 **Note:** Version bump only for package @next-bricks/containers
-
-
-
-
 
 ## [0.24.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.24.8...@next-bricks/containers@0.24.9) (2023-12-12)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [0.24.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.24.7...@next-bricks/containers@0.24.8) (2023-12-11)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [0.24.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.24.6...@next-bricks/containers@0.24.7) (2023-12-07)
-
 
 ### Bug Fixes
 
-* main-view 的 pageTitle 插槽使用 flex 布局 ([d81a08c](https://github.com/easyops-cn/next-bricks/commit/d81a08ca05bad2d71f9008621425a7996b5b4840))
-
-
-
-
+- main-view 的 pageTitle 插槽使用 flex 布局 ([d81a08c](https://github.com/easyops-cn/next-bricks/commit/d81a08ca05bad2d71f9008621425a7996b5b4840))
 
 ## [0.24.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.24.5...@next-bricks/containers@0.24.6) (2023-12-07)
 
-
 ### Bug Fixes
 
-* **card:** fix css variables ([b7b0a47](https://github.com/easyops-cn/next-bricks/commit/b7b0a47ef96c24af90b91c03c7a15a5c4bcf69fb))
-
-
-
-
+- **card:** fix css variables ([b7b0a47](https://github.com/easyops-cn/next-bricks/commit/b7b0a47ef96c24af90b91c03c7a15a5c4bcf69fb))
 
 ## [0.24.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.24.4...@next-bricks/containers@0.24.5) (2023-12-06)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [0.24.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.24.3...@next-bricks/containers@0.24.4) (2023-12-01)
-
 
 ### Bug Fixes
 
-* refine content-layout compatibility ([6bfac9f](https://github.com/easyops-cn/next-bricks/commit/6bfac9fc2e252e173fd03faf34c60629289e09e8))
-
-
-
-
+- refine content-layout compatibility ([6bfac9f](https://github.com/easyops-cn/next-bricks/commit/6bfac9fc2e252e173fd03faf34c60629289e09e8))
 
 ## [0.24.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.24.2...@next-bricks/containers@0.24.3) (2023-11-30)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [0.24.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.24.1...@next-bricks/containers@0.24.2) (2023-11-30)
-
 
 ### Bug Fixes
 
-* host-context fallback ([6c627f7](https://github.com/easyops-cn/next-bricks/commit/6c627f7863d0d80b1f0e9dcc44185e4cb56e0d46))
-
-
-
-
+- host-context fallback ([6c627f7](https://github.com/easyops-cn/next-bricks/commit/6c627f7863d0d80b1f0e9dcc44185e4cb56e0d46))
 
 ## [0.24.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.24.0...@next-bricks/containers@0.24.1) (2023-11-28)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 # [0.24.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.23.10...@next-bricks/containers@0.24.0) (2023-11-27)
-
 
 ### Features
 
-* add workbench layout ([847e5d0](https://github.com/easyops-cn/next-bricks/commit/847e5d08f5aef4ca11285a3d3c638fcd56ded6b5))
-
-
-
-
+- add workbench layout ([847e5d0](https://github.com/easyops-cn/next-bricks/commit/847e5d08f5aef4ca11285a3d3c638fcd56ded6b5))
 
 ## [0.23.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.23.9...@next-bricks/containers@0.23.10) (2023-11-23)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [0.23.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.23.8...@next-bricks/containers@0.23.9) (2023-11-22)
 
 **Note:** Version bump only for package @next-bricks/containers
-
-
-
-
 
 ## [0.23.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.23.7...@next-bricks/containers@0.23.8) (2023-11-22)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [0.23.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.23.6...@next-bricks/containers@0.23.7) (2023-11-21)
-
 
 ### Bug Fixes
 
-* make launchpad compatible with browsers not support flex gap ([288c478](https://github.com/easyops-cn/next-bricks/commit/288c47831d3603cdac7702a39dc88ffc8baae492))
-
-
-
-
+- make launchpad compatible with browsers not support flex gap ([288c478](https://github.com/easyops-cn/next-bricks/commit/288c47831d3603cdac7702a39dc88ffc8baae492))
 
 ## [0.23.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.23.5...@next-bricks/containers@0.23.6) (2023-11-21)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [0.23.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.23.4...@next-bricks/containers@0.23.5) (2023-11-21)
-
 
 ### Bug Fixes
 
-* flex gap fallback ([9ea3b94](https://github.com/easyops-cn/next-bricks/commit/9ea3b944c3fc91e5b4511ec6b27df1ebbf870988))
-
-
-
-
+- flex gap fallback ([9ea3b94](https://github.com/easyops-cn/next-bricks/commit/9ea3b944c3fc91e5b4511ec6b27df1ebbf870988))
 
 ## [0.23.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.23.3...@next-bricks/containers@0.23.4) (2023-11-20)
 
-
 ### Bug Fixes
 
-* refine wrap local bricks ([34b4861](https://github.com/easyops-cn/next-bricks/commit/34b48616cdf0a11449dcfb86b75a13d866a81b01))
-
-
-
-
+- refine wrap local bricks ([34b4861](https://github.com/easyops-cn/next-bricks/commit/34b48616cdf0a11449dcfb86b75a13d866a81b01))
 
 ## [0.23.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.23.2...@next-bricks/containers@0.23.3) (2023-11-17)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [0.23.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.23.1...@next-bricks/containers@0.23.2) (2023-11-17)
-
 
 ### Bug Fixes
 
-* fix footer height ([c8ed7f0](https://github.com/easyops-cn/next-bricks/commit/c8ed7f05b1e8fd416762799dfd8557be205e2eb6))
-
-
-
-
+- fix footer height ([c8ed7f0](https://github.com/easyops-cn/next-bricks/commit/c8ed7f05b1e8fd416762799dfd8557be205e2eb6))
 
 ## [0.23.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.23.0...@next-bricks/containers@0.23.1) (2023-11-17)
 
-
 ### Bug Fixes
 
-* depends on others bricks of current workspace ([4b835f9](https://github.com/easyops-cn/next-bricks/commit/4b835f902d58d6fa08a5239fb077053121c3df9f))
-
-
-
-
+- depends on others bricks of current workspace ([4b835f9](https://github.com/easyops-cn/next-bricks/commit/4b835f902d58d6fa08a5239fb077053121c3df9f))
 
 # [0.23.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.22.13...@next-bricks/containers@0.23.0) (2023-11-16)
 
-
 ### Bug Fixes
 
-* decrease footer padding ([dfbeac2](https://github.com/easyops-cn/next-bricks/commit/dfbeac2a67c8417da684c73fb9cc81f3fe71691b))
-
+- decrease footer padding ([dfbeac2](https://github.com/easyops-cn/next-bricks/commit/dfbeac2a67c8417da684c73fb9cc81f3fe71691b))
 
 ### Features
 
-* move footer to eo-page-view from eo-main-view ([d1d479b](https://github.com/easyops-cn/next-bricks/commit/d1d479ba59e7e0484f7fd3a49a0598013794f1b1))
-
-
-
-
+- move footer to eo-page-view from eo-main-view ([d1d479b](https://github.com/easyops-cn/next-bricks/commit/d1d479ba59e7e0484f7fd3a49a0598013794f1b1))
 
 ## [0.22.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.22.12...@next-bricks/containers@0.22.13) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [0.22.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.22.11...@next-bricks/containers@0.22.12) (2023-11-16)
-
 
 ### Bug Fixes
 
-* **main-view:** show footer shadow only when it's pinned ([9045955](https://github.com/easyops-cn/next-bricks/commit/9045955842d29f238927ee0be656423f967870bd))
-
-
-
-
+- **main-view:** show footer shadow only when it's pinned ([9045955](https://github.com/easyops-cn/next-bricks/commit/9045955842d29f238927ee0be656423f967870bd))
 
 ## [0.22.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.22.10...@next-bricks/containers@0.22.11) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [0.22.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.22.9...@next-bricks/containers@0.22.10) (2023-11-15)
 
 **Note:** Version bump only for package @next-bricks/containers
-
-
-
-
 
 ## [0.22.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.22.8...@next-bricks/containers@0.22.9) (2023-11-13)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [0.22.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.22.7...@next-bricks/containers@0.22.8) (2023-11-10)
 
 **Note:** Version bump only for package @next-bricks/containers
-
-
-
-
 
 ## [0.22.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.22.6...@next-bricks/containers@0.22.7) (2023-11-10)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [0.22.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.22.5...@next-bricks/containers@0.22.6) (2023-11-09)
 
 **Note:** Version bump only for package @next-bricks/containers
-
-
-
-
 
 ## [0.22.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.22.4...@next-bricks/containers@0.22.5) (2023-11-08)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [0.22.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.22.3...@next-bricks/containers@0.22.4) (2023-11-08)
 
 **Note:** Version bump only for package @next-bricks/containers
-
-
-
-
 
 ## [0.22.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.22.2...@next-bricks/containers@0.22.3) (2023-11-08)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [0.22.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.22.1...@next-bricks/containers@0.22.2) (2023-11-07)
 
 **Note:** Version bump only for package @next-bricks/containers
-
-
-
-
 
 ## [0.22.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.22.0...@next-bricks/containers@0.22.1) (2023-11-07)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 # [0.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.21.0...@next-bricks/containers@0.22.0) (2023-11-06)
-
 
 ### Features
 
-* support panel color ([7a0eea4](https://github.com/easyops-cn/next-bricks/commit/7a0eea4ea0a1ef8b033ead096cf472a49e049629))
-
-
-
-
+- support panel color ([7a0eea4](https://github.com/easyops-cn/next-bricks/commit/7a0eea4ea0a1ef8b033ead096cf472a49e049629))
 
 # [0.21.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.20.0...@next-bricks/containers@0.21.0) (2023-11-06)
 
-
 ### Features
 
-* support tab.select event ([2c87665](https://github.com/easyops-cn/next-bricks/commit/2c87665e6130b9636ff61d74b4720ff6aa52ef67))
-
-
-
-
+- support tab.select event ([2c87665](https://github.com/easyops-cn/next-bricks/commit/2c87665e6130b9636ff61d74b4720ff6aa52ef67))
 
 # [0.20.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.19.2...@next-bricks/containers@0.20.0) (2023-11-03)
 
-
 ### Features
 
-* **category:** support UI 8.2 ([a737eca](https://github.com/easyops-cn/next-bricks/commit/a737ecacfba6414f06722de3ba92326f8abd08d8))
-
-
-
-
+- **category:** support UI 8.2 ([a737eca](https://github.com/easyops-cn/next-bricks/commit/a737ecacfba6414f06722de3ba92326f8abd08d8))
 
 ## [0.19.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.19.1...@next-bricks/containers@0.19.2) (2023-11-02)
 
-
 ### Bug Fixes
 
-* **tabs:** depends on new brick_next ([2732a22](https://github.com/easyops-cn/next-bricks/commit/2732a22f6870435219fa9e7114d4829e7199ea84))
-
-
-
-
+- **tabs:** depends on new brick_next ([2732a22](https://github.com/easyops-cn/next-bricks/commit/2732a22f6870435219fa9e7114d4829e7199ea84))
 
 ## [0.19.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.19.0...@next-bricks/containers@0.19.1) (2023-11-01)
 
-
 ### Bug Fixes
 
-* add gap between tabs ([ba8f5fe](https://github.com/easyops-cn/next-bricks/commit/ba8f5fec54750cd6d595f2082fff9bc99b8c5a77))
-* fix card content padding ([05b4be4](https://github.com/easyops-cn/next-bricks/commit/05b4be4a7ca33c85f8fb6c2c6af7488ebe90f488))
-* require new brick_next ([d0f0d70](https://github.com/easyops-cn/next-bricks/commit/d0f0d70c6fce85b8dbf30df8d708c1168d0a3929))
-* **tabs:** panel tabs always have no outline ([4cc92d4](https://github.com/easyops-cn/next-bricks/commit/4cc92d4db935421579fabc890f26cef9850d0b1e))
-* **tabs:** style with type attr instead of class name ([2541ae0](https://github.com/easyops-cn/next-bricks/commit/2541ae023dae2becb26981ba3203866f466ab037))
-* **tabs:** support ui v8.2 ([8381d2b](https://github.com/easyops-cn/next-bricks/commit/8381d2bd814eaf0caf701cb7ce3661178d5f48dc))
-
-
-
-
+- add gap between tabs ([ba8f5fe](https://github.com/easyops-cn/next-bricks/commit/ba8f5fec54750cd6d595f2082fff9bc99b8c5a77))
+- fix card content padding ([05b4be4](https://github.com/easyops-cn/next-bricks/commit/05b4be4a7ca33c85f8fb6c2c6af7488ebe90f488))
+- require new brick_next ([d0f0d70](https://github.com/easyops-cn/next-bricks/commit/d0f0d70c6fce85b8dbf30df8d708c1168d0a3929))
+- **tabs:** panel tabs always have no outline ([4cc92d4](https://github.com/easyops-cn/next-bricks/commit/4cc92d4db935421579fabc890f26cef9850d0b1e))
+- **tabs:** style with type attr instead of class name ([2541ae0](https://github.com/easyops-cn/next-bricks/commit/2541ae023dae2becb26981ba3203866f466ab037))
+- **tabs:** support ui v8.2 ([8381d2b](https://github.com/easyops-cn/next-bricks/commit/8381d2bd814eaf0caf701cb7ce3661178d5f48dc))
 
 # [0.19.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@0.18.3...@next-bricks/containers@0.19.0) (2023-11-01)
 

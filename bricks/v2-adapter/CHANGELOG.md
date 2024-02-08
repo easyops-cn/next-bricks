@@ -3,318 +3,167 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.0.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@1.0.7...@next-bricks/v2-adapter@1.0.8) (2024-02-07)
+## [1.0.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@1.0.8...@next-bricks/v2-adapter@1.0.9) (2024-02-08)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
 
+## [1.0.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@1.0.7...@next-bricks/v2-adapter@1.0.8) (2024-02-07)
 
-
-
+**Note:** Version bump only for package @next-bricks/v2-adapter
 
 ## [1.0.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@1.0.6...@next-bricks/v2-adapter@1.0.7) (2024-02-05)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
 
-
-
-
-
 ## [1.0.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@1.0.5...@next-bricks/v2-adapter@1.0.6) (2024-02-01)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
 
-
-
-
-
 ## [1.0.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@1.0.4...@next-bricks/v2-adapter@1.0.5) (2024-01-18)
-
 
 ### Bug Fixes
 
-* manually use batched updates for legacy use-brick ([63e1508](https://github.com/easyops-cn/next-bricks/commit/63e1508028003fbe8788077be21cf53b8f4381ef))
-
-
-
-
+- manually use batched updates for legacy use-brick ([63e1508](https://github.com/easyops-cn/next-bricks/commit/63e1508028003fbe8788077be21cf53b8f4381ef))
 
 ## [1.0.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@1.0.3...@next-bricks/v2-adapter@1.0.4) (2024-01-05)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
 
-
-
-
-
 ## [1.0.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@1.0.2...@next-bricks/v2-adapter@1.0.3) (2024-01-03)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
-
-
-
-
 
 ## [1.0.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@1.0.1...@next-bricks/v2-adapter@1.0.2) (2024-01-02)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
 
-
-
-
-
 ## [1.0.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.35...@next-bricks/v2-adapter@1.0.1) (2024-01-02)
-
 
 ### Bug Fixes
 
-* reflect getRuntime::version ([44a7090](https://github.com/easyops-cn/next-bricks/commit/44a7090ae71aefeb603a66693a46be1246973aba))
-
-
-
-
+- reflect getRuntime::version ([44a7090](https://github.com/easyops-cn/next-bricks/commit/44a7090ae71aefeb603a66693a46be1246973aba))
 
 ## [0.3.35](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.34...@next-bricks/v2-adapter@0.3.35) (2023-12-27)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
 
-
-
-
-
 ## [0.3.34](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.33...@next-bricks/v2-adapter@0.3.34) (2023-12-26)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
-
-
-
-
 
 ## [0.3.33](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.32...@next-bricks/v2-adapter@0.3.33) (2023-12-25)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
 
-
-
-
-
 ## [0.3.32](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.31...@next-bricks/v2-adapter@0.3.32) (2023-12-22)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
-
-
-
-
 
 ## [0.3.31](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.30...@next-bricks/v2-adapter@0.3.31) (2023-12-22)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
 
-
-
-
-
 ## [0.3.30](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.29...@next-bricks/v2-adapter@0.3.30) (2023-12-19)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
-
-
-
-
 
 ## [0.3.29](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.28...@next-bricks/v2-adapter@0.3.29) (2023-12-18)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
 
-
-
-
-
 ## [0.3.28](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.27...@next-bricks/v2-adapter@0.3.28) (2023-12-15)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
-
-
-
-
 
 ## [0.3.27](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.26...@next-bricks/v2-adapter@0.3.27) (2023-12-12)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
 
-
-
-
-
 ## [0.3.26](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.25...@next-bricks/v2-adapter@0.3.26) (2023-12-11)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
-
-
-
-
 
 ## [0.3.25](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.24...@next-bricks/v2-adapter@0.3.25) (2023-12-08)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
 
-
-
-
-
 ## [0.3.24](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.23...@next-bricks/v2-adapter@0.3.24) (2023-12-07)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
-
-
-
-
 
 ## [0.3.23](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.22...@next-bricks/v2-adapter@0.3.23) (2023-12-06)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
 
-
-
-
-
 ## [0.3.22](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.21...@next-bricks/v2-adapter@0.3.22) (2023-12-05)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
-
-
-
-
 
 ## [0.3.21](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.20...@next-bricks/v2-adapter@0.3.21) (2023-11-30)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
 
-
-
-
-
 ## [0.3.20](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.19...@next-bricks/v2-adapter@0.3.20) (2023-11-30)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
-
-
-
-
 
 ## [0.3.19](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.18...@next-bricks/v2-adapter@0.3.19) (2023-11-29)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
 
-
-
-
-
 ## [0.3.18](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.17...@next-bricks/v2-adapter@0.3.18) (2023-11-23)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
-
-
-
-
 
 ## [0.3.17](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.16...@next-bricks/v2-adapter@0.3.17) (2023-11-17)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
 
-
-
-
-
 ## [0.3.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.15...@next-bricks/v2-adapter@0.3.16) (2023-11-17)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
-
-
-
-
 
 ## [0.3.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.14...@next-bricks/v2-adapter@0.3.15) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
 
-
-
-
-
 ## [0.3.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.13...@next-bricks/v2-adapter@0.3.14) (2023-11-15)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
-
-
-
-
 
 ## [0.3.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.12...@next-bricks/v2-adapter@0.3.13) (2023-11-13)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
 
-
-
-
-
 ## [0.3.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.11...@next-bricks/v2-adapter@0.3.12) (2023-11-09)
-
 
 ### Bug Fixes
 
-* ignore stale useBrick render ([c2eeea6](https://github.com/easyops-cn/next-bricks/commit/c2eeea6aff69e8669394460091ee20f51fb0bcde))
-
-
-
-
+- ignore stale useBrick render ([c2eeea6](https://github.com/easyops-cn/next-bricks/commit/c2eeea6aff69e8669394460091ee20f51fb0bcde))
 
 ## [0.3.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.10...@next-bricks/v2-adapter@0.3.11) (2023-11-08)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
 
-
-
-
-
 ## [0.3.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.9...@next-bricks/v2-adapter@0.3.10) (2023-11-07)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
-
-
-
-
 
 ## [0.3.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.8...@next-bricks/v2-adapter@0.3.9) (2023-11-06)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
 
-
-
-
-
 ## [0.3.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.7...@next-bricks/v2-adapter@0.3.8) (2023-11-03)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
-
-
-
-
 
 ## [0.3.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.6...@next-bricks/v2-adapter@0.3.7) (2023-11-02)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
 
-
-
-
-
 ## [0.3.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.5...@next-bricks/v2-adapter@0.3.6) (2023-11-01)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
-
-
-
-
 
 ## [0.3.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@0.3.4...@next-bricks/v2-adapter@0.3.5) (2023-11-01)
 
