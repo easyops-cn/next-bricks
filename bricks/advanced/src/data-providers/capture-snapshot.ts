@@ -5,6 +5,7 @@ import {
   downloadImage,
   getCanvasBlob,
   uploadFile,
+  buildImageUrl,
 } from "./snapshot.js";
 export type SnapshotOptions = {
   /** 文件名称 */
@@ -21,7 +22,9 @@ export type SnapshotOptions = {
  *
  * @param options 选项
  */
-export async function captureSnapshot(options: SnapshotOptions): Promise<void> {
+export async function captureSnapshot(
+  options: SnapshotOptions
+): Promise<void | string> {
   const { name, fileType, bucketName, selector } = options;
   switch (fileType) {
     case "image":
@@ -30,7 +33,8 @@ export async function captureSnapshot(options: SnapshotOptions): Promise<void> {
         if (bucketName) {
           const blob = await getCanvasBlob(canvas);
           const files = new File([blob], `${name}.png`, { type: blob.type });
-          await uploadFile(files, bucketName);
+          const result = await uploadFile(files, bucketName);
+          return buildImageUrl(bucketName, result.data.objectName);
         } else {
           await downloadImage(canvas, name);
         }

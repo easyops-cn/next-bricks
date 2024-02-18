@@ -6,24 +6,14 @@ import { getBasePath } from "@next-core/runtime";
 export type UploadStatus = "uploading" | "done" | "error";
 
 export function capture(selector?: string): Promise<HTMLCanvasElement> {
-  const target = selector
+  const target: HTMLElement | null = selector
     ? document.querySelector(`${selector}`)
     : document.body;
   if (!target) {
     throw new Error(`target not found: ${selector}`);
   }
-
   return new Promise(function (resolve, reject) {
-    html2canvas(document.body, {
-      logging: false,
-      scale: window.devicePixelRatio < 3 ? window.devicePixelRatio : 2,
-      width: target ? target.clientWidth : window.innerWidth,
-      height: target ? target.clientHeight : window.innerHeight,
-      foreignObjectRendering: true,
-      allowTaint: true,
-      useCORS: true,
-      removeContainer: false,
-    })
+    html2canvas(target)
       .then(function (canvas: HTMLCanvasElement) {
         resolve(canvas);
       })
@@ -86,4 +76,7 @@ export function uploadFile(
     method: "PUT",
     body: formData,
   });
+}
+export function buildImageUrl(bucketName: string, objectName: string) {
+  return `${getBasePath()}api/gateway/logic.object_store_service/api/v1/objectStore/bucket/${bucketName}/object/${objectName}`;
 }

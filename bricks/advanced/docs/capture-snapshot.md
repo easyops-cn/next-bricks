@@ -47,7 +47,7 @@
           - fileType: image
             name: upload
             bucketName: examples
-            id: uploadImage
+            selector: "#uploadImage"
         callback:
           success:
             - action: console.log
