@@ -1,6 +1,6 @@
 import { uniqueId } from "lodash";
 
-let parseWorker: Worker;
+let parseWorker;
 
 function init() {
   if (!parseWorker) {
@@ -9,9 +9,9 @@ function init() {
 }
 
 export class VSWorkers {
-  static #instance: Record<string, VSWorkers> = {};
+  static #instance = {};
 
-  static getInstance(id: string): VSWorkers {
+  static getInstance(id) {
     if (!this.#instance[id]) {
       init();
       this.#instance[id] = new VSWorkers(id);
@@ -19,27 +19,27 @@ export class VSWorkers {
     return this.#instance[id];
   }
 
-  #id: string;
-  #worker: Worker;
+  #id;
+  #worker;
 
-  #listenerCache = new Map<string, any>();
+  #listenerCache = new Map();
 
-  constructor(id: string) {
+  constructor(id) {
     this.#worker = parseWorker;
     this.#id = id;
   }
 
-  postMessage(message: any) {
+  postMessage(message) {
     this.#worker.postMessage({
       ...message,
       id: this.#id,
     });
   }
 
-  addEventListener(name: string, listener: any) {
+  addEventListener(name, listener) {
     const uid = uniqueId();
     this.#worker.addEventListener(name, (...args) => {
-      const { id } = (args[0] as MessageEvent).data;
+      const { id } = (args[0]).data;
       if (id === this.#id) listener(...args);
     });
     this.#listenerCache.set(uid, {
@@ -49,7 +49,7 @@ export class VSWorkers {
     return uid;
   }
 
-  removeEventListener(uid: string) {
+  removeEventListener(uid) {
     const listener = this.#listenerCache.get(uid);
     if (listener) {
       this.#worker.removeEventListener(listener.name, listener.fn);

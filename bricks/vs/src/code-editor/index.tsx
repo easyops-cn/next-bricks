@@ -28,7 +28,9 @@ import {
 import { brickNextYAMLProviderCompletionItems } from "./utils/brickNextYaml.js";
 import "./index.css";
 import { Level } from "./utils/constants.js";
-import { VSWorkers } from "./workers/index.js";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { VSWorkers } from "./workers/index.mjs";
 import { setEditorId } from "./utils/editorId.js";
 
 registerJavaScript(monaco);
@@ -64,8 +66,8 @@ export interface CodeEditorProps {
 
 export interface Marker {
   token: string;
-  level: keyof typeof Level;
-  message: string;
+  level?: keyof typeof Level;
+  message?: string;
   code?: {
     value: string;
     target: string;
@@ -495,6 +497,7 @@ export function CodeEditorComponent({
       },
       overviewRulerBorder: false,
       mouseWheelScrollSensitivity: 0.5,
+      fixedOverflowWidgets: true,
       suggest: {
         insertMode: "insert",
         preview: true,
