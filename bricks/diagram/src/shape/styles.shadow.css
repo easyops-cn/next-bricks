@@ -1,0 +1,23 @@
+:host {
+  display: block;
+  cursor: default;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+:host([dragging]) {
+  opacity: 0.75;
+  position: fixed;
+}
+
+div {
+  border: 1px solid var(--palette-gray-5);
+  background: var(--palette-gray-3);
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

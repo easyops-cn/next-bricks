@@ -1,0 +1,9 @@
+:host {
+  display: block;
+  background: var(--palette-gray-2);
+  position: relative;
+}
+
+:host([hidden]) {
+  display: none;
+}

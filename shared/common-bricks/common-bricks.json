@@ -181,5 +181,5 @@
     "eo-directory-tree-leaf",
     "eo-directory-tree-internal-node"
   ],
-  "diagram": ["eo-diagram"]
+  "diagram": ["eo-diagram", "eo-draw-canvas", "eo-shape"]
 }
