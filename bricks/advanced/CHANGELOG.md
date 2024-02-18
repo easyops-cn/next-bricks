@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.24.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.24.1...@next-bricks/advanced@0.24.2) (2024-02-18)
+
+
+### Bug Fixes
+
+* capture-snapshot 无法捕获到指定元素的截图 ([d0083b0](https://github.com/easyops-cn/next-bricks/commit/d0083b0555261f9a43324da57dade3e412ea64b2))
+
+
+
+
+
 ## [0.24.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.24.0...@next-bricks/advanced@0.24.1) (2024-02-07)
 
 **Note:** Version bump only for package @next-bricks/advanced
