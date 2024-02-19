@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.0.6...@next-bricks/data-view@1.0.7) (2024-02-19)
+
+
+### Bug Fixes
+
+* use new brick names ([2a7ac9d](https://github.com/easyops-cn/next-bricks/commit/2a7ac9d454a06bfd51cc12a4a9cdf219d1d97f2f))
+
+
+
+
+
 ## [1.0.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.0.5...@next-bricks/data-view@1.0.6) (2024-02-07)
 
 **Note:** Version bump only for package @next-bricks/data-view

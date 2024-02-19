@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.0.10...@next-bricks/containers@1.1.0) (2024-02-19)
+
+
+### Bug Fixes
+
+* use new brick names ([2a7ac9d](https://github.com/easyops-cn/next-bricks/commit/2a7ac9d454a06bfd51cc12a4a9cdf219d1d97f2f))
+
+
+### Features
+
+* **eo-tab:** add content-style property ([3c0cb1e](https://github.com/easyops-cn/next-bricks/commit/3c0cb1eee0f40b663833558b1d5623ff11127951))
+
+
+
+
+
 ## [1.0.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.0.9...@next-bricks/containers@1.0.10) (2024-02-08)
 
 ### Features

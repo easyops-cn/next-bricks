@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.8.3...@next-bricks/nav@1.8.4) (2024-02-19)
+
+
+### Bug Fixes
+
+* use new brick names ([2a7ac9d](https://github.com/easyops-cn/next-bricks/commit/2a7ac9d454a06bfd51cc12a4a9cdf219d1d97f2f))
+
+
+
+
+
 ## [1.8.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.8.2...@next-bricks/nav@1.8.3) (2024-02-07)
 
 **Note:** Version bump only for package @next-bricks/nav

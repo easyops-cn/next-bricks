@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.24.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.24.2...@next-bricks/advanced@0.24.3) (2024-02-19)
+
+
+### Bug Fixes
+
+* use new brick names ([2a7ac9d](https://github.com/easyops-cn/next-bricks/commit/2a7ac9d454a06bfd51cc12a4a9cdf219d1d97f2f))
+
+
+
+
+
 ## [0.24.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.24.1...@next-bricks/advanced@0.24.2) (2024-02-18)
 
 
