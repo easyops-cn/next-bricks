@@ -5,6 +5,26 @@
 ### Basic
 
 ```yaml preview minHeight="600px"
+brick: eo-draw-canvas
+properties:
+  cells:
+  - tag: shape
+    shape: rectangle
+    x: 10
+    y: 20
+    width: 180
+    height: 120
+  - tag: shape
+    shape: rectangle
+    x: 240
+    y: 20
+    width: 180
+    height: 120
+```
+
+### Legacy
+
+```yaml preview minHeight="600px"
 brick: div
 properties:
   style:
