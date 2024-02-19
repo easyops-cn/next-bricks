@@ -6,7 +6,7 @@ import { CodeEditor } from "./index.js";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api.js";
 
 jest.mock("@next-core/theme", () => ({}));
-jest.mock("./workers/index.js", () => ({
+jest.mock("./workers/index.mjs", () => ({
   VSWorkers: {
     getInstance: () => ({
       addEventListener: () => ({}),
