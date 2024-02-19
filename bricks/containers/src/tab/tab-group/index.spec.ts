@@ -9,12 +9,12 @@ import type { TabItem } from "../tab-item/index.jsx";
 jest.mock("@next-core/theme", () => ({}));
 
 // todo: update unit test
-describe("containers.tab-list", () => {
+describe("eo-tab-list", () => {
   test("basic usage", async () => {
     const onTabSelect = jest.fn();
-    const element = document.createElement("containers.tab-group") as TabGroup;
-    const item1 = document.createElement("containers.tab-item") as TabItem;
-    const item2 = document.createElement("containers.tab-item") as TabItem;
+    const element = document.createElement("eo-tab-group") as TabGroup;
+    const item1 = document.createElement("eo-tab-item") as TabItem;
+    const item2 = document.createElement("eo-tab-item") as TabItem;
     item1.slot = "nav";
     item2.slot = "nav";
     item1.panel = "a";

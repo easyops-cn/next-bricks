@@ -28,15 +28,15 @@ beforeEach(() => {
   jest.clearAllMocks();
 });
 
-describe("basic.general-button", () => {
+describe("eo-button", () => {
   test("basic usage", async () => {
-    const element1 = document.createElement("basic.general-link") as Link;
-    const element2 = document.createElement("basic.general-link") as Link;
-    const element3 = document.createElement("basic.general-link") as Link;
-    const element4 = document.createElement("basic.general-link") as Link;
-    const element5 = document.createElement("basic.general-link") as Link;
-    const element6 = document.createElement("basic.general-link") as Link;
-    const element7 = document.createElement("basic.general-link") as Link;
+    const element1 = document.createElement("eo-link") as Link;
+    const element2 = document.createElement("eo-link") as Link;
+    const element3 = document.createElement("eo-link") as Link;
+    const element4 = document.createElement("eo-link") as Link;
+    const element5 = document.createElement("eo-link") as Link;
+    const element6 = document.createElement("eo-link") as Link;
+    const element7 = document.createElement("eo-link") as Link;
     element1.href = "http://www.xx.com";
     element1.textContent = "hello world";
     element1.target = "_blank";

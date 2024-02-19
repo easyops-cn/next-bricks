@@ -15,9 +15,7 @@ import variablesStyleText from "../data-view-variables.shadow.css";
 import styleText from "./tabs-drawer.shadow.css";
 import classNames from "classnames";
 const { defineElement, property, event, method } = createDecorators();
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 export interface TabItem {
   /** 菜单标题对应的图标。 */
   icon: GeneralIconProps;

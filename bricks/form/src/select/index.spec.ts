@@ -13,11 +13,11 @@ customElements.define(
   }
 );
 
-describe("form.general-select", () => {
+describe("eo-select", () => {
   const consoleError = jest.spyOn(console, "error").mockReturnValue();
 
   test("basic usage", async () => {
-    const element = document.createElement("form.general-select") as Select;
+    const element = document.createElement("eo-select") as Select;
     element.options = [
       {
         label: "a",
@@ -165,7 +165,7 @@ describe("form.general-select", () => {
   });
 
   test("mode is multiple", () => {
-    const element = document.createElement("form.general-select") as Select;
+    const element = document.createElement("eo-select") as Select;
     element.options = [
       {
         label: "a",
@@ -247,7 +247,7 @@ describe("form.general-select", () => {
   });
 
   test("group", () => {
-    const element = document.createElement("form.general-select") as Select;
+    const element = document.createElement("eo-select") as Select;
     element.options = [
       {
         label: "a",
@@ -284,7 +284,7 @@ describe("form.general-select", () => {
   });
 
   test("fields", () => {
-    const element = document.createElement("form.general-select") as Select;
+    const element = document.createElement("eo-select") as Select;
     element.options = [
       {
         name: "a",

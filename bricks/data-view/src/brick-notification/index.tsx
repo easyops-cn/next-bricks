@@ -9,9 +9,7 @@ import type {
 } from "@next-bricks/icons/general-icon";
 
 const { defineElement, property } = createDecorators();
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 /**
  * 大屏提示构件

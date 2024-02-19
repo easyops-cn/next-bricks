@@ -14,9 +14,9 @@ import type { AntdIcon } from "./index.js";
   })
 );
 
-describe("icons.antd-icon", () => {
+describe("eo-antd-icon", () => {
   test("basic usage", async () => {
-    const element = document.createElement("icons.antd-icon") as AntdIcon;
+    const element = document.createElement("eo-antd-icon") as AntdIcon;
     element.icon = "branches";
 
     expect(element.shadowRoot).toBeFalsy();
@@ -57,7 +57,7 @@ describe("icons.antd-icon", () => {
   });
 
   test("gradient", async () => {
-    const element = document.createElement("icons.antd-icon") as AntdIcon;
+    const element = document.createElement("eo-antd-icon") as AntdIcon;
     element.theme = "twotone";
     element.icon = "api";
     element.startColor = "#000000";
@@ -180,7 +180,7 @@ describe("icons.antd-icon", () => {
   });
 
   test("no icon", async () => {
-    const element = document.createElement("icons.antd-icon") as AntdIcon;
+    const element = document.createElement("eo-antd-icon") as AntdIcon;
 
     document.body.appendChild(element);
     await (global as any).flushPromises();
@@ -196,7 +196,7 @@ describe("icons.antd-icon", () => {
   });
 
   test("fix theme", async () => {
-    const element = document.createElement("icons.antd-icon") as AntdIcon;
+    const element = document.createElement("eo-antd-icon") as AntdIcon;
     element.icon = "branches";
     element.theme = "twoTone";
 

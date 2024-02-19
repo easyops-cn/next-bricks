@@ -3,11 +3,9 @@ import { act } from "react-dom/test-utils";
 import "./index.js";
 import { EasyViewElement } from "./index.js";
 
-describe("containers.grid-layout", () => {
+describe("eo-grid-layout", () => {
   test("should work with gridAreas", () => {
-    const element = document.createElement(
-      "containers.easy-view"
-    ) as EasyViewElement;
+    const element = document.createElement("eo-easy-view") as EasyViewElement;
 
     element.gridAreas = {
       a: [1, 1, 2, 13],
@@ -39,9 +37,7 @@ describe("containers.grid-layout", () => {
   });
 
   test("should work with gridTemplateAreas", () => {
-    const element = document.createElement(
-      "containers.easy-view"
-    ) as EasyViewElement;
+    const element = document.createElement("eo-easy-view") as EasyViewElement;
 
     element.gridTemplateAreas = [
       ["a", "a", "a"],
@@ -74,9 +70,7 @@ describe("containers.grid-layout", () => {
   });
 
   test("should work with gridAreas", () => {
-    const element = document.createElement(
-      "containers.easy-view"
-    ) as EasyViewElement;
+    const element = document.createElement("eo-easy-view") as EasyViewElement;
 
     expect(element.shadowRoot).toBeFalsy();
 

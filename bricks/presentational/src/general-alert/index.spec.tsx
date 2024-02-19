@@ -15,11 +15,9 @@ jest.mock("@next-core/runtime", () => ({
   }),
 }));
 
-describe("presentational.general-alert", () => {
+describe("eo-alert", () => {
   test("basic usage", async () => {
-    const element = document.createElement(
-      "presentational.general-alert"
-    ) as GeneralAlert;
+    const element = document.createElement("eo-alert") as GeneralAlert;
     element.textContent = "content";
     element.type = AlertType.INFO;
     element.closable = true;
@@ -45,9 +43,7 @@ describe("presentational.general-alert", () => {
   });
 
   test("not show when the value of localStorageKey is true", async () => {
-    const element = document.createElement(
-      "presentational.general-alert"
-    ) as GeneralAlert;
+    const element = document.createElement("eo-alert") as GeneralAlert;
     element.textContent = "content";
     element.type = AlertType.INFO;
     element.disableUrlNamespace = true;
@@ -73,9 +69,7 @@ describe("presentational.general-alert", () => {
   });
 
   test("has title", async () => {
-    const element = document.createElement(
-      "presentational.general-alert"
-    ) as GeneralAlert;
+    const element = document.createElement("eo-alert") as GeneralAlert;
     element.textContent = "content";
     element.type = AlertType.INFO;
     element.hasTitle = true;

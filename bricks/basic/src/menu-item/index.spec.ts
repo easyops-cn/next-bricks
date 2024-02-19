@@ -5,11 +5,9 @@ import { MenuItem } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
-describe("basic.general-menu", () => {
+describe("eo-menu", () => {
   test("basic usage", async () => {
-    const element = document.createElement(
-      "basic.general-menu-item"
-    ) as MenuItem;
+    const element = document.createElement("eo-menu-item") as MenuItem;
     element.textContent = "Menu Item";
     element.icon = {
       lib: "antd",
@@ -47,9 +45,7 @@ describe("basic.general-menu", () => {
   });
 
   test("disabled and click event not emit", () => {
-    const element = document.createElement(
-      "basic.general-menu-item"
-    ) as MenuItem;
+    const element = document.createElement("eo-menu-item") as MenuItem;
     element.textContent = "Menu Item";
     element.disabled = true;
     expect(element.shadowRoot).toBeFalsy();

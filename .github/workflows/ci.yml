@@ -85,15 +85,20 @@ jobs:
         npm-token: ${{ secrets.NPM_TOKEN }}
       if: github.event_name == 'push'
 
-    - name: Compress artifacts
-      run: |
-        shopt -s globstar
-        tar --exclude='*.map' --exclude='bricks/v2-adapter' --exclude='bricks/ui-test' --exclude='bricks/vb-experiment' --exclude='bricks/form-renderer' -cvf bricks.tar bricks/*/dist bricks/*/docs bricks/*/src/**/example.yaml bricks/*/src/**/example.html netlify.toml
-
     - uses: actions/upload-artifact@v4
       with:
         name: brick-artifacts
-        path: bricks.tar
+        path: |
+          bricks/*/dist
+          bricks/*/docs
+          bricks/*/src/**/example.yaml
+          bricks/*/src/**/example.html
+          netlify.toml
+          !*.map
+          !bricks/v2-adapter
+          !bricks/ui-test
+          !bricks/vb-experiment
+          !bricks/form-renderer
         retention-days: 1
 
   build_docs:
@@ -116,10 +121,6 @@ jobs:
       with:
         name: brick-artifacts
         path: ci-bricks
-
-    - name: Extract artifacts
-      run: tar -xvf bricks.tar
-      working-directory: ci-bricks
 
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path

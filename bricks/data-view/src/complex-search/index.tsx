@@ -16,9 +16,7 @@ import { K, NS, locales } from "./i18n.js";
 import empty from "../asset/images/empty.png";
 const { defineElement, property, event } = createDecorators();
 initializeReactI18n(NS, locales);
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 export interface OptionItem {
   icon: GeneralIconProps;

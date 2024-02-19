@@ -5,9 +5,9 @@ import { TagList } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
-describe("basic.general-tag-list", () => {
+describe("eo-tag-list", () => {
   test("basic usage", async () => {
-    const element = document.createElement("basic.general-tag-list") as TagList;
+    const element = document.createElement("eo-tag-list") as TagList;
     element.color = "yellow";
     element.size = "large";
     element.checkable = true;

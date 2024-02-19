@@ -8,10 +8,10 @@ import type { TabList } from "./index.jsx";
 
 jest.mock("@next-core/theme", () => ({}));
 
-describe("containers.tab-list", () => {
+describe("eo-tab-list", () => {
   test("basic usage", async () => {
     const onTabSelect = jest.fn();
-    const element = document.createElement("containers.tab-list") as TabList;
+    const element = document.createElement("eo-tab-list") as TabList;
     element.tabs = [
       "新增",
       {

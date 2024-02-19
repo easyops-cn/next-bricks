@@ -12,9 +12,9 @@ customElements.define(
   }
 );
 
-describe("containers.general-modal", () => {
+describe("eo-modal", () => {
   test("basic usage", async () => {
-    const element = document.createElement("containers.general-modal") as Modal;
+    const element = document.createElement("eo-modal") as Modal;
     const bodyElement = document.createElement("div");
     bodyElement.textContent = "This is a body";
     element.modalTitle = "Modal Title";
@@ -119,7 +119,7 @@ describe("containers.general-modal", () => {
   });
 
   test("closeWhenConfirm was true and click confirm button not close the modal", async () => {
-    const element = document.createElement("containers.general-modal") as Modal;
+    const element = document.createElement("eo-modal") as Modal;
     element.modalTitle = "Modal Title";
     element.closeWhenConfirm = false;
 

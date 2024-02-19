@@ -55,9 +55,9 @@ afterAll(() => {
 
 jest.useFakeTimers();
 
-describe("basic.general-popover", () => {
+describe("eo-popover", () => {
   test("trigger is click should work", async () => {
-    const element = document.createElement("basic.general-popover") as Popover;
+    const element = document.createElement("eo-popover") as Popover;
 
     const button = document.createElement("button");
     button.setAttribute("slot", "anchor");
@@ -176,7 +176,7 @@ describe("basic.general-popover", () => {
   });
 
   test("trigger is hover should work", async () => {
-    const element = document.createElement("basic.general-popover") as Popover;
+    const element = document.createElement("eo-popover") as Popover;
     const divElement = document.createElement("div");
     divElement.setAttribute("textContent", "Hello");
     const mockListener = jest.fn();
@@ -333,7 +333,7 @@ describe("basic.general-popover", () => {
   });
 
   test("disabled should work & arrowColor", async () => {
-    const element = document.createElement("basic.general-popover") as Popover;
+    const element = document.createElement("eo-popover") as Popover;
     element.active = true;
     element.disabled = true;
 
@@ -384,7 +384,7 @@ describe("basic.general-popover", () => {
   });
 
   test("update status frequently should work", async () => {
-    const element = document.createElement("basic.general-popover") as Popover;
+    const element = document.createElement("eo-popover") as Popover;
 
     const button = document.createElement("button");
     button.setAttribute("slot", "anchor");

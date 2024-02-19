@@ -37,11 +37,9 @@ customElements.define(
 );
 global.ResizeObserver = ResizeObserver as any;
 
-describe("presentational.code-display", () => {
+describe("eo-code-display", () => {
   test("basic usage", async () => {
-    const element = document.createElement(
-      "presentational.code-display"
-    ) as CodeDisplay;
+    const element = document.createElement("eo-code-display") as CodeDisplay;
     element.language = "javascript";
     element.value = "const a = 1;";
     element.showCopyButton = true;
@@ -57,58 +55,7 @@ describe("presentational.code-display", () => {
     });
     expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
 
-    expect(element.shadowRoot?.querySelector("pre")).toMatchInlineSnapshot(`
-      <pre
-        class="prism-code language-javascript line-numbers"
-        style="color: rgb(204, 204, 204); background: rgb(45, 45, 45); font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace; tab-size: 4; hyphens: none; --max-lines: 10; --min-lines: 3;"
-      >
-        <div
-          class="token-line"
-        >
-          <span
-            class="line-number"
-          >
-            1
-          </span>
-          <span>
-            <span
-              class="token keyword"
-              style="color: rgb(204, 153, 205);"
-            >
-              const
-            </span>
-            <span
-              class="token plain"
-            >
-               a 
-            </span>
-            <span
-              class="token operator"
-              style="color: rgb(103, 205, 204);"
-            >
-              =
-            </span>
-            <span
-              class="token plain"
-            >
-               
-            </span>
-            <span
-              class="token number"
-              style="color: rgb(240, 141, 73);"
-            >
-              1
-            </span>
-            <span
-              class="token punctuation"
-              style="color: rgb(204, 204, 204);"
-            >
-              ;
-            </span>
-          </span>
-        </div>
-      </pre>
-    `);
+    expect(element.shadowRoot?.querySelector("pre")).toMatchSnapshot();
     const pre = element.shadowRoot?.querySelector("pre") as HTMLPreElement;
     expect(pre.classList.contains("line-numbers")).toBeTruthy();
     expect(pre.style.getPropertyValue("--min-lines")).toBe("3");
@@ -135,9 +82,7 @@ describe("presentational.code-display", () => {
   });
 
   test("load language", async () => {
-    const element = document.createElement(
-      "presentational.code-display"
-    ) as CodeDisplay;
+    const element = document.createElement("eo-code-display") as CodeDisplay;
 
     // base set of languages
     await act(async () => {

@@ -16,7 +16,7 @@ jest.mock("@next-core/runtime", () => ({
   matchPath: () => true,
 }));
 
-describe("basic.nav-menu", () => {
+describe("eo-nav-menu", () => {
   test("basic usage", async () => {
     (window as any).ResizeObserver = jest.fn().mockImplementation(() => ({
       observe: jest.fn(),

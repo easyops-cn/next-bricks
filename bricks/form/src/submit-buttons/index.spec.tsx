@@ -3,12 +3,12 @@ import { describe, test, expect } from "@jest/globals";
 import { act } from "react-dom/test-utils";
 import "./index.jsx";
 import { SubmitButtons, ButtonsComponent } from "./index.jsx";
-import { render, fireEvent } from "@testing-library/react";
+import { render } from "@testing-library/react";
 
-describe("form.submit-buttons", () => {
+describe("eo-submit-buttons", () => {
   test("basic usage", () => {
     const element = document.createElement(
-      "form.submit-buttons"
+      "eo-submit-buttons"
     ) as SubmitButtons;
     expect(element.shadowRoot).toBeFalsy();
     act(() => {

@@ -6,9 +6,9 @@ import type { GeneralIconProps } from "@next-bricks/icons/general-icon";
 
 jest.mock("@next-core/theme", () => ({}));
 
-describe("containers.tab-item", () => {
+describe("eo-tab-item", () => {
   test("basic usage", async () => {
-    const element = document.createElement("containers.tab-item") as TabItem;
+    const element = document.createElement("eo-tab-item") as TabItem;
     const div = document.createElement("div");
     div.textContent = "Hello world";
 

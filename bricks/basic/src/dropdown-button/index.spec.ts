@@ -12,10 +12,10 @@ class EoDropdownActions extends HTMLElement {
 }
 customElements.define("eo-dropdown-actions", EoDropdownActions);
 
-describe("basic.dropdown-button", () => {
+describe("eo-dropdown-button", () => {
   test("basic usage", async () => {
     const element = document.createElement(
-      "basic.dropdown-button"
+      "eo-dropdown-button"
     ) as DropdownButton;
 
     expect(element.shadowRoot).toBeFalsy();

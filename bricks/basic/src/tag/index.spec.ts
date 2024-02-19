@@ -5,9 +5,9 @@ import { Tag } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
-describe("basic.general-tag", () => {
+describe("eo-tag", () => {
   test("basic usage", async () => {
-    const element = document.createElement("basic.general-tag") as Tag;
+    const element = document.createElement("eo-tag") as Tag;
     const div = document.createElement("div");
     div.textContent = "Hello world";
     element.color = "yellow";
@@ -61,7 +61,7 @@ describe("basic.general-tag", () => {
   });
 
   test("when disabled state and close icon should be hidden, with custom color", () => {
-    const element = document.createElement("basic.general-tag") as Tag;
+    const element = document.createElement("eo-tag") as Tag;
     const div = document.createElement("div");
     div.textContent = "Hello world";
     element.appendChild(div);
