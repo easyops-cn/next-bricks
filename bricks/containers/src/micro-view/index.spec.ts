@@ -5,11 +5,9 @@ import { MicroView } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
-describe("containers.micro-view", () => {
+describe("eo-micro-view", () => {
   test("basic usage", async () => {
-    const element = document.createElement(
-      "containers.micro-view"
-    ) as MicroView;
+    const element = document.createElement("eo-micro-view") as MicroView;
     element.pageTitle = "Hello world";
 
     expect(element.shadowRoot).toBeFalsy();

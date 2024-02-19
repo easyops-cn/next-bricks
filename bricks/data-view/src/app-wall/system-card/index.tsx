@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import { createDecorators, EventEmitter } from "@next-core/element";
 import styleText from "./system-card.shadow.css";
-import classNames from "classnames";
 import variablesStyleText from "../../data-view-variables.shadow.css";
 import type {
   GeneralIcon,
@@ -10,9 +9,7 @@ import type {
 } from "@next-bricks/icons/general-icon";
 
 const { defineElement, property, event } = createDecorators();
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 type StatusType = "normal" | "warning";
 interface DescriptionItem {
   key: string;
@@ -119,7 +116,7 @@ export function SystemCardComponent(
   props: SystemCardProps
 ): React.ReactElement {
   const {
-    status,
+    // status,
     itemList,
     cardTitle,
     buttonName,

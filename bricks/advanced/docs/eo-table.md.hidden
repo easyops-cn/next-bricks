@@ -198,7 +198,7 @@
     expandIconColumnIndex: 3
     expandedRowBrick:
       useBrick:
-        - brick: presentational.general-descriptions
+        - brick: eo-descriptions
           properties:
             list:
               - label: "协议："
@@ -443,11 +443,11 @@
 ### Frontend Search
 
 ```yaml preview
-- brick: containers.general-card
+- brick: eo-card
   slots:
     "":
       bricks:
-        - brick: form.general-input
+        - brick: eo-input
           events:
             change:
               - action: console.log

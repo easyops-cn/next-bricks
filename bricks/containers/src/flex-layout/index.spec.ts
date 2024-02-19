@@ -3,9 +3,9 @@ import { act } from "react-dom/test-utils";
 import "./index.js";
 import { FlexLayout } from "./index.js";
 
-describe("containers.flex-layout", () => {
+describe("eo-flex-layout", () => {
   test("basic usage", () => {
-    const element = document.createElement("containers.flex-layout") as FlexLayout;
+    const element = document.createElement("eo-flex-layout") as FlexLayout;
 
     expect(element.shadowRoot).toBeFalsy();
     act(() => {

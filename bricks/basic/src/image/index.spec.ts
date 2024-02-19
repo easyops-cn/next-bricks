@@ -6,10 +6,10 @@ import { Image } from "./index.jsx";
 jest.mock("@next-core/theme", () => ({}));
 
 // Todo(nlicro): fix test fail
-describe("basic.general-image", () => {
+describe("eo-image", () => {
   test("basic usage", () => {
     const onVisibleChange = jest.fn();
-    const element = document.createElement("basic.general-image") as Image;
+    const element = document.createElement("eo-image") as Image;
     element.addEventListener("visibleChange", onVisibleChange);
 
     expect(element.shadowRoot).toBeFalsy();

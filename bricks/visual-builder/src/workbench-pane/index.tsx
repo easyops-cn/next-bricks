@@ -16,9 +16,7 @@ import sharedStyle from "../shared/scrollbar.shadow.css";
 import { debounceByAnimationFrame } from "@next-shared/general/debounceByAnimationFrame";
 import classNames from "classnames";
 
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 const { defineElement, property, event } = createDecorators();
 

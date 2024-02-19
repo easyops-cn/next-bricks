@@ -13,13 +13,9 @@ import classnames from "classnames";
 import { ReactUseMultipleBricks } from "@next-core/react-runtime";
 import "./host-context.css";
 
-const WrappedGeneralCard = wrapBrick<Card, CardProps>(
-  "containers.general-card"
-);
+const WrappedGeneralCard = wrapBrick<Card, CardProps>("eo-card");
 
-const WrappedGridLayout = wrapBrick<GridLayout, GridProps>(
-  "containers.grid-layout"
-);
+const WrappedGridLayout = wrapBrick<GridLayout, GridProps>("eo-grid-layout");
 
 interface DescriptionItem {
   label: string;

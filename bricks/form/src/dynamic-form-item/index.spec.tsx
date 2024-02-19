@@ -15,21 +15,21 @@ jest.mock("@next-core/react-runtime", () => ({
   },
 }));
 
-describe("form.dynamic-form-item", () => {
+describe("eo-dynamic-form-item", () => {
   test("basic usage", async () => {
     const element = document.createElement(
-      "form.dynamic-form-item"
+      "eo-dynamic-form-item"
     ) as DynamicFormItem;
     element.useBrick = [
       {
-        brick: "form.general-input",
+        brick: "eo-input",
         properties: {
           name: "input",
           required: true,
         },
       },
       {
-        brick: "form.general-select",
+        brick: "eo-select",
         properties: {
           name: "select",
           required: true,
@@ -133,11 +133,11 @@ describe("form.dynamic-form-item", () => {
 
   test("unique width validator", async () => {
     const element = document.createElement(
-      "form.dynamic-form-item"
+      "eo-dynamic-form-item"
     ) as DynamicFormItem;
     element.useBrick = [
       {
-        brick: "form.general-input",
+        brick: "eo-input",
         properties: {
           name: "input",
           required: true,
@@ -146,7 +146,7 @@ describe("form.dynamic-form-item", () => {
         },
       },
       {
-        brick: "form.general-select",
+        brick: "eo-select",
         properties: {
           name: "select",
           required: true,
@@ -258,11 +258,11 @@ describe("form.dynamic-form-item", () => {
 
   test("hideRemoveButton、disabledRemoveButton;hideAddButton、disabledAddButton", async () => {
     const element = document.createElement(
-      "form.dynamic-form-item"
+      "eo-dynamic-form-item"
     ) as DynamicFormItem;
     element.useBrick = [
       {
-        brick: "form.general-input",
+        brick: "eo-input",
         properties: {
           name: "input",
           required: true,
@@ -271,7 +271,7 @@ describe("form.dynamic-form-item", () => {
         },
       },
       {
-        brick: "form.general-select",
+        brick: "eo-select",
         properties: {
           name: "select",
           required: true,

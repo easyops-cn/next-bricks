@@ -5,9 +5,9 @@ import { Input } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
-describe("form.general-input", () => {
+describe("eo-input", () => {
   it("value is correct", async () => {
-    const element = document.createElement("form.general-input") as Input;
+    const element = document.createElement("eo-input") as Input;
     element.value = "abc";
 
     act(() => {
@@ -32,7 +32,7 @@ describe("form.general-input", () => {
   });
 
   test("should trigger event correctly", async () => {
-    const element = document.createElement("form.general-input") as Input;
+    const element = document.createElement("eo-input") as Input;
 
     const mockChangeEvent = jest.fn();
     const mockFocusEvent = jest.fn();
@@ -109,7 +109,7 @@ describe("form.general-input", () => {
   });
 
   it("should show clear icon correctly", async () => {
-    const element = document.createElement("form.general-input") as Input;
+    const element = document.createElement("eo-input") as Input;
     element.value = "abc";
 
     act(() => {

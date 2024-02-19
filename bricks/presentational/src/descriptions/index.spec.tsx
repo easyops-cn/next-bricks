@@ -12,11 +12,9 @@ jest.mock("@next-core/react-runtime", () => ({
   },
 }));
 
-describe("presentational.general-descriptions", () => {
+describe("eo-descriptions", () => {
   test("basic usage", async () => {
-    const element = document.createElement(
-      "presentational.general-descriptions"
-    ) as Descriptions;
+    const element = document.createElement("eo-descriptions") as Descriptions;
 
     element.descriptionTitle = "hello world";
     element.list = [
@@ -40,7 +38,7 @@ describe("presentational.general-descriptions", () => {
       {
         label: "标签",
         useBrick: {
-          brick: "basic.general-tag-list",
+          brick: "eo-tag-list",
           properties: {
             list: [
               {

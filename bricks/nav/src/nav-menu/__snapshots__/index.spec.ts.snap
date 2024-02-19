@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`basic.nav-menu basic usage 1`] = `
+exports[`eo-nav-menu basic usage 1`] = `
 "<style>SiteMapItem.shadow.css
 ItemTag.shadow.css
 GroupItem.shadow.css

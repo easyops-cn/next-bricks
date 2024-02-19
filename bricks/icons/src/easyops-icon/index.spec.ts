@@ -24,9 +24,9 @@ import type { EasyOpsIcon } from "./index.js";
   })
 );
 
-describe("icons.easyops-icon", () => {
+describe("eo-easyops-icon", () => {
   test("basic usage", async () => {
-    const element = document.createElement("icons.easyops-icon") as EasyOpsIcon;
+    const element = document.createElement("eo-easyops-icon") as EasyOpsIcon;
     element.icon = "account";
 
     expect(element.shadowRoot).toBeFalsy();
@@ -89,7 +89,7 @@ NodeList [
   });
 
   test("colored icon", async () => {
-    const element = document.createElement("icons.easyops-icon") as EasyOpsIcon;
+    const element = document.createElement("eo-easyops-icon") as EasyOpsIcon;
     element.category = "colored-presudo-3d";
     element.icon = "app";
 
@@ -145,7 +145,7 @@ NodeList [
   });
 
   test("no icon", async () => {
-    const element = document.createElement("icons.easyops-icon") as EasyOpsIcon;
+    const element = document.createElement("eo-easyops-icon") as EasyOpsIcon;
 
     document.body.appendChild(element);
     await (global as any).flushPromises();

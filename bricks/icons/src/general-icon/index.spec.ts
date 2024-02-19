@@ -33,9 +33,9 @@ jest.mock("../svg-icon/index.js", () => ({
   },
 }));
 
-describe("icons.general-icon", () => {
+describe("eo-icon", () => {
   test("basic usage", async () => {
-    const element = document.createElement("icons.general-icon") as GeneralIcon;
+    const element = document.createElement("eo-icon") as GeneralIcon;
     element.lib = "antd";
     element.icon = "branches";
 

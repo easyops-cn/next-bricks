@@ -5,11 +5,9 @@ import { GeneralSwitch } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
-describe("form.general-switch", () => {
+describe("eo-switch", () => {
   test("basic usage", async () => {
-    const element = document.createElement(
-      "form.general-switch"
-    ) as GeneralSwitch;
+    const element = document.createElement("eo-switch") as GeneralSwitch;
     element.value = false;
     element.label = "switch";
     element.disabled = false;

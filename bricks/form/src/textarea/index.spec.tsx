@@ -6,9 +6,9 @@ import { fireEvent } from "@testing-library/react";
 
 jest.mock("@next-core/theme", () => ({}));
 
-describe("form.general-textarea", () => {
+describe("eo-textarea", () => {
   test("basic usage", async () => {
-    const element = document.createElement("form.general-textarea") as Textarea;
+    const element = document.createElement("eo-textarea") as Textarea;
 
     const mockChangeEvent = jest.fn();
     const mockFocusEvent = jest.fn();
@@ -62,7 +62,7 @@ describe("form.general-textarea", () => {
       configurable: true,
       value: 30,
     });
-    const element = document.createElement("form.general-textarea") as Textarea;
+    const element = document.createElement("eo-textarea") as Textarea;
 
     element.autoSize = {
       minRows: 2,

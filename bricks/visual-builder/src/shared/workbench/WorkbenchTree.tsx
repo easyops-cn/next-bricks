@@ -34,9 +34,9 @@ import type {
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
 
-export const WrappedLink = wrapBrick<Link, LinkProps>("basic.general-link");
+export const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 export const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
+  "eo-icon"
 );
 
 const treeLevelPadding = 10;

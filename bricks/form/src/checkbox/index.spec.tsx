@@ -5,7 +5,7 @@ import { Checkbox } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
-describe("form.general-button", () => {
+describe("eo-button", () => {
   test("basic usage", async () => {
     const element = document.createElement("eo-checkbox") as Checkbox;
     element.options = [

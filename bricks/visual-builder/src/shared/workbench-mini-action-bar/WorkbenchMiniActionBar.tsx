@@ -9,7 +9,7 @@ import type {
 } from "@next-bricks/icons/general-icon";
 
 export const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
+  "eo-icon"
 );
 
 export interface WorkbenchSubActionBarProps {

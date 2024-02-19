@@ -6,11 +6,9 @@ import { Category } from "./index.jsx";
 jest.mock("@next-core/theme", () => ({}));
 
 // todo: update unit test
-describe("containers.general-category", () => {
+describe("eo-category", () => {
   test("basic usage", async () => {
-    const element = document.createElement(
-      "containers.general-category"
-    ) as Category;
+    const element = document.createElement("eo-category") as Category;
     element.categories = [
       {
         title: "item1",

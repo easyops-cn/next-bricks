@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`eo-code-display basic usage 1`] = `
+<pre
+  class="prism-code language-javascript line-numbers"
+  style="color: rgb(204, 204, 204); background: rgb(45, 45, 45); font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace; tab-size: 4; hyphens: none; --max-lines: 10; --min-lines: 3;"
+>
+  <div
+    class="token-line"
+  >
+    <span
+      class="line-number"
+    >
+      1
+    </span>
+    <span>
+      <span
+        class="token keyword"
+        style="color: rgb(204, 153, 205);"
+      >
+        const
+      </span>
+      <span
+        class="token plain"
+      >
+         a 
+      </span>
+      <span
+        class="token operator"
+        style="color: rgb(103, 205, 204);"
+      >
+        =
+      </span>
+      <span
+        class="token plain"
+      >
+         
+      </span>
+      <span
+        class="token number"
+        style="color: rgb(240, 141, 73);"
+      >
+        1
+      </span>
+      <span
+        class="token punctuation"
+        style="color: rgb(204, 204, 204);"
+      >
+        ;
+      </span>
+    </span>
+  </div>
+</pre>
+`;

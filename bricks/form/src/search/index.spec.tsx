@@ -7,15 +7,13 @@ import { GeneralSearch } from "./index.jsx";
 jest.mock("@next-core/theme", () => ({}));
 jest.useFakeTimers();
 
-describe("form.general-search", () => {
+describe("eo-search", () => {
   test("basic usage", async () => {
     const onSearch = jest.fn();
     const onBlur = jest.fn();
     const onChange = jest.fn();
 
-    const element = document.createElement(
-      "form.general-search"
-    ) as GeneralSearch;
+    const element = document.createElement("eo-search") as GeneralSearch;
     element.value = "basic";
     element.clearable = true;
     element.autoFocus = true;
@@ -78,9 +76,7 @@ describe("form.general-search", () => {
     const onChange = jest.fn();
     const onSearch = jest.fn();
 
-    const element = document.createElement(
-      "form.general-search"
-    ) as GeneralSearch;
+    const element = document.createElement("eo-search") as GeneralSearch;
     element.trim = true;
     element.debounceTime = 1000;
     element.addEventListener("change", onChange);

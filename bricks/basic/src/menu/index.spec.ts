@@ -5,9 +5,9 @@ import { Menu } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
-describe("basic.general-menu", () => {
+describe("eo-menu", () => {
   test("basic usage", async () => {
-    const element = document.createElement("basic.general-menu") as Menu;
+    const element = document.createElement("eo-menu") as Menu;
 
     expect(element.shadowRoot).toBeFalsy();
     act(() => {

@@ -52,7 +52,7 @@ describe("FaIcon", () => {
   });
 
   it("renders the icon with the correct prefix and icon name", async () => {
-    const icon = document.createElement("icons.fa-icon") as FaIcon;
+    const icon = document.createElement("eo-fa-icon") as FaIcon;
     // expect(icon.constructor).toBe(FaIconClass);
     icon.prefix = "fas";
     icon.icon = "trash-can";
@@ -88,7 +88,7 @@ describe("FaIcon", () => {
   });
 
   it("renders the icon with the unset prefix and an alias icon", async () => {
-    const icon = document.createElement("icons.fa-icon") as FaIcon;
+    const icon = document.createElement("eo-fa-icon") as FaIcon;
     icon.icon = "will-ignore";
     act(() => {
       document.body.appendChild(icon);
@@ -127,7 +127,7 @@ describe("FaIcon", () => {
   });
 
   it("renders nothing when the icon is falsy", async () => {
-    const icon = document.createElement("icons.fa-icon") as FaIcon;
+    const icon = document.createElement("eo-fa-icon") as FaIcon;
     icon.prefix = "fas";
     act(() => {
       document.body.appendChild(icon);
@@ -151,7 +151,7 @@ describe("FaIcon", () => {
   });
 
   it("renders an error message when the fetch fails", async () => {
-    const icon = document.createElement("icons.fa-icon") as FaIcon;
+    const icon = document.createElement("eo-fa-icon") as FaIcon;
     icon.prefix = "fas";
     icon.icon = "oops";
     act(() => {

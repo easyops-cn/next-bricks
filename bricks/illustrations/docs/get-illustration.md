@@ -3,7 +3,7 @@
 ## Examples
 
 ```yaml preview
-brick: basic.general-button
+brick: eo-button
 properties:
   textContent: View illustration
 events:

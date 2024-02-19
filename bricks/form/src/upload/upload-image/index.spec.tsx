@@ -43,9 +43,9 @@ jest.useFakeTimers();
 
 jest.mock("@next-core/theme", () => ({}));
 
-describe("form.upload-image", () => {
+describe("eo-upload-image", () => {
   test("basic usage", async () => {
-    const element = document.createElement("form.upload-image") as UploadImage;
+    const element = document.createElement("eo-upload-image") as UploadImage;
     const files = [
       new File([""], "success1.png", { type: "image/png" }),
       new File([""], "filtered.mp4", { type: "video/mp4" }),
@@ -109,7 +109,7 @@ describe("form.upload-image", () => {
   });
 
   test("max count", async () => {
-    const element = document.createElement("form.upload-image") as UploadImage;
+    const element = document.createElement("eo-upload-image") as UploadImage;
     element.maxCount = 1;
     const files1 = [new File([""], "success1.png", { type: "image/png" })];
     const files2 = [new File([""], "success2.png", { type: "image/png" })];

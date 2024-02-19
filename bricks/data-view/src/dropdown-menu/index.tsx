@@ -11,9 +11,7 @@ import type {
 import classNames from "classnames";
 import { keyBy } from "lodash";
 
-const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>(
-  "icons.general-icon"
-);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 const { defineElement, property, event } = createDecorators();
 
