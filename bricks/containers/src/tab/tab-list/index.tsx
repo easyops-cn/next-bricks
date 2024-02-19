@@ -30,6 +30,7 @@ interface TabListProps {
   tabs?: TabItemProps[];
   activePanel?: string;
   outline?: TabsOutline;
+  contentStyle?: React.CSSProperties;
 }
 
 export interface TabListEvents {
@@ -72,6 +73,12 @@ class TabList extends ReactNextElement {
    */
   @property()
   accessor activePanel: string | undefined;
+
+  /**
+   * 内容样式
+   * */
+  @property({ attribute: false })
+  accessor contentStyle: React.CSSProperties | undefined;
 
   /**
    * 轮廓。默认情况下，使用阴影，8.2 下默认则为无轮廓。
@@ -117,6 +124,7 @@ class TabList extends ReactNextElement {
         tabs={this.#computedTabs(this.tabs)}
         activePanel={this.activePanel}
         outline={this.outline}
+        contentStyle={this.contentStyle}
         onTabSelect={this.#handleTabSelect}
       />
     );
@@ -132,6 +140,7 @@ function TabListElement({
   tabs,
   activePanel,
   outline,
+  contentStyle,
   onTabSelect,
 }: TabListElementProps): React.ReactElement {
   return (
@@ -139,6 +148,7 @@ function TabListElement({
       type={type}
       activePanel={activePanel}
       outline={outline}
+      contentStyle={contentStyle}
       onTabSelect={(e) => onTabSelect?.(e.detail)}
     >
       <div className="tabs-wrapper" slot="nav">
