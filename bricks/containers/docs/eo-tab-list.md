@@ -386,3 +386,67 @@
           properties:
             textContent: Item C
 ```
+
+### Content Style
+
+```yaml preview
+- brick: eo-tab-list
+  events:
+    tab.select:
+      - action: console.log
+  properties:
+    tabs:
+      - text: Tab1
+        panel: Tab1
+      - text: Tab2
+        panel: Tab2
+      - text: Tab3
+        panel: Tab3
+    contentStyle:
+      height: 300px
+      overflow: scroll
+  slots:
+    Tab1:
+      bricks:
+        - brick: div
+          properties:
+            className: box red
+            textContent: Red
+        - brick: div
+          properties:
+            className: box green
+            textContent: Green
+        - brick: div
+          properties:
+            className: box blue
+            textContent: Blue
+    Tab2:
+      bricks:
+        - brick: div
+          properties:
+            textContent: Tab 2
+    Tab3:
+      bricks:
+        - brick: div
+          properties:
+            textContent: Tab 3
+- brick: style
+  properties:
+    textContent: |
+      .box {
+        height: 150px;
+        text-align: center;
+        line-height: 150px;
+        color: #fff;
+        font-size: 40px;
+      }
+      .red {
+        background: var(--palette-red-6);
+      }
+      .green {
+        background: var(--palette-green-6);
+      }
+      .blue {
+        background: var(--palette-blue-6);
+      }
+```

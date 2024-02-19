@@ -13,6 +13,7 @@ export interface TabGroupProps {
   activePanel?: string;
   callback?: (element: HTMLDivElement) => void;
   outline?: TabsOutline;
+  contentStyle?: React.CSSProperties;
 }
 
 // Tabs 对轮廓暂只支持阴影或无轮廓，不支持边框或填充色。
@@ -55,6 +56,12 @@ class TabGroup extends ReactNextElement {
   accessor activePanel: string | undefined;
 
   /**
+   * 内容样式
+   * */
+  @property({ attribute: false })
+  accessor contentStyle: React.CSSProperties | undefined;
+
+  /**
    * 选择 tab 时触发
    * @detail panel
    */
@@ -81,6 +88,7 @@ class TabGroup extends ReactNextElement {
       <TabGroupElement
         type={this.type}
         activePanel={this.activePanel}
+        contentStyle={this.contentStyle}
         onTabSelect={this.#handleTabSelect}
       />
     );
@@ -93,6 +101,7 @@ interface TabGroupElementProps extends TabGroupProps {
 
 function TabGroupElement({
   activePanel,
+  contentStyle,
   onTabSelect,
 }: TabGroupElementProps): React.ReactElement {
   const navSlotRef = useRef<HTMLSlotElement>(null);
@@ -170,7 +179,7 @@ function TabGroupElement({
           <slot name="extra" />
         </div>
       </div>
-      <div className="content" ref={contentRef}>
+      <div className="content" ref={contentRef} style={contentStyle}>
         {tabs?.map((tab) => <slot key={tab} name={tab} />)}
       </div>
     </div>
