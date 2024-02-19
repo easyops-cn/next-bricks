@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.1.2...@next-bricks/vs@1.2.0) (2024-02-19)
+
+
+### Features
+
+* **monaco-editor:** add unit test and css update ([aaeffc1](https://github.com/easyops-cn/next-bricks/commit/aaeffc121c9055df40a54f0d030a3960a3b01436))
+
+
+
+
+
 ## [1.1.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.1.1...@next-bricks/vs@1.1.2) (2024-02-07)
 
 **Note:** Version bump only for package @next-bricks/vs
