@@ -408,7 +408,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
           Table: {
             headerBorderRadius: 0,
             headerSplitColor: "none",
-            borderColor: bordered ? "#f0f0f0" : "none",
+            ...(bordered ? { borderColor: "#f0f0f0" } : {}),
           },
         },
       }}
