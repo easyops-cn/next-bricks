@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.2.0...@next-bricks/vs@1.3.0) (2024-02-20)
+
+
+### Features
+
+* **monaco-editor:** add toolbar ([9229055](https://github.com/easyops-cn/next-bricks/commit/9229055f596b19aed982d8db44a6666c7c6769a8))
+
+
+
+
+
 # [1.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.1.2...@next-bricks/vs@1.2.0) (2024-02-19)
 
 
