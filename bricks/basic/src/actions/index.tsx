@@ -70,24 +70,48 @@ function SubMenuItemCom({
       </WrappedMenuItem>
       <div className="sub-menu-wrapper">
         {action?.items.map(
-          (innerItem: SubeMenuItemAction, innerIndex: number) => (
-            <React.Fragment key={innerIndex}>
-              <WrappedMenuItem
-                className={classnames({
-                  "menu-item-danger": innerItem.danger,
-                  "menu-item-selected": checkedKeys?.includes(innerItem?.key),
-                })}
-                icon={innerItem.icon}
-                disabled={innerItem.disabled}
-                onClick={(e: React.MouseEvent) => {
-                  e.stopPropagation();
-                  onSubMenuClick?.(innerItem);
-                }}
+          (innerItem: SubeMenuItemAction, innerIndex: number) => {
+            const menuItem = (
+              <React.Fragment>
+                <WrappedMenuItem
+                  className={classnames({
+                    "menu-item-danger": innerItem.danger,
+                    "menu-item-selected": checkedKeys?.includes(innerItem?.key),
+                  })}
+                  icon={innerItem.icon}
+                  disabled={innerItem.disabled}
+                  onClick={(e: React.MouseEvent) => {
+                    e.stopPropagation();
+                    onSubMenuClick?.(innerItem);
+                  }}
+                >
+                  {innerItem.text}
+                </WrappedMenuItem>
+              </React.Fragment>
+            );
+            return (
+              <WrappedTooltip
+                key={innerIndex}
+                content={innerItem.tooltip}
+                hoist
+                placement="left"
               >
-                {innerItem.text}
-              </WrappedMenuItem>
-            </React.Fragment>
-          )
+                {innerItem.url || innerItem.href ? (
+                  <WrappedLink
+                    type="plain"
+                    href={innerItem.href}
+                    target={innerItem.target}
+                    url={innerItem.url}
+                    disabled={innerItem.disabled}
+                  >
+                    {menuItem}
+                  </WrappedLink>
+                ) : (
+                  menuItem
+                )}
+              </WrappedTooltip>
+            );
+          }
         )}
       </div>
     </WrappedPopover>

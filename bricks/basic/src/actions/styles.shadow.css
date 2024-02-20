@@ -18,6 +18,7 @@ eo-menu {
 eo-menu-item::part(menu-item) {
   padding: 5px 12px;
   border-radius: var(--medius-border-radius);
+  min-width: max-content;
 }
 
 eo-menu-item:not([disabled]):hover::part(menu-item) {

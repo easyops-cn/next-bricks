@@ -54,6 +54,11 @@ describe("eo-actions", () => {
             key: "g",
             event: "g.click",
           },
+          {
+            text: "h",
+            key: "h",
+            url: "/h",
+          },
         ],
       },
     ];
@@ -66,7 +71,7 @@ describe("eo-actions", () => {
     });
 
     expect(element.shadowRoot?.querySelectorAll("eo-menu-item")).toHaveLength(
-      6
+      7
     );
     expect(
       element.shadowRoot?.querySelectorAll(".menu-item-divider")
@@ -109,6 +114,10 @@ describe("eo-actions", () => {
       );
     });
     expect(onActionClick).toBeCalled();
+
+    expect(
+      element.shadowRoot?.querySelectorAll("eo-link")[1].getAttribute("url")
+    ).toBe("/h");
 
     act(() => {
       document.body.removeChild(element);
