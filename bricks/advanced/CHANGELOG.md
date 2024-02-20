@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.24.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.24.3...@next-bricks/advanced@0.24.4) (2024-02-20)
+
+
+### Bug Fixes
+
+* the design token of border-color must be css color type ([47922a9](https://github.com/easyops-cn/next-bricks/commit/47922a9dd469e70117ffc2049febb968d20621db))
+
+
+
+
+
 ## [0.24.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.24.2...@next-bricks/advanced@0.24.3) (2024-02-19)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.5.0...@next-bricks/basic@1.6.0) (2024-02-20)
+
+
+### Features
+
+* **eo-actions:** action.items support render url ([f254028](https://github.com/easyops-cn/next-bricks/commit/f254028353bd6a930b8829f186219166f8af912b))
+
+
+
+
+
 # [1.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.4.1...@next-bricks/basic@1.5.0) (2024-02-20)
 
 
