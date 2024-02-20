@@ -92,7 +92,6 @@ export async function showNotification(
     const callback = () => {
       root.unmount();
       container.remove();
-      onCancel?.();
     };
 
     if (animations[placement]?.hide) {

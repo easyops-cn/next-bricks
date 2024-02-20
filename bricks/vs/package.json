@@ -40,6 +40,7 @@
     "@next-core/react-element": "^1.0.21",
     "@next-core/react-runtime": "^1.1.52",
     "@next-core/theme": "^1.4.8",
+    "@next-core/utils": "^1.6.10",
     "@next-shared/form": "^0.5.5",
     "monaco-editor": "^0.39.0",
     "monaco-editor-webpack-plugin": "^7.0.1",
@@ -51,6 +52,8 @@
     "resize-observer-polyfill": "^1.5.1"
   },
   "peerDependencies": {
-    "@next-bricks/form": "*"
+    "@next-bricks/basic": "*",
+    "@next-bricks/form": "*",
+    "@next-bricks/icons": "*"
   }
 }

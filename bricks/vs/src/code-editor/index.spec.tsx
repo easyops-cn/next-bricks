@@ -14,6 +14,7 @@ jest.mock("./workers/index.mjs", () => ({
     }),
   },
 }));
+jest.mock("@next-core/react-runtime");
 
 global.ResizeObserver = ResizeObserver as any;
 
@@ -69,6 +70,69 @@ describe("vs.code-editor", () => {
       document.body.appendChild(element);
     });
     expect(element.childNodes.length).toBe(1);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(element.childNodes.length).toBe(0);
+  });
+
+  test("toolbar", async () => {
+    const element = document.createElement("vs.code-editor") as CodeEditor;
+    element.value = "Copy";
+    element.automaticLayout = "fit-container";
+    element.showCopyButton = true;
+    element.showExpandButton = true;
+
+    expect(element.childNodes.length).toBe(0);
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+    expect(element.childNodes.length).toBe(1);
+
+    expect(element.querySelector(".copy-icon")).toBeTruthy();
+    expect(element.querySelector(".expand-icon")).toBeTruthy();
+
+    act(() => {
+      (element.querySelector(".expand-icon") as HTMLElement).click();
+    });
+
+    expect(
+      element
+        .querySelector(".code-editor-wrapper")
+        ?.classList.contains("expanded")
+    ).toBeTruthy();
+
+    act(() => {
+      (element.querySelector(".expand-icon") as HTMLElement).click();
+    });
+
+    expect(
+      element
+        .querySelector(".code-editor-wrapper")
+        ?.classList.contains("expanded")
+    ).toBeFalsy();
+
+    act(() => {
+      (element.querySelector(".expand-icon") as HTMLElement).click();
+    });
+
+    expect(
+      element
+        .querySelector(".code-editor-wrapper")
+        ?.classList.contains("expanded")
+    ).toBeTruthy();
+
+    act(() => {
+      window.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" }));
+    });
+
+    expect(
+      element
+        .querySelector(".code-editor-wrapper")
+        ?.classList.contains("expanded")
+    ).toBeFalsy();
 
     act(() => {
       document.body.removeChild(element);
