@@ -7,6 +7,7 @@ import React, {
   useState,
 } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
+import { unwrapProvider } from "@next-core/utils/general";
 import { wrapBrick } from "@next-core/react-element";
 import { useCurrentTheme } from "@next-core/react-runtime";
 import { FormItemElementBase } from "@next-shared/form";
@@ -26,12 +27,24 @@ import {
   EDITOR_FONT_SIZE,
 } from "./constants.js";
 import { brickNextYAMLProviderCompletionItems } from "./utils/brickNextYaml.js";
-import "./index.css";
 import { Level } from "./utils/constants.js";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { VSWorkers } from "./workers/index.mjs";
 import { setEditorId } from "./utils/editorId.js";
+import type { EoTooltip, ToolTipProps } from "@next-bricks/basic/tooltip";
+import type {
+  GeneralIcon,
+  GeneralIconProps,
+} from "@next-bricks/icons/general-icon";
+import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
+import { K, NS, locales } from "./i18n.js";
+import type { copyToClipboard as _copyToClipboard } from "@next-bricks/basic/data-providers/copy-to-clipboard";
+import type { showNotification as _showNotification } from "@next-bricks/basic/data-providers/show-notification/show-notification";
+import classNames from "classnames";
+import "./index.css";
+
+initializeReactI18n(NS, locales);
 
 registerJavaScript(monaco);
 registerTypeScript(monaco);
@@ -41,6 +54,14 @@ registerHtml(monaco);
 const { defineElement, property, event } = createDecorators();
 
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
+const WrappedTooltip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
+const copyToClipboard = unwrapProvider<typeof _copyToClipboard>(
+  "basic.copy-to-clipboard"
+);
+const showNotification = unwrapProvider<typeof _showNotification>(
+  "basic.show-notification"
+);
 
 export interface CodeEditorProps {
   name?: string;
@@ -61,6 +82,8 @@ export interface CodeEditorProps {
   >;
   markers?: Marker[];
   links?: string[];
+  showExpandButton?: boolean;
+  showCopyButton?: boolean;
   validateState?: string;
 }
 
@@ -169,6 +192,19 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
   @property()
   accessor message: string | undefined;
 
+  /**
+   * 是否展示展开按钮
+   */
+  @property({ type: Boolean })
+  accessor showExpandButton: boolean | undefined;
+
+  /**
+   * 是否展示复制按钮
+   * @default true
+   */
+  @property({ type: Boolean })
+  accessor showCopyButton: boolean | undefined;
+
   @event({ type: "code.change" })
   accessor #codeChange!: EventEmitter<string>;
 
@@ -236,6 +272,8 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
           advancedCompleters={this.advancedCompleters}
           markers={this.markers}
           links={this.links}
+          showCopyButton={this.showCopyButton}
+          showExpandButton={this.showExpandButton}
           validateState={this.validateState}
           onChange={this.#handleChange}
           onTokenClick={this.#handleTokenClick}
@@ -258,6 +296,8 @@ export function CodeEditorComponent({
   markers,
   readOnly,
   links,
+  showExpandButton,
+  showCopyButton = true,
   validateState,
   onChange,
   onTokenClick,
@@ -276,7 +316,10 @@ export function CodeEditorComponent({
   const minLines = _minLines ?? 3;
   const maxLines = _maxLines ?? Infinity;
   const height = _height ?? 500;
+  const [expanded, setExpanded] = useState(false);
   const workerId = useMemo(() => uniqueId("worker"), []);
+
+  const { t } = useTranslation(NS);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const decorationsCollection =
@@ -322,6 +365,7 @@ export function CodeEditorComponent({
         case "parse_yaml_error": {
           monaco.editor.setModelMarkers(model, "brick_next_yaml", []);
           decorationsCollection?.current?.set([]);
+          onChange(model.getValue(), undefined, false, init);
           break;
         }
       }
@@ -632,24 +676,88 @@ export function CodeEditorComponent({
   }, [parseYaml, value, workerId]);
 
   useEffect(() => {
+    if (expanded) {
+      const fn = (e: KeyboardEvent): void => {
+        if (e.key === "Escape" || e.key === "Esc") {
+          window.removeEventListener("keydown", fn);
+          setExpanded(false);
+        }
+      };
+      window.addEventListener("keydown", fn);
+      return () => {
+        window.removeEventListener("keydown", fn);
+      };
+    }
+  }, [expanded]);
+
+  useEffect(() => {
     return () => {
       editorRef.current?.getModel()?.dispose();
       editorRef.current?.dispose();
     };
   }, []);
 
+  const handleCopyIconClick = useCallback(() => {
+    if (editorRef.current) {
+      const currentModel = editorRef.current.getModel()!;
+      copyToClipboard(currentModel.getValue())
+        .then(() =>
+          showNotification({ type: "success", message: t(K.COPY_SUCCESS) })
+        )
+        .catch(() =>
+          showNotification({ type: "error", message: t(K.COPY_FAILED) })
+        );
+    }
+  }, [t]);
+
+  const handleExpandedClick = useCallback(() => {
+    setExpanded(!expanded);
+  }, [expanded]);
+
   return (
     <div
-      ref={containerRef}
-      style={{
-        height: actualHeight,
-        ...(validateState === "error"
-          ? {
-              outline: "1px solid var(--antd-error-color)",
-            }
-          : {}),
-      }}
-    />
+      className={classNames("code-editor-wrapper", {
+        expanded,
+      })}
+    >
+      <div
+        ref={containerRef}
+        style={{
+          height: expanded ? "100%" : actualHeight,
+          ...(validateState === "error"
+            ? {
+                outline: "1px solid var(--antd-error-color)",
+              }
+            : {}),
+        }}
+      />
+      <div className="toolbar">
+        {showCopyButton && (
+          <WrappedTooltip content={t(K.COPY) as string}>
+            <WrappedIcon
+              className="copy-icon"
+              icon="copy"
+              lib="antd"
+              theme="outlined"
+              onClick={handleCopyIconClick}
+            />
+          </WrappedTooltip>
+        )}
+        {showExpandButton && (
+          <WrappedTooltip
+            content={(expanded ? t(K.COLLAPSE) : t(K.EXPAND)) as string}
+          >
+            <WrappedIcon
+              className="expand-icon"
+              icon={expanded ? "compress" : "expand"}
+              lib="antd"
+              theme="outlined"
+              onClick={handleExpandedClick}
+            />
+          </WrappedTooltip>
+        )}
+      </div>
+    </div>
   );
 }
 

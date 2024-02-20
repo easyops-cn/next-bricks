@@ -14,3 +14,54 @@
   background: var(--color-border-divider-line);
   border: 1px solid var(--color-border-divider-line);
 }
+
+.code-editor-wrapper {
+  position: relative;
+}
+
+.code-editor-wrapper.expanded {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px;
+  backdrop-filter: blur(5px);
+}
+
+.code-editor-wrapper.expanded .toolbar {
+  right: 40px;
+  top: 40px;
+}
+
+.code-editor-wrapper:hover .toolbar {
+  display: flex;
+}
+
+.toolbar {
+  display: none;
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  line-height: 12px;
+  font-size: 12px;
+  text-align: center;
+  gap: 10px;
+  box-shadow: none;
+  transition: none;
+  border-radius: 50%;
+  border: none;
+}
+
+.copy-icon,
+.expand-icon {
+  opacity: 0.5;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.copy-icon:hover,
+.expand-icon:hover {
+  opacity: 1;
+}
