@@ -71,7 +71,7 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@ant-design/icons-svg": "^4.2.1",
+    "@ant-design/icons-svg": "^4.4.2",
     "@fortawesome/free-brands-svg-icons": "^6.3.0",
     "@fortawesome/free-regular-svg-icons": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",

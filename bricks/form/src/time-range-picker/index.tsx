@@ -313,7 +313,8 @@ export function RealTimeRangePicker(
     <div className="timeRange">
       <TimePicker
         {...{ id: uniqueId("start-time-") }}
-        onChange={onStartTimeChange}
+        // Currently we don't support multiple pick mode
+        onChange={onStartTimeChange as any}
         getPopupContainer={(trigger) => trigger}
         value={!isEmpty(value?.startTime) ? startTime : undefined}
         format={format}
@@ -321,7 +322,8 @@ export function RealTimeRangePicker(
       <span className="timeRangeSplit">~</span>
       <TimePicker
         {...{ id: uniqueId("end-time-") }}
-        onChange={onEndTimeChange}
+        // Currently we don't support multiple pick mode
+        onChange={onEndTimeChange as any}
         getPopupContainer={(trigger) => trigger}
         value={!isEmpty(value?.endTime) ? endTime : undefined}
         format={format}
