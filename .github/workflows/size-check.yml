@@ -64,6 +64,8 @@ jobs:
       if: steps.yarn-lock-check-before.outputs.sum != steps.yarn-lock-check-after.outputs.sum
 
     - run: yarn build --concurrency 1
+      env:
+        NX_REJECT_UNKNOWN_LOCAL_CACHE: '0'
     - run: yarn size-check:ci
       env:
         CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
