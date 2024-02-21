@@ -194,7 +194,8 @@ export function EoTimePickerComponent(props: EoTimePickerProps) {
               {...configProps}
               getPopupContainer={(trigger) => trigger}
               value={value}
-              onChange={handleChange}
+              // Currently we don't support multiple pick mode
+              onChange={handleChange as any}
               onOpenChange={handleOpenChange}
               disabled={disabled}
               placeholder={placeholder}

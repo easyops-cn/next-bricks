@@ -1,4 +1,4 @@
-import { describe, test, expect, jest } from "@jest/globals";
+import { describe, expect, jest } from "@jest/globals";
 import { act } from "react-dom/test-utils";
 import "./";
 import { EoDatePicker } from "./index.js";
@@ -56,7 +56,7 @@ describe("eo-date-picker", () => {
     act(() => {
       (
         element.shadowRoot?.querySelector(
-          ".ant-picker-today-btn"
+          ".ant-picker-cell-today"
         ) as HTMLElement
       ).click();
     });

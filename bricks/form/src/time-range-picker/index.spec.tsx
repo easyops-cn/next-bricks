@@ -182,7 +182,9 @@ describe("eo-time-range-picker", () => {
 
     const onChangeMock = jest.fn();
 
-    element.addEventListener("change", onChangeMock);
+    element.addEventListener("change", (e) =>
+      onChangeMock((e as CustomEvent).detail)
+    );
 
     expect(element.shadowRoot).toBeFalsy();
 
@@ -214,8 +216,9 @@ describe("eo-time-range-picker", () => {
         contentList?.[1]?.querySelector("[title='2023-11-16']") as HTMLElement
       )?.click();
     });
-    expect(onChangeMock).toBeCalledTimes(3);
-    expect((onChangeMock.mock.calls[2][0] as CustomEvent).detail).toEqual({
+    // NOTE: change called times changed from 3 to 2 after upgrade antd.
+    expect(onChangeMock).toBeCalledTimes(2);
+    expect(onChangeMock).toHaveBeenLastCalledWith({
       endTime: "2023-11-16",
       startTime: "2023-10-10",
     });

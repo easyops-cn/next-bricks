@@ -4,6 +4,8 @@ import { act } from "react-dom/test-utils";
 import "./index.jsx";
 import { CascaderBrick } from "./index.jsx";
 
+jest.mock("@next-core/theme", () => ({}));
+
 describe("eo-cascader", () => {
   test("basic usage", async () => {
     const element = document.createElement("eo-cascader") as CascaderBrick;

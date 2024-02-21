@@ -552,7 +552,10 @@ export function InternalStateDatePicker(
   }, [value, picker, futureDateDisabled]);
 
   const cellRender = useCallback(
-    (current: Dayjs, info: { originNode: React.ReactElement }) => {
+    (
+      current: string | number | Dayjs,
+      info: { originNode: React.ReactElement }
+    ) => {
       const quarterMap = {
         1: i18n.t(`${NS}:${K.FISRT_QUARTER}`),
         2: i18n.t(`${NS}:${K.SECOND_QUARTER}`),
@@ -584,10 +587,7 @@ export function InternalStateDatePicker(
       }}
     >
       <DatePicker
-        cellRender={(
-          current: Dayjs,
-          info: { originNode: React.ReactElement }
-        ) => {
+        cellRender={(current, info: { originNode: React.ReactElement }) => {
           return cellRender(current, info);
         }}
         value={value}
@@ -598,7 +598,8 @@ export function InternalStateDatePicker(
         })}
         format={format}
         showTime={isDatePicker ? showTime : undefined}
-        onChange={onChange}
+        // Currently we don't support multiple pick mode
+        onChange={onChange as any}
         style={inputStyle}
         placeholder={placeholder}
         onOk={onOk}
