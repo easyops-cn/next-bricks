@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.3.3...@next-bricks/form@1.3.4) (2024-02-21)
+
+
+### Bug Fixes
+
+* update antd to the latest ([fea4ac8](https://github.com/easyops-cn/next-bricks/commit/fea4ac81493d49a61fef7b856e50a9532db8645e))
+
+
+
+
+
 ## [1.3.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.3.2...@next-bricks/form@1.3.3) (2024-02-19)
 
 

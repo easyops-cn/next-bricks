@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.0.10...@next-bricks/icons@1.0.11) (2024-02-21)
+
+
+### Bug Fixes
+
+* update antd to the latest ([fea4ac8](https://github.com/easyops-cn/next-bricks/commit/fea4ac81493d49a61fef7b856e50a9532db8645e))
+
+
+
+
+
 ## [1.0.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.0.9...@next-bricks/icons@1.0.10) (2024-02-19)
 
 

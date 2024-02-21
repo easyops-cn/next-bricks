@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.33.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.32.0...@next-shared/common-bricks@0.33.0) (2024-02-21)
+
+
+### Features
+
+* new brick: eo-tree ([711bd33](https://github.com/easyops-cn/next-bricks/commit/711bd339cb8ab3bfd009d02cdf3de97f8bf12adf))
+
+
+
+
+
 # [0.32.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.31.0...@next-shared/common-bricks@0.32.0) (2024-01-09)
 
 
