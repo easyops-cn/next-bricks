@@ -96,7 +96,8 @@
     "eo-cascader",
     "eo-table",
     "eo-next-table",
-    "eo-workbench-layout"
+    "eo-workbench-layout",
+    "eo-tree"
   ],
   "markdown": ["eo-markdown-editor"],
   "shoelace": [

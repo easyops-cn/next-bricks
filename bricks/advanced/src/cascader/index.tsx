@@ -1,6 +1,7 @@
 import React, { CSSProperties, useMemo } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
+import "@next-core/theme";
 import type {
   GeneralIcon,
   GeneralIconProps,
