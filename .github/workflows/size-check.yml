@@ -24,19 +24,27 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         registry-url: 'https://registry.npmjs.org'
-        cache: yarn
+
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+
+    - name: Cache for yarn
+      uses: actions/cache@v4
+      with:
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: node-cache-${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+        restore-keys: |
+          node-cache-${{ runner.os }}-yarn-
 
     - name: Cache nx cache
       uses: actions/cache@v4
       with:
+        save-always: true
         path: .cache
-        key: ${{ runner.os }}-nx-${{ hashFiles('**/package.json') }}
+        key: ${{ runner.os }}-nx-${{ hashFiles('yarn.lock', 'package.json', 'shared/common-bricks/common-bricks.json') }}-${{ hashFiles('**/package.json') }}
         restore-keys: |
-          ${{ runner.os }}-nx-
-
-    - name: Get cypress version
-      id: cypress-version
-      run: echo "::set-output name=ver::$(cat package.json|grep '\"cypress\":'|awk -F '[:,\"]' '{print $5}')"
+          ${{ runner.os }}-nx-${{ hashFiles('yarn.lock', 'package.json', 'shared/common-bricks/common-bricks.json') }}-
 
     - name: Cache for cypress
       uses: actions/cache@v4
@@ -63,7 +71,7 @@ jobs:
       run: exit 1
       if: steps.yarn-lock-check-before.outputs.sum != steps.yarn-lock-check-after.outputs.sum
 
-    - run: yarn build --concurrency 1
+    - run: yarn build
       env:
         NX_REJECT_UNKNOWN_LOCAL_CACHE: '0'
     - run: yarn size-check:ci
