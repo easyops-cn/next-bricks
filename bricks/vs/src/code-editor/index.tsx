@@ -666,14 +666,18 @@ export function CodeEditorComponent({
     const currentModel = editorRef.current.getModel()!;
     const listener = currentModel.onDidChangeContent(() => {
       setEditorId(workerId);
-      parseYaml({
-        init: false,
-      });
+      if (["brick_next_yaml"].includes(language)) {
+        parseYaml({
+          init: false,
+        });
+      } else {
+        onChange(currentModel.getValue(), undefined, false, false);
+      }
     });
     return () => {
       listener.dispose();
     };
-  }, [parseYaml, value, workerId]);
+  }, [parseYaml, onChange, value, workerId, language]);
 
   useEffect(() => {
     if (expanded) {
@@ -724,6 +728,7 @@ export function CodeEditorComponent({
         ref={containerRef}
         style={{
           height: expanded ? "100%" : actualHeight,
+          overflow: expanded ? "scroll" : "",
           ...(validateState === "error"
             ? {
                 outline: "1px solid var(--antd-error-color)",
