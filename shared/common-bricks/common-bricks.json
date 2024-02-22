@@ -79,7 +79,8 @@
     "eo-auto-complete",
     "eo-time-picker",
     "eo-date-picker",
-    "eo-time-range-picker"
+    "eo-time-range-picker",
+    "eo-color-picker"
   ],
   "presentational": [
     "eo-code-display",
