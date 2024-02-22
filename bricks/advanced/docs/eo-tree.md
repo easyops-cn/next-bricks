@@ -35,7 +35,7 @@ properties:
   checkable: true
   selectable: false
   showLine: true
-  switcherIcon: false
+  switcherIcon: chevron
   dataSource:
     - title: parent 1
       key: 0-0

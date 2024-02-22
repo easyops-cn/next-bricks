@@ -121,11 +121,12 @@ export function EoTreeComponent({
             : theme.defaultAlgorithm,
       }}
     >
-      {/* Set hashPriority to "high" to disable `:where()` usage for compatibility */}
       <StyleProvider
         container={shadowRoot}
+        // Auto clear injected styles after unmount
         autoClear
         cache={cache}
+        // Set hashPriority to "high" to disable `:where()` usage for compatibility
         hashPriority="high"
       >
         <Tree
