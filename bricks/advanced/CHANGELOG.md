@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.26.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.25.1...@next-bricks/advanced@0.26.0) (2024-02-22)
+
+
+### Features
+
+* **tree:** support control expandedKeys and checkedKeys ([5cc76ee](https://github.com/easyops-cn/next-bricks/commit/5cc76ee15d6ff461cc63b71d008136d066cdf4d5))
+
+
+
+
+
 ## [0.25.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.25.0...@next-bricks/advanced@0.25.1) (2024-02-22)
 
 **Note:** Version bump only for package @next-bricks/advanced
