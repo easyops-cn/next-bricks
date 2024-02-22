@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.3.4...@next-bricks/form@1.4.0) (2024-02-22)
+
+
+### Features
+
+* **form:** support eo-color-picker ([c820b7e](https://github.com/easyops-cn/next-bricks/commit/c820b7e4331ee8469224158b178e27d641f8c0cd))
+
+
+
+
+
 ## [1.3.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.3.3...@next-bricks/form@1.3.4) (2024-02-21)
 
 

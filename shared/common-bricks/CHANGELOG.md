@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.34.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.33.0...@next-shared/common-bricks@0.34.0) (2024-02-22)
+
+
+### Features
+
+* **form:** support eo-color-picker ([c820b7e](https://github.com/easyops-cn/next-bricks/commit/c820b7e4331ee8469224158b178e27d641f8c0cd))
+
+
+
+
+
 # [0.33.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.32.0...@next-shared/common-bricks@0.33.0) (2024-02-21)
 
 

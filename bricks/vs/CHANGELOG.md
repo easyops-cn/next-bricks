@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.3.0...@next-bricks/vs@1.3.1) (2024-02-22)
+
+
+### Bug Fixes
+
+* **monaco-editor:** onChange should emit ([28d4cba](https://github.com/easyops-cn/next-bricks/commit/28d4cbacba21eb5184723016d5b7ef2d16b2497e))
+
+
+
+
+
 # [1.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.2.0...@next-bricks/vs@1.3.0) (2024-02-20)
 
 
