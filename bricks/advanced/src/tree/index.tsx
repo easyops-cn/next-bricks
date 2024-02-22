@@ -17,6 +17,8 @@ export interface EoTreeProps {
   selectable?: boolean;
   defaultExpandAll?: boolean;
   showLine?: boolean;
+  expandedKeys?: TreeNodeKey[];
+  checkedKeys?: TreeNodeKey[];
   switcherIcon?: "auto" | "chevron" | false;
 }
 
@@ -61,6 +63,12 @@ class EoTree extends ReactNextElement implements EoTreeProps {
   accessor showLine: boolean | undefined;
 
   @property({ attribute: false })
+  accessor expandedKeys: TreeNodeKey[] | undefined;
+
+  @property({ attribute: false })
+  accessor checkedKeys: TreeNodeKey[] | undefined;
+
+  @property({ attribute: false })
   accessor switcherIcon: "auto" | "chevron" | false | undefined;
 
   @event({ type: "check" })
@@ -77,6 +85,13 @@ class EoTree extends ReactNextElement implements EoTreeProps {
     });
   };
 
+  @event({ type: "expand" })
+  accessor #expandEvent!: EventEmitter<TreeNodeKey[]>;
+
+  #handleExpand: TreeProps["onExpand"] = (expandedKeys) => {
+    this.#expandEvent.emit(expandedKeys as TreeNodeKey[]);
+  };
+
   render() {
     return (
       <EoTreeComponent
@@ -87,7 +102,10 @@ class EoTree extends ReactNextElement implements EoTreeProps {
         defaultExpandAll={this.defaultExpandAll}
         showLine={this.showLine}
         switcherIcon={this.switcherIcon}
+        expandedKeys={this.expandedKeys}
+        checkedKeys={this.checkedKeys}
         onCheck={this.#handleCheck}
+        onExpand={this.#handleExpand}
       />
     );
   }
@@ -96,6 +114,7 @@ class EoTree extends ReactNextElement implements EoTreeProps {
 export interface EoTreeComponentProps extends EoTreeProps {
   shadowRoot: ShadowRoot;
   onCheck: TreeProps["onCheck"];
+  onExpand: TreeProps["onExpand"];
 }
 
 export function EoTreeComponent({
@@ -105,8 +124,11 @@ export function EoTreeComponent({
   selectable,
   defaultExpandAll,
   showLine,
+  expandedKeys,
+  checkedKeys,
   switcherIcon,
   onCheck,
+  onExpand,
 }: EoTreeComponentProps) {
   const currentTheme = useCurrentTheme();
 
@@ -142,7 +164,10 @@ export function EoTreeComponent({
           selectable={selectable}
           defaultExpandAll={defaultExpandAll}
           showLine={showLine}
+          {...(expandedKeys ? { expandedKeys } : null)}
+          {...(checkedKeys ? { checkedKeys } : null)}
           onCheck={onCheck}
+          onExpand={onExpand}
         />
       </StyleProvider>
     </ConfigProvider>
