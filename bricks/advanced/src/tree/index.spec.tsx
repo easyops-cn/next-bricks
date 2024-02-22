@@ -90,6 +90,8 @@ describe("eo-tree", () => {
 
   test("switcher icon and dark theme", async () => {
     const element = document.createElement("eo-tree") as EoTree;
+    element.expandedKeys = [];
+    element.checkedKeys = [];
     element.dataSource = treeData;
     act(() => {
       document.body.appendChild(element);
@@ -128,6 +130,44 @@ describe("eo-tree", () => {
         new CustomEvent("theme.change", { detail: "dark-v2" })
       );
     });
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("expand", async () => {
+    const element = document.createElement("eo-tree") as EoTree;
+    element.dataSource = treeData;
+
+    const onExpand = jest.fn();
+
+    element.addEventListener("expand", (e) =>
+      onExpand((e as CustomEvent).detail)
+    );
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(
+      element.shadowRoot
+        ?.querySelector(".ant-tree-switcher")
+        ?.classList.contains("ant-tree-switcher_open")
+    ).toBe(false);
+
+    act(() => {
+      fireEvent.click(element.shadowRoot!.querySelector(".ant-tree-switcher")!);
+    });
+
+    expect(onExpand).toBeCalledTimes(1);
+    expect(onExpand).toBeCalledWith(["0-0"]);
+
+    expect(
+      element.shadowRoot
+        ?.querySelector(".ant-tree-switcher")
+        ?.classList.contains("ant-tree-switcher_open")
+    ).toBe(true);
 
     act(() => {
       document.body.removeChild(element);
