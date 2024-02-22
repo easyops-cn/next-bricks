@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.26.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.26.0...@next-bricks/advanced@0.26.1) (2024-02-22)
+
+
+### Bug Fixes
+
+* 卡片太多分辨率太多导出的PDF显示不全 ([05322d9](https://github.com/easyops-cn/next-bricks/commit/05322d9403ff300c87545176fd26ca8d50920090))
+
+
+
+
+
 # [0.26.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.25.1...@next-bricks/advanced@0.26.0) (2024-02-22)
 
 
