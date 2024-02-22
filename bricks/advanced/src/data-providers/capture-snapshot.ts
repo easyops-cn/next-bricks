@@ -44,7 +44,9 @@ export async function captureSnapshot(
       const { jsPDF } = await import("jspdf");
       const canvas = await capture(selector);
       const imageData = canvas.toDataURL("image/jpeg", 1.0);
-      const pdf = new jsPDF("l", "pt", [canvas.width, canvas.height]);
+      const orientation =
+        canvas.width > canvas.height ? "landscape" : "portrait";
+      const pdf = new jsPDF(orientation, "pt", [canvas.width, canvas.height]);
       pdf.addImage(imageData, "JPEG", 0, 0, canvas.width, canvas.height);
       await pdf.save(`${name}.pdf`, { returnPromise: true });
       break;

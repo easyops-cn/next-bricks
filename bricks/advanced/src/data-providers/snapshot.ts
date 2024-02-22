@@ -13,7 +13,11 @@ export function capture(selector?: string): Promise<HTMLCanvasElement> {
     throw new Error(`target not found: ${selector}`);
   }
   return new Promise(function (resolve, reject) {
-    html2canvas(target)
+    html2canvas(target, {
+      useCORS: true,
+      allowTaint: true,
+      scale: window.devicePixelRatio < 3 ? window.devicePixelRatio : 2,
+    })
       .then(function (canvas: HTMLCanvasElement) {
         resolve(canvas);
       })
