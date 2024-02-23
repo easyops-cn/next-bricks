@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.27.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.26.1...@next-bricks/advanced@0.27.0) (2024-02-23)
+
+
+### Features
+
+* **tree:** support nodes to reorder ([528c069](https://github.com/easyops-cn/next-bricks/commit/528c069f382302375b7a55742fd7d0166c684656))
+
+
+
+
+
 ## [0.26.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.26.0...@next-bricks/advanced@0.26.1) (2024-02-22)
 
 
