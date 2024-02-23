@@ -257,6 +257,8 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
         name={this.name}
         label={this.label}
         required={this.required}
+        helpBrick={this.helpBrick}
+        labelBrick={this.labelBrick}
         validator={this.#handleValidtor}
       >
         <CodeEditorComponent
