@@ -20,6 +20,7 @@ function onMessage(message: MessageEvent): void {
         self.postMessage({
           token: "parse_yaml_error",
           id,
+          init,
         });
       }
       break;
