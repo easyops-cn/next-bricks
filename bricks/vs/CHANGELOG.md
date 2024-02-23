@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.3.1...@next-bricks/vs@1.4.0) (2024-02-23)
+
+
+### Features
+
+* **monaco-editor:** add helpBrick & labelBrick ([139cdb1](https://github.com/easyops-cn/next-bricks/commit/139cdb10629f83e9e6041ec3b2f14c13b89d6eb8))
+
+
+
+
+
 ## [1.3.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.3.0...@next-bricks/vs@1.3.1) (2024-02-22)
 
 
