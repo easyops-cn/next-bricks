@@ -4,6 +4,7 @@ import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import { Tree, ConfigProvider, theme } from "antd";
 import type { TreeProps } from "antd";
+import type { BasicDataNode } from "antd/es/tree";
 import { StyleProvider, createCache } from "@ant-design/cssinjs";
 import { DownOutlined } from "@ant-design/icons";
 import { useCurrentTheme } from "@next-core/react-runtime";
@@ -19,10 +20,12 @@ export interface EoTreeProps {
   showLine?: boolean;
   expandedKeys?: TreeNodeKey[];
   checkedKeys?: TreeNodeKey[];
+  nodeDraggable?: boolean | { icon?: false };
   switcherIcon?: "auto" | "chevron" | false;
+  allowDrop?: (info: AllowDropInfo) => boolean;
 }
 
-export interface TreeNode {
+export interface TreeNode extends BasicDataNode {
   title: string;
   key: TreeNodeKey;
   children?: TreeNode[];
@@ -34,6 +37,28 @@ export interface CheckDetail {
   checkedKeys: TreeNodeKey[];
   halfCheckedKeys: TreeNodeKey[];
 }
+
+export interface AllowDropInfo {
+  dragNode: TreeNode;
+  dropNode: TreeNode;
+  /**
+   * The drop position is relative to the drop node, inside 0, top -1, bottom 1
+   */
+  dropPosition: number;
+}
+
+export interface DropDetail {
+  dragNode: TreeNode;
+  dropNode: TreeNode;
+  /**
+   * The drop position is relative to the drop node, inside 0, top -1, bottom 1
+   */
+  dropPosition: number;
+}
+
+export type RawDropInfo = Parameters<
+  Exclude<TreeProps<TreeNode>["onDrop"], undefined>
+>[0];
 
 /**
  * 树形构件
@@ -69,7 +94,13 @@ class EoTree extends ReactNextElement implements EoTreeProps {
   accessor checkedKeys: TreeNodeKey[] | undefined;
 
   @property({ attribute: false })
+  accessor nodeDraggable: boolean | { icon?: false } | undefined;
+
+  @property({ attribute: false })
   accessor switcherIcon: "auto" | "chevron" | false | undefined;
+
+  @property({ attribute: false })
+  accessor allowDrop: ((info: AllowDropInfo) => boolean) | undefined;
 
   @event({ type: "check" })
   accessor #checkEvent!: EventEmitter<TreeNodeKey[]>;
@@ -77,7 +108,7 @@ class EoTree extends ReactNextElement implements EoTreeProps {
   @event({ type: "check.detail" })
   accessor #checkDetailEvent!: EventEmitter<CheckDetail>;
 
-  #handleCheck: TreeProps["onCheck"] = (checkedKeys, info) => {
+  #handleCheck: TreeProps<TreeNode>["onCheck"] = (checkedKeys, info) => {
     this.#checkEvent.emit(checkedKeys as TreeNodeKey[]);
     this.#checkDetailEvent.emit({
       checkedKeys: checkedKeys as TreeNodeKey[],
@@ -88,8 +119,20 @@ class EoTree extends ReactNextElement implements EoTreeProps {
   @event({ type: "expand" })
   accessor #expandEvent!: EventEmitter<TreeNodeKey[]>;
 
-  #handleExpand: TreeProps["onExpand"] = (expandedKeys) => {
+  #handleExpand: TreeProps<TreeNode>["onExpand"] = (expandedKeys) => {
     this.#expandEvent.emit(expandedKeys as TreeNodeKey[]);
+  };
+
+  @event({ type: "node.drop" })
+  accessor #dropEvent!: EventEmitter<DropDetail>;
+
+  // istanbul ignore next
+  #handleDrop = ({ dragNode, node: dropNode, dropPosition }: RawDropInfo) => {
+    this.#dropEvent.emit({
+      dragNode,
+      dropNode,
+      dropPosition,
+    });
   };
 
   render() {
@@ -101,11 +144,14 @@ class EoTree extends ReactNextElement implements EoTreeProps {
         selectable={this.selectable}
         defaultExpandAll={this.defaultExpandAll}
         showLine={this.showLine}
+        nodeDraggable={this.nodeDraggable}
         switcherIcon={this.switcherIcon}
         expandedKeys={this.expandedKeys}
         checkedKeys={this.checkedKeys}
         onCheck={this.#handleCheck}
         onExpand={this.#handleExpand}
+        allowDrop={this.allowDrop}
+        onDrop={this.#handleDrop}
       />
     );
   }
@@ -113,8 +159,10 @@ class EoTree extends ReactNextElement implements EoTreeProps {
 
 export interface EoTreeComponentProps extends EoTreeProps {
   shadowRoot: ShadowRoot;
-  onCheck: TreeProps["onCheck"];
-  onExpand: TreeProps["onExpand"];
+  onCheck: TreeProps<TreeNode>["onCheck"];
+  onExpand: TreeProps<TreeNode>["onExpand"];
+  onDrop: TreeProps<TreeNode>["onDrop"];
+  allowDrop?: (info: AllowDropInfo) => boolean;
 }
 
 export function EoTreeComponent({
@@ -126,9 +174,12 @@ export function EoTreeComponent({
   showLine,
   expandedKeys,
   checkedKeys,
+  nodeDraggable,
   switcherIcon,
   onCheck,
   onExpand,
+  onDrop,
+  allowDrop,
 }: EoTreeComponentProps) {
   const currentTheme = useCurrentTheme();
 
@@ -164,10 +215,13 @@ export function EoTreeComponent({
           selectable={selectable}
           defaultExpandAll={defaultExpandAll}
           showLine={showLine}
+          draggable={nodeDraggable}
           {...(expandedKeys ? { expandedKeys } : null)}
           {...(checkedKeys ? { checkedKeys } : null)}
           onCheck={onCheck}
           onExpand={onExpand}
+          allowDrop={allowDrop}
+          onDrop={onDrop}
         />
       </StyleProvider>
     </ConfigProvider>
