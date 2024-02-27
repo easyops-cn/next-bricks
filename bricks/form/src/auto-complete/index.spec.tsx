@@ -2,15 +2,13 @@ import { describe, test, expect, jest } from "@jest/globals";
 import { act } from "react-dom/test-utils";
 import { fireEvent } from "@testing-library/react";
 import "./";
-import { EoAutoComplete } from "./index.js";
+import { AutoComplete } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
 describe("eo-auto-complete", () => {
   test("basic usage", async () => {
-    const element = document.createElement(
-      "eo-auto-complete",
-    ) as EoAutoComplete;
+    const element = document.createElement("eo-auto-complete") as AutoComplete;
     element.options = [
       { label: "option1", value: "option1" },
       { label: "option2", value: "option2", caption: "caption2" },
@@ -34,21 +32,21 @@ describe("eo-auto-complete", () => {
     act(() => {
       fireEvent.focus(input);
     });
-    expect(element.shadowRoot?.querySelectorAll(".groupWrapper").length).toBe(
-      1,
+    expect(element.shadowRoot?.querySelectorAll(".group-wrapper").length).toBe(
+      1
     );
 
     act(() => {
       fireEvent(input, new CustomEvent("change", { detail: "caption" }));
     });
     expect(
-      element.shadowRoot?.querySelectorAll(".optionContainer").length,
+      element.shadowRoot?.querySelectorAll(".option-container").length
     ).toBe(2);
     expect(element.value).toBe("caption");
 
     act(() => {
       fireEvent.click(
-        element.shadowRoot?.querySelector(".optionContainer") as HTMLElement,
+        element.shadowRoot?.querySelector(".option-container") as HTMLElement
       );
     });
     expect(element.value).toBe("option2");
@@ -56,12 +54,12 @@ describe("eo-auto-complete", () => {
     act(() => {
       fireEvent.focus(input);
     });
-    expect(element.shadowRoot?.querySelector(".dropDownWrapper")).toBeTruthy();
+    expect(element.shadowRoot?.querySelector(".dropdown-wrapper")).toBeTruthy();
 
     act(() => {
       fireEvent.click(document);
     });
-    expect(element.shadowRoot?.querySelector(".dropDownWrapper")).toBeFalsy();
+    expect(element.shadowRoot?.querySelector(".dropdown-wrapper")).toBeFalsy();
 
     act(() => {
       document.body.removeChild(element);

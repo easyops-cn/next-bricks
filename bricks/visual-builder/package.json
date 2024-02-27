@@ -54,6 +54,7 @@
   },
   "peerDependencies": {
     "@next-bricks/basic": "*",
+    "@next-bricks/form": "*",
     "@next-bricks/icons": "*"
   }
 }
