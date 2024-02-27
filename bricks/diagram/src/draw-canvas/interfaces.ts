@@ -2,9 +2,11 @@ import type { UseSingleBrickConf } from "@next-core/react-runtime";
 
 export type Cell = ShapeCell | BrickCell;
 
-export type ShapeCell = NodeShapeCell | EdgeShapeCell;
+export type ShapeCell = NodeShapeCell /*  | EdgeShapeCell */;
 
-export type BrickCell = NodeBrickCell | EdgeBrickCell;
+export type BrickCell = NodeBrickCell /*  | EdgeBrickCell */;
+
+export type NodeCell = NodeBrickCell | NodeShapeCell;
 
 export type NodeShapeCell = BaseShapeCell & BaseNodeCell;
 
@@ -27,21 +29,28 @@ export interface ShapeStyle {
 }
 
 export interface BaseBrickCell extends BaseCell {
-  tag: "brick";
+  tag?: "brick";
   useBrick: UseSingleBrickConf;
 }
 
 export interface BaseNodeCell extends BaseCell {
-  id: string;
+  id: string | number;
+  view: NodeView;
 }
 
 export interface BaseEdgeCell extends BaseCell {
   source: string;
   target: string;
+  // view: EdgeView;
 }
 
 export interface BaseCell {
-  tag: "shape" | "brick";
+  tag?: "shape" | "brick";
+  data: unknown;
+  view: unknown;
+}
+
+export interface NodeView {
   x: number;
   y: number;
   width: number;

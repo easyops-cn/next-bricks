@@ -1,15 +1,18 @@
 import React, { useCallback, useState } from "react";
-import { createDecorators } from "@next-core/element";
+import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
-import { ReactUseBrick } from "@next-core/react-runtime";
+import {
+  ReactUseBrick,
+  type UseSingleBrickConf,
+} from "@next-core/react-runtime";
 import "@next-core/theme";
-import type { PositionTuple } from "../diagram/interfaces";
-import type { Cell } from "./interfaces";
+import type { PositionTuple, SizeTuple } from "../diagram/interfaces";
+import type { Cell, NodeCell } from "./interfaces";
 import { Shape } from "./shapes/Shape";
 import styleText from "./styles.shadow.css";
 import { HoverState, HoverStateContext } from "./HoverStateContext";
 
-const { defineElement, property, method } = createDecorators();
+const { defineElement, property, method, event } = createDecorators();
 
 export interface EoDrawCanvasProps {
   cells: Cell[] | undefined;
@@ -34,37 +37,66 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
   @property({ attribute: false })
   accessor cells: Cell[] | undefined;
 
+  @event({ type: "cells.change" })
+  accessor #cellsChangeEvent!: EventEmitter<Cell[]>;
+
+  #handleCellsChange = (cells: Cell[]) => {
+    this.#cellsChangeEvent.emit(cells);
+  };
+
   @method()
-  drop({
+  async drop({
+    id,
     position,
+    size,
     data,
+    useBrick,
   }: {
+    id: string | number;
+    /** [PointerEvent::clientX, PointerEvent::clientY] */
     position: PositionTuple;
+    size: SizeTuple;
     data: unknown;
-  }): { position: PositionTuple; data: unknown } | null {
+    useBrick: UseSingleBrickConf;
+  }): Promise<NodeCell | null> {
+    // Drag and then drop a node
     const droppedInside = document
       .elementsFromPoint?.(position[0], position[1])
       ?.includes(this);
     if (droppedInside) {
       const boundingClientRect = this.getBoundingClientRect();
       return {
-        position: [
-          position[0] - boundingClientRect.left,
-          position[1] - boundingClientRect.top,
-        ],
+        id,
+        view: {
+          x: position[0] - boundingClientRect.left,
+          y: position[1] - boundingClientRect.top,
+          width: size[0],
+          height: size[1],
+        },
         data,
+        useBrick,
       };
     }
     return null;
   }
 
+  @method()
+  async add(): Promise<void> {
+    // Add a node
+  }
+
   render() {
-    return <EoDrawCanvasComponent cells={this.cells} />;
+    return (
+      <EoDrawCanvasComponent
+        cells={this.cells}
+        onCellsChange={this.#handleCellsChange}
+      />
+    );
   }
 }
 
 export interface EoDrawCanvasComponentProps extends EoDrawCanvasProps {
-  cells: Cell[] | undefined;
+  onCellsChange?(cells: Cell[]): void;
 }
 
 export function EoDrawCanvasComponent({ cells }: EoDrawCanvasComponentProps) {
@@ -92,10 +124,10 @@ export function EoDrawCanvasComponent({ cells }: EoDrawCanvasComponentProps) {
             ) : cell.useBrick ? (
               <foreignObject
                 key={index}
-                x={cell.x}
-                y={cell.y}
-                width={cell.width}
-                height={cell.height}
+                x={cell.view.x}
+                y={cell.view.y}
+                width={cell.view.width}
+                height={cell.view.height}
                 style={{ overflow: "visible" }}
               >
                 <ReactUseBrick useBrick={cell.useBrick} />
@@ -111,19 +143,19 @@ export function EoDrawCanvasComponent({ cells }: EoDrawCanvasComponentProps) {
               onMouseLeave={() => setHoverState(null)}
             >
               <rect
-                x={hoverState.cell.x - hoverPadding}
-                y={hoverState.cell.y - hoverPadding}
-                width={hoverState.cell.width + hoverPadding * 2}
-                height={hoverState.cell.height + hoverPadding * 2}
+                x={hoverState.cell.view.x - hoverPadding}
+                y={hoverState.cell.view.y - hoverPadding}
+                width={hoverState.cell.view.width + hoverPadding * 2}
+                height={hoverState.cell.view.height + hoverPadding * 2}
                 fill="none"
                 stroke="none"
                 pointerEvents="all"
               />
               <rect
-                x={hoverState.cell.x}
-                y={hoverState.cell.y}
-                width={hoverState.cell.width}
-                height={hoverState.cell.height}
+                x={hoverState.cell.view.x}
+                y={hoverState.cell.view.y}
+                width={hoverState.cell.view.width}
+                height={hoverState.cell.view.height}
                 fill="none"
                 stroke="cyan"
               />
