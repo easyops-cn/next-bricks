@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.28.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.27.0...@next-bricks/advanced@0.28.0) (2024-02-28)
+
+
+### Features
+
+* eo-tree support titleSuffixBrick ([924ea2e](https://github.com/easyops-cn/next-bricks/commit/924ea2ed40022a1e9934f2506a8cf4b0e2dd0479))
+
+
+
+
+
 # [0.27.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.26.1...@next-bricks/advanced@0.27.0) (2024-02-23)
 
 
