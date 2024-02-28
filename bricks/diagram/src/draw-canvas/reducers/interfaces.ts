@@ -1,10 +1,10 @@
-import type { Cell, NodeCell } from "../interfaces";
+import type { Cell, EdgeCell, NodeCell } from "../interfaces";
 
 export interface DrawCanvasState {
   cells: Cell[];
 }
 
-export type DrawCanvasAction = DropNodeAction | AddNodeAction | AddEdgesAction;
+export type DrawCanvasAction = DropNodeAction | AddNodeAction | AddEdgeAction;
 
 export interface DropNodeAction {
   type: "drop-node";
@@ -16,7 +16,7 @@ export interface AddNodeAction {
   payload: NodeCell[];
 }
 
-export interface AddEdgesAction {
-  type: "add-edges";
-  payload: unknown;
+export interface AddEdgeAction {
+  type: "add-edge";
+  payload: EdgeCell;
 }

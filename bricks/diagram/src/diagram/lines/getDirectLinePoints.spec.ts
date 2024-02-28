@@ -1,6 +1,5 @@
 import { describe, test, expect } from "@jest/globals";
 import { getDirectLinePoints } from "./getDirectLinePoints";
-import type { RenderedNode } from "../interfaces";
 
 describe("getDirectLinePoints", () => {
   const nodeA = {
@@ -8,25 +7,25 @@ describe("getDirectLinePoints", () => {
     y: 100,
     width: 180,
     height: 120,
-  } as RenderedNode;
+  };
   const nodeB = {
     x: 100,
     y: 150,
     width: 180,
     height: 120,
-  } as RenderedNode;
+  };
   const nodeC = {
     x: 420,
     y: 150,
     width: 180,
     height: 120,
-  } as RenderedNode;
+  };
   const nodeD = {
     x: 420,
     y: 350,
     width: 180,
     height: 120,
-  } as RenderedNode;
+  };
 
   test("basic usage", () => {
     expect(getDirectLinePoints(nodeA, nodeA)).toBe(null);

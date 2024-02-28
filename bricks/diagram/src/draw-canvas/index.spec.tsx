@@ -2,6 +2,7 @@ import { describe, test, expect, jest } from "@jest/globals";
 import { act } from "react-dom/test-utils";
 import "./";
 import type { EoDrawCanvas } from "./index.js";
+import type { NodeBrickCell } from "./interfaces";
 
 jest.mock("@next-core/theme", () => ({}));
 
@@ -171,6 +172,102 @@ describe("eo-draw-canvas", () => {
         },
       ]);
     });
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("add edge", async () => {
+    const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
+    element.defaultNodeSize = [180, 120];
+    element.cells = [
+      {
+        // This edge will be ignored since source node is not found
+        type: "edge",
+        source: "oops",
+        target: "x",
+      },
+      {
+        type: "node",
+        id: "x",
+        view: {
+          x: 20,
+          y: 20,
+        },
+        useBrick: { brick: "div" },
+      },
+      {
+        type: "node",
+        id: "y",
+        view: {
+          x: 20,
+          y: 320,
+        },
+        useBrick: { brick: "div" },
+      },
+      {
+        type: "node",
+        id: "z",
+        view: {
+          x: 320,
+          y: 320,
+        },
+        useBrick: { brick: "div" },
+      },
+    ] as NodeBrickCell[];
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(element.shadowRoot?.querySelectorAll(".line").length).toBe(0);
+
+    await act(async () => {
+      const result = await element.addEdge({
+        source: "x",
+        target: "y",
+      });
+      expect(result).toEqual({
+        type: "edge",
+        source: "x",
+        target: "y",
+      });
+    });
+
+    const getCellTagNames = () =>
+      [...element.shadowRoot!.querySelector("g")!.childNodes!].map((node) =>
+        (node as Element).tagName.toLowerCase()
+      );
+
+    // Edges are adding to just next to the previous last edge,
+    // If no previous edge, add to the start.
+    expect(getCellTagNames()).toEqual([
+      "path",
+      "foreignobject",
+      "foreignobject",
+      "foreignobject",
+    ]);
+
+    await act(async () => {
+      const result = await element.addEdge({
+        source: "x",
+        target: "z",
+      });
+      expect(result).toEqual({
+        type: "edge",
+        source: "x",
+        target: "z",
+      });
+    });
+
+    expect(getCellTagNames()).toEqual([
+      "path",
+      "path",
+      "foreignobject",
+      "foreignobject",
+      "foreignobject",
+    ]);
 
     act(() => {
       document.body.removeChild(element);

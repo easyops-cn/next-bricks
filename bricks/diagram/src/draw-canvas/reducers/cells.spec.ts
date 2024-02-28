@@ -17,12 +17,51 @@ describe("cells reducer", () => {
     ).toEqual([{ id: "2" }, { id: "3" }]);
   });
 
-  test("add edges", () => {
+  test("add edge", () => {
+    const newCells = cells([{ type: "node", id: "2" } as any], {
+      type: "add-edge",
+      payload: { type: "edge", source: "1", target: "2" },
+    });
+    expect(newCells).toEqual([
+      {
+        source: "1",
+        target: "2",
+        type: "edge",
+      },
+      {
+        id: "2",
+        type: "node",
+      },
+    ]);
+    expect(
+      cells(newCells, {
+        type: "add-edge",
+        payload: { type: "edge", source: "1", target: "3" },
+      })
+    ).toEqual([
+      {
+        source: "1",
+        target: "2",
+        type: "edge",
+      },
+      {
+        source: "1",
+        target: "3",
+        type: "edge",
+      },
+      {
+        id: "2",
+        type: "node",
+      },
+    ]);
+  });
+
+  test("unknown actions", () => {
     expect(
       cells([{ id: "x" } as any], {
-        type: "add-edges",
-        payload: { id: "z" } as any,
-      })
+        type: "unknown",
+        payload: { id: "z" },
+      } as any)
     ).toEqual([{ id: "x" }]);
   });
 });

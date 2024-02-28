@@ -12,6 +12,7 @@ properties:
   style:
     display: flex
     height: 600px
+    gap: 1em
 context:
   - name: dragging
     value: null
@@ -19,7 +20,10 @@ children:
   - brick: div
     properties:
       style:
-        width: 200px
+        width: 180px
+        display: flex
+        flexDirection: column
+        gap: 1em
     children:
       - brick: eo-button
         properties:
@@ -55,15 +59,23 @@ children:
                 args:
                   - Added nodes
                   - <% EVENT.detail %>
+      - brick: eo-button
+        properties:
+          textContent: "Add edge: Y => Z"
+        events:
+          click:
+            target: eo-draw-canvas
+            method: addEdge
+            args:
+              - source: Y
+                target: Z
       - brick: hr
         properties:
           style:
-            margin: 1em 0
+            width: 100%
       - brick: h3
         properties:
           textContent: Drag nodes below
-          style:
-            marginBottom: 1em
       - brick: :forEach
         dataSource: |
           <%
@@ -129,20 +141,46 @@ children:
             width: 100%
             height: 100%
           # Initial nodes only
-          cells:
-            - type: node
-              id: x
-              data:
-                name: Node X
-              view:
-                x: 300
-                y: 200
-                width: 60
-                height: 60
-              useBrick:
-                brick: diagram.experimental-node
-                properties:
-                  textContent: Node X
+          cells: |
+            <%
+              [
+                {
+                  type: "edge",
+                  source: "X",
+                  target: "Y",
+                },
+                {
+                  type: "edge",
+                  source: "X",
+                  target: "Z",
+                },
+              ].concat(
+                ["X", "Y", "Z"].map((id) => ({
+                  type: "node",
+                  id,
+                  data: {
+                    name: `Node ${id}`,
+                  },
+                  useBrick: {
+                    brick: "diagram.experimental-node",
+                    properties: {
+                      textContent: `Node ${id}`,
+                    }
+                  },
+                  view: {
+                    x:
+                      id === "X"
+                        ? 200 + Math.random() * 200
+                        : id === "Y"
+                        ? Math.random() * 300
+                        : 300 + Math.random() * 300,
+                    y: (id === "X" ? 0 : 300) + Math.random() * 200,
+                    width: 60,
+                    height: 60,
+                  }
+                }))
+              )
+            %>
   - brick: diagram.experimental-node
     properties:
       usage: dragging
