@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.15.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.14.0...@next-bricks/diagram@0.15.0) (2024-02-28)
+
+
+### Features
+
+* support edges ([a297930](https://github.com/easyops-cn/next-bricks/commit/a2979302733a222df13bb7e78d37b55ab77d4af3))
+
+
+
+
+
 # [0.14.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.13.0...@next-bricks/diagram@0.14.0) (2024-02-28)
 
 
