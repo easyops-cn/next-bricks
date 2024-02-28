@@ -7,7 +7,11 @@ import type { TreeProps } from "antd";
 import type { BasicDataNode } from "antd/es/tree";
 import { StyleProvider, createCache } from "@ant-design/cssinjs";
 import { DownOutlined } from "@ant-design/icons";
-import { useCurrentTheme } from "@next-core/react-runtime";
+import {
+  useCurrentTheme,
+  ReactUseMultipleBricks,
+} from "@next-core/react-runtime";
+import { UseBrickConf } from "@next-core/types";
 import styleText from "./styles.shadow.css";
 
 const { defineElement, property, event } = createDecorators();
@@ -23,6 +27,7 @@ export interface EoTreeProps {
   nodeDraggable?: boolean | { icon?: false };
   switcherIcon?: "auto" | "chevron" | false;
   allowDrop?: (info: AllowDropInfo) => boolean;
+  titleSuffixBrick?: { useBrick: UseBrickConf };
 }
 
 export interface TreeNode extends BasicDataNode {
@@ -102,6 +107,9 @@ class EoTree extends ReactNextElement implements EoTreeProps {
   @property({ attribute: false })
   accessor allowDrop: ((info: AllowDropInfo) => boolean) | undefined;
 
+  @property({ attribute: false })
+  accessor titleSuffixBrick: { useBrick: UseBrickConf } | undefined;
+
   @event({ type: "check" })
   accessor #checkEvent!: EventEmitter<TreeNodeKey[]>;
 
@@ -148,6 +156,7 @@ class EoTree extends ReactNextElement implements EoTreeProps {
         switcherIcon={this.switcherIcon}
         expandedKeys={this.expandedKeys}
         checkedKeys={this.checkedKeys}
+        titleSuffixBrick={this.titleSuffixBrick}
         onCheck={this.#handleCheck}
         onExpand={this.#handleExpand}
         allowDrop={this.allowDrop}
@@ -176,6 +185,7 @@ export function EoTreeComponent({
   checkedKeys,
   nodeDraggable,
   switcherIcon,
+  titleSuffixBrick,
   onCheck,
   onExpand,
   onDrop,
@@ -210,6 +220,23 @@ export function EoTreeComponent({
               <DownOutlined />
             ) : undefined
           }
+          {...(titleSuffixBrick?.useBrick
+            ? {
+                titleRender: (nodeData: TreeNode) => {
+                  return (
+                    <>
+                      {nodeData.title}
+                      <span onClick={(e) => e.stopPropagation()}>
+                        <ReactUseMultipleBricks
+                          useBrick={titleSuffixBrick.useBrick}
+                          data={nodeData}
+                        />
+                      </span>
+                    </>
+                  );
+                },
+              }
+            : null)}
           treeData={dataSource}
           checkable={checkable}
           selectable={selectable}
