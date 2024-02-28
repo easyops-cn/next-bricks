@@ -45,6 +45,14 @@ describe("eo-tree", () => {
     element.selectable = false;
     element.defaultExpandAll = true;
     element.dataSource = treeData;
+    element.titleSuffixBrick = {
+      useBrick: {
+        brick: "span",
+        properties: {
+          className: "title-suffix-brick",
+        },
+      },
+    };
 
     const onCheck = jest.fn();
     const onCheckDetail = jest.fn();
