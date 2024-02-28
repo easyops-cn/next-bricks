@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.13.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.12.3...@next-bricks/diagram@0.13.0) (2024-02-28)
+
+
+### Features
+
+* new brick: eo-draw-canvas ([5bbb94f](https://github.com/easyops-cn/next-bricks/commit/5bbb94f16c744e2930f4cfbccd1a0a8af563a57c))
+
+
+
+
+
 ## [0.12.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.12.2...@next-bricks/diagram@0.12.3) (2024-02-07)
 
 **Note:** Version bump only for package @next-bricks/diagram

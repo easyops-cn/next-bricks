@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.6.0...@next-bricks/basic@1.6.1) (2024-02-28)
+
+
+### Bug Fixes
+
+* **show-notification:** fix z-index ([86b0ea2](https://github.com/easyops-cn/next-bricks/commit/86b0ea276cd9924945ca893e31f769f21224bded))
+
+
+
+
+
 # [1.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.5.0...@next-bricks/basic@1.6.0) (2024-02-20)
 
 
