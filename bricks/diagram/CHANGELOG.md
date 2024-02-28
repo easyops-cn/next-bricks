@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.13.0...@next-bricks/diagram@0.14.0) (2024-02-28)
+
+
+### Features
+
+* **draw-canvas:** support add nodes ([3cd7183](https://github.com/easyops-cn/next-bricks/commit/3cd7183f1fa6e9fe39086bd591930e27832a51bc))
+
+
+
+
+
 # [0.13.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.12.3...@next-bricks/diagram@0.13.0) (2024-02-28)
 
 
