@@ -1,6 +1,6 @@
 import type { UseSingleBrickConf } from "@next-core/react-runtime";
 
-export type Cell = ShapeCell | BrickCell;
+export type Cell = NodeCell | EdgeCell;
 
 export type ShapeCell = NodeShapeCell /*  | EdgeShapeCell */;
 
@@ -8,13 +8,15 @@ export type BrickCell = NodeBrickCell /*  | EdgeBrickCell */;
 
 export type NodeCell = NodeBrickCell | NodeShapeCell;
 
+export type EdgeCell = BaseEdgeCell;
+
 export type NodeShapeCell = BaseShapeCell & BaseNodeCell;
 
 export type NodeBrickCell = BaseBrickCell & BaseNodeCell;
 
-export type EdgeShapeCell = BaseShapeCell & BaseEdgeCell;
+// export type EdgeShapeCell = BaseShapeCell & BaseEdgeCell;
 
-export type EdgeBrickCell = BaseBrickCell & BaseEdgeCell;
+// export type EdgeBrickCell = BaseBrickCell & BaseEdgeCell;
 
 export interface BaseShapeCell extends BaseCell {
   tag: "shape";
@@ -41,24 +43,34 @@ export interface BaseNodeCell extends BaseCell {
 
 export interface BaseEdgeCell extends BaseCell {
   type: "edge";
-  source: string;
-  target: string;
+  source: string | number;
+  target: string | number;
   // view: EdgeView;
 }
 
 export interface BaseCell {
   type: "node" | "edge";
   tag?: "shape" | "brick";
-  data: unknown;
-  view: unknown;
+  data?: unknown;
 }
 
-export interface NodeView {
-  x: number;
-  y: number;
+export interface NodeView extends InitialNodeView {
   width: number;
   height: number;
 }
+
+export interface InitialNodeView {
+  x: number;
+  y: number;
+  width?: number;
+  height?: number;
+}
+
+export type InitialNodeCell = Omit<NodeCell, "view"> & {
+  view: InitialNodeView;
+};
+
+export type InitialCell = InitialNodeCell | EdgeCell;
 
 export interface BasicShapeProps {
   cell: ShapeCell;

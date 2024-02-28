@@ -1,9 +1,9 @@
-import type { NodePosition, RenderedNode } from "../interfaces";
+import type { NodePosition, NodeRect } from "../interfaces";
 import { doTwoNodesOverlap } from "../processors/doTwoNodesOverlap";
 
 export function getDirectLinePoints(
-  source: RenderedNode,
-  target: RenderedNode
+  source: NodeRect,
+  target: NodeRect
 ): NodePosition[] | null {
   // Ignore if two nodes are the same.
   // Ignore if two nodes overlap.

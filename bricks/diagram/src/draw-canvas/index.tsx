@@ -1,4 +1,9 @@
-import React, { createRef, useImperativeHandle, useReducer } from "react";
+import React, {
+  createRef,
+  useImperativeHandle,
+  useMemo,
+  useReducer,
+} from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import {
@@ -6,9 +11,24 @@ import {
   type UseSingleBrickConf,
 } from "@next-core/react-runtime";
 import "@next-core/theme";
-import type { PositionTuple, SizeTuple } from "../diagram/interfaces";
-import type { BrickCell, Cell, NodeCell } from "./interfaces";
+import { uniqueId } from "lodash";
+import type { NodeRect, PositionTuple, SizeTuple } from "../diagram/interfaces";
+import type {
+  BrickCell,
+  Cell,
+  EdgeCell,
+  InitialCell,
+  NodeCell,
+  NodeView,
+} from "./interfaces";
 import { rootReducer } from "./reducers";
+import { getDirectLinePoints } from "../diagram/lines/getDirectLinePoints";
+import { MarkerComponent } from "../diagram/MarkerComponent";
+import {
+  isEdgeCell,
+  isInitialNodeCell,
+  isNodeCell,
+} from "./processors/asserts";
 import styleText from "./styles.shadow.css";
 
 const DEFAULT_NODE_SIZE = 20;
@@ -16,7 +36,8 @@ const DEFAULT_NODE_SIZE = 20;
 const { defineElement, property, method } = createDecorators();
 
 export interface EoDrawCanvasProps {
-  cells: Cell[] | undefined;
+  cells: InitialCell[] | undefined;
+  defaultNodeSize?: SizeTuple;
 }
 
 export interface DropNodeInfo extends AddNodeInfo {
@@ -26,9 +47,15 @@ export interface DropNodeInfo extends AddNodeInfo {
 
 export interface AddNodeInfo {
   id: string | number;
-  data: unknown;
   useBrick: UseSingleBrickConf;
+  data?: unknown;
   size?: SizeTuple;
+}
+
+export interface AddEdgeInfo {
+  source: string | number;
+  target: string | number;
+  data?: unknown;
 }
 
 export const EoDrawCanvasComponent = React.forwardRef(
@@ -49,7 +76,10 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
    * 仅当初始化时使用，渲染后重新设置 `cells` 将无效。
    */
   @property({ attribute: false })
-  accessor cells: Cell[] | undefined;
+  accessor cells: InitialCell[] | undefined;
+
+  @property({ attribute: false })
+  accessor defaultNodeSize: SizeTuple | undefined;
 
   // @event({ type: "cells.change" })
   // accessor #cellsChangeEvent!: EventEmitter<Cell[]>;
@@ -78,8 +108,8 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         view: {
           x: position[0] - boundingClientRect.left,
           y: position[1] - boundingClientRect.top,
-          width: size?.[0] ?? DEFAULT_NODE_SIZE,
-          height: size?.[1] ?? DEFAULT_NODE_SIZE,
+          width: size?.[0] ?? this.defaultNodeSize?.[0] ?? DEFAULT_NODE_SIZE,
+          height: size?.[1] ?? this.defaultNodeSize?.[0] ?? DEFAULT_NODE_SIZE,
         },
         data,
         useBrick,
@@ -109,12 +139,24 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
       view: {
         x: Math.floor(index / rows) * (width + gap) + gap,
         y: (index % rows) * (height + gap) + gap,
-        width: size?.[0] ?? DEFAULT_NODE_SIZE,
-        height: size?.[1] ?? DEFAULT_NODE_SIZE,
+        width: size?.[0] ?? this.defaultNodeSize?.[0] ?? DEFAULT_NODE_SIZE,
+        height: size?.[1] ?? this.defaultNodeSize?.[0] ?? DEFAULT_NODE_SIZE,
       },
     }));
     this.#canvasRef.current?.addNodes(positionedNodes);
     return positionedNodes;
+  }
+
+  @method()
+  async addEdge({ source, target, data }: AddEdgeInfo): Promise<EdgeCell> {
+    const newEdge: EdgeCell = {
+      type: "edge",
+      source,
+      target,
+      data,
+    };
+    this.#canvasRef.current?.addEdge(newEdge);
+    return newEdge;
   }
 
   #canvasRef = createRef<DrawCanvasRef>();
@@ -124,6 +166,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
       <EoDrawCanvasComponent
         ref={this.#canvasRef}
         cells={this.cells}
+        defaultNodeSize={this.defaultNodeSize}
         // onCellsChange={this.#handleCellsChange}
       />
     );
@@ -137,15 +180,37 @@ export interface EoDrawCanvasComponentProps extends EoDrawCanvasProps {
 export interface DrawCanvasRef {
   dropNode(node: NodeCell): void;
   addNodes(nodes: NodeCell[]): void;
+  addEdge(edge: EdgeCell): void;
 }
 
 function LegacyEoDrawCanvasComponent(
-  { cells: initialCells }: EoDrawCanvasComponentProps,
+  { cells: initialCells, defaultNodeSize }: EoDrawCanvasComponentProps,
   ref: React.Ref<DrawCanvasRef>
 ) {
-  const [{ cells }, dispatch] = useReducer(rootReducer, {
-    cells: initialCells ?? [],
-  });
+  const [{ cells }, dispatch] = useReducer(
+    rootReducer,
+    initialCells,
+    (initialCells) => {
+      const originalCells = initialCells ?? [];
+      const finalCells: Cell[] = defaultNodeSize
+        ? originalCells.map<Cell>((cell) =>
+            isInitialNodeCell(cell)
+              ? cell.view.width === undefined || cell.view.height === undefined
+                ? ({
+                    ...cell,
+                    view: {
+                      width: defaultNodeSize[0],
+                      height: defaultNodeSize[1],
+                      ...cell.view,
+                    },
+                  } as NodeCell)
+                : (cell as NodeCell)
+              : (cell as EdgeCell)
+          )
+        : (originalCells as NodeCell[]);
+      return { cells: finalCells };
+    }
+  );
 
   useImperativeHandle(
     ref,
@@ -156,29 +221,115 @@ function LegacyEoDrawCanvasComponent(
       addNodes(nodes) {
         dispatch({ type: "add-nodes", payload: nodes });
       },
+      addEdge(edge) {
+        dispatch({ type: "add-edge", payload: edge });
+      },
     }),
     []
   );
 
+  const defPrefix = useMemo(() => `${uniqueId("diagram-")}-`, []);
+  const markerPrefix = `${defPrefix}line-arrow-`;
+  const markerEnd = `${markerPrefix}1`;
+
   return (
     // Todo(steve): canvas size
     <svg width={800} height={600}>
+      <defs>
+        <MarkerComponent id={markerEnd} type="arrow" strokeColor="gray" />
+      </defs>
       <g>
-        {cells.map((cell, index) =>
-          (cell as BrickCell).useBrick ? (
-            <foreignObject
-              key={index}
-              x={cell.view.x}
-              y={cell.view.y}
-              width={cell.view.width}
-              height={cell.view.height}
-              style={{ overflow: "visible" }}
-            >
-              <ReactUseBrick useBrick={(cell as BrickCell).useBrick} />
-            </foreignObject>
+        {cells.map((cell) =>
+          isNodeCell(cell) ? (
+            (cell as BrickCell).useBrick ? (
+              <foreignObject
+                key={`node:${cell.id}`}
+                x={cell.view.x}
+                y={cell.view.y}
+                width={cell.view.width}
+                height={cell.view.height}
+                style={{ overflow: "visible" }}
+              >
+                <ReactUseBrick useBrick={(cell as BrickCell).useBrick} />
+              </foreignObject>
+            ) : null
+          ) : isEdgeCell(cell) ? (
+            <EdgeComponent
+              key={`edge:${cell.source}-${cell.target}`}
+              edge={cell}
+              cells={cells}
+              markerEnd={markerEnd}
+            />
           ) : null
         )}
       </g>
     </svg>
   );
+}
+
+export interface EdgeComponentProps {
+  edge: EdgeCell;
+  cells: Cell[];
+  markerEnd: string;
+}
+
+export function EdgeComponent({
+  edge,
+  cells,
+  markerEnd,
+}: EdgeComponentProps): JSX.Element | null {
+  const nodes = useMemo(() => {
+    let sourceNode: NodeCell | undefined;
+    let targetNode: NodeCell | undefined;
+    for (const cell of cells) {
+      if (isNodeCell(cell)) {
+        if (cell.id === edge.source) {
+          sourceNode = cell;
+        }
+        if (cell.id === edge.target) {
+          targetNode = cell;
+        }
+      }
+    }
+    return sourceNode && targetNode
+      ? ([sourceNode, targetNode] as const)
+      : null;
+  }, [cells, edge.source, edge.target]);
+
+  const padding = 5;
+
+  const line = useMemo(
+    () =>
+      nodes
+        ? getDirectLinePoints(
+            nodeViewToNodeRect(nodes[0].view, padding),
+            nodeViewToNodeRect(nodes[1].view, padding)
+          )
+        : null,
+    [nodes]
+  );
+
+  if (!line) {
+    // This happens when source or target is not found
+    return null;
+  }
+
+  return (
+    <path
+      className="line"
+      d={`M${line[0].x} ${line[0].y}L${line[1].x} ${line[1].y}`}
+      fill="none"
+      stroke="gray"
+      markerEnd={`url(#${markerEnd})`}
+    />
+  );
+}
+
+function nodeViewToNodeRect(view: NodeView, padding: number): NodeRect {
+  return {
+    x: view.x + view.width / 2,
+    y: view.y + view.height / 2,
+    width: view.width + padding,
+    height: view.height + padding,
+  };
 }
