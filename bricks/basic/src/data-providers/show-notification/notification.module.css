@@ -3,6 +3,7 @@
   display: flex;
   gap: 16px;
   flex-direction: column;
+  z-index: var(--sl-z-index-toast);
 }
 
 .notificationWrapper.center {
