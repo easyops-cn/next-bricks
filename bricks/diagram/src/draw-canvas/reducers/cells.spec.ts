@@ -8,12 +8,21 @@ describe("cells reducer", () => {
     ).toEqual([{ id: "1" }]);
   });
 
-  test("add node", () => {
+  test("add nodes", () => {
     expect(
       cells([{ id: "2" } as any], {
-        type: "add-node",
-        payload: { id: "3" } as any,
+        type: "add-nodes",
+        payload: [{ id: "3" }] as any,
       })
-    ).toEqual([{ id: "2" }]);
+    ).toEqual([{ id: "2" }, { id: "3" }]);
+  });
+
+  test("add edges", () => {
+    expect(
+      cells([{ id: "x" } as any], {
+        type: "add-edges",
+        payload: { id: "z" } as any,
+      })
+    ).toEqual([{ id: "x" }]);
   });
 });

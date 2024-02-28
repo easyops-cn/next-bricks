@@ -1,4 +1,6 @@
-构件 `eo-draw-canvas`
+用于手工绘图的画布。
+
+注意：将配套另外一个用于展示的画布构件。
 
 ## Examples
 
@@ -19,6 +21,49 @@ children:
       style:
         width: 200px
     children:
+      - brick: eo-button
+        properties:
+          textContent: Add random nodes
+        events:
+          click:
+            target: eo-draw-canvas
+            method: addNodes
+            args:
+              - |
+                <%
+                  ((...seeds) => seeds.map((seed) => ({
+                    id: seed,
+                    data: {
+                      name: String(seed),
+                    },
+                    useBrick: {
+                      brick: "diagram.experimental-node",
+                      properties: {
+                        textContent: String(seed),
+                      }
+                    },
+                    size: [60, 60],
+                  })))(
+                    Math.round(Math.random() * 1e6),
+                    Math.round(Math.random() * 1e6),
+                    Math.round(Math.random() * 1e6),
+                  )
+                %>
+            callback:
+              success:
+                action: console.log
+                args:
+                  - Added nodes
+                  - <% EVENT.detail %>
+      - brick: hr
+        properties:
+          style:
+            margin: 1em 0
+      - brick: h3
+        properties:
+          textContent: Drag nodes below
+          style:
+            marginBottom: 1em
       - brick: :forEach
         dataSource: |
           <%
