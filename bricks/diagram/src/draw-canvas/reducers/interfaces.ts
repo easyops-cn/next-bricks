@@ -4,7 +4,7 @@ export interface DrawCanvasState {
   cells: Cell[];
 }
 
-export type DrawCanvasAction = DropNodeAction | AddNodeAction;
+export type DrawCanvasAction = DropNodeAction | AddNodeAction | AddEdgesAction;
 
 export interface DropNodeAction {
   type: "drop-node";
@@ -12,6 +12,11 @@ export interface DropNodeAction {
 }
 
 export interface AddNodeAction {
-  type: "add-node";
-  payload: NodeCell;
+  type: "add-nodes";
+  payload: NodeCell[];
+}
+
+export interface AddEdgesAction {
+  type: "add-edges";
+  payload: unknown;
 }

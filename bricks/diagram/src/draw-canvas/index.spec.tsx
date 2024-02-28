@@ -66,4 +66,114 @@ describe("eo-draw-canvas", () => {
     });
     expect(element.shadowRoot?.childNodes.length).toBe(0);
   });
+
+  test("add nodes", async () => {
+    const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    await act(async () => {
+      const result = await element.addNodes([]);
+      expect(result).toEqual([]);
+    });
+
+    await act(async () => {
+      const result = await element.addNodes([
+        {
+          id: "add-1",
+          size: [100, 200],
+          data: {},
+          useBrick: { brick: "div" },
+        },
+        {
+          id: "add-2",
+          data: {},
+          useBrick: { brick: "div" },
+        },
+      ]);
+      expect(result).toEqual([
+        {
+          data: {},
+          id: "add-1",
+          type: "node",
+          useBrick: {
+            brick: "div",
+          },
+          view: {
+            height: 200,
+            width: 100,
+            x: 20,
+            y: 20,
+          },
+        },
+        {
+          data: {},
+          id: "add-2",
+          type: "node",
+          useBrick: {
+            brick: "div",
+          },
+          view: {
+            height: 20,
+            width: 20,
+            x: 20,
+            y: 240,
+          },
+        },
+      ]);
+    });
+
+    // Test when the first node has no size
+    await act(async () => {
+      const result = await element.addNodes([
+        {
+          id: "add-3",
+          data: {},
+          useBrick: { brick: "div" },
+        },
+        {
+          id: "add-4",
+          size: [100, 200],
+          data: {},
+          useBrick: { brick: "div" },
+        },
+      ]);
+      expect(result).toEqual([
+        {
+          data: {},
+          id: "add-3",
+          type: "node",
+          useBrick: {
+            brick: "div",
+          },
+          view: {
+            height: 20,
+            width: 20,
+            x: 20,
+            y: 20,
+          },
+        },
+        {
+          data: {},
+          id: "add-4",
+          type: "node",
+          useBrick: {
+            brick: "div",
+          },
+          view: {
+            height: 200,
+            width: 100,
+            x: 20,
+            y: 60,
+          },
+        },
+      ]);
+    });
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
 });
