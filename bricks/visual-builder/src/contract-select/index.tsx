@@ -184,7 +184,7 @@ export function EoContractSelectComponent({
         value={mixedValue.name}
         inputStyle={inputStyle}
         validateState={validateState}
-        onChange={handlerNameChange}
+        onChange={handlerNameChange as any}
       >
         <MoreOption
           onBlur={(pageSize) => setPageSize(pageSize)}
@@ -196,7 +196,7 @@ export function EoContractSelectComponent({
         value={mixedValue.version}
         validateState={validateState}
         options={versionOptions?.map((v) => ({ value: v, label: v }))}
-        onChange={handleVersionChange}
+        onChange={handleVersionChange as any}
       ></WrappedAutoComplete>
     </div>
   );

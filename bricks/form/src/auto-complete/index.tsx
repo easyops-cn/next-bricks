@@ -38,7 +38,7 @@ export interface AutoCompleteProps extends FormItemProps {
 }
 
 export interface AutoCompleteEvents {
-  onChange: CustomEvent<string>;
+  change: CustomEvent<string>;
 }
 
 export interface AutoCompleteEventsMap {
