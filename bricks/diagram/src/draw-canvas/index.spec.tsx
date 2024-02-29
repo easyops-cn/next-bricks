@@ -70,6 +70,7 @@ describe("eo-draw-canvas", () => {
 
   test("add nodes", async () => {
     const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
+    element.defaultNodeBricks = [{ useBrick: { brick: "div" } }];
 
     act(() => {
       document.body.appendChild(element);
@@ -86,12 +87,10 @@ describe("eo-draw-canvas", () => {
           id: "add-1",
           size: [100, 200],
           data: {},
-          useBrick: { brick: "div" },
         },
         {
           id: "add-2",
           data: {},
-          useBrick: { brick: "div" },
         },
       ]);
       expect(result).toEqual([
@@ -99,9 +98,6 @@ describe("eo-draw-canvas", () => {
           data: {},
           id: "add-1",
           type: "node",
-          useBrick: {
-            brick: "div",
-          },
           view: {
             height: 200,
             width: 100,
@@ -113,9 +109,6 @@ describe("eo-draw-canvas", () => {
           data: {},
           id: "add-2",
           type: "node",
-          useBrick: {
-            brick: "div",
-          },
           view: {
             height: 20,
             width: 20,

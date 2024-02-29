@@ -34,7 +34,7 @@ export interface ShapeStyle {
 
 export interface BaseBrickCell extends BaseCell {
   tag?: "brick";
-  useBrick: UseSingleBrickConf;
+  useBrick?: UseSingleBrickConf;
 }
 
 export interface BaseNodeCell extends BaseCell {
@@ -73,6 +73,11 @@ export type InitialNodeCell = Omit<NodeCell, "view"> & {
 };
 
 export type InitialCell = InitialNodeCell | EdgeCell;
+
+export interface NodeBrickConf {
+  useBrick: UseSingleBrickConf;
+  if?: string | boolean | null;
+}
 
 export interface BasicShapeProps {
   cell: ShapeCell;

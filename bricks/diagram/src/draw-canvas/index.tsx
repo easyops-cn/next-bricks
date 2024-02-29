@@ -18,10 +18,10 @@ import type {
   SizeTuple,
 } from "../diagram/interfaces";
 import type {
-  BrickCell,
   Cell,
   EdgeCell,
   InitialCell,
+  NodeBrickConf,
   NodeCell,
   NodeId,
 } from "./interfaces";
@@ -34,7 +34,7 @@ import {
 } from "./processors/asserts";
 import { EdgeComponent } from "./EdgeComponent";
 import styleText from "./styles.shadow.css";
-import { NodeComponent } from "./NodeComponent";
+import { NodeContainer } from "./NodeComponent";
 import { handleMouseDown } from "./processors/handleMouseDown";
 import type { MoveNodePayload } from "./reducers/interfaces";
 
@@ -45,6 +45,7 @@ const { defineElement, property, method, event } = createDecorators();
 export interface EoDrawCanvasProps {
   cells: InitialCell[] | undefined;
   defaultNodeSize?: SizeTuple;
+  defaultNodeBricks?: NodeBrickConf[];
 }
 
 export interface DropNodeInfo extends AddNodeInfo {
@@ -54,7 +55,7 @@ export interface DropNodeInfo extends AddNodeInfo {
 
 export interface AddNodeInfo {
   id: NodeId;
-  useBrick: UseSingleBrickConf;
+  useBrick?: UseSingleBrickConf;
   data?: unknown;
   size?: SizeTuple;
 }
@@ -87,6 +88,9 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
 
   @property({ attribute: false })
   accessor defaultNodeSize: SizeTuple | undefined;
+
+  @property({ attribute: false })
+  accessor defaultNodeBricks: NodeBrickConf[] | undefined;
 
   // @event({ type: "cells.change" })
   // accessor #cellsChangeEvent!: EventEmitter<Cell[]>;
@@ -140,23 +144,28 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
       return [];
     }
     const firstNode = nodes[0];
-    const width = firstNode.size?.[0] ?? DEFAULT_NODE_SIZE;
-    const height = firstNode.size?.[1] ?? DEFAULT_NODE_SIZE;
+    const width =
+      firstNode.size?.[0] ?? this.defaultNodeSize?.[0] ?? DEFAULT_NODE_SIZE;
+    const height =
+      firstNode.size?.[1] ?? this.defaultNodeSize?.[1] ?? DEFAULT_NODE_SIZE;
     const gap = 20;
     // Todo(steve): canvas size
     const canvasHeight = 600;
     const rows = Math.floor(canvasHeight / (height + gap));
     // Assert: nodes are all brick nodes (no shape nodes)
-    const positionedNodes = nodes.map<NodeCell>(({ size, ...node }, index) => ({
-      ...node,
-      type: "node",
-      view: {
-        x: Math.floor(index / rows) * (width + gap) + gap,
-        y: (index % rows) * (height + gap) + gap,
-        width: size?.[0] ?? this.defaultNodeSize?.[0] ?? DEFAULT_NODE_SIZE,
-        height: size?.[1] ?? this.defaultNodeSize?.[0] ?? DEFAULT_NODE_SIZE,
-      },
-    }));
+    const positionedNodes = nodes.map<NodeCell>(
+      ({ size, useBrick, ...node }, index) => ({
+        ...node,
+        type: "node",
+        view: {
+          x: Math.floor(index / rows) * (width + gap) + gap,
+          y: (index % rows) * (height + gap) + gap,
+          width: size?.[0] ?? this.defaultNodeSize?.[0] ?? DEFAULT_NODE_SIZE,
+          height: size?.[1] ?? this.defaultNodeSize?.[0] ?? DEFAULT_NODE_SIZE,
+        },
+        useBrick,
+      })
+    );
     this.#canvasRef.current?.addNodes(positionedNodes);
     return positionedNodes;
   }
@@ -181,6 +190,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         ref={this.#canvasRef}
         cells={this.cells}
         defaultNodeSize={this.defaultNodeSize}
+        defaultNodeBricks={this.defaultNodeBricks}
         // onCellsChange={this.#handleCellsChange}
         onNodeMove={this.#handleNodeMove}
       />
@@ -203,6 +213,7 @@ function LegacyEoDrawCanvasComponent(
   {
     cells: initialCells,
     defaultNodeSize,
+    defaultNodeBricks,
     onNodeMove,
   }: EoDrawCanvasComponentProps,
   ref: React.Ref<DrawCanvasRef>
@@ -213,20 +224,22 @@ function LegacyEoDrawCanvasComponent(
     (initialCells) => {
       const originalCells = initialCells ?? [];
       const finalCells: Cell[] = defaultNodeSize
-        ? originalCells.map<Cell>((cell) =>
-            isInitialNodeCell(cell)
-              ? cell.view.width === undefined || cell.view.height === undefined
-                ? ({
-                    ...cell,
-                    view: {
-                      width: defaultNodeSize[0],
-                      height: defaultNodeSize[1],
-                      ...cell.view,
-                    },
-                  } as NodeCell)
-                : (cell as NodeCell)
-              : (cell as EdgeCell)
-          )
+        ? originalCells.map<Cell>((cell) => {
+            if (
+              !isInitialNodeCell(cell) ||
+              (cell.view.width !== undefined && cell.view.height !== undefined)
+            ) {
+              return cell as NodeCell;
+            }
+            return {
+              ...cell,
+              view: {
+                width: defaultNodeSize[0],
+                height: defaultNodeSize[1],
+                ...cell.view,
+              },
+            } as NodeCell;
+          })
         : (originalCells as NodeCell[]);
       return { cells: finalCells };
     }
@@ -303,23 +316,13 @@ function LegacyEoDrawCanvasComponent(
       <g ref={cellsRef}>
         {cells.map((cell) =>
           isNodeCell(cell) ? (
-            (cell as BrickCell).useBrick ? (
-              <foreignObject
-                key={`node:${cell.id}`}
-                x={cell.view.x}
-                y={cell.view.y}
-                width={cell.view.width}
-                height={cell.view.height}
-                style={{ overflow: "visible" }}
-              >
-                <NodeComponent
-                  id={cell.id}
-                  useBrick={(cell as BrickCell).useBrick}
-                  onMount={handleNodeMount}
-                  onUnmount={handleNodeUnmount}
-                />
-              </foreignObject>
-            ) : null
+            <NodeContainer
+              key={`node:${cell.id}`}
+              node={cell}
+              defaultNodeBricks={defaultNodeBricks}
+              onMount={handleNodeMount}
+              onUnmount={handleNodeUnmount}
+            />
           ) : isEdgeCell(cell) ? (
             <EdgeComponent
               key={`edge:${cell.source}~${cell.target}`}
