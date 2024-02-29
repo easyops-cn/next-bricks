@@ -79,6 +79,24 @@ export interface NodeBrickConf {
   if?: string | boolean | null;
 }
 
+export type ActiveTarget = ActiveTargetOfNode | ActiveTargetOfEdge;
+
+export interface ActiveTargetOfNode {
+  type: "node";
+  id: NodeId;
+}
+
+export interface ActiveTargetOfEdge {
+  type: "edge";
+  source: NodeId;
+  target: NodeId;
+}
+
+export interface NodeBasicInfo {
+  id: NodeId;
+  data: unknown;
+}
+
 export interface BasicShapeProps {
   cell: ShapeCell;
   onMouseEnter?: () => void;

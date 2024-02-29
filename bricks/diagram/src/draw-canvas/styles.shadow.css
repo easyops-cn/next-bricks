@@ -11,3 +11,7 @@
 :host([hidden]) {
   display: none;
 }
+
+.root:focus {
+  outline: none;
+}

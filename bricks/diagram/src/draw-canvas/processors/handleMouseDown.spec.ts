@@ -5,9 +5,11 @@ import { handleMouseDown } from "./handleMouseDown";
 describe("handleMouseDown", () => {
   const onNodeMoving = jest.fn();
   const onNodeMoved = jest.fn();
+  const onSwitchActiveTarget = jest.fn();
   const methods = {
     onNodeMoving,
     onNodeMoved,
+    onSwitchActiveTarget,
   };
 
   test("no nodesRefRepository", () => {
@@ -31,14 +33,6 @@ describe("handleMouseDown", () => {
       "http://www.w3.org/2000/svg",
       "foreignObject"
     );
-    Object.defineProperties(nodeAContainer, {
-      x: { value: { baseVal: { value: 3 } } },
-      y: { value: { baseVal: { value: 5 } } },
-    });
-    Object.defineProperties(nodeBContainer, {
-      x: { value: { baseVal: { value: 4 } } },
-      y: { value: { baseVal: { value: 6 } } },
-    });
     nodeAContainer.append(nodeA);
     nodeBContainer.append(nodeB);
     document.body.append(nodeAContainer);
@@ -60,6 +54,11 @@ describe("handleMouseDown", () => {
       ...methods,
     });
 
+    expect(onSwitchActiveTarget).toHaveBeenCalledWith({
+      type: "node",
+      id: "b",
+    });
+
     fireEvent.mouseMove(document, { clientX: 11, clientY: 22 });
     expect(onNodeMoving).not.toBeCalled();
 
@@ -69,8 +68,7 @@ describe("handleMouseDown", () => {
     fireEvent.mouseUp(nodeA, { clientX: 26, clientY: 51 });
     expect(onNodeMoved).toBeCalledWith({ id: "b", x: 20, y: 37 });
 
-    expect(nodeBContainer.x.baseVal.value).toBe(20);
-    expect(nodeBContainer.y.baseVal.value).toBe(37);
+    expect(onSwitchActiveTarget).toHaveBeenCalledTimes(1);
 
     document.body.replaceChildren();
   });

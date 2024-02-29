@@ -15,7 +15,7 @@ properties:
     gap: 1em
 context:
   - name: dragging
-    value: null
+  - name: activeTarget
 children:
   - brick: div
     properties:
@@ -40,13 +40,6 @@ children:
                     data: {
                       name: String(seed),
                     },
-                    useBrick: {
-                      brick: "diagram.experimental-node",
-                      properties: {
-                        textContent: String(seed),
-                      }
-                    },
-                    size: [60, 60],
                   })))(
                     Math.round(Math.random() * 1e6),
                     Math.round(Math.random() * 1e6),
@@ -85,12 +78,6 @@ children:
               data: {
                 name: `Node ${id}`,
               },
-              useBrick: {
-                brick: "diagram.experimental-node",
-                properties: {
-                  textContent: `Node ${id}`,
-                }
-              },
             }))
           %>
         children:
@@ -114,10 +101,8 @@ children:
                   method: dropNode
                   args:
                     - position: <% EVENT.detail %>
-                      size: [60, 60]
                       id: <% ITEM.id %>
                       data: <% ITEM.data %>
-                      useBrick: <% ITEM.useBrick %>
                   callback:
                     success:
                       if: <% EVENT.detail %>
@@ -141,6 +126,27 @@ children:
             width: 100%
             height: 100%
           # Initial nodes only
+          defaultNodeSize: [60, 60]
+          defaultNodeBricks:
+            - useBrick:
+                brick: diagram.experimental-node
+                properties:
+                  textContent: <% `Node ${DATA.node.id}` %>
+                  status: |
+                    <%=
+                      CTX.activeTarget?.type === "node" && CTX.activeTarget.id === DATA.node.id
+                        ? "highlighted"
+                        : CTX.activeTarget && CTX.activeTarget?.id !== DATA.node.id
+                        ? "faded"
+                        : "default"
+                    %>
+                events:
+                  click:
+                    action: context.replace
+                    args:
+                      - activeTarget
+                      - type: node
+                        id: <% DATA.node.id %>
           cells: |
             <%
               [
@@ -161,26 +167,26 @@ children:
                   data: {
                     name: `Node ${id}`,
                   },
-                  useBrick: {
-                    brick: "diagram.experimental-node",
-                    properties: {
-                      textContent: `Node ${id}`,
-                    }
-                  },
                   view: {
-                    x:
+                    x: Math.round(
                       id === "X"
                         ? 200 + Math.random() * 200
                         : id === "Y"
                         ? Math.random() * 300
-                        : 300 + Math.random() * 300,
-                    y: (id === "X" ? 0 : 300) + Math.random() * 200,
+                        : 300 + Math.random() * 300
+                    ),
+                    y: (id === "X" ? 0 : 300) + Math.round((Math.random() * 200)),
                     width: 60,
                     height: 60,
                   }
                 }))
               )
             %>
+        events:
+          node.move:
+            action: message.info
+            args:
+              - <% `You just moved node ${EVENT.detail.id} to (${Math.round(EVENT.detail.x)}, ${Math.round(EVENT.detail.y)})` %>
   - brick: diagram.experimental-node
     properties:
       usage: dragging

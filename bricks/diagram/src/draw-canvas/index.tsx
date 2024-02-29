@@ -6,6 +6,7 @@ import React, {
   useMemo,
   useReducer,
   useRef,
+  useState,
 } from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
@@ -18,9 +19,11 @@ import type {
   SizeTuple,
 } from "../diagram/interfaces";
 import type {
+  ActiveTarget,
   Cell,
   EdgeCell,
   InitialCell,
+  NodeBasicInfo,
   NodeBrickConf,
   NodeCell,
   NodeId,
@@ -37,6 +40,8 @@ import styleText from "./styles.shadow.css";
 import { NodeContainer } from "./NodeComponent";
 import { handleMouseDown } from "./processors/handleMouseDown";
 import type { MoveNodePayload } from "./reducers/interfaces";
+import { sameTarget } from "./processors/sameTarget";
+import { handleKeyboard } from "./processors/handleKeyboard";
 
 const DEFAULT_NODE_SIZE = 20;
 
@@ -46,6 +51,7 @@ export interface EoDrawCanvasProps {
   cells: InitialCell[] | undefined;
   defaultNodeSize?: SizeTuple;
   defaultNodeBricks?: NodeBrickConf[];
+  activeTarget?: ActiveTarget | null;
 }
 
 export interface DropNodeInfo extends AddNodeInfo {
@@ -92,18 +98,34 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
   @property({ attribute: false })
   accessor defaultNodeBricks: NodeBrickConf[] | undefined;
 
-  // @event({ type: "cells.change" })
-  // accessor #cellsChangeEvent!: EventEmitter<Cell[]>;
+  @property({ attribute: false })
+  accessor activeTarget: ActiveTarget | null | undefined;
 
-  // #handleCellsChange = (cells: Cell[]) => {
-  //   this.#cellsChangeEvent.emit(cells);
-  // };
+  @event({ type: "activeTarget.change" })
+  accessor #activeTargetChangeEvent!: EventEmitter<ActiveTarget | null>;
+
+  #handleActiveTargetChange = (target: ActiveTarget | null) => {
+    this.#activeTargetChangeEvent.emit(target);
+  };
+
+  #handleSwitchActiveTarget = (target: ActiveTarget | null) => {
+    if (!sameTarget(target, this.activeTarget)) {
+      this.activeTarget = target;
+    }
+  };
 
   @event({ type: "node.move" })
   accessor #nodeMoveEvent!: EventEmitter<MoveNodePayload>;
 
   #handleNodeMove = (info: MoveNodePayload) => {
     this.#nodeMoveEvent.emit(info);
+  };
+
+  @event({ type: "node.delete" })
+  accessor #nodeDelete!: EventEmitter<NodeBasicInfo>;
+
+  #handleNodeDelete = (node: NodeBasicInfo) => {
+    this.#nodeDelete.emit(node);
   };
 
   @method()
@@ -191,16 +213,21 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         cells={this.cells}
         defaultNodeSize={this.defaultNodeSize}
         defaultNodeBricks={this.defaultNodeBricks}
-        // onCellsChange={this.#handleCellsChange}
+        activeTarget={this.activeTarget}
+        onActiveTargetChange={this.#handleActiveTargetChange}
+        onSwitchActiveTarget={this.#handleSwitchActiveTarget}
         onNodeMove={this.#handleNodeMove}
+        onNodeDelete={this.#handleNodeDelete}
       />
     );
   }
 }
 
 export interface EoDrawCanvasComponentProps extends EoDrawCanvasProps {
-  // onCellsChange?(cells: Cell[]): void;
-  onNodeMove?(info: unknown): void;
+  onActiveTargetChange(target: ActiveTarget | null): void;
+  onSwitchActiveTarget(target: ActiveTarget | null): void;
+  onNodeMove(info: unknown): void;
+  onNodeDelete?(node: NodeBasicInfo): void;
 }
 
 export interface DrawCanvasRef {
@@ -214,7 +241,11 @@ function LegacyEoDrawCanvasComponent(
     cells: initialCells,
     defaultNodeSize,
     defaultNodeBricks,
+    activeTarget: _activeTarget,
+    onActiveTargetChange,
+    onSwitchActiveTarget,
     onNodeMove,
+    onNodeDelete,
   }: EoDrawCanvasComponentProps,
   ref: React.Ref<DrawCanvasRef>
 ) {
@@ -261,9 +292,49 @@ function LegacyEoDrawCanvasComponent(
     []
   );
 
+  const rootRef = useRef<SVGSVGElement>(null);
   const cellsRef = useRef<SVGGElement>(null);
-
   const refRepository = useMemo<RefRepository>(() => new Map(), []);
+
+  const newActiveTarget = _activeTarget ?? null;
+  const [activeTarget, setActiveTarget] = useState<ActiveTarget | null>(
+    newActiveTarget
+  );
+
+  useEffect(() => {
+    setActiveTarget((previous) =>
+      sameTarget(previous, newActiveTarget) ? previous : newActiveTarget
+    );
+  }, [newActiveTarget]);
+
+  const activeTargetChangeInitialized = useRef(false);
+  useEffect(() => {
+    if (!activeTargetChangeInitialized.current) {
+      activeTargetChangeInitialized.current = true;
+      return;
+    }
+    onActiveTargetChange(activeTarget);
+  }, [activeTarget, onActiveTargetChange]);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    const onKeydown = (event: KeyboardEvent) => {
+      const action = handleKeyboard(event, {
+        cells,
+        activeTarget,
+      });
+
+      if (action?.action === "delete-node") {
+        onNodeDelete?.(action.node);
+      } /*  else if (action?.action === "delete-edge") {
+        onEdgeDelete?.(action.edge);
+      } */
+    };
+    root?.addEventListener("keydown", onKeydown);
+    return () => {
+      root?.removeEventListener("keydown", onKeydown);
+    };
+  }, [activeTarget, cells, onNodeDelete]);
 
   const handleNodeMount = useCallback(
     (id: NodeId, element: HTMLElement | null) => {
@@ -293,9 +364,8 @@ function LegacyEoDrawCanvasComponent(
         onNodeMoving(info) {
           dispatch({ type: "move-node", payload: info });
         },
-        onNodeMoved(info) {
-          onNodeMove?.(info);
-        },
+        onNodeMoved: onNodeMove,
+        onSwitchActiveTarget,
       });
     };
     // Bind mousedown event manually, since the React event handler can't work with
@@ -305,15 +375,15 @@ function LegacyEoDrawCanvasComponent(
     return () => {
       cellsContainer?.removeEventListener("mousedown", onMouseDown);
     };
-  }, [cells, onNodeMove, refRepository]);
+  }, [cells, onNodeMove, onSwitchActiveTarget, refRepository]);
 
   return (
     // Todo(steve): canvas size
-    <svg width={800} height={600}>
+    <svg width={800} height={600} ref={rootRef} className="root" tabIndex={-1}>
       <defs>
         <MarkerComponent id={markerEnd} type="arrow" strokeColor="gray" />
       </defs>
-      <g ref={cellsRef}>
+      <g className="cells" ref={cellsRef}>
         {cells.map((cell) =>
           isNodeCell(cell) ? (
             <NodeContainer
