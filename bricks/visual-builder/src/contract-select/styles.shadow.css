@@ -1,0 +1,28 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.contract-wrapper {
+  display: flex;
+  gap: 4px;
+}
+
+.contract-selector {
+  flex: 1;
+}
+
+.version-selector {
+  width: 100px;
+}
+
+.options-tips {
+  padding: 0px 10px;
+  font-weight: 400;
+  color: #999;
+  white-space: nowrap;
+  font-style: italic;
+}

@@ -10,7 +10,7 @@
   position: relative;
 }
 
-.optionContainer {
+.option-container {
   display: flex;
   flex-direction: column;
   margin: 2px 4px;
@@ -26,35 +26,38 @@
     line-height: 20px;
   }
 }
-.optionContainer:hover {
+.option-container:hover {
   background-color: var(--antd-select-item-active-bg);
 }
 
-.groupWrapper .optionContainer {
+.group-wrapper .option-container {
   padding-left: 24px;
 }
-.groupItem {
+.group-item {
   color: var(--antd-text-color-secondary);
   font-size: 12px;
   margin: 2px 4px;
   padding: 5px 12px;
 }
-.selectedOption {
+.selected-option {
   background-color: var(--color-info-icon-bg);
 }
 
-.dropDownWrapper {
+.dropdown-wrapper {
   position: absolute;
   box-sizing: border-box;
   width: 100%;
-  max-height: 256px;
-  overflow: scroll;
   background-color: var(--antd-select-dropdown-bg);
   box-shadow: var(--antd-box-shadow-base);
   z-index: 1050;
   margin-top: 5px;
   padding: 4px 2px;
   border-radius: var(--small-border-radius);
+}
+
+.dropdown-list {
+  max-height: 256px;
+  overflow: scroll;
 }
 
 eo-input {

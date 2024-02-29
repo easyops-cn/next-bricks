@@ -25,15 +25,24 @@ const WrappedInput = wrapBrick<Input, InputProps, InputEvents, InputEventsMap>(
   }
 );
 
-interface EoAutoCompleteComponentProps extends FormItemProps {
+export interface AutoCompleteProps extends FormItemProps {
   curElement?: HTMLElement;
-  value?: any;
+  value?: string;
   options?: string[] | OptionType[];
   placeholder?: string;
   inputStyle?: React.CSSProperties;
   disabled?: boolean;
   filterByCaption?: boolean;
-  onChange?: (value: any) => void;
+  validateState?: string;
+  onChange?: (v: any) => void;
+}
+
+export interface AutoCompleteEvents {
+  change: CustomEvent<string>;
+}
+
+export interface AutoCompleteEventsMap {
+  onChange: "change";
 }
 export interface Option {
   label: string;
@@ -58,7 +67,7 @@ export
 @defineElement("eo-auto-complete", {
   styleTexts: [styleText],
 })
-class EoAutoComplete extends FormItemElementBase {
+class AutoComplete extends FormItemElementBase {
   /**
    * 字段名称
    */
@@ -155,6 +164,7 @@ class EoAutoComplete extends FormItemElementBase {
         validator={this.validator}
         pattern={this.pattern}
         filterByCaption={this.filterByCaption}
+        validateState={this.validateState}
         trigger="handleInputChange"
         onChange={this.handleInputChange}
       />
@@ -162,7 +172,7 @@ class EoAutoComplete extends FormItemElementBase {
   }
 }
 
-export function EoAutoCompleteComponent(props: EoAutoCompleteComponentProps) {
+export function EoAutoCompleteComponent(props: AutoCompleteProps) {
   const {
     onChange,
     curElement,
@@ -170,6 +180,7 @@ export function EoAutoCompleteComponent(props: EoAutoCompleteComponentProps) {
     disabled,
     placeholder,
     filterByCaption,
+    validateState,
   } = props;
   const [options, setOptions] = useState(props.options || []);
   const [filteredOptions, setFilteredOptions] = useState<any[]>([]);
@@ -211,7 +222,6 @@ export function EoAutoCompleteComponent(props: EoAutoCompleteComponentProps) {
       return options;
     };
     const result = search(cloneDeep(originalOptions));
-    setActive(!!result.length);
     setFilteredOptions(result);
     onChange?.(e.detail);
   };
@@ -231,10 +241,11 @@ export function EoAutoCompleteComponent(props: EoAutoCompleteComponentProps) {
 
   useEffect(() => {
     const handleDocumentClick = (e: MouseEvent) => {
-      if (!curElement?.contains(e.target as HTMLElement)) {
-        setActive(false);
-        inputRef.current?.blur();
-      }
+      e.stopPropagation();
+      const path = e.composedPath();
+      if (curElement && path.includes(curElement)) return;
+      setActive(false);
+      inputRef.current?.blur();
     };
     document.addEventListener("click", handleDocumentClick);
     return () => {
@@ -246,8 +257,8 @@ export function EoAutoCompleteComponent(props: EoAutoCompleteComponentProps) {
     return (
       <div
         key={`${option.label}_${index}`}
-        className={classNames("optionContainer", {
-          selectedOption: value === option.value,
+        className={classNames("option-container", {
+          "selected-option": value === option.value,
         })}
         onClick={() => {
           setValue(option.value);
@@ -270,27 +281,31 @@ export function EoAutoCompleteComponent(props: EoAutoCompleteComponentProps) {
           placeholder={placeholder}
           disabled={disabled}
           inputStyle={inputStyle}
+          validateState={validateState}
           onFocus={() => {
-            setActive(!!filteredOptions.length);
+            setActive(true);
           }}
           onChange={handleChange as any}
         />
-        {active && (
-          <div className="dropDownWrapper">
-            {filteredOptions.map((f: any, index) =>
-              f.options?.length ? (
-                <div key={`${f.label}_${index}`} className="groupWrapper">
-                  <div className={"groupItem"}>{f.label}</div>
-                  {f.options.map((option: any, i: number) =>
-                    renderLabel(option, i)
-                  )}
-                </div>
-              ) : (
-                renderLabel(f, index)
-              )
-            )}
+        {active && filteredOptions.length ? (
+          <div className="dropdown-wrapper">
+            <div className="dropdown-list">
+              {filteredOptions.map((f: any, index) =>
+                f.options?.length ? (
+                  <div key={`${f.label}_${index}`} className="group-wrapper">
+                    <div className="group-item">{f.label}</div>
+                    {f.options.map((option: any, i: number) =>
+                      renderLabel(option, i)
+                    )}
+                  </div>
+                ) : (
+                  renderLabel(f, index)
+                )
+              )}
+            </div>
+            <slot name="options-toolbar"></slot>
           </div>
-        )}
+        ) : null}
       </div>
     </WrappedFormItem>
   );
