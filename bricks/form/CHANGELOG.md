@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.5.0...@next-bricks/form@1.5.1) (2024-02-29)
+
+
+### Bug Fixes
+
+* **eo-textarea:** value was null not update ([b0abc5f](https://github.com/easyops-cn/next-bricks/commit/b0abc5f30a072162c7d32a6ba961f233ade77cf7))
+
+
+
+
+
 # [1.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.4.0...@next-bricks/form@1.5.0) (2024-02-29)
 
 
