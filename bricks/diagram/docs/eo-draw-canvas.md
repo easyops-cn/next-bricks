@@ -125,6 +125,7 @@ children:
           style:
             width: 100%
             height: 100%
+          activeTarget: <%= CTX.activeTarget %>
           # Initial nodes only
           defaultNodeSize: [60, 60]
           defaultNodeBricks:
@@ -136,17 +137,10 @@ children:
                     <%=
                       CTX.activeTarget?.type === "node" && CTX.activeTarget.id === DATA.node.id
                         ? "highlighted"
-                        : CTX.activeTarget && CTX.activeTarget?.id !== DATA.node.id
-                        ? "faded"
+                        // : CTX.activeTarget && CTX.activeTarget?.id !== DATA.node.id
+                        // ? "faded"
                         : "default"
                     %>
-                events:
-                  click:
-                    action: context.replace
-                    args:
-                      - activeTarget
-                      - type: node
-                        id: <% DATA.node.id %>
           cells: |
             <%
               [
@@ -187,6 +181,15 @@ children:
             action: message.info
             args:
               - <% `You just moved node ${EVENT.detail.id} to (${Math.round(EVENT.detail.x)}, ${Math.round(EVENT.detail.y)})` %>
+          activeTarget.change:
+            action: context.replace
+            args:
+              - activeTarget
+              - <% EVENT.detail %>
+          node.delete:
+            action: message.warn
+            args:
+              - <% `You wanna delete node ${EVENT.detail.id}?` %>
   - brick: diagram.experimental-node
     properties:
       usage: dragging
