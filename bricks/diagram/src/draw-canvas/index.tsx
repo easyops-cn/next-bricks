@@ -1,39 +1,46 @@
 import React, {
   createRef,
+  useCallback,
+  useEffect,
   useImperativeHandle,
   useMemo,
   useReducer,
+  useRef,
 } from "react";
-import { createDecorators } from "@next-core/element";
+import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
-import {
-  ReactUseBrick,
-  type UseSingleBrickConf,
-} from "@next-core/react-runtime";
+import type { UseSingleBrickConf } from "@next-core/react-runtime";
 import "@next-core/theme";
 import { uniqueId } from "lodash";
-import type { NodeRect, PositionTuple, SizeTuple } from "../diagram/interfaces";
+import type {
+  PositionTuple,
+  RefRepository,
+  SizeTuple,
+} from "../diagram/interfaces";
 import type {
   BrickCell,
   Cell,
   EdgeCell,
   InitialCell,
   NodeCell,
-  NodeView,
+  NodeId,
 } from "./interfaces";
 import { rootReducer } from "./reducers";
-import { getDirectLinePoints } from "../diagram/lines/getDirectLinePoints";
 import { MarkerComponent } from "../diagram/MarkerComponent";
 import {
   isEdgeCell,
   isInitialNodeCell,
   isNodeCell,
 } from "./processors/asserts";
+import { EdgeComponent } from "./EdgeComponent";
 import styleText from "./styles.shadow.css";
+import { NodeComponent } from "./NodeComponent";
+import { handleMouseDown } from "./processors/handleMouseDown";
+import type { MoveNodePayload } from "./reducers/interfaces";
 
 const DEFAULT_NODE_SIZE = 20;
 
-const { defineElement, property, method } = createDecorators();
+const { defineElement, property, method, event } = createDecorators();
 
 export interface EoDrawCanvasProps {
   cells: InitialCell[] | undefined;
@@ -46,15 +53,15 @@ export interface DropNodeInfo extends AddNodeInfo {
 }
 
 export interface AddNodeInfo {
-  id: string | number;
+  id: NodeId;
   useBrick: UseSingleBrickConf;
   data?: unknown;
   size?: SizeTuple;
 }
 
 export interface AddEdgeInfo {
-  source: string | number;
-  target: string | number;
+  source: NodeId;
+  target: NodeId;
   data?: unknown;
 }
 
@@ -87,6 +94,13 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
   // #handleCellsChange = (cells: Cell[]) => {
   //   this.#cellsChangeEvent.emit(cells);
   // };
+
+  @event({ type: "node.move" })
+  accessor #nodeMoveEvent!: EventEmitter<MoveNodePayload>;
+
+  #handleNodeMove = (info: MoveNodePayload) => {
+    this.#nodeMoveEvent.emit(info);
+  };
 
   @method()
   async dropNode({
@@ -168,13 +182,15 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         cells={this.cells}
         defaultNodeSize={this.defaultNodeSize}
         // onCellsChange={this.#handleCellsChange}
+        onNodeMove={this.#handleNodeMove}
       />
     );
   }
 }
 
 export interface EoDrawCanvasComponentProps extends EoDrawCanvasProps {
-  onCellsChange?(cells: Cell[]): void;
+  // onCellsChange?(cells: Cell[]): void;
+  onNodeMove?(info: unknown): void;
 }
 
 export interface DrawCanvasRef {
@@ -184,7 +200,11 @@ export interface DrawCanvasRef {
 }
 
 function LegacyEoDrawCanvasComponent(
-  { cells: initialCells, defaultNodeSize }: EoDrawCanvasComponentProps,
+  {
+    cells: initialCells,
+    defaultNodeSize,
+    onNodeMove,
+  }: EoDrawCanvasComponentProps,
   ref: React.Ref<DrawCanvasRef>
 ) {
   const [{ cells }, dispatch] = useReducer(
@@ -228,9 +248,51 @@ function LegacyEoDrawCanvasComponent(
     []
   );
 
+  const cellsRef = useRef<SVGGElement>(null);
+
+  const refRepository = useMemo<RefRepository>(() => new Map(), []);
+
+  const handleNodeMount = useCallback(
+    (id: NodeId, element: HTMLElement | null) => {
+      if (element) {
+        refRepository.set(id, element);
+      }
+    },
+    [refRepository]
+  );
+
+  const handleNodeUnmount = useCallback(
+    (id: NodeId) => {
+      refRepository.delete(id);
+    },
+    [refRepository]
+  );
+
   const defPrefix = useMemo(() => `${uniqueId("diagram-")}-`, []);
   const markerPrefix = `${defPrefix}line-arrow-`;
   const markerEnd = `${markerPrefix}1`;
+
+  useEffect(() => {
+    const onMouseDown = (event: MouseEvent) => {
+      handleMouseDown(event, {
+        cells,
+        nodesRefRepository: refRepository,
+        onNodeMoving(info) {
+          dispatch({ type: "move-node", payload: info });
+        },
+        onNodeMoved(info) {
+          onNodeMove?.(info);
+        },
+      });
+    };
+    // Bind mousedown event manually, since the React event handler can't work with
+    // d3-zoom inside shadow DOM.
+    const cellsContainer = cellsRef.current;
+    cellsContainer?.addEventListener("mousedown", onMouseDown);
+    return () => {
+      cellsContainer?.removeEventListener("mousedown", onMouseDown);
+    };
+  }, [cells, onNodeMove, refRepository]);
 
   return (
     // Todo(steve): canvas size
@@ -238,7 +300,7 @@ function LegacyEoDrawCanvasComponent(
       <defs>
         <MarkerComponent id={markerEnd} type="arrow" strokeColor="gray" />
       </defs>
-      <g>
+      <g ref={cellsRef}>
         {cells.map((cell) =>
           isNodeCell(cell) ? (
             (cell as BrickCell).useBrick ? (
@@ -250,12 +312,17 @@ function LegacyEoDrawCanvasComponent(
                 height={cell.view.height}
                 style={{ overflow: "visible" }}
               >
-                <ReactUseBrick useBrick={(cell as BrickCell).useBrick} />
+                <NodeComponent
+                  id={cell.id}
+                  useBrick={(cell as BrickCell).useBrick}
+                  onMount={handleNodeMount}
+                  onUnmount={handleNodeUnmount}
+                />
               </foreignObject>
             ) : null
           ) : isEdgeCell(cell) ? (
             <EdgeComponent
-              key={`edge:${cell.source}-${cell.target}`}
+              key={`edge:${cell.source}~${cell.target}`}
               edge={cell}
               cells={cells}
               markerEnd={markerEnd}
@@ -265,71 +332,4 @@ function LegacyEoDrawCanvasComponent(
       </g>
     </svg>
   );
-}
-
-export interface EdgeComponentProps {
-  edge: EdgeCell;
-  cells: Cell[];
-  markerEnd: string;
-}
-
-export function EdgeComponent({
-  edge,
-  cells,
-  markerEnd,
-}: EdgeComponentProps): JSX.Element | null {
-  const nodes = useMemo(() => {
-    let sourceNode: NodeCell | undefined;
-    let targetNode: NodeCell | undefined;
-    for (const cell of cells) {
-      if (isNodeCell(cell)) {
-        if (cell.id === edge.source) {
-          sourceNode = cell;
-        }
-        if (cell.id === edge.target) {
-          targetNode = cell;
-        }
-      }
-    }
-    return sourceNode && targetNode
-      ? ([sourceNode, targetNode] as const)
-      : null;
-  }, [cells, edge.source, edge.target]);
-
-  const padding = 5;
-
-  const line = useMemo(
-    () =>
-      nodes
-        ? getDirectLinePoints(
-            nodeViewToNodeRect(nodes[0].view, padding),
-            nodeViewToNodeRect(nodes[1].view, padding)
-          )
-        : null,
-    [nodes]
-  );
-
-  if (!line) {
-    // This happens when source or target is not found
-    return null;
-  }
-
-  return (
-    <path
-      className="line"
-      d={`M${line[0].x} ${line[0].y}L${line[1].x} ${line[1].y}`}
-      fill="none"
-      stroke="gray"
-      markerEnd={`url(#${markerEnd})`}
-    />
-  );
-}
-
-function nodeViewToNodeRect(view: NodeView, padding: number): NodeRect {
-  return {
-    x: view.x + view.width / 2,
-    y: view.y + view.height / 2,
-    width: view.width + padding,
-    height: view.height + padding,
-  };
 }

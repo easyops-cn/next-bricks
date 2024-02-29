@@ -18,6 +18,8 @@ export type NodeBrickCell = BaseBrickCell & BaseNodeCell;
 
 // export type EdgeBrickCell = BaseBrickCell & BaseEdgeCell;
 
+export type NodeId = string /* | number */;
+
 export interface BaseShapeCell extends BaseCell {
   tag: "shape";
   shape: string;
@@ -37,14 +39,14 @@ export interface BaseBrickCell extends BaseCell {
 
 export interface BaseNodeCell extends BaseCell {
   type: "node";
-  id: string | number;
+  id: NodeId;
   view: NodeView;
 }
 
 export interface BaseEdgeCell extends BaseCell {
   type: "edge";
-  source: string | number;
-  target: string | number;
+  source: NodeId;
+  target: NodeId;
   // view: EdgeView;
 }
 

@@ -6,6 +6,7 @@
   display: block;
   border: 1px solid var(--palette-gray-5);
   cursor: default;
+  user-select: none;
 }
 
 :host([hidden]) {
