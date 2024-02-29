@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.1.0...@next-bricks/containers@1.1.1) (2024-02-29)
+
+
+### Bug Fixes
+
+* modal scrollable ([db3242b](https://github.com/easyops-cn/next-bricks/commit/db3242b3e62228638fae3dafc4ff46d641c53c27))
+
+
+
+
+
 # [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.0.10...@next-bricks/containers@1.1.0) (2024-02-19)
 
 

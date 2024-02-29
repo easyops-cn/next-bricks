@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.4.0...@next-bricks/form@1.5.0) (2024-02-29)
+
+
+### Features
+
+* common-bricks.json ([41498fa](https://github.com/easyops-cn/next-bricks/commit/41498fac482beaaab266b85b9913cdd7b5937def))
+* contract-select ([3a16fe4](https://github.com/easyops-cn/next-bricks/commit/3a16fe4cae51a5740ebea396c19dde566241674d))
+
+
+
+
+
 # [1.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.3.4...@next-bricks/form@1.4.0) (2024-02-22)
 
 
