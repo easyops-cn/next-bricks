@@ -48,6 +48,16 @@ describe("eo-textarea", () => {
     expect(mockBlurEvent).toBeCalledTimes(1);
     expect(mockChangeEvent).toBeCalledTimes(1);
 
+    expect(element.shadowRoot?.querySelector("textarea")?.textContent).toBe(
+      "a"
+    );
+
+    await act(async () => {
+      await (element.value = undefined);
+    });
+
+    expect(element.shadowRoot?.querySelector("textarea")?.textContent).toBe("");
+
     act(() => {
       document.body.removeChild(element);
     });

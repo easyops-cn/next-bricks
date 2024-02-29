@@ -185,7 +185,7 @@ export function TextareaComponent(props: TextareaProps) {
     validateState,
     onInputChange,
   } = props;
-  const [value, setValue] = useState(props.value);
+  const [value, setValue] = useState(props.value ?? "");
   const [autoSizeStyle, setAutoSizeStyle] = useState<React.CSSProperties>();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -219,7 +219,7 @@ export function TextareaComponent(props: TextareaProps) {
   };
 
   useEffect(() => {
-    setValue(props.value);
+    setValue(props.value ?? "");
   }, [props.value]);
 
   useEffect(() => {
