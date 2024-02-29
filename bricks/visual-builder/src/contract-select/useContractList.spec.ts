@@ -1,4 +1,4 @@
-import { useContract } from "./useContract";
+import { useContractList } from "./useContractList";
 import { ContractCenterApi_searchContract } from "@next-api-sdk/next-builder-sdk";
 import { renderHook } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
@@ -27,7 +27,7 @@ describe("useContract", () => {
     );
 
     const { result, rerender } = renderHook(
-      (initialValue) => useContract(initialValue),
+      (initialValue) => useContractList(initialValue),
       {
         initialProps: {},
       }
@@ -35,7 +35,7 @@ describe("useContract", () => {
 
     await act(() => (global as any).flushPromises());
 
-    expect(result.current[0]).toEqual([
+    expect(result.current).toEqual([
       {
         fullContractName: "cmdb.instance@postSearch",
         version: ["1.0.0"],
@@ -55,7 +55,7 @@ describe("useContract", () => {
     await act(() => (global as any).flushPromises());
 
     // await waitFor();
-    expect(result.current[0]).toEqual([
+    expect(result.current).toEqual([
       {
         fullContractName: "cmdb.instance@postSearch",
         version: ["1.0.0"],
@@ -71,7 +71,7 @@ describe("useContract", () => {
 
     const spyOnConsoleError = jest.spyOn(window.console, "error");
 
-    renderHook(() => useContract({}));
+    renderHook(() => useContractList({}));
 
     await (global as any).flushPromises();
     expect(spyOnConsoleError).toHaveBeenCalled();

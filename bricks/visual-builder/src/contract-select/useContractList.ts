@@ -11,10 +11,10 @@ interface ContractField {
   version: string[];
 }
 
-export function useContract({
+export function useContractList({
   pageSize = 20,
   q = "",
-}: ContractParams): [ContractField[]] {
+}: ContractParams): ContractField[] {
   const [contractList, setContractList] = useState<ContractField[]>([]);
   const [query, setQ] = useState<string>(q);
   const [count, setCount] = useState(pageSize);
@@ -50,5 +50,5 @@ export function useContract({
     })();
   }, [query, count]);
 
-  return [contractList];
+  return contractList;
 }

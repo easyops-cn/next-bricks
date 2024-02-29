@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { createDecorators, EventEmitter } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
+import { ReactUseMultipleBricks } from "@next-core/react-runtime";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import type {
@@ -11,12 +12,13 @@ import type {
 } from "@next-bricks/form/auto-complete";
 import { debounce, isNil } from "lodash";
 import { FormItemElementBase } from "@next-shared/form";
-import { useContract } from "./useContract.js";
+import { useContractList } from "./useContractList.js";
 import { FormItem, FormItemProps } from "@next-bricks/form/form-item";
 import { K, NS, locales } from "./i18n.js";
 import { initializeReactI18n } from "@next-core/i18n/react";
 import { i18n } from "@next-core/i18n";
 import { MoreOption } from "./more-option/MoreOption";
+import { UseSingleBrickConf } from "@next-core/types";
 
 initializeReactI18n(NS, locales);
 
@@ -37,7 +39,7 @@ const WrappedAutoComplete = wrapBrick<
  * 契约选择构件
  */
 export
-@defineElement("eo-contract-select", {
+@defineElement("visual-builder.contract-select", {
   styleTexts: [styleText],
 })
 class EoContractSelect extends FormItemElementBase {
@@ -57,6 +59,13 @@ class EoContractSelect extends FormItemElementBase {
   })
   accessor value: any | undefined;
 
+  @property({
+    attribute: false,
+  })
+  accessor suffix:
+    | { useBrick: UseSingleBrickConf | UseSingleBrickConf[] }
+    | undefined;
+
   @event({ type: "change" })
   accessor #changeEvent: EventEmitter<string>;
 
@@ -72,11 +81,14 @@ class EoContractSelect extends FormItemElementBase {
         name={this.name}
         label={this.label}
         required={this.required}
+        labelBrick={this.labelBrick}
+        helpBrick={this.helpBrick}
         trigger="handleChange"
         validator={checkContractRule}
       >
         <EoContractSelectComponent
           value={this.value}
+          suffix={this.suffix}
           validateState={this.validateState}
           onChange={this.handleChange}
         />
@@ -90,6 +102,7 @@ export interface EoContractSelectProps {
   validateState?: string;
   placeholder?: string;
   inputStyle?: React.CSSProperties;
+  suffix?: { useBrick: UseSingleBrickConf | UseSingleBrickConf[] };
   onChange?(value: string): void;
 }
 
@@ -121,11 +134,12 @@ export function EoContractSelectComponent({
   value,
   inputStyle,
   validateState,
+  suffix,
   onChange,
 }: EoContractSelectProps) {
   const [q, setQ] = useState<string>();
   const [pageSize, setPageSize] = useState(20);
-  const [contractList] = useContract({ q, pageSize });
+  const contractList = useContractList({ q, pageSize });
   const [mixedValue, setMixedValue] = useState(splitContract(value));
   const [versionOptions, setVersionOptions] = useState([]);
 
@@ -198,6 +212,9 @@ export function EoContractSelectComponent({
         options={versionOptions?.map((v) => ({ value: v, label: v }))}
         onChange={handleVersionChange as any}
       ></WrappedAutoComplete>
+      {suffix.useBrick ? (
+        <ReactUseMultipleBricks {...suffix}></ReactUseMultipleBricks>
+      ) : null}
     </div>
   );
 }
