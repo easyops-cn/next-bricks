@@ -348,21 +348,20 @@ function ModalComponent({
   }, [open]);
 
   return isOpen ? (
-    <div className="modal">
+    <div className="modal-root">
       <div className="mask" />
       <div className="modal-wrap" onClick={handleWrapperClick}>
         <div
-          className={classNames("modal-container", {
+          className={classNames("modal", {
             fullscreen,
           })}
-          style={{
-            width: width,
-          }}
-          ref={containerRef}
+          style={{ width: width }}
         >
-          {header}
-          {body}
-          {footer}
+          <div className="modal-container" ref={containerRef}>
+            {header}
+            {body}
+            {footer}
+          </div>
         </div>
       </div>
     </div>

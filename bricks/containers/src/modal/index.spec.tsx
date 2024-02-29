@@ -41,7 +41,7 @@ describe("eo-modal", () => {
     expect(element.innerHTML).toBe("<div>This is a body</div>");
 
     expect(element.visible).toBeFalsy();
-    expect(element.shadowRoot?.querySelector(".modal")).toBeFalsy();
+    expect(element.shadowRoot?.querySelector(".modal-root")).toBeFalsy();
 
     // open
     await act(async () => {
@@ -51,11 +51,10 @@ describe("eo-modal", () => {
     expect(element.shadowRoot?.childNodes.length).toBe(2);
     expect(mockOpenEvent).toBeCalledTimes(1);
     expect(element.visible).toBeTruthy();
-    expect(element.shadowRoot?.querySelector(".modal")).toBeTruthy();
+    expect(element.shadowRoot?.querySelector(".modal-root")).toBeTruthy();
     expect(
-      (element.shadowRoot?.querySelector(".modal-container") as HTMLElement)
-        .className
-    ).toBe("modal-container fullscreen");
+      (element.shadowRoot?.querySelector(".modal") as HTMLElement).className
+    ).toBe("modal fullscreen");
 
     // close
     await act(async () => {
@@ -64,7 +63,7 @@ describe("eo-modal", () => {
 
     expect(element.visible).toBeFalsy();
     expect(mockCloseEvnet).toBeCalledTimes(1);
-    expect(element.shadowRoot?.querySelector(".modal")).toBeFalsy();
+    expect(element.shadowRoot?.querySelector(".modal-root")).toBeFalsy();
 
     // confirm
     await act(async () => {
