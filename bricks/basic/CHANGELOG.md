@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.6.1...@next-bricks/basic@1.7.0) (2024-03-01)
+
+
+### Features
+
+* **draw-canvas:** support decorators: area and text ([6e2161a](https://github.com/easyops-cn/next-bricks/commit/6e2161a94fd9b8438addbb52fb5da5c3530d67f4))
+
+
+
+
+
 ## [1.6.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.6.0...@next-bricks/basic@1.6.1) (2024-02-28)
 
 
