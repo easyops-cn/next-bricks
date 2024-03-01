@@ -67,7 +67,7 @@ export type InitialNodeCell = Omit<NodeCell, "view"> & {
   view: InitialNodeView;
 };
 
-export type InitialCell = InitialNodeCell | EdgeCell;
+export type InitialCell = InitialNodeCell | EdgeCell | DecoratorCell;
 
 export interface NodeBrickConf {
   useBrick: UseSingleBrickConf;

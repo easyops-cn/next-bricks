@@ -15,6 +15,17 @@ document.elementsFromPoint = jest.fn(() => []);
 describe("eo-draw-canvas", () => {
   test("drop node", async () => {
     const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
+    element.cells = [
+      {
+        type: "decorator",
+        decorator: "text",
+        id: "text-1",
+        view: {
+          x: 150,
+          y: 160,
+        },
+      } as any,
+    ];
 
     expect(element.shadowRoot).toBeFalsy();
 
@@ -45,7 +56,6 @@ describe("eo-draw-canvas", () => {
       const dropResult2 = await element.dropNode({
         id: "test",
         position: [800, 600],
-        size: [100, 200],
         data: {},
         useBrick: { brick: "div" },
       });
@@ -59,8 +69,8 @@ describe("eo-draw-canvas", () => {
         view: {
           x: 620,
           y: 480,
-          width: 100,
-          height: 200,
+          width: 20,
+          height: 20,
         },
       });
     });
@@ -75,6 +85,17 @@ describe("eo-draw-canvas", () => {
   test("add nodes", async () => {
     const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
     element.defaultNodeBricks = [{ useBrick: { brick: "div" } }];
+    element.cells = [
+      {
+        type: "decorator",
+        decorator: "text",
+        id: "text-1",
+        view: {
+          x: 150,
+          y: 160,
+        },
+      } as any,
+    ];
 
     act(() => {
       document.body.appendChild(element);
@@ -212,6 +233,15 @@ describe("eo-draw-canvas", () => {
         },
         useBrick: { brick: "div" },
       },
+      {
+        type: "decorator",
+        decorator: "text",
+        id: "text-1",
+        view: {
+          x: 150,
+          y: 160,
+        },
+      },
     ] as NodeBrickCell[];
 
     act(() => {
@@ -244,6 +274,7 @@ describe("eo-draw-canvas", () => {
       "foreignobject",
       "foreignobject",
       "foreignobject",
+      "text",
     ]);
 
     await act(async () => {
@@ -264,6 +295,7 @@ describe("eo-draw-canvas", () => {
       "foreignobject",
       "foreignobject",
       "foreignobject",
+      "text",
     ]);
 
     act(() => {
@@ -275,6 +307,15 @@ describe("eo-draw-canvas", () => {
     const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
     element.defaultNodeBricks = [{ useBrick: { brick: "div" } }];
     element.cells = [
+      {
+        type: "decorator",
+        decorator: "area",
+        id: "area-1",
+        view: {
+          x: 10,
+          y: 10,
+        },
+      },
       {
         type: "node",
         id: "a",
@@ -289,6 +330,15 @@ describe("eo-draw-canvas", () => {
         view: {
           x: 20,
           y: 320,
+        },
+      },
+      {
+        type: "decorator",
+        decorator: "text",
+        id: "text-1",
+        view: {
+          x: 150,
+          y: 160,
         },
       },
     ] as NodeBrickCell[];
@@ -328,6 +378,52 @@ describe("eo-draw-canvas", () => {
       key: "Backspace",
     });
     expect(onCellDelete).toBeCalledWith({ type: "node", id: "a" });
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("drop decorator", async () => {
+    const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    element.getBoundingClientRect = jest.fn(() => ({
+      left: 180,
+      top: 120,
+    })) as any;
+
+    await act(async () => {
+      const dropResult1 = await element.dropDecorator({
+        decorator: "area",
+        position: [800, 600],
+      });
+      expect(dropResult1).toBe(null);
+    });
+
+    const originalElementsFromPoint = document.elementsFromPoint;
+    document.elementsFromPoint = jest.fn(() => [element]);
+    await act(async () => {
+      const dropResult2 = await element.dropDecorator({
+        decorator: "area",
+        position: [800, 600],
+      });
+      expect(dropResult2).toEqual({
+        type: "decorator",
+        decorator: "area",
+        id: expect.any(String),
+        view: {
+          x: 620,
+          y: 480,
+          width: 100,
+          height: 60,
+        },
+      });
+    });
+    document.elementsFromPoint = originalElementsFromPoint;
 
     act(() => {
       document.body.removeChild(element);

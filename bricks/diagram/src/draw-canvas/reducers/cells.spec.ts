@@ -140,6 +140,40 @@ describe("cells reducer", () => {
     ]);
   });
 
+  test("resize node", () => {
+    const newCells = cells(
+      [{ id: "2", type: "node", view: { width: 100, height: 60 } } as any],
+      {
+        type: "resize-cell",
+        payload: { type: "node", id: "2", width: 120, height: 80 },
+      }
+    );
+    expect(newCells).toEqual([
+      {
+        id: "2",
+        type: "node",
+        view: { width: 120, height: 80 },
+      },
+    ]);
+  });
+
+  test("resize a not found node", () => {
+    const newCells = cells(
+      [{ id: "2", type: "node", view: { width: 100, height: 60 } } as any],
+      {
+        type: "resize-cell",
+        payload: { type: "node", id: "3", width: 120, height: 80 },
+      }
+    );
+    expect(newCells).toEqual([
+      {
+        id: "2",
+        type: "node",
+        view: { width: 100, height: 60 },
+      },
+    ]);
+  });
+
   test("unknown actions", () => {
     expect(
       cells([{ id: "x" } as any], {

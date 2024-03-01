@@ -19,6 +19,7 @@ export function DecoratorComponent({
     case "text":
       SpecifiedComponent = DecoratorText;
       break;
+    // istanbul ignore next
     default:
       // eslint-disable-next-line no-console
       console.error(`Unknown decorator: ${cell.decorator}`);
