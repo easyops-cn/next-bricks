@@ -160,7 +160,20 @@
 }
 
 .form-item-control {
-  flex: 1;
+  display: flex;
+  gap: 4px;
+  slot {
+    display: block;
+    width: 100%;
+  }
+}
+
+.align-right {
+  flex-direction: row;
+}
+
+.align-bottom {
+  flex-direction: column;
 }
 
 .message {

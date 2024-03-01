@@ -42,7 +42,10 @@ export interface FormItemProps {
   trigger?: string;
   valuePropsName?: string;
   notRender?: boolean;
-  helpBrick?: { useBrick: UseSingleBrickConf | UseSingleBrickConf[] };
+  helpBrick?: {
+    useBrick: UseSingleBrickConf | UseSingleBrickConf[];
+    placement?: "right" | "bottom";
+  };
   labelBrick?: { useBrick: UseSingleBrickConf | UseSingleBrickConf[] };
   needValidate?: boolean;
   validator?: (value: any) => MessageBody | string;
@@ -325,12 +328,16 @@ export function FormItemComponent(props: FormItemProps) {
           convertToItemColName(finalWrapperCol, layout)
         )}
       >
-        <div className="form-item-control">
+        <div
+          className={classNames("form-item-control", {
+            [`align-${helpBrick?.placement ?? "bottom"}`]: helpBrick,
+          })}
+        >
           <slot></slot>
+          {helpBrick?.useBrick ? (
+            <ReactUseMultipleBricks {...helpBrick}></ReactUseMultipleBricks>
+          ) : null}
         </div>
-        {helpBrick?.useBrick ? (
-          <ReactUseMultipleBricks {...helpBrick}></ReactUseMultipleBricks>
-        ) : null}
         {formElement ? (
           <div
             className={classNames("message", {

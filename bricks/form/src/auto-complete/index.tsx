@@ -161,6 +161,8 @@ class AutoComplete extends FormItemElementBase {
         message={this.message}
         value={this.value}
         options={this.options}
+        labelBrick={this.labelBrick}
+        helpBrick={this.helpBrick}
         validator={this.validator}
         pattern={this.pattern}
         filterByCaption={this.filterByCaption}
@@ -175,7 +177,6 @@ class AutoComplete extends FormItemElementBase {
 export function EoAutoCompleteComponent(props: AutoCompleteProps) {
   const {
     onChange,
-    curElement,
     inputStyle,
     disabled,
     placeholder,
@@ -187,6 +188,7 @@ export function EoAutoCompleteComponent(props: AutoCompleteProps) {
   const [active, setActive] = useState(false);
   const [value, setValue] = useState<string>("");
   const inputRef = useRef<any>();
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const originalOptions: OptionType[] = useMemo(() => {
     const walkOptions = (options: (OptionType | string)[]): OptionType[] => {
@@ -243,7 +245,8 @@ export function EoAutoCompleteComponent(props: AutoCompleteProps) {
     const handleDocumentClick = (e: MouseEvent) => {
       e.stopPropagation();
       const path = e.composedPath();
-      if (curElement && path.includes(curElement)) return;
+      const containerElement = containerRef.current;
+      if (containerElement && path.includes(containerElement)) return;
       setActive(false);
       inputRef.current?.blur();
     };
@@ -274,7 +277,7 @@ export function EoAutoCompleteComponent(props: AutoCompleteProps) {
 
   return (
     <WrappedFormItem {...props}>
-      <div className="complete-container">
+      <div className="complete-container" ref={containerRef}>
         <WrappedInput
           ref={inputRef}
           value={value}
