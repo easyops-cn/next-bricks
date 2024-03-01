@@ -11,7 +11,7 @@ export function sameTarget(
   return a
     ? !!b &&
         a.type === b.type &&
-        (a.type === "node"
+        (a.type === "node" || a.type === "decorator"
           ? a.id === (b as ActiveTargetOfNode).id
           : a.source === (b as ActiveTargetOfEdge).source &&
             a.target === (b as ActiveTargetOfEdge).target)

@@ -4,7 +4,6 @@
 
 :host {
   display: block;
-  background: var(--palette-gray-2);
   position: relative;
 }
 
@@ -14,4 +13,41 @@
 
 .root:focus {
   outline: none;
+}
+
+.decorator-area .area {
+  fill: rgba(119, 141, 195, 0.1);
+  stroke: none;
+  stroke-width: 0;
+}
+
+.decorator-area.active .area {
+  stroke: var(--palette-blue-4);
+  stroke-dasharray: 4;
+  stroke-width: 1;
+}
+
+.cell {
+  user-select: none;
+}
+
+.resize-handle {
+  cursor: se-resize;
+  opacity: 0;
+}
+
+.resize-handle rect {
+  fill: transparent;
+  stroke: none;
+}
+
+.resize-handle path {
+  fill: none;
+  stroke: var(--palette-gray-5);
+  stroke-width: 1.5;
+}
+
+.decorator-area.active .resize-handle,
+.decorator-area:hover .resize-handle {
+  opacity: 1;
 }

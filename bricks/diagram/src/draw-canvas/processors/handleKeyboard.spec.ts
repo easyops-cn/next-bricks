@@ -8,6 +8,10 @@ describe("handleKeyboard", () => {
       type: "node",
       id: "a",
     },
+    {
+      type: "decorator",
+      id: "b",
+    },
   ] as unknown as Cell[];
 
   test("delete node", () => {
@@ -22,8 +26,25 @@ describe("handleKeyboard", () => {
       }
     );
     expect(action).toEqual({
-      action: "delete-node",
-      node: { id: "a" },
+      action: "delete-cell",
+      cell: { type: "node", id: "a" },
+    });
+  });
+
+  test("delete decorator", () => {
+    const action = handleKeyboard(
+      new KeyboardEvent("keydown", { key: "Backspace" }),
+      {
+        cells,
+        activeTarget: {
+          type: "decorator",
+          id: "b",
+        },
+      }
+    );
+    expect(action).toEqual({
+      action: "delete-cell",
+      cell: { type: "decorator", id: "b" },
     });
   });
 

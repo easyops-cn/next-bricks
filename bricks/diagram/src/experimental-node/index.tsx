@@ -5,6 +5,7 @@ import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import type { PositionTuple } from "../diagram/interfaces";
 import styleText from "./styles.shadow.css";
+import type { DecoratorType } from "../draw-canvas/interfaces";
 
 const { defineElement, property, event } = createDecorators();
 
@@ -33,6 +34,10 @@ class ExperimentalNode
   // 最终节点应该统一实现这个字段，保持类型一致
   @property({ type: String, render: false })
   accessor status: NodeStatus | undefined;
+
+  // 最终节点应该统一实现这个字段，保持类型一致
+  @property({ type: String })
+  accessor decorator: DecoratorType | undefined;
 
   @event({ type: "drag.start" })
   accessor #dragStartEvent!: EventEmitter<PositionTuple>;

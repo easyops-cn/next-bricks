@@ -114,6 +114,50 @@ children:
                         action: message.warn
                         args:
                           - Unexpected drop position
+      - brick: hr
+        properties:
+          style:
+            width: 100%
+      - brick: h3
+        properties:
+          textContent: Drag decorators below
+      - brick: :forEach
+        dataSource:
+          - area
+          - text
+        children:
+          - brick: diagram.experimental-node
+            properties:
+              textContent: <% _.upperFirst(ITEM) %>
+              usage: library
+            events:
+              drag.move:
+                action: context.replace
+                args:
+                  - dragging
+                  - |
+                    <% {position: EVENT.detail, type: "decorator", decorator: ITEM} %>
+              drag.end:
+                - action: context.replace
+                  args:
+                    - dragging
+                    - null
+                - target: eo-draw-canvas
+                  method: dropDecorator
+                  args:
+                    - position: <% EVENT.detail %>
+                      decorator: <% ITEM %>
+                  callback:
+                    success:
+                      if: <% EVENT.detail %>
+                      then:
+                        # action: message.success
+                        # args:
+                        #   - <% JSON.stringify(EVENT.detail) %>
+                      else:
+                        action: message.warn
+                        args:
+                          - Unexpected drop position
   - brick: div
     properties:
       style:
@@ -144,6 +188,29 @@ children:
           cells: |
             <%
               [
+                {
+                  type: "decorator",
+                  id: "area-1",
+                  decorator: "area",
+                  view: {
+                    x: 10,
+                    y: 20,
+                    width: 400,
+                    height: 300,
+                  },
+                },
+                {
+                  type: "decorator",
+                  id: "text-1",
+                  decorator: "text",
+                  view: {
+                    x: 100,
+                    y: 120,
+                    width: 100,
+                    height: 20,
+                    text: "Hello!"
+                  },
+                },
                 {
                   type: "edge",
                   source: "X",
@@ -177,23 +244,30 @@ children:
               )
             %>
         events:
-          node.move:
-            action: message.info
-            args:
-              - <% `You just moved node ${EVENT.detail.id} to (${Math.round(EVENT.detail.x)}, ${Math.round(EVENT.detail.y)})` %>
           activeTarget.change:
             action: context.replace
             args:
               - activeTarget
               - <% EVENT.detail %>
-          node.delete:
+          cell.move:
+            action: message.info
+            args:
+              - <% `You just moved ${EVENT.detail.type} ${EVENT.detail.id} to (${Math.round(EVENT.detail.x)}, ${Math.round(EVENT.detail.y)})` %>
+          cell.resize:
+            action: message.info
+            args:
+              - <% `You just resized ${EVENT.detail.type} ${EVENT.detail.id} to (${Math.round(EVENT.detail.width)}, ${Math.round(EVENT.detail.height)})` %>
+          cell.delete:
             action: message.warn
             args:
-              - <% `You wanna delete node ${EVENT.detail.id}?` %>
+              - <% `You wanna delete ${EVENT.detail.type} ${EVENT.detail.id}?` %>
   - brick: diagram.experimental-node
     properties:
       usage: dragging
-      textContent: <%= CTX.dragging?.data.name %>
+      textContent: |
+        <%= CTX.dragging?.type === "decorator" ? (CTX.dragging.decorator === "text" ? "未命名" : null) : CTX.dragging?.data.name %>
+      decorator: |
+        <%= CTX.dragging?.type === "decorator" ? CTX.dragging.decorator : null %>
       style: |
         <%=
           {

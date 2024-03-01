@@ -1,5 +1,6 @@
 import type {
   Cell,
+  DecoratorCell,
   EdgeCell,
   InitialCell,
   InitialNodeCell,
@@ -8,6 +9,10 @@ import type {
 
 export function isNodeCell(cell: Cell): cell is NodeCell {
   return cell.type === "node";
+}
+
+export function isDecoratorCell(cell: Cell): cell is DecoratorCell {
+  return cell.type === "decorator";
 }
 
 export function isInitialNodeCell(cell: InitialCell): cell is InitialNodeCell {

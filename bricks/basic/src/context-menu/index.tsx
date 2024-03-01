@@ -37,6 +37,13 @@ export interface EoContextMenuProps {
 
 export type Position = [x: number, y: number];
 
+export interface OpenInfo {
+  /**
+   * 通常设为 `[EVENT.clientX, EVENT.clientY]`
+   */
+  position: Position;
+}
+
 /**
  * 构件 `eo-context-menu`
  */
@@ -73,7 +80,7 @@ class EoContextMenu extends ReactNextElement {
   accessor #actionClickEvent!: EventEmitter<SimpleAction>;
 
   @method()
-  open({ position }: { position: [x: number, y: number] }) {
+  open({ position }: OpenInfo) {
     this.active = true;
     this.position = position;
   }

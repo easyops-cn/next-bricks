@@ -1,36 +1,19 @@
 import type { UseSingleBrickConf } from "@next-core/react-runtime";
+import type { ResizeCellPayload } from "./reducers/interfaces";
 
-export type Cell = NodeCell | EdgeCell;
-
-export type ShapeCell = NodeShapeCell /*  | EdgeShapeCell */;
+export type Cell = NodeCell | EdgeCell | DecoratorCell;
 
 export type BrickCell = NodeBrickCell /*  | EdgeBrickCell */;
 
-export type NodeCell = NodeBrickCell | NodeShapeCell;
+export type NodeCell = NodeBrickCell /* | NodeShapeCell */;
 
 export type EdgeCell = BaseEdgeCell;
 
-export type NodeShapeCell = BaseShapeCell & BaseNodeCell;
-
 export type NodeBrickCell = BaseBrickCell & BaseNodeCell;
-
-// export type EdgeShapeCell = BaseShapeCell & BaseEdgeCell;
 
 // export type EdgeBrickCell = BaseBrickCell & BaseEdgeCell;
 
 export type NodeId = string /* | number */;
-
-export interface BaseShapeCell extends BaseCell {
-  tag: "shape";
-  shape: string;
-  style?: ShapeStyle;
-}
-
-export interface ShapeStyle {
-  stroke: string;
-  fill: string;
-  strokeWidth: number;
-}
 
 export interface BaseBrickCell extends BaseCell {
   tag?: "brick";
@@ -50,15 +33,27 @@ export interface BaseEdgeCell extends BaseCell {
   // view: EdgeView;
 }
 
+export type DecoratorType = "text" | "area";
+
+export interface DecoratorCell extends BaseCell {
+  type: "decorator";
+  decorator: DecoratorType;
+  id: NodeId;
+  view: DecoratorView;
+}
+
 export interface BaseCell {
-  type: "node" | "edge";
-  tag?: "shape" | "brick";
+  type: "node" | "edge" | "decorator";
   data?: unknown;
 }
 
 export interface NodeView extends InitialNodeView {
   width: number;
   height: number;
+}
+
+export interface DecoratorView extends NodeView {
+  text?: string;
 }
 
 export interface InitialNodeView {
@@ -72,14 +67,17 @@ export type InitialNodeCell = Omit<NodeCell, "view"> & {
   view: InitialNodeView;
 };
 
-export type InitialCell = InitialNodeCell | EdgeCell;
+export type InitialCell = InitialNodeCell | EdgeCell | DecoratorCell;
 
 export interface NodeBrickConf {
   useBrick: UseSingleBrickConf;
   if?: string | boolean | null;
 }
 
-export type ActiveTarget = ActiveTargetOfNode | ActiveTargetOfEdge;
+export type ActiveTarget =
+  | ActiveTargetOfNode
+  | ActiveTargetOfEdge
+  | ActiveTargetOfDecorator;
 
 export interface ActiveTargetOfNode {
   type: "node";
@@ -92,13 +90,21 @@ export interface ActiveTargetOfEdge {
   target: NodeId;
 }
 
-export interface NodeBasicInfo {
+export interface ActiveTargetOfDecorator {
+  type: "decorator";
   id: NodeId;
-  data: unknown;
 }
 
-export interface BasicShapeProps {
-  cell: ShapeCell;
-  onMouseEnter?: () => void;
-  onMouseLeave?: () => void;
+export interface NodeOrDecoratorBasicInfo {
+  type: "node" | "decorator";
+  id: NodeId;
+  data?: unknown;
+}
+
+export interface BasicDecoratorProps {
+  cell: DecoratorCell;
+  active?: boolean;
+  onCellResizing(info: ResizeCellPayload): void;
+  onCellResized(info: ResizeCellPayload): void;
+  onSwitchActiveTarget(activeTarget: ActiveTarget | null): void;
 }

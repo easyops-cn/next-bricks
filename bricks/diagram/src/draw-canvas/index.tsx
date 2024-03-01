@@ -13,37 +13,31 @@ import { ReactNextElement } from "@next-core/react-element";
 import type { UseSingleBrickConf } from "@next-core/react-runtime";
 import "@next-core/theme";
 import { uniqueId } from "lodash";
-import type {
-  PositionTuple,
-  RefRepository,
-  SizeTuple,
-} from "../diagram/interfaces";
+import type { PositionTuple, SizeTuple } from "../diagram/interfaces";
 import type {
   ActiveTarget,
   Cell,
   EdgeCell,
   InitialCell,
-  NodeBasicInfo,
+  NodeOrDecoratorBasicInfo,
   NodeBrickConf,
   NodeCell,
   NodeId,
+  DecoratorCell,
+  DecoratorType,
 } from "./interfaces";
 import { rootReducer } from "./reducers";
 import { MarkerComponent } from "../diagram/MarkerComponent";
-import {
-  isEdgeCell,
-  isInitialNodeCell,
-  isNodeCell,
-} from "./processors/asserts";
-import { EdgeComponent } from "./EdgeComponent";
-import styleText from "./styles.shadow.css";
-import { NodeContainer } from "./NodeComponent";
-import { handleMouseDown } from "./processors/handleMouseDown";
-import type { MoveNodePayload } from "./reducers/interfaces";
+import { isInitialNodeCell } from "./processors/asserts";
+import type { MoveCellPayload, ResizeCellPayload } from "./reducers/interfaces";
 import { sameTarget } from "./processors/sameTarget";
 import { handleKeyboard } from "./processors/handleKeyboard";
+import { CellComponent } from "./CellComponent";
+import styleText from "./styles.shadow.css";
 
 const DEFAULT_NODE_SIZE = 20;
+const DEFAULT_AREA_WIDTH = 100;
+const DEFAULT_AREA_HEIGHT = 60;
 
 const { defineElement, property, method, event } = createDecorators();
 
@@ -55,6 +49,12 @@ export interface EoDrawCanvasProps {
 }
 
 export interface DropNodeInfo extends AddNodeInfo {
+  /** [PointerEvent::clientX, PointerEvent::clientY] */
+  position: PositionTuple;
+}
+
+export interface DropDecoratorInfo {
+  decorator: DecoratorType;
   /** [PointerEvent::clientX, PointerEvent::clientY] */
   position: PositionTuple;
 }
@@ -114,18 +114,43 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
     }
   };
 
+  /**
+   * @deprecated Use `cell.move` instead.
+   */
   @event({ type: "node.move" })
-  accessor #nodeMoveEvent!: EventEmitter<MoveNodePayload>;
+  accessor #nodeMoveEvent!: EventEmitter<MoveCellPayload>;
 
-  #handleNodeMove = (info: MoveNodePayload) => {
-    this.#nodeMoveEvent.emit(info);
+  @event({ type: "cell.move" })
+  accessor #cellMoveEvent!: EventEmitter<MoveCellPayload>;
+
+  #handleCellMove = (info: MoveCellPayload) => {
+    this.#cellMoveEvent.emit(info);
+    if (info.type === "node") {
+      this.#nodeMoveEvent.emit(info);
+    }
   };
 
-  @event({ type: "node.delete" })
-  accessor #nodeDelete!: EventEmitter<NodeBasicInfo>;
+  @event({ type: "cell.resize" })
+  accessor #cellResizeEvent!: EventEmitter<ResizeCellPayload>;
 
-  #handleNodeDelete = (node: NodeBasicInfo) => {
-    this.#nodeDelete.emit(node);
+  #handleCellResize = (info: ResizeCellPayload) => {
+    this.#cellResizeEvent.emit(info);
+  };
+
+  /**
+   * @deprecated Use `cell.delete` instead.
+   */
+  @event({ type: "node.delete" })
+  accessor #nodeDelete!: EventEmitter<NodeOrDecoratorBasicInfo>;
+
+  @event({ type: "cell.delete" })
+  accessor #cellDelete!: EventEmitter<NodeOrDecoratorBasicInfo>;
+
+  #handleCellDelete = (cell: NodeOrDecoratorBasicInfo) => {
+    this.#cellDelete.emit(cell);
+    if (cell.type === "node") {
+      this.#nodeDelete.emit(cell);
+    }
   };
 
   @method()
@@ -156,6 +181,34 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
       };
       this.#canvasRef.current?.dropNode(newNode);
       return newNode;
+    }
+    return null;
+  }
+
+  @method()
+  async dropDecorator({
+    position,
+    decorator,
+  }: DropDecoratorInfo): Promise<DecoratorCell | null> {
+    // Drag and then drop a node
+    const droppedInside = document
+      .elementsFromPoint?.(position[0], position[1])
+      ?.includes(this);
+    if (droppedInside) {
+      const boundingClientRect = this.getBoundingClientRect();
+      const newDecorator: DecoratorCell = {
+        type: "decorator",
+        decorator,
+        id: uuidV4(),
+        view: {
+          x: position[0] - boundingClientRect.left,
+          y: position[1] - boundingClientRect.top,
+          width: DEFAULT_AREA_WIDTH,
+          height: DEFAULT_AREA_HEIGHT,
+        },
+      };
+      this.#canvasRef.current?.dropDecorator(newDecorator);
+      return newDecorator;
     }
     return null;
   }
@@ -216,8 +269,9 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         activeTarget={this.activeTarget}
         onActiveTargetChange={this.#handleActiveTargetChange}
         onSwitchActiveTarget={this.#handleSwitchActiveTarget}
-        onNodeMove={this.#handleNodeMove}
-        onNodeDelete={this.#handleNodeDelete}
+        onCellMove={this.#handleCellMove}
+        onCellResize={this.#handleCellResize}
+        onCellDelete={this.#handleCellDelete}
       />
     );
   }
@@ -226,12 +280,14 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
 export interface EoDrawCanvasComponentProps extends EoDrawCanvasProps {
   onActiveTargetChange(target: ActiveTarget | null): void;
   onSwitchActiveTarget(target: ActiveTarget | null): void;
-  onNodeMove(info: unknown): void;
-  onNodeDelete?(node: NodeBasicInfo): void;
+  onCellMove(info: MoveCellPayload): void;
+  onCellResize(cell: ResizeCellPayload): void;
+  onCellDelete(cell: NodeOrDecoratorBasicInfo): void;
 }
 
 export interface DrawCanvasRef {
   dropNode(node: NodeCell): void;
+  dropDecorator(decorator: DecoratorCell): void;
   addNodes(nodes: NodeCell[]): void;
   addEdge(edge: EdgeCell): void;
 }
@@ -244,8 +300,9 @@ function LegacyEoDrawCanvasComponent(
     activeTarget: _activeTarget,
     onActiveTargetChange,
     onSwitchActiveTarget,
-    onNodeMove,
-    onNodeDelete,
+    onCellMove,
+    onCellResize,
+    onCellDelete,
   }: EoDrawCanvasComponentProps,
   ref: React.Ref<DrawCanvasRef>
 ) {
@@ -282,6 +339,9 @@ function LegacyEoDrawCanvasComponent(
       dropNode(node) {
         dispatch({ type: "drop-node", payload: node });
       },
+      dropDecorator(decorator) {
+        dispatch({ type: "drop-decorator", payload: decorator });
+      },
       addNodes(nodes) {
         dispatch({ type: "add-nodes", payload: nodes });
       },
@@ -293,8 +353,6 @@ function LegacyEoDrawCanvasComponent(
   );
 
   const rootRef = useRef<SVGSVGElement>(null);
-  const cellsRef = useRef<SVGGElement>(null);
-  const refRepository = useMemo<RefRepository>(() => new Map(), []);
 
   const newActiveTarget = _activeTarget ?? null;
   const [activeTarget, setActiveTarget] = useState<ActiveTarget | null>(
@@ -324,85 +382,75 @@ function LegacyEoDrawCanvasComponent(
         activeTarget,
       });
 
-      if (action?.action === "delete-node") {
-        onNodeDelete?.(action.node);
-      } /*  else if (action?.action === "delete-edge") {
-        onEdgeDelete?.(action.edge);
-      } */
+      if (action?.action === "delete-cell") {
+        onCellDelete(action.cell);
+      }
     };
     root?.addEventListener("keydown", onKeydown);
     return () => {
       root?.removeEventListener("keydown", onKeydown);
     };
-  }, [activeTarget, cells, onNodeDelete]);
-
-  const handleNodeMount = useCallback(
-    (id: NodeId, element: HTMLElement | null) => {
-      if (element) {
-        refRepository.set(id, element);
-      }
-    },
-    [refRepository]
-  );
-
-  const handleNodeUnmount = useCallback(
-    (id: NodeId) => {
-      refRepository.delete(id);
-    },
-    [refRepository]
-  );
+  }, [activeTarget, cells, onCellDelete]);
 
   const defPrefix = useMemo(() => `${uniqueId("diagram-")}-`, []);
   const markerPrefix = `${defPrefix}line-arrow-`;
   const markerEnd = `${markerPrefix}1`;
 
-  useEffect(() => {
-    const onMouseDown = (event: MouseEvent) => {
-      handleMouseDown(event, {
-        cells,
-        nodesRefRepository: refRepository,
-        onNodeMoving(info) {
-          dispatch({ type: "move-node", payload: info });
-        },
-        onNodeMoved: onNodeMove,
-        onSwitchActiveTarget,
-      });
-    };
-    // Bind mousedown event manually, since the React event handler can't work with
-    // d3-zoom inside shadow DOM.
-    const cellsContainer = cellsRef.current;
-    cellsContainer?.addEventListener("mousedown", onMouseDown);
-    return () => {
-      cellsContainer?.removeEventListener("mousedown", onMouseDown);
-    };
-  }, [cells, onNodeMove, onSwitchActiveTarget, refRepository]);
+  const handleCellMoving = useCallback((info: MoveCellPayload) => {
+    dispatch({ type: "move-cell", payload: info });
+  }, []);
+
+  const handleCellMoved = useCallback(
+    (info: MoveCellPayload) => {
+      dispatch({ type: "move-cell", payload: info });
+      onCellMove(info);
+    },
+    [onCellMove]
+  );
+
+  const handleCellResizing = useCallback((info: ResizeCellPayload) => {
+    dispatch({ type: "resize-cell", payload: info });
+  }, []);
+
+  const handleCellResized = useCallback(
+    (info: ResizeCellPayload) => {
+      dispatch({ type: "resize-cell", payload: info });
+      onCellResize(info);
+    },
+    [onCellResize]
+  );
 
   return (
     // Todo(steve): canvas size
-    <svg width={800} height={600} ref={rootRef} className="root" tabIndex={-1}>
+    <svg width={1000} height={800} ref={rootRef} className="root" tabIndex={-1}>
       <defs>
         <MarkerComponent id={markerEnd} type="arrow" strokeColor="gray" />
       </defs>
-      <g className="cells" ref={cellsRef}>
-        {cells.map((cell) =>
-          isNodeCell(cell) ? (
-            <NodeContainer
-              key={`node:${cell.id}`}
-              node={cell}
-              defaultNodeBricks={defaultNodeBricks}
-              onMount={handleNodeMount}
-              onUnmount={handleNodeUnmount}
-            />
-          ) : isEdgeCell(cell) ? (
-            <EdgeComponent
-              key={`edge:${cell.source}~${cell.target}`}
-              edge={cell}
-              cells={cells}
-              markerEnd={markerEnd}
-            />
-          ) : null
-        )}
+      <g className="cells">
+        {cells.map((cell) => (
+          <CellComponent
+            key={`${cell.type}:${cell.type === "edge" ? `${cell.source}~${cell.target}` : cell.id}`}
+            cell={cell}
+            cells={cells}
+            defaultNodeBricks={defaultNodeBricks}
+            markerEnd={markerEnd}
+            activeTarget={activeTarget}
+            onCellMoving={handleCellMoving}
+            onCellMoved={handleCellMoved}
+            onCellResizing={handleCellResizing}
+            onCellResized={handleCellResized}
+            onSwitchActiveTarget={onSwitchActiveTarget}
+          />
+        ))}
       </g>
     </svg>
   );
+}
+
+function uuidV4() {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    const r = (Math.random() * 16) | 0,
+      v = c == "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
 }

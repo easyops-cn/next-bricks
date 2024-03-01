@@ -47,3 +47,17 @@ div {
 :host([status="faded"]) {
   opacity: 0.3;
 }
+
+:host([decorator="area"]) {
+  width: 100px;
+  height: 60px;
+  background: rgba(119, 141, 195, 0.1);
+  border: none;
+}
+
+:host([decorator="text"]) {
+  width: auto;
+  height: auto;
+  background: none;
+  border: none;
+}
