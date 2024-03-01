@@ -111,7 +111,12 @@ interface ProcessedContractField {
   version: string;
 }
 
-function splitContract(value = ""): ProcessedContractField {
+function splitContract(value: string): ProcessedContractField {
+  if (typeof value !== "string")
+    return {
+      name: "",
+      version: "",
+    };
   const [name, version] = value.split(":");
   return {
     name,
@@ -212,7 +217,7 @@ export function EoContractSelectComponent({
         options={versionOptions?.map((v) => ({ value: v, label: v }))}
         onChange={handleVersionChange as any}
       ></WrappedAutoComplete>
-      {suffix.useBrick ? (
+      {suffix?.useBrick ? (
         <ReactUseMultipleBricks {...suffix}></ReactUseMultipleBricks>
       ) : null}
     </div>
