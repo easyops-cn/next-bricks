@@ -47,6 +47,12 @@ class EoDirectory extends ReactNextElement implements EoDirectoryProps {
   accessor menuItems: MenuItem[] = [];
 
   /**
+   * 是否隐藏右边线
+   */
+  @property({ type: Boolean })
+  accessor hideRightBorder: boolean = false;
+
+  /**
    * 后缀 useBrick
    */
   @property({
@@ -84,6 +90,7 @@ class EoDirectory extends ReactNextElement implements EoDirectoryProps {
       <EoDirectoryComponent
         menuItems={this.menuItems}
         directoryTitle={this.directoryTitle}
+        hideRightBorder={this.hideRightBorder}
         suffixIconClick={this.#suffixIconClick}
         menuItemClick={this.#menuItemClick}
         defaultSelectedKeys={this.defaultSelectedKeys}
@@ -97,6 +104,7 @@ export interface EoDirectoryProps {
   suffixBrick?: { useBrick: UseBrickConf };
   directoryTitle: string | undefined;
   menuItems: MenuItem[];
+  hideRightBorder?: boolean;
   menuItemClick?: (data: MenuItemClickEventDetail) => void;
   suffixIconClick?: (key: string) => void;
   defaultSelectedKeys?: string[] | undefined;
@@ -124,6 +132,7 @@ export function EoDirectoryComponent(props: EoDirectoryProps) {
   const {
     menuItems,
     directoryTitle,
+    hideRightBorder,
     menuItemClick,
     suffixIconClick,
     defaultSelectedKeys,
@@ -131,7 +140,11 @@ export function EoDirectoryComponent(props: EoDirectoryProps) {
   } = props;
 
   return (
-    <div className="directory-container">
+    <div
+      className={classNames("directory-container", {
+        "directory-container-not-border": hideRightBorder,
+      })}
+    >
       {directoryTitle && (
         <div className="directory-title" title={directoryTitle}>
           {directoryTitle}

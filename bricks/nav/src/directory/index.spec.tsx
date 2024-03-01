@@ -45,6 +45,13 @@ describe("eo-directory", () => {
         suffixIconDisabled: true,
         suffixIconTooltip: "禁止点击",
       },
+      {
+        title: "菜单项3",
+        key: "key2",
+        type: "item",
+        suffixIconDisabled: true,
+        suffixIconTooltip: "禁止点击",
+      },
     ];
     const menuItemClick = jest.fn();
     const suffixIconClick = jest.fn();
@@ -77,6 +84,30 @@ describe("eo-directory", () => {
       element.shadowRoot?.querySelector(".menu-item-title-item") as HTMLElement
     );
     expect(menuItemClick).toBeCalledTimes(1);
+
+    fireEvent.click(
+      element.shadowRoot?.querySelector(
+        ".menu-item-item .menu-item-title-item"
+      ) as HTMLElement
+    );
+    expect(menuItemClick).toBeCalledTimes(2);
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
+  test("basic usage", async () => {
+    const element = document.createElement("eo-directory") as EoDirectory;
+    element.hideRightBorder = true;
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+    expect(
+      element.shadowRoot?.querySelector(".directory-container-not-border")
+    ).toBeDefined();
     act(() => {
       document.body.removeChild(element);
     });
