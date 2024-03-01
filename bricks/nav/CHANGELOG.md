@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.8.4...@next-bricks/nav@1.9.0) (2024-03-01)
+
+
+### Features
+
+* 添加hideRightBorder隐藏右边框 ([b2fc96b](https://github.com/easyops-cn/next-bricks/commit/b2fc96bf98ec849d8a70b649d0641447bf48d81a))
+
+
+
+
+
 ## [1.8.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.8.3...@next-bricks/nav@1.8.4) (2024-02-19)
 
 
