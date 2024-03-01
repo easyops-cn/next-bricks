@@ -233,7 +233,7 @@ describe("eo-draw-canvas", () => {
     });
 
     const getCellTagNames = () =>
-      [...element.shadowRoot!.querySelector("g")!.childNodes!].map((node) =>
+      [...element.shadowRoot!.querySelectorAll(".cell > *")].map((node) =>
         (node as Element).tagName.toLowerCase()
       );
 
@@ -297,9 +297,9 @@ describe("eo-draw-canvas", () => {
     element.addEventListener("activeTarget.change", (e) =>
       onActiveTargetChange((e as CustomEvent).detail)
     );
-    const onNodeDelete = jest.fn();
-    element.addEventListener("node.delete", (e) =>
-      onNodeDelete((e as CustomEvent).detail)
+    const onCellDelete = jest.fn();
+    element.addEventListener("cell.delete", (e) =>
+      onCellDelete((e as CustomEvent).detail)
     );
 
     act(() => {
@@ -327,7 +327,7 @@ describe("eo-draw-canvas", () => {
     fireEvent.keyDown(element.shadowRoot!.querySelector("svg")!, {
       key: "Backspace",
     });
-    expect(onNodeDelete).toBeCalledWith({ id: "a" });
+    expect(onCellDelete).toBeCalledWith({ type: "node", id: "a" });
 
     act(() => {
       document.body.removeChild(element);

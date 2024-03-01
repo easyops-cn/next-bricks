@@ -1,23 +1,17 @@
 import type {
   ActiveTarget,
   Cell,
-  NodeBasicInfo,
-  // EdgeCell,
+  DecoratorCell,
+  NodeOrDecoratorBasicInfo,
+  NodeCell,
 } from "../interfaces";
-import { findNode } from "./findNode";
 
-export type KeyboardAction = KeyboardActionDeleteNode;
-// | KeyboardActionDeleteEdge;
+export type KeyboardAction = KeyboardActionDeleteCell;
 
-export interface KeyboardActionDeleteNode {
-  action: "delete-node";
-  node: NodeBasicInfo;
+export interface KeyboardActionDeleteCell {
+  action: "delete-cell";
+  cell: NodeOrDecoratorBasicInfo;
 }
-
-// export interface KeyboardActionDeleteEdge {
-//   action: "delete-edge";
-//   edge: EdgeCell;
-// }
 
 export function handleKeyboard(
   event: KeyboardEvent,
@@ -29,14 +23,15 @@ export function handleKeyboard(
     activeTarget: ActiveTarget | null | undefined;
   }
 ): KeyboardAction | undefined {
-  const activeNode =
-    activeTarget?.type === "node"
-      ? findNode(cells, activeTarget.id)
+  const activeCell =
+    activeTarget?.type === "node" || activeTarget?.type === "decorator"
+      ? (cells.find(
+          (cell) =>
+            cell.type === activeTarget.type && cell.id === activeTarget.id
+        ) as NodeCell | DecoratorCell)
       : undefined;
-  // const activeEdge =
-  //   activeTarget?.type === "edge" ? activeTarget.edge : undefined;
 
-  if (!activeNode /* && !activeEdge */) {
+  if (!activeCell) {
     return;
   }
 
@@ -44,31 +39,22 @@ export function handleKeyboard(
     event.key ||
     /* istanbul ignore next: compatibility */ event.keyCode ||
     /* istanbul ignore next: compatibility */ event.which;
-  let action: KeyboardAction["action"] | undefined;
-  let node: NodeBasicInfo | undefined;
-  // let edge: DiagramEdge | undefined;
 
   switch (key) {
     case "Backspace":
     case 8:
     case "Delete":
     case 46: {
-      // if (activeNode) {
-      action = "delete-node";
-      node = {
-        id: activeNode.id,
-        data: activeNode.data,
+      event.preventDefault();
+      event.stopPropagation();
+      return {
+        action: "delete-cell",
+        cell: {
+          type: activeCell.type,
+          id: activeCell.id,
+          data: activeCell.data,
+        },
       };
-      // } else {
-      //   action = "delete-edge";
-      //   edge = activeEdge;
-      // }
-      break;
     }
-  }
-  if (action) {
-    event.preventDefault();
-    event.stopPropagation();
-    return { action, node: node! };
   }
 }

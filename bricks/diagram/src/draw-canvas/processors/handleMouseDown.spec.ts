@@ -3,54 +3,34 @@ import { fireEvent } from "@testing-library/dom";
 import { handleMouseDown } from "./handleMouseDown";
 
 describe("handleMouseDown", () => {
-  const onNodeMoving = jest.fn();
-  const onNodeMoved = jest.fn();
+  const onCellMoving = jest.fn();
+  const onCellMoved = jest.fn();
+  const onCellResizing = jest.fn();
+  const onCellResized = jest.fn();
   const onSwitchActiveTarget = jest.fn();
   const methods = {
-    onNodeMoving,
-    onNodeMoved,
+    onCellMoving,
+    onCellMoved,
+    onCellResizing,
+    onCellResized,
     onSwitchActiveTarget,
   };
 
-  test("no nodesRefRepository", () => {
+  test("edge should be ignored", () => {
     const noopMouseDown = new MouseEvent("mousedown");
     handleMouseDown(noopMouseDown, {
-      cells: [],
-      nodesRefRepository: null,
+      cell: { type: "edge", source: "a", target: "b" },
+      action: "move",
       ...methods,
     });
-    expect(onNodeMoving).not.toBeCalled();
+    expect(onSwitchActiveTarget).not.toBeCalled();
   });
 
   test("move node", () => {
-    const nodeA = document.createElement("div");
-    const nodeB = document.createElement("div");
-    const nodeAContainer = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "foreignObject"
-    );
-    const nodeBContainer = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "foreignObject"
-    );
-    nodeAContainer.append(nodeA);
-    nodeBContainer.append(nodeB);
-    document.body.append(nodeAContainer);
-    document.body.append(nodeBContainer);
     const mousedown = new MouseEvent("mousedown", { clientX: 10, clientY: 20 });
-    Object.defineProperty(mousedown, "target", {
-      value: nodeB,
-      enumerable: true,
-    });
     handleMouseDown(mousedown, {
-      cells: [
-        { type: "node", id: "a" },
-        { type: "node", id: "b" },
-      ] as any[],
-      nodesRefRepository: new Map([
-        ["a", nodeA],
-        ["b", nodeB],
-      ]),
+      action: "move",
+      cell: { type: "node", id: "b", view: { x: 4, y: 6 } } as any,
       ...methods,
     });
 
@@ -60,13 +40,59 @@ describe("handleMouseDown", () => {
     });
 
     fireEvent.mouseMove(document, { clientX: 11, clientY: 22 });
-    expect(onNodeMoving).not.toBeCalled();
+    expect(onCellMoving).not.toBeCalled();
 
     fireEvent.mouseMove(document, { clientX: 25, clientY: 50 });
-    expect(onNodeMoving).toBeCalledWith({ id: "b", x: 19, y: 36 });
+    expect(onCellMoving).toBeCalledWith({
+      type: "node",
+      id: "b",
+      x: 19,
+      y: 36,
+    });
 
-    fireEvent.mouseUp(nodeA, { clientX: 26, clientY: 51 });
-    expect(onNodeMoved).toBeCalledWith({ id: "b", x: 20, y: 37 });
+    fireEvent.mouseUp(document, { clientX: 26, clientY: 51 });
+    expect(onCellMoved).toBeCalledWith({ type: "node", id: "b", x: 20, y: 37 });
+
+    expect(onSwitchActiveTarget).toHaveBeenCalledTimes(1);
+
+    document.body.replaceChildren();
+  });
+
+  test("resize node", () => {
+    const mousedown = new MouseEvent("mousedown", { clientX: 10, clientY: 20 });
+    handleMouseDown(mousedown, {
+      action: "resize",
+      cell: {
+        type: "decorator",
+        id: "b",
+        view: { width: 100, height: 60 },
+      } as any,
+      ...methods,
+    });
+
+    expect(onSwitchActiveTarget).toHaveBeenCalledWith({
+      type: "decorator",
+      id: "b",
+    });
+
+    fireEvent.mouseMove(document, { clientX: 11, clientY: 22 });
+    expect(onCellResizing).not.toBeCalled();
+
+    fireEvent.mouseMove(document, { clientX: 25, clientY: 50 });
+    expect(onCellResizing).toBeCalledWith({
+      type: "decorator",
+      id: "b",
+      width: 115,
+      height: 90,
+    });
+
+    fireEvent.mouseUp(document, { clientX: 26, clientY: 51 });
+    expect(onCellResized).toBeCalledWith({
+      type: "decorator",
+      id: "b",
+      width: 116,
+      height: 91,
+    });
 
     expect(onSwitchActiveTarget).toHaveBeenCalledTimes(1);
 
