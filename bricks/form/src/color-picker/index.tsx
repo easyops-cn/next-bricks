@@ -112,6 +112,9 @@ class EoColorPicker extends FormItemElementBase implements EoColorPickerProps {
         label={this.label}
         name={this.name}
         required={this.required}
+        notRender={this.notRender}
+        helpBrick={this.helpBrick}
+        labelBrick={this.labelBrick}
         trigger="handleChange"
       >
         <EoColorPickerComponent

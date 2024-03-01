@@ -152,7 +152,6 @@ class FormItem extends FormItemElementBase implements FormItemProps {
   accessor needValidate: boolean | undefined;
 
   render() {
-    if (this.notRender) return null;
     return (
       <FormItemComponent
         formElement={this.formElement}
@@ -200,6 +199,7 @@ export function FormItemComponent(props: FormItemProps) {
     helpBrick,
     labelBrick,
     needValidate = true,
+    notRender,
     validator,
   } = props;
   const formInstance = formElement?.formStore;
@@ -273,6 +273,7 @@ export function FormItemComponent(props: FormItemProps) {
     formInstance.setField(name, {
       name,
       label,
+      notRender,
       validate: {
         required,
         pattern,
@@ -289,6 +290,7 @@ export function FormItemComponent(props: FormItemProps) {
   }, [
     curElement,
     formElement?.size,
+    notRender,
     formInstance,
     label,
     layout,

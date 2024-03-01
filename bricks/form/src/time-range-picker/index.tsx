@@ -205,6 +205,9 @@ class EoTimeRangePicker extends FormItemElementBase {
         name={this.name}
         label={this.label}
         value={this.value}
+        notRender={this.notRender}
+        labelBrick={this.labelBrick}
+        helpBrick={this.helpBrick}
         selectNearDays={this.selectNearDays}
         emitChangeOnInit={this.emitChangeOnInit}
         rangeType={this.rangeType}

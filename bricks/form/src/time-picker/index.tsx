@@ -131,6 +131,9 @@ class EoTimePicker extends FormItemElementBase {
         value={this.value}
         required={this.required}
         message={this.message}
+        notRender={this.notRender}
+        labelBrick={this.labelBrick}
+        helpBrick={this.helpBrick}
         shadowRoot={this.shadowRoot}
         disabled={this.disabled}
       />

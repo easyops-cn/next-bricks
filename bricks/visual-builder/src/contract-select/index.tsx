@@ -83,6 +83,7 @@ class EoContractSelect extends FormItemElementBase {
         required={this.required}
         labelBrick={this.labelBrick}
         helpBrick={this.helpBrick}
+        notRender={this.notRender}
         trigger="handleChange"
         validator={checkContractRule}
       >

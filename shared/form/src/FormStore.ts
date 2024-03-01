@@ -8,6 +8,7 @@ interface FormStoreOptions {
 interface FieldDetail {
   name: string;
   label?: string;
+  notRender?: boolean;
   originProps?: Record<string, any>;
   validate: Validate;
   [k: string]: any;
@@ -74,11 +75,24 @@ export class FormStore extends PubSub {
     this.#fields.set(name, new Field(name, detail));
   }
   #getAllFields() {
-    return [...this.#fields.keys()];
+    return [...this.#fields.keys()].filter((key) => {
+      return !this.#fields.get(key)!.detail?.notRender;
+    });
   }
 
   getAllValues() {
-    return this.#formData;
+    const allFields = this.#getAllFields();
+    const formData = Object.fromEntries(
+      Object.entries(this.#formData)
+        .map(([k, v]) => {
+          if (allFields.includes(k)) {
+            return [k, v];
+          }
+          return [];
+        })
+        .filter(Boolean)
+    );
+    return formData;
   }
 
   setInitValue(values: Record<string, unknown>, isEmitValuseChange = true) {
@@ -153,8 +167,9 @@ export class FormStore extends PubSub {
       callback(true, results);
       return false;
     } else {
-      callback(false, this.#formData);
-      return this.#formData;
+      const formData = this.getAllValues();
+      callback(false, formData);
+      return formData;
     }
   }
 
