@@ -13,7 +13,9 @@
   overflow-y: auto;
   scrollbar-width: none;
 }
-
+.directory-container-not-border {
+  border-right: none;
+}
 .directory-title {
   font-size: var(--sub-menu-title-font-size);
   margin-bottom: 24px;
