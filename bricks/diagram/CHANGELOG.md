@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.16.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.15.0...@next-bricks/diagram@0.16.0) (2024-03-01)
+
+
+### Features
+
+* **draw-canvas:** move node ([31e2da5](https://github.com/easyops-cn/next-bricks/commit/31e2da5cdfb15c8526ed9dc42d01c93cc3313933))
+* **draw-canvas:** support select nodes ([c7794d2](https://github.com/easyops-cn/next-bricks/commit/c7794d26fabf5ac01dff9bbef1fba3c40dca3069))
+* **draw-canvas:** support set default node bricks ([79a3d09](https://github.com/easyops-cn/next-bricks/commit/79a3d095c1bc8c943ea270a407117e562f778618))
+
+
+
+
+
 # [0.15.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.14.0...@next-bricks/diagram@0.15.0) (2024-02-28)
 
 
