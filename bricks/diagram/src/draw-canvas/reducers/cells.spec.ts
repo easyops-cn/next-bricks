@@ -56,6 +56,40 @@ describe("cells reducer", () => {
     ]);
   });
 
+  test("move node", () => {
+    const newCells = cells(
+      [{ id: "2", type: "node", view: { x: 0, y: 0 } } as any],
+      {
+        type: "move-node",
+        payload: { id: "2", x: 1, y: 2 },
+      }
+    );
+    expect(newCells).toEqual([
+      {
+        id: "2",
+        type: "node",
+        view: { x: 1, y: 2 },
+      },
+    ]);
+  });
+
+  test("move a not found node", () => {
+    const newCells = cells(
+      [{ id: "2", type: "node", view: { x: 0, y: 0 } } as any],
+      {
+        type: "move-node",
+        payload: { id: "3", x: 1, y: 2 },
+      }
+    );
+    expect(newCells).toEqual([
+      {
+        id: "2",
+        type: "node",
+        view: { x: 0, y: 0 },
+      },
+    ]);
+  });
+
   test("unknown actions", () => {
     expect(
       cells([{ id: "x" } as any], {

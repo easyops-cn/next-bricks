@@ -6,6 +6,7 @@
   display: block;
   border: 1px solid var(--palette-gray-5);
   cursor: default;
+  user-select: none;
 }
 
 :host([hidden]) {
@@ -35,4 +36,14 @@ div {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+:host([status="highlighted"]) {
+  color: var(--palette-blue-5);
+  background: var(--palette-blue-1);
+  border-color: 1px solid var(--palette-blue-4);
+}
+
+:host([status="faded"]) {
+  opacity: 0.3;
 }

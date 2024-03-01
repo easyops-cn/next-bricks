@@ -18,6 +18,8 @@ export type NodeBrickCell = BaseBrickCell & BaseNodeCell;
 
 // export type EdgeBrickCell = BaseBrickCell & BaseEdgeCell;
 
+export type NodeId = string /* | number */;
+
 export interface BaseShapeCell extends BaseCell {
   tag: "shape";
   shape: string;
@@ -32,19 +34,19 @@ export interface ShapeStyle {
 
 export interface BaseBrickCell extends BaseCell {
   tag?: "brick";
-  useBrick: UseSingleBrickConf;
+  useBrick?: UseSingleBrickConf;
 }
 
 export interface BaseNodeCell extends BaseCell {
   type: "node";
-  id: string | number;
+  id: NodeId;
   view: NodeView;
 }
 
 export interface BaseEdgeCell extends BaseCell {
   type: "edge";
-  source: string | number;
-  target: string | number;
+  source: NodeId;
+  target: NodeId;
   // view: EdgeView;
 }
 
@@ -71,6 +73,29 @@ export type InitialNodeCell = Omit<NodeCell, "view"> & {
 };
 
 export type InitialCell = InitialNodeCell | EdgeCell;
+
+export interface NodeBrickConf {
+  useBrick: UseSingleBrickConf;
+  if?: string | boolean | null;
+}
+
+export type ActiveTarget = ActiveTargetOfNode | ActiveTargetOfEdge;
+
+export interface ActiveTargetOfNode {
+  type: "node";
+  id: NodeId;
+}
+
+export interface ActiveTargetOfEdge {
+  type: "edge";
+  source: NodeId;
+  target: NodeId;
+}
+
+export interface NodeBasicInfo {
+  id: NodeId;
+  data: unknown;
+}
 
 export interface BasicShapeProps {
   cell: ShapeCell;

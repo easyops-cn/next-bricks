@@ -1,10 +1,14 @@
 import { describe, test, expect, jest } from "@jest/globals";
 import { act } from "react-dom/test-utils";
+import { fireEvent } from "@testing-library/dom";
 import "./";
 import type { EoDrawCanvas } from "./index.js";
 import type { NodeBrickCell } from "./interfaces";
+import * as _handleMouseDown from "./processors/handleMouseDown";
 
 jest.mock("@next-core/theme", () => ({}));
+
+const handleMouseDown = jest.spyOn(_handleMouseDown, "handleMouseDown");
 
 document.elementsFromPoint = jest.fn(() => []);
 
@@ -70,6 +74,7 @@ describe("eo-draw-canvas", () => {
 
   test("add nodes", async () => {
     const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
+    element.defaultNodeBricks = [{ useBrick: { brick: "div" } }];
 
     act(() => {
       document.body.appendChild(element);
@@ -86,12 +91,10 @@ describe("eo-draw-canvas", () => {
           id: "add-1",
           size: [100, 200],
           data: {},
-          useBrick: { brick: "div" },
         },
         {
           id: "add-2",
           data: {},
-          useBrick: { brick: "div" },
         },
       ]);
       expect(result).toEqual([
@@ -99,9 +102,6 @@ describe("eo-draw-canvas", () => {
           data: {},
           id: "add-1",
           type: "node",
-          useBrick: {
-            brick: "div",
-          },
           view: {
             height: 200,
             width: 100,
@@ -113,9 +113,6 @@ describe("eo-draw-canvas", () => {
           data: {},
           id: "add-2",
           type: "node",
-          useBrick: {
-            brick: "div",
-          },
           view: {
             height: 20,
             width: 20,
@@ -268,6 +265,69 @@ describe("eo-draw-canvas", () => {
       "foreignobject",
       "foreignobject",
     ]);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("active target", async () => {
+    const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
+    element.defaultNodeBricks = [{ useBrick: { brick: "div" } }];
+    element.cells = [
+      {
+        type: "node",
+        id: "a",
+        view: {
+          x: 20,
+          y: 20,
+        },
+      },
+      {
+        type: "node",
+        id: "b",
+        view: {
+          x: 20,
+          y: 320,
+        },
+      },
+    ] as NodeBrickCell[];
+
+    const onActiveTargetChange = jest.fn();
+    element.addEventListener("activeTarget.change", (e) =>
+      onActiveTargetChange((e as CustomEvent).detail)
+    );
+    const onNodeDelete = jest.fn();
+    element.addEventListener("node.delete", (e) =>
+      onNodeDelete((e as CustomEvent).detail)
+    );
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+
+    act(() => {
+      fireEvent.mouseDown(element.shadowRoot!.querySelector(".cells div")!);
+    });
+    expect(handleMouseDown).toBeCalled();
+
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+    expect(onActiveTargetChange).toHaveBeenCalledWith({
+      type: "node",
+      id: "a",
+    });
+
+    // Set active target to the same node
+    element.activeTarget = { type: "node", id: "a" };
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+    expect(onActiveTargetChange).toHaveBeenCalledTimes(1);
+
+    fireEvent.keyDown(element.shadowRoot!.querySelector("svg")!, {
+      key: "Backspace",
+    });
+    expect(onNodeDelete).toBeCalledWith({ id: "a" });
 
     act(() => {
       document.body.removeChild(element);

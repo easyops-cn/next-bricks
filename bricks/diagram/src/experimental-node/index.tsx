@@ -9,9 +9,11 @@ import styleText from "./styles.shadow.css";
 const { defineElement, property, event } = createDecorators();
 
 type ExperimentalUsage = "library" | "dragging" | "default";
+type NodeStatus = "highlighted" | "faded" | "default";
 
 export interface ExperimentalNodeProps {
   usage?: ExperimentalUsage;
+  status?: NodeStatus;
 }
 
 /**
@@ -27,6 +29,10 @@ class ExperimentalNode
 {
   @property()
   accessor usage: ExperimentalUsage | undefined;
+
+  // 最终节点应该统一实现这个字段，保持类型一致
+  @property({ type: String, render: false })
+  accessor status: NodeStatus | undefined;
 
   @event({ type: "drag.start" })
   accessor #dragStartEvent!: EventEmitter<PositionTuple>;
