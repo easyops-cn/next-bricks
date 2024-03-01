@@ -163,6 +163,7 @@ class AutoComplete extends FormItemElementBase {
         options={this.options}
         labelBrick={this.labelBrick}
         helpBrick={this.helpBrick}
+        notRender={this.notRender}
         validator={this.validator}
         pattern={this.pattern}
         filterByCaption={this.filterByCaption}

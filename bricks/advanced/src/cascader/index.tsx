@@ -164,6 +164,7 @@ class CascaderBrick extends FormItemElementBase implements CascaderProps {
         name={this.name}
         label={this.label}
         required={this.required}
+        notRender={this.notRender}
         trigger="handleOnChange"
       >
         <CascaderElement

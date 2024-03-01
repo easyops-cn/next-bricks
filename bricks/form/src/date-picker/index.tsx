@@ -203,6 +203,7 @@ class EoDatePicker extends FormItemElementBase {
         inputStyle={this.inputStyle}
         disabled={this.disabled}
         disabledDate={this.disabledDate}
+        notRender={this.notRender}
         futureDateDisabled={this.futureDateDisabled}
         picker={this.picker}
         format={this.format}

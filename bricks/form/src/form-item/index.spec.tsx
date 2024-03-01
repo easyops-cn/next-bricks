@@ -47,6 +47,7 @@ describe("eo-form-item", () => {
     expect(mockFormStore.setField).toHaveBeenNthCalledWith(1, "test", {
       name: "test",
       label: "测试",
+      notRender: false,
       validate: {
         required: true,
       },
@@ -59,6 +60,7 @@ describe("eo-form-item", () => {
     expect(mockFormStore.setField).toHaveBeenNthCalledWith(2, "test", {
       name: "test",
       label: "测试",
+      notRender: false,
       validate: {
         required: false,
       },
