@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.6.0...@next-bricks/form@1.6.1) (2024-03-01)
+
+
+### Bug Fixes
+
+* form value should not with notRender item ([f0b98ca](https://github.com/easyops-cn/next-bricks/commit/f0b98ca23dfc5c7b4110a89837c21571c104a3af))
+
+
+
+
+
 # [1.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.5.1...@next-bricks/form@1.6.0) (2024-03-01)
 
 
