@@ -23,6 +23,7 @@ export interface CardProps {
   hasExtraSlot?: boolean;
   operationButtons?: OperationButton[];
   headerStyle?: React.CSSProperties;
+  bodyStyle?: React.CSSProperties;
   headerIcon?: GeneralIconProps;
   background?: boolean | string;
   compact?: boolean;
@@ -109,6 +110,14 @@ class Card extends ReactNextElement implements CardProps {
   accessor headerStyle: React.CSSProperties | undefined;
 
   /**
+   * 内容区域样式
+   */
+  @property({
+    attribute: false,
+  })
+  accessor bodyStyle: React.CSSProperties | undefined;
+
+  /**
    * 背景
    */
   @property({
@@ -140,6 +149,7 @@ class Card extends ReactNextElement implements CardProps {
         hasExtraSlot={this.hasExtraSlot}
         operationButtons={this.operationButtons}
         headerStyle={this.headerStyle}
+        bodyStyle={this.bodyStyle}
         headerIcon={this.headerIcon}
         background={this.background}
       />
@@ -153,6 +163,7 @@ export function CardComponent({
   hasExtraSlot,
   operationButtons,
   headerStyle,
+  bodyStyle,
   headerIcon,
   background = true,
 }: CardProps) {
@@ -224,6 +235,7 @@ export function CardComponent({
                 alignItems: "center",
               }
             : {}),
+          ...bodyStyle,
         }}
       >
         <slot></slot>
