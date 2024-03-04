@@ -32,6 +32,7 @@ describe("eo-textarea", () => {
         >
       )?._values
     ).toEqual({
+      display: "block",
       height: "94px",
     });
 
@@ -90,6 +91,7 @@ describe("eo-textarea", () => {
         >
       )?._values
     ).toEqual({
+      display: "block",
       height: "54px",
       "max-height": "120px",
       "min-height": "54px",
