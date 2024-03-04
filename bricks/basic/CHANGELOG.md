@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.7.0...@next-bricks/basic@1.8.0) (2024-03-04)
+
+
+### Features
+
+* **text:** add type property ([092ab2f](https://github.com/easyops-cn/next-bricks/commit/092ab2f4eedcbe5189e2ac8d098c0e70866c42c1))
+
+
+
+
+
 # [1.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.6.1...@next-bricks/basic@1.7.0) (2024-03-01)
 
 

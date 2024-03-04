@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.6.1...@next-bricks/form@1.6.2) (2024-03-04)
+
+
+### Bug Fixes
+
+* **textarea:** fix the gap at the bottom ([5585bfb](https://github.com/easyops-cn/next-bricks/commit/5585bfb2e4b6c98c4864ba95d106cfcc5f2c02d8))
+
+
+
+
+
 ## [1.6.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.6.0...@next-bricks/form@1.6.1) (2024-03-01)
 
 

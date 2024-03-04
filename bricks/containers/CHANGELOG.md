@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.1.1...@next-bricks/containers@1.2.0) (2024-03-04)
+
+
+### Features
+
+* **card:** add bodyStyle property ([489333c](https://github.com/easyops-cn/next-bricks/commit/489333cc927f9ed3a2fbf0402c51de84dc1c65bb))
+
+
+
+
+
 ## [1.1.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.1.0...@next-bricks/containers@1.1.1) (2024-02-29)
 
 
