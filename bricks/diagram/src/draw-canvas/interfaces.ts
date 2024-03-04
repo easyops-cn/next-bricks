@@ -95,16 +95,15 @@ export interface ActiveTargetOfDecorator {
   id: NodeId;
 }
 
-export interface NodeOrDecoratorBasicInfo {
-  type: "node" | "decorator";
-  id: NodeId;
-  data?: unknown;
-}
-
 export interface BasicDecoratorProps {
   cell: DecoratorCell;
-  active?: boolean;
   onCellResizing(info: ResizeCellPayload): void;
   onCellResized(info: ResizeCellPayload): void;
   onSwitchActiveTarget(activeTarget: ActiveTarget | null): void;
+}
+
+export interface CellContextMenuDetail {
+  cell: Cell;
+  clientX: number;
+  clientY: number;
 }

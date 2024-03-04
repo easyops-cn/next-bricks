@@ -1,11 +1,9 @@
 import React, { useEffect } from "react";
-import classNames from "classnames";
 import type { BasicDecoratorProps } from "../interfaces";
 import { handleMouseDown } from "../processors/handleMouseDown";
 
 export function DecoratorArea({
   cell,
-  active,
   onCellResizing,
   onCellResized,
   onSwitchActiveTarget,
@@ -30,7 +28,7 @@ export function DecoratorArea({
   }, [cell, onCellResized, onCellResizing, onSwitchActiveTarget]);
 
   return (
-    <g className={classNames("decorator-area", { active })}>
+    <g className="decorator-area">
       <rect
         // x={cell.view.x}
         // y={cell.view.y}

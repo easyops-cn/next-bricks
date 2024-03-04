@@ -19,12 +19,12 @@ import type {
   Cell,
   EdgeCell,
   InitialCell,
-  NodeOrDecoratorBasicInfo,
   NodeBrickConf,
   NodeCell,
   NodeId,
   DecoratorCell,
   DecoratorType,
+  CellContextMenuDetail,
 } from "./interfaces";
 import { rootReducer } from "./reducers";
 import { MarkerComponent } from "../diagram/MarkerComponent";
@@ -141,16 +141,23 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
    * @deprecated Use `cell.delete` instead.
    */
   @event({ type: "node.delete" })
-  accessor #nodeDelete!: EventEmitter<NodeOrDecoratorBasicInfo>;
+  accessor #nodeDelete!: EventEmitter<Cell>;
 
   @event({ type: "cell.delete" })
-  accessor #cellDelete!: EventEmitter<NodeOrDecoratorBasicInfo>;
+  accessor #cellDelete!: EventEmitter<Cell>;
 
-  #handleCellDelete = (cell: NodeOrDecoratorBasicInfo) => {
+  #handleCellDelete = (cell: Cell) => {
     this.#cellDelete.emit(cell);
     if (cell.type === "node") {
       this.#nodeDelete.emit(cell);
     }
+  };
+
+  @event({ type: "cell.contextmenu" })
+  accessor #cellContextMenu!: EventEmitter<CellContextMenuDetail>;
+
+  #handleCellContextMenu = (detail: CellContextMenuDetail) => {
+    this.#cellContextMenu.emit(detail);
   };
 
   @method()
@@ -272,6 +279,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         onCellMove={this.#handleCellMove}
         onCellResize={this.#handleCellResize}
         onCellDelete={this.#handleCellDelete}
+        onCellContextMenu={this.#handleCellContextMenu}
       />
     );
   }
@@ -282,7 +290,8 @@ export interface EoDrawCanvasComponentProps extends EoDrawCanvasProps {
   onSwitchActiveTarget(target: ActiveTarget | null): void;
   onCellMove(info: MoveCellPayload): void;
   onCellResize(cell: ResizeCellPayload): void;
-  onCellDelete(cell: NodeOrDecoratorBasicInfo): void;
+  onCellDelete(cell: Cell): void;
+  onCellContextMenu(detail: CellContextMenuDetail): void;
 }
 
 export interface DrawCanvasRef {
@@ -303,6 +312,7 @@ function LegacyEoDrawCanvasComponent(
     onCellMove,
     onCellResize,
     onCellDelete,
+    onCellContextMenu,
   }: EoDrawCanvasComponentProps,
   ref: React.Ref<DrawCanvasRef>
 ) {
@@ -353,6 +363,7 @@ function LegacyEoDrawCanvasComponent(
   );
 
   const rootRef = useRef<SVGSVGElement>(null);
+  const cellsRef = useRef<SVGGElement>(null);
 
   const newActiveTarget = _activeTarget ?? null;
   const [activeTarget, setActiveTarget] = useState<ActiveTarget | null>(
@@ -373,6 +384,25 @@ function LegacyEoDrawCanvasComponent(
     }
     onActiveTargetChange(activeTarget);
   }, [activeTarget, onActiveTargetChange]);
+
+  useEffect(() => {
+    if (!activeTarget) {
+      return;
+    }
+    const resetActiveTarget = (e: MouseEvent) => {
+      const path = e.composedPath();
+      const cellsContainerIndex = path.indexOf(cellsRef.current!);
+      // Reset active target to null when clicking outside of the cells container,
+      // Or inside the cells container but not on any cell.
+      if (cellsContainerIndex <= 0) {
+        setActiveTarget(null);
+      }
+    };
+    document.addEventListener("click", resetActiveTarget);
+    return () => {
+      document.removeEventListener("click", resetActiveTarget);
+    };
+  }, [activeTarget]);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -426,7 +456,7 @@ function LegacyEoDrawCanvasComponent(
       <defs>
         <MarkerComponent id={markerEnd} type="arrow" strokeColor="gray" />
       </defs>
-      <g className="cells">
+      <g className="cells" ref={cellsRef}>
         {cells.map((cell) => (
           <CellComponent
             key={`${cell.type}:${cell.type === "edge" ? `${cell.source}~${cell.target}` : cell.id}`}
@@ -434,12 +464,13 @@ function LegacyEoDrawCanvasComponent(
             cells={cells}
             defaultNodeBricks={defaultNodeBricks}
             markerEnd={markerEnd}
-            activeTarget={activeTarget}
+            active={sameTarget(activeTarget, cell)}
             onCellMoving={handleCellMoving}
             onCellMoved={handleCellMoved}
             onCellResizing={handleCellResizing}
             onCellResized={handleCellResized}
             onSwitchActiveTarget={onSwitchActiveTarget}
+            onCellContextMenu={onCellContextMenu}
           />
         ))}
       </g>

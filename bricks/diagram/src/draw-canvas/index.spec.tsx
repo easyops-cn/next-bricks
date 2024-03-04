@@ -271,6 +271,8 @@ describe("eo-draw-canvas", () => {
     // If no previous edge, add to the start.
     expect(getCellTagNames()).toEqual([
       "path",
+      "path",
+      "path",
       "foreignobject",
       "foreignobject",
       "foreignobject",
@@ -290,6 +292,10 @@ describe("eo-draw-canvas", () => {
     });
 
     expect(getCellTagNames()).toEqual([
+      "path",
+      "path",
+      "path",
+      "path",
       "path",
       "path",
       "foreignobject",
@@ -377,7 +383,17 @@ describe("eo-draw-canvas", () => {
     fireEvent.keyDown(element.shadowRoot!.querySelector("svg")!, {
       key: "Backspace",
     });
-    expect(onCellDelete).toBeCalledWith({ type: "node", id: "a" });
+    expect(onCellDelete).toBeCalledWith({
+      type: "node",
+      id: "a",
+      view: { x: 20, y: 20 },
+    });
+
+    act(() => {
+      fireEvent.click(element.shadowRoot!.querySelector(".cells")!);
+    });
+    expect(onActiveTargetChange).toHaveBeenCalledTimes(2);
+    expect(onActiveTargetChange).toHaveBeenNthCalledWith(2, null);
 
     act(() => {
       document.body.removeChild(element);
@@ -424,6 +440,71 @@ describe("eo-draw-canvas", () => {
       });
     });
     document.elementsFromPoint = originalElementsFromPoint;
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("context menu", async () => {
+    const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
+    element.defaultNodeBricks = [{ useBrick: { brick: "div" } }];
+    element.cells = [
+      {
+        type: "node",
+        id: "a",
+        view: {
+          x: 20,
+          y: 20,
+        },
+      },
+      {
+        type: "node",
+        id: "b",
+        view: {
+          x: 20,
+          y: 320,
+        },
+      },
+    ] as NodeBrickCell[];
+
+    const onActiveTargetChange = jest.fn();
+    element.addEventListener("activeTarget.change", (e) =>
+      onActiveTargetChange((e as CustomEvent).detail)
+    );
+    const onCellContextMenu = jest.fn();
+    element.addEventListener("cell.contextmenu", (e) =>
+      onCellContextMenu((e as CustomEvent).detail)
+    );
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+
+    act(() => {
+      fireEvent.contextMenu(element.shadowRoot!.querySelector(".cell")!, {
+        clientX: 100,
+        clientY: 200,
+      });
+    });
+
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+    expect(onActiveTargetChange).toHaveBeenCalledWith({
+      type: "node",
+      id: "a",
+    });
+
+    expect(onCellContextMenu).toHaveBeenCalledWith({
+      cell: {
+        type: "node",
+        id: "a",
+        view: { x: 20, y: 20 },
+      },
+      clientX: 100,
+      clientY: 200,
+    });
 
     act(() => {
       document.body.removeChild(element);

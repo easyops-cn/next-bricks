@@ -16,14 +16,18 @@ describe("handleMouseDown", () => {
     onSwitchActiveTarget,
   };
 
-  test("edge should be ignored", () => {
+  test("mousedown on edge", () => {
     const noopMouseDown = new MouseEvent("mousedown");
     handleMouseDown(noopMouseDown, {
       cell: { type: "edge", source: "a", target: "b" },
       action: "move",
       ...methods,
     });
-    expect(onSwitchActiveTarget).not.toBeCalled();
+    expect(onSwitchActiveTarget).toBeCalledWith({
+      type: "edge",
+      source: "a",
+      target: "b",
+    });
   });
 
   test("move node", () => {
