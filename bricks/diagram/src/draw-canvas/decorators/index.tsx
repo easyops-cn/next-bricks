@@ -5,7 +5,6 @@ import { DecoratorText } from "./DecoratorText";
 
 export function DecoratorComponent({
   cell,
-  active,
   onCellResizing,
   onCellResized,
   onSwitchActiveTarget,
@@ -29,7 +28,6 @@ export function DecoratorComponent({
   return (
     <SpecifiedComponent
       cell={cell}
-      active={active}
       onCellResizing={onCellResizing}
       onCellResized={onCellResized}
       onSwitchActiveTarget={onSwitchActiveTarget}

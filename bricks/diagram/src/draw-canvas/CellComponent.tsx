@@ -1,23 +1,31 @@
-import React, { useEffect, useRef } from "react";
-import type { ActiveTarget, Cell, NodeBrickConf } from "./interfaces";
+import React, { useCallback, useEffect, useRef } from "react";
+import classNames from "classnames";
+import type {
+  ActiveTarget,
+  Cell,
+  CellContextMenuDetail,
+  NodeBrickConf,
+} from "./interfaces";
 import { isDecoratorCell, isEdgeCell, isNodeCell } from "./processors/asserts";
 import { EdgeComponent } from "./EdgeComponent";
 import { NodeComponent } from "./NodeComponent";
 import { handleMouseDown } from "./processors/handleMouseDown";
 import type { MoveCellPayload, ResizeCellPayload } from "./reducers/interfaces";
 import { DecoratorComponent } from "./decorators";
+import { cellToTarget } from "./processors/cellToTarget";
 
 export interface CellComponentProps {
   cell: Cell;
   cells: Cell[];
   defaultNodeBricks?: NodeBrickConf[];
   markerEnd: string;
-  activeTarget: ActiveTarget | null;
+  active: boolean;
   onCellMoving(info: MoveCellPayload): void;
   onCellMoved(info: MoveCellPayload): void;
   onCellResizing(info: ResizeCellPayload): void;
   onCellResized(info: ResizeCellPayload): void;
   onSwitchActiveTarget(target: ActiveTarget | null): void;
+  onCellContextMenu(detail: CellContextMenuDetail): void;
 }
 
 export function CellComponent({
@@ -25,12 +33,13 @@ export function CellComponent({
   cells,
   defaultNodeBricks,
   markerEnd,
-  activeTarget,
+  active,
   onCellMoving,
   onCellMoved,
   onCellResizing,
   onCellResized,
   onSwitchActiveTarget,
+  onCellContextMenu,
 }: CellComponentProps): JSX.Element | null {
   const gRef = useRef<SVGGElement>(null);
 
@@ -51,15 +60,29 @@ export function CellComponent({
     };
   }, [cell, onCellMoved, onCellMoving, onSwitchActiveTarget]);
 
+  const handleContextMenu = useCallback(
+    (event: React.MouseEvent<SVGGElement>) => {
+      event.preventDefault();
+      onSwitchActiveTarget(cellToTarget(cell));
+      onCellContextMenu({
+        cell,
+        clientX: event.clientX,
+        clientY: event.clientY,
+      });
+    },
+    [cell, onCellContextMenu, onSwitchActiveTarget]
+  );
+
   return (
     <g
-      className="cell"
+      className={classNames("cell", { active })}
       ref={gRef}
       transform={
         cell.type === "edge"
           ? undefined
           : `translate(${cell.view.x} ${cell.view.y})`
       }
+      onContextMenu={handleContextMenu}
     >
       {isNodeCell(cell) ? (
         <NodeComponent node={cell} defaultNodeBricks={defaultNodeBricks} />
@@ -68,9 +91,6 @@ export function CellComponent({
       ) : isDecoratorCell(cell) ? (
         <DecoratorComponent
           cell={cell}
-          active={
-            activeTarget?.type === "decorator" && activeTarget.id === cell.id
-          }
           onCellResizing={onCellResizing}
           onCellResized={onCellResized}
           onSwitchActiveTarget={onSwitchActiveTarget}

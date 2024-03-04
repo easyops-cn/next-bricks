@@ -4,6 +4,7 @@ import type {
   MoveCellPayload,
   ResizeCellPayload,
 } from "../reducers/interfaces";
+import { cellToTarget } from "./cellToTarget";
 
 export function handleMouseDown(
   event: MouseEvent,
@@ -25,14 +26,13 @@ export function handleMouseDown(
     onSwitchActiveTarget(activeTarget: ActiveTarget | null): void;
   }
 ) {
+  event.stopPropagation();
+  // Drag node
+  onSwitchActiveTarget(cellToTarget(cell));
+
   if (cell.type === "edge") {
     return;
   }
-
-  event.stopPropagation();
-
-  // Drag node
-  onSwitchActiveTarget({ type: cell.type, id: cell.id });
 
   const scale = 1;
   const from: PositionTuple = [event.clientX, event.clientY];

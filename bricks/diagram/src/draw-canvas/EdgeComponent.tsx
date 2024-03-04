@@ -42,14 +42,26 @@ export function EdgeComponent({
     return null;
   }
 
+  const d = `M${line[0].x} ${line[0].y}L${line[1].x} ${line[1].y}`;
+
   return (
-    <path
-      className="line"
-      d={`M${line[0].x} ${line[0].y}L${line[1].x} ${line[1].y}`}
-      fill="none"
-      stroke="gray"
-      markerEnd={`url(#${markerEnd})`}
-    />
+    <>
+      <path
+        // This `path` is made for expanding interaction area of graph lines.
+        d={d}
+        fill="none"
+        stroke="transparent"
+        strokeWidth={16}
+      />
+      <path
+        className="line"
+        d={d}
+        fill="none"
+        stroke="gray"
+        markerEnd={`url(#${markerEnd})`}
+      />
+      <path className="line-active-bg" d={d} fill="none" />
+    </>
   );
 }
 

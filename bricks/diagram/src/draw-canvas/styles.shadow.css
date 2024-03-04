@@ -21,10 +21,15 @@
   stroke-width: 0;
 }
 
-.decorator-area.active .area {
-  stroke: var(--palette-blue-4);
+.cell.active .decorator-area .area,
+.cell.active .line-active-bg {
+  stroke: var(--palette-blue-5);
   stroke-dasharray: 4;
   stroke-width: 1;
+}
+
+.cell.active .decorator-text {
+  fill: var(--palette-blue-5);
 }
 
 .cell {
@@ -47,7 +52,7 @@
   stroke-width: 1.5;
 }
 
-.decorator-area.active .resize-handle,
+.cell.active .decorator-area .resize-handle,
 .decorator-area:hover .resize-handle {
   opacity: 1;
 }

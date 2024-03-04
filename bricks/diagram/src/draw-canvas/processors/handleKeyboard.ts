@@ -1,16 +1,11 @@
-import type {
-  ActiveTarget,
-  Cell,
-  DecoratorCell,
-  NodeOrDecoratorBasicInfo,
-  NodeCell,
-} from "../interfaces";
+import type { ActiveTarget, Cell } from "../interfaces";
+import { sameTarget } from "./sameTarget";
 
 export type KeyboardAction = KeyboardActionDeleteCell;
 
 export interface KeyboardActionDeleteCell {
   action: "delete-cell";
-  cell: NodeOrDecoratorBasicInfo;
+  cell: Cell;
 }
 
 export function handleKeyboard(
@@ -23,13 +18,7 @@ export function handleKeyboard(
     activeTarget: ActiveTarget | null | undefined;
   }
 ): KeyboardAction | undefined {
-  const activeCell =
-    activeTarget?.type === "node" || activeTarget?.type === "decorator"
-      ? (cells.find(
-          (cell) =>
-            cell.type === activeTarget.type && cell.id === activeTarget.id
-        ) as NodeCell | DecoratorCell)
-      : undefined;
+  const activeCell = cells.find((cell) => sameTarget(cell, activeTarget));
 
   if (!activeCell) {
     return;
@@ -49,11 +38,7 @@ export function handleKeyboard(
       event.stopPropagation();
       return {
         action: "delete-cell",
-        cell: {
-          type: activeCell.type,
-          id: activeCell.id,
-          data: activeCell.data,
-        },
+        cell: activeCell,
       };
     }
   }
