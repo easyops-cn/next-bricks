@@ -237,6 +237,7 @@ export function TextareaComponent(props: TextareaProps) {
         value={value}
         disabled={disabled}
         style={{
+          display: "block",
           height: 94,
           ...textareaStyle,
           ...autoSizeStyle,

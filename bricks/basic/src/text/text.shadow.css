@@ -1,0 +1,44 @@
+:host {
+  --font-family-code: "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
+    Courier, monospace;
+}
+
+.secondary {
+  color: var(--color-secondary-text);
+}
+
+.success {
+  color: var(--color-success);
+}
+
+.warning {
+  color: var(--color-warning);
+}
+
+.danger {
+  color: var(--color-error);
+}
+
+.disabled {
+  color: var(--text-color-disabled);
+  cursor: not-allowed;
+  user-select: none;
+}
+
+code,
+kbd {
+  font-family: var(--font-family-code);
+  padding-inline: 0.4em;
+  padding-block: 0.15em 0.1em;
+  border: 1px solid rgba(100, 100, 100, 0.2);
+  border-radius: 3px;
+}
+
+code {
+  background: rgba(150, 150, 150, 0.1);
+}
+
+kbd {
+  background: rgba(150, 150, 150, 0.06);
+  border-bottom-width: 2px;
+}

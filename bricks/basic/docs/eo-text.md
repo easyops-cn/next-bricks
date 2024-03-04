@@ -8,6 +8,39 @@
 
 ## Examples
 
+### type
+
+```yaml preview
+- brick: eo-text
+  properties:
+    type: secondary
+    textContent: Hello World
+- brick: eo-text
+  properties:
+    type: success
+    textContent: Hello World
+- brick: eo-text
+  properties:
+    type: warning
+    textContent: Hello World
+- brick: eo-text
+  properties:
+    type: danger
+    textContent: Hello World
+- brick: eo-text
+  properties:
+    type: disabled
+    textContent: Hello World
+- brick: eo-text
+  properties:
+    type: code
+    textContent: Hello World
+- brick: eo-text
+  properties:
+    type: keyboard
+    textContent: Hello World
+```
+
 ### CustomStyle
 
 ```yaml preview
