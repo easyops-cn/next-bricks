@@ -16,6 +16,7 @@ properties:
 context:
   - name: dragging
   - name: activeTarget
+  - name: targetCell
 children:
   - brick: div
     properties:
@@ -260,7 +261,19 @@ children:
           cell.delete:
             action: message.warn
             args:
-              - <% `You wanna delete ${EVENT.detail.type} ${EVENT.detail.id}?` %>
+              - |
+                <% `You wanna delete ${EVENT.detail.type} ${EVENT.detail.type === "edge" ? `(${EVENT.detail.source} => ${EVENT.detail.target})` : EVENT.detail.id}?` %>
+          cell.contextmenu:
+            - target: eo-context-menu
+              method: open
+              args:
+                - position:
+                    - <% EVENT.detail.clientX %>
+                    - <% EVENT.detail.clientY %>
+            - action: context.replace
+              args:
+                - targetCell
+                - <% EVENT.detail.cell %>
   - brick: diagram.experimental-node
     properties:
       usage: dragging
@@ -276,4 +289,15 @@ children:
           }
         %>
       hidden: <%= !CTX.dragging %>
+  - brick: eo-context-menu
+    properties:
+      actions: |
+        <%=
+          [
+            {
+              text: `Test ${CTX.targetCell?.type}`,
+              event: "test-${CTX.targetCell?.type}",
+            }
+          ]
+        %>
 ```
