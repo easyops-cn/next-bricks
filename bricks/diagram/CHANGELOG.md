@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.18.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.17.0...@next-bricks/diagram@0.18.0) (2024-03-04)
+
+
+### Features
+
+* support context menu event and edge selection ([1e277f7](https://github.com/easyops-cn/next-bricks/commit/1e277f75869e45e0f7d62773fc8bacb86b4f312e))
+
+
+
+
+
 # [0.17.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.16.0...@next-bricks/diagram@0.17.0) (2024-03-01)
 
 
