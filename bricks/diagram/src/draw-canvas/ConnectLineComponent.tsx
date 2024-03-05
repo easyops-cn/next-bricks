@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import classNames from "classnames";
 import type { ConnectLineState } from "./interfaces";
-import type { PositionTuple } from "../diagram/interfaces";
+import type { PositionTuple, TransformLiteral } from "../diagram/interfaces";
 
 export interface ConnectLineComponentProps {
   connectLineState: ConnectLineState | null;
+  transform: TransformLiteral;
   markerEnd: string;
   onConnect(state: ConnectLineState, to: PositionTuple): void;
 }
 
 export function ConnectLineComponent({
   connectLineState,
+  transform,
   markerEnd,
   onConnect,
 }: ConnectLineComponentProps): JSX.Element {
@@ -21,11 +23,16 @@ export function ConnectLineComponent({
   useEffect(() => {
     if (connectLineState) {
       setConnectLineTo(connectLineState.from);
+    }
+  }, [connectLineState]);
 
+  useEffect(() => {
+    if (connectLineState) {
       const onMouseMove = (e: MouseEvent) => {
+        // Set connect line to based on the mouse position and the transform
         setConnectLineTo([
-          e.clientX - connectLineState.offset[0],
-          e.clientY - connectLineState.offset[1],
+          (e.clientX - transform.x - connectLineState.offset[0]) / transform.k,
+          (e.clientY - transform.y - connectLineState.offset[1]) / transform.k,
         ]);
       };
       const onMouseDown = (e: MouseEvent) => {
@@ -36,8 +43,8 @@ export function ConnectLineComponent({
         // eslint-disable-next-line @typescript-eslint/no-use-before-define
         reset();
         onConnect(connectLineState, [
-          e.clientX - connectLineState.offset[0],
-          e.clientY - connectLineState.offset[1],
+          (e.clientX - transform.x - connectLineState.offset[0]) / transform.k,
+          (e.clientY - transform.y - connectLineState.offset[1]) / transform.k,
         ]);
       };
       const reset = () => {
@@ -54,7 +61,7 @@ export function ConnectLineComponent({
 
       return reset;
     }
-  }, [connectLineState, onConnect]);
+  }, [connectLineState, onConnect, transform]);
 
   return (
     <path

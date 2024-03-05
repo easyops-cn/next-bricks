@@ -5,6 +5,13 @@
 :host {
   display: block;
   position: relative;
+  overflow: hidden;
+}
+
+:host,
+.root {
+  width: 100%;
+  height: 100%;
 }
 
 :host([hidden]) {
@@ -37,7 +44,7 @@
 }
 
 .resize-handle {
-  cursor: se-resize;
+  cursor: nwse-resize;
   opacity: 0;
 }
 

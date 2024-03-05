@@ -14,6 +14,7 @@ describe("handleMouseDown", () => {
     onCellResizing,
     onCellResized,
     onSwitchActiveTarget,
+    scale: 1,
   };
 
   test("mousedown on edge", () => {
