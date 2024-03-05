@@ -56,3 +56,7 @@
 .decorator-area:hover .resize-handle {
   opacity: 1;
 }
+
+.connect-line:not(.connecting) {
+  display: none;
+}

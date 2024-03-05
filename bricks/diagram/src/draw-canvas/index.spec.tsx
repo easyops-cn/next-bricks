@@ -12,6 +12,14 @@ const handleMouseDown = jest.spyOn(_handleMouseDown, "handleMouseDown");
 
 document.elementsFromPoint = jest.fn(() => []);
 
+const lockBodyScroll = jest.fn();
+customElements.define(
+  "basic.lock-body-scroll",
+  class extends HTMLElement {
+    resolve = lockBodyScroll;
+  }
+);
+
 describe("eo-draw-canvas", () => {
   test("drop node", async () => {
     const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
@@ -505,6 +513,234 @@ describe("eo-draw-canvas", () => {
       clientX: 100,
       clientY: 200,
     });
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("manually connect nodes", async () => {
+    const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
+    element.defaultNodeBricks = [{ useBrick: { brick: "div" } }];
+    element.defaultNodeSize = [20, 20];
+    element.cells = [
+      {
+        type: "node",
+        id: "a",
+        view: {
+          x: 20,
+          y: 20,
+        },
+      },
+      {
+        type: "node",
+        id: "b",
+        view: {
+          x: 20,
+          y: 320,
+        },
+      },
+    ];
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+
+    // Case 1: Connect from an unknown node
+    expect(() => element.manuallyConnectNodes("x")).rejects.toBe(null);
+
+    // Case 2: Click on outside of any nodes
+    let promiseWillFail: Promise<unknown> | undefined;
+    act(() => {
+      promiseWillFail = element.manuallyConnectNodes("a");
+    });
+
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+
+    act(() => {
+      fireEvent.click(document, { clientX: 15, clientY: 325 });
+    });
+
+    expect(promiseWillFail).rejects.toBe(null);
+
+    // Case 3: successful connection
+    let promise: Promise<unknown> | undefined;
+    act(() => {
+      promise = element.manuallyConnectNodes("a");
+    });
+
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+
+    act(() => {
+      fireEvent.click(document, { clientX: 25, clientY: 325 });
+    });
+
+    const result = await promise;
+
+    expect(result).toMatchObject({
+      source: expect.objectContaining({
+        id: "a",
+      }),
+      target: expect.objectContaining({
+        id: "b",
+      }),
+    });
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("update cells", async () => {
+    const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
+    element.defaultNodeBricks = [
+      {
+        useBrick: {
+          brick: "div",
+          properties: { textContent: "<% DATA.node.id %>" },
+        },
+      },
+    ];
+    element.defaultNodeSize = [20, 20];
+    element.cells = [
+      {
+        type: "node",
+        id: "a",
+        view: {
+          x: 20,
+          y: 20,
+        },
+      },
+    ];
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+
+    expect(element.shadowRoot?.querySelectorAll(".cells"))
+      .toMatchInlineSnapshot(`
+      NodeList [
+        <g
+          class="cells"
+        >
+          <g
+            class="cell"
+            transform="translate(20 20)"
+          >
+            <foreignobject
+              height="20"
+              style="overflow: visible;"
+              width="20"
+            >
+              <div>
+                a
+              </div>
+            </foreignobject>
+          </g>
+        </g>,
+      ]
+    `);
+
+    act(() => {
+      element.updateCells([
+        {
+          type: "node",
+          id: "a",
+          view: {
+            x: 20,
+            y: 20,
+          },
+        },
+        {
+          type: "node",
+          id: "b",
+          view: {
+            x: 20,
+            y: 320,
+          },
+        },
+      ]);
+    });
+
+    if (element.shadowRoot?.querySelectorAll("div").length === 1) {
+      expect(element.shadowRoot?.querySelectorAll(".cells"))
+        .toMatchInlineSnapshot(`
+        NodeList [
+          <g
+            class="cells"
+          >
+            <g
+              class="cell"
+              transform="translate(20 20)"
+            >
+              <foreignobject
+                height="20"
+                style="overflow: visible;"
+                width="20"
+              >
+                <div>
+                  a
+                </div>
+              </foreignobject>
+            </g>
+            <g
+              class="cell"
+              transform="translate(20 320)"
+            >
+              <foreignobject
+                height="20"
+                style="overflow: visible;"
+                width="20"
+              />
+            </g>
+          </g>,
+        ]
+      `);
+
+      await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+    }
+
+    expect(element.shadowRoot?.querySelectorAll(".cells"))
+      .toMatchInlineSnapshot(`
+      NodeList [
+        <g
+          class="cells"
+        >
+          <g
+            class="cell"
+            transform="translate(20 20)"
+          >
+            <foreignobject
+              height="20"
+              style="overflow: visible;"
+              width="20"
+            >
+              <div>
+                a
+              </div>
+            </foreignobject>
+          </g>
+          <g
+            class="cell"
+            transform="translate(20 320)"
+          >
+            <foreignobject
+              height="20"
+              style="overflow: visible;"
+              width="20"
+            >
+              <div>
+                b
+              </div>
+            </foreignobject>
+          </g>
+        </g>,
+      ]
+    `);
 
     act(() => {
       document.body.removeChild(element);

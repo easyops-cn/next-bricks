@@ -174,6 +174,26 @@ describe("cells reducer", () => {
     ]);
   });
 
+  test("update all", () => {
+    const newCells = cells(
+      [{ id: "2", type: "node", view: { width: 100, height: 60 } } as any],
+      {
+        type: "update-all",
+        payload: {
+          cells: [{ id: "3", type: "node", view: {} } as any],
+          defaultNodeSize: [120, 80],
+        },
+      }
+    );
+    expect(newCells).toEqual([
+      {
+        id: "3",
+        type: "node",
+        view: { width: 120, height: 80 },
+      },
+    ]);
+  });
+
   test("unknown actions", () => {
     expect(
       cells([{ id: "x" } as any], {

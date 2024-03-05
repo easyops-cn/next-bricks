@@ -1,5 +1,6 @@
 import type { UseSingleBrickConf } from "@next-core/react-runtime";
 import type { ResizeCellPayload } from "./reducers/interfaces";
+import type { PositionTuple } from "../diagram/interfaces";
 
 export type Cell = NodeCell | EdgeCell | DecoratorCell;
 
@@ -106,4 +107,20 @@ export interface CellContextMenuDetail {
   cell: Cell;
   clientX: number;
   clientY: number;
+}
+
+export interface ConnectLineState {
+  source: NodeCell;
+  from: PositionTuple;
+  offset: PositionTuple;
+}
+
+export interface Deferred<T> {
+  resolve: (value: T) => void;
+  reject: (reason: unknown) => void;
+}
+
+export interface ConnectNodesDetail {
+  source: NodeCell;
+  target: NodeCell;
 }

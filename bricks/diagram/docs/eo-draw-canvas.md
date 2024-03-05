@@ -293,11 +293,29 @@ children:
     properties:
       actions: |
         <%=
-          [
+          CTX.targetCell?.type === "node" ? [
+            {
+              text: "添加边",
+              event: "add-edge",
+            }
+          ] : [
             {
               text: `Test ${CTX.targetCell?.type}`,
-              event: "test-${CTX.targetCell?.type}",
+              event: `test-${CTX.targetCell?.type}`,
             }
           ]
         %>
+    events:
+      add-edge:
+        target: eo-draw-canvas
+        method: manuallyConnectNodes
+        args:
+          - <% CTX.targetCell.id %>
+        callback:
+          success:
+            target: eo-draw-canvas
+            method: addEdge
+            args:
+              - source: <% EVENT.detail.source.id %>
+                target: <% EVENT.detail.target.id %>
 ```

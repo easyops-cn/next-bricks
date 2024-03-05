@@ -11,8 +11,10 @@ import React, {
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import type { UseSingleBrickConf } from "@next-core/react-runtime";
+import { unwrapProvider } from "@next-core/utils/general";
 import "@next-core/theme";
 import { uniqueId } from "lodash";
+import type { lockBodyScroll as _lockBodyScroll } from "@next-bricks/basic/data-providers/lock-body-scroll/lock-body-scroll";
 import type { PositionTuple, SizeTuple } from "../diagram/interfaces";
 import type {
   ActiveTarget,
@@ -25,19 +27,28 @@ import type {
   DecoratorCell,
   DecoratorType,
   CellContextMenuDetail,
+  ConnectLineState,
+  Deferred,
+  ConnectNodesDetail,
 } from "./interfaces";
 import { rootReducer } from "./reducers";
 import { MarkerComponent } from "../diagram/MarkerComponent";
-import { isInitialNodeCell } from "./processors/asserts";
+import { isNodeCell } from "./processors/asserts";
 import type { MoveCellPayload, ResizeCellPayload } from "./reducers/interfaces";
 import { sameTarget } from "./processors/sameTarget";
 import { handleKeyboard } from "./processors/handleKeyboard";
 import { CellComponent } from "./CellComponent";
 import styleText from "./styles.shadow.css";
+import { ConnectLineComponent } from "./ConnectLineComponent";
+import { initializeCells } from "./processors/initializeCells";
 
 const DEFAULT_NODE_SIZE = 20;
 const DEFAULT_AREA_WIDTH = 100;
 const DEFAULT_AREA_HEIGHT = 60;
+
+const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
+  "basic.lock-body-scroll"
+);
 
 const { defineElement, property, method, event } = createDecorators();
 
@@ -264,11 +275,27 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
     return newEdge;
   }
 
+  @method()
+  manuallyConnectNodes(source: NodeId): Promise<ConnectNodesDetail> {
+    return this.#canvasRef.current!.manuallyConnectNodes(source);
+  }
+
+  @method()
+  updateCells(cells: InitialCell[]): void {
+    this.#canvasRef.current!.updateCells(cells);
+  }
+
   #canvasRef = createRef<DrawCanvasRef>();
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    lockBodyScroll(this, false);
+  }
 
   render() {
     return (
       <EoDrawCanvasComponent
+        host={this}
         ref={this.#canvasRef}
         cells={this.cells}
         defaultNodeSize={this.defaultNodeSize}
@@ -286,6 +313,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
 }
 
 export interface EoDrawCanvasComponentProps extends EoDrawCanvasProps {
+  host: HTMLElement;
   onActiveTargetChange(target: ActiveTarget | null): void;
   onSwitchActiveTarget(target: ActiveTarget | null): void;
   onCellMove(info: MoveCellPayload): void;
@@ -299,10 +327,13 @@ export interface DrawCanvasRef {
   dropDecorator(decorator: DecoratorCell): void;
   addNodes(nodes: NodeCell[]): void;
   addEdge(edge: EdgeCell): void;
+  manuallyConnectNodes(source: NodeId): Promise<ConnectNodesDetail>;
+  updateCells(cells: InitialCell[]): void;
 }
 
 function LegacyEoDrawCanvasComponent(
   {
+    host,
     cells: initialCells,
     defaultNodeSize,
     defaultNodeBricks,
@@ -319,29 +350,19 @@ function LegacyEoDrawCanvasComponent(
   const [{ cells }, dispatch] = useReducer(
     rootReducer,
     initialCells,
-    (initialCells) => {
-      const originalCells = initialCells ?? [];
-      const finalCells: Cell[] = defaultNodeSize
-        ? originalCells.map<Cell>((cell) => {
-            if (
-              !isInitialNodeCell(cell) ||
-              (cell.view.width !== undefined && cell.view.height !== undefined)
-            ) {
-              return cell as NodeCell;
-            }
-            return {
-              ...cell,
-              view: {
-                width: defaultNodeSize[0],
-                height: defaultNodeSize[1],
-                ...cell.view,
-              },
-            } as NodeCell;
-          })
-        : (originalCells as NodeCell[]);
-      return { cells: finalCells };
-    }
+    (initialCells) => ({
+      cells: initializeCells(initialCells, { defaultNodeSize }),
+    })
   );
+
+  const rootRef = useRef<SVGSVGElement>(null);
+  const cellsRef = useRef<SVGGElement>(null);
+  const manualConnectDeferredRef = useRef<Deferred<ConnectNodesDetail> | null>(
+    null
+  );
+
+  const [connectLineState, setConnectLineState] =
+    useState<ConnectLineState | null>(null);
 
   useImperativeHandle(
     ref,
@@ -358,12 +379,65 @@ function LegacyEoDrawCanvasComponent(
       addEdge(edge) {
         dispatch({ type: "add-edge", payload: edge });
       },
+      updateCells(cells) {
+        dispatch({ type: "update-all", payload: { cells, defaultNodeSize } });
+      },
+      manuallyConnectNodes(sourceId) {
+        const source = cells.find(
+          (cell) => isNodeCell(cell) && cell.id === sourceId
+        ) as NodeCell | undefined;
+        if (source) {
+          const rect = rootRef.current!.getBoundingClientRect();
+          setConnectLineState({
+            source,
+            from: [
+              source.view.x + source.view.width / 2,
+              source.view.y + source.view.height / 2,
+            ],
+            offset: [rect.left, rect.top],
+          });
+          const promise = new Promise<ConnectNodesDetail>((resolve, reject) => {
+            manualConnectDeferredRef.current = { resolve, reject };
+          });
+          return promise;
+        }
+        return Promise.reject(null);
+      },
     }),
-    []
+    [cells]
   );
 
-  const rootRef = useRef<SVGSVGElement>(null);
-  const cellsRef = useRef<SVGGElement>(null);
+  const handleConnect = useCallback(
+    (state: ConnectLineState, to: PositionTuple) => {
+      // Find the target node from top bo bottom,
+      // detect whether the pointer is inside the target node.
+      for (let i = 0; i < cells.length; i++) {
+        const cell = cells[i];
+        // Currently ignore connecting to self
+        if (isNodeCell(cell) && cell.id !== state.source.id) {
+          if (
+            cell.view.x < to[0] &&
+            cell.view.x + cell.view.width > to[0] &&
+            cell.view.y < to[1] &&
+            cell.view.y + cell.view.height > to[1]
+          ) {
+            manualConnectDeferredRef.current?.resolve({
+              source: state.source,
+              target: cell,
+            });
+            break;
+          }
+        }
+      }
+      manualConnectDeferredRef.current?.reject(null);
+      setConnectLineState(null);
+    },
+    [cells]
+  );
+
+  useEffect(() => {
+    lockBodyScroll(host, !!connectLineState);
+  }, [connectLineState, host]);
 
   const newActiveTarget = _activeTarget ?? null;
   const [activeTarget, setActiveTarget] = useState<ActiveTarget | null>(
@@ -474,6 +548,11 @@ function LegacyEoDrawCanvasComponent(
           />
         ))}
       </g>
+      <ConnectLineComponent
+        connectLineState={connectLineState}
+        markerEnd={markerEnd}
+        onConnect={handleConnect}
+      />
     </svg>
   );
 }
