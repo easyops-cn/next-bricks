@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.19.0...@next-bricks/diagram@0.20.0) (2024-03-05)
+
+
+### Features
+
+* **draw-canvas:** zoom, pan and scale ([9030ae3](https://github.com/easyops-cn/next-bricks/commit/9030ae3715ec2a8bb9d28085b0fb5ac9cfcaf107))
+
+
+
+
+
 # [0.19.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.18.0...@next-bricks/diagram@0.19.0) (2024-03-05)
 
 
