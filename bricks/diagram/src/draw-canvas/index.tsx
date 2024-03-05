@@ -33,13 +33,14 @@ import type {
 } from "./interfaces";
 import { rootReducer } from "./reducers";
 import { MarkerComponent } from "../diagram/MarkerComponent";
-import { isInitialNodeCell, isNodeCell } from "./processors/asserts";
+import { isNodeCell } from "./processors/asserts";
 import type { MoveCellPayload, ResizeCellPayload } from "./reducers/interfaces";
 import { sameTarget } from "./processors/sameTarget";
 import { handleKeyboard } from "./processors/handleKeyboard";
 import { CellComponent } from "./CellComponent";
 import styleText from "./styles.shadow.css";
 import { ConnectLineComponent } from "./ConnectLineComponent";
+import { initializeCells } from "./processors/initializeCells";
 
 const DEFAULT_NODE_SIZE = 20;
 const DEFAULT_AREA_WIDTH = 100;
@@ -279,6 +280,11 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
     return this.#canvasRef.current!.manuallyConnectNodes(source);
   }
 
+  @method()
+  updateCells(cells: InitialCell[]): void {
+    this.#canvasRef.current!.updateCells(cells);
+  }
+
   #canvasRef = createRef<DrawCanvasRef>();
 
   disconnectedCallback(): void {
@@ -322,6 +328,7 @@ export interface DrawCanvasRef {
   addNodes(nodes: NodeCell[]): void;
   addEdge(edge: EdgeCell): void;
   manuallyConnectNodes(source: NodeId): Promise<ConnectNodesDetail>;
+  updateCells(cells: InitialCell[]): void;
 }
 
 function LegacyEoDrawCanvasComponent(
@@ -343,28 +350,9 @@ function LegacyEoDrawCanvasComponent(
   const [{ cells }, dispatch] = useReducer(
     rootReducer,
     initialCells,
-    (initialCells) => {
-      const originalCells = initialCells ?? [];
-      const finalCells: Cell[] = defaultNodeSize
-        ? originalCells.map<Cell>((cell) => {
-            if (
-              !isInitialNodeCell(cell) ||
-              (cell.view.width !== undefined && cell.view.height !== undefined)
-            ) {
-              return cell as NodeCell;
-            }
-            return {
-              ...cell,
-              view: {
-                width: defaultNodeSize[0],
-                height: defaultNodeSize[1],
-                ...cell.view,
-              },
-            } as NodeCell;
-          })
-        : (originalCells as NodeCell[]);
-      return { cells: finalCells };
-    }
+    (initialCells) => ({
+      cells: initializeCells(initialCells, { defaultNodeSize }),
+    })
   );
 
   const rootRef = useRef<SVGSVGElement>(null);
@@ -390,6 +378,9 @@ function LegacyEoDrawCanvasComponent(
       },
       addEdge(edge) {
         dispatch({ type: "add-edge", payload: edge });
+      },
+      updateCells(cells) {
+        dispatch({ type: "update-all", payload: { cells, defaultNodeSize } });
       },
       manuallyConnectNodes(sourceId) {
         const source = cells.find(

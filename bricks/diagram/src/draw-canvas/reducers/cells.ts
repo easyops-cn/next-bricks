@@ -1,6 +1,7 @@
 import type { Reducer } from "react";
 import type { DrawCanvasAction } from "./interfaces";
 import type { Cell, NodeCell } from "../interfaces";
+import { initializeCells } from "../processors/initializeCells";
 
 export const cells: Reducer<Cell[], DrawCanvasAction> = (state, action) => {
   switch (action.type) {
@@ -70,6 +71,10 @@ export const cells: Reducer<Cell[], DrawCanvasAction> = (state, action) => {
         ];
       }
       return state;
+    }
+    case "update-all": {
+      const { cells, defaultNodeSize } = action.payload;
+      return initializeCells(cells, { defaultNodeSize });
     }
   }
   return state;

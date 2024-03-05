@@ -540,7 +540,7 @@ describe("eo-draw-canvas", () => {
           y: 320,
         },
       },
-    ] as NodeBrickCell[];
+    ];
 
     act(() => {
       document.body.appendChild(element);
@@ -587,6 +587,160 @@ describe("eo-draw-canvas", () => {
         id: "b",
       }),
     });
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("update cells", async () => {
+    const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
+    element.defaultNodeBricks = [
+      {
+        useBrick: {
+          brick: "div",
+          properties: { textContent: "<% DATA.node.id %>" },
+        },
+      },
+    ];
+    element.defaultNodeSize = [20, 20];
+    element.cells = [
+      {
+        type: "node",
+        id: "a",
+        view: {
+          x: 20,
+          y: 20,
+        },
+      },
+    ];
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+
+    expect(element.shadowRoot?.querySelectorAll(".cells"))
+      .toMatchInlineSnapshot(`
+      NodeList [
+        <g
+          class="cells"
+        >
+          <g
+            class="cell"
+            transform="translate(20 20)"
+          >
+            <foreignobject
+              height="20"
+              style="overflow: visible;"
+              width="20"
+            >
+              <div>
+                a
+              </div>
+            </foreignobject>
+          </g>
+        </g>,
+      ]
+    `);
+
+    act(() => {
+      element.updateCells([
+        {
+          type: "node",
+          id: "a",
+          view: {
+            x: 20,
+            y: 20,
+          },
+        },
+        {
+          type: "node",
+          id: "b",
+          view: {
+            x: 20,
+            y: 320,
+          },
+        },
+      ]);
+    });
+
+    if (element.shadowRoot?.querySelectorAll("div").length === 1) {
+      expect(element.shadowRoot?.querySelectorAll(".cells"))
+        .toMatchInlineSnapshot(`
+        NodeList [
+          <g
+            class="cells"
+          >
+            <g
+              class="cell"
+              transform="translate(20 20)"
+            >
+              <foreignobject
+                height="20"
+                style="overflow: visible;"
+                width="20"
+              >
+                <div>
+                  a
+                </div>
+              </foreignobject>
+            </g>
+            <g
+              class="cell"
+              transform="translate(20 320)"
+            >
+              <foreignobject
+                height="20"
+                style="overflow: visible;"
+                width="20"
+              />
+            </g>
+          </g>,
+        ]
+      `);
+
+      await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+    }
+
+    expect(element.shadowRoot?.querySelectorAll(".cells"))
+      .toMatchInlineSnapshot(`
+      NodeList [
+        <g
+          class="cells"
+        >
+          <g
+            class="cell"
+            transform="translate(20 20)"
+          >
+            <foreignobject
+              height="20"
+              style="overflow: visible;"
+              width="20"
+            >
+              <div>
+                a
+              </div>
+            </foreignobject>
+          </g>
+          <g
+            class="cell"
+            transform="translate(20 320)"
+          >
+            <foreignobject
+              height="20"
+              style="overflow: visible;"
+              width="20"
+            >
+              <div>
+                b
+              </div>
+            </foreignobject>
+          </g>
+        </g>,
+      ]
+    `);
 
     act(() => {
       document.body.removeChild(element);
