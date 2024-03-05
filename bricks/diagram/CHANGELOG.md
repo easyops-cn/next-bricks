@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.18.0...@next-bricks/diagram@0.19.0) (2024-03-05)
+
+
+### Features
+
+* **draw-canvas:** manually connect nodes ([e52f08e](https://github.com/easyops-cn/next-bricks/commit/e52f08e420bbc157f56104412f3831ac75b082e8))
+* **draw-canvas:** new method: updateCells ([c2bc512](https://github.com/easyops-cn/next-bricks/commit/c2bc5127fd522bbbb0c212a8ad5e00d9cc76ec77))
+
+
+
+
+
 # [0.18.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.17.0...@next-bricks/diagram@0.18.0) (2024-03-04)
 
 

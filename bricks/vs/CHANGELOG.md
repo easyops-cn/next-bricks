@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.4.1...@next-bricks/vs@1.4.2) (2024-03-05)
+
+
+### Bug Fixes
+
+* **monaco-editor:** fix set value and focus to header & expand height fix ([b4c6fb7](https://github.com/easyops-cn/next-bricks/commit/b4c6fb7d0bb776fc8456ee9a173039242e76abf3))
+
+
+
+
+
 ## [1.4.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.4.0...@next-bricks/vs@1.4.1) (2024-03-01)
 
 
