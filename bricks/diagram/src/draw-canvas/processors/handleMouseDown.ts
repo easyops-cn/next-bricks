@@ -11,6 +11,7 @@ export function handleMouseDown(
   {
     action,
     cell,
+    scale,
     onCellMoving,
     onCellMoved,
     onCellResizing,
@@ -19,6 +20,7 @@ export function handleMouseDown(
   }: {
     action: "move" | "resize";
     cell: Cell;
+    scale: number;
     onCellMoving?(info: MoveCellPayload): void;
     onCellMoved?(info: MoveCellPayload): void;
     onCellResizing?(info: ResizeCellPayload): void;
@@ -34,7 +36,6 @@ export function handleMouseDown(
     return;
   }
 
-  const scale = 1;
   const from: PositionTuple = [event.clientX, event.clientY];
   const original =
     action === "move"

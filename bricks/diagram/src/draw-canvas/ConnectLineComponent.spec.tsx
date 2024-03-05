@@ -6,12 +6,15 @@ import { ConnectLineComponent } from "./ConnectLineComponent";
 import type { ConnectLineState } from "./interfaces";
 
 describe("ConnectLineComponent", () => {
+  const defaultTransform = { k: 1, x: 0, y: 0 };
+
   test("not connecting", () => {
     const onConnect = jest.fn();
     const { container } = render(
       <svg>
         <ConnectLineComponent
           connectLineState={null}
+          transform={defaultTransform}
           markerEnd="marker-1"
           onConnect={onConnect}
         />
@@ -37,6 +40,7 @@ describe("ConnectLineComponent", () => {
       <svg>
         <ConnectLineComponent
           connectLineState={connectLineState}
+          transform={defaultTransform}
           markerEnd="marker-1"
           onConnect={onConnect}
         />
@@ -47,6 +51,7 @@ describe("ConnectLineComponent", () => {
       <svg>
         <ConnectLineComponent
           connectLineState={connectLineState}
+          transform={defaultTransform}
           markerEnd="marker-1"
           onConnect={onConnect}
         />

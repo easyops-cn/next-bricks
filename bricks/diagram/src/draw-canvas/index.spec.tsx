@@ -7,6 +7,7 @@ import type { NodeBrickCell } from "./interfaces";
 import * as _handleMouseDown from "./processors/handleMouseDown";
 
 jest.mock("@next-core/theme", () => ({}));
+jest.mock("d3-drag");
 
 const handleMouseDown = jest.spyOn(_handleMouseDown, "handleMouseDown");
 

@@ -13,11 +13,13 @@ import { handleMouseDown } from "./processors/handleMouseDown";
 import type { MoveCellPayload, ResizeCellPayload } from "./reducers/interfaces";
 import { DecoratorComponent } from "./decorators";
 import { cellToTarget } from "./processors/cellToTarget";
+import type { TransformLiteral } from "../diagram/interfaces";
 
 export interface CellComponentProps {
   cell: Cell;
   cells: Cell[];
   defaultNodeBricks?: NodeBrickConf[];
+  transform: TransformLiteral;
   markerEnd: string;
   active: boolean;
   onCellMoving(info: MoveCellPayload): void;
@@ -34,6 +36,7 @@ export function CellComponent({
   defaultNodeBricks,
   markerEnd,
   active,
+  transform,
   onCellMoving,
   onCellMoved,
   onCellResizing,
@@ -49,6 +52,7 @@ export function CellComponent({
       handleMouseDown(event, {
         action: "move",
         cell,
+        scale: transform.k,
         onCellMoving,
         onCellMoved,
         onSwitchActiveTarget,
@@ -58,7 +62,7 @@ export function CellComponent({
     return () => {
       g?.removeEventListener("mousedown", onMouseDown);
     };
-  }, [cell, onCellMoved, onCellMoving, onSwitchActiveTarget]);
+  }, [cell, onCellMoved, onCellMoving, onSwitchActiveTarget, transform.k]);
 
   const handleContextMenu = useCallback(
     (event: React.MouseEvent<SVGGElement>) => {
@@ -91,6 +95,7 @@ export function CellComponent({
       ) : isDecoratorCell(cell) ? (
         <DecoratorComponent
           cell={cell}
+          transform={transform}
           onCellResizing={onCellResizing}
           onCellResized={onCellResized}
           onSwitchActiveTarget={onSwitchActiveTarget}

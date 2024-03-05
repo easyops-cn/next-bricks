@@ -4,6 +4,7 @@ import { handleMouseDown } from "../processors/handleMouseDown";
 
 export function DecoratorArea({
   cell,
+  transform,
   onCellResizing,
   onCellResized,
   onSwitchActiveTarget,
@@ -16,6 +17,7 @@ export function DecoratorArea({
       handleMouseDown(event, {
         action: "resize",
         cell,
+        scale: transform.k,
         onCellResizing,
         onCellResized,
         onSwitchActiveTarget,
@@ -25,7 +27,7 @@ export function DecoratorArea({
     return () => {
       resizeHandle?.removeEventListener("mousedown", onMouseDown);
     };
-  }, [cell, onCellResized, onCellResizing, onSwitchActiveTarget]);
+  }, [cell, onCellResized, onCellResizing, onSwitchActiveTarget, transform.k]);
 
   return (
     <g className="decorator-area">

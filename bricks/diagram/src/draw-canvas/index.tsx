@@ -14,8 +14,16 @@ import type { UseSingleBrickConf } from "@next-core/react-runtime";
 import { unwrapProvider } from "@next-core/utils/general";
 import "@next-core/theme";
 import { uniqueId } from "lodash";
+import { select } from "d3-selection";
+import { ZoomTransform, zoom } from "d3-zoom";
+import classNames from "classnames";
 import type { lockBodyScroll as _lockBodyScroll } from "@next-bricks/basic/data-providers/lock-body-scroll/lock-body-scroll";
-import type { PositionTuple, SizeTuple } from "../diagram/interfaces";
+import type {
+  PositionTuple,
+  RangeTuple,
+  SizeTuple,
+  TransformLiteral,
+} from "../diagram/interfaces";
 import type {
   ActiveTarget,
   Cell,
@@ -41,10 +49,13 @@ import { CellComponent } from "./CellComponent";
 import styleText from "./styles.shadow.css";
 import { ConnectLineComponent } from "./ConnectLineComponent";
 import { initializeCells } from "./processors/initializeCells";
+import { transformToCenter } from "./processors/transformToCenter";
 
 const DEFAULT_NODE_SIZE = 20;
 const DEFAULT_AREA_WIDTH = 100;
 const DEFAULT_AREA_HEIGHT = 60;
+const DEFAULT_SCALE_RANGE_MIN = 0.5;
+const DEFAULT_SCALE_RANGE_MAX = 2;
 
 const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
   "basic.lock-body-scroll"
@@ -57,6 +68,10 @@ export interface EoDrawCanvasProps {
   defaultNodeSize?: SizeTuple;
   defaultNodeBricks?: NodeBrickConf[];
   activeTarget?: ActiveTarget | null;
+  zoomable?: boolean;
+  scrollable?: boolean;
+  pannable?: boolean;
+  scaleRange?: RangeTuple;
 }
 
 export interface DropNodeInfo extends AddNodeInfo {
@@ -111,6 +126,18 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
 
   @property({ attribute: false })
   accessor activeTarget: ActiveTarget | null | undefined;
+
+  @property({ type: Boolean })
+  accessor zoomable: boolean | undefined = true;
+
+  @property({ type: Boolean })
+  accessor scrollable: boolean | undefined = true;
+
+  @property({ type: Boolean })
+  accessor pannable: boolean | undefined = true;
+
+  @property({ attribute: false })
+  accessor scaleRange: RangeTuple | undefined;
 
   @event({ type: "activeTarget.change" })
   accessor #activeTargetChangeEvent!: EventEmitter<ActiveTarget | null>;
@@ -171,6 +198,16 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
     this.#cellContextMenu.emit(detail);
   };
 
+  /**
+   * 缩放变化后，从素材库拖拽元素进画布时，拖拽图像应设置对应的缩放比例。
+   */
+  @event({ type: "scale.change" })
+  accessor #scaleChange!: EventEmitter<number>;
+
+  #handleScaleChange = (scale: number) => {
+    this.#scaleChange.emit(scale);
+  };
+
   @method()
   async dropNode({
     id,
@@ -185,12 +222,14 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
       ?.includes(this);
     if (droppedInside) {
       const boundingClientRect = this.getBoundingClientRect();
+      const transform = this.#canvasRef.current!.getTransform();
       const newNode: NodeCell = {
         type: "node",
         id,
         view: {
-          x: position[0] - boundingClientRect.left,
-          y: position[1] - boundingClientRect.top,
+          x:
+            (position[0] - boundingClientRect.left - transform.x) / transform.k,
+          y: (position[1] - boundingClientRect.top - transform.y) / transform.k,
           width: size?.[0] ?? this.defaultNodeSize?.[0] ?? DEFAULT_NODE_SIZE,
           height: size?.[1] ?? this.defaultNodeSize?.[0] ?? DEFAULT_NODE_SIZE,
         },
@@ -214,13 +253,15 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
       ?.includes(this);
     if (droppedInside) {
       const boundingClientRect = this.getBoundingClientRect();
+      const transform = this.#canvasRef.current!.getTransform();
       const newDecorator: DecoratorCell = {
         type: "decorator",
         decorator,
         id: uuidV4(),
         view: {
-          x: position[0] - boundingClientRect.left,
-          y: position[1] - boundingClientRect.top,
+          x:
+            (position[0] - boundingClientRect.left - transform.x) / transform.k,
+          y: (position[1] - boundingClientRect.top - transform.y) / transform.k,
           width: DEFAULT_AREA_WIDTH,
           height: DEFAULT_AREA_HEIGHT,
         },
@@ -301,12 +342,17 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         defaultNodeSize={this.defaultNodeSize}
         defaultNodeBricks={this.defaultNodeBricks}
         activeTarget={this.activeTarget}
+        zoomable={this.zoomable}
+        scrollable={this.scrollable}
+        pannable={this.pannable}
+        scaleRange={this.scaleRange}
         onActiveTargetChange={this.#handleActiveTargetChange}
         onSwitchActiveTarget={this.#handleSwitchActiveTarget}
         onCellMove={this.#handleCellMove}
         onCellResize={this.#handleCellResize}
         onCellDelete={this.#handleCellDelete}
         onCellContextMenu={this.#handleCellContextMenu}
+        onScaleChange={this.#handleScaleChange}
       />
     );
   }
@@ -320,6 +366,7 @@ export interface EoDrawCanvasComponentProps extends EoDrawCanvasProps {
   onCellResize(cell: ResizeCellPayload): void;
   onCellDelete(cell: Cell): void;
   onCellContextMenu(detail: CellContextMenuDetail): void;
+  onScaleChange(scale: number): void;
 }
 
 export interface DrawCanvasRef {
@@ -329,6 +376,7 @@ export interface DrawCanvasRef {
   addEdge(edge: EdgeCell): void;
   manuallyConnectNodes(source: NodeId): Promise<ConnectNodesDetail>;
   updateCells(cells: InitialCell[]): void;
+  getTransform(): TransformLiteral;
 }
 
 function LegacyEoDrawCanvasComponent(
@@ -338,12 +386,17 @@ function LegacyEoDrawCanvasComponent(
     defaultNodeSize,
     defaultNodeBricks,
     activeTarget: _activeTarget,
+    zoomable,
+    scrollable,
+    pannable,
+    scaleRange: _scaleRange,
     onActiveTargetChange,
     onSwitchActiveTarget,
     onCellMove,
     onCellResize,
     onCellDelete,
     onCellContextMenu,
+    onScaleChange,
   }: EoDrawCanvasComponentProps,
   ref: React.Ref<DrawCanvasRef>
 ) {
@@ -361,8 +414,130 @@ function LegacyEoDrawCanvasComponent(
     null
   );
 
+  const [grabbing, setGrabbing] = useState(false);
+  const [transform, setTransform] = useState<TransformLiteral>({
+    k: 1,
+    x: 0,
+    y: 0,
+  });
+  const [centered, setCentered] = useState(false);
+
+  useEffect(() => {
+    onScaleChange(transform.k);
+  }, [onScaleChange, transform.k]);
+
   const [connectLineState, setConnectLineState] =
     useState<ConnectLineState | null>(null);
+
+  const scaleRange = useMemo(
+    () =>
+      _scaleRange ??
+      ([DEFAULT_SCALE_RANGE_MIN, DEFAULT_SCALE_RANGE_MAX] as RangeTuple),
+    [_scaleRange]
+  );
+
+  const zoomer = useMemo(() => zoom<SVGSVGElement, unknown>(), []);
+
+  // istanbul ignore next: d3-zoom currently hard to test
+  useEffect(() => {
+    let moved = false;
+    zoomer
+      .scaleExtent(zoomable ? scaleRange : [1, 1])
+      .on("start", () => {
+        moved = false;
+        setGrabbing(true);
+      })
+      .on("zoom", (e: { transform: TransformLiteral }) => {
+        moved = true;
+        setTransform(e.transform);
+      })
+      .on("end", () => {
+        setGrabbing(false);
+        if (!moved) {
+          onSwitchActiveTarget?.(null);
+        }
+      });
+  }, [onSwitchActiveTarget, scaleRange, zoomable, zoomer]);
+
+  // istanbul ignore next: d3-zoom currently hard to test
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) {
+      return;
+    }
+
+    const rootSelection = select(root);
+
+    const unsetZoom = () => {
+      rootSelection
+        .on(".zoom", null)
+        .on(".zoom.custom", null)
+        .on("wheel", null);
+    };
+
+    if (!(zoomable || scrollable || pannable)) {
+      unsetZoom();
+      return;
+    }
+
+    if (zoomable || scrollable) {
+      // Do not override default d3 zoom handler.
+      // Only handles *panning*
+      rootSelection.on(
+        "wheel.zoom.custom",
+        (e: WheelEvent & { wheelDeltaX: number; wheelDeltaY: number }) => {
+          // Mac OS trackpad pinch event is emitted as a wheel.zoom and d3.event.ctrlKey set to true
+          if (!e.ctrlKey) {
+            // Stop immediate propagation for default d3 zoom handler
+            e.stopImmediatePropagation();
+            if (scrollable) {
+              e.preventDefault();
+              zoomer.translateBy(
+                rootSelection,
+                e.wheelDeltaX / 5,
+                e.wheelDeltaY / 5
+              );
+            }
+          }
+          // zoomer.scaleBy(rootSelection, Math.pow(2, defaultWheelDelta(e)))
+        }
+      );
+    }
+
+    rootSelection
+      .call(zoomer)
+      .on("wheel", (e: WheelEvent) => e.preventDefault())
+      .on("dblclick.zoom", null)
+      .on("mousedown.zoom", null);
+
+    if (!pannable) {
+      rootSelection
+        .on("touchstart.zoom", null)
+        .on("touchmove.zoom", null)
+        .on("touchend.zoom", null);
+    }
+
+    return unsetZoom;
+  }, [pannable, scrollable, zoomable, zoomer]);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root || centered) {
+      return;
+    }
+    const { k, x, y } = transformToCenter(cells, {
+      canvasWidth: root.clientWidth,
+      canvasHeight: root.clientHeight,
+      scaleRange: zoomable ? scaleRange : undefined,
+    });
+    // istanbul ignore next
+    if (process.env.NODE_ENV !== "test") {
+      // jsdom doesn't support svg baseVal yet.
+      // https://github.com/jsdom/jsdom/issues/2531
+      zoomer.transform(select(root), new ZoomTransform(k, x, y));
+    }
+    setCentered(true);
+  }, [cells, centered, scaleRange, zoomable, zoomer]);
 
   useImperativeHandle(
     ref,
@@ -381,6 +556,9 @@ function LegacyEoDrawCanvasComponent(
       },
       updateCells(cells) {
         dispatch({ type: "update-all", payload: { cells, defaultNodeSize } });
+      },
+      getTransform() {
+        return transform;
       },
       manuallyConnectNodes(sourceId) {
         const source = cells.find(
@@ -404,7 +582,7 @@ function LegacyEoDrawCanvasComponent(
         return Promise.reject(null);
       },
     }),
-    [cells]
+    [cells, defaultNodeSize, transform]
   );
 
   const handleConnect = useCallback(
@@ -526,33 +704,45 @@ function LegacyEoDrawCanvasComponent(
 
   return (
     // Todo(steve): canvas size
-    <svg width={1000} height={800} ref={rootRef} className="root" tabIndex={-1}>
+    <svg
+      width="100%"
+      height="100%"
+      ref={rootRef}
+      className={classNames("root", { grabbing, pannable })}
+      tabIndex={-1}
+    >
       <defs>
         <MarkerComponent id={markerEnd} type="arrow" strokeColor="gray" />
       </defs>
-      <g className="cells" ref={cellsRef}>
-        {cells.map((cell) => (
-          <CellComponent
-            key={`${cell.type}:${cell.type === "edge" ? `${cell.source}~${cell.target}` : cell.id}`}
-            cell={cell}
-            cells={cells}
-            defaultNodeBricks={defaultNodeBricks}
-            markerEnd={markerEnd}
-            active={sameTarget(activeTarget, cell)}
-            onCellMoving={handleCellMoving}
-            onCellMoved={handleCellMoved}
-            onCellResizing={handleCellResizing}
-            onCellResized={handleCellResized}
-            onSwitchActiveTarget={onSwitchActiveTarget}
-            onCellContextMenu={onCellContextMenu}
-          />
-        ))}
+      <g
+        transform={`translate(${transform.x} ${transform.y}) scale(${transform.k})`}
+      >
+        <g className="cells" ref={cellsRef}>
+          {cells.map((cell) => (
+            <CellComponent
+              key={`${cell.type}:${cell.type === "edge" ? `${cell.source}~${cell.target}` : cell.id}`}
+              cell={cell}
+              cells={cells}
+              defaultNodeBricks={defaultNodeBricks}
+              transform={transform}
+              markerEnd={markerEnd}
+              active={sameTarget(activeTarget, cell)}
+              onCellMoving={handleCellMoving}
+              onCellMoved={handleCellMoved}
+              onCellResizing={handleCellResizing}
+              onCellResized={handleCellResized}
+              onSwitchActiveTarget={onSwitchActiveTarget}
+              onCellContextMenu={onCellContextMenu}
+            />
+          ))}
+        </g>
+        <ConnectLineComponent
+          connectLineState={connectLineState}
+          transform={transform}
+          markerEnd={markerEnd}
+          onConnect={handleConnect}
+        />
       </g>
-      <ConnectLineComponent
-        connectLineState={connectLineState}
-        markerEnd={markerEnd}
-        onConnect={handleConnect}
-      />
     </svg>
   );
 }

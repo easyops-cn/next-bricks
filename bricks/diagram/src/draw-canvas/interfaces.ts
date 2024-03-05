@@ -1,6 +1,6 @@
 import type { UseSingleBrickConf } from "@next-core/react-runtime";
 import type { ResizeCellPayload } from "./reducers/interfaces";
-import type { PositionTuple } from "../diagram/interfaces";
+import type { PositionTuple, TransformLiteral } from "../diagram/interfaces";
 
 export type Cell = NodeCell | EdgeCell | DecoratorCell;
 
@@ -98,6 +98,7 @@ export interface ActiveTargetOfDecorator {
 
 export interface BasicDecoratorProps {
   cell: DecoratorCell;
+  transform: TransformLiteral;
   onCellResizing(info: ResizeCellPayload): void;
   onCellResized(info: ResizeCellPayload): void;
   onSwitchActiveTarget(activeTarget: ActiveTarget | null): void;
