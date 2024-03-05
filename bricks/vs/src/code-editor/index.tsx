@@ -19,7 +19,7 @@ import { register as registerYaml } from "@next-core/monaco-contributions/yaml";
 import { register as registerHtml } from "@next-core/monaco-contributions/html";
 import yaml from "js-yaml";
 import "@next-core/theme";
-import { isEqual, uniqueId } from "lodash";
+import { uniqueId, debounce } from "lodash";
 import {
   EDITOR_SCROLLBAR_SIZE,
   EDITOR_PADDING_VERTICAL,
@@ -217,6 +217,7 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
     isFlush: boolean,
     isInit: boolean = false
   ) => {
+    this.value = value;
     !isInit && this.getFormElement()?.formStore.onChange(this.name!, value);
     this.#codeChange.emit(value);
     if (!isFlush) {
@@ -342,7 +343,9 @@ export function CodeEditorComponent({
     const workerInstance = VSWorkers.getInstance(workerId);
     const id = workerInstance.addEventListener("message", (message: any) => {
       const { token, data, init = false } = message.data;
-      const model = editorRef.current!.getModel()!;
+      const model = editorRef.current!.getModel();
+      if (!model) return;
+      const originValue = model.getValue();
 
       switch (token) {
         case "parse_yaml": {
@@ -362,13 +365,13 @@ export function CodeEditorComponent({
             }))
           );
           monaco.editor.setModelMarkers(model, "brick_next_yaml", markers);
-          onChange(model.getValue(), value, false, init);
+          onChange(originValue, value, false, init);
           break;
         }
         case "parse_yaml_error": {
           monaco.editor.setModelMarkers(model, "brick_next_yaml", []);
           decorationsCollection?.current?.set([]);
-          onChange(model.getValue(), undefined, false, init);
+          onChange(originValue, undefined, false, init);
           break;
         }
       }
@@ -419,32 +422,34 @@ export function CodeEditorComponent({
 
   const parseYaml = useCallback(
     ({ init = false }: { init?: boolean }) => {
-      if (language !== "brick_next_yaml") return;
+      if (language !== "brick_next_yaml" || !editorRef.current) return;
       const workerInstance = VSWorkers.getInstance(workerId);
       workerInstance.postMessage({
         token: "parse_yaml",
         data: {
-          value: editorRef.current!.getModel()!.getValue(),
+          value,
           links,
           markers,
         },
         init,
       });
     },
-    [language, links, markers, workerId]
+    [language, value, links, markers, workerId]
   );
+
+  const debounceParse = useMemo(() => debounce(parseYaml, 300), [parseYaml]);
 
   useEffect(() => {
     if (editorRef.current) {
-      const currentModel = editorRef.current.getModel()!;
-      if (!isEqual(currentModel.getValue(), value)) {
-        currentModel.setValue(value);
-        parseYaml({
+      const currentModel = editorRef.current.getModel();
+      if (currentModel && value !== currentModel.getValue()) {
+        currentModel.setValue(value as string);
+        debounceParse({
           init: true,
         });
       }
     }
-  }, [value, parseYaml]);
+  }, [value, debounceParse]);
 
   useLayoutEffect(() => {
     if (automaticLayoutRef.current !== "fit-content" || !containerRef.current) {
@@ -460,9 +465,14 @@ export function CodeEditorComponent({
           const newWidth = entry.contentBoxSize
             ? entry.contentBoxSize[0].inlineSize
             : entry.contentRect.width;
-          if (newWidth !== size.current.width) {
-            size.current.width = newWidth;
-            editorRef.current?.layout(size.current);
+          const newHeight = entry.contentBoxSize
+            ? entry.contentBoxSize[0].blockSize
+            : entry.contentRect.height;
+          if (newWidth !== size.current.width || expanded) {
+            editorRef.current?.layout({
+              width: newWidth,
+              height: expanded ? newHeight : size.current.height,
+            });
           }
           break;
         }
@@ -473,7 +483,7 @@ export function CodeEditorComponent({
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [expanded]);
 
   useLayoutEffect(() => {
     if (automaticLayoutRef.current !== "fit-container") {
@@ -545,6 +555,8 @@ export function CodeEditorComponent({
       overviewRulerBorder: false,
       mouseWheelScrollSensitivity: 0.5,
       fixedOverflowWidgets: true,
+      folding: false,
+      lineNumbersMinChars: 3,
       suggest: {
         insertMode: "insert",
         preview: true,
@@ -612,7 +624,7 @@ export function CodeEditorComponent({
         });
       });
 
-      parseYaml({
+      debounceParse({
         init: true,
       });
 
@@ -621,7 +633,7 @@ export function CodeEditorComponent({
         editorMouseDownEvent?.dispose();
       };
     }
-  }, [language, onTokenClick, systemTheme, theme, parseYaml]);
+  }, [language, onTokenClick, systemTheme, theme, debounceParse]);
 
   useEffect(() => {
     const editor = editorRef.current;
@@ -634,6 +646,7 @@ export function CodeEditorComponent({
     }
 
     const listener = editor.onDidContentSizeChange((e) => {
+      if (expanded) return;
       if (e.contentHeightChanged) {
         const newHeight = fixEditorHeightWithScrollBar(
           e.contentHeight,
@@ -660,7 +673,7 @@ export function CodeEditorComponent({
     return () => {
       listener.dispose();
     };
-  }, [maxLines, minLines]);
+  }, [maxLines, minLines, expanded]);
 
   useEffect(() => {
     if (!editorRef.current) {
@@ -670,7 +683,7 @@ export function CodeEditorComponent({
     const listener = currentModel.onDidChangeContent(() => {
       setEditorId(workerId);
       if (["brick_next_yaml"].includes(language)) {
-        parseYaml({
+        debounceParse({
           init: false,
         });
       } else {
@@ -680,7 +693,7 @@ export function CodeEditorComponent({
     return () => {
       listener.dispose();
     };
-  }, [parseYaml, onChange, value, workerId, language]);
+  }, [debounceParse, onChange, workerId, language]);
 
   useEffect(() => {
     if (expanded) {
