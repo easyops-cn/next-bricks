@@ -28,15 +28,16 @@
   stroke-width: 0;
 }
 
+.node,
+.decorator-text {
+  overflow: visible;
+}
+
 .cell.active .decorator-area .area,
 .cell.active .line-active-bg {
   stroke: var(--palette-blue-5);
   stroke-dasharray: 4;
   stroke-width: 1;
-}
-
-.cell.active .decorator-text {
-  fill: var(--palette-blue-5);
 }
 
 .cell {
@@ -70,4 +71,17 @@
 
 .line.dashed {
   stroke-dasharray: 4;
+}
+
+.cell.active .decorator-text .text-container {
+  outline: 1px dashed var(--palette-blue-5);
+}
+
+.decorator-text .text-container {
+  width: max-content;
+  padding: 0.5em;
+}
+
+.decorator-text .text:focus {
+  outline: none;
 }

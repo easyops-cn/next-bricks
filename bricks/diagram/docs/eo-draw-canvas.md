@@ -30,18 +30,6 @@
               },
             },
             {
-              type: "decorator",
-              id: "text-1",
-              decorator: "text",
-              view: {
-                x: 100,
-                y: 120,
-                width: 100,
-                height: 20,
-                text: "Hello!"
-              },
-            },
-            {
               type: "edge",
               source: "X",
               target: "Y",
@@ -74,7 +62,20 @@
                 height: 60,
               }
             }))
-          )
+          ).concat([
+            {
+              type: "decorator",
+              id: "text-1",
+              decorator: "text",
+              view: {
+                x: 100,
+                y: 120,
+                width: 100,
+                height: 20,
+                text: "Hello!"
+              },
+            },
+          ])
         %>
     - name: dragging
     - name: activeTarget
@@ -261,6 +262,7 @@
                     args:
                       - position: <% EVENT.detail %>
                         decorator: <% ITEM %>
+                        text: '<% ITEM === "text" ? "Text" : undefined %>'
                     callback:
                       success:
                         if: <% EVENT.detail %>
@@ -333,6 +335,10 @@
                 args:
                   - targetCell
                   - <% EVENT.detail.cell %>
+            decorator.text.change:
+              action: message.info
+              args:
+                - <% JSON.stringify(EVENT.detail) %>
             scale.change:
               action: context.replace
               args:
@@ -342,7 +348,7 @@
   properties:
     usage: dragging
     textContent: |
-      <%= CTX.dragging?.type === "decorator" ? (CTX.dragging.decorator === "text" ? "未命名" : null) : CTX.dragging?.data.name %>
+      <%= CTX.dragging?.type === "decorator" ? (CTX.dragging.decorator === "text" ? "Text" : null) : CTX.dragging?.data.name %>
     decorator: |
       <%= CTX.dragging?.type === "decorator" ? CTX.dragging.decorator : null %>
     style: |
@@ -352,6 +358,7 @@
           top: `${CTX.dragging?.position[1]}px`,
           transform: `scale(${CTX.scale})`,
           transformOrigin: "0 0",
+          padding: CTX.dragging?.decorator === "text" ? "0.5em" : "0"
         }
       %>
     hidden: <%= !CTX.dragging %>

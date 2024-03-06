@@ -107,6 +107,8 @@ export interface BasicDecoratorProps {
   onCellResizing(info: ResizeCellPayload): void;
   onCellResized(info: ResizeCellPayload): void;
   onSwitchActiveTarget(activeTarget: ActiveTarget | null): void;
+  onDecoratorTextEditing(detail: { id: string; editing: boolean }): void;
+  onDecoratorTextChange(detail: DecoratorTextChangeDetail): void;
 }
 
 export interface CellContextMenuDetail {
@@ -129,4 +131,9 @@ export interface Deferred<T> {
 export interface ConnectNodesDetail {
   source: NodeCell;
   target: NodeCell;
+}
+
+export interface DecoratorTextChangeDetail {
+  id: string;
+  view: DecoratorView;
 }

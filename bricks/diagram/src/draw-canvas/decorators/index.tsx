@@ -9,6 +9,8 @@ export function DecoratorComponent({
   onCellResizing,
   onCellResized,
   onSwitchActiveTarget,
+  onDecoratorTextEditing,
+  onDecoratorTextChange,
 }: BasicDecoratorProps): JSX.Element | null {
   let SpecifiedComponent: (props: BasicDecoratorProps) => JSX.Element | null;
 
@@ -33,6 +35,8 @@ export function DecoratorComponent({
       onCellResizing={onCellResizing}
       onCellResized={onCellResized}
       onSwitchActiveTarget={onSwitchActiveTarget}
+      onDecoratorTextEditing={onDecoratorTextEditing}
+      onDecoratorTextChange={onDecoratorTextChange}
     />
   );
 }
