@@ -416,7 +416,7 @@ describe("eo-draw-canvas", () => {
     expect(onCellDelete).toBeCalledWith({
       type: "node",
       id: "a",
-      view: { x: 20, y: 20 },
+      view: { x: 20, y: 20, width: 20, height: 20 },
     });
 
     act(() => {
@@ -530,7 +530,7 @@ describe("eo-draw-canvas", () => {
       cell: {
         type: "node",
         id: "a",
-        view: { x: 20, y: 20 },
+        view: { x: 20, y: 20, width: 20, height: 20 },
       },
       clientX: 100,
       clientY: 200,
@@ -763,6 +763,70 @@ describe("eo-draw-canvas", () => {
         </g>,
       ]
     `);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("update cells", async () => {
+    const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
+    element.defaultNodeBricks = [{ useBrick: { brick: "div" } }];
+    element.cells = [
+      {
+        type: "node",
+        id: "x",
+        view: {
+          x: 20,
+          y: 30,
+        },
+      },
+    ];
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+
+    await act(async () => {
+      const result = await element.updateCells(
+        [
+          {
+            type: "edge",
+            source: "x",
+            target: "y",
+          },
+          {
+            type: "node",
+            id: "x",
+            view: {
+              x: 20,
+              y: 30,
+            },
+          },
+          {
+            type: "node",
+            id: "y",
+          },
+        ],
+        { reason: "add-related-nodes", parent: "x" }
+      );
+      expect(result).toEqual({
+        updated: [
+          {
+            type: "node",
+            id: "y",
+            view: {
+              height: 20,
+              width: 20,
+              x: 20,
+              y: 70,
+            },
+          },
+        ],
+      });
+    });
 
     act(() => {
       document.body.removeChild(element);

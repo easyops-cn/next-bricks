@@ -7,27 +7,25 @@ export function initializeCells(
   {
     defaultNodeSize,
   }: {
-    defaultNodeSize?: SizeTuple;
-  } = {}
+    defaultNodeSize: SizeTuple;
+  }
 ): Cell[] {
   const originalCells = initialCells ?? [];
-  const finalCells: Cell[] = defaultNodeSize
-    ? originalCells.map<Cell>((cell) => {
-        if (
-          !isInitialNodeCell(cell) ||
-          (cell.view.width !== undefined && cell.view.height !== undefined)
-        ) {
-          return cell as NodeCell;
-        }
-        return {
-          ...cell,
-          view: {
-            width: defaultNodeSize[0],
-            height: defaultNodeSize[1],
-            ...cell.view,
-          },
-        } as NodeCell;
-      })
-    : (originalCells as NodeCell[]);
+  const finalCells: Cell[] = originalCells.map<Cell>((cell) => {
+    if (
+      !isInitialNodeCell(cell) ||
+      (cell.view?.width !== undefined && cell.view?.height !== undefined)
+    ) {
+      return cell as NodeCell;
+    }
+    return {
+      ...cell,
+      view: {
+        width: defaultNodeSize[0],
+        height: defaultNodeSize[1],
+        ...cell.view,
+      },
+    } as NodeCell;
+  });
   return finalCells;
 }

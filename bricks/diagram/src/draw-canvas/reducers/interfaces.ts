@@ -1,9 +1,7 @@
-import type { SizeTuple } from "../../diagram/interfaces";
 import type {
   Cell,
   DecoratorCell,
   EdgeCell,
-  InitialCell,
   NodeCell,
   NodeId,
 } from "../interfaces";
@@ -19,7 +17,7 @@ export type DrawCanvasAction =
   | AddEdgeAction
   | MoveCellAction
   | ResizeCellAction
-  | UpdateAllAction;
+  | UpdateCellsAction;
 
 export interface DropNodeAction {
   type: "drop-node";
@@ -51,12 +49,9 @@ export interface ResizeCellAction {
   payload: ResizeCellPayload;
 }
 
-export interface UpdateAllAction {
-  type: "update-all";
-  payload: {
-    cells: InitialCell[];
-    defaultNodeSize: SizeTuple | undefined;
-  };
+export interface UpdateCellsAction {
+  type: "update-cells";
+  payload: Cell[];
 }
 
 export interface MoveCellPayload {

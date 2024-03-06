@@ -65,7 +65,7 @@ export interface InitialNodeView {
 }
 
 export type InitialNodeCell = Omit<NodeCell, "view"> & {
-  view: InitialNodeView;
+  view?: InitialNodeView;
 };
 
 export type InitialCell = InitialNodeCell | EdgeCell | DecoratorCell;
