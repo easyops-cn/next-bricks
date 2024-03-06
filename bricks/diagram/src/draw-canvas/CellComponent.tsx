@@ -4,6 +4,7 @@ import type {
   ActiveTarget,
   Cell,
   CellContextMenuDetail,
+  EdgeLineConf,
   NodeBrickConf,
 } from "./interfaces";
 import { isDecoratorCell, isEdgeCell, isNodeCell } from "./processors/asserts";
@@ -19,6 +20,7 @@ export interface CellComponentProps {
   cell: Cell;
   cells: Cell[];
   defaultNodeBricks?: NodeBrickConf[];
+  defaultEdgeLines?: EdgeLineConf[];
   transform: TransformLiteral;
   markerEnd: string;
   active: boolean;
@@ -34,6 +36,7 @@ export function CellComponent({
   cell,
   cells,
   defaultNodeBricks,
+  defaultEdgeLines,
   markerEnd,
   active,
   transform,
@@ -91,7 +94,12 @@ export function CellComponent({
       {isNodeCell(cell) ? (
         <NodeComponent node={cell} defaultNodeBricks={defaultNodeBricks} />
       ) : isEdgeCell(cell) ? (
-        <EdgeComponent edge={cell} cells={cells} markerEnd={markerEnd} />
+        <EdgeComponent
+          edge={cell}
+          defaultEdgeLines={defaultEdgeLines}
+          cells={cells}
+          markerEnd={markerEnd}
+        />
       ) : isDecoratorCell(cell) ? (
         <DecoratorComponent
           cell={cell}

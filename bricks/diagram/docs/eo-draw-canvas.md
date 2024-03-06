@@ -188,6 +188,9 @@
                           // ? "faded"
                           : "default"
                       %>
+            defaultEdgeLines:
+              - if: <% DATA.edge.data?.virtual %>
+                dashed: true
             cells: |
               <%
                 [
@@ -223,6 +226,9 @@
                     type: "edge",
                     source: "X",
                     target: "Z",
+                    data: {
+                      virtual: true,
+                    }
                   },
                 ].concat(
                   ["X", "Y", "Z"].map((id) => ({

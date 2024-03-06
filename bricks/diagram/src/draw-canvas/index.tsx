@@ -38,6 +38,7 @@ import type {
   ConnectLineState,
   Deferred,
   ConnectNodesDetail,
+  EdgeLineConf,
 } from "./interfaces";
 import { rootReducer } from "./reducers";
 import { MarkerComponent } from "../diagram/MarkerComponent";
@@ -67,6 +68,7 @@ export interface EoDrawCanvasProps {
   cells: InitialCell[] | undefined;
   defaultNodeSize?: SizeTuple;
   defaultNodeBricks?: NodeBrickConf[];
+  defaultEdgeLines?: EdgeLineConf[];
   activeTarget?: ActiveTarget | null;
   zoomable?: boolean;
   scrollable?: boolean;
@@ -123,6 +125,18 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
 
   @property({ attribute: false })
   accessor defaultNodeBricks: NodeBrickConf[] | undefined;
+
+  /**
+   * 使用条件判断设置默认的边对应的连线。在 `if` 表达式中 `DATA` 为 `{ edge }`，例如：
+   *
+   * ```yaml
+   * defaultEdgeLines:
+   *   - if: <% DATA.edge.data?.virtual %>
+   *     dashed: true
+   * ```
+   */
+  @property({ attribute: false })
+  accessor defaultEdgeLines: EdgeLineConf[] | undefined;
 
   @property({ attribute: false })
   accessor activeTarget: ActiveTarget | null | undefined;
@@ -341,6 +355,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         cells={this.cells}
         defaultNodeSize={this.defaultNodeSize}
         defaultNodeBricks={this.defaultNodeBricks}
+        defaultEdgeLines={this.defaultEdgeLines}
         activeTarget={this.activeTarget}
         zoomable={this.zoomable}
         scrollable={this.scrollable}
@@ -385,6 +400,7 @@ function LegacyEoDrawCanvasComponent(
     cells: initialCells,
     defaultNodeSize,
     defaultNodeBricks,
+    defaultEdgeLines,
     activeTarget: _activeTarget,
     zoomable,
     scrollable,
@@ -724,6 +740,7 @@ function LegacyEoDrawCanvasComponent(
               cell={cell}
               cells={cells}
               defaultNodeBricks={defaultNodeBricks}
+              defaultEdgeLines={defaultEdgeLines}
               transform={transform}
               markerEnd={markerEnd}
               active={sameTarget(activeTarget, cell)}
