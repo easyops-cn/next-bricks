@@ -16,8 +16,10 @@ export function transformToCenter(
   let top = Infinity;
   let right = -Infinity;
   let bottom = -Infinity;
+  let empty = true;
   for (const cell of cells) {
     if (!isEdgeCell(cell)) {
+      empty = false;
       const { view } = cell;
       const r = view.x + view.width;
       const b = view.y + view.height;
@@ -40,15 +42,15 @@ export function transformToCenter(
   const height = bottom - top;
 
   const scale =
-    scaleRange && (width > canvasWidth || height > canvasHeight)
+    scaleRange && !empty && (width > canvasWidth || height > canvasHeight)
       ? Math.max(
           Math.min(canvasWidth / width, canvasHeight / height, scaleRange[1]),
           scaleRange[0]
         )
       : 1;
 
-  const x = (canvasWidth - width * scale) / 2 - left * scale;
-  const y = (canvasHeight - height * scale) / 2 - top * scale;
+  const x = empty ? 0 : (canvasWidth - width * scale) / 2 - left * scale;
+  const y = empty ? 0 : (canvasHeight - height * scale) / 2 - top * scale;
 
   return { x, y, k: scale };
 }

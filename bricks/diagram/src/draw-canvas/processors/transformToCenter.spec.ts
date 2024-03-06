@@ -55,4 +55,13 @@ describe("transformToCenter", () => {
     });
     expect(transform).toEqual({ x: 240, y: 30, k: 0.6 });
   });
+
+  test("empty cells", () => {
+    const transform = transformToCenter([], {
+      canvasWidth: 600,
+      canvasHeight: 400,
+      scaleRange: [0.5, 2],
+    });
+    expect(transform).toEqual({ x: 0, y: 0, k: 1 });
+  });
 });

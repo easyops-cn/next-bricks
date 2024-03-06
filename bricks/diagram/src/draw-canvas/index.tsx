@@ -51,6 +51,7 @@ import styleText from "./styles.shadow.css";
 import { ConnectLineComponent } from "./ConnectLineComponent";
 import { initializeCells } from "./processors/initializeCells";
 import { transformToCenter } from "./processors/transformToCenter";
+import { updateCells } from "./processors/updateCells";
 
 const DEFAULT_NODE_SIZE = 20;
 const DEFAULT_AREA_WIDTH = 100;
@@ -66,7 +67,7 @@ const { defineElement, property, method, event } = createDecorators();
 
 export interface EoDrawCanvasProps {
   cells: InitialCell[] | undefined;
-  defaultNodeSize?: SizeTuple;
+  defaultNodeSize: SizeTuple;
   defaultNodeBricks?: NodeBrickConf[];
   defaultEdgeLines?: EdgeLineConf[];
   activeTarget?: ActiveTarget | null;
@@ -100,6 +101,11 @@ export interface AddEdgeInfo {
   data?: unknown;
 }
 
+export interface UpdateCellsContext {
+  reason: "add-related-nodes";
+  parent: NodeId;
+}
+
 export const EoDrawCanvasComponent = React.forwardRef(
   LegacyEoDrawCanvasComponent
 );
@@ -121,7 +127,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
   accessor cells: InitialCell[] | undefined;
 
   @property({ attribute: false })
-  accessor defaultNodeSize: SizeTuple | undefined;
+  accessor defaultNodeSize: SizeTuple = [DEFAULT_NODE_SIZE, DEFAULT_NODE_SIZE];
 
   @property({ attribute: false })
   accessor defaultNodeBricks: NodeBrickConf[] | undefined;
@@ -244,8 +250,8 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
           x:
             (position[0] - boundingClientRect.left - transform.x) / transform.k,
           y: (position[1] - boundingClientRect.top - transform.y) / transform.k,
-          width: size?.[0] ?? this.defaultNodeSize?.[0] ?? DEFAULT_NODE_SIZE,
-          height: size?.[1] ?? this.defaultNodeSize?.[0] ?? DEFAULT_NODE_SIZE,
+          width: size?.[0] ?? this.defaultNodeSize[0],
+          height: size?.[1] ?? this.defaultNodeSize[0],
         },
         data,
         useBrick,
@@ -292,10 +298,8 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
       return [];
     }
     const firstNode = nodes[0];
-    const width =
-      firstNode.size?.[0] ?? this.defaultNodeSize?.[0] ?? DEFAULT_NODE_SIZE;
-    const height =
-      firstNode.size?.[1] ?? this.defaultNodeSize?.[1] ?? DEFAULT_NODE_SIZE;
+    const width = firstNode.size?.[0] ?? this.defaultNodeSize?.[0];
+    const height = firstNode.size?.[1] ?? this.defaultNodeSize?.[1];
     const gap = 20;
     // Todo(steve): canvas size
     const canvasHeight = 600;
@@ -308,8 +312,8 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         view: {
           x: Math.floor(index / rows) * (width + gap) + gap,
           y: (index % rows) * (height + gap) + gap,
-          width: size?.[0] ?? this.defaultNodeSize?.[0] ?? DEFAULT_NODE_SIZE,
-          height: size?.[1] ?? this.defaultNodeSize?.[0] ?? DEFAULT_NODE_SIZE,
+          width: size?.[0] ?? this.defaultNodeSize?.[0],
+          height: size?.[1] ?? this.defaultNodeSize?.[0],
         },
         useBrick,
       })
@@ -336,8 +340,17 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
   }
 
   @method()
-  updateCells(cells: InitialCell[]): void {
-    this.#canvasRef.current!.updateCells(cells);
+  async updateCells(
+    cells: InitialCell[],
+    ctx?: UpdateCellsContext
+  ): Promise<{ updated: Cell[] }> {
+    const { cells: newCells, updated } = updateCells({
+      ...ctx,
+      cells,
+      defaultNodeSize: this.defaultNodeSize,
+    });
+    this.#canvasRef.current!.updateCells(newCells);
+    return { updated };
   }
 
   #canvasRef = createRef<DrawCanvasRef>();
@@ -390,7 +403,7 @@ export interface DrawCanvasRef {
   addNodes(nodes: NodeCell[]): void;
   addEdge(edge: EdgeCell): void;
   manuallyConnectNodes(source: NodeId): Promise<ConnectNodesDetail>;
-  updateCells(cells: InitialCell[]): void;
+  updateCells(cells: Cell[]): void;
   getTransform(): TransformLiteral;
 }
 
@@ -571,7 +584,7 @@ function LegacyEoDrawCanvasComponent(
         dispatch({ type: "add-edge", payload: edge });
       },
       updateCells(cells) {
-        dispatch({ type: "update-all", payload: { cells, defaultNodeSize } });
+        dispatch({ type: "update-cells", payload: cells });
       },
       getTransform() {
         return transform;
@@ -598,7 +611,7 @@ function LegacyEoDrawCanvasComponent(
         return Promise.reject(null);
       },
     }),
-    [cells, defaultNodeSize, transform]
+    [cells, transform]
   );
 
   const handleConnect = useCallback(
