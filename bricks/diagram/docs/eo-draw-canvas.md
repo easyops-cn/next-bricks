@@ -14,6 +14,68 @@
       height: 600px
       gap: 1em
   context:
+    - name: initialCells
+      value: |
+        <%
+          [
+            {
+              type: "decorator",
+              id: "area-1",
+              decorator: "area",
+              view: {
+                x: 10,
+                y: 20,
+                width: 400,
+                height: 300,
+              },
+            },
+            {
+              type: "decorator",
+              id: "text-1",
+              decorator: "text",
+              view: {
+                x: 100,
+                y: 120,
+                width: 100,
+                height: 20,
+                text: "Hello!"
+              },
+            },
+            {
+              type: "edge",
+              source: "X",
+              target: "Y",
+            },
+            {
+              type: "edge",
+              source: "X",
+              target: "Z",
+              data: {
+                virtual: true,
+              }
+            },
+          ].concat(
+            ["X", "Y", "Z"].map((id) => ({
+              type: "node",
+              id,
+              data: {
+                name: `Node ${id}`,
+              },
+              view: {
+                x: Math.round(
+                  id === "X"
+                    ? 200 + Math.random() * 200
+                    : id === "Y"
+                    ? Math.random() * 300
+                    : 300 + Math.random() * 300
+                ),
+                y: (id === "X" ? 0 : 300) + Math.round((Math.random() * 200)),
+                width: 60,
+                height: 60,
+              }
+            }))
+          )
+        %>
     - name: dragging
     - name: activeTarget
     - name: targetCell
@@ -65,6 +127,55 @@
               args:
                 - source: Y
                   target: Z
+                  data:
+                    virtual: true
+        - brick: :forEach
+          dataSource:
+            - X
+            - Y
+          children:
+            - brick: eo-button
+              properties:
+                textContent: <% `Add nodes below ${ITEM}` %>
+              events:
+                click:
+                  target: eo-draw-canvas
+                  method: updateCells
+                  args:
+                    - |
+                      <%
+                        CTX.initialCells.concat([
+                          {
+                            type: "edge",
+                            source: ITEM,
+                            target: "U",
+                          },
+                          {
+                            type: "edge",
+                            source: ITEM,
+                            target: "V",
+                          },
+                          {
+                            type: "node",
+                            id: "U",
+                            data: {
+                              name: "U"
+                            }
+                          },
+                          {
+                            type: "node",
+                            id: "V",
+                            data: {
+                              name: "V"
+                            }
+                          },
+                        ])
+                      %>
+                    - reason: add-related-nodes
+                      parent: <% ITEM %>
+                  callback:
+                    success:
+                      action: console.log
         - brick: hr
           properties:
             style:
@@ -110,9 +221,9 @@
                       success:
                         if: <% EVENT.detail %>
                         then:
-                          # action: message.success
-                          # args:
-                          #   - <% JSON.stringify(EVENT.detail) %>
+                          action: message.success
+                          args:
+                            - <% JSON.stringify(EVENT.detail) %>
                         else:
                           action: message.warn
                           args:
@@ -191,67 +302,7 @@
             defaultEdgeLines:
               - if: <% DATA.edge.data?.virtual %>
                 dashed: true
-            cells: |
-              <%
-                [
-                  {
-                    type: "decorator",
-                    id: "area-1",
-                    decorator: "area",
-                    view: {
-                      x: 10,
-                      y: 20,
-                      width: 400,
-                      height: 300,
-                    },
-                  },
-                  {
-                    type: "decorator",
-                    id: "text-1",
-                    decorator: "text",
-                    view: {
-                      x: 100,
-                      y: 120,
-                      width: 100,
-                      height: 20,
-                      text: "Hello!"
-                    },
-                  },
-                  {
-                    type: "edge",
-                    source: "X",
-                    target: "Y",
-                  },
-                  {
-                    type: "edge",
-                    source: "X",
-                    target: "Z",
-                    data: {
-                      virtual: true,
-                    }
-                  },
-                ].concat(
-                  ["X", "Y", "Z"].map((id) => ({
-                    type: "node",
-                    id,
-                    data: {
-                      name: `Node ${id}`,
-                    },
-                    view: {
-                      x: Math.round(
-                        id === "X"
-                          ? 200 + Math.random() * 200
-                          : id === "Y"
-                          ? Math.random() * 300
-                          : 300 + Math.random() * 300
-                      ),
-                      y: (id === "X" ? 0 : 300) + Math.round((Math.random() * 200)),
-                      width: 60,
-                      height: 60,
-                    }
-                  }))
-                )
-              %>
+            cells: <% CTX.initialCells %>
           events:
             activeTarget.change:
               action: context.replace
