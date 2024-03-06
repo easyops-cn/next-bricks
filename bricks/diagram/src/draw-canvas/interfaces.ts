@@ -75,6 +75,11 @@ export interface NodeBrickConf {
   if?: string | boolean | null;
 }
 
+export interface EdgeLineConf {
+  if?: string | boolean | null;
+  dashed?: boolean;
+}
+
 export type ActiveTarget =
   | ActiveTargetOfNode
   | ActiveTargetOfEdge

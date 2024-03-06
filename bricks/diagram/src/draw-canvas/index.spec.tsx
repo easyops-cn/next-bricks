@@ -208,6 +208,9 @@ describe("eo-draw-canvas", () => {
   test("add edge", async () => {
     const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
     element.defaultNodeSize = [180, 120];
+    element.defaultEdgeLines = [
+      { if: "<% DATA.edge.data?.virtual %>", dashed: true },
+    ];
     element.cells = [
       {
         // This edge will be ignored since source node is not found
@@ -276,6 +279,12 @@ describe("eo-draw-canvas", () => {
         (node as Element).tagName.toLowerCase()
       );
 
+    expect(
+      element.shadowRoot
+        ?.querySelectorAll(".line")[0]
+        .classList.contains("dashed")
+    ).toBe(false);
+
     // Edges are adding to just next to the previous last edge,
     // If no previous edge, add to the start.
     expect(getCellTagNames()).toEqual([
@@ -292,13 +301,25 @@ describe("eo-draw-canvas", () => {
       const result = await element.addEdge({
         source: "x",
         target: "z",
+        data: {
+          virtual: true,
+        },
       });
       expect(result).toEqual({
         type: "edge",
         source: "x",
         target: "z",
+        data: {
+          virtual: true,
+        },
       });
     });
+
+    expect(
+      element.shadowRoot
+        ?.querySelectorAll(".line")[1]
+        .classList.contains("dashed")
+    ).toBe(true);
 
     expect(getCellTagNames()).toEqual([
       "path",

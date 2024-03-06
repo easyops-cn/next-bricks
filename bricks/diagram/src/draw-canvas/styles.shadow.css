@@ -67,3 +67,7 @@
 .connect-line:not(.connecting) {
   display: none;
 }
+
+.line.dashed {
+  stroke-dasharray: 4;
+}

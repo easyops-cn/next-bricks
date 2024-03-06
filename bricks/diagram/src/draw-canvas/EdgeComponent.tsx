@@ -1,5 +1,7 @@
 import React, { useMemo } from "react";
-import type { Cell, EdgeCell, NodeView } from "./interfaces";
+import { checkIfByTransform } from "@next-core/runtime";
+import classNames from "classnames";
+import type { Cell, EdgeCell, EdgeLineConf, NodeView } from "./interfaces";
 import { getDirectLinePoints } from "../diagram/lines/getDirectLinePoints";
 import type { NodeRect } from "../diagram/interfaces";
 import { findNode } from "./processors/findNode";
@@ -8,12 +10,14 @@ export interface EdgeComponentProps {
   edge: EdgeCell;
   cells: Cell[];
   markerEnd: string;
+  defaultEdgeLines?: EdgeLineConf[];
 }
 
 export function EdgeComponent({
   edge,
   cells,
   markerEnd,
+  defaultEdgeLines,
 }: EdgeComponentProps): JSX.Element | null {
   const sourceNode = useMemo(
     () => findNode(cells, edge.source),
@@ -22,6 +26,10 @@ export function EdgeComponent({
   const targetNode = useMemo(
     () => findNode(cells, edge.target),
     [cells, edge.target]
+  );
+  const lineConf = useMemo(
+    () => defaultEdgeLines?.find((item) => checkIfByTransform(item, { edge })),
+    [defaultEdgeLines, edge]
   );
 
   const padding = 5;
@@ -54,7 +62,7 @@ export function EdgeComponent({
         strokeWidth={16}
       />
       <path
-        className="line"
+        className={classNames("line", { dashed: lineConf?.dashed })}
         d={d}
         fill="none"
         stroke="gray"
