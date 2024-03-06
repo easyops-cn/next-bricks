@@ -4,6 +4,7 @@ import type {
   ActiveTarget,
   Cell,
   CellContextMenuDetail,
+  DecoratorTextChangeDetail,
   EdgeLineConf,
   NodeBrickConf,
 } from "./interfaces";
@@ -30,6 +31,8 @@ export interface CellComponentProps {
   onCellResized(info: ResizeCellPayload): void;
   onSwitchActiveTarget(target: ActiveTarget | null): void;
   onCellContextMenu(detail: CellContextMenuDetail): void;
+  onDecoratorTextEditing(detail: { id: string; editing: boolean }): void;
+  onDecoratorTextChange(detail: DecoratorTextChangeDetail): void;
 }
 
 export function CellComponent({
@@ -46,6 +49,8 @@ export function CellComponent({
   onCellResized,
   onSwitchActiveTarget,
   onCellContextMenu,
+  onDecoratorTextEditing,
+  onDecoratorTextChange,
 }: CellComponentProps): JSX.Element | null {
   const gRef = useRef<SVGGElement>(null);
 
@@ -107,6 +112,8 @@ export function CellComponent({
           onCellResizing={onCellResizing}
           onCellResized={onCellResized}
           onSwitchActiveTarget={onSwitchActiveTarget}
+          onDecoratorTextEditing={onDecoratorTextEditing}
+          onDecoratorTextChange={onDecoratorTextChange}
         />
       ) : null}
     </g>

@@ -32,7 +32,7 @@ export function NodeComponent({
       // y={node.view.y}
       width={node.view.width}
       height={node.view.height}
-      style={{ overflow: "visible" }}
+      className="node"
     >
       {useBrick && <ReactUseBrick useBrick={useBrick} data={memoizedData} />}
     </foreignObject>

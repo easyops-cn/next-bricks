@@ -1,9 +1,9 @@
 import { describe, test, expect, jest } from "@jest/globals";
 import { act } from "react-dom/test-utils";
-import { fireEvent } from "@testing-library/dom";
+import { fireEvent } from "@testing-library/react";
 import "./";
 import type { EoDrawCanvas } from "./index.js";
-import type { NodeBrickCell } from "./interfaces";
+import type { Cell, NodeBrickCell } from "./interfaces";
 import * as _handleMouseDown from "./processors/handleMouseDown";
 
 jest.mock("@next-core/theme", () => ({}));
@@ -294,7 +294,7 @@ describe("eo-draw-canvas", () => {
       "foreignobject",
       "foreignobject",
       "foreignobject",
-      "text",
+      "foreignobject",
     ]);
 
     await act(async () => {
@@ -331,7 +331,7 @@ describe("eo-draw-canvas", () => {
       "foreignobject",
       "foreignobject",
       "foreignobject",
-      "text",
+      "foreignobject",
     ]);
 
     act(() => {
@@ -454,18 +454,20 @@ describe("eo-draw-canvas", () => {
     document.elementsFromPoint = jest.fn(() => [element]);
     await act(async () => {
       const dropResult2 = await element.dropDecorator({
-        decorator: "area",
+        decorator: "text",
         position: [800, 600],
+        text: "Hello",
       });
       expect(dropResult2).toEqual({
         type: "decorator",
-        decorator: "area",
+        decorator: "text",
         id: expect.any(String),
         view: {
           x: 620,
           y: 480,
           width: 100,
           height: 60,
+          text: "Hello",
         },
       });
     });
@@ -654,8 +656,8 @@ describe("eo-draw-canvas", () => {
             transform="translate(20 20)"
           >
             <foreignobject
+              class="node"
               height="20"
-              style="overflow: visible;"
               width="20"
             >
               <div>
@@ -700,8 +702,8 @@ describe("eo-draw-canvas", () => {
               transform="translate(20 20)"
             >
               <foreignobject
+                class="node"
                 height="20"
-                style="overflow: visible;"
                 width="20"
               >
                 <div>
@@ -714,8 +716,8 @@ describe("eo-draw-canvas", () => {
               transform="translate(20 320)"
             >
               <foreignobject
+                class="node"
                 height="20"
-                style="overflow: visible;"
                 width="20"
               />
             </g>
@@ -737,8 +739,8 @@ describe("eo-draw-canvas", () => {
             transform="translate(20 20)"
           >
             <foreignobject
+              class="node"
               height="20"
-              style="overflow: visible;"
               width="20"
             >
               <div>
@@ -751,8 +753,8 @@ describe("eo-draw-canvas", () => {
             transform="translate(20 320)"
           >
             <foreignobject
+              class="node"
               height="20"
-              style="overflow: visible;"
               width="20"
             >
               <div>
@@ -826,6 +828,58 @@ describe("eo-draw-canvas", () => {
           },
         ],
       });
+    });
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("edit decorator text", async () => {
+    const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
+    element.cells = [
+      {
+        type: "decorator",
+        decorator: "text",
+        id: "x",
+        view: {
+          x: 20,
+          y: 30,
+        },
+      } as Cell,
+    ];
+
+    const onDecoratorTextChange = jest.fn();
+    element.addEventListener("decorator.text.change", (e) =>
+      onDecoratorTextChange((e as CustomEvent).detail)
+    );
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+
+    act(() => {
+      fireEvent.doubleClick(
+        element.shadowRoot!.querySelector(".decorator-text .text-container")!
+      );
+    });
+
+    element.shadowRoot!.querySelector(".text")!.textContent = "Updated";
+    act(() => {
+      fireEvent.input(
+        element.shadowRoot!.querySelector(".decorator-text .text")!
+      );
+    });
+    act(() => {
+      fireEvent.blur(
+        element.shadowRoot!.querySelector(".decorator-text .text")!
+      );
+    });
+    expect(onDecoratorTextChange).toHaveBeenCalledWith({
+      id: "x",
+      view: { x: 20, y: 30, text: "Updated" },
     });
 
     act(() => {

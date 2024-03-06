@@ -39,6 +39,7 @@ import type {
   Deferred,
   ConnectNodesDetail,
   EdgeLineConf,
+  DecoratorTextChangeDetail,
 } from "./interfaces";
 import { rootReducer } from "./reducers";
 import { MarkerComponent } from "../diagram/MarkerComponent";
@@ -86,6 +87,7 @@ export interface DropDecoratorInfo {
   decorator: DecoratorType;
   /** [PointerEvent::clientX, PointerEvent::clientY] */
   position: PositionTuple;
+  text?: string;
 }
 
 export interface AddNodeInfo {
@@ -218,6 +220,13 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
     this.#cellContextMenu.emit(detail);
   };
 
+  @event({ type: "decorator.text.change" })
+  accessor #decoratorTextChange!: EventEmitter<DecoratorTextChangeDetail>;
+
+  #handleDecoratorTextChange = (detail: DecoratorTextChangeDetail) => {
+    this.#decoratorTextChange.emit(detail);
+  };
+
   /**
    * 缩放变化后，从素材库拖拽元素进画布时，拖拽图像应设置对应的缩放比例。
    */
@@ -266,6 +275,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
   async dropDecorator({
     position,
     decorator,
+    text,
   }: DropDecoratorInfo): Promise<DecoratorCell | null> {
     // Drag and then drop a node
     const droppedInside = document
@@ -284,6 +294,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
           y: (position[1] - boundingClientRect.top - transform.y) / transform.k,
           width: DEFAULT_AREA_WIDTH,
           height: DEFAULT_AREA_HEIGHT,
+          text,
         },
       };
       this.#canvasRef.current?.dropDecorator(newDecorator);
@@ -380,6 +391,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         onCellResize={this.#handleCellResize}
         onCellDelete={this.#handleCellDelete}
         onCellContextMenu={this.#handleCellContextMenu}
+        onDecoratorTextChange={this.#handleDecoratorTextChange}
         onScaleChange={this.#handleScaleChange}
       />
     );
@@ -394,6 +406,7 @@ export interface EoDrawCanvasComponentProps extends EoDrawCanvasProps {
   onCellResize(cell: ResizeCellPayload): void;
   onCellDelete(cell: Cell): void;
   onCellContextMenu(detail: CellContextMenuDetail): void;
+  onDecoratorTextChange(detail: DecoratorTextChangeDetail): void;
   onScaleChange(scale: number): void;
 }
 
@@ -425,6 +438,7 @@ function LegacyEoDrawCanvasComponent(
     onCellResize,
     onCellDelete,
     onCellContextMenu,
+    onDecoratorTextChange,
     onScaleChange,
   }: EoDrawCanvasComponentProps,
   ref: React.Ref<DrawCanvasRef>
@@ -442,7 +456,7 @@ function LegacyEoDrawCanvasComponent(
   const manualConnectDeferredRef = useRef<Deferred<ConnectNodesDetail> | null>(
     null
   );
-
+  const [editingTexts, setEditingTexts] = useState<string[]>([]);
   const [grabbing, setGrabbing] = useState(false);
   const [transform, setTransform] = useState<TransformLiteral>({
     k: 1,
@@ -687,6 +701,9 @@ function LegacyEoDrawCanvasComponent(
 
   useEffect(() => {
     const root = rootRef.current;
+    if (!root || editingTexts.length > 0) {
+      return;
+    }
     const onKeydown = (event: KeyboardEvent) => {
       const action = handleKeyboard(event, {
         cells,
@@ -697,11 +714,11 @@ function LegacyEoDrawCanvasComponent(
         onCellDelete(action.cell);
       }
     };
-    root?.addEventListener("keydown", onKeydown);
+    root.addEventListener("keydown", onKeydown);
     return () => {
-      root?.removeEventListener("keydown", onKeydown);
+      root.removeEventListener("keydown", onKeydown);
     };
-  }, [activeTarget, cells, onCellDelete]);
+  }, [activeTarget, cells, editingTexts.length, onCellDelete]);
 
   const defPrefix = useMemo(() => `${uniqueId("diagram-")}-`, []);
   const markerPrefix = `${defPrefix}line-arrow-`;
@@ -729,6 +746,19 @@ function LegacyEoDrawCanvasComponent(
       onCellResize(info);
     },
     [onCellResize]
+  );
+
+  const handleDecoratorTextEditing = useCallback(
+    ({ id, editing }: { id: string; editing: boolean }) => {
+      if (editing) {
+        setEditingTexts((texts) =>
+          texts.includes(id) ? texts : [...texts, id]
+        );
+      } else {
+        setEditingTexts((texts) => texts.filter((text) => text !== id));
+      }
+    },
+    []
   );
 
   return (
@@ -763,6 +793,8 @@ function LegacyEoDrawCanvasComponent(
               onCellResized={handleCellResized}
               onSwitchActiveTarget={onSwitchActiveTarget}
               onCellContextMenu={onCellContextMenu}
+              onDecoratorTextChange={onDecoratorTextChange}
+              onDecoratorTextEditing={handleDecoratorTextEditing}
             />
           ))}
         </g>
