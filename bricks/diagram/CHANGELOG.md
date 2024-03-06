@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.21.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.20.0...@next-bricks/diagram@0.21.0) (2024-03-06)
+
+
+### Features
+
+* **draw-canvas:** edge line conf ([370e6d3](https://github.com/easyops-cn/next-bricks/commit/370e6d3326693c7366844652d9bb56877808c126))
+
+
+
+
+
 # [0.20.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.19.0...@next-bricks/diagram@0.20.0) (2024-03-05)
 
 
