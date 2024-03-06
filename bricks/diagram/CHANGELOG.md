@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.21.0...@next-bricks/diagram@0.22.0) (2024-03-06)
+
+
+### Features
+
+* auto alignment when update cells ([d090e28](https://github.com/easyops-cn/next-bricks/commit/d090e28273355db3f49c5ad1cf02cf84fafac0c6))
+
+
+
+
+
 # [0.21.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.20.0...@next-bricks/diagram@0.21.0) (2024-03-06)
 
 
