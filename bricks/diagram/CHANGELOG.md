@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.23.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.22.0...@next-bricks/diagram@0.23.0) (2024-03-06)
+
+
+### Features
+
+* **draw-canvas:** editable text ([a689642](https://github.com/easyops-cn/next-bricks/commit/a689642279a5f45b5bf7e9d138396e420e99b871))
+
+
+
+
+
 # [0.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.21.0...@next-bricks/diagram@0.22.0) (2024-03-06)
 
 
