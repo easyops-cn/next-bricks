@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.23.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.23.0...@next-bricks/diagram@0.23.1) (2024-03-07)
+
+
+### Bug Fixes
+
+* **draw-canvas:** use deep memo for node data ([107530d](https://github.com/easyops-cn/next-bricks/commit/107530d874dfeb41d1779ee8dd25f9b17fdb575c))
+
+
+
+
+
 # [0.23.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.22.0...@next-bricks/diagram@0.23.0) (2024-03-06)
 
 
