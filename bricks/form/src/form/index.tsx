@@ -168,8 +168,22 @@ class Form extends ReactNextElement implements FormProps, AbstractForm {
    * 表单设置值方法
    */
   @method()
-  setInitValue(values: Record<string, unknown>) {
-    this.#_setInitValue(values);
+  setInitValue(
+    values: Record<string, unknown>,
+    options?: { runInMacrotask?: boolean; runInMicrotask?: boolean }
+  ) {
+    if (options) {
+      options.runInMicrotask &&
+        queueMicrotask(() => {
+          this.#_setInitValue(values);
+        });
+      options.runInMacrotask &&
+        setTimeout(() => {
+          this.#_setInitValue(values);
+        });
+    } else {
+      this.#_setInitValue(values);
+    }
   }
 
   /**

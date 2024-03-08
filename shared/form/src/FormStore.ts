@@ -109,16 +109,13 @@ export class FormStore extends PubSub {
   }
 
   setFieldsValue(values: Record<string, unknown>, isEmitValuseChange = true) {
-    const allFields = this.#getAllFields();
     const newFormData: Record<string, unknown> = {
       ...this.#formData,
     };
     Object.entries(values).forEach(([k, v]) => {
-      if (allFields.includes(k)) {
-        newFormData[k] = v;
-        this.#initData && (this.#initData[k] = v);
-        this.publish(`${k}.init.value`, v);
-      }
+      newFormData[k] = v;
+      this.#initData && (this.#initData[k] = v);
+      this.publish(`${k}.init.value`, v);
     });
     this.#formData = newFormData;
 
