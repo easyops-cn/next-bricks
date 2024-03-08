@@ -555,7 +555,6 @@ export function CodeEditorComponent({
       overviewRulerBorder: false,
       mouseWheelScrollSensitivity: 0.5,
       fixedOverflowWidgets: true,
-      folding: false,
       lineNumbersMinChars: 3,
       suggest: {
         insertMode: "insert",
