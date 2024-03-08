@@ -135,8 +135,8 @@ describe("eo-draw-canvas", () => {
           view: {
             height: 200,
             width: 100,
-            x: 20,
-            y: 20,
+            x: 10,
+            y: 10,
           },
         },
         {
@@ -146,8 +146,8 @@ describe("eo-draw-canvas", () => {
           view: {
             height: 20,
             width: 20,
-            x: 20,
-            y: 240,
+            x: 130,
+            y: 10,
           },
         },
       ]);
@@ -179,8 +179,8 @@ describe("eo-draw-canvas", () => {
           view: {
             height: 20,
             width: 20,
-            x: 20,
-            y: 20,
+            x: 250,
+            y: 10,
           },
         },
         {
@@ -193,8 +193,8 @@ describe("eo-draw-canvas", () => {
           view: {
             height: 200,
             width: 100,
-            x: 20,
-            y: 60,
+            x: 370,
+            y: 10,
           },
         },
       ]);
