@@ -175,14 +175,14 @@ class Form extends ReactNextElement implements FormProps, AbstractForm {
     if (options) {
       options.runInMicrotask &&
         queueMicrotask(() => {
-          this.#_setInitValue(values);
+          this.#_values = values;
         });
       options.runInMacrotask &&
         setTimeout(() => {
-          this.#_setInitValue(values);
+          this.#_values = values;
         });
     } else {
-      this.#_setInitValue(values);
+      this.#_values = values;
     }
   }
 
