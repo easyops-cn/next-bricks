@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.6.2...@next-bricks/form@1.7.0) (2024-03-08)
+
+
+### Features
+
+* **form:**  setInitValue method add options ([efa9916](https://github.com/easyops-cn/next-bricks/commit/efa9916da4299ceb15c4353c922addaaf4a9c34b))
+* **form:** update unit test ([8b5e3ad](https://github.com/easyops-cn/next-bricks/commit/8b5e3ad5326b6bdf6e9a835273c9c5cd3734e903))
+
+
+
+
+
 ## [1.6.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.6.1...@next-bricks/form@1.6.2) (2024-03-04)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.4.2...@next-bricks/vs@1.5.0) (2024-03-08)
+
+
+### Features
+
+* code-editor support folding ([1b02569](https://github.com/easyops-cn/next-bricks/commit/1b025697cdc3a725683fa4430a88fbaac7db9117))
+
+
+
+
+
 ## [1.4.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.4.1...@next-bricks/vs@1.4.2) (2024-03-05)
 
 
