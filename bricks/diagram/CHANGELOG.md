@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.24.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.23.2...@next-bricks/diagram@0.24.0) (2024-03-08)
+
+
+### Features
+
+* **draw-canvas:** support enable fade unrelated cells ([4d15b2f](https://github.com/easyops-cn/next-bricks/commit/4d15b2f9b0013e533b04db77bdce5aa71af8d784))
+
+
+
+
+
 ## [0.23.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.23.1...@next-bricks/diagram@0.23.2) (2024-03-08)
 
 
