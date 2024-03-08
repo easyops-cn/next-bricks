@@ -43,7 +43,7 @@
               }
             },
           ].concat(
-            ["X", "Y", "Z"].map((id) => ({
+            ["X", "Y", "Z", "W"].map((id) => ({
               type: "node",
               id,
               data: {
@@ -286,6 +286,7 @@
               width: 100%
               height: 100%
             activeTarget: <%= CTX.activeTarget %>
+            fadeUnrelatedCells: true
             # Initial nodes only
             defaultNodeSize: [60, 60]
             defaultNodeBricks:
@@ -297,7 +298,9 @@
                       <%=
                         CTX.activeTarget?.type === "node" && CTX.activeTarget.id === DATA.node.id
                           ? "highlighted"
-                          // : CTX.activeTarget && CTX.activeTarget?.id !== DATA.node.id
+                          // : CTX.unrelated.some(n =>
+                          //     n.type === "node" && n.id === DATA.node.id
+                          //   )
                           // ? "faded"
                           : "default"
                       %>
