@@ -2,12 +2,14 @@ import {
   NextElement,
   createDecorators,
   supportsAdoptingStyleSheets,
+  type EventEmitter,
 } from "@next-core/element";
 import { wrapLocalBrick } from "@next-core/react-element";
 import { getIcon } from "../shared/SvgCache.js";
+import type { IconEvents, IconEventsMapping } from "../shared/interfaces.js";
 import sharedStyleText from "../shared/icons.shadow.css";
 
-const { defineElement, property } = createDecorators();
+const { defineElement, property, event } = createDecorators();
 
 export interface EasyOpsIconProps {
   /** Defaults to "default" */
@@ -28,6 +30,11 @@ class EasyOpsIcon extends NextElement implements EasyOpsIconProps {
 
   /** 图标名 */
   @property() accessor icon: string | undefined;
+
+  @event({ type: "icon.found" })
+  accessor #iconFoundEvent!: EventEmitter<boolean>;
+
+  #iconFound = true;
 
   #createShadowRoot(): void {
     if (this.shadowRoot) {
@@ -84,9 +91,17 @@ class EasyOpsIcon extends NextElement implements EasyOpsIconProps {
       nodes.push(svg);
     }
     this.shadowRoot.replaceChildren(...nodes);
+
+    const iconFound = !!svg;
+    if (this.#iconFound !== iconFound) {
+      this.#iconFoundEvent.emit((this.#iconFound = iconFound));
+    }
   }
 }
 
-export const WrappedEasyOpsIcon = wrapLocalBrick<EasyOpsIcon, EasyOpsIconProps>(
-  EasyOpsIcon
-);
+export const WrappedEasyOpsIcon = wrapLocalBrick<
+  EasyOpsIcon,
+  EasyOpsIconProps,
+  IconEvents,
+  IconEventsMapping
+>(EasyOpsIcon, { onIconFoundChange: "icon.found" });

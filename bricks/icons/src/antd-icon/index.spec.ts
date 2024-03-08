@@ -182,6 +182,11 @@ describe("eo-antd-icon", () => {
   test("no icon", async () => {
     const element = document.createElement("eo-antd-icon") as AntdIcon;
 
+    const onIconFound = jest.fn();
+    element.addEventListener("icon.found", (e) => {
+      onIconFound((e as CustomEvent).detail);
+    });
+
     document.body.appendChild(element);
     await (global as any).flushPromises();
     expect(element.shadowRoot?.childNodes).toMatchInlineSnapshot(`
@@ -192,6 +197,8 @@ describe("eo-antd-icon", () => {
         </style>,
       ]
     `);
+    expect(onIconFound).toHaveBeenCalledWith(false);
+
     document.body.removeChild(element);
   });
 
