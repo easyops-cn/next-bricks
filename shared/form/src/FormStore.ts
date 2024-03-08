@@ -5,7 +5,7 @@ interface FormStoreOptions {
   onValuesChanged?: (data: any) => void;
 }
 
-interface FieldDetail {
+export interface FieldDetail {
   name: string;
   label?: string;
   notRender?: boolean;
@@ -90,7 +90,7 @@ export class FormStore extends PubSub {
           }
           return [];
         })
-        .filter(Boolean)
+        .filter((item) => item.length)
     );
     return formData;
   }
@@ -109,16 +109,13 @@ export class FormStore extends PubSub {
   }
 
   setFieldsValue(values: Record<string, unknown>, isEmitValuseChange = true) {
-    const allFields = this.#getAllFields();
     const newFormData: Record<string, unknown> = {
       ...this.#formData,
     };
     Object.entries(values).forEach(([k, v]) => {
-      if (allFields.includes(k)) {
-        newFormData[k] = v;
-        this.#initData && (this.#initData[k] = v);
-        this.publish(`${k}.init.value`, v);
-      }
+      newFormData[k] = v;
+      this.#initData && (this.#initData[k] = v);
+      this.publish(`${k}.init.value`, v);
     });
     this.#formData = newFormData;
 
@@ -132,10 +129,10 @@ export class FormStore extends PubSub {
 
   resetFields(name?: string) {
     if (name) {
-      this.#formData[name] = null;
+      this.removeField(name);
       this.publish(`${name}.reset.fields`, null);
     } else {
-      this.#formData = {};
+      this.#fields.clear();
       this.publish("reset.fields", null);
     }
   }
@@ -164,7 +161,10 @@ export class FormStore extends PubSub {
     });
 
     if (results.some((result) => result?.type !== "normal")) {
-      callback(true, results);
+      callback(
+        true,
+        results.filter((result) => result?.type !== "normal")
+      );
       return false;
     } else {
       const formData = this.getAllValues();
