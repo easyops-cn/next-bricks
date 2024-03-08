@@ -1,6 +1,7 @@
 import React, { CSSProperties, useCallback, useState } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
+import { pick } from "lodash";
 import { AntdIconProps, WrappedAntdIcon } from "../antd-icon/index.js";
 import { EasyOpsIconProps, WrappedEasyOpsIcon } from "../easyops-icon/index.js";
 import { FaIconProps, WrappedFaIcon } from "../fa-icon/index.js";
@@ -47,11 +48,16 @@ export type LibIconProps =
 export type GeneralIconProps = LibIconProps | ImgIconProps;
 
 export interface FallbackIcon {
-  lib: "antd" | "easyops" | "fa";
-  icon: string;
+  lib?: "antd" | "easyops" | "fa";
+  icon?: string;
   theme?: string;
   category?: string;
   prefix?: string;
+  keepSvgOriginalColor?: boolean;
+  imgSrc?: string;
+  imgStyle?: CSSProperties;
+  imgLoading?: "lazy" | "eager";
+  noPublicRoot?: boolean;
 }
 
 const LIBS = new Set(["antd", "easyops", "fa"]);
@@ -182,25 +188,47 @@ function GeneralIconComponent({
   endColor,
   fallback,
   gradientDirection,
-  keepSvgOriginalColor,
-  imgSrc,
-  imgStyle,
-  imgLoading,
-  noPublicRoot,
   ...props
 }: GeneralIconComponentProps): JSX.Element | null {
-  const isImage = imgSrc && typeof imgSrc === "string";
   const [iconNotFound, setIconNotFound] = useState(
-    !isImage && !LIBS.has(props.lib!)
+    !(props.imgSrc && typeof props.imgSrc === "string") && !LIBS.has(props.lib!)
   );
+
+  const {
+    lib,
+    icon,
+    theme,
+    category,
+    prefix,
+    keepSvgOriginalColor,
+    imgSrc,
+    imgStyle,
+    imgLoading,
+    noPublicRoot,
+  } =
+    iconNotFound && fallback
+      ? {
+          ...pick(props, "keepSvgOriginalColor", "imgStyle", "noPublicRoot"),
+          ...fallback,
+        }
+      : props;
+
+  const isImage = imgSrc && typeof imgSrc === "string";
 
   const handleIconFoundChange = useCallback((e: CustomEvent<boolean>) => {
     setIconNotFound(!e.detail);
   }, []);
 
+  const onIconFoundChange =
+    !iconNotFound && fallback ? handleIconFoundChange : undefined;
+
   if (isImage) {
     return !keepSvgOriginalColor && imgSrc.endsWith(".svg") ? (
-      <WrappedSvgIcon imgSrc={imgSrc} noPublicRoot={noPublicRoot} />
+      <WrappedSvgIcon
+        imgSrc={imgSrc}
+        noPublicRoot={noPublicRoot}
+        onIconFoundChange={onIconFoundChange}
+      />
     ) : (
       <WrappedEoImgIcon
         imgSrc={imgSrc}
@@ -211,10 +239,6 @@ function GeneralIconComponent({
     );
   }
 
-  const { lib, icon, theme, category, prefix } =
-    iconNotFound && fallback ? fallback : props;
-  const onIconFoundChange =
-    !iconNotFound && fallback ? handleIconFoundChange : undefined;
   const commonProps = {
     icon,
     startColor: startColor,

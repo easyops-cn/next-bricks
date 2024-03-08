@@ -267,4 +267,20 @@ children:
         fallback:
           lib: fa
           icon: question
+    - brick: eo-icon
+      properties:
+        lib: antd
+        icon: oops
+        fallback:
+          imgSrc: "https://cdn.jsdelivr.net/npm/lucide-static@0.16.29/icons/pie-chart.svg"
+    - brick: eo-icon
+      properties:
+        imgSrc: "https://cdn.jsdelivr.net/npm/lucide-static@0.16.29/icons/x-chart.svg"
+        fallback:
+          imgSrc: "https://cdn.jsdelivr.net/npm/lucide-static@0.16.29/icons/pie-chart.svg"
+    - brick: eo-icon
+      properties:
+        imgSrc: "https://cdn.jsdelivr.net/npm/lucide-static@0.16.29/icons/x-chart.svg"
+        fallback:
+          imgSrc: "https://cdn.jsdelivr.net/npm/lucide-static@0.16.29/icons/y-chart.svg"
 ```

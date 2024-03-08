@@ -2,13 +2,15 @@ import {
   NextElement,
   createDecorators,
   supportsAdoptingStyleSheets,
+  type EventEmitter,
 } from "@next-core/element";
 import { wrapLocalBrick } from "@next-core/react-element";
 import { getIcon } from "../shared/SvgCache.js";
 import { getImageUrl } from "../shared/getImageUrl.js";
+import type { IconEvents, IconEventsMapping } from "../shared/interfaces.js";
 import sharedStyleText from "../shared/icons.shadow.css";
 
-const { defineElement, property } = createDecorators();
+const { defineElement, property, event } = createDecorators();
 
 export interface SvgIconProps {
   imgSrc?: string;
@@ -25,6 +27,11 @@ class SvgIcon extends NextElement implements SvgIconProps {
     type: Boolean,
   })
   accessor noPublicRoot: boolean | undefined;
+
+  @event({ type: "icon.found" })
+  accessor #iconFoundEvent!: EventEmitter<boolean>;
+
+  #iconFound = true;
 
   #createShadowRoot(): void {
     if (this.shadowRoot) {
@@ -73,7 +80,17 @@ class SvgIcon extends NextElement implements SvgIconProps {
       nodes.push(svg);
     }
     this.shadowRoot.replaceChildren(...nodes);
+
+    const iconFound = !!svg;
+    if (this.#iconFound !== iconFound) {
+      this.#iconFoundEvent.emit((this.#iconFound = iconFound));
+    }
   }
 }
 
-export const WrappedSvgIcon = wrapLocalBrick<SvgIcon, SvgIconProps>(SvgIcon);
+export const WrappedSvgIcon = wrapLocalBrick<
+  SvgIcon,
+  SvgIconProps,
+  IconEvents,
+  IconEventsMapping
+>(SvgIcon, { onIconFoundChange: "icon.found" });
