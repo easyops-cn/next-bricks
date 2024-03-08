@@ -61,8 +61,11 @@ export function updateCells({
       let rightMostNode: NodeCell | undefined = undefined;
       for (const node of downstreamNodes) {
         if (node.view.x !== undefined && node.view.y !== undefined) {
-          // Positioned nodes
-          if (!rightMostNode || node.view.x > rightMostNode.view.x) {
+          // Find the rightmost node that is below the parent node.
+          if (
+            (!rightMostNode || node.view.x > rightMostNode.view.x) &&
+            node.view.y > parentNode.view.y
+          ) {
             rightMostNode = node;
           }
         } else {
