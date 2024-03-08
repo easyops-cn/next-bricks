@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.23.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.23.1...@next-bricks/diagram@0.23.2) (2024-03-08)
+
+
+### Bug Fixes
+
+* find the rightmost node below the parent node ([277efe1](https://github.com/easyops-cn/next-bricks/commit/277efe1c8a9eb9c5cb62f53902d6618f92041228))
+* place unpositioned nodes in a grid ([fff945c](https://github.com/easyops-cn/next-bricks/commit/fff945c2930fa7044dd6d22b3fca3b7c5b686c5a))
+
+
+
+
+
 ## [0.23.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.23.0...@next-bricks/diagram@0.23.1) (2024-03-07)
 
 
