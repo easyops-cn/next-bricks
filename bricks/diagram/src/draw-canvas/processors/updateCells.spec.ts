@@ -62,6 +62,8 @@ describe("updateCells", () => {
           },
         ],
         defaultNodeSize: [120, 80],
+        canvasHeight: 600,
+        transform: { k: 1, x: 0, y: 0 },
         reason: "add-related-nodes",
         parent: "1",
       })
@@ -185,6 +187,8 @@ describe("updateCells", () => {
           },
         ],
         defaultNodeSize: [120, 80],
+        canvasHeight: 600,
+        transform: { k: 1, x: 0, y: 0 },
         reason: "add-related-nodes",
         parent: "2",
       })
@@ -260,6 +264,8 @@ describe("updateCells", () => {
           },
         ],
         defaultNodeSize: [120, 80],
+        canvasHeight: 600,
+        transform: { k: 1, x: 0, y: 0 },
       })
     ).toEqual({
       cells: [
@@ -269,6 +275,8 @@ describe("updateCells", () => {
           view: {
             height: 80,
             width: 120,
+            x: 10,
+            y: 10,
           },
         },
         {
@@ -277,10 +285,12 @@ describe("updateCells", () => {
           view: {
             height: 80,
             width: 120,
+            x: 10,
+            y: 110,
           },
         },
       ],
-      updated: [],
+      updated: expect.objectContaining({ length: 2 }),
     });
   });
 
@@ -298,6 +308,8 @@ describe("updateCells", () => {
           },
         ],
         defaultNodeSize: [120, 80],
+        canvasHeight: 600,
+        transform: { k: 1, x: 0, y: 0 },
         reason: "add-related-nodes",
         parent: "1",
       })
@@ -309,6 +321,8 @@ describe("updateCells", () => {
           view: {
             height: 80,
             width: 120,
+            x: 10,
+            y: 10,
           },
         },
         {
@@ -317,10 +331,12 @@ describe("updateCells", () => {
           view: {
             height: 80,
             width: 120,
+            x: 10,
+            y: 110,
           },
         },
       ],
-      updated: [],
+      updated: expect.objectContaining({ length: 2 }),
     });
   });
 
@@ -346,6 +362,8 @@ describe("updateCells", () => {
           },
         ],
         defaultNodeSize: [120, 80],
+        canvasHeight: 600,
+        transform: { k: 1, x: 0, y: 0 },
         reason: "add-related-nodes",
         parent: "1",
       })
