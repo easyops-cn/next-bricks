@@ -34,49 +34,49 @@ describe("eo-easyops-icon", () => {
     expect(element.shadowRoot).toBeTruthy();
     await (global as any).flushPromises();
     expect(element.shadowRoot?.childNodes).toMatchInlineSnapshot(`
-NodeList [
-  <style>
-    icons.shadow.css
-  </style>,
-  <svg
-    height="1em"
-    version="1.1"
-    viewBox="0 0 15 17"
-    width="1em"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-  >
-    <mask
-      fill="white"
-    />
-    <g
-      fill="none"
-      fill-rule="evenodd"
-      stroke="none"
-      stroke-width="1"
-    >
-      <g
-        stroke="currentColor"
-        transform="translate(-1804.000000, -58.000000)"
-      >
-        <g
-          transform="translate(1805.000000, 59.000000)"
+      NodeList [
+        <style>
+          icons.shadow.css
+        </style>,
+        <svg
+          height="1em"
+          version="1.1"
+          viewBox="0 0 15 17"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <circle
-            cx="6.512"
-            cy="3.552"
-            r="3.552"
+          <mask
+            fill="white"
           />
-          <path
-            d="M10.448,8.184 Z"
-            stroke-linecap="square"
-          />
-        </g>
-      </g>
-    </g>
-  </svg>,
-]
-`);
+          <g
+            fill="none"
+            fill-rule="evenodd"
+            stroke="none"
+            stroke-width="1"
+          >
+            <g
+              stroke="currentColor"
+              transform="translate(-1804.000000, -58.000000)"
+            >
+              <g
+                transform="translate(1805.000000, 59.000000)"
+              >
+                <circle
+                  cx="6.512"
+                  cy="3.552"
+                  r="3.552"
+                />
+                <path
+                  d="M10.448,8.184 Z"
+                  stroke-linecap="square"
+                />
+              </g>
+            </g>
+          </g>
+        </svg>,
+      ]
+    `);
     document.body.removeChild(element);
     expect(element.shadowRoot?.childNodes.length).toBe(0);
 
@@ -98,58 +98,65 @@ NodeList [
     expect(element.shadowRoot).toBeTruthy();
     await (global as any).flushPromises();
     expect(element.shadowRoot?.childNodes).toMatchInlineSnapshot(`
-NodeList [
-  <style>
-    icons.shadow.css
-  </style>,
-  <svg
-    height="1em"
-    version="1.1"
-    viewBox="0 0 15 17"
-    width="1em"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-  >
-    <mask
-      fill="white"
-    />
-    <g
-      fill="none"
-      fill-rule="evenodd"
-      stroke="none"
-      stroke-width="1"
-    >
-      <g
-        stroke="#595959"
-        transform="translate(-1804.000000, -58.000000)"
-      >
-        <g
-          transform="translate(1805.000000, 59.000000)"
+      NodeList [
+        <style>
+          icons.shadow.css
+        </style>,
+        <svg
+          height="1em"
+          version="1.1"
+          viewBox="0 0 15 17"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
         >
-          <circle
-            cx="6.512"
-            cy="3.552"
-            r="3.552"
+          <mask
+            fill="white"
           />
-          <path
-            d="M10.448,8.184 Z"
-            stroke-linecap="square"
-          />
-        </g>
-      </g>
-    </g>
-  </svg>,
-]
-`);
+          <g
+            fill="none"
+            fill-rule="evenodd"
+            stroke="none"
+            stroke-width="1"
+          >
+            <g
+              stroke="#595959"
+              transform="translate(-1804.000000, -58.000000)"
+            >
+              <g
+                transform="translate(1805.000000, 59.000000)"
+              >
+                <circle
+                  cx="6.512"
+                  cy="3.552"
+                  r="3.552"
+                />
+                <path
+                  d="M10.448,8.184 Z"
+                  stroke-linecap="square"
+                />
+              </g>
+            </g>
+          </g>
+        </svg>,
+      ]
+    `);
     document.body.removeChild(element);
   });
 
   test("no icon", async () => {
     const element = document.createElement("eo-easyops-icon") as EasyOpsIcon;
 
+    const onIconFound = jest.fn();
+    element.addEventListener("icon.found", (e) => {
+      onIconFound((e as CustomEvent).detail);
+    });
+
     document.body.appendChild(element);
     await (global as any).flushPromises();
     expect(element.shadowRoot?.childNodes.length).toBe(1);
+    expect(onIconFound).toHaveBeenCalledWith(false);
+
     document.body.removeChild(element);
   });
 

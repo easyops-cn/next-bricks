@@ -1,4 +1,4 @@
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, useCallback, useState } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import { AntdIconProps, WrappedAntdIcon } from "../antd-icon/index.js";
@@ -46,6 +46,16 @@ export type LibIconProps =
 
 export type GeneralIconProps = LibIconProps | ImgIconProps;
 
+export interface FallbackIcon {
+  lib: "antd" | "easyops" | "fa";
+  icon: string;
+  theme?: string;
+  category?: string;
+  prefix?: string;
+}
+
+const LIBS = new Set(["antd", "easyops", "fa"]);
+
 /**
  * 通用图标构件
  *
@@ -85,6 +95,12 @@ class GeneralIcon
    */
   @property() accessor prefix!: string;
 
+  /**
+   * 设置当图标未找到时的回退图标
+   */
+  @property({ attribute: false })
+  accessor fallback: FallbackIcon | undefined;
+
   /** 渐变色起始颜色（不适用于 EasyOps 图标） */
   @property() accessor startColor: string | undefined;
 
@@ -95,7 +111,9 @@ class GeneralIcon
   @property() accessor gradientDirection: GradientDirection | undefined;
 
   /** 是否自动旋转 */
-  @property({ type: Boolean }) accessor spinning: boolean | undefined;
+  @property({ type: Boolean, render: false }) accessor spinning:
+    | boolean
+    | undefined;
 
   /** 图片地址 */
   @property() accessor imgSrc: string | undefined;
@@ -121,34 +139,102 @@ class GeneralIcon
   accessor keepSvgOriginalColor: boolean | undefined;
 
   render() {
-    if (this.imgSrc && typeof this.imgSrc === "string") {
-      return !this.keepSvgOriginalColor && this.imgSrc.endsWith(".svg") ? (
-        <WrappedSvgIcon imgSrc={this.imgSrc} noPublicRoot={this.noPublicRoot} />
-      ) : (
-        <WrappedEoImgIcon
-          imgSrc={this.imgSrc}
-          imgStyle={this.imgStyle}
-          imgLoading={this.imgLoading}
-          noPublicRoot={this.noPublicRoot}
-        />
-      );
-    }
-
-    const commonProps = {
-      icon: this.icon,
-      startColor: this.startColor,
-      endColor: this.endColor,
-      gradientDirection: this.gradientDirection,
-    };
-    return this.lib === "antd" ? (
-      <WrappedAntdIcon theme={this.theme} {...commonProps} />
-    ) : this.lib === "easyops" ? (
-      // `easyops-icon`s don't support setting gradient color, since we use a
-      // single svg path with fill to render the gradient color under the hood,
-      // while `easyops-icon`s are using other svg elements.
-      <WrappedEasyOpsIcon category={this.category} icon={this.icon} />
-    ) : this.lib === "fa" ? (
-      <WrappedFaIcon prefix={this.prefix} {...commonProps} />
-    ) : null;
+    return (
+      <GeneralIconComponent
+        lib={this.lib}
+        icon={this.icon}
+        theme={this.theme}
+        category={this.category}
+        prefix={this.prefix}
+        fallback={this.fallback}
+        startColor={this.startColor}
+        endColor={this.endColor}
+        gradientDirection={this.gradientDirection}
+        imgSrc={this.imgSrc}
+        imgStyle={this.imgStyle}
+        imgLoading={this.imgLoading}
+        noPublicRoot={this.noPublicRoot}
+        keepSvgOriginalColor={this.keepSvgOriginalColor}
+      />
+    );
   }
+}
+
+interface GeneralIconComponentProps {
+  lib?: "antd" | "easyops" | "fa";
+  icon?: string;
+  theme?: string;
+  category?: string;
+  prefix?: string;
+  fallback?: FallbackIcon;
+  startColor?: string;
+  endColor?: string;
+  gradientDirection?: GradientDirection;
+  keepSvgOriginalColor?: boolean;
+  imgSrc?: string;
+  imgStyle?: CSSProperties;
+  imgLoading?: "lazy" | "eager";
+  noPublicRoot?: boolean;
+}
+
+function GeneralIconComponent({
+  startColor,
+  endColor,
+  fallback,
+  gradientDirection,
+  keepSvgOriginalColor,
+  imgSrc,
+  imgStyle,
+  imgLoading,
+  noPublicRoot,
+  ...props
+}: GeneralIconComponentProps): JSX.Element | null {
+  const isImage = imgSrc && typeof imgSrc === "string";
+  const [iconNotFound, setIconNotFound] = useState(
+    !isImage && !LIBS.has(props.lib!)
+  );
+
+  const handleIconFoundChange = useCallback((e: CustomEvent<boolean>) => {
+    setIconNotFound(!e.detail);
+  }, []);
+
+  if (isImage) {
+    return !keepSvgOriginalColor && imgSrc.endsWith(".svg") ? (
+      <WrappedSvgIcon imgSrc={imgSrc} noPublicRoot={noPublicRoot} />
+    ) : (
+      <WrappedEoImgIcon
+        imgSrc={imgSrc}
+        imgStyle={imgStyle}
+        imgLoading={imgLoading}
+        noPublicRoot={noPublicRoot}
+      />
+    );
+  }
+
+  const { lib, icon, theme, category, prefix } =
+    iconNotFound && fallback ? fallback : props;
+  const onIconFoundChange =
+    !iconNotFound && fallback ? handleIconFoundChange : undefined;
+  const commonProps = {
+    icon,
+    startColor: startColor,
+    endColor: endColor,
+    gradientDirection: gradientDirection,
+    onIconFoundChange,
+  };
+
+  return lib === "antd" ? (
+    <WrappedAntdIcon theme={theme} {...commonProps} />
+  ) : lib === "easyops" ? (
+    // `easyops-icon`s don't support setting gradient color, since we use a
+    // single svg path with fill to render the gradient color under the hood,
+    // while `easyops-icon`s are using other svg elements.
+    <WrappedEasyOpsIcon
+      category={category}
+      icon={icon}
+      onIconFoundChange={onIconFoundChange}
+    />
+  ) : lib === "fa" ? (
+    <WrappedFaIcon prefix={prefix} {...commonProps} />
+  ) : null;
 }

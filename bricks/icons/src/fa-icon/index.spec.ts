@@ -154,6 +154,12 @@ describe("FaIcon", () => {
     const icon = document.createElement("eo-fa-icon") as FaIcon;
     icon.prefix = "fas";
     icon.icon = "oops";
+
+    const onIconFound = jest.fn();
+    icon.addEventListener("icon.found", (e) => {
+      onIconFound((e as CustomEvent).detail);
+    });
+
     act(() => {
       document.body.appendChild(icon);
     });
@@ -175,6 +181,9 @@ describe("FaIcon", () => {
       "fas",
       "oops"
     );
+
+    expect(onIconFound).toHaveBeenCalledWith(false);
+
     act(() => {
       document.body.removeChild(icon);
     });

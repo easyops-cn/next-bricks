@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { createDecorators } from "@next-core/element";
+import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement, wrapLocalBrick } from "@next-core/react-element";
 import { hasOwnProperty } from "@next-core/utils/general";
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
@@ -9,6 +9,7 @@ import {
   GradientDirection,
 } from "../shared/DefineLinearGradient.js";
 import linearGradientStyleText from "../shared/DefineLinearGradient.shadow.css";
+import type { IconEvents, IconEventsMapping } from "../shared/interfaces.js";
 import sharedStyleText from "../shared/icons.shadow.css";
 
 const iconCache = new Map<string, Promise<IconDefinition | null>>();
@@ -49,7 +50,7 @@ async function getIconDefinition(
   }
 }
 
-const { defineElement, property } = createDecorators();
+const { defineElement, property, event } = createDecorators();
 
 export interface FaIconProps extends DefineLinearGradientProps {
   /** Defaults to "fas" */
@@ -83,6 +84,13 @@ class FaIcon extends ReactNextElement implements FaIconProps {
   /** 渐变色方向 */
   @property() accessor gradientDirection: GradientDirection | undefined;
 
+  @event({ type: "icon.found" })
+  accessor #iconFoundEvent!: EventEmitter<boolean>;
+
+  #handleIconFoundChange = (found: boolean) => {
+    this.#iconFoundEvent.emit(found);
+  };
+
   render() {
     return (
       <FaIconComponent
@@ -91,9 +99,14 @@ class FaIcon extends ReactNextElement implements FaIconProps {
         startColor={this.startColor}
         endColor={this.endColor}
         gradientDirection={this.gradientDirection}
+        onIconFoundChange={this.#handleIconFoundChange}
       />
     );
   }
+}
+
+interface FaIconComponentProps extends FaIconProps {
+  onIconFoundChange(found: boolean): void;
 }
 
 function FaIconComponent({
@@ -102,7 +115,8 @@ function FaIconComponent({
   startColor,
   endColor,
   gradientDirection,
-}: FaIconProps) {
+  onIconFoundChange,
+}: FaIconComponentProps) {
   const prefix = _prefix ?? "fas";
   const [iconDefinition, setIconDefinition] = useState<IconDefinition | null>(
     null
@@ -117,18 +131,20 @@ function FaIconComponent({
           console.error("FontAwesome Icon not found:", prefix, icon);
         }
         setIconDefinition(result);
+        onIconFoundChange(!!result);
       }
     });
     return () => {
       ignore = true;
     };
-  }, [icon, prefix]);
+  }, [icon, onIconFoundChange, prefix]);
 
   if (!iconDefinition) {
     return null;
   }
 
-  const [width, height, ligatures, symbol, pathData] = iconDefinition.icon;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [width, height, _ligatures, _symbol, pathData] = iconDefinition.icon;
 
   return (
     <>
@@ -154,4 +170,11 @@ interface Alias {
   };
 }
 
-export const WrappedFaIcon = wrapLocalBrick<FaIcon, FaIconProps>(FaIcon);
+export const WrappedFaIcon = wrapLocalBrick<
+  FaIcon,
+  FaIconProps,
+  IconEvents,
+  IconEventsMapping
+>(FaIcon, {
+  onIconFoundChange: "icon.found",
+});
