@@ -342,6 +342,7 @@ describe("eo-draw-canvas", () => {
   test("active target", async () => {
     const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
     element.defaultNodeBricks = [{ useBrick: { brick: "div" } }];
+    element.fadeUnrelatedCells = true;
     element.cells = [
       {
         type: "decorator",
@@ -404,6 +405,11 @@ describe("eo-draw-canvas", () => {
       type: "node",
       id: "a",
     });
+    expect(
+      [...element.shadowRoot!.querySelectorAll(".cells .cell")].map((cell) =>
+        cell.classList.contains("faded")
+      )
+    ).toEqual([true, false, true, true]);
 
     // Set active target to the same node
     element.activeTarget = { type: "node", id: "a" };

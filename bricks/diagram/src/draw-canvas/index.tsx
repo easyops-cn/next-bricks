@@ -54,6 +54,7 @@ import { ConnectLineComponent } from "./ConnectLineComponent";
 import { initializeCells } from "./processors/initializeCells";
 import { transformToCenter } from "./processors/transformToCenter";
 import { updateCells } from "./processors/updateCells";
+import { getUnrelatedCells } from "./processors/getUnrelatedCells";
 
 const DEFAULT_NODE_SIZE = 20;
 const DEFAULT_AREA_WIDTH = 100;
@@ -73,6 +74,7 @@ export interface EoDrawCanvasProps {
   defaultNodeBricks?: NodeBrickConf[];
   defaultEdgeLines?: EdgeLineConf[];
   activeTarget?: ActiveTarget | null;
+  fadeUnrelatedCells?: boolean;
   zoomable?: boolean;
   scrollable?: boolean;
   pannable?: boolean;
@@ -154,6 +156,9 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
 
   @property({ attribute: false })
   accessor activeTarget: ActiveTarget | null | undefined;
+
+  @property({ type: Boolean })
+  accessor fadeUnrelatedCells: boolean | undefined;
 
   @property({ type: Boolean })
   accessor zoomable: boolean | undefined = true;
@@ -383,6 +388,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         defaultNodeBricks={this.defaultNodeBricks}
         defaultEdgeLines={this.defaultEdgeLines}
         activeTarget={this.activeTarget}
+        fadeUnrelatedCells={this.fadeUnrelatedCells}
         zoomable={this.zoomable}
         scrollable={this.scrollable}
         pannable={this.pannable}
@@ -430,6 +436,7 @@ function LegacyEoDrawCanvasComponent(
     defaultNodeBricks,
     defaultEdgeLines,
     activeTarget: _activeTarget,
+    fadeUnrelatedCells,
     zoomable,
     scrollable,
     pannable,
@@ -700,6 +707,17 @@ function LegacyEoDrawCanvasComponent(
     onActiveTargetChange(activeTarget);
   }, [activeTarget, onActiveTargetChange]);
 
+  const [unrelatedCells, setUnrelatedCells] = useState<Cell[]>([]);
+  useEffect(() => {
+    const nextUnrelated = fadeUnrelatedCells
+      ? getUnrelatedCells(cells, activeTarget)
+      : [];
+    // Do not update the state when prev and next are both empty.
+    setUnrelatedCells((prev) =>
+      prev.length === 0 && nextUnrelated.length === 0 ? prev : nextUnrelated
+    );
+  }, [activeTarget, cells, fadeUnrelatedCells]);
+
   useEffect(() => {
     if (!activeTarget) {
       return;
@@ -806,6 +824,7 @@ function LegacyEoDrawCanvasComponent(
               transform={transform}
               markerEnd={markerEnd}
               active={sameTarget(activeTarget, cell)}
+              unrelatedCells={unrelatedCells}
               onCellMoving={handleCellMoving}
               onCellMoved={handleCellMoved}
               onCellResizing={handleCellResizing}

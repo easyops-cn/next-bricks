@@ -85,3 +85,7 @@
 .decorator-text .text:focus {
   outline: none;
 }
+
+.cell.faded {
+  opacity: 0.3;
+}
