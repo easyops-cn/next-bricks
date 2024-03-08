@@ -86,9 +86,16 @@ describe("eo-svg-icon", () => {
   test("no imgSrc", async () => {
     const element = document.createElement("eo-svg-icon") as SvgIcon;
 
+    const onIconFound = jest.fn();
+    element.addEventListener("icon.found", (e) => {
+      onIconFound((e as CustomEvent).detail);
+    });
+
     document.body.appendChild(element);
     await (global as any).flushPromises();
     expect(element.shadowRoot?.childNodes.length).toBe(1);
+    expect(onIconFound).toHaveBeenCalledWith(false);
+
     document.body.removeChild(element);
   });
 

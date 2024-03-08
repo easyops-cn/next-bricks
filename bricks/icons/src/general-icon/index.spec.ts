@@ -139,6 +139,26 @@ describe("eo-icon", () => {
     });
   });
 
+  test("unknown lib with svg fallback", async () => {
+    const element = document.createElement("eo-icon") as GeneralIcon;
+    element.lib = "oops" as any;
+    element.icon = "any";
+    element.fallback = {
+      imgSrc: "https://test.com/image.svg",
+    };
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.textContent).toMatchInlineSnapshot(
+      `"styles.shadow.css svg-icon:{"imgSrc":"https://test.com/image.svg"}"`
+    );
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
   test("unknown lib without fallback", async () => {
     const element = document.createElement("eo-icon") as GeneralIcon;
     element.lib = "oops" as any;
