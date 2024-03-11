@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.25.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.25.0...@next-bricks/diagram@0.25.1) (2024-03-11)
+
+
+### Bug Fixes
+
+* **draw-canvas:** handle unrelated cells when connecting line ([ed0fbdd](https://github.com/easyops-cn/next-bricks/commit/ed0fbdd0afc684a3f0dacca935a93d9df2e434f5))
+* **draw-canvas:** set pointer-events of connect line to null ([8bfa174](https://github.com/easyops-cn/next-bricks/commit/8bfa1746d2e7853e20528f07b0e7483c8f55c3a9))
+
+
+
+
+
 # [0.25.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.24.1...@next-bricks/diagram@0.25.0) (2024-03-11)
 
 
