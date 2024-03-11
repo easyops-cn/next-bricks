@@ -9,6 +9,8 @@ import type {
 import { isEdgeCell, isNodeCell } from "./asserts";
 import { initializeCells } from "./initializeCells";
 
+const GAP = 36;
+
 export function updateCells({
   cells,
   defaultNodeSize,
@@ -74,27 +76,26 @@ export function updateCells({
         }
       }
       if (updateCandidates.length > 0) {
-        const gap = 20;
         let nextX: number;
         let nextY: number;
         if (rightMostNode) {
           // Place unpositioned nodes on the right side of the rightmost positioned siblings.
-          nextX = rightMostNode.view.x + rightMostNode.view.width + gap;
+          nextX = rightMostNode.view.x + rightMostNode.view.width + GAP;
           nextY = rightMostNode.view.y;
         } else {
           // If there are no positioned siblings, just place them below the parent.
           const totalWidth = updateCandidates.reduce(
-            (acc, node) => acc + node.view.width + gap,
-            -gap
+            (acc, node) => acc + node.view.width + GAP,
+            -GAP
           );
           nextX =
             parentNode.view.x - totalWidth / 2 + parentNode.view.width / 2;
-          nextY = parentNode.view.y + parentNode.view.height + gap;
+          nextY = parentNode.view.y + parentNode.view.height + GAP;
         }
         for (const node of updateCandidates) {
           node.view.x = nextX;
           node.view.y = nextY;
-          nextX += node.view.width + gap;
+          nextX += node.view.width + GAP;
         }
       }
     }
@@ -104,7 +105,6 @@ export function updateCells({
     // By default, place unpositioned nodes in a grid.
     let maxWidth = defaultNodeSize[0];
     let maxHeight = defaultNodeSize[1];
-    const gap = 20;
     const occupiedViews: NodeView[] = [];
     for (const cell of newCells) {
       if (isNodeCell(cell)) {
@@ -122,8 +122,8 @@ export function updateCells({
       }
     }
 
-    const deltaX = maxWidth + gap;
-    const deltaY = maxHeight + gap;
+    const deltaX = maxWidth + GAP;
+    const deltaY = maxHeight + GAP;
 
     const occupiedIndexes = new Set<string>();
     for (const view of occupiedViews) {
@@ -157,9 +157,9 @@ export function updateCells({
       } while (occupiedIndexes.has(`${xIndex},${yIndex}`));
 
       node.view.x =
-        (xIndex * scaledDeltaX - transform.x) / transform.k + gap / 2;
+        (xIndex * scaledDeltaX - transform.x) / transform.k + GAP / 2;
       node.view.y =
-        (yIndex * scaledDeltaY - transform.y) / transform.k + gap / 2;
+        (yIndex * scaledDeltaY - transform.y) / transform.k + GAP / 2;
     }
   }
 
