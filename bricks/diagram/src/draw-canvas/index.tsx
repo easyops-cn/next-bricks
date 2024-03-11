@@ -741,13 +741,13 @@ function LegacyEoDrawCanvasComponent(
   const [unrelatedCells, setUnrelatedCells] = useState<Cell[]>([]);
   useEffect(() => {
     const nextUnrelated = fadeUnrelatedCells
-      ? getUnrelatedCells(cells, activeTarget)
+      ? getUnrelatedCells(cells, connectLineState, activeTarget)
       : [];
     // Do not update the state when prev and next are both empty.
     setUnrelatedCells((prev) =>
       prev.length === 0 && nextUnrelated.length === 0 ? prev : nextUnrelated
     );
-  }, [activeTarget, cells, fadeUnrelatedCells]);
+  }, [activeTarget, cells, connectLineState, fadeUnrelatedCells]);
 
   useEffect(() => {
     if (!activeTarget) {
