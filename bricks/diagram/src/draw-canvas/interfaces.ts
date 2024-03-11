@@ -1,6 +1,7 @@
 import type { UseSingleBrickConf } from "@next-core/react-runtime";
 import type { ResizeCellPayload } from "./reducers/interfaces";
 import type { PositionTuple, TransformLiteral } from "../diagram/interfaces";
+import { SYMBOL_FOR_SIZE_INITIALIZED } from "./constants";
 
 export type Cell = NodeCell | EdgeCell | DecoratorCell;
 
@@ -25,6 +26,7 @@ export interface BaseNodeCell extends BaseCell {
   type: "node";
   id: NodeId;
   view: NodeView;
+  [SYMBOL_FOR_SIZE_INITIALIZED]?: boolean;
 }
 
 export interface BaseEdgeCell extends BaseCell {

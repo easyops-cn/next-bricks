@@ -1,5 +1,6 @@
 import { describe, test, expect } from "@jest/globals";
 import { cells } from "./cells";
+import { SYMBOL_FOR_SIZE_INITIALIZED } from "../constants";
 
 describe("cells reducer", () => {
   test("drop node", () => {
@@ -189,6 +190,30 @@ describe("cells reducer", () => {
         id: "3",
         type: "node",
         view: { width: 120, height: 80 },
+      },
+    ]);
+  });
+
+  test("update-node-size", () => {
+    const newCells = cells(
+      [
+        { source: "1", target: "2", type: "edge" },
+        { id: "1", type: "node", view: { width: 100, height: 60 } },
+        { id: "2", type: "node", view: { width: 100, height: 60 } },
+      ] as any,
+      {
+        type: "update-node-size",
+        payload: { id: "2", size: [120, 80] },
+      }
+    );
+    expect(newCells).toEqual([
+      { source: "1", target: "2", type: "edge" },
+      { id: "1", type: "node", view: { width: 100, height: 60 } },
+      {
+        id: "2",
+        type: "node",
+        view: { width: 120, height: 80 },
+        [SYMBOL_FOR_SIZE_INITIALIZED]: true,
       },
     ]);
   });

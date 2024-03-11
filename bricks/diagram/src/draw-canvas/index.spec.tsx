@@ -663,8 +663,8 @@ describe("eo-draw-canvas", () => {
           >
             <foreignobject
               class="node"
-              height="20"
-              width="20"
+              height="9999"
+              width="9999"
             >
               <div>
                 a
@@ -709,8 +709,8 @@ describe("eo-draw-canvas", () => {
             >
               <foreignobject
                 class="node"
-                height="20"
-                width="20"
+                height="9999"
+                width="9999"
               >
                 <div>
                   a
@@ -723,8 +723,8 @@ describe("eo-draw-canvas", () => {
             >
               <foreignobject
                 class="node"
-                height="20"
-                width="20"
+                height="9999"
+                width="9999"
               />
             </g>
           </g>,
@@ -746,8 +746,8 @@ describe("eo-draw-canvas", () => {
           >
             <foreignobject
               class="node"
-              height="20"
-              width="20"
+              height="9999"
+              width="9999"
             >
               <div>
                 a
@@ -760,8 +760,8 @@ describe("eo-draw-canvas", () => {
           >
             <foreignobject
               class="node"
-              height="20"
-              width="20"
+              height="9999"
+              width="9999"
             >
               <div>
                 b

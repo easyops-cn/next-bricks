@@ -15,7 +15,7 @@ import { handleMouseDown } from "./processors/handleMouseDown";
 import type { MoveCellPayload, ResizeCellPayload } from "./reducers/interfaces";
 import { DecoratorComponent } from "./decorators";
 import { cellToTarget } from "./processors/cellToTarget";
-import type { TransformLiteral } from "../diagram/interfaces";
+import type { SizeTuple, TransformLiteral } from "../diagram/interfaces";
 import { sameTarget } from "./processors/sameTarget";
 
 export interface CellComponentProps {
@@ -35,6 +35,7 @@ export interface CellComponentProps {
   onCellContextMenu(detail: CellContextMenuDetail): void;
   onDecoratorTextEditing(detail: { id: string; editing: boolean }): void;
   onDecoratorTextChange(detail: DecoratorTextChangeDetail): void;
+  onNodeBrickResize(id: string, size: SizeTuple | null): void;
 }
 
 export function CellComponent({
@@ -54,6 +55,7 @@ export function CellComponent({
   onCellContextMenu,
   onDecoratorTextEditing,
   onDecoratorTextChange,
+  onNodeBrickResize,
 }: CellComponentProps): JSX.Element | null {
   const gRef = useRef<SVGGElement>(null);
 
@@ -105,7 +107,11 @@ export function CellComponent({
       onContextMenu={handleContextMenu}
     >
       {isNodeCell(cell) ? (
-        <NodeComponent node={cell} defaultNodeBricks={defaultNodeBricks} />
+        <NodeComponent
+          node={cell}
+          defaultNodeBricks={defaultNodeBricks}
+          onResize={onNodeBrickResize}
+        />
       ) : isEdgeCell(cell) ? (
         <EdgeComponent
           edge={cell}

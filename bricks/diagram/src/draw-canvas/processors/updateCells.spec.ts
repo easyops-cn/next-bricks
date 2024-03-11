@@ -1,5 +1,6 @@
 import { describe, test, expect } from "@jest/globals";
 import { updateCells } from "./updateCells";
+import { SYMBOL_FOR_SIZE_INITIALIZED } from "../constants";
 
 describe("updateCells", () => {
   test("add related nodes on right side of siblings", () => {
@@ -61,6 +62,7 @@ describe("updateCells", () => {
             type: "node",
           },
         ],
+        previousCells: [],
         defaultNodeSize: [120, 80],
         canvasHeight: 600,
         transform: { k: 1, x: 0, y: 0 },
@@ -186,6 +188,7 @@ describe("updateCells", () => {
             type: "node",
           },
         ],
+        previousCells: [],
         defaultNodeSize: [120, 80],
         canvasHeight: 600,
         transform: { k: 1, x: 0, y: 0 },
@@ -263,6 +266,7 @@ describe("updateCells", () => {
             type: "node",
           },
         ],
+        previousCells: [],
         defaultNodeSize: [120, 80],
         canvasHeight: 600,
         transform: { k: 1, x: 0, y: 0 },
@@ -307,6 +311,7 @@ describe("updateCells", () => {
             type: "node",
           },
         ],
+        previousCells: [],
         defaultNodeSize: [120, 80],
         canvasHeight: 600,
         transform: { k: 1, x: 0, y: 0 },
@@ -361,6 +366,29 @@ describe("updateCells", () => {
             },
           },
         ],
+        previousCells: [
+          {
+            id: "1",
+            type: "node",
+            view: {
+              x: 100,
+              y: 30,
+              width: 160,
+              height: 100,
+            },
+            [SYMBOL_FOR_SIZE_INITIALIZED]: true,
+          },
+          {
+            id: "2",
+            type: "node",
+            view: {
+              x: 300,
+              y: 30,
+              width: 160,
+              height: 100,
+            },
+          },
+        ],
         defaultNodeSize: [120, 80],
         canvasHeight: 600,
         transform: { k: 1, x: 0, y: 0 },
@@ -375,9 +403,10 @@ describe("updateCells", () => {
           view: {
             x: 100,
             y: 30,
-            height: 80,
-            width: 120,
+            height: 100,
+            width: 160,
           },
+          [SYMBOL_FOR_SIZE_INITIALIZED]: true,
         },
         {
           id: "2",
