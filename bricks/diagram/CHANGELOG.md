@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.24.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.24.0...@next-bricks/diagram@0.24.1) (2024-03-11)
+
+
+### Bug Fixes
+
+* do not apply auto center if no cells ([f66beb2](https://github.com/easyops-cn/next-bricks/commit/f66beb2664e0d75547d8c8b8694e2a14c0b93f61))
+* increase default gap ([ba2958d](https://github.com/easyops-cn/next-bricks/commit/ba2958d9e8f5c06df4c76a3c9fbffb066a3009e5))
+
+
+
+
+
 # [0.24.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.23.2...@next-bricks/diagram@0.24.0) (2024-03-08)
 
 
