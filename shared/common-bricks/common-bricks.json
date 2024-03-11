@@ -98,7 +98,8 @@
     "eo-table",
     "eo-next-table",
     "eo-workbench-layout",
-    "eo-tree"
+    "eo-tree",
+    "eo-tree-select"
   ],
   "markdown": ["eo-markdown-editor"],
   "shoelace": [
