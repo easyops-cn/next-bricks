@@ -129,7 +129,7 @@ describe("updateCells", () => {
           id: "4",
           type: "node",
           view: {
-            x: 300,
+            x: 316,
             y: 100,
             height: 80,
             width: 120,
@@ -141,7 +141,7 @@ describe("updateCells", () => {
           id: "4",
           type: "node",
           view: {
-            x: 300,
+            x: 316,
             y: 100,
             height: 80,
             width: 120,
@@ -229,7 +229,7 @@ describe("updateCells", () => {
           type: "node",
           view: {
             x: 20,
-            y: 200,
+            y: 216,
             height: 80,
             width: 120,
           },
@@ -241,7 +241,7 @@ describe("updateCells", () => {
           type: "node",
           view: {
             x: 20,
-            y: 200,
+            y: 216,
             height: 80,
             width: 120,
           },
@@ -275,8 +275,8 @@ describe("updateCells", () => {
           view: {
             height: 80,
             width: 120,
-            x: 10,
-            y: 10,
+            x: 18,
+            y: 18,
           },
         },
         {
@@ -285,8 +285,8 @@ describe("updateCells", () => {
           view: {
             height: 80,
             width: 120,
-            x: 10,
-            y: 110,
+            x: 18,
+            y: 134,
           },
         },
       ],
@@ -321,8 +321,8 @@ describe("updateCells", () => {
           view: {
             height: 80,
             width: 120,
-            x: 10,
-            y: 10,
+            x: 18,
+            y: 18,
           },
         },
         {
@@ -331,8 +331,8 @@ describe("updateCells", () => {
           view: {
             height: 80,
             width: 120,
-            x: 10,
-            y: 110,
+            x: 18,
+            y: 134,
           },
         },
       ],
