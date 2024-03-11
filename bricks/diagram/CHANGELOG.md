@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.25.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.24.1...@next-bricks/diagram@0.25.0) (2024-03-11)
+
+
+### Features
+
+* **draw-canvas:** responsive to node brick size ([e29458a](https://github.com/easyops-cn/next-bricks/commit/e29458a244dbbcc2241bbc1b3a03d0ab2290505c))
+
+
+
+
+
 ## [0.24.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.24.0...@next-bricks/diagram@0.24.1) (2024-03-11)
 
 
