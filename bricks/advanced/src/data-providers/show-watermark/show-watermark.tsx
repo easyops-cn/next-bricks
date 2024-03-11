@@ -26,8 +26,8 @@ export interface WatermarkProps {
 const DEFAULT_GAP_X = 100;
 const DEFAULT_GAP_Y = 100;
 
-const watermarkMap = new Map<HTMLElement, HTMLDivElement>();
-const observeMap = new Map<HTMLElement, MutationObserver>();
+const watermarkMap = new WeakMap<HTMLElement, HTMLDivElement>();
+const observeMap = new WeakMap<HTMLElement, MutationObserver>();
 
 function toLowercaseSeparator(key: string) {
   return key.replace(/([A-Z])/g, "-$1").toLowerCase();
@@ -41,9 +41,6 @@ function getStyleStr(style: React.CSSProperties): string {
     )
     .join(" ");
 }
-
-const isWatermarkEle = (ele: any) =>
-  Array.from(watermarkMap.values()).includes(ele);
 
 const appendWatermark = (
   base64Url: string,
@@ -209,19 +206,19 @@ export function showWaterMark({
     }
   };
 
-  const reRendering = (
-    mutation: MutationRecord,
-    isWatermarkEle: (ele: Node) => boolean
-  ) => {
+  const reRendering = (mutation: MutationRecord) => {
     let flag = false;
     // Whether to delete the watermark node
     if (mutation.removedNodes.length) {
-      flag = Array.from<Node>(mutation.removedNodes).some((node) =>
-        isWatermarkEle(node)
+      flag = Array.from<Node>(mutation.removedNodes).some(
+        (node) => watermarkMap.get(container) === node
       );
     }
     // Whether the watermark dom property value has been modified
-    if (mutation.type === "attributes" && isWatermarkEle(mutation.target)) {
+    if (
+      mutation.type === "attributes" &&
+      watermarkMap.get(container) === mutation.target
+    ) {
       flag = true;
     }
     return flag;
@@ -229,7 +226,7 @@ export function showWaterMark({
 
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
-      if (reRendering(mutation, isWatermarkEle)) {
+      if (reRendering(mutation)) {
         renderWatermark();
       }
     });
@@ -249,6 +246,6 @@ export function showWaterMark({
 }
 
 customElements.define(
-  "basic.show-watermark",
+  "advanced.show-watermark",
   createProviderClass(showWaterMark)
 );

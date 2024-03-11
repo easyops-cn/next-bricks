@@ -8,9 +8,10 @@
 brick: div
 lifeCycle:
   onPageLoad:
-    - useProvider: basic.show-watermark
+    - useProvider: advanced.show-watermark
       args:
         - content: Developer
+          zIndex: -1
 children:
   - brick: eo-button
     properties:
@@ -23,11 +24,14 @@ children:
 brick: div
 lifeCycle:
   onPageLoad:
-    - useProvider: basic.show-watermark
+    - useProvider: advanced.show-watermark
       args:
         - content:
             - Hello
             - World
+          width: 180
+          height: 60
+          zIndex: -1
 children:
   - brick: eo-button
     properties:
@@ -40,7 +44,7 @@ children:
 brick: div
 lifeCycle:
   onPageLoad:
-    - useProvider: basic.show-watermark
+    - useProvider: advanced.show-watermark
       args:
         - content:
             - Developer
@@ -68,11 +72,12 @@ children:
 brick: div
 lifeCycle:
   onPageLoad:
-    - useProvider: basic.show-watermark
+    - useProvider: advanced.show-watermark
       args:
         - image: https://user-assets.sxlcdn.com/images/367275/FoZZCRcWcp4_HPWinw2CpHbu8Dnm.png?imageMogr2/strip/auto-orient/thumbnail/720x1440%3E/format/png
           width: 100
           height: 50
+          zIndex: -1
 children:
   - brick: eo-button
     properties:
@@ -85,7 +90,7 @@ children:
 brick: div
 lifeCycle:
   onPageLoad:
-    - useProvider: basic.show-watermark
+    - useProvider: advanced.show-watermark
       args:
         - content: Only Box
           container: "#box"
