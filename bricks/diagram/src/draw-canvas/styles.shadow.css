@@ -73,6 +73,10 @@
   opacity: 1;
 }
 
+.connect-line {
+  pointer-events: none;
+}
+
 .connect-line:not(.connecting) {
   display: none;
 }
