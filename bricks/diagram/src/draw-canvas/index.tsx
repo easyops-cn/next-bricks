@@ -324,8 +324,6 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
       id,
       data,
       view: {
-        // x: Math.floor(index / rows) * (width + gap) + gap,
-        // y: (index % rows) * (height + gap) + gap,
         width: size?.[0] ?? this.defaultNodeSize[0],
         height: size?.[1] ?? this.defaultNodeSize[0],
       } as NodeView,
@@ -574,7 +572,7 @@ function LegacyEoDrawCanvasComponent(
 
   useEffect(() => {
     const root = rootRef.current;
-    if (!root || centered) {
+    if (cells.length === 0 || !root || centered) {
       return;
     }
     const { k, x, y } = transformToCenter(cells, {
