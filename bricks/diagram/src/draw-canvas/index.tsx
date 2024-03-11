@@ -44,7 +44,7 @@ import type {
 } from "./interfaces";
 import { rootReducer } from "./reducers";
 import { MarkerComponent } from "../diagram/MarkerComponent";
-import { isNodeCell } from "./processors/asserts";
+import { isDecoratorCell, isNodeCell } from "./processors/asserts";
 import type { MoveCellPayload, ResizeCellPayload } from "./reducers/interfaces";
 import { sameTarget } from "./processors/sameTarget";
 import { handleKeyboard } from "./processors/handleKeyboard";
@@ -55,12 +55,14 @@ import { initializeCells } from "./processors/initializeCells";
 import { transformToCenter } from "./processors/transformToCenter";
 import { updateCells } from "./processors/updateCells";
 import { getUnrelatedCells } from "./processors/getUnrelatedCells";
-
-const DEFAULT_NODE_SIZE = 20;
-const DEFAULT_AREA_WIDTH = 100;
-const DEFAULT_AREA_HEIGHT = 60;
-const DEFAULT_SCALE_RANGE_MIN = 0.5;
-const DEFAULT_SCALE_RANGE_MAX = 2;
+import { SYMBOL_FOR_SIZE_INITIALIZED } from "./constants";
+import {
+  DEFAULT_NODE_SIZE,
+  DEFAULT_AREA_WIDTH,
+  DEFAULT_AREA_HEIGHT,
+  DEFAULT_SCALE_RANGE_MIN,
+  DEFAULT_SCALE_RANGE_MAX,
+} from "./constants";
 
 const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
   "basic.lock-body-scroll"
@@ -357,15 +359,11 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
     cells: InitialCell[],
     ctx?: UpdateCellsContext
   ): Promise<{ updated: Cell[] }> {
-    const transform = this.#canvasRef.current!.getTransform();
-    const { cells: newCells, updated } = updateCells({
+    const { updated } = this.#canvasRef.current!.updateCells(cells, {
       ...ctx,
-      cells,
       defaultNodeSize: this.defaultNodeSize,
       canvasHeight: this.clientHeight,
-      transform,
     });
-    this.#canvasRef.current!.updateCells(newCells);
     return { updated };
   }
 
@@ -422,7 +420,16 @@ export interface DrawCanvasRef {
   addNodes(nodes: NodeCell[], ctx: AddNodesContext): NodeCell[];
   addEdge(edge: EdgeCell): void;
   manuallyConnectNodes(source: NodeId): Promise<ConnectNodesDetail>;
-  updateCells(cells: Cell[]): void;
+  updateCells(
+    cells: InitialCell[],
+    ctx: Partial<UpdateCellsContext> & {
+      defaultNodeSize: SizeTuple;
+      canvasHeight: number;
+    }
+  ): {
+    cells: Cell[];
+    updated: Cell[];
+  };
   getTransform(): TransformLiteral;
 }
 
@@ -572,7 +579,14 @@ function LegacyEoDrawCanvasComponent(
 
   useEffect(() => {
     const root = rootRef.current;
-    if (cells.length === 0 || !root || centered) {
+    if (
+      !root ||
+      centered ||
+      !cells.some((cell) => isNodeCell(cell) || isDecoratorCell(cell)) ||
+      cells.some(
+        (cell) => isNodeCell(cell) && !cell[SYMBOL_FOR_SIZE_INITIALIZED]
+      )
+    ) {
       return;
     }
     const { k, x, y } = transformToCenter(cells, {
@@ -589,13 +603,24 @@ function LegacyEoDrawCanvasComponent(
     setCentered(true);
   }, [cells, centered, scaleRange, zoomable, zoomer]);
 
+  useEffect(() => {
+    // Reset auto centering when nodes and decorators are all removed.
+    if (!cells.some((cell) => isNodeCell(cell) || isDecoratorCell(cell))) {
+      setCentered(false);
+    }
+  }, [cells]);
+
   useImperativeHandle(
     ref,
     () => ({
       dropNode(node) {
+        // Do not apply auto centering when dropping a node.
+        setCentered(true);
         dispatch({ type: "drop-node", payload: node });
       },
       dropDecorator(decorator) {
+        // Do not apply auto centering when dropping a decorator.
+        setCentered(true);
         dispatch({ type: "drop-decorator", payload: decorator });
       },
       addNodes(nodes, { defaultNodeSize, canvasHeight }: AddNodesContext) {
@@ -610,6 +635,7 @@ function LegacyEoDrawCanvasComponent(
         ];
         const { cells: allCells, updated } = updateCells({
           cells: newCells,
+          previousCells: cells,
           defaultNodeSize,
           canvasHeight,
           transform,
@@ -622,8 +648,15 @@ function LegacyEoDrawCanvasComponent(
       addEdge(edge) {
         dispatch({ type: "add-edge", payload: edge });
       },
-      updateCells(cells) {
-        dispatch({ type: "update-cells", payload: cells });
+      updateCells(newCells, ctx) {
+        const result = updateCells({
+          ...ctx,
+          previousCells: cells,
+          cells: newCells,
+          transform,
+        });
+        dispatch({ type: "update-cells", payload: result.cells });
+        return result;
       },
       getTransform() {
         return transform;
@@ -797,12 +830,19 @@ function LegacyEoDrawCanvasComponent(
     []
   );
 
+  const handleNodeBrickResize = useCallback(
+    (id: string, size: SizeTuple | null) => {
+      dispatch({ type: "update-node-size", payload: { id, size } });
+    },
+    []
+  );
+
   return (
     <svg
       width="100%"
       height="100%"
       ref={rootRef}
-      className={classNames("root", { grabbing, pannable })}
+      className={classNames("root", { grabbing, pannable, ready: centered })}
       tabIndex={-1}
     >
       <defs>
@@ -831,6 +871,7 @@ function LegacyEoDrawCanvasComponent(
               onCellContextMenu={onCellContextMenu}
               onDecoratorTextChange={onDecoratorTextChange}
               onDecoratorTextEditing={handleDecoratorTextEditing}
+              onNodeBrickResize={handleNodeBrickResize}
             />
           ))}
         </g>

@@ -1,4 +1,5 @@
 import type { SizeTuple, TransformLiteral } from "../../diagram/interfaces";
+import { DEFAULT_NODE_GAP, SYMBOL_FOR_SIZE_INITIALIZED } from "../constants";
 import type {
   Cell,
   InitialCell,
@@ -9,10 +10,9 @@ import type {
 import { isEdgeCell, isNodeCell } from "./asserts";
 import { initializeCells } from "./initializeCells";
 
-const GAP = 36;
-
 export function updateCells({
   cells,
+  previousCells,
   defaultNodeSize,
   canvasHeight,
   transform,
@@ -20,6 +20,7 @@ export function updateCells({
   parent,
 }: {
   cells: InitialCell[];
+  previousCells: Cell[];
   defaultNodeSize: SizeTuple;
   canvasHeight: number;
   transform: TransformLiteral;
@@ -32,10 +33,23 @@ export function updateCells({
   const newCells = initializeCells(cells, { defaultNodeSize });
   const updateCandidates: NodeCell[] = [];
 
+  const previousSizeInitializedNodes = new Map<string, NodeCell>();
+  for (const cell of previousCells) {
+    if (isNodeCell(cell) && cell[SYMBOL_FOR_SIZE_INITIALIZED]) {
+      previousSizeInitializedNodes.set(cell.id, cell);
+    }
+  }
+
   const nodesMap = new Map<string, NodeCell>();
   for (const cell of newCells) {
     if (isNodeCell(cell)) {
       nodesMap.set(cell.id, cell);
+      const previousNode = previousSizeInitializedNodes.get(cell.id);
+      if (previousNode) {
+        cell.view.width = previousNode.view.width;
+        cell.view.height = previousNode.view.height;
+        cell[SYMBOL_FOR_SIZE_INITIALIZED] = true;
+      }
     }
   }
 
@@ -80,22 +94,23 @@ export function updateCells({
         let nextY: number;
         if (rightMostNode) {
           // Place unpositioned nodes on the right side of the rightmost positioned siblings.
-          nextX = rightMostNode.view.x + rightMostNode.view.width + GAP;
+          nextX =
+            rightMostNode.view.x + rightMostNode.view.width + DEFAULT_NODE_GAP;
           nextY = rightMostNode.view.y;
         } else {
           // If there are no positioned siblings, just place them below the parent.
           const totalWidth = updateCandidates.reduce(
-            (acc, node) => acc + node.view.width + GAP,
-            -GAP
+            (acc, node) => acc + node.view.width + DEFAULT_NODE_GAP,
+            -DEFAULT_NODE_GAP
           );
           nextX =
             parentNode.view.x - totalWidth / 2 + parentNode.view.width / 2;
-          nextY = parentNode.view.y + parentNode.view.height + GAP;
+          nextY = parentNode.view.y + parentNode.view.height + DEFAULT_NODE_GAP;
         }
         for (const node of updateCandidates) {
           node.view.x = nextX;
           node.view.y = nextY;
-          nextX += node.view.width + GAP;
+          nextX += node.view.width + DEFAULT_NODE_GAP;
         }
       }
     }
@@ -122,8 +137,8 @@ export function updateCells({
       }
     }
 
-    const deltaX = maxWidth + GAP;
-    const deltaY = maxHeight + GAP;
+    const deltaX = maxWidth + DEFAULT_NODE_GAP;
+    const deltaY = maxHeight + DEFAULT_NODE_GAP;
 
     const occupiedIndexes = new Set<string>();
     for (const view of occupiedViews) {
@@ -157,9 +172,11 @@ export function updateCells({
       } while (occupiedIndexes.has(`${xIndex},${yIndex}`));
 
       node.view.x =
-        (xIndex * scaledDeltaX - transform.x) / transform.k + GAP / 2;
+        (xIndex * scaledDeltaX - transform.x) / transform.k +
+        DEFAULT_NODE_GAP / 2;
       node.view.y =
-        (yIndex * scaledDeltaY - transform.y) / transform.k + GAP / 2;
+        (yIndex * scaledDeltaY - transform.y) / transform.k +
+        DEFAULT_NODE_GAP / 2;
     }
   }
 
