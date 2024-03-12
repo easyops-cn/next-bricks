@@ -469,6 +469,7 @@ export function CodeEditorComponent({
             ? entry.contentBoxSize[0].blockSize
             : entry.contentRect.height;
           if (newWidth !== size.current.width || expanded) {
+            size.current.width = newWidth;
             editorRef.current?.layout({
               width: newWidth,
               height: expanded ? newHeight : size.current.height,
@@ -555,7 +556,6 @@ export function CodeEditorComponent({
       overviewRulerBorder: false,
       mouseWheelScrollSensitivity: 0.5,
       fixedOverflowWidgets: true,
-      folding: false,
       lineNumbersMinChars: 3,
       suggest: {
         insertMode: "insert",
@@ -738,6 +738,7 @@ export function CodeEditorComponent({
     <div
       className={classNames("code-editor-wrapper", {
         expanded,
+        error: validateState === "error",
       })}
     >
       <div
@@ -745,11 +746,6 @@ export function CodeEditorComponent({
         style={{
           height: expanded ? "100%" : actualHeight,
           overflow: expanded ? "scroll" : "",
-          ...(validateState === "error"
-            ? {
-                outline: "1px solid var(--antd-error-color)",
-              }
-            : {}),
         }}
       />
       <div className="toolbar">

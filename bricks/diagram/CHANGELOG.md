@@ -3,6 +3,64 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.25.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.25.0...@next-bricks/diagram@0.25.1) (2024-03-11)
+
+
+### Bug Fixes
+
+* **draw-canvas:** handle unrelated cells when connecting line ([ed0fbdd](https://github.com/easyops-cn/next-bricks/commit/ed0fbdd0afc684a3f0dacca935a93d9df2e434f5))
+* **draw-canvas:** set pointer-events of connect line to null ([8bfa174](https://github.com/easyops-cn/next-bricks/commit/8bfa1746d2e7853e20528f07b0e7483c8f55c3a9))
+
+
+
+
+
+# [0.25.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.24.1...@next-bricks/diagram@0.25.0) (2024-03-11)
+
+
+### Features
+
+* **draw-canvas:** responsive to node brick size ([e29458a](https://github.com/easyops-cn/next-bricks/commit/e29458a244dbbcc2241bbc1b3a03d0ab2290505c))
+
+
+
+
+
+## [0.24.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.24.0...@next-bricks/diagram@0.24.1) (2024-03-11)
+
+
+### Bug Fixes
+
+* do not apply auto center if no cells ([f66beb2](https://github.com/easyops-cn/next-bricks/commit/f66beb2664e0d75547d8c8b8694e2a14c0b93f61))
+* increase default gap ([ba2958d](https://github.com/easyops-cn/next-bricks/commit/ba2958d9e8f5c06df4c76a3c9fbffb066a3009e5))
+
+
+
+
+
+# [0.24.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.23.2...@next-bricks/diagram@0.24.0) (2024-03-08)
+
+
+### Features
+
+* **draw-canvas:** support enable fade unrelated cells ([4d15b2f](https://github.com/easyops-cn/next-bricks/commit/4d15b2f9b0013e533b04db77bdce5aa71af8d784))
+
+
+
+
+
+## [0.23.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.23.1...@next-bricks/diagram@0.23.2) (2024-03-08)
+
+
+### Bug Fixes
+
+* find the rightmost node below the parent node ([277efe1](https://github.com/easyops-cn/next-bricks/commit/277efe1c8a9eb9c5cb62f53902d6618f92041228))
+* place unpositioned nodes in a grid ([fff945c](https://github.com/easyops-cn/next-bricks/commit/fff945c2930fa7044dd6d22b3fca3b7c5b686c5a))
+
+
+
+
+
 ## [0.23.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.23.0...@next-bricks/diagram@0.23.1) (2024-03-07)
 
 

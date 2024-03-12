@@ -40,10 +40,11 @@ import type {
   ConnectNodesDetail,
   EdgeLineConf,
   DecoratorTextChangeDetail,
+  NodeView,
 } from "./interfaces";
 import { rootReducer } from "./reducers";
 import { MarkerComponent } from "../diagram/MarkerComponent";
-import { isNodeCell } from "./processors/asserts";
+import { isDecoratorCell, isNodeCell } from "./processors/asserts";
 import type { MoveCellPayload, ResizeCellPayload } from "./reducers/interfaces";
 import { sameTarget } from "./processors/sameTarget";
 import { handleKeyboard } from "./processors/handleKeyboard";
@@ -53,12 +54,15 @@ import { ConnectLineComponent } from "./ConnectLineComponent";
 import { initializeCells } from "./processors/initializeCells";
 import { transformToCenter } from "./processors/transformToCenter";
 import { updateCells } from "./processors/updateCells";
-
-const DEFAULT_NODE_SIZE = 20;
-const DEFAULT_AREA_WIDTH = 100;
-const DEFAULT_AREA_HEIGHT = 60;
-const DEFAULT_SCALE_RANGE_MIN = 0.5;
-const DEFAULT_SCALE_RANGE_MAX = 2;
+import { getUnrelatedCells } from "./processors/getUnrelatedCells";
+import { SYMBOL_FOR_SIZE_INITIALIZED } from "./constants";
+import {
+  DEFAULT_NODE_SIZE,
+  DEFAULT_AREA_WIDTH,
+  DEFAULT_AREA_HEIGHT,
+  DEFAULT_SCALE_RANGE_MIN,
+  DEFAULT_SCALE_RANGE_MAX,
+} from "./constants";
 
 const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
   "basic.lock-body-scroll"
@@ -72,6 +76,7 @@ export interface EoDrawCanvasProps {
   defaultNodeBricks?: NodeBrickConf[];
   defaultEdgeLines?: EdgeLineConf[];
   activeTarget?: ActiveTarget | null;
+  fadeUnrelatedCells?: boolean;
   zoomable?: boolean;
   scrollable?: boolean;
   pannable?: boolean;
@@ -106,6 +111,11 @@ export interface AddEdgeInfo {
 export interface UpdateCellsContext {
   reason: "add-related-nodes";
   parent: NodeId;
+}
+
+export interface AddNodesContext {
+  defaultNodeSize: SizeTuple;
+  canvasHeight: number;
 }
 
 export const EoDrawCanvasComponent = React.forwardRef(
@@ -148,6 +158,9 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
 
   @property({ attribute: false })
   accessor activeTarget: ActiveTarget | null | undefined;
+
+  @property({ type: Boolean })
+  accessor fadeUnrelatedCells: boolean | undefined;
 
   @property({ type: Boolean })
   accessor zoomable: boolean | undefined = true;
@@ -308,29 +321,20 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
     if (nodes.length === 0) {
       return [];
     }
-    const firstNode = nodes[0];
-    const width = firstNode.size?.[0] ?? this.defaultNodeSize?.[0];
-    const height = firstNode.size?.[1] ?? this.defaultNodeSize?.[1];
-    const gap = 20;
-    // Todo(steve): canvas size
-    const canvasHeight = 600;
-    const rows = Math.floor(canvasHeight / (height + gap));
-    // Assert: nodes are all brick nodes (no shape nodes)
-    const positionedNodes = nodes.map<NodeCell>(
-      ({ size, useBrick, ...node }, index) => ({
-        ...node,
-        type: "node",
-        view: {
-          x: Math.floor(index / rows) * (width + gap) + gap,
-          y: (index % rows) * (height + gap) + gap,
-          width: size?.[0] ?? this.defaultNodeSize?.[0],
-          height: size?.[1] ?? this.defaultNodeSize?.[0],
-        },
-        useBrick,
-      })
-    );
-    this.#canvasRef.current?.addNodes(positionedNodes);
-    return positionedNodes;
+    const newNodes = nodes.map<NodeCell>(({ size, useBrick, id, data }) => ({
+      type: "node",
+      id,
+      data,
+      view: {
+        width: size?.[0] ?? this.defaultNodeSize[0],
+        height: size?.[1] ?? this.defaultNodeSize[0],
+      } as NodeView,
+      useBrick,
+    }));
+    return this.#canvasRef.current!.addNodes(newNodes, {
+      defaultNodeSize: this.defaultNodeSize,
+      canvasHeight: this.clientHeight,
+    });
   }
 
   @method()
@@ -355,12 +359,11 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
     cells: InitialCell[],
     ctx?: UpdateCellsContext
   ): Promise<{ updated: Cell[] }> {
-    const { cells: newCells, updated } = updateCells({
+    const { updated } = this.#canvasRef.current!.updateCells(cells, {
       ...ctx,
-      cells,
       defaultNodeSize: this.defaultNodeSize,
+      canvasHeight: this.clientHeight,
     });
-    this.#canvasRef.current!.updateCells(newCells);
     return { updated };
   }
 
@@ -381,6 +384,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         defaultNodeBricks={this.defaultNodeBricks}
         defaultEdgeLines={this.defaultEdgeLines}
         activeTarget={this.activeTarget}
+        fadeUnrelatedCells={this.fadeUnrelatedCells}
         zoomable={this.zoomable}
         scrollable={this.scrollable}
         pannable={this.pannable}
@@ -413,10 +417,19 @@ export interface EoDrawCanvasComponentProps extends EoDrawCanvasProps {
 export interface DrawCanvasRef {
   dropNode(node: NodeCell): void;
   dropDecorator(decorator: DecoratorCell): void;
-  addNodes(nodes: NodeCell[]): void;
+  addNodes(nodes: NodeCell[], ctx: AddNodesContext): NodeCell[];
   addEdge(edge: EdgeCell): void;
   manuallyConnectNodes(source: NodeId): Promise<ConnectNodesDetail>;
-  updateCells(cells: Cell[]): void;
+  updateCells(
+    cells: InitialCell[],
+    ctx: Partial<UpdateCellsContext> & {
+      defaultNodeSize: SizeTuple;
+      canvasHeight: number;
+    }
+  ): {
+    cells: Cell[];
+    updated: Cell[];
+  };
   getTransform(): TransformLiteral;
 }
 
@@ -428,6 +441,7 @@ function LegacyEoDrawCanvasComponent(
     defaultNodeBricks,
     defaultEdgeLines,
     activeTarget: _activeTarget,
+    fadeUnrelatedCells,
     zoomable,
     scrollable,
     pannable,
@@ -565,7 +579,14 @@ function LegacyEoDrawCanvasComponent(
 
   useEffect(() => {
     const root = rootRef.current;
-    if (!root || centered) {
+    if (
+      !root ||
+      centered ||
+      !cells.some((cell) => isNodeCell(cell) || isDecoratorCell(cell)) ||
+      cells.some(
+        (cell) => isNodeCell(cell) && !cell[SYMBOL_FOR_SIZE_INITIALIZED]
+      )
+    ) {
       return;
     }
     const { k, x, y } = transformToCenter(cells, {
@@ -582,23 +603,60 @@ function LegacyEoDrawCanvasComponent(
     setCentered(true);
   }, [cells, centered, scaleRange, zoomable, zoomer]);
 
+  useEffect(() => {
+    // Reset auto centering when nodes and decorators are all removed.
+    if (!cells.some((cell) => isNodeCell(cell) || isDecoratorCell(cell))) {
+      setCentered(false);
+    }
+  }, [cells]);
+
   useImperativeHandle(
     ref,
     () => ({
       dropNode(node) {
+        // Do not apply auto centering when dropping a node.
+        setCentered(true);
         dispatch({ type: "drop-node", payload: node });
       },
       dropDecorator(decorator) {
+        // Do not apply auto centering when dropping a decorator.
+        setCentered(true);
         dispatch({ type: "drop-decorator", payload: decorator });
       },
-      addNodes(nodes) {
-        dispatch({ type: "add-nodes", payload: nodes });
+      addNodes(nodes, { defaultNodeSize, canvasHeight }: AddNodesContext) {
+        const index =
+          cells.findLastIndex(
+            (cell) => !(cell.type === "decorator" && cell.decorator === "text")
+          ) + 1;
+        const newCells = [
+          ...cells.slice(0, index),
+          ...nodes,
+          ...cells.slice(index),
+        ];
+        const { cells: allCells, updated } = updateCells({
+          cells: newCells,
+          previousCells: cells,
+          defaultNodeSize,
+          canvasHeight,
+          transform,
+        });
+        dispatch({ type: "update-cells", payload: allCells });
+        return updated.filter((node) =>
+          nodes.includes(node as NodeCell)
+        ) as NodeCell[];
       },
       addEdge(edge) {
         dispatch({ type: "add-edge", payload: edge });
       },
-      updateCells(cells) {
-        dispatch({ type: "update-cells", payload: cells });
+      updateCells(newCells, ctx) {
+        const result = updateCells({
+          ...ctx,
+          previousCells: cells,
+          cells: newCells,
+          transform,
+        });
+        dispatch({ type: "update-cells", payload: result.cells });
+        return result;
       },
       getTransform() {
         return transform;
@@ -679,6 +737,17 @@ function LegacyEoDrawCanvasComponent(
     }
     onActiveTargetChange(activeTarget);
   }, [activeTarget, onActiveTargetChange]);
+
+  const [unrelatedCells, setUnrelatedCells] = useState<Cell[]>([]);
+  useEffect(() => {
+    const nextUnrelated = fadeUnrelatedCells
+      ? getUnrelatedCells(cells, connectLineState, activeTarget)
+      : [];
+    // Do not update the state when prev and next are both empty.
+    setUnrelatedCells((prev) =>
+      prev.length === 0 && nextUnrelated.length === 0 ? prev : nextUnrelated
+    );
+  }, [activeTarget, cells, connectLineState, fadeUnrelatedCells]);
 
   useEffect(() => {
     if (!activeTarget) {
@@ -761,13 +830,19 @@ function LegacyEoDrawCanvasComponent(
     []
   );
 
+  const handleNodeBrickResize = useCallback(
+    (id: string, size: SizeTuple | null) => {
+      dispatch({ type: "update-node-size", payload: { id, size } });
+    },
+    []
+  );
+
   return (
-    // Todo(steve): canvas size
     <svg
       width="100%"
       height="100%"
       ref={rootRef}
-      className={classNames("root", { grabbing, pannable })}
+      className={classNames("root", { grabbing, pannable, ready: centered })}
       tabIndex={-1}
     >
       <defs>
@@ -787,6 +862,7 @@ function LegacyEoDrawCanvasComponent(
               transform={transform}
               markerEnd={markerEnd}
               active={sameTarget(activeTarget, cell)}
+              unrelatedCells={unrelatedCells}
               onCellMoving={handleCellMoving}
               onCellMoved={handleCellMoved}
               onCellResizing={handleCellResizing}
@@ -795,6 +871,7 @@ function LegacyEoDrawCanvasComponent(
               onCellContextMenu={onCellContextMenu}
               onDecoratorTextChange={onDecoratorTextChange}
               onDecoratorTextEditing={handleDecoratorTextEditing}
+              onNodeBrickResize={handleNodeBrickResize}
             />
           ))}
         </g>

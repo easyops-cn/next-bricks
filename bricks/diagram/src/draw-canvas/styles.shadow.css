@@ -18,6 +18,14 @@
   display: none;
 }
 
+.root {
+  opacity: 0;
+}
+
+.root.ready {
+  opacity: 1;
+}
+
 .root:focus {
   outline: none;
 }
@@ -65,6 +73,10 @@
   opacity: 1;
 }
 
+.connect-line {
+  pointer-events: none;
+}
+
 .connect-line:not(.connecting) {
   display: none;
 }
@@ -84,4 +96,16 @@
 
 .decorator-text .text:focus {
   outline: none;
+}
+
+.cell.faded {
+  opacity: 0.3;
+}
+
+.cell .node {
+  pointer-events: none;
+}
+
+.cell .node > * {
+  pointer-events: auto;
 }

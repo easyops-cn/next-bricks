@@ -2,6 +2,7 @@ import {
   NextElement,
   createDecorators,
   supportsAdoptingStyleSheets,
+  type EventEmitter,
 } from "@next-core/element";
 import { wrapLocalBrick } from "@next-core/react-element";
 import {
@@ -10,9 +11,10 @@ import {
 } from "../shared/DefineLinearGradient.js";
 import linearGradientStyleText from "../shared/DefineLinearGradient.shadow.css";
 import sharedStyleText from "../shared/icons.shadow.css";
+import type { IconEvents, IconEventsMapping } from "../shared/interfaces.js";
 import { getIcon } from "../shared/SvgCache.js";
 
-const { defineElement, property } = createDecorators();
+const { defineElement, property, event } = createDecorators();
 
 export interface AntdIconProps extends DefineLinearGradientProps {
   /** Defaults to "outlined" */
@@ -44,6 +46,11 @@ class AntdIcon extends NextElement implements AntdIconProps {
 
   /** 渐变色方向 */
   @property() accessor gradientDirection: GradientDirection | undefined;
+
+  @event({ type: "icon.found" })
+  accessor #iconFoundEvent!: EventEmitter<boolean>;
+
+  #iconFound = true;
 
   #createShadowRoot(): void {
     if (this.shadowRoot) {
@@ -113,6 +120,11 @@ class AntdIcon extends NextElement implements AntdIconProps {
     }
 
     this.shadowRoot.replaceChildren(...nodes);
+
+    const iconFound = !!svg;
+    if (this.#iconFound !== iconFound) {
+      this.#iconFoundEvent.emit((this.#iconFound = iconFound));
+    }
   }
 }
 
@@ -124,9 +136,12 @@ function escapeAttr(unsafe: string) {
     .replace(/"/g, "&quot;");
 }
 
-export const WrappedAntdIcon = wrapLocalBrick<AntdIcon, AntdIconProps>(
-  AntdIcon
-);
+export const WrappedAntdIcon = wrapLocalBrick<
+  AntdIcon,
+  AntdIconProps,
+  IconEvents,
+  IconEventsMapping
+>(AntdIcon, { onIconFoundChange: "icon.found" });
 
 function fixTheme(theme?: string) {
   // The icon theme for v2 is twoTone

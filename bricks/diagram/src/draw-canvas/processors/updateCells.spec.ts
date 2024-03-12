@@ -1,5 +1,6 @@
 import { describe, test, expect } from "@jest/globals";
 import { updateCells } from "./updateCells";
+import { SYMBOL_FOR_SIZE_INITIALIZED } from "../constants";
 
 describe("updateCells", () => {
   test("add related nodes on right side of siblings", () => {
@@ -61,7 +62,10 @@ describe("updateCells", () => {
             type: "node",
           },
         ],
+        previousCells: [],
         defaultNodeSize: [120, 80],
+        canvasHeight: 600,
+        transform: { k: 1, x: 0, y: 0 },
         reason: "add-related-nodes",
         parent: "1",
       })
@@ -127,7 +131,7 @@ describe("updateCells", () => {
           id: "4",
           type: "node",
           view: {
-            x: 300,
+            x: 316,
             y: 100,
             height: 80,
             width: 120,
@@ -139,7 +143,7 @@ describe("updateCells", () => {
           id: "4",
           type: "node",
           view: {
-            x: 300,
+            x: 316,
             y: 100,
             height: 80,
             width: 120,
@@ -184,7 +188,10 @@ describe("updateCells", () => {
             type: "node",
           },
         ],
+        previousCells: [],
         defaultNodeSize: [120, 80],
+        canvasHeight: 600,
+        transform: { k: 1, x: 0, y: 0 },
         reason: "add-related-nodes",
         parent: "2",
       })
@@ -225,7 +232,7 @@ describe("updateCells", () => {
           type: "node",
           view: {
             x: 20,
-            y: 200,
+            y: 216,
             height: 80,
             width: 120,
           },
@@ -237,7 +244,7 @@ describe("updateCells", () => {
           type: "node",
           view: {
             x: 20,
-            y: 200,
+            y: 216,
             height: 80,
             width: 120,
           },
@@ -259,7 +266,10 @@ describe("updateCells", () => {
             type: "node",
           },
         ],
+        previousCells: [],
         defaultNodeSize: [120, 80],
+        canvasHeight: 600,
+        transform: { k: 1, x: 0, y: 0 },
       })
     ).toEqual({
       cells: [
@@ -269,6 +279,8 @@ describe("updateCells", () => {
           view: {
             height: 80,
             width: 120,
+            x: 18,
+            y: 18,
           },
         },
         {
@@ -277,10 +289,12 @@ describe("updateCells", () => {
           view: {
             height: 80,
             width: 120,
+            x: 18,
+            y: 134,
           },
         },
       ],
-      updated: [],
+      updated: expect.objectContaining({ length: 2 }),
     });
   });
 
@@ -297,7 +311,10 @@ describe("updateCells", () => {
             type: "node",
           },
         ],
+        previousCells: [],
         defaultNodeSize: [120, 80],
+        canvasHeight: 600,
+        transform: { k: 1, x: 0, y: 0 },
         reason: "add-related-nodes",
         parent: "1",
       })
@@ -309,6 +326,8 @@ describe("updateCells", () => {
           view: {
             height: 80,
             width: 120,
+            x: 18,
+            y: 18,
           },
         },
         {
@@ -317,10 +336,12 @@ describe("updateCells", () => {
           view: {
             height: 80,
             width: 120,
+            x: 18,
+            y: 134,
           },
         },
       ],
-      updated: [],
+      updated: expect.objectContaining({ length: 2 }),
     });
   });
 
@@ -345,7 +366,32 @@ describe("updateCells", () => {
             },
           },
         ],
+        previousCells: [
+          {
+            id: "1",
+            type: "node",
+            view: {
+              x: 100,
+              y: 30,
+              width: 160,
+              height: 100,
+            },
+            [SYMBOL_FOR_SIZE_INITIALIZED]: true,
+          },
+          {
+            id: "2",
+            type: "node",
+            view: {
+              x: 300,
+              y: 30,
+              width: 160,
+              height: 100,
+            },
+          },
+        ],
         defaultNodeSize: [120, 80],
+        canvasHeight: 600,
+        transform: { k: 1, x: 0, y: 0 },
         reason: "add-related-nodes",
         parent: "1",
       })
@@ -357,9 +403,10 @@ describe("updateCells", () => {
           view: {
             x: 100,
             y: 30,
-            height: 80,
-            width: 120,
+            height: 100,
+            width: 160,
           },
+          [SYMBOL_FOR_SIZE_INITIALIZED]: true,
         },
         {
           id: "2",

@@ -1,6 +1,8 @@
 import type { Reducer } from "react";
 import type { DrawCanvasAction } from "./interfaces";
 import type { Cell, NodeCell } from "../interfaces";
+import { isNodeCell } from "../processors/asserts";
+import { SYMBOL_FOR_SIZE_INITIALIZED } from "../constants";
 
 export const cells: Reducer<Cell[], DrawCanvasAction> = (state, action) => {
   switch (action.type) {
@@ -73,6 +75,22 @@ export const cells: Reducer<Cell[], DrawCanvasAction> = (state, action) => {
     }
     case "update-cells":
       return action.payload;
+    case "update-node-size":
+      return state.map((cell) =>
+        isNodeCell(cell) && cell.id === action.payload.id
+          ? {
+              ...cell,
+              [SYMBOL_FOR_SIZE_INITIALIZED]: true,
+              view: action.payload.size
+                ? {
+                    ...cell.view,
+                    width: action.payload.size[0],
+                    height: action.payload.size[1],
+                  }
+                : cell.view,
+            }
+          : cell
+      );
   }
   return state;
 };

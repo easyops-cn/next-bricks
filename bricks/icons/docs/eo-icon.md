@@ -235,3 +235,52 @@ children:
         category: third-menu
         icon: placeholder-third-menu
 ```
+
+### Fallback
+
+```yaml preview
+- brick: div
+  properties:
+    style:
+      display: flex
+      gap: 1em
+      fontSize: 32px
+  children:
+    - brick: eo-icon
+      properties:
+        lib: antd
+        icon: oops
+        fallback:
+          lib: fa
+          icon: question
+    - brick: eo-icon
+      properties:
+        lib: fa
+        icon: oops
+        fallback:
+          lib: fa
+          icon: question
+    - brick: eo-icon
+      properties:
+        lib: easyops
+        icon: oops
+        fallback:
+          lib: fa
+          icon: question
+    - brick: eo-icon
+      properties:
+        lib: antd
+        icon: oops
+        fallback:
+          imgSrc: "https://cdn.jsdelivr.net/npm/lucide-static@0.16.29/icons/pie-chart.svg"
+    - brick: eo-icon
+      properties:
+        imgSrc: "https://cdn.jsdelivr.net/npm/lucide-static@0.16.29/icons/x-chart.svg"
+        fallback:
+          imgSrc: "https://cdn.jsdelivr.net/npm/lucide-static@0.16.29/icons/pie-chart.svg"
+    - brick: eo-icon
+      properties:
+        imgSrc: "https://cdn.jsdelivr.net/npm/lucide-static@0.16.29/icons/x-chart.svg"
+        fallback:
+          imgSrc: "https://cdn.jsdelivr.net/npm/lucide-static@0.16.29/icons/y-chart.svg"
+```

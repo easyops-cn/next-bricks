@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.0...@next-bricks/icons@1.1.1) (2024-03-08)
+
+
+### Bug Fixes
+
+* support set icon fallback to image ([b0c732e](https://github.com/easyops-cn/next-bricks/commit/b0c732e59b707cec5b9a670908befa8ba3944e28))
+
+
+
+
+
+# [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.0.12...@next-bricks/icons@1.1.0) (2024-03-08)
+
+
+### Features
+
+* support icon fallback ([2191068](https://github.com/easyops-cn/next-bricks/commit/2191068d7b5f337d24b92e597942f8bb4c29609c))
+
+
+
+
+
 ## [1.0.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.0.11...@next-bricks/icons@1.0.12) (2024-02-27)
 
 **Note:** Version bump only for package @next-bricks/icons

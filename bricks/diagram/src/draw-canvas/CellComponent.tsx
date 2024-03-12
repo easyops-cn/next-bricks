@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import classNames from "classnames";
 import type {
   ActiveTarget,
@@ -15,7 +15,8 @@ import { handleMouseDown } from "./processors/handleMouseDown";
 import type { MoveCellPayload, ResizeCellPayload } from "./reducers/interfaces";
 import { DecoratorComponent } from "./decorators";
 import { cellToTarget } from "./processors/cellToTarget";
-import type { TransformLiteral } from "../diagram/interfaces";
+import type { SizeTuple, TransformLiteral } from "../diagram/interfaces";
+import { sameTarget } from "./processors/sameTarget";
 
 export interface CellComponentProps {
   cell: Cell;
@@ -25,6 +26,7 @@ export interface CellComponentProps {
   transform: TransformLiteral;
   markerEnd: string;
   active: boolean;
+  unrelatedCells: Cell[];
   onCellMoving(info: MoveCellPayload): void;
   onCellMoved(info: MoveCellPayload): void;
   onCellResizing(info: ResizeCellPayload): void;
@@ -33,6 +35,7 @@ export interface CellComponentProps {
   onCellContextMenu(detail: CellContextMenuDetail): void;
   onDecoratorTextEditing(detail: { id: string; editing: boolean }): void;
   onDecoratorTextChange(detail: DecoratorTextChangeDetail): void;
+  onNodeBrickResize(id: string, size: SizeTuple | null): void;
 }
 
 export function CellComponent({
@@ -43,6 +46,7 @@ export function CellComponent({
   markerEnd,
   active,
   transform,
+  unrelatedCells,
   onCellMoving,
   onCellMoved,
   onCellResizing,
@@ -51,8 +55,14 @@ export function CellComponent({
   onCellContextMenu,
   onDecoratorTextEditing,
   onDecoratorTextChange,
+  onNodeBrickResize,
 }: CellComponentProps): JSX.Element | null {
   const gRef = useRef<SVGGElement>(null);
+
+  const unrelated = useMemo(
+    () => unrelatedCells.some((item) => sameTarget(item, cell)),
+    [cell, unrelatedCells]
+  );
 
   useEffect(() => {
     const g = gRef.current;
@@ -87,7 +97,7 @@ export function CellComponent({
 
   return (
     <g
-      className={classNames("cell", { active })}
+      className={classNames("cell", { active, faded: unrelated })}
       ref={gRef}
       transform={
         cell.type === "edge"
@@ -97,7 +107,11 @@ export function CellComponent({
       onContextMenu={handleContextMenu}
     >
       {isNodeCell(cell) ? (
-        <NodeComponent node={cell} defaultNodeBricks={defaultNodeBricks} />
+        <NodeComponent
+          node={cell}
+          defaultNodeBricks={defaultNodeBricks}
+          onResize={onNodeBrickResize}
+        />
       ) : isEdgeCell(cell) ? (
         <EdgeComponent
           edge={cell}
