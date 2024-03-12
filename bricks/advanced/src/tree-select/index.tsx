@@ -162,9 +162,7 @@ class TreeSelectBrick extends FormItemElementBase implements TreeSelectProps {
 
   handleOnChange = (value: AntdTreeSelectProps["value"]): void => {
     this.value = value;
-    Promise.resolve().then(() => {
-      this.#changeEvent.emit({ value });
-    });
+    this.#changeEvent.emit({ value });
   };
 
   @event({ type: "search" })
