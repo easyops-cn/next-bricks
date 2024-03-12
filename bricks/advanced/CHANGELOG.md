@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.28.1...@next-bricks/advanced@0.29.0) (2024-03-12)
+
+
+### Features
+
+* add eo-tree-select ([751e7e3](https://github.com/easyops-cn/next-bricks/commit/751e7e39cedd6d8c308a4b0f07cf103f98a8f1ef))
+* update unit test ([994f99e](https://github.com/easyops-cn/next-bricks/commit/994f99e906eac02439e32d700cbb1de74f66f47f))
+
+
+
+
+
 ## [0.28.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.28.0...@next-bricks/advanced@0.28.1) (2024-03-01)
 
 
