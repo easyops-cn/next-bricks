@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.5.0...@next-bricks/vs@1.5.1) (2024-03-12)
+
+
+### Bug Fixes
+
+* fix code editor update height and scroll to top ([e7b5134](https://github.com/easyops-cn/next-bricks/commit/e7b51340e2e57baea2c14289f202eabf813464a8))
+
+
+
+
+
 # [1.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.4.2...@next-bricks/vs@1.5.0) (2024-03-08)
 
 

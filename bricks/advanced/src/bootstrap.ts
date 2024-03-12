@@ -5,3 +5,4 @@ import "./workbench-layout/index.js";
 import "./data-providers/capture-snapshot.js";
 import "./tree/index.js";
 import "./data-providers/show-watermark/show-watermark.js";
+import "./tree-select/index.js";
