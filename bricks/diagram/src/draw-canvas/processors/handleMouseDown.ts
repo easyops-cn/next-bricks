@@ -25,12 +25,12 @@ export function handleMouseDown(
     onCellMoved?(info: MoveCellPayload): void;
     onCellResizing?(info: ResizeCellPayload): void;
     onCellResized?(info: ResizeCellPayload): void;
-    onSwitchActiveTarget(activeTarget: ActiveTarget | null): void;
+    onSwitchActiveTarget?(activeTarget: ActiveTarget | null): void;
   }
 ) {
   event.stopPropagation();
   // Drag node
-  onSwitchActiveTarget(cellToTarget(cell));
+  onSwitchActiveTarget?.(cellToTarget(cell));
 
   if (cell.type === "edge") {
     return;

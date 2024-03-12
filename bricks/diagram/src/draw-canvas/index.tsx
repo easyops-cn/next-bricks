@@ -14,8 +14,6 @@ import type { UseSingleBrickConf } from "@next-core/react-runtime";
 import { unwrapProvider } from "@next-core/utils/general";
 import "@next-core/theme";
 import { uniqueId } from "lodash";
-import { select } from "d3-selection";
-import { ZoomTransform, zoom } from "d3-zoom";
 import classNames from "classnames";
 import type { lockBodyScroll as _lockBodyScroll } from "@next-bricks/basic/data-providers/lock-body-scroll/lock-body-scroll";
 import type {
@@ -44,25 +42,24 @@ import type {
 } from "./interfaces";
 import { rootReducer } from "./reducers";
 import { MarkerComponent } from "../diagram/MarkerComponent";
-import { isDecoratorCell, isNodeCell } from "./processors/asserts";
+import { isNodeCell } from "./processors/asserts";
 import type { MoveCellPayload, ResizeCellPayload } from "./reducers/interfaces";
 import { sameTarget } from "./processors/sameTarget";
 import { handleKeyboard } from "./processors/handleKeyboard";
 import { CellComponent } from "./CellComponent";
-import styleText from "./styles.shadow.css";
 import { ConnectLineComponent } from "./ConnectLineComponent";
 import { initializeCells } from "./processors/initializeCells";
-import { transformToCenter } from "./processors/transformToCenter";
 import { updateCells } from "./processors/updateCells";
 import { getUnrelatedCells } from "./processors/getUnrelatedCells";
-import { SYMBOL_FOR_SIZE_INITIALIZED } from "./constants";
 import {
   DEFAULT_NODE_SIZE,
   DEFAULT_AREA_WIDTH,
   DEFAULT_AREA_HEIGHT,
-  DEFAULT_SCALE_RANGE_MIN,
-  DEFAULT_SCALE_RANGE_MAX,
 } from "./constants";
+import { useZoom } from "../shared/canvas/useZoom";
+import { useAutoCenter } from "../shared/canvas/useAutoCenter";
+import { useActiveTarget } from "../shared/canvas/useActiveTarget";
+import styleText from "../shared/canvas/styles.shadow.css";
 
 const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
   "basic.lock-body-scroll"
@@ -471,13 +468,14 @@ function LegacyEoDrawCanvasComponent(
     null
   );
   const [editingTexts, setEditingTexts] = useState<string[]>([]);
-  const [grabbing, setGrabbing] = useState(false);
-  const [transform, setTransform] = useState<TransformLiteral>({
-    k: 1,
-    x: 0,
-    y: 0,
+  const { grabbing, transform, zoomer, scaleRange } = useZoom({
+    rootRef,
+    zoomable,
+    scrollable,
+    pannable,
+    scaleRange: _scaleRange,
+    onSwitchActiveTarget,
   });
-  const [centered, setCentered] = useState(false);
 
   useEffect(() => {
     onScaleChange(transform.k);
@@ -486,129 +484,13 @@ function LegacyEoDrawCanvasComponent(
   const [connectLineState, setConnectLineState] =
     useState<ConnectLineState | null>(null);
 
-  const scaleRange = useMemo(
-    () =>
-      _scaleRange ??
-      ([DEFAULT_SCALE_RANGE_MIN, DEFAULT_SCALE_RANGE_MAX] as RangeTuple),
-    [_scaleRange]
-  );
-
-  const zoomer = useMemo(() => zoom<SVGSVGElement, unknown>(), []);
-
-  // istanbul ignore next: d3-zoom currently hard to test
-  useEffect(() => {
-    let moved = false;
-    zoomer
-      .scaleExtent(zoomable ? scaleRange : [1, 1])
-      .on("start", () => {
-        moved = false;
-        setGrabbing(true);
-      })
-      .on("zoom", (e: { transform: TransformLiteral }) => {
-        moved = true;
-        setTransform(e.transform);
-      })
-      .on("end", () => {
-        setGrabbing(false);
-        if (!moved) {
-          onSwitchActiveTarget?.(null);
-        }
-      });
-  }, [onSwitchActiveTarget, scaleRange, zoomable, zoomer]);
-
-  // istanbul ignore next: d3-zoom currently hard to test
-  useEffect(() => {
-    const root = rootRef.current;
-    if (!root) {
-      return;
-    }
-
-    const rootSelection = select(root);
-
-    const unsetZoom = () => {
-      rootSelection
-        .on(".zoom", null)
-        .on(".zoom.custom", null)
-        .on("wheel", null);
-    };
-
-    if (!(zoomable || scrollable || pannable)) {
-      unsetZoom();
-      return;
-    }
-
-    if (zoomable || scrollable) {
-      // Do not override default d3 zoom handler.
-      // Only handles *panning*
-      rootSelection.on(
-        "wheel.zoom.custom",
-        (e: WheelEvent & { wheelDeltaX: number; wheelDeltaY: number }) => {
-          // Mac OS trackpad pinch event is emitted as a wheel.zoom and d3.event.ctrlKey set to true
-          if (!e.ctrlKey) {
-            // Stop immediate propagation for default d3 zoom handler
-            e.stopImmediatePropagation();
-            if (scrollable) {
-              e.preventDefault();
-              zoomer.translateBy(
-                rootSelection,
-                e.wheelDeltaX / 5,
-                e.wheelDeltaY / 5
-              );
-            }
-          }
-          // zoomer.scaleBy(rootSelection, Math.pow(2, defaultWheelDelta(e)))
-        }
-      );
-    }
-
-    rootSelection
-      .call(zoomer)
-      .on("wheel", (e: WheelEvent) => e.preventDefault())
-      .on("dblclick.zoom", null)
-      .on("mousedown.zoom", null);
-
-    if (!pannable) {
-      rootSelection
-        .on("touchstart.zoom", null)
-        .on("touchmove.zoom", null)
-        .on("touchend.zoom", null);
-    }
-
-    return unsetZoom;
-  }, [pannable, scrollable, zoomable, zoomer]);
-
-  useEffect(() => {
-    const root = rootRef.current;
-    if (
-      !root ||
-      centered ||
-      !cells.some((cell) => isNodeCell(cell) || isDecoratorCell(cell)) ||
-      cells.some(
-        (cell) => isNodeCell(cell) && !cell[SYMBOL_FOR_SIZE_INITIALIZED]
-      )
-    ) {
-      return;
-    }
-    const { k, x, y } = transformToCenter(cells, {
-      canvasWidth: root.clientWidth,
-      canvasHeight: root.clientHeight,
-      scaleRange: zoomable ? scaleRange : undefined,
-    });
-    // istanbul ignore next
-    if (process.env.NODE_ENV !== "test") {
-      // jsdom doesn't support svg baseVal yet.
-      // https://github.com/jsdom/jsdom/issues/2531
-      zoomer.transform(select(root), new ZoomTransform(k, x, y));
-    }
-    setCentered(true);
-  }, [cells, centered, scaleRange, zoomable, zoomer]);
-
-  useEffect(() => {
-    // Reset auto centering when nodes and decorators are all removed.
-    if (!cells.some((cell) => isNodeCell(cell) || isDecoratorCell(cell))) {
-      setCentered(false);
-    }
-  }, [cells]);
+  const [centered, setCentered] = useAutoCenter({
+    rootRef,
+    cells,
+    zoomable,
+    zoomer,
+    scaleRange,
+  });
 
   useImperativeHandle(
     ref,
@@ -683,7 +565,7 @@ function LegacyEoDrawCanvasComponent(
         return Promise.reject(null);
       },
     }),
-    [cells, transform]
+    [cells, setCentered, transform]
   );
 
   const handleConnect = useCallback(
@@ -718,25 +600,11 @@ function LegacyEoDrawCanvasComponent(
     lockBodyScroll(host, !!connectLineState);
   }, [connectLineState, host]);
 
-  const newActiveTarget = _activeTarget ?? null;
-  const [activeTarget, setActiveTarget] = useState<ActiveTarget | null>(
-    newActiveTarget
-  );
-
-  useEffect(() => {
-    setActiveTarget((previous) =>
-      sameTarget(previous, newActiveTarget) ? previous : newActiveTarget
-    );
-  }, [newActiveTarget]);
-
-  const activeTargetChangeInitialized = useRef(false);
-  useEffect(() => {
-    if (!activeTargetChangeInitialized.current) {
-      activeTargetChangeInitialized.current = true;
-      return;
-    }
-    onActiveTargetChange(activeTarget);
-  }, [activeTarget, onActiveTargetChange]);
+  const activeTarget = useActiveTarget({
+    cellsRef,
+    activeTarget: _activeTarget,
+    onActiveTargetChange,
+  });
 
   const [unrelatedCells, setUnrelatedCells] = useState<Cell[]>([]);
   useEffect(() => {
@@ -748,25 +616,6 @@ function LegacyEoDrawCanvasComponent(
       prev.length === 0 && nextUnrelated.length === 0 ? prev : nextUnrelated
     );
   }, [activeTarget, cells, connectLineState, fadeUnrelatedCells]);
-
-  useEffect(() => {
-    if (!activeTarget) {
-      return;
-    }
-    const resetActiveTarget = (e: MouseEvent) => {
-      const path = e.composedPath();
-      const cellsContainerIndex = path.indexOf(cellsRef.current!);
-      // Reset active target to null when clicking outside of the cells container,
-      // Or inside the cells container but not on any cell.
-      if (cellsContainerIndex <= 0) {
-        setActiveTarget(null);
-      }
-    };
-    document.addEventListener("click", resetActiveTarget);
-    return () => {
-      document.removeEventListener("click", resetActiveTarget);
-    };
-  }, [activeTarget]);
 
   useEffect(() => {
     const root = rootRef.current;

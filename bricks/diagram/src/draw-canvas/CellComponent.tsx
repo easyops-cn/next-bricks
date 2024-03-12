@@ -26,15 +26,16 @@ export interface CellComponentProps {
   transform: TransformLiteral;
   markerEnd: string;
   active: boolean;
+  readOnly?: boolean;
   unrelatedCells: Cell[];
-  onCellMoving(info: MoveCellPayload): void;
-  onCellMoved(info: MoveCellPayload): void;
-  onCellResizing(info: ResizeCellPayload): void;
-  onCellResized(info: ResizeCellPayload): void;
+  onCellMoving?(info: MoveCellPayload): void;
+  onCellMoved?(info: MoveCellPayload): void;
+  onCellResizing?(info: ResizeCellPayload): void;
+  onCellResized?(info: ResizeCellPayload): void;
   onSwitchActiveTarget(target: ActiveTarget | null): void;
   onCellContextMenu(detail: CellContextMenuDetail): void;
-  onDecoratorTextEditing(detail: { id: string; editing: boolean }): void;
-  onDecoratorTextChange(detail: DecoratorTextChangeDetail): void;
+  onDecoratorTextEditing?(detail: { id: string; editing: boolean }): void;
+  onDecoratorTextChange?(detail: DecoratorTextChangeDetail): void;
   onNodeBrickResize(id: string, size: SizeTuple | null): void;
 }
 
@@ -45,6 +46,7 @@ export function CellComponent({
   defaultEdgeLines,
   markerEnd,
   active,
+  readOnly,
   transform,
   unrelatedCells,
   onCellMoving,
@@ -66,6 +68,9 @@ export function CellComponent({
 
   useEffect(() => {
     const g = gRef.current;
+    if (!g || readOnly) {
+      return;
+    }
     const onMouseDown = (event: MouseEvent) => {
       handleMouseDown(event, {
         action: "move",
@@ -76,14 +81,24 @@ export function CellComponent({
         onSwitchActiveTarget,
       });
     };
-    g?.addEventListener("mousedown", onMouseDown);
+    g.addEventListener("mousedown", onMouseDown);
     return () => {
-      g?.removeEventListener("mousedown", onMouseDown);
+      g.removeEventListener("mousedown", onMouseDown);
     };
-  }, [cell, onCellMoved, onCellMoving, onSwitchActiveTarget, transform.k]);
+  }, [
+    cell,
+    onCellMoved,
+    onCellMoving,
+    onSwitchActiveTarget,
+    readOnly,
+    transform.k,
+  ]);
 
   const handleContextMenu = useCallback(
     (event: React.MouseEvent<SVGGElement>) => {
+      if (readOnly && cell.type === "decorator") {
+        return;
+      }
       event.preventDefault();
       onSwitchActiveTarget(cellToTarget(cell));
       onCellContextMenu({
@@ -92,12 +107,16 @@ export function CellComponent({
         clientY: event.clientY,
       });
     },
-    [cell, onCellContextMenu, onSwitchActiveTarget]
+    [cell, onCellContextMenu, onSwitchActiveTarget, readOnly]
   );
 
   return (
     <g
-      className={classNames("cell", { active, faded: unrelated })}
+      className={classNames("cell", {
+        active,
+        faded: unrelated,
+        "read-only": readOnly,
+      })}
       ref={gRef}
       transform={
         cell.type === "edge"
@@ -123,6 +142,7 @@ export function CellComponent({
         <DecoratorComponent
           cell={cell}
           transform={transform}
+          readOnly={readOnly}
           onCellResizing={onCellResizing}
           onCellResized={onCellResized}
           onSwitchActiveTarget={onSwitchActiveTarget}

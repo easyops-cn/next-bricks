@@ -106,11 +106,12 @@ export interface ActiveTargetOfDecorator {
 export interface BasicDecoratorProps {
   cell: DecoratorCell;
   transform: TransformLiteral;
-  onCellResizing(info: ResizeCellPayload): void;
-  onCellResized(info: ResizeCellPayload): void;
-  onSwitchActiveTarget(activeTarget: ActiveTarget | null): void;
-  onDecoratorTextEditing(detail: { id: string; editing: boolean }): void;
-  onDecoratorTextChange(detail: DecoratorTextChangeDetail): void;
+  readOnly?: boolean;
+  onCellResizing?(info: ResizeCellPayload): void;
+  onCellResized?(info: ResizeCellPayload): void;
+  onSwitchActiveTarget?(activeTarget: ActiveTarget | null): void;
+  onDecoratorTextEditing?(detail: { id: string; editing: boolean }): void;
+  onDecoratorTextChange?(detail: DecoratorTextChangeDetail): void;
 }
 
 export interface CellContextMenuDetail {
