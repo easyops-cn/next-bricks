@@ -101,6 +101,7 @@ export function showWaterMark({
   const containerObserve = observeMap.get(container);
 
   if (containerObserve) {
+    observeMap.delete(container);
     containerObserve.disconnect();
   }
 
