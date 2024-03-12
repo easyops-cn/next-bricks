@@ -18,6 +18,7 @@ import {
   deferredLaunchpadInfo,
   deferredPlatformCategories,
 } from "./useLaunchpadInfo";
+import launchpadStyleText from "./Launchpad.shadow.css";
 import "./host-context.css";
 
 // initializeReactI18n(NS, locales);
@@ -34,7 +35,7 @@ const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
  */
 export
 @defineElement("eo-launchpad-button-v2", {
-  styleTexts: [styleText, platformCategoryStyleText],
+  styleTexts: [styleText, platformCategoryStyleText, launchpadStyleText],
 })
 class EoLaunchpadButtonV2 extends ReactNextElement {
   disconnectedCallback(): void {
