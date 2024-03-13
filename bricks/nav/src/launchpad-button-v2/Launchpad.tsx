@@ -95,8 +95,10 @@ export function Launchpad({ active }: { active?: boolean }) {
 
   useEffect(() => {
     if (_favorites.length > favorites.length) {
+      // 新增无需等待直接更新列表
       setFavorites(_favorites);
     } else {
+      // 删除操作需要等待动画执行完后才更新列表数据
       setTimeout(() => {
         setFavorites(_favorites);
       }, 300);
