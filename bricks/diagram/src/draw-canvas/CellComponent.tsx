@@ -37,6 +37,8 @@ export interface CellComponentProps {
   onDecoratorTextEditing?(detail: { id: string; editing: boolean }): void;
   onDecoratorTextChange?(detail: DecoratorTextChangeDetail): void;
   onNodeBrickResize(id: string, size: SizeTuple | null): void;
+  onCellMouseEnter?(cell: Cell): void;
+  onCellMouseLeave?(cell: Cell): void;
 }
 
 export function CellComponent({
@@ -58,6 +60,8 @@ export function CellComponent({
   onDecoratorTextEditing,
   onDecoratorTextChange,
   onNodeBrickResize,
+  onCellMouseEnter,
+  onCellMouseLeave,
 }: CellComponentProps): JSX.Element | null {
   const gRef = useRef<SVGGElement>(null);
 
@@ -110,6 +114,14 @@ export function CellComponent({
     [cell, onCellContextMenu, onSwitchActiveTarget, readOnly]
   );
 
+  const handleMouseEnter = useCallback(() => {
+    onCellMouseEnter?.(cell);
+  }, [cell, onCellMouseEnter]);
+
+  const handleMouseLeave = useCallback(() => {
+    onCellMouseLeave?.(cell);
+  }, [cell, onCellMouseLeave]);
+
   return (
     <g
       className={classNames("cell", {
@@ -124,6 +136,8 @@ export function CellComponent({
           : `translate(${cell.view.x} ${cell.view.y})`
       }
       onContextMenu={handleContextMenu}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {isNodeCell(cell) ? (
         <NodeComponent

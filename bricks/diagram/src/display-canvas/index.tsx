@@ -1,4 +1,11 @@
-import React, { useCallback, useMemo, useReducer, useRef } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
@@ -22,7 +29,9 @@ import { useZoom } from "../shared/canvas/useZoom";
 import { useAutoCenter } from "../shared/canvas/useAutoCenter";
 import { useActiveTarget } from "../shared/canvas/useActiveTarget";
 import { rootReducer } from "../draw-canvas/reducers";
+import { getUnrelatedCells } from "../draw-canvas/processors/getUnrelatedCells";
 import styleText from "../shared/canvas/styles.shadow.css";
+import { isEdgeCell, isNodeCell } from "../draw-canvas/processors/asserts";
 
 const { defineElement, property, event } = createDecorators();
 
@@ -74,6 +83,9 @@ class EoDisplayCanvas extends ReactNextElement implements EoDisplayCanvasProps {
   @property({ attribute: false })
   accessor activeTarget: ActiveTarget | null | undefined;
 
+  /**
+   * 当鼠标悬浮到某节点上时，隐藏其他跟该节点无关的元素。
+   */
   @property({ type: Boolean })
   accessor fadeUnrelatedCells: boolean | undefined;
 
@@ -142,7 +154,7 @@ function EoDisplayCanvasComponent({
   defaultNodeBricks,
   defaultEdgeLines,
   activeTarget: _activeTarget,
-  // fadeUnrelatedCells,
+  fadeUnrelatedCells,
   zoomable,
   scrollable,
   pannable,
@@ -196,8 +208,24 @@ function EoDisplayCanvasComponent({
     []
   );
 
-  // Todo
-  const unrelatedCells = useRef<Cell[]>([]).current;
+  const [hoverCell, setHoverCell] = useState<Cell | null>(null);
+  const handleCellMouseEnter = useCallback((cell: Cell) => {
+    setHoverCell(cell);
+  }, []);
+  const handleCellMouseLeave = useCallback((cell: Cell) => {
+    setHoverCell((prev) => (prev === cell ? null : prev));
+  }, []);
+
+  const [unrelatedCells, setUnrelatedCells] = useState<Cell[]>([]);
+  useEffect(() => {
+    const nextUnrelated = fadeUnrelatedCells
+      ? getUnrelatedCells(cells, null, hoverCell)
+      : [];
+    // Do not update the state when prev and next are both empty.
+    setUnrelatedCells((prev) =>
+      prev.length === 0 && nextUnrelated.length === 0 ? prev : nextUnrelated
+    );
+  }, [cells, fadeUnrelatedCells, hoverCell]);
 
   return (
     <svg
@@ -216,7 +244,7 @@ function EoDisplayCanvasComponent({
         <g className="cells" ref={cellsRef}>
           {cells.map((cell) => (
             <CellComponent
-              key={`${cell.type}:${cell.type === "edge" ? `${cell.source}~${cell.target}` : cell.id}`}
+              key={`${cell.type}:${isEdgeCell(cell) ? `${cell.source}~${cell.target}` : cell.id}`}
               cell={cell}
               cells={cells}
               defaultNodeBricks={defaultNodeBricks}
@@ -229,6 +257,16 @@ function EoDisplayCanvasComponent({
               onSwitchActiveTarget={onSwitchActiveTarget}
               onCellContextMenu={onCellContextMenu}
               onNodeBrickResize={handleNodeBrickResize}
+              onCellMouseEnter={
+                fadeUnrelatedCells && isNodeCell(cell)
+                  ? handleCellMouseEnter
+                  : undefined
+              }
+              onCellMouseLeave={
+                fadeUnrelatedCells && isNodeCell(cell)
+                  ? handleCellMouseLeave
+                  : undefined
+              }
             />
           ))}
         </g>

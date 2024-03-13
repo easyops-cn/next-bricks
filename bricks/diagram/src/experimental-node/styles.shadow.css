@@ -38,6 +38,8 @@ div {
   justify-content: center;
 }
 
+/* hover 样式在节点构件实现 */
+:host(:not([usage="dragging"]):not([usage="library"]):hover),
 :host([status="highlighted"]) {
   color: var(--palette-blue-5);
   background: var(--palette-blue-1);

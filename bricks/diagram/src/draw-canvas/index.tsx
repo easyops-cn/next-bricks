@@ -156,6 +156,9 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
   @property({ attribute: false })
   accessor activeTarget: ActiveTarget | null | undefined;
 
+  /**
+   * 当 `activeTarget` 不为 `null` 时，隐藏其他跟该 `activeTarget` 无关的元素。
+   */
   @property({ type: Boolean })
   accessor fadeUnrelatedCells: boolean | undefined;
 

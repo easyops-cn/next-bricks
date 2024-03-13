@@ -9,7 +9,7 @@ jest.mock("@next-core/theme", () => ({}));
 jest.mock("d3-drag");
 
 describe("eo-display-canvas", () => {
-  test("active target", async () => {
+  test("hover", async () => {
     const element = document.createElement(
       "eo-display-canvas"
     ) as EoDisplayCanvas;
@@ -24,6 +24,11 @@ describe("eo-display-canvas", () => {
           x: 10,
           y: 10,
         },
+      },
+      {
+        type: "edge",
+        source: "a",
+        target: "b",
       },
       {
         type: "node",
@@ -52,29 +57,34 @@ describe("eo-display-canvas", () => {
       },
     ] as NodeBrickCell[];
 
-    const onActiveTargetChange = jest.fn();
-    element.addEventListener("activeTarget.change", (e) =>
-      onActiveTargetChange((e as CustomEvent).detail)
-    );
-
     act(() => {
       document.body.appendChild(element);
     });
 
     await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
 
-    element.activeTarget = { type: "node", id: "a" };
-    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
-
-    expect(onActiveTargetChange).toHaveBeenCalledWith({
-      type: "node",
-      id: "a",
+    act(() => {
+      fireEvent.mouseEnter(element.shadowRoot!.querySelectorAll(".cell")[2]!);
     });
+    expect(
+      [...element.shadowRoot!.querySelectorAll(".cells .cell")].map((cell) =>
+        cell.classList.contains("faded")
+      )
+    ).toEqual([true, false, false, false, true]);
 
-    // Set active target to the same node
-    element.activeTarget = { type: "node", id: "a" };
-    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
-    expect(onActiveTargetChange).toHaveBeenCalledTimes(1);
+    act(() => {
+      fireEvent.mouseLeave(element.shadowRoot!.querySelectorAll(".cell")[3]!);
+    });
+    expect(
+      element.shadowRoot!.querySelectorAll(".cells .cell.faded").length
+    ).toBe(2);
+
+    act(() => {
+      fireEvent.mouseLeave(element.shadowRoot!.querySelectorAll(".cell")[2]!);
+    });
+    expect(
+      element.shadowRoot!.querySelectorAll(".cells .cell.faded").length
+    ).toBe(0);
 
     act(() => {
       document.body.removeChild(element);
