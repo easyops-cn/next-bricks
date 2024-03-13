@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.9.1...@next-bricks/nav@1.10.0) (2024-03-13)
+
+
+### Features
+
+* add annotate ([64e72f1](https://github.com/easyops-cn/next-bricks/commit/64e72f1ec082fbda5640a5065b505b88f8a18310))
+* **launchpad:** favorites add animation ([0e3a2da](https://github.com/easyops-cn/next-bricks/commit/0e3a2da0b059079fa2cc84f525df5604d9017ff9))
+
+
+
+
+
 ## [1.9.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.9.0...@next-bricks/nav@1.9.1) (2024-03-12)
 
 **Note:** Version bump only for package @next-bricks/nav

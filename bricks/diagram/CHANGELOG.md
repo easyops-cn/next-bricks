@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.27.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.26.0...@next-bricks/diagram@0.27.0) (2024-03-13)
+
+
+### Features
+
+* **display-canvas:** support hover status ([41a7113](https://github.com/easyops-cn/next-bricks/commit/41a71139db08f4dc6361bedca1517f58a3f4b695))
+
+
+
+
+
 # [0.26.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.25.2...@next-bricks/diagram@0.26.0) (2024-03-13)
 
 
