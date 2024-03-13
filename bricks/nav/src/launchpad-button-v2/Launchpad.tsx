@@ -10,15 +10,21 @@ import { WrappedIcon, WrappedLink } from "./wrapped-bricks";
 import { useLaunchpadInfo } from "./useLaunchpadInfo.js";
 import { MenuGroup, SidebarMenuItem } from "./MenuGroup.js";
 import { LaunchpadsContext } from "./LaunchpadContext.js";
-import { PlatformCategoryItem, SidebarMenuItemData } from "./interfaces";
+import {
+  FavMenuItem,
+  PlatformCategoryItem,
+  SidebarMenuItemData,
+} from "./interfaces";
 import {
   PlatformItem,
   PlatformCategorySidebarMenuItem,
 } from "./PlatformCategory";
 import { getRuntime } from "@next-core/runtime";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 export function Launchpad({ active }: { active?: boolean }) {
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const [favorites, setFavorites] = useState<FavMenuItem[]>([]);
   const handleClickSearchBox = useCallback(() => {
     searchInputRef.current?.focus();
   }, []);
@@ -49,7 +55,7 @@ export function Launchpad({ active }: { active?: boolean }) {
     q,
     setQ,
     menuGroups,
-    favorites,
+    favorites: _favorites,
     loadingFavorites,
     recentVisits,
     pushRecentVisit,
@@ -87,6 +93,18 @@ export function Launchpad({ active }: { active?: boolean }) {
     return platformCategories.find((v) => v.id === platform);
   }, [platform, platformCategories]);
 
+  useEffect(() => {
+    if (_favorites.length > favorites.length) {
+      // 新增无需等待直接更新列表
+      setFavorites(_favorites);
+    } else {
+      // 删除操作需要等待动画执行完后才更新列表数据
+      setTimeout(() => {
+        setFavorites(_favorites);
+      }, 300);
+    }
+  }, [_favorites, favorites.length]);
+
   return (
     <div className={classNames("launchpad", { active })}>
       <LaunchpadsContext.Provider
@@ -103,14 +121,29 @@ export function Launchpad({ active }: { active?: boolean }) {
             <div className="quick-nav">
               <div className="quick-nav-label">快捷访问</div>
               {/* <Loading loading={loading || loadingFavorites} /> */}
-              <ul className="sidebar-menu quick-nav-menu">
-                {favorites.map((item, index) => (
-                  <SidebarMenuItem
-                    key={index}
-                    item={item as SidebarMenuItemData}
-                  />
-                ))}
-              </ul>
+              <TransitionGroup>
+                <ul className="sidebar-menu quick-nav-menu">
+                  {favorites.map((item, index) => (
+                    <CSSTransition
+                      key={index}
+                      timeout={300}
+                      in={!!_favorites.find((i) => i.id === item.id)}
+                      classNames={{
+                        enter: "fadeEnter",
+                        enterActive: "fadeEnterActive",
+                        exit: "fadeExit",
+                        exitActive: "fadeExitActive",
+                        exitDone: "fadeExitDone",
+                      }}
+                    >
+                      <SidebarMenuItem
+                        key={index}
+                        item={item as SidebarMenuItemData}
+                      />
+                    </CSSTransition>
+                  ))}
+                </ul>
+              </TransitionGroup>
             </div>
 
             {showPlatformCategory && (
