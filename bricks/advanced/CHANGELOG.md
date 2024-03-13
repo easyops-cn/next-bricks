@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.30.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.29.0...@next-bricks/advanced@0.30.0) (2024-03-13)
+
+
+### Features
+
+*  observeMap detele container ([74adc73](https://github.com/easyops-cn/next-bricks/commit/74adc73b47604aa87a48aab1b79165b4dc6d76c2))
+* add adavanced.show-watermark ([26bbc06](https://github.com/easyops-cn/next-bricks/commit/26bbc0603f41e7d5044781fc758abc3335b13a3e))
+
+
+
+
+
 # [0.29.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.28.1...@next-bricks/advanced@0.29.0) (2024-03-12)
 
 
