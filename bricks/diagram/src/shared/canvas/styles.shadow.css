@@ -48,7 +48,7 @@
   stroke-width: 1;
 }
 
-.cell {
+.cell:not(.read-only) {
   user-select: none;
 }
 

@@ -4,11 +4,12 @@ import classNames from "classnames";
 
 export type DecoratorTextProps = Pick<
   BasicDecoratorProps,
-  "cell" | "onDecoratorTextEditing" | "onDecoratorTextChange"
+  "cell" | "readOnly" | "onDecoratorTextEditing" | "onDecoratorTextChange"
 >;
 
 export function DecoratorText({
   cell,
+  readOnly,
   onDecoratorTextEditing,
   onDecoratorTextChange,
 }: DecoratorTextProps): JSX.Element {
@@ -19,11 +20,17 @@ export function DecoratorText({
   const [shouldEmitLabelChange, setShouldEmitLabelChange] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  const handleEnableEdit = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setEditingLabel(true);
-  }, []);
+  const handleEnableEdit = useCallback(
+    (e: React.MouseEvent) => {
+      if (readOnly) {
+        return;
+      }
+      e.preventDefault();
+      e.stopPropagation();
+      setEditingLabel(true);
+    },
+    [readOnly]
+  );
 
   useEffect(() => {
     const element = ref.current;
@@ -37,7 +44,7 @@ export function DecoratorText({
       ref.current.focus();
       selectAllText(ref.current);
     }
-    onDecoratorTextEditing({ id: cell.id, editing: editingLabel });
+    onDecoratorTextEditing?.({ id: cell.id, editing: editingLabel });
   }, [cell.id, editingLabel, onDecoratorTextEditing]);
 
   useEffect(() => {
@@ -48,14 +55,23 @@ export function DecoratorText({
     }
   }, [cell.id, editingLabel, onDecoratorTextEditing]);
 
-  const handleInput = useCallback((event: React.FormEvent<HTMLDivElement>) => {
-    setCurrentLabel((event.target as HTMLDivElement).textContent!);
-  }, []);
+  const handleInput = useCallback(
+    (event: React.FormEvent<HTMLDivElement>) => {
+      if (readOnly) {
+        return;
+      }
+      setCurrentLabel((event.target as HTMLDivElement).textContent!);
+    },
+    [readOnly]
+  );
 
   const handleBlur = useCallback(() => {
+    if (readOnly) {
+      return;
+    }
     setEditingLabel(false);
     setShouldEmitLabelChange(true);
-  }, []);
+  }, [readOnly]);
 
   useEffect(() => {
     if (shouldEmitLabelChange) {

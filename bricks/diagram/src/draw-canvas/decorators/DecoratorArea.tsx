@@ -5,6 +5,7 @@ import { handleMouseDown } from "../processors/handleMouseDown";
 export function DecoratorArea({
   cell,
   transform,
+  readOnly,
   onCellResizing,
   onCellResized,
   onSwitchActiveTarget,
@@ -13,6 +14,9 @@ export function DecoratorArea({
 
   useEffect(() => {
     const resizeHandle = resizeHandleRef.current;
+    if (!resizeHandle || readOnly) {
+      return;
+    }
     const onMouseDown = (event: MouseEvent) => {
       handleMouseDown(event, {
         action: "resize",
@@ -23,29 +27,36 @@ export function DecoratorArea({
         onSwitchActiveTarget,
       });
     };
-    resizeHandle?.addEventListener("mousedown", onMouseDown);
+    resizeHandle.addEventListener("mousedown", onMouseDown);
     return () => {
-      resizeHandle?.removeEventListener("mousedown", onMouseDown);
+      resizeHandle.removeEventListener("mousedown", onMouseDown);
     };
-  }, [cell, onCellResized, onCellResizing, onSwitchActiveTarget, transform.k]);
+  }, [
+    cell,
+    onCellResized,
+    onCellResizing,
+    onSwitchActiveTarget,
+    readOnly,
+    transform.k,
+  ]);
 
   return (
     <g className="decorator-area">
       <rect
-        // x={cell.view.x}
-        // y={cell.view.y}
         width={cell.view.width}
         height={cell.view.height}
         className="area"
       />
-      <g
-        ref={resizeHandleRef}
-        className="resize-handle"
-        transform={`translate(${cell.view.width - 20} ${cell.view.height - 20})`}
-      >
-        <rect width={20} height={20} />
-        <path d="M10 18L18 10 M15 18L18 15" />
-      </g>
+      {!readOnly && (
+        <g
+          ref={resizeHandleRef}
+          className="resize-handle"
+          transform={`translate(${cell.view.width - 20} ${cell.view.height - 20})`}
+        >
+          <rect width={20} height={20} />
+          <path d="M10 18L18 10 M15 18L18 15" />
+        </g>
+      )}
     </g>
   );
 }
