@@ -14,6 +14,7 @@ export interface EoEasyopsAvatarProps {
   nameOrInstanceId?: string;
   size?: AvatarSize;
   bordered?: boolean;
+  showName?: boolean;
 }
 
 /**
@@ -43,19 +44,28 @@ class EoEasyopsAvatar extends ReactNextElement implements EoEasyopsAvatarProps {
   })
   accessor bordered: boolean | undefined;
 
+  /**
+   * 是否展示用户名称
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor showName: boolean | undefined;
+
   render() {
     return (
       <EoEasyopsAvatarComponent
         nameOrInstanceId={this.nameOrInstanceId}
         size={this.size}
         bordered={this.bordered}
+        showName={this.showName}
       />
     );
   }
 }
 
 export function EoEasyopsAvatarComponent(props: EoEasyopsAvatarProps) {
-  const { nameOrInstanceId, size, bordered } = props;
+  const { nameOrInstanceId, size, bordered, showName } = props;
 
   const { user } = useUserInfoByNameOrInstanceId(nameOrInstanceId);
 
@@ -65,6 +75,7 @@ export function EoEasyopsAvatarComponent(props: EoEasyopsAvatarProps) {
       name={user?.name}
       size={size}
       bordered={bordered}
+      showName={showName}
     />
   );
 }
