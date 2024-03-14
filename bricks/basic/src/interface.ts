@@ -16,7 +16,8 @@ export type ButtonType =
   | "dashed"
   | "ghost"
   | "link"
-  | "text";
+  | "text"
+  | "icon";
 
 export type ComponentSize = "large" | "medium" | "small" | "xs";
 

@@ -8,18 +8,36 @@
 
 ### Types
 
-```html preview gap
-<eo-button type="primary">Primary</eo-button>
-
-<eo-button>Default</eo-button>
-
-<eo-button type="dashed">Dashed</eo-button>
-
-<eo-button type="ghost">Ghost</eo-button>
-
-<eo-button type="text">Text</eo-button>
-
-<eo-button type="link">Link</eo-button>
+```yaml preview gap
+- brick: eo-button
+  properties:
+    type: primary
+    textContent: Primary
+- brick: eo-button
+  properties:
+    textContent: Default
+- brick: eo-button
+  properties:
+    type: dashed
+    textContent: Dashed
+- brick: eo-button
+  properties:
+    type: ghost
+    textContent: Ghost
+- brick: eo-button
+  properties:
+    type: icon
+    icon:
+      lib: antd
+      icon: edit
+- brick: eo-button
+  properties:
+    type: text
+    textContent: Text
+- brick: eo-button
+  properties:
+    type: link
+    textContent: Link
 ```
 
 ### Sizes
