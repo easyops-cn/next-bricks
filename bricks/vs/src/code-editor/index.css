@@ -12,10 +12,7 @@
 .monaco-editor .overflow-guard {
   border-radius: var(--antd-button-border-radius);
   background: var(--color-border-divider-line);
-}
-
-.monaco-editor.focused .overflow-guard {
-  outline: 1px solid var(--color-border-divider-line);
+  border: 1px solid var(--color-border-divider-line);
 }
 
 .code-editor-wrapper.error .overflow-guard {

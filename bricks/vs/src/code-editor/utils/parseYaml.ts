@@ -4,7 +4,27 @@ import BrickNextYamlSourceMap, { Token } from "./brickNextSourceMap.js";
 import type { Marker } from "../index.jsx";
 import { EVALUATE_KEYWORD, Level } from "./constants.js";
 
-const getParseYaml = async () => {
+const getObjectName = (node: Identifier | MemberExpression): string => {
+  let name: string = "";
+  if (node.type === "Identifier") {
+    name = node.name;
+  } else if (
+    node.type === "MemberExpression" &&
+    node.object.type === "MemberExpression" &&
+    node.object.object.type === "Identifier" &&
+    node.object.property.type === "Identifier"
+  ) {
+    name = `${getObjectName(node.object.object)}.${getObjectName(node.object.property)}`;
+  } else if (
+    node.object.type === "Identifier" &&
+    node.property?.type === "Identifier"
+  ) {
+    name = node.object.name;
+  }
+  return name;
+};
+
+const getParseYaml = async ({ showDSKey = false }) => {
   const yaml = await import("js-yaml");
   const { preevaluate } = await import("@next-core/cook");
 
@@ -34,8 +54,22 @@ const getParseYaml = async () => {
                 if (
                   node.type === "MemberExpression" &&
                   node.object.type === "Identifier" &&
-                  EVALUATE_KEYWORD.includes(node.object.name) &&
-                  node.property.type === "Identifier"
+                  EVALUATE_KEYWORD.concat(showDSKey ? ["DS"] : []).includes(
+                    node.object.name
+                  ) &&
+                  node.property.type === "Identifier" &&
+                  !globalNodes.find((item) => item.object === node)
+                ) {
+                  globalNodes.push(node);
+                }
+                if (
+                  showDSKey &&
+                  node.type === "MemberExpression" &&
+                  node.object.type === "MemberExpression" &&
+                  node.object.object.type === "Identifier" &&
+                  node.object.object.name === "CTX" &&
+                  node.object.property.type === "Identifier" &&
+                  node.object.property.name === "DS"
                 ) {
                   globalNodes.push(node);
                 }
@@ -48,7 +82,7 @@ const getParseYaml = async () => {
             if (item.startLineNumber !== item.endLineNumber) {
               const hadWrap = /<%[~=]?[ ]+/.test(result.prefix);
               tokens.push({
-                token: (node.object as Identifier)?.name,
+                token: getObjectName(node),
                 property: (node.property as Identifier).name,
                 startLineNumber:
                   item.startLineNumber +
@@ -73,7 +107,7 @@ const getParseYaml = async () => {
               });
             } else {
               tokens.push({
-                token: (node.object as Identifier)?.name,
+                token: getObjectName(node),
                 property: (node.property as Identifier).name,
                 startLineNumber,
                 endLineNumber,
