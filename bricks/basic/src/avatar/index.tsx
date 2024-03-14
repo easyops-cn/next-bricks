@@ -34,6 +34,7 @@ export interface AvatarProps {
   icon?: GeneralIconProps;
   name?: string;
   bordered?: boolean;
+  showName?: boolean;
 }
 
 /**
@@ -90,6 +91,14 @@ class EoAvatar extends ReactNextElement implements AvatarProps {
   })
   accessor bordered: boolean | undefined;
 
+  /**
+   * 是否展示名称
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor showName: boolean | undefined;
+
   render() {
     return (
       <EoAvatarComponent
@@ -100,6 +109,7 @@ class EoAvatar extends ReactNextElement implements AvatarProps {
         icon={this.icon}
         name={this.name}
         bordered={this.bordered}
+        showName={this.showName}
       />
     );
   }
@@ -209,21 +219,24 @@ export function EoAvatarComponent(props: AvatarProps) {
   }
 
   return (
-    <span
-      className={classNames(
-        "avatar",
-        `shape-${shape}`,
-        `size-${size}`,
-        `type-${type}`,
-        {
-          bordered: !!bordered,
-        }
-      )}
-      ref={avatarNodeRef}
-      part={`avatar avatar-${type}`}
-      title={name}
-    >
-      {avatarNode}
-    </span>
+    <>
+      <span
+        className={classNames(
+          "avatar",
+          `shape-${shape}`,
+          `size-${size}`,
+          `type-${type}`,
+          {
+            bordered: !!bordered,
+          }
+        )}
+        ref={avatarNodeRef}
+        part={`avatar avatar-${type}`}
+        title={name}
+      >
+        {avatarNode}
+      </span>
+      {props.showName && <span className="name">{name}</span>}
+    </>
   );
 }
