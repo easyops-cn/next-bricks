@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.8.1...@next-bricks/basic@1.9.0) (2024-03-14)
+
+
+### Features
+
+* **avator:** add showName ([cca0577](https://github.com/easyops-cn/next-bricks/commit/cca057729de796a3353cee86b6eaf8a63049475d))
+* **button:** add icon type ([6aed8f5](https://github.com/easyops-cn/next-bricks/commit/6aed8f5a1270b3cc4a264e3f43ec0565239ae27f))
+
+
+
+
+
 ## [1.8.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.8.0...@next-bricks/basic@1.8.1) (2024-03-12)
 
 **Note:** Version bump only for package @next-bricks/basic
