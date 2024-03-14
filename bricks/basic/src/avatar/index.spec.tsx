@@ -46,6 +46,7 @@ describe("eo-avatar", () => {
     expect(element.shadowRoot?.querySelector(".type-img")).toBeTruthy();
     expect(element.shadowRoot?.querySelector(".avatar-img")).toBeTruthy();
     expect(element.shadowRoot?.querySelector(".bordered")).toBeTruthy();
+    expect(element.shadowRoot?.querySelector(".name")).toBeFalsy();
 
     act(() => {
       document.body.removeChild(element);
@@ -108,6 +109,7 @@ describe("eo-avatar", () => {
   test("text avatar", async () => {
     const element = document.createElement("eo-avatar") as EoAvatar;
     element.name = "Lucy";
+    element.showName = true;
 
     expect(element.shadowRoot).toBeFalsy();
 
@@ -118,6 +120,7 @@ describe("eo-avatar", () => {
 
     expect(element.shadowRoot?.querySelector(".type-text")).toBeTruthy();
     expect(element.shadowRoot?.querySelector(".avatar-text")).toBeTruthy();
+    expect(element.shadowRoot?.querySelector(".name")).toBeTruthy();
 
     act(() => {
       document.body.removeChild(element);
