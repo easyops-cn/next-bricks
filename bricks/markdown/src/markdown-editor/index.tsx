@@ -9,7 +9,12 @@ import type {
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
 import type { CmdKey } from "@milkdown/core";
-import { defaultValueCtx, Editor, rootCtx } from "@milkdown/core";
+import {
+  defaultValueCtx,
+  Editor,
+  editorViewOptionsCtx,
+  rootCtx,
+} from "@milkdown/core";
 import { Milkdown, MilkdownProvider, useEditor } from "@milkdown/react";
 import {
   commonmark,
@@ -50,6 +55,7 @@ import {
 import { CodeBlock } from "./components/CodeBlock.tsx";
 import type { FormItem, FormItemProps } from "@next-bricks/form/form-item";
 import { FormItemElementBase } from "@next-shared/form";
+import classNames from "classnames";
 
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 
@@ -80,6 +86,7 @@ export interface MarkdownEditorProps extends FormItemProps {
   value?: string;
   bucketName?: string;
   containerStyle?: React.CSSProperties;
+  readonly?: boolean;
   onUploadImage?: (value: ImageInfo) => void;
   onMarkdownValueChange?: (value: string) => void;
 }
@@ -133,6 +140,14 @@ class MarkdownEditor extends FormItemElementBase {
   @property() accessor bucketName: string | undefined;
 
   /**
+   * 只读模式
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor readonly: boolean | undefined;
+
+  /**
    * 外层容器样式
    */
   @property({
@@ -176,6 +191,7 @@ class MarkdownEditor extends FormItemElementBase {
             curElement={this}
             bucketName={this.bucketName}
             value={this.value}
+            readonly={this.readonly}
             containerStyle={this.containerStyle}
             onUploadImage={this.handleUploadImage}
             onMarkdownValueChange={this.handleMarkdownValueChange}
@@ -194,6 +210,7 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
     containerStyle,
     value,
     formElement,
+    readonly,
     onUploadImage,
     onMarkdownValueChange,
   } = props;
@@ -276,6 +293,10 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
       .config((ctx: any) => {
         // 配置root
         ctx.set(rootCtx, root);
+        ctx.update(editorViewOptionsCtx, (prev: any) => ({
+          ...prev,
+          editable: () => !readonly,
+        }));
         // 配置默认值
         value && ctx.set(defaultValueCtx, value);
         // 配置事件监听
@@ -382,14 +403,21 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
 
   return (
     <WrappedFormItem {...props}>
-      <div className="markdown-container" style={containerStyle}>
-        <div className="menu-container-outter">
-          <div className="menu-container-inner prose">
-            {MenuBtnData.map((item) => (
-              <MenuButton {...item} key={JSON.stringify(item.icon)} />
-            ))}
+      <div
+        className={classNames("markdown-container", {
+          readonly,
+        })}
+        style={containerStyle}
+      >
+        {!readonly && (
+          <div className="menu-container-outter">
+            <div className="menu-container-inner prose">
+              {MenuBtnData.map((item) => (
+                <MenuButton {...item} key={JSON.stringify(item.icon)} />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
         <div className="editor-container">
           <Milkdown />
         </div>

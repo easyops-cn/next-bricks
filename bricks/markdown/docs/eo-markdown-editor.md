@@ -71,6 +71,30 @@ markdown 编辑器
         - <% EVENT.detail %>
 ````
 
+### Readonly
+
+````yaml preview
+- brick: eo-markdown-editor
+  properties:
+    readonly: true
+    value: |-
+      # Markdown
+
+      > Content.
+
+      ```css
+        .table-tooltip-btn-box:hover {
+          background-color: #e8e8e8;
+        }
+      ```
+  events:
+    markdown.value.change:
+      action: console.log
+      args:
+        - change
+        - <% EVENT.detail %>
+````
+
 ### With Form
 
 ```yaml preview
