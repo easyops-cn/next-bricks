@@ -38,3 +38,4 @@ import "./data-providers/set-theme-by-apps.js";
 import "./avatar-group/index.js";
 import "./actions/index.js";
 import "./context-menu/index.js";
+import "./data-providers/show-watermark/show-watermark.js";

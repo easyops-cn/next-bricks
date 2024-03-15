@@ -247,6 +247,6 @@ export function showWaterMark({
 }
 
 customElements.define(
-  "advanced.show-watermark",
+  "basic.show-watermark",
   createProviderClass(showWaterMark)
 );
