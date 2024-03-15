@@ -64,7 +64,9 @@ describe("updateCells", () => {
         ],
         previousCells: [],
         defaultNodeSize: [120, 80],
+        canvasWidth: 800,
         canvasHeight: 600,
+        scaleRange: [0.5, 2],
         transform: { k: 1, x: 0, y: 0 },
         reason: "add-related-nodes",
         parent: "1",
@@ -190,7 +192,9 @@ describe("updateCells", () => {
         ],
         previousCells: [],
         defaultNodeSize: [120, 80],
+        canvasWidth: 800,
         canvasHeight: 600,
+        scaleRange: [0.5, 2],
         transform: { k: 1, x: 0, y: 0 },
         reason: "add-related-nodes",
         parent: "2",
@@ -268,7 +272,9 @@ describe("updateCells", () => {
         ],
         previousCells: [],
         defaultNodeSize: [120, 80],
+        canvasWidth: 800,
         canvasHeight: 600,
+        scaleRange: [0.5, 2],
         transform: { k: 1, x: 0, y: 0 },
       })
     ).toEqual({
@@ -313,7 +319,9 @@ describe("updateCells", () => {
         ],
         previousCells: [],
         defaultNodeSize: [120, 80],
+        canvasWidth: 800,
         canvasHeight: 600,
+        scaleRange: [0.5, 2],
         transform: { k: 1, x: 0, y: 0 },
         reason: "add-related-nodes",
         parent: "1",
@@ -390,7 +398,9 @@ describe("updateCells", () => {
           },
         ],
         defaultNodeSize: [120, 80],
+        canvasWidth: 800,
         canvasHeight: 600,
+        scaleRange: [0.5, 2],
         transform: { k: 1, x: 0, y: 0 },
         reason: "add-related-nodes",
         parent: "1",
@@ -420,6 +430,87 @@ describe("updateCells", () => {
         },
       ],
       updated: [],
+    });
+  });
+
+  test("previous not centered", () => {
+    expect(
+      updateCells({
+        cells: [
+          {
+            id: "1",
+            type: "node",
+            view: {
+              x: 12000,
+              y: 30,
+            },
+          },
+          {
+            id: "2",
+            type: "node",
+            view: {
+              x: 12300,
+              y: 30,
+            },
+          },
+          {
+            id: "3",
+            type: "node",
+            view: {} as any,
+          },
+        ],
+        previousCells: [],
+        defaultNodeSize: [120, 80],
+        canvasWidth: 800,
+        canvasHeight: 600,
+        scaleRange: [0.5, 2],
+        transform: { k: 1, x: 0, y: 0 },
+      })
+    ).toEqual({
+      cells: [
+        {
+          id: "1",
+          type: "node",
+          view: {
+            x: 12000,
+            y: 30,
+            height: 80,
+            width: 120,
+          },
+        },
+        {
+          id: "2",
+          type: "node",
+          view: {
+            x: 12300,
+            y: 30,
+            height: 80,
+            width: 120,
+          },
+        },
+        {
+          id: "3",
+          type: "node",
+          view: {
+            x: 11828,
+            y: -212,
+            height: 80,
+            width: 120,
+          },
+        },
+      ],
+      updated: [
+        {
+          id: "3",
+          type: "node",
+          view: {
+            x: 11828,
+            y: -212,
+            height: 80,
+            width: 120,
+          },
+        },
+      ],
     });
   });
 });
