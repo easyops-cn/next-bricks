@@ -52,7 +52,7 @@
     "test:ci": "cross-env NODE_ENV='test' CI=true test-next"
   },
   "dependencies": {
-    "@next-core/runtime": "^1.31.2",
+    "@next-core/runtime": "^1.33.0",
     "history": "^4.7.11"
   },
   "devDependencies": {

@@ -29,13 +29,13 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-core/easyops-runtime": "^0.7.7",
+    "@next-core/easyops-runtime": "^0.7.9",
     "@next-core/element": "^1.2.3",
     "@next-core/http": "^1.1.10",
     "@next-core/i18n": "^1.0.39",
     "@next-core/loader": "^1.5.5",
     "@next-core/react-element": "^1.0.22",
-    "@next-core/runtime": "^1.31.2",
+    "@next-core/runtime": "^1.33.0",
     "@next-core/theme": "^1.4.8",
     "@next-core/utils": "^1.6.11",
     "history": "^4.10.1",
