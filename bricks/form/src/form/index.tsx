@@ -40,7 +40,7 @@ export interface FormMapEvents {
 })
 class Form extends ReactNextElement implements FormProps, AbstractForm {
   formStore: FormStore;
-  #_values!: Record<string, unknown>;
+  #values!: Record<string, unknown>;
   defaultEmitValuesChange = true;
 
   constructor() {
@@ -55,15 +55,15 @@ class Form extends ReactNextElement implements FormProps, AbstractForm {
   }
 
   set values(value: Record<string, unknown>) {
-    this.#_values = value;
+    this.#values = value;
 
-    this.#_setInitValue(value);
+    this.#setInitValue(value);
   }
   get values(): Record<string, unknown> {
-    return this.#_values;
+    return this.#values;
   }
 
-  #_setInitValue(values: Record<string, unknown>) {
+  #setInitValue(values: Record<string, unknown>) {
     this.formStore.setInitValue(values, this.defaultEmitValuesChange);
   }
 
@@ -175,14 +175,14 @@ class Form extends ReactNextElement implements FormProps, AbstractForm {
     if (options) {
       options.runInMicrotask &&
         queueMicrotask(() => {
-          this.#_values = values;
+          this.values = values;
         });
       options.runInMacrotask &&
         setTimeout(() => {
-          this.#_values = values;
+          this.values = values;
         });
     } else {
-      this.#_values = values;
+      this.values = values;
     }
   }
 
