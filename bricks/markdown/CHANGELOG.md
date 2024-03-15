@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.8.18...@next-bricks/markdown@1.9.0) (2024-03-15)
+
+
+### Features
+
+* **markdown-editor:** add readonly ([a782c38](https://github.com/easyops-cn/next-bricks/commit/a782c38c671b515ac0d107150660069be8b7d61a))
+
+
+
+
+
 ## [1.8.18](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.8.17...@next-bricks/markdown@1.8.18) (2024-03-12)
 
 **Note:** Version bump only for package @next-bricks/markdown
