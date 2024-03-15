@@ -63,6 +63,7 @@ describe("eo-display-canvas", () => {
 
     await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
 
+    // MouseEnter node a
     act(() => {
       fireEvent.mouseEnter(element.shadowRoot!.querySelectorAll(".cell")[2]!);
     });
@@ -72,13 +73,16 @@ describe("eo-display-canvas", () => {
       )
     ).toEqual([true, false, false, false, true]);
 
+    // MouseLeave node b
     act(() => {
       fireEvent.mouseLeave(element.shadowRoot!.querySelectorAll(".cell")[3]!);
     });
+    // No effects
     expect(
       element.shadowRoot!.querySelectorAll(".cells .cell.faded").length
     ).toBe(2);
 
+    // MouseLeave node a
     act(() => {
       fireEvent.mouseLeave(element.shadowRoot!.querySelectorAll(".cell")[2]!);
     });
@@ -151,6 +155,48 @@ describe("eo-display-canvas", () => {
       },
       clientX: 100,
       clientY: 200,
+    });
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("zoom bar", async () => {
+    const element = document.createElement(
+      "eo-display-canvas"
+    ) as EoDisplayCanvas;
+    element.defaultNodeBricks = [{ useBrick: { brick: "div" } }];
+    element.cells = [
+      {
+        type: "node",
+        id: "a",
+        view: {
+          x: 20,
+          y: 20,
+        },
+      },
+    ] as NodeBrickCell[];
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+
+    // Zoom in
+    act(() => {
+      fireEvent.click(element.shadowRoot!.querySelector(".zoom-button")!);
+    });
+
+    // Zoom out
+    act(() => {
+      fireEvent.click(element.shadowRoot!.querySelectorAll(".zoom-button")[1]);
+    });
+
+    // Re-center
+    act(() => {
+      fireEvent.click(element.shadowRoot!.querySelector(".center-button")!);
     });
 
     act(() => {

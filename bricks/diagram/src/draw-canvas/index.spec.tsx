@@ -88,7 +88,6 @@ describe("eo-draw-canvas", () => {
     act(() => {
       document.body.removeChild(element);
     });
-    expect(element.shadowRoot?.childNodes.length).toBe(0);
   });
 
   test("add nodes", async () => {
@@ -696,7 +695,7 @@ describe("eo-draw-canvas", () => {
       ]);
     });
 
-    if (element.shadowRoot?.querySelectorAll("div").length === 1) {
+    if (element.shadowRoot?.querySelectorAll("svg div").length === 1) {
       expect(element.shadowRoot?.querySelectorAll(".cells"))
         .toMatchInlineSnapshot(`
         NodeList [
@@ -886,6 +885,46 @@ describe("eo-draw-canvas", () => {
     expect(onDecoratorTextChange).toHaveBeenCalledWith({
       id: "x",
       view: { x: 20, y: 30, text: "Updated" },
+    });
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("zoom bar", async () => {
+    const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
+    element.defaultNodeBricks = [{ useBrick: { brick: "div" } }];
+    element.cells = [
+      {
+        type: "node",
+        id: "a",
+        view: {
+          x: 20,
+          y: 20,
+        },
+      },
+    ] as NodeBrickCell[];
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+
+    // Zoom in
+    act(() => {
+      fireEvent.click(element.shadowRoot!.querySelector(".zoom-button")!);
+    });
+
+    // Zoom out
+    act(() => {
+      fireEvent.click(element.shadowRoot!.querySelectorAll(".zoom-button")[1]);
+    });
+
+    // Re-center
+    act(() => {
+      fireEvent.click(element.shadowRoot!.querySelector(".center-button")!);
     });
 
     act(() => {

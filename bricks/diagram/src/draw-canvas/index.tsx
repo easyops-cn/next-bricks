@@ -15,6 +15,7 @@ import { unwrapProvider } from "@next-core/utils/general";
 import "@next-core/theme";
 import { uniqueId } from "lodash";
 import classNames from "classnames";
+import { select } from "d3-selection";
 import type { lockBodyScroll as _lockBodyScroll } from "@next-bricks/basic/data-providers/lock-body-scroll/lock-body-scroll";
 import type {
   PositionTuple,
@@ -59,7 +60,9 @@ import {
 import { useZoom } from "../shared/canvas/useZoom";
 import { useAutoCenter } from "../shared/canvas/useAutoCenter";
 import { useActiveTarget } from "../shared/canvas/useActiveTarget";
+import { ZoomBarComponent } from "../shared/canvas/ZoomBarComponent";
 import styleText from "../shared/canvas/styles.shadow.css";
+import zoomBarStyleText from "../shared/canvas/ZoomBarComponent.shadow.css";
 
 const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
   "basic.lock-body-scroll"
@@ -126,7 +129,7 @@ export const EoDrawCanvasComponent = React.forwardRef(
  */
 export
 @defineElement("eo-draw-canvas", {
-  styleTexts: [styleText],
+  styleTexts: [styleText, zoomBarStyleText],
 })
 class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
   /**
@@ -689,52 +692,75 @@ function LegacyEoDrawCanvasComponent(
     []
   );
 
+  const handleZoomSlide = useCallback(
+    (value: number) => {
+      // istanbul ignore next
+      if (process.env.NODE_ENV !== "test") {
+        zoomer.scaleTo(select(rootRef.current!), value / 100);
+      }
+    },
+    [zoomer]
+  );
+
+  const reCenter = useCallback(() => {
+    setCentered(false);
+  }, [setCentered]);
+
   return (
-    <svg
-      width="100%"
-      height="100%"
-      ref={rootRef}
-      className={classNames("root", { grabbing, pannable, ready: centered })}
-      tabIndex={-1}
-    >
-      <defs>
-        <MarkerComponent id={markerEnd} type="arrow" strokeColor="gray" />
-      </defs>
-      <g
-        transform={`translate(${transform.x} ${transform.y}) scale(${transform.k})`}
+    <>
+      <svg
+        width="100%"
+        height="100%"
+        ref={rootRef}
+        className={classNames("root", { grabbing, pannable, ready: centered })}
+        tabIndex={-1}
       >
-        <g className="cells" ref={cellsRef}>
-          {cells.map((cell) => (
-            <CellComponent
-              key={`${cell.type}:${cell.type === "edge" ? `${cell.source}~${cell.target}` : cell.id}`}
-              cell={cell}
-              cells={cells}
-              defaultNodeBricks={defaultNodeBricks}
-              defaultEdgeLines={defaultEdgeLines}
-              transform={transform}
-              markerEnd={markerEnd}
-              active={sameTarget(activeTarget, cell)}
-              unrelatedCells={unrelatedCells}
-              onCellMoving={handleCellMoving}
-              onCellMoved={handleCellMoved}
-              onCellResizing={handleCellResizing}
-              onCellResized={handleCellResized}
-              onSwitchActiveTarget={onSwitchActiveTarget}
-              onCellContextMenu={onCellContextMenu}
-              onDecoratorTextChange={onDecoratorTextChange}
-              onDecoratorTextEditing={handleDecoratorTextEditing}
-              onNodeBrickResize={handleNodeBrickResize}
-            />
-          ))}
+        <defs>
+          <MarkerComponent id={markerEnd} type="arrow" strokeColor="gray" />
+        </defs>
+        <g
+          transform={`translate(${transform.x} ${transform.y}) scale(${transform.k})`}
+        >
+          <g className="cells" ref={cellsRef}>
+            {cells.map((cell) => (
+              <CellComponent
+                key={`${cell.type}:${cell.type === "edge" ? `${cell.source}~${cell.target}` : cell.id}`}
+                cell={cell}
+                cells={cells}
+                defaultNodeBricks={defaultNodeBricks}
+                defaultEdgeLines={defaultEdgeLines}
+                transform={transform}
+                markerEnd={markerEnd}
+                active={sameTarget(activeTarget, cell)}
+                unrelatedCells={unrelatedCells}
+                onCellMoving={handleCellMoving}
+                onCellMoved={handleCellMoved}
+                onCellResizing={handleCellResizing}
+                onCellResized={handleCellResized}
+                onSwitchActiveTarget={onSwitchActiveTarget}
+                onCellContextMenu={onCellContextMenu}
+                onDecoratorTextChange={onDecoratorTextChange}
+                onDecoratorTextEditing={handleDecoratorTextEditing}
+                onNodeBrickResize={handleNodeBrickResize}
+              />
+            ))}
+          </g>
+          <ConnectLineComponent
+            connectLineState={connectLineState}
+            transform={transform}
+            markerEnd={markerEnd}
+            onConnect={handleConnect}
+          />
         </g>
-        <ConnectLineComponent
-          connectLineState={connectLineState}
-          transform={transform}
-          markerEnd={markerEnd}
-          onConnect={handleConnect}
-        />
-      </g>
-    </svg>
+      </svg>
+      <ZoomBarComponent
+        shadowRoot={host.shadowRoot!}
+        scale={transform.k}
+        scaleRange={scaleRange}
+        onZoomChange={handleZoomSlide}
+        onReCenter={reCenter}
+      />
+    </>
   );
 }
 
