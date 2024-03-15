@@ -11,6 +11,7 @@ export const editor = {
   })),
   setModelMarkers: jest.fn(),
   setTheme: jest.fn(),
+  defineTheme: jest.fn(),
 };
 
 export const languages = {
@@ -63,11 +64,11 @@ class Editor {
     return 200;
   }
 
-  onDidChangeModelContent(fn) {
+  onDidChangeModelContent() {
     return { dispose: jest.fn() };
   }
 
-  onDidContentSizeChange(fn) {
+  onDidContentSizeChange() {
     return { dispose: jest.fn() };
   }
 

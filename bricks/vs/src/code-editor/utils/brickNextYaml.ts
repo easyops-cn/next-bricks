@@ -3,6 +3,7 @@ import storyboardJsonSchema from "@next-core/types/storyboard.json";
 import { EVALUATE_KEYWORD, brickNextKeywords } from "./constants.js";
 import get from "lodash/get.js";
 import { getEditorId } from "./editorId.js";
+import { TokenConfig } from "../index.jsx";
 
 const findKeys = (
   model: monaco.editor.ITextModel,
@@ -44,7 +45,8 @@ const findKeys = (
 
 const getPrefixWord = (
   model: monaco.editor.ITextModel,
-  position: monaco.Position
+  position: monaco.Position,
+  tokenConfig: TokenConfig
 ): {
   word: string | undefined;
   token: string;
@@ -60,8 +62,17 @@ const getPrefixWord = (
     ...position,
     column: position.column - word?.word?.length - 1,
   });
+  let matchWord = prefixWord?.word;
+  if (tokenConfig.showDSKey && prefixWord?.word === "DS") {
+    const prefix = model.getWordAtPosition({
+      ...position,
+      column: prefixWord.startColumn - 1,
+    });
+
+    matchWord = `${prefix?.word}.${prefixWord.word}`;
+  }
   return {
-    word: prefixWord?.word,
+    word: matchWord,
     token: prefixToken,
   };
 };
@@ -119,12 +130,13 @@ export const isInEvaluateBody = (
 };
 
 export const brickNextYAMLProviderCompletionItems = (
-  completers?: monaco.languages.CompletionItem[],
-  advancedCompleters?: Record<
+  completers: monaco.languages.CompletionItem[] = [],
+  advancedCompleters: Record<
     string,
     { triggerCharacter: string; completers: monaco.languages.CompletionItem[] }
-  >,
-  id?: string
+  > = {},
+  id: string,
+  tokenConfig: TokenConfig
 ) => {
   return (
     model: monaco.editor.ITextModel,
@@ -135,10 +147,12 @@ export const brickNextYAMLProviderCompletionItems = (
       return {
         suggestions: [],
       };
+    const DSToken = tokenConfig.showDSKey ? ["CTX.DS", "DS"] : [];
     const word = model.getWordUntilPosition(position);
     const { word: prefixWord, token: prefixToken } = getPrefixWord(
       model,
-      position
+      position,
+      tokenConfig
     );
     const curLineWord = model.getValueInRange({
       startLineNumber: position.lineNumber,
@@ -210,7 +224,7 @@ export const brickNextYAMLProviderCompletionItems = (
       context.triggerCharacter === ":" ||
       (context.triggerCharacter === "." &&
         prefixWord &&
-        !["CTX", "STATE", "FN"].includes(prefixWord))
+        !["CTX", "STATE", "FN"].concat(DSToken).includes(prefixWord))
     ) {
       if (prefixWord === "action" && context.triggerCharacter === ":") {
         const actions = get(
@@ -264,7 +278,7 @@ export const brickNextYAMLProviderCompletionItems = (
     if (isInEvaluateBody(model, position)) {
       if (
         prefixWord &&
-        ["CTX", "STATE"].includes(prefixWord) &&
+        ["CTX", "STATE"].concat(DSToken).includes(prefixWord) &&
         advancedCompleters
       ) {
         return {

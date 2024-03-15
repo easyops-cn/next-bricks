@@ -76,6 +76,7 @@ export interface CodeEditorProps {
   maxLines?: number;
   height?: string | number;
   completers?: monaco.languages.CompletionItem[];
+  tokenConfig?: TokenConfig;
   advancedCompleters?: Record<
     string,
     { triggerCharacter: string; completers: monaco.languages.CompletionItem[] }
@@ -97,6 +98,10 @@ export interface Marker {
   };
   params?: string[];
 }
+
+export type TokenConfig = {
+  showDSKey: boolean;
+};
 
 /**
  * 构件代码编辑器
@@ -199,6 +204,14 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
   accessor showExpandButton: boolean | undefined;
 
   /**
+   * 自定义高亮配置
+   */
+  @property({
+    attribute: false,
+  })
+  accessor tokenConfig: TokenConfig | undefined;
+
+  /**
    * 是否展示复制按钮
    * @default true
    */
@@ -276,6 +289,7 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
           advancedCompleters={this.advancedCompleters}
           markers={this.markers}
           links={this.links}
+          tokenConfig={this.tokenConfig}
           showCopyButton={this.showCopyButton}
           showExpandButton={this.showExpandButton}
           validateState={this.validateState}
@@ -300,6 +314,9 @@ export function CodeEditorComponent({
   markers,
   readOnly,
   links,
+  tokenConfig = {
+    showDSKey: false,
+  },
   showExpandButton,
   showCopyButton = true,
   validateState,
@@ -382,15 +399,26 @@ export function CodeEditorComponent({
   }, []);
 
   useEffect(() => {
-    // Currently theme is configured globally.
-    // See https://github.com/microsoft/monaco-editor/issues/338
-    monaco.editor.setTheme(
+    const computedTheme =
       theme === "auto"
         ? systemTheme === "dark" || systemTheme === "dark-v2"
           ? "vs-dark"
           : "vs"
-        : theme
-    );
+        : theme;
+    const lineHeightBackground = computedTheme.includes("dark")
+      ? "#FFFFFF0F"
+      : "#0000000A";
+    monaco.editor.defineTheme("custom-theme", {
+      base: computedTheme as "vs-dark" | "vs",
+      inherit: true,
+      rules: [],
+      colors: {
+        "editor.lineHighlightBackground": `${lineHeightBackground}`,
+      },
+    });
+    // Currently theme is configured globally.
+    // See https://github.com/microsoft/monaco-editor/issues/338
+    monaco.editor.setTheme("custom-theme");
   }, [systemTheme, theme]);
 
   useEffect(() => {
@@ -405,7 +433,8 @@ export function CodeEditorComponent({
       const provideCompletionItems = brickNextYAMLProviderCompletionItems(
         completers,
         advancedCompleters,
-        workerId
+        workerId,
+        tokenConfig
       );
       const monacoProviderRef = monaco.languages.registerCompletionItemProvider(
         "brick_next_yaml",
@@ -431,10 +460,11 @@ export function CodeEditorComponent({
           links,
           markers,
         },
+        options: tokenConfig,
         init,
       });
     },
-    [language, value, links, markers, workerId]
+    [language, value, tokenConfig, links, markers, workerId]
   );
 
   const debounceParse = useMemo(() => debounce(parseYaml, 300), [parseYaml]);
@@ -442,7 +472,7 @@ export function CodeEditorComponent({
   useEffect(() => {
     if (editorRef.current) {
       const currentModel = editorRef.current.getModel();
-      if (currentModel && value !== currentModel.getValue()) {
+      if (currentModel?.getValue && value !== currentModel.getValue()) {
         currentModel.setValue(value as string);
         debounceParse({
           init: true,
@@ -563,6 +593,7 @@ export function CodeEditorComponent({
       },
       readOnly: readOnly,
       quickSuggestions: { strings: true, other: true, comments: true },
+      renderLineHighlightOnlyWhenFocus: true,
     });
 
     decorationsCollection.current =

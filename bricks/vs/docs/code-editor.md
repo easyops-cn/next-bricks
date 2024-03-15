@@ -73,7 +73,7 @@ children:
 ```yaml preview
 - brick: vs.code-editor
   events:
-    highlight.click:
+    token.click:
       - action: console.log
   properties:
     language: brick_next_yaml
@@ -252,4 +252,57 @@ children:
         params:
           - a
           - b
+```
+
+### Show CTX.DS
+
+```yaml preview minHeight="500px"
+- brick: eo-form
+  events:
+    validate.success:
+      action: console.log
+  properties:
+    values:
+      code: |
+        a: <% CTX.DS.a %>
+        b: <% CTX.DS.c %>
+        c: <% CTX.a %>
+        d: <% CTXDS.a %>
+        e: <% CTX.a.DS %>
+        f: <% CTX.DSA.a %>
+        g: <% CTX.DS %>
+        h: <% DS.a %>
+        i: <% DS.c %>
+  children:
+    - brick: vs.code-editor
+      events:
+        token.click:
+          - action: console.log
+      properties:
+        name: code
+        label: code
+        required: true
+        language: brick_next_yaml
+        showExpandButton: true
+        automaticLayout: fit-content
+        links:
+          - CTX
+          - CTX.DS
+          - DS
+        tokenConfig:
+          showDSKey: true
+        markers:
+          - token: CTX
+            params:
+              - a
+              - DS
+          - token: CTX.DS
+            params:
+              - a
+              - b
+          - token: DS
+            params:
+              - a
+              - b
+    - brick: eo-submit-buttons
 ```

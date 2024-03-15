@@ -3,7 +3,9 @@ import { getParseYaml } from "./parseYaml.js";
 
 let parseYaml: any;
 beforeAll(async () => {
-  parseYaml = await getParseYaml();
+  parseYaml = await getParseYaml({
+    showDSKey: true,
+  });
 });
 
 describe("parseYaml should work", () => {
@@ -570,6 +572,45 @@ test9: |
         token: "CTX",
       },
     ]);
+  });
+
+  test("should match CTX.DS", () => {
+    const result = parseYaml(`a: <% CTX.DS.a + CTX.b + DS.a %>`, [
+      "CTX",
+      "DS",
+      "CTX.DS",
+    ]);
+
+    expect(result).toEqual({
+      markers: [],
+      tokens: [
+        {
+          endColumn: 15,
+          endLineNumber: 1,
+          property: "a",
+          startColumn: 7,
+          startLineNumber: 1,
+          token: "CTX.DS",
+        },
+        {
+          endColumn: 23,
+          endLineNumber: 1,
+          property: "b",
+          startColumn: 18,
+          startLineNumber: 1,
+          token: "CTX",
+        },
+        {
+          endColumn: 30,
+          endLineNumber: 1,
+          property: "a",
+          startColumn: 26,
+          startLineNumber: 1,
+          token: "DS",
+        },
+      ],
+      value: { a: "<% CTX.DS.a + CTX.b + DS.a %>" },
+    });
   });
 
   test("yaml error should throw error", () => {

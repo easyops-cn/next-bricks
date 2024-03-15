@@ -2,10 +2,13 @@ import { getParseYaml } from "../utils/parseYaml.js";
 
 self.onmessage = onMessage;
 
-const parseYaml = await getParseYaml();
+let parseYaml: any;
 
-function onMessage(message: MessageEvent): void {
-  const { token, data, id, init } = message.data;
+async function onMessage(message: MessageEvent): Promise<void> {
+  const { token, data, id, options, init } = message.data;
+  if (!parseYaml) {
+    parseYaml = await getParseYaml(options);
+  }
   switch (token) {
     case "parse_yaml": {
       try {
