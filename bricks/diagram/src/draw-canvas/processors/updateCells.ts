@@ -1,4 +1,9 @@
-import type { SizeTuple, TransformLiteral } from "../../diagram/interfaces";
+import { without } from "lodash";
+import type {
+  RangeTuple,
+  SizeTuple,
+  TransformLiteral,
+} from "../../diagram/interfaces";
 import { DEFAULT_NODE_GAP, SYMBOL_FOR_SIZE_INITIALIZED } from "../constants";
 import type {
   Cell,
@@ -7,14 +12,17 @@ import type {
   NodeId,
   NodeView,
 } from "../interfaces";
-import { isEdgeCell, isNodeCell } from "./asserts";
+import { isDecoratorCell, isEdgeCell, isNodeCell } from "./asserts";
 import { initializeCells } from "./initializeCells";
+import { transformToCenter } from "./transformToCenter";
 
 export function updateCells({
   cells,
   previousCells,
   defaultNodeSize,
+  canvasWidth,
   canvasHeight,
+  scaleRange,
   transform,
   reason,
   parent,
@@ -22,7 +30,9 @@ export function updateCells({
   cells: InitialCell[];
   previousCells: Cell[];
   defaultNodeSize: SizeTuple;
+  canvasWidth: number;
   canvasHeight: number;
+  scaleRange: RangeTuple;
   transform: TransformLiteral;
   reason?: "add-related-nodes";
   parent?: NodeId;
@@ -34,9 +44,15 @@ export function updateCells({
   const updateCandidates: NodeCell[] = [];
 
   const previousSizeInitializedNodes = new Map<string, NodeCell>();
+  let previousShouldCentered = false;
   for (const cell of previousCells) {
-    if (isNodeCell(cell) && cell[SYMBOL_FOR_SIZE_INITIALIZED]) {
-      previousSizeInitializedNodes.set(cell.id, cell);
+    if (isDecoratorCell(cell)) {
+      previousShouldCentered = true;
+    } else if (isNodeCell(cell)) {
+      previousShouldCentered = true;
+      if (cell[SYMBOL_FOR_SIZE_INITIALIZED]) {
+        previousSizeInitializedNodes.set(cell.id, cell);
+      }
     }
   }
 
@@ -135,6 +151,15 @@ export function updateCells({
           occupiedViews.push(cell.view);
         }
       }
+    }
+
+    if (!previousShouldCentered) {
+      // If the previous cells are not centered, use the centered transform instead.
+      transform = transformToCenter(without(newCells, ...updateCandidates), {
+        canvasWidth,
+        canvasHeight,
+        scaleRange,
+      });
     }
 
     const deltaX = maxWidth + DEFAULT_NODE_GAP;

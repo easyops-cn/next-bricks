@@ -115,6 +115,7 @@ export interface UpdateCellsContext {
 
 export interface AddNodesContext {
   defaultNodeSize: SizeTuple;
+  canvasWidth: number;
   canvasHeight: number;
 }
 
@@ -336,6 +337,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
     }));
     return this.#canvasRef.current!.addNodes(newNodes, {
       defaultNodeSize: this.defaultNodeSize,
+      canvasWidth: this.clientWidth,
       canvasHeight: this.clientHeight,
     });
   }
@@ -365,6 +367,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
     const { updated } = this.#canvasRef.current!.updateCells(cells, {
       ...ctx,
       defaultNodeSize: this.defaultNodeSize,
+      canvasWidth: this.clientWidth,
       canvasHeight: this.clientHeight,
     });
     return { updated };
@@ -427,6 +430,7 @@ export interface DrawCanvasRef {
     cells: InitialCell[],
     ctx: Partial<UpdateCellsContext> & {
       defaultNodeSize: SizeTuple;
+      canvasWidth: number;
       canvasHeight: number;
     }
   ): {
@@ -511,7 +515,10 @@ function LegacyEoDrawCanvasComponent(
         setCentered(true);
         dispatch({ type: "drop-decorator", payload: decorator });
       },
-      addNodes(nodes, { defaultNodeSize, canvasHeight }: AddNodesContext) {
+      addNodes(
+        nodes,
+        { defaultNodeSize, canvasWidth, canvasHeight }: AddNodesContext
+      ) {
         const index =
           cells.findLastIndex(
             (cell) => !(cell.type === "decorator" && cell.decorator === "text")
@@ -525,7 +532,9 @@ function LegacyEoDrawCanvasComponent(
           cells: newCells,
           previousCells: cells,
           defaultNodeSize,
+          canvasWidth,
           canvasHeight,
+          scaleRange,
           transform,
         });
         dispatch({ type: "update-cells", payload: allCells });
@@ -541,6 +550,7 @@ function LegacyEoDrawCanvasComponent(
           ...ctx,
           previousCells: cells,
           cells: newCells,
+          scaleRange,
           transform,
         });
         dispatch({ type: "update-cells", payload: result.cells });
@@ -571,7 +581,7 @@ function LegacyEoDrawCanvasComponent(
         return Promise.reject(null);
       },
     }),
-    [cells, setCentered, transform]
+    [cells, scaleRange, setCentered, transform]
   );
 
   const handleConnect = useCallback(
