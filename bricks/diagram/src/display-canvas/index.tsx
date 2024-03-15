@@ -11,6 +11,7 @@ import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import { uniqueId } from "lodash";
 import classNames from "classnames";
+import { select } from "d3-selection";
 import type { RangeTuple, SizeTuple } from "../diagram/interfaces";
 import type {
   ActiveTarget,
@@ -30,8 +31,10 @@ import { useAutoCenter } from "../shared/canvas/useAutoCenter";
 import { useActiveTarget } from "../shared/canvas/useActiveTarget";
 import { rootReducer } from "../draw-canvas/reducers";
 import { getUnrelatedCells } from "../draw-canvas/processors/getUnrelatedCells";
-import styleText from "../shared/canvas/styles.shadow.css";
 import { isEdgeCell, isNodeCell } from "../draw-canvas/processors/asserts";
+import { ZoomBarComponent } from "../shared/canvas/ZoomBarComponent";
+import styleText from "../shared/canvas/styles.shadow.css";
+import zoomBarStyleText from "../shared/canvas/ZoomBarComponent.shadow.css";
 
 const { defineElement, property, event } = createDecorators();
 
@@ -53,7 +56,7 @@ export interface EoDisplayCanvasProps {
  */
 export
 @defineElement("eo-display-canvas", {
-  styleTexts: [styleText],
+  styleTexts: [styleText, zoomBarStyleText],
 })
 class EoDisplayCanvas extends ReactNextElement implements EoDisplayCanvasProps {
   /**
@@ -124,6 +127,7 @@ class EoDisplayCanvas extends ReactNextElement implements EoDisplayCanvasProps {
   render() {
     return (
       <EoDisplayCanvasComponent
+        shadowRoot={this.shadowRoot!}
         cells={this.cells}
         defaultNodeSize={this.defaultNodeSize}
         defaultNodeBricks={this.defaultNodeBricks}
@@ -143,12 +147,14 @@ class EoDisplayCanvas extends ReactNextElement implements EoDisplayCanvasProps {
 }
 
 export interface EoDisplayCanvasComponentProps extends EoDisplayCanvasProps {
+  shadowRoot: ShadowRoot;
   onActiveTargetChange(target: ActiveTarget | null): void;
   onSwitchActiveTarget(target: ActiveTarget | null): void;
   onCellContextMenu(detail: CellContextMenuDetail): void;
 }
 
 function EoDisplayCanvasComponent({
+  shadowRoot,
   cells: initialCells,
   defaultNodeSize,
   defaultNodeBricks,
@@ -183,7 +189,7 @@ function EoDisplayCanvasComponent({
     onSwitchActiveTarget,
   });
 
-  const [centered] = useAutoCenter({
+  const [centered, setCentered] = useAutoCenter({
     rootRef,
     cells,
     zoomable,
@@ -227,50 +233,73 @@ function EoDisplayCanvasComponent({
     );
   }, [cells, fadeUnrelatedCells, hoverCell]);
 
+  const handleZoomSlide = useCallback(
+    (value: number) => {
+      // istanbul ignore next
+      if (process.env.NODE_ENV !== "test") {
+        zoomer.scaleTo(select(rootRef.current!), value / 100);
+      }
+    },
+    [zoomer]
+  );
+
+  const reCenter = useCallback(() => {
+    setCentered(false);
+  }, [setCentered]);
+
   return (
-    <svg
-      width="100%"
-      height="100%"
-      ref={rootRef}
-      className={classNames("root", { grabbing, pannable, ready: centered })}
-      tabIndex={-1}
-    >
-      <defs>
-        <MarkerComponent id={markerEnd} type="arrow" strokeColor="gray" />
-      </defs>
-      <g
-        transform={`translate(${transform.x} ${transform.y}) scale(${transform.k})`}
+    <>
+      <svg
+        width="100%"
+        height="100%"
+        ref={rootRef}
+        className={classNames("root", { grabbing, pannable, ready: centered })}
+        tabIndex={-1}
       >
-        <g className="cells" ref={cellsRef}>
-          {cells.map((cell) => (
-            <CellComponent
-              key={`${cell.type}:${isEdgeCell(cell) ? `${cell.source}~${cell.target}` : cell.id}`}
-              cell={cell}
-              cells={cells}
-              defaultNodeBricks={defaultNodeBricks}
-              defaultEdgeLines={defaultEdgeLines}
-              transform={transform}
-              markerEnd={markerEnd}
-              active={sameTarget(activeTarget, cell)}
-              readOnly
-              unrelatedCells={unrelatedCells}
-              onSwitchActiveTarget={onSwitchActiveTarget}
-              onCellContextMenu={onCellContextMenu}
-              onNodeBrickResize={handleNodeBrickResize}
-              onCellMouseEnter={
-                fadeUnrelatedCells && isNodeCell(cell)
-                  ? handleCellMouseEnter
-                  : undefined
-              }
-              onCellMouseLeave={
-                fadeUnrelatedCells && isNodeCell(cell)
-                  ? handleCellMouseLeave
-                  : undefined
-              }
-            />
-          ))}
+        <defs>
+          <MarkerComponent id={markerEnd} type="arrow" strokeColor="gray" />
+        </defs>
+        <g
+          transform={`translate(${transform.x} ${transform.y}) scale(${transform.k})`}
+        >
+          <g className="cells" ref={cellsRef}>
+            {cells.map((cell) => (
+              <CellComponent
+                key={`${cell.type}:${isEdgeCell(cell) ? `${cell.source}~${cell.target}` : cell.id}`}
+                cell={cell}
+                cells={cells}
+                defaultNodeBricks={defaultNodeBricks}
+                defaultEdgeLines={defaultEdgeLines}
+                transform={transform}
+                markerEnd={markerEnd}
+                active={sameTarget(activeTarget, cell)}
+                readOnly
+                unrelatedCells={unrelatedCells}
+                onSwitchActiveTarget={onSwitchActiveTarget}
+                onCellContextMenu={onCellContextMenu}
+                onNodeBrickResize={handleNodeBrickResize}
+                onCellMouseEnter={
+                  fadeUnrelatedCells && isNodeCell(cell)
+                    ? handleCellMouseEnter
+                    : undefined
+                }
+                onCellMouseLeave={
+                  fadeUnrelatedCells && isNodeCell(cell)
+                    ? handleCellMouseLeave
+                    : undefined
+                }
+              />
+            ))}
+          </g>
         </g>
-      </g>
-    </svg>
+      </svg>
+      <ZoomBarComponent
+        shadowRoot={shadowRoot}
+        scale={transform.k}
+        scaleRange={scaleRange}
+        onZoomChange={handleZoomSlide}
+        onReCenter={reCenter}
+      />
+    </>
   );
 }
