@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.5.1...@next-bricks/vs@1.6.0) (2024-03-15)
+
+
+### Features
+
+* **code-editor:** update theme and support CTX.DS & DS token ([71d4067](https://github.com/easyops-cn/next-bricks/commit/71d4067dc5154f4c0a9a7457580804ef85bad074))
+
+
+
+
+
 ## [1.5.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.5.0...@next-bricks/vs@1.5.1) (2024-03-12)
 
 
