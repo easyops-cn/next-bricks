@@ -8,7 +8,7 @@
 brick: div
 lifeCycle:
   onPageLoad:
-    - useProvider: advanced.show-watermark
+    - useProvider: basic.show-watermark
       args:
         - content: Developer
           zIndex: -1
@@ -24,7 +24,7 @@ children:
 brick: div
 lifeCycle:
   onPageLoad:
-    - useProvider: advanced.show-watermark
+    - useProvider: basic.show-watermark
       args:
         - content:
             - Hello
@@ -44,7 +44,7 @@ children:
 brick: div
 lifeCycle:
   onPageLoad:
-    - useProvider: advanced.show-watermark
+    - useProvider: basic.show-watermark
       args:
         - content:
             - Developer
@@ -72,7 +72,7 @@ children:
 brick: div
 lifeCycle:
   onPageLoad:
-    - useProvider: advanced.show-watermark
+    - useProvider: basic.show-watermark
       args:
         - image: https://user-assets.sxlcdn.com/images/367275/FoZZCRcWcp4_HPWinw2CpHbu8Dnm.png?imageMogr2/strip/auto-orient/thumbnail/720x1440%3E/format/png
           width: 100
@@ -90,7 +90,7 @@ children:
 brick: div
 lifeCycle:
   onPageLoad:
-    - useProvider: advanced.show-watermark
+    - useProvider: basic.show-watermark
       args:
         - content: Only Box
           container: "#box"
