@@ -155,6 +155,155 @@ describe("updateCells", () => {
     });
   });
 
+  test("add related nodes with force layout", () => {
+    expect(
+      updateCells({
+        cells: [
+          {
+            type: "decorator",
+            decorator: "area",
+            id: "area-a",
+            view: {
+              x: 1,
+              y: 2,
+              width: 3,
+              height: 4,
+            },
+          },
+          {
+            type: "edge",
+            source: "1",
+            target: "2",
+          },
+          {
+            type: "edge",
+            source: "1",
+            target: "3",
+          },
+          {
+            type: "edge",
+            source: "1",
+            target: "4",
+          },
+          {
+            id: "1",
+            type: "node",
+            view: {
+              x: 100,
+              y: 30,
+            },
+          },
+          {
+            id: "2",
+            type: "node",
+            view: {
+              x: 160,
+              y: 100,
+            },
+          },
+          {
+            id: "3",
+            type: "node",
+            view: {
+              x: 20,
+              y: 100,
+            },
+          },
+          {
+            id: "4",
+            type: "node",
+          },
+        ],
+        layout: "force",
+        previousCells: [],
+        defaultNodeSize: [120, 80],
+        canvasWidth: 800,
+        canvasHeight: 600,
+        scaleRange: [0.5, 2],
+        transform: { k: 1, x: 0, y: 0 },
+        reason: "add-related-nodes",
+        parent: "1",
+      })
+    ).toEqual({
+      cells: [
+        {
+          type: "decorator",
+          decorator: "area",
+          id: "area-a",
+          view: {
+            x: 1,
+            y: 2,
+            width: 3,
+            height: 4,
+          },
+        },
+        {
+          type: "edge",
+          source: "1",
+          target: "2",
+        },
+        {
+          type: "edge",
+          source: "1",
+          target: "3",
+        },
+        {
+          type: "edge",
+          source: "1",
+          target: "4",
+        },
+        {
+          id: "1",
+          type: "node",
+          view: {
+            x: 100,
+            y: 30,
+            height: 80,
+            width: 120,
+          },
+        },
+        {
+          id: "2",
+          type: "node",
+          view: {
+            x: 160,
+            y: 100,
+            height: 80,
+            width: 120,
+          },
+        },
+        {
+          id: "3",
+          type: "node",
+          view: {
+            x: 20,
+            y: 100,
+            height: 80,
+            width: 120,
+          },
+        },
+        {
+          id: "4",
+          type: "node",
+          view: {
+            height: 80,
+            width: 120,
+          },
+        },
+      ],
+      updated: [
+        {
+          id: "4",
+          type: "node",
+          view: {
+            height: 80,
+            width: 120,
+          },
+        },
+      ],
+    });
+  });
+
   test("add related nodes below parent", () => {
     expect(
       updateCells({
@@ -506,6 +655,84 @@ describe("updateCells", () => {
           view: {
             x: 11828,
             y: -212,
+            height: 80,
+            width: 120,
+          },
+        },
+      ],
+    });
+  });
+
+  test("previous not centered with force layout", () => {
+    expect(
+      updateCells({
+        cells: [
+          {
+            id: "1",
+            type: "node",
+            view: {
+              x: 12000,
+              y: 30,
+            },
+          },
+          {
+            id: "2",
+            type: "node",
+            view: {
+              x: 12300,
+              y: 30,
+            },
+          },
+          {
+            id: "3",
+            type: "node",
+            view: {} as any,
+          },
+        ],
+        layout: "force",
+        previousCells: [],
+        defaultNodeSize: [120, 80],
+        canvasWidth: 800,
+        canvasHeight: 600,
+        scaleRange: [0.5, 2],
+        transform: { k: 1, x: 0, y: 0 },
+      })
+    ).toEqual({
+      cells: [
+        {
+          id: "1",
+          type: "node",
+          view: {
+            x: 12000,
+            y: 30,
+            height: 80,
+            width: 120,
+          },
+        },
+        {
+          id: "2",
+          type: "node",
+          view: {
+            x: 12300,
+            y: 30,
+            height: 80,
+            width: 120,
+          },
+        },
+        {
+          id: "3",
+          type: "node",
+          view: {
+            height: 80,
+            width: 120,
+          },
+        },
+      ],
+      updated: [
+        {
+          id: "3",
+          type: "node",
+          view: {
             height: 80,
             width: 120,
           },

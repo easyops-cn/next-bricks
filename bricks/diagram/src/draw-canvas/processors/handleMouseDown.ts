@@ -1,9 +1,10 @@
 import type { PositionTuple } from "../../diagram/interfaces";
-import type { ActiveTarget, Cell } from "../interfaces";
+import type { ActiveTarget, Cell, LayoutType } from "../interfaces";
 import type {
   MoveCellPayload,
   ResizeCellPayload,
 } from "../reducers/interfaces";
+import { isEdgeCell, isNodeCell } from "./asserts";
 import { cellToTarget } from "./cellToTarget";
 
 export function handleMouseDown(
@@ -12,6 +13,7 @@ export function handleMouseDown(
     action,
     cell,
     scale,
+    layout,
     onCellMoving,
     onCellMoved,
     onCellResizing,
@@ -21,6 +23,7 @@ export function handleMouseDown(
     action: "move" | "resize";
     cell: Cell;
     scale: number;
+    layout?: LayoutType;
     onCellMoving?(info: MoveCellPayload): void;
     onCellMoved?(info: MoveCellPayload): void;
     onCellResizing?(info: ResizeCellPayload): void;
@@ -32,7 +35,10 @@ export function handleMouseDown(
   // Drag node
   onSwitchActiveTarget?.(cellToTarget(cell));
 
-  if (cell.type === "edge") {
+  if (
+    isEdgeCell(cell) ||
+    ((layout === "force" || layout === "dagre") && isNodeCell(cell))
+  ) {
     return;
   }
 

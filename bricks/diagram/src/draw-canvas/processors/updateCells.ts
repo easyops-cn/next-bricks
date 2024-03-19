@@ -8,6 +8,7 @@ import { DEFAULT_NODE_GAP, SYMBOL_FOR_SIZE_INITIALIZED } from "../constants";
 import type {
   Cell,
   InitialCell,
+  LayoutType,
   NodeCell,
   NodeId,
   NodeView,
@@ -18,6 +19,7 @@ import { transformToCenter } from "./transformToCenter";
 
 export function updateCells({
   cells,
+  layout,
   previousCells,
   defaultNodeSize,
   canvasWidth,
@@ -28,6 +30,7 @@ export function updateCells({
   parent,
 }: {
   cells: InitialCell[];
+  layout?: LayoutType;
   previousCells: Cell[];
   defaultNodeSize: SizeTuple;
   canvasWidth: number;
@@ -40,6 +43,7 @@ export function updateCells({
   cells: Cell[];
   updated: Cell[];
 } {
+  const isManualLayout = layout !== "force" && layout !== "dagre";
   const newCells = initializeCells(cells, { defaultNodeSize });
   const updateCandidates: NodeCell[] = [];
 
@@ -105,7 +109,7 @@ export function updateCells({
           updateCandidates.push(node);
         }
       }
-      if (updateCandidates.length > 0) {
+      if (updateCandidates.length > 0 && isManualLayout) {
         let nextX: number;
         let nextY: number;
         if (rightMostNode) {
@@ -153,55 +157,57 @@ export function updateCells({
       }
     }
 
-    if (!previousShouldCentered) {
-      // If the previous cells are not centered, use the centered transform instead.
-      transform = transformToCenter(without(newCells, ...updateCandidates), {
-        canvasWidth,
-        canvasHeight,
-        scaleRange,
-      });
-    }
+    if (isManualLayout) {
+      if (!previousShouldCentered) {
+        // If the previous cells are not centered, use the centered transform instead.
+        transform = transformToCenter(without(newCells, ...updateCandidates), {
+          canvasWidth,
+          canvasHeight,
+          scaleRange,
+        });
+      }
 
-    const deltaX = maxWidth + DEFAULT_NODE_GAP;
-    const deltaY = maxHeight + DEFAULT_NODE_GAP;
+      const deltaX = maxWidth + DEFAULT_NODE_GAP;
+      const deltaY = maxHeight + DEFAULT_NODE_GAP;
 
-    const occupiedIndexes = new Set<string>();
-    for (const view of occupiedViews) {
-      const x0 = Math.floor((view.x + transform.x / transform.k) / deltaX);
-      const y0 = Math.floor((view.y + transform.y / transform.k) / deltaY);
-      const x1 = Math.floor(
-        (view.x + transform.x / transform.k + view.width) / deltaX
-      );
-      const y1 = Math.floor(
-        (view.y + transform.y / transform.k + view.height) / deltaY
-      );
+      const occupiedIndexes = new Set<string>();
+      for (const view of occupiedViews) {
+        const x0 = Math.floor((view.x + transform.x / transform.k) / deltaX);
+        const y0 = Math.floor((view.y + transform.y / transform.k) / deltaY);
+        const x1 = Math.floor(
+          (view.x + transform.x / transform.k + view.width) / deltaX
+        );
+        const y1 = Math.floor(
+          (view.y + transform.y / transform.k + view.height) / deltaY
+        );
 
-      for (let i = x0; i <= x1; i++) {
-        for (let j = y0; j <= y1; j++) {
-          occupiedIndexes.add(`${i},${j}`);
+        for (let i = x0; i <= x1; i++) {
+          for (let j = y0; j <= y1; j++) {
+            occupiedIndexes.add(`${i},${j}`);
+          }
         }
       }
-    }
 
-    const scaledDeltaX = deltaX * transform.k;
-    const scaledDeltaY = deltaY * transform.k;
-    const rows = Math.max(1, Math.floor(canvasHeight / scaledDeltaY));
-    let i = 0;
-    for (const node of updateCandidates) {
-      let xIndex: number;
-      let yIndex: number;
-      do {
-        xIndex = Math.floor(i / rows);
-        yIndex = i % rows;
-        i++;
-      } while (occupiedIndexes.has(`${xIndex},${yIndex}`));
+      const scaledDeltaX = deltaX * transform.k;
+      const scaledDeltaY = deltaY * transform.k;
+      const rows = Math.max(1, Math.floor(canvasHeight / scaledDeltaY));
+      let i = 0;
+      for (const node of updateCandidates) {
+        let xIndex: number;
+        let yIndex: number;
+        do {
+          xIndex = Math.floor(i / rows);
+          yIndex = i % rows;
+          i++;
+        } while (occupiedIndexes.has(`${xIndex},${yIndex}`));
 
-      node.view.x =
-        (xIndex * scaledDeltaX - transform.x) / transform.k +
-        DEFAULT_NODE_GAP / 2;
-      node.view.y =
-        (yIndex * scaledDeltaY - transform.y) / transform.k +
-        DEFAULT_NODE_GAP / 2;
+        node.view.x =
+          (xIndex * scaledDeltaX - transform.x) / transform.k +
+          DEFAULT_NODE_GAP / 2;
+        node.view.y =
+          (yIndex * scaledDeltaY - transform.y) / transform.k +
+          DEFAULT_NODE_GAP / 2;
+      }
     }
   }
 

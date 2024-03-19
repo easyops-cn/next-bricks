@@ -1,7 +1,15 @@
 import type { UseSingleBrickConf } from "@next-core/react-runtime";
+import type { SimulationLinkDatum, SimulationNodeDatum } from "d3-force";
 import type { ResizeCellPayload } from "./reducers/interfaces";
-import type { PositionTuple, TransformLiteral } from "../diagram/interfaces";
-import { SYMBOL_FOR_SIZE_INITIALIZED } from "./constants";
+import type {
+  PartialRectTuple,
+  PositionTuple,
+  TransformLiteral,
+} from "../diagram/interfaces";
+import {
+  SYMBOL_FOR_SIZE_INITIALIZED,
+  type SYMBOL_FOR_LAYOUT_INITIALIZED,
+} from "./constants";
 
 export type Cell = NodeCell | EdgeCell | DecoratorCell;
 
@@ -27,6 +35,7 @@ export interface BaseNodeCell extends BaseCell {
   id: NodeId;
   view: NodeView;
   [SYMBOL_FOR_SIZE_INITIALIZED]?: boolean;
+  [SYMBOL_FOR_LAYOUT_INITIALIZED]?: boolean;
 }
 
 export interface BaseEdgeCell extends BaseCell {
@@ -140,3 +149,37 @@ export interface DecoratorTextChangeDetail {
   id: string;
   view: DecoratorView;
 }
+
+export type LayoutType = "manual" | "force" | "dagre" | undefined;
+
+export type LayoutOptions = LayoutOptionsDagre | LayoutOptionsForce;
+
+export interface LayoutOptionsDagre extends BaseLayoutOptions {
+  rankdir?: "TB" | "BT" | "LR" | "RL";
+  ranksep?: number;
+  edgesep?: number;
+  nodesep?: number;
+  align?: "UL" | "UR" | "DL" | "DR";
+}
+
+export interface LayoutOptionsForce extends BaseLayoutOptions {
+  collide?: boolean | ForceCollideOptions;
+}
+
+export interface ForceCollideOptions {
+  radiusDiff?: number;
+  strength?: number;
+  iterations?: number;
+}
+
+export interface BaseLayoutOptions {
+  nodePadding?: PartialRectTuple;
+}
+
+export interface ForceNode extends SimulationNodeDatum {
+  id: NodeId;
+  width: number;
+  height: number;
+}
+
+export type ForceLink = SimulationLinkDatum<ForceNode>;

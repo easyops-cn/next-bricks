@@ -1,6 +1,7 @@
 import { describe, test, expect, jest } from "@jest/globals";
 import { fireEvent } from "@testing-library/dom";
 import { handleMouseDown } from "./handleMouseDown";
+import type { Cell } from "../interfaces";
 
 describe("handleMouseDown", () => {
   const onCellMoving = jest.fn();
@@ -102,5 +103,19 @@ describe("handleMouseDown", () => {
     expect(onSwitchActiveTarget).toHaveBeenCalledTimes(1);
 
     document.body.replaceChildren();
+  });
+
+  test("mousedown on node with force layout", () => {
+    const noopMouseDown = new MouseEvent("mousedown");
+    handleMouseDown(noopMouseDown, {
+      cell: { type: "node", id: "a" } as Cell,
+      action: "move",
+      layout: "force",
+      ...methods,
+    });
+    expect(onSwitchActiveTarget).toBeCalledWith({
+      type: "node",
+      id: "a",
+    });
   });
 });

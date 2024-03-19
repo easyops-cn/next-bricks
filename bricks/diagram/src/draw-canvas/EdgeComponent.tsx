@@ -36,7 +36,10 @@ export function EdgeComponent({
 
   const line = useMemo(
     () =>
-      sourceNode && targetNode
+      sourceNode &&
+      targetNode &&
+      sourceNode.view.x != null &&
+      targetNode.view.x != null
         ? getDirectLinePoints(
             nodeViewToNodeRect(sourceNode.view, padding),
             nodeViewToNodeRect(targetNode.view, padding)
@@ -46,7 +49,8 @@ export function EdgeComponent({
   );
 
   if (!line) {
-    // This happens when source or target is not found
+    // This happens when source or target is not found,
+    // or when source or target has not been positioned yet.
     return null;
   }
 

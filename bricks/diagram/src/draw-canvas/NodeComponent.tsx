@@ -47,7 +47,7 @@ export function NodeComponent({
         // Wait a macro task to let `useBrick` to be rendered.
         setTimeout(() => {
           const observer = new ResizeObserver(() => {
-            onResize(node.id, [element.clientWidth, element.clientHeight]);
+            onResize(node.id, [element.offsetWidth, element.offsetHeight]);
           });
           observer.observe(element);
           observerRef.current = observer;

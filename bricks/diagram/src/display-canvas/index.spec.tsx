@@ -7,6 +7,16 @@ import type { NodeBrickCell } from "../draw-canvas/interfaces";
 
 jest.mock("@next-core/theme", () => ({}));
 jest.mock("d3-drag");
+jest.mock("resize-observer-polyfill", () => ({
+  __esModule: true,
+  default: function (callback: ResizeObserverCallback) {
+    callback([], null!);
+    return {
+      observe: jest.fn(),
+      disconnect: jest.fn(),
+    };
+  },
+}));
 
 describe("eo-display-canvas", () => {
   test("hover", async () => {
@@ -198,6 +208,150 @@ describe("eo-display-canvas", () => {
     act(() => {
       fireEvent.click(element.shadowRoot!.querySelector(".center-button")!);
     });
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("dagre layout", async () => {
+    const element = document.createElement(
+      "eo-display-canvas"
+    ) as EoDisplayCanvas;
+    element.defaultNodeBricks = [{ useBrick: { brick: "div" } }];
+    element.layout = "dagre";
+    element.cells = [
+      {
+        type: "decorator",
+        decorator: "area",
+        id: "area-1",
+        view: {
+          x: 10,
+          y: 10,
+        },
+      },
+      {
+        type: "edge",
+        source: "a",
+        target: "b",
+      },
+      {
+        type: "node",
+        id: "a",
+        view: {
+          x: 20,
+          y: 20,
+        },
+      },
+      {
+        type: "node",
+        id: "b",
+        view: {
+          x: 20,
+          y: 320,
+        },
+      },
+      {
+        type: "decorator",
+        decorator: "text",
+        id: "text-1",
+        view: {
+          x: 150,
+          y: 160,
+        },
+      },
+    ] as NodeBrickCell[];
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    await act(() => (global as any).flushPromises());
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+
+    expect(
+      [...element.shadowRoot!.querySelectorAll(".cell")].map((cell) =>
+        cell.getAttribute("transform")
+      )
+    ).toEqual([
+      "translate(10 10)",
+      null,
+      "translate(0 0)",
+      "translate(0 50)",
+      "translate(150 160)",
+    ]);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("force layout", async () => {
+    const element = document.createElement(
+      "eo-display-canvas"
+    ) as EoDisplayCanvas;
+    element.defaultNodeBricks = [{ useBrick: { brick: "div" } }];
+    element.layout = "force";
+    element.cells = [
+      {
+        type: "decorator",
+        decorator: "area",
+        id: "area-1",
+        view: {
+          x: 10,
+          y: 10,
+        },
+      },
+      {
+        type: "edge",
+        source: "a",
+        target: "b",
+      },
+      {
+        type: "node",
+        id: "a",
+        view: {
+          x: 20,
+          y: 20,
+        },
+      },
+      {
+        type: "node",
+        id: "b",
+        view: {
+          x: 20,
+          y: 320,
+        },
+      },
+      {
+        type: "decorator",
+        decorator: "text",
+        id: "text-1",
+        view: {
+          x: 150,
+          y: 160,
+        },
+      },
+    ] as NodeBrickCell[];
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    await act(() => (global as any).flushPromises());
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+
+    expect(
+      [...element.shadowRoot!.querySelectorAll(".cell")].map((cell) =>
+        cell.getAttribute("transform")
+      )
+    ).toEqual([
+      "translate(10 10)",
+      null,
+      expect.stringMatching(/^translate\(16\.01\d+ -8\.22\d+\)$/),
+      expect.stringMatching(/^translate\(-16\.01\d+ 8\.22\d+\)$/),
+      "translate(150 160)",
+    ]);
 
     act(() => {
       document.body.removeChild(element);

@@ -13,6 +13,7 @@ import { transformToCenter } from "../../draw-canvas/processors/transformToCente
 export interface UseAutoCenterOptions {
   rootRef: React.RefObject<SVGSVGElement>;
   cells: Cell[];
+  layoutInitialized: boolean;
   zoomable?: boolean;
   zoomer: ZoomBehavior<SVGSVGElement, unknown>;
   scaleRange: RangeTuple;
@@ -26,6 +27,7 @@ export type UseAutoCenterResult = [
 export function useAutoCenter({
   rootRef,
   cells,
+  layoutInitialized,
   zoomable,
   zoomer,
   scaleRange,
@@ -36,6 +38,7 @@ export function useAutoCenter({
     const root = rootRef.current;
     if (
       !root ||
+      !layoutInitialized ||
       centered ||
       !cells.some((cell) => isNodeCell(cell) || isDecoratorCell(cell)) ||
       cells.some(
@@ -56,7 +59,15 @@ export function useAutoCenter({
       zoomer.transform(select(root), new ZoomTransform(k, x, y));
     }
     setCentered(true);
-  }, [cells, centered, rootRef, scaleRange, zoomable, zoomer]);
+  }, [
+    cells,
+    centered,
+    layoutInitialized,
+    rootRef,
+    scaleRange,
+    zoomable,
+    zoomer,
+  ]);
 
   useEffect(() => {
     // Reset auto centering when nodes and decorators are all removed.

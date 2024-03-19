@@ -20,6 +20,8 @@ import type {
   CellContextMenuDetail,
   EdgeLineConf,
   Cell,
+  LayoutType,
+  LayoutOptions,
 } from "../draw-canvas/interfaces";
 import { MarkerComponent } from "../diagram/MarkerComponent";
 import { sameTarget } from "../draw-canvas/processors/sameTarget";
@@ -27,12 +29,13 @@ import { CellComponent } from "../draw-canvas/CellComponent";
 import { initializeCells } from "../draw-canvas/processors/initializeCells";
 import { DEFAULT_NODE_SIZE } from "../draw-canvas/constants";
 import { useZoom } from "../shared/canvas/useZoom";
-import { useAutoCenter } from "../shared/canvas/useAutoCenter";
 import { useActiveTarget } from "../shared/canvas/useActiveTarget";
 import { rootReducer } from "../draw-canvas/reducers";
 import { getUnrelatedCells } from "../draw-canvas/processors/getUnrelatedCells";
 import { isEdgeCell, isNodeCell } from "../draw-canvas/processors/asserts";
 import { ZoomBarComponent } from "../shared/canvas/ZoomBarComponent";
+import { useLayout } from "../shared/canvas/useLayout";
+import { useReady } from "../shared/canvas/useReady";
 import styleText from "../shared/canvas/styles.shadow.css";
 import zoomBarStyleText from "../shared/canvas/ZoomBarComponent.shadow.css";
 
@@ -40,6 +43,8 @@ const { defineElement, property, event } = createDecorators();
 
 export interface EoDisplayCanvasProps {
   cells: InitialCell[] | undefined;
+  layout: LayoutType;
+  layoutOptions?: LayoutOptions;
   defaultNodeSize: SizeTuple;
   defaultNodeBricks?: NodeBrickConf[];
   defaultEdgeLines?: EdgeLineConf[];
@@ -64,6 +69,12 @@ class EoDisplayCanvas extends ReactNextElement implements EoDisplayCanvasProps {
    */
   @property({ attribute: false })
   accessor cells: InitialCell[] | undefined;
+
+  @property({ type: String })
+  accessor layout: LayoutType;
+
+  @property({ attribute: false })
+  accessor layoutOptions: LayoutOptions | undefined;
 
   @property({ attribute: false })
   accessor defaultNodeSize: SizeTuple = [DEFAULT_NODE_SIZE, DEFAULT_NODE_SIZE];
@@ -129,6 +140,8 @@ class EoDisplayCanvas extends ReactNextElement implements EoDisplayCanvasProps {
       <EoDisplayCanvasComponent
         shadowRoot={this.shadowRoot!}
         cells={this.cells}
+        layout={this.layout}
+        layoutOptions={this.layoutOptions}
         defaultNodeSize={this.defaultNodeSize}
         defaultNodeBricks={this.defaultNodeBricks}
         defaultEdgeLines={this.defaultEdgeLines}
@@ -156,6 +169,8 @@ export interface EoDisplayCanvasComponentProps extends EoDisplayCanvasProps {
 function EoDisplayCanvasComponent({
   shadowRoot,
   cells: initialCells,
+  layout,
+  layoutOptions,
   defaultNodeSize,
   defaultNodeBricks,
   defaultEdgeLines,
@@ -189,12 +204,15 @@ function EoDisplayCanvasComponent({
     onSwitchActiveTarget,
   });
 
-  const [centered, setCentered] = useAutoCenter({
+  const { centered, setCentered } = useLayout({
+    layout,
+    layoutOptions,
     rootRef,
     cells,
     zoomable,
     zoomer,
     scaleRange,
+    dispatch,
   });
 
   const activeTarget = useActiveTarget({
@@ -247,13 +265,15 @@ function EoDisplayCanvasComponent({
     setCentered(false);
   }, [setCentered]);
 
+  const ready = useReady({ cells, layout, centered });
+
   return (
     <>
       <svg
         width="100%"
         height="100%"
         ref={rootRef}
-        className={classNames("root", { grabbing, pannable, ready: centered })}
+        className={classNames("root", { grabbing, pannable, ready })}
         tabIndex={-1}
       >
         <defs>
@@ -266,6 +286,7 @@ function EoDisplayCanvasComponent({
             {cells.map((cell) => (
               <CellComponent
                 key={`${cell.type}:${isEdgeCell(cell) ? `${cell.source}~${cell.target}` : cell.id}`}
+                layout={undefined}
                 cell={cell}
                 cells={cells}
                 defaultNodeBricks={defaultNodeBricks}
