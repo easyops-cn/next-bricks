@@ -6,6 +6,7 @@ import type {
   CellContextMenuDetail,
   DecoratorTextChangeDetail,
   EdgeLineConf,
+  LayoutType,
   NodeBrickConf,
 } from "./interfaces";
 import { isDecoratorCell, isEdgeCell, isNodeCell } from "./processors/asserts";
@@ -19,6 +20,7 @@ import type { SizeTuple, TransformLiteral } from "../diagram/interfaces";
 import { sameTarget } from "./processors/sameTarget";
 
 export interface CellComponentProps {
+  layout: LayoutType;
   cell: Cell;
   cells: Cell[];
   defaultNodeBricks?: NodeBrickConf[];
@@ -42,6 +44,7 @@ export interface CellComponentProps {
 }
 
 export function CellComponent({
+  layout,
   cell,
   cells,
   defaultNodeBricks,
@@ -77,6 +80,7 @@ export function CellComponent({
     }
     const onMouseDown = (event: MouseEvent) => {
       handleMouseDown(event, {
+        layout,
         action: "move",
         cell,
         scale: transform.k,
@@ -90,6 +94,7 @@ export function CellComponent({
       g.removeEventListener("mousedown", onMouseDown);
     };
   }, [
+    layout,
     cell,
     onCellMoved,
     onCellMoving,
@@ -131,7 +136,7 @@ export function CellComponent({
       })}
       ref={gRef}
       transform={
-        cell.type === "edge"
+        cell.type === "edge" || cell.view.x == null
           ? undefined
           : `translate(${cell.view.x} ${cell.view.y})`
       }

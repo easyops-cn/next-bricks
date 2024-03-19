@@ -22,3 +22,7 @@ export function isInitialNodeCell(cell: InitialCell): cell is InitialNodeCell {
 export function isEdgeCell(cell: Cell): cell is EdgeCell {
   return cell.type === "edge";
 }
+
+export function isNodeOrEdgeCell(cell: Cell): cell is NodeCell | EdgeCell {
+  return cell.type === "node" || cell.type === "edge";
+}

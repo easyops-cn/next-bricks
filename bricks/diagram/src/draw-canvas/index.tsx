@@ -40,6 +40,8 @@ import type {
   EdgeLineConf,
   DecoratorTextChangeDetail,
   NodeView,
+  LayoutType,
+  LayoutOptions,
 } from "./interfaces";
 import { rootReducer } from "./reducers";
 import { MarkerComponent } from "../diagram/MarkerComponent";
@@ -58,9 +60,10 @@ import {
   DEFAULT_AREA_HEIGHT,
 } from "./constants";
 import { useZoom } from "../shared/canvas/useZoom";
-import { useAutoCenter } from "../shared/canvas/useAutoCenter";
 import { useActiveTarget } from "../shared/canvas/useActiveTarget";
 import { ZoomBarComponent } from "../shared/canvas/ZoomBarComponent";
+import { useLayout } from "../shared/canvas/useLayout";
+import { useReady } from "../shared/canvas/useReady";
 import styleText from "../shared/canvas/styles.shadow.css";
 import zoomBarStyleText from "../shared/canvas/ZoomBarComponent.shadow.css";
 
@@ -72,6 +75,8 @@ const { defineElement, property, method, event } = createDecorators();
 
 export interface EoDrawCanvasProps {
   cells: InitialCell[] | undefined;
+  layout: LayoutType;
+  layoutOptions?: LayoutOptions;
   defaultNodeSize: SizeTuple;
   defaultNodeBricks?: NodeBrickConf[];
   defaultEdgeLines?: EdgeLineConf[];
@@ -138,6 +143,12 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
    */
   @property({ attribute: false })
   accessor cells: InitialCell[] | undefined;
+
+  @property({ type: String })
+  accessor layout: LayoutType;
+
+  @property({ attribute: false })
+  accessor layoutOptions: LayoutOptions | undefined;
 
   @property({ attribute: false })
   accessor defaultNodeSize: SizeTuple = [DEFAULT_NODE_SIZE, DEFAULT_NODE_SIZE];
@@ -269,19 +280,26 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
     if (droppedInside) {
       const boundingClientRect = this.getBoundingClientRect();
       const transform = this.#canvasRef.current!.getTransform();
-      const newNode: NodeCell = {
+      const newNode = {
         type: "node",
         id,
         view: {
-          x:
-            (position[0] - boundingClientRect.left - transform.x) / transform.k,
-          y: (position[1] - boundingClientRect.top - transform.y) / transform.k,
+          ...(this.layout === "force" || this.layout === "dagre"
+            ? null
+            : {
+                x:
+                  (position[0] - boundingClientRect.left - transform.x) /
+                  transform.k,
+                y:
+                  (position[1] - boundingClientRect.top - transform.y) /
+                  transform.k,
+              }),
           width: size?.[0] ?? this.defaultNodeSize[0],
           height: size?.[1] ?? this.defaultNodeSize[0],
         },
         data,
         useBrick,
-      };
+      } as NodeCell;
       this.#canvasRef.current?.dropNode(newNode);
       return newNode;
     }
@@ -385,6 +403,8 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
       <EoDrawCanvasComponent
         host={this}
         ref={this.#canvasRef}
+        layout={this.layout}
+        layoutOptions={this.layoutOptions}
         cells={this.cells}
         defaultNodeSize={this.defaultNodeSize}
         defaultNodeBricks={this.defaultNodeBricks}
@@ -443,6 +463,8 @@ export interface DrawCanvasRef {
 function LegacyEoDrawCanvasComponent(
   {
     host,
+    layout,
+    layoutOptions,
     cells: initialCells,
     defaultNodeSize,
     defaultNodeBricks,
@@ -494,12 +516,15 @@ function LegacyEoDrawCanvasComponent(
   const [connectLineState, setConnectLineState] =
     useState<ConnectLineState | null>(null);
 
-  const [centered, setCentered] = useAutoCenter({
+  const { centered, setCentered } = useLayout({
+    layout,
+    layoutOptions,
     rootRef,
     cells,
     zoomable,
     zoomer,
     scaleRange,
+    dispatch,
   });
 
   useImperativeHandle(
@@ -530,6 +555,7 @@ function LegacyEoDrawCanvasComponent(
         ];
         const { cells: allCells, updated } = updateCells({
           cells: newCells,
+          layout,
           previousCells: cells,
           defaultNodeSize,
           canvasWidth,
@@ -548,6 +574,7 @@ function LegacyEoDrawCanvasComponent(
       updateCells(newCells, ctx) {
         const result = updateCells({
           ...ctx,
+          layout,
           previousCells: cells,
           cells: newCells,
           scaleRange,
@@ -581,7 +608,7 @@ function LegacyEoDrawCanvasComponent(
         return Promise.reject(null);
       },
     }),
-    [cells, scaleRange, setCentered, transform]
+    [cells, layout, scaleRange, setCentered, transform]
   );
 
   const handleConnect = useCallback(
@@ -716,13 +743,15 @@ function LegacyEoDrawCanvasComponent(
     setCentered(false);
   }, [setCentered]);
 
+  const ready = useReady({ cells, layout, centered });
+
   return (
     <>
       <svg
         width="100%"
         height="100%"
         ref={rootRef}
-        className={classNames("root", { grabbing, pannable, ready: centered })}
+        className={classNames("root", { grabbing, pannable, ready })}
         tabIndex={-1}
       >
         <defs>
@@ -735,6 +764,7 @@ function LegacyEoDrawCanvasComponent(
             {cells.map((cell) => (
               <CellComponent
                 key={`${cell.type}:${cell.type === "edge" ? `${cell.source}~${cell.target}` : cell.id}`}
+                layout={layout}
                 cell={cell}
                 cells={cells}
                 defaultNodeBricks={defaultNodeBricks}
