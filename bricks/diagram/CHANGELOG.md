@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.29.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.28.1...@next-bricks/diagram@0.29.0) (2024-03-19)
+
+
+### Features
+
+* **canvas:** force and dagre layout ([75ca114](https://github.com/easyops-cn/next-bricks/commit/75ca11452b9a7694ac59da45b42300430ce64d99))
+
+
+
+
+
 ## [0.28.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.28.0...@next-bricks/diagram@0.28.1) (2024-03-15)
 
 
