@@ -1,3 +1,4 @@
+import React from "react";
 import { FormItem } from "./";
 import { describe, test, expect } from "@jest/globals";
 import { act } from "react-dom/test-utils";
@@ -6,6 +7,11 @@ import { Form } from "../form/index.js";
 
 jest.mock("./FormItem.shadow.less", () => "");
 jest.mock("@next-core/theme", () => ({}));
+jest.mock("@next-core/react-runtime", () => ({
+  ReactUseMultipleBricks: () => {
+    return <div>mock element</div>;
+  },
+}));
 
 describe("eo-form-item", () => {
   test("basic usage", async () => {
@@ -30,6 +36,22 @@ describe("eo-form-item", () => {
     element.trigger = "change";
     element.label = "测试";
     element.required = true;
+    element.labelBrick = {
+      useBrick: {
+        brick: "span",
+        properties: {
+          textContent: "labelBrick",
+        },
+      },
+    };
+    element.helpBrick = {
+      useBrick: {
+        brick: "span",
+        properties: {
+          textContent: "helpBrick",
+        },
+      },
+    };
 
     expect(element.shadowRoot).toBeFalsy();
     act(() => {
@@ -71,7 +93,6 @@ describe("eo-form-item", () => {
     act(() => {
       document.body.removeChild(element);
     });
-
     expect(mockFormStore.removeField).toBeCalledTimes(1);
     expect(mockFormStore.unsubscribe).toBeCalledTimes(5);
     expect(element.shadowRoot?.childNodes.length).toBe(0);

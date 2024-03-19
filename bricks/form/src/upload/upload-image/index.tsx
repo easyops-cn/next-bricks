@@ -144,6 +144,7 @@ class UploadImage extends FormItemElementBase implements UploadImageProps {
         helpBrick={this.helpBrick}
         onChange={this.handleChange}
         trigger="handleChange"
+        labelBrick={this.labelBrick}
       />
     );
   }
