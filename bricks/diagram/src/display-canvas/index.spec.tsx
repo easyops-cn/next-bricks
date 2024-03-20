@@ -414,7 +414,7 @@ describe("eo-display-canvas", () => {
       [...element.shadowRoot!.querySelectorAll("marker path")].map(
         (markerPath) => (markerPath as SVGPathElement).getAttribute("stroke")
       )
-    ).toEqual(["red", "gray"]);
+    ).toEqual(["gray", "red"]);
 
     act(() => {
       document.body.removeChild(element);

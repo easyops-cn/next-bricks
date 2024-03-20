@@ -30,7 +30,9 @@ export function useLineMarkers({
   markers: LineMarker[],
 ] {
   return useMemo(() => {
-    const markers: LineMarker[] = [];
+    // Always put the default stroke marker at the first position,
+    // since the connecting line will use it.
+    const markers: LineMarker[] = [{ strokeColor: DEFAULT_LINE_STROKE_COLOR }];
     const map = new WeakMap<EdgeCell, ComputedEdgeLineConf>();
     for (const cell of cells) {
       if (isEdgeCell(cell)) {
