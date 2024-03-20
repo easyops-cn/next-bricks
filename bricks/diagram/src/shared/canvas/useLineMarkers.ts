@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { checkIfByTransform } from "@next-core/runtime";
-import { findIndex } from "lodash";
+import { __secret_internals, checkIfByTransform } from "@next-core/runtime";
+import { findIndex, isUndefined, omitBy } from "lodash";
 import type {
   Cell,
   ComputedEdgeLineConf,
@@ -13,6 +13,9 @@ import {
   DEFAULT_LINE_STROKE_COLOR,
   DEFAULT_LINE_STROKE_WIDTH,
   DEFAULT_LINE_INTERACT_STROKE_WIDTH,
+  DEFAULT_LINE_INTERACT_SHOW_START_ARROW,
+  DEFAULT_LINE_INTERACT_SHOW_END_ARROW,
+  DEFAULT_LINE_INTERACT_ANIMATE_DURATION,
 } from "../../draw-canvas/constants";
 
 export interface UseLineMarkersOptions {
@@ -36,14 +39,25 @@ export function useLineMarkers({
     const map = new WeakMap<EdgeCell, ComputedEdgeLineConf>();
     for (const cell of cells) {
       if (isEdgeCell(cell)) {
+        const computedLineConf =
+          __secret_internals.legacyDoTransform(
+            { edge: cell },
+            defaultEdgeLines?.find((item) =>
+              checkIfByTransform(item, { edge: cell })
+            )
+          ) ?? {};
         const lineConf = {
           dashed: false,
           strokeColor: DEFAULT_LINE_STROKE_COLOR,
           strokeWidth: DEFAULT_LINE_STROKE_WIDTH,
           interactStrokeWidth: DEFAULT_LINE_INTERACT_STROKE_WIDTH,
-          ...defaultEdgeLines?.find((item) =>
-            checkIfByTransform(item, { edge: cell })
-          ),
+          showStartArrow: DEFAULT_LINE_INTERACT_SHOW_START_ARROW,
+          showEndArrow: DEFAULT_LINE_INTERACT_SHOW_END_ARROW,
+          animate: {
+            useAnimate: false,
+            duration: DEFAULT_LINE_INTERACT_ANIMATE_DURATION,
+          },
+          ...omitBy(computedLineConf, isUndefined),
         } as ComputedEdgeLineConf;
         if (lineConf.parallelGap === undefined) {
           lineConf.parallelGap = lineConf.interactStrokeWidth;
@@ -52,7 +66,7 @@ export function useLineMarkers({
           { strokeColor: lineConf.strokeColor },
           markers
         );
-        lineConf.markerEnd = `url(#${markerPrefix}${markerEndIndex})`;
+        lineConf.markerArrow = `url(#${markerPrefix}${markerEndIndex})`;
         map.set(cell, lineConf);
       }
     }

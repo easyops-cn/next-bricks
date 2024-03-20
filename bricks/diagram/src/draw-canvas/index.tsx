@@ -742,7 +742,6 @@ function LegacyEoDrawCanvasComponent(
   const reCenter = useCallback(() => {
     setCentered(false);
   }, [setCentered]);
-
   const [lineConfMap, markers] = useLineMarkers({
     cells,
     defaultEdgeLines,
