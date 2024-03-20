@@ -7,3 +7,4 @@ import "./divider/index.js";
 import "./info-card-item/index.js";
 import "./humanize-time/index.js";
 import "./statistics-card/index.js";
+import "./loading-step/index.js";

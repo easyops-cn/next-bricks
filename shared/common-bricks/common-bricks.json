@@ -91,7 +91,8 @@
     "eo-divider",
     "eo-info-card-item",
     "eo-humanize-time",
-    "eo-statistics-card"
+    "eo-statistics-card",
+    "eo-loading-step"
   ],
   "advanced": [
     "eo-cascader",
