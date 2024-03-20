@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.31.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.30.1...@next-bricks/diagram@0.31.0) (2024-03-20)
+
+
+### Features
+
+* **line:** 支持设置线的粗细，流动速度，线颜色 ([b67ec05](https://github.com/easyops-cn/next-bricks/commit/b67ec051610d61952eda8237ae5cd83322fcc4fb))
+
+
+
+
+
 ## [0.30.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.30.0...@next-bricks/diagram@0.30.1) (2024-03-20)
 
 
