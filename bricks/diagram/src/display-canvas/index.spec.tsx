@@ -357,4 +357,67 @@ describe("eo-display-canvas", () => {
       document.body.removeChild(element);
     });
   });
+
+  test("line conf", async () => {
+    const element = document.createElement(
+      "eo-display-canvas"
+    ) as EoDisplayCanvas;
+    element.defaultNodeBricks = [{ useBrick: { brick: "div" } }];
+    element.cells = [
+      {
+        type: "edge",
+        source: "a",
+        target: "b",
+      },
+      {
+        type: "edge",
+        source: "b",
+        target: "c",
+      },
+      {
+        type: "node",
+        id: "a",
+        view: {
+          x: 20,
+          y: 20,
+        },
+      },
+      {
+        type: "node",
+        id: "b",
+        view: {
+          x: 20,
+          y: 320,
+        },
+      },
+      {
+        type: "node",
+        id: "c",
+        view: {
+          x: 320,
+          y: 320,
+        },
+      },
+    ] as NodeBrickCell[];
+    element.defaultEdgeLines = [
+      { if: "<% DATA.edge.source === 'a' %>", strokeColor: "red" },
+    ];
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    await act(() => (global as any).flushPromises());
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+
+    expect(
+      [...element.shadowRoot!.querySelectorAll("marker path")].map(
+        (markerPath) => (markerPath as SVGPathElement).getAttribute("stroke")
+      )
+    ).toEqual(["red", "gray"]);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
 });

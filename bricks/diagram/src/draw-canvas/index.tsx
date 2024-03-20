@@ -64,6 +64,7 @@ import { useActiveTarget } from "../shared/canvas/useActiveTarget";
 import { ZoomBarComponent } from "../shared/canvas/ZoomBarComponent";
 import { useLayout } from "../shared/canvas/useLayout";
 import { useReady } from "../shared/canvas/useReady";
+import { useLineMarkers } from "../shared/canvas/useLineMarkers";
 import styleText from "../shared/canvas/styles.shadow.css";
 import zoomBarStyleText from "../shared/canvas/ZoomBarComponent.shadow.css";
 
@@ -683,7 +684,6 @@ function LegacyEoDrawCanvasComponent(
 
   const defPrefix = useMemo(() => `${uniqueId("diagram-")}-`, []);
   const markerPrefix = `${defPrefix}line-arrow-`;
-  const markerEnd = `${markerPrefix}1`;
 
   const handleCellMoving = useCallback((info: MoveCellPayload) => {
     dispatch({ type: "move-cell", payload: info });
@@ -743,6 +743,12 @@ function LegacyEoDrawCanvasComponent(
     setCentered(false);
   }, [setCentered]);
 
+  const [lineConfMap, markers] = useLineMarkers({
+    cells,
+    defaultEdgeLines,
+    markerPrefix,
+  });
+
   const ready = useReady({ cells, layout, centered });
 
   return (
@@ -755,7 +761,14 @@ function LegacyEoDrawCanvasComponent(
         tabIndex={-1}
       >
         <defs>
-          <MarkerComponent id={markerEnd} type="arrow" strokeColor="gray" />
+          {markers.map((marker, index) => (
+            <MarkerComponent
+              key={index}
+              id={`${markerPrefix}${index}`}
+              type="arrow"
+              strokeColor={marker.strokeColor}
+            />
+          ))}
         </defs>
         <g
           transform={`translate(${transform.x} ${transform.y}) scale(${transform.k})`}
@@ -768,9 +781,8 @@ function LegacyEoDrawCanvasComponent(
                 cell={cell}
                 cells={cells}
                 defaultNodeBricks={defaultNodeBricks}
-                defaultEdgeLines={defaultEdgeLines}
                 transform={transform}
-                markerEnd={markerEnd}
+                lineConfMap={lineConfMap}
                 active={sameTarget(activeTarget, cell)}
                 unrelatedCells={unrelatedCells}
                 onCellMoving={handleCellMoving}
@@ -788,7 +800,7 @@ function LegacyEoDrawCanvasComponent(
           <ConnectLineComponent
             connectLineState={connectLineState}
             transform={transform}
-            markerEnd={markerEnd}
+            markerEnd={`${markerPrefix}0`}
             onConnect={handleConnect}
           />
         </g>

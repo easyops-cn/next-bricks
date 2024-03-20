@@ -89,6 +89,21 @@ export interface NodeBrickConf {
 export interface EdgeLineConf {
   if?: string | boolean | null;
   dashed?: boolean;
+  strokeWidth?: number;
+  strokeColor?: string;
+  interactStrokeWidth?: number;
+}
+
+export interface ComputedEdgeLineConf {
+  dashed: boolean;
+  strokeWidth: number;
+  strokeColor: string;
+  interactStrokeWidth: number;
+  markerEnd: string;
+}
+
+export interface LineMarker {
+  strokeColor: string;
 }
 
 export type ActiveTarget =

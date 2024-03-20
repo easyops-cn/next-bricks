@@ -36,6 +36,7 @@ import { isEdgeCell, isNodeCell } from "../draw-canvas/processors/asserts";
 import { ZoomBarComponent } from "../shared/canvas/ZoomBarComponent";
 import { useLayout } from "../shared/canvas/useLayout";
 import { useReady } from "../shared/canvas/useReady";
+import { useLineMarkers } from "../shared/canvas/useLineMarkers";
 import styleText from "../shared/canvas/styles.shadow.css";
 import zoomBarStyleText from "../shared/canvas/ZoomBarComponent.shadow.css";
 
@@ -223,7 +224,6 @@ function EoDisplayCanvasComponent({
 
   const defPrefix = useMemo(() => `${uniqueId("diagram-")}-`, []);
   const markerPrefix = `${defPrefix}line-arrow-`;
-  const markerEnd = `${markerPrefix}1`;
 
   const handleNodeBrickResize = useCallback(
     (id: string, size: SizeTuple | null) => {
@@ -265,6 +265,12 @@ function EoDisplayCanvasComponent({
     setCentered(false);
   }, [setCentered]);
 
+  const [lineConfMap, markers] = useLineMarkers({
+    cells,
+    defaultEdgeLines,
+    markerPrefix,
+  });
+
   const ready = useReady({ cells, layout, centered });
 
   return (
@@ -277,7 +283,14 @@ function EoDisplayCanvasComponent({
         tabIndex={-1}
       >
         <defs>
-          <MarkerComponent id={markerEnd} type="arrow" strokeColor="gray" />
+          {markers.map((marker, index) => (
+            <MarkerComponent
+              key={index}
+              id={`${markerPrefix}${index}`}
+              type="arrow"
+              strokeColor={marker.strokeColor}
+            />
+          ))}
         </defs>
         <g
           transform={`translate(${transform.x} ${transform.y}) scale(${transform.k})`}
@@ -290,9 +303,8 @@ function EoDisplayCanvasComponent({
                 cell={cell}
                 cells={cells}
                 defaultNodeBricks={defaultNodeBricks}
-                defaultEdgeLines={defaultEdgeLines}
+                lineConfMap={lineConfMap}
                 transform={transform}
-                markerEnd={markerEnd}
                 active={sameTarget(activeTarget, cell)}
                 readOnly
                 unrelatedCells={unrelatedCells}

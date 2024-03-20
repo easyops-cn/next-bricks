@@ -1,7 +1,11 @@
 import React, { useMemo } from "react";
-import { checkIfByTransform } from "@next-core/runtime";
 import classNames from "classnames";
-import type { Cell, EdgeCell, EdgeLineConf, NodeView } from "./interfaces";
+import type {
+  Cell,
+  ComputedEdgeLineConf,
+  EdgeCell,
+  NodeView,
+} from "./interfaces";
 import { getDirectLinePoints } from "../diagram/lines/getDirectLinePoints";
 import type { NodeRect } from "../diagram/interfaces";
 import { findNode } from "./processors/findNode";
@@ -9,15 +13,13 @@ import { findNode } from "./processors/findNode";
 export interface EdgeComponentProps {
   edge: EdgeCell;
   cells: Cell[];
-  markerEnd: string;
-  defaultEdgeLines?: EdgeLineConf[];
+  lineConfMap: WeakMap<EdgeCell, ComputedEdgeLineConf>;
 }
 
 export function EdgeComponent({
   edge,
   cells,
-  markerEnd,
-  defaultEdgeLines,
+  lineConfMap,
 }: EdgeComponentProps): JSX.Element | null {
   const sourceNode = useMemo(
     () => findNode(cells, edge.source),
@@ -27,10 +29,7 @@ export function EdgeComponent({
     () => findNode(cells, edge.target),
     [cells, edge.target]
   );
-  const lineConf = useMemo(
-    () => defaultEdgeLines?.find((item) => checkIfByTransform(item, { edge })),
-    [defaultEdgeLines, edge]
-  );
+  const lineConf = useMemo(() => lineConfMap.get(edge)!, [edge, lineConfMap]);
 
   const padding = 5;
 
@@ -63,14 +62,15 @@ export function EdgeComponent({
         d={d}
         fill="none"
         stroke="transparent"
-        strokeWidth={16}
+        strokeWidth={lineConf.interactStrokeWidth}
       />
       <path
-        className={classNames("line", { dashed: lineConf?.dashed })}
+        className={classNames("line", { dashed: lineConf.dashed })}
         d={d}
         fill="none"
-        stroke="gray"
-        markerEnd={`url(#${markerEnd})`}
+        stroke={lineConf.strokeColor}
+        strokeWidth={lineConf.strokeWidth}
+        markerEnd={lineConf.markerEnd}
       />
       <path className="line-active-bg" d={d} fill="none" />
     </>

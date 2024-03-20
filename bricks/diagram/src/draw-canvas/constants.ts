@@ -6,3 +6,6 @@ export const DEFAULT_AREA_WIDTH = 100;
 export const DEFAULT_AREA_HEIGHT = 60;
 export const DEFAULT_SCALE_RANGE_MIN = 0.5;
 export const DEFAULT_SCALE_RANGE_MAX = 2;
+export const DEFAULT_LINE_STROKE_COLOR = "gray";
+export const DEFAULT_LINE_STROKE_WIDTH = 1;
+export const DEFAULT_LINE_INTERACT_STROKE_WIDTH = 15;
