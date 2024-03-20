@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.38.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.37.0...@next-shared/common-bricks@0.38.0) (2024-03-20)
+
+
+### Features
+
+* support eo-loading-step ([d6af843](https://github.com/easyops-cn/next-bricks/commit/d6af8435961b2f11ae90db3d949cab37f287e487))
+
+
+
+
+
 # [0.37.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.36.0...@next-shared/common-bricks@0.37.0) (2024-03-13)
 
 

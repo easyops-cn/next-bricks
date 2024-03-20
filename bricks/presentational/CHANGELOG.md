@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.2.6...@next-bricks/presentational@1.3.0) (2024-03-20)
+
+
+### Bug Fixes
+
+* loading icon spinning ([24c350c](https://github.com/easyops-cn/next-bricks/commit/24c350c8db1304d89199ea9964194915026c8c3e))
+
+
+### Features
+
+* support eo-loading-step ([d6af843](https://github.com/easyops-cn/next-bricks/commit/d6af8435961b2f11ae90db3d949cab37f287e487))
+
+
+
+
+
 ## [1.2.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.2.5...@next-bricks/presentational@1.2.6) (2024-03-19)
 
 **Note:** Version bump only for package @next-bricks/presentational
