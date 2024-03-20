@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.30.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.30.0...@next-bricks/diagram@0.30.1) (2024-03-20)
+
+
+### Bug Fixes
+
+* **canvas:** always put the default stroke marker at first ([235dfa7](https://github.com/easyops-cn/next-bricks/commit/235dfa7e506f2ee028d12e9376679577050f6346))
+* **canvas:** parallel lines ([f987d96](https://github.com/easyops-cn/next-bricks/commit/f987d96bbf1281df0c93b5577aa6ade3b38f4c81))
+
+
+
+
+
 # [0.30.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.29.0...@next-bricks/diagram@0.30.0) (2024-03-20)
 
 
