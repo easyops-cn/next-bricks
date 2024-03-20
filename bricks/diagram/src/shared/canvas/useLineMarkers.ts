@@ -45,6 +45,9 @@ export function useLineMarkers({
             checkIfByTransform(item, { edge: cell })
           ),
         } as ComputedEdgeLineConf;
+        if (lineConf.parallelGap === undefined) {
+          lineConf.parallelGap = lineConf.interactStrokeWidth;
+        }
         const markerEndIndex = addMarker(
           { strokeColor: lineConf.strokeColor },
           markers

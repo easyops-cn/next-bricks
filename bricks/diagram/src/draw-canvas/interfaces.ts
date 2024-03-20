@@ -92,6 +92,11 @@ export interface EdgeLineConf {
   strokeWidth?: number;
   strokeColor?: string;
   interactStrokeWidth?: number;
+  /**
+   * By default, the `parallelGap` is equal to `interactStrokeWidth`,
+   * so that the two parallel line interact area will not conflict.
+   */
+  parallelGap?: number;
 }
 
 export interface ComputedEdgeLineConf {
@@ -99,6 +104,7 @@ export interface ComputedEdgeLineConf {
   strokeWidth: number;
   strokeColor: string;
   interactStrokeWidth: number;
+  parallelGap: number;
   markerEnd: string;
 }
 

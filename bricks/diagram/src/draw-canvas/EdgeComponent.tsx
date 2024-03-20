@@ -9,6 +9,7 @@ import type {
 import { getDirectLinePoints } from "../diagram/lines/getDirectLinePoints";
 import type { NodeRect } from "../diagram/interfaces";
 import { findNode } from "./processors/findNode";
+import { isEdgeCell } from "./processors/asserts";
 
 export interface EdgeComponentProps {
   edge: EdgeCell;
@@ -31,6 +32,16 @@ export function EdgeComponent({
   );
   const lineConf = useMemo(() => lineConfMap.get(edge)!, [edge, lineConfMap]);
 
+  const parallelGap = useMemo(() => {
+    const hasOppositeEdge = cells.some(
+      (cell) =>
+        isEdgeCell(cell) &&
+        cell.source === edge.target &&
+        cell.target === edge.source
+    );
+    return hasOppositeEdge ? lineConf.parallelGap : 0;
+  }, [cells, edge, lineConf.parallelGap]);
+
   const padding = 5;
 
   const line = useMemo(
@@ -41,10 +52,11 @@ export function EdgeComponent({
       targetNode.view.x != null
         ? getDirectLinePoints(
             nodeViewToNodeRect(sourceNode.view, padding),
-            nodeViewToNodeRect(targetNode.view, padding)
+            nodeViewToNodeRect(targetNode.view, padding),
+            parallelGap
           )
         : null,
-    [sourceNode, targetNode]
+    [parallelGap, sourceNode, targetNode]
   );
 
   if (!line) {
