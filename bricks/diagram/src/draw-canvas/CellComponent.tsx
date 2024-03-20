@@ -4,8 +4,9 @@ import type {
   ActiveTarget,
   Cell,
   CellContextMenuDetail,
+  ComputedEdgeLineConf,
   DecoratorTextChangeDetail,
-  EdgeLineConf,
+  EdgeCell,
   LayoutType,
   NodeBrickConf,
 } from "./interfaces";
@@ -24,9 +25,8 @@ export interface CellComponentProps {
   cell: Cell;
   cells: Cell[];
   defaultNodeBricks?: NodeBrickConf[];
-  defaultEdgeLines?: EdgeLineConf[];
   transform: TransformLiteral;
-  markerEnd: string;
+  lineConfMap: WeakMap<EdgeCell, ComputedEdgeLineConf>;
   active: boolean;
   readOnly?: boolean;
   unrelatedCells: Cell[];
@@ -48,8 +48,7 @@ export function CellComponent({
   cell,
   cells,
   defaultNodeBricks,
-  defaultEdgeLines,
-  markerEnd,
+  lineConfMap,
   active,
   readOnly,
   transform,
@@ -151,12 +150,7 @@ export function CellComponent({
           onResize={onNodeBrickResize}
         />
       ) : isEdgeCell(cell) ? (
-        <EdgeComponent
-          edge={cell}
-          defaultEdgeLines={defaultEdgeLines}
-          cells={cells}
-          markerEnd={markerEnd}
-        />
+        <EdgeComponent edge={cell} cells={cells} lineConfMap={lineConfMap} />
       ) : isDecoratorCell(cell) ? (
         <DecoratorComponent
           cell={cell}
