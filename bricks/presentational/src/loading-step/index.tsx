@@ -133,6 +133,7 @@ const statusMap = {
         lib="antd"
         theme="outlined"
         icon="loading"
+        spinning
         className="step-item-icon"
       />
     ),

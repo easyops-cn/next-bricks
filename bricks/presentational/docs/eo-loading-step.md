@@ -4,7 +4,7 @@
 
 ### Basic
 
-```yaml preview
+```yaml preview minHeight="600px"
 brick: eo-loading-step
 properties:
   visible: true
