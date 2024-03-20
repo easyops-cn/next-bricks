@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useRef } from "react";
 import classNames from "classnames";
 import type {
   Cell,
@@ -10,6 +10,7 @@ import { getDirectLinePoints } from "../diagram/lines/getDirectLinePoints";
 import type { NodeRect } from "../diagram/interfaces";
 import { findNode } from "./processors/findNode";
 import { isEdgeCell } from "./processors/asserts";
+import { DEFAULT_LINE_INTERACT_ANIMATE_DURATION } from "./constants";
 
 export interface EdgeComponentProps {
   edge: EdgeCell;
@@ -22,6 +23,7 @@ export function EdgeComponent({
   cells,
   lineConfMap,
 }: EdgeComponentProps): JSX.Element | null {
+  const pathRef = useRef<SVGPathElement>(null);
   const sourceNode = useMemo(
     () => findNode(cells, edge.source),
     [cells, edge.source]
@@ -64,9 +66,7 @@ export function EdgeComponent({
     // or when source or target has not been positioned yet.
     return null;
   }
-
   const d = `M${line[0].x} ${line[0].y}L${line[1].x} ${line[1].y}`;
-
   return (
     <>
       <path
@@ -77,12 +77,24 @@ export function EdgeComponent({
         strokeWidth={lineConf.interactStrokeWidth}
       />
       <path
-        className={classNames("line", { dashed: lineConf.dashed })}
+        ref={pathRef}
+        className={classNames("line", {
+          dashed: lineConf.dashed,
+          [`${lineConf.dashed ? "dashed" : "solid"}-animation`]:
+            lineConf.animate.useAnimate,
+        })}
+        style={
+          {
+            "--time": `${lineConf.animate.duration ?? DEFAULT_LINE_INTERACT_ANIMATE_DURATION}s`,
+            "--solid-length": pathRef.current?.getTotalLength?.(),
+          } as React.CSSProperties
+        }
         d={d}
         fill="none"
         stroke={lineConf.strokeColor}
         strokeWidth={lineConf.strokeWidth}
-        markerEnd={lineConf.markerEnd}
+        markerStart={lineConf.showStartArrow ? lineConf.markerArrow : ""}
+        markerEnd={lineConf.showEndArrow ? lineConf.markerArrow : ""}
       />
       <path className="line-active-bg" d={d} fill="none" />
     </>

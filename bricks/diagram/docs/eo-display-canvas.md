@@ -31,13 +31,38 @@
               type: "edge",
               source: "X",
               target: "Y",
+              data: {
+                virtual: false,
+                showStartArrow: false,
+                strokeColor:"red",
+                strokeWidth: 5,
+              }
             },
+            {
+              type: "edge",
+              source: "X",
+              target: "W",
+              data: {
+                virtual: false,
+                showStartArrow: true,
+                strokeColor:"pink",
+                animate:{
+                  useAnimate: true,
+                  duration: 4 
+                } 
+              }
+            }, 
             {
               type: "edge",
               source: "X",
               target: "Z",
               data: {
                 virtual: true,
+                showStartArrow: true,
+                strokeColor:"blue",
+                animate:{
+                  useAnimate: true 
+                } 
               }
             },
           ].concat(
@@ -60,7 +85,7 @@
                 height: 60,
               }
             }))
-          ).concat([
+          ).concat([ 
             {
               type: "decorator",
               id: "text-1",
@@ -72,7 +97,7 @@
                 height: 20,
                 text: "Hello!"
               },
-            },
+            },  
           ])
         %>
     - name: activeTarget
@@ -109,8 +134,12 @@
                           : "default"
                       %>
             defaultEdgeLines:
-              - if: <% DATA.edge.data?.virtual %>
-                dashed: true
+              - if: true
+                dashed: <% DATA.edge?.data?.virtual %>
+                strokeColor: <% DATA.edge?.data?.strokeColor %>
+                showStartArrow: <% DATA.edge?.data?.showStartArrow %>
+                strokeWidth: <% DATA.edge?.data?.strokeWidth %>
+                animate: <% DATA.edge?.data?.animate %>
             cells: <% CTX.initialCells %>
           events:
             activeTarget.change:

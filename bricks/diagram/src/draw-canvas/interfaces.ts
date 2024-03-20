@@ -86,17 +86,13 @@ export interface NodeBrickConf {
   if?: string | boolean | null;
 }
 
-export interface EdgeLineConf {
+export interface EdgeLineConf
+  extends Omit<Partial<ComputedEdgeLineConf>, "markerArrow"> {
   if?: string | boolean | null;
-  dashed?: boolean;
-  strokeWidth?: number;
-  strokeColor?: string;
-  interactStrokeWidth?: number;
-  /**
-   * By default, the `parallelGap` is equal to `interactStrokeWidth`,
-   * so that the two parallel line interact area will not conflict.
-   */
-  parallelGap?: number;
+}
+export interface LineAnimate {
+  useAnimate: boolean;
+  duration: number;
 }
 
 export interface ComputedEdgeLineConf {
@@ -106,6 +102,10 @@ export interface ComputedEdgeLineConf {
   interactStrokeWidth: number;
   parallelGap: number;
   markerEnd: string;
+  markerArrow: string;
+  showStartArrow: boolean;
+  showEndArrow: boolean;
+  animate: LineAnimate;
 }
 
 export interface LineMarker {

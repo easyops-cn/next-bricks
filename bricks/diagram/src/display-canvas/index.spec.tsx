@@ -3,7 +3,7 @@ import { act } from "react-dom/test-utils";
 import { fireEvent } from "@testing-library/react";
 import "./";
 import type { EoDisplayCanvas } from "./index.js";
-import type { NodeBrickCell } from "../draw-canvas/interfaces";
+import type { EdgeLineConf, NodeBrickCell } from "../draw-canvas/interfaces";
 
 jest.mock("@next-core/theme", () => ({}));
 jest.mock("d3-drag");
@@ -17,7 +17,7 @@ jest.mock("resize-observer-polyfill", () => ({
     };
   },
 }));
-
+(Element as any).prototype.getTotalLength = jest.fn(() => 100);
 describe("eo-display-canvas", () => {
   test("hover", async () => {
     const element = document.createElement(
@@ -375,6 +375,22 @@ describe("eo-display-canvas", () => {
         target: "c",
       },
       {
+        type: "edge",
+        source: "b",
+        target: "a",
+        data: {
+          virtual: true,
+          showStartArrow: true,
+          showEndArrow: false,
+          strokeColor: "blue",
+          strokeWidth: 5,
+          parallelGap: 5,
+          animate: {
+            useAnimate: true,
+          },
+        },
+      },
+      {
         type: "node",
         id: "a",
         view: {
@@ -401,6 +417,16 @@ describe("eo-display-canvas", () => {
     ] as NodeBrickCell[];
     element.defaultEdgeLines = [
       { if: "<% DATA.edge.source === 'a' %>", strokeColor: "red" },
+      {
+        if: true,
+        dashed: "<% DATA.edge?.data?.virtual %>",
+        strokeColor: "<% DATA.edge?.data?.strokeColor %>",
+        showStartArrow: "<% DATA.edge?.data?.showStartArrow %>",
+        showEndArrow: "<% DATA.edge?.data?.showEndArrow %>",
+        strokeWidth: "<% DATA.edge?.data?.strokeWidth %>",
+        parallelGap: "<% DATA.edge?.data?.parallelGap %>",
+        animate: "<% DATA.edge?.data?.animate %>",
+      } as any as EdgeLineConf,
     ];
 
     act(() => {
@@ -414,7 +440,10 @@ describe("eo-display-canvas", () => {
       [...element.shadowRoot!.querySelectorAll("marker path")].map(
         (markerPath) => (markerPath as SVGPathElement).getAttribute("stroke")
       )
-    ).toEqual(["gray", "red"]);
+    ).toEqual(["gray", "red", "blue"]);
+    expect(
+      element.shadowRoot!.querySelectorAll(".dashed-animation").length
+    ).toBe(1);
 
     act(() => {
       document.body.removeChild(element);

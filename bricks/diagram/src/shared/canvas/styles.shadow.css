@@ -1,11 +1,13 @@
 * {
   box-sizing: border-box;
 }
-
 :host {
   display: block;
   position: relative;
   overflow: hidden;
+  --animation-dasharray: 48;
+  --stroke-dashoffset: 96;
+  --dasharray: 4;
 }
 
 :host,
@@ -30,6 +32,29 @@
   outline: none;
 }
 
+@keyframes dashedAnimation {
+  0% {
+    stroke-dashoffset: var(--stroke-dashoffset);
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes solidAnimation {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.solid-animation {
+  stroke-dasharray: var(--solid-length);
+  stroke-dashoffset: var(--solid-length);
+  animation: solidAnimation var(--time) linear infinite;
+}
+.dashed-animation {
+  animation: dashedAnimation var(--time) linear infinite;
+}
+
 .decorator-area .area {
   fill: rgba(119, 141, 195, 0.1);
   stroke: none;
@@ -44,7 +69,7 @@
 .cell.active .decorator-area .area,
 .cell.active .line-active-bg {
   stroke: var(--palette-blue-5);
-  stroke-dasharray: 4;
+  stroke-dasharray: var(--dasharray);
   stroke-width: 1;
 }
 
@@ -82,7 +107,7 @@
 }
 
 .line.dashed {
-  stroke-dasharray: 4;
+  stroke-dasharray: var(--dasharray);
 }
 
 .cell.active .decorator-text .text-container {
