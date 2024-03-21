@@ -554,7 +554,11 @@ function LegacyEoDrawCanvasComponent(
           ...nodes,
           ...cells.slice(index),
         ];
-        const { cells: allCells, updated } = updateCells({
+        const {
+          cells: allCells,
+          updated,
+          shouldReCenter,
+        } = updateCells({
           cells: newCells,
           layout,
           previousCells: cells,
@@ -564,6 +568,9 @@ function LegacyEoDrawCanvasComponent(
           scaleRange,
           transform,
         });
+        if (shouldReCenter) {
+          setCentered(false);
+        }
         dispatch({ type: "update-cells", payload: allCells });
         return updated.filter((node) =>
           nodes.includes(node as NodeCell)
@@ -573,7 +580,7 @@ function LegacyEoDrawCanvasComponent(
         dispatch({ type: "add-edge", payload: edge });
       },
       updateCells(newCells, ctx) {
-        const result = updateCells({
+        const { shouldReCenter, ...result } = updateCells({
           ...ctx,
           layout,
           previousCells: cells,
@@ -581,6 +588,9 @@ function LegacyEoDrawCanvasComponent(
           scaleRange,
           transform,
         });
+        if (shouldReCenter) {
+          setCentered(false);
+        }
         dispatch({ type: "update-cells", payload: result.cells });
         return result;
       },

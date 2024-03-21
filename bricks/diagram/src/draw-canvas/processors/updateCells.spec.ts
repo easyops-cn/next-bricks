@@ -152,6 +152,7 @@ describe("updateCells", () => {
           },
         },
       ],
+      shouldReCenter: false,
     });
   });
 
@@ -301,6 +302,7 @@ describe("updateCells", () => {
           },
         },
       ],
+      shouldReCenter: false,
     });
   });
 
@@ -403,6 +405,7 @@ describe("updateCells", () => {
           },
         },
       ],
+      shouldReCenter: false,
     });
   });
 
@@ -434,8 +437,8 @@ describe("updateCells", () => {
           view: {
             height: 80,
             width: 120,
-            x: 18,
-            y: 18,
+            x: 60,
+            y: 40,
           },
         },
         {
@@ -444,12 +447,14 @@ describe("updateCells", () => {
           view: {
             height: 80,
             width: 120,
-            x: 18,
-            y: 134,
+            x: 230,
+            y: 40,
           },
         },
       ],
       updated: expect.objectContaining({ length: 2 }),
+      // dagre layout
+      shouldReCenter: true,
     });
   });
 
@@ -483,8 +488,8 @@ describe("updateCells", () => {
           view: {
             height: 80,
             width: 120,
-            x: 18,
-            y: 18,
+            x: 60,
+            y: 40,
           },
         },
         {
@@ -493,12 +498,14 @@ describe("updateCells", () => {
           view: {
             height: 80,
             width: 120,
-            x: 18,
-            y: 134,
+            x: 230,
+            y: 40,
           },
         },
       ],
       updated: expect.objectContaining({ length: 2 }),
+      // dagre layout
+      shouldReCenter: true,
     });
   });
 
@@ -579,6 +586,7 @@ describe("updateCells", () => {
         },
       ],
       updated: [],
+      shouldReCenter: false,
     });
   });
 
@@ -641,8 +649,8 @@ describe("updateCells", () => {
           id: "3",
           type: "node",
           view: {
-            x: 11828,
-            y: -212,
+            x: expect.closeTo(12150, 0),
+            y: expect.closeTo(130, 0),
             height: 80,
             width: 120,
           },
@@ -653,13 +661,14 @@ describe("updateCells", () => {
           id: "3",
           type: "node",
           view: {
-            x: 11828,
-            y: -212,
+            x: expect.closeTo(12150, 0),
+            y: expect.closeTo(130, 0),
             height: 80,
             width: 120,
           },
         },
       ],
+      shouldReCenter: false,
     });
   });
 
@@ -738,6 +747,7 @@ describe("updateCells", () => {
           },
         },
       ],
+      shouldReCenter: false,
     });
   });
 });

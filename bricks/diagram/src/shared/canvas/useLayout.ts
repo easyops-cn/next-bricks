@@ -1,23 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import type { ZoomBehavior } from "d3-zoom";
-import {
-  forceCollide,
-  forceLink,
-  forceManyBody,
-  forceSimulation,
-  forceX,
-  forceY,
-  type Simulation,
-} from "d3-force";
-import dagre from "@dagrejs/dagre";
-import { pick } from "lodash";
 import type {
   Cell,
-  ForceCollideOptions,
-  ForceLink,
-  ForceNode,
   LayoutOptions,
   LayoutOptionsForce,
+  LayoutOptionsDagre,
   LayoutType,
   NodeId,
   NodeView,
@@ -25,7 +12,6 @@ import type {
 import type { FullRectTuple, RangeTuple } from "../../diagram/interfaces";
 import { useAutoCenter } from "./useAutoCenter";
 import {
-  isEdgeCell,
   isNodeCell,
   isNodeOrEdgeCell,
 } from "../../draw-canvas/processors/asserts";
@@ -34,7 +20,8 @@ import {
   SYMBOL_FOR_SIZE_INITIALIZED,
 } from "../../draw-canvas/constants";
 import type { DrawCanvasAction } from "../../draw-canvas/reducers/interfaces";
-import { extractPartialRectTuple } from "../../diagram/processors/extractPartialRectTuple";
+import { forceLayout } from "./forceLayout";
+import { dagreLayout } from "./dagreLayout";
 
 export interface UseLayoutOptions {
   layout: LayoutType;
@@ -98,105 +85,15 @@ export function useLayout({
     let nodePaddings: FullRectTuple;
 
     if (layout === "force") {
-      const forceLayoutOptions = layoutOptions as LayoutOptionsForce;
-      const { nodePadding, collide } = {
-        nodePadding: 0,
-        ...pick(forceLayoutOptions, ["nodePadding"]),
-        collide:
-          forceLayoutOptions?.collide !== false
-            ? ({
-                radiusDiff: 18,
-                strength: 1,
-                iterations: 1,
-                ...(forceLayoutOptions?.collide === true
-                  ? null
-                  : (forceLayoutOptions?.collide as ForceCollideOptions)),
-              } as Required<ForceCollideOptions>)
-            : (false as const),
-      };
-      nodePaddings = extractPartialRectTuple(nodePadding);
-      const forceNodes: ForceNode[] = [];
-      const forceLinks: ForceLink[] = [];
-      const nodesMap = new Map<NodeId, ForceNode>();
-      for (const cell of cells) {
-        if (isNodeCell(cell)) {
-          const node: ForceNode = {
-            id: cell.id,
-            width: cell.view.width + nodePaddings[1] + nodePaddings[3],
-            height: cell.view.height + nodePaddings[0] + nodePaddings[2],
-          };
-          forceNodes.push(node);
-          nodesMap.set(node.id, node);
-        } else if (isEdgeCell(cell)) {
-          forceLinks.push({ source: cell.source, target: cell.target });
-        }
-      }
-
-      const linkSimulation = forceLink<ForceNode, ForceLink>(forceLinks).id(
-        (d) => d.id
-      );
-      const simulation = forceSimulation<ForceNode, ForceLink>(forceNodes)
-        .force("link", linkSimulation)
-        .force("x", forceX())
-        .force("y", forceY())
-        .force("charge", forceManyBody());
-
-      if (collide) {
-        simulation.force(
-          "collide",
-          forceCollide<ForceNode>()
-            .radius(
-              (d) =>
-                Math.sqrt(d.width ** 2 + d.height ** 2) / 2 + collide.radiusDiff
-            )
-            .strength(collide.strength)
-            .iterations(collide.iterations)
-        );
-      }
-
-      simulation.stop();
-      manuallyTickToTheEnd(simulation);
-
-      getNodeView = (id: NodeId) => nodesMap.get(id) as NodeView;
+      ({ getNodeView, nodePaddings } = forceLayout({
+        cells,
+        layoutOptions: layoutOptions as LayoutOptionsForce,
+      }));
     } else {
-      const dagreLayoutOptions = layoutOptions as LayoutOptionsForce;
-      const { nodePadding, ...dagreGraphOptions } = {
-        nodePadding: 0,
-        rankdir: "TB",
-        ranksep: 50,
-        edgesep: 10,
-        nodesep: 50,
-        // align: undefined,
-        ...pick(dagreLayoutOptions, [
-          "nodePadding",
-          "rankdir",
-          "ranksep",
-          "edgesep",
-          "nodesep",
-          "align",
-        ]),
-      };
-      nodePaddings = extractPartialRectTuple(nodePadding);
-      const graph = new dagre.graphlib.Graph<ForceNode>();
-      graph.setGraph(dagreGraphOptions);
-      // Default to assigning a new object as a label for each new edge.
-      graph.setDefaultEdgeLabel(function () {
-        return {};
-      });
-      for (const cell of cells) {
-        if (isNodeCell(cell)) {
-          graph.setNode(cell.id, {
-            id: cell.id,
-            width: cell.view.width + nodePaddings[1] + nodePaddings[3],
-            height: cell.view.height + nodePaddings[0] + nodePaddings[2],
-          });
-        } else if (isEdgeCell(cell)) {
-          graph.setEdge(cell.source, cell.target);
-        }
-      }
-      dagre.layout(graph);
-
-      getNodeView = (id: NodeId) => graph.node(id);
+      ({ getNodeView, nodePaddings } = dagreLayout({
+        cells,
+        layoutOptions: layoutOptions as LayoutOptionsDagre,
+      }));
     }
 
     const newCells: Cell[] = cells.map((cell) => {
@@ -222,17 +119,6 @@ export function useLayout({
   }, [cells, dispatch, layout, layoutOptions, setCentered]);
 
   return { centered, setCentered };
-}
-
-function manuallyTickToTheEnd(
-  simulation: Simulation<ForceNode, ForceLink>
-): void {
-  // Manually tick to the end.
-  simulation.tick(
-    Math.ceil(
-      Math.log(simulation.alphaMin()) / Math.log(1 - simulation.alphaDecay())
-    )
-  );
 }
 
 function isSameArray<T = unknown>(a: T[] | null, b: T[]): boolean {

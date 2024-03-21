@@ -16,6 +16,8 @@ import type {
 import { isDecoratorCell, isEdgeCell, isNodeCell } from "./asserts";
 import { initializeCells } from "./initializeCells";
 import { transformToCenter } from "./transformToCenter";
+import { forceLayout } from "../../shared/canvas/forceLayout";
+import { dagreLayout } from "../../shared/canvas/dagreLayout";
 
 export function updateCells({
   cells,
@@ -42,10 +44,12 @@ export function updateCells({
 }): {
   cells: Cell[];
   updated: Cell[];
+  shouldReCenter: boolean;
 } {
   const isManualLayout = layout !== "force" && layout !== "dagre";
   const newCells = initializeCells(cells, { defaultNodeSize });
   const updateCandidates: NodeCell[] = [];
+  let shouldReCenter = false;
 
   const previousSizeInitializedNodes = new Map<string, NodeCell>();
   let previousShouldCentered = false;
@@ -140,7 +144,8 @@ export function updateCells({
     // By default, place unpositioned nodes in a grid.
     let maxWidth = defaultNodeSize[0];
     let maxHeight = defaultNodeSize[1];
-    const occupiedViews: NodeView[] = [];
+    let positionedNodesCount = 0;
+    let hasDecorators = false;
     for (const cell of newCells) {
       if (isNodeCell(cell)) {
         if (cell.view.width > maxWidth) {
@@ -152,8 +157,10 @@ export function updateCells({
         if (cell.view.x === undefined || cell.view.y === undefined) {
           updateCandidates.push(cell);
         } else {
-          occupiedViews.push(cell.view);
+          positionedNodesCount++;
         }
+      } else if (isDecoratorCell(cell)) {
+        hasDecorators = true;
       }
     }
 
@@ -167,49 +174,37 @@ export function updateCells({
         });
       }
 
-      const deltaX = maxWidth + DEFAULT_NODE_GAP;
-      const deltaY = maxHeight + DEFAULT_NODE_GAP;
+      let getNodeView: (id: NodeId) => NodeView;
 
-      const occupiedIndexes = new Set<string>();
-      for (const view of occupiedViews) {
-        const x0 = Math.floor((view.x + transform.x / transform.k) / deltaX);
-        const y0 = Math.floor((view.y + transform.y / transform.k) / deltaY);
-        const x1 = Math.floor(
-          (view.x + transform.x / transform.k + view.width) / deltaX
-        );
-        const y1 = Math.floor(
-          (view.y + transform.y / transform.k + view.height) / deltaY
-        );
-
-        for (let i = x0; i <= x1; i++) {
-          for (let j = y0; j <= y1; j++) {
-            occupiedIndexes.add(`${i},${j}`);
-          }
-        }
+      // If there is no positioned nodes, or only one while without decorators,
+      // then there is no relative positions, we can place the nodes with dagre layout.
+      // Otherwise, use the force layout.
+      if (
+        positionedNodesCount === 0 ||
+        (positionedNodesCount === 1 && !hasDecorators)
+      ) {
+        ({ getNodeView } = dagreLayout({ cells: newCells }));
+        shouldReCenter = true;
+      } else {
+        ({ getNodeView } = forceLayout({
+          cells: newCells,
+          fixedPosition: true,
+          center: [
+            (canvasWidth / 2 - transform.x) / transform.k,
+            (canvasHeight / 2 - transform.y) / transform.k,
+          ],
+        }));
       }
 
-      const scaledDeltaX = deltaX * transform.k;
-      const scaledDeltaY = deltaY * transform.k;
-      const rows = Math.max(1, Math.floor(canvasHeight / scaledDeltaY));
-      let i = 0;
-      for (const node of updateCandidates) {
-        let xIndex: number;
-        let yIndex: number;
-        do {
-          xIndex = Math.floor(i / rows);
-          yIndex = i % rows;
-          i++;
-        } while (occupiedIndexes.has(`${xIndex},${yIndex}`));
-
-        node.view.x =
-          (xIndex * scaledDeltaX - transform.x) / transform.k +
-          DEFAULT_NODE_GAP / 2;
-        node.view.y =
-          (yIndex * scaledDeltaY - transform.y) / transform.k +
-          DEFAULT_NODE_GAP / 2;
+      for (const cell of newCells) {
+        if (isNodeCell(cell)) {
+          const view = getNodeView(cell.id);
+          cell.view.x = view.x;
+          cell.view.y = view.y;
+        }
       }
     }
   }
 
-  return { cells: newCells, updated: updateCandidates };
+  return { cells: newCells, updated: updateCandidates, shouldReCenter };
 }

@@ -220,8 +220,8 @@ describe("eo-draw-canvas", () => {
           view: {
             height: 200,
             width: 100,
-            x: 18,
-            y: 18,
+            x: 50,
+            y: 100,
           },
         },
         {
@@ -231,8 +231,8 @@ describe("eo-draw-canvas", () => {
           view: {
             height: 20,
             width: 20,
-            x: 154,
-            y: 18,
+            x: 160,
+            y: 100,
           },
         },
       ]);
@@ -264,8 +264,8 @@ describe("eo-draw-canvas", () => {
           view: {
             height: 20,
             width: 20,
-            x: 290,
-            y: 18,
+            x: expect.closeTo(73.7, 1),
+            y: expect.closeTo(-60.2, 1),
           },
         },
         {
@@ -278,8 +278,8 @@ describe("eo-draw-canvas", () => {
           view: {
             height: 200,
             width: 100,
-            x: 426,
-            y: 18,
+            x: expect.closeTo(-73.1, 1),
+            y: expect.closeTo(-128.5, 1),
           },
         },
       ]);
