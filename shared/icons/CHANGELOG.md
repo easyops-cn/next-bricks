@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.2.4...@next-shared/icons@0.3.0) (2024-03-22)
+
+
+### Features
+
+* **icons:** add serial and parallel icons ([7074639](https://github.com/easyops-cn/next-bricks/commit/70746397ed8b15c2a6fb27eba2b2dd2b769b1eb8))
+
+
+
+
+
 ## [0.2.4](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.2.3...@next-shared/icons@0.2.4) (2024-03-12)
 
 **Note:** Version bump only for package @next-shared/icons
