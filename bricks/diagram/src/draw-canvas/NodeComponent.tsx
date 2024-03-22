@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import { ReactUseBrick } from "@next-core/react-runtime";
-import { checkIfByTransform } from "@next-core/runtime";
+import { __secret_internals, checkIfByTransform } from "@next-core/runtime";
 import { isEqual } from "lodash";
 import ResizeObserver from "resize-observer-polyfill";
 import type { NodeBrickCell, NodeBrickConf, NodeCell } from "./interfaces";
@@ -14,12 +14,16 @@ import type { SizeTuple } from "../diagram/interfaces";
 
 export interface NodeComponentProps {
   node: NodeCell;
+  degraded: boolean;
+  degradedNodeLabel?: string;
   defaultNodeBricks?: NodeBrickConf[];
   onResize(id: string, size: SizeTuple | null): void;
 }
 
 export function NodeComponent({
   node,
+  degraded,
+  degradedNodeLabel,
   defaultNodeBricks,
   onResize,
 }: NodeComponentProps): JSX.Element | null {
@@ -28,12 +32,26 @@ export function NodeComponent({
   const observerRef = useRef<ResizeObserver | null>(null);
 
   const useBrick = useMemo(() => {
-    return (
-      specifiedUseBrick ??
-      defaultNodeBricks?.find((item) => checkIfByTransform(item, memoizedData))
-        ?.useBrick
-    );
-  }, [defaultNodeBricks, specifiedUseBrick, memoizedData]);
+    return degraded
+      ? null
+      : specifiedUseBrick ??
+          defaultNodeBricks?.find((item) =>
+            checkIfByTransform(item, memoizedData)
+          )?.useBrick;
+  }, [degraded, specifiedUseBrick, defaultNodeBricks, memoizedData]);
+
+  const label = useMemo<string>(
+    () =>
+      degraded
+        ? String(
+            __secret_internals.legacyDoTransform(
+              memoizedData,
+              degradedNodeLabel ?? "<% DATA.node.id %>"
+            )
+          )
+        : "",
+    [degraded, degradedNodeLabel, memoizedData]
+  );
 
   const refCallback = useCallback(
     (element: HTMLElement | null) => {
@@ -59,6 +77,22 @@ export function NodeComponent({
     [node.id, onResize]
   );
 
+  const degradedRefCallBack = useCallback(
+    (g: SVGGElement | null) => {
+      if (g) {
+        // istanbul ignore next
+        const size =
+          process.env.NODE_ENV === "test"
+            ? { width: 60, height: 60 }
+            : g.getBBox();
+        onResize(node.id, [size.width, size.height]);
+      } else {
+        onResize(node.id, null);
+      }
+    },
+    [node.id, onResize]
+  );
+
   return useBrick ? (
     <foreignObject
       // Make a large size to avoid the brick inside to be clipped by the foreignObject.
@@ -74,6 +108,13 @@ export function NodeComponent({
         />
       )}
     </foreignObject>
+  ) : degraded ? (
+    <g className="degraded" ref={degradedRefCallBack}>
+      <circle cx={8} cy={8} r={8} />
+      <text x={8} y={32}>
+        {label}
+      </text>
+    </g>
   ) : null;
 }
 

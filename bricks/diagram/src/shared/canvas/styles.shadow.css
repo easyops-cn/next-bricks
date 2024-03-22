@@ -134,3 +134,23 @@
 .cell .node > * {
   pointer-events: auto;
 }
+
+.degraded {
+  pointer-events: bounding-box;
+}
+
+.degraded circle {
+  fill: rgb(119, 141, 195);
+}
+
+.degraded text {
+  text-anchor: middle;
+  fill: var(--antd-text-color);
+}
+
+.cell.active .degraded circle,
+.cell.active .degraded text,
+.degraded:hover circle,
+.degraded:hover text {
+  fill: var(--color-brand);
+}

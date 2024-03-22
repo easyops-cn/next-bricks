@@ -58,6 +58,7 @@ import {
   DEFAULT_NODE_SIZE,
   DEFAULT_AREA_WIDTH,
   DEFAULT_AREA_HEIGHT,
+  DEFAULT_DEGRADED_THRESHOLD,
 } from "./constants";
 import { useZoom } from "../shared/canvas/useZoom";
 import { useActiveTarget } from "../shared/canvas/useActiveTarget";
@@ -81,6 +82,8 @@ export interface EoDrawCanvasProps {
   defaultNodeSize: SizeTuple;
   defaultNodeBricks?: NodeBrickConf[];
   defaultEdgeLines?: EdgeLineConf[];
+  degradedThreshold?: number;
+  degradedNodeLabel?: string;
   activeTarget?: ActiveTarget | null;
   fadeUnrelatedCells?: boolean;
   zoomable?: boolean;
@@ -156,6 +159,25 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
 
   @property({ attribute: false })
   accessor defaultNodeBricks: NodeBrickConf[] | undefined;
+
+  /**
+   * 当节点数量达到或超过 `degradedThreshold` 时，节点将被降级展示。
+   *
+   * @default 500
+   */
+  @property({ type: Number })
+  accessor degradedThreshold: number | undefined;
+
+  // Set `attribute` to `false` event if it accepts string value.
+  // Because when passing like "<% DATA.node.data.name %>", it will be
+  // evaluated as object temporarily.
+  /**
+   * 设置节点将降级展示时显示的名称。
+   *
+   * @default "<% DATA.node.id %>"
+   */
+  @property({ attribute: false })
+  accessor degradedNodeLabel: string | undefined;
 
   /**
    * 使用条件判断设置默认的边对应的连线。在 `if` 表达式中 `DATA` 为 `{ edge }`，例如：
@@ -383,6 +405,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
     cells: InitialCell[],
     ctx?: UpdateCellsContext
   ): Promise<{ updated: Cell[] }> {
+    await this.#waitForCanvasRef();
     const { updated } = this.#canvasRef.current!.updateCells(cells, {
       ...ctx,
       defaultNodeSize: this.defaultNodeSize,
@@ -390,6 +413,19 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
       canvasHeight: this.clientHeight,
     });
     return { updated };
+  }
+
+  #waitForCanvasRef() {
+    return new Promise<void>((resolve) => {
+      const check = () => {
+        if (this.#canvasRef.current) {
+          resolve();
+        } else {
+          setTimeout(check, 10);
+        }
+      };
+      check();
+    });
   }
 
   #canvasRef = createRef<DrawCanvasRef>();
@@ -410,6 +446,8 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         defaultNodeSize={this.defaultNodeSize}
         defaultNodeBricks={this.defaultNodeBricks}
         defaultEdgeLines={this.defaultEdgeLines}
+        degradedThreshold={this.degradedThreshold}
+        degradedNodeLabel={this.degradedNodeLabel}
         activeTarget={this.activeTarget}
         fadeUnrelatedCells={this.fadeUnrelatedCells}
         zoomable={this.zoomable}
@@ -470,6 +508,8 @@ function LegacyEoDrawCanvasComponent(
     defaultNodeSize,
     defaultNodeBricks,
     defaultEdgeLines,
+    degradedThreshold,
+    degradedNodeLabel,
     activeTarget: _activeTarget,
     fadeUnrelatedCells,
     zoomable,
@@ -493,6 +533,15 @@ function LegacyEoDrawCanvasComponent(
     (initialCells) => ({
       cells: initializeCells(initialCells, { defaultNodeSize }),
     })
+  );
+
+  // When nodes are greater or equal to threshold, the diagram will be degraded.
+  // Thus all nodes will be displayed as simple svg elements instead of bricks.
+  const degraded = useMemo(
+    () =>
+      cells.filter(isNodeCell).length >=
+      (degradedThreshold ?? DEFAULT_DEGRADED_THRESHOLD),
+    [cells, degradedThreshold]
   );
 
   const rootRef = useRef<SVGSVGElement>(null);
@@ -789,6 +838,8 @@ function LegacyEoDrawCanvasComponent(
                 layout={layout}
                 cell={cell}
                 cells={cells}
+                degraded={degraded}
+                degradedNodeLabel={degradedNodeLabel}
                 defaultNodeBricks={defaultNodeBricks}
                 transform={transform}
                 lineConfMap={lineConfMap}

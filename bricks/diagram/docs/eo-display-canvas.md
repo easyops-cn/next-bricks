@@ -451,3 +451,105 @@
         ]
       %>
 ```
+
+### Degraded diagram
+
+```yaml preview minHeight="600px"
+- brick: div
+  properties:
+    style:
+      display: flex
+      height: 600px
+      gap: 1em
+  context:
+    - name: initialCells
+      value: |
+        <%
+          ((...seeds) => seeds.map((seed) => ({
+            type: "node",
+            id: seed,
+            data: {
+              name: seed,
+            },
+          })))(
+            ...(
+              new Array(500).fill(null).map((_, i) => String(i))
+            )
+          )
+        %>
+    - name: activeTarget
+    - name: targetCell
+  children:
+    - brick: div
+      properties:
+        style:
+          flex: 1
+          minWidth: 0
+      children:
+        - brick: eo-display-canvas
+          properties:
+            style:
+              width: 100%
+              height: 100%
+            activeTarget: <%= CTX.activeTarget %>
+            fadeUnrelatedCells: true
+            layout: force
+            # Initial nodes only
+            defaultNodeSize: [60, 60]
+            defaultNodeBricks:
+              - useBrick:
+                  brick: diagram.experimental-node
+                  properties:
+                    textContent: <% `Node ${DATA.node.id}` %>
+                    status: |
+                      <%=
+                        CTX.activeTarget?.type === "node" && CTX.activeTarget.id === DATA.node.id
+                          ? "highlighted"
+                          // : CTX.unrelated.some(n =>
+                          //     n.type === "node" && n.id === DATA.node.id
+                          //   )
+                          // ? "faded"
+                          : "default"
+                      %>
+            defaultEdgeLines:
+              - if: true
+                dashed: <% DATA.edge?.data?.virtual %>
+                strokeColor: <% DATA.edge?.data?.strokeColor %>
+                showStartArrow: <% DATA.edge?.data?.showStartArrow %>
+                strokeWidth: <% DATA.edge?.data?.strokeWidth %>
+                animate: <% DATA.edge?.data?.animate %>
+            cells: <% CTX.initialCells %>
+          events:
+            activeTarget.change:
+              action: context.replace
+              args:
+                - activeTarget
+                - <% EVENT.detail %>
+            cell.contextmenu:
+              - target: eo-context-menu
+                method: open
+                args:
+                  - position:
+                      - <% EVENT.detail.clientX %>
+                      - <% EVENT.detail.clientY %>
+              - action: context.replace
+                args:
+                  - targetCell
+                  - <% EVENT.detail.cell %>
+            scale.change:
+              action: context.replace
+              args:
+                - scale
+                - <% EVENT.detail %>
+- brick: eo-context-menu
+  properties:
+    actions: |
+      <%=
+        [
+          {
+            text: `Test ${CTX.targetCell?.type}`,
+            event: `test-${CTX.targetCell?.type}`,
+          }
+        ]
+      %>
+```
