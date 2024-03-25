@@ -106,7 +106,7 @@ class EoMainView extends ReactNextElement {
   /**
    * 是否没有边距
    */
-  @property({ type: Boolean, render: true })
+  @property({ type: Boolean, render: false })
   accessor noPadding: boolean | undefined;
 
   /**
