@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.31.1...@next-bricks/diagram@0.32.0) (2024-03-25)
+
+
+### Features
+
+* degrade the diagram when there are too many nodes ([0d4e800](https://github.com/easyops-cn/next-bricks/commit/0d4e8005e44065843d0a5aacd6782903149756d6))
+
+
+
+
+
 ## [0.31.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.31.0...@next-bricks/diagram@0.31.1) (2024-03-21)
 
 
