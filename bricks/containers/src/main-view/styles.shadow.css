@@ -19,6 +19,13 @@
   --local-content-gap: 8px;
 }
 
+:host([no-padding]) {
+  --page-padding-top: 0;
+  --page-padding-right: 0;
+  --page-padding-bottom: 0;
+  --page-padding-left: 0;
+}
+
 eo-banner {
   margin-top: calc(-1 * var(--page-padding-top));
   margin-left: calc(-1 * var(--page-padding-left));

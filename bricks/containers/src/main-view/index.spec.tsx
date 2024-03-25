@@ -74,6 +74,23 @@ describe("eo-main-view", () => {
     });
   });
 
+  test("showBanner", async () => {
+    const element = document.createElement("eo-main-view") as EoMainView;
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.querySelector("eo-banner")).toBeTruthy();
+
+    element.showBanner = false;
+    await act(() => (global as any).flushPromises());
+    expect(element.shadowRoot?.querySelector("eo-banner")).toBeFalsy();
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
   test("footer", async () => {
     const element = document.createElement("eo-main-view") as EoMainView;
 
