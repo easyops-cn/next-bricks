@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.3.0...@next-shared/icons@0.4.0) (2024-03-25)
+
+
+### Features
+
+* update chart basic dep code ([4619d6f](https://github.com/easyops-cn/next-bricks/commit/4619d6f88a6009b043a73a934e54185447491183))
+
+
+
+
+
 # [0.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.2.4...@next-shared/icons@0.3.0) (2024-03-22)
 
 

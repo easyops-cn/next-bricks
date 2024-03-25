@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.7.3...@next-bricks/form@1.8.0) (2024-03-25)
+
+
+### Features
+
+* update chart basic dep code ([4619d6f](https://github.com/easyops-cn/next-bricks/commit/4619d6f88a6009b043a73a934e54185447491183))
+
+
+
+
+
 ## [1.7.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.7.2...@next-bricks/form@1.7.3) (2024-03-19)
 
 **Note:** Version bump only for package @next-bricks/form
