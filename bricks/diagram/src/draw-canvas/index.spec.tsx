@@ -760,8 +760,8 @@ describe("eo-draw-canvas", () => {
       ]
     `);
 
-    act(() => {
-      element.updateCells([
+    await act(async () => {
+      await element.updateCells([
         {
           type: "node",
           id: "a",
@@ -1012,6 +1012,39 @@ describe("eo-draw-canvas", () => {
     act(() => {
       fireEvent.click(element.shadowRoot!.querySelector(".center-button")!);
     });
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("degraded diagram", async () => {
+    const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
+    element.defaultNodeBricks = [{ useBrick: { brick: "strong" } }];
+    element.cells = new Array(400).fill(null).map((_, i) => ({
+      type: "node",
+      id: `node-${i}`,
+    }));
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+
+    expect(element.shadowRoot?.querySelectorAll(".degraded").length).toBe(0);
+    expect(element.shadowRoot?.querySelectorAll("strong").length).toBe(400);
+
+    await act(async () => {
+      await element.addNodes(
+        new Array(100).fill(null).map((_, i) => ({
+          type: "node",
+          id: `node-${i + 400}`,
+        }))
+      );
+    });
+
+    expect(element.shadowRoot?.querySelectorAll(".degraded").length).toBe(500);
+    expect(element.shadowRoot?.querySelectorAll("strong").length).toBe(0);
 
     act(() => {
       document.body.removeChild(element);

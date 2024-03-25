@@ -24,6 +24,8 @@ export interface CellComponentProps {
   layout: LayoutType;
   cell: Cell;
   cells: Cell[];
+  degraded: boolean;
+  degradedNodeLabel?: string;
   defaultNodeBricks?: NodeBrickConf[];
   transform: TransformLiteral;
   lineConfMap: WeakMap<EdgeCell, ComputedEdgeLineConf>;
@@ -47,6 +49,8 @@ export function CellComponent({
   layout,
   cell,
   cells,
+  degraded,
+  degradedNodeLabel,
   defaultNodeBricks,
   lineConfMap,
   active,
@@ -146,6 +150,8 @@ export function CellComponent({
       {isNodeCell(cell) ? (
         <NodeComponent
           node={cell}
+          degraded={degraded}
+          degradedNodeLabel={degradedNodeLabel}
           defaultNodeBricks={defaultNodeBricks}
           onResize={onNodeBrickResize}
         />
