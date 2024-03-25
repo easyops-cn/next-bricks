@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.32.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.32.0...@next-bricks/diagram@0.32.1) (2024-03-25)
+
+
+### Bug Fixes
+
+* **canvas:** dagre cannot render empty nodes ([0a56d5f](https://github.com/easyops-cn/next-bricks/commit/0a56d5fbf1d9dc36a129199a52a46bedf19ba889))
+
+
+
+
+
 # [0.32.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.31.1...@next-bricks/diagram@0.32.0) (2024-03-25)
 
 
