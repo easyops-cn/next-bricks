@@ -37,6 +37,15 @@ export function dagreLayout({ cells, layoutOptions }: DagreLayoutOptions): {
     ]),
   };
   const nodePaddings = extractPartialRectTuple(nodePadding);
+
+  if (!cells.some(isNodeCell)) {
+    // Dagre cannot render empty nodes
+    return {
+      getNodeView: () => null!,
+      nodePaddings,
+    };
+  }
+
   const graph = new dagre.graphlib.Graph<ForceNode>();
   graph.setGraph(dagreGraphOptions);
   // Default to assigning a new object as a label for each new edge.

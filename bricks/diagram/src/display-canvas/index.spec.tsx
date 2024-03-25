@@ -3,7 +3,7 @@ import { act } from "react-dom/test-utils";
 import { fireEvent } from "@testing-library/react";
 import "./";
 import type { EoDisplayCanvas } from "./index.js";
-import type { EdgeLineConf, NodeBrickCell } from "../draw-canvas/interfaces";
+import type { Cell, EdgeLineConf } from "../draw-canvas/interfaces";
 
 jest.mock("@next-core/theme", () => ({}));
 jest.mock("d3-drag");
@@ -65,7 +65,7 @@ describe("eo-display-canvas", () => {
           y: 160,
         },
       },
-    ] as NodeBrickCell[];
+    ] as Cell[];
 
     act(() => {
       document.body.appendChild(element);
@@ -127,7 +127,7 @@ describe("eo-display-canvas", () => {
           y: 320,
         },
       },
-    ] as NodeBrickCell[];
+    ] as Cell[];
 
     const onActiveTargetChange = jest.fn();
     element.addEventListener("activeTarget.change", (e) =>
@@ -186,7 +186,7 @@ describe("eo-display-canvas", () => {
           y: 20,
         },
       },
-    ] as NodeBrickCell[];
+    ] as Cell[];
 
     act(() => {
       document.body.appendChild(element);
@@ -260,7 +260,7 @@ describe("eo-display-canvas", () => {
           y: 160,
         },
       },
-    ] as NodeBrickCell[];
+    ] as Cell[];
 
     act(() => {
       document.body.appendChild(element);
@@ -280,6 +280,38 @@ describe("eo-display-canvas", () => {
       "translate(0 50)",
       "translate(150 160)",
     ]);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("dagre layout with empty nodes", async () => {
+    const element = document.createElement(
+      "eo-display-canvas"
+    ) as EoDisplayCanvas;
+    element.defaultNodeBricks = [{ useBrick: { brick: "div" } }];
+    element.layout = "dagre";
+    element.cells = [
+      {
+        type: "decorator",
+        decorator: "area",
+        id: "area-1",
+        view: {
+          x: 10,
+          y: 10,
+        },
+      },
+    ] as Cell[];
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    await act(() => (global as any).flushPromises());
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+
+    expect(element.shadowRoot!.querySelectorAll(".cell").length).toBe(1);
 
     act(() => {
       document.body.removeChild(element);
@@ -332,7 +364,7 @@ describe("eo-display-canvas", () => {
           y: 160,
         },
       },
-    ] as NodeBrickCell[];
+    ] as Cell[];
 
     act(() => {
       document.body.appendChild(element);
@@ -414,7 +446,7 @@ describe("eo-display-canvas", () => {
           y: 320,
         },
       },
-    ] as NodeBrickCell[];
+    ] as Cell[];
     element.defaultEdgeLines = [
       { if: "<% DATA.edge.source === 'a' %>", strokeColor: "red" },
       {
