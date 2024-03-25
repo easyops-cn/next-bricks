@@ -46,10 +46,10 @@
   "devDependencies": {
     "@cypress/browserify-preprocessor": "^3.0.2",
     "@next-core/babel-preset-next": "^1.0.14",
-    "@next-core/brick-container": "^3.12.3",
-    "@next-core/brick-playground": "^1.10.133",
+    "@next-core/brick-container": "^3.13.3",
+    "@next-core/brick-playground": "^1.10.139",
     "@next-core/browserslist-config-next": "^1.0.3",
-    "@next-core/eslint-config-next": "^2.0.14",
+    "@next-core/eslint-config-next": "^2.0.17",
     "@next-core/test-next": "^1.0.16",
     "@next-core/yo": "^1.5.40",
     "@types/d3-force": "^3.0.9",
