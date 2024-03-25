@@ -26,6 +26,7 @@ export interface MainViewProps {
   bannerDescription?: string;
   bannerImage?: string;
   bannerSunk?: boolean;
+  showBanner?: boolean;
   showFooter?: boolean;
 }
 
@@ -96,6 +97,19 @@ class EoMainView extends ReactNextElement {
   accessor bannerSunk: boolean | undefined;
 
   /**
+   * 是否展示 banner（包括页面标题，面包屑，工作栏）
+   * @default true
+   */
+  @property({ type: Boolean })
+  accessor showBanner: boolean | undefined;
+
+  /**
+   * 是否没有边距
+   */
+  @property({ type: Boolean })
+  accessor noPadding: boolean | undefined;
+
+  /**
    * 是否显示底栏（通常放置按钮）
    * @deprecated 已废弃，请使用 eo-page-view 的 footer
    */
@@ -110,6 +124,7 @@ class EoMainView extends ReactNextElement {
         bannerTitle={this.bannerTitle}
         bannerDescription={this.bannerDescription}
         bannerImage={this.bannerImage}
+        showBanner={this.showBanner}
         showFooter={this.showFooter}
       />
     );
@@ -122,6 +137,7 @@ export function EoMainViewComponent({
   bannerTitle,
   bannerDescription,
   bannerImage,
+  showBanner = true,
   showFooter,
 }: MainViewProps) {
   const narrow = _narrow ?? "full";
@@ -150,28 +166,30 @@ export function EoMainViewComponent({
 
   return (
     <>
-      <WrappedBanner
-        narrow={narrow}
-        style={{
-          backgroundImage: bannerImage,
-        }}
-        {...bannerConfig}
-      >
-        <div className="breadcrumb">
-          <slot name="breadcrumb" />
-        </div>
-        <div className="titlebar">
-          <div className="page-title">
-            <slot name="pageTitle" />
+      {showBanner && (
+        <WrappedBanner
+          narrow={narrow}
+          style={{
+            backgroundImage: bannerImage,
+          }}
+          {...bannerConfig}
+        >
+          <div className="breadcrumb">
+            <slot name="breadcrumb" />
           </div>
-          <div className="toolbar">
-            <slot name="toolbar" />
+          <div className="titlebar">
+            <div className="page-title">
+              <slot name="pageTitle" />
+            </div>
+            <div className="toolbar">
+              <slot name="toolbar" />
+            </div>
           </div>
-        </div>
-        <div className="banner">
-          <slot name="banner" />
-        </div>
-      </WrappedBanner>
+          <div className="banner">
+            <slot name="banner" />
+          </div>
+        </WrappedBanner>
+      )}
       <WrappedNarrowView className="content" size={narrow}>
         <slot />
       </WrappedNarrowView>
