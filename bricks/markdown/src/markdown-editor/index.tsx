@@ -25,6 +25,8 @@ import {
   wrapInBlockquoteCommand,
   codeBlockSchema,
 } from "@milkdown/preset-commonmark";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { nord } from "@milkdown/theme-nord";
 import { history, redoCommand, undoCommand } from "@milkdown/plugin-history";
 import { upload, uploadConfig, Uploader } from "@milkdown/plugin-upload";
@@ -51,8 +53,8 @@ import {
   TableTooltip,
   tableTooltip,
   tableTooltipCtx,
-} from "./components/TableWidget.tsx";
-import { CodeBlock } from "./components/CodeBlock.tsx";
+} from "./components/TableWidget.js";
+import { CodeBlock } from "./components/CodeBlock.js";
 import type { FormItem, FormItemProps } from "@next-bricks/form/form-item";
 import { FormItemElementBase } from "@next-shared/form";
 import classNames from "classnames";
@@ -273,7 +275,7 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
   const nodeViewFactory = useNodeViewFactory();
 
   const gfmPlugins: MilkdownPlugin[] = useMemo(() => {
-    return [
+    return readonly ? [] : [
       gfm,
       tableTooltip,
       tableTooltipCtx,
@@ -286,7 +288,7 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
       },
       tableSelectorPlugin(widgetViewFactory),
     ].flat();
-  }, [pluginViewFactory, widgetViewFactory]);
+  }, [readonly, pluginViewFactory, widgetViewFactory]);
 
   const { get } = useEditor((root: any) => {
     return Editor.make()
@@ -335,8 +337,8 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
       .use(gfmPlugins)
       .use(prism)
       .use(
-        $view(codeBlockSchema.node, () =>
-          nodeViewFactory({ component: CodeBlock })
+        readonly ? [] : $view(codeBlockSchema.node, () =>
+          nodeViewFactory({ component: CodeBlock, })
         )
       );
   }, []);

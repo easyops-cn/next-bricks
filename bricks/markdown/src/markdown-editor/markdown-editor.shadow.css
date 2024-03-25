@@ -1676,6 +1676,11 @@ video {
   padding-bottom: 1rem;
 }
 
+.readonly .milkdown {
+  margin: 0;
+  padding: 0;
+}
+
 .editor {
   margin-left: auto;
   margin-right: auto;

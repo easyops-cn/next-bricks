@@ -90,6 +90,14 @@ class Popover extends ReactNextElement implements PopoverProps {
   accessor arrow: boolean | undefined;
 
   /**
+   * 发生移位行为之前超出的填充量
+   */
+  @property({
+    type: Number
+  })
+  accessor shiftPadding: number | undefined;
+
+  /**
    * 箭头颜色
    */
   @property()
@@ -159,6 +167,7 @@ class Popover extends ReactNextElement implements PopoverProps {
         placement={this.placement ?? "bottom"}
         arrow={this.arrow ?? true}
         arrowColor={this.arrowColor}
+        shiftPadding={this.shiftPadding}
         strategy={this.strategy}
         sync={this.sync}
         active={this.active}
@@ -184,6 +193,7 @@ function PopoverComponent(props: PopoverComponentProps) {
     disabled,
     trigger,
     arrowColor,
+    shiftPadding = 24,
     onVisibleChange,
     beforeVisibleChange,
     distance = props.arrow ? POPUP_DISTANCE + ARROW_SIZE : POPUP_DISTANCE,
@@ -373,7 +383,7 @@ function PopoverComponent(props: PopoverComponentProps) {
       {...omit(props, ["active", "curElement", "onVisibleChange"])}
       shift
       flip
-      shiftPadding={24}
+      shiftPadding={shiftPadding}
       distance={distance}
     >
       <slot

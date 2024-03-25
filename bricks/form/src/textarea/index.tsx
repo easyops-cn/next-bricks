@@ -17,7 +17,7 @@ type AutoSize =
       maxRows: number;
     };
 
-interface TextareaProps extends FormItemProps {
+export interface TextareaProps extends FormItemProps {
   name?: string;
   value?: string;
   placeholder?: string;
