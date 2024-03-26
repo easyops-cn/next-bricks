@@ -18,6 +18,7 @@ jest.mock("resize-observer-polyfill", () => ({
   },
 }));
 (Element as any).prototype.getTotalLength = jest.fn(() => 100);
+
 describe("eo-display-canvas", () => {
   test("hover", async () => {
     const element = document.createElement(
@@ -157,15 +158,90 @@ describe("eo-display-canvas", () => {
       id: "a",
     });
 
-    expect(onCellContextMenu).toHaveBeenCalledWith({
-      cell: {
+    expect(onCellContextMenu).toHaveBeenCalledWith(
+      expect.objectContaining({
+        cell: {
+          type: "node",
+          id: "a",
+          view: { x: 20, y: 20, width: 20, height: 20 },
+        },
+        clientX: 100,
+        clientY: 200,
+      })
+    );
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("click on cell", async () => {
+    const element = document.createElement(
+      "eo-display-canvas"
+    ) as EoDisplayCanvas;
+    element.defaultNodeBricks = [{ useBrick: { brick: "div" } }];
+    element.cells = [
+      {
         type: "node",
         id: "a",
-        view: { x: 20, y: 20, width: 20, height: 20 },
+        view: {
+          x: 20,
+          y: 20,
+        },
       },
-      clientX: 100,
-      clientY: 200,
+      {
+        type: "decorator",
+        decorator: "text",
+        id: "b",
+        view: {
+          x: 20,
+          y: 320,
+          width: 20,
+          height: 100,
+        },
+      },
+    ] as Cell[];
+
+    const onCellClick = jest.fn();
+    element.addEventListener("cell.click", (e) =>
+      onCellClick((e as CustomEvent).detail)
+    );
+
+    act(() => {
+      document.body.appendChild(element);
     });
+
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+
+    act(() => {
+      fireEvent.click(element.shadowRoot!.querySelector(".cell")!, {
+        clientX: 100,
+        clientY: 200,
+      });
+    });
+
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+
+    expect(onCellClick).toHaveBeenCalledWith(
+      expect.objectContaining({
+        cell: {
+          type: "node",
+          id: "a",
+          view: { x: 20, y: 20, width: 20, height: 20 },
+        },
+        clientX: 100,
+        clientY: 200,
+      })
+    );
+
+    // Click on a decorator will not trigger `cell.click`
+    act(() => {
+      fireEvent.click(element.shadowRoot!.querySelector(".cell + .cell")!, {
+        clientX: 100,
+        clientY: 200,
+      });
+    });
+    expect(onCellClick).toHaveBeenCalledTimes(1);
 
     act(() => {
       document.body.removeChild(element);

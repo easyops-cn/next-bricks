@@ -160,6 +160,13 @@ class EoDisplayCanvas extends ReactNextElement implements EoDisplayCanvasProps {
     this.#cellContextMenu.emit(detail);
   };
 
+  @event({ type: "cell.click" })
+  accessor #cellClick!: EventEmitter<CellContextMenuDetail>;
+
+  #handleCellClick = (detail: CellContextMenuDetail) => {
+    this.#cellClick.emit(detail);
+  };
+
   render() {
     return (
       <EoDisplayCanvasComponent
@@ -181,6 +188,7 @@ class EoDisplayCanvas extends ReactNextElement implements EoDisplayCanvasProps {
         onActiveTargetChange={this.#handleActiveTargetChange}
         onSwitchActiveTarget={this.#handleSwitchActiveTarget}
         onCellContextMenu={this.#handleCellContextMenu}
+        onCellClick={this.#handleCellClick}
       />
     );
   }
@@ -191,6 +199,7 @@ export interface EoDisplayCanvasComponentProps extends EoDisplayCanvasProps {
   onActiveTargetChange(target: ActiveTarget | null): void;
   onSwitchActiveTarget(target: ActiveTarget | null): void;
   onCellContextMenu(detail: CellContextMenuDetail): void;
+  onCellClick(detail: CellContextMenuDetail): void;
 }
 
 function EoDisplayCanvasComponent({
@@ -212,6 +221,7 @@ function EoDisplayCanvasComponent({
   onActiveTargetChange,
   onSwitchActiveTarget,
   onCellContextMenu,
+  onCellClick,
 }: EoDisplayCanvasComponentProps) {
   const [{ cells }, dispatch] = useReducer(
     rootReducer,
@@ -349,6 +359,7 @@ function EoDisplayCanvasComponent({
                 unrelatedCells={unrelatedCells}
                 onSwitchActiveTarget={onSwitchActiveTarget}
                 onCellContextMenu={onCellContextMenu}
+                onCellClick={onCellClick}
                 onNodeBrickResize={handleNodeBrickResize}
                 onCellMouseEnter={
                   fadeUnrelatedCells && isNodeCell(cell)
