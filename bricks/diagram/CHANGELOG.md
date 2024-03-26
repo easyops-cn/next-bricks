@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.32.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.32.2...@next-bricks/diagram@0.32.3) (2024-03-26)
+
+
+### Bug Fixes
+
+* **draw-canvas:** do not fade other cells when click on a decorator ([99016e3](https://github.com/easyops-cn/next-bricks/commit/99016e3d9a142adedf87849dc2a193a17b0d8d30))
+
+
+
+
+
 ## [0.32.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.32.1...@next-bricks/diagram@0.32.2) (2024-03-25)
 
 **Note:** Version bump only for package @next-bricks/diagram
