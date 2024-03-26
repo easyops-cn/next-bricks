@@ -38,6 +38,7 @@ export interface CellComponentProps {
   onCellResized?(info: ResizeCellPayload): void;
   onSwitchActiveTarget(target: ActiveTarget | null): void;
   onCellContextMenu(detail: CellContextMenuDetail): void;
+  onCellClick?(detail: CellContextMenuDetail): void;
   onDecoratorTextEditing?(detail: { id: string; editing: boolean }): void;
   onDecoratorTextChange?(detail: DecoratorTextChangeDetail): void;
   onNodeBrickResize(id: string, size: SizeTuple | null): void;
@@ -63,6 +64,7 @@ export function CellComponent({
   onCellResized,
   onSwitchActiveTarget,
   onCellContextMenu,
+  onCellClick,
   onDecoratorTextEditing,
   onDecoratorTextChange,
   onNodeBrickResize,
@@ -122,6 +124,20 @@ export function CellComponent({
     [cell, onCellContextMenu, onSwitchActiveTarget, readOnly]
   );
 
+  const handleCellClick = useCallback(
+    (event: React.MouseEvent<SVGGElement>) => {
+      if (!onCellClick || cell.type === "decorator") {
+        return;
+      }
+      onCellClick({
+        cell,
+        clientX: event.clientX,
+        clientY: event.clientY,
+      });
+    },
+    [cell, onCellClick]
+  );
+
   const handleMouseEnter = useCallback(() => {
     onCellMouseEnter?.(cell);
   }, [cell, onCellMouseEnter]);
@@ -144,6 +160,7 @@ export function CellComponent({
           : `translate(${cell.view.x} ${cell.view.y})`
       }
       onContextMenu={handleContextMenu}
+      onClick={handleCellClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
