@@ -49,17 +49,7 @@ describe("getUnrelatedCells", () => {
   test("active target is decorator", () => {
     const activeTarget = { id: "8", type: "decorator" } as ActiveTarget;
     const unrelated = getUnrelatedCells(cells, null, activeTarget);
-    expect(unrelated).toEqual([
-      { id: "1", type: "node" },
-      { id: "2", type: "node" },
-      { id: "3", type: "node" },
-      { id: "4", type: "node" },
-      { id: "4", type: "edge", source: "1", target: "2" },
-      { id: "5", type: "edge", source: "2", target: "3" },
-      { id: "6", type: "edge", source: "3", target: "4" },
-      { id: "7", type: "edge", source: "4", target: "1" },
-      { id: "9", type: "decorator" },
-    ]);
+    expect(unrelated).toEqual([]);
   });
 
   test("active target is null", () => {

@@ -67,14 +67,6 @@ export function getUnrelatedCells(
           }
         }
         break;
-
-      case "decorator":
-        for (const cell of cells) {
-          if (cell.type !== "decorator" || cell.id !== activeTarget.id) {
-            unrelated.push(cell);
-          }
-        }
-        break;
     }
   }
 
