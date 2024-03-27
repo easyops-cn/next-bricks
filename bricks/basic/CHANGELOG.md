@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.10.1...@next-bricks/basic@1.11.0) (2024-03-27)
+
+
+### Features
+
+* **advacned.chat-view:** init ([1be1b32](https://github.com/easyops-cn/next-bricks/commit/1be1b32c3a49c44ad09927cd8af7acb64186d06f))
+
+
+
+
+
 ## [1.10.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.10.0...@next-bricks/basic@1.10.1) (2024-03-27)
 
 

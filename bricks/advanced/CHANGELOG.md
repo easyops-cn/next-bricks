@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.31.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.30.3...@next-bricks/advanced@0.31.0) (2024-03-27)
+
+
+### Features
+
+* **advacned.chat-view:** init ([1be1b32](https://github.com/easyops-cn/next-bricks/commit/1be1b32c3a49c44ad09927cd8af7acb64186d06f))
+
+
+
+
+
 ## [0.30.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.30.2...@next-bricks/advanced@0.30.3) (2024-03-25)
 
 **Note:** Version bump only for package @next-bricks/advanced
