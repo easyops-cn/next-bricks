@@ -204,6 +204,7 @@ describe("cells reducer", () => {
       {
         type: "update-node-size",
         payload: { id: "2", size: [120, 80] },
+        layoutKey: 0,
       }
     );
     expect(newCells).toEqual([

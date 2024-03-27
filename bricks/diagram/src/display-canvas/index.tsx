@@ -223,11 +223,12 @@ function EoDisplayCanvasComponent({
   onCellContextMenu,
   onCellClick,
 }: EoDisplayCanvasComponentProps) {
-  const [{ cells }, dispatch] = useReducer(
+  const [{ cells, layoutKey }, dispatch] = useReducer(
     rootReducer,
     initialCells,
     (initialCells) => ({
       cells: initializeCells(initialCells, { defaultNodeSize }),
+      layoutKey: 1,
     })
   );
 
@@ -252,7 +253,7 @@ function EoDisplayCanvasComponent({
     onSwitchActiveTarget,
   });
 
-  const { centered, setCentered } = useLayout({
+  const { centered, setCentered, getNextLayoutKey } = useLayout({
     layout,
     layoutOptions,
     rootRef,
@@ -260,6 +261,7 @@ function EoDisplayCanvasComponent({
     zoomable,
     zoomer,
     scaleRange,
+    layoutKey,
     dispatch,
   });
 
@@ -274,9 +276,13 @@ function EoDisplayCanvasComponent({
 
   const handleNodeBrickResize = useCallback(
     (id: string, size: SizeTuple | null) => {
-      dispatch({ type: "update-node-size", payload: { id, size } });
+      dispatch({
+        type: "update-node-size",
+        payload: { id, size },
+        layoutKey: getNextLayoutKey(),
+      });
     },
-    []
+    [getNextLayoutKey]
   );
 
   const [hoverCell, setHoverCell] = useState<Cell | null>(null);

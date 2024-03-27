@@ -527,11 +527,12 @@ function LegacyEoDrawCanvasComponent(
   }: EoDrawCanvasComponentProps,
   ref: React.Ref<DrawCanvasRef>
 ) {
-  const [{ cells }, dispatch] = useReducer(
+  const [{ cells, layoutKey }, dispatch] = useReducer(
     rootReducer,
     initialCells,
     (initialCells) => ({
       cells: initializeCells(initialCells, { defaultNodeSize }),
+      layoutKey: 0,
     })
   );
 
@@ -566,7 +567,7 @@ function LegacyEoDrawCanvasComponent(
   const [connectLineState, setConnectLineState] =
     useState<ConnectLineState | null>(null);
 
-  const { centered, setCentered } = useLayout({
+  const { centered, setCentered, getNextLayoutKey } = useLayout({
     layout,
     layoutOptions,
     rootRef,
@@ -574,6 +575,7 @@ function LegacyEoDrawCanvasComponent(
     zoomable,
     zoomer,
     scaleRange,
+    layoutKey,
     dispatch,
   });
 
@@ -783,9 +785,14 @@ function LegacyEoDrawCanvasComponent(
 
   const handleNodeBrickResize = useCallback(
     (id: string, size: SizeTuple | null) => {
-      dispatch({ type: "update-node-size", payload: { id, size } });
+      const nextLayoutKey = getNextLayoutKey();
+      dispatch({
+        type: "update-node-size",
+        payload: { id, size },
+        layoutKey: nextLayoutKey,
+      });
     },
-    []
+    [getNextLayoutKey]
   );
 
   const handleZoomSlide = useCallback(
