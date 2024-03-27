@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.32.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.32.5...@next-bricks/diagram@0.32.6) (2024-03-27)
+
+
+### Bug Fixes
+
+* **display-canvas:** allow update cells prop ([4f184b8](https://github.com/easyops-cn/next-bricks/commit/4f184b8dda4f6a9cf7396c7d0218ea9cb3287773))
+
+
+
+
+
 ## [0.32.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.32.4...@next-bricks/diagram@0.32.5) (2024-03-27)
 
 
