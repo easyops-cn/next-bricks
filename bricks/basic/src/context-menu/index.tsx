@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import { unwrapProvider } from "@next-core/utils/general";
@@ -28,6 +28,8 @@ const WrappedActions = wrapBrick<
 >("eo-actions", {
   onActionClick: "action.click",
 });
+
+const MINIMAL_PADDING = 8;
 
 export interface EoContextMenuProps {
   actions?: Action[];
@@ -150,6 +152,29 @@ export function EoContextMenuComponent({
     [element, onActionClick]
   );
 
+  const actionsRef = useRef<EoActions>(null);
+  const [fixedPosition, setFixedPosition] = useState<Position | null>(null);
+
+  useEffect(() => {
+    if (active && actionsRef.current && position) {
+      // 修正菜单位置，使其不超出视窗
+      const rect = actionsRef.current.getBoundingClientRect();
+      const width = rect.width + MINIMAL_PADDING;
+      const height = rect.height + MINIMAL_PADDING;
+      const { clientWidth, clientHeight } = document.documentElement;
+      const fixed = [...position] as Position;
+      if (clientWidth > width && position[0] + width > clientWidth) {
+        fixed[0] = position[0] - width;
+      }
+      if (clientHeight > height && position[1] + height > clientHeight) {
+        fixed[1] = clientHeight - height;
+      }
+      setFixedPosition(fixed);
+    } else {
+      setFixedPosition(null);
+    }
+  }, [active, position]);
+
   return (
     <>
       <div
@@ -158,11 +183,13 @@ export function EoContextMenuComponent({
         onContextMenu={handleMaskClick}
       />
       <WrappedActions
+        ref={actionsRef}
         actions={actions}
         onActionClick={handleActionClick}
         style={{
-          left: position?.[0],
-          top: position?.[1],
+          left: (fixedPosition ?? position)?.[0],
+          top: (fixedPosition ?? position)?.[1],
+          visibility: fixedPosition ? "visible" : "hidden",
         }}
       />
     </>

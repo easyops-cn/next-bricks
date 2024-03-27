@@ -22,6 +22,13 @@ customElements.define(
   }
 );
 
+jest
+  .spyOn(document.documentElement, "clientWidth", "get")
+  .mockImplementation(() => 800);
+jest
+  .spyOn(document.documentElement, "clientHeight", "get")
+  .mockImplementation(() => 600);
+
 describe("eo-context-menu", () => {
   test("basic usage", async () => {
     const onActionClick = jest.fn();
@@ -98,5 +105,53 @@ describe("eo-context-menu", () => {
       document.body.removeChild(element);
     });
     expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
+
+  test("fix position", async () => {
+    const element = document.createElement("eo-context-menu") as EoContextMenu;
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    element.shadowRoot!.querySelector("eo-actions")!.getBoundingClientRect =
+      jest.fn(() => ({
+        width: 180,
+        height: 120,
+      })) as any;
+
+    element.open({ position: [700, 500] });
+    await act(() => (global as any).flushPromises());
+    expect(element.active).toBe(true);
+
+    expect(
+      (element.shadowRoot!.querySelector("eo-actions") as HTMLElement).style
+    ).toMatchObject({
+      left: "512px",
+      top: "472px",
+      visibility: "visible",
+    });
+
+    element.shadowRoot!.querySelector("eo-actions")!.getBoundingClientRect =
+      jest.fn(() => ({
+        width: 900,
+        height: 70,
+      })) as any;
+
+    element.open({ position: [700, 500] });
+    await act(() => (global as any).flushPromises());
+    expect(element.active).toBe(true);
+
+    expect(
+      (element.shadowRoot!.querySelector("eo-actions") as HTMLElement).style
+    ).toMatchObject({
+      left: "700px",
+      top: "500px",
+      visibility: "visible",
+    });
+
+    act(() => {
+      document.body.removeChild(element);
+    });
   });
 });
