@@ -1,6 +1,7 @@
 import { Reducer } from "react";
 import type { DrawCanvasAction, DrawCanvasState } from "./interfaces";
 import { cells } from "./cells";
+import { layoutKey } from "./layoutKey";
 
 type ReducersMapObject<S, A> = {
   [K in keyof S]: Reducer<S[K], A>;
@@ -20,4 +21,5 @@ function combineReducers<S, A>(
 
 export const rootReducer = combineReducers<DrawCanvasState, DrawCanvasAction>({
   cells,
+  layoutKey,
 });

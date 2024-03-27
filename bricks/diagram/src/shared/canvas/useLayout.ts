@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { ZoomBehavior } from "d3-zoom";
 import type {
   Cell,
@@ -31,6 +31,7 @@ export interface UseLayoutOptions {
   zoomable?: boolean;
   zoomer: ZoomBehavior<SVGSVGElement, unknown>;
   scaleRange: RangeTuple;
+  layoutKey: number;
   dispatch: (value: DrawCanvasAction) => void;
 }
 
@@ -42,11 +43,18 @@ export function useLayout({
   zoomable,
   zoomer,
   scaleRange,
+  layoutKey,
   dispatch,
 }: UseLayoutOptions) {
   const [layoutInitialized, setLayoutInitialized] = useState(
     layout !== "force" && layout !== "dagre"
   );
+
+  const layoutKeyRef = useRef(layoutKey);
+
+  const getNextLayoutKey = useCallback(() => {
+    return ++layoutKeyRef.current;
+  }, []);
 
   const [centered, setCentered] = useAutoCenter({
     rootRef,
@@ -74,10 +82,16 @@ export function useLayout({
       return;
     }
 
-    // Do not re-layout if nodes and edges not changed.
+    // DO NOT re-layout if layout key mismatched.
+    // DO NOT re-layout if nodes and edges not changed.
     if (
+      layoutKeyRef.current !== layoutKey ||
       isSameArray(previousLayoutRef.current, cells.filter(isNodeOrEdgeCell))
     ) {
+      // Layout key mismatch happens when this effect is performed after
+      // update-node-size dispatched but not yet applied.
+      // If didn't ignore mismatched layout, it will cause the update-cells
+      // action overwrites those update-node-size actions.
       return;
     }
 
@@ -112,13 +126,13 @@ export function useLayout({
       return cell;
     });
     previousLayoutRef.current = newCells.filter(isNodeOrEdgeCell);
-    dispatch({ type: "update-cells", payload: newCells });
 
+    dispatch({ type: "update-cells", payload: newCells });
     setCentered(false);
     setLayoutInitialized(true);
-  }, [cells, dispatch, layout, layoutOptions, setCentered]);
+  }, [cells, dispatch, layout, layoutKey, layoutOptions, setCentered]);
 
-  return { centered, setCentered };
+  return { centered, setCentered, getNextLayoutKey };
 }
 
 function isSameArray<T = unknown>(a: T[] | null, b: T[]): boolean {

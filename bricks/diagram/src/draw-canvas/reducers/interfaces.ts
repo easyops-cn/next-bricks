@@ -9,6 +9,7 @@ import type {
 
 export interface DrawCanvasState {
   cells: Cell[];
+  layoutKey: number;
 }
 
 export type DrawCanvasAction =
@@ -62,6 +63,7 @@ export interface UpdateNodeSizeAction {
     id: string;
     size: SizeTuple | null;
   };
+  layoutKey: number;
 }
 
 export interface MoveCellPayload {
