@@ -87,12 +87,6 @@ markdown 编辑器
           background-color: #e8e8e8;
         }
       ```
-  events:
-    markdown.value.change:
-      action: console.log
-      args:
-        - change
-        - <% EVENT.detail %>
 ````
 
 ### With Form
