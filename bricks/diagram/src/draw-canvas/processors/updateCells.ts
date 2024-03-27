@@ -31,7 +31,7 @@ export function updateCells({
   reason,
   parent,
 }: {
-  cells: InitialCell[];
+  cells: InitialCell[] | undefined;
   layout?: LayoutType;
   previousCells: Cell[];
   defaultNodeSize: SizeTuple;

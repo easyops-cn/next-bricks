@@ -40,6 +40,7 @@ import { ZoomBarComponent } from "../shared/canvas/ZoomBarComponent";
 import { useLayout } from "../shared/canvas/useLayout";
 import { useReady } from "../shared/canvas/useReady";
 import { useLineMarkers } from "../shared/canvas/useLineMarkers";
+import { updateCells } from "../draw-canvas/processors/updateCells";
 import styleText from "../shared/canvas/styles.shadow.css";
 import zoomBarStyleText from "../shared/canvas/ZoomBarComponent.shadow.css";
 
@@ -71,7 +72,7 @@ export
 })
 class EoDisplayCanvas extends ReactNextElement implements EoDisplayCanvasProps {
   /**
-   * 仅当初始化时使用，渲染后重新设置 `cells` 将无效。
+   * 用于查看的画布可以更新 `cells` 属性。
    */
   @property({ attribute: false })
   accessor cells: InitialCell[] | undefined;
@@ -265,6 +266,37 @@ function EoDisplayCanvasComponent({
     dispatch,
   });
 
+  const reCenter = useCallback(() => {
+    setCentered(false);
+  }, [setCentered]);
+
+  const previousCellsRef = useRef(initialCells);
+
+  useEffect(() => {
+    if (initialCells !== previousCellsRef.current) {
+      previousCellsRef.current = initialCells;
+      const result = updateCells({
+        canvasWidth: shadowRoot.host.clientWidth,
+        canvasHeight: shadowRoot.host.clientHeight,
+        defaultNodeSize,
+        layout,
+        previousCells: cells,
+        cells: initialCells,
+        scaleRange,
+        transform,
+      });
+      dispatch({ type: "update-cells", payload: result.cells });
+    }
+  }, [
+    cells,
+    defaultNodeSize,
+    initialCells,
+    layout,
+    scaleRange,
+    shadowRoot,
+    transform,
+  ]);
+
   const activeTarget = useActiveTarget({
     cellsRef,
     activeTarget: _activeTarget,
@@ -313,10 +345,6 @@ function EoDisplayCanvasComponent({
     },
     [zoomer]
   );
-
-  const reCenter = useCallback(() => {
-    setCentered(false);
-  }, [setCentered]);
 
   const [lineConfMap, markers] = useLineMarkers({
     cells,
