@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.32.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.32.4...@next-bricks/diagram@0.32.5) (2024-03-27)
+
+
+### Bug Fixes
+
+* **draw-canvas:** ignore stale layout effect ([07b230a](https://github.com/easyops-cn/next-bricks/commit/07b230a2c7a8a50cbc1012b78a0dc0ab895ce073))
+
+
+
+
+
 ## [0.32.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.32.3...@next-bricks/diagram@0.32.4) (2024-03-26)
 
 
