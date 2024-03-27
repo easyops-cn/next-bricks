@@ -109,3 +109,18 @@ children:
       style:
         height: 100%
 ```
+
+### noPadding & showBanner set false
+
+```yaml preview
+brick: eo-main-view
+properties:
+  noPadding: true
+  showBanner: false
+children:
+  - brick: div
+    properties:
+      textContent: Say hello to everyone!
+      style:
+        height: 100%
+```
