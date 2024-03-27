@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.10.0...@next-bricks/basic@1.10.1) (2024-03-27)
+
+
+### Bug Fixes
+
+* auto placement for eo-context-menu ([541004e](https://github.com/easyops-cn/next-bricks/commit/541004ead39fae444f7c655dda16f69082510d6d))
+
+
+
+
+
 # [1.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.9.2...@next-bricks/basic@1.10.0) (2024-03-25)
 
 
