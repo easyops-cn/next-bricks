@@ -68,7 +68,7 @@ initializeReactI18n(NS, locales);
 
 const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 
-interface NextTableComponentProps {
+export interface NextTableComponentProps {
   shadowRoot: ShadowRoot | null;
   rowKey: string;
   columns?: Column[];
@@ -598,7 +598,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                       },
                     }
               }
-              onChange={(pagination, filters, sorter, extra) => {
+              onChange={(pagination, _filters, sorter, extra) => {
                 switch (extra.action) {
                   case "paginate": {
                     setPageAndPageSize((pre) => {

@@ -16,6 +16,7 @@ import type {
 } from "./interface.js";
 import { RowSelectMethod } from "antd/es/table/interface.js";
 import type { TableProps } from "antd/es/table";
+import type { NextTableComponentProps } from "./Table.js";
 import "./host-context.css";
 
 const { defineElement, property, method, event } = createDecorators();
@@ -335,3 +336,5 @@ class EoNextTable extends ReactNextElement {
     );
   }
 }
+
+export { NextTableComponentProps };
