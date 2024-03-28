@@ -80,19 +80,23 @@ export function CellComponent({
 
   useEffect(() => {
     const g = gRef.current;
-    if (!g || readOnly) {
+    if (!g) {
       return;
     }
     const onMouseDown = (event: MouseEvent) => {
-      handleMouseDown(event, {
-        layout,
-        action: "move",
-        cell,
-        scale: transform.k,
-        onCellMoving,
-        onCellMoved,
-        onSwitchActiveTarget,
-      });
+      if (readOnly) {
+        event.stopPropagation();
+      } else {
+        handleMouseDown(event, {
+          layout,
+          action: "move",
+          cell,
+          scale: transform.k,
+          onCellMoving,
+          onCellMoved,
+          onSwitchActiveTarget,
+        });
+      }
     };
     g.addEventListener("mousedown", onMouseDown);
     return () => {

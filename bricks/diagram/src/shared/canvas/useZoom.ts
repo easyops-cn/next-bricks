@@ -13,6 +13,7 @@ export interface UseZoomOptions {
   zoomable?: boolean;
   scrollable?: boolean;
   pannable?: boolean;
+  draggable?: boolean;
   scaleRange?: RangeTuple;
   onSwitchActiveTarget?(target: ActiveTarget | null): void;
 }
@@ -29,6 +30,7 @@ export function useZoom({
   zoomable,
   scrollable,
   pannable,
+  draggable,
   scaleRange: _scaleRange,
   onSwitchActiveTarget,
 }: UseZoomOptions): UseZoomResult {
@@ -117,8 +119,11 @@ export function useZoom({
     rootSelection
       .call(zoomer)
       .on("wheel", (e: WheelEvent) => e.preventDefault())
-      .on("dblclick.zoom", null)
-      .on("mousedown.zoom", null);
+      .on("dblclick.zoom", null);
+
+    if (!draggable || !pannable) {
+      rootSelection.on("mousedown.zoom", null);
+    }
 
     if (!pannable) {
       rootSelection
@@ -128,7 +133,7 @@ export function useZoom({
     }
 
     return unsetZoom;
-  }, [pannable, rootRef, scrollable, zoomable, zoomer]);
+  }, [draggable, pannable, rootRef, scrollable, zoomable, zoomer]);
 
   return { grabbing, transform, zoomer, scaleRange };
 }
