@@ -64,7 +64,7 @@ afterAll(() => {
 describe("eo-popup", () => {
   test("basic usage", async () => {
     const element = document.createElement("eo-popup") as EoPopup;
-    element.isVisible = true;
+    element.visible = true;
     element.popupTitle = "title";
     element.popupWidth = 600;
     element.popupHeight = 400;
@@ -184,7 +184,7 @@ describe("eo-popup", () => {
 
   test("should hidde", async () => {
     const element = document.createElement("eo-popup") as EoPopup;
-    element.isVisible = false;
+    element.visible = false;
 
     expect(element.shadowRoot).toBeFalsy();
 
@@ -204,7 +204,7 @@ describe("eo-popup", () => {
   test("popup should use localstory position", async () => {
     const element = document.createElement("eo-popup") as EoPopup;
     element.popupId = "popup-a";
-    element.isVisible = true;
+    element.visible = true;
 
     expect(element.shadowRoot).toBeFalsy();
 
@@ -224,10 +224,10 @@ describe("eo-popup", () => {
     expect(element.shadowRoot?.childNodes.length).toBe(0);
   });
 
-  test("should work with resize", () => {
+  test("should work with resizable", () => {
     const element = document.createElement("eo-popup") as EoPopup;
-    element.resize = true;
-    element.isVisible = true;
+    element.resizable = true;
+    element.visible = true;
 
     expect(element.shadowRoot).toBeFalsy();
 

@@ -9,7 +9,7 @@ brick: eo-popup
 properties:
   popupTitle: Popup
   popupHeight: 300px
-  isVisible: true
+  visible: true
 children:
   - brick: div
     properties:
@@ -45,28 +45,28 @@ children:
         textContent: Hello, I'm content!
 ```
 
-### Resize
+### Resizable
 
 ```yaml preview minHeight="500px"
 brick: eo-popup
 properties:
-  popupTitle: Resize
-  isVisible: true
-  resize: true
+  popupTitle: resizable
+  visible: true
+  resizable: true
 children:
   - brick: div
     properties:
       textContent: Hello, I'm content!
 ```
 
-### toolbar slot
+### Toolbar slot
 
 ```yaml preview minHeight="300px"
 brick: eo-popup
 properties:
-  popupTitle: Resize
+  popupTitle: resizable
   popupHeight: 200px
-  isVisible: true
+  visible: true
 children:
   - brick: div
     properties:

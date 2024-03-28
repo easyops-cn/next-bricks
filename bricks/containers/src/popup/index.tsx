@@ -10,7 +10,6 @@ import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import { JsonStorage } from "@next-core/utils/general";
-import moment from "moment";
 import { debounceByAnimationFrame } from "@next-shared/general/debounceByAnimationFrame";
 import { getCssPropertyValue } from "@next-core/runtime";
 import type {
@@ -30,7 +29,7 @@ export enum OpenDirection {
   Center = "center",
 }
 
-let headerHeight = parseInt(getCssPropertyValue("--app-bar-height")) || 56;
+const headerHeight = parseInt(getCssPropertyValue("--app-bar-height")) || 56;
 
 /**
  * 构件 `eo-popup`
@@ -78,7 +77,7 @@ class EoPopup extends ReactNextElement {
   @property({
     type: Boolean,
   })
-  accessor isVisible: boolean | undefined;
+  accessor visible: boolean | undefined;
 
   /**
    * 用于设置 popup head的样式
@@ -111,14 +110,14 @@ class EoPopup extends ReactNextElement {
   @property({
     type: Boolean,
   })
-  accessor resize: boolean | undefined;
+  accessor resizable: boolean | undefined;
 
   /**
    * 显示弹窗
    */
   @method()
   open(): void {
-    this.isVisible = true;
+    this.visible = true;
   }
 
   /**
@@ -126,11 +125,11 @@ class EoPopup extends ReactNextElement {
    */
   @method()
   close(): void {
-    this.closePopup();
+    this.#closePopup();
   }
 
-  closePopup = (): void => {
-    this.isVisible = false;
+  #closePopup = (): void => {
+    this.visible = false;
   };
 
   render() {
@@ -140,13 +139,13 @@ class EoPopup extends ReactNextElement {
         popupWidth={this.popupWidth}
         popupHeight={this.popupHeight}
         popupTitle={this.popupTitle}
-        visible={this.isVisible}
-        closePopup={this.closePopup}
+        visible={this.visible}
+        closePopup={this.#closePopup}
         openDirection={this.openDirection}
         dragHeaderStyle={this.dragHeaderStyle}
         dragWrapperStyle={this.dragWrapperStyle}
         noPadding={this.noPadding}
-        resize={this.resize}
+        resizable={this.resizable}
       />
     );
   }
@@ -158,12 +157,12 @@ export interface EoPopupProps {
   popupTitle?: string;
   popupWidth?: React.CSSProperties["width"];
   popupHeight?: React.CSSProperties["height"];
-  closePopup?: () => void;
   dragHeaderStyle?: Record<string, any>;
   dragWrapperStyle?: Record<string, any>;
   openDirection?: OpenDirection;
-  resize?: boolean;
+  resizable?: boolean;
   noPadding?: boolean;
+  closePopup?: () => void;
 }
 
 export function EoPopupComponent({
@@ -175,18 +174,18 @@ export function EoPopupComponent({
   dragHeaderStyle,
   dragWrapperStyle,
   openDirection,
+  resizable,
   closePopup,
-  resize,
 }: EoPopupProps) {
   const popupRef = useRef<HTMLDivElement>();
   const headerRef = useRef<HTMLDivElement>();
   const [isMove, setIsMove] = useState(false);
+  const [contentMaxSize, setContentMaxSize] = useState<React.CSSProperties>();
   const curPointRef = useRef({
     offsetX: 0,
     offsetY: 0,
   });
   const [position, setPosition] = useState<Array<number>>([]);
-  const jsonStorage = React.useMemo(() => new JsonStorage(localStorage), []);
 
   const storage = useMemo(
     () =>
@@ -198,24 +197,6 @@ export function EoPopupComponent({
         : null,
     [popupId]
   );
-
-  const handleShowTips = ((e: CustomEvent<any>): void => {
-    const list = (e.detail ?? []).filter((item: any) => {
-      const isTipClosing =
-        item.closable &&
-        jsonStorage.getItem(item.tipKey) &&
-        moment().unix() <= (jsonStorage.getItem(item.tipKey) as number);
-      return !isTipClosing;
-    });
-    headerHeight += list.length * 32;
-  }) as EventListener;
-
-  useEffect(() => {
-    window.addEventListener("app.bar.tips", handleShowTips);
-    return () => {
-      window.removeEventListener("app.bar.tips", handleShowTips);
-    };
-  }, []);
 
   const debouncedSetPoint = useMemo(
     () => debounceByAnimationFrame(setPosition),
@@ -333,6 +314,25 @@ export function EoPopupComponent({
     };
   }, [isMove, handleMouseUp, handleMouseMove]);
 
+  const computedContentMaxSize = useCallback(() => {
+    if (popupRef.current) {
+      const { left, top } = popupRef.current.getBoundingClientRect();
+      const { innerWidth, innerHeight } = window;
+      setContentMaxSize({
+        maxWidth: innerWidth - left - 40,
+        maxHeight: innerHeight - top - 40 - 44,
+      });
+    }
+    return {};
+  }, []);
+
+  useEffect(() => {
+    // fix resize overflow to screen
+    if (resizable) {
+      computedContentMaxSize();
+    }
+  }, [position]);
+
   return (
     visible && (
       <div
@@ -360,10 +360,11 @@ export function EoPopupComponent({
           className="content"
           style={{
             width: popupWidth ?? "500px",
-            ...(resize
+            ...(resizable
               ? {
                   resize: "both",
                   height: popupHeight,
+                  ...contentMaxSize,
                 }
               : { maxHeight: popupHeight }),
           }}
