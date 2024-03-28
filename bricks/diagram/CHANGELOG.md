@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.33.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.32.6...@next-bricks/diagram@0.33.0) (2024-03-28)
+
+
+### Features
+
+* support layoutOptions.alignOrigin ([27a1555](https://github.com/easyops-cn/next-bricks/commit/27a15558367252913dca8e5f137d97bd748d282e))
+
+
+
+
+
 ## [0.32.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.32.5...@next-bricks/diagram@0.32.6) (2024-03-27)
 
 
