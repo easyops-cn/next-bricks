@@ -195,7 +195,30 @@ export interface ForceCollideOptions {
 
 export interface BaseLayoutOptions {
   nodePadding?: PartialRectTuple;
+
+  /**
+   * 根据节点什么位置进行对齐，支持关键字、百分比和比例值。
+   * 第一个值为 x 轴，第二个值为 y 轴。
+   * 使用数字时，表示相对于节点的宽高的比例。
+   *
+   * 注意，节点宽高将包含 nodePadding 的值。
+   *
+   * @default ["center","center"]
+   *
+   * @example
+   * [0, 0] // left-top
+   * [0.5, 0.5] // center
+   * [1, 1] // right-bottom
+   * ["center", "center"] // center
+   * ["50%", "50%"] // center
+   * ["left", "top"]
+   * ["right", "bottom"]
+   */
+  alignOrigin?: AlignOrigin;
 }
+
+export type AlignOrigin = [x: string | number, y: string | number];
+export type NormalizedAlignOrigin = [x: number, y: number];
 
 export interface ForceNode extends SimulationNodeDatum {
   id: NodeId;
