@@ -22,6 +22,7 @@ import {
 import type { DrawCanvasAction } from "../../draw-canvas/reducers/interfaces";
 import { forceLayout } from "./forceLayout";
 import { dagreLayout } from "./dagreLayout";
+import { normalizeAlignOrigin } from "../../draw-canvas/processors/normalizeAlignOrigin";
 
 export interface UseLayoutOptions {
   layout: LayoutType;
@@ -110,6 +111,8 @@ export function useLayout({
       }));
     }
 
+    const alignOrigin = normalizeAlignOrigin(layoutOptions?.alignOrigin);
+
     const newCells: Cell[] = cells.map((cell) => {
       if (isNodeCell(cell)) {
         const nodeView = getNodeView(cell.id);
@@ -117,8 +120,8 @@ export function useLayout({
           ...cell,
           view: {
             ...cell.view,
-            x: nodeView.x! - nodeView.width / 2 + nodePaddings[3],
-            y: nodeView.y! - nodeView.height / 2 + nodePaddings[0],
+            x: nodeView.x! - nodeView.width * alignOrigin[0] + nodePaddings[3],
+            y: nodeView.y! - nodeView.height * alignOrigin[1] + nodePaddings[0],
           },
           [SYMBOL_FOR_LAYOUT_INITIALIZED]: true,
         };
