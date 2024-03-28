@@ -250,6 +250,7 @@ function EoDisplayCanvasComponent({
     zoomable,
     scrollable,
     pannable,
+    draggable: true,
     scaleRange: _scaleRange,
     onSwitchActiveTarget,
   });
