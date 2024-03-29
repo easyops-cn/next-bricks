@@ -32,7 +32,12 @@ const originalOffsetHeight = Object.getOwnPropertyDescriptor(
   HTMLElement.prototype,
   "offsetHeight"
 );
-const getBoundingClientRectSpy = jest.fn(() => ({ width: 600, height: 400 }));
+const getBoundingClientRectSpy = jest.fn(() => ({
+  width: 600,
+  height: 400,
+  left: 100,
+  top: 100,
+}));
 beforeAll(() => {
   Object.defineProperty(HTMLElement.prototype, "offsetWidth", {
     configurable: true,
@@ -240,6 +245,65 @@ describe("eo-popup", () => {
       ".content"
     ) as HTMLElement;
     expect(contentElement.style.resize).toEqual("both");
+    expect(contentElement.style.maxWidth).toBe("860px");
+    expect(contentElement.style.maxHeight).toBe("316px");
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
+
+  test("method should work", async () => {
+    const element = document.createElement("eo-popup") as EoPopup;
+    const toolbarElement = document.createElement("div");
+    toolbarElement.textContent = "toolbar";
+    toolbarElement.slot = "toolbar";
+    element.appendChild(toolbarElement);
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBe(1);
+
+    expect(element.shadowRoot.querySelector(".general-popup")).toBeFalsy();
+
+    await act(async () => {
+      await element.open();
+    });
+
+    expect(element.shadowRoot.querySelector(".general-popup")).toBeTruthy();
+
+    expect(element.querySelector("div[slot='toolbar']")).toBeTruthy();
+
+    fireEvent.mouseDown(element.querySelector("div[slot='toolbar']"));
+
+    expect(element.visible).toBe(true);
+
+    const event = new MouseEvent("mousedown", {
+      bubbles: true,
+      cancelable: true,
+    });
+
+    fireEvent(element.shadowRoot.querySelector("eo-icon[icon='close']"), event);
+
+    await window.dispatchEvent(new MouseEvent("mouseup", {}));
+
+    expect(element.visible).toBe(false);
+
+    await act(async () => {
+      await element.open();
+    });
+
+    expect(element.shadowRoot.querySelector(".general-popup")).toBeTruthy();
+
+    await act(async () => {
+      await element.close();
+    });
+
+    expect(element.shadowRoot.querySelector(".general-popup")).toBeFalsy();
 
     act(() => {
       document.body.removeChild(element);
