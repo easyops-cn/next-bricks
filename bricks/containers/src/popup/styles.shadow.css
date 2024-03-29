@@ -19,6 +19,7 @@
 
 .general-popup-header {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   background: var(--antd-modal-footer-bg);
   padding: 12px;
@@ -37,6 +38,8 @@
 }
 
 .general-popup-close-btn {
+  display: flex;
+  align-items: center;
   cursor: pointer;
   color: var(--antd-text-color-secondary);
   &:hover {

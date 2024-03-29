@@ -73,6 +73,7 @@ describe("eo-popup", () => {
     element.popupTitle = "title";
     element.popupWidth = 600;
     element.popupHeight = 400;
+    element.resizable = true;
 
     expect(element.shadowRoot).toBeFalsy();
 
@@ -93,6 +94,10 @@ describe("eo-popup", () => {
       ".general-popup-header"
     );
 
+    expect(
+      (element.shadowRoot.querySelector(".content") as HTMLElement).style.resize
+    ).toBe("both");
+
     const event = new MouseEvent("mousedown", {
       bubbles: true,
       cancelable: true,
@@ -111,6 +116,11 @@ describe("eo-popup", () => {
         clientY: 100,
       })
     );
+
+    expect(
+      (element.shadowRoot.querySelector(".content") as HTMLElement).style.resize
+    ).toBe("none");
+
     await window.dispatchEvent(new MouseEvent("mouseup", {}));
 
     expect((GeneralPopupElement as HTMLElement).style.transform).toBe(
@@ -245,8 +255,8 @@ describe("eo-popup", () => {
       ".content"
     ) as HTMLElement;
     expect(contentElement.style.resize).toEqual("both");
-    expect(contentElement.style.maxWidth).toBe("860px");
-    expect(contentElement.style.maxHeight).toBe("316px");
+    expect(contentElement.style.maxWidth).toBe("900px");
+    expect(contentElement.style.maxHeight).toBe("0");
 
     act(() => {
       document.body.removeChild(element);
