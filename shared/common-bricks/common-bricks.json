@@ -59,7 +59,8 @@
     "eo-main-view",
     "eo-narrow-view",
     "eo-banner",
-    "eo-content-layout"
+    "eo-content-layout",
+    "eo-popup"
   ],
   "form": [
     "eo-textarea",
