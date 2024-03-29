@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.3.1...@next-bricks/containers@1.4.0) (2024-03-29)
+
+
+### Bug Fixes
+
+* resize overflow to screen ([58310e8](https://github.com/easyops-cn/next-bricks/commit/58310e86b872f35f34658e19c76e5b10c79f9048))
+
+
+### Features
+
+* **eo-popup:** init ([f0e6d81](https://github.com/easyops-cn/next-bricks/commit/f0e6d81bb4d7d62f9fd7a489895a409321e2ebb2))
+* update unit test ([7fba180](https://github.com/easyops-cn/next-bricks/commit/7fba18052b44fced806faf71b2f24d2a5977c253))
+
+
+
+
+
 ## [1.3.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.3.0...@next-bricks/containers@1.3.1) (2024-03-27)
 
 **Note:** Version bump only for package @next-bricks/containers

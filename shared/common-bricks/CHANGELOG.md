@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.39.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.38.0...@next-shared/common-bricks@0.39.0) (2024-03-29)
+
+
+### Features
+
+* **eo-popup:** init ([f0e6d81](https://github.com/easyops-cn/next-bricks/commit/f0e6d81bb4d7d62f9fd7a489895a409321e2ebb2))
+
+
+
+
+
 # [0.38.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.37.0...@next-shared/common-bricks@0.38.0) (2024-03-20)
 
 
