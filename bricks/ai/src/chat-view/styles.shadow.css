@@ -1,5 +1,6 @@
 :host {
-  display: inline-block;
+  display: block;
+  height: 100%;
 }
 
 :host([hidden]) {
@@ -300,7 +301,7 @@
       outline: none;
       border: none;
       line-height: 20px;
-      color: inherit;
+      color: var(--color-normal-text);
       background-color: transparent;
       cursor: inherit;
       transition: all 300ms ease-out;
@@ -376,16 +377,4 @@
       color: var(--color-secondary-text);
     }
   }
-}
-
-/* 加载框样式 */
-.loading-wrapper {
-  display: flex;
-  padding: 20px;
-  font-size: 40px;
-  align-items: center;
-  justify-content: center;
-  background: inherit;
-  color: #d2d3d4;
-  border-radius: 6px;
 }

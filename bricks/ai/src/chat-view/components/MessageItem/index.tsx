@@ -3,7 +3,7 @@ import { MessageItem, MessageItemContent } from "../../ChatViewContext.js";
 import { GuideItem } from "./GuideItem.js";
 import { MarkdownItem } from "./MarkdownItem.js";
 import { TableItem } from "./TableItem.js";
-import { Loading } from "./Loading.js";
+import { ChatItemLoading } from "../Loading.js";
 import { TextItem } from "./TextItem.js";
 import { Toolbar } from "./Toolbar.js";
 import { Time } from "./Time.js";
@@ -25,7 +25,7 @@ export function MessageNode(props: MessageItem): React.ReactNode {
         case "table":
           return <TableItem key={key} text={text} />;
         case "load":
-          return <Loading loading />;
+          return <ChatItemLoading loading />;
         case "text":
         default:
           return <TextItem key={key} text={text} />;
