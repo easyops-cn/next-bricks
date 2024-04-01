@@ -315,12 +315,14 @@ export function EoPopupComponent({
   }, [isMove, handleMouseUp, handleMouseMove]);
 
   const computedContentMaxSize = useCallback(() => {
-    if (popupRef.current) {
+    if (popupRef.current && headerRef.current) {
       const { left, top } = popupRef.current.getBoundingClientRect();
+      const { height: headerHeight } =
+        headerRef.current.getBoundingClientRect();
       const { innerWidth, innerHeight } = window;
       setContentMaxSize({
-        maxWidth: innerWidth - left - 40,
-        maxHeight: innerHeight - top - 40 - 44,
+        maxWidth: innerWidth - left,
+        maxHeight: innerHeight - top - headerHeight,
       });
     }
     return {};
@@ -328,10 +330,10 @@ export function EoPopupComponent({
 
   useEffect(() => {
     // fix resize overflow to screen
-    if (resizable) {
+    if (resizable && !isMove) {
       computedContentMaxSize();
     }
-  }, [position]);
+  }, [isMove, position]);
 
   return (
     visible && (
@@ -362,7 +364,7 @@ export function EoPopupComponent({
             width: popupWidth ?? "500px",
             ...(resizable
               ? {
-                  resize: "both",
+                  resize: isMove ? "none" : "both",
                   height: popupHeight,
                   ...contentMaxSize,
                 }
