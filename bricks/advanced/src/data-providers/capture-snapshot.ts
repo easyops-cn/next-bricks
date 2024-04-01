@@ -16,6 +16,8 @@ export type SnapshotOptions = {
   selector?: string;
   /** 对象存储桶名字, fileType只能为 `image` */
   bucketName?: string;
+  /** 画布背景颜色, 默认透明 */
+  backgroundColor?: string;
 };
 /**
  * 截图，保存或上传
@@ -25,11 +27,11 @@ export type SnapshotOptions = {
 export async function captureSnapshot(
   options: SnapshotOptions
 ): Promise<void | string> {
-  const { name, fileType, bucketName, selector } = options;
+  const { name, fileType, bucketName, selector, backgroundColor } = options;
   switch (fileType) {
     case "image":
       {
-        const canvas = await capture(selector);
+        const canvas = await capture(selector, backgroundColor);
         if (bucketName) {
           const blob = await getCanvasBlob(canvas);
           const files = new File([blob], `${name}.png`, { type: blob.type });
@@ -42,7 +44,7 @@ export async function captureSnapshot(
       break;
     case "pdf": {
       const { jsPDF } = await import("jspdf");
-      const canvas = await capture(selector);
+      const canvas = await capture(selector, backgroundColor);
       const imageData = canvas.toDataURL("image/jpeg", 1.0);
       const orientation =
         canvas.width > canvas.height ? "landscape" : "portrait";
