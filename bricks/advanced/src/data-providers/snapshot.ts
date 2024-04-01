@@ -5,7 +5,10 @@ import { getBasePath } from "@next-core/runtime";
 
 export type UploadStatus = "uploading" | "done" | "error";
 
-export function capture(selector?: string): Promise<HTMLCanvasElement> {
+export function capture(
+  selector?: string,
+  backgroundColor?: string
+): Promise<HTMLCanvasElement> {
   const target: HTMLElement | null = selector
     ? document.querySelector(`${selector}`)
     : document.body;
@@ -14,6 +17,7 @@ export function capture(selector?: string): Promise<HTMLCanvasElement> {
   }
   return new Promise(function (resolve, reject) {
     html2canvas(target, {
+      backgroundColor: backgroundColor || null,
       useCORS: true,
       allowTaint: true,
       scale: window.devicePixelRatio < 3 ? window.devicePixelRatio : 2,
@@ -49,6 +53,7 @@ export function downloadImage(
       };
       image.src = url;
       resolve("succeed");
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       reject("failed");
     }
