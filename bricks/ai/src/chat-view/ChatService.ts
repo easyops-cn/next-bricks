@@ -21,6 +21,7 @@ export interface QueueItem {
 
 export class ChatService {
   #agentId: string;
+  #enterInterval: number;
   #charting = false;
   #isStartEmitEvent = false;
   #emitTimer: NodeJS.Timeout | undefined;
@@ -28,8 +29,15 @@ export class ChatService {
   #subscribers: Record<string, Array<(msg?: SSEMessageItem) => void>> = {};
   #conversationId?: string;
 
-  constructor({ agentId }: { agentId: string }) {
+  constructor({
+    agentId,
+    enterInterval = 50,
+  }: {
+    agentId: string;
+    enterInterval: number;
+  }) {
     this.#agentId = agentId;
+    this.#enterInterval = enterInterval;
   }
 
   enqueue(data: QueueItem) {
@@ -161,7 +169,7 @@ export class ChatService {
         this.#isStartEmitEvent = false;
         this.notifySubscribers({ topic: "finish" });
       }
-    }, 80);
+    }, this.#enterInterval);
   }
 }
 

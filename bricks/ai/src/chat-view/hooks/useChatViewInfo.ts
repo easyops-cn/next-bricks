@@ -4,7 +4,13 @@ import { mockList2, mockmsgList } from "../mockList.js";
 import moment from "moment";
 import { ChatService, SSEMessageItem } from "../ChatService.js";
 
-export function useChatViewInfo({ agentId }: { agentId: string }) {
+export function useChatViewInfo({
+  agentId,
+  enterInterval = 50,
+}: {
+  agentId: string;
+  enterInterval?: number;
+}) {
   const [activeSessionId, setActiveSessionid] = useState<string>("1");
   const [loading, setLoading] = useState<boolean>(false);
   const [chartting, setChatting] = useState<boolean>(false);
@@ -18,8 +24,9 @@ export function useChatViewInfo({ agentId }: { agentId: string }) {
     () =>
       new ChatService({
         agentId,
+        enterInterval,
       }),
-    [agentId]
+    [agentId, enterInterval]
   );
 
   useEffect(() => {
