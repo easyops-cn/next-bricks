@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.4.0...@next-bricks/containers@1.4.1) (2024-04-01)
+
+
+### Bug Fixes
+
+* **eo-popup:** fix moving will change content width ([93071f2](https://github.com/easyops-cn/next-bricks/commit/93071f2e56d08c6d6df5670818fbf8525334e042))
+
+
+
+
+
 # [1.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.3.1...@next-bricks/containers@1.4.0) (2024-03-29)
 
 
