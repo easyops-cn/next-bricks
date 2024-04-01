@@ -37,6 +37,11 @@ export function useChatViewInfo({ agentId }: { agentId: string }) {
         ctime: 1710731756,
         active: true,
       },
+      // {
+      //   title: "会话二",
+      //   id: "2",
+      //   ctime: 1710731756,
+      // },
     ]);
   }, []);
 
@@ -107,6 +112,11 @@ export function useChatViewInfo({ agentId }: { agentId: string }) {
     [chartService]
   );
 
+  const createSession = useCallback(() => {
+    setMsgList([]);
+    chartService.setConversationId();
+  }, [chartService]);
+
   const updateSession = useCallback(async (id: string) => {
     setLoading(true);
     setMsgList([]);
@@ -132,6 +142,7 @@ export function useChatViewInfo({ agentId }: { agentId: string }) {
     msgList,
     msgItem,
     handleChat,
+    createSession,
     updateSession,
     setSearchStr,
   };

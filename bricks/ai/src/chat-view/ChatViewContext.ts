@@ -34,6 +34,7 @@ interface ChatViewContextProps {
   showLike: boolean;
   handleChat: (str: string) => void;
   updateSession: (id: string) => void;
+  createSession: () => void;
   setSearchStr: (str: string) => void;
 }
 

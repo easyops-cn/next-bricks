@@ -6,8 +6,10 @@ import { MessageList } from "./components/MessageList.js";
 import { useChatViewInfo } from "./hooks/useChatViewInfo.js";
 import { SessionList } from "./components/SessionList.js";
 import { SearchInput } from "./components/SearchInput.js";
-import { ChatViewToolbar } from "./components/ChatViewToolbar.js";
+// import { ChatViewToolbar } from "./components/ChatViewToolbar.js";
 import styleText from "./styles.shadow.css";
+import loadStyleText from "./components/loading.shadow.css";
+import markdownStyleText from "./components/MessageItem/markdown.shadow.css";
 import "@next-core/theme";
 
 const { defineElement, property } = createDecorators();
@@ -16,8 +18,8 @@ const { defineElement, property } = createDecorators();
  * AI 对话终端
  */
 export
-@defineElement("advanced.chat-view", {
-  styleTexts: [styleText],
+@defineElement("ai.chat-view", {
+  styleTexts: [styleText, loadStyleText, markdownStyleText],
 })
 class ChatView extends ReactNextElement {
   @property()
@@ -28,14 +30,6 @@ class ChatView extends ReactNextElement {
    */
   @property()
   accessor agentId!: string;
-
-  /**
-   * 是否展示聊天工具栏
-   */
-  @property({
-    type: Boolean,
-  })
-  accessor showToolbar: boolean | undefined;
 
   /**
    * 是否展示对话用户头像
@@ -69,7 +63,6 @@ class ChatView extends ReactNextElement {
       <ChatViewComponent
         agentId={this.agentId}
         sessionId={this.sessionId}
-        showToolbar={this.showToolbar}
         showAvatar={this.showAvatar}
         showSessionList={this.showSessionList}
         showLike={this.showLike}
@@ -81,7 +74,6 @@ class ChatView extends ReactNextElement {
 export interface ChatViewProps {
   agentId: string;
   sessionId?: string;
-  showToolbar?: boolean;
   showAvatar?: boolean;
   showSessionList?: boolean;
   showLike?: boolean;
@@ -89,7 +81,6 @@ export interface ChatViewProps {
 
 export function ChatViewComponent({
   agentId,
-  showToolbar,
   showAvatar,
   showSessionList = true,
   showLike = true,
@@ -103,6 +94,7 @@ export function ChatViewComponent({
     chartting,
     searchStr,
     handleChat,
+    createSession,
     updateSession,
     setSearchStr,
   } = useChatViewInfo({
@@ -121,6 +113,7 @@ export function ChatViewComponent({
         searchStr,
         showLike,
         handleChat,
+        createSession,
         updateSession,
         setSearchStr,
       }}
@@ -132,7 +125,6 @@ export function ChatViewComponent({
           </div>
         )}
         <div className="chat-view-content">
-          {showToolbar && <ChatViewToolbar />}
           <div className="chat-view">
             <MessageList showAvatar={showAvatar} />
             <SearchInput />

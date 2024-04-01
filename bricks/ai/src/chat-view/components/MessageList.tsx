@@ -8,7 +8,7 @@ import React, {
 import { MessageItem, useChatViewContext } from "../ChatViewContext";
 import { Avatar } from "./MessageItem/Avatar.js";
 import classNames from "classnames";
-import { Loading } from "./MessageItem/Loading";
+import { MessageListLoading } from "./Loading.js";
 import { MessageNode } from "./MessageItem/index.js";
 
 interface MessageListProps {
@@ -22,7 +22,6 @@ export function MessageList({
 }: MessageListProps): React.ReactNode {
   const messageListRef = useRef<HTMLDivElement>(null);
   const messgetListBoxRef = useRef<HTMLDivElement>(null);
-  // const preHeight = useRef<number>(0);
   const [preHeight, setPreHeight] = useState<number>(0);
 
   const { msgList, msgItem, loading, chartting } = useChatViewContext();
@@ -91,7 +90,7 @@ export function MessageList({
         {msgListNode}
         {msgItemNode}
       </div>
-      <Loading loading={loading} />
+      <MessageListLoading loading={loading} />
     </div>
   );
 }

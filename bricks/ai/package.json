@@ -1,7 +1,7 @@
 {
-  "name": "@next-bricks/advanced",
-  "version": "0.31.0",
-  "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/basic",
+  "name": "@next-bricks/ai",
+  "version": "0.0.0",
+  "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/ai",
   "repository": {
     "type": "git",
     "url": "git@github.com:easyops-cn/next-bricks.git"
@@ -28,45 +28,30 @@
     "build:main": "cross-env NODE_ENV=production build-next-bricks",
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist-types --project tsconfig.json",
     "build:manifest": "cross-env NODE_ENV=production build-next-bricks --manifest-only",
-    "test": "cross-env NODE_ENV='test' test-next",
-    "test:ci": "cross-env NODE_ENV='test' CI=true test-next",
     "prepublishOnly": "cp package.json package.json.bak && npm pkg delete dependencies",
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@ant-design/cssinjs": "^1.18.4",
-    "@ant-design/icons": "^5.3.0",
-    "@dnd-kit/core": "^6.0.8",
-    "@dnd-kit/modifiers": "^6.0.1",
-    "@dnd-kit/sortable": "^7.0.2",
-    "@dnd-kit/utilities": "^3.2.1",
+    "@microsoft/fetch-event-source": "^2.0.1",
     "@next-core/element": "^1.2.3",
-    "@next-core/http": "^1.1.10",
+    "@next-core/i18n": "^1.0.39",
     "@next-core/react-element": "^1.0.22",
-    "@next-core/react-runtime": "^1.2.9",
-    "@next-core/runtime": "^1.34.3",
     "@next-core/theme": "^1.4.8",
-    "@next-core/types": "^1.8.1",
-    "antd": "^5.14.1",
-    "classnames": "^2.3.2",
-    "html2canvas": "^1.4.1",
-    "immutability-helper": "^3.1.1",
-    "jspdf": "^2.5.1",
-    "lodash": "^4.17.21",
-    "react": "0.0.0-experimental-ee8509801-20230117",
-    "react-dnd": "^16.0.1",
-    "react-dnd-html5-backend": "^16.0.1",
-    "react-dom": "0.0.0-experimental-ee8509801-20230117",
-    "react-grid-layout": "^1.4.3"
+    "react": "0.0.0-experimental-ee8509801-20230117"
   },
   "devDependencies": {
+    "@milkdown/core": "^7.3.5",
+    "@milkdown/plugin-prism": "^7.3.5",
+    "@milkdown/preset-commonmark": "^7.3.5",
+    "@milkdown/preset-gfm": "^7.3.5",
+    "@milkdown/react": "^7.3.5",
+    "@milkdown/theme-nord": "^7.3.5",
     "@next-core/build-next-bricks": "^1.20.6",
     "@next-core/test-next": "^1.0.16"
   },
   "peerDependencies": {
     "@next-bricks/basic": "*",
-    "@next-bricks/form": "*",
-    "@next-bricks/icons": "*",
-    "@next-bricks/markdown": "*"
+    "@next-bricks/containers": "*",
+    "@next-bricks/icons": "*"
   }
 }

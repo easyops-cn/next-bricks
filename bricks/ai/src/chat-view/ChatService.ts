@@ -70,6 +70,10 @@ export class ChatService {
     }
   }
 
+  setConversationId(id?: string) {
+    this.#conversationId = id;
+  }
+
   async getSessionList() {
     // const response = await fetch(
     //   `${getBasePath()}api/gateway/easyops.api.aiops_chat.conversation/conversation/list/${this.#agentId}`,

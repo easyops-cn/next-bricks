@@ -1,0 +1,81 @@
+.message-list-loading-wrapper {
+  width: 140px;
+  height: 140px;
+  background-repeat: no-repeat;
+  margin: auto;
+  background-image: url("../assets/loading.gif");
+}
+
+.chart-item-loading-wrapper {
+  display: flex;
+  padding: 10px;
+  font-size: 40px;
+  align-items: center;
+  justify-content: center;
+  background: inherit;
+  color: #d2d3d4;
+  border-radius: 6px;
+
+  .load {
+    display: inline-block;
+    position: relative;
+    width: 64px;
+    height: 64px;
+
+    div {
+      position: absolute;
+      top: 27px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: #aaa8a8;
+      animation-timing-function: cubic-bezier(0, 1, 1, 0);
+
+      &:nth-child(1) {
+        left: 6px;
+        animation: load1 0.6s infinite;
+      }
+
+      &:nth-child(2) {
+        left: 6px;
+        animation: load2 0.6s infinite;
+      }
+
+      &:nth-child(3) {
+        left: 26px;
+        animation: load2 0.6s infinite;
+      }
+
+      &:nth-child(4) {
+        left: 45px;
+        animation: load3 0.6s infinite;
+      }
+    }
+  }
+}
+
+@keyframes load1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes load2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(19px, 0);
+  }
+}
+
+@keyframes load3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}

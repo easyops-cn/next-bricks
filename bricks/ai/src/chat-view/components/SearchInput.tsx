@@ -29,8 +29,14 @@ export function SearchInput(): React.ReactNode {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const hadExpanded = useRef<boolean>(false);
 
-  const { chartting, loading, searchStr, setSearchStr, handleChat } =
-    useChatViewContext();
+  const {
+    chartting,
+    loading,
+    searchStr,
+    createSession,
+    setSearchStr,
+    handleChat,
+  } = useChatViewContext();
 
   const hadValue = useMemo(() => !!value, [value]);
   const defaultSize = useMemo(() => [1, 5], []);
@@ -64,7 +70,7 @@ export function SearchInput(): React.ReactNode {
   );
 
   const hanldeCreateSession = () => {
-    //
+    createSession();
   };
 
   const handleExpand = useCallback(() => {
@@ -145,7 +151,7 @@ export function SearchInput(): React.ReactNode {
             ...autoSizeStyle,
             paddingRight: expand ? "50px" : "140px",
           }}
-          placeholder="提出你的想法..."
+          placeholder={chartting ? "回复中,请稍等..." : "提出你的想法..."}
           onFocus={() => setActive(true)}
           onBlur={() => setActive(false)}
           onChange={handleChange}

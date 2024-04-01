@@ -5,4 +5,3 @@ import "./workbench-layout/index.js";
 import "./data-providers/capture-snapshot.js";
 import "./tree/index.js";
 import "./tree-select/index.js";
-import "./chat-view/index.js";
