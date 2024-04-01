@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.32.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.31.1...@next-bricks/advanced@0.32.0) (2024-04-01)
+
+
+### Features
+
+* support backgroundColor ([fc03549](https://github.com/easyops-cn/next-bricks/commit/fc03549485645e53498c8735e8cf0f014b465066))
+
+
+
+
+
 ## [0.31.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.31.0...@next-bricks/advanced@0.31.1) (2024-04-01)
 
 **Note:** Version bump only for package @next-bricks/advanced
