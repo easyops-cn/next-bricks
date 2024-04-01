@@ -86,6 +86,7 @@ describe("eo-card-item", () => {
       element.avatar = {
         imgSrc: "./test.jpg",
       };
+      element.coverImageSize = "cover";
     });
     expect(
       element.shadowRoot?.querySelector(".card-cover-wrapper")
