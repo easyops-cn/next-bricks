@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.33.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.33.1...@next-bricks/diagram@0.33.2) (2024-04-01)
+
+
+### Bug Fixes
+
+* **draw-canvas:** fix update with a single positioned nodes ([c3f8fe7](https://github.com/easyops-cn/next-bricks/commit/c3f8fe7eaa05907b913284a8d4e49317d38d22d2))
+
+
+
+
+
 ## [0.33.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.33.0...@next-bricks/diagram@0.33.1) (2024-03-28)
 
 
