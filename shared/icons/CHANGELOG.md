@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.4.1...@next-shared/icons@0.5.0) (2024-04-01)
+
+
+### Features
+
+* add menu icons ([d370c33](https://github.com/easyops-cn/next-bricks/commit/d370c33d5147cf91d05b7a957f05fe3a21a96b4e))
+
+
+
+
+
 ## [0.4.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.4.0...@next-shared/icons@0.4.1) (2024-03-27)
 
 **Note:** Version bump only for package @next-shared/icons
