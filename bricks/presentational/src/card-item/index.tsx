@@ -87,6 +87,7 @@ export interface EoCardItemProps {
   coverColor?: string;
   tagConfig?: TagConfig;
   avatarPosition?: "content" | "cover";
+  coverImageSize?: React.CSSProperties["backgroundSize"];
 }
 
 /**
@@ -189,6 +190,14 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
   accessor coverColor: string;
 
   /**
+   * 卡片封面图片尺寸 ，配置参考 https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-size
+   */
+  @property({
+    attribute: false,
+  })
+  accessor coverImageSize: React.CSSProperties["backgroundSize"] | undefined;
+
+  /**
    * 图标是否放置在卡片封面
    */
   @property()
@@ -270,6 +279,7 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
         avatarPosition={this.avatarPosition}
         onActionClick={this.#handleActionClick}
         onTagClick={this.#handleTagClick}
+        coverImageSize={this.coverImageSize}
       />
     );
   }
@@ -300,6 +310,7 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
     tagConfig,
     onActionClick,
     onTagClick,
+    coverImageSize,
   } = props;
 
   const handleActionClick = useCallback(
@@ -392,6 +403,7 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
               style={{
                 ...(coverImage && { backgroundImage: `url(${coverImage})` }),
                 ...(coverColor && { backgroundColor: coverColor }),
+                ...(coverImageSize && { backgroundSize: coverImageSize }),
               }}
             >
               {MiniActions}
