@@ -750,4 +750,53 @@ describe("updateCells", () => {
       shouldReCenter: false,
     });
   });
+
+  test("a single positioned node", () => {
+    expect(
+      updateCells({
+        cells: [
+          {
+            id: "1",
+            type: "node",
+            view: {
+              x: 100,
+              y: 30,
+            },
+          },
+        ],
+        previousCells: [],
+        defaultNodeSize: [120, 80],
+        canvasWidth: 800,
+        canvasHeight: 600,
+        scaleRange: [0.5, 2],
+        transform: { k: 1, x: 0, y: 0 },
+      })
+    ).toEqual({
+      cells: [
+        {
+          id: "1",
+          type: "node",
+          view: {
+            x: 60,
+            y: 40,
+            width: 120,
+            height: 80,
+          },
+        },
+      ],
+      updated: [
+        {
+          id: "1",
+          type: "node",
+          view: {
+            x: 60,
+            y: 40,
+            width: 120,
+            height: 80,
+          },
+        },
+      ],
+      shouldReCenter: true,
+    });
+  });
 });

@@ -144,7 +144,7 @@ export function updateCells({
     // By default, place unpositioned nodes in a grid.
     let maxWidth = defaultNodeSize[0];
     let maxHeight = defaultNodeSize[1];
-    let positionedNodesCount = 0;
+    const positionedNodes: NodeCell[] = [];
     let hasDecorators = false;
     for (const cell of newCells) {
       if (isNodeCell(cell)) {
@@ -157,7 +157,7 @@ export function updateCells({
         if (cell.view.x === undefined || cell.view.y === undefined) {
           updateCandidates.push(cell);
         } else {
-          positionedNodesCount++;
+          positionedNodes.push(cell);
         }
       } else if (isDecoratorCell(cell)) {
         hasDecorators = true;
@@ -180,9 +180,11 @@ export function updateCells({
       // then there is no relative positions, we can place the nodes with dagre layout.
       // Otherwise, use the force layout.
       if (
-        positionedNodesCount === 0 ||
-        (positionedNodesCount === 1 && !hasDecorators)
+        positionedNodes.length === 0 ||
+        (positionedNodes.length === 1 && !hasDecorators)
       ) {
+        // The positioned node (if exists) will be updated.
+        updateCandidates.push(...positionedNodes);
         ({ getNodeView } = dagreLayout({ cells: newCells }));
         shouldReCenter = true;
       } else {
