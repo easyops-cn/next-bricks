@@ -58,6 +58,15 @@ class ChatView extends ReactNextElement {
   })
   accessor showLike: boolean | undefined;
 
+  /**
+   * 输入间隔
+   * @default 50
+   */
+  @property({
+    type: Number,
+  })
+  accessor enterInterval: number | undefined;
+
   render() {
     return (
       <ChatViewComponent
@@ -66,6 +75,7 @@ class ChatView extends ReactNextElement {
         showAvatar={this.showAvatar}
         showSessionList={this.showSessionList}
         showLike={this.showLike}
+        enterInterval={this.enterInterval}
       />
     );
   }
@@ -77,6 +87,7 @@ export interface ChatViewProps {
   showAvatar?: boolean;
   showSessionList?: boolean;
   showLike?: boolean;
+  enterInterval?: number;
 }
 
 export function ChatViewComponent({
@@ -84,6 +95,7 @@ export function ChatViewComponent({
   showAvatar,
   showSessionList = true,
   showLike = true,
+  enterInterval,
 }: ChatViewProps) {
   const {
     activeSessionId,
@@ -99,6 +111,7 @@ export function ChatViewComponent({
     setSearchStr,
   } = useChatViewInfo({
     agentId,
+    enterInterval,
   });
 
   return (
