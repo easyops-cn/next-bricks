@@ -200,6 +200,8 @@ class EoDatePicker extends FormItemElementBase {
         message={this.message}
         required={this.required}
         placeholder={this.placeholder}
+        labelBrick={this.labelBrick}
+        helpBrick={this.helpBrick}
         inputStyle={this.inputStyle}
         disabled={this.disabled}
         disabledDate={this.disabledDate}

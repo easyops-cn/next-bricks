@@ -192,6 +192,7 @@ class Checkbox extends FormItemElementBase {
         message={this.message}
         notRender={this.notRender}
         helpBrick={this.helpBrick}
+        labelBrick={this.labelBrick}
         trigger="handleCheckboxChange"
         onChange={this.handleCheckboxChange}
         optionsChange={this.#handleOptionsChange}
