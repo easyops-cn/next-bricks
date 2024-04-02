@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.10.3...@next-bricks/nav@1.10.4) (2024-04-02)
+
+
+### Bug Fixes
+
+* 开放平台去掉开关 ([5a35628](https://github.com/easyops-cn/next-bricks/commit/5a35628d543fda9aa9cbd7bf6e610809102dc428))
+
+
+
+
+
 ## [1.10.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.10.2...@next-bricks/nav@1.10.3) (2024-04-02)
 
 **Note:** Version bump only for package @next-bricks/nav

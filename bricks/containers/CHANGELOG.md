@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.4.1...@next-bricks/containers@1.4.2) (2024-04-02)
+
+
+### Bug Fixes
+
+* drawer mask merge custom css propperties ([bd7c6c2](https://github.com/easyops-cn/next-bricks/commit/bd7c6c2125ab41cfa2de63873b062dcb645fab73))
+
+
+
+
+
 ## [1.4.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.4.0...@next-bricks/containers@1.4.1) (2024-04-01)
 
 
