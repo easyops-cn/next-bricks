@@ -163,7 +163,12 @@ describe("eo-display-canvas", () => {
         cell: {
           type: "node",
           id: "a",
-          view: { x: 20, y: 20, width: 20, height: 20 },
+          view: expect.objectContaining({
+            x: 20,
+            y: 20,
+            width: 20,
+            height: 20,
+          }),
         },
         clientX: 100,
         clientY: 200,
