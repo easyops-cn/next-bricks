@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef, CSSProperties } from "react";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import type {
@@ -129,6 +129,12 @@ class Drawer extends ReactNextElement implements DrawerProps {
   accessor scrollToTopWhenOpen = true;
 
   /**
+   * 自定义遮罩层的样式
+   */
+  @property({ attribute: false })
+  accessor maskStyle = {};
+
+  /**
    * 抽屉开启事件
    */
   @event({ type: "open" })
@@ -181,6 +187,7 @@ class Drawer extends ReactNextElement implements DrawerProps {
         visible={this.visible}
         mask={this.mask}
         maskClosable={this.maskClosable}
+        maskStyle={this.maskStyle}
         placement={this.placement}
         footerSlot={this.footerSlot}
         onDrawerClose={this.#handleDrawerClose}
@@ -193,6 +200,7 @@ class Drawer extends ReactNextElement implements DrawerProps {
 
 interface DrawerComponentProps extends DrawerProps {
   onDrawerClose: () => void;
+  maskStyle?: CSSProperties;
 }
 
 export function DrawerComponent({
@@ -202,6 +210,7 @@ export function DrawerComponent({
   closable = true,
   mask = true,
   maskClosable = true,
+  maskStyle,
   placement = "right",
   visible: open = false,
   footerSlot = false,
@@ -234,6 +243,11 @@ export function DrawerComponent({
     [closable, customTitle, onDrawerClose]
   );
 
+  const mergeMaskStyle = {
+    backgroundColor: "var(--antd-modal-mask-bg)",
+    ...maskStyle,
+  } as CSSProperties;
+
   useEffect(() => {
     lockBodyScroll(curElement, open);
     scrollToTopWhenOpen && open && contentRef.current?.scrollTo(0, 0);
@@ -245,7 +259,11 @@ export function DrawerComponent({
       })}
     >
       {mask && (
-        <div className="mask" onClick={() => maskClosable && onDrawerClose()} />
+        <div
+          className="mask"
+          style={mergeMaskStyle}
+          onClick={() => maskClosable && onDrawerClose()}
+        />
       )}
       <div
         className={classNames("drawer-wrapper", `drawer-wrapper-${placement}`)}
