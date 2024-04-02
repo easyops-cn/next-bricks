@@ -237,6 +237,7 @@ class DynamicFormItem extends FormItemElementBase {
         needValidate={false}
         notRender={this.notRender}
         helpBrick={this.helpBrick}
+        labelBrick={this.labelBrick}
         trigger="handleDynamicFormChange"
         onChange={this.handleDynamicFormChange}
         onValuesChange={this.handleDynamicFormChange}

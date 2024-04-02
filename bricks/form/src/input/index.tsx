@@ -296,6 +296,7 @@ class Input extends FormItemElementBase {
         message={this.message}
         notRender={this.notRender}
         helpBrick={this.helpBrick}
+        labelBrick={this.labelBrick}
         validateState={this.validateState}
         value={this.value}
         placeholder={this.placeholder}

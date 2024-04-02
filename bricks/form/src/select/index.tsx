@@ -313,6 +313,7 @@ class Select extends FormItemElementBase {
         validateState={this.validateState}
         notRender={this.notRender}
         helpBrick={this.helpBrick}
+        labelBrick={this.labelBrick}
         options={this.options}
         onChange={this.handleChange}
         optionsChange={this._handleOptionsChange}

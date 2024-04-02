@@ -165,6 +165,7 @@ class IconSelect extends FormItemElementBase implements IconSelectProps {
         message={this.message}
         notRender={this.notRender}
         helpBrick={this.helpBrick}
+        labelBrick={this.labelBrick}
         onChange={this.handleChange}
         trigger="handleChange"
       />

@@ -120,6 +120,7 @@ class GeneralSwitch extends FormItemElementBase {
         label={this.label}
         notRender={this.notRender}
         helpBrick={this.helpBrick}
+        labelBrick={this.labelBrick}
         trigger="handleSwitch"
       />
     );
