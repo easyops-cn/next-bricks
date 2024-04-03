@@ -35,6 +35,7 @@ export interface AppData {
   cardItemProps: AppWallCardItemProps & SimpleCardItemProps;
   systemCardProps: SystemCardProps;
   trapezoidalProps: TrapezoidalProps;
+  data?: any;
 }
 
 export type Relation = {

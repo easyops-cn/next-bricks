@@ -1,12 +1,11 @@
 import React from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
-import { ReactNextElement } from "@next-core/react-element";
+import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import variablesStyleText from "../data-view-variables.shadow.css";
 import styleText from "./app-wall.shadow.css";
 import { AppWallElement } from "./app-wall.js";
 import type { AppData, Relation } from "./utils.js";
 import { AppWallCardBrickNameType, CardSize } from "./interface.js";
-
 const { defineElement, property, event } = createDecorators();
 
 export interface AppWallProps {
@@ -23,6 +22,7 @@ export interface AppWallProps {
   handleCardClick?: (data: AppData) => void;
   cardBrickName: AppWallCardBrickNameType; // 支持更多种类，需要在dependencies内增加引入增加的类型
   containerId?: string;
+  useSystemPopover?: boolean;
 }
 
 /**
@@ -39,6 +39,7 @@ export interface AppWallProps {
     "data-view.app-wall-card-item",
     "data-view.cabinet-thumbnail",
     "data-view.simple-card-item",
+    "monitoring.sys-popover",
   ],
 })
 class AppWall extends ReactNextElement implements AppWallProps {
@@ -113,6 +114,12 @@ class AppWall extends ReactNextElement implements AppWallProps {
   accessor containerId: string;
 
   /**
+   *  是否使用系统卡片popover
+   */
+  @property({ attribute: false })
+  accessor useSystemPopover: boolean;
+
+  /**
    *  详情卡片点击事件
    */
   @event({ type: "system.card.button.click" })
@@ -178,6 +185,7 @@ class AppWall extends ReactNextElement implements AppWallProps {
         cardSize={this.cardSize}
         cardBrickName={this.cardBrickName}
         containerId={this.containerId}
+        useSystemPopover={this.useSystemPopover}
       />
     );
   }
