@@ -21,6 +21,7 @@ export interface QueueItem {
 }
 
 export class ChatService {
+  #ctrl?: AbortController;
   #agentId: string;
   #enterInterval: number;
   #charting = false;
@@ -48,6 +49,10 @@ export class ChatService {
 
   dequeue() {
     return this.#messageQueue.shift();
+  }
+
+  #clear() {
+    this.#messageQueue.length = 0;
   }
 
   getMessageQueue() {
@@ -91,14 +96,14 @@ export class ChatService {
 
   async chat(str: string): Promise<void> {
     //  http://172.30.0.57:8107
-    const ctrl = new AbortController();
+    this.#ctrl = new AbortController();
     let hadMatchMessage = false;
     this.#charting = true;
     await fetchEventSource(
       `${getBasePath()}api/gateway/easyops.api.aiops_chat.manage.LLMStreamChat/stream_chat`,
       {
         method: "POST",
-        signal: ctrl.signal,
+        signal: this.#ctrl.signal,
         body: JSON.stringify({
           agentId: this.#agentId,
           conversationId: this.#conversationId,
@@ -127,7 +132,7 @@ export class ChatService {
           const { data } = msg;
           hadMatchMessage = true;
           if (data === "[DONE]") {
-            ctrl.abort();
+            this.#ctrl!.abort();
             return;
           }
           let result = {} as SSEMessageItem;
@@ -165,17 +170,27 @@ export class ChatService {
               },
             });
           }
-          ctrl.abort();
+          this.#ctrl!.abort();
         },
         onerror: (err) => {
           // eslint-disable-next-line no-console
           console.log("err", err);
-          ctrl.abort();
+          this.#ctrl!.abort();
         },
       }
     );
 
     this.#charting = false;
+  }
+
+  stop() {
+    clearInterval(this.#emitTimer);
+    this.#ctrl && this.#ctrl?.abort();
+    this.#charting = false;
+    this.#emitTimer = undefined;
+    this.#isStartEmitEvent = false;
+    this.#clear();
+    this.notifySubscribers({ topic: "stop" });
   }
 
   #startEmitEvent() {

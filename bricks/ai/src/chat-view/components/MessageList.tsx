@@ -25,7 +25,7 @@ export function MessageList({
   const messgetListBoxRef = useRef<HTMLDivElement>(null);
   const [preHeight, setPreHeight] = useState<number>(0);
 
-  const { msgList, msgItem, loading, chartting } = useChatViewContext();
+  const { msgList, msgItem, loading, chatting } = useChatViewContext();
 
   const getMsgItemNode = useCallback(
     (item: MessageItem, index: number = 0) => {
@@ -67,13 +67,13 @@ export function MessageList({
         for (const entry of entries) {
           newHeight = entry.contentRect.height - DEFAULT_OFFSET_HEIGHT;
         }
-        if (newHeight > preHeight && !loading && !chartting) {
+        if (newHeight > preHeight && !loading && !chatting) {
           messageListRef.current!.scroll({
             top: Number.MAX_SAFE_INTEGER,
           });
           setPreHeight(newHeight);
         }
-        if (newHeight > preHeight && chartting) {
+        if (newHeight > preHeight && chatting) {
           messageListRef.current!.scroll({
             top: Number.MAX_SAFE_INTEGER,
           });
@@ -83,7 +83,7 @@ export function MessageList({
       observer.observe(element);
       return () => observer.disconnect();
     }
-  }, [chartting, loading, preHeight]);
+  }, [chatting, loading, preHeight]);
 
   return (
     <div className="message-list" ref={messageListRef}>

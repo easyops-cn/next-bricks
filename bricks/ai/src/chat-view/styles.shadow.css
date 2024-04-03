@@ -251,6 +251,32 @@
   padding: 12px;
   position: relative;
 
+  .stop-responding-wrapper {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translate(-50%, 0);
+
+    .stop-btn {
+      cursor: pointer;
+      background-color: rgba(229, 162, 65, 1);
+      padding: 4px 16px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-radius: 3px;
+
+      &:hover {
+        background-color: rgba(229, 162, 65, 0.8);
+      }
+
+      &:active {
+        background-color: rgba(229, 162, 65, 0.9);
+      }
+    }
+  }
+
   &.fill-content {
     box-shadow: 1px 0px 4px 0px rgba(197, 197, 197, 0.5);
   }

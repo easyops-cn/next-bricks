@@ -13,14 +13,14 @@ export function useChatViewInfo({
 }) {
   const [activeSessionId, setActiveSessionid] = useState<string>("1");
   const [loading, setLoading] = useState<boolean>(false);
-  const [chartting, setChatting] = useState<boolean>(false);
+  const [chatting, setChatting] = useState<boolean>(false);
   const [sessionList, setSessionList] = useState<SessionItem[]>([]);
   const [msgList, setMsgList] = useState<MessageItem[]>([]);
   const [msgItem, setMsgItem] = useState<MessageItem>();
   const [searchStr, setSearchStr] = useState<string>("");
-  const chartingText = useRef<string>("");
-  const chartingMessageItem = useRef<MessageItem>();
-  const chartService = useMemo(
+  const chatingText = useRef<string>("");
+  const chatingMessageItem = useRef<MessageItem>();
+  const chatService = useMemo(
     () =>
       new ChatService({
         agentId,
@@ -35,7 +35,7 @@ export function useChatViewInfo({
   }, []);
 
   useEffect(() => {
-    // chartService.getSessionList();
+    // chatService.getSessionList();
     // mock
     setSessionList([
       {
@@ -55,44 +55,63 @@ export function useChatViewInfo({
   useEffect(() => {
     const listener = (msgItem?: SSEMessageItem) => {
       if (!msgItem) return;
-      chartingText.current =
-        chartingText.current +
+      chatingText.current =
+        chatingText.current +
         msgItem.messages.map((item) => item.content.text).toString();
       // eslint-disable-next-line no-console
-      console.log(chartingText.current);
-      chartingMessageItem.current = {
+      console.log(chatingText.current);
+      chatingMessageItem.current = {
         role: "assistant",
         content: [
           {
             type: "markdown",
-            text: chartingText.current,
+            text: chatingText.current,
           },
         ],
         key: Math.random(),
         ctime: msgItem?.ctime,
       };
-      setMsgItem(chartingMessageItem.current);
+      setMsgItem(chatingMessageItem.current);
+    };
+    const reset = () => {
+      chatingText.current = "";
+      setMsgItem(undefined);
+      setChatting(false);
+      chatingMessageItem.current = undefined;
     };
     const finishListener = () => {
       setMsgList((list) => {
-        return list.concat(chartingMessageItem.current!);
+        return list.concat(chatingMessageItem.current!);
       });
-      chartingText.current = "";
-      setMsgItem(undefined);
-      setChatting(false);
+      reset();
     };
-    chartService.subscribe("add", listener);
-    chartService.subscribe("finish", finishListener);
+    const stopListener = () => {
+      setMsgList((list) => {
+        if (chatingMessageItem.current) {
+          chatingMessageItem.current?.content.push({
+            type: "markdown",
+            text: "` 对话被中断了 `",
+          });
+          return list.concat(chatingMessageItem.current);
+        }
+        return list;
+      });
+      reset();
+    };
+    chatService.subscribe("add", listener);
+    chatService.subscribe("finish", finishListener);
+    chatService.subscribe("stop", stopListener);
     return () => {
-      chartService.unsubscribe("add", listener);
-      chartService.unsubscribe("finish", finishListener);
+      chatService.unsubscribe("add", listener);
+      chatService.unsubscribe("finish", finishListener);
+      chatService.unsubscribe("stop", stopListener);
     };
-  }, [chartService]);
+  }, [chatService]);
 
   const handleChat = useCallback(
     async (str: string) => {
       setChatting(true);
-      chartService.chat(str);
+      chatService.chat(str);
       setMsgList((list) => {
         return list.concat({
           role: "user",
@@ -116,13 +135,17 @@ export function useChatViewInfo({
         ctime: "Now",
       });
     },
-    [chartService]
+    [chatService]
   );
+
+  const stopChat = useCallback(() => {
+    chatService.stop();
+  }, [chatService]);
 
   const createSession = useCallback(() => {
     setMsgList([]);
-    chartService.setConversationId();
-  }, [chartService]);
+    chatService.setConversationId();
+  }, [chatService]);
 
   const updateSession = useCallback(async (id: string) => {
     setLoading(true);
@@ -142,13 +165,14 @@ export function useChatViewInfo({
 
   return {
     loading,
-    chartting,
+    chatting,
     activeSessionId,
     sessionList,
     searchStr,
     msgList,
     msgItem,
     handleChat,
+    stopChat,
     createSession,
     updateSession,
     setSearchStr,
