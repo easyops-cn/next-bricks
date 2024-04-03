@@ -7,7 +7,6 @@ import { ChatItemLoading } from "../Loading.js";
 import { TextItem } from "./TextItem.js";
 import { Toolbar } from "./Toolbar.js";
 import { Time } from "./Time.js";
-import classNames from "classnames";
 import { ContentTip } from "./ContentTip.js";
 
 export function MessageNode(props: MessageItem): React.ReactNode {
@@ -49,10 +48,6 @@ export function MessageNode(props: MessageItem): React.ReactNode {
         <div className="content">
           {messageNode}
           <ContentTip {...props} />
-        </div>
-      </div>
-      <div className={classNames("message-bottom", role)}>
-        <div className="message-toolbar">
           <Toolbar {...props} />
         </div>
       </div>

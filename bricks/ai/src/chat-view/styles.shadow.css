@@ -155,7 +155,7 @@
         padding-left: 40px;
 
         .message-box {
-          position: relative;
+          margin-bottom: 0;
           .message-top {
             flex-direction: row-reverse;
           }
@@ -193,6 +193,8 @@
       }
 
       .message-box {
+        position: relative;
+        margin-bottom: 22px;
         .message-content {
           display: flex;
           justify-content: start;
@@ -206,6 +208,23 @@
             .text-item {
               white-space: pre-wrap;
             }
+
+            .toolbar {
+              position: absolute;
+              bottom: -24px;
+              right: 0;
+              display: flex;
+              gap: 12px;
+
+              eo-icon {
+                cursor: pointer;
+                color: #606f7c;
+              }
+              eo-icon[icon="dislike"] {
+                padding-right: 12px;
+                border-right: 1px solid #d9d9d9;
+              }
+            }
           }
         }
 
@@ -217,32 +236,6 @@
 
           .time {
             min-height: 22px;
-          }
-        }
-
-        .message-bottom {
-          display: flex;
-          justify-content: end;
-          margin-top: 4px;
-
-          &.user {
-            justify-content: start;
-          }
-
-          .message-toolbar {
-            .toolbar {
-              display: flex;
-              gap: 16px;
-
-              eo-icon {
-                cursor: pointer;
-                color: #606f7c;
-              }
-              eo-icon[icon="copy"] {
-                padding-left: 12px;
-                border-left: 1px solid #d9d9d9;
-              }
-            }
           }
         }
       }
