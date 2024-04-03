@@ -34,6 +34,45 @@ describe("eo-table", () => {
         age: "18",
       },
     ];
+    element.size = "x-small";
+
+    expect(element.shadowRoot).toBeFalsy();
+    act(() => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBe(2);
+    expect(element.columns.length).toBe(2);
+    expect(element.shadowRoot).toBeTruthy();
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+
+    expect(document.body.contains(element)).toBeFalsy();
+  });
+
+  test("basic usage v2", () => {
+    const element = document.createElement("eo-table") as TableComponent;
+
+    element.columns = [
+      {
+        title: "name",
+        key: "name",
+        dataIndex: "name",
+      },
+      {
+        title: "age",
+        key: "age",
+        dataIndex: "age",
+      },
+    ];
+
+    element.dataSource = [
+      {
+        name: "sailor",
+        age: "18",
+      },
+    ];
 
     expect(element.shadowRoot).toBeFalsy();
     act(() => {
