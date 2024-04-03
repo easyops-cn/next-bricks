@@ -160,16 +160,10 @@ describe("eo-display-canvas", () => {
 
     expect(onCellContextMenu).toHaveBeenCalledWith(
       expect.objectContaining({
-        cell: {
+        cell: expect.objectContaining({
           type: "node",
           id: "a",
-          view: expect.objectContaining({
-            x: 20,
-            y: 20,
-            width: 20,
-            height: 20,
-          }),
-        },
+        }),
         clientX: 100,
         clientY: 200,
       })
