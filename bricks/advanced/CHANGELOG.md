@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.32.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.32.1...@next-bricks/advanced@0.32.2) (2024-04-03)
+
+
+### Bug Fixes
+
+* **eo-table:** 增加xSmallSizeTable实现更小的表格样式 ([3548f7f](https://github.com/easyops-cn/next-bricks/commit/3548f7f6a42440cf616601493e0f9d938e17dd2b))
+
+
+
+
+
 ## [0.32.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.32.0...@next-bricks/advanced@0.32.1) (2024-04-02)
 
 **Note:** Version bump only for package @next-bricks/advanced
