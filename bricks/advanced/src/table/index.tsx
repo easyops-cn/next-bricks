@@ -613,7 +613,7 @@ class TableComponent extends ReactNextElement {
    * @group ui
    */
   @property()
-  accessor size: SizeType;
+  accessor size: SizeType | "x-small";
 
   /**
    * 选框类型（单选/多选）
@@ -1358,6 +1358,7 @@ class TableComponent extends ReactNextElement {
         optimizedColumns={this.optimizedColumns}
         ellipsisInfo={this.ellipsisInfo}
         thTransparent={this.thTransparent}
+        xSmallSizeTable={this.size == "x-small"}
       />
     );
   }
@@ -1468,13 +1469,13 @@ class TableComponent extends ReactNextElement {
         }
       }
       if (!this.configProps.size) {
-        this._finalConfigProps.size = this.size;
+        this._finalConfigProps.size = this.size == "x-small" ? "" : this.size;
       }
     } else {
       this._finalConfigProps = {};
       this._finalConfigProps.pagination =
         this.pagination !== false ? defaultPagination : false;
-      this._finalConfigProps.size = this.size;
+      this._finalConfigProps.size = this.size == "x-small" ? "" : this.size;
     }
     const rowSelec = this.configProps?.rowSelection ?? this.rowSelection;
     if (rowSelec) {

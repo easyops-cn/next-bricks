@@ -98,3 +98,17 @@ td.alignBottom {
 .ant-table-wrapper .ant-table-pagination.ant-pagination {
   margin: 24px 0;
 }
+.xSmallSizeTable .ant-table {
+  line-height: 1;
+}
+.xSmallSizeTable .ant-table .ant-table-selection-col {
+  width: 32px;
+}
+.xSmallSizeTable .ant-table-thead tr th,
+.xSmallSizeTable .ant-table-tbody tr td {
+  padding: 0px 2px;
+}
+.xSmallSizeTable .ant-table-thead tr th:first-child,
+.xSmallSizeTable .ant-table-tbody tr td:first-child {
+  padding: 0;
+}
