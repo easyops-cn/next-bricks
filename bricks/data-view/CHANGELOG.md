@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.0.12...@next-bricks/data-view@1.1.0) (2024-04-03)
+
+
+### Features
+
+* 业务墙hover构件 ([57c3aa2](https://github.com/easyops-cn/next-bricks/commit/57c3aa213ccafec78a95ee378a53fd451f399089))
+
+
+
+
+
 ## [1.0.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.0.11...@next-bricks/data-view@1.0.12) (2024-04-03)
 
 **Note:** Version bump only for package @next-bricks/data-view
