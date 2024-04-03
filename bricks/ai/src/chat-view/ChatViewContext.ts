@@ -35,11 +35,12 @@ interface ChatViewContextProps {
   msgList: MessageItem[];
   msgItem?: MessageItem;
   loading: boolean;
-  chartting: boolean;
+  chatting: boolean;
   searchStr: string;
   showLike: boolean;
   quickAnswerConfig?: QuickAnswerConfig;
   handleChat: (str: string) => void;
+  stopChat: () => void;
   updateSession: (id: string) => void;
   createSession: () => void;
   setSearchStr: (str: string) => void;

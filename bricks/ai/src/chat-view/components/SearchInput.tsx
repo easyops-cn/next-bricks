@@ -30,17 +30,18 @@ export function SearchInput(): React.ReactNode {
   const hadExpanded = useRef<boolean>(false);
 
   const {
-    chartting,
+    chatting,
     loading,
     searchStr,
     createSession,
     setSearchStr,
     handleChat,
+    stopChat,
   } = useChatViewContext();
 
   const hadValue = useMemo(() => !!value, [value]);
   const defaultSize = useMemo(() => [1, 5], []);
-  const disabled = useMemo(() => loading || chartting, [chartting, loading]);
+  const disabled = useMemo(() => loading || chatting, [chatting, loading]);
 
   const computedAutoSize = useCallback(
     (size = defaultSize) => {
@@ -78,6 +79,10 @@ export function SearchInput(): React.ReactNode {
       return !value;
     });
   }, []);
+
+  const handleStopClick = () => {
+    stopChat();
+  };
 
   const handleSubmit = useCallback(() => {
     if (!hadValue || !textareaRef.current || disabled) return;
@@ -137,6 +142,14 @@ export function SearchInput(): React.ReactNode {
       })}
       ref={searchInputBoxRef}
     >
+      {chatting && (
+        <div className="stop-responding-wrapper">
+          <div className="stop-btn" onClick={handleStopClick}>
+            <WrappedIcon icon="stop-circle" lib="fa" prefix="fas" />
+            中断响应
+          </div>
+        </div>
+      )}
       <div
         className={classNames("input-box", {
           active,
@@ -151,7 +164,7 @@ export function SearchInput(): React.ReactNode {
             ...autoSizeStyle,
             paddingRight: expand ? "50px" : "140px",
           }}
-          placeholder={chartting ? "回复中,请稍等..." : "提出你的想法..."}
+          placeholder={chatting ? "回复中,请稍等..." : "提出你的想法..."}
           onFocus={() => setActive(true)}
           onBlur={() => setActive(false)}
           onChange={handleChange}
@@ -181,10 +194,10 @@ export function SearchInput(): React.ReactNode {
                 active: hadValue,
                 disabled: !hadValue || disabled,
               })}
-              lib={chartting ? "antd" : "easyops"}
-              icon={chartting ? "loading" : "release-management-fill"}
-              category={chartting ? "" : "menu"}
-              spinning={chartting}
+              lib={chatting ? "antd" : "easyops"}
+              icon={chatting ? "loading" : "release-management-fill"}
+              category={chatting ? "" : "menu"}
+              spinning={chatting}
               onClick={handleSubmit}
             />
           </WrappedToolTip>
