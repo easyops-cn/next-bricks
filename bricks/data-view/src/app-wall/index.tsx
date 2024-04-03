@@ -25,6 +25,7 @@ export interface AppWallProps {
   containerId?: string;
   noRotate?: boolean;
   boundMargin?: number;
+  useSystemPopover?: boolean;
 }
 
 /**
@@ -38,6 +39,7 @@ export interface AppWallProps {
     "data-view.app-wall-card-item",
     "data-view.cabinet-thumbnail",
     "data-view.simple-card-item",
+    "monitoring.sys-popover",
   ],
 })
 class AppWall extends ReactNextElement implements AppWallProps {
@@ -123,6 +125,12 @@ class AppWall extends ReactNextElement implements AppWallProps {
   accessor boundMargin: number = 100;
 
   /**
+   *  是否使用系统卡片popover
+   */
+  @property({ attribute: false })
+  accessor useSystemPopover: boolean;
+
+  /**
    *  详情卡片点击事件
    */
   @event({ type: "system.card.button.click" })
@@ -190,6 +198,7 @@ class AppWall extends ReactNextElement implements AppWallProps {
         containerId={this.containerId}
         noRotate={this.noRotate}
         boundMargin={this.boundMargin}
+        useSystemPopover={this.useSystemPopover}
       />
     );
   }

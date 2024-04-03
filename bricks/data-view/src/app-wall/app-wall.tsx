@@ -121,6 +121,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
     containerId,
     noRotate,
     boundMargin,
+    useSystemPopover,
   } = props;
   const [curClickCardItemAppData, setCurClickCardItemAppData] =
     useState<AppData>(null);
@@ -130,6 +131,9 @@ export function AppWallElement(props: AppWallProps): ReactElement {
   const closeBtnRef = useRef<HTMLDivElement>();
   const maskRef = useRef<HTMLDivElement>();
   const systemCardRef = useRef<SystemCard>();
+  const popoverRef = useRef<
+    HTMLElement & Ele & { instanceId: string; loading: boolean }
+  >();
 
   const rendererRef = useRef<CSS3DRenderer>();
   const sceneRef = useRef<Scene>();
@@ -211,7 +215,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
   };
 
   const createView = (table: Target[]) => {
-    table.forEach((data, i) => {
+    table.forEach((data) => {
       const element = document.createElement(
         cardBrickName
       ) as AppWallCardBrickEleType & Ele;
@@ -354,6 +358,23 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         createRelationLines(__objectCSS);
         render();
         registerEvents.current.element = target;
+
+        if (useSystemPopover) {
+          const canRenderPopover =
+            popoverRef.current?.instanceId !=
+            target?.__userData?.data?.instanceId;
+          if (canRenderPopover) {
+            popoverRef.current.loading = true;
+            const rect = target.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            popoverRef.current.instanceId =
+              target?.__userData?.data?.instanceId;
+            popoverRef.current.style.left = `${centerX}px`;
+            popoverRef.current.style.top = `${centerY}px`;
+            popoverRef.current.style.display = "block";
+          }
+        }
       })
       .start();
   };
@@ -718,6 +739,16 @@ export function AppWallElement(props: AppWallProps): ReactElement {
   }, [props.dataSource, useDistanceConfig]);
 
   useEffect(() => {
+    if (useSystemPopover) {
+      const element = document.createElement("monitoring.sys-popover") as any;
+      element.style.position = "absolute";
+      element.style.display = "none";
+      popoverRef.current = element;
+      document.querySelector("#main-mount-point").appendChild(element);
+    }
+  }, [useSystemPopover]);
+
+  useEffect(() => {
     const container = containerRef.current;
     const handleMouseover = (e: MouseEvent) => {
       clearTimeout(registerEvents.current.mouseoverTimer);
@@ -728,6 +759,16 @@ export function AppWallElement(props: AppWallProps): ReactElement {
       )
         return false;
       const target = findElementByEvent(e, cardBrickName);
+      if (useSystemPopover) {
+        const canRenderPopover =
+          popoverRef.current?.instanceId !=
+          target?.__userData?.data?.instanceId;
+
+        if (!target || !canRenderPopover) {
+          popoverRef.current.style.display = "none";
+          popoverRef.current.loading = true;
+        }
+      }
       registerEvents.current.mouseoverTimer = window.setTimeout(() => {
         restoreElementState(() => {
           target &&
@@ -737,6 +778,26 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         });
       }, 300);
     };
+
+    const handleMouseout = (e: MouseEvent) => {
+      if (
+        registerEvents.current.isShowAppInfo ||
+        registerEvents.current.isShowGraph3D ||
+        !registerEvents.current.enable
+      )
+        return false;
+      const target = findElementByEvent(e, cardBrickName);
+      if (useSystemPopover) {
+        const canRenderPopover =
+          popoverRef.current.instanceId != target?.__userData?.data?.instanceId;
+
+        if (!target || !canRenderPopover) {
+          popoverRef.current.style.display = "none";
+          popoverRef.current.loading = true;
+        }
+      }
+    };
+
     const handleClick = (e: MouseEvent) => {
       clearTimeout(registerEvents.current.clickTimer);
       clearTimeout(registerEvents.current.mouseoverTimer);
@@ -890,8 +951,10 @@ export function AppWallElement(props: AppWallProps): ReactElement {
     container.addEventListener("dblclick", handleDbClick);
     container.addEventListener("click", handleClick);
     container.addEventListener("mouseover", handleMouseover);
+    container.addEventListener("mouseout", handleMouseout);
     return () => {
       container.removeEventListener("mouseover", handleMouseover);
+      container.removeEventListener("mouseout", handleMouseout);
       container.removeEventListener("click", handleClick);
       container.removeEventListener("dblclick", handleDbClick);
     };
