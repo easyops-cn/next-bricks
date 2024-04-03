@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@0.2.0...@next-bricks/ai@1.1.0) (2024-04-03)
+
+
+### Features
+
+* add stop responsing btn ([e11abfd](https://github.com/easyops-cn/next-bricks/commit/e11abfd68292135584b0bc87420bcddf45980076))
+
+
+
+
+
 # [0.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@0.1.0...@next-bricks/ai@0.2.0) (2024-04-03)
 
 
