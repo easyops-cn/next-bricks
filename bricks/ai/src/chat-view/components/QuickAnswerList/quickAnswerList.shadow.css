@@ -1,0 +1,55 @@
+.quick-answer-wrapper {
+  margin-top: 20px;
+  .tip {
+    font-size: 18px;
+  }
+
+  .quick-answer-list {
+    display: grid;
+    gap: 24px 16px;
+    margin-top: 30px;
+    border-radius: 3px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+
+    .quick-answer-card-item {
+      position: relative;
+      padding: 16px;
+      box-shadow: 1px 2px 9px #ddd;
+      cursor: pointer;
+
+      &:hover {
+        background: #f4f4f4;
+      }
+
+      .icon {
+        position: absolute;
+        top: -20px;
+        left: 10px;
+        font-size: 26px;
+        background: #fff;
+        box-shadow: 1px 3px 4px #eee;
+        padding: 6px;
+        border-radius: 6px;
+      }
+
+      .content {
+        margin-top: 12px;
+
+        .title {
+          font-weight: bold;
+          color: var(--color-normal-text);
+        }
+
+        .description {
+          color: var(--color-auxiliary-text);
+          font-size: 12px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+        }
+      }
+    }
+  }
+}

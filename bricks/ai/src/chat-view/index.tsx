@@ -1,15 +1,15 @@
 import React from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
-import { ChatViewContext } from "./ChatViewContext.js";
+import { ChatViewContext, QuickAnswerConfig } from "./ChatViewContext.js";
 import { MessageList } from "./components/MessageList.js";
 import { useChatViewInfo } from "./hooks/useChatViewInfo.js";
 import { SessionList } from "./components/SessionList.js";
 import { SearchInput } from "./components/SearchInput.js";
-// import { ChatViewToolbar } from "./components/ChatViewToolbar.js";
 import styleText from "./styles.shadow.css";
 import loadStyleText from "./components/loading.shadow.css";
 import markdownStyleText from "./components/MessageItem/markdown.shadow.css";
+import quickAnswerListStyleText from "./components/QuickAnswerList/quickAnswerList.shadow.css";
 import "@next-core/theme";
 
 const { defineElement, property } = createDecorators();
@@ -19,7 +19,12 @@ const { defineElement, property } = createDecorators();
  */
 export
 @defineElement("ai.chat-view", {
-  styleTexts: [styleText, loadStyleText, markdownStyleText],
+  styleTexts: [
+    styleText,
+    loadStyleText,
+    markdownStyleText,
+    quickAnswerListStyleText,
+  ],
 })
 class ChatView extends ReactNextElement {
   @property()
@@ -67,6 +72,14 @@ class ChatView extends ReactNextElement {
   })
   accessor enterInterval: number | undefined;
 
+  /**
+   * 快速入口列表
+   */
+  @property({
+    attribute: false,
+  })
+  accessor quickAnswerConfig: QuickAnswerConfig | undefined;
+
   render() {
     return (
       <ChatViewComponent
@@ -75,6 +88,7 @@ class ChatView extends ReactNextElement {
         showAvatar={this.showAvatar}
         showSessionList={this.showSessionList}
         showLike={this.showLike}
+        quickAnswerConfig={this.quickAnswerConfig}
         enterInterval={this.enterInterval}
       />
     );
@@ -87,6 +101,7 @@ export interface ChatViewProps {
   showAvatar?: boolean;
   showSessionList?: boolean;
   showLike?: boolean;
+  quickAnswerConfig?: QuickAnswerConfig;
   enterInterval?: number;
 }
 
@@ -95,6 +110,7 @@ export function ChatViewComponent({
   showAvatar,
   showSessionList = true,
   showLike = true,
+  quickAnswerConfig,
   enterInterval,
 }: ChatViewProps) {
   const {
@@ -125,6 +141,7 @@ export function ChatViewComponent({
         loading,
         searchStr,
         showLike,
+        quickAnswerConfig,
         handleChat,
         createSession,
         updateSession,

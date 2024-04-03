@@ -10,6 +10,7 @@ import { Avatar } from "./MessageItem/Avatar.js";
 import classNames from "classnames";
 import { MessageListLoading } from "./Loading.js";
 import { MessageNode } from "./MessageItem/index.js";
+import { QuickAnswerList } from "./QuickAnswerList/index.js";
 
 interface MessageListProps {
   showAvatar?: boolean;
@@ -87,6 +88,7 @@ export function MessageList({
   return (
     <div className="message-list" ref={messageListRef}>
       <div className="message-list-box" ref={messgetListBoxRef}>
+        <QuickAnswerList />
         {msgListNode}
         {msgItemNode}
       </div>

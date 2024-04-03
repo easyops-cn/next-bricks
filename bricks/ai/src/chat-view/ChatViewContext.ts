@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react";
+import { AgentDetailItem } from "./components/QuickAnswerList/index.js";
 
 export type Role = "guide" | "user" | "assistant";
 
@@ -23,6 +24,11 @@ export interface SessionItem {
   active?: boolean;
 }
 
+export interface QuickAnswerConfig {
+  tip: string;
+  list: AgentDetailItem[];
+}
+
 interface ChatViewContextProps {
   activeSessionId: string;
   sessionList: SessionItem[];
@@ -32,6 +38,7 @@ interface ChatViewContextProps {
   chartting: boolean;
   searchStr: string;
   showLike: boolean;
+  quickAnswerConfig?: QuickAnswerConfig;
   handleChat: (str: string) => void;
   updateSession: (id: string) => void;
   createSession: () => void;
