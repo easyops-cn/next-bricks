@@ -132,7 +132,12 @@ export function AppWallElement(props: AppWallProps): ReactElement {
   const maskRef = useRef<HTMLDivElement>();
   const systemCardRef = useRef<SystemCard>();
   const popoverRef = useRef<
-    HTMLElement & Ele & { instanceId: string; loading: boolean }
+    HTMLElement &
+      Ele & {
+        instanceId: string;
+        setPosition: (pos: { x: number; y: number }) => void;
+        setVisible: (visible: boolean) => void;
+      }
   >();
 
   const rendererRef = useRef<CSS3DRenderer>();
@@ -360,20 +365,13 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         registerEvents.current.element = target;
 
         if (useSystemPopover) {
-          const canRenderPopover =
-            popoverRef.current?.instanceId !=
-            target?.__userData?.data?.instanceId;
-          if (canRenderPopover) {
-            popoverRef.current.loading = true;
-            const rect = target.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            popoverRef.current.instanceId =
-              target?.__userData?.data?.instanceId;
-            popoverRef.current.style.left = `${centerX}px`;
-            popoverRef.current.style.top = `${centerY}px`;
-            popoverRef.current.style.display = "block";
-          }
+          const rect = target.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+
+          popoverRef.current.instanceId = target?.__userData?.data?.instanceId;
+          popoverRef.current.setPosition({ x: centerX, y: centerY });
+          popoverRef.current.setVisible(true);
         }
       })
       .start();
@@ -741,8 +739,6 @@ export function AppWallElement(props: AppWallProps): ReactElement {
   useEffect(() => {
     if (useSystemPopover) {
       const element = document.createElement("monitoring.sys-popover") as any;
-      element.style.position = "absolute";
-      element.style.display = "none";
       popoverRef.current = element;
       document.querySelector("#main-mount-point").appendChild(element);
     }
@@ -765,8 +761,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
           target?.__userData?.data?.instanceId;
 
         if (!target || !canRenderPopover) {
-          popoverRef.current.style.display = "none";
-          popoverRef.current.loading = true;
+          popoverRef.current.setVisible(false);
         }
       }
       registerEvents.current.mouseoverTimer = window.setTimeout(() => {
@@ -792,8 +787,7 @@ export function AppWallElement(props: AppWallProps): ReactElement {
           popoverRef.current.instanceId != target?.__userData?.data?.instanceId;
 
         if (!target || !canRenderPopover) {
-          popoverRef.current.style.display = "none";
-          popoverRef.current.loading = true;
+          popoverRef.current.setVisible(false);
         }
       }
     };
