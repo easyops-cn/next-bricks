@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.0...@next-bricks/data-view@1.1.1) (2024-04-07)
+
+
+### Bug Fixes
+
+* optimized  popover display logic of app wall ([b427988](https://github.com/easyops-cn/next-bricks/commit/b427988a3cfbf2fb08dd83021a9583c8c936890b))
+
+
+
+
+
 # [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.0.12...@next-bricks/data-view@1.1.0) (2024-04-03)
 
 
