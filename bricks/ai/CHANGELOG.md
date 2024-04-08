@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.1.0...@next-bricks/ai@1.2.0) (2024-04-08)
+
+
+### Features
+
+* **chat-view:** LLMStreamChat to LLMChatProxy ([ea278fb](https://github.com/easyops-cn/next-bricks/commit/ea278fb391789616aecfc1d939b774d22593d71c))
+
+
+
+
+
 # [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@0.2.0...@next-bricks/ai@1.1.0) (2024-04-03)
 
 
