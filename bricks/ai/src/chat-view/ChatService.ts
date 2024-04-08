@@ -3,9 +3,17 @@ import { getBasePath } from "@next-core/runtime";
 import moment from "moment";
 
 export interface SSEMessageItem {
-  ctime: string;
-  mtime: string;
   conversationId?: string;
+  created: number | string;
+  delta: {
+    content: string;
+    role: string;
+  };
+  /** @deprecated */
+  ctime: string;
+  /** @deprecated */
+  mtime: string;
+  /** @deprecated */
   messages: Array<{
     content: {
       type: string;
@@ -95,30 +103,24 @@ export class ChatService {
   }
 
   async chat(str: string): Promise<void> {
-    //  http://172.30.0.57:8107
     this.#ctrl = new AbortController();
     let hadMatchMessage = false;
     this.#charting = true;
     await fetchEventSource(
-      `${getBasePath()}api/gateway/easyops.api.aiops_chat.manage.LLMStreamChat/stream_chat`,
+      `${getBasePath()}api/gateway/easyops.api.aiops_chat.manage.LLMChatProxy@1.0.0/api/aiops_chat/v1/chat/completions`,
       {
         method: "POST",
         signal: this.#ctrl.signal,
         body: JSON.stringify({
           agentId: this.#agentId,
+          // agentId: "cmdb_search_agent",
           conversationId: this.#conversationId,
-          messages: [
-            {
-              role: "user",
-              content: [
-                {
-                  text: str,
-                  type: "text",
-                },
-              ],
-            },
-          ],
+          input: str,
+          stream: true,
         }),
+        headers: {
+          "giraffe-contract-name": "easyops.api.aiops_chat.manage.LLMChatProxy",
+        },
         onopen: async (response) => {
           if (response.ok) {
             // eslint-disable-next-line no-console
@@ -158,6 +160,11 @@ export class ChatService {
               message: {
                 ctime: moment().format("YYYY-MM-DD HH:mm:ss"),
                 mtime: moment().format("YYYY-MM-DD HH:mm:ss"),
+                delta: {
+                  role: "assistant",
+                  content: "无法识别",
+                },
+                created: moment().format("YYYY-MM-DD HH:mm:ss"),
                 messages: [
                   {
                     role: "assistant",

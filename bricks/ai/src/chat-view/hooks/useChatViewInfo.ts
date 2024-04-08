@@ -55,9 +55,7 @@ export function useChatViewInfo({
   useEffect(() => {
     const listener = (msgItem?: SSEMessageItem) => {
       if (!msgItem) return;
-      chatingText.current =
-        chatingText.current +
-        msgItem.messages.map((item) => item.content.text).toString();
+      chatingText.current = chatingText.current + msgItem.delta.content;
       // eslint-disable-next-line no-console
       console.log(chatingText.current);
       chatingMessageItem.current = {
@@ -69,7 +67,7 @@ export function useChatViewInfo({
           },
         ],
         key: Math.random(),
-        ctime: msgItem?.ctime,
+        ctime: moment(msgItem?.created).format("YYYY-MM-DD HH:mm:ss"),
       };
       setMsgItem(chatingMessageItem.current);
     };

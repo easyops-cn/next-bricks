@@ -19,15 +19,15 @@ export function MessageNode(props: MessageItem): React.ReactNode {
       switch (type) {
         case "guide":
           return <GuideItem key={key} text={text} prompts={examplePrompts} />;
-        case "markdown":
-          return <MarkdownItem key={key} text={text} />;
+        case "text":
+          return <TextItem key={key} text={text} />;
         case "table":
           return <TableItem key={key} text={text} />;
         case "load":
           return <ChatItemLoading loading />;
-        case "text":
+        case "markdown":
         default:
-          return <TextItem key={key} text={text} />;
+          return <MarkdownItem key={key} text={text} />;
       }
     },
     []
