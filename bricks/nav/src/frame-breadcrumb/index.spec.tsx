@@ -1,7 +1,6 @@
 import { describe, test, expect, jest } from "@jest/globals";
 import { act } from "react-dom/test-utils";
-import { getRuntime } from "@next-core/runtime";
-import { useCurrentApp } from "@next-core/react-runtime";
+import { useCurrentApp, useNavConfig } from "@next-core/react-runtime";
 import "./";
 import { EoFrameBreadcrumb } from "./index.js";
 
@@ -10,11 +9,7 @@ jest.mock("@next-core/runtime");
 jest.mock("@next-core/react-runtime");
 
 const mockUseCurrentApp = useCurrentApp as jest.Mock;
-const mockGetNavConfig = jest.fn();
-const mockGetRuntime = getRuntime as jest.Mock;
-mockGetRuntime.mockReturnValue({
-  getNavConfig: mockGetNavConfig,
-});
+const mockUseNavConfig = useNavConfig as jest.Mock;
 
 describe("eo-frame-breadcrumb", () => {
   test("should render breadcrumb from props", async () => {
@@ -62,7 +57,7 @@ describe("eo-frame-breadcrumb", () => {
     const element = document.createElement(
       "eo-frame-breadcrumb"
     ) as EoFrameBreadcrumb;
-    mockGetNavConfig.mockReturnValueOnce({
+    mockUseNavConfig.mockReturnValueOnce({
       breadcrumb: [
         {
           text: "nav config 1",
