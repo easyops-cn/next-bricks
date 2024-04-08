@@ -10,11 +10,11 @@ export interface SSEMessageItem {
     role: string;
   };
   /** @deprecated */
-  ctime: string;
+  ctime?: string;
   /** @deprecated */
-  mtime: string;
+  mtime?: string;
   /** @deprecated */
-  messages: Array<{
+  messages?: Array<{
     content: {
       type: string;
       text: string;
@@ -143,6 +143,17 @@ export class ChatService {
           } catch (e) {
             // eslint-disable-next-line no-console
             console.log("数据格式错误", e);
+            this.enqueue({
+              topic: "add",
+              message: {
+                created: moment().format("YYYY-MM-DD HH:mm:ss"),
+                delta: {
+                  role: "assistant",
+                  content: "`数据格式错误`",
+                },
+              },
+            });
+            return;
           }
           this.#conversationId = result.conversationId;
           this.enqueue({
@@ -158,22 +169,11 @@ export class ChatService {
             this.enqueue({
               topic: "add",
               message: {
-                ctime: moment().format("YYYY-MM-DD HH:mm:ss"),
-                mtime: moment().format("YYYY-MM-DD HH:mm:ss"),
                 delta: {
                   role: "assistant",
                   content: "无法识别",
                 },
                 created: moment().format("YYYY-MM-DD HH:mm:ss"),
-                messages: [
-                  {
-                    role: "assistant",
-                    content: {
-                      text: "无法识别",
-                      type: "markdown",
-                    },
-                  },
-                ],
               },
             });
           }
