@@ -208,7 +208,7 @@ export class ChatService {
     this.#emitTimer = setInterval(() => {
       if (this.#charting || this.getMessageQueue().length) {
         const messageItem = this.dequeue()!;
-        this.notifySubscribers(messageItem);
+        messageItem && this.notifySubscribers(messageItem);
       } else {
         clearInterval(this.#emitTimer);
         this.#emitTimer = undefined;
