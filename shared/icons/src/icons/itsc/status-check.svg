@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>图标-check</title>
+    <g id="迭代四" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ITSM-工单详情-选中处理历史" transform="translate(-1495.000000, -420.000000)">
+            <g id="注释" transform="translate(1439.000000, -19.235751)">
+                <g id="操作标记" transform="translate(32.000000, 414.235751)">
+                    <g id="图标‘" transform="translate(0.000000, 1.000000)">
+                        <g id="图标-check" transform="translate(24.000000, 24.000000)">
+                            <rect id="矩形" fill-opacity="0" fill="#D8D8D8" x="0" y="0" width="12" height="12"></rect>
+                            <path d="M3.34264069,7.53060422 C2.90081289,7.53060422 2.54264069,7.17243202 2.54264069,6.73060422 L2.54264069,3.8514028 C2.54264069,3.57526043 2.76649831,3.3514028 3.04264069,3.3514028 L3.64264069,3.3514028 C3.91878306,3.3514028 4.14264069,3.57526043 4.14264069,3.8514028 L4.14264069,5.9304028 L9.04264069,5.93060422 C9.31878306,5.93060422 9.54264069,6.15446184 9.54264069,6.43060422 L9.54264069,7.03060422 C9.54264069,7.30674659 9.31878306,7.53060422 9.04264069,7.53060422 L3.34264069,7.53060422 Z" id="形状结合" fill="#FFFFFF" transform="translate(6.042641, 5.441004) rotate(-45.000000) translate(-6.042641, -5.441004) "></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
