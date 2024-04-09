@@ -213,7 +213,7 @@ export function UploadImageComponent(props: UploadImageComponentProps) {
         <div className="image-item-inner">
           <img
             className="image"
-            src={userData?.url || url}
+            src={url || userData?.url}
             onClick={() => wrapBrickImageRef.current!.open(index)}
           />
           <div className="infos">
@@ -288,7 +288,7 @@ export function UploadImageComponent(props: UploadImageComponentProps) {
                 ref={wrapBrickImageRef}
                 onlyPreview={true}
                 imgList={fileDataList.map((item) => ({
-                  src: item.userData?.url,
+                  src: item.url || item.userData?.url,
                 }))}
               />
             </>
