@@ -67,11 +67,11 @@ export function MessageList({
         for (const entry of entries) {
           newHeight = entry.contentRect.height - DEFAULT_OFFSET_HEIGHT;
         }
-        if (newHeight > preHeight && !loading && !chatting) {
+        if (newHeight === preHeight && !loading && !chatting) {
+          // msgItem置为空，合并到msgList, 高度不变，并且聊天结束
           messageListRef.current!.scroll({
             top: Number.MAX_SAFE_INTEGER,
           });
-          setPreHeight(newHeight);
         }
         if (newHeight > preHeight && chatting) {
           messageListRef.current!.scroll({

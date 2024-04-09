@@ -52,4 +52,27 @@
       }
     }
   }
+
+  .show-more-wrapper {
+    text-align: center;
+    margin-top: 20px;
+    .show-more-btn {
+      padding: 4px 20px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      cursor: pointer;
+      line-height: 24px;
+      color: var(--color-auxiliary-text);
+
+      &:hover {
+        color: #fff;
+        background: var(--color-auxiliary-text);
+      }
+
+      &:active {
+        coloe: #fff;
+        background: #393838;
+      }
+    }
+  }
 }

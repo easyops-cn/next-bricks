@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useChatViewContext } from "../../ChatViewContext";
 import { wrapBrick } from "@next-core/react-element";
 import type {
@@ -33,8 +33,12 @@ function QuickAnswerCardItem({
     <div className="quick-answer-card-item" onClick={handleCardClick}>
       <WrapperIcon
         className="icon"
-        {...icon}
-        style={{ color: `var(--theme-${icon.color ?? "geekblue"}-color)` }}
+        {...(icon ?? {
+          icon: "default-app",
+          lib: "easyops",
+          category: "app",
+        })}
+        style={{ color: `var(--theme-${icon?.color ?? "geekblue"}-color)` }}
       />
       <div className="content">
         <div className="title">{name}</div>
@@ -46,6 +50,11 @@ function QuickAnswerCardItem({
 
 export function QuickAnswerList() {
   const { quickAnswerConfig, msgList } = useChatViewContext();
+  const [showMoreBtn, setShowMoreBtn] = useState<boolean>(true);
+
+  const handleShowMoreClick = () => {
+    setShowMoreBtn(false);
+  };
 
   return quickAnswerConfig?.list.length && msgList.length === 0 ? (
     <div className="quick-answer-wrapper">
@@ -53,10 +62,19 @@ export function QuickAnswerList() {
         {quickAnswerConfig.tip ?? "你好，我是AI机器人，我能为你提供以下服务:"}
       </div>
       <div className="quick-answer-list">
-        {quickAnswerConfig.list.map((item) => (
-          <QuickAnswerCardItem key={item.instanceId} {...item} />
-        ))}
+        {quickAnswerConfig.list
+          .slice(0, showMoreBtn ? 3 : quickAnswerConfig.list.length)
+          .map((item) => (
+            <QuickAnswerCardItem key={item.instanceId} {...item} />
+          ))}
       </div>
+      {showMoreBtn ? (
+        <div className="show-more-wrapper">
+          <span className="show-more-btn" onClick={handleShowMoreClick}>
+            显示更多
+          </span>
+        </div>
+      ) : null}
     </div>
   ) : null;
 }
