@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.2.1...@next-bricks/ai@1.3.0) (2024-04-09)
+
+
+### Features
+
+* **chat-view:** add more-btn ([0e90d5c](https://github.com/easyops-cn/next-bricks/commit/0e90d5c611ca3373eaa3793bf82b796b5e6d7267))
+
+
+
+
+
 ## [1.2.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.2.0...@next-bricks/ai@1.2.1) (2024-04-08)
 
 
