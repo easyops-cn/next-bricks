@@ -3,23 +3,40 @@ import { act } from "react-dom/test-utils";
 import "./";
 import type { EoPopup } from "./index.js";
 import { fireEvent } from "@testing-library/react";
+import ResizeObserver from "resize-observer-polyfill";
 
+jest.mock("resize-observer-polyfill");
 jest.mock("@next-core/theme", () => ({}));
-
 jest.mock("@next-shared/general/debounceByAnimationFrame", () => ({
   debounceByAnimationFrame: jest.fn((fn) => fn),
 }));
+const mockStorageSetItem = jest.fn();
 jest.mock("@next-core/utils/general", () => ({
   JsonStorage: jest.fn(() => {
     return {
-      getItem: () => [66, 66],
-      setItem: jest.fn(),
+      getItem: () => ({
+        position: [66, 66],
+        size: [315, 388],
+      }),
+      setItem: mockStorageSetItem,
     };
   }),
 }));
 jest.mock("@next-core/runtime", () => ({
   getCssPropertyValue: () => "56",
 }));
+
+let observerCallback: ResizeObserverCallback | undefined;
+
+(ResizeObserver as jest.Mock).mockImplementation(function (
+  callback: ResizeObserverCallback
+) {
+  observerCallback = callback;
+  return {
+    observe: jest.fn(),
+    disconnect: jest.fn(),
+  };
+} as any);
 
 window.innerWidth = 1000;
 window.innerHeight = 500;
@@ -64,6 +81,10 @@ afterAll(() => {
     "offsetWidth",
     originalOffsetWidth
   );
+});
+
+beforeEach(() => {
+  jest.clearAllMocks();
 });
 
 describe("eo-popup", () => {
@@ -239,10 +260,13 @@ describe("eo-popup", () => {
     expect(element.shadowRoot?.childNodes.length).toBe(0);
   });
 
-  test("should work with resizable", () => {
+  test("should work with resizable and cache size", async () => {
     const element = document.createElement("eo-popup") as EoPopup;
     element.resizable = true;
     element.visible = true;
+    element.popupId = "test";
+    element.popupWidth = 100;
+    element.popupHeight = 200;
 
     expect(element.shadowRoot).toBeFalsy();
 
@@ -257,6 +281,28 @@ describe("eo-popup", () => {
     expect(contentElement.style.resize).toEqual("both");
     expect(contentElement.style.maxWidth).toBe("900px");
     expect(contentElement.style.maxHeight).toBe("0");
+
+    expect(contentElement.style.width).toBe("315px");
+    expect(contentElement.style.height).toBe("388px");
+
+    act(() => {
+      observerCallback(
+        [
+          {
+            contentRect: {
+              width: 200,
+              height: 300,
+            },
+          },
+        ] as any,
+        null!
+      );
+    });
+
+    expect(mockStorageSetItem).toBeCalledWith("test", {
+      position: [66, 66],
+      size: [200, 300],
+    });
 
     act(() => {
       document.body.removeChild(element);

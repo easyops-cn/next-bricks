@@ -1,6 +1,7 @@
 import React, {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -12,6 +13,7 @@ import styleText from "./styles.shadow.css";
 import { JsonStorage } from "@next-core/utils/general";
 import { debounceByAnimationFrame } from "@next-shared/general/debounceByAnimationFrame";
 import { getCssPropertyValue } from "@next-core/runtime";
+import ResizeObserver from "resize-observer-polyfill";
 import type {
   GeneralIcon,
   GeneralIconProps,
@@ -165,6 +167,11 @@ export interface EoPopupProps {
   closePopup?: () => void;
 }
 
+export interface StorageCache {
+  position?: [number, number];
+  size?: [number, number];
+}
+
 export function EoPopupComponent({
   popupId,
   popupTitle,
@@ -179,24 +186,35 @@ export function EoPopupComponent({
 }: EoPopupProps) {
   const popupRef = useRef<HTMLDivElement>();
   const headerRef = useRef<HTMLDivElement>();
+  const contentRef = useRef<HTMLDivElement>();
   const [isMove, setIsMove] = useState(false);
   const [contentMaxSize, setContentMaxSize] = useState<React.CSSProperties>();
   const curPointRef = useRef({
     offsetX: 0,
     offsetY: 0,
   });
-  const [position, setPosition] = useState<Array<number>>([]);
+  const [position, setPosition] = useState<[number, number]>();
 
   const storage = useMemo(
     () =>
       popupId
-        ? new JsonStorage<Record<string, Array<number>>>(
+        ? new JsonStorage<Record<string, StorageCache>>(
             localStorage,
-            "general-popup-postion-"
+            "general-popup-"
           )
         : null,
     [popupId]
   );
+
+  const popupSize = useMemo(() => {
+    if (resizable && popupId) {
+      const cache = storage.getItem(popupId);
+      if (cache?.size) {
+        return cache.size;
+      }
+    }
+    return [popupWidth, popupHeight];
+  }, [popupId, resizable, storage, visible, popupHeight, popupWidth]);
 
   const debouncedSetPoint = useMemo(
     () => debounceByAnimationFrame(setPosition),
@@ -254,11 +272,17 @@ export function EoPopupComponent({
 
   const handleMouseUp = useCallback((): void => {
     setIsMove(false);
-    popupId && storage.setItem(popupId, [position[0], position[1]]);
+    if (popupId) {
+      const cache = storage.getItem(popupId) ?? {};
+      storage.setItem(popupId, {
+        ...cache,
+        position,
+      });
+    }
   }, [popupId, position, storage]);
 
   const initPos = useCallback(() => {
-    let initPostion: Array<number> = [];
+    let initPostion: [number, number];
     if (visible && popupRef.current) {
       const { innerWidth, innerHeight } = window;
       const { offsetWidth, offsetHeight } = popupRef.current;
@@ -279,13 +303,17 @@ export function EoPopupComponent({
         ],
       };
 
-      initPostion = map[openDirection || OpenDirection.Center];
-      return popupId ? storage.getItem(popupId) ?? initPostion : initPostion;
+      initPostion = map[openDirection || OpenDirection.Center] as [
+        number,
+        number,
+      ];
+      const cache = popupId && storage.getItem(popupId);
+      return popupId && cache?.position ? cache.position : initPostion;
     }
     return initPostion;
   }, [visible, openDirection, popupId, storage]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const popupElement = popupRef.current;
     if (popupElement) {
       setPosition(initPos());
@@ -335,13 +363,41 @@ export function EoPopupComponent({
     }
   }, [isMove, position]);
 
+  useEffect(() => {
+    const content = contentRef.current;
+    if (resizable && visible && popupId) {
+      const observer = new ResizeObserver((entries) => {
+        let width: number, height: number;
+        for (const entry of entries) {
+          const { width: contentWidth, height: contentHeight } =
+            entry.contentRect;
+          width = contentWidth;
+          height = contentHeight;
+        }
+        const cache = storage.getItem(popupId) ?? {};
+        storage.setItem(popupId, {
+          ...cache,
+          size: [width, height],
+        });
+      });
+
+      observer.observe(content);
+
+      return () => {
+        observer.disconnect();
+      };
+    }
+  }, [popupId, resizable, storage, visible]);
+
   return (
     visible && (
       <div
         className="general-popup"
         ref={popupRef}
         style={{
-          transform: `translate(${position[0]}px, ${position[1]}px)`,
+          transform: position
+            ? `translate(${position[0]}px, ${position[1]}px)`
+            : "",
           ...dragWrapperStyle,
         }}
       >
@@ -359,16 +415,17 @@ export function EoPopupComponent({
           </div>
         </div>
         <div
+          ref={contentRef}
           className="content"
           style={{
-            width: popupWidth ?? "500px",
+            width: popupSize[0] ?? "500px",
             ...(resizable
               ? {
                   resize: isMove ? "none" : "both",
-                  height: popupHeight,
+                  height: popupSize[1],
                   ...contentMaxSize,
                 }
-              : { maxHeight: popupHeight }),
+              : { maxHeight: popupSize[1] }),
           }}
         >
           <slot />
