@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.2...@next-bricks/form@1.9.3) (2024-04-09)
+
+
+### Bug Fixes
+
+* 上传图片无法预览 ([b87d3ad](https://github.com/easyops-cn/next-bricks/commit/b87d3ad5c36f99e215562079c9cec5139a5d23fe))
+
+
+
+
+
 ## [1.9.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.1...@next-bricks/form@1.9.2) (2024-04-08)
 
 **Note:** Version bump only for package @next-bricks/form
