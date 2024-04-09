@@ -1,8 +1,7 @@
 import React from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
-import { getRuntime } from "@next-core/runtime";
-import { useCurrentApp } from "@next-core/react-runtime";
+import { useCurrentApp, useNavConfig } from "@next-core/react-runtime";
 import { BreadcrumbItemConf } from "@next-core/types";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
@@ -84,7 +83,7 @@ class EoFrameBreadcrumb
 export function EoFrameBreadcrumbComponent(props: EoFrameBreadcrumbProps) {
   const { menu } = props;
 
-  const navConfig = getRuntime().getNavConfig();
+  const navConfig = useNavConfig();
   const currentApp = useCurrentApp();
   const curAppBreadcrumb = currentApp?.breadcrumb;
 
