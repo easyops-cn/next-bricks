@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.10.6...@next-bricks/nav@1.11.0) (2024-04-09)
+
+
+### Features
+
+* listen on nav config change ([abc3afb](https://github.com/easyops-cn/next-bricks/commit/abc3afb3529b7483e7663c9e748f36d443a0066e))
+
+
+
+
+
 ## [1.10.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.10.5...@next-bricks/nav@1.10.6) (2024-04-08)
 
 **Note:** Version bump only for package @next-bricks/nav
