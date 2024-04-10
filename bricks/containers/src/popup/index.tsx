@@ -11,9 +11,9 @@ import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import { JsonStorage } from "@next-core/utils/general";
-import { debounceByAnimationFrame } from "@next-shared/general/debounceByAnimationFrame";
 import { getCssPropertyValue } from "@next-core/runtime";
-import ResizeObserver from "resize-observer-polyfill";
+import { Rnd, RndResizeCallback, RndDragCallback } from "react-rnd";
+import { isEqual } from "lodash";
 import type {
   GeneralIcon,
   GeneralIconProps,
@@ -87,7 +87,7 @@ class EoPopup extends ReactNextElement {
   @property({
     attribute: false,
   })
-  accessor dragHeaderStyle: React.CSSProperties | undefined;
+  accessor headerStyle: React.CSSProperties | undefined;
 
   /**
    * 用于设置 popup wrapper的样式
@@ -95,7 +95,7 @@ class EoPopup extends ReactNextElement {
   @property({
     attribute: false,
   })
-  accessor dragWrapperStyle: React.CSSProperties | undefined;
+  accessor wrapperStyle: React.CSSProperties | undefined;
 
   /**
    * 内容没有边距
@@ -144,8 +144,8 @@ class EoPopup extends ReactNextElement {
         visible={this.visible}
         closePopup={this.#closePopup}
         openDirection={this.openDirection}
-        dragHeaderStyle={this.dragHeaderStyle}
-        dragWrapperStyle={this.dragWrapperStyle}
+        headerStyle={this.headerStyle}
+        wrapperStyle={this.wrapperStyle}
         noPadding={this.noPadding}
         resizable={this.resizable}
       />
@@ -159,8 +159,8 @@ export interface EoPopupProps {
   popupTitle?: string;
   popupWidth?: React.CSSProperties["width"];
   popupHeight?: React.CSSProperties["height"];
-  dragHeaderStyle?: Record<string, any>;
-  dragWrapperStyle?: Record<string, any>;
+  headerStyle?: Record<string, any>;
+  wrapperStyle?: Record<string, any>;
   openDirection?: OpenDirection;
   resizable?: boolean;
   noPadding?: boolean;
@@ -178,8 +178,8 @@ export function EoPopupComponent({
   popupWidth,
   popupHeight,
   visible,
-  dragHeaderStyle,
-  dragWrapperStyle,
+  headerStyle,
+  wrapperStyle,
   openDirection,
   resizable,
   closePopup,
@@ -187,13 +187,10 @@ export function EoPopupComponent({
   const popupRef = useRef<HTMLDivElement>();
   const headerRef = useRef<HTMLDivElement>();
   const contentRef = useRef<HTMLDivElement>();
-  const [isMove, setIsMove] = useState(false);
-  const [contentMaxSize, setContentMaxSize] = useState<React.CSSProperties>();
-  const curPointRef = useRef({
-    offsetX: 0,
-    offsetY: 0,
-  });
+  const [size, setSize] = useState<[number, number]>();
   const [position, setPosition] = useState<[number, number]>();
+  const preSizeRef = useRef<[number, number]>();
+  const prePositionRef = useRef<[number, number]>();
 
   const storage = useMemo(
     () =>
@@ -206,72 +203,29 @@ export function EoPopupComponent({
     [popupId]
   );
 
-  const popupSize = useMemo(() => {
-    if (resizable && popupId) {
-      const cache = storage.getItem(popupId);
-      if (cache?.size) {
-        return cache.size;
-      }
-    }
-    return [popupWidth, popupHeight];
-  }, [popupId, resizable, storage, visible, popupHeight, popupWidth]);
-
-  const debouncedSetPoint = useMemo(
-    () => debounceByAnimationFrame(setPosition),
-    []
-  );
-
-  const handleMouseDown = (e: MouseEvent): void => {
-    const paths = e.composedPath() as HTMLElement[];
-    for (const path of paths) {
-      if (path.nodeName) {
-        if (
-          path.nodeName.toLowerCase() === "span" &&
-          path.className.includes("general-popup-close-btn")
-        ) {
-          closePopup?.();
-          return;
-        }
-        if (
-          path.nodeName.toLowerCase() === "div" &&
-          path.className.includes("general-popup-header-toolbar")
-        ) {
-          return;
-        }
-        if (
-          path.nodeName.toLowerCase() === "div" &&
-          path.className.includes("general-popup-header")
-        ) {
-          setIsMove(true);
-          curPointRef.current = {
-            offsetX: e.offsetX,
-            offsetY: e.offsetY,
-          };
-        }
-      }
+  const handleResizeStop: RndResizeCallback = (
+    _e,
+    _direction,
+    ref,
+    _delta,
+    pos
+  ) => {
+    const { width, height } = ref.getBoundingClientRect();
+    const size: [number, number] = [width, height];
+    const position: [number, number] = [pos.x, pos.y];
+    setSize(size);
+    setPosition(position);
+    if (popupId) {
+      storage.setItem(popupId, {
+        size,
+        position,
+      });
     }
   };
 
-  const handleMouseMove = useCallback(
-    (e: MouseEvent): void => {
-      if (isMove) {
-        const { width, height } = popupRef.current.getBoundingClientRect();
-        const { innerWidth, innerHeight } = window;
-        const maxX = innerWidth - width;
-        const maxY = innerHeight - height;
-        const pointX = e.clientX - curPointRef.current.offsetX;
-        const pointY = e.clientY - curPointRef.current.offsetY;
-        debouncedSetPoint([
-          pointX <= 0 ? 0 : pointX >= maxX ? maxX : pointX,
-          pointY <= 0 ? 0 : pointY >= maxY ? maxY : pointY,
-        ]);
-      }
-    },
-    [debouncedSetPoint, isMove]
-  );
-
-  const handleMouseUp = useCallback((): void => {
-    setIsMove(false);
+  const handleDragStop: RndDragCallback = (_e, d) => {
+    const position: [number, number] = [d.x, d.y];
+    setPosition(position);
     if (popupId) {
       const cache = storage.getItem(popupId) ?? {};
       storage.setItem(popupId, {
@@ -279,27 +233,55 @@ export function EoPopupComponent({
         position,
       });
     }
-  }, [popupId, position, storage]);
+  };
+
+  const computedRightPosition = useCallback(() => {
+    const popup = popupRef.current;
+    if (!popup) return;
+    const { innerWidth, innerHeight } = window;
+    const { width, height, x, y } = popup.getBoundingClientRect();
+    const rightWidth = width > innerWidth ? innerWidth : width;
+    const rightHeight = height > innerHeight ? innerHeight : height;
+    const isOverflowX = x + width > innerWidth || x < 0;
+    const isOverflowY = y + height > innerHeight || y < 0;
+    if (isOverflowX || isOverflowY) {
+      setPosition((prePos) => {
+        const newPos: [number, number] = [
+          isOverflowX ? innerWidth - width : prePos[0],
+          isOverflowY ? innerHeight - height : prePos[1],
+        ];
+        prePositionRef.current = newPos;
+        return newPos;
+      });
+    }
+    if (rightWidth !== width || rightHeight !== height) {
+      const newSize: [number, number] = [rightWidth, rightHeight];
+      preSizeRef.current = newSize;
+      setSize(newSize);
+    }
+  }, []);
 
   const initPos = useCallback(() => {
     let initPostion: [number, number];
     if (visible && popupRef.current) {
       const { innerWidth, innerHeight } = window;
-      const { offsetWidth, offsetHeight } = popupRef.current;
+      const { offsetWidth: width, offsetHeight: height } = popupRef.current;
+      const widthGap = 15;
+      const heightGap = 30;
 
       const map: { [key in OpenDirection]: Array<number> } = {
         [OpenDirection.LeftTop]: [0, headerHeight],
-        [OpenDirection.LeftBottom]: [0, innerHeight - offsetHeight],
-        [OpenDirection.RightTop]: [innerWidth - offsetWidth, headerHeight],
+        [OpenDirection.LeftBottom]: [0, innerHeight - height - heightGap],
 
+        [OpenDirection.RightTop]: [innerWidth - width - widthGap, headerHeight],
         [OpenDirection.RightBottom]: [
-          innerWidth - offsetWidth,
-          innerHeight - offsetHeight,
+          innerWidth - width - widthGap,
+          innerHeight - height - heightGap,
         ],
 
         [OpenDirection.Center]: [
-          Math.floor((innerWidth - offsetWidth) / 2),
-          Math.floor((innerHeight - offsetHeight) / 2),
+          Math.floor((innerWidth - width) / 2),
+          Math.floor((innerHeight - height) / 2),
         ],
       };
 
@@ -314,122 +296,87 @@ export function EoPopupComponent({
   }, [visible, openDirection, popupId, storage]);
 
   useLayoutEffect(() => {
+    if (popupId) {
+      const cache = storage.getItem(popupId);
+      if (cache?.size) {
+        setSize(cache.size);
+        return;
+      }
+    }
+    setSize([popupWidth as number, popupHeight as number]);
+  }, []);
+
+  useLayoutEffect(() => {
     const popupElement = popupRef.current;
     if (popupElement) {
       setPosition(initPos());
-      /**
-       * Antd Select构件在shadow dom会出现异常的情况
-       * 具体可参见: https://github.com/ant-design/ant-design/issues/28012
-       * 采用原生事件监听可避免该种情况发生
-       */
-      popupElement.addEventListener("mousedown", handleMouseDown);
     }
-    return () => {
-      popupElement?.removeEventListener("mousedown", handleMouseDown);
-    };
   }, [visible, initPos]);
 
   useEffect(() => {
-    if (!isMove) {
-      return;
+    const prePos = prePositionRef.current;
+    const preSize = preSizeRef.current;
+    if (!isEqual(prePos, position) || !isEqual(preSize, size)) {
+      computedRightPosition();
     }
+  }, [position, size]);
 
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
+  useEffect(() => {
+    window.addEventListener("resize", computedRightPosition);
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("resize", computedRightPosition);
     };
-  }, [isMove, handleMouseUp, handleMouseMove]);
-
-  const computedContentMaxSize = useCallback(() => {
-    if (popupRef.current && headerRef.current) {
-      const { left, top } = popupRef.current.getBoundingClientRect();
-      const { height: headerHeight } =
-        headerRef.current.getBoundingClientRect();
-      const { innerWidth, innerHeight } = window;
-      setContentMaxSize({
-        maxWidth: innerWidth - left,
-        maxHeight: innerHeight - top - headerHeight,
-      });
-    }
-    return {};
   }, []);
-
-  useEffect(() => {
-    // fix resize overflow to screen
-    if (resizable && !isMove) {
-      computedContentMaxSize();
-    }
-  }, [isMove, position]);
-
-  useEffect(() => {
-    const content = contentRef.current;
-    if (resizable && visible && popupId) {
-      const observer = new ResizeObserver((entries) => {
-        let width: number, height: number;
-        for (const entry of entries) {
-          const { width: contentWidth, height: contentHeight } =
-            entry.contentRect;
-          width = contentWidth;
-          height = contentHeight;
-        }
-        const cache = storage.getItem(popupId) ?? {};
-        storage.setItem(popupId, {
-          ...cache,
-          size: [width, height],
-        });
-      });
-
-      observer.observe(content);
-
-      return () => {
-        observer.disconnect();
-      };
-    }
-  }, [popupId, resizable, storage, visible]);
 
   return (
     visible && (
-      <div
-        className="general-popup"
-        ref={popupRef}
-        style={{
-          transform: position
-            ? `translate(${position[0]}px, ${position[1]}px)`
-            : "",
-          ...dragWrapperStyle,
-        }}
-      >
-        <div
-          className="general-popup-header"
-          ref={headerRef}
-          style={dragHeaderStyle}
-        >
-          <span className="title">{popupTitle}</span>
-          <div className="general-popup-header-toolbar">
-            <slot name="toolbar"></slot>
-            <span className="general-popup-close-btn">
-              <WrappedIcon icon="close" lib="antd" theme="outlined" />
-            </span>
-          </div>
-        </div>
-        <div
-          ref={contentRef}
-          className="content"
-          style={{
-            width: popupSize[0] ?? "500px",
-            ...(resizable
-              ? {
-                  resize: isMove ? "none" : "both",
-                  height: popupSize[1],
-                  ...contentMaxSize,
-                }
-              : { maxHeight: popupSize[1] }),
+      <div>
+        <Rnd
+          className="general-popup"
+          dragHandleClassName="general-popup-header"
+          enableResizing={resizable}
+          size={{
+            width: size?.[0] ?? 500,
+            height: size?.[1],
           }}
+          position={
+            position && {
+              x: position[0],
+              y: position[1],
+            }
+          }
+          bounds="window"
+          onDragStop={handleDragStop}
+          onResizeStop={handleResizeStop}
         >
-          <slot />
-        </div>
+          <div
+            ref={popupRef}
+            className="general-popup-container"
+            style={wrapperStyle}
+          >
+            <div
+              className="general-popup-header"
+              ref={headerRef}
+              style={headerStyle}
+            >
+              <span className="title">{popupTitle}</span>
+              <div className="general-popup-header-toolbar">
+                <slot name="toolbar"></slot>
+                <span className="general-popup-close-btn">
+                  <WrappedIcon
+                    icon="close"
+                    lib="antd"
+                    theme="outlined"
+                    onClick={closePopup}
+                  />
+                </span>
+              </div>
+            </div>
+            <div ref={contentRef} className="content">
+              <slot />
+            </div>
+          </div>
+        </Rnd>
       </div>
     )
   );

@@ -7,14 +7,15 @@
 }
 
 .general-popup {
-  position: fixed;
-  left: 0;
-  top: 0;
   z-index: 1000;
   box-shadow: 0px 21px 50px 0px rgb(0 0 0 / 46%);
-  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 6px;
   overflow: hidden;
+
+  .general-popup-container {
+    height: 100%;
+    background: var(--antd-dropdown-menu-bg);
+  }
 }
 
 .general-popup-header {
@@ -23,7 +24,6 @@
   justify-content: space-between;
   background: var(--antd-modal-footer-bg);
   padding: 12px;
-  border-bottom: 1px solid var(--theme-gray-color);
   border-radius: 6px 6px 0 0;
   font-size: 16px;
   line-height: 16px;
@@ -55,8 +55,7 @@
 
 .content {
   overflow: auto;
-  background: var(--antd-dropdown-menu-bg);
   padding: 20px;
   margin-top: -1px;
-  height: calc(100vh - 100px);
+  height: fit-content;
 }

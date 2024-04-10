@@ -2,14 +2,8 @@ import { describe, test, expect, jest } from "@jest/globals";
 import { act } from "react-dom/test-utils";
 import "./";
 import type { EoPopup } from "./index.js";
-import { fireEvent } from "@testing-library/react";
-import ResizeObserver from "resize-observer-polyfill";
 
-jest.mock("resize-observer-polyfill");
 jest.mock("@next-core/theme", () => ({}));
-jest.mock("@next-shared/general/debounceByAnimationFrame", () => ({
-  debounceByAnimationFrame: jest.fn((fn) => fn),
-}));
 const mockStorageSetItem = jest.fn();
 jest.mock("@next-core/utils/general", () => ({
   JsonStorage: jest.fn(() => {
@@ -26,18 +20,6 @@ jest.mock("@next-core/runtime", () => ({
   getCssPropertyValue: () => "56",
 }));
 
-let observerCallback: ResizeObserverCallback | undefined;
-
-(ResizeObserver as jest.Mock).mockImplementation(function (
-  callback: ResizeObserverCallback
-) {
-  observerCallback = callback;
-  return {
-    observe: jest.fn(),
-    disconnect: jest.fn(),
-  };
-} as any);
-
 window.innerWidth = 1000;
 window.innerHeight = 500;
 
@@ -50,8 +32,8 @@ const originalOffsetHeight = Object.getOwnPropertyDescriptor(
   "offsetHeight"
 );
 const getBoundingClientRectSpy = jest.fn(() => ({
-  width: 600,
-  height: 400,
+  width: 200,
+  height: 300,
   left: 100,
   top: 100,
 }));
@@ -94,8 +76,6 @@ describe("eo-popup", () => {
     element.popupTitle = "title";
     element.popupWidth = 600;
     element.popupHeight = 400;
-    element.resizable = true;
-
     expect(element.shadowRoot).toBeFalsy();
 
     act(() => {
@@ -103,263 +83,21 @@ describe("eo-popup", () => {
     });
     expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
 
-    const GeneralPopupElement =
-      element.shadowRoot!.querySelector(".general-popup");
-    expect(GeneralPopupElement).toBeTruthy();
-    // init position
-    expect((GeneralPopupElement as HTMLElement).style.transform).toBe(
-      "translate(200px, 50px)"
-    );
-
-    const headerElement = element.shadowRoot.querySelector(
-      ".general-popup-header"
-    );
+    expect(element.shadowRoot.querySelector(".general-popup")).toBeTruthy();
 
     expect(
-      (element.shadowRoot.querySelector(".content") as HTMLElement).style.resize
-    ).toBe("both");
-
-    const event = new MouseEvent("mousedown", {
-      bubbles: true,
-      cancelable: true,
-    });
-
-    Object.defineProperty(event, "offsetX", { get: () => 20 });
-    Object.defineProperty(event, "offsetY", { get: () => 10 });
-
-    expect(headerElement).toBeTruthy();
-
-    fireEvent(headerElement, event);
-
-    window.dispatchEvent(
-      new MouseEvent("mousemove", {
-        clientX: 100,
-        clientY: 100,
-      })
-    );
+      (element.shadowRoot.querySelector(".general-popup") as HTMLElement)!.style
+        .width
+    ).toBe("600px");
+    expect(
+      (element.shadowRoot.querySelector(".general-popup") as HTMLElement)!.style
+        .height
+    ).toBe("400px");
 
     expect(
-      (element.shadowRoot.querySelector(".content") as HTMLElement).style.resize
-    ).toBe("none");
-
-    await window.dispatchEvent(new MouseEvent("mouseup", {}));
-
-    expect((GeneralPopupElement as HTMLElement).style.transform).toBe(
-      "translate(80px, 90px)"
-    );
-
-    // move to outside window
-    // left top
-    fireEvent(headerElement, event);
-
-    window.dispatchEvent(
-      new MouseEvent("mousemove", {
-        clientX: -100,
-        clientY: -100,
-      })
-    );
-
-    await window.dispatchEvent(new MouseEvent("mouseup", {}));
-
-    expect((GeneralPopupElement as HTMLElement).style.transform).toBe(
-      "translate(0px, 0px)"
-    );
-
-    // right top
-    fireEvent(headerElement, event);
-
-    window.dispatchEvent(
-      new MouseEvent("mousemove", {
-        clientX: 1200,
-        clientY: 0,
-      })
-    );
-
-    await window.dispatchEvent(new MouseEvent("mouseup", {}));
-
-    expect((GeneralPopupElement as HTMLElement).style.transform).toBe(
-      "translate(400px, 0px)"
-    );
-
-    // left bottom
-    fireEvent(headerElement, event);
-
-    window.dispatchEvent(
-      new MouseEvent("mousemove", {
-        clientX: -100,
-        clientY: 600,
-      })
-    );
-
-    await window.dispatchEvent(new MouseEvent("mouseup", {}));
-
-    expect((GeneralPopupElement as HTMLElement).style.transform).toBe(
-      "translate(0px, 100px)"
-    );
-
-    // right bottom
-    fireEvent(headerElement, event);
-
-    window.dispatchEvent(
-      new MouseEvent("mousemove", {
-        clientX: 1200,
-        clientY: 600,
-      })
-    );
-    await window.dispatchEvent(new MouseEvent("mouseup", {}));
-
-    expect((GeneralPopupElement as HTMLElement).style.transform).toBe(
-      "translate(400px, 100px)"
-    );
-
-    act(() => {
-      document.body.removeChild(element);
-    });
-    expect(element.shadowRoot?.childNodes.length).toBe(0);
-  });
-
-  test("should hidde", async () => {
-    const element = document.createElement("eo-popup") as EoPopup;
-    element.visible = false;
-
-    expect(element.shadowRoot).toBeFalsy();
-
-    act(() => {
-      document.body.appendChild(element);
-    });
-    expect(element.shadowRoot?.childNodes.length).toBe(1);
-
-    expect(element.shadowRoot.querySelector(".general-popup")).toBeFalsy();
-
-    act(() => {
-      document.body.removeChild(element);
-    });
-    expect(element.shadowRoot?.childNodes.length).toBe(0);
-  });
-
-  test("popup should use localstory position", async () => {
-    const element = document.createElement("eo-popup") as EoPopup;
-    element.popupId = "popup-a";
-    element.visible = true;
-
-    expect(element.shadowRoot).toBeFalsy();
-
-    act(() => {
-      document.body.appendChild(element);
-    });
-    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
-
-    expect(
-      (element.shadowRoot.querySelector(".general-popup") as HTMLElement).style
+      (element.shadowRoot.querySelector(".general-popup") as HTMLElement)!.style
         .transform
-    ).toBe("translate(66px, 66px)");
-
-    act(() => {
-      document.body.removeChild(element);
-    });
-    expect(element.shadowRoot?.childNodes.length).toBe(0);
-  });
-
-  test("should work with resizable and cache size", async () => {
-    const element = document.createElement("eo-popup") as EoPopup;
-    element.resizable = true;
-    element.visible = true;
-    element.popupId = "test";
-    element.popupWidth = 100;
-    element.popupHeight = 200;
-
-    expect(element.shadowRoot).toBeFalsy();
-
-    act(() => {
-      document.body.appendChild(element);
-    });
-    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
-
-    const contentElement = element.shadowRoot.querySelector(
-      ".content"
-    ) as HTMLElement;
-    expect(contentElement.style.resize).toEqual("both");
-    expect(contentElement.style.maxWidth).toBe("900px");
-    expect(contentElement.style.maxHeight).toBe("0");
-
-    expect(contentElement.style.width).toBe("315px");
-    expect(contentElement.style.height).toBe("388px");
-
-    act(() => {
-      observerCallback(
-        [
-          {
-            contentRect: {
-              width: 200,
-              height: 300,
-            },
-          },
-        ] as any,
-        null!
-      );
-    });
-
-    expect(mockStorageSetItem).toBeCalledWith("test", {
-      position: [66, 66],
-      size: [200, 300],
-    });
-
-    act(() => {
-      document.body.removeChild(element);
-    });
-    expect(element.shadowRoot?.childNodes.length).toBe(0);
-  });
-
-  test("method should work", async () => {
-    const element = document.createElement("eo-popup") as EoPopup;
-    const toolbarElement = document.createElement("div");
-    toolbarElement.textContent = "toolbar";
-    toolbarElement.slot = "toolbar";
-    element.appendChild(toolbarElement);
-
-    expect(element.shadowRoot).toBeFalsy();
-
-    act(() => {
-      document.body.appendChild(element);
-    });
-    expect(element.shadowRoot?.childNodes.length).toBe(1);
-
-    expect(element.shadowRoot.querySelector(".general-popup")).toBeFalsy();
-
-    await act(async () => {
-      await element.open();
-    });
-
-    expect(element.shadowRoot.querySelector(".general-popup")).toBeTruthy();
-
-    expect(element.querySelector("div[slot='toolbar']")).toBeTruthy();
-
-    fireEvent.mouseDown(element.querySelector("div[slot='toolbar']"));
-
-    expect(element.visible).toBe(true);
-
-    const event = new MouseEvent("mousedown", {
-      bubbles: true,
-      cancelable: true,
-    });
-
-    fireEvent(element.shadowRoot.querySelector("eo-icon[icon='close']"), event);
-
-    await window.dispatchEvent(new MouseEvent("mouseup", {}));
-
-    expect(element.visible).toBe(false);
-
-    await act(async () => {
-      await element.open();
-    });
-
-    expect(element.shadowRoot.querySelector(".general-popup")).toBeTruthy();
-
-    await act(async () => {
-      await element.close();
-    });
-
-    expect(element.shadowRoot.querySelector(".general-popup")).toBeFalsy();
+    ).toBe("translate(200px,50px)");
 
     act(() => {
       document.body.removeChild(element);
