@@ -11,6 +11,7 @@ import classNames from "classnames";
 import { MessageListLoading } from "./Loading.js";
 import { MessageNode } from "./MessageItem/index.js";
 import { QuickAnswerList } from "./QuickAnswerList/index.js";
+import { throttle } from "lodash";
 
 interface MessageListProps {
   showAvatar?: boolean;
@@ -24,6 +25,8 @@ export function MessageList({
   const messageListRef = useRef<HTMLDivElement>(null);
   const messgetListBoxRef = useRef<HTMLDivElement>(null);
   const [preHeight, setPreHeight] = useState<number>(0);
+  const flag = useRef<boolean>(false);
+  const isCustomScroll = useRef<boolean>(false);
 
   const { msgList, msgItem, loading, chatting } = useChatViewContext();
 
@@ -59,11 +62,44 @@ export function MessageList({
     return null;
   }, [msgItem, getMsgItemNode]);
 
+  const handleScroll = throttle(() => {
+    const computedHeight =
+      messageListRef.current!.scrollHeight -
+      messageListRef.current!.clientHeight;
+    const isBottom =
+      computedHeight === messageListRef.current!.scrollTop ||
+      // 缓冲20高度
+      computedHeight - 20 < messageListRef.current!.scrollTop;
+    if (isCustomScroll.current) {
+      if (isBottom) {
+        flag.current = false;
+        isCustomScroll.current = false;
+      }
+      return;
+    }
+    if (!isBottom) {
+      // fixed：有时候在数据返回时页面会跳一下，导致计算异常，这里做临时兼容处理
+      if (!flag.current) {
+        flag.current = true;
+      } else {
+        isCustomScroll.current = true;
+      }
+    }
+  }, 200);
+
+  useEffect(() => {
+    if (chatting) {
+      isCustomScroll.current = false;
+      flag.current = false;
+    }
+  }, [chatting]);
+
   useEffect(() => {
     const element = messgetListBoxRef.current;
     if (element) {
       const observer = new ResizeObserver((entries) => {
         let newHeight: number = 0;
+        if (isCustomScroll.current) return;
         for (const entry of entries) {
           newHeight = entry.contentRect.height - DEFAULT_OFFSET_HEIGHT;
         }
@@ -86,7 +122,7 @@ export function MessageList({
   }, [chatting, loading, preHeight]);
 
   return (
-    <div className="message-list" ref={messageListRef}>
+    <div className="message-list" ref={messageListRef} onScroll={handleScroll}>
       <div className="message-list-box" ref={messgetListBoxRef}>
         <QuickAnswerList />
         {msgListNode}

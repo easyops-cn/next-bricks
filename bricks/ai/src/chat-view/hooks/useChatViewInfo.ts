@@ -57,7 +57,7 @@ export function useChatViewInfo({
       if (!msgItem) return;
       chatingText.current = chatingText.current + msgItem.delta.content;
       // eslint-disable-next-line no-console
-      console.log(chatingText.current);
+      // console.log(chatingText.current);
       chatingMessageItem.current = {
         role: "assistant",
         content: [
