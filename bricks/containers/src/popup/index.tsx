@@ -11,7 +11,6 @@ import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import { JsonStorage } from "@next-core/utils/general";
-import { getCssPropertyValue } from "@next-core/runtime";
 import { Rnd, RndResizeCallback, RndDragCallback } from "react-rnd";
 import { isEqual } from "lodash";
 import type {
@@ -30,8 +29,6 @@ export enum OpenDirection {
   RightBottom = "rightBottom",
   Center = "center",
 }
-
-const headerHeight = parseInt(getCssPropertyValue("--app-bar-height")) || 56;
 
 /**
  * 构件 `eo-popup`
@@ -187,9 +184,12 @@ export function EoPopupComponent({
   const popupRef = useRef<HTMLDivElement>();
   const headerRef = useRef<HTMLDivElement>();
   const contentRef = useRef<HTMLDivElement>();
-  const [size, setSize] = useState<[number, number]>();
+  const [size, setSize] = useState<[number | string, number | string]>([
+    popupWidth ?? 500,
+    popupHeight,
+  ]);
   const [position, setPosition] = useState<[number, number]>();
-  const preSizeRef = useRef<[number, number]>();
+  const preSizeRef = useRef<[number | string, number | string]>(size);
   const prePositionRef = useRef<[number, number]>();
 
   const storage = useMemo(
@@ -240,15 +240,19 @@ export function EoPopupComponent({
     if (!popup) return;
     const { innerWidth, innerHeight } = window;
     const { width, height, x, y } = popup.getBoundingClientRect();
+    const widthGap = 15;
+    const heightGap = 30;
     const rightWidth = width > innerWidth ? innerWidth : width;
     const rightHeight = height > innerHeight ? innerHeight : height;
-    const isOverflowX = x + width > innerWidth || x < 0;
-    const isOverflowY = y + height > innerHeight || y < 0;
+    const isOverflowX = x + width - widthGap > innerWidth || x < 0;
+    const isOverflowY = y + height - heightGap > innerHeight || y < 0;
     if (isOverflowX || isOverflowY) {
       setPosition((prePos) => {
         const newPos: [number, number] = [
-          isOverflowX ? innerWidth - width : prePos[0],
-          isOverflowY ? innerHeight - height : prePos[1],
+          isOverflowX ? Math.max(0, innerWidth - width) - widthGap : prePos[0],
+          isOverflowY
+            ? Math.max(0, innerHeight - height) - heightGap
+            : prePos[1],
         ];
         prePositionRef.current = newPos;
         return newPos;
@@ -266,12 +270,16 @@ export function EoPopupComponent({
     if (visible && popupRef.current) {
       const { innerWidth, innerHeight } = window;
       const { offsetWidth: width, offsetHeight: height } = popupRef.current;
-      const widthGap = 15;
-      const heightGap = 30;
+      const { offsetHeight: headerHeight } = headerRef.current;
+      const widthGap = 30;
+      const heightGap = 60;
 
       const map: { [key in OpenDirection]: Array<number> } = {
-        [OpenDirection.LeftTop]: [0, headerHeight],
-        [OpenDirection.LeftBottom]: [0, innerHeight - height - heightGap],
+        [OpenDirection.LeftTop]: [widthGap, headerHeight],
+        [OpenDirection.LeftBottom]: [
+          widthGap,
+          innerHeight - height - heightGap,
+        ],
 
         [OpenDirection.RightTop]: [innerWidth - width - widthGap, headerHeight],
         [OpenDirection.RightBottom]: [
@@ -280,8 +288,8 @@ export function EoPopupComponent({
         ],
 
         [OpenDirection.Center]: [
-          Math.floor((innerWidth - width) / 2),
-          Math.floor((innerHeight - height) / 2),
+          (innerWidth - width) / 2,
+          (innerHeight - height) / 2 - headerHeight,
         ],
       };
 
@@ -290,7 +298,8 @@ export function EoPopupComponent({
         number,
       ];
       const cache = popupId && storage.getItem(popupId);
-      return popupId && cache?.position ? cache.position : initPostion;
+      const newPos = popupId && cache?.position ? cache.position : initPostion;
+      return newPos;
     }
     return initPostion;
   }, [visible, openDirection, popupId, storage]);
@@ -303,7 +312,6 @@ export function EoPopupComponent({
         return;
       }
     }
-    setSize([popupWidth as number, popupHeight as number]);
   }, []);
 
   useLayoutEffect(() => {
@@ -330,14 +338,14 @@ export function EoPopupComponent({
 
   return (
     visible && (
-      <div>
+      <div className="general-popup-popup">
         <Rnd
           className="general-popup"
           dragHandleClassName="general-popup-header"
           enableResizing={resizable}
           size={{
-            width: size?.[0] ?? 500,
-            height: size?.[1],
+            width: size[0],
+            height: size[1],
           }}
           position={
             position && {

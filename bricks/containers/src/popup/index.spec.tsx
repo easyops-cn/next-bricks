@@ -94,11 +94,6 @@ describe("eo-popup", () => {
         .height
     ).toBe("400px");
 
-    expect(
-      (element.shadowRoot.querySelector(".general-popup") as HTMLElement)!.style
-        .transform
-    ).toBe("translate(200px,50px)");
-
     act(() => {
       document.body.removeChild(element);
     });
