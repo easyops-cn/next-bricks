@@ -89,8 +89,11 @@ export interface EoDrawCanvasProps {
   zoomable?: boolean;
   scrollable?: boolean;
   pannable?: boolean;
+  dragBehavior?: DragBehavior;
   scaleRange?: RangeTuple;
 }
+
+export type DragBehavior = "lasso" | "grab";
 
 export interface DropNodeInfo extends AddNodeInfo {
   /** [PointerEvent::clientX, PointerEvent::clientY] */
@@ -208,6 +211,19 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
 
   @property({ type: Boolean })
   accessor pannable: boolean | undefined = true;
+
+  @property({ type: Boolean })
+  accessor selectable: boolean | undefined = true;
+
+  /**
+   * 按住鼠标拖动时的行为：
+   *  - `lasso`：绘制选区
+   *  - `grab`：拖动画布
+   *
+   * @default "lasso"
+   */
+  @property()
+  accessor dragBehavior: DragBehavior | undefined;
 
   @property({ attribute: false })
   accessor scaleRange: RangeTuple | undefined;
@@ -453,6 +469,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         zoomable={this.zoomable}
         scrollable={this.scrollable}
         pannable={this.pannable}
+        dragBehavior={this.dragBehavior}
         scaleRange={this.scaleRange}
         onActiveTargetChange={this.#handleActiveTargetChange}
         onSwitchActiveTarget={this.#handleSwitchActiveTarget}
@@ -515,6 +532,7 @@ function LegacyEoDrawCanvasComponent(
     zoomable,
     scrollable,
     pannable,
+    dragBehavior,
     scaleRange: _scaleRange,
     onActiveTargetChange,
     onSwitchActiveTarget,
@@ -556,6 +574,7 @@ function LegacyEoDrawCanvasComponent(
     zoomable,
     scrollable,
     pannable,
+    draggable: dragBehavior === "grab",
     scaleRange: _scaleRange,
     onSwitchActiveTarget,
   });
