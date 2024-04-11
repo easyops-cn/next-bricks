@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.3.0...@next-bricks/ai@1.4.0) (2024-04-11)
+
+
+### Features
+
+* **chat-view:** handle custom scroll ([8222cfe](https://github.com/easyops-cn/next-bricks/commit/8222cfed54fa5857bd873c8d2cf12e51f123201e))
+
+
+
+
+
 # [1.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.2.1...@next-bricks/ai@1.3.0) (2024-04-09)
 
 
