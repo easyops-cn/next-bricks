@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.11.3...@next-bricks/basic@1.11.4) (2024-04-11)
+
+
+### Bug Fixes
+
+* no pointer events for badge counter ([e123e6c](https://github.com/easyops-cn/next-bricks/commit/e123e6cd48db698ce1decb12c4a39d327de1819c))
+
+
+
+
+
 ## [1.11.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.11.2...@next-bricks/basic@1.11.3) (2024-04-08)
 
 **Note:** Version bump only for package @next-bricks/basic
