@@ -135,6 +135,12 @@ export function SearchInput(): React.ReactNode {
     }
   }, []);
 
+  useEffect(() => {
+    if (!chatting && textareaRef.current) {
+      textareaRef.current?.focus();
+    }
+  }, [chatting]);
+
   return (
     <div
       className={classNames("search-input-box", {
