@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.4.0...@next-bricks/ai@1.5.0) (2024-04-11)
+
+
+### Features
+
+* update style ([62fe17f](https://github.com/easyops-cn/next-bricks/commit/62fe17f5d5358b5183522f642cb46eed5c8480bd))
+
+
+
+
+
 # [1.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.3.0...@next-bricks/ai@1.4.0) (2024-04-11)
 
 
