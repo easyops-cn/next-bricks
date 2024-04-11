@@ -143,6 +143,7 @@
   .message-list-box {
     display: flex;
     flex-direction: column;
+    position: relative;
     gap: 18px;
 
     .message-item {
@@ -188,13 +189,23 @@
       }
 
       .avatar {
-        font-size: 36px;
+        width: 36px;
+        height: 36px;
         margin-top: 32px;
+
+        &.user {
+          background-image: url("./assets/user.png");
+        }
+
+        &.robot {
+          background-image: url("./assets/robot.png");
+        }
       }
 
       .message-box {
         position: relative;
-        margin-bottom: 22px;
+        flex: 1;
+        /* margin-bottom: 22px; */
         .message-content {
           display: flex;
           justify-content: start;
@@ -240,6 +251,12 @@
         }
       }
     }
+
+    .stop-responding-wrapper {
+      position: absolute;
+      left: 44px;
+      bottom: -28px;
+    }
   }
 }
 
@@ -250,32 +267,6 @@
   height: 50px;
   padding: 12px;
   position: relative;
-
-  .stop-responding-wrapper {
-    position: absolute;
-    top: -30px;
-    left: 50%;
-    transform: translate(-50%, 0);
-
-    .stop-btn {
-      cursor: pointer;
-      background-color: rgba(229, 162, 65, 1);
-      padding: 4px 16px;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      border-radius: 3px;
-
-      &:hover {
-        background-color: rgba(229, 162, 65, 0.8);
-      }
-
-      &:active {
-        background-color: rgba(229, 162, 65, 0.9);
-      }
-    }
-  }
 
   &.fill-content {
     box-shadow: 1px 0px 4px 0px rgba(197, 197, 197, 0.5);

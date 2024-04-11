@@ -28,6 +28,7 @@ export function SearchInput(): React.ReactNode {
   const searchInputBoxRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const hadExpanded = useRef<boolean>(false);
+  const inputEndRef = useRef<boolean>(false);
 
   const {
     chatting,
@@ -36,7 +37,6 @@ export function SearchInput(): React.ReactNode {
     createSession,
     setSearchStr,
     handleChat,
-    stopChat,
   } = useChatViewContext();
 
   const hadValue = useMemo(() => !!value, [value]);
@@ -70,6 +70,14 @@ export function SearchInput(): React.ReactNode {
     []
   );
 
+  const handleCompositionStart = () => {
+    inputEndRef.current = true;
+  };
+
+  const handleCompositionEnd = () => {
+    inputEndRef.current = false;
+  };
+
   const hanldeCreateSession = () => {
     createSession();
   };
@@ -79,10 +87,6 @@ export function SearchInput(): React.ReactNode {
       return !value;
     });
   }, []);
-
-  const handleStopClick = () => {
-    stopChat();
-  };
 
   const handleSubmit = useCallback(() => {
     if (!hadValue || !textareaRef.current || disabled) return;
@@ -97,7 +101,7 @@ export function SearchInput(): React.ReactNode {
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-      if (e.key === "Enter" && !e.shiftKey) {
+      if (e.key === "Enter" && !e.shiftKey && !inputEndRef.current) {
         e.preventDefault();
         handleSubmit();
       }
@@ -148,14 +152,6 @@ export function SearchInput(): React.ReactNode {
       })}
       ref={searchInputBoxRef}
     >
-      {chatting && (
-        <div className="stop-responding-wrapper">
-          <div className="stop-btn" onClick={handleStopClick}>
-            <WrappedIcon icon="stop-circle" lib="fa" prefix="fas" />
-            中断响应
-          </div>
-        </div>
-      )}
       <div
         className={classNames("input-box", {
           active,
@@ -175,6 +171,8 @@ export function SearchInput(): React.ReactNode {
           onBlur={() => setActive(false)}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
+          onCompositionStart={handleCompositionStart}
+          onCompositionEnd={handleCompositionEnd}
         />
         <span className="suffix-icon">
           <WrappedToolTip content="新增会话">
