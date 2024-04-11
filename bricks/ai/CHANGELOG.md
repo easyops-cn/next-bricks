@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.5.0...@next-bricks/ai@1.6.0) (2024-04-11)
+
+
+### Features
+
+* **chat-view:** quick-answer-list add ResizeObserver ([91d99bf](https://github.com/easyops-cn/next-bricks/commit/91d99bf4ee8165ef5a88f07c7489d83cd949e88a))
+
+
+
+
+
 # [1.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.4.0...@next-bricks/ai@1.5.0) (2024-04-11)
 
 
