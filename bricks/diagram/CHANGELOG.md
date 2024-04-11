@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.34.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.33.5...@next-bricks/diagram@0.34.0) (2024-04-11)
+
+
+### Features
+
+* **draw-canvas:** support drag behavior of grab other than lasso ([6a974fb](https://github.com/easyops-cn/next-bricks/commit/6a974fb1b304176bbe4abb751e8e3aa1698d1115))
+
+
+
+
+
 ## [0.33.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.33.4...@next-bricks/diagram@0.33.5) (2024-04-08)
 
 **Note:** Version bump only for package @next-bricks/diagram
