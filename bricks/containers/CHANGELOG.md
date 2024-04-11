@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.4.4...@next-bricks/containers@1.5.0) (2024-04-11)
+
+
+### Features
+
+* popup cache size ([8b2fe4d](https://github.com/easyops-cn/next-bricks/commit/8b2fe4d347f6aa4255d4ce0f5cf1b958e6ac241b))
+* **popup:** use react-rnd ([2acc805](https://github.com/easyops-cn/next-bricks/commit/2acc8058bd17e127b9eb79c829ff1c3342ea6a09))
+* update code ([33c95a3](https://github.com/easyops-cn/next-bricks/commit/33c95a3ec924f78f5c3f3755e6806293e5b90a05))
+
+
+
+
+
 ## [1.4.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.4.3...@next-bricks/containers@1.4.4) (2024-04-08)
 
 **Note:** Version bump only for package @next-bricks/containers
