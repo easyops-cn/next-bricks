@@ -12,6 +12,7 @@ import { MessageListLoading } from "./Loading.js";
 import { MessageNode } from "./MessageItem/index.js";
 import { QuickAnswerList } from "./QuickAnswerList/index.js";
 import { throttle } from "lodash";
+import { StopBtn } from "./StopBtn.js";
 
 interface MessageListProps {
   showAvatar?: boolean;
@@ -52,15 +53,19 @@ export function MessageList({
     return null;
   }, [msgList, getMsgItemNode]);
 
-  const msgItemNode = useMemo(() => {
-    if (msgItem) {
-      return getMsgItemNode({
-        ...msgItem,
-        chatting: true,
-      });
-    }
-    return null;
-  }, [msgItem, getMsgItemNode]);
+  const msgItemNode = useMemo(
+    () =>
+      msgItem ? (
+        <>
+          {getMsgItemNode({
+            ...msgItem,
+            chatting: true,
+          })}
+          <StopBtn />
+        </>
+      ) : null,
+    [msgItem, getMsgItemNode]
+  );
 
   const handleScroll = throttle(() => {
     const computedHeight =
