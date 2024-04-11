@@ -30,6 +30,7 @@
   top: 0;
   right: 0;
   position: absolute;
+  pointer-events: none;
 }
 .badgeContainer .badgeDot {
   z-index: auto;
