@@ -10,7 +10,13 @@ jest.mock("./BrickTable.js", () => ({
   },
 }));
 jest.mock("@next-core/theme", () => ({}));
-
+jest.mock("react-i18next", () => {
+  const originalModule = jest.requireActual("react-i18next") as any;
+  return {
+    ...originalModule,
+    Trans: jest.fn(),
+  };
+});
 describe("eo-table", () => {
   test("basic usage", () => {
     const element = document.createElement("eo-table") as TableComponent;

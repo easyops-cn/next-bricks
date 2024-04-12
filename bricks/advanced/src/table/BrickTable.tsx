@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
-import { Table, type TableProps } from "antd";
+import { Table, type TableProps, ConfigProvider } from "antd";
 import { getCellStyle } from "./utils.js";
 import { pickBy, isNil, toPath, isEqual } from "lodash";
 import classNames from "classnames";
@@ -11,10 +11,20 @@ import { ReactUseMultipleBricks } from "@next-core/react-runtime";
 import type { UseSingleBrickConf } from "@next-core/types";
 import { wrapBrick } from "@next-core/react-element";
 import { StyleProvider, createCache } from "@ant-design/cssinjs";
+import { K, NS, locales } from "./i18n.js";
+import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
+
+import { i18n } from "@next-core/i18n";
+
+import type { Locale } from "antd/es/locale";
+import enUS from "antd/locale/en_US.js";
+import zhCN from "antd/locale/zh_CN.js";
+
 import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
+initializeReactI18n(NS, locales);
 const type = "DraggableBodyRow";
 
 const downMenuIcon: GeneralIconProps = {
@@ -157,6 +167,11 @@ const getCustomComp = (
 };
 
 export function BrickTable(props: BrickTableProps): React.ReactElement {
+  const { t } = useTranslation(NS);
+
+  const locale = (i18n.language.split("-")[0] === "zh"
+    ? zhCN
+    : enUS) as unknown as Locale;
   if (props.error) {
     throw props.error;
   }
@@ -501,8 +516,10 @@ export function BrickTable(props: BrickTableProps): React.ReactElement {
   }, []);
 
   return (
-    <StyleProvider container={props.shadowRoot as ShadowRoot} cache={cahce}>
-      {table}
-    </StyleProvider>
+    <ConfigProvider locale={locale}>
+      <StyleProvider container={props.shadowRoot as ShadowRoot} cache={cahce}>
+        {table}
+      </StyleProvider>
+    </ConfigProvider>
   );
 }
