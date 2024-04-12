@@ -334,6 +334,7 @@
               - if: <% DATA.edge.data?.virtual %>
                 dashed: true
             cells: <% CTX.initialCells %>
+            lineConnector: true
           events:
             activeTarget.change:
               action: context.replace

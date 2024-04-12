@@ -52,7 +52,7 @@ export const cells: Reducer<Cell[], DrawCanvasAction> = (state, action) => {
         if (newCell) {
           matched = true;
           return {
-            ...cell,
+            ...(cell as NodeCell),
             view: { ...(cell as NodeCell).view, x: newCell.x, y: newCell.y },
           };
         }

@@ -488,6 +488,10 @@ describe("eo-display-canvas", () => {
         type: "edge",
         source: "a",
         target: "b",
+        view: {
+          exitPosition: { x: 0.5, y: 1 },
+          entryPosition: { x: 0.5, y: 0 },
+        },
       },
       {
         type: "edge",

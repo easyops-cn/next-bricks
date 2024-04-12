@@ -4,8 +4,10 @@ import { findIndex, isUndefined, omitBy } from "lodash";
 import type {
   Cell,
   ComputedEdgeLineConf,
+  ComputedLineConnecterConf,
   EdgeCell,
   EdgeLineConf,
+  LineConnecterConf,
   LineMarker,
 } from "../../draw-canvas/interfaces";
 import { isEdgeCell } from "../../draw-canvas/processors/asserts";
@@ -22,20 +24,37 @@ export interface UseLineMarkersOptions {
   cells: Cell[];
   defaultEdgeLines: EdgeLineConf[] | undefined;
   markerPrefix: string;
+  lineConnector?: LineConnecterConf | boolean;
 }
 
 export function useLineMarkers({
   cells,
   defaultEdgeLines,
   markerPrefix,
-}: UseLineMarkersOptions): [
-  lineConfMap: WeakMap<EdgeCell, ComputedEdgeLineConf>,
-  markers: LineMarker[],
-] {
+  lineConnector,
+}: UseLineMarkersOptions): {
+  lineConfMap: WeakMap<EdgeCell, ComputedEdgeLineConf>;
+  lineConnectorConf: ComputedLineConnecterConf | null;
+  markers: LineMarker[];
+} {
   return useMemo(() => {
     // Always put the default stroke marker at the first position,
     // since the connecting line will use it.
     const markers: LineMarker[] = [{ strokeColor: DEFAULT_LINE_STROKE_COLOR }];
+
+    let lineConnectorConf: ComputedLineConnecterConf | null = null;
+    if (lineConnector) {
+      lineConnectorConf = {
+        ...getDefaultLineConf(),
+        ...omitBy(lineConnector === true ? {} : lineConnector, isUndefined),
+      } as ComputedLineConnecterConf;
+      const markerIndex = addMarker(
+        { strokeColor: lineConnectorConf.strokeColor },
+        markers
+      );
+      lineConnectorConf.$markerUrl = `url(#${markerPrefix}${markerIndex})`;
+    }
+
     const map = new WeakMap<EdgeCell, ComputedEdgeLineConf>();
     for (const cell of cells) {
       if (isEdgeCell(cell)) {
@@ -47,31 +66,23 @@ export function useLineMarkers({
             )
           ) ?? {};
         const lineConf = {
-          dashed: false,
-          strokeColor: DEFAULT_LINE_STROKE_COLOR,
-          strokeWidth: DEFAULT_LINE_STROKE_WIDTH,
-          interactStrokeWidth: DEFAULT_LINE_INTERACT_STROKE_WIDTH,
-          showStartArrow: DEFAULT_LINE_INTERACT_SHOW_START_ARROW,
-          showEndArrow: DEFAULT_LINE_INTERACT_SHOW_END_ARROW,
-          animate: {
-            useAnimate: false,
-            duration: DEFAULT_LINE_INTERACT_ANIMATE_DURATION,
-          },
+          ...getDefaultLineConf(),
           ...omitBy(computedLineConf, isUndefined),
+          ...omitBy(cell.view, isUndefined),
         } as ComputedEdgeLineConf;
         if (lineConf.parallelGap === undefined) {
           lineConf.parallelGap = lineConf.interactStrokeWidth;
         }
-        const markerEndIndex = addMarker(
+        const markerIndex = addMarker(
           { strokeColor: lineConf.strokeColor },
           markers
         );
-        lineConf.markerArrow = `url(#${markerPrefix}${markerEndIndex})`;
+        lineConf.$markerUrl = `url(#${markerPrefix}${markerIndex})`;
         map.set(cell, lineConf);
       }
     }
-    return [map, markers];
-  }, [cells, defaultEdgeLines, markerPrefix]);
+    return { lineConfMap: map, lineConnectorConf, markers };
+  }, [cells, defaultEdgeLines, lineConnector, markerPrefix]);
 }
 
 function addMarker(marker: LineMarker, markers: LineMarker[]): number {
@@ -80,4 +91,20 @@ function addMarker(marker: LineMarker, markers: LineMarker[]): number {
     markerIndex = markers.push(marker) - 1;
   }
   return markerIndex;
+}
+
+function getDefaultLineConf() {
+  return {
+    type: "auto",
+    dashed: false,
+    strokeColor: DEFAULT_LINE_STROKE_COLOR,
+    strokeWidth: DEFAULT_LINE_STROKE_WIDTH,
+    interactStrokeWidth: DEFAULT_LINE_INTERACT_STROKE_WIDTH,
+    showStartArrow: DEFAULT_LINE_INTERACT_SHOW_START_ARROW,
+    showEndArrow: DEFAULT_LINE_INTERACT_SHOW_END_ARROW,
+    animate: {
+      useAnimate: false,
+      duration: DEFAULT_LINE_INTERACT_ANIMATE_DURATION,
+    },
+  };
 }
