@@ -66,4 +66,32 @@ describe("getPolyLinePoints", () => {
       },
     ]);
   });
+  expect(getPolyLinePoints(nodeA, nodeC, "right", "top", 0.5, 0.5)).toEqual([
+    {
+      x: 290,
+      y: 100,
+    },
+    {
+      x: 420,
+      y: 100,
+    },
+    {
+      x: 420,
+      y: 90,
+    },
+  ]);
+  expect(getPolyLinePoints(nodeA, nodeC, "bottom", "left", 0.5, 0.5)).toEqual([
+    {
+      x: 200,
+      y: 160,
+    },
+    {
+      x: 200,
+      y: 150,
+    },
+    {
+      x: 330,
+      y: 150,
+    },
+  ]);
 });

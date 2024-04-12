@@ -2,13 +2,17 @@ import type { UseSingleBrickConf } from "@next-core/react-runtime";
 import type { SimulationLinkDatum, SimulationNodeDatum } from "d3-force";
 import type { ResizeCellPayload } from "./reducers/interfaces";
 import type {
+  CurveType,
+  Direction,
+  LineType,
+  NodePosition,
   PartialRectTuple,
   PositionTuple,
   TransformLiteral,
 } from "../diagram/interfaces";
-import {
+import type {
   SYMBOL_FOR_SIZE_INITIALIZED,
-  type SYMBOL_FOR_LAYOUT_INITIALIZED,
+  SYMBOL_FOR_LAYOUT_INITIALIZED,
 } from "./constants";
 
 export type Cell = NodeCell | EdgeCell | DecoratorCell;
@@ -42,7 +46,7 @@ export interface BaseEdgeCell extends BaseCell {
   type: "edge";
   source: NodeId;
   target: NodeId;
-  // view: EdgeView;
+  view?: EdgeView;
 }
 
 export type DecoratorType = "text" | "area";
@@ -86,31 +90,48 @@ export interface NodeBrickConf {
   if?: string | boolean | null;
 }
 
-export interface EdgeLineConf
-  extends Omit<Partial<ComputedEdgeLineConf>, "markerArrow"> {
+export interface EdgeView extends BaseEdgeLineConf {
+  // controlPoints?: NodePosition[];
+  exitPosition?: NodePosition;
+  entryPosition?: NodePosition;
+}
+
+export interface EdgeLineConf extends BaseEdgeLineConf {
   if?: string | boolean | null;
 }
+
 export interface LineAnimate {
   useAnimate: boolean;
   duration: number;
 }
 
-export interface ComputedEdgeLineConf {
-  dashed: boolean;
-  strokeWidth: number;
-  strokeColor: string;
-  interactStrokeWidth: number;
-  parallelGap: number;
-  markerEnd: string;
-  markerArrow: string;
-  showStartArrow: boolean;
-  showEndArrow: boolean;
-  animate: LineAnimate;
+export interface ComputedEdgeLineConf extends Required<BaseEdgeLineConf> {
+  $markerUrl: string;
+}
+
+export interface BaseEdgeLineConf {
+  type?: LineType;
+  curveType?: CurveType;
+  dashed?: boolean;
+  strokeWidth?: number;
+  strokeColor?: string;
+  interactStrokeWidth?: number;
+  parallelGap?: number;
+  showStartArrow?: boolean;
+  showEndArrow?: boolean;
+  animate?: LineAnimate;
 }
 
 export interface LineMarker {
   strokeColor: string;
 }
+
+export type LineConnecterConf = Pick<
+  BaseEdgeLineConf,
+  "type" | "strokeWidth" | "strokeColor" | "showStartArrow" | "showEndArrow"
+>;
+
+export type ComputedLineConnecterConf = ComputedEdgeLineConf;
 
 export type ActiveTarget =
   | ActiveTargetOfNode
@@ -154,6 +175,13 @@ export interface ConnectLineState {
   source: NodeCell;
   from: PositionTuple;
   offset: PositionTuple;
+}
+
+export interface SmartConnectLineState {
+  source: NodeCell;
+  from: PositionTuple;
+  offset: PositionTuple;
+  exitPosition: NodeConnectPoint;
 }
 
 export interface Deferred<T> {
@@ -227,3 +255,7 @@ export interface ForceNode extends SimulationNodeDatum {
 }
 
 export type ForceLink = SimulationLinkDatum<ForceNode>;
+
+export interface NodeConnectPoint extends NodePosition {
+  d: Direction[];
+}

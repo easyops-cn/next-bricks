@@ -1025,6 +1025,7 @@ describe("eo-draw-canvas", () => {
       type: "node",
       id: `node-${i}`,
     }));
+    element.lineConnector = true;
 
     act(() => {
       document.body.appendChild(element);
