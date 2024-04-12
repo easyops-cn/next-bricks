@@ -158,7 +158,7 @@ export function LoadingPanelComponent(
   return (
     <div className="wrapper">
       <div className="titleWrapper">
-        <div className="title">{customTitle ?? "Tarsier"}</div>
+        <div className="title">{customTitle ?? "EASYOPS"}</div>
         <div className="description">Loading...</div>
       </div>
       <div className="progress">{`${progressValue}%`}</div>
