@@ -373,8 +373,15 @@ export function SelectComponent(props: SelectProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setOptions(formatOptions(props.options, fields));
-  }, [props.options, fields]);
+    setOptions(
+      formatOptions(
+        (props.options ?? []).concat(
+          mode === "tags" && props.value ? props.value : []
+        ),
+        fields
+      )
+    );
+  }, [props.options, fields, props.value, mode]);
 
   const handleSelectorClick = useCallback(() => {
     if (!value) {
@@ -506,12 +513,14 @@ export function SelectComponent(props: SelectProps) {
   }, [inputValue, mode, options, selectedOptions]);
 
   useEffect(() => {
-    setValue(props.value);
+    const computedValue =
+      multiple && !Array.isArray(props.value) ? [props.value] : props.value;
+    setValue(computedValue);
     // 设置回填option
     setSelectedOptions(
       computedOptions.filter((item) =>
-        Array.isArray(props.value)
-          ? props.value.includes(item.value)
+        multiple
+          ? computedValue.includes(item.value)
           : item.value === props.value
       )
     );

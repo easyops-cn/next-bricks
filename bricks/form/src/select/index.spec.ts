@@ -246,6 +246,28 @@ describe("eo-select", () => {
     expect(element.shadowRoot?.childNodes.length).toBe(0);
   });
 
+  test("mode is tags and had value,should render options", () => {
+    const element = document.createElement("eo-select") as Select;
+    element.mode = "tags";
+    element.value = ["a", "b"];
+    act(() => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot).toBeTruthy();
+    expect(element.shadowRoot?.childNodes.length).toBe(2);
+
+    expect(
+      element.shadowRoot?.querySelectorAll(
+        ".select-item.select-option-selected"
+      ).length
+    ).toBe(2);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
+
   test("group", () => {
     const element = document.createElement("eo-select") as Select;
     element.options = [
