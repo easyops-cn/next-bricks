@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.4...@next-bricks/form@1.9.5) (2024-04-15)
+
+
+### Bug Fixes
+
+* tag mode value is undefined error ([18b8c4f](https://github.com/easyops-cn/next-bricks/commit/18b8c4f7ea8e0872723b4b825fd82235484205dc))
+
+
+
+
+
 ## [1.9.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.3...@next-bricks/form@1.9.4) (2024-04-15)
 
 
