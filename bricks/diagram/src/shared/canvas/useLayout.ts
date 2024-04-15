@@ -118,7 +118,9 @@ export function useLayout({
       }));
     }
 
-    const alignOrigin = normalizeAlignOrigin(layoutOptions?.alignOrigin);
+    const alignOrigin = normalizeAlignOrigin(
+      (layoutOptions as LayoutOptionsForce | LayoutOptionsDagre)?.alignOrigin
+    );
 
     const newCells: Cell[] = cells.map((cell) => {
       if (

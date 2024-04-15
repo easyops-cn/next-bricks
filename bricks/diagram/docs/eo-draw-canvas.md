@@ -310,6 +310,8 @@
             fadeUnrelatedCells: true
             allowEdgeToArea: true
             dragBehavior: lasso
+            # layoutOptions:
+            #   snapToGrid: true
             # Initial nodes only
             defaultNodeSize: [60, 60]
             defaultNodeBricks:

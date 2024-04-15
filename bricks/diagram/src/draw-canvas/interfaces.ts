@@ -169,6 +169,7 @@ export interface BasicDecoratorProps {
   readOnly?: boolean;
   layout?: LayoutType;
   view: DecoratorView;
+  layoutOptions?: LayoutOptions;
   activeTarget: ActiveTarget | null | undefined;
   cells: Cell[];
   onCellResizing?(info: ResizeCellPayload): void;
@@ -221,7 +222,14 @@ export interface DecoratorTextChangeDetail {
 
 export type LayoutType = "manual" | "force" | "dagre" | undefined;
 
-export type LayoutOptions = LayoutOptionsDagre | LayoutOptionsForce;
+export type LayoutOptions =
+  | LayoutOptionsManual
+  | LayoutOptionsDagre
+  | LayoutOptionsForce;
+
+export interface LayoutOptionsManual {
+  snapToGrid?: boolean | snapToGridOptions;
+}
 
 export interface LayoutOptionsDagre extends BaseLayoutOptions {
   rankdir?: "TB" | "BT" | "LR" | "RL";
@@ -243,6 +251,7 @@ export interface ForceCollideOptions {
 
 export interface BaseLayoutOptions {
   nodePadding?: PartialRectTuple;
+  snapToGrid?: boolean | snapToGridOptions;
 
   /**
    * 根据节点什么位置进行对齐，支持关键字、百分比和比例值。
@@ -263,6 +272,11 @@ export interface BaseLayoutOptions {
    * ["right", "bottom"]
    */
   alignOrigin?: AlignOrigin;
+}
+
+export interface snapToGridOptions {
+  /** @default 10 */
+  size?: number;
 }
 
 export type AlignOrigin = [x: string | number, y: string | number];

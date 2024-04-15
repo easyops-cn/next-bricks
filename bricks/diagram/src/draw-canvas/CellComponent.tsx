@@ -8,6 +8,7 @@ import type {
   DecoratorTextChangeDetail,
   DecoratorView,
   EdgeCell,
+  LayoutOptions,
   LayoutType,
   NodeBrickConf,
   NodeCell,
@@ -32,6 +33,7 @@ import { computeContainerRect } from "./processors/computeContainerRect";
 import { get } from "lodash";
 export interface CellComponentProps {
   layout: LayoutType;
+  layoutOptions?: LayoutOptions;
   cell: Cell;
   cells: Cell[];
   degraded: boolean;
@@ -59,6 +61,7 @@ export interface CellComponentProps {
 
 export function CellComponent({
   layout,
+  layoutOptions,
   cell,
   cells,
   degraded,
@@ -120,6 +123,7 @@ export function CellComponent({
       } else {
         handleMouseDown(event, {
           layout,
+          layoutOptions,
           action: "move",
           cell,
           scale: transform.k,
@@ -137,6 +141,7 @@ export function CellComponent({
     };
   }, [
     layout,
+    layoutOptions,
     cell,
     activeTarget,
     cells,
@@ -220,6 +225,7 @@ export function CellComponent({
           transform={transform}
           readOnly={readOnly}
           layout={layout}
+          layoutOptions={layoutOptions}
           activeTarget={activeTarget}
           cells={cells}
           onCellResizing={onCellResizing}

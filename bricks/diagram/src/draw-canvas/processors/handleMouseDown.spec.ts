@@ -166,6 +166,42 @@ describe("handleMouseDown", () => {
     document.body.replaceChildren();
   });
 
+  test("move node and snap to grid", () => {
+    const mousedown = new MouseEvent("mousedown", { clientX: 10, clientY: 20 });
+    handleMouseDown(mousedown, {
+      action: "move",
+      cell: { type: "node", id: "b", view: { x: 4, y: 6 } } as any,
+      layoutOptions: {
+        snapToGrid: true,
+      },
+      ...methods,
+    });
+
+    expect(onSwitchActiveTarget).toHaveBeenCalledWith({
+      type: "node",
+      id: "b",
+    });
+
+    fireEvent.mouseMove(document, { clientX: 25, clientY: 50 });
+    expect(onCellsMoving).toBeCalledWith([
+      {
+        type: "node",
+        id: "b",
+        x: 20,
+        y: 40,
+      },
+    ]);
+
+    fireEvent.mouseUp(document, { clientX: 26, clientY: 51 });
+    expect(onCellsMoved).toBeCalledWith([
+      { type: "node", id: "b", x: 20, y: 40 },
+    ]);
+
+    expect(onSwitchActiveTarget).toHaveBeenCalledTimes(1);
+
+    document.body.replaceChildren();
+  });
+
   test("move multi nodes", () => {
     const mousedown = new MouseEvent("mousedown", { clientX: 10, clientY: 20 });
     handleMouseDown(mousedown, {
