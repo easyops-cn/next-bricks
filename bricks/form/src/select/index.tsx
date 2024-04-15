@@ -514,7 +514,9 @@ export function SelectComponent(props: SelectProps) {
 
   useEffect(() => {
     const computedValue =
-      multiple && !Array.isArray(props.value) ? [props.value] : props.value;
+      multiple && props.value && !Array.isArray(props.value)
+        ? [props.value]
+        : props.value;
     setValue(computedValue);
     // 设置回填option
     setSelectedOptions(
