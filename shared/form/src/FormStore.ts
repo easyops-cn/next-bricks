@@ -129,12 +129,13 @@ export class FormStore extends PubSub {
 
   resetFields(name?: string) {
     if (name) {
-      this.removeField(name);
+      delete this.#formData[name];
       this.publish(`${name}.reset.fields`, null);
     } else {
-      this.#fields.clear();
+      this.#formData = {};
       this.publish("reset.fields", null);
     }
+    this.resetValidateState();
   }
 
   getFieldsValue(name?: string) {
@@ -197,9 +198,7 @@ export class FormStore extends PubSub {
         required &&
         (typeof value === "object"
           ? isEmpty(value)
-          : typeof value === "number"
-            ? false
-            : !value)
+          : value === undefined || value === null)
       ) {
         return messageBody(message?.required || `${label}为必填项`);
       }

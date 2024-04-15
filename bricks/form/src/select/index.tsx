@@ -373,8 +373,15 @@ export function SelectComponent(props: SelectProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setOptions(formatOptions(props.options, fields));
-  }, [props.options, fields]);
+    setOptions(
+      formatOptions(
+        (props.options ?? []).concat(
+          mode === "tags" && props.value ? props.value : []
+        ),
+        fields
+      )
+    );
+  }, [props.options, fields, props.value, mode]);
 
   const handleSelectorClick = useCallback(() => {
     if (!value) {

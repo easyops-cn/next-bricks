@@ -221,6 +221,10 @@ describe("FormStore", () => {
       },
     });
 
+    const validateResult = store.validateField("validator-item");
+
+    expect(validateResult).toEqual({ message: "", type: "normal" });
+
     expect(store.getFieldsValue("a")).toBe(123);
     expect(store.getFieldsValue()).toEqual({
       a: 123,
@@ -242,5 +246,40 @@ describe("FormStore", () => {
     store.resetFields();
 
     expect(store.getAllValues()).toEqual({});
+  });
+
+  it("event should work", () => {
+    const store = new FormStore();
+
+    store.setField("a", {
+      name: "a",
+      label: "字段A",
+      validate: {
+        required: true,
+      },
+    });
+
+    const mockInitValueEvent = jest.fn();
+    const mockResetField = jest.fn();
+    const mockResetFields = jest.fn();
+    const mockResetValidate = jest.fn();
+    store.subscribe("a.init.value", mockInitValueEvent);
+    store.subscribe("reset.fields", mockResetFields);
+    store.subscribe("a.reset.fields", mockResetField);
+    store.subscribe("reset.validate", mockResetValidate);
+
+    store.setInitValue({
+      a: 1,
+    });
+
+    expect(mockInitValueEvent).toHaveBeenCalledWith("a.init.value", 1);
+
+    store.resetFields("a");
+    expect(mockResetField).toHaveBeenCalledWith("a.reset.fields", null);
+    expect(mockResetValidate).toHaveBeenCalledWith("reset.validate", null);
+
+    store.resetFields();
+    expect(mockResetFields).toHaveBeenCalledWith("reset.fields", null);
+    expect(mockResetValidate).toHaveBeenCalledTimes(2);
   });
 });

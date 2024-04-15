@@ -23,10 +23,7 @@ describe("formatOptions", () => {
         { label: "a", value: "a" },
         { label: "a", value: "a" },
       ])
-    ).toEqual([
-      { label: "a", value: "a" },
-      { label: "a", value: "a" },
-    ]);
+    ).toEqual([{ label: "a", value: "a" }]);
 
     expect(
       formatOptions(
