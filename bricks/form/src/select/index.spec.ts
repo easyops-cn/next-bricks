@@ -246,10 +246,13 @@ describe("eo-select", () => {
     expect(element.shadowRoot?.childNodes.length).toBe(0);
   });
 
-  test("mode is tags and had value,should render options", () => {
+  test("mode is tags and had value,should render options", async () => {
     const element = document.createElement("eo-select") as Select;
     element.mode = "tags";
     element.value = ["a", "b"];
+    element.tokenSeparators = [" ", ","];
+    const mockOptionsChange = jest.fn();
+    element.addEventListener("options.change", mockOptionsChange);
     act(() => {
       document.body.appendChild(element);
     });
@@ -261,6 +264,29 @@ describe("eo-select", () => {
         ".select-item.select-option-selected"
       ).length
     ).toBe(2);
+
+    await act(async () => {
+      fireEvent.change(element.shadowRoot!.querySelector("input")!, {
+        target: { value: "hello" },
+      });
+
+      await fireEvent.keyDown(element.shadowRoot!.querySelector("input")!, {
+        key: "Enter",
+      });
+    });
+
+    expect(mockOptionsChange).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        detail: {
+          options: [
+            { key: "hello", label: "hello", value: "hello" },
+            { label: "a", value: "a" },
+            { label: "b", value: "b" },
+          ],
+          name: undefined,
+        },
+      })
+    );
 
     act(() => {
       document.body.removeChild(element);
