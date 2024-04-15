@@ -179,7 +179,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
   @property({ type: Number })
   accessor degradedThreshold: number | undefined;
 
-  // Set `attribute` to `false` event if it accepts string value.
+  // Set `attribute` to `false` even if it accepts string value.
   // Because when passing like "<% DATA.node.data.name %>", it will be
   // evaluated as object temporarily.
   /**
@@ -939,6 +939,7 @@ function LegacyEoDrawCanvasComponent(
               <CellComponent
                 key={`${cell.type}:${cell.type === "edge" ? `${cell.source}~${cell.target}` : cell.id}`}
                 layout={layout}
+                layoutOptions={layoutOptions}
                 cell={cell}
                 cells={cells}
                 degraded={degraded}

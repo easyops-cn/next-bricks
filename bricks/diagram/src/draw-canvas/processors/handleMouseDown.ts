@@ -1,5 +1,11 @@
 import type { PositionTuple } from "../../diagram/interfaces";
-import type { ActiveTarget, Cell, LayoutType } from "../interfaces";
+import { DEFAULT_SNAP_GRID_SIZE } from "../constants";
+import type {
+  ActiveTarget,
+  Cell,
+  LayoutOptions,
+  LayoutType,
+} from "../interfaces";
 import type {
   MoveCellPayload,
   ResizeCellPayload,
@@ -14,6 +20,7 @@ export function handleMouseDown(
     cell,
     scale,
     layout,
+    layoutOptions,
     onCellMoving,
     onCellMoved,
     onCellResizing,
@@ -24,6 +31,7 @@ export function handleMouseDown(
     cell: Cell;
     scale: number;
     layout?: LayoutType;
+    layoutOptions?: LayoutOptions;
     onCellMoving?(info: MoveCellPayload): void;
     onCellMoved?(info: MoveCellPayload): void;
     onCellResizing?(info: ResizeCellPayload): void;
@@ -42,11 +50,19 @@ export function handleMouseDown(
     return;
   }
 
+  const snapToGrid = layoutOptions?.snapToGrid
+    ? layoutOptions.snapToGrid === true
+      ? {}
+      : layoutOptions.snapToGrid
+    : null;
+  const snapToGridSize = snapToGrid?.size ?? DEFAULT_SNAP_GRID_SIZE;
+
   const from: PositionTuple = [event.clientX, event.clientY];
-  const original =
+  const original: PositionTuple =
     action === "move"
       ? [cell.view.x, cell.view.y]
       : [cell.view.width, cell.view.height];
+  let previous: PositionTuple = [...original];
 
   function getMovement(e: MouseEvent): PositionTuple {
     return [(e.clientX - from[0]) / scale, (e.clientY - from[1]) / scale];
@@ -57,25 +73,45 @@ export function handleMouseDown(
   const handleMove = (e: MouseEvent, finished?: boolean) => {
     // Respect the scale
     const movement = getMovement(e);
-    if (!moved) {
-      moved = movement[0] ** 2 + movement[1] ** 2 >= 9;
+    let newValue: PositionTuple;
+
+    // Use alt key (or option key ⌥ on Mac) to toggle snap
+    if (!snapToGrid === !e.altKey) {
+      // No snap
+      newValue = [original[0] + movement[0], original[1] + movement[1]];
+      if (!moved) {
+        moved = movement[0] ** 2 + movement[1] ** 2 >= 9;
+      }
+    } else {
+      // Snap
+      newValue = [
+        Math.round((original[0] + movement[0]) / snapToGridSize) *
+          snapToGridSize,
+        Math.round((original[1] + movement[1]) / snapToGridSize) *
+          snapToGridSize,
+      ];
+      const changed =
+        newValue[0] !== previous[0] || newValue[1] !== previous[1];
+      if (changed) {
+        previous = newValue;
+        moved = true;
+      }
     }
-    // const [x, y] = getNewPosition(movement);
-    // adjustCellPosition(x, y);
+
     if (moved) {
       if (action === "move") {
         (finished ? onCellMoved : onCellMoving)?.({
           type: cell.type,
           id: cell.id,
-          x: original[0] + movement[0],
-          y: original[1] + movement[1],
+          x: newValue[0],
+          y: newValue[1],
         });
       } else {
         (finished ? onCellResized : onCellResizing)?.({
           type: cell.type,
           id: cell.id,
-          width: original[0] + movement[0],
-          height: original[1] + movement[1],
+          width: newValue[0],
+          height: newValue[1],
         });
       }
     }
