@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.2](https://github.com/easyops-cn/next-bricks/compare/@next-shared/form@0.6.1...@next-shared/form@0.6.2) (2024-04-15)
+
+
+### Bug Fixes
+
+* formStore resetFields and select tag mode ([81dd947](https://github.com/easyops-cn/next-bricks/commit/81dd9471001e2ad30b324c4014006b715d8dda9e))
+
+
+
+
+
 ## [0.6.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/form@0.6.0...@next-shared/form@0.6.1) (2024-03-12)
 
 **Note:** Version bump only for package @next-shared/form
