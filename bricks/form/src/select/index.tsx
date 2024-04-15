@@ -513,12 +513,14 @@ export function SelectComponent(props: SelectProps) {
   }, [inputValue, mode, options, selectedOptions]);
 
   useEffect(() => {
-    setValue(props.value);
+    const computedValue =
+      multiple && !Array.isArray(props.value) ? [props.value] : props.value;
+    setValue(computedValue);
     // 设置回填option
     setSelectedOptions(
       computedOptions.filter((item) =>
-        Array.isArray(props.value)
-          ? props.value.includes(item.value)
+        multiple
+          ? computedValue.includes(item.value)
           : item.value === props.value
       )
     );
