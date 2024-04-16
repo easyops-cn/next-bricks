@@ -93,7 +93,8 @@
     "eo-info-card-item",
     "eo-humanize-time",
     "eo-statistics-card",
-    "eo-loading-step"
+    "eo-loading-step",
+    "eo-current-time"
   ],
   "advanced": [
     "eo-cascader",

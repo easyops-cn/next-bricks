@@ -1,0 +1,19 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.front-icon {
+  display: flex;
+  height: 100%;
+  margin-right: 10px;
+}
