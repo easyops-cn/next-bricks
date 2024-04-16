@@ -11,6 +11,7 @@ import loadStyleText from "./components/loading.shadow.css";
 import markdownStyleText from "./components/MessageItem/markdown.shadow.css";
 import quickAnswerListStyleText from "./components/QuickAnswerList/quickAnswerList.shadow.css";
 import "@next-core/theme";
+import "./host-context.css";
 
 const { defineElement, property } = createDecorators();
 

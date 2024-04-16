@@ -1,7 +1,7 @@
 .quick-answer-wrapper {
   margin-top: 20px;
   border-radius: 6px;
-  border: 1px solid #e8e8e8;
+  border: 1px solid var(--color-border-divider-line);
   padding: 16px 24px;
   .tip {
     font-size: 18px;
@@ -26,7 +26,7 @@
       box-sizing: border-box;
 
       &:hover {
-        box-shadow: 1px 2px 9px #ddd;
+        box-shadow: var(--quick-answer-card-item-hover);
       }
 
       .left {
@@ -40,10 +40,15 @@
       }
 
       .content {
+        flex: 1;
+        min-width: 0;
         .title {
           font-size: 16px;
           font-weight: bold;
           color: var(--color-normal-text);
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
         }
 
         .description {
@@ -68,7 +73,7 @@
       &::after,
       &::before {
         content: "- - - - -";
-        color: #d9d9d9;
+        color: var(--color-text-divider-line);
         position: absolute;
       }
 
