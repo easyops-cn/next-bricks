@@ -1,0 +1,34 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.scrollContainer {
+  overflow: hidden;
+}
+
+.scrollText {
+  white-space: nowrap;
+  overflow: hidden;
+  animation: scroll 3000ms linear infinite;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(100%);
+    /* 文字出发的位置 */
+  }
+
+  50% {
+    transform: translateX(0);
+    /* 文字正常的位置 */
+  }
+
+  100% {
+    transform: translateX(-100%);
+    /* 文字终点的位置 */
+  }
+}
