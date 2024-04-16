@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.40.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.39.0...@next-shared/common-bricks@0.40.0) (2024-04-16)
+
+
+### Features
+
+* feat current time bricks ([5181177](https://github.com/easyops-cn/next-bricks/commit/518117702e7284fdc27ca8d78daea82e299dc53b))
+
+
+
+
+
 # [0.39.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.38.0...@next-shared/common-bricks@0.39.0) (2024-03-29)
 
 
