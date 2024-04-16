@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.5...@next-bricks/form@1.9.6) (2024-04-16)
+
+
+### Bug Fixes
+
+* **select:** fix default value null was error ([0fa18a4](https://github.com/easyops-cn/next-bricks/commit/0fa18a4b8b78f1e5c75627a0cab11bded071d511))
+
+
+
+
+
 ## [1.9.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.4...@next-bricks/form@1.9.5) (2024-04-15)
 
 
