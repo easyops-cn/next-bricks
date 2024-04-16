@@ -2388,10 +2388,10 @@
     "@babel/preset-typescript" "^7.24.1"
     "@babel/runtime" "^7.24.4"
 
-"@next-core/brick-container@^3.14.8":
-  version "3.14.8"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.14.8.tgz#4180c0af85237a4a2e18dbb4516bb4eb164efaa1"
-  integrity sha512-ia166UhjFGNAfwKRcgDyvZPNkqie90kfiIidszqUMbUsgDEzOQGxakajV125S3O6FI3dd40+LoKLJtO2DTObEQ==
+"@next-core/brick-container@^3.14.9":
+  version "3.14.9"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.14.9.tgz#bfc77a42e3cf20d3058e0f833ac4b4a2afde463e"
+  integrity sha512-okSIASfcD1vfoRBnxHov5i50MXHRfm9sOMq8rHw1l+CxW+RwlWrchkhjbXe4YJzBzewZPQvA8RjgJfwfREcYxA==
   dependencies:
     "@next-core/serve-helpers" "^1.2.2"
     body-parser "^1.20.1"
@@ -2557,7 +2557,7 @@
     "@next-core/types" "^1.9.0"
     lodash "^4.17.21"
 
-"@next-core/loader@^1.5.5", "@next-core/loader@^1.5.6":
+"@next-core/loader@^1.5.6":
   version "1.5.6"
   resolved "https://registry.yarnpkg.com/@next-core/loader/-/loader-1.5.6.tgz#a968a6fce6097a275b836ebf48b6b37398e1cd85"
   integrity sha512-3Hx04cUt5zN51qGZXqJqj6TLHNMm4/yjiuUTw7N/qYq5lBkoni+kdLGu1lYqMCBDwq43yFZcRsDvrQ8qTXBuPQ==
