@@ -205,7 +205,6 @@
       .message-box {
         position: relative;
         flex: 1;
-        /* margin-bottom: 22px; */
         .message-content {
           display: flex;
           justify-content: start;
@@ -214,7 +213,7 @@
             position: relative;
             padding: 14px;
             border-radius: 6px;
-            background: #f1f3f4;
+            background: var(--message-box-bg);
 
             .text-item {
               white-space: pre-wrap;
@@ -338,8 +337,8 @@
         cursor: pointer;
         padding: 6px;
         border-radius: 3px;
-        &:hover {
-          background: #ddd;
+        &:not(.disabled):hover {
+          background: var(--search-input-icon-hover);
         }
       }
 
@@ -370,7 +369,7 @@
         padding: 6px;
         border-radius: 3px;
         &:hover {
-          background: #ddd;
+          background: var(--search-input-icon-hover);
         }
       }
     }

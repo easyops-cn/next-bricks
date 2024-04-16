@@ -102,7 +102,8 @@ export function QuickAnswerList() {
   return quickAnswerConfig?.list.length && msgList.length === 0 ? (
     <div className="quick-answer-wrapper">
       <div className="tip">
-        {quickAnswerConfig.tip ?? "你好，我是AI机器人，我能为你提供以下服务:"}
+        {quickAnswerConfig.tip ??
+          "你好，我是运维数智人—Murphy，我能为你提供以下服务:"}
       </div>
       <div
         className="quick-answer-list"
