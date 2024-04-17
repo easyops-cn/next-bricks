@@ -11,4 +11,5 @@ properties:
   animationDuration: 3000
   fontColor: var(--antd-text-color)
   fontSize: 20px
+  containerWidth: 100%
 ```

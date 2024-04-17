@@ -21,6 +21,13 @@ class EoCarouselText extends ReactNextElement {
   accessor text: string = "";
 
   /**
+   * 容器宽度
+   * @default "100%"
+   */
+  @property()
+  accessor containerWidth: CSSProperties["width"] = "100%";
+
+  /**
    * 字体大小
    * @default "14px"
    */
@@ -48,6 +55,7 @@ class EoCarouselText extends ReactNextElement {
         animationDuration={this.animationDuration}
         fontColor={this.fontColor}
         fontSize={this.fontSize}
+        containerWidth={this.containerWidth}
       />
     );
   }
@@ -58,12 +66,14 @@ export interface EoCarouselTextProps {
   animationDuration: number;
   fontColor: CSSProperties["color"];
   fontSize: CSSProperties["fontSize"];
+  containerWidth: CSSProperties["width"];
 }
 
 export function EoCarouselTextComponent(props: EoCarouselTextProps) {
-  const { text, animationDuration, fontColor, fontSize } = props;
+  const { text, animationDuration, fontColor, fontSize, containerWidth } =
+    props;
   return (
-    <div className="scrollContainer">
+    <div className="scrollContainer" style={{ width: containerWidth }}>
       <div
         className="scrollText"
         style={{
