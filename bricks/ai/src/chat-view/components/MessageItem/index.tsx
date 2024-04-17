@@ -10,31 +10,28 @@ import { Time } from "./Time.js";
 import { ContentTip } from "./ContentTip.js";
 
 export function MessageNode(props: MessageItem): React.ReactNode {
-  const { content, ctime, role } = props;
+  const { content, created, role } = props;
   const isUser = useMemo(() => role === "user", [role]);
 
-  const getContentNode = useCallback(
-    (content: MessageItemContent, key: number) => {
-      const { type, text, examplePrompts } = content;
-      switch (type) {
-        case "guide":
-          return <GuideItem key={key} text={text} prompts={examplePrompts} />;
-        case "text":
-          return <TextItem key={key} text={text} />;
-        case "table":
-          return <TableItem key={key} text={text} />;
-        case "load":
-          return <ChatItemLoading loading />;
-        case "markdown":
-        default:
-          return <MarkdownItem key={key} text={text} />;
-      }
-    },
-    []
-  );
+  const getContentNode = useCallback((content: MessageItemContent) => {
+    const { type, text, examplePrompts } = content;
+    switch (type) {
+      case "guide":
+        return <GuideItem text={text} prompts={examplePrompts} />;
+      case "text":
+        return <TextItem text={text} />;
+      case "table":
+        return <TableItem text={text} />;
+      case "load":
+        return <ChatItemLoading loading />;
+      case "markdown":
+      default:
+        return <MarkdownItem text={text} />;
+    }
+  }, []);
 
   const messageNode = useMemo(
-    () => content.map(getContentNode),
+    () => getContentNode(content),
     [content, getContentNode]
   );
 
@@ -42,7 +39,7 @@ export function MessageNode(props: MessageItem): React.ReactNode {
     <div className="message-box">
       <div className="message-top">
         {isUser ? "我" : "AI助手"}
-        <Time time={ctime} />
+        <Time time={created} />
       </div>
       <div className="message-content">
         <div className="content">

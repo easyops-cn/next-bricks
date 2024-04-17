@@ -25,16 +25,14 @@ export function Toolbar({
   chatting,
 }: MessageItem): React.ReactNode {
   const isAssistant = useMemo(
-    () =>
-      role === "assistant" && !content?.find((item) => item.type === "load"),
-    [role, content]
+    () => role === "assistant" && content.type !== "load",
+    [role, content.type]
   );
   const isChattingItem = useMemo(() => chatting, [chatting]);
   const { showLike } = useChatViewContext();
 
   const handleCopy = () => {
-    const str = content.map((item) => item.text).toString();
-    copyToClipboard(str)
+    copyToClipboard(content.text)
       .then(() => showNotification({ type: "success", message: "复制成功" }))
       .catch(() => showNotification({ type: "error", message: "复制失败" }));
   };

@@ -8,10 +8,10 @@ import React, {
 import { MessageItem, useChatViewContext } from "../ChatViewContext";
 import { Avatar } from "./MessageItem/Avatar.js";
 import classNames from "classnames";
-import { MessageListLoading } from "./Loading.js";
+import { CommonLoading, MessageListLoading } from "./Loading.js";
 import { MessageNode } from "./MessageItem/index.js";
 import { QuickAnswerList } from "./QuickAnswerList/index.js";
-import { throttle } from "lodash";
+import { debounce } from "lodash";
 import { StopBtn } from "./StopBtn.js";
 
 interface MessageListProps {
@@ -19,6 +19,7 @@ interface MessageListProps {
 }
 
 const DEFAULT_OFFSET_HEIGHT = 80;
+const CACHE_HEIGHT = 200;
 
 export function MessageList({
   showAvatar = true,
@@ -26,17 +27,25 @@ export function MessageList({
   const messageListRef = useRef<HTMLDivElement>(null);
   const messgetListBoxRef = useRef<HTMLDivElement>(null);
   const [preHeight, setPreHeight] = useState<number>(0);
-  const flag = useRef<boolean>(false);
   const isCustomScroll = useRef<boolean>(false);
 
-  const { msgList, msgItem, loading, chatting } = useChatViewContext();
+  const {
+    msgLoading,
+    msgEnd,
+    msgList,
+    msgItem,
+    loading,
+    activeSessionId,
+    chatting,
+    checkSession,
+  } = useChatViewContext();
 
   const getMsgItemNode = useCallback(
     (item: MessageItem, index: number = 0) => {
       return (
         <div
           className={classNames("message-item", { user: item.role === "user" })}
-          key={item.ctime ?? index}
+          key={item.key ?? index}
         >
           {showAvatar && <Avatar role={item.role} />}
           <MessageNode {...item} />
@@ -67,49 +76,45 @@ export function MessageList({
     [msgItem, getMsgItemNode]
   );
 
-  const handleScroll = throttle(() => {
-    const computedHeight =
-      messageListRef.current!.scrollHeight -
-      messageListRef.current!.clientHeight;
-    const isBottom =
-      computedHeight === messageListRef.current!.scrollTop ||
-      // 缓冲20高度
-      computedHeight - 20 < messageListRef.current!.scrollTop;
-    if (isCustomScroll.current) {
-      if (isBottom) {
-        flag.current = false;
+  const handleScroll = useCallback(() => {
+    const messageList = messageListRef.current;
+    if (messageList) {
+      const { scrollHeight, clientHeight, scrollTop } = messageList;
+      // 滚动到底部所需的高度 = 总高度 - 视图高度
+      const isBottom = scrollHeight - clientHeight === scrollTop;
+      if (!isBottom) {
+        isCustomScroll.current = true;
+      } else if (isBottom && isCustomScroll.current) {
+        // 自动吸低
         isCustomScroll.current = false;
       }
-      return;
-    }
-    if (!isBottom) {
-      // fixed：有时候在数据返回时页面会跳一下，导致计算异常，这里做临时兼容处理
-      if (!flag.current) {
-        flag.current = true;
-      } else {
-        isCustomScroll.current = true;
+      if (!msgLoading && !msgEnd && scrollTop < CACHE_HEIGHT) {
+        checkSession();
       }
     }
-  }, 200);
+  }, [msgEnd, msgLoading, checkSession]);
+
+  const debounceHandleScroll = debounce(handleScroll, 200);
 
   useEffect(() => {
-    if (chatting) {
+    if (chatting || activeSessionId) {
+      // 聊天或者会话变更时，重置滚动状态
       isCustomScroll.current = false;
-      flag.current = false;
     }
-  }, [chatting]);
+  }, [chatting, activeSessionId]);
 
   useEffect(() => {
     const element = messgetListBoxRef.current;
     if (element) {
       const observer = new ResizeObserver((entries) => {
         let newHeight: number = 0;
+        // 如果存在用户行为，不触发自动滚动行为
         if (isCustomScroll.current) return;
         for (const entry of entries) {
           newHeight = entry.contentRect.height - DEFAULT_OFFSET_HEIGHT;
         }
-        if (newHeight === preHeight && !loading && !chatting) {
-          // msgItem置为空，合并到msgList, 高度不变，并且聊天结束
+        if (!loading && !chatting) {
+          // 高度变化，代表消息新增，自动滚动到最下
           messageListRef.current!.scroll({
             top: Number.MAX_SAFE_INTEGER,
           });
@@ -127,8 +132,16 @@ export function MessageList({
   }, [chatting, loading, preHeight]);
 
   return (
-    <div className="message-list" ref={messageListRef} onScroll={handleScroll}>
+    <div
+      className="message-list"
+      ref={messageListRef}
+      onScroll={debounceHandleScroll}
+    >
       <div className="message-list-box" ref={messgetListBoxRef}>
+        {msgEnd && msgList.length ? (
+          <div className="message-start-tip">会话开始</div>
+        ) : null}
+        {msgLoading && <CommonLoading />}
         <QuickAnswerList />
         {msgListNode}
         {msgItemNode}

@@ -16,7 +16,7 @@ export function ContentTip({ role, content }: MessageItem): React.ReactNode {
   const { chatting, setSearchStr } = useChatViewContext();
 
   const handleCopy = () => {
-    setSearchStr(content.map((item) => item.text).toString());
+    setSearchStr(content.text);
   };
 
   return isUser && !chatting ? (

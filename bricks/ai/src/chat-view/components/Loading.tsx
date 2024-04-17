@@ -1,5 +1,11 @@
 import React from "react";
+import type {
+  GeneralIcon,
+  GeneralIconProps,
+} from "@next-bricks/icons/general-icon";
+import { wrapBrick } from "@next-core/react-element";
 
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 interface LoadingProps {
   loading?: boolean;
 }
@@ -19,4 +25,12 @@ export function ChatItemLoading({ loading }: LoadingProps) {
       </div>
     </div>
   ) : null;
+}
+
+export function CommonLoading() {
+  return (
+    <div className="common-loading-wrapper">
+      <WrappedIcon icon="loading" lib="antd" spinning />
+    </div>
+  );
 }

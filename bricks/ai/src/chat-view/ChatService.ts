@@ -1,4 +1,5 @@
 import { fetchEventSource } from "@microsoft/fetch-event-source";
+import { http } from "@next-core/http";
 import { getBasePath } from "@next-core/runtime";
 import moment from "moment";
 
@@ -9,23 +10,36 @@ export interface SSEMessageItem {
     content: string;
     role: string;
   };
-  /** @deprecated */
-  ctime?: string;
-  /** @deprecated */
-  mtime?: string;
-  /** @deprecated */
-  messages?: Array<{
-    content: {
-      type: string;
-      text: string;
-    };
-    role: string;
-  }>;
+  taskId?: string;
+  agentId?: string;
 }
 
 export interface QueueItem {
   topic: string;
   message?: SSEMessageItem;
+}
+
+export interface SessionItem {
+  conversationId: string;
+  isDelete: boolean;
+  time: number;
+  title: string;
+  user: string;
+  _row_id: string;
+}
+
+export interface ChatItem {
+  agentId: string;
+  conversationId: string;
+  input: string;
+  output: string;
+  taskId: string;
+  time: number;
+  user: string;
+  _row_id: string;
+  tag: {
+    isLike?: boolean;
+  };
 }
 
 export class ChatService {
@@ -38,6 +52,13 @@ export class ChatService {
   #messageQueue: Array<QueueItem> = [];
   #subscribers: Record<string, Array<(msg?: SSEMessageItem) => void>> = {};
   #conversationId?: string;
+
+  // 会话
+  #sessionNextToken?: string;
+  #cacheLimit?: number;
+
+  // 消息
+  #messageNextToken?: string;
 
   constructor({
     agentId,
@@ -95,11 +116,75 @@ export class ChatService {
     this.#conversationId = id;
   }
 
-  async getSessionList() {
-    // const response = await fetch(
-    //   `${getBasePath()}api/gateway/easyops.api.aiops_chat.conversation/conversation/list/${this.#agentId}`,
-    // )
-    // console.log(response);
+  async getSessionHistory(limit?: number): Promise<SessionItem[]> {
+    if (limit) {
+      this.#cacheLimit = limit;
+    }
+    try {
+      const {
+        data: { conversations, next_token },
+      } = await http.request<{
+        data: {
+          conversations: SessionItem[];
+          next_token: string;
+          previous_token: string;
+        };
+      }>(
+        `${getBasePath()}api/gateway/easyops.api.aiops_chat.conversation.ListConversation/conversation/list`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            limit: this.#cacheLimit ?? 20,
+            next_token: this.#sessionNextToken,
+          }),
+        }
+      );
+      this.#sessionNextToken = next_token;
+      if (!next_token) {
+        this.notifySubscribers({ topic: "session.fetch.end" });
+      }
+      return conversations;
+    } catch {
+      // eslint-disable-next-line no-console
+      console.error("获取会话历史失败");
+    }
+    return [];
+  }
+
+  async getChatHistory(id?: string): Promise<ChatItem[]> {
+    if (id) {
+      this.setConversationId(id);
+      this.#messageNextToken = "";
+    }
+    try {
+      const {
+        data: { conversations, next_token },
+      } = await http.request<{
+        data: {
+          conversations: ChatItem[];
+          next_token: string;
+          previous_token: string;
+        };
+      }>(
+        `${getBasePath()}api/gateway/easyops.api.aiops_chat.conversation.GetAllDialogue/conversation/get/${this.#conversationId}`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            limit: 15,
+            next_token: this.#messageNextToken,
+          }),
+        }
+      );
+      this.#messageNextToken = next_token;
+      if (!next_token) {
+        this.notifySubscribers({ topic: "message.fetch.end" });
+      }
+      return conversations;
+    } catch {
+      // eslint-disable-next-line no-console
+      console.error("获取消息历史失败");
+    }
+    return [];
   }
 
   async chat(str: string): Promise<void> {
@@ -149,13 +234,15 @@ export class ChatService {
                 created: moment().format("YYYY-MM-DD HH:mm:ss"),
                 delta: {
                   role: "assistant",
-                  content: "`数据格式错误`",
+                  content: "\\\n `数据格式错误`",
                 },
               },
             });
             return;
           }
-          this.#conversationId = result.conversationId;
+          if (!this.#conversationId) {
+            this.setConversationId(result.conversationId);
+          }
           this.enqueue({
             topic: "add",
             message: result,
@@ -171,7 +258,7 @@ export class ChatService {
               message: {
                 delta: {
                   role: "assistant",
-                  content: "无法识别",
+                  content: "`无法识别`",
                 },
                 created: moment().format("YYYY-MM-DD HH:mm:ss"),
               },
