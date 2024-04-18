@@ -103,7 +103,7 @@ export function QuickAnswerList() {
     <div className="quick-answer-wrapper">
       <div className="tip">
         {quickAnswerConfig.tip ??
-          "你好，我是运维数智人—Murphy，我能为你提供以下服务:"}
+          "你好，我是运维数智人 — Murphy，我能为你提供以下服务:"}
       </div>
       <div
         className="quick-answer-list"

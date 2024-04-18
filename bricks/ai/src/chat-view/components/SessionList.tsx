@@ -4,6 +4,20 @@ import classNames from "classnames";
 import { debounce } from "lodash";
 import { SessionItem as SessionItemProps } from "../ChatService";
 import { CommonLoading } from "./Loading.js";
+import type {
+  GeneralIcon,
+  GeneralIconProps,
+} from "@next-bricks/icons/general-icon";
+import { wrapBrick } from "@next-core/react-element";
+import { unwrapProvider } from "@next-core/utils/general";
+import type { showDialog as _showDialog } from "@next-bricks/basic/data-providers/show-dialog/show-dialog";
+import type { showNotification as _showNotification } from "@next-bricks/basic/data-providers/show-notification/show-notification";
+
+const showNotification = unwrapProvider<typeof _showNotification>(
+  "basic.show-notification"
+);
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
+const showDialog = unwrapProvider<typeof _showDialog>("basic.show-dialog");
 
 const SESSION_ITEM_HEIGHT = 42;
 const BUFFER_NUMBER = 5;
@@ -61,11 +75,31 @@ export function SessionList(): React.ReactNode {
 }
 
 function SessionItem({ title, conversationId }: SessionItemProps) {
-  const { checkSession, activeSessionId } = useChatViewContext();
+  const { activeSessionId, checkSession, deleteSession } = useChatViewContext();
 
   const handleCheckSession = useCallback(() => {
     checkSession(conversationId, true);
   }, [conversationId, checkSession]);
+
+  const handleDeleteSession = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      showDialog({
+        type: "confirm",
+        title: "会话删除确认",
+        content: `请输入 {{ expect }} 以确认删除`,
+        expect: title,
+      }).then(async () => {
+        // console.log(conversationId);
+        const result = await deleteSession([conversationId]);
+        showNotification({
+          message: `删除会话${result ? "成功" : "失败"}`,
+          type: result ? "success" : "error",
+        });
+      });
+    },
+    [conversationId, deleteSession, title]
+  );
 
   return (
     <div
@@ -75,7 +109,13 @@ function SessionItem({ title, conversationId }: SessionItemProps) {
       })}
       onClick={handleCheckSession}
     >
-      {title}
+      <div className="content">
+        <div className="title">{title}</div>
+      </div>
+
+      <div className="session-close-btn" onClick={handleDeleteSession}>
+        <WrappedIcon icon="close" lib="antd" />
+      </div>
     </div>
   );
 }

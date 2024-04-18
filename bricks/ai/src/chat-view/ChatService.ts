@@ -35,6 +35,7 @@ export interface ChatItem {
   output: string;
   taskId: string;
   time: number;
+  inputTime: number;
   user: string;
   _row_id: string;
   tag: {
@@ -112,6 +113,28 @@ export class ChatService {
     }
   }
 
+  async setChatItemIsLike(id: string, isLike: boolean): Promise<boolean> {
+    let flag: boolean = false;
+    try {
+      const { code } = await http.request<{ code: number }>(
+        `${getBasePath()}api/gateway/easyops.api.aiops_chat.conversation.CommentDialogue/conversation/comment`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            taskId: id,
+            isLike,
+          }),
+        }
+      );
+      if (code === 0) {
+        flag = true;
+      }
+    } catch {
+      flag = false;
+    }
+    return flag;
+  }
+
   setConversationId(id?: string) {
     this.#conversationId = id;
   }
@@ -156,6 +179,7 @@ export class ChatService {
       this.setConversationId(id);
       this.#messageNextToken = "";
     }
+    if (!this.#conversationId) return [];
     try {
       const {
         data: { conversations, next_token },
@@ -187,6 +211,28 @@ export class ChatService {
     return [];
   }
 
+  async deleteSession(id: string[]): Promise<boolean> {
+    if (!id.length) return false;
+    let flag: boolean = false;
+    try {
+      const { code } = await http.request<{ code: number }>(
+        `${getBasePath()}api/gateway/easyops.api.aiops_chat.conversation.DeleteConversation/conversation/delete`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            conversationIds: id,
+          }),
+        }
+      );
+      if (code === 0) {
+        flag = true;
+      }
+    } catch {
+      flag = false;
+    }
+    return flag;
+  }
+
   async chat(str: string): Promise<void> {
     this.#ctrl = new AbortController();
     let hadMatchMessage = false;
@@ -198,7 +244,6 @@ export class ChatService {
         signal: this.#ctrl.signal,
         body: JSON.stringify({
           agentId: this.#agentId,
-          // agentId: "cmdb_search_agent",
           conversationId: this.#conversationId,
           input: str,
           stream: true,

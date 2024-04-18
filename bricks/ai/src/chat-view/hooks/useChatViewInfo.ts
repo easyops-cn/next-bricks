@@ -19,7 +19,7 @@ export function useChatViewInfo({
 }) {
   const [sessionEnd, setSessionEnd] = useState<boolean>(false);
   const [sessionLoading, setSessionLoading] = useState<boolean>(false);
-  const [activeSessionId, setActiveSessionid] = useState<string>();
+  const [activeSessionId, setActiveSessionId] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
   const [chatting, setChatting] = useState<boolean>(false);
   const [sessionList, setSessionList] = useState<SessionItem[]>([]);
@@ -61,7 +61,7 @@ export function useChatViewInfo({
         setMsgLoading(false);
         setLoading(true);
         setMsgList([]);
-        setActiveSessionid(id);
+        setActiveSessionId(id);
         if (chatting) {
           stopChat();
         }
@@ -91,7 +91,8 @@ export function useChatViewInfo({
                 text: item.output,
               },
               key: `assistant_${item.taskId}`,
-              created: item.time,
+              created: item.inputTime,
+              tag: item.tag,
             }
           );
         });
@@ -106,6 +107,63 @@ export function useChatViewInfo({
     [chatService, chatting, stopChat]
   );
 
+  const deleteSession = useCallback(
+    async (ids: string[]): Promise<boolean> => {
+      // 需要过滤新建会话, 因为新建会话在本地，还没上报到远端
+      const filterIds = ids.filter((item) => item !== NEW_SESSION_ID);
+      const result = await chatService.deleteSession(filterIds);
+      if (result) {
+        let deleteActiveSession = false;
+        if (
+          activeSessionId &&
+          filterIds.includes(activeSessionId) &&
+          activeSessionId !== NEW_SESSION_ID
+        ) {
+          // 如果删除会话包含当前会话，需要重置状态
+          deleteActiveSession = true;
+          // 清除会话id
+          chatService.setConversationId();
+
+          setMsgEnd(false);
+          setMsgLoading(false);
+          setMsgList([]);
+
+          if (chatting) {
+            stopChat();
+          }
+        }
+
+        setSessionList((list) => {
+          const newList = list.filter(
+            (item) => !filterIds.includes(item.conversationId!)
+          );
+          if (deleteActiveSession) {
+            // 已经选中的当前会话已经被删除
+            if (newList.length) {
+              // 如果会话列表仍有数据，取第一个
+              checkSession(newList[0].conversationId, true);
+            } else {
+              // 否则新增会话
+              setLoading(false);
+              setActiveSessionId(NEW_SESSION_ID);
+              return [defaultNewSessionItem];
+            }
+          }
+          return newList;
+        });
+      }
+      return true;
+    },
+    [
+      activeSessionId,
+      chatService,
+      chatting,
+      checkSession,
+      defaultNewSessionItem,
+      stopChat,
+    ]
+  );
+
   const querySessionHistory = useCallback(
     async (limit?: number) => {
       setSessionLoading(true);
@@ -114,10 +172,10 @@ export function useChatViewInfo({
         // 初始化默认第一个为会话历史
         if (list.length) {
           const id = list[0].conversationId;
-          setActiveSessionid(id);
+          setActiveSessionId(id);
           checkSession(id, true);
         } else {
-          setActiveSessionid(NEW_SESSION_ID);
+          setActiveSessionId(NEW_SESSION_ID);
         }
       }
       setSessionList((preList) => {
@@ -166,7 +224,7 @@ export function useChatViewInfo({
   const createSession = useCallback(() => {
     chatService.setConversationId();
     setMsgList([]);
-    setActiveSessionid(NEW_SESSION_ID);
+    setActiveSessionId(NEW_SESSION_ID);
     const hasNewOne = sessionList.find(
       (item) => item.conversationId === NEW_SESSION_ID
     );
@@ -176,6 +234,27 @@ export function useChatViewInfo({
       });
     }
   }, [chatService, sessionList, defaultNewSessionItem]);
+
+  const handleIsLike = useCallback(
+    async (id: string, isLike: boolean): Promise<boolean> => {
+      const result = await chatService.setChatItemIsLike(id, isLike);
+      if (result) {
+        setMsgList((list) => {
+          return list.map((item) => ({
+            ...item,
+            tag:
+              id === item.taskId
+                ? {
+                    isLike,
+                  }
+                : item.tag,
+          }));
+        });
+      }
+      return result;
+    },
+    [chatService]
+  );
 
   useEffect(() => {
     // session listener
@@ -205,7 +284,7 @@ export function useChatViewInfo({
                 : item.conversationId,
           }));
         });
-        setActiveSessionid(msgItem.conversationId);
+        setActiveSessionId(msgItem.conversationId);
       }
       // eslint-disable-next-line no-console
       // console.log(chatingText.current);
@@ -277,8 +356,10 @@ export function useChatViewInfo({
     handleChat,
     stopChat,
     createSession,
+    deleteSession,
     checkSession,
     setSearchStr,
     querySessionHistory,
+    handleIsLike,
   };
 }
