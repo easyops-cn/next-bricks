@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.9.0...@next-bricks/ai@1.9.1) (2024-04-18)
+
+
+### Bug Fixes
+
+* **chat-view:** title had newline and delete not work ([8682e95](https://github.com/easyops-cn/next-bricks/commit/8682e953a36363116aadedef00177f3bd68dfb88))
+
+
+
+
+
 # [1.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.8.0...@next-bricks/ai@1.9.0) (2024-04-18)
 
 
