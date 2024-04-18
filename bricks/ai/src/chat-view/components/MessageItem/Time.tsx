@@ -7,7 +7,7 @@ export function Time({ time }: { time?: string | number }) {
       {time
         ? typeof time === "string"
           ? time
-          : moment(time * 1000).format("YYYY-MM-DD HH:mm:ss")
+          : moment(time).format("YYYY-MM-DD HH:mm:ss")
         : null}
     </div>
   );

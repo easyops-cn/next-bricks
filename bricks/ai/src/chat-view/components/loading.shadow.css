@@ -78,3 +78,9 @@
     transform: scale(0);
   }
 }
+
+.common-loading-wrapper {
+  text-align: center;
+  font-size: 30px;
+  color: #ddd;
+}

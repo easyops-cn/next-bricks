@@ -115,7 +115,11 @@ export function ChatViewComponent({
   enterInterval,
 }: ChatViewProps) {
   const {
+    sessionEnd,
+    sessionLoading,
     activeSessionId,
+    msgEnd,
+    msgLoading,
     msgList,
     msgItem,
     sessionList,
@@ -125,8 +129,9 @@ export function ChatViewComponent({
     handleChat,
     stopChat,
     createSession,
-    updateSession,
+    checkSession,
     setSearchStr,
+    querySessionHistory,
   } = useChatViewInfo({
     agentId,
     enterInterval,
@@ -135,8 +140,12 @@ export function ChatViewComponent({
   return (
     <ChatViewContext.Provider
       value={{
+        sessionEnd,
+        sessionLoading,
         activeSessionId,
         sessionList,
+        msgEnd,
+        msgLoading,
         msgList,
         msgItem,
         chatting,
@@ -147,8 +156,9 @@ export function ChatViewComponent({
         handleChat,
         stopChat,
         createSession,
-        updateSession,
+        checkSession,
         setSearchStr,
+        querySessionHistory,
       }}
     >
       <div className="chat-view-container">

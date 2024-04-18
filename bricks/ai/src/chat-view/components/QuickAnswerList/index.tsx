@@ -67,7 +67,7 @@ function QuickAnswerCardItem({
 }
 
 export function QuickAnswerList() {
-  const { quickAnswerConfig, msgList } = useChatViewContext();
+  const { quickAnswerConfig, msgList, loading } = useChatViewContext();
   const [showMoreBtn, setShowMoreBtn] = useState<boolean>(false);
   const listRef = useRef<HTMLDivElement>(null);
   const hadClickShowMoreBtn = useRef<boolean>(false);
@@ -99,7 +99,7 @@ export function QuickAnswerList() {
     }
   }, [showMoreBtn]);
 
-  return quickAnswerConfig?.list.length && msgList.length === 0 ? (
+  return quickAnswerConfig?.list.length && msgList.length === 0 && !loading ? (
     <div className="quick-answer-wrapper">
       <div className="tip">
         {quickAnswerConfig.tip ??

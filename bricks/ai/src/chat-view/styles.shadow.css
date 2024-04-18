@@ -100,15 +100,17 @@
 
 /* 会话列表 */
 .session-list-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
   .session-title {
     font-size: 16px;
     color: var(--color-header-text);
     margin-bottom: 16px;
   }
   .session-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    overflow-y: auto;
 
     .session-item {
       cursor: pointer;
@@ -116,6 +118,14 @@
       background-color: var(--third-menu-default-bg);
       padding: 6px 16px;
       color: var(--color-header-text);
+      margin-top: 8px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      &:first-child {
+        margin-top: 0px;
+      }
 
       &.active {
         background-color: var(--third-menu-item-selected-bg);
@@ -385,5 +395,29 @@
       font-size: 12px;
       color: var(--color-secondary-text);
     }
+  }
+}
+
+.message-start-tip,
+.session-end-tip {
+  color: var(--color-disabled-text);
+  font-size: 12px;
+  text-align: center;
+  margin-top: 12px;
+  position: relative;
+
+  &::after,
+  &::before {
+    content: "- - -";
+    color: var(--color-disabled-text);
+    position: absolute;
+  }
+
+  &::before {
+    margin-left: -35px;
+  }
+
+  &::after {
+    margin-left: 10px;
   }
 }
