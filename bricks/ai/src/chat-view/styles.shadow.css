@@ -113,6 +113,8 @@
     overflow-y: auto;
 
     .session-item {
+      display: flex;
+      justify-content: space-between;
       cursor: pointer;
       border-radius: var(--small-border-radius);
       background-color: var(--third-menu-default-bg);
@@ -122,6 +124,24 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+
+      .content {
+        width: 0;
+        flex: 1;
+        .title {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+
+      &:hover {
+        .session-close-btn {
+          eo-icon {
+            display: block;
+          }
+        }
+      }
 
       &:first-child {
         margin-top: 0px;
@@ -136,6 +156,21 @@
       &.active:hover {
         color: var(--color-header-text);
         background-color: var(--third-menu-item-hover-bg);
+      }
+
+      .session-close-btn {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        font-size: 12px;
+
+        &:hover {
+          color: var(--color-error);
+        }
+
+        eo-icon {
+          display: none;
+        }
       }
     }
   }
@@ -154,7 +189,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    gap: 18px;
+    gap: 36px;
 
     .message-item {
       display: flex;
@@ -239,11 +274,20 @@
               eo-icon {
                 cursor: pointer;
                 color: #606f7c;
+
+                &.unlike {
+                  padding-right: 12px;
+                  border-right: 1px solid #d9d9d9;
+                }
+
+                &.active {
+                  color: var(--color-brand);
+                }
               }
-              eo-icon[icon="dislike"] {
+              /* eo-icon[icon="dislike"] {
                 padding-right: 12px;
                 border-right: 1px solid #d9d9d9;
-              }
+              } */
             }
           }
         }

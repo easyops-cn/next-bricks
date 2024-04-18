@@ -19,6 +19,9 @@ export interface MessageItem {
   taskId?: string;
   agentId?: string;
   chatting?: boolean;
+  tag?: {
+    isLike?: boolean;
+  };
 }
 
 export interface QuickAnswerConfig {
@@ -40,10 +43,12 @@ interface ChatViewContextProps {
   searchStr: string;
   showLike: boolean;
   quickAnswerConfig?: QuickAnswerConfig;
+  handleIsLike: (id: string, isLike: boolean) => Promise<boolean>;
   handleChat: (str: string) => void;
   stopChat: () => void;
   checkSession: (id?: string, isInit?: boolean) => void;
   createSession: () => void;
+  deleteSession: (ids: string[]) => Promise<boolean>;
   setSearchStr: (str: string) => void;
   querySessionHistory: (limit?: number) => void;
 }
