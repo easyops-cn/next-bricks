@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.7.0...@next-bricks/ai@1.8.0) (2024-04-18)
+
+
+### Features
+
+* **chat-view:** support like,unlike, delete session ([2584047](https://github.com/easyops-cn/next-bricks/commit/25840478c766e9eaeadd688e2727da5a9123fa21))
+
+
+
+
+
 # [1.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.6.2...@next-bricks/ai@1.7.0) (2024-04-18)
 
 
