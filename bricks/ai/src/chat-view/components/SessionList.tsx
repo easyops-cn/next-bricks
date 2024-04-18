@@ -88,9 +88,8 @@ function SessionItem({ title, conversationId }: SessionItemProps) {
         type: "confirm",
         title: "会话删除确认",
         content: `请输入 {{ expect }} 以确认删除`,
-        expect: title,
+        expect: title.replace(/\s+/g, ""),
       }).then(async () => {
-        // console.log(conversationId);
         const result = await deleteSession([conversationId]);
         showNotification({
           message: `删除会话${result ? "成功" : "失败"}`,
@@ -110,7 +109,9 @@ function SessionItem({ title, conversationId }: SessionItemProps) {
       onClick={handleCheckSession}
     >
       <div className="content">
-        <div className="title">{title}</div>
+        <div className="title" title={title}>
+          {title}
+        </div>
       </div>
 
       <div className="session-close-btn" onClick={handleDeleteSession}>
