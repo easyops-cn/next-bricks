@@ -75,6 +75,7 @@ export function Toolbar({
               onClick={() => handleLikeOrIsLike(false)}
             />
           </WrappedToolTip>
+          <div className="split" />
         </>
       )}
       <WrappedToolTip content="点击复制">

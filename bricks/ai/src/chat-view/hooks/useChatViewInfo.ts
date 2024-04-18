@@ -68,6 +68,11 @@ export function useChatViewInfo({
       } else {
         setMsgLoading(true);
       }
+      // 如果是新建会话，不需要查询历史
+      if (id === NEW_SESSION_ID) {
+        setLoading(false);
+        return;
+      }
       const list = await chatService.getChatHistory(id);
       const computedList = (list: ChatItem[]) => {
         const newList: MessageItem[] = [];
@@ -138,30 +143,25 @@ export function useChatViewInfo({
             (item) => !filterIds.includes(item.conversationId!)
           );
           if (deleteActiveSession) {
-            // 已经选中的当前会话已经被删除
-            if (newList.length) {
-              // 如果会话列表仍有数据，取第一个
-              checkSession(newList[0].conversationId, true);
+            // 已经选中的当前会话被删除，新建会话
+            const hasNewOne = list.find(
+              (item) => item.conversationId === NEW_SESSION_ID
+            );
+            setLoading(false);
+
+            setActiveSessionId(NEW_SESSION_ID);
+            if (hasNewOne) {
+              return newList;
             } else {
-              // 否则新增会话
-              setLoading(false);
-              setActiveSessionId(NEW_SESSION_ID);
-              return [defaultNewSessionItem];
+              return [defaultNewSessionItem].concat(newList);
             }
           }
           return newList;
         });
       }
-      return true;
+      return result;
     },
-    [
-      activeSessionId,
-      chatService,
-      chatting,
-      checkSession,
-      defaultNewSessionItem,
-      stopChat,
-    ]
+    [activeSessionId, chatService, chatting, defaultNewSessionItem, stopChat]
   );
 
   const querySessionHistory = useCallback(
@@ -169,17 +169,15 @@ export function useChatViewInfo({
       setSessionLoading(true);
       const list = await chatService.getSessionHistory(limit);
       if (!activeSessionId) {
-        // 初始化默认第一个为会话历史
-        if (list.length) {
-          const id = list[0].conversationId;
-          setActiveSessionId(id);
-          checkSession(id, true);
-        } else {
-          setActiveSessionId(NEW_SESSION_ID);
-        }
+        // 如果没有 activeSessionId, 默认新增会话
+        setActiveSessionId(NEW_SESSION_ID);
+      } else {
+        await checkSession(activeSessionId);
       }
       setSessionList((preList) => {
-        return preList.concat(list.length ? list : [defaultNewSessionItem]);
+        return !activeSessionId
+          ? [defaultNewSessionItem].concat([...preList, ...list])
+          : preList.concat(list);
       });
       setSessionLoading(false);
     },
