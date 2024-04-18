@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.6.2...@next-bricks/ai@1.7.0) (2024-04-18)
+
+
+### Features
+
+* **chat-view:** support session and chat history ([37d7876](https://github.com/easyops-cn/next-bricks/commit/37d787602ca0a5af1271d1ad3ce38d8fbfa2a947))
+
+
+
+
+
 ## [1.6.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.6.1...@next-bricks/ai@1.6.2) (2024-04-16)
 
 **Note:** Version bump only for package @next-bricks/ai
