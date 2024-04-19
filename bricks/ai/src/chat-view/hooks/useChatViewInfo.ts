@@ -287,6 +287,7 @@ export function useChatViewInfo({
       // eslint-disable-next-line no-console
       // console.log(chatingText.current);
       chatingMessageItem.current = {
+        ...msgItem,
         role: "assistant",
         content: {
           type: "markdown",
