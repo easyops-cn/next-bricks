@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@1.0.16...@next-bricks/v2-adapter@1.1.0) (2024-04-19)
+
+
+### Features
+
+* **v2-adapter:** add getRealValue ([5976e64](https://github.com/easyops-cn/next-bricks/commit/5976e64ed84cf49a9178cfeef86f67bfe801bf19))
+
+
+
+
+
 ## [1.0.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@1.0.15...@next-bricks/v2-adapter@1.0.16) (2024-04-16)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
