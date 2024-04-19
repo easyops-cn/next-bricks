@@ -279,7 +279,7 @@ export class ChatService {
                 created: moment().format("YYYY-MM-DD HH:mm:ss"),
                 delta: {
                   role: "assistant",
-                  content: "\\\n `数据格式错误`",
+                  content: "`【数据格式错误】`",
                 },
               },
             });
