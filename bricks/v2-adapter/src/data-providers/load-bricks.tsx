@@ -17,6 +17,7 @@ import {
   StoryboardFunctionRegistryFactory,
   unstable_createRoot,
   __secret_internals,
+  getRealValue,
 } from "@next-core/runtime";
 import { auth } from "@next-core/easyops-runtime";
 import { i18n, i18nText } from "@next-core/i18n";
@@ -278,6 +279,7 @@ async function loadMainDll(adapterPkgFilePath: string) {
     looseCheckIfOfComputed: checkIfOfComputed,
     i18nText,
     StoryboardFunctionRegistryFactory,
+    getRealValue,
 
     // Auth
     ...lodash.pick(auth, ["getAuth", "authenticate", "logout", "isLoggedIn"]),

@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.5.2...@next-shared/icons@0.6.0) (2024-04-18)
+
+
+### Features
+
+* add inspect icon ([eb00d3b](https://github.com/easyops-cn/next-bricks/commit/eb00d3b621499204422550477bf2a6ca5b7dd37f))
+
+
+
+
+
+## [0.5.2](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.5.1...@next-shared/icons@0.5.2) (2024-04-09)
+
+**Note:** Version bump only for package @next-shared/icons
+
+
+
+
+
 ## [0.5.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.5.0...@next-shared/icons@0.5.1) (2024-04-02)
 
 **Note:** Version bump only for package @next-shared/icons

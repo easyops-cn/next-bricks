@@ -1,43 +1,54 @@
 .quick-answer-wrapper {
   margin-top: 20px;
+  border-radius: 6px;
+  border: 1px solid var(--color-border-divider-line);
+  padding: 16px 24px;
   .tip {
     font-size: 18px;
+    margin-bottom: 30px;
   }
 
   .quick-answer-list {
     display: grid;
     gap: 24px 16px;
-    margin-top: 30px;
     border-radius: 3px;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 
     .quick-answer-card-item {
       position: relative;
       padding: 16px;
-      box-shadow: 1px 2px 9px #ddd;
+      border-radius: 6px;
       cursor: pointer;
+      display: flex;
+      padding: 10px 20px;
+      gap: 12px;
+      width: auto;
+      box-sizing: border-box;
 
       &:hover {
-        background: #f4f4f4;
+        box-shadow: var(--quick-answer-card-item-hover);
       }
 
-      .icon {
-        position: absolute;
-        top: -20px;
-        left: 10px;
-        font-size: 26px;
-        background: #fff;
-        box-shadow: 1px 3px 4px #eee;
-        padding: 6px;
-        border-radius: 6px;
+      .left {
+        .icon {
+          font-size: 20px;
+          color: #fff;
+          padding: 8px;
+          border-radius: 6px;
+          margin-top: 4px;
+        }
       }
 
       .content {
-        margin-top: 12px;
-
+        flex: 1;
+        min-width: 0;
         .title {
+          font-size: 16px;
           font-weight: bold;
           color: var(--color-normal-text);
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
         }
 
         .description {
@@ -49,6 +60,29 @@
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 2;
         }
+      }
+    }
+  }
+
+  .show-more-wrapper {
+    text-align: center;
+    margin-top: 20px;
+    .show-more-btn {
+      line-height: 24px;
+
+      &::after,
+      &::before {
+        content: "- - - - -";
+        color: var(--color-text-divider-line);
+        position: absolute;
+      }
+
+      &::before {
+        margin-left: -60px;
+      }
+
+      &::after {
+        margin-left: 10px;
       }
     }
   }

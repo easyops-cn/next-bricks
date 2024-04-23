@@ -100,22 +100,52 @@
 
 /* 会话列表 */
 .session-list-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
   .session-title {
     font-size: 16px;
     color: var(--color-header-text);
     margin-bottom: 16px;
   }
   .session-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    overflow-y: auto;
 
     .session-item {
+      display: flex;
+      justify-content: space-between;
       cursor: pointer;
       border-radius: var(--small-border-radius);
       background-color: var(--third-menu-default-bg);
       padding: 6px 16px;
       color: var(--color-header-text);
+      margin-top: 8px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      .content {
+        width: 0;
+        flex: 1;
+        .title {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+
+      &:hover {
+        .session-close-btn {
+          eo-icon {
+            display: block;
+          }
+        }
+      }
+
+      &:first-child {
+        margin-top: 0px;
+      }
 
       &.active {
         background-color: var(--third-menu-item-selected-bg);
@@ -126,6 +156,21 @@
       &.active:hover {
         color: var(--color-header-text);
         background-color: var(--third-menu-item-hover-bg);
+      }
+
+      .session-close-btn {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        font-size: 12px;
+
+        &:hover {
+          color: var(--color-error);
+        }
+
+        eo-icon {
+          display: none;
+        }
       }
     }
   }
@@ -143,7 +188,8 @@
   .message-list-box {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    position: relative;
+    gap: 36px;
 
     .message-item {
       display: flex;
@@ -188,13 +234,22 @@
       }
 
       .avatar {
-        font-size: 36px;
+        width: 36px;
+        height: 36px;
         margin-top: 32px;
+
+        &.user {
+          background-image: url("./assets/user.png");
+        }
+
+        &.robot {
+          background-image: url("./assets/robot.png");
+        }
       }
 
       .message-box {
         position: relative;
-        margin-bottom: 22px;
+        flex: 1;
         .message-content {
           display: flex;
           justify-content: start;
@@ -203,7 +258,7 @@
             position: relative;
             padding: 14px;
             border-radius: 6px;
-            background: #f1f3f4;
+            background: var(--message-box-bg);
 
             .text-item {
               white-space: pre-wrap;
@@ -215,14 +270,22 @@
               right: 0;
               display: flex;
               gap: 12px;
+              align-items: center;
 
               eo-icon {
                 cursor: pointer;
                 color: #606f7c;
+
+                &.active {
+                  color: var(--color-brand);
+                }
               }
-              eo-icon[icon="dislike"] {
-                padding-right: 12px;
-                border-right: 1px solid #d9d9d9;
+
+              .split {
+                width: 1px;
+                height: 16px;
+                background-color: #d9d9d9;
+                margin-bottom: 1px;
               }
             }
           }
@@ -240,6 +303,12 @@
         }
       }
     }
+
+    .stop-responding-wrapper {
+      position: absolute;
+      left: 44px;
+      bottom: -28px;
+    }
   }
 }
 
@@ -250,32 +319,6 @@
   height: 50px;
   padding: 12px;
   position: relative;
-
-  .stop-responding-wrapper {
-    position: absolute;
-    top: -30px;
-    left: 50%;
-    transform: translate(-50%, 0);
-
-    .stop-btn {
-      cursor: pointer;
-      background-color: rgba(229, 162, 65, 1);
-      padding: 4px 16px;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      border-radius: 3px;
-
-      &:hover {
-        background-color: rgba(229, 162, 65, 0.8);
-      }
-
-      &:active {
-        background-color: rgba(229, 162, 65, 0.9);
-      }
-    }
-  }
 
   &.fill-content {
     box-shadow: 1px 0px 4px 0px rgba(197, 197, 197, 0.5);
@@ -347,8 +390,8 @@
         cursor: pointer;
         padding: 6px;
         border-radius: 3px;
-        &:hover {
-          background: #ddd;
+        &:not(.disabled):hover {
+          background: var(--search-input-icon-hover);
         }
       }
 
@@ -379,7 +422,7 @@
         padding: 6px;
         border-radius: 3px;
         &:hover {
-          background: #ddd;
+          background: var(--search-input-icon-hover);
         }
       }
     }
@@ -395,5 +438,29 @@
       font-size: 12px;
       color: var(--color-secondary-text);
     }
+  }
+}
+
+.message-start-tip,
+.session-end-tip {
+  color: var(--color-disabled-text);
+  font-size: 12px;
+  text-align: center;
+  margin-top: 12px;
+  position: relative;
+
+  &::after,
+  &::before {
+    content: "- - -";
+    color: var(--color-disabled-text);
+    position: absolute;
+  }
+
+  &::before {
+    margin-left: -35px;
+  }
+
+  &::after {
+    margin-left: 10px;
   }
 }

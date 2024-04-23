@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.6...@next-bricks/form@1.9.7) (2024-04-16)
+
+**Note:** Version bump only for package @next-bricks/form
+
+
+
+
+
+## [1.9.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.5...@next-bricks/form@1.9.6) (2024-04-16)
+
+
+### Bug Fixes
+
+* **select:** fix default value null was error ([0fa18a4](https://github.com/easyops-cn/next-bricks/commit/0fa18a4b8b78f1e5c75627a0cab11bded071d511))
+
+
+
+
+
+## [1.9.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.4...@next-bricks/form@1.9.5) (2024-04-15)
+
+
+### Bug Fixes
+
+* tag mode value is undefined error ([18b8c4f](https://github.com/easyops-cn/next-bricks/commit/18b8c4f7ea8e0872723b4b825fd82235484205dc))
+
+
+
+
+
+## [1.9.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.3...@next-bricks/form@1.9.4) (2024-04-15)
+
+
+### Bug Fixes
+
+* formStore resetFields and select tag mode ([81dd947](https://github.com/easyops-cn/next-bricks/commit/81dd9471001e2ad30b324c4014006b715d8dda9e))
+* **select:** tag mode and value isn't array ([743ec0e](https://github.com/easyops-cn/next-bricks/commit/743ec0ee5de1f3d06be61c278ef79cf0666c69bf))
+
+
+
+
+
 ## [1.9.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.2...@next-bricks/form@1.9.3) (2024-04-09)
 
 

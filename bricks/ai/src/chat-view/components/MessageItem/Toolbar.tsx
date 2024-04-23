@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { wrapBrick } from "@next-core/react-element";
 import type { copyToClipboard as _copyToClipboard } from "@next-bricks/basic/data-providers/copy-to-clipboard";
 import type { showNotification as _showNotification } from "@next-bricks/basic/data-providers/show-notification/show-notification";
@@ -9,6 +9,7 @@ import type {
 import { EoTooltip, ToolTipProps } from "@next-bricks/basic/tooltip";
 import { MessageItem, useChatViewContext } from "../../ChatViewContext";
 import { unwrapProvider } from "@next-core/utils/general";
+import classNames from "classnames";
 
 const WrapperIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 const WrappedToolTip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");
@@ -23,32 +24,58 @@ export function Toolbar({
   role,
   content,
   chatting,
+  taskId,
+  tag,
 }: MessageItem): React.ReactNode {
   const isAssistant = useMemo(
-    () =>
-      role === "assistant" && !content?.find((item) => item.type === "load"),
-    [role, content]
+    () => role === "assistant" && content.type !== "load",
+    [role, content.type]
   );
   const isChattingItem = useMemo(() => chatting, [chatting]);
-  const { showLike } = useChatViewContext();
+  const { showLike, handleIsLike } = useChatViewContext();
 
   const handleCopy = () => {
-    const str = content.map((item) => item.text).toString();
-    copyToClipboard(str)
+    copyToClipboard(content.text)
       .then(() => showNotification({ type: "success", message: "复制成功" }))
       .catch(() => showNotification({ type: "error", message: "复制失败" }));
   };
+
+  const handleLikeOrIsLike = useCallback(
+    async (islike: boolean) => {
+      const result = await handleIsLike(taskId!, islike);
+      showNotification({
+        message: `${islike ? "点赞" : "操作"}${result ? "成功" : "失败"}`,
+        type: result ? "success" : "error",
+      });
+    },
+    [taskId, handleIsLike]
+  );
 
   return isAssistant && !isChattingItem ? (
     <div className="toolbar">
       {showLike && (
         <>
           <WrappedToolTip content="点赞">
-            <WrapperIcon lib="antd" icon="like" theme="filled" />
+            <WrapperIcon
+              className={classNames("like", {
+                active: tag?.isLike === true,
+              })}
+              lib="easyops"
+              icon="like"
+              onClick={() => handleLikeOrIsLike(true)}
+            />
           </WrappedToolTip>
           <WrappedToolTip content="还不够好">
-            <WrapperIcon lib="antd" icon="dislike" theme="filled" />
+            <WrapperIcon
+              className={classNames("unlike", {
+                active: tag?.isLike === false,
+              })}
+              lib="easyops"
+              icon="unlike"
+              onClick={() => handleLikeOrIsLike(false)}
+            />
           </WrappedToolTip>
+          <div className="split" />
         </>
       )}
       <WrappedToolTip content="点击复制">

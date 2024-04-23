@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/ai",
-  "version": "1.2.1",
+  "version": "1.9.2",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/ai",
   "repository": {
     "type": "git",
@@ -33,9 +33,9 @@
   },
   "dependencies": {
     "@microsoft/fetch-event-source": "^2.0.1",
-    "@next-core/element": "^1.2.3",
-    "@next-core/i18n": "^1.0.40",
-    "@next-core/react-element": "^1.0.22",
+    "@next-core/element": "^1.2.4",
+    "@next-core/i18n": "^1.0.41",
+    "@next-core/react-element": "^1.0.23",
     "@next-core/theme": "^1.5.0",
     "react": "0.0.0-experimental-ee8509801-20230117"
   },
@@ -46,8 +46,8 @@
     "@milkdown/preset-gfm": "^7.3.5",
     "@milkdown/react": "^7.3.5",
     "@milkdown/theme-nord": "^7.3.5",
-    "@next-core/build-next-bricks": "^1.20.7",
-    "@next-core/test-next": "^1.0.16"
+    "@next-core/build-next-bricks": "^1.20.8",
+    "@next-core/test-next": "^1.0.17"
   },
   "peerDependencies": {
     "@next-bricks/basic": "*",

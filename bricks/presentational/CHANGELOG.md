@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.5.0...@next-bricks/presentational@1.6.0) (2024-04-17)
+
+
+### Features
+
+* feat carousel text ([4a8c573](https://github.com/easyops-cn/next-bricks/commit/4a8c57300c59a5ae570b4f71da117a6963dbeda9))
+* feat carousel text ([b849cc9](https://github.com/easyops-cn/next-bricks/commit/b849cc966b5aec9439088d9c2cc4853ef4e22e66))
+
+
+
+
+
+# [1.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.4.3...@next-bricks/presentational@1.5.0) (2024-04-16)
+
+
+### Features
+
+* feat current time bricks ([5181177](https://github.com/easyops-cn/next-bricks/commit/518117702e7284fdc27ca8d78daea82e299dc53b))
+
+
+
+
+
 ## [1.4.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.4.2...@next-bricks/presentational@1.4.3) (2024-04-08)
 
 **Note:** Version bump only for package @next-bricks/presentational

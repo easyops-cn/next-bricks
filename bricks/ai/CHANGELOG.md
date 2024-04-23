@@ -3,6 +3,121 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.9.1...@next-bricks/ai@1.9.2) (2024-04-19)
+
+
+### Bug Fixes
+
+* chat item like not work ([78365cf](https://github.com/easyops-cn/next-bricks/commit/78365cfb750138c98f4b6767e525cb39fd0db258))
+
+
+
+
+
+## [1.9.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.9.0...@next-bricks/ai@1.9.1) (2024-04-18)
+
+
+### Bug Fixes
+
+* **chat-view:** title had newline and delete not work ([8682e95](https://github.com/easyops-cn/next-bricks/commit/8682e953a36363116aadedef00177f3bd68dfb88))
+
+
+
+
+
+# [1.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.8.0...@next-bricks/ai@1.9.0) (2024-04-18)
+
+
+### Features
+
+* **chat-view:** update default session ([1cdb0c9](https://github.com/easyops-cn/next-bricks/commit/1cdb0c9307f5803883a079ad80c0bbe2a260e1e2))
+
+
+
+
+
+# [1.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.7.0...@next-bricks/ai@1.8.0) (2024-04-18)
+
+
+### Features
+
+* **chat-view:** support like,unlike, delete session ([2584047](https://github.com/easyops-cn/next-bricks/commit/25840478c766e9eaeadd688e2727da5a9123fa21))
+
+
+
+
+
+# [1.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.6.2...@next-bricks/ai@1.7.0) (2024-04-18)
+
+
+### Features
+
+* **chat-view:** support session and chat history ([37d7876](https://github.com/easyops-cn/next-bricks/commit/37d787602ca0a5af1271d1ad3ce38d8fbfa2a947))
+
+
+
+
+
+## [1.6.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.6.1...@next-bricks/ai@1.6.2) (2024-04-16)
+
+**Note:** Version bump only for package @next-bricks/ai
+
+
+
+
+
+## [1.6.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.6.0...@next-bricks/ai@1.6.1) (2024-04-16)
+
+**Note:** Version bump only for package @next-bricks/ai
+
+
+
+
+
+# [1.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.5.0...@next-bricks/ai@1.6.0) (2024-04-11)
+
+
+### Features
+
+* **chat-view:** quick-answer-list add ResizeObserver ([91d99bf](https://github.com/easyops-cn/next-bricks/commit/91d99bf4ee8165ef5a88f07c7489d83cd949e88a))
+
+
+
+
+
+# [1.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.4.0...@next-bricks/ai@1.5.0) (2024-04-11)
+
+
+### Features
+
+* update style ([62fe17f](https://github.com/easyops-cn/next-bricks/commit/62fe17f5d5358b5183522f642cb46eed5c8480bd))
+
+
+
+
+
+# [1.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.3.0...@next-bricks/ai@1.4.0) (2024-04-11)
+
+
+### Features
+
+* **chat-view:** handle custom scroll ([8222cfe](https://github.com/easyops-cn/next-bricks/commit/8222cfed54fa5857bd873c8d2cf12e51f123201e))
+
+
+
+
+
+# [1.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.2.1...@next-bricks/ai@1.3.0) (2024-04-09)
+
+
+### Features
+
+* **chat-view:** add more-btn ([0e90d5c](https://github.com/easyops-cn/next-bricks/commit/0e90d5c611ca3373eaa3793bf82b796b5e6d7267))
+
+
+
+
+
 ## [1.2.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.2.0...@next-bricks/ai@1.2.1) (2024-04-08)
 
 
