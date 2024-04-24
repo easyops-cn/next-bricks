@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.42.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.41.0...@next-shared/common-bricks@0.42.0) (2024-04-24)
+
+
+### Features
+
+* new brick: eo-formatter-number ([2290d1b](https://github.com/easyops-cn/next-bricks/commit/2290d1b43dfaa58785ad2b3ea6cb5eef63d000e9))
+
+
+
+
+
 # [0.41.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.40.0...@next-shared/common-bricks@0.41.0) (2024-04-17)
 
 
