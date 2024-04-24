@@ -42,6 +42,7 @@ interface ChatViewContextProps {
   chatting: boolean;
   searchStr: string;
   showLike: boolean;
+  readonly: boolean;
   quickAnswerConfig?: QuickAnswerConfig;
   handleIsLike: (id: string, isLike: boolean) => Promise<boolean>;
   handleChat: (str: string) => void;

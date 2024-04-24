@@ -56,6 +56,14 @@ class ChatView extends ReactNextElement {
   accessor showSessionList: boolean | undefined;
 
   /**
+   * 只读模式
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor readonly: boolean | undefined;
+
+  /**
    * 是否展示点赞能力
    * @default true
    */
@@ -86,6 +94,7 @@ class ChatView extends ReactNextElement {
       <ChatViewComponent
         agentId={this.agentId}
         sessionId={this.sessionId}
+        readonly={this.readonly}
         showAvatar={this.showAvatar}
         showSessionList={this.showSessionList}
         showLike={this.showLike}
@@ -99,6 +108,7 @@ class ChatView extends ReactNextElement {
 export interface ChatViewProps {
   agentId: string;
   sessionId?: string;
+  readonly?: boolean;
   showAvatar?: boolean;
   showSessionList?: boolean;
   showLike?: boolean;
@@ -110,6 +120,7 @@ export function ChatViewComponent({
   agentId,
   showAvatar,
   showSessionList = true,
+  readonly = false,
   showLike = true,
   quickAnswerConfig,
   enterInterval,
@@ -154,6 +165,7 @@ export function ChatViewComponent({
         loading,
         searchStr,
         showLike,
+        readonly,
         quickAnswerConfig,
         handleIsLike,
         handleChat,
@@ -174,7 +186,7 @@ export function ChatViewComponent({
         <div className="chat-view-content">
           <div className="chat-view">
             <MessageList showAvatar={showAvatar} />
-            <SearchInput />
+            {!readonly && <SearchInput />}
           </div>
         </div>
       </div>

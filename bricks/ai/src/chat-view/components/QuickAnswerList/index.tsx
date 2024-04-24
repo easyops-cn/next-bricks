@@ -97,7 +97,7 @@ export function QuickAnswerList() {
       observer.observe(element);
       return () => observer.disconnect();
     }
-  }, [showMoreBtn]);
+  }, [showMoreBtn, quickAnswerConfig?.list]);
 
   return quickAnswerConfig?.list.length && msgList.length === 0 && !loading ? (
     <div className="quick-answer-wrapper">

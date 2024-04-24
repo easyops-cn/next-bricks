@@ -70,6 +70,9 @@ export function useChatViewInfo({
       }
       // 如果是新建会话，不需要查询历史
       if (id === NEW_SESSION_ID) {
+        // 重置会话id
+        chatService.setConversationId();
+        setMsgEnd(true);
         setLoading(false);
         return;
       }
@@ -89,6 +92,7 @@ export function useChatViewInfo({
               created: item.time,
             },
             {
+              agentId: item.agentId,
               taskId: item.taskId,
               role: "assistant",
               content: {

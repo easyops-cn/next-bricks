@@ -13,13 +13,13 @@ const WrapperIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 export function ContentTip({ role, content }: MessageItem): React.ReactNode {
   const isUser = useMemo(() => role === "user", [role]);
 
-  const { chatting, setSearchStr } = useChatViewContext();
+  const { chatting, readonly, setSearchStr } = useChatViewContext();
 
   const handleCopy = () => {
     setSearchStr(content.text);
   };
 
-  return isUser && !chatting ? (
+  return !readonly && isUser && !chatting ? (
     <div className="content-tip">
       <WrappedToolTip content="点击再次提问">
         <WrapperIcon lib="antd" icon="edit" onClick={handleCopy} />

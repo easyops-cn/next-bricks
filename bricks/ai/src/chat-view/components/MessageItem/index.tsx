@@ -9,8 +9,10 @@ import { Toolbar } from "./Toolbar.js";
 import { Time } from "./Time.js";
 import { ContentTip } from "./ContentTip.js";
 
+const NOT_AGENT_MATCH = "no_agent";
+
 export function MessageNode(props: MessageItem): React.ReactNode {
-  const { content, created, role } = props;
+  const { content, created, role, agentId } = props;
   const isUser = useMemo(() => role === "user", [role]);
 
   const getContentNode = useCallback((content: MessageItemContent) => {
@@ -38,7 +40,11 @@ export function MessageNode(props: MessageItem): React.ReactNode {
   return (
     <div className="message-box">
       <div className="message-top">
-        {isUser ? "我" : "AI助手"}
+        {isUser
+          ? "我"
+          : !agentId || agentId === NOT_AGENT_MATCH
+            ? "AI助手"
+            : agentId}
         <Time time={created} />
       </div>
       <div className="message-content">
