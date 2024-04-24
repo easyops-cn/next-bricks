@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.13.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.12.0...@next-bricks/basic@1.13.0) (2024-04-24)
+
+
+### Features
+
+* **formatter-number:** support number unit ([7834f57](https://github.com/easyops-cn/next-bricks/commit/7834f57e6f46a75ab643f93e97933ac5b74bc2e5))
+
+
+
+
+
 # [1.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.11.5...@next-bricks/basic@1.12.0) (2024-04-24)
 
 
