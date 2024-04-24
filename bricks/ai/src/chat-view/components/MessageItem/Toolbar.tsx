@@ -32,7 +32,7 @@ export function Toolbar({
     [role, content.type]
   );
   const isChattingItem = useMemo(() => chatting, [chatting]);
-  const { showLike, handleIsLike } = useChatViewContext();
+  const { showLike, readonly, handleIsLike } = useChatViewContext();
 
   const handleCopy = () => {
     copyToClipboard(content.text)
@@ -53,7 +53,7 @@ export function Toolbar({
 
   return isAssistant && !isChattingItem ? (
     <div className="toolbar">
-      {showLike && (
+      {showLike && !readonly && (
         <>
           <WrappedToolTip content="点赞">
             <WrapperIcon

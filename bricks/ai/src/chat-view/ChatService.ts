@@ -279,7 +279,7 @@ export class ChatService {
                 created: moment().format("YYYY-MM-DD HH:mm:ss"),
                 delta: {
                   role: "assistant",
-                  content: "`【数据格式错误】`",
+                  content: `\`【数据格式错误】:\` ${e}`,
                 },
               },
             });
@@ -288,10 +288,26 @@ export class ChatService {
           if (!this.#conversationId) {
             this.setConversationId(result.conversationId);
           }
-          this.enqueue({
-            topic: "add",
-            message: result,
-          });
+          if (result.delta.content.length) {
+            // 切割单词，模拟输入效果，推入队列
+            result.delta.content.split("").forEach((word) => {
+              this.enqueue({
+                topic: "add",
+                message: {
+                  ...result,
+                  delta: {
+                    role: "assistant",
+                    content: word,
+                  },
+                },
+              });
+            });
+          } else {
+            this.enqueue({
+              topic: "add",
+              message: result,
+            });
+          }
         },
         onclose: () => {
           // eslint-disable-next-line no-console
