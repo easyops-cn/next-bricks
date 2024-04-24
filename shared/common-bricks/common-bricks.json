@@ -31,7 +31,8 @@
     "eo-easyops-avatar",
     "eo-avatar-group",
     "eo-actions",
-    "eo-context-menu"
+    "eo-context-menu",
+    "eo-formatter-number"
   ],
   "icons": [
     "eo-antd-icon",
