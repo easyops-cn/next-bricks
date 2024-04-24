@@ -28,6 +28,17 @@ properties:
   type: percent
 ```
 
+### Bytes
+
+```yaml preview
+brick: eo-formatter-number
+properties:
+  value: 314159265
+  type: unit
+  decimals: 2
+  originalUnit: KiB
+```
+
 ### Fallback
 
 ```yaml preview

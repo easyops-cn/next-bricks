@@ -61,6 +61,26 @@ describe("eo-formatter-number", () => {
     });
   });
 
+  test("percent", () => {
+    const element = document.createElement(
+      "eo-formatter-number"
+    ) as EoFormatterNumber;
+    element.value = 314159265;
+    element.type = "unit";
+    element.originalUnit = "KiB";
+    element.decimals = 2;
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(element.shadowRoot?.lastChild?.textContent).toBe("299.61 GiB");
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
   test("fallback", () => {
     const element = document.createElement(
       "eo-formatter-number"
