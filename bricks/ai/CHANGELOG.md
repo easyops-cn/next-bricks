@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.9.2...@next-bricks/ai@1.10.0) (2024-04-24)
+
+
+### Features
+
+* **chat-view:** support readonly and update onMessage ([c4f20e3](https://github.com/easyops-cn/next-bricks/commit/c4f20e392dff0ba686ed9b0f1e478b27b94c2973))
+
+
+
+
+
 ## [1.9.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.9.1...@next-bricks/ai@1.9.2) (2024-04-19)
 
 
