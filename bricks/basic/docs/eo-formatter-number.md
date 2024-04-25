@@ -1,4 +1,4 @@
-构件 `eo-formatter-number`
+数字格式化，支持普通数字、货币、百分比、二进制字节等数字的格式化显示。
 
 ## Examples
 

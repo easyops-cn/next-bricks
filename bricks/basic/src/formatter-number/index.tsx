@@ -38,7 +38,7 @@ export type NumberOriginalUnit =
   | "PiB";
 
 /**
- * 数字格式化构件
+ * 数字格式化，支持普通数字、货币、百分比、二进制字节等数字的格式化显示。
  */
 export
 @defineElement("eo-formatter-number", {
@@ -52,12 +52,14 @@ class EoFormatterNumber
   accessor value: number | undefined;
 
   /**
-   * @default "decimal"
+   * 格式化类型
    */
   @property()
   accessor type: NumberType | undefined;
 
   /**
+   * 货币名
+   *
    * @default "CNY"
    */
   @property()
@@ -66,6 +68,9 @@ class EoFormatterNumber
   @property()
   accessor unit: string | undefined;
 
+  /**
+   * 原始单位，用于单位转换
+   */
   @property()
   accessor originalUnit: NumberOriginalUnit | undefined;
 
@@ -84,7 +89,7 @@ class EoFormatterNumber
   accessor thousandsSeparators: boolean | undefined;
 
   /**
-   * 当 value 为空或不是数字时的显示内容
+   * 当 value 为空或不是数字时的回退显示内容
    */
   @property()
   accessor fallback: string | undefined;
