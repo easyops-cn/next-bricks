@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.17](https://github.com/easyops-cn/next-bricks/compare/@next-shared/datetime@0.1.16...@next-shared/datetime@0.1.17) (2024-04-25)
+
+
+### Bug Fixes
+
+* fix eo-humanize-time medium format in en ([97423e8](https://github.com/easyops-cn/next-bricks/commit/97423e81a5c4fb899851070715c77b5492e57732))
+
+
+
+
+
 ## [0.1.16](https://github.com/easyops-cn/next-bricks/compare/@next-shared/datetime@0.1.15...@next-shared/datetime@0.1.16) (2024-04-16)
 
 **Note:** Version bump only for package @next-shared/datetime
