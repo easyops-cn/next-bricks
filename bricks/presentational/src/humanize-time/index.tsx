@@ -33,9 +33,7 @@ const { defineElement, property } = createDecorators();
 const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 
 /**
- * 人性化时间展示
- * @author ice
- * @category text
+ * 人性化时间展示，可显示完整时间、相对时间、未来时间、耗时等，支持自定义输入值格式和输出格式。
  */
 export
 @defineElement("eo-humanize-time", {
