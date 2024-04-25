@@ -8,8 +8,23 @@ Date.now = jest.fn(() => +new Date("2017-03-07 16:48:00"));
 const TIME_OFFSET = 0;
 
 describe("humanizeTime", () => {
+  beforeEach(() => {
+    i18n.changeLanguage("zh-CN");
+    moment.locale(i18n.language);
+  });
+
   it("compute humanized time from a date string", function () {
     expect(humanizeTime("2016-03-07 15:40:00")).toBe("2016年3月7日 下午3:40");
+  });
+
+  it("compute humanized time from a date string of current year", function () {
+    expect(humanizeTime("2017-03-07 15:40:00")).toBe("3月7日 下午3:40");
+  });
+
+  it("compute humanized time from a date string in en-US", function () {
+    i18n.changeLanguage("en-US");
+    moment.locale(i18n.language);
+    expect(humanizeTime("2016-03-07 15:40:00")).toBe("March 7, 2016 3:40 PM");
   });
 
   it("compute humanized time from a number in milliseconds", function () {
