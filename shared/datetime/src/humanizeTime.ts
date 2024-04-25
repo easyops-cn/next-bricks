@@ -2,6 +2,7 @@ import moment from "moment";
 import { i18n } from "@next-core/i18n";
 import { NS_LIBS_DATETIME, K } from "./i18n/constants.js";
 import { addResourceBundle } from "./i18n/index.js";
+
 addResourceBundle();
 
 const TIME_OFFSET = 0;
@@ -30,7 +31,7 @@ export const humanizeTime = (
   const m = moment(time);
   const now = moment().add(TIME_OFFSET);
   const fFull = "LL HH:mm";
-  const fMedium = "LL ah:mm";
+  const fMedium = i18n.t(`${NS_LIBS_DATETIME}:${K.FORMAT_MEDIUM}`);
   const fShort = i18n.t(`${NS_LIBS_DATETIME}:${K.FORMAT_SHORT}`);
   const fShort24 = i18n.t(`${NS_LIBS_DATETIME}:${K.FORMAT_SHORT_DAY}`);
   const fDefault = "LL HH:mm:ss";
@@ -49,16 +50,16 @@ export const humanizeTime = (
       m.year() < now.year()
         ? "lastYear"
         : diff < -2 || m.isBefore(now.clone().add(-1, "day"), "day")
-        ? "twoDaysBefore"
-        : m.isSame(now.clone().add(-1, "day"), "day")
-        ? "yesterday"
-        : m.isSame(now, "day")
-        ? "sameDay"
-        : diff < 2 && m.isSame(now.clone().add(1, "day"), "day")
-        ? "nextDay"
-        : diff < 7
-        ? "nextWeek"
-        : "default";
+          ? "twoDaysBefore"
+          : m.isSame(now.clone().add(-1, "day"), "day")
+            ? "yesterday"
+            : m.isSame(now, "day")
+              ? "sameDay"
+              : diff < 2 && m.isSame(now.clone().add(1, "day"), "day")
+                ? "nextDay"
+                : diff < 7
+                  ? "nextWeek"
+                  : "default";
     switch (retVal) {
       case "sameDay":
         _text =
