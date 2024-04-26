@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.13.1...@next-bricks/basic@1.13.2) (2024-04-26)
+
+
+### Bug Fixes
+
+* rename thousandsSeparators -> thousandsSeparator ([76027a5](https://github.com/easyops-cn/next-bricks/commit/76027a518e894232c30a2e1d2a382c899f437bb1))
+
+
+
+
+
 ## [1.13.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.13.0...@next-bricks/basic@1.13.1) (2024-04-25)
 
 **Note:** Version bump only for package @next-bricks/basic
