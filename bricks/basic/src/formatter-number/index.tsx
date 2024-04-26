@@ -14,7 +14,7 @@ export interface EoFormatterNumberProps {
   unit?: string;
   originalUnit?: string;
   decimals?: number;
-  thousandsSeparators?: boolean;
+  thousandsSeparator?: boolean;
   fallback?: string;
 }
 
@@ -86,7 +86,7 @@ class EoFormatterNumber
    * @default true
    */
   @property({ type: Boolean })
-  accessor thousandsSeparators: boolean | undefined;
+  accessor thousandsSeparator: boolean | undefined;
 
   /**
    * 当 value 为空或不是数字时的回退显示内容
@@ -103,7 +103,7 @@ class EoFormatterNumber
         unit={this.unit}
         originalUnit={this.originalUnit}
         decimals={this.decimals}
-        thousandsSeparators={this.thousandsSeparators}
+        thousandsSeparator={this.thousandsSeparator}
         fallback={this.fallback}
       />
     );
@@ -117,7 +117,7 @@ export function EoFormatterNumberComponent({
   unit,
   originalUnit,
   decimals,
-  thousandsSeparators,
+  thousandsSeparator,
   fallback,
 }: EoFormatterNumberProps) {
   const formattedValue = useMemo(() => {
@@ -135,7 +135,7 @@ export function EoFormatterNumberComponent({
       unit,
       minimumFractionDigits: decimals ?? 0,
       maximumFractionDigits: decimals ?? 20,
-      useGrouping: thousandsSeparators,
+      useGrouping: thousandsSeparator,
     });
     return formatter.format(value);
   }, [
@@ -143,7 +143,7 @@ export function EoFormatterNumberComponent({
     decimals,
     fallback,
     originalUnit,
-    thousandsSeparators,
+    thousandsSeparator,
     type,
     unit,
     value,

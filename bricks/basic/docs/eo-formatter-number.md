@@ -53,6 +53,6 @@ properties:
 brick: eo-formatter-number
 properties:
   value: 314159.265
-  thousandsSeparators: false
+  thousandsSeparator: false
   decimals: 2
 ```
