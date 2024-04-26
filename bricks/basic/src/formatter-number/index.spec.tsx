@@ -105,7 +105,7 @@ describe("eo-formatter-number", () => {
     element.fallback = "-";
     element.value = 314159.265;
     element.decimals = 2;
-    element.thousandsSeparators = false;
+    element.thousandsSeparator = false;
 
     act(() => {
       document.body.appendChild(element);
