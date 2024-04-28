@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.11.0...@next-bricks/ai@1.11.1) (2024-04-28)
+
+
+### Bug Fixes
+
+* **chat-view:** fix show-more url ([88ee878](https://github.com/easyops-cn/next-bricks/commit/88ee878ba6c3e183cc2d912698e6f4503746f3f9))
+* **chat-view:** fix show-more url ([1bad426](https://github.com/easyops-cn/next-bricks/commit/1bad426abd91d9619bb598285353771dc89c9d22))
+
+
+
+
+
 # [1.11.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.10.0...@next-bricks/ai@1.11.0) (2024-04-28)
 
 
