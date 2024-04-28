@@ -37,7 +37,6 @@ interface ChatViewContextProps {
   msgEnd: boolean;
   msgLoading: boolean;
   msgList: MessageItem[];
-  msgItem?: MessageItem;
   loading: boolean;
   chatting: boolean;
   searchStr: string;

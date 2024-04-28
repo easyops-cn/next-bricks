@@ -8,8 +8,9 @@ import { SessionList } from "./components/SessionList.js";
 import { SearchInput } from "./components/SearchInput.js";
 import styleText from "./styles.shadow.css";
 import loadStyleText from "./components/loading.shadow.css";
-import markdownStyleText from "./components/MessageItem/markdown.shadow.css";
+import markdownStyleText from "./components/MessageItem/Markdown/markdown.shadow.css";
 import quickAnswerListStyleText from "./components/QuickAnswerList/quickAnswerList.shadow.css";
+import CodeBlockStyleText from "./components/MessageItem/Markdown/CodeBlock/CodeBlock.shadow.css";
 import "@next-core/theme";
 import "./host-context.css";
 
@@ -25,6 +26,7 @@ export
     loadStyleText,
     markdownStyleText,
     quickAnswerListStyleText,
+    CodeBlockStyleText,
   ],
 })
 class ChatView extends ReactNextElement {
@@ -132,7 +134,6 @@ export function ChatViewComponent({
     msgEnd,
     msgLoading,
     msgList,
-    msgItem,
     sessionList,
     loading,
     chatting,
@@ -160,7 +161,6 @@ export function ChatViewComponent({
         msgEnd,
         msgLoading,
         msgList,
-        msgItem,
         chatting,
         loading,
         searchStr,
