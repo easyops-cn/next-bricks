@@ -119,7 +119,8 @@ export default function InstanceList({ text }: { text: string }) {
           {objectId ? (
             <div className="open-more">
               <WrappedLink
-                href={`${getBasePath()}/next-cmdb-instance-management/next/${objectId}/list`}
+                href={`${getBasePath()}next-cmdb-instance-management/next/${objectId}/list`}
+                target="_blank"
               >
                 查看更多
               </WrappedLink>
