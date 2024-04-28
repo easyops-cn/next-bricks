@@ -8,6 +8,7 @@ import type { Link, LinkProps } from "@next-bricks/basic/link";
 import { TableColumn, TableComponent } from "./Table";
 import { ChatItemLoading } from "../../../../Loading.js";
 import { useMsgItemContext } from "../../../MsgItemContext.js";
+import { getBasePath } from "@next-core/runtime";
 
 export type RequestParams = InstanceApi_PostSearchV3RequestBody & {
   objectId: string;
@@ -118,7 +119,7 @@ export default function InstanceList({ text }: { text: string }) {
           {objectId ? (
             <div className="open-more">
               <WrappedLink
-                href={`/next-cmdb-instance-management/next/${objectId}/list`}
+                href={`${getBasePath()}/next-cmdb-instance-management/next/${objectId}/list`}
               >
                 查看更多
               </WrappedLink>
