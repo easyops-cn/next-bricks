@@ -56,7 +56,8 @@ export default function InstanceList({ text }: { text: string }) {
           ...params,
         });
         setTableData(request.list ?? []);
-        setTableColumn(computedTableColumns(request.list!));
+        request.list?.length &&
+          setTableColumn(computedTableColumns(request.list!));
         setIsError(false);
       } catch {
         setIsError(true);
