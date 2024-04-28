@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.10.0...@next-bricks/ai@1.11.0) (2024-04-28)
+
+
+### Features
+
+* **chat-view:** support cmdb-instance-list ([2085be6](https://github.com/easyops-cn/next-bricks/commit/2085be65751bf3300e7ea2d138eedf6ec9797f2f))
+
+
+
+
+
 # [1.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.9.2...@next-bricks/ai@1.10.0) (2024-04-24)
 
 
