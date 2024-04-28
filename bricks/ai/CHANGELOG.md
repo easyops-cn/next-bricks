@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.11.1...@next-bricks/ai@1.11.2) (2024-04-28)
+
+
+### Bug Fixes
+
+* **chat-view:** table empty data error ([6ccf02a](https://github.com/easyops-cn/next-bricks/commit/6ccf02add2aaadc509b074b852a49822af1abc5a))
+
+
+
+
+
 ## [1.11.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.11.0...@next-bricks/ai@1.11.1) (2024-04-28)
 
 
