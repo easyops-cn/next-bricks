@@ -23,6 +23,8 @@
     }
     .empty-tip {
       margin-left: 12px;
+      font-size: 12px;
+      color: var(--palette-gray-7);
     }
     .table-wrapper {
       position: relative;
