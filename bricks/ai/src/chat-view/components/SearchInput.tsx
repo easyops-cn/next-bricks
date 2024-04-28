@@ -112,6 +112,7 @@ export function SearchInput(): React.ReactNode {
   useEffect(() => {
     if (searchStr) {
       handleChange(searchStr);
+      textareaRef.current?.focus();
       setSearchStr("");
     }
   }, [searchStr, disabled, setSearchStr, handleChange]);

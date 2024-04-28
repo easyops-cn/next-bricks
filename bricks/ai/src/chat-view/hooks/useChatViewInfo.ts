@@ -27,7 +27,6 @@ export function useChatViewInfo({
   const [msgLoading, setMsgLoading] = useState<boolean>(false);
   const [msgEnd, setMsgEnd] = useState<boolean>(false);
   const [msgList, setMsgList] = useState<MessageItem[]>([]);
-  const [msgItem, setMsgItem] = useState<MessageItem>();
   const [searchStr, setSearchStr] = useState<string>("");
   const chatingText = useRef<string>("");
   const chatingMessageItem = useRef<MessageItem>();
@@ -202,22 +201,25 @@ export function useChatViewInfo({
       setChatting(true);
       chatService.chat(str);
       setMsgList((list) => {
-        return list.concat({
-          role: "user",
-          content: {
-            type: "text",
-            text: str,
+        return list.concat([
+          {
+            role: "user",
+            content: {
+              type: "text",
+              text: str,
+            },
+            created: moment().format("YYYY-MM-DD HH:mm:ss"),
           },
-          created: moment().format("YYYY-MM-DD HH:mm:ss"),
-        });
-      });
-      setMsgItem({
-        role: "assistant",
-        content: {
-          type: "load",
-          text: "",
-        },
-        created: "Now",
+          {
+            role: "assistant",
+            content: {
+              type: "load",
+              text: "",
+            },
+            chatting: true,
+            created: "Now",
+          },
+        ]);
       });
     },
     [chatService, activeSessionId]
@@ -297,39 +299,34 @@ export function useChatViewInfo({
           type: "markdown",
           text: chatingText.current,
         },
-        key: Math.random(),
+        chatting: true,
         created: moment(msgItem?.created).format("YYYY-MM-DD HH:mm:ss"),
       };
-      setMsgItem(chatingMessageItem.current);
+      setMsgList((list) => {
+        list.pop();
+        return list.concat(chatingMessageItem.current!);
+      });
     };
     const reset = () => {
       chatingText.current = "";
-      setMsgItem(undefined);
       setChatting(false);
       chatingMessageItem.current = undefined;
     };
     const finishListener = () => {
-      setMsgList((list) => {
-        return list.concat(chatingMessageItem.current!);
-      });
       reset();
     };
     const fetchEndListener = () => {
       setMsgEnd(true);
     };
     const stopListener = () => {
-      setMsgList((list) => {
-        if (chatingMessageItem.current) {
-          chatingMessageItem.current.content = {
-            type: "markdown",
-            text:
-              chatingMessageItem.current.content.text +
-              " \\\n  ` 对话被中断了 `",
-          };
-          return list.concat(chatingMessageItem.current);
-        }
-        return list;
-      });
+      if (chatingMessageItem.current) {
+        chatingMessageItem.current.content = {
+          type: "markdown",
+          text:
+            chatingMessageItem.current.content.text + " \\\n  ` 对话被中断了 `",
+        };
+        setMsgList(msgList.concat(chatingMessageItem.current));
+      }
       reset();
     };
     chatService.subscribe("add", listener);
@@ -342,7 +339,7 @@ export function useChatViewInfo({
       chatService.unsubscribe("stop", stopListener);
       chatService.unsubscribe("message.fetch.end", fetchEndListener);
     };
-  }, [chatService, activeSessionId]);
+  }, [chatService, activeSessionId, msgList]);
 
   return {
     sessionEnd,
@@ -355,7 +352,6 @@ export function useChatViewInfo({
     msgEnd,
     msgLoading,
     msgList,
-    msgItem,
     handleChat,
     stopChat,
     createSession,

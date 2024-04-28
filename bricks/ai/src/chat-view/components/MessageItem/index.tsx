@@ -1,13 +1,14 @@
 import React, { useCallback, useMemo } from "react";
 import { MessageItem, MessageItemContent } from "../../ChatViewContext.js";
 import { GuideItem } from "./GuideItem.js";
-import { MarkdownItem } from "./MarkdownItem.js";
+import { MarkdownItem } from "./Markdown/index.js";
 import { TableItem } from "./TableItem.js";
 import { ChatItemLoading } from "../Loading.js";
 import { TextItem } from "./TextItem.js";
 import { Toolbar } from "./Toolbar.js";
 import { Time } from "./Time.js";
 import { ContentTip } from "./ContentTip.js";
+import { MsgItemContext } from "./MsgItemContext.js";
 
 const NOT_AGENT_MATCH = "no_agent";
 
@@ -25,7 +26,7 @@ export function MessageNode(props: MessageItem): React.ReactNode {
       case "table":
         return <TableItem text={text} />;
       case "load":
-        return <ChatItemLoading loading />;
+        return <ChatItemLoading />;
       case "markdown":
       default:
         return <MarkdownItem text={text} />;
@@ -38,22 +39,24 @@ export function MessageNode(props: MessageItem): React.ReactNode {
   );
 
   return (
-    <div className="message-box">
-      <div className="message-top">
-        {isUser
-          ? "我"
-          : !agentId || agentId === NOT_AGENT_MATCH
-            ? "AI助手"
-            : agentId}
-        <Time time={created} />
-      </div>
-      <div className="message-content">
-        <div className="content">
-          {messageNode}
-          <ContentTip {...props} />
-          <Toolbar {...props} />
+    <MsgItemContext.Provider value={props}>
+      <div className="message-box">
+        <div className="message-top">
+          {isUser
+            ? "我"
+            : !agentId || agentId === NOT_AGENT_MATCH
+              ? "AI助手"
+              : agentId}
+          <Time time={created} />
+        </div>
+        <div className="message-content">
+          <div className="content">
+            {messageNode}
+            <ContentTip {...props} />
+            <Toolbar {...props} />
+          </div>
         </div>
       </div>
-    </div>
+    </MsgItemContext.Provider>
   );
 }

@@ -6,16 +6,13 @@ import type {
 import { wrapBrick } from "@next-core/react-element";
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
-interface LoadingProps {
-  loading?: boolean;
+
+export function MessageListLoading() {
+  return <div className="message-list-loading-wrapper"></div>;
 }
 
-export function MessageListLoading({ loading }: LoadingProps) {
-  return loading ? <div className="message-list-loading-wrapper"></div> : null;
-}
-
-export function ChatItemLoading({ loading }: LoadingProps) {
-  return loading ? (
+export function ChatItemLoading() {
+  return (
     <div className="chart-item-loading-wrapper">
       <div className="load">
         <div></div>
@@ -24,7 +21,7 @@ export function ChatItemLoading({ loading }: LoadingProps) {
         <div></div>
       </div>
     </div>
-  ) : null;
+  );
 }
 
 export function CommonLoading() {

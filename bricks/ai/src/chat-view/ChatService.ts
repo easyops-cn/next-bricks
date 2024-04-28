@@ -233,6 +233,59 @@ export class ChatService {
     return flag;
   }
 
+  splitWord(str: string) {
+    if (!str) return [];
+    // 单词长度小于 5 直接返回, 否则做单词分割处理
+    if (str?.length < 5) return [str];
+    const list = [];
+
+    if (window.Intl) {
+      const segmenterFr = new Intl.Segmenter("zh-Hans-CN", {
+        granularity: "word",
+      });
+      const iterator = segmenterFr.segment(str)[Symbol.iterator]();
+
+      let nextWord = iterator.next();
+      while (!nextWord.done) {
+        list.push(nextWord.value.segment);
+        nextWord = iterator.next();
+      }
+    } else {
+      const customSplit = {
+        [Symbol.split](str: string) {
+          let pos = 0;
+          const result = [];
+          let cache = "";
+          while (pos < str.length) {
+            const matchStr = str.substring(pos, pos + 1);
+            // 如果是中文，单个输出
+            if (/[\u4e00-\u9fa5]/.test(matchStr)) {
+              result.push(cache + matchStr);
+              cache = "";
+            } else {
+              // 否则，遇到空格或者标点符号再分词
+              if (!/\s|[，。；《》?!,.:<>？！]]/.test(matchStr)) {
+                cache = cache + matchStr;
+              } else {
+                result.push(cache + matchStr);
+                cache = "";
+              }
+            }
+            pos++;
+          }
+          if (cache) result.push(cache);
+          return result;
+        },
+      };
+
+      str.split(customSplit).forEach((word) => {
+        list.push(word);
+      });
+    }
+
+    return list;
+  }
+
   async chat(str: string): Promise<void> {
     this.#ctrl = new AbortController();
     let hadMatchMessage = false;
@@ -288,26 +341,43 @@ export class ChatService {
           if (!this.#conversationId) {
             this.setConversationId(result.conversationId);
           }
-          if (result.delta.content.length) {
-            // 切割单词，模拟输入效果，推入队列
-            result.delta.content.split("").forEach((word) => {
-              this.enqueue({
-                topic: "add",
-                message: {
-                  ...result,
-                  delta: {
-                    role: "assistant",
-                    content: word,
-                  },
-                },
-              });
-            });
-          } else {
+          const wordList = this.splitWord(result.delta.content);
+          wordList.forEach((word) => {
             this.enqueue({
               topic: "add",
-              message: result,
+              message: {
+                ...result,
+                delta: {
+                  role: "assistant",
+                  content: word,
+                },
+              },
             });
-          }
+          });
+          // if (result.delta.content.length) {
+          //   // 切割单词，模拟输入效果，推入队列
+          //   result.delta.content.split("").forEach((word) => {
+          //     this.enqueue({
+          //       topic: "add",
+          //       message: {
+          //         ...result,
+          //         delta: {
+          //           role: "assistant",
+          //           content: word,
+          //         },
+          //       },
+          //     });
+          //   });
+          // } else {
+          //   this.enqueue({
+          //     topic: "add",
+          //     message: result,
+          //   });
+          // }
+          // this.enqueue({
+          //   topic: "add",
+          //   message: result,
+          // });
         },
         onclose: () => {
           // eslint-disable-next-line no-console

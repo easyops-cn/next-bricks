@@ -33,7 +33,6 @@ export function MessageList({
     msgLoading,
     msgEnd,
     msgList,
-    msgItem,
     loading,
     activeSessionId,
     chatting,
@@ -45,7 +44,7 @@ export function MessageList({
       return (
         <div
           className={classNames("message-item", { user: item.role === "user" })}
-          key={item.key ?? index}
+          key={index}
         >
           {showAvatar && <Avatar role={item.role} />}
           <MessageNode {...item} />
@@ -56,25 +55,19 @@ export function MessageList({
   );
 
   const msgListNode = useMemo(() => {
-    if (msgList.length) {
-      return msgList.map(getMsgItemNode);
-    }
-    return null;
-  }, [msgList, getMsgItemNode]);
-
-  const msgItemNode = useMemo(
-    () =>
-      msgItem ? (
-        <>
-          {getMsgItemNode({
-            ...msgItem,
-            chatting: true,
-          })}
-          <StopBtn />
-        </>
-      ) : null,
-    [msgItem, getMsgItemNode]
-  );
+    return msgList.map((item, index) => {
+      if (item.chatting) {
+        return (
+          <>
+            {getMsgItemNode(item, index)}
+            {chatting && index === msgList.length - 1 ? <StopBtn /> : null}
+          </>
+        );
+      } else {
+        return getMsgItemNode(item, index);
+      }
+    });
+  }, [msgList, chatting, getMsgItemNode]);
 
   const handleScroll = useCallback(() => {
     const messageList = messageListRef.current;
@@ -144,9 +137,8 @@ export function MessageList({
         {msgLoading && <CommonLoading />}
         <QuickAnswerList />
         {msgListNode}
-        {msgItemNode}
       </div>
-      <MessageListLoading loading={loading} />
+      {loading && <MessageListLoading />}
     </div>
   );
 }
