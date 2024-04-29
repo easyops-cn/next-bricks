@@ -7,6 +7,7 @@ import type {
   ComputedEdgeLineConf,
   DecoratorTextChangeDetail,
   EdgeCell,
+  LayoutOptions,
   LayoutType,
   NodeBrickConf,
 } from "./interfaces";
@@ -22,6 +23,7 @@ import { sameTarget } from "./processors/sameTarget";
 
 export interface CellComponentProps {
   layout: LayoutType;
+  layoutOptions?: LayoutOptions;
   cell: Cell;
   cells: Cell[];
   degraded: boolean;
@@ -48,6 +50,7 @@ export interface CellComponentProps {
 
 export function CellComponent({
   layout,
+  layoutOptions,
   cell,
   cells,
   degraded,
@@ -89,6 +92,7 @@ export function CellComponent({
       } else {
         handleMouseDown(event, {
           layout,
+          layoutOptions,
           action: "move",
           cell,
           scale: transform.k,
@@ -104,6 +108,7 @@ export function CellComponent({
     };
   }, [
     layout,
+    layoutOptions,
     cell,
     onCellMoved,
     onCellMoving,

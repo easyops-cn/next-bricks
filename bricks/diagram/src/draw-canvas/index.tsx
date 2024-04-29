@@ -11,13 +11,14 @@ import React, {
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import type { UseSingleBrickConf } from "@next-core/react-runtime";
-import { unwrapProvider } from "@next-core/utils/general";
+import { isObject, unwrapProvider } from "@next-core/utils/general";
 import "@next-core/theme";
 import { uniqueId } from "lodash";
 import classNames from "classnames";
 import { select } from "d3-selection";
 import type { lockBodyScroll as _lockBodyScroll } from "@next-bricks/basic/data-providers/lock-body-scroll/lock-body-scroll";
 import type {
+  NodePosition,
   PositionTuple,
   RangeTuple,
   SizeTuple,
@@ -42,6 +43,8 @@ import type {
   NodeView,
   LayoutType,
   LayoutOptions,
+  SmartConnectLineState,
+  LineConnecterConf,
 } from "./interfaces";
 import { rootReducer } from "./reducers";
 import { MarkerComponent } from "../diagram/MarkerComponent";
@@ -66,8 +69,12 @@ import { ZoomBarComponent } from "../shared/canvas/ZoomBarComponent";
 import { useLayout } from "../shared/canvas/useLayout";
 import { useReady } from "../shared/canvas/useReady";
 import { useLineMarkers } from "../shared/canvas/useLineMarkers";
+import { getConnectPointsOfRectangle } from "../shared/canvas/shapes/Rectangle";
+import { LineConnectorComponent } from "./LineConnectorComponent";
+import { HoverStateContext, type HoverState } from "./HoverStateContext";
 import styleText from "../shared/canvas/styles.shadow.css";
 import zoomBarStyleText from "../shared/canvas/ZoomBarComponent.shadow.css";
+import { SmartConnectLineComponent } from "./SmartConnectLineComponent";
 
 const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
   "basic.lock-body-scroll"
@@ -91,6 +98,7 @@ export interface EoDrawCanvasProps {
   pannable?: boolean;
   dragBehavior?: DragBehavior;
   scaleRange?: RangeTuple;
+  lineConnector?: LineConnecterConf | boolean;
 }
 
 export type DragBehavior = "lasso" | "grab";
@@ -171,7 +179,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
   @property({ type: Number })
   accessor degradedThreshold: number | undefined;
 
-  // Set `attribute` to `false` event if it accepts string value.
+  // Set `attribute` to `false` even if it accepts string value.
   // Because when passing like "<% DATA.node.data.name %>", it will be
   // evaluated as object temporarily.
   /**
@@ -212,9 +220,6 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
   @property({ type: Boolean })
   accessor pannable: boolean | undefined = true;
 
-  @property({ type: Boolean })
-  accessor selectable: boolean | undefined = true;
-
   /**
    * 按住鼠标拖动时的行为：
    *  - `lasso`：绘制选区
@@ -227,6 +232,9 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
 
   @property({ attribute: false })
   accessor scaleRange: RangeTuple | undefined;
+
+  @property({ attribute: false })
+  accessor lineConnector: LineConnecterConf | boolean | undefined;
 
   @event({ type: "activeTarget.change" })
   accessor #activeTargetChangeEvent!: EventEmitter<ActiveTarget | null>;
@@ -471,6 +479,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         pannable={this.pannable}
         dragBehavior={this.dragBehavior}
         scaleRange={this.scaleRange}
+        lineConnector={this.lineConnector}
         onActiveTargetChange={this.#handleActiveTargetChange}
         onSwitchActiveTarget={this.#handleSwitchActiveTarget}
         onCellMove={this.#handleCellMove}
@@ -534,6 +543,7 @@ function LegacyEoDrawCanvasComponent(
     pannable,
     dragBehavior,
     scaleRange: _scaleRange,
+    lineConnector,
     onActiveTargetChange,
     onSwitchActiveTarget,
     onCellMove,
@@ -719,10 +729,12 @@ function LegacyEoDrawCanvasComponent(
     },
     [cells]
   );
+  const [smartConnectLineState, setSmartConnectLineState] =
+    useState<SmartConnectLineState | null>(null);
 
   useEffect(() => {
-    lockBodyScroll(host, !!connectLineState);
-  }, [connectLineState, host]);
+    lockBodyScroll(host, !!connectLineState || !!smartConnectLineState);
+  }, [connectLineState, host, smartConnectLineState]);
 
   const activeTarget = useActiveTarget({
     cellsRef,
@@ -827,16 +839,81 @@ function LegacyEoDrawCanvasComponent(
   const reCenter = useCallback(() => {
     setCentered(false);
   }, [setCentered]);
-  const [lineConfMap, markers] = useLineMarkers({
+  const { lineConfMap, lineConnectorConf, markers } = useLineMarkers({
     cells,
     defaultEdgeLines,
+    lineConnector,
     markerPrefix,
   });
 
   const ready = useReady({ cells, layout, centered });
 
+  const [hoverState, setHoverState] = useState<HoverState | null>(null);
+  const unsetHoverStateTimeoutRef = useRef<number | null>(null);
+
+  const handleCellMouseEnter = useCallback(
+    (cell: Cell) => {
+      if (lineConnectorConf && isNodeCell(cell)) {
+        if (unsetHoverStateTimeoutRef.current !== null) {
+          clearTimeout(unsetHoverStateTimeoutRef.current);
+          unsetHoverStateTimeoutRef.current = null;
+        }
+        const relativePoints = getConnectPointsOfRectangle();
+        setHoverState({
+          cell,
+          relativePoints,
+          points: getConnectPoints(relativePoints, cell.view),
+        });
+      }
+    },
+    [lineConnectorConf]
+  );
+
+  const handleCellMouseLeave = useCallback(
+    (cell: Cell) => {
+      if (lineConnectorConf && isNodeCell(cell)) {
+        unsetHoverStateTimeoutRef.current = setTimeout(() => {
+          setHoverState(null);
+        }) as unknown as number;
+      }
+    },
+    [lineConnectorConf]
+  );
+
+  const hoverStateContextValue = useMemo(
+    () => ({
+      rootRef,
+      smartConnectLineState,
+      unsetHoverStateTimeoutRef,
+      hoverState,
+      setHoverState,
+      setSmartConnectLineState,
+      onConnect(
+        source: NodeCell,
+        target: NodeCell,
+        exitPosition: NodePosition,
+        entryPosition: NodePosition
+      ) {
+        dispatch({
+          type: "add-edge",
+          payload: {
+            type: "edge",
+            source: source.id,
+            target: target.id,
+            view: {
+              exitPosition,
+              entryPosition,
+              ...(isObject(lineConnector) ? lineConnector : null),
+            },
+          },
+        });
+      },
+    }),
+    [smartConnectLineState, hoverState, lineConnector]
+  );
+
   return (
-    <>
+    <HoverStateContext.Provider value={hoverStateContextValue}>
       <svg
         width="100%"
         height="100%"
@@ -862,6 +939,7 @@ function LegacyEoDrawCanvasComponent(
               <CellComponent
                 key={`${cell.type}:${cell.type === "edge" ? `${cell.source}~${cell.target}` : cell.id}`}
                 layout={layout}
+                layoutOptions={layoutOptions}
                 cell={cell}
                 cells={cells}
                 degraded={degraded}
@@ -880,6 +958,8 @@ function LegacyEoDrawCanvasComponent(
                 onDecoratorTextChange={onDecoratorTextChange}
                 onDecoratorTextEditing={handleDecoratorTextEditing}
                 onNodeBrickResize={handleNodeBrickResize}
+                onCellMouseEnter={handleCellMouseEnter}
+                onCellMouseLeave={handleCellMouseLeave}
               />
             ))}
           </g>
@@ -889,7 +969,21 @@ function LegacyEoDrawCanvasComponent(
             markerEnd={`${markerPrefix}0`}
             onConnect={handleConnect}
           />
+          {lineConnectorConf && (
+            <SmartConnectLineComponent
+              smartConnectLineState={smartConnectLineState}
+              transform={transform}
+              options={lineConnectorConf}
+            />
+          )}
         </g>
+        {lineConnectorConf && (
+          <LineConnectorComponent
+            activeTarget={activeTarget}
+            transform={transform}
+            smartConnectLineState={smartConnectLineState}
+          />
+        )}
       </svg>
       <ZoomBarComponent
         shadowRoot={host.shadowRoot!}
@@ -898,7 +992,7 @@ function LegacyEoDrawCanvasComponent(
         onZoomChange={handleZoomSlide}
         onReCenter={reCenter}
       />
-    </>
+    </HoverStateContext.Provider>
   );
 }
 
@@ -908,4 +1002,22 @@ function uuidV4() {
       v = c == "x" ? r : (r & 0x3) | 0x8;
     return v.toString(16);
   });
+}
+
+function getConnectPoints(
+  relativePoints: ReadonlyArray<NodePosition>,
+  view: NodeView,
+  border = 1
+) {
+  const viewWithBorder: NodeView = {
+    x: view.x + border / 2,
+    y: view.y + border / 2,
+    width: view.width - border,
+    height: view.height - border,
+  };
+
+  return relativePoints.map((p) => ({
+    x: viewWithBorder.x + p.x * viewWithBorder.width,
+    y: viewWithBorder.y + p.y * viewWithBorder.height,
+  }));
 }

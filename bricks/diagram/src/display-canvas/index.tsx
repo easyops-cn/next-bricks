@@ -347,7 +347,7 @@ function EoDisplayCanvasComponent({
     [zoomer]
   );
 
-  const [lineConfMap, markers] = useLineMarkers({
+  const { lineConfMap, markers } = useLineMarkers({
     cells,
     defaultEdgeLines,
     markerPrefix,
