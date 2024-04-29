@@ -21,7 +21,7 @@ export function ContentTip({ role, content }: MessageItem): React.ReactNode {
 
   return !readonly && isUser && !chatting ? (
     <div className="content-tip">
-      <WrappedToolTip content="点击再次提问">
+      <WrappedToolTip content="点击再次提问" hoist>
         <WrapperIcon lib="antd" icon="edit" onClick={handleCopy} />
       </WrappedToolTip>
     </div>

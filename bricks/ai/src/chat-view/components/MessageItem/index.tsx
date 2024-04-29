@@ -50,8 +50,9 @@ export function MessageNode(props: MessageItem): React.ReactNode {
           <Time time={created} />
         </div>
         <div className="message-content">
-          <div className="content">
-            {messageNode}
+          <div className="wrapper">
+            <div className="content">{messageNode}</div>
+
             <ContentTip {...props} />
             <Toolbar {...props} />
           </div>

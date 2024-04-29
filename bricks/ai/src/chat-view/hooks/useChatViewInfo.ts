@@ -12,9 +12,11 @@ const NEW_SESSION_ID = "new_session_id";
 
 export function useChatViewInfo({
   agentId,
+  sessionId,
   enterInterval = 50,
 }: {
   agentId: string;
+  sessionId?: string;
   enterInterval?: number;
 }) {
   const [sessionEnd, setSessionEnd] = useState<boolean>(false);
@@ -259,6 +261,10 @@ export function useChatViewInfo({
     },
     [chatService]
   );
+
+  useEffect(() => {
+    checkSession(sessionId);
+  }, [sessionId, checkSession]);
 
   useEffect(() => {
     // session listener

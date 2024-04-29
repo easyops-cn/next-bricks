@@ -39,11 +39,6 @@ export default function InstanceList({ text }: { text: string }) {
   const [objectId, setObjectId] = useState<string>("");
   const [tableColumn, setTableColumn] = useState<TableColumn[]>([]);
   const [tableData, setTableData] = useState<Record<string, any>[]>([]);
-  const [showMore, setShowMore] = useState<boolean>(false);
-
-  const handleClickShowMoreBtn = () => {
-    setShowMore((isShow) => !isShow);
-  };
 
   const fetchInstanceList = useCallback(
     async (objectId: string, params: InstanceApi_PostSearchV3RequestBody) => {
@@ -98,22 +93,16 @@ export default function InstanceList({ text }: { text: string }) {
 
   return (
     <div className="instance-list-wrapper">
+      <div className="params">
+        <div className="params-tip">【查询语句】: </div>
+        <pre>
+          <code>{text}</code>
+        </pre>
+      </div>
       {isLoading || isFetching ? (
         <ChatItemLoading />
       ) : isEnd && isError ? (
-        <div className="error-tip">
-          <WrappedLink onClick={handleClickShowMoreBtn}>
-            {showMore ? "收起" : "查询失败, 点击查看原始查询语句"}
-          </WrappedLink>
-          {showMore ? (
-            <div className="params">
-              <div className="params-tip">【查询语句】: </div>
-              <pre>
-                <code>{text}</code>
-              </pre>
-            </div>
-          ) : null}
-        </div>
+        <div className="error-tip">【查询失败】</div>
       ) : (
         <div>
           <TableComponent columns={tableColumn} dataSource={tableData} />

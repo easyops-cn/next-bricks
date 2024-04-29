@@ -183,7 +183,7 @@
   padding-bottom: 30px;
   padding: 12px;
   flex: 1;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   .message-list-box {
     display: flex;
@@ -202,31 +202,33 @@
 
         .message-box {
           margin-bottom: 0;
+          overflow: hidden;
           .message-top {
             flex-direction: row-reverse;
           }
           .message-content {
             justify-content: end;
-            .content {
-              background-color: #606f7c;
-              color: #fff;
-            }
-            &:hover {
-              .content-tip {
-                display: block;
+            .wrapper {
+              display: flex;
+              flex-direction: row-reverse;
+              .content {
+                background-color: #606f7c;
+                color: #fff;
               }
-            }
+              &:hover {
+                .content-tip {
+                  display: block;
+                }
+              }
 
-            .content-tip {
-              position: absolute;
-              left: -22px;
-              top: 0px;
-              display: none;
+              .content-tip {
+                display: none;
 
-              eo-icon {
-                padding: 4px;
-                color: #606f7c;
-                cursor: pointer;
+                eo-icon {
+                  padding: 4px;
+                  color: #606f7c;
+                  cursor: pointer;
+                }
               }
             }
           }
@@ -250,27 +252,30 @@
       .message-box {
         position: relative;
         flex: 1;
+        overflow: hidden;
         .message-content {
           display: flex;
           justify-content: start;
           position: relative;
-          .content {
+          .wrapper {
             position: relative;
-            padding: 14px;
-            border-radius: 6px;
-            background: var(--message-box-bg);
+            overflow: hidden;
+            .content {
+              position: relative;
+              padding: 14px;
+              border-radius: 6px;
+              overflow: hidden;
+              background: var(--message-box-bg);
 
-            .text-item {
-              white-space: pre-wrap;
+              .text-item {
+                white-space: pre-wrap;
+              }
             }
-
             .toolbar {
-              position: absolute;
-              bottom: -24px;
-              right: 0;
               display: flex;
               gap: 12px;
-              align-items: center;
+              justify-content: end;
+              margin-top: 4px;
 
               eo-icon {
                 cursor: pointer;
