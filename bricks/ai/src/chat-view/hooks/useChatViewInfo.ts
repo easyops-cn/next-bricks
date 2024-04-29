@@ -263,8 +263,10 @@ export function useChatViewInfo({
   );
 
   useEffect(() => {
-    checkSession(sessionId);
-  }, [sessionId, checkSession]);
+    if (sessionId) {
+      checkSession(sessionId);
+    }
+  }, [sessionId]);
 
   useEffect(() => {
     // session listener
