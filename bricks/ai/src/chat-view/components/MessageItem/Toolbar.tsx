@@ -55,7 +55,7 @@ export function Toolbar({
     <div className="toolbar">
       {showLike && !readonly && (
         <>
-          <WrappedToolTip content="点赞">
+          <WrappedToolTip content="点赞" hoist>
             <WrapperIcon
               className={classNames("like", {
                 active: tag?.isLike === true,
@@ -65,7 +65,7 @@ export function Toolbar({
               onClick={() => handleLikeOrIsLike(true)}
             />
           </WrappedToolTip>
-          <WrappedToolTip content="还不够好">
+          <WrappedToolTip content="还不够好" hoist>
             <WrapperIcon
               className={classNames("unlike", {
                 active: tag?.isLike === false,
@@ -78,7 +78,7 @@ export function Toolbar({
           <div className="split" />
         </>
       )}
-      <WrappedToolTip content="点击复制">
+      <WrappedToolTip content="点击复制" hoist>
         <WrapperIcon lib="antd" icon="copy" onClick={handleCopy} />
       </WrappedToolTip>
     </div>

@@ -15,14 +15,22 @@
 }
 
 .instance-list-wrapper {
-  .instance-list-table-wrapper {
-    .result-tip {
-      margin: 12px 0 2px 12px;
-      font-size: 0.875em;
-      color: rgb(94 129 172);
+  margin: 0 12px;
+  .params {
+    margin-top: 6px;
+    border-radius: 3px;
+    pre {
+      margin: 4px 0;
     }
+  }
+  .params-tip,
+  .error-tip,
+  .result-tip {
+    font-size: 0.875em;
+    color: rgb(94 129 172);
+  }
+  .instance-list-table-wrapper {
     .empty-tip {
-      margin-left: 12px;
       font-size: 12px;
       color: var(--palette-gray-7);
     }
@@ -36,10 +44,9 @@
       max-width: 100%;
       overflow: hidden;
       .table-content {
-        width: 0;
-        overflow: scroll;
+        overflow-x: auto;
         table {
-          margin: 0;
+          margin: 4px 0;
           tr {
             td {
               text-overflow: ellipsis;
@@ -48,18 +55,6 @@
             }
           }
         }
-      }
-    }
-  }
-  .error-tip {
-    padding: 12px 0;
-    font-size: 12px;
-    .params {
-      margin-top: 6px;
-      border-radius: 3px;
-      padding: 4px;
-      .params-tip {
-        color: rgb(94 129 172);
       }
     }
   }

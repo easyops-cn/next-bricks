@@ -120,6 +120,7 @@ export interface ChatViewProps {
 
 export function ChatViewComponent({
   agentId,
+  sessionId,
   showAvatar,
   showSessionList = true,
   readonly = false,
@@ -148,6 +149,7 @@ export function ChatViewComponent({
     querySessionHistory,
   } = useChatViewInfo({
     agentId,
+    sessionId,
     enterInterval,
   });
 

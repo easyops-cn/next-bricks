@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useLayoutEffect } from "react";
+import React, { useMemo, useRef } from "react";
 
 export type TableColumn = {
   title: string;
@@ -51,16 +51,6 @@ export function TableComponent({
       </colgroup>
     );
   }, [columns]);
-
-  useLayoutEffect(() => {
-    const tableContent = tableContentRef.current;
-
-    if (tableContent) {
-      const { width } = tableContent.parentElement!.getBoundingClientRect();
-
-      tableContent.style.width = `${width}px`;
-    }
-  }, []);
 
   return (
     <div className="instance-list-table-wrapper">

@@ -323,16 +323,14 @@ export class ChatService {
           let result = {} as SSEMessageItem;
           try {
             result = JSON.parse(data);
-          } catch (e) {
-            // eslint-disable-next-line no-console
-            console.log("数据格式错误", e);
+          } catch {
             this.enqueue({
               topic: "add",
               message: {
                 created: moment().format("YYYY-MM-DD HH:mm:ss"),
                 delta: {
                   role: "assistant",
-                  content: `\`【数据格式错误】:\` ${e}`,
+                  content: `\`【数据格式错误】:\` ${data}`,
                 },
               },
             });
@@ -354,30 +352,6 @@ export class ChatService {
               },
             });
           });
-          // if (result.delta.content.length) {
-          //   // 切割单词，模拟输入效果，推入队列
-          //   result.delta.content.split("").forEach((word) => {
-          //     this.enqueue({
-          //       topic: "add",
-          //       message: {
-          //         ...result,
-          //         delta: {
-          //           role: "assistant",
-          //           content: word,
-          //         },
-          //       },
-          //     });
-          //   });
-          // } else {
-          //   this.enqueue({
-          //     topic: "add",
-          //     message: result,
-          //   });
-          // }
-          // this.enqueue({
-          //   topic: "add",
-          //   message: result,
-          // });
         },
         onclose: () => {
           // eslint-disable-next-line no-console
