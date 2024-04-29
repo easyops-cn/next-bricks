@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.12.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.12.0...@next-bricks/ai@1.12.1) (2024-04-29)
+
+
+### Bug Fixes
+
+* **chat-view:** fix sessionId change ([944de42](https://github.com/easyops-cn/next-bricks/commit/944de4289950e00fcdf70a2ecf292da0eb16831d))
+
+
+
+
+
 # [1.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.11.2...@next-bricks/ai@1.12.0) (2024-04-29)
 
 
