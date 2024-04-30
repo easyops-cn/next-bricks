@@ -127,9 +127,9 @@ export default function CustomComponent({
   const component = useMemo(() => {
     switch (language) {
       case "easy_cmd_cmdb_instance_list":
-        return <TableComponent data={data} params={parseData} />;
+        return <TableComponent data={data?.list} params={parseData} />;
       case "easy_cmd_monitor_dashboard":
-        return <ChartComponent data={data.data} params={parseData} />;
+        return <ChartComponent data={data?.data} params={parseData} />;
     }
   }, [language, data, parseData]);
 
