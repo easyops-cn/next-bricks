@@ -11,6 +11,11 @@
   .chat-view-container {
     .chat-view-content {
       .chat-view {
+        .message-list {
+          width: 1556px;
+        }
+      }
+      .search-input-box {
         width: 1556px;
       }
     }
@@ -21,6 +26,11 @@
   .chat-view-container {
     .chat-view-content {
       .chat-view {
+        .message-list {
+          width: 1156px;
+        }
+      }
+      .search-input-box {
         width: 1156px;
       }
     }
@@ -31,6 +41,11 @@
   .chat-view-container {
     .chat-view-content {
       .chat-view {
+        .message-list {
+          width: 804px;
+        }
+      }
+      .search-input-box {
         width: 804px;
       }
     }
@@ -41,6 +56,11 @@
   .chat-view-container {
     .chat-view-content {
       .chat-view {
+        .message-list {
+          width: 100%;
+        }
+      }
+      .search-input-box {
         width: 100%;
       }
     }
@@ -65,6 +85,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  gap: 8px;
 
   .chat-view-toolbar {
     background: #e0e4e5;
@@ -94,7 +115,6 @@
     flex-direction: column;
     box-sizing: border-box;
     overflow-y: auto;
-    margin: 0 auto;
   }
 }
 
@@ -183,7 +203,9 @@
   padding-bottom: 30px;
   padding: 12px;
   flex: 1;
-  overflow-y: auto;
+  margin: 0 auto;
+  max-width: 100%;
+  box-sizing: border-box;
 
   .message-list-box {
     display: flex;
@@ -321,12 +343,15 @@
 .search-input-box {
   display: flex;
   flex-direction: column;
-  height: 50px;
+  height: 75px;
   padding: 12px;
   position: relative;
+  margin: 0 auto;
+  max-width: 100%;
+  box-sizing: border-box;
 
   &.fill-content {
-    box-shadow: 1px 0px 4px 0px rgba(197, 197, 197, 0.5);
+    border-top: 1px solid rgba(197, 197, 197, 0.5);
   }
 
   .input-box {

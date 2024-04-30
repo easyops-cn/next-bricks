@@ -318,9 +318,16 @@ export function useChatViewInfo({
     const reset = () => {
       chatingText.current = "";
       setChatting(false);
+      setLoading(false);
       chatingMessageItem.current = undefined;
     };
     const finishListener = () => {
+      setMsgList((list) => {
+        return list.map((item) => ({
+          ...item,
+          chatting: false,
+        }));
+      });
       reset();
     };
     const fetchEndListener = () => {
@@ -333,7 +340,14 @@ export function useChatViewInfo({
           text:
             chatingMessageItem.current.content.text + " \\\n  ` 对话被中断了 `",
         };
-        setMsgList(msgList.concat(chatingMessageItem.current));
+        setMsgList((list) => {
+          list.pop();
+          return msgList.concat(chatingMessageItem.current!);
+        });
+      } else {
+        setMsgList((list) => {
+          return list.filter((item) => item.content.type !== "load");
+        });
       }
       reset();
     };

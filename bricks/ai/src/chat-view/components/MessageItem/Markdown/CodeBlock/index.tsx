@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNodeViewContext } from "@prosemirror-adapter/react";
-import InstanceList from "./InstanceList/index.js";
 import { ProgressText } from "./ProgressText.js";
+import CustomComponent from "./CustomComponent.js";
 
 export const CodeBlock = () => {
   const [language, setLanguage] = useState("");
@@ -17,12 +17,13 @@ export const CodeBlock = () => {
 
   const renderContent = useMemo(() => {
     if (!node.firstChild?.text) return null;
+    const text = node.firstChild?.textContent;
     switch (language) {
       case "easy_cmd_progress":
-        return <ProgressText text={node.firstChild?.textContent} />;
+        return <ProgressText text={text} />;
       case "easy_cmd_cmdb_instance_list":
-      case "easy_cmd_cmdb_instance_table":
-        return <InstanceList text={node.firstChild?.textContent} />;
+      case "easy_cmd_monitor_dashboard":
+        return <CustomComponent text={text} language={language} />;
       default:
         return defaultContent;
     }

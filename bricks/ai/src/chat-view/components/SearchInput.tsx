@@ -126,10 +126,9 @@ export function SearchInput(): React.ReactNode {
     if (searchInputBox) {
       const observe = new ResizeObserver(() => {
         const { width: currentWidth } = searchInputBox.getBoundingClientRect();
-        const { width: parentWidth } =
-          searchInputBox.parentElement!.parentElement!.getBoundingClientRect();
+        const FIT_CONTENT_WIDTH = 900;
 
-        setIsFillContent(currentWidth === parentWidth);
+        setIsFillContent(currentWidth < FIT_CONTENT_WIDTH);
       });
 
       observe.observe(searchInputBox);
