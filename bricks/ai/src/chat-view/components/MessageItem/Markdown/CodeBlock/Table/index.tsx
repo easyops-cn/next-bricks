@@ -1,4 +1,9 @@
 import React, { useMemo, useRef } from "react";
+import type { Link, LinkProps } from "@next-bricks/basic/link";
+import { wrapBrick } from "@next-core/react-element";
+import { getBasePath } from "@next-core/runtime";
+
+const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 
 export type TableColumn = {
   title: string;
@@ -18,12 +23,28 @@ function cmdbInstanceShowName(value: string | string[]): string {
   }
 }
 
-export function TableComponent({
-  columns,
-  dataSource,
+function computedTableColumns(data: Record<string, any>[]) {
+  const columns: TableColumn[] = [];
+  const matchItem = data[0];
+  Object.keys(matchItem)?.forEach((key) => {
+    columns.push({
+      title: key,
+      dataIndex: key,
+      key: key,
+    });
+  });
+  return columns;
+}
+
+export default function TableComponent({
+  data: dataSource,
+  params,
 }: {
-  columns: TableColumn[];
-  dataSource: Record<string, unknown>[];
+  data: Record<string, unknown>[];
+  params: {
+    objectId: string;
+    [k: string]: unknown;
+  };
 }) {
   const tableContentRef = useRef<HTMLDivElement>(null);
 
@@ -33,6 +54,13 @@ export function TableComponent({
     }
     return value;
   };
+
+  const columns = useMemo((): TableColumn[] => {
+    if (dataSource.length) {
+      return computedTableColumns(dataSource);
+    }
+    return [];
+  }, [dataSource]);
 
   const getColGroup = useMemo(() => {
     return (
@@ -53,10 +81,10 @@ export function TableComponent({
   }, [columns]);
 
   return (
-    <div className="instance-list-table-wrapper">
+    <div className="table-wrapper">
       <div className="result-tip">【查询结果】:</div>
       {dataSource.length ? (
-        <div className="table-wrapper">
+        <div className="table-container">
           <div className="table-content" ref={tableContentRef}>
             <table>
               {getColGroup}
@@ -91,9 +119,19 @@ export function TableComponent({
               </tbody>
             </table>
           </div>
+          {params?.objectId ? (
+            <div className="open-more">
+              <WrappedLink
+                href={`${getBasePath()}next-cmdb-instance-management/next/${params.objectId}/list`}
+                target="_blank"
+              >
+                查看更多
+              </WrappedLink>
+            </div>
+          ) : null}
         </div>
       ) : (
-        <div className="empty-tip">【无数据】</div>
+        <div className="empty-tip">无数据</div>
       )}
     </div>
   );

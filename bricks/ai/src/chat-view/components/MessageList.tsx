@@ -24,7 +24,7 @@ const CACHE_HEIGHT = 200;
 export function MessageList({
   showAvatar = true,
 }: MessageListProps): React.ReactNode {
-  const messageListRef = useRef<HTMLDivElement>(null);
+  const chatViewRef = useRef<HTMLDivElement>(null);
   const messgetListBoxRef = useRef<HTMLDivElement>(null);
   const [preHeight, setPreHeight] = useState<number>(0);
   const isCustomScroll = useRef<boolean>(false);
@@ -70,7 +70,7 @@ export function MessageList({
   }, [msgList, chatting, getMsgItemNode]);
 
   const handleScroll = useCallback(() => {
-    const messageList = messageListRef.current;
+    const messageList = chatViewRef.current;
     if (messageList) {
       const { scrollHeight, clientHeight, scrollTop } = messageList;
       // 滚动到底部所需的高度 = 总高度 - 视图高度
@@ -81,11 +81,16 @@ export function MessageList({
         // 自动吸低
         isCustomScroll.current = false;
       }
-      if (!msgLoading && !msgEnd && scrollTop < CACHE_HEIGHT) {
+      if (
+        !msgLoading &&
+        !msgEnd &&
+        scrollTop < CACHE_HEIGHT &&
+        activeSessionId
+      ) {
         checkSession();
       }
     }
-  }, [msgEnd, msgLoading, checkSession]);
+  }, [msgEnd, msgLoading, activeSessionId, checkSession]);
 
   const debounceHandleScroll = debounce(handleScroll, 200);
 
@@ -108,12 +113,12 @@ export function MessageList({
         }
         if (!loading && !chatting) {
           // 高度变化，代表消息新增，自动滚动到最下
-          messageListRef.current!.scroll({
+          chatViewRef.current!.scroll({
             top: Number.MAX_SAFE_INTEGER,
           });
         }
         if (newHeight > preHeight && chatting) {
-          messageListRef.current!.scroll({
+          chatViewRef.current!.scroll({
             top: Number.MAX_SAFE_INTEGER,
           });
           setPreHeight(Math.max(preHeight, newHeight));
@@ -126,19 +131,21 @@ export function MessageList({
 
   return (
     <div
-      className="message-list"
-      ref={messageListRef}
+      className="chat-view"
+      ref={chatViewRef}
       onScroll={debounceHandleScroll}
     >
-      <div className="message-list-box" ref={messgetListBoxRef}>
-        {msgEnd && msgList.length ? (
-          <div className="message-start-tip">会话开始</div>
-        ) : null}
-        {msgLoading && <CommonLoading />}
-        <QuickAnswerList />
-        {msgListNode}
+      <div className="message-list">
+        <div className="message-list-box" ref={messgetListBoxRef}>
+          {msgEnd && msgList.length ? (
+            <div className="message-start-tip">会话开始</div>
+          ) : null}
+          {msgLoading && <CommonLoading />}
+          <QuickAnswerList />
+          {msgListNode}
+        </div>
+        {loading && <MessageListLoading />}
       </div>
-      {loading && <MessageListLoading />}
     </div>
   );
 }

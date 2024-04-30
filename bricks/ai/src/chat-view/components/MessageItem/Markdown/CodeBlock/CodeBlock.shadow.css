@@ -14,8 +14,7 @@
   }
 }
 
-.instance-list-wrapper {
-  margin: 0 12px;
+.custom-component-wrapper {
   .params {
     margin-top: 6px;
     border-radius: 3px;
@@ -29,12 +28,12 @@
     font-size: 0.875em;
     color: rgb(94 129 172);
   }
-  .instance-list-table-wrapper {
-    .empty-tip {
-      font-size: 12px;
-      color: var(--palette-gray-7);
-    }
-    .table-wrapper {
+  .empty-tip {
+    font-size: 12px;
+    color: var(--palette-gray-7);
+  }
+  .table-wrapper {
+    .table-container {
       position: relative;
       box-sizing: border-box;
       margin: 0;
@@ -57,11 +56,15 @@
         }
       }
     }
+    .open-more {
+      margin-top: 4px;
+      font-size: 12px;
+      display: flex;
+      justify-content: end;
+    }
   }
-  .open-more {
-    margin-top: 4px;
-    font-size: 12px;
-    display: flex;
-    justify-content: end;
+  .chart-wrapper {
+    background: #fff;
+    margin-top: 12px;
   }
 }

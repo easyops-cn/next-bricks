@@ -186,10 +186,8 @@ export function ChatViewComponent({
           </div>
         )}
         <div className="chat-view-content">
-          <div className="chat-view">
-            <MessageList showAvatar={showAvatar} />
-            {!readonly && <SearchInput />}
-          </div>
+          <MessageList showAvatar={showAvatar} />
+          {!readonly && <SearchInput />}
         </div>
       </div>
     </ChatViewContext.Provider>
