@@ -82,7 +82,6 @@ export default function TableComponent({
 
   return (
     <div className="table-wrapper">
-      <div className="result-tip">【查询结果】:</div>
       {dataSource.length ? (
         <div className="table-container">
           <div className="table-content" ref={tableContentRef}>

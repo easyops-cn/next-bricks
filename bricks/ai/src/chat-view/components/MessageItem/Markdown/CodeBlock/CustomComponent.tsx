@@ -37,38 +37,44 @@ function useFetchData({ text, chatting, language }: UseFetchDataProps) {
   const [parseData, setParseData] = useState<any>();
   const [data, setData] = useState<any>({});
 
-  const requestPromise = useCallback(() => {
-    switch (language) {
-      case "easy_cmd_cmdb_instance_list":
-        return InstanceApi_postSearchV3(parseData.objectId, {
-          page: 1,
-          page_size: 10,
-          ...parseData,
-        });
-      case "easy_cmd_monitor_dashboard":
-        return http.request<any>(
-          `${getBasePath()}/api/gateway/logic.data_exchange/api/v1/data_exchange/olap`,
-          {
-            method: "POST",
-            body: text,
-          }
-        );
-    }
-  }, [language, text, parseData]);
+  const requestPromise = useCallback(
+    async (data: any) => {
+      switch (language) {
+        case "easy_cmd_cmdb_instance_list":
+          return await InstanceApi_postSearchV3(data.objectId, {
+            page: 1,
+            page_size: 10,
+            ...data,
+          });
+        case "easy_cmd_monitor_dashboard":
+          return await http.request<any>(
+            `${getBasePath()}/api/gateway/logic.data_exchange/api/v1/data_exchange/olap`,
+            {
+              method: "POST",
+              body: text,
+            }
+          );
+      }
+    },
+    [language, text, parseData]
+  );
 
-  const fetchData = useCallback(async () => {
-    if (isFetching) return;
-    setIsFetching(true);
-    try {
-      const response = await requestPromise();
-      setData(response);
-      setIsError(false);
-    } catch {
-      setIsError(true);
-    }
-    setIsFetching(false);
-    setIsLoading(false);
-  }, [isFetching, requestPromise]);
+  const fetchData = useCallback(
+    async (data: any) => {
+      if (isFetching) return;
+      setIsFetching(true);
+      try {
+        const response = await requestPromise(data);
+        setData(response);
+        setIsError(false);
+      } catch {
+        setIsError(true);
+      }
+      setIsFetching(false);
+      setIsLoading(false);
+    },
+    [isFetching, requestPromise]
+  );
 
   useEffect(() => {
     if (cahceTextRef.current !== text) {
@@ -81,7 +87,7 @@ function useFetchData({ text, chatting, language }: UseFetchDataProps) {
         return;
       }
       setParseData(data);
-      fetchData();
+      fetchData(data);
     }
   }, [text]);
 
