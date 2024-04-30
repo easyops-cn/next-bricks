@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.13.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.12.1...@next-bricks/ai@1.13.0) (2024-04-30)
+
+
+### Features
+
+* **chat-view:** support display Chart ([c009539](https://github.com/easyops-cn/next-bricks/commit/c009539095df91e68a19cdd8226e62d7c630cfd5))
+
+
+
+
+
 ## [1.12.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.12.0...@next-bricks/ai@1.12.1) (2024-04-29)
 
 
