@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.13.0...@next-bricks/ai@1.13.1) (2024-04-30)
+
+
+### Bug Fixes
+
+* **chat-view:** fetch table data error ([ae72810](https://github.com/easyops-cn/next-bricks/commit/ae72810ec3c568f412e009bbadffe982e8e2a4b1))
+
+
+
+
+
 # [1.13.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.12.1...@next-bricks/ai@1.13.0) (2024-04-30)
 
 
