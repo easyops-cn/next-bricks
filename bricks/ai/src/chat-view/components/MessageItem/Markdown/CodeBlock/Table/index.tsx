@@ -56,7 +56,7 @@ export default function TableComponent({
   };
 
   const columns = useMemo((): TableColumn[] => {
-    if (dataSource.length) {
+    if (dataSource?.length) {
       return computedTableColumns(dataSource);
     }
     return [];
