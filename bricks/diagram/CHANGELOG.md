@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.34.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.34.3...@next-bricks/diagram@0.34.4) (2024-05-06)
+
+
+### Bug Fixes
+
+* do not re-center when dropping cells in manual layout ([02b1695](https://github.com/easyops-cn/next-bricks/commit/02b1695b54c11322a6b0775f35eaa3d3badc611a))
+
+
+
+
+
 ## [0.34.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.34.2...@next-bricks/diagram@0.34.3) (2024-05-06)
 
 
