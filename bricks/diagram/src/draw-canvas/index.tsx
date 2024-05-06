@@ -602,13 +602,17 @@ function LegacyEoDrawCanvasComponent(
     ref,
     () => ({
       dropNode(node) {
-        // Do not apply auto centering when dropping a node.
-        setCentered(true);
+        // Do not apply auto centering when dropping a node in manual layout.
+        if (layout !== "dagre" && layout !== "force") {
+          setCentered(true);
+        }
         dispatch({ type: "drop-node", payload: node });
       },
       dropDecorator(decorator) {
-        // Do not apply auto centering when dropping a decorator.
-        setCentered(true);
+        // Do not apply auto centering when dropping a decorator in manual layout.
+        if (layout !== "dagre" && layout !== "force") {
+          setCentered(true);
+        }
         dispatch({ type: "drop-decorator", payload: decorator });
       },
       addNodes(
