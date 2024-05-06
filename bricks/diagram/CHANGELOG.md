@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.34.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.34.2...@next-bricks/diagram@0.34.3) (2024-05-06)
+
+
+### Bug Fixes
+
+* skip layout if no cells ([5c50ae2](https://github.com/easyops-cn/next-bricks/commit/5c50ae2958298a65a8b0777b85722025a55e3e27))
+
+
+
+
+
 ## [0.34.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.34.1...@next-bricks/diagram@0.34.2) (2024-04-26)
 
 **Note:** Version bump only for package @next-bricks/diagram

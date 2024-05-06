@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.13.2...@next-bricks/ai@1.13.3) (2024-05-06)
+
+**Note:** Version bump only for package @next-bricks/ai
+
+
+
+
+
 ## [1.13.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.13.1...@next-bricks/ai@1.13.2) (2024-04-30)
 
 
