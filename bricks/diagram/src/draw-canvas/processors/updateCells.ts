@@ -186,7 +186,8 @@ export function updateCells({
         // The positioned node (if exists) will be updated.
         updateCandidates.push(...positionedNodes);
         ({ getNodeView } = dagreLayout({ cells: newCells }));
-        shouldReCenter = true;
+        // Only re-center when there is no cells previous.
+        shouldReCenter = previousCells.length === 0;
       } else {
         ({ getNodeView } = forceLayout({
           cells: newCells,

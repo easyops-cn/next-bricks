@@ -73,7 +73,9 @@ export function useLayout({
     if (
       cells.some(
         (cell) => isNodeCell(cell) && !cell[SYMBOL_FOR_SIZE_INITIALIZED]
-      )
+      ) ||
+      // Skip layout if no cells.
+      cells.length === 0
     ) {
       return;
     }
@@ -131,9 +133,9 @@ export function useLayout({
     previousLayoutRef.current = newCells.filter(isNodeOrEdgeCell);
 
     dispatch({ type: "update-cells", payload: newCells });
-    setCentered(false);
+    // setCentered(false);
     setLayoutInitialized(true);
-  }, [cells, dispatch, layout, layoutKey, layoutOptions, setCentered]);
+  }, [cells, dispatch, layout, layoutKey, layoutOptions /* , setCentered */]);
 
   return { centered, setCentered, getNextLayoutKey };
 }
