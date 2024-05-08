@@ -1,25 +1,24 @@
+import type {
+  ALLOWED_BUTTON_TYPES,
+  ALLOWED_COMPONENT_SIZES,
+  ALLOWED_SHAPES,
+} from "./constants";
+
 /* ============== Common Type Start ============== */
 
 export type Target = "_self" | "_blank" | "_parent" | "_top";
 
 export type UIType = "default" | "dashboard";
 
-export type Shape = "round" | "circle";
+export type Shape = (typeof ALLOWED_SHAPES)[number];
 
 /* ============== Common Type Start ============== */
 
 /* ============== Button Type Start ============== */
 
-export type ButtonType =
-  | "primary"
-  | "default"
-  | "dashed"
-  | "ghost"
-  | "link"
-  | "text"
-  | "icon";
+export type ButtonType = (typeof ALLOWED_BUTTON_TYPES)[number];
 
-export type ComponentSize = "large" | "medium" | "small" | "xs";
+export type ComponentSize = (typeof ALLOWED_COMPONENT_SIZES)[number];
 
 /* ============== Button Type End ============== */
 

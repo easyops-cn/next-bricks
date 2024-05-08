@@ -128,4 +128,23 @@ describe("eo-button", () => {
     });
     expect(element.shadowRoot?.childNodes.length).toBe(0);
   });
+
+  test("handle unknown types/sizes/shapes", async () => {
+    const element = document.createElement("eo-button") as Button;
+    element.textContent = "Hello";
+    element.size = "oops" as any;
+    element.type = "ouch" as any;
+    element.shape = "yaks" as any;
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    const button = element.shadowRoot?.querySelector("button");
+    expect(button?.className).toBe("medium default");
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
 });
