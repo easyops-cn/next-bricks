@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.32.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.32.8...@next-bricks/advanced@0.32.9) (2024-05-08)
+
+
+### Bug Fixes
+
+* 表格页面条数提示语修复为中文 ([fa806be](https://github.com/easyops-cn/next-bricks/commit/fa806be0e36064e3059c887c0fed29f17a54d10e))
+
+
+
+
+
 ## [0.32.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.32.7...@next-bricks/advanced@0.32.8) (2024-05-08)
 
 **Note:** Version bump only for package @next-bricks/advanced
