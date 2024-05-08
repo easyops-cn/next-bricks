@@ -11,6 +11,11 @@ import type { EoTooltip, ToolTipProps } from "../tooltip/index.jsx";
 import classNames from "classnames";
 import styleText from "./button.shadow.css";
 import "@next-core/theme";
+import {
+  ALLOWED_BUTTON_TYPES,
+  ALLOWED_COMPONENT_SIZES,
+  ALLOWED_SHAPES,
+} from "../constants.js";
 
 export const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 const WrappedTooltip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");
@@ -167,9 +172,12 @@ export function ButtonComponent({
     const button = (
       <button
         ref={callback}
-        className={classNames(size, shape, type, {
-          danger: danger,
-        })}
+        className={classNames(
+          ALLOWED_COMPONENT_SIZES.includes(size) ? size : "medium",
+          shape && ALLOWED_SHAPES.includes(shape) ? shape : null,
+          ALLOWED_BUTTON_TYPES.includes(type) ? type : "default",
+          { danger }
+        )}
         style={buttonStyle}
         disabled={disabled}
       >
