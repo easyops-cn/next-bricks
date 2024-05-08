@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.13.4...@next-bricks/basic@1.13.5) (2024-05-08)
+
+
+### Bug Fixes
+
+* **button:** handle unknown types/sizes/shapes ([a248c97](https://github.com/easyops-cn/next-bricks/commit/a248c9752fa5c7b40680b17495578ea129334ff8))
+
+
+
+
+
 ## [1.13.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.13.3...@next-bricks/basic@1.13.4) (2024-05-08)
 
 **Note:** Version bump only for package @next-bricks/basic
