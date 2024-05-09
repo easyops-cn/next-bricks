@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.7.11...@next-bricks/visual-builder@1.8.0) (2024-05-09)
+
+
+### Features
+
+* ai chat for visual builder ([271ab17](https://github.com/easyops-cn/next-bricks/commit/271ab17e5da5ad34567b5dde5374516dfa386461))
+
+
+
+
+
 ## [1.7.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.7.10...@next-bricks/visual-builder@1.7.11) (2024-05-08)
 
 **Note:** Version bump only for package @next-bricks/visual-builder

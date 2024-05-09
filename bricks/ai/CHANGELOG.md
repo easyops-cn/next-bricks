@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.14.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.13.4...@next-bricks/ai@1.14.0) (2024-05-09)
+
+
+### Features
+
+* ai chat agent ([390288e](https://github.com/easyops-cn/next-bricks/commit/390288e1258c6760804401273d862725506f0142))
+
+
+
+
+
 ## [1.13.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.13.3...@next-bricks/ai@1.13.4) (2024-05-08)
 
 **Note:** Version bump only for package @next-bricks/ai
