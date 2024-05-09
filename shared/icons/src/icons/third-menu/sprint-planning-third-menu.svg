@@ -2,11 +2,16 @@
 <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <title>sprint-planning-third-menu</title>
     <g id="sprint-planning-third-menu" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="编组备份" transform="translate(1.000000, 1.000000)" fill-rule="nonzero">
-            <rect id="矩形" stroke="#262626" stroke-width="1.2" x="0.6" y="0.6" width="4.05" height="6.675" rx="1"></rect>
-            <path d="M13,6.125 C13.5522847,6.125 14,6.57271525 14,7.125 L14,10.4 C14,10.7313708 13.7313708,11 13.4,11 C13.0686292,11 12.8,10.7313708 12.8,10.4 L12.8,7.325 L12.8,7.325 L9.95,7.325 L9.95,12.8 L11.4,12.8 C11.7313708,12.8 12,13.0686292 12,13.4 C12,13.7313708 11.7313708,14 11.4,14 L9.75,14 L9.75,14 C9.19771525,14 8.75,13.5522847 8.75,13 L8.75,7.125 C8.75,6.57271525 9.19771525,6.125 9.75,6.125 L13,6.125 Z" id="路径" fill="#262626"></path>
-            <path d="M11.6875,-0.7125 L12.0875,5.5625 L8.4375,5.9625 L8.0375,-0.3125 L11.6875,-0.7125 Z" id="矩形备份-2" stroke="#262626" stroke-width="1.2" transform="translate(10.062500, 2.625000) rotate(-270.000000) translate(-10.062500, -2.625000) "></path>
-            <path d="M5.5625,8.0375 L5.9625,14.3125 L2.3125,14.7125 L1.9125,8.4375 L5.5625,8.0375 Z" id="矩形备份-4" stroke="#262626" stroke-width="1.2" transform="translate(3.937500, 11.375000) rotate(-270.000000) translate(-3.937500, -11.375000) "></path>
+        <g id="编组">
+            <rect id="矩形" x="0" y="0" width="16" height="16"></rect>
+        </g>
+        <g id="部署编排" transform="translate(1.000000, 1.000000)" stroke="#262626" stroke-width="1.2">
+            <g id="形状结合备份-2" transform="translate(0.000000, 0.000000)">
+                <path d="M4.28571429,0.6 L4.4,7.27272727 L0.714285714,7.4 L0.6,0.727272727 L4.28571429,0.6 Z" id="路径" transform="translate(2.500000, 4.000000) rotate(180.000000) translate(-2.500000, -4.000000) "></path>
+                <path d="M13.2857143,6.6 L13.4,13.2727273 L9.71428571,13.4 L9.6,6.72727273 L13.2857143,6.6 Z" id="路径" transform="translate(11.500000, 10.000000) rotate(180.000000) translate(-11.500000, -10.000000) "></path>
+            </g>
+            <path d="M13.2727273,0.6 L13.4,4.28571429 L6.72727273,4.4 L6.6,0.714285714 L13.2727273,0.6 Z" id="形状结合-path"></path>
+            <path d="M7.27272727,9.6 L7.4,13.2857143 L0.727272727,13.4 L0.6,9.71428571 L7.27272727,9.6 Z" id="形状结合-path"></path>
         </g>
     </g>
 </svg>

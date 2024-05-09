@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>data-bulider-app</title>
+    <g id="data-bulider-app" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="矩形" fill="#000000" opacity="0" x="0" y="0" width="16" height="16"></rect>
+        <g id="形状结合备份-3" transform="translate(2.000000, 1.000000)" fill="#BFBFBF">
+            <path d="M6.3740515,7.60824575 L11.777,10.799 L6.22251537,14 L0.676,10.805 L6.3740515,7.60824575 Z M5.743,0 L5.7430515,6.47724575 L0,9.698 L0.000586297018,3.30854958 L5.743,0 Z M7.02,0.184 L12.4444444,3.30854958 L12.444,9.688 L7.0200515,6.48624575 L7.02,0.184 Z" transform="translate(6.222222, 7.000000) rotate(-180.000000) translate(-6.222222, -7.000000) "></path>
+        </g>
+    </g>
+</svg>

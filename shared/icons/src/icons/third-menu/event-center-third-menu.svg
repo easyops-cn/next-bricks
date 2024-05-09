@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>event-center-third-menu</title>
+    <g id="event-center-third-menu" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="编组" transform="translate(2.2, 1.5)">
+            <path d="M10.1141038,13.4523204 C6.9088907,13.4523204 4.41283148,13.4523204 2.62592619,13.4523204 C2.33860926,13.4523204 1.90763386,13.4523204 1.333,13.4523204 C0.6,13.4523204 0,12.8523204 0,12.1193204 L0,1.333 C0,0.6 0.6,0 1.333,0 L10.1141038,0 C10.8471038,0 11.4471038,0.6 11.4471038,1.333 L11.4471038,12.1193204 C11.4471038,12.8523204 10.8471038,13.4523204 10.1141038,13.4523204 Z" id="Stroke-1备份-5" stroke="#262626" stroke-width="1.2" stroke-linecap="round"></path>
+            <line x1="4.5" y1="10.5835" x2="7.70039669" y2="10.5835" id="Stroke-3备份-7" stroke="#262626" stroke-width="1.2" stroke-linecap="round"></line>
+            <path d="M3,10.5835 C3,10.8595 2.776,11.0835 2.5,11.0835 C2.224,11.0835 2,10.8595 2,10.5835 C2,10.3075 2.224,10.0835 2.5,10.0835 C2.776,10.0835 3,10.3075 3,10.5835" id="Fill-5备份-5" fill="#262626"></path>
+            <line x1="4.5" y1="5.5835" x2="9.242" y2="5.5835" id="Stroke-7备份-5" stroke="#262626" stroke-width="1.2" stroke-linecap="round"></line>
+            <path d="M3,5.5835 C3,5.8595 2.776,6.0835 2.5,6.0835 C2.224,6.0835 2,5.8595 2,5.5835 C2,5.3075 2.224,5.0835 2.5,5.0835 C2.776,5.0835 3,5.3075 3,5.5835" id="Fill-9备份-4" fill="#262626"></path>
+            <line x1="4.5" y1="8.0835" x2="9.242" y2="8.0835" id="Stroke-11备份-5" stroke="#262626" stroke-width="1.2" stroke-linecap="round"></line>
+            <path d="M3,8.0835 C3,8.3595 2.776,8.5835 2.5,8.5835 C2.224,8.5835 2,8.3595 2,8.0835 C2,7.8075 2.224,7.5835 2.5,7.5835 C2.776,7.5835 3,7.8075 3,8.0835" id="Fill-13备份-4" fill="#262626"></path>
+            <line x1="0.5" y1="2.5" x2="11.2098532" y2="2.5" id="直线-9备份" stroke="#262626" stroke-width="1.2" stroke-linecap="round"></line>
+        </g>
+    </g>
+</svg>

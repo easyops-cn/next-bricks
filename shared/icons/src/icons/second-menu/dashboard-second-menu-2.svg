@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>dashboard-second-menu</title>
+    <g id="dashboard-second-menu" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="图形" transform="translate(2, 3)">
+            <path d="M16,3 L16,13 C16,13.5522847 15.5522847,14 15,14 L1,14 C0.44771525,14 6.76353751e-17,13.5522847 0,13 L0,3 L16,3 Z M5.0625,5.875 C3.37112795,5.875 2,7.24612795 2,8.9375 C2,10.628872 3.37112795,12 5.0625,12 C6.75387205,12 8.125,10.628872 8.125,8.9375 L5.0625,8.9375 L5.0625,5.875 Z M14.1,5.9 L12.9,5.9 L12.9,11.1 L14.1,11.1 L14.1,5.9 Z M12.1,8.9 L10.9,8.9 L10.9,11.1 L12.1,11.1 L12.1,8.9 Z M5.5,5 L5.5,8.5 L9,8.5 C9,6.56700338 7.43299662,5 5.5,5 Z" id="形状结合" fill="#57689C"></path>
+            <path d="M1,0 L15,0 C15.5522847,-1.01453063e-16 16,0.44771525 16,1 L16,3 L16,3 L0,3 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z" id="矩形" fill="#57689C" opacity="0.55"></path>
+            <g id="编组-15" transform="translate(2, 5)"></g>
+        </g>
+    </g>
+</svg>

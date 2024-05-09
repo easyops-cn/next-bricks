@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>computing-resources-app</title>
+    <g id="computing-resources-app" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="compute-drm-third-menu">
+            <rect id="矩形" fill="#000000" opacity="0" x="0" y="0" width="16" height="16"></rect>
+            <g id="编组-2" transform="translate(1.1, 1)" fill="#BFBFBF">
+                <path d="M9.81111111,3.61111111 L10.3111111,9.88888889 L4.03333333,10.3888889 L3.53333333,4.11111111 L9.81111111,3.61111111 Z M8.37481924,4.85933071 L4.78155294,5.54740298 L5.46962521,9.14066929 L9.06289151,8.45259702 L8.37481924,4.85933071 Z" id="形状结合" stroke="#BFBFBF"></path>
+                <g id="编组" transform="translate(3.8889, 0)">
+                    <rect id="矩形" x="0.7" y="0.777777778" width="1" height="3.11111111"></rect>
+                    <rect id="矩形备份-2" x="0.7" y="10.1111111" width="1" height="3.11111111"></rect>
+                    <rect id="矩形备份" x="4.58888889" y="0.777777778" width="1" height="3.11111111"></rect>
+                    <rect id="矩形备份-3" x="4.58888889" y="10.1111111" width="1" height="3.11111111"></rect>
+                    <circle id="椭圆形" cx="1.16666667" cy="1.16666667" r="1.16666667"></circle>
+                    <circle id="椭圆形备份-2" cx="1.16666667" cy="12.8333333" r="1.16666667"></circle>
+                    <circle id="椭圆形备份" cx="5.05555556" cy="1.16666667" r="1.16666667"></circle>
+                    <circle id="椭圆形备份-3" cx="5.05555556" cy="12.8333333" r="1.16666667"></circle>
+                </g>
+                <g id="编组" transform="translate(7, 7) rotate(-270) translate(-7, -7)translate(3.8889, 0)">
+                    <rect id="矩形" x="0.7" y="0.777777778" width="1" height="3.11111111"></rect>
+                    <rect id="矩形备份-2" x="0.7" y="10.1111111" width="1" height="3.11111111"></rect>
+                    <rect id="矩形备份" x="4.58888889" y="0.777777778" width="1" height="3.11111111"></rect>
+                    <rect id="矩形备份-3" x="4.58888889" y="10.1111111" width="1" height="3.11111111"></rect>
+                    <circle id="椭圆形" cx="1.16666667" cy="1.16666667" r="1.16666667"></circle>
+                    <circle id="椭圆形备份-2" cx="1.16666667" cy="12.8333333" r="1.16666667"></circle>
+                    <circle id="椭圆形备份" cx="5.05555556" cy="1.16666667" r="1.16666667"></circle>
+                    <circle id="椭圆形备份-3" cx="5.05555556" cy="12.8333333" r="1.16666667"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

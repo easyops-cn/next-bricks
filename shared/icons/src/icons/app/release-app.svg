@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>release-app</title>
+    <g id="release-app" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="矩形" fill="#000000" opacity="0" x="0" y="0" width="16" height="16"></rect>
+        <g id="发布色块" transform="translate(1.000000, 1.500000)" fill="#BFBFBF">
+            <polygon id="路径" points="4.6226136 8.29644241 0 5.48066221 14 0 11.5486439 12.6098626 5.5842198 8.79006692 10.9154632 3.03473054"></polygon>
+            <polygon id="路径" points="5.62564283 9.81627334 5.62564283 13.0512152 7.60211342 11.0446636"></polygon>
+        </g>
+    </g>
+</svg>

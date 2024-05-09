@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>dashboard-third-menu</title>
+    <g id="dashboard-third-menu" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="图形备份" transform="translate(1, 2)">
+            <path d="M13.5,3.125 L13.5,11.25 L1,11.75 L0.5,3.125 L13.5,3.125 Z" id="矩形" stroke="#262626"></path>
+            <path d="M1,0 L13,0 C13.5522847,-1.01453063e-16 14,0.44771525 14,1 L14,2.625 L14,2.625 L0,2.625 L0,1 C-6.76353751e-17,0.44771525 0.44771525,1.01453063e-16 1,0 Z" id="矩形" fill="#262626"></path>
+            <g id="编组-15" transform="translate(1.75, 4.375)">
+                <line x1="10.0625" y1="1.3125" x2="10.0625" y2="4.8125" id="直线-2" stroke="#262626" stroke-width="1.2" stroke-linecap="square"></line>
+                <line x1="8.3125" y1="3.9375" x2="8.3125" y2="4.8125" id="直线-2备份" stroke="#262626" stroke-width="1.2" stroke-linecap="square"></line>
+                <path d="M2.6796875,0.765625 L2.6796875,3.4453125 L5.359375,3.4453125 C5.359375,4.92526304 4.15963804,6.125 2.6796875,6.125 C1.19973696,6.125 0,4.92526304 0,3.4453125 C0,1.96536196 1.19973696,0.765625 2.6796875,0.765625 Z M3.0625,0 C4.75387205,0 6.125,1.37112795 6.125,3.0625 L3.0625,3.0625 L3.0625,0 Z" id="形状结合" fill="#262626"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>data-bulider-second-menu</title>
+    <g id="data-bulider-second-menu" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="编组-3" fill="#000000" opacity="0">
+            <rect id="矩形" x="0" y="0" width="20" height="20"></rect>
+        </g>
+        <g id="路径" transform="translate(2.000000, 1.000000)" fill="#57689C">
+            <polygon points="7.80564807 8.21854118 0.858 4.116 7.99962309 0 15.13 4.109"></polygon>
+            <polygon opacity="0.55" points="8.615 18.001 8.61564807 9.67354118 16 5.53 15.9992462 13.7461505"></polygon>
+            <polygon points="6.975 17.765 0 13.7461505 3.0375702e-13 5.543 6.97464807 9.66154118"></polygon>
+        </g>
+    </g>
+</svg>

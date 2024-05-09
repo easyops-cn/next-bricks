@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>workload-app</title>
+    <g id="workload-app" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="矩形" fill="#000000" opacity="0" x="0" y="0" width="16" height="16"></rect>
+        <g id="架构拓扑" transform="translate(1.000245, 1.875421)" fill="#BFBFBF">
+            <polygon id="路径-2" fill-rule="nonzero" points="5.56561506 3.38407183 6.58955326 4.00981184 3.3832191 9.25654048 2.3592809 8.63080047"></polygon>
+            <polygon id="路径-2备份" fill-rule="nonzero" points="8.37919428 3.29370258 11.521864 8.43625309 10.4979258 9.06199311 7.35525608 3.91944259"></polygon>
+            <polygon id="路径-3" fill-rule="nonzero" points="10.4235661 9.56252516 10.4235661 10.5625252 3.7610144 10.5625252 3.7610144 9.56252516"></polygon>
+            <rect id="矩形" x="4.81226703" y="0" width="4.37501094" height="4.37501094" rx="2.18750547"></rect>
+            <rect id="矩形备份" x="0" y="7.87501969" width="4.37501094" height="4.37501094" rx="2.18750547"></rect>
+            <rect id="矩形备份-2" x="9.62502406" y="7.87501969" width="4.37501094" height="4.37501094" rx="2.18750547"></rect>
+        </g>
+    </g>
+</svg>
