@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>it-service-center-app</title>
+    <g id="it-service-center-app" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="应用性能监控">
+            <rect id="矩形" x="0" y="0" width="16" height="16"></rect>
+            <g id="IT服务中心" transform="translate(8.000000, 8.000000) scale(-1, 1) translate(-8.000000, -8.000000) translate(1.000000, 1.000000)" fill="#BFBFBF" fill-rule="nonzero">
+                <path d="M7,0 C10.8659932,0 14,3.13400675 14,7 C14,10.8659932 10.8659932,14 7,14 C3.13400675,14 0,10.8659932 0,7 C0,3.13400675 3.13400675,0 7,0 Z M5.08,3.8 L3.8,3.8 L3.8,10.2 L7.7997488,10.2 L7.7997488,8.92033543 L5.08,8.92 L5.08,3.8 Z M10.2,3.8 L6.2,3.8 L6.2,5.08 L8.92,5.079 L8.92,10.2 L10.2,10.2 L10.2,3.8 Z M7.8,6.2 L6.2,6.2 L6.2,7.8 L7.8,7.8 L7.8,6.2 Z" id="形状结合"></path>
+            </g>
+        </g>
+    </g>
+</svg>

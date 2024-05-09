@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>api-mock</title>
+    <g id="api-mock" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="矩形" fill="#000000" opacity="0" x="0" y="0" width="16" height="16"></rect>
+        <g id="编组" transform="translate(1.000000, 2.022517)">
+            <path d="M11.7817358,0.746885231 L13.0727312,1.06108349 L13.3732179,10.6329866 L7.18124207,8.55128314 L1.24937984,11.0520978 L0.623035274,1.38627699 L1.7260889,0.759455654 L6.75488645,3.33907331 L11.7817358,0.746885231 Z" id="矩形备份-50" stroke="#262626" stroke-width="1.2"></path>
+            <polygon id="路径-25" fill="#262626" points="2.8 8.99638004 2.8 4.16558173 3.92446522 3.47748253 7.01920352 5.24126334 10.0624078 3.47748253 11.2 4.16558173 11.2 8.99638004 9.71033653 8.23371471 9.71033653 5.31879925 7.01920352 7.00848024 4.22631235 5.31879925 4.22631235 8.23371471"></polygon>
+        </g>
+    </g>
+</svg>

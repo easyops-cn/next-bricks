@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>apm-third-menu</title>
+    <g id="apm-third-menu" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="编组-8" stroke="#262626" transform="translate(1, 2)">
+            <path d="M11.667,-0.4 C11.8685338,-0.4 12.0513828,-0.316839046 12.1841109,-0.184110931 C12.316839,-0.0513828168 12.4,0.131466242 12.4,0.333 L12.4,11.667 C12.4,11.8685338 12.316839,12.0513828 12.1841109,12.1841109 C12.0513828,12.316839 11.8685338,12.4 11.667,12.4 L2.333,12.4 C2.13146624,12.4 1.94861718,12.316839 1.81588907,12.1841109 C1.68316095,12.0513828 1.6,11.8685338 1.6,11.667 L1.6,0.333 C1.6,0.131466242 1.68316095,-0.0513828168 1.81588907,-0.184110931 C1.94861718,-0.316839046 2.13146624,-0.4 2.333,-0.4 Z" id="Stroke-1备份-5" stroke-width="1.2" transform="translate(7, 6) rotate(-270) translate(-7, -6)"></path>
+            <line x1="6.31675636" y1="6.80381319" x2="6.31675636" y2="-1.80381319" id="Stroke-3备份-5" stroke-linecap="round" transform="translate(6.3168, 2.5) rotate(-270) translate(-6.3168, -2.5)"></line>
+            <line x1="4.51987787" y1="7.13046682" x2="4.47996281" y2="2.13062614" id="Stroke-7备份-5" stroke-linecap="round" transform="translate(4.4999, 4.6305) rotate(-270) translate(-4.4999, -4.6305)"></line>
+            <line x1="6.56161992" y1="9.26101329" x2="6.52170487" y2="4.26117262" id="Stroke-7备份-6" stroke-linecap="round" transform="translate(6.5417, 6.7611) rotate(-270) translate(-6.5417, -6.7611)"></line>
+            <line x1="8.16377749" y1="11.3827058" x2="8.0780958" y2="6.38344004" id="Stroke-11备份-5" stroke-linecap="round" transform="translate(8.1209, 8.8831) rotate(-270) translate(-8.1209, -8.8831)"></line>
+        </g>
+    </g>
+</svg>

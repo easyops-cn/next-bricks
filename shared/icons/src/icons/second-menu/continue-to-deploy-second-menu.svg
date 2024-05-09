@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>continue-to-deploy-second-menu</title>
+    <g id="continue-to-deploy-second-menu" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="矩形" fill="#000000" opacity="0" x="0" y="0" width="20" height="20"></rect>
+        <g id="编组-2" transform="translate(2.000000, 3.000000)" fill="#57689C">
+            <polygon id="多边形" points="2.13333333 10.1333333 3.98085419 11.2 3.98085419 13.3333333 2.13333333 14.4 0.285812472 13.3333333 0.285812472 11.2"></polygon>
+            <polygon id="多边形备份" points="8 0 9.84752086 1.06666667 9.84752086 3.2 8 4.26666667 6.15247914 3.2 6.15247914 1.06666667"></polygon>
+            <polygon id="多边形备份-3" points="8 5.33333333 11.0022214 7.06666667 11.0022214 10.5333333 8 12.2666667 4.9977786 10.5333333 4.9977786 7.06666667"></polygon>
+            <rect id="矩形" opacity="0.55" x="7.46666667" y="1.6" width="1.06666667" height="5.86666667"></rect>
+            <polygon id="矩形备份" opacity="0.55" transform="translate(3.733333, 11.466667) rotate(-120.000000) translate(-3.733333, -11.466667) " points="3.2 8.53333333 4.26666667 8.53333333 4.26666667 14.4 3.2 14.4"></polygon>
+            <polygon id="矩形备份-2" opacity="0.55" transform="translate(12.800000, 11.795214) scale(-1, 1) rotate(-120.000000) translate(-12.800000, -11.795214) " points="12.2666667 8.86188022 13.3333333 8.86188022 13.3333333 14.7285469 12.2666667 14.7285469"></polygon>
+            <polygon id="多边形备份-2" points="13.8666667 10.1333333 15.7141875 11.2 15.7141875 13.3333333 13.8666667 14.4 12.0191458 13.3333333 12.0191458 11.2"></polygon>
+        </g>
+    </g>
+</svg>

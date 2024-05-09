@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>caching-and-distributed-service-monitoring-app</title>
+    <defs>
+        <filter x="-1050.0%" y="-145.1%" width="2200.0%" height="486.8%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.176470588   0 0 0 0 0.447058824   0 0 0 0 0.945098039  0 0 0 1 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <path d="M0.363636364,0 L0.363636364,4.13636364" id="path-2"></path>
+        <filter x="-637.5%" y="-96.7%" width="1375.0%" height="341.8%" filterUnits="objectBoundingBox" id="filter-3">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.931131999   0 0 0 0 0.649545397   0 0 0 0 0.1274895  0 0 0 1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="caching-and-distributed-service-monitoring-app" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="矩形" fill-opacity="0" fill="#F0F0F0" x="0" y="0" width="16" height="16"></rect>
+        <g id="编组-2" transform="translate(1, 1)">
+            <path d="M7,0 C10.8659932,0 14,3.13400675 14,7 C14,10.8659932 10.8659932,14 7,14 C3.13400675,14 0,10.8659932 0,7 C0,3.13400675 3.13400675,0 7,0 Z M7,2.54545455 C4.53982248,2.54545455 2.54545455,4.53982248 2.54545455,7 C2.54545455,9.46017752 4.53982248,11.4545455 7,11.4545455 C7.52680701,11.4545455 8.03225513,11.3630972 8.50133587,11.1952092 L8.17762044,10.6331241 C7.80670671,10.7532639 7.41093455,10.8181818 7,10.8181818 C4.89127641,10.8181818 3.18181818,9.10872359 3.18181818,7 C3.18181818,4.89127641 4.89127641,3.18181818 7,3.18181818 C9.10872359,3.18181818 10.8181818,4.89127641 10.8181818,7 C10.8181818,7.88641441 10.5161221,8.70227899 10.0093192,9.35027721 L10.3484364,9.93793603 C11.0370394,9.15374391 11.4545455,8.12562884 11.4545455,7 C11.4545455,4.53982248 9.46017752,2.54545455 7,2.54545455 Z M7.69177414,4.78876471 L6.69177414,4.78876471 L6.69110836,8.17776471 L5.01210026,6.61846405 L4.57910836,7.08480802 L6.68380728,9.03898267 L6.89315678,9.23335987 L7.12491065,9.23507243 L7.3182664,9.05554514 L7.45810836,8.92476471 L7.69177414,8.92512834 L7.69110836,8.70876471 L9.44080355,7.08480802 L9.00781166,6.61846405 L7.69110836,7.83976471 L7.69177414,4.78876471 Z" id="形状结合" fill="#BFBFBF"></path>
+            <g id="编组" filter="url(#filter-1)" transform="translate(6.8509, 4.7888)" fill="black" fill-opacity="1">
+                <g id="路径-3">
+                    <use filter="url(#filter-3)" xlink:href="#path-2"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>environmental-management-third-menu</title>
+    <g id="environmental-management-third-menu" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="矩形" fill="#000000" opacity="0" x="0" y="0" width="16" height="16"></rect>
+        <g id="编组" transform="translate(3.1, 4.45)" fill="#262626">
+            <rect id="矩形" x="0" y="0" width="2.8" height="1.4" rx="0.7"></rect>
+            <rect id="矩形备份" x="0" y="6.65" width="2.8" height="1.4" rx="0.7"></rect>
+        </g>
+        <path d="M15,2 L15,8 L1,8 L1,2 L15,2 Z M13.8,3.2 L2.2,3.2 L2.2,6.8 L13.8,6.8 L13.8,3.2 Z" id="矩形" fill="#262626" fill-rule="nonzero"></path>
+        <path d="M15,9 L15,11 L13.8,11 L13.8,10.2 L2.2,10.2 L2.2,13.8 L9,13.8 L9,15 L1,15 L1,9 L15,9 Z" id="形状结合" fill="#262626" fill-rule="nonzero"></path>
+        <path d="M12.1,15.2045453 C12.05,15.2045453 11.975,15.2045453 11.875,15.2045453 C11.775,15.2045453 11.675,15.2045453 11.575,15.2045453 L11.5,15.2045453 C10.67515,15.2045453 10,14.5364272 10,13.7200736 C10,12.9528041 10.57495,12.3341481 11.35,12.2355262 C11.65,11.641677 12.27475,11.1136363 13,11.1136363 C14.173913,11.1136363 14.6749,11.8889125 14.84995,12.7300728 C15.475,12.779535 16,13.323922 16,13.9670066 C16,14.6600071 15.44995,15.2045453 14.74975,15.2045453 L12.4,15.2045453 L12.1,15.2045453 Z" id="路径备份-2" fill="#262626"></path>
+    </g>
+</svg>
