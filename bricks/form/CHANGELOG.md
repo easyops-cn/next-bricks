@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.11...@next-bricks/form@1.9.12) (2024-05-09)
+
+
+### Bug Fixes
+
+* fix select suffix useBrick  notWork ([be69cbf](https://github.com/easyops-cn/next-bricks/commit/be69cbf4cfd7adb77e326b7c7f4d3c18e9633f4b))
+
+
+
+
+
 ## [1.9.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.10...@next-bricks/form@1.9.11) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/form
