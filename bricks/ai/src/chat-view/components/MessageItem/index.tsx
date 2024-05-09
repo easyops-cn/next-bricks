@@ -17,7 +17,7 @@ import { MsgItemContext } from "./MsgItemContext.js";
 const NOT_AGENT_MATCH = "no_agent";
 
 export function MessageNode(props: MessageItem): React.ReactNode {
-  const { content, created, role, agentId } = props;
+  const { content, created, role, agentId, chatting = false } = props;
   const isUser = useMemo(() => role === "user", [role]);
   const { quickAnswerConfig } = useChatViewContext();
 
@@ -34,7 +34,7 @@ export function MessageNode(props: MessageItem): React.ReactNode {
         return <ChatItemLoading />;
       case "markdown":
       default:
-        return <MarkdownItem text={text} />;
+        return <MarkdownItem text={text} chatting={chatting} />;
     }
   }, []);
 

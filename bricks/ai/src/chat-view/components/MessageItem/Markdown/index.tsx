@@ -5,6 +5,7 @@ import {
   rootCtx,
   editorViewOptionsCtx,
 } from "@milkdown/core";
+import { EditorView } from "prosemirror-view";
 import { Milkdown, useEditor, MilkdownProvider } from "@milkdown/react";
 import { commonmark, codeBlockSchema } from "@milkdown/preset-commonmark";
 import { nord } from "@milkdown/theme-nord";
@@ -17,20 +18,62 @@ import {
 } from "@prosemirror-adapter/react";
 import { CodeBlock } from "./CodeBlock/index.js";
 
-export function MarkdownItem({ text }: { text: string }) {
+export function MarkdownItem({
+  text,
+  chatting,
+}: {
+  text: string;
+  chatting: boolean;
+}) {
   return (
     <div className="markdown-item">
       <MilkdownProvider>
         <ProsemirrorAdapterProvider>
-          <MarkdownDisplay value={text} />
+          <MarkdownDisplay value={text} chatting={chatting} />
         </ProsemirrorAdapterProvider>
       </MilkdownProvider>
     </div>
   );
 }
 
-export function MarkdownDisplay({ value }: { value: string }): React.ReactNode {
+function hasURLProtocol(url: any) {
+  return (
+    url.startsWith("http://") ||
+    url.startsWith("https://") ||
+    url.startsWith("file://") ||
+    url.startsWith("data:") ||
+    url.startsWith("ts://?ts") ||
+    url.startsWith("ts:?ts")
+  );
+}
+
+export function MarkdownDisplay({
+  value,
+  chatting,
+}: {
+  value: string;
+  chatting: boolean;
+}): React.ReactNode {
   const nodeViewFactory = useNodeViewFactory();
+
+  const handleClick = (view: EditorView, pos: number) => {
+    const found = view.state.tr.doc.nodeAt(pos);
+
+    if (found && found.marks.length > 0) {
+      const mark = found.marks.find((m) => m.type.name === "link");
+      const href = mark?.attrs.href;
+      let path: string;
+
+      if (hasURLProtocol(href)) {
+        path = href;
+      } else {
+        path = encodeURIComponent(href);
+      }
+
+      !chatting && window.open(path, "_blank");
+    }
+    return true;
+  };
 
   const { get } = useEditor((root) => {
     return Editor.make()
@@ -39,8 +82,20 @@ export function MarkdownDisplay({ value }: { value: string }): React.ReactNode {
         ctx.update(editorViewOptionsCtx, (prev: any) => ({
           ...prev,
           editable: () => false,
+          handleClickOn: (view: EditorView, pos: number) =>
+            handleClick(view, pos),
         }));
         value && ctx.set(defaultValueCtx, value);
+        //拦截link的默认点击事件以支持通过新窗口弹出页面，如果后续有其他的定制化需求可以改用custom widget的方式写link widget
+        const observer = new MutationObserver(() => {
+          const links = Array.from(root.querySelectorAll("a"));
+          links.forEach((link) => {
+            link.onclick = () => false;
+          });
+        });
+        observer.observe(root, {
+          childList: true,
+        });
       })
       .config(nord)
       .use(prism)
