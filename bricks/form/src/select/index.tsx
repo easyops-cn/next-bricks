@@ -74,7 +74,7 @@ export interface SelectProps extends FormItemProps {
   tokenSeparators?: string[];
   maxTagCount?: number;
   groupBy?: string;
-  suffix?: UseSingleBrickConf;
+  suffix?: { useBrick: UseSingleBrickConf };
   fields?: { label?: string; value?: string };
   useBackend?: UseBackendConf & {
     onValueChangeArgs?: any[] | ((...args: any[]) => any[]);
@@ -183,7 +183,7 @@ class Select extends FormItemElementBase {
   @property({
     attribute: false,
   })
-  accessor suffix: UseSingleBrickConf | undefined;
+  accessor suffix: { useBrick: UseSingleBrickConf } | undefined;
 
   /**
    * 是否支持清除
@@ -703,16 +703,16 @@ export function SelectComponent(props: SelectProps) {
                 onClose={() => handleMultipleItemClose(option.value)}
               >
                 {option.label}
-                {multiple && suffix && (
-                  <ReactUseBrick useBrick={suffix} data={option} />
+                {multiple && suffix?.useBrick && (
+                  <ReactUseBrick useBrick={suffix.useBrick} data={option} />
                 )}
               </WrappedTag>
             ) : (
               option.label
             )}
           </span>
-          {!multiple && suffix && (
-            <ReactUseBrick useBrick={suffix} data={option} />
+          {!multiple && suffix?.useBrick && (
+            <ReactUseBrick useBrick={suffix.useBrick} data={option} />
           )}
         </div>
       );
@@ -787,7 +787,9 @@ export function SelectComponent(props: SelectProps) {
         <div className="select-item-option-content">
           <div className="option">
             <span className="label">{item.label}</span>
-            {suffix && <ReactUseBrick useBrick={suffix} data={item} />}
+            {suffix?.useBrick && (
+              <ReactUseBrick useBrick={suffix.useBrick} data={item} />
+            )}
           </div>
           {multiple && (
             <div className="is-checked">

@@ -182,10 +182,11 @@
         color: yellow
         tag: 粤
     suffix:
-      brick: eo-tag
-      properties:
-        textContent: <% DATA.tag %>
-        color: <% DATA.color %>
+      useBrick:
+        brick: eo-tag
+        properties:
+          textContent: <% DATA.tag %>
+          color: <% DATA.color %>
 ```
 
 ### GroupBy
@@ -271,9 +272,10 @@
       label: name
       value: name
     suffix:
-      brick: eo-tag
-      properties:
-        textContent: <% DATA.country %>
+      useBrick:
+        brick: eo-tag
+        properties:
+          textContent: <% DATA.country %>
 ```
 
 ### Input Style
