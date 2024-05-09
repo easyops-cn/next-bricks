@@ -35,6 +35,6 @@
   },
   "devDependencies": {
     "@next-core/build-next-libs": "^1.0.14",
-    "@next-core/test-next": "^1.0.17"
+    "@next-core/test-next": "^1.1.0"
   }
 }

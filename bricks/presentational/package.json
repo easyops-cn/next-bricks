@@ -34,12 +34,12 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-core/element": "^1.2.4",
-    "@next-core/i18n": "^1.0.42",
-    "@next-core/react-element": "^1.0.23",
-    "@next-core/react-runtime": "^1.4.6",
+    "@next-core/element": "^1.2.5",
+    "@next-core/i18n": "^1.0.43",
+    "@next-core/react-element": "^1.0.24",
+    "@next-core/react-runtime": "^1.4.7",
     "@next-core/types": "^1.10.0",
-    "@next-core/utils": "^1.7.0",
+    "@next-core/utils": "^1.7.1",
     "@next-shared/datetime": "^0.1.18",
     "@next-shared/general": "^0.8.23",
     "classnames": "^2.3.2",
@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "@next-core/build-next-bricks": "^1.20.8",
-    "@next-core/test-next": "^1.0.17",
+    "@next-core/test-next": "^1.1.0",
     "babel-plugin-prismjs": "^2.1.0"
   },
   "peerDependencies": {
