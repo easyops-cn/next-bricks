@@ -34,8 +34,8 @@
     "test:ci": "cross-env NODE_ENV='test' CI=true test-next"
   },
   "dependencies": {
-    "@next-core/element": "^1.2.5",
-    "@next-core/react-element": "^1.0.24",
+    "@next-core/element": "^1.2.6",
+    "@next-core/react-element": "^1.0.25",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
