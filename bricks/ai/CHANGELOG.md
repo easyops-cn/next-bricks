@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.15.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.14.0...@next-bricks/ai@1.15.0) (2024-05-09)
+
+
+### Features
+
+* **chat-view:** Input support mentions agent and setAgent ([ce0ffca](https://github.com/easyops-cn/next-bricks/commit/ce0ffca9b9b5646422cd0f3396eef77db5ef09ea))
+
+
+
+
+
 # [1.14.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.13.4...@next-bricks/ai@1.14.0) (2024-05-09)
 
 
