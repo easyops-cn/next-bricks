@@ -16,6 +16,7 @@ export interface AgentDetailItem {
   icon: GeneralIconProps & { color: string };
   starterPrompts?: string[];
   instanceId: string;
+  id: string;
   [key: string]: any;
 }
 

@@ -54,6 +54,13 @@ export function useChatViewInfo({
     chatService.stop();
   }, [chatService]);
 
+  const setAgent = useCallback(
+    (id: string) => {
+      chatService.setAgentId(id);
+    },
+    [chatService]
+  );
+
   const checkSession = useCallback(
     async (id?: string, isInit = false) => {
       if (isInit && id) {
@@ -374,6 +381,7 @@ export function useChatViewInfo({
     msgEnd,
     msgLoading,
     msgList,
+    setAgent,
     handleChat,
     stopChat,
     createSession,

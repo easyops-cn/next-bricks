@@ -49,13 +49,12 @@ export default function ChartComponent({
         })
         .scale("y", {
           nice: true,
-        })
-        // https://github.com/antvis/G2/issues/6213
-        // 由于 tooltip 显示在 shadow-dom 下有问题，故先隐藏
-        .tooltip(false);
+        });
 
-      // 渲染可视化
-      chart.render();
+      // https://github.com/antvis/G2/issues/6213
+      chart.render().then(() => {
+        chart.getContext().canvas!.getConfig().supportsCSSTransform = false;
+      });
       return () => {
         chart.destroy();
       };

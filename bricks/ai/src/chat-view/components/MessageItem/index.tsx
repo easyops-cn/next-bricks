@@ -1,5 +1,9 @@
 import React, { useCallback, useMemo } from "react";
-import { MessageItem, MessageItemContent } from "../../ChatViewContext.js";
+import {
+  MessageItem,
+  MessageItemContent,
+  useChatViewContext,
+} from "../../ChatViewContext.js";
 import { GuideItem } from "./GuideItem.js";
 import { MarkdownItem } from "./Markdown/index.js";
 import { TableItem } from "./TableItem.js";
@@ -15,6 +19,7 @@ const NOT_AGENT_MATCH = "no_agent";
 export function MessageNode(props: MessageItem): React.ReactNode {
   const { content, created, role, agentId } = props;
   const isUser = useMemo(() => role === "user", [role]);
+  const { quickAnswerConfig } = useChatViewContext();
 
   const getContentNode = useCallback((content: MessageItemContent) => {
     const { type, text, examplePrompts } = content;
@@ -38,15 +43,24 @@ export function MessageNode(props: MessageItem): React.ReactNode {
     [content, getContentNode]
   );
 
+  const agentList = useMemo(
+    () => quickAnswerConfig?.list ?? [],
+    [quickAnswerConfig]
+  );
+
+  const matchAgent = useMemo(() => {
+    return agentList.find((item) => item.id === agentId);
+  }, [agentList, agentId]);
+
   return (
     <MsgItemContext.Provider value={props}>
       <div className="message-box">
         <div className="message-top">
           {isUser
             ? "我"
-            : !agentId || agentId === NOT_AGENT_MATCH
+            : !agentId || agentId === NOT_AGENT_MATCH || !matchAgent
               ? "AI助手"
-              : agentId}
+              : matchAgent.name}
           <Time time={created} />
         </div>
         <div className="message-content">
