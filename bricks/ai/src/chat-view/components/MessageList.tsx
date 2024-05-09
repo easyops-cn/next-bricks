@@ -46,7 +46,7 @@ export function MessageList({
           className={classNames("message-item", { user: item.role === "user" })}
           key={index}
         >
-          {showAvatar && <Avatar role={item.role} />}
+          {showAvatar && <Avatar role={item.role} agentId={item.agentId} />}
           <MessageNode {...item} />
         </div>
       );

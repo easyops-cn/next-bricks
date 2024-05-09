@@ -135,6 +135,10 @@ export class ChatService {
     return flag;
   }
 
+  setAgentId(id: string) {
+    this.#agentId = id;
+  }
+
   setConversationId(id?: string) {
     this.#conversationId = id;
   }
@@ -332,6 +336,7 @@ export class ChatService {
                   role: "assistant",
                   content: `\`【数据格式错误】:\` ${data}`,
                 },
+                agentId: this.#agentId,
               },
             });
             return;
@@ -365,6 +370,7 @@ export class ChatService {
                   role: "assistant",
                   content: "`无法识别`",
                 },
+                agentId: this.#agentId,
                 created: moment().format("YYYY-MM-DD HH:mm:ss"),
               },
             });

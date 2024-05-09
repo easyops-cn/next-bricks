@@ -28,7 +28,6 @@ export interface QuickAnswerConfig {
   tip: string;
   list: AgentDetailItem[];
 }
-
 interface ChatViewContextProps {
   sessionEnd: boolean;
   sessionLoading: boolean;
@@ -43,6 +42,7 @@ interface ChatViewContextProps {
   showLike: boolean;
   readonly: boolean;
   quickAnswerConfig?: QuickAnswerConfig;
+  setAgent: (id: string) => void;
   handleIsLike: (id: string, isLike: boolean) => Promise<boolean>;
   handleChat: (str: string) => void;
   stopChat: () => void;
