@@ -2912,7 +2912,7 @@
   resolved "https://registry.yarnpkg.com/@next-core/types/-/types-1.10.0.tgz#c2a277a790ec54702c3696e2cbb3d8c28a217ce9"
   integrity sha512-B96vVHCZXY0MvJq00AHj8BiUdOLVhYSgIXpI67xAOPNv0EJYbVxkhSsCUp3zjBLCNbm0wyuPkAGiDwfXP0QytQ==
 
-"@next-core/utils@^1.7.1":
+"@next-core/utils@^1.7.0", "@next-core/utils@^1.7.1":
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/@next-core/utils/-/utils-1.7.1.tgz#0d4e6ee2a7c1ed290566d3643d9ba9e4a93f1d34"
   integrity sha512-4PFAjU2gr61EmdhVmVIi4bZQOgv6r0zyjXqYAdqGKRKlXghqMyEOlzGv60qmZdMpxRFuVwwrdPq3cKLM69WYNw==
