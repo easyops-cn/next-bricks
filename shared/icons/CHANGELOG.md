@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.7.0...@next-shared/icons@0.8.0) (2024-05-09)
+
+
+### Features
+
+* launchpad所有小产品图标的上传 ([142b9b5](https://github.com/easyops-cn/next-bricks/commit/142b9b5ed7e97937e6ed36a689ea34f66162ab86))
+
+
+
+
+
 # [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.6.1...@next-shared/icons@0.7.0) (2024-05-09)
 
 
