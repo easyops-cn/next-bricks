@@ -240,12 +240,18 @@ export function LegacyChatAgentComponent(
         console.error("stream failed:", error);
         setFullMessages((prev) => {
           const last = prev[prev.length - 1];
+          let keep = prev;
           if (last?.key === assistantKey) {
-            last.partial = false;
-            last.failed = true;
+            if (last.content) {
+              last.partial = false;
+              last.failed = true;
+            } else {
+              // Ignore the empty assistant message.
+              keep = prev.slice(0, -1);
+            }
           }
           return [
-            ...prev,
+            ...keep,
             {
               role: "assistant",
               content: "系统错误",

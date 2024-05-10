@@ -68,7 +68,7 @@ describe("ai.chat-agent", () => {
     expect(onBusyChange).not.toHaveBeenCalled();
     expect(onMessagesUpdate).not.toHaveBeenCalled();
 
-    let promise: Promise<string | undefined>;
+    let promise: Promise<string | undefined> | undefined;
     act(() => {
       promise = element.postMessage("Hi");
     });
