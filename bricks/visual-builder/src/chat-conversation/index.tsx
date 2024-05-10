@@ -169,7 +169,12 @@ export function LegacyChatConversationComponent({
           if (childBrick) {
             main.children.push({
               ...childBrick,
+              properties: {
+                ...childBrick.properties,
+                slot: undefined,
+              },
               slot: "toolbar",
+              iid: `item-${child}`,
             });
             hasContent = true;
           }
@@ -180,20 +185,27 @@ export function LegacyChatConversationComponent({
           const brick: BrickConf = {
             ...rawBrick,
             children: [],
+            iid: `block-${block.uuid}`,
           };
           hasContent = true;
           contentLayout.children.push(brick);
           for (const child of block.children) {
             const childBrick = storyboardMap.get(child);
             if (childBrick) {
-              brick.children.push(childBrick);
+              brick.children.push({
+                ...childBrick,
+                iid: `item-${child}`,
+              });
             }
           }
         } else if (!block.hasContainer) {
           for (const child of block.children) {
             const childBrick = storyboardMap.get(child);
             if (childBrick) {
-              contentLayout.children.push(childBrick);
+              contentLayout.children.push({
+                ...childBrick,
+                iid: `item-${child}`,
+              });
               hasContent = true;
             }
           }

@@ -30,6 +30,10 @@ describe("ai.chat-agent", () => {
     element.addEventListener("busy.change", (event) => {
       onBusyChange((event as CustomEvent).detail);
     });
+    const onConversationIdChange = jest.fn();
+    element.addEventListener("conversationId.change", (event) => {
+      onConversationIdChange((event as CustomEvent).detail);
+    });
 
     act(() => {
       document.body.appendChild(element);
@@ -44,6 +48,7 @@ describe("ai.chat-agent", () => {
             role: "assistant",
             content: "Hello",
           },
+          conversationId: "chat-1",
           key: 1,
         };
         await new Promise((resolve) => setTimeout(resolve, 100));
@@ -52,6 +57,7 @@ describe("ai.chat-agent", () => {
             role: "assistant",
             content: "World",
           },
+          conversationId: "chat-1",
           key: 1,
         };
         await new Promise((resolve) => setTimeout(resolve, 100));
@@ -59,20 +65,21 @@ describe("ai.chat-agent", () => {
     });
 
     await (global as any).flushPromises();
-    expect(onBusyChange).toHaveBeenLastCalledWith(false);
-    expect(onMessagesUpdate).toHaveBeenLastCalledWith([]);
+    expect(onBusyChange).not.toHaveBeenCalled();
+    expect(onMessagesUpdate).not.toHaveBeenCalled();
 
+    let promise: Promise<string | undefined> | undefined;
     act(() => {
-      element.postMessage("Hi");
+      promise = element.postMessage("Hi");
     });
     await (global as any).flushPromises();
-    expect(onBusyChange).toHaveBeenCalledTimes(2);
+    expect(onBusyChange).toHaveBeenCalledTimes(1);
     expect(onBusyChange).toHaveBeenLastCalledWith(true);
 
     // Should be ignored when the agent is busy.
     element.postMessage("Hi");
 
-    expect(onMessagesUpdate).toHaveBeenCalledTimes(2);
+    expect(onMessagesUpdate).toHaveBeenCalledTimes(1);
     expect(onMessagesUpdate).toHaveBeenLastCalledWith([
       {
         role: "user",
@@ -83,13 +90,13 @@ describe("ai.chat-agent", () => {
 
     jest.advanceTimersByTime(100);
 
-    while (onMessagesUpdate.mock.calls.length < 3) {
+    while (onMessagesUpdate.mock.calls.length < 2) {
       await act(async () => {
         await (global as any).flushPromises();
       });
     }
 
-    expect(onMessagesUpdate).toHaveBeenCalledTimes(3);
+    expect(onMessagesUpdate).toHaveBeenCalledTimes(2);
     expect(onMessagesUpdate).toHaveBeenLastCalledWith([
       {
         role: "user",
@@ -104,11 +111,13 @@ describe("ai.chat-agent", () => {
       },
     ]);
 
+    expect(onConversationIdChange).not.toHaveBeenCalled();
+
     jest.advanceTimersByTime(100);
     await act(async () => {
       await (global as any).flushPromises();
     });
-    expect(onMessagesUpdate).toHaveBeenCalledTimes(4);
+    expect(onMessagesUpdate).toHaveBeenCalledTimes(3);
     expect(onMessagesUpdate).toHaveBeenLastCalledWith([
       {
         role: "user",
@@ -122,6 +131,29 @@ describe("ai.chat-agent", () => {
         partial: true,
       },
     ]);
+
+    expect(onConversationIdChange).toHaveBeenCalledTimes(1);
+    expect(onConversationIdChange).toHaveBeenLastCalledWith("chat-1");
+
+    jest.advanceTimersByTime(100);
+    await act(async () => {
+      await (global as any).flushPromises();
+    });
+    expect(onMessagesUpdate).toHaveBeenCalledTimes(4);
+    expect(onMessagesUpdate).toHaveBeenLastCalledWith([
+      {
+        role: "user",
+        content: "Hi",
+        key: 0,
+      },
+      {
+        role: "assistant",
+        content: "HelloWorld",
+        key: 1,
+        partial: true,
+      },
+    ]);
+    expect(onBusyChange).toHaveBeenCalledTimes(1);
 
     jest.advanceTimersByTime(100);
     await act(async () => {
@@ -138,31 +170,14 @@ describe("ai.chat-agent", () => {
         role: "assistant",
         content: "HelloWorld",
         key: 1,
-        partial: true,
-      },
-    ]);
-    expect(onBusyChange).toHaveBeenCalledTimes(2);
-
-    jest.advanceTimersByTime(100);
-    await act(async () => {
-      await (global as any).flushPromises();
-    });
-    expect(onMessagesUpdate).toHaveBeenCalledTimes(6);
-    expect(onMessagesUpdate).toHaveBeenLastCalledWith([
-      {
-        role: "user",
-        content: "Hi",
-        key: 0,
-      },
-      {
-        role: "assistant",
-        content: "HelloWorld",
-        key: 1,
         partial: false,
       },
     ]);
-    expect(onBusyChange).toHaveBeenCalledTimes(3);
+    expect(onBusyChange).toHaveBeenCalledTimes(2);
     expect(onBusyChange).toHaveBeenLastCalledWith(false);
+
+    const conversationId = await promise!;
+    expect(conversationId).toBe("chat-1");
 
     act(() => {
       document.body.removeChild(element);
@@ -203,20 +218,20 @@ describe("ai.chat-agent", () => {
     });
 
     await (global as any).flushPromises();
-    expect(onBusyChange).toHaveBeenLastCalledWith(false);
-    expect(onMessagesUpdate).toHaveBeenLastCalledWith([]);
+    expect(onBusyChange).not.toHaveBeenCalled();
+    expect(onMessagesUpdate).not.toHaveBeenCalled();
 
     act(() => {
       element.postMessage("Hi");
     });
     await (global as any).flushPromises();
-    expect(onBusyChange).toHaveBeenCalledTimes(2);
+    expect(onBusyChange).toHaveBeenCalledTimes(1);
     expect(onBusyChange).toHaveBeenLastCalledWith(true);
 
     // Should be ignored when the agent is busy.
     element.postMessage("Hi");
 
-    expect(onMessagesUpdate).toHaveBeenCalledTimes(2);
+    expect(onMessagesUpdate).toHaveBeenCalledTimes(1);
     expect(onMessagesUpdate).toHaveBeenLastCalledWith([
       {
         role: "user",
@@ -227,13 +242,13 @@ describe("ai.chat-agent", () => {
 
     jest.advanceTimersByTime(100);
 
-    while (onMessagesUpdate.mock.calls.length < 3) {
+    while (onMessagesUpdate.mock.calls.length < 2) {
       await act(async () => {
         await (global as any).flushPromises();
       });
     }
 
-    expect(onMessagesUpdate).toHaveBeenCalledTimes(3);
+    expect(onMessagesUpdate).toHaveBeenCalledTimes(2);
     expect(onMessagesUpdate).toHaveBeenLastCalledWith([
       {
         role: "user",
@@ -247,14 +262,14 @@ describe("ai.chat-agent", () => {
         partial: true,
       },
     ]);
-    expect(onBusyChange).toHaveBeenCalledTimes(2);
+    expect(onBusyChange).toHaveBeenCalledTimes(1);
     expect(consoleError).not.toHaveBeenCalled();
 
     jest.advanceTimersByTime(100);
     await act(async () => {
       await (global as any).flushPromises();
     });
-    expect(onMessagesUpdate).toHaveBeenCalledTimes(4);
+    expect(onMessagesUpdate).toHaveBeenCalledTimes(3);
     expect(onMessagesUpdate).toHaveBeenLastCalledWith([
       {
         role: "user",
@@ -275,7 +290,7 @@ describe("ai.chat-agent", () => {
         failed: true,
       },
     ]);
-    expect(onBusyChange).toHaveBeenCalledTimes(3);
+    expect(onBusyChange).toHaveBeenCalledTimes(2);
     expect(onBusyChange).toHaveBeenLastCalledWith(false);
     expect(consoleError).toHaveBeenCalledTimes(1);
     expect(consoleError).toHaveBeenCalledWith(
