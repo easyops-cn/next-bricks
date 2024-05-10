@@ -169,6 +169,10 @@ export function LegacyChatConversationComponent({
           if (childBrick) {
             main.children.push({
               ...childBrick,
+              properties: {
+                ...childBrick.properties,
+                slot: undefined,
+              },
               slot: "toolbar",
               iid: `item-${child}`,
             });

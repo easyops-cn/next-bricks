@@ -50,6 +50,7 @@
     "@next-core/brick-playground": "^1.11.3",
     "@next-core/browserslist-config-next": "^1.0.3",
     "@next-core/eslint-config-next": "^2.0.18",
+    "@next-core/preview": "^0.5.0",
     "@next-core/test-next": "^1.1.0",
     "@next-core/yo": "^1.5.46",
     "@types/d3-force": "^3.0.9",

@@ -9,3 +9,4 @@ import "./page-arch-node/index.js";
 import "./contract-select/index.js";
 import "./chat-conversation/index.js";
 import "./chat-preview/index.js";
+import "./data-providers/inject-chat-preview-agent.js";

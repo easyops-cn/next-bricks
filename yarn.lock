@@ -2817,6 +2817,11 @@
     lodash "^4.17.21"
     moment "^2.30.1"
 
+"@next-core/preview@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@next-core/preview/-/preview-0.5.0.tgz#6852c228f0d40062a6082b14c45e60f3d8769c22"
+  integrity sha512-UtNrbGQYamaMgEtCB0cxYsuJ3H4ovRWqfUNxoybY1TuM6sKavGEyMwev/HxjXEzTutjRlwKvuZudpLv8IRzfFA==
+
 "@next-core/react-element@^1.0.25":
   version "1.0.25"
   resolved "https://registry.yarnpkg.com/@next-core/react-element/-/react-element-1.0.25.tgz#6b53aedcb274c8583476b6f38b03be8f381101b1"
