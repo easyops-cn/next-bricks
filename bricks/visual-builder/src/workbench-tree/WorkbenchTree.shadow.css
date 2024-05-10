@@ -103,11 +103,21 @@
   padding: 0 15px;
 }
 
+.nodeLabelLink {
+  display: block;
+}
+
+.nodeLabelLink::part(link) {
+  display: flex;
+}
+
 .nodeLabelRow {
   display: flex;
   cursor: pointer;
   height: 22px;
   padding-right: 10px;
+  flex: 1;
+  min-width: 0;
 }
 
 .nodeLabelRow:hover,

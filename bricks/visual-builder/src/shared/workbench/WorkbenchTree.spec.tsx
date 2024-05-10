@@ -226,7 +226,7 @@ test("WorkbenchTree with text-icon", () => {
   );
 
   expect(container.querySelector(".nodeIcon").innerHTML).toBe(
-    `<eo-icon lib="text" icon="TS" color="blue"></eo-icon>`
+    `<eo-icon lib="text" icon="TS" color="blue" style="color: blue;"></eo-icon>`
   );
 });
 

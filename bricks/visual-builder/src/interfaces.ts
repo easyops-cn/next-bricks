@@ -4,9 +4,13 @@ export interface WorkbenchNodeData<T = unknown> {
   if?: boolean;
   key: string | number;
   name: string;
-  icon?: GeneralIconProps;
+  icon?: IconConfig;
   data?: T;
   labelColor?: string;
+  labelPrefix?: {
+    text: string;
+    style?: React.CSSProperties;
+  };
   link?:
     | {
         to: string;
@@ -14,7 +18,7 @@ export interface WorkbenchNodeData<T = unknown> {
     | {
         href: string;
       };
-  badge?: GeneralIconProps;
+  badge?: IconConfig;
   children?: WorkbenchNodeData[];
   matched?: boolean;
   matchedSelf?: boolean;
@@ -25,9 +29,13 @@ export interface WorkbenchNodeData<T = unknown> {
   unreachable?: boolean;
 }
 
+export type IconConfig = GeneralIconProps & {
+  color?: string;
+};
+
 export interface WorkbenchTreeAction {
   action: string;
-  icon: GeneralIconProps;
+  icon: IconConfig;
   title?: string;
   if?: string | boolean;
 }

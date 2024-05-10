@@ -7,7 +7,7 @@ import { ContractCenterApi_searchContract } from "@next-api-sdk/next-builder-sdk
 jest.mock("@next-core/theme", () => ({}));
 jest.mock("@next-api-sdk/next-builder-sdk");
 
-describe("eo-contract-select", () => {
+describe("visual-builder.contract-select", () => {
   test("basic usage", async () => {
     (ContractCenterApi_searchContract as jest.Mock).mockImplementation(() =>
       Promise.resolve({
@@ -28,13 +28,16 @@ describe("eo-contract-select", () => {
       })
     );
     const element = document.createElement(
-      "eo-contract-select"
+      "visual-builder.contract-select"
     ) as EoContractSelect;
 
     expect(element.shadowRoot).toBeFalsy();
 
     act(() => {
       document.body.appendChild(element);
+    });
+    await act(async () => {
+      await (global as any).flushPromises();
     });
     expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
 
