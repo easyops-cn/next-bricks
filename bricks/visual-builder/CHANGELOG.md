@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.9.3...@next-bricks/visual-builder@1.10.0) (2024-05-10)
+
+
+### Features
+
+* add block meta info ([a58cb1b](https://github.com/easyops-cn/next-bricks/commit/a58cb1b957c55399c8c7ab5bcb0cb49d90efdf28))
+
+
+
+
+
 ## [1.9.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.9.2...@next-bricks/visual-builder@1.9.3) (2024-05-10)
 
 
