@@ -177,7 +177,15 @@ export function LegacyChatConversationComponent({
               },
               slot: "toolbar",
               iid: `item-${child}`,
-            });
+              meta: {
+                type: "item",
+                uuid: child,
+                block: {
+                  uuid: block.uuid,
+                  name: block.name,
+                },
+              },
+            } as BrickConf);
             hasContent = true;
           }
         }
@@ -188,7 +196,12 @@ export function LegacyChatConversationComponent({
             ...rawBrick,
             children: [],
             iid: `block-${block.uuid}`,
-          };
+            meta: {
+              type: "block",
+              uuid: block.uuid,
+              name: block.name,
+            },
+          } as BrickConf;
           hasContent = true;
           contentLayout.children.push(brick);
           for (const child of block.children) {
@@ -197,7 +210,11 @@ export function LegacyChatConversationComponent({
               brick.children.push({
                 ...childBrick,
                 iid: `item-${child}`,
-              });
+                meta: {
+                  type: "item",
+                  uuid: child,
+                },
+              } as BrickConf);
             }
           }
         } else if (!block.hasContainer) {
@@ -207,7 +224,11 @@ export function LegacyChatConversationComponent({
               contentLayout.children.push({
                 ...childBrick,
                 iid: `item-${child}`,
-              });
+                meta: {
+                  type: "item",
+                  uuid: child,
+                },
+              } as BrickConf);
               hasContent = true;
             }
           }
