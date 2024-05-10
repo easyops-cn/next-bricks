@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.9.0...@next-bricks/visual-builder@1.9.1) (2024-05-10)
+
+
+### Bug Fixes
+
+* do not update storyboard chunks if no new chunks ([83882fe](https://github.com/easyops-cn/next-bricks/commit/83882feabc1888e4e9f71a6a4c1c3b40b9baebdd))
+
+
+
+
+
 # [1.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.8.1...@next-bricks/visual-builder@1.9.0) (2024-05-10)
 
 
