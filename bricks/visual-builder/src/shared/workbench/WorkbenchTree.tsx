@@ -623,6 +623,7 @@ function TreeNode({
           : {})}
       >
         <WrappedLink
+          className="nodeLabelLink"
           tabIndex={0}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
@@ -685,17 +686,23 @@ function TreeNode({
                 )}
                 <span className="nodeIcon">
                   <WrappedGeneralIcon
-                    {...(node.icon as GeneralIconProps)}
+                    {...node.icon}
                     style={{
                       fontSize: (node.icon as unknown as Record<string, string>)
                         ?.imgSrc
                         ? 14
                         : null,
+                      color: node.icon?.color,
                     }}
                   />
                 </span>
               </span>
               <span className="nodeName">
+                {node.labelPrefix && (
+                  <span style={node.labelPrefix.style}>
+                    {node.labelPrefix.text}
+                  </span>
+                )}
                 {/* {isTransformName
                   ? smartDisplayForEvaluableString(node.name)
                   : node.name} */}
@@ -713,7 +720,10 @@ function TreeNode({
             />
             {node.badge && (
               <span className="badge">
-                <WrappedGeneralIcon {...(node.badge as GeneralIconProps)} />
+                <WrappedGeneralIcon
+                  {...node.badge}
+                  style={{ color: node.badge.color }}
+                />
               </span>
             )}
           </span>
