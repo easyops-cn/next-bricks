@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.9.1...@next-bricks/visual-builder@1.9.2) (2024-05-10)
+
+
+### Bug Fixes
+
+* fix auto scroll to bottom ([901e7a1](https://github.com/easyops-cn/next-bricks/commit/901e7a1d8ddd572a7ffe105776a837bd639832b8))
+
+
+
+
+
 ## [1.9.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.9.0...@next-bricks/visual-builder@1.9.1) (2024-05-10)
 
 
