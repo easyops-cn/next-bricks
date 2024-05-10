@@ -123,7 +123,9 @@ export function LegacyChatConversationComponent({
           console.error("parse storyboard failed:", e);
         }
       }
-      setChunks((prev) => [...prev, ...newChunks]);
+      if (newChunks.length > 0) {
+        setChunks((prev) => [...prev, ...newChunks]);
+      }
     }
   }, [chunkRegExp, messages]);
 
