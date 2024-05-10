@@ -18,18 +18,12 @@ import {
 } from "@prosemirror-adapter/react";
 import { CodeBlock } from "./CodeBlock/index.js";
 
-export function MarkdownItem({
-  text,
-  chatting,
-}: {
-  text: string;
-  chatting: boolean;
-}) {
+export function MarkdownItem({ text }: { text: string }) {
   return (
     <div className="markdown-item">
       <MilkdownProvider>
         <ProsemirrorAdapterProvider>
-          <MarkdownDisplay value={text} chatting={chatting} />
+          <MarkdownDisplay value={text} />
         </ProsemirrorAdapterProvider>
       </MilkdownProvider>
     </div>
@@ -47,13 +41,7 @@ function hasURLProtocol(url: any) {
   );
 }
 
-export function MarkdownDisplay({
-  value,
-  chatting,
-}: {
-  value: string;
-  chatting: boolean;
-}): React.ReactNode {
+export function MarkdownDisplay({ value }: { value: string }): React.ReactNode {
   const nodeViewFactory = useNodeViewFactory();
 
   const handleClick = (view: EditorView, pos: number) => {
@@ -70,7 +58,7 @@ export function MarkdownDisplay({
         path = encodeURIComponent(href);
       }
 
-      !chatting && window.open(path, "_blank");
+      window.open(path, "_blank");
     }
     return true;
   };
@@ -95,6 +83,7 @@ export function MarkdownDisplay({
         });
         observer.observe(root, {
           childList: true,
+          subtree: true,
         });
       })
       .config(nord)
