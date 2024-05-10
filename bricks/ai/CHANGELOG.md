@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.15.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.15.2...@next-bricks/ai@1.15.3) (2024-05-10)
+
+
+### Bug Fixes
+
+* 修复chatting过程中link没有打开新窗口的问题 ([4bc0f45](https://github.com/easyops-cn/next-bricks/commit/4bc0f455038823845d3bf4aa5c0e2db4e17131ab))
+
+
+
+
+
 ## [1.15.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.15.1...@next-bricks/ai@1.15.2) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/ai
