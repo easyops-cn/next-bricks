@@ -109,13 +109,11 @@ button:active {
 .default.danger:hover {
   color: var(--antd-btn-danger-hover-bg);
   border-color: var(--antd-btn-danger-hover-bg);
-  background: var(--antd-btn-danger-hover-color);
 }
 
 .default.danger:active {
   color: var(--antd-btn-danger-active-bg);
   border-color: var(--antd-btn-danger-active-bg);
-  background: var(--antd-btn-danger-active-color);
 }
 
 .default[disabled],
