@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.8.1...@next-bricks/visual-builder@1.9.0) (2024-05-10)
+
+
+### Features
+
+* **chat-agent:** add a low level method: sendRequest ([32fa7d0](https://github.com/easyops-cn/next-bricks/commit/32fa7d05a768b66fc6d2e1d9a86160f8f60cded1))
+* support inspecting chat-preview ([6982077](https://github.com/easyops-cn/next-bricks/commit/6982077e423fe2e3c55a362d7ae7644c1321b88a))
+
+
+
+
+
 ## [1.8.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.8.0...@next-bricks/visual-builder@1.8.1) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/visual-builder

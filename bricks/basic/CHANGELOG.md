@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.13.7...@next-bricks/basic@1.13.8) (2024-05-10)
+
+
+### Bug Fixes
+
+* no background for default danger button ([a79590e](https://github.com/easyops-cn/next-bricks/commit/a79590e6ffdcf42c186a8b3e2e1c6b2764993151))
+
+
+
+
+
 ## [1.13.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.13.6...@next-bricks/basic@1.13.7) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/basic

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.16.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.15.3...@next-bricks/ai@1.16.0) (2024-05-10)
+
+
+### Bug Fixes
+
+* refine error messages ([8555156](https://github.com/easyops-cn/next-bricks/commit/855515662cd6429f670cb9e63eb6269441df06e6))
+
+
+### Features
+
+* **chat-agent:** add a low level method: sendRequest ([32fa7d0](https://github.com/easyops-cn/next-bricks/commit/32fa7d05a768b66fc6d2e1d9a86160f8f60cded1))
+
+
+
+
+
 ## [1.15.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.15.2...@next-bricks/ai@1.15.3) (2024-05-10)
 
 
