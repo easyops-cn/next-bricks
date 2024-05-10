@@ -231,7 +231,7 @@ export function LegacyChatConversationComponent({
       // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
       containerRef.current?.scrollTo(0, containerRef.current?.scrollHeight!);
     }, 0);
-  }, [storyboard]);
+  }, [messages]);
 
   return (
     <div className="chat" ref={containerRef}>
