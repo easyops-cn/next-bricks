@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.9.2...@next-bricks/visual-builder@1.9.3) (2024-05-10)
+
+
+### Bug Fixes
+
+* fix workbench tree styles ([6649572](https://github.com/easyops-cn/next-bricks/commit/66495721304868b7c230116dee2aa21a5cdf517d))
+
+
+
+
+
 ## [1.9.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.9.1...@next-bricks/visual-builder@1.9.2) (2024-05-10)
 
 
