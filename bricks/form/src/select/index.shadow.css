@@ -93,7 +93,12 @@
 }
 
 .select-single-item {
+  flex: 1;
+  min-width: 0;
   .label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     .text {
       margin-right: 4px;
     }
@@ -295,6 +300,7 @@
   min-height: 28px;
   display: flex;
   align-items: center;
+  min-width: 0;
 }
 
 .empty-tips {
