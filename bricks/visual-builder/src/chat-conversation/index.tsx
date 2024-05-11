@@ -1,4 +1,11 @@
-import React, { forwardRef, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
@@ -21,9 +28,9 @@ export interface ChatConversationProps {
   messages?: Message[];
 }
 
-type Chunk = ChunkBlock | ChunkBlockItem | ChunkStoryboard;
+type StoryboardChunk = StoryboardChunkBlock | StoryboardChunkBlockItem;
 
-interface ChunkBlock {
+interface StoryboardChunkBlock {
   type: "block";
   uuid: string;
   children: string[];
@@ -32,16 +39,24 @@ interface ChunkBlock {
   hasContainer?: boolean;
 }
 
-interface ChunkBlockItem {
+interface StoryboardChunkBlockItem {
   type: "item";
   uuid: string;
   storyboard?: BrickConf;
 }
 
-interface ChunkStoryboard {
-  type: "storyboard";
-  uuid: string;
-  storyboard: BrickConf;
+type MessageChunk = MessageChunkText | MessageChunkCommand;
+
+interface MessageChunkText {
+  type: "text";
+  content: string;
+}
+
+interface MessageChunkCommand {
+  type: "command";
+  command: string;
+  content: string;
+  raw: string;
 }
 
 export const ChatConversationComponent = forwardRef(
@@ -93,8 +108,8 @@ export function LegacyChatConversationComponent({
     []
   );
   const lastIndexMapRef = useRef(new Map<number, number>());
-  const [chunks, setChunks] = useState<Chunk[]>([]);
-
+  const [chunks, setChunks] = useState<StoryboardChunk[]>([]);
+  const manualScrolledRef = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -104,18 +119,22 @@ export function LegacyChatConversationComponent({
       }
       chunkRegExp.lastIndex = lastIndexMapRef.current.get(message.key) ?? 0;
       let match: RegExpExecArray | null;
-      const newChunks: Chunk[] = [];
+      const newChunks: StoryboardChunk[] = [];
+      let newPage = false;
       while ((match = chunkRegExp.exec(message.content))) {
         lastIndexMapRef.current.set(message.key, chunkRegExp.lastIndex);
         const [, type, content] = match;
         try {
           const parsed = JSON.parse(content) as unknown;
           if (type === "page") {
-            newChunks.push(...(parsed as (ChunkBlock | ChunkBlockItem)[]));
+            newPage = true;
+            newChunks.push(
+              ...(parsed as (StoryboardChunkBlock | StoryboardChunkBlockItem)[])
+            );
           } else {
             newChunks.push({
-              ...(parsed as ChunkStoryboard),
-              type: "storyboard",
+              ...(parsed as StoryboardChunkBlockItem),
+              type: "item",
             });
           }
         } catch (e) {
@@ -123,7 +142,9 @@ export function LegacyChatConversationComponent({
           console.error("parse storyboard failed:", e);
         }
       }
-      if (newChunks.length > 0) {
+      if (newPage) {
+        setChunks(newChunks);
+      } else if (newChunks.length > 0) {
         setChunks((prev) => [...prev, ...newChunks]);
       }
     }
@@ -176,7 +197,7 @@ export function LegacyChatConversationComponent({
                 slot: undefined,
               },
               slot: "toolbar",
-              iid: `item-${child}`,
+              iid: `item:${child}`,
               meta: {
                 type: "item",
                 uuid: child,
@@ -195,7 +216,7 @@ export function LegacyChatConversationComponent({
           const brick: BrickConf = {
             ...rawBrick,
             children: [],
-            iid: `block-${block.uuid}`,
+            iid: `block:${block.uuid}`,
             meta: {
               type: "block",
               uuid: block.uuid,
@@ -209,7 +230,7 @@ export function LegacyChatConversationComponent({
             if (childBrick) {
               brick.children.push({
                 ...childBrick,
-                iid: `item-${child}`,
+                iid: `item:${child}`,
                 meta: {
                   type: "item",
                   uuid: child,
@@ -223,7 +244,7 @@ export function LegacyChatConversationComponent({
             if (childBrick) {
               contentLayout.children.push({
                 ...childBrick,
-                iid: `item-${child}`,
+                iid: `item:${child}`,
                 meta: {
                   type: "item",
                   uuid: child,
@@ -248,23 +269,87 @@ export function LegacyChatConversationComponent({
   }, [onStoryboardUpdate, storyboard]);
 
   useEffect(() => {
+    if (manualScrolledRef.current) {
+      return;
+    }
     setTimeout(() => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
       containerRef.current?.scrollTo(0, containerRef.current?.scrollHeight!);
     }, 0);
   }, [messages]);
 
+  const handleScroll = useCallback(() => {
+    manualScrolledRef.current =
+      containerRef.current!.scrollTop +
+        containerRef.current!.clientHeight! +
+        6 <
+      containerRef.current!.scrollHeight;
+  }, []);
+
   return (
-    <div className="chat" ref={containerRef}>
+    <div className="chat" ref={containerRef} onScroll={handleScroll}>
       {messages?.map((message, index) => (
-        <p
-          key={message.key ?? `index-${index}`}
-          className={classNames({ failed: message.failed })}
-        >
-          {upperFirst(message.role)}: {message.content}
-          {message.partial && <Dots />}
-        </p>
+        <MessageBox key={message.key ?? `index-${index}`} message={message} />
       ))}
+    </div>
+  );
+}
+
+interface MessageBoxProps {
+  message: Message;
+}
+
+function MessageBox({ message }: MessageBoxProps) {
+  const messageChunks = useMemo(() => {
+    const chunks: MessageChunk[] = [];
+    const chunkRegExp = /(?:^|\n)```(\S*)\n([\s\S]*?)\n```(?:$|\n)/gm;
+
+    let match: RegExpExecArray | null;
+    let lastIndex = 0;
+    while ((match = chunkRegExp.exec(message.content))) {
+      const [fullMatch, command, content] = match;
+      const start = match.index;
+      const previousText = message.content.slice(lastIndex, start).trim();
+      if (previousText.length > 0) {
+        chunks.push({
+          type: "text",
+          content: previousText,
+        });
+      }
+      chunks.push({
+        type: "command",
+        command,
+        content: content.trim(),
+        raw: fullMatch,
+      });
+      lastIndex = chunkRegExp.lastIndex;
+    }
+    const lastText = message.content.slice(lastIndex).trim();
+    if (lastText.length > 0) {
+      chunks.push({
+        type: "text",
+        content: lastText,
+      });
+    }
+    return chunks;
+  }, [message.content]);
+
+  return (
+    <div className={classNames("message", { failed: message.failed })}>
+      <span>{upperFirst(message.role)}: </span>
+      {messageChunks.map((chunk, index) => (
+        <React.Fragment key={index}>
+          {chunk.type === "text" ? (
+            <span>{chunk.content}</span>
+          ) : (
+            <details className="command">
+              <summary>```{chunk.command}</summary>
+              {chunk.content}
+            </details>
+          )}
+        </React.Fragment>
+      ))}
+      {message.partial && <Dots />}
     </div>
   );
 }

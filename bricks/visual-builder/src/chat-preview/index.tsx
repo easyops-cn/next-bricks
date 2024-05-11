@@ -19,7 +19,7 @@ import type {
 } from "../data-providers/chat-preview/interfaces";
 import { InspectOutlineComponent } from "./InspectOutlineComponent";
 
-const { defineElement, property, event } = createDecorators();
+const { defineElement, property, event, method } = createDecorators();
 
 export interface ChatPreviewProps {
   storyboard?: BrickConf | BrickConf[];
@@ -49,6 +49,19 @@ class ChatPreview extends ReactNextElement {
   #handleActiveTargetChange = (target: InspectSelector | undefined) => {
     this.#activeTargetChangeEvent.emit(target);
   };
+
+  @method()
+  select(payload: InspectSelector) {
+    const iframeWin = this.shadowRoot?.querySelector("iframe")?.contentWindow;
+    iframeWin?.postMessage(
+      {
+        channel: "chat-preview",
+        type: "select",
+        payload,
+      },
+      location.origin
+    );
+  }
 
   render() {
     return (
