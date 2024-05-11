@@ -644,9 +644,9 @@ function getBrickOutlines(iid: string, alias?: string): BrickOutline[] {
     : outlines;
 }
 
-function getElementsIncludingInShadowDOM(
+export function getElementsIncludingInShadowDOM(
   iid: string,
-  isRoot: boolean
+  isRoot?: boolean
 ): HTMLElement[] {
   const elements: HTMLElement[] = [];
 

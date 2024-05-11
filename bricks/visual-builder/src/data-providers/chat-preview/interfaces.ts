@@ -1,11 +1,11 @@
 export interface InspectTarget extends InspectSelector {
   element: HTMLElement;
+  label: string;
 }
 
 export interface InspectSelector {
   type: "item";
   uuid: string;
-  label: string;
 }
 
 export interface InspectOutline extends InspectSelector {
@@ -13,4 +13,5 @@ export interface InspectOutline extends InspectSelector {
   height: number;
   left: number;
   top: number;
+  label: string;
 }

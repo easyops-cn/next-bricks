@@ -1,4 +1,4 @@
-:host-context(html[data-theme="light"]),
+:host,
 :host-context(html[data-override-theme="light"]) {
   --search-box-background: #fff;
   --node-color: #595959;
@@ -125,14 +125,7 @@
   background-color: rgba(255, 255, 255, 0.12);
 }
 
-.nodeLabelRow:focus {
-  outline-width: 1px;
-  outline-style: solid;
-  outline-offset: -1px;
-  outline-color: var(--node-background-focus);
-}
-
-.nodeLabelRow.active:focus {
+.nodeLabelLink:focus .nodeLabelRow.active {
   background-color: var(--node-background-focus);
 }
 
@@ -153,7 +146,7 @@
   color: var(--node-color);
 }
 
-.nodeLabelRow:focus .nodeLabel {
+.nodeLabelLink:focus .nodeLabel {
   color: var(--node-color-focus);
 }
 

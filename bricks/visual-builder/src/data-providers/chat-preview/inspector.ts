@@ -1,10 +1,15 @@
 // istanbul ignore file: working in progress
 // https://github.com/facebook/react/blob/cae635054e17a6f107a39d328649137b83f25972/packages/react-devtools-shared/src/backend/views/Highlighter/index.js
 import { debounce } from "lodash";
-import type { InspectOutline, InspectTarget } from "./interfaces.js";
+import type {
+  InspectOutline,
+  InspectSelector,
+  InspectTarget,
+} from "./interfaces.js";
+import { getElementsIncludingInShadowDOM } from "../preview/connect.js";
 
 let isInspecting = false;
-const IID_ITEM_PREFIX = "item-";
+const IID_ITEM_PREFIX = "item:";
 let currentHoverElement: Element | null = null;
 
 export function toggleInspecting(inspecting: boolean): void {
@@ -26,10 +31,27 @@ export function toggleInspecting(inspecting: boolean): void {
   window[method]("pointermove", onPointerMove as EventListener, true);
 }
 
+export function select(selector: InspectSelector) {
+  const iid = `${selector.type}:${selector.uuid}`;
+  const elements = getElementsIncludingInShadowDOM(iid);
+  window.parent.postMessage(
+    {
+      channel: "chat-preview",
+      type: "inspect-active",
+      payload: {
+        outlines: elements.map((element) =>
+          getTargetOutline({ ...selector, element, label: getLabel(element) })
+        ),
+      },
+    },
+    location.origin
+  );
+}
+
 function onClick(event: MouseEvent): void {
   event.preventDefault();
   event.stopPropagation();
-  selectTarget(event);
+  selectByClick(event);
 }
 
 function onMouseEvent(event: MouseEvent): void {
@@ -88,7 +110,7 @@ function onPointerLeave(event: MouseEvent): void {
   );
 }
 
-function selectTarget(event: MouseEvent): void {
+function selectByClick(event: MouseEvent): void {
   const targets = getPossibleBrickTargets(event.composedPath());
   window.parent.postMessage(
     {
@@ -102,7 +124,7 @@ function selectTarget(event: MouseEvent): void {
   );
 }
 
-export function getPossibleBrickTargets(eventTargets: EventTarget[]) {
+function getPossibleBrickTargets(eventTargets: EventTarget[]) {
   const inspectTargets: InspectTarget[] = [];
   eventTargets.forEach((item) => {
     let iid: string | undefined;
@@ -116,7 +138,7 @@ export function getPossibleBrickTargets(eventTargets: EventTarget[]) {
       inspectTargets.push({
         type: "item",
         uuid,
-        label: item.tagName.toLowerCase().split(".").pop(),
+        label: getLabel(item),
         element: item,
       });
     }
@@ -136,4 +158,8 @@ function getTargetOutline(target: InspectTarget): InspectOutline {
     uuid,
     label,
   };
+}
+
+function getLabel(element: Element) {
+  return element.tagName.toLowerCase().split(".").pop();
 }

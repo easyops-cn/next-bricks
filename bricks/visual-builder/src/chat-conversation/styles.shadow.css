@@ -17,13 +17,13 @@
   white-space: pre-wrap;
 }
 
-.chat > p {
+.message {
   background-color: var(--palette-gray-3);
   border-radius: 6px;
   padding: 1em;
 }
 
-.chat > p:not(:last-child) {
+.message:not(:last-child) {
   margin-bottom: 1em;
 }
 
@@ -33,4 +33,12 @@
 
 .failed {
   color: var(--color-error);
+}
+
+.command:not(:first-child) {
+  margin-top: 1em;
+}
+
+.command:not(:last-child) {
+  margin-bottom: 1em;
 }

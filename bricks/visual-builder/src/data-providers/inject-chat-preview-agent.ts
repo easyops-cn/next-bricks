@@ -1,5 +1,5 @@
 import { createProviderClass } from "@next-core/utils/general";
-import { toggleInspecting } from "./chat-preview/inspector";
+import { select, toggleInspecting } from "./chat-preview/inspector";
 
 let injected = false;
 
@@ -17,6 +17,9 @@ export async function injectChatPreviewAgent(): Promise<unknown> {
       switch (e.data.type) {
         case "toggle-inspecting":
           toggleInspecting(e.data.payload.inspecting);
+          break;
+        case "select":
+          select(e.data.payload);
           break;
       }
     }
