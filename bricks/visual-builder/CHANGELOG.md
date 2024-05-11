@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.10.0...@next-bricks/visual-builder@1.10.1) (2024-05-11)
+
+
+### Bug Fixes
+
+* **chat-view:** manually select target ([a39086d](https://github.com/easyops-cn/next-bricks/commit/a39086da96e1c2e17f6fc0667bc02e7ac45f6a76))
+
+
+
+
+
 # [1.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.9.3...@next-bricks/visual-builder@1.10.0) (2024-05-10)
 
 
