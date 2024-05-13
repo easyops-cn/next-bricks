@@ -5,7 +5,14 @@ import {
   __secret_internals as _internals,
   type NextLocation,
 } from "@next-core/runtime";
-import type { BrickConf, CustomTemplate, RouteConf } from "@next-core/types";
+import { HttpResponseError } from "@next-core/http";
+import { flowApi } from "@next-core/easyops-runtime";
+import type {
+  BrickConf,
+  Contract,
+  CustomTemplate,
+  RouteConf,
+} from "@next-core/types";
 import { isEmpty, throttle } from "lodash";
 import type {
   BrickOutline,
@@ -16,6 +23,8 @@ import type {
   PreviewMessagePreviewContractUpdate,
   PreviewMessagePreviewDataValueError,
   PreviewMessagePreviewDataValueSuccess,
+  PreviewMessagePreviewDebugValueSuccess,
+  PreviewMessagePreviewDebugValueError,
   PreviewMessagePreviewerCaptureFailed,
   PreviewMessagePreviewerCaptureOk,
   PreviewMessagePreviewerContentScroll,
@@ -29,6 +38,7 @@ import type {
   PreviewMessageToPreviewer,
   PreviewSettings,
   PreviewStartOptions,
+  PreviewDebugData,
 } from "./interfaces.js";
 import { capture } from "./capture.js";
 import {
@@ -89,6 +99,11 @@ try {
         return Object.fromEntries(
           [...v2Map].map(([k, v]) => [k, (v as any).value])
         );
+      },
+      debugDataValue(data, { tplStateStoreId }) {
+        return developHelperV2.debugDataValue(data, {
+          tplContextId: tplStateStoreId,
+        } as any);
       },
     };
     isV2 = true;
@@ -275,6 +290,38 @@ export default async function connect(
     }
   };
 
+  const debugDataValue = async (
+    data: PreviewDebugData,
+    contractData: Contract,
+    options: PreviewDataOption
+  ) => {
+    try {
+      if (contractData) {
+        flowApi.collectDebugContract([contractData]);
+      }
+      const value = await __secret_internals.debugDataValue(data, {
+        tplStateStoreId:
+          options.dataType === "state" ? getRootTplStateStoreId() : undefined,
+      });
+
+      sendMessage<PreviewMessagePreviewDebugValueSuccess>({
+        type: "debug-data-value-success",
+        data: {
+          debugConf: data,
+          value,
+        },
+      });
+    } catch (error) {
+      sendMessage<PreviewMessagePreviewDebugValueError>({
+        type: "debug-data-value-error",
+        data:
+          error instanceof HttpResponseError
+            ? error.responseJson
+            : { message: (error as Error).message },
+      });
+    }
+  };
+
   const history = getHistory();
 
   window.addEventListener(
@@ -427,6 +474,9 @@ export default async function connect(
             syncRouteMatch();
             break;
           }
+          case "debug-data-value":
+            debugDataValue(data.debugData, data.contractData, data.options);
+            break;
           /* case "excute-proxy-method": {
             const [ref, method, args = []] = data.proxyMethodArgs;
             try {

@@ -1,4 +1,5 @@
 import * as runtime from "@next-core/runtime";
+import { flowApi } from "@next-core/easyops-runtime";
 import { capture } from "./capture.js";
 import {
   setPreviewFromOrigin,
@@ -7,10 +8,11 @@ import {
 } from "./inspector.js";
 import _connect from "./connect.js";
 jest.mock("@next-core/runtime");
+jest.mock("@next-core/easyops-runtime");
 jest.mock("./inspector.js");
+
 jest.mock("./capture.js");
 jest.mock("../collect-used-contracts.js");
-
 const historyListeners = new Set<(loc: string) => void>();
 const history = {
   location: {
@@ -36,6 +38,8 @@ const history = {
 } as any;
 jest.spyOn(runtime, "getHistory").mockReturnValue(history);
 // jest.spyOn(runtime.__secret_internals, "updateStoryboard").mockImplementation();
+
+jest.spyOn(flowApi, "collectDebugContract");
 jest
   .spyOn(runtime.__secret_internals, "updateTemplatePreviewSettings")
   .mockImplementation();
@@ -682,6 +686,107 @@ describe("connect", () => {
           error: {
             message: "tplStateStoreId not found, unable to preview STATE value",
           },
+        },
+      },
+      "http://localhost:8081"
+    );
+
+    listener({
+      origin: "http://localhost:8081",
+      data: {
+        sender: "preview-container",
+        type: "debug-data-value",
+        debugData: {
+          value: "<% 1 + 1 %>",
+        },
+        options: {
+          dataType: "context",
+        },
+      },
+    } as any);
+
+    expect(runtime.__secret_internals.debugDataValue).toHaveBeenLastCalledWith(
+      {
+        value: "<% 1 + 1 %>",
+      },
+      { tplStateStoreId: undefined }
+    );
+
+    span.dataset.tplStateStoreId = "tpl-state-8";
+    listener({
+      origin: "http://localhost:8081",
+      data: {
+        sender: "preview-container",
+        type: "debug-data-value",
+        debugData: {
+          resolve: {
+            useProvider: "easyops.cmdb.instance@postSearch:1.0.0",
+            args: ["APP"],
+          },
+        },
+        contractData: {
+          name: "postSearch",
+          namespaceId: "easyops.cmdb.instance",
+          version: "1.0.0",
+          endpoint: {
+            method: "POST",
+            uri: "/api/cmdb",
+          },
+        },
+        options: {
+          dataType: "state",
+        },
+      },
+    } as any);
+
+    expect(runtime.__secret_internals.debugDataValue).toHaveBeenLastCalledWith(
+      {
+        resolve: {
+          useProvider: "easyops.cmdb.instance@postSearch:1.0.0",
+          args: ["APP"],
+        },
+      },
+      { tplStateStoreId: "tpl-state-8" }
+    );
+
+    jest
+      .spyOn(runtime.__secret_internals, "debugDataValue")
+      .mockRejectedValueOnce(new Error("error"));
+    listener({
+      origin: "http://localhost:8081",
+      data: {
+        sender: "preview-container",
+        type: "debug-data-value",
+        debugData: {
+          resolve: {
+            useProvider: "easyops.cmdb.instance@postSearch:1.0.0",
+            args: ["<% STATE.AppId %>"],
+          },
+        },
+        contractData: {
+          name: "postSearch",
+          namespaceId: "easyops.cmdb.instance",
+          version: "1.0.0",
+          endpoint: {
+            method: "POST",
+            uri: "/api/cmdb",
+          },
+        },
+        options: {
+          dataType: "state",
+        },
+      },
+    } as any);
+
+    await (global as any).flushPromises();
+
+    expect(parentPostMessage).toHaveBeenNthCalledWith(
+      19,
+      {
+        sender: "previewer",
+        type: "debug-data-value-error",
+        data: {
+          message: "error",
         },
       },
       "http://localhost:8081"

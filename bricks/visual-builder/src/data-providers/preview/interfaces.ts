@@ -1,4 +1,8 @@
-import type { Storyboard } from "@next-core/types";
+import type {
+  Storyboard,
+  UseProviderResolveConf,
+  Contract,
+} from "@next-core/types";
 import type { pipes } from "@next-core/pipes";
 
 export interface PreviewHelperBrick {
@@ -93,6 +97,8 @@ export type PreviewMessageFromPreviewer =
   | PreviewMessagePreviewerCaptureFailed
   | PreviewMessagePreviewDataValueSuccess
   | PreviewMessagePreviewDataValueError
+  | PreviewMessagePreviewDebugValueSuccess
+  | PreviewMessagePreviewDebugValueError
   | PreviewMessagePreviewContractUpdate;
 
 export type PreviewMessageToPreviewer =
@@ -109,7 +115,8 @@ export type PreviewMessageToPreviewer =
   | PreviewMessageContainerCapture
   | PreviewMessageContainerUpdatePreviewUrl
   | PreviewMessageContainerUpdatePreviewRoute
-  | PreviewMessageContainerInspectDataValue;
+  | PreviewMessageContainerInspectDataValue
+  | PreviewMessageContainerDebugDataValue;
 
 export type PreviewMessageFromContainer =
   | PreviewMessageContainerBuilderHoverOnIframe
@@ -278,6 +285,20 @@ export interface PreviewMessagePreviewDataValueError
   data: unknown;
 }
 
+export interface PreviewMessagePreviewDebugValueSuccess
+  extends PreviewBaseMessage {
+  sender: "previewer";
+  type: "debug-data-value-success";
+  data: unknown;
+}
+
+export interface PreviewMessagePreviewDebugValueError
+  extends PreviewBaseMessage {
+  sender: "previewer";
+  type: "debug-data-value-error";
+  data: unknown;
+}
+
 export interface PreviewMessagePreviewContractUpdateDetail {
   add?: string[];
 }
@@ -364,6 +385,15 @@ export interface PreviewMessageContainerInspectDataValue
   type: "inspect-data-value";
   name: string;
   option: PreviewDataOption;
+}
+
+export interface PreviewMessageContainerDebugDataValue
+  extends PreviewBaseMessage {
+  sender: "preview-container";
+  type: "debug-data-value";
+  debugData: PreviewDebugData;
+  contractData: Contract;
+  options: PreviewDataOption;
 }
 
 export interface PreviewMessageContainerMatchApiCache
@@ -677,4 +707,9 @@ export interface BackendMessageForExecuteSuccess {
     res: any;
     op: string;
   };
+}
+
+export interface PreviewDebugData {
+  resolve?: UseProviderResolveConf;
+  value?: unknown;
 }
