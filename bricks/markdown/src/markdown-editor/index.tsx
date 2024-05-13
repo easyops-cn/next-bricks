@@ -37,6 +37,7 @@ import {
   gfm,
   toggleStrikethroughCommand,
   insertTableCommand,
+  tableKeymap,
 } from "@milkdown/preset-gfm";
 import { indent } from "@milkdown/plugin-indent";
 import { Ctx, MilkdownPlugin } from "@milkdown/ctx";
@@ -264,7 +265,8 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
         })
       );
     } catch (err) {
-      // do nothing
+      // eslint-disable-next-line no-console
+      console.error("upload failed:", err);
     }
 
     return nodes;
@@ -275,19 +277,26 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
   const nodeViewFactory = useNodeViewFactory();
 
   const gfmPlugins: MilkdownPlugin[] = useMemo(() => {
-    return readonly ? [] : [
-      gfm,
-      tableTooltip,
-      tableTooltipCtx,
-      (ctx: Ctx) => async () => {
-        ctx.set(tableTooltip.key, {
-          view: pluginViewFactory({
-            component: TableTooltip,
-          }),
-        });
-      },
-      tableSelectorPlugin(widgetViewFactory),
-    ].flat();
+    return readonly
+      ? []
+      : [
+          gfm,
+          tableTooltip,
+          tableTooltipCtx,
+          (ctx: Ctx) => async () => {
+            ctx.set(tableTooltip.key, {
+              view: pluginViewFactory({
+                component: TableTooltip,
+              }),
+            });
+            ctx.set(tableKeymap.key, {
+              ExitTable: ["Enter"],
+              NextCell: ["Mod-]", "Tab"],
+              PrevCell: ["Mod-[", "Shift-Tab"],
+            });
+          },
+          tableSelectorPlugin(widgetViewFactory),
+        ].flat();
   }, [readonly, pluginViewFactory, widgetViewFactory]);
 
   const { get } = useEditor((root: any) => {
@@ -305,14 +314,15 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
         ctx
           .get(listenerCtx)
           .markdownUpdated(
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             (ctx: any, markdown: string, prevMarkdown: string) => {
               onMarkdownValueChange && onMarkdownValueChange(markdown);
             }
           )
-          .focus((ctx: any) => {
+          .focus(() => {
             setIsFocus(true);
           })
-          .blur((ctx: any) => {
+          .blur(() => {
             setIsFocus(false);
           });
         // 配置文件上传,不传bucketName则默认把图片转为base64格式
@@ -337,9 +347,11 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
       .use(gfmPlugins)
       .use(prism)
       .use(
-        readonly ? [] : $view(codeBlockSchema.node, () =>
-          nodeViewFactory({ component: CodeBlock, })
-        )
+        readonly
+          ? []
+          : $view(codeBlockSchema.node, () =>
+              nodeViewFactory({ component: CodeBlock })
+            )
       );
   }, []);
 
