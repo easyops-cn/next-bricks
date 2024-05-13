@@ -1,9 +1,12 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import classNames from "classnames";
 import { micromark } from "micromark";
 import { wrapBrick } from "@next-core/react-element";
 import type { AvatarProps, EoAvatar } from "@next-bricks/basic/avatar";
+import Prism from "prismjs";
 import type { Message } from "./index";
+
+// Prism.manual = true;
 
 const WrappedAvatar = wrapBrick<EoAvatar, AvatarProps>("eo-avatar");
 
@@ -129,18 +132,60 @@ export function MessageComponent({ message }: MessageComponentProps) {
 }
 
 function MessageChunkComponent({ chunk }: { chunk: MessageChunk }) {
+  const markdownRef = useRef<HTMLDivElement>(null);
+
   const chunkHtml = useMemo(() => {
     if (chunk.type === "text") {
       return {
         __html: micromark(chunk.content),
       };
     }
-  }, [chunk]);
+  }, [chunk.type, chunk.content]);
+
+  const [prismLanguageLoaded, setPrismLanguageLoaded] = useState(false);
+
+  useEffect(() => {
+    const elements = markdownRef.current?.querySelectorAll(
+      'code[class*="language-"]'
+    );
+    const languages: string[] = [];
+    for (const element of elements ?? []) {
+      const language = (
+        Prism.util as unknown as { getLanguage(element: Element): string }
+      ).getLanguage(element);
+      if (language !== "none") {
+        languages.push(language);
+      }
+    }
+    Promise.allSettled(
+      languages.map(
+        (language) => import(`prismjs/components/prism-${language}.min.js`)
+      )
+    ).then((results) => {
+      for (const result of results) {
+        if (result.status === "rejected") {
+          // eslint-disable-next-line no-console
+          console.error("load prism language failed:", result.reason);
+        }
+      }
+      setPrismLanguageLoaded(true);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (prismLanguageLoaded && chunk.type === "text" && markdownRef.current) {
+      Prism.highlightAllUnder(markdownRef.current);
+    }
+  }, [chunk.type, chunkHtml, prismLanguageLoaded]);
 
   return (
     <>
       {chunk.type === "text" ? (
-        <div className="markdown" dangerouslySetInnerHTML={chunkHtml} />
+        <div
+          className="markdown"
+          ref={markdownRef}
+          dangerouslySetInnerHTML={chunkHtml}
+        />
       ) : (
         <>
           <details className="command">
