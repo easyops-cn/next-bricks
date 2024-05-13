@@ -45,7 +45,7 @@ import type {
 } from "./interfaces";
 import { rootReducer } from "./reducers";
 import { MarkerComponent } from "../diagram/MarkerComponent";
-import { isNodeCell } from "./processors/asserts";
+import { isNodeCell, isNodeOrAreaDecoratorCell } from "./processors/asserts";
 import type { MoveCellPayload, ResizeCellPayload } from "./reducers/interfaces";
 import { sameTarget } from "./processors/sameTarget";
 import { handleKeyboard } from "./processors/handleKeyboard";
@@ -91,6 +91,7 @@ export interface EoDrawCanvasProps {
   pannable?: boolean;
   dragBehavior?: DragBehavior;
   scaleRange?: RangeTuple;
+  allowEdgeToArea?: boolean;
 }
 
 export type DragBehavior = "lasso" | "grab";
@@ -214,6 +215,9 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
 
   @property({ type: Boolean })
   accessor selectable: boolean | undefined = true;
+
+  @property({ type: Boolean })
+  accessor allowEdgeToArea: boolean | undefined = false;
 
   /**
    * 按住鼠标拖动时的行为：
@@ -471,6 +475,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         pannable={this.pannable}
         dragBehavior={this.dragBehavior}
         scaleRange={this.scaleRange}
+        allowEdgeToArea={this.allowEdgeToArea}
         onActiveTargetChange={this.#handleActiveTargetChange}
         onSwitchActiveTarget={this.#handleSwitchActiveTarget}
         onCellMove={this.#handleCellMove}
@@ -534,6 +539,7 @@ function LegacyEoDrawCanvasComponent(
     pannable,
     dragBehavior,
     scaleRange: _scaleRange,
+    allowEdgeToArea,
     onActiveTargetChange,
     onSwitchActiveTarget,
     onCellMove,
@@ -672,9 +678,11 @@ function LegacyEoDrawCanvasComponent(
         return transform;
       },
       manuallyConnectNodes(sourceId) {
-        const source = cells.find(
-          (cell) => isNodeCell(cell) && cell.id === sourceId
-        ) as NodeCell | undefined;
+        const source = cells.find((cell) =>
+          allowEdgeToArea
+            ? isNodeOrAreaDecoratorCell(cell) && cell.id === sourceId
+            : isNodeCell(cell) && cell.id === sourceId
+        ) as NodeCell | DecoratorCell | undefined;
         if (source) {
           const rect = rootRef.current!.getBoundingClientRect();
           setConnectLineState({
@@ -693,7 +701,7 @@ function LegacyEoDrawCanvasComponent(
         return Promise.reject(null);
       },
     }),
-    [cells, layout, scaleRange, setCentered, transform]
+    [cells, layout, scaleRange, setCentered, transform, allowEdgeToArea]
   );
 
   const handleConnect = useCallback(
@@ -703,7 +711,7 @@ function LegacyEoDrawCanvasComponent(
       for (let i = 0; i < cells.length; i++) {
         const cell = cells[i];
         // Currently ignore connecting to self
-        if (isNodeCell(cell) && cell.id !== state.source.id) {
+        if (isNodeOrAreaDecoratorCell(cell) && cell.id !== state.source.id) {
           if (
             cell.view.x < to[0] &&
             cell.view.x + cell.view.width > to[0] &&
@@ -737,13 +745,24 @@ function LegacyEoDrawCanvasComponent(
   const [unrelatedCells, setUnrelatedCells] = useState<Cell[]>([]);
   useEffect(() => {
     const nextUnrelated = fadeUnrelatedCells
-      ? getUnrelatedCells(cells, connectLineState, activeTarget)
+      ? getUnrelatedCells(
+          cells,
+          connectLineState,
+          activeTarget,
+          allowEdgeToArea
+        )
       : [];
     // Do not update the state when prev and next are both empty.
     setUnrelatedCells((prev) =>
       prev.length === 0 && nextUnrelated.length === 0 ? prev : nextUnrelated
     );
-  }, [activeTarget, cells, connectLineState, fadeUnrelatedCells]);
+  }, [
+    activeTarget,
+    cells,
+    connectLineState,
+    fadeUnrelatedCells,
+    allowEdgeToArea,
+  ]);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -861,7 +880,10 @@ function LegacyEoDrawCanvasComponent(
         <g
           transform={`translate(${transform.x} ${transform.y}) scale(${transform.k})`}
         >
-          <g className="cells" ref={cellsRef}>
+          <g
+            className={classNames("cells", { allowEdgeToArea })}
+            ref={cellsRef}
+          >
             {cells.map((cell) => (
               <CellComponent
                 key={`${cell.type}:${cell.type === "edge" ? `${cell.source}~${cell.target}` : cell.id}`}

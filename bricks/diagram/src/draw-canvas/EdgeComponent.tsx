@@ -8,9 +8,9 @@ import type {
 } from "./interfaces";
 import { getDirectLinePoints } from "../diagram/lines/getDirectLinePoints";
 import type { NodeRect } from "../diagram/interfaces";
-import { findNode } from "./processors/findNode";
 import { isEdgeCell } from "./processors/asserts";
 import { DEFAULT_LINE_INTERACT_ANIMATE_DURATION } from "./constants";
+import { findNodeOrAreaDecorator } from "./processors/findNodeOrAreaDecorator";
 
 export interface EdgeComponentProps {
   edge: EdgeCell;
@@ -25,11 +25,11 @@ export function EdgeComponent({
 }: EdgeComponentProps): JSX.Element | null {
   const pathRef = useRef<SVGPathElement>(null);
   const sourceNode = useMemo(
-    () => findNode(cells, edge.source),
+    () => findNodeOrAreaDecorator(cells, edge.source),
     [cells, edge.source]
   );
   const targetNode = useMemo(
-    () => findNode(cells, edge.target),
+    () => findNodeOrAreaDecorator(cells, edge.target),
     [cells, edge.target]
   );
   const lineConf = useMemo(() => lineConfMap.get(edge)!, [edge, lineConfMap]);
@@ -45,7 +45,6 @@ export function EdgeComponent({
   }, [cells, edge, lineConf.parallelGap]);
 
   const padding = 5;
-
   const line = useMemo(
     () =>
       sourceNode &&

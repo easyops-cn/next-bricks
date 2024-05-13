@@ -287,6 +287,7 @@
               height: 100%
             activeTarget: <%= CTX.activeTarget %>
             fadeUnrelatedCells: true
+            allowEdgeToArea: true
             # Initial nodes only
             defaultNodeSize: [60, 60]
             defaultNodeBricks:
@@ -369,7 +370,7 @@
   properties:
     actions: |
       <%=
-        CTX.targetCell?.type === "node" ? [
+        (["node"].includes(CTX.targetCell?.type )||CTX.targetCell?.decorator=="area") ? [
           {
             text: "添加边",
             event: "add-edge",

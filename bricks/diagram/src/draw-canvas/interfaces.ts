@@ -151,7 +151,7 @@ export interface CellContextMenuDetail {
 }
 
 export interface ConnectLineState {
-  source: NodeCell;
+  source: NodeCell | DecoratorCell;
   from: PositionTuple;
   offset: PositionTuple;
 }
@@ -162,8 +162,8 @@ export interface Deferred<T> {
 }
 
 export interface ConnectNodesDetail {
-  source: NodeCell;
-  target: NodeCell;
+  source: NodeCell | DecoratorCell;
+  target: NodeCell | DecoratorCell;
 }
 
 export interface DecoratorTextChangeDetail {

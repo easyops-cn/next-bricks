@@ -67,6 +67,7 @@
 }
 
 .cell.active .decorator-area .area,
+.allowEdgeToArea:hover .decorator-area .area,
 .cell.active .line-active-bg {
   stroke: var(--palette-blue-5);
   stroke-dasharray: var(--dasharray);

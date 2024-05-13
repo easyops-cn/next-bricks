@@ -70,4 +70,14 @@ describe("getUnrelatedCells", () => {
       { id: "9", type: "decorator" },
     ]);
   });
+  test("connect line state is area", () => {
+    const connectLineState = { source: { id: "8" } } as any;
+    const unrelated = getUnrelatedCells(cells, connectLineState, null, true);
+    expect(unrelated).toEqual([
+      { id: "4", type: "edge", source: "1", target: "2" },
+      { id: "5", type: "edge", source: "2", target: "3" },
+      { id: "6", type: "edge", source: "3", target: "4" },
+      { id: "7", type: "edge", source: "4", target: "1" },
+    ]);
+  });
 });
