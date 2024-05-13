@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
@@ -37,10 +37,6 @@ interface StoryboardChunkBlockItem {
   storyboard?: BrickConf;
 }
 
-export const ChatConversationComponent = forwardRef(
-  LegacyChatConversationComponent
-);
-
 /**
  * 用于 Visual Builder 的智能聊天对话列表
  */
@@ -78,7 +74,7 @@ export interface ChatConversationComponentProps extends ChatConversationProps {
   onStoryboardUpdate?: (storyboard: BrickConf[]) => void;
 }
 
-export function LegacyChatConversationComponent({
+export function ChatConversationComponent({
   messages,
   host,
   onStoryboardUpdate,
@@ -276,7 +272,7 @@ export function LegacyChatConversationComponent({
     setTimeout(() => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
       verticalScrollParent.scrollTo(0, verticalScrollParent.scrollHeight!);
-    }, 0);
+    }, 1);
   }, [messages, verticalScrollParent]);
 
   useEffect(() => {

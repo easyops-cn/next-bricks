@@ -1,12 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import classNames from "classnames";
-import { micromark } from "micromark";
+import { Remark } from "react-remark";
 import { wrapBrick } from "@next-core/react-element";
 import type { AvatarProps, EoAvatar } from "@next-bricks/basic/avatar";
-import Prism from "prismjs";
 import type { Message } from "./index";
-
-// Prism.manual = true;
+import { rehypePrism } from "./rehypePrism";
 
 const WrappedAvatar = wrapBrick<EoAvatar, AvatarProps>("eo-avatar");
 
@@ -69,41 +67,43 @@ export function MessageComponent({ message }: MessageComponentProps) {
     if (!contentElement) {
       return;
     }
-    const textingElements =
-      contentElement.parentElement.querySelectorAll(".texting");
-    for (const element of textingElements) {
-      element.classList.remove("texting");
-    }
-    if (!message.partial) {
-      return;
-    }
-    // Find the last text element descendant of the message element,
-    // and apply a texting effect to it.
-    let current = contentElement as HTMLElement;
-    while (current) {
-      const lastChild = current.lastChild;
-      if (
-        lastChild?.nodeType === Node.ELEMENT_NODE &&
-        ((lastChild as HTMLElement)?.tagName !== "DETAILS" ||
-          (lastChild as HTMLDetailsElement).open)
-      ) {
-        current = lastChild as HTMLElement;
-      } else {
-        // Handle a special case: the last child is a text node without any
-        // non-whitespace content. In such case, we should apply the texting
-        // effect to the previous sibling element.
+    setTimeout(() => {
+      const textingElements =
+        contentElement.parentElement.querySelectorAll(".texting");
+      for (const element of textingElements) {
+        element.classList.remove("texting");
+      }
+      if (!message.partial) {
+        return;
+      }
+      // Find the last text element descendant of the message element,
+      // and apply a texting effect to it.
+      let current = contentElement as HTMLElement;
+      while (current) {
+        const lastChild = current.lastChild;
         if (
-          lastChild?.nodeType === Node.TEXT_NODE &&
-          lastChild.textContent.trim().length === 0 &&
-          lastChild.previousSibling?.nodeType === Node.ELEMENT_NODE
+          lastChild?.nodeType === Node.ELEMENT_NODE &&
+          ((lastChild as HTMLElement)?.tagName !== "DETAILS" ||
+            (lastChild as HTMLDetailsElement).open)
         ) {
-          current = lastChild.previousSibling as HTMLElement;
+          current = lastChild as HTMLElement;
         } else {
-          break;
+          // Handle a special case: the last child is a text node without any
+          // non-whitespace content. In such case, we should apply the texting
+          // effect to the previous sibling element.
+          if (
+            lastChild?.nodeType === Node.TEXT_NODE &&
+            lastChild.textContent.trim().length === 0 &&
+            lastChild.previousSibling?.nodeType === Node.ELEMENT_NODE
+          ) {
+            current = lastChild.previousSibling as HTMLElement;
+          } else {
+            break;
+          }
         }
       }
-    }
-    current.classList.add("texting");
+      current.classList.add("texting");
+    }, 1);
   }, [message.partial, message.content]);
 
   return (
@@ -132,60 +132,12 @@ export function MessageComponent({ message }: MessageComponentProps) {
 }
 
 function MessageChunkComponent({ chunk }: { chunk: MessageChunk }) {
-  const markdownRef = useRef<HTMLDivElement>(null);
-
-  const chunkHtml = useMemo(() => {
-    if (chunk.type === "text") {
-      return {
-        __html: micromark(chunk.content),
-      };
-    }
-  }, [chunk.type, chunk.content]);
-
-  const [prismLanguageLoaded, setPrismLanguageLoaded] = useState(false);
-
-  useEffect(() => {
-    const elements = markdownRef.current?.querySelectorAll(
-      'code[class*="language-"]'
-    );
-    const languages: string[] = [];
-    for (const element of elements ?? []) {
-      const language = (
-        Prism.util as unknown as { getLanguage(element: Element): string }
-      ).getLanguage(element);
-      if (language !== "none") {
-        languages.push(language);
-      }
-    }
-    Promise.allSettled(
-      languages.map(
-        (language) => import(`prismjs/components/prism-${language}.min.js`)
-      )
-    ).then((results) => {
-      for (const result of results) {
-        if (result.status === "rejected") {
-          // eslint-disable-next-line no-console
-          console.error("load prism language failed:", result.reason);
-        }
-      }
-      setPrismLanguageLoaded(true);
-    });
-  }, []);
-
-  useEffect(() => {
-    if (prismLanguageLoaded && chunk.type === "text" && markdownRef.current) {
-      Prism.highlightAllUnder(markdownRef.current);
-    }
-  }, [chunk.type, chunkHtml, prismLanguageLoaded]);
-
   return (
     <>
       {chunk.type === "text" ? (
-        <div
-          className="markdown"
-          ref={markdownRef}
-          dangerouslySetInnerHTML={chunkHtml}
-        />
+        <div className="markdown">
+          <Remark rehypePlugins={[rehypePrism as any]}>{chunk.content}</Remark>
+        </div>
       ) : (
         <>
           <details className="command">

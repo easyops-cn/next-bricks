@@ -91,6 +91,7 @@
   "resolutions": {
     "@babel/parser": "^7.24.4",
     "@babel/runtime": "^7.24.4",
+    "@types/hast": "^3.0.4",
     "@types/react": "^18.2.79",
     "lodash": "^4.17.21",
     "moment": "^2.30.1"
