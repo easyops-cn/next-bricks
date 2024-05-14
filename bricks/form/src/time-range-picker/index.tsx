@@ -261,8 +261,8 @@ export function RealTimeRangePicker(
   const rangeType = props.rangeType ?? "time";
   const today = times.includes(rangeType) ? "" : dayjs().format("YYYY-MM-DD");
   const initRange = {
-    startTime: today + INIT_TIME_RANGE.startTime,
-    endTime: today + INIT_TIME_RANGE.endTime,
+    startTime: today + " " + INIT_TIME_RANGE.startTime,
+    endTime: today + " " + INIT_TIME_RANGE.endTime,
   };
 
   const initValue: TimeRange =
@@ -413,16 +413,21 @@ export function RealTimeRangePicker(
     return !!tooSelectNearDays;
   };
 
+  // Memoize the picker value
+  const pickerValue = useMemo(() => {
+    return (
+      !isEmpty(value?.startTime) || !isEmpty(value?.endTime)
+        ? [startTime, endTime]
+        : []
+    ) as any;
+  }, [endTime, startTime, value?.endTime, value?.startTime]);
+
   const dateRange = (
     <DatePicker.RangePicker
       style={{ width: 400 }}
       showTime={(rangeType as RangeType) === "dateTime"}
       picker={(rangeType as RangeType) === "dateTime" ? "date" : rangeType}
-      value={
-        (!isEmpty(value?.startTime) || !isEmpty(value?.endTime)
-          ? [startTime, endTime]
-          : []) as any
-      }
+      value={pickerValue}
       presets={presetRange as any}
       format={format}
       onChange={rangeChange}
