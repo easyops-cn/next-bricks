@@ -12,6 +12,10 @@ export function handleLasso(
   event: MouseEvent,
   { transform, offset, onLassoing, onLassoed }: HandleLassoOptions
 ) {
+  if (event.ctrlKey || event.button) {
+    return;
+  }
+
   event.stopPropagation();
 
   const from: PositionTuple = [event.clientX, event.clientY];

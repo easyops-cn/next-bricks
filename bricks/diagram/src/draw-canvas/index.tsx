@@ -92,11 +92,13 @@ export interface EoDrawCanvasProps {
   scrollable?: boolean;
   pannable?: boolean;
   dragBehavior?: DragBehavior;
+  ctrlDragBehavior?: CtrlDragBehavior;
   scaleRange?: RangeTuple;
   allowEdgeToArea?: boolean;
 }
 
 export type DragBehavior = "none" | "lasso" | "grab";
+export type CtrlDragBehavior = "none" | "grab";
 
 export interface DropNodeInfo extends AddNodeInfo {
   /** [PointerEvent::clientX, PointerEvent::clientY] */
@@ -231,6 +233,16 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
    */
   @property()
   accessor dragBehavior: DragBehavior | undefined;
+
+  /**
+   * 按住 ctrl 键并按住鼠标拖动时的行为：
+   *  - `none`：无
+   *  - `grab`：拖动画布
+   *
+   * @default "none"
+   */
+  @property()
+  accessor ctrlDragBehavior: CtrlDragBehavior | undefined;
 
   @property({ attribute: false })
   accessor scaleRange: RangeTuple | undefined;
@@ -491,6 +503,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         scrollable={this.scrollable}
         pannable={this.pannable}
         dragBehavior={this.dragBehavior}
+        ctrlDragBehavior={this.ctrlDragBehavior}
         scaleRange={this.scaleRange}
         allowEdgeToArea={this.allowEdgeToArea}
         onActiveTargetChange={this.#handleActiveTargetChange}
@@ -559,6 +572,7 @@ function LegacyEoDrawCanvasComponent(
     scrollable,
     pannable,
     dragBehavior,
+    ctrlDragBehavior,
     scaleRange: _scaleRange,
     allowEdgeToArea,
     onActiveTargetChange,
@@ -604,6 +618,7 @@ function LegacyEoDrawCanvasComponent(
     scrollable,
     pannable,
     draggable: dragBehavior === "grab",
+    ctrlDraggable: ctrlDragBehavior === "grab",
     scaleRange: _scaleRange,
     onSwitchActiveTarget,
   });
