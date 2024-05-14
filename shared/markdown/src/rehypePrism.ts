@@ -2,11 +2,12 @@ import { visit } from "unist-util-visit";
 import { toString } from "hast-util-to-string";
 import { refractor, type RefractorElement } from "refractor";
 
+// Reference https://github.com/mapbox/rehype-prism
 export function rehypePrism() {
   function visitor(
     node: RefractorElement,
-    _index: number,
-    parent: RefractorElement
+    _index: number | undefined,
+    parent: RefractorElement | undefined
   ) {
     if (!parent || parent.tagName !== "pre" || node.tagName !== "code") {
       return;

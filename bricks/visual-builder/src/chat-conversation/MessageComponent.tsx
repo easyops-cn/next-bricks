@@ -1,10 +1,9 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import classNames from "classnames";
-import { Remark } from "react-remark";
+import { MarkdownComponent } from "@next-shared/markdown";
 import { wrapBrick } from "@next-core/react-element";
 import type { AvatarProps, EoAvatar } from "@next-bricks/basic/avatar";
 import type { Message } from "./index";
-import { rehypePrism } from "./rehypePrism";
 
 const WrappedAvatar = wrapBrick<EoAvatar, AvatarProps>("eo-avatar");
 
@@ -136,7 +135,7 @@ function MessageChunkComponent({ chunk }: { chunk: MessageChunk }) {
     <>
       {chunk.type === "text" ? (
         <div className="markdown">
-          <Remark rehypePlugins={[rehypePrism as any]}>{chunk.content}</Remark>
+          <MarkdownComponent content={chunk.content} />
         </div>
       ) : (
         <>

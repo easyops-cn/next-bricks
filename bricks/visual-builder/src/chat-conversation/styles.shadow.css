@@ -10,8 +10,7 @@
   box-sizing: border-box;
 }
 
-/* @import "~prismjs/themes/prism.css"; */
-@import "~prismjs/themes/prism-tomorrow.css";
+@import "~@next-shared/markdown/dist/esm/prism-tomorrow.css";
 
 .message {
   display: flex;

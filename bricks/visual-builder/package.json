@@ -44,20 +44,16 @@
     "@next-core/types": "^1.10.0",
     "@next-core/utils": "^1.7.2",
     "@next-shared/general": "^0.8.26",
+    "@next-shared/markdown": "^0.0.0",
     "classnames": "^2.3.2",
-    "hast-util-to-string": "^3.0.0",
     "html2canvas": "^1.4.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
-    "react": "0.0.0-experimental-ee8509801-20230117",
-    "react-remark": "^2.1.0",
-    "refractor": "^4.8.1",
-    "unist-util-visit": "^5.0.0"
+    "react": "0.0.0-experimental-ee8509801-20230117"
   },
   "devDependencies": {
     "@next-core/build-next-bricks": "^1.20.9",
-    "@next-core/test-next": "^1.1.1",
-    "babel-plugin-prismjs": "^2.1.0"
+    "@next-core/test-next": "^1.1.1"
   },
   "peerDependencies": {
     "@next-bricks/basic": "*",
