@@ -156,6 +156,7 @@ async function loadMainDll(adapterPkgFilePath: string) {
   const { antdLocaleZhCN } = LegacyBrickKit;
 
   defineModule(LegacyI18next, {
+    ...i18n,
     default: i18n,
   });
 
