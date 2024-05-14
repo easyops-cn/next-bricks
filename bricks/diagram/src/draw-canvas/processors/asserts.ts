@@ -26,3 +26,12 @@ export function isEdgeCell(cell: Cell): cell is EdgeCell {
 export function isNodeOrEdgeCell(cell: Cell): cell is NodeCell | EdgeCell {
   return cell.type === "node" || cell.type === "edge";
 }
+
+export function isNodeOrAreaDecoratorCell(
+  cell: Cell
+): cell is NodeCell | DecoratorCell {
+  return (
+    cell.type === "node" ||
+    (cell.type === "decorator" && cell.decorator === "area")
+  );
+}

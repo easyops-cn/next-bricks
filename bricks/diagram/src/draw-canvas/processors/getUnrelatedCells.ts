@@ -4,10 +4,10 @@ import { sameTarget } from "./sameTarget";
 export function getUnrelatedCells(
   cells: Cell[],
   connectLineState: ConnectLineState | null,
-  activeTarget: ActiveTarget | null
+  activeTarget: ActiveTarget | null,
+  allowEdgeToArea?: boolean
 ): Cell[] {
   const unrelated: Cell[] = [];
-
   if (connectLineState) {
     const existedTargets = new Set<string>();
     for (const cell of cells) {
@@ -19,6 +19,15 @@ export function getUnrelatedCells(
       switch (cell.type) {
         case "node":
           if (existedTargets.has(cell.id)) {
+            unrelated.push(cell);
+          }
+          break;
+        case "decorator":
+          if (
+            !allowEdgeToArea ||
+            cell.decorator == "text" ||
+            existedTargets.has(cell.id)
+          ) {
             unrelated.push(cell);
           }
           break;
