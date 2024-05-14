@@ -18,6 +18,7 @@ import { initializeCells } from "./initializeCells";
 import { transformToCenter } from "./transformToCenter";
 import { forceLayout } from "../../shared/canvas/forceLayout";
 import { dagreLayout } from "../../shared/canvas/dagreLayout";
+import { sameTarget } from "./sameTarget";
 
 export function updateCells({
   cells,
@@ -186,8 +187,14 @@ export function updateCells({
         // The positioned node (if exists) will be updated.
         updateCandidates.push(...positionedNodes);
         ({ getNodeView } = dagreLayout({ cells: newCells }));
-        // Only re-center when there is no cells previous.
-        shouldReCenter = previousCells.length === 0;
+        // Only re-center when there is no cells previous,
+        // or the cell ids are not changed (this happens when updateCells called by backend right after dropNode).
+        shouldReCenter =
+          previousCells.length === 0 ||
+          (previousCells.length === newCells.length &&
+            previousCells.every((cell, index) =>
+              sameTarget(cell, newCells[index])
+            ));
       } else {
         ({ getNodeView } = forceLayout({
           cells: newCells,
