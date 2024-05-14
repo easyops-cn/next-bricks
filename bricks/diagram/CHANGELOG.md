@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.35.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.34.7...@next-bricks/diagram@0.35.0) (2024-05-14)
+
+
+### Features
+
+* 新版拓扑图支持区域连线 ([b7b16e4](https://github.com/easyops-cn/next-bricks/commit/b7b16e43a03ffb4649ee840ef6bbfca5a1339afa))
+
+
+
+
+
 ## [0.34.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.34.6...@next-bricks/diagram@0.34.7) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/diagram
