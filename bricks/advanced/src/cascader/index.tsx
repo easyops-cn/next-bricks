@@ -250,7 +250,7 @@ function CascaderElement(props: CascaderProps): React.ReactElement {
           getPopupContainer={(trigger) => trigger.parentElement}
           allowClear={allowClear}
           disabled={disabled}
-          multiple={multiple}
+          multiple={multiple as true | undefined}
           expandTrigger={expandTrigger}
           fieldNames={fieldNames}
           placeholder={placeholder}
@@ -260,12 +260,14 @@ function CascaderElement(props: CascaderProps): React.ReactElement {
           style={cascaderStyle}
           suffixIcon={suffixIcon && <WrappedIcon {...suffixIcon} />}
           maxTagCount={maxTagCount}
-          value={value}
+          value={value as any}
           options={options}
-          onChange={(
-            value: AntdCascaderProps["value"],
-            selectedOptions: DefaultOptionType[] | DefaultOptionType[][]
-          ) => onChange?.(value, selectedOptions)}
+          onChange={
+            ((
+              value: AntdCascaderProps["value"],
+              selectedOptions: DefaultOptionType[] | DefaultOptionType[][]
+            ) => onChange?.(value, selectedOptions)) as any
+          }
         />
       </StyleProvider>
     </ConfigProvider>
