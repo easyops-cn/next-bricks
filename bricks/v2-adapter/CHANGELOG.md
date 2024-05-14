@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@1.1.5...@next-bricks/v2-adapter@1.1.6) (2024-05-14)
+
+
+### Bug Fixes
+
+* adapt rest of i18next ([d0bc984](https://github.com/easyops-cn/next-bricks/commit/d0bc9847c65c199c13cf2a968a36a98935576c9d))
+
+
+
+
+
 ## [1.1.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@1.1.4...@next-bricks/v2-adapter@1.1.5) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
