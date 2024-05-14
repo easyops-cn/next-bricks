@@ -111,8 +111,8 @@ describe("cells reducer", () => {
     const newCells = cells(
       [{ id: "2", type: "node", view: { x: 0, y: 0 } } as any],
       {
-        type: "move-cell",
-        payload: { type: "node", id: "2", x: 1, y: 2 },
+        type: "move-cells",
+        payload: [{ type: "node", id: "2", x: 1, y: 2 }],
       }
     );
     expect(newCells).toEqual([
@@ -128,8 +128,8 @@ describe("cells reducer", () => {
     const newCells = cells(
       [{ id: "2", type: "node", view: { x: 0, y: 0 } } as any],
       {
-        type: "move-cell",
-        payload: { type: "node", id: "3", x: 1, y: 2 },
+        type: "move-cells",
+        payload: [{ type: "node", id: "3", x: 1, y: 2 }],
       }
     );
     expect(newCells).toEqual([

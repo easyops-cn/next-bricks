@@ -1,11 +1,18 @@
 import type { PositionTuple } from "../../diagram/interfaces";
-import type { ActiveTarget, Cell, LayoutType } from "../interfaces";
+import type {
+  ActiveTarget,
+  Cell,
+  DecoratorCell,
+  LayoutType,
+  NodeCell,
+} from "../interfaces";
 import type {
   MoveCellPayload,
   ResizeCellPayload,
 } from "../reducers/interfaces";
-import { isEdgeCell, isNodeCell } from "./asserts";
+import { isDecoratorCell, isEdgeCell, isNodeCell } from "./asserts";
 import { cellToTarget } from "./cellToTarget";
+import { targetIsActive } from "./targetIsActive";
 
 export function handleMouseDown(
   event: MouseEvent,
@@ -14,8 +21,10 @@ export function handleMouseDown(
     cell,
     scale,
     layout,
-    onCellMoving,
-    onCellMoved,
+    activeTarget,
+    cells,
+    onCellsMoving,
+    onCellsMoved,
     onCellResizing,
     onCellResized,
     onSwitchActiveTarget,
@@ -24,8 +33,10 @@ export function handleMouseDown(
     cell: Cell;
     scale: number;
     layout?: LayoutType;
-    onCellMoving?(info: MoveCellPayload): void;
-    onCellMoved?(info: MoveCellPayload): void;
+    activeTarget: ActiveTarget | null | undefined;
+    cells: Cell[];
+    onCellsMoving?(info: MoveCellPayload[]): void;
+    onCellsMoved?(info: MoveCellPayload[]): void;
     onCellResizing?(info: ResizeCellPayload): void;
     onCellResized?(info: ResizeCellPayload): void;
     onSwitchActiveTarget?(activeTarget: ActiveTarget | null): void;
@@ -33,20 +44,34 @@ export function handleMouseDown(
 ) {
   event.stopPropagation();
   // Drag node
-  onSwitchActiveTarget?.(cellToTarget(cell));
+  if (action === "resize" || !targetIsActive(cell, activeTarget)) {
+    onSwitchActiveTarget?.(cellToTarget(cell));
+  }
 
-  if (
-    isEdgeCell(cell) ||
-    ((layout === "force" || layout === "dagre") && isNodeCell(cell))
-  ) {
+  const isAutoLayout = layout === "force" || layout === "dagre";
+  if (isEdgeCell(cell)) {
+    return;
+  }
+
+  const activeCells =
+    activeTarget?.type === "multi" && action === "move"
+      ? cells.filter((c) => targetIsActive(c, activeTarget))
+      : [cell];
+
+  const movableActiveCells = activeCells.filter(
+    (c) => (isNodeCell(c) && !isAutoLayout) || isDecoratorCell(c)
+  ) as (NodeCell | DecoratorCell)[];
+
+  if (movableActiveCells.length === 0) {
     return;
   }
 
   const from: PositionTuple = [event.clientX, event.clientY];
-  const original =
-    action === "move"
-      ? [cell.view.x, cell.view.y]
-      : [cell.view.width, cell.view.height];
+  const originals = movableActiveCells.map((c) => ({
+    cell: c,
+    position:
+      action === "move" ? [c.view.x, c.view.y] : [c.view.width, c.view.height],
+  }));
 
   function getMovement(e: MouseEvent): PositionTuple {
     return [(e.clientX - from[0]) / scale, (e.clientY - from[1]) / scale];
@@ -60,22 +85,21 @@ export function handleMouseDown(
     if (!moved) {
       moved = movement[0] ** 2 + movement[1] ** 2 >= 9;
     }
-    // const [x, y] = getNewPosition(movement);
-    // adjustCellPosition(x, y);
     if (moved) {
       if (action === "move") {
-        (finished ? onCellMoved : onCellMoving)?.({
+        const payloads = originals.map(({ cell, position }) => ({
           type: cell.type,
           id: cell.id,
-          x: original[0] + movement[0],
-          y: original[1] + movement[1],
-        });
+          x: position[0] + movement[0],
+          y: position[1] + movement[1],
+        }));
+        (finished ? onCellsMoved : onCellsMoving)?.(payloads);
       } else {
         (finished ? onCellResized : onCellResizing)?.({
           type: cell.type,
           id: cell.id,
-          width: original[0] + movement[0],
-          height: original[1] + movement[1],
+          width: originals[0].position[0] + movement[0],
+          height: originals[0].position[1] + movement[1],
         });
       }
     }

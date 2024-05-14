@@ -7,6 +7,8 @@ export function DecoratorComponent({
   cell,
   transform,
   readOnly,
+  activeTarget,
+  cells,
   onCellResizing,
   onCellResized,
   onSwitchActiveTarget,
@@ -34,6 +36,8 @@ export function DecoratorComponent({
       cell={cell}
       transform={transform}
       readOnly={readOnly}
+      activeTarget={activeTarget}
+      cells={cells}
       onCellResizing={onCellResizing}
       onCellResized={onCellResized}
       onSwitchActiveTarget={onSwitchActiveTarget}

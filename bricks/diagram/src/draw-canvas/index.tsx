@@ -66,8 +66,10 @@ import { ZoomBarComponent } from "../shared/canvas/ZoomBarComponent";
 import { useLayout } from "../shared/canvas/useLayout";
 import { useReady } from "../shared/canvas/useReady";
 import { useLineMarkers } from "../shared/canvas/useLineMarkers";
+import { handleLasso } from "./processors/handleLasso";
 import styleText from "../shared/canvas/styles.shadow.css";
 import zoomBarStyleText from "../shared/canvas/ZoomBarComponent.shadow.css";
+import { cellToTarget } from "./processors/cellToTarget";
 
 const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
   "basic.lock-body-scroll"
@@ -94,7 +96,7 @@ export interface EoDrawCanvasProps {
   allowEdgeToArea?: boolean;
 }
 
-export type DragBehavior = "lasso" | "grab";
+export type DragBehavior = "none" | "lasso" | "grab";
 
 export interface DropNodeInfo extends AddNodeInfo {
   /** [PointerEvent::clientX, PointerEvent::clientY] */
@@ -221,10 +223,11 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
 
   /**
    * 按住鼠标拖动时的行为：
+   *  - `none`：无
    *  - `lasso`：绘制选区
    *  - `grab`：拖动画布
    *
-   * @default "lasso"
+   * @default "none"
    */
   @property()
   accessor dragBehavior: DragBehavior | undefined;
@@ -261,6 +264,13 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
     }
   };
 
+  @event({ type: "cells.move" })
+  accessor #cellsMoveEvent!: EventEmitter<MoveCellPayload[]>;
+
+  #handleCellsMove = (info: MoveCellPayload[]) => {
+    this.#cellsMoveEvent.emit(info);
+  };
+
   @event({ type: "cell.resize" })
   accessor #cellResizeEvent!: EventEmitter<ResizeCellPayload>;
 
@@ -282,6 +292,13 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
     if (cell.type === "node") {
       this.#nodeDelete.emit(cell);
     }
+  };
+
+  @event({ type: "cells.delete" })
+  accessor #cellsDelete!: EventEmitter<Cell[]>;
+
+  #handleCellsDelete = (cells: Cell[]) => {
+    this.#cellsDelete.emit(cells);
   };
 
   @event({ type: "cell.contextmenu" })
@@ -479,8 +496,10 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         onActiveTargetChange={this.#handleActiveTargetChange}
         onSwitchActiveTarget={this.#handleSwitchActiveTarget}
         onCellMove={this.#handleCellMove}
+        onCellsMove={this.#handleCellsMove}
         onCellResize={this.#handleCellResize}
         onCellDelete={this.#handleCellDelete}
+        onCellsDelete={this.#handleCellsDelete}
         onCellContextMenu={this.#handleCellContextMenu}
         onDecoratorTextChange={this.#handleDecoratorTextChange}
         onScaleChange={this.#handleScaleChange}
@@ -496,6 +515,8 @@ export interface EoDrawCanvasComponentProps extends EoDrawCanvasProps {
   onCellMove(info: MoveCellPayload): void;
   onCellResize(cell: ResizeCellPayload): void;
   onCellDelete(cell: Cell): void;
+  onCellsMove(info: MoveCellPayload[]): void;
+  onCellsDelete(cells: Cell[]): void;
   onCellContextMenu(detail: CellContextMenuDetail): void;
   onDecoratorTextChange(detail: DecoratorTextChangeDetail): void;
   onScaleChange(scale: number): void;
@@ -545,6 +566,8 @@ function LegacyEoDrawCanvasComponent(
     onCellMove,
     onCellResize,
     onCellDelete,
+    onCellsMove,
+    onCellsDelete,
     onCellContextMenu,
     onDecoratorTextChange,
     onScaleChange,
@@ -588,6 +611,8 @@ function LegacyEoDrawCanvasComponent(
   useEffect(() => {
     onScaleChange(transform.k);
   }, [onScaleChange, transform.k]);
+
+  const [lassoRect, setLassoRect] = useState<NodeView | null>(null);
 
   const [connectLineState, setConnectLineState] =
     useState<ConnectLineState | null>(null);
@@ -733,8 +758,8 @@ function LegacyEoDrawCanvasComponent(
   );
 
   useEffect(() => {
-    lockBodyScroll(host, !!connectLineState);
-  }, [connectLineState, host]);
+    lockBodyScroll(host, !!(connectLineState || lassoRect));
+  }, [connectLineState, host, lassoRect]);
 
   const activeTarget = useActiveTarget({
     cellsRef,
@@ -775,29 +800,37 @@ function LegacyEoDrawCanvasComponent(
         activeTarget,
       });
 
-      if (action?.action === "delete-cell") {
-        onCellDelete(action.cell);
+      switch (action?.action) {
+        case "delete-cells":
+          onCellsDelete(action.cells);
+          if (action.cells.length === 1) {
+            onCellDelete(action.cells[0]);
+          }
+          break;
       }
     };
     root.addEventListener("keydown", onKeydown);
     return () => {
       root.removeEventListener("keydown", onKeydown);
     };
-  }, [activeTarget, cells, editingTexts.length, onCellDelete]);
+  }, [activeTarget, cells, editingTexts.length, onCellDelete, onCellsDelete]);
 
   const defPrefix = useMemo(() => `${uniqueId("diagram-")}-`, []);
   const markerPrefix = `${defPrefix}line-arrow-`;
 
-  const handleCellMoving = useCallback((info: MoveCellPayload) => {
-    dispatch({ type: "move-cell", payload: info });
+  const handleCellsMoving = useCallback((info: MoveCellPayload[]) => {
+    dispatch({ type: "move-cells", payload: info });
   }, []);
 
-  const handleCellMoved = useCallback(
-    (info: MoveCellPayload) => {
-      dispatch({ type: "move-cell", payload: info });
-      onCellMove(info);
+  const handleCellsMoved = useCallback(
+    (info: MoveCellPayload[]) => {
+      dispatch({ type: "move-cells", payload: info });
+      onCellsMove(info);
+      if (info.length === 1) {
+        onCellMove(info[0]);
+      }
     },
-    [onCellMove]
+    [onCellMove, onCellsMove]
   );
 
   const handleCellResizing = useCallback((info: ResizeCellPayload) => {
@@ -858,6 +891,54 @@ function LegacyEoDrawCanvasComponent(
 
   const ready = useReady({ cells, layout, centered });
 
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root || dragBehavior !== "lasso") {
+      return;
+    }
+    const rootRect = root.getBoundingClientRect();
+    const onMouseDown = (event: MouseEvent) => {
+      handleLasso(event, {
+        transform,
+        offset: [rootRect.left, rootRect.top],
+        onLassoing(rect) {
+          setLassoRect(rect);
+        },
+        onLassoed(rect) {
+          setLassoRect(null);
+          const lassoedCells: (NodeCell | DecoratorCell)[] = [];
+          for (const cell of cells) {
+            // Currently only nodes and area decorators are supported to be lassoed.
+            // Because edges and text decorators currently has no accurate size info.
+            if (isNodeOrAreaDecoratorCell(cell)) {
+              const x = cell.view.x;
+              const y = cell.view.y;
+              if (
+                x >= rect.x &&
+                x + cell.view.width <= rect.x + rect.width &&
+                y >= rect.y &&
+                y + cell.view.height <= rect.y + rect.height
+              ) {
+                lassoedCells.push(cell);
+              }
+            }
+          }
+          onSwitchActiveTarget?.(
+            lassoedCells.length > 1
+              ? { type: "multi", targets: lassoedCells.map(cellToTarget) }
+              : lassoedCells.length === 1
+                ? cellToTarget(lassoedCells[0])
+                : null
+          );
+        },
+      });
+    };
+    root.addEventListener("mousedown", onMouseDown);
+    return () => {
+      root.removeEventListener("mousedown", onMouseDown);
+    };
+  }, [transform, cells, dragBehavior, onSwitchActiveTarget]);
+
   return (
     <>
       <svg
@@ -895,10 +976,10 @@ function LegacyEoDrawCanvasComponent(
                 defaultNodeBricks={defaultNodeBricks}
                 transform={transform}
                 lineConfMap={lineConfMap}
-                active={sameTarget(activeTarget, cell)}
+                activeTarget={activeTarget}
                 unrelatedCells={unrelatedCells}
-                onCellMoving={handleCellMoving}
-                onCellMoved={handleCellMoved}
+                onCellsMoving={handleCellsMoving}
+                onCellsMoved={handleCellsMoved}
                 onCellResizing={handleCellResizing}
                 onCellResized={handleCellResized}
                 onSwitchActiveTarget={onSwitchActiveTarget}
@@ -915,6 +996,18 @@ function LegacyEoDrawCanvasComponent(
             markerEnd={`${markerPrefix}0`}
             onConnect={handleConnect}
           />
+          {lassoRect && (
+            <rect
+              x={lassoRect.x}
+              y={lassoRect.y}
+              width={lassoRect.width}
+              height={lassoRect.height}
+              fill="var(--palette-gray-5)"
+              fillOpacity={0.3}
+              stroke="var(--palette-gray-5)"
+              strokeDasharray={2}
+            />
+          )}
         </g>
       </svg>
       <ZoomBarComponent

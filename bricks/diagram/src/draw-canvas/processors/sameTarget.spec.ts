@@ -15,6 +15,25 @@ describe("sameTarget", () => {
     expect(result).toBe(true);
   });
 
+  test("should return true if both targets have the same node ids", () => {
+    const target1: ActiveTarget = {
+      type: "multi",
+      targets: [
+        { type: "node", id: "target1" },
+        { type: "node", id: "target2" },
+      ],
+    };
+    const target2: ActiveTarget = {
+      type: "multi",
+      targets: [
+        { type: "node", id: "target2" },
+        { type: "node", id: "target1" },
+      ],
+    };
+    const result = sameTarget(target1, target2);
+    expect(result).toBe(true);
+  });
+
   test("should return false if both targets have different node ids", () => {
     const target1: ActiveTarget = { type: "node", id: "target1" };
     const target2: ActiveTarget = { type: "node", id: "target2" };

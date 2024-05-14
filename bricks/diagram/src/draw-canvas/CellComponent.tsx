@@ -19,6 +19,7 @@ import { DecoratorComponent } from "./decorators";
 import { cellToTarget } from "./processors/cellToTarget";
 import type { SizeTuple, TransformLiteral } from "../diagram/interfaces";
 import { sameTarget } from "./processors/sameTarget";
+import { targetIsActive } from "./processors/targetIsActive";
 
 export interface CellComponentProps {
   layout: LayoutType;
@@ -29,11 +30,11 @@ export interface CellComponentProps {
   defaultNodeBricks?: NodeBrickConf[];
   transform: TransformLiteral;
   lineConfMap: WeakMap<EdgeCell, ComputedEdgeLineConf>;
-  active: boolean;
+  activeTarget: ActiveTarget | null | undefined;
   readOnly?: boolean;
   unrelatedCells: Cell[];
-  onCellMoving?(info: MoveCellPayload): void;
-  onCellMoved?(info: MoveCellPayload): void;
+  onCellsMoving?(info: MoveCellPayload[]): void;
+  onCellsMoved?(info: MoveCellPayload[]): void;
   onCellResizing?(info: ResizeCellPayload): void;
   onCellResized?(info: ResizeCellPayload): void;
   onSwitchActiveTarget(target: ActiveTarget | null): void;
@@ -54,12 +55,12 @@ export function CellComponent({
   degradedNodeLabel,
   defaultNodeBricks,
   lineConfMap,
-  active,
+  activeTarget,
   readOnly,
   transform,
   unrelatedCells,
-  onCellMoving,
-  onCellMoved,
+  onCellsMoving,
+  onCellsMoved,
   onCellResizing,
   onCellResized,
   onSwitchActiveTarget,
@@ -92,8 +93,10 @@ export function CellComponent({
           action: "move",
           cell,
           scale: transform.k,
-          onCellMoving,
-          onCellMoved,
+          activeTarget,
+          cells,
+          onCellsMoving,
+          onCellsMoved,
           onSwitchActiveTarget,
         });
       }
@@ -105,8 +108,10 @@ export function CellComponent({
   }, [
     layout,
     cell,
-    onCellMoved,
-    onCellMoving,
+    activeTarget,
+    cells,
+    onCellsMoved,
+    onCellsMoving,
     onSwitchActiveTarget,
     readOnly,
     transform.k,
@@ -153,7 +158,7 @@ export function CellComponent({
   return (
     <g
       className={classNames("cell", {
-        active,
+        active: targetIsActive(cell, activeTarget),
         faded: unrelated,
         "read-only": readOnly,
       })}
@@ -183,6 +188,8 @@ export function CellComponent({
           cell={cell}
           transform={transform}
           readOnly={readOnly}
+          activeTarget={activeTarget}
+          cells={cells}
           onCellResizing={onCellResizing}
           onCellResized={onCellResized}
           onSwitchActiveTarget={onSwitchActiveTarget}

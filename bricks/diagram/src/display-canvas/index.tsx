@@ -389,7 +389,7 @@ function EoDisplayCanvasComponent({
                 defaultNodeBricks={defaultNodeBricks}
                 lineConfMap={lineConfMap}
                 transform={transform}
-                active={sameTarget(activeTarget, cell)}
+                activeTarget={activeTarget}
                 readOnly
                 unrelatedCells={unrelatedCells}
                 onSwitchActiveTarget={onSwitchActiveTarget}
