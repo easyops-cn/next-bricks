@@ -261,8 +261,8 @@ export function RealTimeRangePicker(
   const rangeType = props.rangeType ?? "time";
   const today = times.includes(rangeType) ? "" : dayjs().format("YYYY-MM-DD");
   const initRange = {
-    startTime: today + " " + INIT_TIME_RANGE.startTime,
-    endTime: today + " " + INIT_TIME_RANGE.endTime,
+    startTime: today + (today ? " " : "") + INIT_TIME_RANGE.startTime,
+    endTime: today + (today ? " " : "") + INIT_TIME_RANGE.endTime,
   };
 
   const initValue: TimeRange =
