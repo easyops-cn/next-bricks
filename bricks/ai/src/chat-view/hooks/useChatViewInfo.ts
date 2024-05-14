@@ -14,10 +14,12 @@ export function useChatViewInfo({
   agentId,
   sessionId,
   enterInterval = 50,
+  debug,
 }: {
   agentId: string;
   sessionId?: string;
   enterInterval?: number;
+  debug: boolean;
 }) {
   const [sessionEnd, setSessionEnd] = useState<boolean>(false);
   const [sessionLoading, setSessionLoading] = useState<boolean>(false);
@@ -37,8 +39,9 @@ export function useChatViewInfo({
       new ChatService({
         agentId,
         enterInterval,
+        debug,
       }),
-    [agentId, enterInterval]
+    [agentId, enterInterval, debug]
   );
 
   const defaultNewSessionItem = useMemo(
@@ -183,8 +186,6 @@ export function useChatViewInfo({
       if (!activeSessionId) {
         // 如果没有 activeSessionId, 默认新增会话
         setActiveSessionId(NEW_SESSION_ID);
-      } else {
-        await checkSession(activeSessionId);
       }
       setSessionList((preList) => {
         return !activeSessionId
@@ -193,7 +194,7 @@ export function useChatViewInfo({
       });
       setSessionLoading(false);
     },
-    [chatService, activeSessionId, defaultNewSessionItem, checkSession]
+    [chatService, activeSessionId, defaultNewSessionItem]
   );
 
   const handleChat = useCallback(
@@ -342,14 +343,18 @@ export function useChatViewInfo({
     };
     const stopListener = () => {
       if (chatingMessageItem.current) {
-        chatingMessageItem.current.content = {
-          type: "markdown",
-          text:
-            chatingMessageItem.current.content.text + " \\\n  ` 对话被中断了 `",
+        const stopMessageItem: MessageItem = {
+          ...chatingMessageItem.current,
+          content: {
+            type: "markdown",
+            text:
+              chatingMessageItem.current.content.text +
+              " \\\n  ` 对话被中断了 `",
+          },
         };
         setMsgList((list) => {
           list.pop();
-          return msgList.concat(chatingMessageItem.current!);
+          return msgList.concat(stopMessageItem);
         });
       } else {
         setMsgList((list) => {

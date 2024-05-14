@@ -44,6 +44,7 @@ export interface ChatItem {
 }
 
 export class ChatService {
+  #debug: boolean;
   #ctrl?: AbortController;
   #agentId: string;
   #enterInterval: number;
@@ -64,12 +65,15 @@ export class ChatService {
   constructor({
     agentId,
     enterInterval = 50,
+    debug = false,
   }: {
     agentId: string;
     enterInterval: number;
+    debug: boolean;
   }) {
     this.#agentId = agentId;
     this.#enterInterval = enterInterval;
+    this.#debug = debug;
   }
 
   enqueue(data: QueueItem) {
@@ -304,6 +308,9 @@ export class ChatService {
           conversationId: this.#conversationId,
           input: str,
           stream: true,
+          config: {
+            debug: this.#debug,
+          },
         }),
         headers: {
           "giraffe-contract-name": "easyops.api.aiops_chat.manage.LLMChatProxy",
