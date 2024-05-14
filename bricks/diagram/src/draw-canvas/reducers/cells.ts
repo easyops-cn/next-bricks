@@ -43,20 +43,22 @@ export const cells: Reducer<Cell[], DrawCanvasAction> = (state, action) => {
           cell.type === "edge" ||
           (cell.type === "decorator" && cell.decorator === "area")
       );
-    case "move-cell": {
-      const { type, id, x, y } = action.payload;
-      const index = state.findIndex(
-        (cell) => cell.type === type && cell.id === id
-      );
-      if (index !== -1) {
-        const node = state[index] as NodeCell;
-        return [
-          ...state.slice(0, index),
-          { ...node, view: { ...node.view, x, y } },
-          ...state.slice(index + 1),
-        ];
-      }
-      return state;
+    case "move-cells": {
+      let matched = false;
+      const newState = state.map((cell) => {
+        const newCell = action.payload.find(
+          (move) => cell.type === move.type && cell.id === move.id
+        );
+        if (newCell) {
+          matched = true;
+          return {
+            ...cell,
+            view: { ...(cell as NodeCell).view, x: newCell.x, y: newCell.y },
+          };
+        }
+        return cell;
+      });
+      return matched ? newState : state;
     }
     case "resize-cell": {
       const { type, id, width, height } = action.payload;

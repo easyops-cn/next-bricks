@@ -26,8 +26,8 @@ describe("handleKeyboard", () => {
       }
     );
     expect(action).toEqual({
-      action: "delete-cell",
-      cell: { type: "node", id: "a" },
+      action: "delete-cells",
+      cells: [{ type: "node", id: "a" }],
     });
   });
 
@@ -43,8 +43,8 @@ describe("handleKeyboard", () => {
       }
     );
     expect(action).toEqual({
-      action: "delete-cell",
-      cell: { type: "decorator", id: "b" },
+      action: "delete-cells",
+      cells: [{ type: "decorator", id: "b" }],
     });
   });
 

@@ -70,6 +70,7 @@ describe("getUnrelatedCells", () => {
       { id: "9", type: "decorator" },
     ]);
   });
+
   test("connect line state is area", () => {
     const connectLineState = { source: { id: "8" } } as any;
     const unrelated = getUnrelatedCells(cells, connectLineState, null, true);
@@ -78,6 +79,22 @@ describe("getUnrelatedCells", () => {
       { id: "5", type: "edge", source: "2", target: "3" },
       { id: "6", type: "edge", source: "3", target: "4" },
       { id: "7", type: "edge", source: "4", target: "1" },
+    ]);
+  });
+
+  test("multiple active targets", () => {
+    const unrelated = getUnrelatedCells(cells, null, {
+      type: "multi",
+      targets: [
+        { type: "node", id: "1" },
+        { type: "decorator", id: "8" },
+      ],
+    });
+    expect(unrelated).toEqual([
+      { id: "5", type: "edge", source: "2", target: "3" },
+      { id: "6", type: "edge", source: "3", target: "4" },
+      { id: "9", type: "decorator" },
+      { id: "3", type: "node" },
     ]);
   });
 });

@@ -288,6 +288,7 @@
             activeTarget: <%= CTX.activeTarget %>
             fadeUnrelatedCells: true
             allowEdgeToArea: true
+            dragBehavior: lasso
             # Initial nodes only
             defaultNodeSize: [60, 60]
             defaultNodeBricks:
@@ -297,12 +298,15 @@
                     textContent: <% `Node ${DATA.node.id}` %>
                     status: |
                       <%=
-                        CTX.activeTarget?.type === "node" && CTX.activeTarget.id === DATA.node.id
+                        (CTX.activeTarget?.type === "multi"
+                          ? CTX.activeTarget.targets
+                          : CTX.activeTarget
+                          ? [CTX.activeTarget]
+                          : []
+                        ).some((target) => (
+                          target.type === "node" && target.id === DATA.node.id
+                        ))
                           ? "highlighted"
-                          // : CTX.unrelated.some(n =>
-                          //     n.type === "node" && n.id === DATA.node.id
-                          //   )
-                          // ? "faded"
                           : "default"
                       %>
             defaultEdgeLines:
@@ -315,19 +319,19 @@
               args:
                 - activeTarget
                 - <% EVENT.detail %>
-            cell.move:
+            cells.move:
               action: message.info
               args:
-                - <% `You just moved ${EVENT.detail.type} ${EVENT.detail.id} to (${Math.round(EVENT.detail.x)}, ${Math.round(EVENT.detail.y)})` %>
+                - <% `You just moved ${EVENT.detail.length} cells` %>
             cell.resize:
               action: message.info
               args:
                 - <% `You just resized ${EVENT.detail.type} ${EVENT.detail.id} to (${Math.round(EVENT.detail.width)}, ${Math.round(EVENT.detail.height)})` %>
-            cell.delete:
+            cells.delete:
               action: message.warn
               args:
                 - |
-                  <% `You wanna delete ${EVENT.detail.type} ${EVENT.detail.type === "edge" ? `(${EVENT.detail.source} => ${EVENT.detail.target})` : EVENT.detail.id}?` %>
+                  <% `You wanna delete ${EVENT.detail.length} cells?` %>
             cell.contextmenu:
               - target: eo-context-menu
                 method: open

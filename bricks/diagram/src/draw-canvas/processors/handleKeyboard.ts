@@ -1,11 +1,11 @@
 import type { ActiveTarget, Cell } from "../interfaces";
-import { sameTarget } from "./sameTarget";
+import { targetIsActive } from "./targetIsActive";
 
-export type KeyboardAction = KeyboardActionDeleteCell;
+export type KeyboardAction = KeyboardActionDeleteCells;
 
-export interface KeyboardActionDeleteCell {
-  action: "delete-cell";
-  cell: Cell;
+export interface KeyboardActionDeleteCells {
+  action: "delete-cells";
+  cells: Cell[];
 }
 
 export function handleKeyboard(
@@ -18,9 +18,11 @@ export function handleKeyboard(
     activeTarget: ActiveTarget | null | undefined;
   }
 ): KeyboardAction | undefined {
-  const activeCell = cells.find((cell) => sameTarget(cell, activeTarget));
+  const activeCells = cells.filter((cell) =>
+    targetIsActive(cell, activeTarget)
+  );
 
-  if (!activeCell) {
+  if (activeCells.length === 0) {
     return;
   }
 
@@ -37,8 +39,8 @@ export function handleKeyboard(
       event.preventDefault();
       event.stopPropagation();
       return {
-        action: "delete-cell",
-        cell: activeCell,
+        action: "delete-cells",
+        cells: activeCells,
       };
     }
   }

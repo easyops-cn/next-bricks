@@ -112,7 +112,9 @@ export interface LineMarker {
   strokeColor: string;
 }
 
-export type ActiveTarget =
+export type ActiveTarget = ActiveTargetOfSingular | ActiveTargetOfMulti;
+
+export type ActiveTargetOfSingular =
   | ActiveTargetOfNode
   | ActiveTargetOfEdge
   | ActiveTargetOfDecorator;
@@ -133,10 +135,17 @@ export interface ActiveTargetOfDecorator {
   id: NodeId;
 }
 
+export interface ActiveTargetOfMulti {
+  type: "multi";
+  targets: ActiveTargetOfSingular[];
+}
+
 export interface BasicDecoratorProps {
   cell: DecoratorCell;
   transform: TransformLiteral;
   readOnly?: boolean;
+  activeTarget: ActiveTarget | null | undefined;
+  cells: Cell[];
   onCellResizing?(info: ResizeCellPayload): void;
   onCellResized?(info: ResizeCellPayload): void;
   onSwitchActiveTarget?(activeTarget: ActiveTarget | null): void;

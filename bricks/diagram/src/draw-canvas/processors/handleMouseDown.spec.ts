@@ -4,18 +4,20 @@ import { handleMouseDown } from "./handleMouseDown";
 import type { Cell } from "../interfaces";
 
 describe("handleMouseDown", () => {
-  const onCellMoving = jest.fn();
-  const onCellMoved = jest.fn();
+  const onCellsMoving = jest.fn();
+  const onCellsMoved = jest.fn();
   const onCellResizing = jest.fn();
   const onCellResized = jest.fn();
   const onSwitchActiveTarget = jest.fn();
   const methods = {
-    onCellMoving,
-    onCellMoved,
+    onCellsMoving,
+    onCellsMoved,
     onCellResizing,
     onCellResized,
     onSwitchActiveTarget,
     scale: 1,
+    cells: [],
+    activeTarget: null,
   };
 
   test("mousedown on edge", () => {
@@ -46,20 +48,114 @@ describe("handleMouseDown", () => {
     });
 
     fireEvent.mouseMove(document, { clientX: 11, clientY: 22 });
-    expect(onCellMoving).not.toBeCalled();
+    expect(onCellsMoving).not.toBeCalled();
 
     fireEvent.mouseMove(document, { clientX: 25, clientY: 50 });
-    expect(onCellMoving).toBeCalledWith({
-      type: "node",
-      id: "b",
-      x: 19,
-      y: 36,
-    });
+    expect(onCellsMoving).toBeCalledWith([
+      {
+        type: "node",
+        id: "b",
+        x: 19,
+        y: 36,
+      },
+    ]);
 
     fireEvent.mouseUp(document, { clientX: 26, clientY: 51 });
-    expect(onCellMoved).toBeCalledWith({ type: "node", id: "b", x: 20, y: 37 });
+    expect(onCellsMoved).toBeCalledWith([
+      { type: "node", id: "b", x: 20, y: 37 },
+    ]);
 
     expect(onSwitchActiveTarget).toHaveBeenCalledTimes(1);
+
+    document.body.replaceChildren();
+  });
+
+  test("move multi nodes", () => {
+    const mousedown = new MouseEvent("mousedown", { clientX: 10, clientY: 20 });
+    handleMouseDown(mousedown, {
+      action: "move",
+      cell: { type: "node", id: "b", view: { x: 4, y: 6 } } as any,
+      ...methods,
+      cells: [
+        { type: "node", id: "a", view: { x: 44, y: 46 } } as any,
+        { type: "node", id: "b", view: { x: 4, y: 6 } } as any,
+        { type: "node", id: "c", view: { x: 144, y: 146 } } as any,
+      ],
+      activeTarget: {
+        type: "multi",
+        targets: [
+          {
+            type: "node",
+            id: "b",
+          },
+          {
+            type: "node",
+            id: "c",
+          },
+        ],
+      },
+    });
+
+    fireEvent.mouseMove(document, { clientX: 11, clientY: 22 });
+    expect(onCellsMoving).not.toBeCalled();
+
+    fireEvent.mouseMove(document, { clientX: 25, clientY: 50 });
+    expect(onCellsMoving).toBeCalledWith([
+      {
+        type: "node",
+        id: "b",
+        x: 19,
+        y: 36,
+      },
+      {
+        type: "node",
+        id: "c",
+        x: 159,
+        y: 176,
+      },
+    ]);
+
+    fireEvent.mouseUp(document, { clientX: 26, clientY: 51 });
+    expect(onCellsMoved).toBeCalledWith([
+      { type: "node", id: "b", x: 20, y: 37 },
+      { type: "node", id: "c", x: 160, y: 177 },
+    ]);
+
+    expect(onSwitchActiveTarget).not.toHaveBeenCalled();
+
+    document.body.replaceChildren();
+  });
+
+  test("no movable nodes", () => {
+    const mousedown = new MouseEvent("mousedown", { clientX: 10, clientY: 20 });
+    handleMouseDown(mousedown, {
+      action: "move",
+      cell: { type: "node", id: "b", view: { x: 4, y: 6 } } as any,
+      ...methods,
+      layout: "force",
+      cells: [
+        { type: "node", id: "a", view: { x: 44, y: 46 } } as any,
+        { type: "node", id: "b", view: { x: 4, y: 6 } } as any,
+        { type: "node", id: "c", view: { x: 144, y: 146 } } as any,
+      ],
+      activeTarget: {
+        type: "multi",
+        targets: [
+          {
+            type: "node",
+            id: "b",
+          },
+          {
+            type: "node",
+            id: "c",
+          },
+        ],
+      },
+    });
+
+    fireEvent.mouseMove(document, { clientX: 25, clientY: 50 });
+    expect(onCellsMoving).not.toBeCalled();
+    expect(onSwitchActiveTarget).not.toHaveBeenCalled();
 
     document.body.replaceChildren();
   });

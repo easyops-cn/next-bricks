@@ -1,5 +1,5 @@
 import type { ActiveTarget, Cell, ConnectLineState } from "../interfaces";
-import { sameTarget } from "./sameTarget";
+import { targetIsActive } from "./targetIsActive";
 
 export function getUnrelatedCells(
   cells: Cell[],
@@ -37,6 +37,39 @@ export function getUnrelatedCells(
     }
   } else {
     switch (activeTarget?.type) {
+      case "multi": {
+        const nodesMap = new Map<string, Cell>();
+        const activeNodeIds = new Set<string>();
+        const relatedNodeIds = new Set<string>();
+        for (const active of activeTarget.targets) {
+          if (active.type === "node") {
+            activeNodeIds.add(active.id);
+            relatedNodeIds.add(active.id);
+          }
+        }
+        for (const cell of cells) {
+          if (cell.type === "node") {
+            nodesMap.set(cell.id, cell);
+          } else if (cell.type === "edge") {
+            if (activeNodeIds.has(cell.source)) {
+              relatedNodeIds.add(cell.target);
+            } else if (activeNodeIds.has(cell.target)) {
+              relatedNodeIds.add(cell.source);
+            } else if (!targetIsActive(cell, activeTarget)) {
+              unrelated.push(cell);
+            }
+          } else if (!targetIsActive(cell, activeTarget)) {
+            unrelated.push(cell);
+          }
+        }
+        for (const [id, cell] of nodesMap) {
+          if (!relatedNodeIds.has(id)) {
+            unrelated.push(cell);
+          }
+        }
+        break;
+      }
+
       case "node": {
         const nodesMap = new Map<string, Cell>();
         const relatedNodeIds = new Set<string>([activeTarget.id]);
@@ -67,7 +100,7 @@ export function getUnrelatedCells(
         for (const cell of cells) {
           if (
             !(cell.type === "edge"
-              ? sameTarget(cell, activeTarget)
+              ? targetIsActive(cell, activeTarget)
               : cell.type === "node" &&
                 (cell.id === activeTarget.source ||
                   cell.id === activeTarget.target))

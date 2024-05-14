@@ -6,6 +6,8 @@ export function DecoratorArea({
   cell,
   transform,
   readOnly,
+  activeTarget,
+  cells,
   onCellResizing,
   onCellResized,
   onSwitchActiveTarget,
@@ -22,6 +24,8 @@ export function DecoratorArea({
         action: "resize",
         cell,
         scale: transform.k,
+        activeTarget,
+        cells,
         onCellResizing,
         onCellResized,
         onSwitchActiveTarget,
@@ -32,7 +36,9 @@ export function DecoratorArea({
       resizeHandle.removeEventListener("mousedown", onMouseDown);
     };
   }, [
+    activeTarget,
     cell,
+    cells,
     onCellResized,
     onCellResizing,
     onSwitchActiveTarget,
