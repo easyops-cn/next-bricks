@@ -40,6 +40,14 @@ class ChatView extends ReactNextElement {
   accessor agentId!: string;
 
   /**
+   * 是否为debug模式
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor debug: boolean | undefined;
+
+  /**
    * 是否展示对话用户头像
    * @default true
    */
@@ -95,6 +103,7 @@ class ChatView extends ReactNextElement {
     return (
       <ChatViewComponent
         agentId={this.agentId}
+        debug={this.debug}
         sessionId={this.sessionId}
         readonly={this.readonly}
         showAvatar={this.showAvatar}
@@ -116,6 +125,7 @@ export interface ChatViewProps {
   showLike?: boolean;
   quickAnswerConfig?: QuickAnswerConfig;
   enterInterval?: number;
+  debug?: boolean;
 }
 
 export function ChatViewComponent({
@@ -127,6 +137,7 @@ export function ChatViewComponent({
   showLike = true,
   quickAnswerConfig,
   enterInterval,
+  debug = false,
 }: ChatViewProps) {
   const {
     sessionEnd,
@@ -152,6 +163,7 @@ export function ChatViewComponent({
     agentId,
     sessionId,
     enterInterval,
+    debug,
   });
 
   return (
