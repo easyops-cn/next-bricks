@@ -34,8 +34,8 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@ant-design/cssinjs": "^1.18.4",
-    "@ant-design/icons": "^5.3.6",
+    "@ant-design/cssinjs": "^1.20.0",
+    "@ant-design/icons": "^5.3.7",
     "@next-core/element": "^1.2.7",
     "@next-core/http": "^1.2.2",
     "@next-core/react-element": "^1.0.26",
@@ -45,7 +45,7 @@
     "@next-core/types": "^1.10.0",
     "@next-shared/form": "^0.6.6",
     "@next-shared/hooks": "^0.0.5",
-    "antd": "^5.14.1",
+    "antd": "^5.17.1",
     "classnames": "^2.3.2",
     "dayjs": "^1.11.10",
     "lodash": "^4.17.21",
