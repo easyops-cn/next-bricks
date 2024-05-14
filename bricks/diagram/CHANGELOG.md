@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.36.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.35.0...@next-bricks/diagram@0.36.0) (2024-05-14)
+
+
+### Bug Fixes
+
+* refine auto center ([abc06eb](https://github.com/easyops-cn/next-bricks/commit/abc06ebee71c0ed2e241698a5b5e9327be81a8ea))
+
+
+### Features
+
+* **diagram:** support lasso ([57daf29](https://github.com/easyops-cn/next-bricks/commit/57daf295551b81119beab955d57acba0a1e89675))
+
+
+
+
+
 # [0.35.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.34.7...@next-bricks/diagram@0.35.0) (2024-05-14)
 
 
