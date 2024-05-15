@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.17](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.16...@next-bricks/form@1.9.17) (2024-05-15)
+
+
+### Bug Fixes
+
+* revert data value passed by eo-dynamic-form-item ([71ef0ca](https://github.com/easyops-cn/next-bricks/commit/71ef0ca26c47651cdf47d67d6cec24d7c7c51abc))
+
+
+
+
+
 ## [1.9.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.15...@next-bricks/form@1.9.16) (2024-05-15)
 
 
