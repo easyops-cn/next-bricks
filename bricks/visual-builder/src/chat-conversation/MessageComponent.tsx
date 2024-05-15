@@ -11,10 +11,18 @@ export interface MessageComponentProps {
   message: Message;
 }
 
-type MessageChunk = MessageChunkText | MessageChunkCommand;
+type MessageChunk =
+  | MessageChunkPlain
+  | MessageChunkMarkdown
+  | MessageChunkCommand;
 
-interface MessageChunkText {
-  type: "text";
+interface MessageChunkPlain {
+  type: "plain";
+  content: string;
+}
+
+interface MessageChunkMarkdown {
+  type: "markdown";
   content: string;
 }
 
@@ -28,37 +36,47 @@ interface MessageChunkCommand {
 export function MessageComponent({ message }: MessageComponentProps) {
   const messageChunks = useMemo(() => {
     const chunks: MessageChunk[] = [];
-    const chunkRegExp = /(?:^|\n)```(easy_cmd_\S+)\n([\s\S]*?)\n```(?:$|\n)/gm;
 
-    let match: RegExpExecArray | null;
-    let lastIndex = 0;
-    while ((match = chunkRegExp.exec(message.content))) {
-      const [fullMatch, command, content] = match;
-      const start = match.index;
-      const previousText = message.content.slice(lastIndex, start).trim();
-      if (previousText.length > 0) {
+    if (message.role === "assistant") {
+      const chunkRegExp =
+        /(?:^|\n)```(easy_cmd_\S+)\n([\s\S]*?)\n```(?:$|\n)/gm;
+
+      let match: RegExpExecArray | null;
+      let lastIndex = 0;
+      while ((match = chunkRegExp.exec(message.content))) {
+        const [fullMatch, command, content] = match;
+        const start = match.index;
+        const previousText = message.content.slice(lastIndex, start).trim();
+        if (previousText.length > 0) {
+          chunks.push({
+            type: "markdown",
+            content: previousText,
+          });
+        }
         chunks.push({
-          type: "text",
-          content: previousText,
+          type: "command",
+          command,
+          content: content.trim(),
+          raw: fullMatch,
+        });
+        lastIndex = chunkRegExp.lastIndex;
+      }
+      const lastText = message.content.slice(lastIndex).trim();
+      if (lastText.length > 0) {
+        chunks.push({
+          type: "markdown",
+          content: lastText,
         });
       }
+    } else {
       chunks.push({
-        type: "command",
-        command,
-        content: content.trim(),
-        raw: fullMatch,
-      });
-      lastIndex = chunkRegExp.lastIndex;
-    }
-    const lastText = message.content.slice(lastIndex).trim();
-    if (lastText.length > 0) {
-      chunks.push({
-        type: "text",
-        content: lastText,
+        type: "plain",
+        content: message.content,
       });
     }
+
     return chunks;
-  }, [message.content]);
+  }, [message.content, message.role]);
 
   const contentRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -134,11 +152,11 @@ export function MessageComponent({ message }: MessageComponentProps) {
 function MessageChunkComponent({ chunk }: { chunk: MessageChunk }) {
   return (
     <>
-      {chunk.type === "text" ? (
+      {chunk.type === "markdown" ? (
         <div className="markdown">
           <MarkdownComponent content={chunk.content} />
         </div>
-      ) : (
+      ) : chunk.type === "command" ? (
         <>
           <details className="command">
             <summary>```{chunk.command}</summary>
@@ -147,6 +165,8 @@ function MessageChunkComponent({ chunk }: { chunk: MessageChunk }) {
             </pre>
           </details>
         </>
+      ) : (
+        <div className="plain">{chunk.content}</div>
       )}
     </>
   );
