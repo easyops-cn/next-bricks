@@ -81,6 +81,7 @@ export interface EoCardItemProps {
   actions?: ActionType[];
   hasExpandedArea1?: boolean;
   hasExpandedArea2?: boolean;
+  selected?: boolean;
   styleType?: "grayish";
   hasCover?: boolean;
   coverImage?: string;
@@ -162,6 +163,14 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
   accessor actions: ActionType[] | undefined;
 
   /**
+   * 是否选中
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor selected: boolean;
+
+  /**
    * 卡片样式类型
    */
   @property()
@@ -170,7 +179,9 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
   /**
    * 是否使用卡片封面
    */
-  @property()
+  @property({
+    type: Boolean,
+  })
   accessor hasCover: boolean;
 
   /**
@@ -268,6 +279,7 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
         auxiliaryText={this.auxiliaryText}
         avatar={this.avatar}
         actions={this.actions}
+        selected={this.selected}
         href={this.href}
         url={this.url}
         target={this.target}
@@ -298,6 +310,7 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
     description,
     auxiliaryText,
     actions,
+    selected,
     avatar,
     url,
     target,
@@ -395,7 +408,7 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
 
   return (
     <WrappedLink type="plain" url={url} target={target} href={href}>
-      <div className="card-wrapper" ref={callback}>
+      <div className={classNames("card-wrapper", { selected })} ref={callback}>
         {hasCover && (
           <div className="card-cover-wrapper">
             <div
