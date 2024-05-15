@@ -27,8 +27,6 @@ describe("handleLasso", () => {
 
     fireEvent.mouseUp(document, { clientX: 26, clientY: 51 });
     expect(onLassoed).toBeCalledWith({ height: 31, width: 16, x: 10, y: 20 });
-
-    document.body.replaceChildren();
   });
 
   test("lasso to top-left", () => {
@@ -45,7 +43,19 @@ describe("handleLasso", () => {
 
     fireEvent.mouseUp(document, { clientX: 6, clientY: 11 });
     expect(onLassoed).toBeCalledWith({ height: 9, width: 4, x: 6, y: 11 });
+  });
 
-    document.body.replaceChildren();
+  test("lasso ignored", () => {
+    const mousedown = new MouseEvent("mousedown", {
+      clientX: 10,
+      clientY: 20,
+      ctrlKey: true,
+    });
+    handleLasso(mousedown, {
+      ...methods,
+    });
+
+    fireEvent.mouseMove(document, { clientX: 5, clientY: 10 });
+    expect(onLassoing).not.toBeCalled();
   });
 });

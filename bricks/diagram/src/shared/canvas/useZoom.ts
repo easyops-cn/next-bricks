@@ -14,6 +14,7 @@ export interface UseZoomOptions {
   scrollable?: boolean;
   pannable?: boolean;
   draggable?: boolean;
+  ctrlDraggable?: boolean;
   scaleRange?: RangeTuple;
   onSwitchActiveTarget?(target: ActiveTarget | null): void;
 }
@@ -31,6 +32,7 @@ export function useZoom({
   scrollable,
   pannable,
   draggable,
+  ctrlDraggable,
   scaleRange: _scaleRange,
   onSwitchActiveTarget,
 }: UseZoomOptions): UseZoomResult {
@@ -68,8 +70,35 @@ export function useZoom({
         if (!moved) {
           onSwitchActiveTarget?.(null);
         }
-      });
-  }, [onSwitchActiveTarget, scaleRange, zoomable, zoomer]);
+      })
+      .filter(
+        (event) =>
+          (event.type === "wheel" ||
+            (ctrlDraggable ? draggable || event.ctrlKey : !event.ctrlKey)) &&
+          !event.button
+      );
+  }, [
+    onSwitchActiveTarget,
+    scaleRange,
+    zoomable,
+    zoomer,
+    ctrlDraggable,
+    draggable,
+  ]);
+
+  useEffect(() => {
+    if (ctrlDraggable) {
+      const onContextMenu = (e: MouseEvent) => {
+        if (e.ctrlKey) {
+          e.preventDefault();
+        }
+      };
+      document.addEventListener("contextmenu", onContextMenu, true);
+      return () => {
+        document.removeEventListener("contextmenu", onContextMenu, true);
+      };
+    }
+  }, [ctrlDraggable]);
 
   // istanbul ignore next: d3-zoom currently hard to test
   useEffect(() => {
@@ -118,10 +147,12 @@ export function useZoom({
 
     rootSelection
       .call(zoomer)
-      .on("wheel", (e: WheelEvent) => e.preventDefault())
+      .on("wheel", (e: WheelEvent) => {
+        e.preventDefault();
+      })
       .on("dblclick.zoom", null);
 
-    if (!draggable || !pannable) {
+    if ((!draggable && !ctrlDraggable) || !pannable) {
       rootSelection.on("mousedown.zoom", null);
     }
 
@@ -133,7 +164,15 @@ export function useZoom({
     }
 
     return unsetZoom;
-  }, [draggable, pannable, rootRef, scrollable, zoomable, zoomer]);
+  }, [
+    ctrlDraggable,
+    draggable,
+    pannable,
+    rootRef,
+    scrollable,
+    zoomable,
+    zoomer,
+  ]);
 
   return { grabbing, transform, zoomer, scaleRange };
 }
