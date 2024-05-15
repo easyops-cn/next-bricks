@@ -398,8 +398,8 @@ export function DynamicFormItemComponent(props: DynamicFormItemProps) {
                         ? bricks
                         : bricksOfNoLabel) as UseSingleBrickConf[]
                     }
-                    // Passing changed `data={value}` will cause useBrick to re-render and lose state
-                    // data={value}
+                    // NOTE: Passing changed `data={value}` will cause useBrick to re-render and lose state
+                    data={value}
                   />
                   {!hideRemoveBtn && (
                     <div
