@@ -64,6 +64,11 @@ class ChatAgent extends ReactNextElement implements ChatAgentProps {
     return this.#ref.current?.sendRequest(content, url, options);
   }
 
+  @method()
+  newConversation() {
+    this.#ref.current?.newConversation();
+  }
+
   // @event({ type: "messageChunk.push" })
   // accessor #messageChunkPushEvent!: EventEmitter<MessageChunk>;
 
@@ -86,9 +91,9 @@ class ChatAgent extends ReactNextElement implements ChatAgentProps {
   };
 
   @event({ type: "conversationId.change" })
-  accessor #conversationIdChangeEvent!: EventEmitter<string | undefined>;
+  accessor #conversationIdChangeEvent!: EventEmitter<string | null>;
 
-  #handleConversationIdChange = (conversationId: string | undefined) => {
+  #handleConversationIdChange = (conversationId: string | null) => {
     this.#conversationIdChangeEvent.emit(conversationId);
   };
 
@@ -113,16 +118,17 @@ export interface ChatAgentComponentProps extends ChatAgentProps {
   onMessageChunkPush?(msg: MessageChunk): void;
   onMessagesUpdate?(messages: Message[]): void;
   onBusyChange?(busy: boolean): void;
-  onConversationIdChange?(conversationId: string | undefined): void;
+  onConversationIdChange?(conversationId: string | null): void;
 }
 
 export interface ChatAgentRef {
-  postMessage(content: string): Promise<string | undefined>;
+  postMessage(content: string): Promise<string | null>;
   sendRequest(
     content: string,
     url: string,
     options: Options<MessageChunk>
-  ): Promise<string | undefined>;
+  ): Promise<string | null>;
+  newConversation(): void;
 }
 
 export function LegacyChatAgentComponent(
@@ -137,12 +143,12 @@ export function LegacyChatAgentComponent(
   ref: React.Ref<ChatAgentRef>
 ) {
   const didMountRef = useRef(false);
-
-  const [busy, setBusy] = useState(false);
-  const [conversationId, setConversationId] = useState<string | undefined>();
+  const chatIdRef = useRef(1);
+  const busyRef = useRef(false);
+  const [conversationId, setConversationId] = useState<string | null>(null);
 
   useEffect(() => {
-    setConversationId(propConversationId);
+    setConversationId(propConversationId ?? null);
   }, [propConversationId]);
 
   useEffect(() => {
@@ -177,14 +183,29 @@ export function LegacyChatAgentComponent(
 
   const sendRequest = useCallback(
     async (content: string, url: string, options: Options<MessageChunk>) => {
-      if (busy) {
-        return;
+      // Use ref instead of state to handle sync sequential calls.
+      if (busyRef.current) {
+        return null;
       }
+      const thisChatId = chatIdRef.current;
+      let newConversationError: Error | undefined;
+      const checkNewConversation = async () => {
+        if (thisChatId !== chatIdRef.current) {
+          // istanbul ignore else: should never happen
+          if (!newConversationError) {
+            newConversationError = new Error("New conversation started");
+          }
+          throw newConversationError;
+        }
+      };
+
       const userKey = getMessageChunkKey();
       const assistantKey = getMessageChunkKey();
       let currentConversationId = conversationId;
+
+      onBusyChange?.((busyRef.current = true));
+
       try {
-        setBusy(true);
         pushPartialMessage?.({
           key: userKey,
           delta: {
@@ -203,6 +224,9 @@ export function LegacyChatAgentComponent(
           request,
           new Promise((resolve) => setTimeout(resolve, 1000)),
         ]);
+
+        await checkNewConversation();
+
         pushPartialMessage?.({
           key: assistantKey,
           delta: {
@@ -219,6 +243,9 @@ export function LegacyChatAgentComponent(
           //   // eslint-disable-next-line no-console
           //   console.log("stream iterated:", value);
           // }
+
+          await checkNewConversation();
+
           pushPartialMessage?.({
             delta: value.delta,
             key: assistantKey,
@@ -228,6 +255,9 @@ export function LegacyChatAgentComponent(
             setConversationId((currentConversationId = value.conversationId));
           }
         }
+
+        await checkNewConversation();
+
         setFullMessages((prev) => {
           const last = prev[prev.length - 1];
           if (last?.partial) {
@@ -236,8 +266,14 @@ export function LegacyChatAgentComponent(
           return [...prev];
         });
       } catch (error) {
+        if (error && error === newConversationError) {
+          throw error;
+        }
+
         // eslint-disable-next-line no-console
         console.error("stream failed:", error);
+        await checkNewConversation();
+
         setFullMessages((prev) => {
           const last = prev[prev.length - 1];
           let keep = prev;
@@ -260,12 +296,15 @@ export function LegacyChatAgentComponent(
             },
           ];
         });
-      } finally {
-        setBusy(false);
       }
+
+      await checkNewConversation();
+
+      onBusyChange?.((busyRef.current = false));
+
       return currentConversationId;
     },
-    [busy, conversationId, getMessageChunkKey, pushPartialMessage]
+    [conversationId, getMessageChunkKey, onBusyChange, pushPartialMessage]
   );
 
   useImperativeHandle(
@@ -291,13 +330,17 @@ export function LegacyChatAgentComponent(
           }
         );
       },
+      newConversation() {
+        chatIdRef.current++;
+        setConversationId(null);
+        setFullMessages((prev) => (prev.length === 0 ? prev : []));
+        if (busyRef.current) {
+          onBusyChange?.((busyRef.current = false));
+        }
+      },
     }),
-    [agentId, conversationId, sendRequest]
+    [agentId, conversationId, onBusyChange, sendRequest]
   );
-
-  useEffect(() => {
-    didMountRef.current && onBusyChange?.(busy);
-  }, [busy, onBusyChange]);
 
   useEffect(() => {
     didMountRef.current && onMessagesUpdate?.(fullMessages);
