@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>图标-按钮</title>
+    <g id="图标-按钮" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M37,10 C38.6568542,10 40,11.3431458 40,13 L40,27 C40,28.6568542 38.6568542,30 37,30 L3,30 C1.34314575,30 2.02906125e-16,28.6568542 0,27 L0,13 C-2.02906125e-16,11.3431458 1.34314575,10 3,10 L37,10 Z M10,16 L9,16 L9,24 L10,24 L10,16 Z M13,16 L12,16 L12,24 L13,24 L13,16 Z M16,16 L15,16 L15,24 L16,24 L16,16 Z M19,16 L18,16 L18,24 L19,24 L19,16 Z M22,16 L21,16 L21,24 L22,24 L22,16 Z M25,16 L24,16 L24,24 L25,24 L25,16 Z M28,16 L27,16 L27,24 L28,24 L28,16 Z M31,16 L30,16 L30,24 L31,24 L31,16 Z" id="形状结合" fill="#000000"></path>
+    </g>
+</svg>
