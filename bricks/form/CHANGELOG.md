@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.15...@next-bricks/form@1.9.16) (2024-05-15)
+
+
+### Bug Fixes
+
+* **dynamic-form-item:** do not pass value as data to useBrick ([c4e87c5](https://github.com/easyops-cn/next-bricks/commit/c4e87c5ac95436508ef859d494a930b74fd145fb))
+* fix range picker ([1fc8e68](https://github.com/easyops-cn/next-bricks/commit/1fc8e68022330166a2ff2a26ed0aa537d53a3e44))
+* handle no date in init ([213c6ea](https://github.com/easyops-cn/next-bricks/commit/213c6ea59cf08ccdd8b75948f4223bcad44c178f))
+* update antd to latest ([4de0052](https://github.com/easyops-cn/next-bricks/commit/4de0052c56197297f519af72722591263611db21))
+
+
+
+
+
 ## [1.9.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.14...@next-bricks/form@1.9.15) (2024-05-15)
 
 **Note:** Version bump only for package @next-bricks/form

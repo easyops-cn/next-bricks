@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.21](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.20...@next-bricks/recent-history@1.0.21) (2024-05-15)
+
+**Note:** Version bump only for package @next-bricks/recent-history
+
+
+
+
+
 ## [1.0.20](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.19...@next-bricks/recent-history@1.0.20) (2024-05-15)
 
 **Note:** Version bump only for package @next-bricks/recent-history

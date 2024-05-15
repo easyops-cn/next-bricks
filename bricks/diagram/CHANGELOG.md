@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.37.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.37.0...@next-bricks/diagram@0.37.1) (2024-05-15)
+
+
+### Bug Fixes
+
+* update antd to latest ([4de0052](https://github.com/easyops-cn/next-bricks/commit/4de0052c56197297f519af72722591263611db21))
+
+
+
+
+
 # [0.37.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.36.0...@next-bricks/diagram@0.37.0) (2024-05-15)
 
 

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.32.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.32.12...@next-bricks/advanced@0.32.13) (2024-05-15)
+
+
+### Bug Fixes
+
+* fix types ([297d8f6](https://github.com/easyops-cn/next-bricks/commit/297d8f62218fe6e5563849459b13552bcfac21b4))
+* update antd to latest ([4de0052](https://github.com/easyops-cn/next-bricks/commit/4de0052c56197297f519af72722591263611db21))
+
+
+
+
+
 ## [0.32.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.32.11...@next-bricks/advanced@0.32.12) (2024-05-15)
 
 **Note:** Version bump only for package @next-bricks/advanced
