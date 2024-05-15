@@ -1,17 +1,9 @@
-import React, {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
-import { upperFirst } from "lodash";
-import classNames from "classnames";
 import type { BrickConf } from "@next-core/types";
+import { MessageComponent } from "./MessageComponent";
 import styleText from "./styles.shadow.css";
 
 const { defineElement, property, event } = createDecorators();
@@ -45,24 +37,6 @@ interface StoryboardChunkBlockItem {
   storyboard?: BrickConf;
 }
 
-type MessageChunk = MessageChunkText | MessageChunkCommand;
-
-interface MessageChunkText {
-  type: "text";
-  content: string;
-}
-
-interface MessageChunkCommand {
-  type: "command";
-  command: string;
-  content: string;
-  raw: string;
-}
-
-export const ChatConversationComponent = forwardRef(
-  LegacyChatConversationComponent
-);
-
 /**
  * 用于 Visual Builder 的智能聊天对话列表
  */
@@ -87,6 +61,7 @@ class ChatConversation
   render() {
     return (
       <ChatConversationComponent
+        host={this}
         messages={this.messages}
         onStoryboardUpdate={this.#handleStoryboardUpdate}
       />
@@ -95,11 +70,13 @@ class ChatConversation
 }
 
 export interface ChatConversationComponentProps extends ChatConversationProps {
+  host: Element;
   onStoryboardUpdate?: (storyboard: BrickConf[]) => void;
 }
 
-export function LegacyChatConversationComponent({
+export function ChatConversationComponent({
   messages,
+  host,
   onStoryboardUpdate,
 }: ChatConversationComponentProps) {
   const chunkRegExp = useMemo(
@@ -110,7 +87,6 @@ export function LegacyChatConversationComponent({
   const lastIndexMapRef = useRef(new Map<number, number>());
   const [chunks, setChunks] = useState<StoryboardChunk[]>([]);
   const manualScrolledRef = useRef(false);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     for (const message of messages ?? []) {
@@ -268,103 +244,59 @@ export function LegacyChatConversationComponent({
     onStoryboardUpdate?.(storyboard);
   }, [onStoryboardUpdate, storyboard]);
 
+  const verticalScrollParent = useMemo(() => {
+    // Lookup the nearest scrollable parent (on axis y)
+    let current = host;
+    while (current) {
+      const overflowY = getComputedStyle(current, null).getPropertyValue(
+        "overflow-y"
+      );
+      if (overflowY === "auto" || overflowY === "scroll") {
+        return current;
+      }
+      if (current.parentNode instanceof ShadowRoot) {
+        current = current.parentNode.host;
+      } else if (current.parentNode instanceof Element) {
+        current = current.parentNode;
+      } else {
+        break;
+      }
+    }
+    return document.scrollingElement || document.documentElement;
+  }, [host]);
+
   useEffect(() => {
     if (manualScrolledRef.current) {
       return;
     }
     setTimeout(() => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-      containerRef.current?.scrollTo(0, containerRef.current?.scrollHeight!);
-    }, 0);
-  }, [messages]);
+      verticalScrollParent.scrollTo(0, verticalScrollParent.scrollHeight!);
+    }, 1);
+  }, [messages, verticalScrollParent]);
 
-  const handleScroll = useCallback(() => {
-    manualScrolledRef.current =
-      containerRef.current!.scrollTop +
-        containerRef.current!.clientHeight! +
-        6 <
-      containerRef.current!.scrollHeight;
-  }, []);
-
-  return (
-    <div className="chat" ref={containerRef} onScroll={handleScroll}>
-      {messages?.map((message, index) => (
-        <MessageBox key={message.key ?? `index-${index}`} message={message} />
-      ))}
-    </div>
-  );
-}
-
-interface MessageBoxProps {
-  message: Message;
-}
-
-function MessageBox({ message }: MessageBoxProps) {
-  const messageChunks = useMemo(() => {
-    const chunks: MessageChunk[] = [];
-    const chunkRegExp = /(?:^|\n)```(\S*)\n([\s\S]*?)\n```(?:$|\n)/gm;
-
-    let match: RegExpExecArray | null;
-    let lastIndex = 0;
-    while ((match = chunkRegExp.exec(message.content))) {
-      const [fullMatch, command, content] = match;
-      const start = match.index;
-      const previousText = message.content.slice(lastIndex, start).trim();
-      if (previousText.length > 0) {
-        chunks.push({
-          type: "text",
-          content: previousText,
-        });
-      }
-      chunks.push({
-        type: "command",
-        command,
-        content: content.trim(),
-        raw: fullMatch,
-      });
-      lastIndex = chunkRegExp.lastIndex;
-    }
-    const lastText = message.content.slice(lastIndex).trim();
-    if (lastText.length > 0) {
-      chunks.push({
-        type: "text",
-        content: lastText,
-      });
-    }
-    return chunks;
-  }, [message.content]);
-
-  return (
-    <div className={classNames("message", { failed: message.failed })}>
-      <span>{upperFirst(message.role)}: </span>
-      {messageChunks.map((chunk, index) => (
-        <React.Fragment key={index}>
-          {chunk.type === "text" ? (
-            <span>{chunk.content}</span>
-          ) : (
-            <details className="command">
-              <summary>```{chunk.command}</summary>
-              {chunk.content}
-            </details>
-          )}
-        </React.Fragment>
-      ))}
-      {message.partial && <Dots />}
-    </div>
-  );
-}
-
-function Dots() {
-  const [dots, setDots] = useState(1);
   useEffect(() => {
-    setInterval(() => {
-      setDots((dots) => (dots + 1) % 4);
-    }, 500);
-  }, []);
+    const handleScroll = () => {
+      manualScrolledRef.current =
+        verticalScrollParent.scrollTop +
+          verticalScrollParent.clientHeight! +
+          6 <
+        verticalScrollParent.scrollHeight;
+    };
+    verticalScrollParent.addEventListener("scroll", handleScroll);
+    return () => {
+      verticalScrollParent.removeEventListener("scroll", handleScroll);
+    };
+  }, [verticalScrollParent]);
+
   return (
     <>
-      <span>{".".repeat(dots)}</span>
-      <span className="invisible-dots">{".".repeat(3 - dots)}</span>
+      {messages?.map((message, index) => (
+        <MessageComponent
+          key={message.key ?? `index-${index}`}
+          message={message}
+        />
+      ))}
     </>
   );
 }
