@@ -110,10 +110,11 @@ export function MessageComponent({ message }: MessageComponentProps) {
       <div className="avatar">
         <WrappedAvatar
           icon={{
-            lib: "fa",
-            icon: message.role === "assistant" ? "robot" : "user",
+            lib: "easyops",
+            icon: message.role === "assistant" ? "robot" : "account",
           }}
           size="small"
+          className={`role-${message.role}`}
         />
       </div>
       <div className="main">

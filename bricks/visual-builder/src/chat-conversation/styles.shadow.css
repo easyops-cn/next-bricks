@@ -101,3 +101,7 @@ pre[class*="language-"],
 code[class*="language-"] {
   white-space: pre-wrap;
 }
+
+eo-avatar.role-assistant::part(avatar-icon) {
+  background-color: var(--palette-blue-5);
+}
