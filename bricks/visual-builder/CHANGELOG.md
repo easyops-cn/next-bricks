@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.10.3...@next-bricks/visual-builder@1.11.0) (2024-05-15)
+
+
+### Features
+
+* **chat:** show message as markdown ([1416e68](https://github.com/easyops-cn/next-bricks/commit/1416e68cd48d863ec138c59d6bab638d2c0d0c2d))
+* markdown component ([e2d5766](https://github.com/easyops-cn/next-bricks/commit/e2d576668224284f64e7ebb6a87152e92c5428a1))
+* use micromark ([fca8509](https://github.com/easyops-cn/next-bricks/commit/fca8509b51b9860d9c77b5a219b716b2cbc43cd7))
+* use remark ([73908ba](https://github.com/easyops-cn/next-bricks/commit/73908ba4e061eee827fba92ddb276098e3bf0f5b))
+
+
+
+
+
 ## [1.10.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.10.2...@next-bricks/visual-builder@1.10.3) (2024-05-15)
 
 **Note:** Version bump only for package @next-bricks/visual-builder
