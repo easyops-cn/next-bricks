@@ -77,7 +77,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@next-core/element": "^1.2.7",
     "@next-core/react-element": "^1.0.26",
-    "@next-core/runtime": "^1.42.0",
+    "@next-core/runtime": "^1.43.0",
     "@next-core/utils": "^1.7.2",
     "lodash": "^4.17.21",
     "react": "0.0.0-experimental-ee8509801-20230117"
