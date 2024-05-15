@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.37.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.36.0...@next-bricks/diagram@0.37.0) (2024-05-15)
+
+
+### Features
+
+* **draw-canvas:** support ctrlDragBehavior ([2249b78](https://github.com/easyops-cn/next-bricks/commit/2249b78d62e0769c2a23244e7d129049acfce5bd))
+
+
+
+
+
 # [0.36.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.35.0...@next-bricks/diagram@0.36.0) (2024-05-14)
 
 
