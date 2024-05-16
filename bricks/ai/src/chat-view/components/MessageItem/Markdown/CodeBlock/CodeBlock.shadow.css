@@ -68,3 +68,18 @@
     margin-top: 12px;
   }
 }
+
+.default-container {
+  .default-toolbar-container {
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+
+.default-container:hover {
+  .default-toolbar-container {
+    visibility: visible;
+  }
+}
