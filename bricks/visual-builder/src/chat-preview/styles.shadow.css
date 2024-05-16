@@ -28,6 +28,7 @@ iframe {
   margin: 0;
   padding: 0;
   transform-origin: 0% 0%;
+  user-select: none;
 }
 
 .outline {
@@ -64,4 +65,8 @@ iframe {
   .label {
     background: var(--palette-blue-6);
   }
+}
+
+.container:not(.inspecting) .outline {
+  display: none;
 }
