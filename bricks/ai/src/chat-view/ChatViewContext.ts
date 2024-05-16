@@ -1,8 +1,14 @@
 import { createContext, useContext } from "react";
 import { AgentDetailItem } from "./components/QuickAnswerList/index.js";
 import { SessionItem } from "./ChatService.js";
+import { UseSingleBrickConf } from "@next-core/react-runtime";
 
 export type Role = "guide" | "user" | "assistant";
+
+export type commandBrickConf = Record<
+  string,
+  { useBrick: UseSingleBrickConf; showOriginData?: boolean }
+>;
 
 export interface MessageItemContent {
   type: "guide" | "text" | "markdown" | "table" | "load";
@@ -42,6 +48,7 @@ interface ChatViewContextProps {
   showLike: boolean;
   readonly: boolean;
   quickAnswerConfig?: QuickAnswerConfig;
+  commandBricks?: commandBrickConf;
   setAgent: (id: string) => void;
   handleIsLike: (id: string, isLike: boolean) => Promise<boolean>;
   handleChat: (str: string) => void;

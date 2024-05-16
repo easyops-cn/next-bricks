@@ -241,11 +241,16 @@ export class ChatService {
     return flag;
   }
 
-  splitWord(str: string) {
+  splitWord(str: string): string[] {
     if (!str) return [];
     // 单词长度小于 5 直接返回, 否则做单词分割处理
     if (str?.length < 5) return [str];
     const list = [];
+
+    // TODO: 特殊逻辑，临时处理 debug 内容
+    if (this.#debug && /easy_cmd_flow_debug/.test(str)) {
+      return [str];
+    }
 
     if (window.Intl) {
       const segmenterFr = new Intl.Segmenter("zh-Hans-CN", {

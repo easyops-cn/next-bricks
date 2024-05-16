@@ -5,6 +5,7 @@ import CustomComponent from "./CustomComponent.js";
 import { wrapBrick } from "@next-core/react-element";
 import { GeneralIcon, GeneralIconProps } from "@next-bricks/icons/general-icon";
 import { Tooltip, message } from "antd";
+import { useChatViewContext } from "../../../../ChatViewContext";
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
@@ -16,7 +17,8 @@ const copyIcon: GeneralIconProps = {
 
 export const CodeBlock = () => {
   const [language, setLanguage] = useState("");
-  const { contentRef, node } = useNodeViewContext();
+  const { contentRef, node, view } = useNodeViewContext();
+  const { commandBricks } = useChatViewContext();
   const [messageApi, contextHolder] = message.useMessage();
 
   const handleCopy = async () => {
@@ -58,16 +60,19 @@ export const CodeBlock = () => {
   const renderContent = useMemo(() => {
     if (!node.firstChild?.text) return null;
     const text = node.firstChild?.textContent;
+    if (commandBricks && commandBricks[language]) {
+      // 使 markdown 默认样式不生效, 防止样式穿透
+      view.dom.classList.contains("prose") &&
+        view.dom.classList.replace("prose", "not-prose");
+      return <CustomComponent text={text} language={language} />;
+    }
     switch (language) {
       case "easy_cmd_progress":
         return <ProgressText text={text} />;
-      case "easy_cmd_cmdb_instance_list":
-      case "easy_cmd_monitor_dashboard":
-        return <CustomComponent text={text} language={language} />;
       default:
         return defaultContent;
     }
-  }, [node, language, defaultContent]);
+  }, [node, language, view, defaultContent, commandBricks]);
 
   useEffect(() => {
     if (!language) {
