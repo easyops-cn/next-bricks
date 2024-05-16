@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.6.9...@next-bricks/presentational@1.7.0) (2024-05-16)
+
+
+### Features
+
+* **card-item:** add selected property ([ef35227](https://github.com/easyops-cn/next-bricks/commit/ef352276606d6f66a300cc458076e874ae533f5e))
+
+
+
+
+
 ## [1.6.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.6.8...@next-bricks/presentational@1.6.9) (2024-05-15)
 
 **Note:** Version bump only for package @next-bricks/presentational
