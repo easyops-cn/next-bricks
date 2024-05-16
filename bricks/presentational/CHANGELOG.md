@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.0...@next-bricks/presentational@1.7.1) (2024-05-16)
+
+
+### Bug Fixes
+
+* **card-item:** fix selected style of grayish styleType ([fc257a9](https://github.com/easyops-cn/next-bricks/commit/fc257a90e41fbaa5343c73488d96ca0b71de3ca9))
+
+
+
+
+
 # [1.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.6.9...@next-bricks/presentational@1.7.0) (2024-05-16)
 
 
