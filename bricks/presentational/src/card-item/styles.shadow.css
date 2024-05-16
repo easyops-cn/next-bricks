@@ -40,7 +40,8 @@ eo-link {
 }
 
 .card-wrapper.selected {
-  border-color: var(--palette-blue-6);
+  border-color: var(--local-card-selected-border-color);
+  background-color: var(--local-card-selected-background-color);
 }
 
 /* header */
