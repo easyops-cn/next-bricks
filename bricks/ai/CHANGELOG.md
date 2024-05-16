@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.18.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.17.1...@next-bricks/ai@1.18.0) (2024-05-16)
+
+
+### Features
+
+* **chat-view:** add debug mode and custom component useBrick ([8609b39](https://github.com/easyops-cn/next-bricks/commit/8609b394264bb24b7e56903470491190ca86d3ac))
+
+
+
+
+
 ## [1.17.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.17.0...@next-bricks/ai@1.17.1) (2024-05-16)
 
 
