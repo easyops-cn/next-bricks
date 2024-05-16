@@ -151,6 +151,21 @@ describe("eo-card-item", () => {
       element.shadowRoot.querySelector(".card-tag").querySelector("eo-icon")
     ).toBeTruthy();
 
+    // selected
+    expect(
+      element.shadowRoot
+        ?.querySelector(".card-wrapper")
+        .classList.contains("selected")
+    ).toBeFalsy();
+    await act(async () => {
+      element.selected = true;
+    });
+    expect(
+      element.shadowRoot
+        ?.querySelector(".card-wrapper")
+        .classList.contains("selected")
+    ).toBeTruthy();
+
     act(() => {
       document.body.removeChild(element);
     });
