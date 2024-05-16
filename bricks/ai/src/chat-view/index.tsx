@@ -6,13 +6,16 @@ import { MessageList } from "./components/MessageList.js";
 import { useChatViewInfo } from "./hooks/useChatViewInfo.js";
 import { SessionList } from "./components/SessionList.js";
 import { SearchInput } from "./components/SearchInput.js";
-import styleText from "./styles.shadow.css";
-import loadStyleText from "./components/loading.shadow.css";
-import markdownStyleText from "./components/MessageItem/Markdown/markdown.shadow.css";
-import quickAnswerListStyleText from "./components/QuickAnswerList/quickAnswerList.shadow.css";
-import CodeBlockStyleText from "./components/MessageItem/Markdown/CodeBlock/CodeBlock.shadow.css";
+// import styleText from "./styles.shadow.css";
+// import loadStyleText from "./components/loading.shadow.css";
+// import markdownStyleText from "./components/MessageItem/Markdown/markdown.shadow.css";
+// import quickAnswerListStyleText from "./components/QuickAnswerList/quickAnswerList.shadow.css";
+// import CodeBlockStyleText from "./components/MessageItem/Markdown/CodeBlock/CodeBlock.shadow.css";
+// import  "./styles.shadow.css";
 import "@next-core/theme";
 import "./host-context.css";
+import "./index.css";
+import { commandBrickConf } from "./ChatViewContext";
 
 const { defineElement, property } = createDecorators();
 
@@ -21,13 +24,7 @@ const { defineElement, property } = createDecorators();
  */
 export
 @defineElement("ai.chat-view", {
-  styleTexts: [
-    styleText,
-    loadStyleText,
-    markdownStyleText,
-    quickAnswerListStyleText,
-    CodeBlockStyleText,
-  ],
+  shadowOptions: false,
 })
 class ChatView extends ReactNextElement {
   @property()
@@ -99,6 +96,14 @@ class ChatView extends ReactNextElement {
   })
   accessor quickAnswerConfig: QuickAnswerConfig | undefined;
 
+  /**
+   * 自定义语言配置
+   */
+  @property({
+    attribute: false,
+  })
+  accessor commandBricks: commandBrickConf | undefined;
+
   render() {
     return (
       <ChatViewComponent
@@ -111,6 +116,7 @@ class ChatView extends ReactNextElement {
         showLike={this.showLike}
         quickAnswerConfig={this.quickAnswerConfig}
         enterInterval={this.enterInterval}
+        commandBricks={this.commandBricks}
       />
     );
   }
@@ -126,6 +132,7 @@ export interface ChatViewProps {
   quickAnswerConfig?: QuickAnswerConfig;
   enterInterval?: number;
   debug?: boolean;
+  commandBricks?: commandBrickConf;
 }
 
 export function ChatViewComponent({
@@ -138,6 +145,7 @@ export function ChatViewComponent({
   quickAnswerConfig,
   enterInterval,
   debug = false,
+  commandBricks,
 }: ChatViewProps) {
   const {
     sessionEnd,
@@ -182,6 +190,7 @@ export function ChatViewComponent({
         showLike,
         readonly,
         quickAnswerConfig,
+        commandBricks,
         setAgent,
         handleIsLike,
         handleChat,
