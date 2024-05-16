@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.13.10...@next-bricks/basic@1.13.11) (2024-05-16)
+
+
+### Bug Fixes
+
+* fix icon button bg in dark mode ([1d91042](https://github.com/easyops-cn/next-bricks/commit/1d91042cdbd4ee25fd62e05478c6ed10d8760463))
+
+
+
+
+
 ## [1.13.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.13.9...@next-bricks/basic@1.13.10) (2024-05-15)
 
 **Note:** Version bump only for package @next-bricks/basic

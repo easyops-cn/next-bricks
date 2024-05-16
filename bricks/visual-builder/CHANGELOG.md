@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.13.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.12.0...@next-bricks/visual-builder@1.13.0) (2024-05-16)
+
+
+### Features
+
+* **chat-view:** set uiVersion and app ([4f556a1](https://github.com/easyops-cn/next-bricks/commit/4f556a16743d7d8e70355d7f27967a871215421b))
+
+
+
+
+
 # [1.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.11.1...@next-bricks/visual-builder@1.12.0) (2024-05-16)
 
 
