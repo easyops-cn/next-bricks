@@ -269,17 +269,17 @@ button:active {
 }
 
 .icon {
-  background: #f5f5f5;
+  background: var(--palette-gray-3);
   border: 1px solid transparent;
 }
 
 .icon:hover {
-  background-color: #f0f6ff;
+  background-color: var(--palette-blue-1);
   color: var(--antd-btn-default-hover-color);
 }
 
 .icon:active {
-  background-color: #f0f6ff;
+  background-color: var(--palette-blue-1);
   color: var(--antd-btn-default-active-color);
 }
 .icon.large {

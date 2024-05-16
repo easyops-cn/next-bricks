@@ -9,21 +9,24 @@ import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import { __secret_internals, getBasePath } from "@next-core/runtime";
-import type { BrickConf } from "@next-core/types";
+import type { BrickConf, MicroApp } from "@next-core/types";
 import { JSON_SCHEMA, safeDump } from "js-yaml";
 import type { PreviewWindow } from "@next-core/preview/types";
-import styleText from "./styles.shadow.css";
+import classNames from "classnames";
 import type {
   InspectOutline,
   InspectSelector,
 } from "../data-providers/chat-preview/interfaces";
 import { InspectOutlineComponent } from "./InspectOutlineComponent";
+import styleText from "./styles.shadow.css";
 
 const { defineElement, property, event, method } = createDecorators();
 
 export interface ChatPreviewProps {
   storyboard?: BrickConf | BrickConf[];
   theme?: string;
+  uiVersion?: string;
+  app?: MicroApp;
   inspecting?: boolean;
 }
 
@@ -40,6 +43,12 @@ class ChatPreview extends ReactNextElement {
 
   @property()
   accessor theme: string | undefined;
+
+  @property()
+  accessor uiVersion: string | undefined;
+
+  @property()
+  accessor app: MicroApp | undefined;
 
   @property({ type: Boolean })
   accessor inspecting: boolean | undefined;
@@ -68,6 +77,8 @@ class ChatPreview extends ReactNextElement {
       <ChatPreviewComponent
         storyboard={this.storyboard}
         theme={this.theme}
+        uiVersion={this.uiVersion}
+        app={this.app}
         inspecting={this.inspecting}
         onActiveTargetChange={this.#handleActiveTargetChange}
       />
@@ -82,6 +93,8 @@ export interface ChatPreviewComponentProps extends ChatPreviewProps {
 export function ChatPreviewComponent({
   storyboard,
   theme,
+  uiVersion,
+  app,
   inspecting,
   onActiveTargetChange,
 }: ChatPreviewComponentProps) {
@@ -152,10 +165,12 @@ export function ChatPreviewComponent({
         }),
       },
       {
+        app,
         theme,
+        uiVersion,
       }
     );
-  }, [ready, storyboard, theme]);
+  }, [app, ready, storyboard, theme, uiVersion]);
 
   const handleMouseOut = useMemo(() => {
     if (!initialized) {
@@ -247,7 +262,7 @@ export function ChatPreviewComponent({
   }, [hoverOutlines, adjustOutlines]);
 
   return (
-    <div className="container">
+    <div className={classNames("container", { inspecting })}>
       <iframe
         ref={iframeRef}
         src={`${getBasePath()}_brick-preview-v3_/preview/`}
