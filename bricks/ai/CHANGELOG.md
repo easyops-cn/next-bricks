@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.17.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.17.0...@next-bricks/ai@1.17.1) (2024-05-16)
+
+
+### Bug Fixes
+
+* chat-view默认命令字展示支持copy ([71a5931](https://github.com/easyops-cn/next-bricks/commit/71a59311dc8295f7d2e89bc5527f0150256edbb9))
+
+
+
+
+
 # [1.17.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.16.3...@next-bricks/ai@1.17.0) (2024-05-15)
 
 
