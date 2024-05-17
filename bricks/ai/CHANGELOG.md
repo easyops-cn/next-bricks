@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.19.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.19.0...@next-bricks/ai@1.19.1) (2024-05-17)
+
+
+### Bug Fixes
+
+* 【AI辅助工具】AI辅助编写工具 ([d2d6606](https://github.com/easyops-cn/next-bricks/commit/d2d6606ce5824930be1d788e5d4f82a8b1e34180))
+* 【AI辅助工具】AI辅助编写工具 ([ce6a7f0](https://github.com/easyops-cn/next-bricks/commit/ce6a7f08b8b4582df810425187fb0648d46e9f73))
+
+
+
+
+
 # [1.19.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.18.2...@next-bricks/ai@1.19.0) (2024-05-17)
 
 
