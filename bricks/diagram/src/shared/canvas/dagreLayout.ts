@@ -8,15 +8,24 @@ import type {
   NodeId,
   NodeView,
 } from "../../draw-canvas/interfaces";
-import { isEdgeCell, isNodeCell } from "../../draw-canvas/processors/asserts";
+import {
+  isEdgeCell,
+  isNodeCell,
+  isNodeOrAreaDecoratorCell,
+} from "../../draw-canvas/processors/asserts";
 import type { FullRectTuple } from "../../diagram/interfaces";
 
 export interface DagreLayoutOptions {
   cells: Cell[];
   layoutOptions?: LayoutOptionsDagre;
+  allowEdgeToArea?: boolean;
 }
 
-export function dagreLayout({ cells, layoutOptions }: DagreLayoutOptions): {
+export function dagreLayout({
+  cells,
+  layoutOptions,
+  allowEdgeToArea,
+}: DagreLayoutOptions): {
   getNodeView: (id: NodeId) => NodeView;
   nodePaddings: FullRectTuple;
 } {
@@ -53,7 +62,10 @@ export function dagreLayout({ cells, layoutOptions }: DagreLayoutOptions): {
     return {};
   });
   for (const cell of cells) {
-    if (isNodeCell(cell)) {
+    if (
+      (allowEdgeToArea && isNodeOrAreaDecoratorCell(cell)) ||
+      isNodeCell(cell)
+    ) {
       graph.setNode(cell.id, {
         id: cell.id,
         width: cell.view.width + nodePaddings[1] + nodePaddings[3],

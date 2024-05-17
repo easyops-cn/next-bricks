@@ -641,6 +641,7 @@ function LegacyEoDrawCanvasComponent(
     zoomer,
     scaleRange,
     layoutKey,
+    allowEdgeToArea,
     dispatch,
   });
 
@@ -687,6 +688,7 @@ function LegacyEoDrawCanvasComponent(
           canvasHeight,
           scaleRange,
           transform,
+          allowEdgeToArea,
         });
         if (shouldReCenter) {
           setCentered(false);
@@ -707,6 +709,7 @@ function LegacyEoDrawCanvasComponent(
           cells: newCells,
           scaleRange,
           transform,
+          allowEdgeToArea,
         });
         if (shouldReCenter) {
           setCentered(false);
@@ -718,10 +721,11 @@ function LegacyEoDrawCanvasComponent(
         return transform;
       },
       manuallyConnectNodes(sourceId) {
-        const source = cells.find((cell) =>
-          allowEdgeToArea
-            ? isNodeOrAreaDecoratorCell(cell) && cell.id === sourceId
-            : isNodeCell(cell) && cell.id === sourceId
+        const source = cells.find(
+          (cell) =>
+            ((allowEdgeToArea && isNodeOrAreaDecoratorCell(cell)) ||
+              isNodeCell(cell)) &&
+            cell.id === sourceId
         ) as NodeCell | DecoratorCell | undefined;
         if (source) {
           const rect = rootRef.current!.getBoundingClientRect();
@@ -748,10 +752,14 @@ function LegacyEoDrawCanvasComponent(
     (state: ConnectLineState, to: PositionTuple) => {
       // Find the target node from top bo bottom,
       // detect whether the pointer is inside the target node.
-      for (let i = 0; i < cells.length; i++) {
+      for (let i = cells.length - 1; i >= 0; i--) {
         const cell = cells[i];
         // Currently ignore connecting to self
-        if (isNodeOrAreaDecoratorCell(cell) && cell.id !== state.source.id) {
+        if (
+          ((allowEdgeToArea && isNodeOrAreaDecoratorCell(cell)) ||
+            isNodeCell(cell)) &&
+          cell.id !== state.source.id
+        ) {
           if (
             cell.view.x < to[0] &&
             cell.view.x + cell.view.width > to[0] &&

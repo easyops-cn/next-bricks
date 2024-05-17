@@ -31,6 +31,7 @@ export function updateCells({
   transform,
   reason,
   parent,
+  allowEdgeToArea,
 }: {
   cells: InitialCell[] | undefined;
   layout?: LayoutType;
@@ -42,6 +43,7 @@ export function updateCells({
   transform: TransformLiteral;
   reason?: "add-related-nodes";
   parent?: NodeId;
+  allowEdgeToArea?: boolean;
 }): {
   cells: Cell[];
   updated: Cell[];
@@ -186,7 +188,7 @@ export function updateCells({
       ) {
         // The positioned node (if exists) will be updated.
         updateCandidates.push(...positionedNodes);
-        ({ getNodeView } = dagreLayout({ cells: newCells }));
+        ({ getNodeView } = dagreLayout({ cells: newCells, allowEdgeToArea }));
         // Only re-center when there is no cells previous,
         // or the cell ids are not changed (this happens when updateCells called by backend right after dropNode).
         shouldReCenter =
@@ -199,6 +201,7 @@ export function updateCells({
         ({ getNodeView } = forceLayout({
           cells: newCells,
           fixedPosition: true,
+          allowEdgeToArea,
           center: [
             (canvasWidth / 2 - transform.x) / transform.k,
             (canvasHeight / 2 - transform.y) / transform.k,
