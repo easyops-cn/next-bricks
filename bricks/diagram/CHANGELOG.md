@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.37.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.37.2...@next-bricks/diagram@0.37.3) (2024-05-17)
+
+
+### Bug Fixes
+
+* 修复allowEdgeToArea:true的时,初始化报错的问题 ([9ef18a8](https://github.com/easyops-cn/next-bricks/commit/9ef18a8ef00523b8ab156f575b808161277a6504))
+
+
+
+
+
 ## [0.37.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.37.1...@next-bricks/diagram@0.37.2) (2024-05-17)
 
 **Note:** Version bump only for package @next-bricks/diagram
