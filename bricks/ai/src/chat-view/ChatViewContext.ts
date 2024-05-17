@@ -1,13 +1,13 @@
 import { createContext, useContext } from "react";
 import { AgentDetailItem } from "./components/QuickAnswerList/index.js";
 import { SessionItem } from "./ChatService.js";
-import { UseSingleBrickConf } from "@next-core/react-runtime";
+import { UseBrickConf } from "@next-core/types";
 
 export type Role = "guide" | "user" | "assistant";
 
 export type commandBrickConf = Record<
   string,
-  { useBrick: UseSingleBrickConf; showOriginData?: boolean }
+  { useBrick: UseBrickConf; showOriginData?: boolean }
 >;
 
 export interface MessageItemContent {

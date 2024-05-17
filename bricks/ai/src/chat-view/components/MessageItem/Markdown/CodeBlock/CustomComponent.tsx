@@ -1,6 +1,9 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useMsgItemContext } from "../../MsgItemContext.js";
-import { ReactUseBrick } from "@next-core/react-runtime";
+import {
+  ReactUseBrick,
+  ReactUseMultipleBricks,
+} from "@next-core/react-runtime";
 import { useChatViewContext } from "../../../../ChatViewContext.js";
 
 interface UseDataProps {
@@ -52,7 +55,7 @@ export default function CustomComponent({
   language: string;
 }) {
   const { commandBricks } = useChatViewContext();
-  const { chatting } = useMsgItemContext();
+  const { chatting, agentId, conversationId, taskId } = useMsgItemContext();
 
   const { parseData, isError } = useData({
     text,
@@ -62,9 +65,17 @@ export default function CustomComponent({
   const commandBrickConf = useMemo(() => {
     const config = commandBricks?.[language];
     if (config) {
+      const data = {
+        data: parseData,
+        agentId,
+        conversationId,
+        taskId,
+      };
       return {
-        component: (
-          <ReactUseBrick useBrick={config.useBrick} data={parseData} />
+        component: Array.isArray(config.useBrick) ? (
+          <ReactUseMultipleBricks useBrick={config.useBrick} data={data} />
+        ) : (
+          <ReactUseBrick useBrick={config.useBrick} data={data} />
         ),
         ...config,
       };
@@ -73,7 +84,7 @@ export default function CustomComponent({
       component: null,
       showOriginData: true,
     };
-  }, [language, commandBricks, parseData]);
+  }, [commandBricks, language, parseData, agentId, conversationId, taskId]);
 
   return (
     <div className="custom-component-wrapper">
