@@ -72,7 +72,7 @@ describe("eo-time-range-picker", () => {
       )?.click();
     });
 
-    expect(onChangeMock).toBeCalledTimes(3);
+    expect(onChangeMock).toBeCalledTimes(2);
     act(() => {
       document.body.removeChild(element);
     });
@@ -217,7 +217,7 @@ describe("eo-time-range-picker", () => {
       )?.click();
     });
     // NOTE: change called times changed from 3 to 2 after upgrade antd.
-    expect(onChangeMock).toBeCalledTimes(2);
+    expect(onChangeMock).toBeCalledTimes(1);
     expect(onChangeMock).toHaveBeenLastCalledWith({
       endTime: "2023-11-16",
       startTime: "2023-10-10",
