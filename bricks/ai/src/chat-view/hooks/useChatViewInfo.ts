@@ -98,7 +98,7 @@ export function useChatViewInfo({
               conversationId: item.conversationId,
               role: "user",
               content: {
-                type: "text",
+                type: "markdown",
                 text: item.input,
               },
               key: `user_${item.taskId}`,
@@ -218,7 +218,7 @@ export function useChatViewInfo({
           {
             role: "user",
             content: {
-              type: "text",
+              type: "markdown",
               text: str,
             },
             created: moment().format("YYYY-MM-DD HH:mm:ss"),
