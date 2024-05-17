@@ -50,7 +50,7 @@
     "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.20.9",
+    "@next-core/build-next-bricks": "^1.21.0",
     "@next-core/test-next": "^1.1.1",
     "babel-plugin-prismjs": "^2.1.0"
   },
