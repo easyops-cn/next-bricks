@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.18.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.18.1...@next-bricks/ai@1.18.2) (2024-05-17)
+
+
+### Bug Fixes
+
+* fix style ([bfaf9c6](https://github.com/easyops-cn/next-bricks/commit/bfaf9c6b647b24d3c686afa4dab491e9fddbb03a))
+* style fix ([f1c94de](https://github.com/easyops-cn/next-bricks/commit/f1c94dee8e9f98f3b40798f98f90776995047b4c))
+* style update ([3fd7b99](https://github.com/easyops-cn/next-bricks/commit/3fd7b9995988ba988d5dad835d5809c22bb8d4b9))
+
+
+
+
+
 ## [1.18.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.18.0...@next-bricks/ai@1.18.1) (2024-05-17)
 
 **Note:** Version bump only for package @next-bricks/ai
