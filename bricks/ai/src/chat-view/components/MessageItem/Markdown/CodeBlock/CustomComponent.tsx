@@ -1,9 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useMsgItemContext } from "../../MsgItemContext.js";
-import {
-  ReactUseBrick,
-  ReactUseMultipleBricks,
-} from "@next-core/react-runtime";
+import { ReactUseMultipleBricks } from "@next-core/react-runtime";
 import { useChatViewContext } from "../../../../ChatViewContext.js";
 
 interface UseDataProps {
@@ -72,10 +69,8 @@ export default function CustomComponent({
         taskId,
       };
       return {
-        component: Array.isArray(config.useBrick) ? (
+        component: (
           <ReactUseMultipleBricks useBrick={config.useBrick} data={data} />
-        ) : (
-          <ReactUseBrick useBrick={config.useBrick} data={data} />
         ),
         ...config,
       };
