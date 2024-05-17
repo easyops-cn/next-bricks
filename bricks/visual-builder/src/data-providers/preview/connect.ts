@@ -6,7 +6,7 @@ import {
   type NextLocation,
 } from "@next-core/runtime";
 import { HttpResponseError } from "@next-core/http";
-import { flowApi } from "@next-core/easyops-runtime";
+import { flowApi as _flowAPi } from "@next-core/easyops-runtime";
 import type {
   BrickConf,
   Contract,
@@ -57,6 +57,7 @@ interface DLL {
   (moduleId: "tYg3"): {
     getHistory: typeof _getHistory;
     developHelper: typeof _internals;
+    collectDebugContract: typeof flowApi.collectDebugContract;
   };
   (moduleId: "A+yw"): {
     matchPath: typeof _matchPath;
@@ -66,6 +67,7 @@ interface DLL {
 let getHistory = _getHistory;
 let matchPath = _matchPath;
 let __secret_internals = _internals;
+let flowApi = _flowAPi;
 let isV2 = false;
 
 // istanbul ignore next
@@ -76,8 +78,11 @@ try {
     dll &&
     window.BRICK_NEXT_VERSIONS?.["brick-container"]?.startsWith("2.")
   ) {
-    const { getHistory: getHistoryV2, developHelper: developHelperV2 } =
-      dll("tYg3");
+    const {
+      getHistory: getHistoryV2,
+      developHelper: developHelperV2,
+      collectDebugContract,
+    } = dll("tYg3");
     const { matchPath: matchPathV2 } = dll("A+yw");
     getHistory = getHistoryV2;
     matchPath = matchPathV2;
@@ -106,6 +111,10 @@ try {
         } as any);
       },
     };
+
+    flowApi = {
+      collectDebugContract,
+    } as any;
     isV2 = true;
   }
 } catch (e) {
