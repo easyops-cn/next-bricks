@@ -13,6 +13,7 @@ import type { FullRectTuple, RangeTuple } from "../../diagram/interfaces";
 import { useAutoCenter } from "./useAutoCenter";
 import {
   isNodeCell,
+  isNodeOrAreaDecoratorCell,
   isNodeOrEdgeCell,
 } from "../../draw-canvas/processors/asserts";
 import {
@@ -33,6 +34,7 @@ export interface UseLayoutOptions {
   zoomer: ZoomBehavior<SVGSVGElement, unknown>;
   scaleRange: RangeTuple;
   layoutKey: number;
+  allowEdgeToArea?: boolean;
   dispatch: (value: DrawCanvasAction) => void;
 }
 
@@ -45,6 +47,7 @@ export function useLayout({
   zoomer,
   scaleRange,
   layoutKey,
+  allowEdgeToArea,
   dispatch,
 }: UseLayoutOptions) {
   const [layoutInitialized, setLayoutInitialized] = useState(
@@ -105,18 +108,23 @@ export function useLayout({
       ({ getNodeView, nodePaddings } = forceLayout({
         cells,
         layoutOptions: layoutOptions as LayoutOptionsForce,
+        allowEdgeToArea,
       }));
     } else {
       ({ getNodeView, nodePaddings } = dagreLayout({
         cells,
         layoutOptions: layoutOptions as LayoutOptionsDagre,
+        allowEdgeToArea,
       }));
     }
 
     const alignOrigin = normalizeAlignOrigin(layoutOptions?.alignOrigin);
 
     const newCells: Cell[] = cells.map((cell) => {
-      if (isNodeCell(cell)) {
+      if (
+        (allowEdgeToArea && isNodeOrAreaDecoratorCell(cell)) ||
+        isNodeCell(cell)
+      ) {
         const nodeView = getNodeView(cell.id);
         return {
           ...cell,

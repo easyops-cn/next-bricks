@@ -17,7 +17,11 @@ import type {
   NodeId,
   NodeView,
 } from "../../draw-canvas/interfaces";
-import { isEdgeCell, isNodeCell } from "../../draw-canvas/processors/asserts";
+import {
+  isEdgeCell,
+  isNodeCell,
+  isNodeOrAreaDecoratorCell,
+} from "../../draw-canvas/processors/asserts";
 import { extractPartialRectTuple } from "../../diagram/processors/extractPartialRectTuple";
 import type { FullRectTuple, PositionTuple } from "../../diagram/interfaces";
 
@@ -26,6 +30,7 @@ export interface ForceLayoutOptions {
   layoutOptions?: LayoutOptionsForce;
   center?: PositionTuple;
   fixedPosition?: boolean;
+  allowEdgeToArea?: boolean;
 }
 
 export function forceLayout({
@@ -33,6 +38,7 @@ export function forceLayout({
   layoutOptions,
   center,
   fixedPosition,
+  allowEdgeToArea,
 }: ForceLayoutOptions): {
   getNodeView: (id: NodeId) => NodeView;
   nodePaddings: FullRectTuple;
@@ -57,7 +63,10 @@ export function forceLayout({
   const forceLinks: ForceLink[] = [];
   const nodesMap = new Map<NodeId, ForceNode>();
   for (const cell of cells) {
-    if (isNodeCell(cell)) {
+    if (
+      (allowEdgeToArea && isNodeOrAreaDecoratorCell(cell)) ||
+      isNodeCell(cell)
+    ) {
       const node: ForceNode = {
         id: cell.id,
         width: cell.view.width + nodePaddings[1] + nodePaddings[3],
