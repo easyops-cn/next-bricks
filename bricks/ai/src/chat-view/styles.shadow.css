@@ -230,6 +230,11 @@
               .content {
                 background-color: #606f7c;
                 color: #fff;
+
+                .ProseMirror.prose {
+                  /* 修改markdown字体颜色 */
+                  color: #fff;
+                }
               }
               &:hover {
                 .content-tip {
