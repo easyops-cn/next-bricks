@@ -1,7 +1,9 @@
 import React, {
   ChangeEvent,
+  forwardRef,
   useCallback,
   useEffect,
+  useImperativeHandle,
   useMemo,
   useRef,
   useState,
@@ -17,12 +19,19 @@ import classNames from "classnames";
 import { useChatViewContext } from "../ChatViewContext.js";
 import { AgentDetailItem } from "./QuickAnswerList/index";
 
+export interface SearchInputRef {
+  handleInsertQuestion: (value: string) => void;
+}
+
 const WrappedToolTip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 const PREFIX_WORD = "@";
 
-export function SearchInput(): React.ReactNode {
+export function LegacySearchInput(
+  _: any,
+  ref: React.Ref<SearchInputRef>
+): React.ReactNode {
   const [value, setValue] = useState<string>("");
   const [active, setActive] = useState<boolean>(false);
   const [expand, setExpand] = useState<boolean>(false);
@@ -212,17 +221,23 @@ export function SearchInput(): React.ReactNode {
     [agentList, setAgent]
   );
 
+  const handleDispatchQuestion = useCallback(
+    (val: string) => {
+      matchFirstAgent(val);
+      handleChat(val);
+
+      setActive(false);
+      setExpand(false);
+      handleChange("");
+      textareaRef.current?.blur();
+    },
+    [handleChat, handleChange, matchFirstAgent]
+  );
+
   const handleSubmit = useCallback(() => {
     if (!hadValue || !textareaRef.current || disabled) return;
-
-    matchFirstAgent(value);
-    handleChat(value);
-
-    setActive(false);
-    setExpand(false);
-    handleChange("");
-    textareaRef.current.blur();
-  }, [value, hadValue, disabled, handleChat, handleChange, matchFirstAgent]);
+    handleDispatchQuestion(value);
+  }, [value, hadValue, disabled, handleDispatchQuestion]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -365,6 +380,12 @@ export function SearchInput(): React.ReactNode {
     };
   }, []);
 
+  useImperativeHandle(ref, () => ({
+    handleInsertQuestion: (value: string) => {
+      handleDispatchQuestion(value);
+    },
+  }));
+
   return (
     <div
       className={classNames("search-input-box", {
@@ -444,3 +465,5 @@ export function SearchInput(): React.ReactNode {
     </div>
   );
 }
+
+export const SearchInput = forwardRef(LegacySearchInput);
