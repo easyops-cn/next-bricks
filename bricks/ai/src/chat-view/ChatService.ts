@@ -54,6 +54,7 @@ export class ChatService {
   #messageQueue: Array<QueueItem> = [];
   #subscribers: Record<string, Array<(msg?: SSEMessageItem) => void>> = {};
   #conversationId?: string;
+  #answerLanguage?: string | undefined;
 
   // 会话
   #sessionNextToken?: string;
@@ -66,14 +67,17 @@ export class ChatService {
     agentId,
     enterInterval = 50,
     debug = false,
+    answerLanguage,
   }: {
     agentId: string;
     enterInterval: number;
     debug: boolean;
+    answerLanguage?: string;
   }) {
     this.#agentId = agentId;
     this.#enterInterval = enterInterval;
     this.#debug = debug;
+    this.#answerLanguage = answerLanguage;
   }
 
   enqueue(data: QueueItem) {
@@ -315,6 +319,7 @@ export class ChatService {
           stream: true,
           config: {
             debug: this.#debug,
+            ...(this.#answerLanguage ? { lang: this.#answerLanguage } : {}),
           },
         }),
         headers: {

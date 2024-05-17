@@ -15,11 +15,13 @@ export function useChatViewInfo({
   sessionId,
   enterInterval = 50,
   debug,
+  answerLanguage,
 }: {
   agentId: string;
   sessionId?: string;
   enterInterval?: number;
   debug: boolean;
+  answerLanguage?: string;
 }) {
   const [sessionEnd, setSessionEnd] = useState<boolean>(false);
   const [sessionLoading, setSessionLoading] = useState<boolean>(false);
@@ -40,8 +42,9 @@ export function useChatViewInfo({
         agentId,
         enterInterval,
         debug,
+        answerLanguage,
       }),
-    [agentId, enterInterval, debug]
+    [agentId, enterInterval, debug, answerLanguage]
   );
 
   const defaultNewSessionItem = useMemo(
