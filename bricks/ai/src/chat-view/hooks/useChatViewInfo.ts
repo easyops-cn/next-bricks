@@ -93,7 +93,9 @@ export function useChatViewInfo({
         list.forEach((item) => {
           newList.unshift(
             {
+              agentId: item.agentId,
               taskId: item.taskId,
+              conversationId: item.conversationId,
               role: "user",
               content: {
                 type: "text",
@@ -105,6 +107,7 @@ export function useChatViewInfo({
             {
               agentId: item.agentId,
               taskId: item.taskId,
+              conversationId: item.conversationId,
               role: "assistant",
               content: {
                 type: "markdown",

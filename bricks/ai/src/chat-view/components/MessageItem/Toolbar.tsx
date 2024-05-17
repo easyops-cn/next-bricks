@@ -52,7 +52,7 @@ export function Toolbar({
   );
 
   return isAssistant && !isChattingItem ? (
-    <div className="toolbar">
+    <div className="message-toolbar">
       {showLike && !readonly && (
         <>
           <WrappedToolTip content="点赞" hoist>

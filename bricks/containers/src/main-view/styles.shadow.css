@@ -20,10 +20,12 @@
 }
 
 :host([no-padding]) {
-  --page-padding-top: 0;
-  --page-padding-right: 0;
-  --page-padding-bottom: 0;
-  --page-padding-left: 0;
+  padding: 0;
+
+  eo-banner {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 eo-banner {
