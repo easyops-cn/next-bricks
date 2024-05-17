@@ -41,7 +41,7 @@ export function LegacyChatViewComponent(
     commandBricks,
     answerLanguage,
   }: ChatViewProps,
-  ref: React.RefObject<SearchInputRef>
+  ref: React.Ref<SearchInputRef>
 ) {
   const {
     sessionEnd,
@@ -113,7 +113,7 @@ export function LegacyChatViewComponent(
   );
 }
 
-export const ChatViewComponent = forwardRef(LegacyChatViewComponent as any);
+export const ChatViewComponent = forwardRef(LegacyChatViewComponent);
 
 /**
  * AI 对话终端
