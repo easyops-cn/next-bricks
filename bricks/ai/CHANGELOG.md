@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.19.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.18.2...@next-bricks/ai@1.19.0) (2024-05-17)
+
+
+### Features
+
+* support user message item render markdown ([aa1e46d](https://github.com/easyops-cn/next-bricks/commit/aa1e46d37136e079521644ba7d8422a04be1cd57))
+
+
+
+
+
 ## [1.18.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.18.1...@next-bricks/ai@1.18.2) (2024-05-17)
 
 
