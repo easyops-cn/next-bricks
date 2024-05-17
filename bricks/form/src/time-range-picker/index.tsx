@@ -69,7 +69,7 @@ export interface EoTimeRangePickerProps extends FormItemProps {
 }
 type RealTimeRangePickerProps = Omit<
   EoTimeRangePickerProps,
-  keyof FormItemProps
+  keyof Omit<FormItemProps, "formElement">
 >;
 /**
  * 时间区间选择器
@@ -119,7 +119,7 @@ class EoTimeRangePicker extends FormItemElementBase {
    * 是否在初始化完成后额外触发一次`time.range.change`, 这里因为历史原因之前默认行为就是在初始化后会触发该事件，这里为了兼容之前的行为，默认值只能设置为 true。
    */
   @property({ type: Boolean })
-  accessor emitChangeOnInit: boolean | undefined;
+  accessor emitChangeOnInit: boolean | undefined = true;
 
   /**
    * @default  []
@@ -253,9 +253,10 @@ export function RealTimeRangePicker(
     value,
     selectNearDays,
     format,
-    emitChangeOnInit = true,
+    emitChangeOnInit,
     presetRanges,
     onChange,
+    formElement,
   } = props;
   const times = ["time", "hmTime"];
   const rangeType = props.rangeType ?? "time";
@@ -294,10 +295,10 @@ export function RealTimeRangePicker(
   };
 
   useEffect(() => {
-    if (emitChangeOnInit && onChange) {
+    if (emitChangeOnInit && !props.value && !formElement && onChange) {
       onChange(times.includes(rangeType) ? INIT_TIME_RANGE : initRange);
     }
-  }, [onChange]);
+  }, []);
 
   useEffect(() => {
     if (value?.startTime) {
@@ -478,6 +479,7 @@ export function EoTimeRangePickerComponent(props: EoTimeRangePickerProps) {
               emitChangeOnInit={props.emitChangeOnInit}
               selectNearDays={props.selectNearDays}
               presetRanges={props.presetRanges}
+              formElement={props.formElement}
             />
           </div>
         </StyleProvider>
