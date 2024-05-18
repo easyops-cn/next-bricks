@@ -36,6 +36,7 @@
   "dependencies": {
     "@ant-design/cssinjs": "^1.20.0",
     "@ant-design/icons": "^5.3.7",
+    "@easyops-cn/rc-trigger": "^2.1.4",
     "@next-core/element": "^1.2.7",
     "@next-core/http": "^1.2.2",
     "@next-core/react-element": "^1.0.26",
