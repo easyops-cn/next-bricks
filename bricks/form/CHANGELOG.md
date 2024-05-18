@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.21](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.20...@next-bricks/form@1.9.21) (2024-05-18)
+
+
+### Bug Fixes
+
+* use fork of rc-trigger to fix events in nested shadow dom ([0f173b6](https://github.com/easyops-cn/next-bricks/commit/0f173b64d8e6f4b51d3e1f0b34cbd96edbda9521))
+
+
+
+
+
 ## [1.9.20](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.19...@next-bricks/form@1.9.20) (2024-05-17)
 
 **Note:** Version bump only for package @next-bricks/form
