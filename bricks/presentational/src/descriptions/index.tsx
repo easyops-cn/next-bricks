@@ -8,7 +8,7 @@ import type {
 } from "@next-bricks/containers/grid-layout";
 import styleText from "./descriptions.shadow.css";
 import "@next-core/theme";
-import { UseSingleBrickConf } from "@next-core/types";
+import type { UseBrickConf } from "@next-core/types";
 import classnames from "classnames";
 import { ReactUseMultipleBricks } from "@next-core/react-runtime";
 import "./host-context.css";
@@ -22,7 +22,7 @@ interface DescriptionItem {
   field?: string;
   group?: string;
   text?: string | number;
-  useBrick?: UseSingleBrickConf;
+  useBrick?: UseBrickConf;
 }
 
 type Layout = "horizontal" | "vertical";
