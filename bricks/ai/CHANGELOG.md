@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.20.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.19.1...@next-bricks/ai@1.20.0) (2024-05-21)
+
+
+### Features
+
+* **chatService:** catch error status ([a3267cc](https://github.com/easyops-cn/next-bricks/commit/a3267ccd0375e3bc94398a8db699b05b17fa3476))
+
+
+
+
+
 ## [1.19.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.19.0...@next-bricks/ai@1.19.1) (2024-05-17)
 
 
