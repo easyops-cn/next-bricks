@@ -1,0 +1,23 @@
+#preview-root {
+  padding: 0;
+  height: 100vh;
+  overflow-y: auto;
+  border: 1px solid var(--theme-gray-border-color);
+  border-radius: 4px;
+}
+
+.head-cell {
+  position: sticky;
+  top: 0;
+  background: var(--body-background);
+  z-index: 1;
+  font-weight: bold;
+}
+
+.last-col-cell {
+  border-right-color: transparent;
+}
+
+.last-row-cell {
+  border-bottom-color: transparent;
+}

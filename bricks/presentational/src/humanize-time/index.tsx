@@ -51,13 +51,13 @@ class EoHumanizeTime extends ReactNextElement {
   accessor value: number | string;
 
   /**
-   * 字符串的时间格式，如 "YYYY-MM-DD", [时间格式参照表](https://dayjs.gitee.io/docs/zh-CN/parse/string-format)
+   * 字符串的时间格式，如 "YYYY-MM-DD", [时间格式参照表](https://day.js.org/docs/en/parse/string-format)
    */
   @property()
   accessor inputFormat: string;
 
   /**
-   * 展示时间格式，如 "YYYY-MM-DD"，当设置该属性时，属性 `formatter` 无效 [时间格式参照表](https://dayjs.gitee.io/docs/zh-CN/parse/string-format)
+   * 展示时间格式，如 "YYYY-MM-DD"，当设置该属性时，属性 `formatter` 无效 [时间格式参照表](https://day.js.org/docs/en/display/format)
    */
   @property()
   accessor outputFormat: string;
@@ -71,7 +71,8 @@ class EoHumanizeTime extends ReactNextElement {
   accessor isCostTime: boolean;
 
   /**
-   * 枚举值：full, default, relative, future, accurate, auto [类型链接](https://github.com/easyops-cn/next-libs/blob/207fe7ee3ac010ab860c23cd062216c8ca612f0c/libs/datetime/src/humanizeTime.ts#L9)
+   * 格式类型
+   *
    * @default "default"
    */
   @property({
