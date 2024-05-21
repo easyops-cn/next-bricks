@@ -344,6 +344,23 @@ export class ChatService {
           let result = {} as SSEMessageItem;
           try {
             result = JSON.parse(data);
+
+            if (!this.#conversationId) {
+              this.setConversationId(result.conversationId);
+            }
+            const wordList = this.splitWord(result.delta.content);
+            wordList.forEach((word) => {
+              this.enqueue({
+                topic: "add",
+                message: {
+                  ...result,
+                  delta: {
+                    role: "assistant",
+                    content: word,
+                  },
+                },
+              });
+            });
           } catch {
             this.enqueue({
               topic: "add",
@@ -356,24 +373,9 @@ export class ChatService {
                 agentId: this.#agentId,
               },
             });
+            this.#ctrl!.abort();
             return;
           }
-          if (!this.#conversationId) {
-            this.setConversationId(result.conversationId);
-          }
-          const wordList = this.splitWord(result.delta.content);
-          wordList.forEach((word) => {
-            this.enqueue({
-              topic: "add",
-              message: {
-                ...result,
-                delta: {
-                  role: "assistant",
-                  content: word,
-                },
-              },
-            });
-          });
         },
         onclose: () => {
           // eslint-disable-next-line no-console
