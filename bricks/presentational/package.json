@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/presentational",
-  "version": "1.7.4",
+  "version": "1.7.5",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/presentational",
   "repository": {
     "type": "git",
@@ -40,8 +40,8 @@
     "@next-core/react-runtime": "^1.5.0",
     "@next-core/types": "^1.11.0",
     "@next-core/utils": "^1.7.4",
-    "@next-shared/datetime": "^0.1.21",
-    "@next-shared/general": "^0.8.27",
+    "@next-shared/datetime": "^0.1.22",
+    "@next-shared/general": "^0.8.28",
     "classnames": "^2.3.2",
     "file-saver": "^2.0.5",
     "prism-react-renderer": "^2.0.6",

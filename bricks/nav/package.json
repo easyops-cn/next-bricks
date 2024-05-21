@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/nav",
-  "version": "1.11.11",
+  "version": "1.11.12",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/nav",
   "repository": {
     "type": "git",
@@ -45,7 +45,7 @@
     "@next-core/theme": "^1.5.0",
     "@next-core/types": "^1.11.0",
     "@next-core/utils": "^1.7.4",
-    "@next-shared/general": "^0.8.27",
+    "@next-shared/general": "^0.8.28",
     "classnames": "^2.3.2",
     "hotkeys-js": "^3.10.1",
     "lodash": "^4.17.21",

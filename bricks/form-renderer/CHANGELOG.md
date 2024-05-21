@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.61](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.60...@next-bricks/form-renderer@0.1.61) (2024-05-21)
+
+**Note:** Version bump only for package @next-bricks/form-renderer
+
+
+
+
+
 ## [0.1.60](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.59...@next-bricks/form-renderer@0.1.60) (2024-05-17)
 
 **Note:** Version bump only for package @next-bricks/form-renderer

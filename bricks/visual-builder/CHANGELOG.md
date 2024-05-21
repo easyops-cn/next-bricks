@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.14.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.13.2...@next-bricks/visual-builder@1.14.0) (2024-05-21)
+
+
+### Features
+
+* pre-generated preview update ([12d5d2c](https://github.com/easyops-cn/next-bricks/commit/12d5d2c9342a6ba1d89e4af8ca67b2f71ad42060))
+
+
+
+
+
 ## [1.13.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.13.1...@next-bricks/visual-builder@1.13.2) (2024-05-17)
 
 
