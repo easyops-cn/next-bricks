@@ -17,7 +17,7 @@ import type {
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import classNames from "classnames";
-import "./host-contenxt.css";
+import { useCurrentTheme } from "@next-core/react-runtime";
 
 const { defineElement, property, event } = createDecorators();
 
@@ -292,6 +292,7 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
         onActionClick={this.#handleActionClick}
         onTagClick={this.#handleTagClick}
         coverImageSize={this.coverImageSize}
+        styleType={this.styleType}
       />
     );
   }
@@ -321,10 +322,13 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
     coverColor,
     avatarPosition,
     tagConfig,
+    styleType,
     onActionClick,
     onTagClick,
     coverImageSize,
   } = props;
+
+  const theme = useCurrentTheme();
 
   const handleActionClick = useCallback(
     (event: CustomEvent<SimpleActionType>) => {
@@ -408,7 +412,10 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
 
   return (
     <WrappedLink type="plain" url={url} target={target} href={href}>
-      <div className={classNames("card-wrapper", { selected })} ref={callback}>
+      <div
+        className={classNames("card-wrapper", theme, styleType, { selected })}
+        ref={callback}
+      >
         {hasCover && (
           <div className="card-cover-wrapper">
             <div
