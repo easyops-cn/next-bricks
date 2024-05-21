@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.3...@next-bricks/presentational@1.7.4) (2024-05-21)
+
+
+### Bug Fixes
+
+* **card-item:** fix style ([f795881](https://github.com/easyops-cn/next-bricks/commit/f795881c59d759fedd2b0b7925a3b290c315c519))
+
+
+
+
+
 ## [1.7.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.2...@next-bricks/presentational@1.7.3) (2024-05-17)
 
 **Note:** Version bump only for package @next-bricks/presentational
