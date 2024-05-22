@@ -30,9 +30,7 @@ describe("brick size check", () => {
         if (resource.name.startsWith(resourceUrlPrefix)) {
           total += resource.transferSize;
           if (
-            /\/chunks\/(?:2?784|(?:2?8)?316)\.[0-9a-f]+\.js$/.test(
-              resource.name
-            )
+            /\/chunks\/(?:(?:40)?41|3?144)\.[0-9a-f]+\.js$/.test(resource.name)
           ) {
             react += resource.transferSize;
           } else {
@@ -77,7 +75,7 @@ describe("brick size check", () => {
 
     cy.get("#main-mount-point > ul > li").then((elements) => {
       expect(elements.length).to.be.greaterThan(0);
-      const pkgNames = elements.map((i, el) => el.textContent).get();
+      const pkgNames = elements.map((_i, el) => el.textContent).get();
       for (const pkgName of pkgNames) {
         cy.visit(`${homepage}/packages/${pkgName}`, {
           onBeforeLoad(win) {
@@ -147,7 +145,7 @@ describe("brick size check", () => {
 
     cy.get("#main-mount-point > ul > li").then((elements) => {
       expect(elements.length).to.be.greaterThan(0);
-      const items = elements.map((i, el) => el.textContent).get();
+      const items = elements.map((_i, el) => el.textContent).get();
       const printedPkgs = new Set();
       for (const item of items) {
         const [pkgName, brick] = item.split(":");
