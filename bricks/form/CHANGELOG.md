@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.23](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.22...@next-bricks/form@1.9.23) (2024-05-22)
+
+
+### Bug Fixes
+
+* **form-item:**  not unsubscribe in first time ([86def3e](https://github.com/easyops-cn/next-bricks/commit/86def3e7b1254296ca8eda5e87da1a0a385a6749))
+
+
+
+
+
 ## [1.9.22](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.21...@next-bricks/form@1.9.22) (2024-05-21)
 
 **Note:** Version bump only for package @next-bricks/form
