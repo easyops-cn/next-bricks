@@ -61,7 +61,6 @@ jobs:
     - run: yarn install --frozen-lockfile
       env:
         CYPRESS_INSTALL_BINARY: ''
-        CYPRESS_DOWNLOAD_MIRROR: ''
 
     - name: Get checksum after yarn install
       id: yarn-lock-check-after
@@ -70,6 +69,8 @@ jobs:
     - name: Exit if yarn.lock updated
       run: exit 1
       if: steps.yarn-lock-check-before.outputs.sum != steps.yarn-lock-check-after.outputs.sum
+
+    - run: cp size-check.config.mjs dev.config.mjs
 
     - run: yarn build
       env:
