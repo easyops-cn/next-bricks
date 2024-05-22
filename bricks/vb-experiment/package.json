@@ -35,7 +35,7 @@
     "@babel/standalone": "^7.22.9",
     "@babel/types": "^7.22.5",
     "@next-core/types": "^1.11.0",
-    "@next-core/utils": "^1.7.4",
+    "@next-core/utils": "^1.7.5",
     "file-saver": "^2.0.5",
     "jszip": "^3.10.1",
     "prettier": "^3.0.3",
