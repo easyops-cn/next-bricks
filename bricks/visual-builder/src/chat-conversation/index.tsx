@@ -18,6 +18,7 @@ export interface Message {
 
 export interface ChatConversationProps {
   messages?: Message[];
+  errorBoundary?: boolean;
 }
 
 type StoryboardChunk = StoryboardChunkBlock | StoryboardChunkBlockItem;
@@ -51,6 +52,9 @@ class ChatConversation
   @property({ attribute: false })
   accessor messages: Message[] | undefined;
 
+  @property({ type: Boolean })
+  accessor errorBoundary: boolean | undefined;
+
   @event({ type: "storyboard.update" })
   accessor #storyboardUpdate!: EventEmitter<BrickConf[]>;
 
@@ -63,6 +67,7 @@ class ChatConversation
       <ChatConversationComponent
         host={this}
         messages={this.messages}
+        errorBoundary={this.errorBoundary}
         onStoryboardUpdate={this.#handleStoryboardUpdate}
       />
     );
@@ -77,6 +82,7 @@ export interface ChatConversationComponentProps extends ChatConversationProps {
 export function ChatConversationComponent({
   messages,
   host,
+  errorBoundary,
   onStoryboardUpdate,
 }: ChatConversationComponentProps) {
   const chunkRegExp = useMemo(
@@ -172,6 +178,7 @@ export function ChatConversationComponent({
                 ...childBrick.properties,
                 slot: undefined,
               },
+              errorBoundary,
               slot: "toolbar",
               iid: `item:${child}`,
               meta: {
@@ -192,6 +199,7 @@ export function ChatConversationComponent({
           const brick: BrickConf = {
             ...rawBrick,
             children: [],
+            errorBoundary,
             iid: `block:${block.uuid}`,
             meta: {
               type: "block",
@@ -206,6 +214,7 @@ export function ChatConversationComponent({
             if (childBrick) {
               brick.children.push({
                 ...childBrick,
+                errorBoundary,
                 iid: `item:${child}`,
                 meta: {
                   type: "item",
@@ -220,6 +229,7 @@ export function ChatConversationComponent({
             if (childBrick) {
               contentLayout.children.push({
                 ...childBrick,
+                errorBoundary,
                 iid: `item:${child}`,
                 meta: {
                   type: "item",
@@ -238,7 +248,7 @@ export function ChatConversationComponent({
     setStoryboard((prev) =>
       hasContent ? [main] : prev.length === 0 ? prev : []
     );
-  }, [chunks]);
+  }, [chunks, errorBoundary]);
 
   useEffect(() => {
     onStoryboardUpdate?.(storyboard);
