@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.16.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.15.0...@next-bricks/basic@1.16.0) (2024-05-23)
+
+
+### Features
+
+* support action item drag ([0e1cb1f](https://github.com/easyops-cn/next-bricks/commit/0e1cb1f607e75b0a0bec41ea6ec3c333a26dfe9a))
+
+
+
+
+
 # [1.15.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.14.0...@next-bricks/basic@1.15.0) (2024-05-23)
 
 
