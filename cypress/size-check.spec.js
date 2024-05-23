@@ -3,6 +3,7 @@
 
 const homepage = "http://localhost:8081/-size-check-";
 const resourceUrlPrefix = "http://localhost:8081/sa-static/-/bricks/";
+const reactChunkRegExp = /\/chunks\/(?:(?:40)?41|3?144)\.[0-9a-f]+\.js$/;
 
 describe("brick size check", () => {
   it("all together", () => {
@@ -29,9 +30,7 @@ describe("brick size check", () => {
       resources.map((resource) => {
         if (resource.name.startsWith(resourceUrlPrefix)) {
           total += resource.transferSize;
-          if (
-            /\/chunks\/(?:(?:40)?41|3?144)\.[0-9a-f]+\.js$/.test(resource.name)
-          ) {
+          if (reactChunkRegExp.test(resource.name)) {
             react += resource.transferSize;
           } else {
             const resourcePkg = resource.name
@@ -95,11 +94,7 @@ describe("brick size check", () => {
           resources.map((resource) => {
             if (resource.name.startsWith(resourceUrlPrefix)) {
               total += resource.transferSize;
-              if (
-                /\/chunks\/(?:2?784|(?:2?8)?316)\.[0-9a-f]+\.js$/.test(
-                  resource.name
-                )
-              ) {
+              if (reactChunkRegExp.test(resource.name)) {
                 react += resource.transferSize;
               } else {
                 const resourcePkg = resource.name
@@ -171,11 +166,7 @@ describe("brick size check", () => {
           resources.map((resource) => {
             if (resource.name.startsWith(resourceUrlPrefix)) {
               total += resource.transferSize;
-              if (
-                /\/chunks\/(?:2?784|(?:2?8)?316)\.[0-9a-f]+\.js$/.test(
-                  resource.name
-                )
-              ) {
+              if (reactChunkRegExp.test(resource.name)) {
                 react += resource.transferSize;
               } else {
                 const resourcePkg = resource.name
