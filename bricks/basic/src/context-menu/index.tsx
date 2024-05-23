@@ -27,6 +27,8 @@ const WrappedActions = wrapBrick<
   ActionsEventsMapping
 >("eo-actions", {
   onActionClick: "action.click",
+  onItemDragEnd: "item.drag.end",
+  onItemDragStart: "item.drag.start",
 });
 
 const MINIMAL_PADDING = 8;
@@ -74,12 +76,34 @@ class EoContextMenu extends ReactNextElement {
   accessor position: Position | undefined;
 
   /**
+   * action中的菜单项是否可拖拽
+   */
+  @property({ type: Boolean })
+  accessor itemDraggable: boolean | undefined;
+
+  /**
    * 点击菜单项动作时触发
    *
    * @detail 该菜单项动作配置
    */
   @event({ type: "action.click" })
   accessor #actionClickEvent!: EventEmitter<SimpleAction>;
+
+  /**
+   * 开始拖拽菜单项时触发
+   *
+   * @detail 该菜单项动作配置
+   */
+  @event({ type: "item.drag.start" })
+  accessor #itemDragStartEvent!: EventEmitter<SimpleAction>;
+
+  /**
+   * 完成拖拽菜单项时触发
+   *
+   * @detail 该菜单项动作配置
+   */
+  @event({ type: "item.drag.end" })
+  accessor #itemDragEndEvent!: EventEmitter<SimpleAction>;
 
   @method()
   open({ position }: OpenInfo) {
@@ -100,6 +124,14 @@ class EoContextMenu extends ReactNextElement {
     }
   };
 
+  #handleItemDragStart = (action: SimpleAction): void => {
+    this.#itemDragStartEvent.emit(action);
+  };
+
+  #handleItemDragEnd = (action: SimpleAction): void => {
+    this.#itemDragEndEvent.emit(action);
+  };
+
   disconnectedCallback() {
     super.disconnectedCallback();
     lockBodyScroll(this, false);
@@ -113,6 +145,9 @@ class EoContextMenu extends ReactNextElement {
         active={this.active}
         position={this.position}
         onActionClick={this.#handleActionClick}
+        itemDraggable={this.itemDraggable}
+        onItemDragStart={this.#handleItemDragStart}
+        onItemDragEnd={this.#handleItemDragEnd}
       />
     );
   }
@@ -120,6 +155,9 @@ class EoContextMenu extends ReactNextElement {
 
 export interface EoContextMenuComponentProps extends EoContextMenuProps {
   onActionClick?(action: SimpleAction): void;
+  onItemDragStart?(action: SimpleAction): void;
+  onItemDragEnd?(action: SimpleAction): void;
+  itemDraggable?: boolean;
   element?: EoContextMenu;
 }
 
@@ -129,6 +167,9 @@ export function EoContextMenuComponent({
   active: _active,
   position,
   onActionClick,
+  itemDraggable,
+  onItemDragStart,
+  onItemDragEnd,
 }: EoContextMenuComponentProps) {
   const active = _active ?? false;
 
@@ -143,13 +184,20 @@ export function EoContextMenuComponent({
     },
     [element]
   );
-
   const handleActionClick = useCallback(
     (e: CustomEvent<SimpleAction>) => {
       element?.close();
       onActionClick?.(e.detail);
     },
     [element, onActionClick]
+  );
+
+  const handleItemDragEnd = useCallback(
+    (e: CustomEvent<SimpleAction>) => {
+      element?.close();
+      onItemDragEnd?.(e.detail);
+    },
+    [element, onItemDragEnd]
   );
 
   const actionsRef = useRef<EoActions>(null);
@@ -185,7 +233,12 @@ export function EoContextMenuComponent({
       <WrappedActions
         ref={actionsRef}
         actions={actions}
+        itemDraggable={itemDraggable}
         onActionClick={handleActionClick}
+        onItemDragStart={(e: CustomEvent<SimpleAction>) =>
+          onItemDragStart?.(e.detail)
+        }
+        onItemDragEnd={handleItemDragEnd}
         style={{
           left: (fixedPosition ?? position)?.[0],
           top: (fixedPosition ?? position)?.[1],

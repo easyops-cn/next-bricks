@@ -61,3 +61,30 @@ events:
     args:
       - click delete button
 ```
+
+### item draggable
+
+```yaml preview
+brick: eo-actions
+properties:
+  itemDraggable: true
+  actions:
+    - text: document
+      icon:
+        lib: antd
+        icon: folder
+      dragConf:
+        format: text/plain
+        data:
+          category: document
+          title: 文档
+    - text: file
+      icon:
+        lib: antd
+        icon: file
+      dragConf:
+        format: text/plain
+        data:
+          category: file
+          title: 文件
+```
