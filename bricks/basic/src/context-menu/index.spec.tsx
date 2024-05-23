@@ -154,4 +154,47 @@ describe("eo-context-menu", () => {
       document.body.removeChild(element);
     });
   });
+
+  test("item draggable", async () => {
+    const onItemDragStart = jest.fn();
+    const onItemDragEnd = jest.fn();
+    const element = document.createElement("eo-context-menu") as EoContextMenu;
+    element.addEventListener("item.drag.start", (e: Event) =>
+      onItemDragStart((e as CustomEvent).detail)
+    );
+
+    element.addEventListener("item.drag.end", (e: Event) =>
+      onItemDragEnd((e as CustomEvent).detail)
+    );
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    act(() => {
+      fireEvent(
+        element.shadowRoot!.querySelector("eo-actions")!,
+        new CustomEvent("item.drag.start", {
+          detail: { text: "item", dragConf: { key: "text", data: {} } },
+        })
+      );
+    });
+    expect(onItemDragStart).toBeCalledWith({
+      text: "item",
+      dragConf: { key: "text", data: {} },
+    });
+
+    act(() => {
+      fireEvent(
+        element.shadowRoot!.querySelector("eo-actions")!,
+        new CustomEvent("item.drag.end", {
+          detail: { text: "item", dragConf: { key: "text", data: {} } },
+        })
+      );
+    });
+    expect(onItemDragEnd).toBeCalledWith({
+      text: "item",
+      dragConf: { key: "text", data: {} },
+    });
+  });
 });

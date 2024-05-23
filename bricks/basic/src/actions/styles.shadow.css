@@ -25,6 +25,14 @@ eo-menu-item:not([disabled]):hover::part(menu-item) {
   background-color: var(--left-sidebar-item-hover-bg);
 }
 
+eo-menu-item.dragging {
+  opacity: 0.5;
+}
+
+eo-menu-item[draggable="true"]::part(menu-item) {
+  cursor: grab;
+}
+
 eo-tooltip {
   display: block;
 }

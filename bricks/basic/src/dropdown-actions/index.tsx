@@ -37,6 +37,8 @@ const WrappedActions = wrapBrick<
   ActionsEventsMapping
 >("eo-actions", {
   onActionClick: "action.click",
+  onItemDragEnd: "item.drag.end",
+  onItemDragStart: "item.drag.start",
 });
 
 export interface DropdownActionsProps {

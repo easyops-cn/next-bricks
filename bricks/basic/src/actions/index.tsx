@@ -129,6 +129,10 @@ export interface SimpleAction {
   href?: string;
   target?: Target;
   danger?: boolean;
+  dragConf?: {
+    format: string;
+    data: unknown;
+  };
 }
 
 export interface SubeMenuItemAction extends SimpleAction {
@@ -148,15 +152,20 @@ export type Action = SimpleAction | Divider | SubeMenuAction;
 
 export interface ActionsProps {
   actions?: Action[];
+  itemDraggable?: boolean;
   checkedKeys?: string[];
 }
 
 export interface ActionsEvents {
   "action.click": CustomEvent<SimpleAction>;
+  "item.drag.start": CustomEvent<SimpleAction>;
+  "item.drag.end": CustomEvent<SimpleAction>;
 }
 
 export interface ActionsEventsMapping {
   onActionClick: "action.click";
+  onItemDragEnd: "item.drag.end";
+  onItemDragStart: "item.drag.start";
 }
 
 /**
@@ -186,11 +195,33 @@ class EoActions extends ReactNextElement implements ActionsProps {
   accessor checkedKeys: string[] = [];
 
   /**
+   * action中的菜单项是否可拖拽
+   */
+  @property({ type: Boolean })
+  accessor itemDraggable: boolean | undefined;
+
+  /**
    * 点击按钮时触发
    * @detail 该按钮配置
    */
   @event({ type: "action.click" })
   accessor #actionClickEvent!: EventEmitter<SimpleAction>;
+
+  /**
+   * 开始拖拽菜单项时触发
+   *
+   * @detail 该菜单项动作配置
+   */
+  @event({ type: "item.drag.start" })
+  accessor #itemDragStartEvent!: EventEmitter<SimpleAction>;
+
+  /**
+   * 完成拖拽菜单项时触发
+   *
+   * @detail 该菜单项动作配置
+   */
+  @event({ type: "item.drag.end" })
+  accessor #itemDragEndEvent!: EventEmitter<SimpleAction>;
 
   #handleActionClick = (action: SimpleAction): void => {
     this.#actionClickEvent.emit(action);
@@ -199,11 +230,22 @@ class EoActions extends ReactNextElement implements ActionsProps {
     }
   };
 
+  #handleItemDragEnd = (action: SimpleAction): void => {
+    this.#itemDragEndEvent.emit(action);
+  };
+
+  #handleItemDragStart = (action: SimpleAction): void => {
+    this.#itemDragStartEvent.emit(action);
+  };
+
   render() {
     return (
       <EoActionsComponent
         actions={this.actions}
+        itemDraggable={this.itemDraggable}
         onActionClick={this.#handleActionClick}
+        onItemDragStart={this.#handleItemDragStart}
+        onItemDragEnd={this.#handleItemDragEnd}
         checkedKeys={this.checkedKeys}
       />
     );
@@ -211,13 +253,19 @@ class EoActions extends ReactNextElement implements ActionsProps {
 }
 
 export interface ActionsComponentProps extends ActionsProps {
+  itemDraggable?: boolean;
   onActionClick?: (action: SimpleAction) => void;
+  onItemDragEnd?: (action: SimpleAction) => void;
+  onItemDragStart?: (action: SimpleAction) => void;
 }
 
 export function EoActionsComponent({
   actions,
   checkedKeys,
   onActionClick,
+  itemDraggable,
+  onItemDragStart,
+  onItemDragEnd,
 }: ActionsComponentProps) {
   const filteredActions = useMemo(() => {
     return actions?.filter((action) => !action.hidden);
@@ -248,11 +296,26 @@ export function EoActionsComponent({
                   className={classnames({
                     "menu-item-danger": action.danger,
                   })}
+                  draggable={itemDraggable}
                   icon={action.icon}
                   disabled={action.disabled}
                   onClick={(e: React.MouseEvent) => {
                     e.stopPropagation();
                     onActionClick?.(action);
+                  }}
+                  onDragStart={(e: React.DragEvent) => {
+                    if (action.dragConf) {
+                      e.dataTransfer?.setData(
+                        action.dragConf.format,
+                        JSON.stringify(action.dragConf.data)
+                      );
+                      (e.target as HTMLElement).classList.add("dragging");
+                    }
+                    onItemDragStart?.(action);
+                  }}
+                  onDragEnd={(e: React.DragEvent) => {
+                    (e.target as HTMLElement).classList.remove("dragging");
+                    onItemDragEnd?.(action);
                   }}
                 >
                   {action.text}

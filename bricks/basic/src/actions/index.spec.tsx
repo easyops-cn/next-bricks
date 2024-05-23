@@ -124,4 +124,54 @@ describe("eo-actions", () => {
     });
     expect(element.shadowRoot?.childNodes.length).toBe(0);
   });
+
+  test("item draggable", async () => {
+    const onItemDragStart = jest.fn();
+    const onItemDragEnd = jest.fn();
+
+    const element = document.createElement("eo-actions") as EoActions;
+    element.itemDraggable = true;
+    element.actions = [
+      {
+        text: "drag item 1",
+        dragConf: {
+          format: "text/plain",
+          data: {
+            a: 1,
+          },
+        },
+      },
+      {
+        text: "drag item 2",
+        dragConf: {
+          format: "text/plain",
+          data: {
+            a: 2,
+          },
+        },
+      },
+    ];
+    element.addEventListener("item.drag.start", onItemDragStart);
+    element.addEventListener("item.drag.start", onItemDragEnd);
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    act(() => {
+      fireEvent.dragStart(
+        element.shadowRoot?.querySelectorAll("eo-menu-item")[0] as HTMLElement
+      );
+    });
+    expect(onItemDragStart).toBeCalled();
+
+    act(() => {
+      fireEvent.dragEnd(
+        element.shadowRoot?.querySelectorAll("eo-menu-item")[0] as HTMLElement
+      );
+    });
+    expect(onItemDragEnd).toBeCalled();
+  });
 });
