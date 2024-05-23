@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.6.18...@next-bricks/vs@1.7.0) (2024-05-23)
+
+
+### Features
+
+* add export message part for form-item bricks ([e82d7e4](https://github.com/easyops-cn/next-bricks/commit/e82d7e433b56b0646c06875d5523f8affc5740cc))
+
+
+
+
+
 ## [1.6.18](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.6.17...@next-bricks/vs@1.6.18) (2024-05-22)
 
 **Note:** Version bump only for package @next-bricks/vs
