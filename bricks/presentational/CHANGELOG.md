@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.6...@next-bricks/presentational@1.7.7) (2024-05-23)
+
+
+### Bug Fixes
+
+* **card-item:** add title attribute to cardTitle element ([35e6306](https://github.com/easyops-cn/next-bricks/commit/35e63060075fedd220f923fd7618cf7e17f5e19c))
+
+
+
+
+
 ## [1.7.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.5...@next-bricks/presentational@1.7.6) (2024-05-22)
 
 **Note:** Version bump only for package @next-bricks/presentational

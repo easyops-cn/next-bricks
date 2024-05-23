@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.14.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.13.16...@next-bricks/basic@1.14.0) (2024-05-23)
+
+
+### Features
+
+* **tag:** add teal color ([582519c](https://github.com/easyops-cn/next-bricks/commit/582519c418d9f620f0e2ac5db3b3f50e9520b0ac))
+
+
+
+
+
 ## [1.13.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.13.15...@next-bricks/basic@1.13.16) (2024-05-22)
 
 **Note:** Version bump only for package @next-bricks/basic
