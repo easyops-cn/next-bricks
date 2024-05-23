@@ -198,6 +198,17 @@
   color: var(--tag-inverse-text-color);
   background: var(--tag-yellow-inverse-color);
 }
+
+.color-teal {
+  color: var(--tag-teal-color);
+  background-color: var(--tag-teal-background);
+  border-color: var(--tag-teal-border-color);
+}
+
+.color-teal-inverse {
+  color: var(--tag-inverse-text-color);
+  background: var(--tag-teal-inverse-color);
+}
 /* Color */
 
 .tag-icon {
