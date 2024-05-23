@@ -42,6 +42,8 @@ export enum TagColor {
   "red-inverse" = "red-inverse",
   yellow = "yellow",
   "yellow-inverse" = "yellow-inverse",
+  teal = "teal",
+  "teal-inverse" = "teal-inverse",
 }
 
 export interface TagProps {
