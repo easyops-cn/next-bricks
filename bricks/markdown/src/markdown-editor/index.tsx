@@ -416,7 +416,7 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
   ];
 
   return (
-    <WrappedFormItem {...props}>
+    <WrappedFormItem exportparts="message" {...props}>
       <div
         className={classNames("markdown-container", {
           readonly,

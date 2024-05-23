@@ -162,7 +162,7 @@ export function EoTimePickerComponent(props: EoTimePickerProps) {
     }
   }, [props.value, format]);
 
-  const handleChange = (time: Dayjs | null, timeString: string): void => {
+  const handleChange = (_time: Dayjs | null, timeString: string): void => {
     onChange?.(timeString);
   };
 
@@ -177,7 +177,10 @@ export function EoTimePickerComponent(props: EoTimePickerProps) {
   }, []);
 
   return (
-    <WrappedFormItem {...(omit(props, ["shadowRoot"]) as any)}>
+    <WrappedFormItem
+      exportparts="message"
+      {...(omit(props, ["shadowRoot"]) as any)}
+    >
       <ConfigProvider
         locale={locale as any}
         theme={{

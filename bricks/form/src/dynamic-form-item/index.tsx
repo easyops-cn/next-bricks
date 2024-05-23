@@ -368,7 +368,11 @@ export function DynamicFormItemComponent(props: DynamicFormItemProps) {
   );
 
   return (
-    <WrappedFormItem {...(props as FormItemProps)} validator={validate}>
+    <WrappedFormItem
+      exportparts="message"
+      {...(props as FormItemProps)}
+      validator={validate}
+    >
       <div className="dynamic-form-wrapper" ref={formWrapperRef}>
         {values.map((value, index) => {
           const hideRemoveBtn = getRealValue(hideRemoveButton, [value, index]);

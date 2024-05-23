@@ -146,7 +146,7 @@ export function GeneralSwitchComponent(props: SwitchProps) {
     setChecked(!checked);
   };
   return (
-    <WrappedFormItem {...props}>
+    <WrappedFormItem exportparts="message" {...props}>
       <button
         disabled={disabled}
         className={classNames(size, {

@@ -305,10 +305,10 @@ export function EoUploadFileComponent(props: UploadFileComponentProps) {
 
   const itemRender = (
     fileData: FileData,
-    fileDataList: FileData[],
+    _fileDataList: FileData[],
     actions: ItemActions
   ) => {
-    const { uid, file, name, userData, status = "done", errors } = fileData;
+    const { uid, name, status = "done", errors } = fileData;
 
     return (
       <WrappedTooltip content={errors?.map((item) => item.message).join(", ")}>
@@ -351,7 +351,11 @@ export function EoUploadFileComponent(props: UploadFileComponentProps) {
   };
 
   return (
-    <WrappedFormItem {...(props as FormItemProps)} validator={validator}>
+    <WrappedFormItem
+      exportparts="message"
+      {...(props as FormItemProps)}
+      validator={validator}
+    >
       <Upload
         itemRender={itemRender}
         fileList={value}
@@ -384,7 +388,7 @@ export function EoUploadFileComponent(props: UploadFileComponentProps) {
               onDragOver={(e) => {
                 e.preventDefault();
               }}
-              onDragLeave={(e) => {
+              onDragLeave={() => {
                 setIsDragOver(false);
               }}
               onDrop={(e) => {

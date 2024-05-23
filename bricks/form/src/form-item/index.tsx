@@ -351,6 +351,7 @@ export function FormItemComponent(props: FormItemProps) {
             className={classNames("message", {
               error: validateState.type === "error",
             })}
+            part="message"
           >
             {validateState?.type !== "normal" && validateState.message}
           </div>

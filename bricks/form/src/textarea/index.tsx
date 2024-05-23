@@ -228,7 +228,7 @@ export function TextareaComponent(props: TextareaProps) {
   }, [maxRows, minRows, setAutoSize]);
 
   return (
-    <WrappedFormItem {...props}>
+    <WrappedFormItem exportparts="message" {...props}>
       <textarea
         ref={textareaRef}
         className={classNames({

@@ -266,6 +266,7 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
   render() {
     return (
       <WrappedFormItem
+        exportparts="message"
         curElement={this}
         formElement={this.getFormElement()}
         name={this.name}

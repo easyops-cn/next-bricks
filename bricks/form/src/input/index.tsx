@@ -354,7 +354,7 @@ export const RCInput = forwardRef<RCInputRef, RCInputProps>((props, ref) => {
       Promise.resolve().then(() => {
         try {
           element.focus();
-        } catch (e) {
+        } catch {
           // Do nothing.
         }
       });
@@ -420,7 +420,7 @@ export const RCInput = forwardRef<RCInputRef, RCInputProps>((props, ref) => {
   };
 
   return (
-    <WrappedFormItem {...props}>
+    <WrappedFormItem exportparts="message" {...props}>
       <div
         part="addon-wrapper"
         className={classNames(

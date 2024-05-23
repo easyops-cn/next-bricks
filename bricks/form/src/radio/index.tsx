@@ -250,7 +250,7 @@ export function RadioComponent(props: RadioComponentProps) {
   };
 
   return (
-    <WrappedFormItem {...props}>
+    <WrappedFormItem exportparts="message" {...props}>
       <div
         className={classNames("radio-group", {
           dashboard: props.ui === "dashboard",

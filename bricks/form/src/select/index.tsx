@@ -849,7 +849,7 @@ export function SelectComponent(props: SelectProps) {
   ]);
 
   return (
-    <WrappedFormItem {...(props as FormItemProps)}>
+    <WrappedFormItem exportparts="message" {...(props as FormItemProps)}>
       <div
         className={classNames("select", {
           "select-disabled": disabled,
