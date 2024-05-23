@@ -455,7 +455,10 @@ export function EoTimeRangePickerComponent(props: EoTimeRangePickerProps) {
   }, []);
 
   return (
-    <WrappedFormItem {...(omit(props, ["shadowRoot"]) as any)}>
+    <WrappedFormItem
+      exportparts="message"
+      {...(omit(props, ["shadowRoot"]) as any)}
+    >
       <ConfigProvider
         locale={locale as any}
         theme={{

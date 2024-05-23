@@ -156,6 +156,13 @@ type RecursivePartial<T> = {
 
 declare namespace React {
   interface HTMLAttributes {
+    /**
+     * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/part
+     */
     part?: string;
+    /**
+     * https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/exportparts
+     */
+    exportparts?: string;
   }
 }

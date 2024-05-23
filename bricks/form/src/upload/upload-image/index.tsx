@@ -195,7 +195,7 @@ export function UploadImageComponent(props: UploadImageComponentProps) {
 
   const itemRender = (
     fileData: ImageData,
-    fileDataList: ImageData[],
+    _fileDataList: ImageData[],
     actions: ItemActions,
     index: number
   ) => {
@@ -259,7 +259,11 @@ export function UploadImageComponent(props: UploadImageComponentProps) {
   };
 
   return (
-    <WrappedFormItem {...(props as FormItemProps)} validator={validator}>
+    <WrappedFormItem
+      exportparts="message"
+      {...(props as FormItemProps)}
+      validator={validator}
+    >
       <Upload
         itemRender={itemRender}
         fileList={value}

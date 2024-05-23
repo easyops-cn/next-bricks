@@ -76,6 +76,7 @@ class EoContractSelect extends FormItemElementBase {
   render() {
     return (
       <WrappedFormItem
+        exportparts="message"
         curElement={this}
         formElement={this.getFormElement()}
         name={this.name}

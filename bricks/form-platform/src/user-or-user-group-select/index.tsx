@@ -736,7 +736,7 @@ export function EoUserOrUserGroupSelectComponent(
   };
 
   return (
-    <WrappedFormItem {...(props as FormItemProps)}>
+    <WrappedFormItem exportparts="message" {...(props as FormItemProps)}>
       <div className="select-wrapper">
         <WrappedSelect
           clearable={true}

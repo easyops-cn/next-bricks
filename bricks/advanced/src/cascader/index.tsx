@@ -159,6 +159,7 @@ class CascaderBrick extends FormItemElementBase implements CascaderProps {
   render() {
     return (
       <WrappedFormItem
+        exportparts="message"
         curElement={this as HTMLElement}
         formElement={this.getFormElement()}
         name={this.name}

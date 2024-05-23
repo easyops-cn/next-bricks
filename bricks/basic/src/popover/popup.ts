@@ -59,7 +59,6 @@ export interface SlPopupProps {
   sync?: Sync;
   autoSizeBoundary?: Element | Element[];
   autoSizePadding?: number;
-  exportparts?: string;
 }
 
 export interface SlPopupEvents {
@@ -74,7 +73,6 @@ export interface SlPopupElement extends HTMLElement {
   reposition(): void;
   popup?: HTMLElement;
   active?: boolean;
-  exportparts?: string;
 }
 
 export const WrappedSlPopup = wrapBrick<

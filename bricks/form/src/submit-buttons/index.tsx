@@ -113,7 +113,7 @@ class SubmitButtons extends FormItemElementBase {
 
 export function ButtonsComponent(props: SubmitButtonsProps) {
   return (
-    <WrappedFormItem {...props}>
+    <WrappedFormItem exportparts="message" {...props}>
       {props.submitText && (
         <WrappedButton
           className={"submitBtn"}

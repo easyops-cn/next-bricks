@@ -107,6 +107,7 @@ class EoColorPicker extends FormItemElementBase implements EoColorPickerProps {
   render() {
     return (
       <WrappedFormItem
+        exportparts="message"
         curElement={this as HTMLElement}
         formElement={this.getFormElement()}
         label={this.label}

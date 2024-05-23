@@ -497,7 +497,7 @@ function CheckboxComponent(props: CheckboxProps) {
     );
   };
   return (
-    <WrappedFormItem {...(props as FormItemProps)}>
+    <WrappedFormItem exportparts="message" {...(props as FormItemProps)}>
       {props.type == "icon" ? (
         <IconCheckbox {...props}></IconCheckbox>
       ) : isGroup && props.optionGroups ? (

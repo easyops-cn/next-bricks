@@ -277,7 +277,7 @@ export function EoAutoCompleteComponent(props: AutoCompleteProps) {
   };
 
   return (
-    <WrappedFormItem {...props}>
+    <WrappedFormItem exportparts="message" {...props}>
       <div className="complete-container" ref={containerRef}>
         <WrappedInput
           ref={inputRef}

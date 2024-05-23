@@ -638,7 +638,7 @@ export function EoDatePickerComponent(
   const isDatePicker = picker === "date";
   const format = props.format || PickerFormatMap[picker];
 
-  const handleChange = (date: Dayjs | null, dateString: string): void => {
+  const handleChange = (_date: Dayjs | null, dateString: string): void => {
     props.onChange?.(dateString);
   };
 
@@ -662,7 +662,10 @@ export function EoDatePickerComponent(
   }, [props.value, format]);
 
   return (
-    <WrappedFormItem {...(omit(props, ["shadowRoot"]) as any)}>
+    <WrappedFormItem
+      exportparts="message"
+      {...(omit(props, ["shadowRoot"]) as any)}
+    >
       <ConfigProvider
         locale={locale as any}
         theme={{

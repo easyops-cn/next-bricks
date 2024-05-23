@@ -254,7 +254,7 @@ export function IconSelectComponent(props: IconSelectComponentProps) {
   };
 
   return (
-    <WrappedFormItem {...(props as FormItemProps)}>
+    <WrappedFormItem exportparts="message" {...(props as FormItemProps)}>
       <span
         onClick={() => !disabled && modalRef.current?.open()}
         className={classNames("show-icon", {
