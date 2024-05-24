@@ -7,6 +7,7 @@ import classNames from "classnames";
 import { __secret_internals, getBasePath } from "@next-core/runtime";
 import type { PreviewWindow } from "@next-core/preview/types";
 import { JSON_SCHEMA, safeDump } from "js-yaml";
+import { isObject } from "@next-core/utils/general";
 import styleText from "./styles.shadow.css";
 import previewStyleText from "./preview.shadow.css";
 
@@ -233,7 +234,9 @@ export function PreGeneratedPreviewComponent({
             brick: "div",
             properties: {
               textContent: propertyName,
-              className: isLastProperty ? "last-row-cell" : undefined,
+              className: classNames("body-cell", {
+                "last-row-cell": isLastProperty,
+              }),
               style: {
                 gridRow: `span ${candidatesByReadWriteType.size}`,
               },
@@ -249,12 +252,13 @@ export function PreGeneratedPreviewComponent({
           brick: "div",
           properties: {
             textContent: rwType,
-            className: isLastRow ? "last-row-cell" : undefined,
+            className: classNames("body-cell", { "last-row-cell": isLastRow }),
           },
         });
 
         for (let i = -2; i < 3; i++) {
           const candidate = candidates.get(i);
+          const candidateCategory = candidate?.category ?? category;
 
           let dataSource: unknown;
           if (candidate?.mockData?.length) {
@@ -262,8 +266,10 @@ export function PreGeneratedPreviewComponent({
               candidate.mockData[
                 Math.floor(Math.random() * candidate.mockData.length)
               ];
-            switch (candidate.category ?? category) {
+            switch (candidateCategory) {
               case "detail-item":
+              case "form-item":
+              case "card-item":
                 dataSource = {
                   [propertyId]: mockValue,
                 };
@@ -275,31 +281,66 @@ export function PreGeneratedPreviewComponent({
             }
           }
 
-          const classNames: string[] = [];
+          const candidateChildren = []
+            .concat(candidate?.storyboard ?? [])
+            .filter((brick) => {
+              if (!isObject(brick)) {
+                // eslint-disable-next-line no-console
+                console.error("Unexpected type of storyboard:", typeof brick);
+                return false;
+              }
+              return true;
+            });
+          candidateChildren.forEach(fixBrickConf);
 
-          if (i === 2) {
-            classNames.push("last-col-cell");
-          }
-          if (isLastRow) {
-            classNames.push("last-row-cell");
+          let container: BrickConf;
+          switch (candidateCategory) {
+            case "form-item":
+              container = {
+                brick: "eo-form",
+                properties: {
+                  layout: "inline",
+                  values: dataSource,
+                  className: "form-container",
+                },
+                children: candidateChildren.map((child) => ({
+                  ...child,
+                  errorBoundary: true,
+                })),
+              };
+              break;
+            case "card-item":
+              container = {
+                brick: ":forEach",
+                dataSource: [dataSource],
+                children: candidateChildren.map((child) => ({
+                  ...child,
+                  errorBoundary: true,
+                })),
+              };
+              break;
+            default:
+              container = {
+                brick: "visual-builder.pre-generated-container",
+                properties: {
+                  useBrick: candidateChildren,
+                  dataSource,
+                },
+                errorBoundary: true,
+              };
           }
 
           tableChildren.push({
             brick: "div",
-            ...(classNames
-              ? {
-                  properties: {
-                    className: classNames.join(" "),
-                  },
-                }
-              : null),
+            properties: {
+              className: classNames("body-cell", {
+                "last-col-cell": i === 2,
+                "last-row-cell": isLastRow,
+              }),
+            },
             children: [
               {
-                brick: "visual-builder.pre-generated-container",
-                properties: {
-                  useBrick: candidate?.storyboard ?? [],
-                  dataSource,
-                },
+                ...container,
                 errorBoundary: true,
               },
             ],
@@ -542,4 +583,12 @@ export function PreGeneratedPreviewComponent({
       />
     </div>
   );
+}
+
+function fixBrickConf(brick: BrickConf) {
+  if (brick.properties?.prefix) {
+    // eslint-disable-next-line no-console
+    console.error("Unexpected readonly property of 'prefix' in:", brick);
+    delete brick.properties.prefix;
+  }
 }
