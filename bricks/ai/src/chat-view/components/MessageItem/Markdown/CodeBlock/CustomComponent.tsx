@@ -86,16 +86,16 @@ export default function CustomComponent({
       {commandBrickConf?.showOriginData ? (
         <>
           <div className="params">
-            <div className="params-tip">【查询语句】: </div>
+            <div className="params-tip">【原始命令】: </div>
             <pre>
               <code>{text}</code>
             </pre>
           </div>
           {isError ? (
-            <div className="error-tip">【查询失败】</div>
+            <div className="error-tip">【执行失败】</div>
           ) : (
             <>
-              <div className="result-tip">【查询结果】:</div>
+              <div className="result-tip">【执行结果】:</div>
               <div className="custom-component">
                 {commandBrickConf.component}
               </div>
