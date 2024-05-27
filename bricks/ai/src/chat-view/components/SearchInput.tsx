@@ -21,6 +21,7 @@ import { AgentDetailItem } from "./QuickAnswerList/index";
 
 export interface SearchInputRef {
   handleInsertQuestion: (value: string) => void;
+  sendMsg: (msg: string) => void;
 }
 
 const WrappedToolTip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");
@@ -383,6 +384,9 @@ export function LegacySearchInput(
   useImperativeHandle(ref, () => ({
     handleInsertQuestion: (value: string) => {
       handleDispatchQuestion(value);
+    },
+    sendMsg: (msg: string) => {
+      handleChat(msg);
     },
   }));
 

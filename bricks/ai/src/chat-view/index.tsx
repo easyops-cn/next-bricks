@@ -120,6 +120,8 @@ export const ChatViewComponent = forwardRef(LegacyChatViewComponent);
  */
 export
 @defineElement("ai.chat-view", {
+  // shadow 模式下，会导致 useBrick 样式丢失
+  // 如：commandBricks 配置 cmdb-instances.instance-list
   shadowOptions: false,
 })
 class ChatView extends ReactNextElement {
@@ -206,7 +208,7 @@ class ChatView extends ReactNextElement {
   })
   accessor commandBricks: commandBrickConf | undefined;
 
-  ref = React.createRef<SearchInputRef>();
+  #ref = React.createRef<SearchInputRef>();
 
   /**
    *
@@ -216,7 +218,15 @@ class ChatView extends ReactNextElement {
   insertQuestion(args: { value: string }): void {
     const { value } = args;
     if (!value) return;
-    this.ref.current?.handleInsertQuestion(value);
+    this.#ref.current?.handleInsertQuestion(value);
+  }
+
+  /**
+   * @description 外部提问
+   */
+  @method()
+  sendMsg(msg: string): void {
+    this.#ref.current?.sendMsg(msg);
   }
 
   render() {
@@ -233,7 +243,7 @@ class ChatView extends ReactNextElement {
         enterInterval={this.enterInterval}
         commandBricks={this.commandBricks}
         answerLanguage={this.answerLanguage}
-        ref={this.ref}
+        ref={this.#ref}
       />
     );
   }
