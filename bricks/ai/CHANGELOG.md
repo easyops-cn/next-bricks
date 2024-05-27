@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.21.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.21.0...@next-bricks/ai@1.21.1) (2024-05-27)
+
+
+### Bug Fixes
+
+* **chat-view:** support ChatBody args ([3ae3b66](https://github.com/easyops-cn/next-bricks/commit/3ae3b66b22cbbadf22160d1adc33bcf39d33317e))
+
+
+
+
+
 # [1.21.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.20.2...@next-bricks/ai@1.21.0) (2024-05-27)
 
 
