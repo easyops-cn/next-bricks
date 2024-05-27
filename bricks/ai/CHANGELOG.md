@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.21.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.20.2...@next-bricks/ai@1.21.0) (2024-05-27)
+
+
+### Features
+
+* **chat-view:**  support sendMsg ([75adc10](https://github.com/easyops-cn/next-bricks/commit/75adc10a73b3b58a8b7aff5d51257e4135e56f4f))
+
+
+
+
+
 ## [1.20.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.20.1...@next-bricks/ai@1.20.2) (2024-05-22)
 
 **Note:** Version bump only for package @next-bricks/ai
