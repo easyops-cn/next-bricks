@@ -10,6 +10,7 @@ import "@next-core/theme";
 import "./host-context.css";
 import "./index.css";
 import { commandBrickConf } from "./ChatViewContext";
+import { ChatBody } from "./ChatService.js";
 
 const { defineElement, property, method } = createDecorators();
 
@@ -225,7 +226,7 @@ class ChatView extends ReactNextElement {
    * @description 外部提问
    */
   @method()
-  sendMsg(msg: string): void {
+  sendMsg(msg: string | ChatBody): void {
     this.#ref.current?.sendMsg(msg);
   }
 

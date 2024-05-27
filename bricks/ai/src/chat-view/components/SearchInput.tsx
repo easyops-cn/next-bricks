@@ -18,10 +18,11 @@ import calculateAutoSizeStyle from "./utils/calculateAutoSizeStyle.js";
 import classNames from "classnames";
 import { useChatViewContext } from "../ChatViewContext.js";
 import { AgentDetailItem } from "./QuickAnswerList/index";
+import { ChatBody } from "../ChatService.js";
 
 export interface SearchInputRef {
   handleInsertQuestion: (value: string) => void;
-  sendMsg: (msg: string) => void;
+  sendMsg: (msg: string | ChatBody) => void;
 }
 
 const WrappedToolTip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");
@@ -385,7 +386,7 @@ export function LegacySearchInput(
     handleInsertQuestion: (value: string) => {
       handleDispatchQuestion(value);
     },
-    sendMsg: (msg: string) => {
+    sendMsg: (msg: string | ChatBody) => {
       handleChat(msg);
     },
   }));

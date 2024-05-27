@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MessageItem } from "../ChatViewContext.js";
 import moment from "moment";
 import {
+  ChatBody,
   ChatItem,
   ChatService,
   SessionItem,
@@ -204,25 +205,27 @@ export function useChatViewInfo({
   );
 
   const handleChat = useCallback(
-    async (str: string) => {
+    async (msg: string | ChatBody) => {
+      const inputMsg = typeof msg === "string" ? msg : msg.input;
       if (activeSessionId === NEW_SESSION_ID) {
         // 如果当前会话属于新建会话，更新会话历史数据
         setSessionList((list) => {
           return list.map((item) => ({
             ...item,
-            title: item.conversationId === NEW_SESSION_ID ? str : item.title,
+            title:
+              item.conversationId === NEW_SESSION_ID ? inputMsg : item.title,
           }));
         });
       }
       setChatting(true);
-      chatService.chat(str);
+      chatService.chat(msg);
       setMsgList((list) => {
         return list.concat([
           {
             role: "user",
             content: {
               type: "markdown",
-              text: str,
+              text: inputMsg,
             },
             created: moment().format("YYYY-MM-DD HH:mm:ss"),
           },
