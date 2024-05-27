@@ -98,6 +98,19 @@ export function updateCells({
     const parentNode = nodesMap.get(parent);
     if (parentNode?.view.x !== undefined && parentNode.view.y !== undefined) {
       handled = true;
+      /**
+       * 临时解决一次性添加多层的节点手工布局报错
+       */
+      if (isManualLayout) {
+        for (const cell of newCells) {
+          if (
+            (isNodeCell(cell) && cell.view.x === undefined) ||
+            (isNodeCell(cell) && cell.view.y === undefined)
+          ) {
+            downstreamNodeIds.add(cell.id);
+          }
+        }
+      }
       const downstreamNodes = [...downstreamNodeIds]
         .map((id) => nodesMap.get(id))
         .filter(Boolean) as NodeCell[];
