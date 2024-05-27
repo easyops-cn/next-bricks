@@ -43,6 +43,15 @@ export interface ChatItem {
   };
 }
 
+export interface ChatBody {
+  agentId?: string;
+  conversationId?: string;
+  input: string;
+  stream?: boolean;
+  config?: Record<string, any>;
+  [k: string]: any;
+}
+
 export class ChatService {
   #debug: boolean;
   #ctrl?: AbortController;
@@ -303,7 +312,7 @@ export class ChatService {
     return list;
   }
 
-  async chat(str: string): Promise<void> {
+  async chat(msg: string | ChatBody): Promise<void> {
     this.#ctrl = new AbortController();
     let hadMatchMessage = false;
     this.#charting = true;
@@ -315,12 +324,16 @@ export class ChatService {
         body: JSON.stringify({
           agentId: this.#agentId,
           conversationId: this.#conversationId,
-          input: str,
           stream: true,
           config: {
             debug: this.#debug,
             ...(this.#answerLanguage ? { lang: this.#answerLanguage } : {}),
           },
+          ...(typeof msg === "string"
+            ? {
+                input: msg,
+              }
+            : msg),
         }),
         headers: {
           "giraffe-contract-name": "easyops.api.aiops_chat.manage.LLMChatProxy",

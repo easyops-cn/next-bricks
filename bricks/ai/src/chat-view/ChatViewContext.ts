@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 import { AgentDetailItem } from "./components/QuickAnswerList/index.js";
-import { SessionItem } from "./ChatService.js";
+import { ChatBody, SessionItem } from "./ChatService.js";
 import { UseBrickConf } from "@next-core/types";
 
 export type Role = "guide" | "user" | "assistant";
@@ -51,7 +51,7 @@ interface ChatViewContextProps {
   commandBricks?: commandBrickConf;
   setAgent: (id: string) => void;
   handleIsLike: (id: string, isLike: boolean) => Promise<boolean>;
-  handleChat: (str: string) => void;
+  handleChat: (str: string | ChatBody) => void;
   stopChat: () => void;
   checkSession: (id?: string, isInit?: boolean) => void;
   createSession: () => void;
