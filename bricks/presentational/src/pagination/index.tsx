@@ -7,9 +7,12 @@ import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
-import type { Popover, PopoverProps } from "@next-bricks/basic/popover";
-import type { Menu } from "@next-bricks/basic/menu";
-import type { MenuItem } from "@next-bricks/basic/menu-item";
+import {
+  DropdownActionsEvents,
+  DropdownActionsEventsMapping,
+  DropdownActionsProps,
+  EoDropdownActions,
+} from "@next-bricks/basic/dropdown-actions";
 import { Trans } from "react-i18next";
 import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
 import { K, NS, locales } from "./i18n.js";
@@ -22,9 +25,15 @@ initializeReactI18n(NS, locales);
 const { defineElement, property, event } = createDecorators();
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
-const WrappedPopover = wrapBrick<Popover, PopoverProps>("eo-popover");
-const WrappedMenu = wrapBrick<Menu, any>("eo-menu");
-const WrappedMenuItem = wrapBrick<MenuItem, any>("eo-menu-item");
+const WrappedDropdownActions = wrapBrick<
+  EoDropdownActions,
+  DropdownActionsProps,
+  DropdownActionsEvents,
+  DropdownActionsEventsMapping
+>("eo-dropdown-actions", {
+  onActionClick: "action.click",
+  onVisibleChange: "visible.change",
+});
 
 interface EoPaginationProps {
   total: number;
@@ -149,13 +158,12 @@ export function EoPaginationComponent(props: EoPaginationComponentProps) {
     setPaginationData({ total: _total, page: _page, pageSize: _pageSize });
   }, [props.page, props.pageSize, props.total]);
 
-  const pageSizeOptions = useMemo(() => {
-    const options = [paginationData.pageSize]
-      .concat(props.pageSizeOptions || [])
-      .map((v) => Number(v))
-      .filter((v) => !Number.isNaN(v));
-    return sortBy([...new Set(options)], (value) => value);
-  }, [paginationData.pageSize, props.pageSizeOptions]);
+  const pageSizeActions = useMemo(() => {
+    const options = [
+      ...new Set([paginationData.pageSize].concat(props.pageSizeOptions || [])),
+    ].map((v) => ({ text: t(K.PAGE_SIZE, { count: v }), key: v }));
+    return sortBy(options, (value) => value.key);
+  }, [paginationData.pageSize, props.pageSizeOptions, t]);
 
   const allPages = useMemo(
     () =>
@@ -281,29 +289,18 @@ export function EoPaginationComponent(props: EoPaginationComponentProps) {
       </div>
       {showSizeChanger && (
         <div className="pagination-size-changer">
-          <WrappedPopover placement="bottom" arrow={false} distance={4}>
-            <div className="pagination-size-selection" slot="anchor">
+          <WrappedDropdownActions
+            actions={pageSizeActions}
+            checkedKeys={[paginationData.pageSize]}
+            onActionClick={(event) =>
+              handlePageSizeChange(event.detail.key as number)
+            }
+          >
+            <div className="pagination-size-selection">
               {t(K.PAGE_SIZE, { count: paginationData.pageSize })}
               <WrappedIcon lib="antd" theme="filled" icon="caret-down" />
             </div>
-            <WrappedMenu className="pagination-size-selector-menu">
-              {pageSizeOptions.map((value) => {
-                const active = value === paginationData.pageSize;
-                return (
-                  <WrappedMenuItem
-                    className={classNames(
-                      "pagination-size-selector-item",
-                      active ? "pagination-size-selector-active" : null
-                    )}
-                    key={value}
-                    onClick={() => handlePageSizeChange(value)}
-                  >
-                    {t(K.PAGE_SIZE, { count: value })}
-                  </WrappedMenuItem>
-                );
-              })}
-            </WrappedMenu>
-          </WrappedPopover>
+          </WrappedDropdownActions>
         </div>
       )}
       <div className="pagination-page">
