@@ -52,6 +52,11 @@ eo-link {
 .menu-item-danger:not([disabled])::part(menu-item) {
   color: var(--theme-red-color);
 }
+.menu-item-selected::part(menu-item) {
+  font-weight: 600;
+  background-color: var(--app-bar-dropdown-menu-item-hover-bg);
+  color: var(--theme-blue-color);
+}
 eo-menu-item::part(menu-icon) {
   margin-right: 8px;
 }
@@ -69,12 +74,8 @@ eo-menu-item::part(menu-icon) {
   overflow-x: hidden;
   overflow-y: auto;
 }
-.popover .menu-item-selected::part(menu-item) {
-  background-color: var(--app-bar-dropdown-menu-item-hover-bg);
-  color: var(--theme-blue-color);
-  &::after {
-    content: "✓";
-    display: inline-block;
-    padding: 0 5px;
-  }
+.popover .menu-item-selected::part(menu-item)::after {
+  content: "✓";
+  display: inline-block;
+  padding: 0 5px;
 }

@@ -4,6 +4,7 @@ import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
 import classnames from "classnames";
 import { GeneralIconProps } from "@next-bricks/icons/general-icon";
+import { isNil } from "lodash";
 import type {
   Popover,
   PopoverEvents,
@@ -36,8 +37,8 @@ const WrappedPopover = wrapBrick<
 
 interface SubMenuItemComProps {
   index: number;
-  action: SubeMenuAction;
-  checkedKeys: string[] | undefined;
+  action: SubMenuAction;
+  checkedKeys: (string | number)[] | undefined;
   onSubMenuClick: (action: SimpleAction) => void;
 }
 
@@ -69,56 +70,57 @@ function SubMenuItemCom({
         {action.text}
       </WrappedMenuItem>
       <div className="sub-menu-wrapper">
-        {action?.items.map(
-          (innerItem: SubeMenuItemAction, innerIndex: number) => {
-            const menuItem = (
-              <React.Fragment>
-                <WrappedMenuItem
-                  className={classnames({
-                    "menu-item-danger": innerItem.danger,
-                    "menu-item-selected": checkedKeys?.includes(innerItem?.key),
-                  })}
-                  icon={innerItem.icon}
-                  disabled={innerItem.disabled}
-                  onClick={(e: React.MouseEvent) => {
-                    e.stopPropagation();
-                    onSubMenuClick?.(innerItem);
-                  }}
-                >
-                  {innerItem.text}
-                </WrappedMenuItem>
-              </React.Fragment>
-            );
-            return (
-              <WrappedTooltip
-                key={innerIndex}
-                content={innerItem.tooltip}
-                hoist
-                placement="left"
+        {action?.items.map((innerItem: SimpleAction, innerIndex: number) => {
+          const menuItem = (
+            <React.Fragment>
+              <WrappedMenuItem
+                className={classnames({
+                  "menu-item-danger": innerItem.danger,
+                  "menu-item-selected":
+                    !isNil(innerItem.key) &&
+                    checkedKeys?.includes(innerItem.key),
+                })}
+                icon={innerItem.icon}
+                disabled={innerItem.disabled}
+                onClick={(e: React.MouseEvent) => {
+                  e.stopPropagation();
+                  onSubMenuClick?.(innerItem);
+                }}
               >
-                {innerItem.url || innerItem.href ? (
-                  <WrappedLink
-                    type="plain"
-                    href={innerItem.href}
-                    target={innerItem.target}
-                    url={innerItem.url}
-                    disabled={innerItem.disabled}
-                  >
-                    {menuItem}
-                  </WrappedLink>
-                ) : (
-                  menuItem
-                )}
-              </WrappedTooltip>
-            );
-          }
-        )}
+                {innerItem.text}
+              </WrappedMenuItem>
+            </React.Fragment>
+          );
+          return (
+            <WrappedTooltip
+              key={innerIndex}
+              content={innerItem.tooltip}
+              hoist
+              placement="left"
+            >
+              {innerItem.url || innerItem.href ? (
+                <WrappedLink
+                  type="plain"
+                  href={innerItem.href}
+                  target={innerItem.target}
+                  url={innerItem.url}
+                  disabled={innerItem.disabled}
+                >
+                  {menuItem}
+                </WrappedLink>
+              ) : (
+                menuItem
+              )}
+            </WrappedTooltip>
+          );
+        })}
       </div>
     </WrappedPopover>
   );
 }
 
 export interface SimpleAction {
+  key?: string | number;
   text: string;
   event?: string;
   icon?: GeneralIconProps;
@@ -135,12 +137,8 @@ export interface SimpleAction {
   };
 }
 
-export interface SubeMenuItemAction extends SimpleAction {
-  key: string;
-}
-
-export interface SubeMenuAction extends SimpleAction {
-  items: SubeMenuItemAction[];
+export interface SubMenuAction extends SimpleAction {
+  items: SimpleAction[];
   placement?: Placement;
 }
 
@@ -148,12 +146,12 @@ export interface Divider {
   type: "divider";
   hidden?: boolean;
 }
-export type Action = SimpleAction | Divider | SubeMenuAction;
+export type Action = SimpleAction | Divider | SubMenuAction;
 
 export interface ActionsProps {
   actions?: Action[];
   itemDraggable?: boolean;
-  checkedKeys?: string[];
+  checkedKeys?: (string | number)[];
 }
 
 export interface ActionsEvents {
@@ -192,7 +190,7 @@ class EoActions extends ReactNextElement implements ActionsProps {
   @property({
     attribute: false,
   })
-  accessor checkedKeys: string[] = [];
+  accessor checkedKeys: (string | number)[] = [];
 
   /**
    * action中的菜单项是否可拖拽
@@ -282,10 +280,10 @@ export function EoActionsComponent({
               }
               return <div key={index} className="menu-item-divider" />;
             } else {
-              const menuItem = (action as SubeMenuAction)?.items?.length ? (
+              const menuItem = (action as SubMenuAction)?.items?.length ? (
                 <SubMenuItemCom
                   index={index}
-                  action={action as SubeMenuAction}
+                  action={action as SubMenuAction}
                   checkedKeys={checkedKeys}
                   onSubMenuClick={(action: SimpleAction) => {
                     onActionClick?.(action);
@@ -295,6 +293,8 @@ export function EoActionsComponent({
                 <WrappedMenuItem
                   className={classnames({
                     "menu-item-danger": action.danger,
+                    "menu-item-selected":
+                      !isNil(action.key) && checkedKeys?.includes(action.key),
                   })}
                   draggable={itemDraggable}
                   icon={action.icon}

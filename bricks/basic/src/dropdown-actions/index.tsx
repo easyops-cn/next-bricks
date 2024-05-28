@@ -41,8 +41,8 @@ const WrappedActions = wrapBrick<
   onItemDragStart: "item.drag.start",
 });
 
-export interface DropdownActionsProps {
-  actions?: Action[];
+export interface DropdownActionsProps
+  extends Pick<ActionsProps, "actions" | "checkedKeys"> {
   disabled?: boolean;
 }
 
@@ -83,7 +83,7 @@ class EoDropdownActions
   @property({
     attribute: false,
   })
-  accessor checkedKeys: string[] = [];
+  accessor checkedKeys: (string | number)[] = [];
 
   /**
    * 是否禁用
@@ -134,7 +134,6 @@ class EoDropdownActions
 interface DropdownActionsComponentProps extends DropdownActionsProps {
   handleActionClick?: (action: SimpleAction) => void;
   onVisibleChange?: (event: boolean) => void;
-  checkedKeys?: string[];
 }
 
 export function EoDropdownActionsComponent({
