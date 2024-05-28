@@ -173,6 +173,8 @@ export function EoContextMenuComponent({
 }: EoContextMenuComponentProps) {
   const active = _active ?? false;
 
+  const [dragging, setDragging] = useState(false);
+
   useEffect(() => {
     lockBodyScroll(element!, active);
   }, [active, element]);
@@ -192,8 +194,17 @@ export function EoContextMenuComponent({
     [element, onActionClick]
   );
 
+  const handleItemStart = useCallback(
+    (e: CustomEvent<SimpleAction>) => {
+      setDragging(true);
+      onItemDragStart?.(e.detail);
+    },
+    [onItemDragStart]
+  );
+
   const handleItemDragEnd = useCallback(
     (e: CustomEvent<SimpleAction>) => {
+      setDragging(false);
       element?.close();
       onItemDragEnd?.(e.detail);
     },
@@ -225,19 +236,19 @@ export function EoContextMenuComponent({
 
   return (
     <>
-      <div
-        className="mask"
-        onClick={handleMaskClick}
-        onContextMenu={handleMaskClick}
-      />
+      {!dragging && (
+        <div
+          className="mask"
+          onClick={handleMaskClick}
+          onContextMenu={handleMaskClick}
+        />
+      )}
       <WrappedActions
         ref={actionsRef}
         actions={actions}
         itemDraggable={itemDraggable}
         onActionClick={handleActionClick}
-        onItemDragStart={(e: CustomEvent<SimpleAction>) =>
-          onItemDragStart?.(e.detail)
-        }
+        onItemDragStart={handleItemStart}
         onItemDragEnd={handleItemDragEnd}
         style={{
           left: (fixedPosition ?? position)?.[0],
