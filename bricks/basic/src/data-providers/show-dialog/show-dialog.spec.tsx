@@ -67,34 +67,34 @@ describe("DialogComponent", () => {
       <DialogComponent type="success" content="Done!" />
     );
     expect(asFragment()).toMatchInlineSnapshot(`
-      <DocumentFragment>
-        <sl-dialog
-          class="dialog"
-        >
-          <div
-            class="body"
-          >
-            <div
-              class="icon success"
-            >
-              <eo-antd-icon />
-            </div>
-            <div
-              style="flex: 1;"
-            >
-              <div>
-                Done!
-              </div>
-            </div>
-          </div>
-          <eo-button
-            slot="footer"
-          >
-            Ok
-          </eo-button>
-        </sl-dialog>
-      </DocumentFragment>
-    `);
+<DocumentFragment>
+  <sl-dialog
+    class="dialog"
+  >
+    <div
+      class="body"
+    >
+      <div
+        class="icon success"
+      >
+        <eo-antd-icon />
+      </div>
+      <div
+        class="content"
+      >
+        <div>
+          Done!
+        </div>
+      </div>
+    </div>
+    <eo-button
+      slot="footer"
+    >
+      Ok
+    </eo-button>
+  </sl-dialog>
+</DocumentFragment>
+`);
     expect(container.querySelector("sl-dialog")).toHaveProperty(
       "label",
       "Dialog"
@@ -120,39 +120,39 @@ describe("DialogComponent", () => {
       />
     );
     expect(asFragment()).toMatchInlineSnapshot(`
-      <DocumentFragment>
-        <sl-dialog
-          class="dialog"
-        >
-          <div
-            class="body"
-          >
-            <div
-              class="icon warning"
-            >
-              <eo-antd-icon />
-            </div>
-            <div
-              style="flex: 1;"
-            >
-              <div>
-                Are you sure?
-              </div>
-            </div>
-          </div>
-          <eo-button
-            slot="footer"
-          >
-            Cancel
-          </eo-button>
-          <eo-button
-            slot="footer"
-          >
-            Ok
-          </eo-button>
-        </sl-dialog>
-      </DocumentFragment>
-    `);
+<DocumentFragment>
+  <sl-dialog
+    class="dialog"
+  >
+    <div
+      class="body"
+    >
+      <div
+        class="icon warning"
+      >
+        <eo-antd-icon />
+      </div>
+      <div
+        class="content"
+      >
+        <div>
+          Are you sure?
+        </div>
+      </div>
+    </div>
+    <eo-button
+      slot="footer"
+    >
+      Cancel
+    </eo-button>
+    <eo-button
+      slot="footer"
+    >
+      Ok
+    </eo-button>
+  </sl-dialog>
+</DocumentFragment>
+`);
     expect(container.querySelector("eo-antd-icon")).toHaveProperty(
       "icon",
       "exclamation-circle"
@@ -188,7 +188,7 @@ describe("DialogComponent", () => {
         <eo-antd-icon />
       </div>
       <div
-        style="flex: 1;"
+        class="content"
       >
         <div>
           Are you sure?
@@ -243,39 +243,39 @@ describe("DialogComponent", () => {
       <DialogComponent type="error" title="Error" content="Oops!" />
     );
     expect(asFragment()).toMatchInlineSnapshot(`
-      <DocumentFragment>
-        <sl-dialog
-          class="dialog"
+<DocumentFragment>
+  <sl-dialog
+    class="dialog"
+  >
+    <div
+      class="body"
+    >
+      <div
+        class="icon danger"
+      >
+        <eo-antd-icon />
+      </div>
+      <div
+        class="content"
+      >
+        <div
+          class="contentTitle"
         >
-          <div
-            class="body"
-          >
-            <div
-              class="icon danger"
-            >
-              <eo-antd-icon />
-            </div>
-            <div
-              style="flex: 1;"
-            >
-              <div
-                class="contentTitle"
-              >
-                Error
-              </div>
-              <div>
-                Oops!
-              </div>
-            </div>
-          </div>
-          <eo-button
-            slot="footer"
-          >
-            Ok
-          </eo-button>
-        </sl-dialog>
-      </DocumentFragment>
-    `);
+          Error
+        </div>
+        <div>
+          Oops!
+        </div>
+      </div>
+    </div>
+    <eo-button
+      slot="footer"
+    >
+      Ok
+    </eo-button>
+  </sl-dialog>
+</DocumentFragment>
+`);
     expect(container.querySelector("sl-dialog")).toHaveProperty(
       "label",
       "Error"
@@ -341,7 +341,7 @@ describe("DialogComponent", () => {
         <eo-antd-icon />
       </div>
       <div
-        style="flex: 1;"
+        class="content"
       >
         <div>
           Please enter 
@@ -395,7 +395,7 @@ describe("DialogComponent", () => {
         <eo-antd-icon />
       </div>
       <div
-        style="flex: 1;"
+        class="content"
       >
         <div>
           <strong
@@ -459,7 +459,7 @@ describe("DialogComponent", () => {
         <eo-antd-icon />
       </div>
       <div
-        style="flex: 1;"
+        class="content"
       >
         <div>
           Please enter  to delete the file.

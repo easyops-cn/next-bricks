@@ -191,7 +191,7 @@ export function DialogComponent({
             <WrappedAntdIcon icon={icon.icon} />
           </div>
         )}
-        <div style={{ flex: 1 }}>
+        <div className={styles.content}>
           {title && <div className={styles.contentTitle}>{title}</div>}
           <div style={contentStyle}>{parseTemplate(content, { expect })}</div>
           {expect && (
