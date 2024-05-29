@@ -49,30 +49,6 @@
   }
 }
 
-.pagination-size-selector-menu {
-  min-width: max-content;
-  padding: 2px;
-  border: none;
-  border-radius: var(--medius-border-radius);
-  background: var(--antd-select-dropdown-bg);
-  box-shadow: var(--antd-box-shadow-base);
-}
-
-.pagination-size-selector-item {
-  padding: 6px;
-  border-radius: var(--medius-border-radius);
-  cursor: pointer;
-}
-
-.pagination-size-selector-active {
-  font-weight: var(--font-weight-600);
-  background-color: var(--antd-select-item-selected-bg) !important;
-}
-
-.pagination-size-selector-item:hover {
-  background-color: var(--antd-select-item-active-bg);
-}
-
 /* pagination-page */
 .pagination-page {
   display: flex;

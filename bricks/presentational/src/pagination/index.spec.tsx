@@ -121,8 +121,11 @@ describe("eo-pagination", () => {
     expect(element.pageSize).toBe(20);
 
     act(() => {
-      fireEvent.click(
-        element.shadowRoot.querySelectorAll(".pagination-size-selector-item")[0]
+      fireEvent(
+        element.shadowRoot.querySelectorAll("eo-dropdown-actions")[0],
+        new CustomEvent("action.click", {
+          detail: { key: element.pageSizeOptions[0] },
+        })
       );
     });
     expect(onChange).lastCalledWith(

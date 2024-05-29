@@ -17,6 +17,12 @@
   gap: var(--sl-spacing-large);
 }
 
+.content {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
 .contentTitle {
   margin-bottom: var(--sl-spacing-medium);
   font-size: var(--sl-font-size-medium);
