@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.7...@next-bricks/presentational@1.7.8) (2024-05-29)
+
+
+### Bug Fixes
+
+* **pagination:** Fix paging size dropdown does not disappear after selection ([ce1a029](https://github.com/easyops-cn/next-bricks/commit/ce1a0291b01b7c371d2ef92b60fde241fcd72a8e))
+
+
+
+
+
 ## [1.7.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.6...@next-bricks/presentational@1.7.7) (2024-05-23)
 
 

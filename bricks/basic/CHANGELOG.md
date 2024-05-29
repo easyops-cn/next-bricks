@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.17.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.16.1...@next-bricks/basic@1.17.0) (2024-05-29)
+
+
+### Bug Fixes
+
+* **show-dialog:** fix long word does not line break ([5688334](https://github.com/easyops-cn/next-bricks/commit/5688334e3dc6cdf6d70a363997873e68be8d32ca))
+
+
+### Features
+
+* **actions:** First level items support selected ([ec43b50](https://github.com/easyops-cn/next-bricks/commit/ec43b5013f2c3925c760e2426e8caa92523019d7))
+
+
+
+
+
 ## [1.16.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.16.0...@next-bricks/basic@1.16.1) (2024-05-28)
 
 
