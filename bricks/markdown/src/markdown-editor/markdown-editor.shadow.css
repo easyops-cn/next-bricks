@@ -1665,15 +1665,17 @@ video {
 }
 
 .milkdown {
-  margin: 1.25rem;
+  /* margin: 1.25rem; */
   border-radius: 0.25rem;
   /* border-width: 1px;
   --tw-bg-opacity: 1;
   background-color: rgb(248 250 252 / var(--tw-bg-opacity)); */
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding: 1rem;
+  height: 100%;
+}
+
+div[data-milkdown-root="true"] {
+  height: 100%;
 }
 
 .readonly .milkdown {
@@ -1684,6 +1686,7 @@ video {
 .editor {
   margin-left: auto;
   margin-right: auto;
+  height: 100%;
 }
 
 :is(.dark .dark\:prose-invert) {
