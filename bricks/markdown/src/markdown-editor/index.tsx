@@ -37,7 +37,6 @@ import {
   gfm,
   toggleStrikethroughCommand,
   insertTableCommand,
-  tableKeymap,
 } from "@milkdown/preset-gfm";
 import { indent } from "@milkdown/plugin-indent";
 import { Ctx, MilkdownPlugin } from "@milkdown/ctx";
@@ -251,8 +250,8 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
             bucketName as string,
             {
               file: image,
-              width: 1280,
-              height: 800,
+              width: 0,
+              height: 0,
             }
           );
           const src = transformResponseToUrl(response?.objectName as string);
@@ -288,11 +287,6 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
               view: pluginViewFactory({
                 component: TableTooltip,
               }),
-            });
-            ctx.set(tableKeymap.key, {
-              ExitTable: ["Enter"],
-              NextCell: ["Mod-]", "Tab"],
-              PrevCell: ["Mod-[", "Shift-Tab"],
             });
           },
           tableSelectorPlugin(widgetViewFactory),
