@@ -250,8 +250,8 @@ export function MarkdownEditorComponent(props: MarkdownEditorProps) {
             bucketName as string,
             {
               file: image,
-              width: 1280,
-              height: 800,
+              width: 0,
+              height: 0,
             }
           );
           const src = transformResponseToUrl(response?.objectName as string);

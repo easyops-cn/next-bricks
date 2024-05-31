@@ -137,7 +137,7 @@ img.ProseMirror-separator {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
   display: inline-block;
-  max-width: 100%;
+  max-width: 960px;
 }
 
 .milkdown-theme-nord.prose
