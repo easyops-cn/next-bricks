@@ -60,7 +60,7 @@ img.ProseMirror-separator {
 .ProseMirror table {
   border-collapse: collapse;
   table-layout: fixed;
-  width: 100%;
+  max-width: 80%;
   overflow: hidden;
 }
 
