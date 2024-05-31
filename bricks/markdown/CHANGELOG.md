@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.11.0...@next-bricks/markdown@1.11.1) (2024-05-31)
+
+
+### Bug Fixes
+
+* 优化图片的展示大小 ([79a7ca9](https://github.com/easyops-cn/next-bricks/commit/79a7ca9049e35dc12293d1a75c455c69316658fe))
+* 修改editor边距;修复只能在第一行聚焦editor的问题 ([9c21961](https://github.com/easyops-cn/next-bricks/commit/9c21961b860f8a41596a4a0d6a8008d402080317))
+* 修改表格宽度 ([e79d165](https://github.com/easyops-cn/next-bricks/commit/e79d16558fafab21d36d440a226ada292001fd53))
+* 修改边距 ([0cf4784](https://github.com/easyops-cn/next-bricks/commit/0cf4784ab39a9c9f921aba4a5004efaf0e0653de))
+
+
+
+
+
 # [1.11.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.10.10...@next-bricks/markdown@1.11.0) (2024-05-23)
 
 
