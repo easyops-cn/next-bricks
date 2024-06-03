@@ -57,8 +57,8 @@
     "refractor": "^4.8.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.21.0",
-    "@next-core/test-next": "^1.1.1"
+    "@next-core/build-next-bricks": "^1.21.1",
+    "@next-core/test-next": "^1.1.2"
   },
   "peerDependencies": {
     "@next-bricks/form": "*",
