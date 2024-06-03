@@ -37,7 +37,7 @@
     "@next-core/element": "^1.2.8",
     "@next-core/i18n": "^1.0.48",
     "@next-core/react-element": "^1.0.27",
-    "@next-core/theme": "^1.5.0",
+    "@next-core/theme": "^1.5.1",
     "react": "0.0.0-experimental-ee8509801-20230117"
   },
   "devDependencies": {
