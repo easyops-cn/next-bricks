@@ -62,6 +62,8 @@ img.ProseMirror-separator {
   table-layout: fixed;
   width: 100%;
   overflow: hidden;
+  background-color: white;
+  margin: 4px 0;
 }
 
 .ProseMirror td,
@@ -202,6 +204,10 @@ img.ProseMirror-separator {
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
 }
 
+.prose :where(tr:first-child) {
+  background-color: var(--antd-table-header-bg);
+}
+
 .dark .milkdown-theme-nord.prose tr {
   --tw-border-opacity: 1;
   border-color: rgb(75 85 99 / var(--tw-border-opacity));
@@ -209,10 +215,6 @@ img.ProseMirror-separator {
 
 .milkdown-theme-nord.prose :where(td, th) p {
   margin: 0 !important;
-}
-
-.milkdown-theme-nord.prose :where(td, th):nth-child(odd) {
-  background-color: var(--color-fill-bg-base-1);
 }
 
 .dark .milkdown-theme-nord.prose :where(td, th):nth-child(odd) {
