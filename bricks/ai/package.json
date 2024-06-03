@@ -36,13 +36,13 @@
   "dependencies": {
     "@antv/g2": "^5.1.19",
     "@microsoft/fetch-event-source": "^2.0.1",
-    "@next-core/element": "^1.2.7",
-    "@next-core/i18n": "^1.0.47",
-    "@next-core/react-element": "^1.0.26",
-    "@next-core/react-runtime": "^1.5.2",
-    "@next-core/runtime": "^1.44.2",
+    "@next-core/element": "^1.2.8",
+    "@next-core/i18n": "^1.0.48",
+    "@next-core/react-element": "^1.0.27",
+    "@next-core/react-runtime": "^1.5.3",
+    "@next-core/runtime": "^1.44.3",
     "@next-core/theme": "^1.5.0",
-    "@next-core/utils": "^1.7.5",
+    "@next-core/utils": "^1.7.6",
     "react": "0.0.0-experimental-ee8509801-20230117"
   },
   "devDependencies": {
@@ -52,8 +52,8 @@
     "@milkdown/preset-gfm": "^7.3.5",
     "@milkdown/react": "^7.3.5",
     "@milkdown/theme-nord": "^7.3.5",
-    "@next-core/build-next-bricks": "^1.21.0",
-    "@next-core/test-next": "^1.1.1"
+    "@next-core/build-next-bricks": "^1.21.1",
+    "@next-core/test-next": "^1.1.2"
   },
   "peerDependencies": {
     "@next-bricks/basic": "*",
