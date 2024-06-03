@@ -2808,7 +2808,7 @@
     "@next-core/types" "^1.11.0"
     lodash "^4.17.21"
 
-"@next-core/loader@^1.5.8", "@next-core/loader@^1.5.9":
+"@next-core/loader@^1.5.9":
   version "1.5.9"
   resolved "https://registry.yarnpkg.com/@next-core/loader/-/loader-1.5.9.tgz#bab7be4c814f68b133dce6e458a4d44f8ccd7dd7"
   integrity sha512-htsUqFp/kQNklXhCQvHnbwZDms/A/O7KYt1uvCncWkM2TaX2VWq46k5BbASiUezfDBFQ1Sj4mlT+Fj0oBew6jQ==
