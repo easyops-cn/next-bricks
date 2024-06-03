@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.21.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.21.1...@next-bricks/ai@1.21.2) (2024-06-03)
+
+
+### Bug Fixes
+
+* fix markdown table style ([693080c](https://github.com/easyops-cn/next-bricks/commit/693080c1637d9397b512f6492e8f0a23bc3b5442))
+
+
+
+
+
 ## [1.21.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.21.0...@next-bricks/ai@1.21.1) (2024-05-27)
 
 
