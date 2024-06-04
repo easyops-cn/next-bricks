@@ -23,6 +23,10 @@ describe("initMenuItemAndMatchCurrentPathKeys", () => {
           },
           {
             type: "subMenu",
+            title: "emptySubMenu",
+          },
+          {
+            type: "subMenu",
             title: "subMenu",
             items: [
               {
@@ -40,13 +44,16 @@ describe("initMenuItemAndMatchCurrentPathKeys", () => {
     expect(menuItems[1].key).toBe("1");
     expect((menuItems[1] as SidebarMenuGroup).items[0].key).toBe("1.0");
     expect(
-      ((menuItems[1] as SidebarMenuGroup).items[1] as SidebarMenuGroup).items[0]
+      ((menuItems[1] as SidebarMenuGroup).items[1] as SidebarMenuGroup).items
+    ).toBe(undefined);
+    expect(
+      ((menuItems[1] as SidebarMenuGroup).items[2] as SidebarMenuGroup).items[0]
         .key
-    ).toBe("1.1.0");
-    expect(selectedKeys).toEqual(["1.1.0"]);
+    ).toBe("1.2.0");
+    expect(selectedKeys).toEqual(["1.2.0"]);
     expect(openedKeys).toContain("1");
-    expect(openedKeys).toContain("1.1");
-    expect(matchedKeys).toEqual(["1", "1.1", "1.1.0"]);
+    expect(openedKeys).toContain("1.2");
+    expect(matchedKeys).toEqual(["1", "1.2", "1.2.0"]);
 
     const { selectedKeys: selectedKeys2, openedKeys: openedKeys2 } =
       initMenuItemAndMatchCurrentPathKeys(

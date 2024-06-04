@@ -34,35 +34,37 @@ export function initMenuItemAndMatchCurrentPathKeys(
   const matchedKeys: string[] = [];
 
   let cursor = 0;
-  menuItems.forEach((item) => {
-    // key的格式最终为0,1,2,0.1,0.2,0.1.1,0.1.2
-    item.key = parentCursor === "" ? `${cursor}` : `${parentCursor}.${cursor}`;
-    if (isGroup(item) || isSubMenu(item)) {
-      const tmp = initMenuItemAndMatchCurrentPathKeys(
-        item.items,
-        pathname,
-        search,
-        item.key
-      );
-      selectedKeys.push(...tmp.selectedKeys);
-      if (tmp.selectedKeys.length || item.defaultExpanded) {
-        openedKeys.push(item.key);
-      }
-      openedKeys.push(...tmp.openedKeys);
-      matchedKeys.push(...tmp.matchedKeys);
-    } else {
-      if (matchMenuItem(item, pathname, search)) {
-        selectedKeys.push(String(item.key));
+  menuItems &&
+    menuItems.forEach((item) => {
+      // key的格式最终为0,1,2,0.1,0.2,0.1.1,0.1.2
+      item.key =
+        parentCursor === "" ? `${cursor}` : `${parentCursor}.${cursor}`;
+      if (isGroup(item) || isSubMenu(item)) {
+        const tmp = initMenuItemAndMatchCurrentPathKeys(
+          item.items,
+          pathname,
+          search,
+          item.key
+        );
+        selectedKeys.push(...tmp.selectedKeys);
+        if (tmp.selectedKeys.length || item.defaultExpanded) {
+          openedKeys.push(item.key);
+        }
+        openedKeys.push(...tmp.openedKeys);
+        matchedKeys.push(...tmp.matchedKeys);
+      } else {
+        if (matchMenuItem(item, pathname, search)) {
+          selectedKeys.push(String(item.key));
 
-        const keyPath = item.key.split(".");
+          const keyPath = item.key.split(".");
 
-        for (let i = 0; i < keyPath.length; i++) {
-          matchedKeys.push(keyPath.slice(0, i + 1).join("."));
+          for (let i = 0; i < keyPath.length; i++) {
+            matchedKeys.push(keyPath.slice(0, i + 1).join("."));
+          }
         }
       }
-    }
-    cursor += 1;
-  });
+      cursor += 1;
+    });
   if (selectedKeys.length && parentCursor !== "") {
     openedKeys.push(parentCursor);
   }
