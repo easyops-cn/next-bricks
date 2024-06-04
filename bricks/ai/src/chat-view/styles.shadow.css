@@ -211,6 +211,11 @@
       display: flex;
       gap: 8px;
       padding-right: 40px;
+
+      &:last-child {
+        margin-bottom: 40px;
+      }
+
       &.user {
         flex-direction: row-reverse;
         padding: 0;

@@ -21,6 +21,7 @@ export interface ChatViewProps {
   showAvatar?: boolean;
   showSessionList?: boolean;
   showLike?: boolean;
+  showShare?: boolean;
   quickAnswerConfig?: QuickAnswerConfig;
   enterInterval?: number;
   debug?: boolean;
@@ -36,6 +37,7 @@ export function LegacyChatViewComponent(
     showSessionList = true,
     readonly = false,
     showLike = true,
+    showShare = true,
     quickAnswerConfig,
     enterInterval,
     debug = false,
@@ -85,6 +87,7 @@ export function LegacyChatViewComponent(
         loading,
         searchStr,
         showLike,
+        showShare,
         readonly,
         quickAnswerConfig,
         commandBricks,
@@ -185,6 +188,15 @@ class ChatView extends ReactNextElement {
   accessor showLike: boolean | undefined;
 
   /**
+   * 是否展示分享能力
+   * @default true
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor showShare: boolean | undefined;
+
+  /**
    * 输入间隔
    * @default 50
    */
@@ -240,6 +252,7 @@ class ChatView extends ReactNextElement {
         showAvatar={this.showAvatar}
         showSessionList={this.showSessionList}
         showLike={this.showLike}
+        showShare={this.showShare}
         quickAnswerConfig={this.quickAnswerConfig}
         enterInterval={this.enterInterval}
         commandBricks={this.commandBricks}

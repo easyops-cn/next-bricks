@@ -46,6 +46,7 @@ interface ChatViewContextProps {
   chatting: boolean;
   searchStr: string;
   showLike: boolean;
+  showShare: boolean;
   readonly: boolean;
   quickAnswerConfig?: QuickAnswerConfig;
   commandBricks?: commandBrickConf;
