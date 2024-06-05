@@ -4,6 +4,8 @@ import { EVALUATE_KEYWORD, brickNextKeywords } from "./constants.js";
 import get from "lodash/get.js";
 import { getEditorId } from "./editorId.js";
 import { TokenConfig } from "../index.jsx";
+import { getDataMemberSuggestions } from "../utils/dataCompletion.js";
+import { AdvancedCompleterMap } from "../interfaces.js";
 
 const findKeys = (
   model: monaco.editor.ITextModel,
@@ -24,13 +26,13 @@ const findKeys = (
     });
     const matchWord = prefixLineWord.match(/^([\s|-]*)(\w+)(?=:)/);
     if (matchWord) {
-      const [, wordspace, key] = matchWord;
-      if (wordspace.length === range.startColumn - 1) {
+      const [, wordSpace, key] = matchWord;
+      if (wordSpace.length === range.startColumn - 1) {
         curLevelKeys.unshift(key);
       }
-      if (wordspace.length < startColumn - 1) {
+      if (wordSpace.length < startColumn - 1) {
         !parentKey && (parentKey = key);
-        startColumn = wordspace.length;
+        startColumn = wordSpace.length;
         keyList.unshift(key);
       }
     }
@@ -131,10 +133,7 @@ export const isInEvaluateBody = (
 
 export const brickNextYAMLProviderCompletionItems = (
   completers: monaco.languages.CompletionItem[] = [],
-  advancedCompleters: Record<
-    string,
-    { triggerCharacter: string; completers: monaco.languages.CompletionItem[] }
-  > = {},
+  advancedCompleters: AdvancedCompleterMap = {},
   id: string,
   tokenConfig: TokenConfig
 ) => {
@@ -160,6 +159,16 @@ export const brickNextYAMLProviderCompletionItems = (
       startColumn: 0,
       endColumn: Infinity,
     });
+
+    let matchInvokeDataMember = false;
+    let parentsWords: string[] = [];
+    if (prefixToken === ".") {
+      const chars = curLineWord.slice(0, position.column - 1)?.split(/\s+/);
+
+      parentsWords = chars[chars.length - 1]?.slice(0, -1).split(".");
+      matchInvokeDataMember = ["STATE", "CTX"].includes(parentsWords[0]);
+    }
+
     const range = {
       startLineNumber: position.lineNumber,
       endLineNumber: position.lineNumber,
@@ -224,7 +233,8 @@ export const brickNextYAMLProviderCompletionItems = (
       context.triggerCharacter === ":" ||
       (context.triggerCharacter === "." &&
         prefixWord &&
-        !["CTX", "STATE", "FN"].concat(DSToken).includes(prefixWord))
+        !["CTX", "STATE", "FN"].concat(DSToken).includes(prefixWord) &&
+        !matchInvokeDataMember)
     ) {
       if (prefixWord === "action" && context.triggerCharacter === ":") {
         const actions = get(
@@ -337,6 +347,17 @@ export const brickNextYAMLProviderCompletionItems = (
         }
         return {
           suggestions,
+        };
+      }
+
+      if (matchInvokeDataMember && advancedCompleters) {
+        const scopeType = parentsWords[0];
+        return {
+          suggestions: getDataMemberSuggestions(
+            parentsWords.slice(1),
+            advancedCompleters[scopeType]?.dataDefinitions,
+            range as monaco.Range
+          ),
         };
       }
 

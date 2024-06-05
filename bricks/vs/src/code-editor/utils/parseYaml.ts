@@ -2,6 +2,8 @@ import type { MemberExpression, Identifier } from "@babel/types";
 import type * as monaco from "monaco-editor/esm/vs/editor/editor.api.js";
 import BrickNextYamlSourceMap, { Token } from "./brickNextSourceMap.js";
 import type { Marker } from "../index.jsx";
+import { AdvancedCompleterMap } from "../interfaces.js";
+import { validateDataFields } from "./validateDataField.js";
 import { EVALUATE_KEYWORD, Level } from "./constants.js";
 
 const getObjectName = (node: Identifier | MemberExpression): string => {
@@ -24,14 +26,21 @@ const getObjectName = (node: Identifier | MemberExpression): string => {
   return name;
 };
 
-const getParseYaml = async ({ showDSKey = false }) => {
+const getParseYaml = async ({
+  showDSKey = false,
+  advancedCompleters,
+}: {
+  showDSKey: boolean;
+  advancedCompleters?: AdvancedCompleterMap;
+}) => {
   const yaml = await import("js-yaml");
   const { preevaluate } = await import("@next-core/cook");
 
   return (value: string, links?: string[], markers?: Marker[]) => {
     const map = new BrickNextYamlSourceMap();
     let parseValue = undefined;
-    let modelMarkers: monaco.editor.IMarkerData[] = [];
+    const modelMarkers: monaco.editor.IMarkerData[] = [];
+    const dataMemberMarkNodes: any[] = [];
     const tokens: Omit<
       Token & { token: string; property: string },
       "source"
@@ -49,8 +58,9 @@ const getParseYaml = async ({ showDSKey = false }) => {
           const { startLineNumber, endLineNumber, startColumn } = item;
           const globalNodes: MemberExpression[] = [];
           const result = preevaluate(isString ? value : item.source, {
+            withParent: true,
             hooks: {
-              beforeVisit(node) {
+              beforeVisit(node, parents) {
                 if (
                   node.type === "MemberExpression" &&
                   node.object.type === "Identifier" &&
@@ -60,6 +70,21 @@ const getParseYaml = async ({ showDSKey = false }) => {
                   node.property.type === "Identifier" &&
                   !globalNodes.find((item) => item.object === node)
                 ) {
+                  if (["STATE", "CTX"].includes(node.object.name)) {
+                    const dataDefinitions =
+                      advancedCompleters?.[node.object.name]?.dataDefinitions;
+
+                    const warningNodeInfo = validateDataFields(
+                      node,
+                      parents!,
+                      dataDefinitions
+                    );
+
+                    if (warningNodeInfo) {
+                      dataMemberMarkNodes.push(warningNodeInfo);
+                    }
+                  }
+
                   globalNodes.push(node);
                 }
                 if (
@@ -124,10 +149,31 @@ const getParseYaml = async ({ showDSKey = false }) => {
               });
             }
           });
+
+          dataMemberMarkNodes.forEach((node) => {
+            const { start, end } = node!;
+
+            modelMarkers.push({
+              severity: Level.warn,
+              message: "Miss Property",
+              startLineNumber,
+              endLineNumber,
+              startColumn:
+                startColumn +
+                (start as number) +
+                result.prefix?.length +
+                Number(!item.isString),
+              endColumn:
+                startColumn +
+                (end as number) +
+                result.prefix?.length +
+                Number(!item.isString),
+            });
+          });
         });
 
         if (markers) {
-          modelMarkers = tokens
+          const marks = tokens
             .map((token) => {
               const matchTokenConf = markers.find(
                 (item) => item.token === token.token
@@ -165,6 +211,8 @@ const getParseYaml = async ({ showDSKey = false }) => {
               }
             })
             .filter(Boolean) as monaco.editor.IMarkerData[];
+
+          modelMarkers.push(...marks);
         }
       }
     } catch {

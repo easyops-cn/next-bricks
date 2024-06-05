@@ -26,6 +26,7 @@ import {
   EDITOR_LINE_HEIGHT,
   EDITOR_FONT_SIZE,
 } from "./constants.js";
+import { AdvancedCompleterMap } from "./interfaces.js";
 import { brickNextYAMLProviderCompletionItems } from "./utils/brickNextYaml.js";
 import { Level } from "./utils/constants.js";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -77,10 +78,7 @@ export interface CodeEditorProps {
   height?: string | number;
   completers?: monaco.languages.CompletionItem[];
   tokenConfig?: TokenConfig;
-  advancedCompleters?: Record<
-    string,
-    { triggerCharacter: string; completers: monaco.languages.CompletionItem[] }
-  >;
+  advancedCompleters?: AdvancedCompleterMap;
   markers?: Marker[];
   links?: string[];
   showExpandButton?: boolean;
@@ -169,15 +167,7 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
   @property({
     attribute: false,
   })
-  accessor advancedCompleters:
-    | Record<
-        string,
-        {
-          triggerCharacter: string;
-          completers: monaco.languages.CompletionItem[];
-        }
-      >
-    | undefined;
+  accessor advancedCompleters: AdvancedCompleterMap | undefined;
 
   @property({ attribute: false })
   accessor markers: Marker[] | undefined;
@@ -461,11 +451,11 @@ export function CodeEditorComponent({
           links,
           markers,
         },
-        options: tokenConfig,
+        options: { ...tokenConfig, advancedCompleters },
         init,
       });
     },
-    [language, value, tokenConfig, links, markers, workerId]
+    [language, value, tokenConfig, links, markers, workerId, advancedCompleters]
   );
 
   const debounceParse = useMemo(() => debounce(parseYaml, 300), [parseYaml]);
