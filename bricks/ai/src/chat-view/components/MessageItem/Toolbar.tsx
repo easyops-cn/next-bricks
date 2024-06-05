@@ -10,6 +10,8 @@ import { EoTooltip, ToolTipProps } from "@next-bricks/basic/tooltip";
 import { MessageItem, useChatViewContext } from "../../ChatViewContext";
 import { unwrapProvider } from "@next-core/utils/general";
 import classNames from "classnames";
+import { useMsgItemContext } from "./MsgItemContext";
+import { getBasePath } from "@next-core/runtime";
 
 const WrapperIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 const WrappedToolTip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");
@@ -32,12 +34,24 @@ export function Toolbar({
     [role, content.type]
   );
   const isChattingItem = useMemo(() => chatting, [chatting]);
-  const { showLike, readonly, handleIsLike } = useChatViewContext();
-
+  const { showLike, showShare, readonly, handleIsLike } = useChatViewContext();
+  const { agentId, conversationId } = useMsgItemContext();
   const handleCopy = () => {
     copyToClipboard(content.text)
       .then(() => showNotification({ type: "success", message: "复制成功" }))
       .catch(() => showNotification({ type: "error", message: "复制失败" }));
+  };
+
+  const handleShare = () => {
+    copyToClipboard(
+      `${location.origin}${getBasePath()}ai-center/share?agentId=${agentId}&conversationId=${conversationId}`
+    )
+      .then(() =>
+        showNotification({ type: "success", message: "会话链接已复制到剪贴板" })
+      )
+      .catch(() =>
+        showNotification({ type: "error", message: "会话链接复制失败" })
+      );
   };
 
   const handleLikeOrIsLike = useCallback(
@@ -81,6 +95,11 @@ export function Toolbar({
       <WrappedToolTip content="点击复制" hoist>
         <WrapperIcon lib="antd" icon="copy" onClick={handleCopy} />
       </WrappedToolTip>
+      {showShare && (
+        <WrappedToolTip content="点击分享" hoist>
+          <WrapperIcon lib="antd" icon="share-alt" onClick={handleShare} />
+        </WrappedToolTip>
+      )}
     </div>
   ) : null;
 }
