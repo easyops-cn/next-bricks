@@ -3,480 +3,247 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.0.27](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.26...@next-bricks/recent-history@1.0.27) (2024-06-03)
+## [1.0.28](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.27...@next-bricks/recent-history@1.0.28) (2024-06-05)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
+## [1.0.27](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.26...@next-bricks/recent-history@1.0.27) (2024-06-03)
 
-
-
+**Note:** Version bump only for package @next-bricks/recent-history
 
 ## [1.0.26](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.25...@next-bricks/recent-history@1.0.26) (2024-06-03)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [1.0.25](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.24...@next-bricks/recent-history@1.0.25) (2024-05-22)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [1.0.24](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.23...@next-bricks/recent-history@1.0.24) (2024-05-21)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [1.0.23](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.22...@next-bricks/recent-history@1.0.23) (2024-05-17)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [1.0.22](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.21...@next-bricks/recent-history@1.0.22) (2024-05-17)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [1.0.21](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.20...@next-bricks/recent-history@1.0.21) (2024-05-15)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [1.0.20](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.19...@next-bricks/recent-history@1.0.20) (2024-05-15)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [1.0.19](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.18...@next-bricks/recent-history@1.0.19) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [1.0.18](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.17...@next-bricks/recent-history@1.0.18) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [1.0.17](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.16...@next-bricks/recent-history@1.0.17) (2024-05-08)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [1.0.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.15...@next-bricks/recent-history@1.0.16) (2024-05-06)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [1.0.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.14...@next-bricks/recent-history@1.0.15) (2024-04-26)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [1.0.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.13...@next-bricks/recent-history@1.0.14) (2024-04-16)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [1.0.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.12...@next-bricks/recent-history@1.0.13) (2024-04-08)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [1.0.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.11...@next-bricks/recent-history@1.0.12) (2024-04-03)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [1.0.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.10...@next-bricks/recent-history@1.0.11) (2024-04-02)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [1.0.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.9...@next-bricks/recent-history@1.0.10) (2024-03-25)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [1.0.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.8...@next-bricks/recent-history@1.0.9) (2024-03-19)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [1.0.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.7...@next-bricks/recent-history@1.0.8) (2024-03-12)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [1.0.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.6...@next-bricks/recent-history@1.0.7) (2024-02-07)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [1.0.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.5...@next-bricks/recent-history@1.0.6) (2024-02-05)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [1.0.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.4...@next-bricks/recent-history@1.0.5) (2024-02-01)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [1.0.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.3...@next-bricks/recent-history@1.0.4) (2024-01-05)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [1.0.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.2...@next-bricks/recent-history@1.0.3) (2024-01-03)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [1.0.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.1...@next-bricks/recent-history@1.0.2) (2024-01-02)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [1.0.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.107...@next-bricks/recent-history@1.0.1) (2024-01-02)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [0.1.107](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.106...@next-bricks/recent-history@0.1.107) (2023-12-27)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [0.1.106](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.105...@next-bricks/recent-history@0.1.106) (2023-12-26)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [0.1.105](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.104...@next-bricks/recent-history@0.1.105) (2023-12-25)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [0.1.104](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.103...@next-bricks/recent-history@0.1.104) (2023-12-22)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [0.1.103](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.102...@next-bricks/recent-history@0.1.103) (2023-12-12)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [0.1.102](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.101...@next-bricks/recent-history@0.1.102) (2023-12-11)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [0.1.101](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.100...@next-bricks/recent-history@0.1.101) (2023-12-06)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [0.1.100](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.99...@next-bricks/recent-history@0.1.100) (2023-12-05)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [0.1.99](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.98...@next-bricks/recent-history@0.1.99) (2023-11-30)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [0.1.98](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.97...@next-bricks/recent-history@0.1.98) (2023-11-23)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [0.1.97](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.96...@next-bricks/recent-history@0.1.97) (2023-11-22)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [0.1.96](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.95...@next-bricks/recent-history@0.1.96) (2023-11-22)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [0.1.95](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.94...@next-bricks/recent-history@0.1.95) (2023-11-21)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [0.1.94](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.93...@next-bricks/recent-history@0.1.94) (2023-11-20)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [0.1.93](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.92...@next-bricks/recent-history@0.1.93) (2023-11-17)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [0.1.92](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.91...@next-bricks/recent-history@0.1.92) (2023-11-17)
-
 
 ### Bug Fixes
 
-* depends on others bricks of current workspace ([4b835f9](https://github.com/easyops-cn/next-bricks/commit/4b835f902d58d6fa08a5239fb077053121c3df9f))
-
-
-
-
+- depends on others bricks of current workspace ([4b835f9](https://github.com/easyops-cn/next-bricks/commit/4b835f902d58d6fa08a5239fb077053121c3df9f))
 
 ## [0.1.91](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.90...@next-bricks/recent-history@0.1.91) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [0.1.90](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.89...@next-bricks/recent-history@0.1.90) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [0.1.89](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.88...@next-bricks/recent-history@0.1.89) (2023-11-15)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [0.1.88](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.87...@next-bricks/recent-history@0.1.88) (2023-11-13)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [0.1.87](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.86...@next-bricks/recent-history@0.1.87) (2023-11-10)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [0.1.86](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.85...@next-bricks/recent-history@0.1.86) (2023-11-10)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [0.1.85](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.84...@next-bricks/recent-history@0.1.85) (2023-11-09)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [0.1.84](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.83...@next-bricks/recent-history@0.1.84) (2023-11-08)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [0.1.83](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.82...@next-bricks/recent-history@0.1.83) (2023-11-08)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [0.1.82](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.81...@next-bricks/recent-history@0.1.82) (2023-11-08)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [0.1.81](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.80...@next-bricks/recent-history@0.1.81) (2023-11-07)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [0.1.80](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.79...@next-bricks/recent-history@0.1.80) (2023-11-07)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [0.1.79](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.78...@next-bricks/recent-history@0.1.79) (2023-11-06)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [0.1.78](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.77...@next-bricks/recent-history@0.1.78) (2023-11-03)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [0.1.77](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.76...@next-bricks/recent-history@0.1.77) (2023-11-02)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [0.1.76](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.75...@next-bricks/recent-history@0.1.76) (2023-11-01)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [0.1.75](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@0.1.74...@next-bricks/recent-history@0.1.75) (2023-11-01)
 

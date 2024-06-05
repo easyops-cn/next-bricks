@@ -3,788 +3,420 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.9...@next-bricks/presentational@1.7.10) (2024-06-05)
+
+**Note:** Version bump only for package @next-bricks/presentational
+
 ## [1.7.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.8...@next-bricks/presentational@1.7.9) (2024-06-03)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [1.7.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.7...@next-bricks/presentational@1.7.8) (2024-05-29)
-
 
 ### Bug Fixes
 
-* **pagination:** Fix paging size dropdown does not disappear after selection ([ce1a029](https://github.com/easyops-cn/next-bricks/commit/ce1a0291b01b7c371d2ef92b60fde241fcd72a8e))
-
-
-
-
+- **pagination:** Fix paging size dropdown does not disappear after selection ([ce1a029](https://github.com/easyops-cn/next-bricks/commit/ce1a0291b01b7c371d2ef92b60fde241fcd72a8e))
 
 ## [1.7.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.6...@next-bricks/presentational@1.7.7) (2024-05-23)
 
-
 ### Bug Fixes
 
-* **card-item:** add title attribute to cardTitle element ([35e6306](https://github.com/easyops-cn/next-bricks/commit/35e63060075fedd220f923fd7618cf7e17f5e19c))
-
-
-
-
+- **card-item:** add title attribute to cardTitle element ([35e6306](https://github.com/easyops-cn/next-bricks/commit/35e63060075fedd220f923fd7618cf7e17f5e19c))
 
 ## [1.7.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.5...@next-bricks/presentational@1.7.6) (2024-05-22)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [1.7.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.4...@next-bricks/presentational@1.7.5) (2024-05-21)
-
 
 ### Bug Fixes
 
-* fix types ([3169557](https://github.com/easyops-cn/next-bricks/commit/3169557d4894f4a77a7ed86f76ecc9daa5ba9c29))
-
-
-
-
+- fix types ([3169557](https://github.com/easyops-cn/next-bricks/commit/3169557d4894f4a77a7ed86f76ecc9daa5ba9c29))
 
 ## [1.7.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.3...@next-bricks/presentational@1.7.4) (2024-05-21)
 
-
 ### Bug Fixes
 
-* **card-item:** fix style ([f795881](https://github.com/easyops-cn/next-bricks/commit/f795881c59d759fedd2b0b7925a3b290c315c519))
-
-
-
-
+- **card-item:** fix style ([f795881](https://github.com/easyops-cn/next-bricks/commit/f795881c59d759fedd2b0b7925a3b290c315c519))
 
 ## [1.7.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.2...@next-bricks/presentational@1.7.3) (2024-05-17)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [1.7.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.1...@next-bricks/presentational@1.7.2) (2024-05-17)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [1.7.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.0...@next-bricks/presentational@1.7.1) (2024-05-16)
-
 
 ### Bug Fixes
 
-* **card-item:** fix selected style of grayish styleType ([fc257a9](https://github.com/easyops-cn/next-bricks/commit/fc257a90e41fbaa5343c73488d96ca0b71de3ca9))
-
-
-
-
+- **card-item:** fix selected style of grayish styleType ([fc257a9](https://github.com/easyops-cn/next-bricks/commit/fc257a90e41fbaa5343c73488d96ca0b71de3ca9))
 
 # [1.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.6.9...@next-bricks/presentational@1.7.0) (2024-05-16)
 
-
 ### Features
 
-* **card-item:** add selected property ([ef35227](https://github.com/easyops-cn/next-bricks/commit/ef352276606d6f66a300cc458076e874ae533f5e))
-
-
-
-
+- **card-item:** add selected property ([ef35227](https://github.com/easyops-cn/next-bricks/commit/ef352276606d6f66a300cc458076e874ae533f5e))
 
 ## [1.6.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.6.8...@next-bricks/presentational@1.6.9) (2024-05-15)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [1.6.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.6.7...@next-bricks/presentational@1.6.8) (2024-05-15)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [1.6.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.6.6...@next-bricks/presentational@1.6.7) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [1.6.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.6.5...@next-bricks/presentational@1.6.6) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [1.6.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.6.4...@next-bricks/presentational@1.6.5) (2024-05-08)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [1.6.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.6.3...@next-bricks/presentational@1.6.4) (2024-05-06)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [1.6.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.6.2...@next-bricks/presentational@1.6.3) (2024-04-26)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [1.6.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.6.1...@next-bricks/presentational@1.6.2) (2024-04-25)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [1.6.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.6.0...@next-bricks/presentational@1.6.1) (2024-04-25)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 # [1.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.5.0...@next-bricks/presentational@1.6.0) (2024-04-17)
-
 
 ### Features
 
-* feat carousel text ([4a8c573](https://github.com/easyops-cn/next-bricks/commit/4a8c57300c59a5ae570b4f71da117a6963dbeda9))
-* feat carousel text ([b849cc9](https://github.com/easyops-cn/next-bricks/commit/b849cc966b5aec9439088d9c2cc4853ef4e22e66))
-
-
-
-
+- feat carousel text ([4a8c573](https://github.com/easyops-cn/next-bricks/commit/4a8c57300c59a5ae570b4f71da117a6963dbeda9))
+- feat carousel text ([b849cc9](https://github.com/easyops-cn/next-bricks/commit/b849cc966b5aec9439088d9c2cc4853ef4e22e66))
 
 # [1.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.4.3...@next-bricks/presentational@1.5.0) (2024-04-16)
 
-
 ### Features
 
-* feat current time bricks ([5181177](https://github.com/easyops-cn/next-bricks/commit/518117702e7284fdc27ca8d78daea82e299dc53b))
-
-
-
-
+- feat current time bricks ([5181177](https://github.com/easyops-cn/next-bricks/commit/518117702e7284fdc27ca8d78daea82e299dc53b))
 
 ## [1.4.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.4.2...@next-bricks/presentational@1.4.3) (2024-04-08)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [1.4.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.4.1...@next-bricks/presentational@1.4.2) (2024-04-03)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [1.4.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.4.0...@next-bricks/presentational@1.4.1) (2024-04-02)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 # [1.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.3.1...@next-bricks/presentational@1.4.0) (2024-04-01)
-
 
 ### Features
 
-* support coverImageSize ([60051b2](https://github.com/easyops-cn/next-bricks/commit/60051b25bf5a81048a521bb3d498ccaf630ed1c4))
-
-
-
-
+- support coverImageSize ([60051b2](https://github.com/easyops-cn/next-bricks/commit/60051b25bf5a81048a521bb3d498ccaf630ed1c4))
 
 ## [1.3.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.3.0...@next-bricks/presentational@1.3.1) (2024-03-25)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 # [1.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.2.6...@next-bricks/presentational@1.3.0) (2024-03-20)
-
 
 ### Bug Fixes
 
-* loading icon spinning ([24c350c](https://github.com/easyops-cn/next-bricks/commit/24c350c8db1304d89199ea9964194915026c8c3e))
-
+- loading icon spinning ([24c350c](https://github.com/easyops-cn/next-bricks/commit/24c350c8db1304d89199ea9964194915026c8c3e))
 
 ### Features
 
-* support eo-loading-step ([d6af843](https://github.com/easyops-cn/next-bricks/commit/d6af8435961b2f11ae90db3d949cab37f287e487))
-
-
-
-
+- support eo-loading-step ([d6af843](https://github.com/easyops-cn/next-bricks/commit/d6af8435961b2f11ae90db3d949cab37f287e487))
 
 ## [1.2.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.2.5...@next-bricks/presentational@1.2.6) (2024-03-19)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [1.2.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.2.4...@next-bricks/presentational@1.2.5) (2024-03-12)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [1.2.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.2.3...@next-bricks/presentational@1.2.4) (2024-02-19)
-
 
 ### Bug Fixes
 
-* use new brick names ([2a7ac9d](https://github.com/easyops-cn/next-bricks/commit/2a7ac9d454a06bfd51cc12a4a9cdf219d1d97f2f))
-
-
-
-
+- use new brick names ([2a7ac9d](https://github.com/easyops-cn/next-bricks/commit/2a7ac9d454a06bfd51cc12a4a9cdf219d1d97f2f))
 
 ## [1.2.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.2.2...@next-bricks/presentational@1.2.3) (2024-02-07)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [1.2.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.2.1...@next-bricks/presentational@1.2.2) (2024-02-05)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [1.2.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.2.0...@next-bricks/presentational@1.2.1) (2024-02-01)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 # [1.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.1.2...@next-bricks/presentational@1.2.0) (2024-01-10)
-
 
 ### Features
 
-* card item add tag ([b46c9f9](https://github.com/easyops-cn/next-bricks/commit/b46c9f94ef2abe451be78cafbb9d0012bef0de06))
-
-
-
-
+- card item add tag ([b46c9f9](https://github.com/easyops-cn/next-bricks/commit/b46c9f94ef2abe451be78cafbb9d0012bef0de06))
 
 ## [1.1.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.1.1...@next-bricks/presentational@1.1.2) (2024-01-09)
 
-
 ### Bug Fixes
 
-* mini actions use eo-action ([3054e19](https://github.com/easyops-cn/next-bricks/commit/3054e19da9494a8cbbc7c125a2e907ba3a54099c))
-
-
-
-
+- mini actions use eo-action ([3054e19](https://github.com/easyops-cn/next-bricks/commit/3054e19da9494a8cbbc7c125a2e907ba3a54099c))
 
 ## [1.1.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.1.0...@next-bricks/presentational@1.1.1) (2024-01-03)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 # [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.0.1...@next-bricks/presentational@1.1.0) (2024-01-02)
-
 
 ### Features
 
-* update wokrbench style & launchpad add readonly mode ([c8b026d](https://github.com/easyops-cn/next-bricks/commit/c8b026de1617cf2726b8333eb78a6f78017f7b22))
-
-
-
-
+- update wokrbench style & launchpad add readonly mode ([c8b026d](https://github.com/easyops-cn/next-bricks/commit/c8b026de1617cf2726b8333eb78a6f78017f7b22))
 
 ## [1.0.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.23.0...@next-bricks/presentational@1.0.1) (2024-01-02)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 # [0.23.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.22.0...@next-bricks/presentational@0.23.0) (2023-12-27)
-
 
 ### Features
 
-* popover add default background ([6f900f4](https://github.com/easyops-cn/next-bricks/commit/6f900f4c24dc1ff8bca35d6b1d91f184edd83791))
-
-
-
-
+- popover add default background ([6f900f4](https://github.com/easyops-cn/next-bricks/commit/6f900f4c24dc1ff8bca35d6b1d91f184edd83791))
 
 # [0.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.21.2...@next-bricks/presentational@0.22.0) (2023-12-25)
 
-
 ### Bug Fixes
 
-* add hasCover attr ([11535d4](https://github.com/easyops-cn/next-bricks/commit/11535d4a3d3f2895f1a81488c7ebf96ddb2ca0db))
-* docs ([5c2a55b](https://github.com/easyops-cn/next-bricks/commit/5c2a55b06f24238337752a56e98e65b1bf1bf8ae))
-* 操作按钮区域错误 ([94ebc0f](https://github.com/easyops-cn/next-bricks/commit/94ebc0fad551a3148566af63a35cc6f97663bfa0))
-* 替换颜色变量 ([9c7b2d1](https://github.com/easyops-cn/next-bricks/commit/9c7b2d1c3823134b9e2932f4812ea50cea636832))
-
+- add hasCover attr ([11535d4](https://github.com/easyops-cn/next-bricks/commit/11535d4a3d3f2895f1a81488c7ebf96ddb2ca0db))
+- docs ([5c2a55b](https://github.com/easyops-cn/next-bricks/commit/5c2a55b06f24238337752a56e98e65b1bf1bf8ae))
+- 操作按钮区域错误 ([94ebc0f](https://github.com/easyops-cn/next-bricks/commit/94ebc0fad551a3148566af63a35cc6f97663bfa0))
+- 替换颜色变量 ([9c7b2d1](https://github.com/easyops-cn/next-bricks/commit/9c7b2d1c3823134b9e2932f4812ea50cea636832))
 
 ### Features
 
-* eo-card-item 支持封面区域 ([cf9d38f](https://github.com/easyops-cn/next-bricks/commit/cf9d38f3ab19ccf0e9ce9c6d843c5b1da688f394))
-
-
-
-
+- eo-card-item 支持封面区域 ([cf9d38f](https://github.com/easyops-cn/next-bricks/commit/cf9d38f3ab19ccf0e9ce9c6d843c5b1da688f394))
 
 ## [0.21.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.21.1...@next-bricks/presentational@0.21.2) (2023-12-25)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [0.21.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.21.0...@next-bricks/presentational@0.21.1) (2023-12-22)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 # [0.21.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.20.1...@next-bricks/presentational@0.21.0) (2023-12-18)
-
 
 ### Features
 
-* statistics-card 支持交互 ([f168f4e](https://github.com/easyops-cn/next-bricks/commit/f168f4ec26b8b08fd4fd26813ad873680088b332))
-* statistics-card 支持交互 ([554d0f5](https://github.com/easyops-cn/next-bricks/commit/554d0f5f370bf8508eb420290ba492ece11abb0b))
-* statistics-card 支持交互 ([601190a](https://github.com/easyops-cn/next-bricks/commit/601190ae4df09c1bf1df1ed6e971a654e3e8f00d))
-
-
-
-
+- statistics-card 支持交互 ([f168f4e](https://github.com/easyops-cn/next-bricks/commit/f168f4ec26b8b08fd4fd26813ad873680088b332))
+- statistics-card 支持交互 ([554d0f5](https://github.com/easyops-cn/next-bricks/commit/554d0f5f370bf8508eb420290ba492ece11abb0b))
+- statistics-card 支持交互 ([601190a](https://github.com/easyops-cn/next-bricks/commit/601190ae4df09c1bf1df1ed6e971a654e3e8f00d))
 
 ## [0.20.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.20.0...@next-bricks/presentational@0.20.1) (2023-12-15)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 # [0.20.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.19.1...@next-bricks/presentational@0.20.0) (2023-12-14)
-
 
 ### Features
 
-* UI验收问题整改-presentational ([bae7d77](https://github.com/easyops-cn/next-bricks/commit/bae7d778c995231330d485990ee842d2dd4cc969))
-
-
-
-
+- UI验收问题整改-presentational ([bae7d77](https://github.com/easyops-cn/next-bricks/commit/bae7d778c995231330d485990ee842d2dd4cc969))
 
 ## [0.19.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.19.0...@next-bricks/presentational@0.19.1) (2023-12-13)
 
-
 ### Bug Fixes
 
-* UI验收问题整改-presentational ([7f4cc1f](https://github.com/easyops-cn/next-bricks/commit/7f4cc1fefd70d720d5ee11ab10c513e804e90257))
-
-
-
-
+- UI验收问题整改-presentational ([7f4cc1f](https://github.com/easyops-cn/next-bricks/commit/7f4cc1fefd70d720d5ee11ab10c513e804e90257))
 
 # [0.19.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.18.3...@next-bricks/presentational@0.19.0) (2023-12-13)
 
-
 ### Features
 
-* support valueStyle & ellipsis ([849c88a](https://github.com/easyops-cn/next-bricks/commit/849c88a723f6d59f9a7282c4647471e2220b3261))
-
-
-
-
+- support valueStyle & ellipsis ([849c88a](https://github.com/easyops-cn/next-bricks/commit/849c88a723f6d59f9a7282c4647471e2220b3261))
 
 ## [0.18.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.18.2...@next-bricks/presentational@0.18.3) (2023-12-12)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [0.18.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.18.1...@next-bricks/presentational@0.18.2) (2023-12-12)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [0.18.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.18.0...@next-bricks/presentational@0.18.1) (2023-12-11)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 # [0.18.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.17.0...@next-bricks/presentational@0.18.0) (2023-12-08)
-
 
 ### Features
 
-* UI验收问题整改-presentational ([7414fd5](https://github.com/easyops-cn/next-bricks/commit/7414fd5a433ce328c03d2b45d06e5bc07396d8d4))
-
-
-
-
+- UI验收问题整改-presentational ([7414fd5](https://github.com/easyops-cn/next-bricks/commit/7414fd5a433ce328c03d2b45d06e5bc07396d8d4))
 
 # [0.17.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.16.4...@next-bricks/presentational@0.17.0) (2023-12-07)
 
-
 ### Features
 
-* eo-statistics-card ([c4ce5ab](https://github.com/easyops-cn/next-bricks/commit/c4ce5ab4699a47cf6460073e50d465e5186e7a21))
-
-
-
-
+- eo-statistics-card ([c4ce5ab](https://github.com/easyops-cn/next-bricks/commit/c4ce5ab4699a47cf6460073e50d465e5186e7a21))
 
 ## [0.16.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.16.3...@next-bricks/presentational@0.16.4) (2023-12-06)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [0.16.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.16.2...@next-bricks/presentational@0.16.3) (2023-12-05)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [0.16.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.16.1...@next-bricks/presentational@0.16.2) (2023-11-30)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [0.16.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.16.0...@next-bricks/presentational@0.16.1) (2023-11-30)
-
 
 ### Bug Fixes
 
-* host-context fallback ([6c627f7](https://github.com/easyops-cn/next-bricks/commit/6c627f7863d0d80b1f0e9dcc44185e4cb56e0d46))
-
-
-
-
+- host-context fallback ([6c627f7](https://github.com/easyops-cn/next-bricks/commit/6c627f7863d0d80b1f0e9dcc44185e4cb56e0d46))
 
 # [0.16.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.42...@next-bricks/presentational@0.16.0) (2023-11-29)
 
-
 ### Features
 
-* eo-card-item support grayish style ([dbb1c96](https://github.com/easyops-cn/next-bricks/commit/dbb1c96262626822d0f0846ac8e7aee57379b075))
-
-
-
-
+- eo-card-item support grayish style ([dbb1c96](https://github.com/easyops-cn/next-bricks/commit/dbb1c96262626822d0f0846ac8e7aee57379b075))
 
 ## [0.15.42](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.41...@next-bricks/presentational@0.15.42) (2023-11-23)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [0.15.41](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.40...@next-bricks/presentational@0.15.41) (2023-11-22)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [0.15.40](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.39...@next-bricks/presentational@0.15.40) (2023-11-22)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [0.15.39](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.38...@next-bricks/presentational@0.15.39) (2023-11-21)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [0.15.38](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.37...@next-bricks/presentational@0.15.38) (2023-11-21)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [0.15.37](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.36...@next-bricks/presentational@0.15.37) (2023-11-21)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [0.15.36](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.35...@next-bricks/presentational@0.15.36) (2023-11-20)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [0.15.35](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.34...@next-bricks/presentational@0.15.35) (2023-11-17)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [0.15.34](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.33...@next-bricks/presentational@0.15.34) (2023-11-17)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [0.15.33](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.32...@next-bricks/presentational@0.15.33) (2023-11-17)
-
 
 ### Bug Fixes
 
-* depends on others bricks of current workspace ([4b835f9](https://github.com/easyops-cn/next-bricks/commit/4b835f902d58d6fa08a5239fb077053121c3df9f))
-
-
-
-
+- depends on others bricks of current workspace ([4b835f9](https://github.com/easyops-cn/next-bricks/commit/4b835f902d58d6fa08a5239fb077053121c3df9f))
 
 ## [0.15.32](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.31...@next-bricks/presentational@0.15.32) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [0.15.31](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.30...@next-bricks/presentational@0.15.31) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [0.15.30](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.29...@next-bricks/presentational@0.15.30) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [0.15.29](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.28...@next-bricks/presentational@0.15.29) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [0.15.28](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.27...@next-bricks/presentational@0.15.28) (2023-11-15)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [0.15.27](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.26...@next-bricks/presentational@0.15.27) (2023-11-13)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [0.15.26](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.25...@next-bricks/presentational@0.15.26) (2023-11-10)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [0.15.25](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.24...@next-bricks/presentational@0.15.25) (2023-11-10)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [0.15.24](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.23...@next-bricks/presentational@0.15.24) (2023-11-09)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [0.15.23](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.22...@next-bricks/presentational@0.15.23) (2023-11-08)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [0.15.22](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.21...@next-bricks/presentational@0.15.22) (2023-11-08)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [0.15.21](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.20...@next-bricks/presentational@0.15.21) (2023-11-08)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [0.15.20](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.19...@next-bricks/presentational@0.15.20) (2023-11-07)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [0.15.19](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.18...@next-bricks/presentational@0.15.19) (2023-11-07)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [0.15.18](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.17...@next-bricks/presentational@0.15.18) (2023-11-06)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [0.15.17](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.16...@next-bricks/presentational@0.15.17) (2023-11-06)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [0.15.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.15...@next-bricks/presentational@0.15.16) (2023-11-03)
-
 
 ### Bug Fixes
 
-* close alert and delete the host node ([8c60f15](https://github.com/easyops-cn/next-bricks/commit/8c60f153b42090545817ee0a9802186897b1f1dd))
-* fix test ([558eccd](https://github.com/easyops-cn/next-bricks/commit/558eccd978693abd483eea9ead9c8d0789405e1b))
-
-
-
-
+- close alert and delete the host node ([8c60f15](https://github.com/easyops-cn/next-bricks/commit/8c60f153b42090545817ee0a9802186897b1f1dd))
+- fix test ([558eccd](https://github.com/easyops-cn/next-bricks/commit/558eccd978693abd483eea9ead9c8d0789405e1b))
 
 ## [0.15.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.14...@next-bricks/presentational@0.15.15) (2023-11-02)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [0.15.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.13...@next-bricks/presentational@0.15.14) (2023-11-01)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [0.15.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@0.15.12...@next-bricks/presentational@0.15.13) (2023-11-01)
 

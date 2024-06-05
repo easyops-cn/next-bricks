@@ -3,291 +3,155 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.31](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.30...@next-shared/general@0.8.31) (2024-06-05)
+
+### Bug Fixes
+
+- nav构件遇到空的items时会报错 ([fe8d77e](https://github.com/easyops-cn/next-bricks/commit/fe8d77eb28dc9e5f89ca334d5e592febaab29ce4))
+
 ## [0.8.30](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.29...@next-shared/general@0.8.30) (2024-06-03)
 
 **Note:** Version bump only for package @next-shared/general
-
-
-
-
 
 ## [0.8.29](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.28...@next-shared/general@0.8.29) (2024-05-22)
 
 **Note:** Version bump only for package @next-shared/general
 
-
-
-
-
 ## [0.8.28](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.27...@next-shared/general@0.8.28) (2024-05-21)
 
 **Note:** Version bump only for package @next-shared/general
-
-
-
-
 
 ## [0.8.27](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.26...@next-shared/general@0.8.27) (2024-05-17)
 
 **Note:** Version bump only for package @next-shared/general
 
-
-
-
-
 ## [0.8.26](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.25...@next-shared/general@0.8.26) (2024-05-15)
 
 **Note:** Version bump only for package @next-shared/general
-
-
-
-
 
 ## [0.8.25](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.24...@next-shared/general@0.8.25) (2024-05-15)
 
 **Note:** Version bump only for package @next-shared/general
 
-
-
-
-
 ## [0.8.24](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.23...@next-shared/general@0.8.24) (2024-05-09)
 
 **Note:** Version bump only for package @next-shared/general
-
-
-
-
 
 ## [0.8.23](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.22...@next-shared/general@0.8.23) (2024-05-08)
 
 **Note:** Version bump only for package @next-shared/general
 
-
-
-
-
 ## [0.8.22](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.21...@next-shared/general@0.8.22) (2024-05-06)
 
 **Note:** Version bump only for package @next-shared/general
-
-
-
-
 
 ## [0.8.21](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.20...@next-shared/general@0.8.21) (2024-04-26)
 
 **Note:** Version bump only for package @next-shared/general
 
-
-
-
-
 ## [0.8.20](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.19...@next-shared/general@0.8.20) (2024-04-16)
 
 **Note:** Version bump only for package @next-shared/general
-
-
-
-
 
 ## [0.8.19](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.18...@next-shared/general@0.8.19) (2024-04-08)
 
 **Note:** Version bump only for package @next-shared/general
 
-
-
-
-
 ## [0.8.18](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.17...@next-shared/general@0.8.18) (2024-04-03)
 
 **Note:** Version bump only for package @next-shared/general
-
-
-
-
 
 ## [0.8.17](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.16...@next-shared/general@0.8.17) (2024-04-02)
 
 **Note:** Version bump only for package @next-shared/general
 
-
-
-
-
 ## [0.8.16](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.15...@next-shared/general@0.8.16) (2024-03-25)
 
 **Note:** Version bump only for package @next-shared/general
-
-
-
-
 
 ## [0.8.15](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.14...@next-shared/general@0.8.15) (2024-03-19)
 
 **Note:** Version bump only for package @next-shared/general
 
-
-
-
-
 ## [0.8.14](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.13...@next-shared/general@0.8.14) (2024-03-12)
 
 **Note:** Version bump only for package @next-shared/general
-
-
-
-
 
 ## [0.8.13](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.12...@next-shared/general@0.8.13) (2024-02-07)
 
 **Note:** Version bump only for package @next-shared/general
 
-
-
-
-
 ## [0.8.12](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.11...@next-shared/general@0.8.12) (2024-02-05)
 
 **Note:** Version bump only for package @next-shared/general
-
-
-
-
 
 ## [0.8.11](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.10...@next-shared/general@0.8.11) (2024-02-01)
 
 **Note:** Version bump only for package @next-shared/general
 
-
-
-
-
 ## [0.8.10](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.9...@next-shared/general@0.8.10) (2024-01-03)
-
 
 ### Bug Fixes
 
-* fix menu active match ([d308400](https://github.com/easyops-cn/next-bricks/commit/d30840059758894eb29173e1167e5c25971306a7))
-
-
-
-
+- fix menu active match ([d308400](https://github.com/easyops-cn/next-bricks/commit/d30840059758894eb29173e1167e5c25971306a7))
 
 ## [0.8.9](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.8...@next-shared/general@0.8.9) (2024-01-02)
 
 **Note:** Version bump only for package @next-shared/general
 
-
-
-
-
 ## [0.8.8](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.7...@next-shared/general@0.8.8) (2023-12-27)
 
 **Note:** Version bump only for package @next-shared/general
-
-
-
-
 
 ## [0.8.7](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.6...@next-shared/general@0.8.7) (2023-12-25)
 
 **Note:** Version bump only for package @next-shared/general
 
-
-
-
-
 ## [0.8.6](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.5...@next-shared/general@0.8.6) (2023-12-22)
 
 **Note:** Version bump only for package @next-shared/general
-
-
-
-
 
 ## [0.8.5](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.4...@next-shared/general@0.8.5) (2023-12-11)
 
 **Note:** Version bump only for package @next-shared/general
 
-
-
-
-
 ## [0.8.4](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.3...@next-shared/general@0.8.4) (2023-12-05)
 
 **Note:** Version bump only for package @next-shared/general
-
-
-
-
 
 ## [0.8.3](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.2...@next-shared/general@0.8.3) (2023-11-30)
 
 **Note:** Version bump only for package @next-shared/general
 
-
-
-
-
 ## [0.8.2](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.1...@next-shared/general@0.8.2) (2023-11-23)
 
 **Note:** Version bump only for package @next-shared/general
-
-
-
-
 
 ## [0.8.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.0...@next-shared/general@0.8.1) (2023-11-17)
 
 **Note:** Version bump only for package @next-shared/general
 
-
-
-
-
 # [0.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.7.7...@next-shared/general@0.8.0) (2023-11-15)
-
 
 ### Features
 
-* initMenuItemAndMatchCurrentPathKeys return matchKeys ([b52aa69](https://github.com/easyops-cn/next-bricks/commit/b52aa69af2b998e0ccc003db7177e0eb19ca5722))
-
-
-
-
+- initMenuItemAndMatchCurrentPathKeys return matchKeys ([b52aa69](https://github.com/easyops-cn/next-bricks/commit/b52aa69af2b998e0ccc003db7177e0eb19ca5722))
 
 ## [0.7.7](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.7.6...@next-shared/general@0.7.7) (2023-11-13)
 
 **Note:** Version bump only for package @next-shared/general
 
-
-
-
-
 ## [0.7.6](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.7.5...@next-shared/general@0.7.6) (2023-11-07)
 
 **Note:** Version bump only for package @next-shared/general
-
-
-
-
 
 ## [0.7.5](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.7.4...@next-shared/general@0.7.5) (2023-11-06)
 
 **Note:** Version bump only for package @next-shared/general
 
-
-
-
-
 ## [0.7.4](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.7.3...@next-shared/general@0.7.4) (2023-11-01)
 
 **Note:** Version bump only for package @next-shared/general
-
-
-
-
 
 ## [0.7.3](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.7.2...@next-shared/general@0.7.3) (2023-11-01)
 

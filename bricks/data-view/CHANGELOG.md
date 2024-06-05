@@ -3,428 +3,223 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.1.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.14...@next-bricks/data-view@1.1.15) (2024-06-03)
+## [1.1.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.15...@next-bricks/data-view@1.1.16) (2024-06-05)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
+## [1.1.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.14...@next-bricks/data-view@1.1.15) (2024-06-03)
 
-
-
+**Note:** Version bump only for package @next-bricks/data-view
 
 ## [1.1.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.13...@next-bricks/data-view@1.1.14) (2024-05-22)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [1.1.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.12...@next-bricks/data-view@1.1.13) (2024-05-21)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [1.1.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.11...@next-bricks/data-view@1.1.12) (2024-05-17)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [1.1.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.10...@next-bricks/data-view@1.1.11) (2024-05-17)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [1.1.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.9...@next-bricks/data-view@1.1.10) (2024-05-15)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [1.1.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.8...@next-bricks/data-view@1.1.9) (2024-05-15)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [1.1.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.7...@next-bricks/data-view@1.1.8) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [1.1.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.6...@next-bricks/data-view@1.1.7) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [1.1.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.5...@next-bricks/data-view@1.1.6) (2024-05-08)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [1.1.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.4...@next-bricks/data-view@1.1.5) (2024-05-06)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [1.1.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.3...@next-bricks/data-view@1.1.4) (2024-04-26)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [1.1.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.2...@next-bricks/data-view@1.1.3) (2024-04-16)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [1.1.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.1...@next-bricks/data-view@1.1.2) (2024-04-08)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [1.1.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.0...@next-bricks/data-view@1.1.1) (2024-04-07)
-
 
 ### Bug Fixes
 
-* optimized  popover display logic of app wall ([b427988](https://github.com/easyops-cn/next-bricks/commit/b427988a3cfbf2fb08dd83021a9583c8c936890b))
-
-
-
-
+- optimized popover display logic of app wall ([b427988](https://github.com/easyops-cn/next-bricks/commit/b427988a3cfbf2fb08dd83021a9583c8c936890b))
 
 # [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.0.12...@next-bricks/data-view@1.1.0) (2024-04-03)
 
-
 ### Features
 
-* 业务墙hover构件 ([57c3aa2](https://github.com/easyops-cn/next-bricks/commit/57c3aa213ccafec78a95ee378a53fd451f399089))
-
-
-
-
+- 业务墙hover构件 ([57c3aa2](https://github.com/easyops-cn/next-bricks/commit/57c3aa213ccafec78a95ee378a53fd451f399089))
 
 ## [1.0.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.0.11...@next-bricks/data-view@1.0.12) (2024-04-03)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [1.0.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.0.10...@next-bricks/data-view@1.0.11) (2024-04-02)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [1.0.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.0.9...@next-bricks/data-view@1.0.10) (2024-03-25)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [1.0.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.0.8...@next-bricks/data-view@1.0.9) (2024-03-19)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [1.0.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.0.7...@next-bricks/data-view@1.0.8) (2024-03-12)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [1.0.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.0.6...@next-bricks/data-view@1.0.7) (2024-02-19)
-
 
 ### Bug Fixes
 
-* use new brick names ([2a7ac9d](https://github.com/easyops-cn/next-bricks/commit/2a7ac9d454a06bfd51cc12a4a9cdf219d1d97f2f))
-
-
-
-
+- use new brick names ([2a7ac9d](https://github.com/easyops-cn/next-bricks/commit/2a7ac9d454a06bfd51cc12a4a9cdf219d1d97f2f))
 
 ## [1.0.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.0.5...@next-bricks/data-view@1.0.6) (2024-02-07)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [1.0.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.0.4...@next-bricks/data-view@1.0.5) (2024-02-05)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [1.0.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.0.3...@next-bricks/data-view@1.0.4) (2024-02-01)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [1.0.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.0.2...@next-bricks/data-view@1.0.3) (2024-01-03)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [1.0.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.0.1...@next-bricks/data-view@1.0.2) (2024-01-02)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [1.0.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.24.13...@next-bricks/data-view@1.0.1) (2024-01-02)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [0.24.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.24.12...@next-bricks/data-view@0.24.13) (2023-12-27)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [0.24.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.24.11...@next-bricks/data-view@0.24.12) (2023-12-25)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [0.24.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.24.10...@next-bricks/data-view@0.24.11) (2023-12-22)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [0.24.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.24.9...@next-bricks/data-view@0.24.10) (2023-12-12)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [0.24.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.24.8...@next-bricks/data-view@0.24.9) (2023-12-11)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [0.24.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.24.7...@next-bricks/data-view@0.24.8) (2023-12-06)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [0.24.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.24.6...@next-bricks/data-view@0.24.7) (2023-12-05)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [0.24.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.24.5...@next-bricks/data-view@0.24.6) (2023-12-01)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [0.24.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.24.4...@next-bricks/data-view@0.24.5) (2023-11-30)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [0.24.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.24.3...@next-bricks/data-view@0.24.4) (2023-11-23)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [0.24.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.24.2...@next-bricks/data-view@0.24.3) (2023-11-17)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [0.24.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.24.1...@next-bricks/data-view@0.24.2) (2023-11-17)
-
 
 ### Bug Fixes
 
-* depends on others bricks of current workspace ([4b835f9](https://github.com/easyops-cn/next-bricks/commit/4b835f902d58d6fa08a5239fb077053121c3df9f))
-
-
-
-
+- depends on others bricks of current workspace ([4b835f9](https://github.com/easyops-cn/next-bricks/commit/4b835f902d58d6fa08a5239fb077053121c3df9f))
 
 ## [0.24.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.24.0...@next-bricks/data-view@0.24.1) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 # [0.24.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.23.10...@next-bricks/data-view@0.24.0) (2023-11-16)
-
 
 ### Features
 
-* app-wall 应用墙构调整 ([e5f17e4](https://github.com/easyops-cn/next-bricks/commit/e5f17e4df64cee9ba81a0f43f2145c1ec847a742))
-
-
-
-
+- app-wall 应用墙构调整 ([e5f17e4](https://github.com/easyops-cn/next-bricks/commit/e5f17e4df64cee9ba81a0f43f2145c1ec847a742))
 
 ## [0.23.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.23.9...@next-bricks/data-view@0.23.10) (2023-11-15)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [0.23.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.23.8...@next-bricks/data-view@0.23.9) (2023-11-13)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [0.23.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.23.7...@next-bricks/data-view@0.23.8) (2023-11-13)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [0.23.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.23.6...@next-bricks/data-view@0.23.7) (2023-11-13)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [0.23.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.23.5...@next-bricks/data-view@0.23.6) (2023-11-09)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [0.23.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.23.4...@next-bricks/data-view@0.23.5) (2023-11-07)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [0.23.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.23.3...@next-bricks/data-view@0.23.4) (2023-11-06)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [0.23.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.23.2...@next-bricks/data-view@0.23.3) (2023-11-03)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [0.23.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.23.1...@next-bricks/data-view@0.23.2) (2023-11-01)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [0.23.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@0.23.0...@next-bricks/data-view@0.23.1) (2023-11-01)
 
