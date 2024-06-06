@@ -261,7 +261,10 @@ export class ChatService {
     const list = [];
 
     // 只要是命令字，且命令字不等于easy_cmd_progress的时候就直接返回
-    if (/easy_cmd_/.test(str) && !/easy_cmd_progress/.test(str)) {
+    if (
+      /^```easy_cmd_.*?```[^`]*$/s.test(str) &&
+      !/easy_cmd_progress/.test(str)
+    ) {
       return [str];
     }
 
