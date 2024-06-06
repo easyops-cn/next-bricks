@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.21.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.21.4...@next-bricks/ai@1.21.5) (2024-06-06)
+
+
+### Bug Fixes
+
+* 只要是命令字，且命令字不等于easy_cmd_progress的时候就直接返回 ([c841ebb](https://github.com/easyops-cn/next-bricks/commit/c841ebbc20cfca85670038a1a400fbe35df42887))
+* 只要是命令字，且命令字不等于easy_cmd_progress的时候就直接返回 ([8778739](https://github.com/easyops-cn/next-bricks/commit/8778739f0a1fbcb645339e7a796b3dcf0724f8df))
+
+
+
+
+
 ## [1.21.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.21.3...@next-bricks/ai@1.21.4) (2024-06-05)
 
 ### Bug Fixes
