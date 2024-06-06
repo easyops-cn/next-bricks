@@ -260,8 +260,11 @@ export class ChatService {
     if (str?.length < 5) return [str];
     const list = [];
 
-    // TODO: 特殊逻辑，临时处理 debug 内容
-    if (this.#debug && /easy_cmd_flow_debug/.test(str)) {
+    // 只要是命令字，且命令字不等于easy_cmd_progress的时候就直接返回
+    if (
+      /^```easy_cmd_.*?```[^`]*$/s.test(str) &&
+      !/easy_cmd_progress/.test(str)
+    ) {
       return [str];
     }
 
