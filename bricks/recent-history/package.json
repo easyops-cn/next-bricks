@@ -4,7 +4,8 @@
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/recent-history",
   "repository": {
     "type": "git",
-    "url": "git@github.com:easyops-cn/next-bricks.git"
+    "url": "git@github.com:easyops-cn/next-bricks.git",
+    "directory": "bricks/recent-history"
   },
   "license": "GPL-3.0",
   "type": "module",
