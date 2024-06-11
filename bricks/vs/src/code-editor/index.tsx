@@ -26,12 +26,18 @@ import {
   EDITOR_LINE_HEIGHT,
   EDITOR_FONT_SIZE,
 } from "./constants.js";
+import { AdvancedCompleterMap, ExtraLib } from "./interfaces.js";
 import { brickNextYAMLProviderCompletionItems } from "./utils/brickNextYaml.js";
 import { Level } from "./utils/constants.js";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { VSWorkers } from "./workers/index.mjs";
 import { setEditorId } from "./utils/editorId.js";
+import {
+  getEmbeddedJavascriptUri,
+  getBrickYamlBuiltInDeclare,
+} from "./utils/jsSuggestInBrickYaml.js";
+import { addExtraLibs } from "./utils/addExtraLibs.js";
 import type { EoTooltip, ToolTipProps } from "@next-bricks/basic/tooltip";
 import type {
   GeneralIcon,
@@ -43,6 +49,7 @@ import type { copyToClipboard as _copyToClipboard } from "@next-bricks/basic/dat
 import type { showNotification as _showNotification } from "@next-bricks/basic/data-providers/show-notification/show-notification";
 import classNames from "classnames";
 import "./index.css";
+import { EmbeddedModelContext } from "./utils/embeddedModelState.js";
 
 initializeReactI18n(NS, locales);
 
@@ -77,10 +84,8 @@ export interface CodeEditorProps {
   height?: string | number;
   completers?: monaco.languages.CompletionItem[];
   tokenConfig?: TokenConfig;
-  advancedCompleters?: Record<
-    string,
-    { triggerCharacter: string; completers: monaco.languages.CompletionItem[] }
-  >;
+  advancedCompleters?: AdvancedCompleterMap;
+  extraLibs?: ExtraLib[];
   markers?: Marker[];
   links?: string[];
   showExpandButton?: boolean;
@@ -169,15 +174,7 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
   @property({
     attribute: false,
   })
-  accessor advancedCompleters:
-    | Record<
-        string,
-        {
-          triggerCharacter: string;
-          completers: monaco.languages.CompletionItem[];
-        }
-      >
-    | undefined;
+  accessor advancedCompleters: AdvancedCompleterMap | undefined;
 
   @property({ attribute: false })
   accessor markers: Marker[] | undefined;
@@ -217,6 +214,14 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
    */
   @property({ type: Boolean })
   accessor showCopyButton: boolean | undefined;
+
+  /**
+   * @description 额外声明的 lib 库
+   */
+  @property({
+    attribute: false,
+  })
+  accessor extraLibs: ExtraLib[] | undefined;
 
   @event({ type: "code.change" })
   accessor #codeChange!: EventEmitter<string>;
@@ -288,6 +293,7 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
           height={this.height}
           completers={this.completers}
           advancedCompleters={this.advancedCompleters}
+          extraLibs={this.extraLibs}
           markers={this.markers}
           links={this.links}
           tokenConfig={this.tokenConfig}
@@ -315,6 +321,7 @@ export function CodeEditorComponent({
   markers,
   readOnly,
   links,
+  extraLibs,
   tokenConfig = {
     showDSKey: false,
   },
@@ -442,7 +449,7 @@ export function CodeEditorComponent({
         {
           provideCompletionItems,
           triggerCharacters: [".", ":", "<"],
-        }
+        } as monaco.languages.CompletionItemProvider
       );
       return () => {
         monacoProviderRef.dispose();
@@ -557,6 +564,16 @@ export function CodeEditorComponent({
       return;
     }
     const model = monaco.editor.createModel(value, language);
+    if (language === "brick_next_yaml") {
+      // 注册嵌套的 model， language 为 js
+      const uri = getEmbeddedJavascriptUri(model.uri);
+      monaco.editor.createModel(value, "javascript", uri);
+      monaco.languages.typescript.javascriptDefaults.addExtraLib(
+        getBrickYamlBuiltInDeclare(),
+        model.uri.toString() + "d.ts"
+      );
+    }
+
     editorRef.current = monaco.editor.create(containerRef.current, {
       model,
       minimap: {
@@ -599,7 +616,23 @@ export function CodeEditorComponent({
 
     decorationsCollection.current =
       editorRef.current.createDecorationsCollection();
-  }, [value, language, readOnly]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const libs: ExtraLib[] = extraLibs ?? [];
+
+    const languageDefaults =
+      language === "typescript" ? "typescriptDefaults" : "javascriptDefaults";
+    const disposables = addExtraLibs(libs, {
+      languageDefaults,
+    });
+    return () => {
+      for (const item of disposables) {
+        item.dispose();
+      }
+    };
+  }, [extraLibs, language]);
 
   useEffect(() => {
     const editor = editorRef.current;
@@ -714,6 +747,55 @@ export function CodeEditorComponent({
     const currentModel = editorRef.current.getModel()!;
     const listener = currentModel.onDidChangeContent(() => {
       setEditorId(workerId);
+
+      const position = editorRef.current?.getPosition();
+
+      const prefixEvaluateOperator = currentModel.findPreviousMatch(
+        "<%[~=]?\\s",
+        position!,
+        true,
+        false,
+        null,
+        false
+      );
+
+      const suffixEvaluateOperator = currentModel.findNextMatch(
+        "\\s%>",
+        position!,
+        true,
+        false,
+        null,
+        false
+      );
+
+      const prefixEvaluateRange = prefixEvaluateOperator?.range;
+      const suffixEvaluateRange = suffixEvaluateOperator?.range;
+
+      if (prefixEvaluateRange && suffixEvaluateRange) {
+        const range = {
+          startLineNumber: prefixEvaluateRange.startLineNumber,
+          startColumn: prefixEvaluateRange.endColumn,
+          endLineNumber: suffixEvaluateRange.startLineNumber,
+          endColumn: suffixEvaluateRange.startColumn,
+        };
+
+        const content = currentModel.getValueInRange(range);
+        const newUri = getEmbeddedJavascriptUri(currentModel.uri);
+        const embeddedModel = monaco.editor.getModel(newUri);
+
+        embeddedModel!.setValue(content);
+        const offset = currentModel.getOffsetAt(
+          new monaco.Position(
+            prefixEvaluateRange.startLineNumber,
+            prefixEvaluateRange.endColumn
+          )
+        );
+
+        const embeddedContext = EmbeddedModelContext.getInstance(workerId);
+
+        embeddedContext.updateState({ content, range, offset });
+      }
+
       if (["brick_next_yaml"].includes(language)) {
         debounceParse({
           init: false,

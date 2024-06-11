@@ -39,7 +39,7 @@ export class VSWorkers {
   addEventListener(name, listener) {
     const uid = uniqueId();
     this.#worker.addEventListener(name, (...args) => {
-      const { id } = (args[0]).data;
+      const { id } = args[0].data;
       if (id === this.#id) listener(...args);
     });
     this.#listenerCache.set(uid, {
