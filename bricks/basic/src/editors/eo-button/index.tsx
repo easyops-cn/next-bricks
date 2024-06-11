@@ -6,7 +6,7 @@ import type { EditorComponentProps } from "@next-bricks/visual-builder/property-
 import { eoButtonSchema } from "./eoButton.schema";
 
 function EoButtonComponent(props: EditorComponentProps): React.ReactElement {
-  const { SchemaFieldComponent } = props;
+  const { SchemaFieldComponent, schemaFormatter } = props;
 
   // 设置表达 effect
   // useEffect(() => {
@@ -19,7 +19,9 @@ function EoButtonComponent(props: EditorComponentProps): React.ReactElement {
   //   })
   // }, []);
 
-  return createElement(SchemaFieldComponent, { schema: eoButtonSchema });
+  return createElement(SchemaFieldComponent, {
+    schema: schemaFormatter(eoButtonSchema),
+  });
 }
 
 customEditors.define("eo-button-editor", EoButtonComponent);

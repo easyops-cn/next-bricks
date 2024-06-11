@@ -19,32 +19,18 @@ export const eoButtonSchema = {
           title: "文本",
           type: "string",
           required: true,
-          "x-decorator": "FormItem",
-          "x-component": "Input",
         },
         disabled: {
           title: "禁用",
           type: "boolean",
-          "x-decorator": "FormItem",
-          "x-decorator-props": {
-            layout: "horizontal",
-          },
-          "x-component": "Switch",
-          "x-component-props": {
-            size: "small",
-          },
         },
         url: {
           title: "内链地址",
           type: "string",
-          "x-decorator": "FormItem",
-          "x-component": "Input",
         },
         href: {
           title: "外链地址",
           type: "string",
-          "x-decorator": "FormItem",
-          "x-component": "Input",
         },
         target: {
           title: "链接类型",
@@ -67,8 +53,6 @@ export const eoButtonSchema = {
         tooltip: {
           title: "按钮提示",
           type: "string",
-          "x-decorator": "FormItem",
-          "x-component": "Input",
         },
         categoryTitle_style: {
           type: "string",
@@ -119,17 +103,9 @@ export const eoButtonSchema = {
         danger: {
           title: "危险模式",
           type: "boolean",
-          "x-decorator": "FormItem",
-          "x-decorator-props": {
-            layout: "horizontal",
-          },
-          "x-component": "Switch",
-          "x-component-props": {
-            size: "small",
-          },
         },
         icon: {
-          type: "string",
+          type: "object",
           title: "图标",
           "x-decorator": "FormItem",
           "x-component": "IconSelect",
