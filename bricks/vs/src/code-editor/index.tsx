@@ -740,29 +740,24 @@ export function CodeEditorComponent({
     };
   }, [maxLines, minLines, expanded]);
 
-  useEffect(() => {
-    if (!editorRef.current) {
-      return;
-    }
-    const currentModel = editorRef.current.getModel()!;
-    const listener = currentModel.onDidChangeContent(() => {
-      setEditorId(workerId);
+  // istanbul ignore next
+  const embeddedModelProcessor = useCallback(
+    async (model: monaco.editor.IModel, position: monaco.Position) => {
+      monaco.editor.setModelMarkers(model, "semantic_validate", []);
 
-      const position = editorRef.current?.getPosition();
-
-      const prefixEvaluateOperator = currentModel.findPreviousMatch(
-        "<%[~=]?\\s",
-        position!,
+      const prefixEvaluateOperator = model.findPreviousMatch(
+        "<%[~=]?",
+        position,
         true,
         false,
         null,
         false
       );
 
-      const suffixEvaluateOperator = currentModel.findNextMatch(
-        "\\s%>",
-        position!,
-        true,
+      const suffixEvaluateOperator = model.findNextMatch(
+        "%>",
+        position,
+        false,
         false,
         null,
         false
@@ -772,31 +767,74 @@ export function CodeEditorComponent({
       const suffixEvaluateRange = suffixEvaluateOperator?.range;
 
       if (prefixEvaluateRange && suffixEvaluateRange) {
-        const range = {
-          startLineNumber: prefixEvaluateRange.startLineNumber,
-          startColumn: prefixEvaluateRange.endColumn,
-          endLineNumber: suffixEvaluateRange.startLineNumber,
-          endColumn: suffixEvaluateRange.startColumn,
-        };
-
-        const content = currentModel.getValueInRange(range);
-        const newUri = getEmbeddedJavascriptUri(currentModel.uri);
-        const embeddedModel = monaco.editor.getModel(newUri);
-
-        embeddedModel!.setValue(content);
-        const offset = currentModel.getOffsetAt(
-          new monaco.Position(
-            prefixEvaluateRange.startLineNumber,
-            prefixEvaluateRange.endColumn
-          )
+        const range = new monaco.Range(
+          prefixEvaluateRange.startLineNumber,
+          prefixEvaluateRange.endColumn,
+          suffixEvaluateRange.startLineNumber,
+          suffixEvaluateRange.startColumn
         );
 
-        const embeddedContext = EmbeddedModelContext.getInstance(workerId);
+        const content = model.getValueInRange(range);
+        if (range.containsPosition(position!) && !/<% | %>/.test(content)) {
+          const newUri = getEmbeddedJavascriptUri(model.uri);
+          const embeddedModel = monaco.editor.getModel(newUri);
 
-        embeddedContext.updateState({ content, range, offset });
+          embeddedModel!.setValue(content);
+          const offset = model.getOffsetAt(
+            new monaco.Position(
+              prefixEvaluateRange.startLineNumber,
+              prefixEvaluateRange.endColumn
+            )
+          );
+
+          const embeddedContext = EmbeddedModelContext.getInstance(workerId);
+
+          embeddedContext.updateState({ content, range, offset });
+
+          const getWorker =
+            await monaco.languages.typescript.getJavaScriptWorker();
+
+          const worker = await getWorker(newUri);
+
+          const diagnostics = await worker.getSemanticDiagnostics(
+            newUri.toString()
+          );
+
+          const semanticMarkers = diagnostics.map((item) => {
+            const finalOffset = offset + (item.start ?? 0);
+            const currentPosition = model.getPositionAt(finalOffset);
+
+            return {
+              startLineNumber: currentPosition.lineNumber,
+              startColumn: currentPosition.column,
+              endLineNumber: currentPosition.lineNumber,
+              endColumn: currentPosition.column + item.length!,
+              message: item.messageText as string,
+              severity: monaco.MarkerSeverity.Warning,
+            };
+          });
+
+          monaco.editor.setModelMarkers(
+            model,
+            "semantic_validate",
+            semanticMarkers
+          );
+        }
       }
+    },
+    [workerId]
+  );
+
+  useEffect(() => {
+    if (!editorRef.current) {
+      return;
+    }
+    const currentModel = editorRef.current.getModel()!;
+    const listener = currentModel.onDidChangeContent(async () => {
+      setEditorId(workerId);
 
       if (["brick_next_yaml"].includes(language)) {
+        embeddedModelProcessor(currentModel, editorRef.current!.getPosition()!);
         debounceParse({
           init: false,
         });
@@ -807,7 +845,7 @@ export function CodeEditorComponent({
     return () => {
       listener.dispose();
     };
-  }, [debounceParse, onChange, workerId, language]);
+  }, [debounceParse, onChange, workerId, language, embeddedModelProcessor]);
 
   useEffect(() => {
     if (expanded) {

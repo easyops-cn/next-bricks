@@ -151,7 +151,11 @@ export const brickNextYAMLProviderCompletionItems = (
       };
     const DSToken = tokenConfig.showDSKey ? ["CTX.DS", "DS"] : [];
     const word = model.getWordUntilPosition(position);
-    const { word: prefixWord } = getPrefixWord(model, position, tokenConfig);
+    const { word: prefixWord, token: _prefixToken } = getPrefixWord(
+      model,
+      position,
+      tokenConfig
+    );
     const curLineWord = model.getValueInRange({
       startLineNumber: position.lineNumber,
       endLineNumber: position.lineNumber,

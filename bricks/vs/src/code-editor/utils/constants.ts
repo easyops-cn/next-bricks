@@ -72,9 +72,7 @@ export const builtInKeywordDeclare = `
   declare const MEDIA;
   declare const MISC;
   declare const PARAMS;
-  declare const PATH;
   declare const PROCESSORS;
-  declare const QUERY;
   declare const QUERY_ARRAY;
   declare const TPL;
   declare namespace SYS {
