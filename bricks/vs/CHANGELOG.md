@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.7.2...@next-bricks/vs@1.7.3) (2024-06-11)
+
+
+### Bug Fixes
+
+* add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
+
+
+
+
+
 ## [1.7.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.7.1...@next-bricks/vs@1.7.2) (2024-06-03)
 
 **Note:** Version bump only for package @next-bricks/vs

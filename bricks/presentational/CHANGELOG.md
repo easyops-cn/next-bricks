@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.10...@next-bricks/presentational@1.7.11) (2024-06-11)
+
+
+### Bug Fixes
+
+* add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
+
+
+
+
+
 ## [1.7.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.9...@next-bricks/presentational@1.7.10) (2024-06-05)
 
 **Note:** Version bump only for package @next-bricks/presentational

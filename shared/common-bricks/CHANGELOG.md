@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.42.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.42.0...@next-shared/common-bricks@0.42.1) (2024-06-11)
+
+
+### Bug Fixes
+
+* add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
+
+
+
+
+
 # [0.42.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.41.0...@next-shared/common-bricks@0.42.0) (2024-04-24)
 
 
