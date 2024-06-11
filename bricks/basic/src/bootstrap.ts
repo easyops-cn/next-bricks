@@ -40,3 +40,4 @@ import "./actions/index.js";
 import "./context-menu/index.js";
 import "./data-providers/show-watermark/show-watermark.js";
 import "./formatter-number/index.js";
+import "./editors/index.js";
