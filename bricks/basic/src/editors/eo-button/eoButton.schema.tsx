@@ -105,7 +105,7 @@ export const eoButtonSchema = {
           type: "boolean",
         },
         icon: {
-          type: "object",
+          type: "string",
           title: "图标",
           "x-decorator": "FormItem",
           "x-component": "IconSelect",

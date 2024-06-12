@@ -19,6 +19,7 @@ import { createSchemaField, FormProvider, ISchema } from "@formily/react";
 import { ConfigProvider, theme } from "antd";
 import { StyleProvider, createCache } from "@ant-design/cssinjs";
 import {
+  FormItem,
   FormLayout,
   Input,
   NumberPicker,
@@ -32,8 +33,10 @@ import { AdvancedFormItem } from "./components/AdvancedFormItem";
 import { CodeEditorComponent } from "./components/common/CodeEditorComponent";
 import { IconSelectComponent } from "./components/common/IconSelectComponent";
 import { __secret_internals, customEditors } from "@next-core/runtime";
-import { schemaFormatter } from "./utils/schemaFormatter";
+import { ADVANCED_FORM_KEY, schemaFormatter } from "./utils/schemaFormatter";
 import "./style.css";
+import yaml from "js-yaml";
+import _ from "lodash";
 
 const { defineElement, property, method, event } = createDecorators();
 
@@ -44,6 +47,7 @@ const SchemaField = createSchemaField({
     FormLayout,
     Input,
     FormItem: AdvancedFormItem,
+    FormItemWithoutAdvanced: FormItem,
     NumberPicker,
     Radio,
     Select,
@@ -55,8 +59,9 @@ const SchemaField = createSchemaField({
 });
 
 export interface EditorComponentProps {
+  advancedMode?: boolean;
   SchemaFieldComponent: typeof SchemaField;
-  schemaFormatter: (data: ISchema) => ISchema;
+  schemaFormatter: (data: ISchema, advancedMode: boolean) => ISchema;
   form: Form<any>;
   effects: {
     onFieldInit: typeof onFieldInit;
@@ -79,13 +84,21 @@ export
 class PropertyEditor extends ReactNextElement {
   #formRef = createRef<any>();
 
+  /** 构件名称 */
   @property()
   accessor editorName: string | undefined;
 
+  /** 值 */
   @property({
     attribute: false,
   })
   accessor values: any | undefined;
+
+  /** 高级模式 */
+  @property({
+    type: Boolean,
+  })
+  accessor advancedMode: boolean | undefined;
 
   /**
    * 表单验证成功时触发事件
@@ -105,7 +118,10 @@ class PropertyEditor extends ReactNextElement {
     form
       .validate()
       .then(() => {
-        this.#successEvent.emit({ ...form.values });
+        const realValue = this.advancedMode
+          ? yaml.load(form.values[ADVANCED_FORM_KEY])
+          : _.omit(form.values, [ADVANCED_FORM_KEY]);
+        this.#successEvent.emit({ ...realValue });
       })
       .catch((err: any[]) => {
         this.#errorEvent.emit(err);
@@ -116,33 +132,29 @@ class PropertyEditor extends ReactNextElement {
     return (
       <PropertyEditorComponent
         ref={this.#formRef}
-        // shadowRoot={this.shadowRoot}
         editorName={this.editorName}
         values={this.values}
+        advancedMode={this.advancedMode}
       />
     );
   }
 }
 
 export interface PropertyEditorProps {
-  shadowRoot?: ShadowRoot;
   values: any;
   editorName: string;
+  advancedMode?: boolean;
 }
 
-export function LegacyPropertyEditor(props: PropertyEditorProps, ref: any) {
+export function LegacyPropertyEditor(
+  { advancedMode, values, editorName }: PropertyEditorProps,
+  ref: any
+) {
   const currentTheme = useCurrentTheme();
   const cache = useMemo(() => createCache(), []);
+  const form = useMemo(() => createForm(), []);
   const [Editor, setEditor] =
     useState<(props: EditorComponentProps) => React.ReactElement>(null);
-
-  const form = useMemo(() => createForm(), []);
-
-  useEffect(() => {
-    if (Editor) {
-      form.setInitialValues(props.values);
-    }
-  }, [form, props.values, Editor]);
 
   useImperativeHandle(ref, () => ({
     getFormInstance: () => form,
@@ -155,36 +167,64 @@ export function LegacyPropertyEditor(props: PropertyEditorProps, ref: any) {
   };
 
   useEffect(() => {
-    props.editorName && load(props.editorName);
-  }, [props.editorName]);
+    editorName && load(editorName);
+  }, [editorName]);
+
+  useEffect(() => {
+    if (Editor) {
+      form.setInitialValues(values);
+    }
+  }, [form, values, Editor]);
+
+  useEffect(() => {
+    const { values } = form.getState();
+    if (advancedMode) {
+      form.setValuesIn(
+        ADVANCED_FORM_KEY,
+        _.isEmpty(values)
+          ? ""
+          : yaml.safeDump(_.omit(values, [ADVANCED_FORM_KEY]))
+      );
+    } else {
+      const realValue = values[ADVANCED_FORM_KEY];
+      if (realValue) {
+        form.setValues(yaml.safeLoad(realValue));
+      } else {
+        form.setValues(values);
+      }
+    }
+  }, [advancedMode, form]);
 
   if (!Editor) return <div>无数据</div>;
 
   return (
-    <ConfigProvider
-      prefixCls="antdV5"
-      theme={{
-        algorithm:
-          currentTheme === "dark-v2"
-            ? theme.darkAlgorithm
-            : theme.defaultAlgorithm,
-      }}
-      getPopupContainer={(trigger) => trigger!}
-    >
-      <StyleProvider container={props.shadowRoot} cache={cache}>
-        <FormProvider form={form}>
-          <Editor
-            SchemaFieldComponent={SchemaField}
-            form={form}
-            effects={{
-              onFieldInit,
-              onFieldValueChange,
-              onFieldInitialValueChange,
-            }}
-            schemaFormatter={schemaFormatter}
-          />
-        </FormProvider>
-      </StyleProvider>
-    </ConfigProvider>
+    <div className="property-form-wrapper">
+      <ConfigProvider
+        prefixCls="antdV5"
+        theme={{
+          algorithm:
+            currentTheme === "dark-v2"
+              ? theme.darkAlgorithm
+              : theme.defaultAlgorithm,
+        }}
+        getPopupContainer={(trigger) => trigger!}
+      >
+        <StyleProvider cache={cache}>
+          <FormProvider form={form}>
+            <Editor
+              advancedMode={advancedMode}
+              SchemaFieldComponent={SchemaField}
+              form={form}
+              effects={{
+                onFieldInit,
+                onFieldValueChange,
+                onFieldInitialValueChange,
+              }}
+              schemaFormatter={schemaFormatter}
+            />
+          </FormProvider>
+        </StyleProvider>
+      </ConfigProvider>
+    </div>
   );
 }

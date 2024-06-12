@@ -1,7 +1,32 @@
 import { ISchema } from "@formily/react";
 import _ from "lodash";
 
-export function schemaFormatter(data: ISchema): ISchema {
+export const ADVANCED_FORM_KEY = "#advanced_form";
+
+export function schemaFormatter(data: ISchema, advancedMode: boolean): ISchema {
+  if (advancedMode) {
+    return {
+      type: "object",
+      properties: {
+        layout: {
+          type: "void",
+          "x-component": "FormLayout",
+          "x-component-props": {
+            layout: "vertical",
+          },
+          properties: {
+            [ADVANCED_FORM_KEY]: {
+              title: "属性",
+              type: "string",
+              "x-decorator": "FormItemWithoutAdvanced",
+              "x-component": "CodeEditor",
+            },
+          },
+        },
+      },
+    };
+  }
+
   const newData = _.clone(data);
 
   const walk = (data: any) => {
