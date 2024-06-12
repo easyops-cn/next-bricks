@@ -1,9 +1,12 @@
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api.js";
 import storyboardJsonSchema from "@next-core/types/storyboard.json";
-import { EVALUATE_KEYWORD, brickNextKeywords } from "./constants.js";
+import { brickNextKeywords } from "./constants.js";
 import get from "lodash/get.js";
 import { getEditorId } from "./editorId.js";
 import { TokenConfig } from "../index.jsx";
+import { AdvancedCompleterMap } from "../interfaces.js";
+import { provideJsSuggestItems } from "../utils/jsSuggestInBrickYaml.js";
+import { EmbeddedModelContext } from "../utils/embeddedModelState.js";
 
 const findKeys = (
   model: monaco.editor.ITextModel,
@@ -24,13 +27,13 @@ const findKeys = (
     });
     const matchWord = prefixLineWord.match(/^([\s|-]*)(\w+)(?=:)/);
     if (matchWord) {
-      const [, wordspace, key] = matchWord;
-      if (wordspace.length === range.startColumn - 1) {
+      const [, wordSpace, key] = matchWord;
+      if (wordSpace.length === range.startColumn - 1) {
         curLevelKeys.unshift(key);
       }
-      if (wordspace.length < startColumn - 1) {
+      if (wordSpace.length < startColumn - 1) {
         !parentKey && (parentKey = key);
-        startColumn = wordspace.length;
+        startColumn = wordSpace.length;
         keyList.unshift(key);
       }
     }
@@ -131,25 +134,24 @@ export const isInEvaluateBody = (
 
 export const brickNextYAMLProviderCompletionItems = (
   completers: monaco.languages.CompletionItem[] = [],
-  advancedCompleters: Record<
-    string,
-    { triggerCharacter: string; completers: monaco.languages.CompletionItem[] }
-  > = {},
+  advancedCompleters: AdvancedCompleterMap = {},
   id: string,
   tokenConfig: TokenConfig
 ) => {
-  return (
+  return async (
     model: monaco.editor.ITextModel,
     position: monaco.Position,
     context: monaco.languages.CompletionContext
-  ): monaco.languages.ProviderResult<monaco.languages.CompletionList> => {
+  ): Promise<
+    monaco.languages.ProviderResult<monaco.languages.CompletionList>
+  > => {
     if (id && id !== getEditorId())
       return {
         suggestions: [],
       };
     const DSToken = tokenConfig.showDSKey ? ["CTX.DS", "DS"] : [];
     const word = model.getWordUntilPosition(position);
-    const { word: prefixWord, token: prefixToken } = getPrefixWord(
+    const { word: prefixWord, token: _prefixToken } = getPrefixWord(
       model,
       position,
       tokenConfig
@@ -276,83 +278,16 @@ export const brickNextYAMLProviderCompletionItems = (
     }
 
     if (isInEvaluateBody(model, position)) {
-      if (
-        prefixWord &&
-        ["CTX", "STATE"].concat(DSToken).includes(prefixWord) &&
-        advancedCompleters
-      ) {
-        return {
-          suggestions: (advancedCompleters[prefixWord]?.completers ?? []).map(
-            (item) => ({
-              label: item.label,
-              insertText: item.label as string,
-              kind: monaco.languages.CompletionItemKind.Value,
-              range,
-            })
-          ),
-        };
-      }
+      const embeddedContext = EmbeddedModelContext.getInstance(id);
 
-      if (
-        prefixWord === "FN" &&
-        context.triggerCharacter === "." &&
-        advancedCompleters
-      ) {
-        return {
-          suggestions: (advancedCompleters["FN"]?.completers ?? []).map(
-            (item) => ({
-              label: item.label,
-              insertText: item.label as string,
-              kind: monaco.languages.CompletionItemKind.Value,
-              range,
-            })
-          ),
-        };
-      }
-
-      if (prefixWord === "APP" && context.triggerCharacter === ".") {
-        const appProperties = get(
-          storyboardJsonSchema,
-          "definitions.MicroApp.properties"
-        );
-        const suggestions = [];
-        for (const [k, v] of Object.entries(
-          appProperties as unknown as Record<
-            string,
-            {
-              description: string;
-              type: string;
-              enum: string[];
-            }
-          >
-        )) {
-          suggestions.push({
-            label: k,
-            kind: monaco.languages.CompletionItemKind.Value,
-            documentation: v.description,
-            detail: v.enum ? v.enum.join("|") : v.type,
-            insertText: k,
-            range,
-          });
-        }
-        return {
-          suggestions,
-        };
-      }
-
-      if ([".", ":"].includes(prefixToken)) {
-        return {
-          suggestions: [],
-        };
-      }
+      const suggestions = await provideJsSuggestItems(
+        model,
+        position,
+        embeddedContext.getState()
+      );
 
       return {
-        suggestions: EVALUATE_KEYWORD.map((item) => ({
-          label: item,
-          insertText: item,
-          kind: monaco.languages.CompletionItemKind.Keyword,
-          range,
-        })),
+        suggestions,
       };
     }
 

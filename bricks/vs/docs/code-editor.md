@@ -183,10 +183,6 @@ children:
       - CTX
       - FN
     markers:
-      - token: CTX
-        params:
-          - a
-          - b
       - token: PATH
         message: “这是 PATH”
         level: hit
@@ -218,21 +214,26 @@ children:
         completers:
           - label: a
           - label: b
-      CTX:
-        triggerCharacter: "."
-        completers:
-          - label: pageTitle
-          - label: name
-      FN:
-        triggerCharacter: "."
-        completers:
-          - label: getPageDetail
-          - label: getInstance
-      PATH:
-        triggerCharacter: "."
-        completers:
-          - label: instanceId
-          - label: name
+    extraLibs:
+      - filePath: base.d.ts
+        content: |
+          declare namespace CTX {
+            const pageTitle: string;
+            const name: string;
+            const a;
+            const b;
+          };
+          declare namespace FN {
+            function getPageDetail();
+            function getInstance();
+          };
+          declare namespace PATH {
+            const instanceId: string;
+            const name: string;
+          };
+          declare namespace QUERY {
+            const activeId: string;
+          }
 - brick: vs.code-editor
   events:
     highlight.click:
@@ -247,11 +248,6 @@ children:
     links:
       - CTX
       - FN
-    markers:
-      - token: CTX
-        params:
-          - a
-          - b
 ```
 
 ### Show CTX.DS
@@ -304,5 +300,21 @@ children:
             params:
               - a
               - b
+        extraLibs:
+          - filePath: common.d.ts
+            content: |
+              declare namespace CTX {
+                const a;
+                namespace DS {
+                  const a;
+                  const b;
+                };
+              };
+              declare namespace PATH {
+                const instanceId: string;
+              };
+              declare namespace QUERY {
+                const index: number;
+              };
     - brick: eo-submit-buttons
 ```
