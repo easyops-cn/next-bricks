@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.7.3...@next-bricks/vs@1.8.0) (2024-06-13)
+
+
+### Features
+
+* support semantic validate ([945cb32](https://github.com/easyops-cn/next-bricks/commit/945cb329facab524bcffe34111d0b5f602d2558f))
+* 编辑器在 brick_yaml 下自动补全 ([2215071](https://github.com/easyops-cn/next-bricks/commit/22150711295e30b3e04070abc4a0f85510c08377))
+
+
+
+
+
 ## [1.7.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.7.2...@next-bricks/vs@1.7.3) (2024-06-11)
 
 

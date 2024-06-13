@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.17.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.16.4...@next-bricks/visual-builder@1.17.0) (2024-06-13)
+
+
+### Features
+
+* add advancedMode ([a0cec99](https://github.com/easyops-cn/next-bricks/commit/a0cec99a8780a853a8976c55991006fcf3dcc729))
+* add schemaFormatter ([8ffa6c1](https://github.com/easyops-cn/next-bricks/commit/8ffa6c1b30cef75628111c73441173c4f7582389))
+* support property-editor ([97b4014](https://github.com/easyops-cn/next-bricks/commit/97b4014c0ecadf0ae3758890763530f5880355e9))
+
+
+
+
+
 ## [1.16.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.16.3...@next-bricks/visual-builder@1.16.4) (2024-06-11)
 
 
