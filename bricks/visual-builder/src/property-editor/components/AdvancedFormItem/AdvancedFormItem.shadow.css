@@ -1,0 +1,21 @@
+.advanced-form-item {
+  position: relative;
+
+  .advanced-mode-check-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    eo-icon[icon="code"] {
+      cursor: pointer;
+      padding: 2px 4px;
+      background: #f2f2f2;
+      border-radius: 6px;
+
+      &.isActive {
+        background: var(--color-brand);
+        color: #fff;
+      }
+    }
+  }
+}

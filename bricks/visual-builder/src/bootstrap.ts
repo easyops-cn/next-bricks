@@ -14,3 +14,4 @@ import "./data-providers/inject-chat-preview-agent.js";
 import "./pre-generated-preview/index.js";
 import "./pre-generated-table-view/index.js";
 import "./pre-generated-container/index.js";
+import "./property-editor/index.js";
