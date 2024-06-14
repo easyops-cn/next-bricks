@@ -1,130 +1,165 @@
 export const eoButtonSchema = {
-  type: "object",
-  properties: {
-    layout: {
+  name: "layout",
+  type: "void",
+  component: {
+    name: "FormLayout",
+    props: {
+      layout: "vertical",
+    },
+  },
+  children: [
+    {
+      name: "categoryTitle_basic",
       type: "void",
-      "x-component": "FormLayout",
-      "x-component-props": {
-        layout: "vertical",
-      },
-      properties: {
-        categoryTitle_basic: {
-          type: "string",
-          "x-decorator": "CategoryTitle",
-          "x-decorator-props": {
-            text: "基础",
-          },
-        },
-        textContent: {
-          title: "文本",
-          type: "string",
-          required: true,
-        },
-        disabled: {
-          title: "禁用",
-          type: "boolean",
-        },
-        url: {
-          title: "内链地址",
-          type: "string",
-        },
-        href: {
-          title: "外链地址",
-          type: "string",
-        },
-        target: {
-          title: "链接类型",
-          type: "string",
-          "x-decorator": "FormItem",
-          "x-component": "Select",
-          "x-component-props": {
-            options: [
-              {
-                label: "当前页面加载",
-                value: "_self",
-              },
-              {
-                label: "新标签打开",
-                value: "_blank",
-              },
-            ],
-          },
-        },
-        tooltip: {
-          title: "按钮提示",
-          type: "string",
-        },
-        categoryTitle_style: {
-          type: "string",
-          "x-decorator": "CategoryTitle",
-          "x-decorator-props": {
-            text: "样式",
-          },
-        },
-        type: {
-          title: "按钮类型",
-          type: "string",
-          "x-decorator": "FormItem",
-          "x-component": "Select",
-          "x-component-props": {
-            placeholder: "请选择按钮类型",
-            allowClear: true,
-            options: [
-              "primary",
-              "default",
-              "dashed",
-              "ghost",
-              "link",
-              "text",
-              "icon",
-            ].map((item) => ({
-              label: item,
-              value: item,
-            })),
-          },
-        },
-        size: {
-          title: "大小",
-          type: "string",
-          "x-decorator": "FormItem",
-          "x-decorator-props": {
-            layout: "horizontal",
-          },
-          "x-component": "Radio.Group",
-          enum: ["large", "medium", "small", "xs"].map((item) => ({
-            label: item,
-            value: item,
-          })),
-          "x-component-props": {
-            size: "small",
-            optionType: "button",
-          },
-        },
-        danger: {
-          title: "危险模式",
-          type: "boolean",
-        },
-        icon: {
-          type: "string",
-          title: "图标",
-          "x-decorator": "FormItem",
-          "x-component": "IconSelect",
-        },
-        shape: {
-          type: "string",
-          title: "形状",
-          "x-decorator": "FormItem",
-          "x-component": "Select",
-          "x-component-props": {
-            placeholder: "请选择按钮大小",
-            allowClear: true,
-            options: ["circle", "shape", "default"].map((item) => ({
-              label: item,
-              value: item,
-            })),
-          },
+      decorator: {
+        name: "CategoryTitle",
+        props: {
+          text: "基础",
         },
       },
     },
-  },
+    {
+      name: "textContent",
+      title: "文本",
+      type: "string",
+      required: true,
+    },
+    {
+      name: "disabled",
+      title: "禁用",
+      type: "boolean",
+    },
+    {
+      name: "url",
+      title: "内链地址",
+      type: "string",
+    },
+    {
+      name: "href",
+      title: "外链地址",
+      type: "string",
+    },
+    {
+      name: "target",
+      title: "链接类型",
+      type: "string",
+      descorator: "FormItem",
+      component: {
+        name: "Select",
+        props: {
+          options: [
+            {
+              label: "当前页面加载",
+              value: "_self",
+            },
+            {
+              label: "新标签打开",
+              value: "_blank",
+            },
+          ],
+        },
+      },
+    },
+    {
+      name: "tooltip",
+      title: "按钮提示",
+      type: "string",
+    },
+    {
+      name: "categoryTitle_style",
+      decorator: {
+        name: "CategoryTitle",
+        props: {
+          text: "外观",
+        },
+      },
+    },
+    {
+      type: "string",
+      title: "按钮类型",
+      component: {
+        name: "Select",
+        props: {
+          placeholder: "请选择按钮类型",
+          allowClear: true,
+          options: [
+            "primary",
+            "default",
+            "dashed",
+            "ghost",
+            "link",
+            "text",
+            "icon",
+          ].map((item) => ({
+            label: item,
+            value: item,
+          })),
+        },
+      },
+    },
+    {
+      name: "size",
+      title: "大小",
+      type: "string",
+      decorator: {
+        name: "FormItem",
+        props: {
+          layout: "horizontal",
+        },
+      },
+      enum: [
+        {
+          label: "大",
+          value: "large",
+        },
+        {
+          label: "标准",
+          value: "medium",
+        },
+        {
+          label: "小",
+          value: "small",
+        },
+        {
+          label: "超小",
+          value: "xs",
+        },
+      ],
+      component: {
+        name: "Radio.Group",
+        props: {
+          size: "small",
+          optionType: "button",
+        },
+      },
+    },
+    {
+      name: "danger",
+      title: "危险模式",
+      type: "boolean",
+    },
+    {
+      name: "icon",
+      title: "图标",
+      type: "string",
+      component: "IconSelect",
+    },
+    {
+      name: "shape",
+      title: "形状",
+      type: "string",
+      component: {
+        name: "Select",
+        props: {
+          placeholder: "请选择按钮形状",
+          allowClear: true,
+          options: [
+            { label: "圆形", value: "circle" },
+            { label: "圆弧形", value: "round" },
+            { label: "默认", value: "default" },
+          ],
+        },
+      },
+    },
+  ],
 };

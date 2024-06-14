@@ -4,9 +4,10 @@ import { customEditors } from "@next-core/runtime";
 // @ts-ignore
 import type { EditorComponentProps } from "@next-bricks/visual-builder/property-editor";
 import { eoButtonSchema } from "./eoButton.schema";
+// import { newSchema } from "./new.schema";
 
 function EoButtonComponent(props: EditorComponentProps): React.ReactElement {
-  const { SchemaFieldComponent, schemaFormatter, advancedMode } = props;
+  const { SchemaFieldComponent, formilySchemaFormatter, advancedMode } = props;
 
   // 设置表达 effect
   // useEffect(() => {
@@ -20,7 +21,7 @@ function EoButtonComponent(props: EditorComponentProps): React.ReactElement {
   // }, []);
 
   return createElement(SchemaFieldComponent, {
-    schema: schemaFormatter(eoButtonSchema, advancedMode),
+    schema: formilySchemaFormatter(eoButtonSchema, advancedMode),
   });
 }
 
