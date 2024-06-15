@@ -19,6 +19,7 @@ import { createSchemaField, FormProvider, ISchema } from "@formily/react";
 import { ConfigProvider, theme } from "antd";
 import { StyleProvider, createCache } from "@ant-design/cssinjs";
 import {
+  FormCollapse,
   FormItem,
   FormLayout,
   Input,
@@ -33,7 +34,11 @@ import { AdvancedFormItem } from "./components/AdvancedFormItem";
 import { CodeEditorComponent } from "./components/common/CodeEditorComponent";
 import { IconSelectComponent } from "./components/common/IconSelectComponent";
 import { __secret_internals, customEditors } from "@next-core/runtime";
-import { ADVANCED_FORM_KEY, schemaFormatter } from "./utils/schemaFormatter";
+import {
+  ADVANCED_FORM_KEY,
+  DataNode,
+  formilySchemaFormatter,
+} from "./utils/formilySchemaFormatter";
 import "./style.css";
 import yaml from "js-yaml";
 import _ from "lodash";
@@ -48,6 +53,7 @@ const SchemaField = createSchemaField({
     Input,
     FormItem: AdvancedFormItem,
     FormItemWithoutAdvanced: FormItem,
+    FormCollapse,
     NumberPicker,
     Radio,
     Select,
@@ -61,7 +67,7 @@ const SchemaField = createSchemaField({
 export interface EditorComponentProps {
   advancedMode?: boolean;
   SchemaFieldComponent: typeof SchemaField;
-  schemaFormatter: (data: ISchema, advancedMode: boolean) => ISchema;
+  formilySchemaFormatter: (data: DataNode, advancedMode: boolean) => ISchema;
   form: Form<any>;
   effects: {
     onFieldInit: typeof onFieldInit;
@@ -220,7 +226,7 @@ export function LegacyPropertyEditor(
                 onFieldValueChange,
                 onFieldInitialValueChange,
               }}
-              schemaFormatter={schemaFormatter}
+              formilySchemaFormatter={formilySchemaFormatter}
             />
           </FormProvider>
         </StyleProvider>
