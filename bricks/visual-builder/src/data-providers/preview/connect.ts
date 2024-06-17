@@ -13,7 +13,7 @@ import type {
   CustomTemplate,
   RouteConf,
 } from "@next-core/types";
-import { isEmpty, throttle } from "lodash";
+import { isEmpty, throttle, omit } from "lodash";
 import type {
   BrickOutline,
   HighLightNode,
@@ -39,6 +39,7 @@ import type {
   PreviewSettings,
   PreviewStartOptions,
   PreviewDebugData,
+  PreviewMessagePreviewInspectRuntimeValue,
 } from "./interfaces.js";
 import { capture } from "./capture.js";
 import {
@@ -302,7 +303,7 @@ export default async function connect(
   const debugDataValue = async (
     data: PreviewDebugData,
     contractData: Contract,
-    options: PreviewDataOption
+    previewOption: PreviewDataOption
   ) => {
     try {
       if (contractData) {
@@ -310,7 +311,10 @@ export default async function connect(
       }
       const value = await __secret_internals.debugDataValue(data, {
         tplStateStoreId:
-          options.dataType === "state" ? getRootTplStateStoreId() : undefined,
+          previewOption.dataType === "state"
+            ? getRootTplStateStoreId()
+            : undefined,
+        routeId: options.routeId,
       });
 
       sendMessage<PreviewMessagePreviewDebugValueSuccess>({
@@ -627,6 +631,20 @@ export default async function connect(
     });
   }
 
+  const setupRuntimeValueInspect = () => {
+    const routeId = options.routeId;
+
+    const data = __secret_internals.getLegalRuntimeValue({ routeId });
+    sendMessage<PreviewMessagePreviewInspectRuntimeValue>({
+      type: "inspect-runtime-data-value",
+      data: {
+        ...omit(data, "query"),
+        query: data.query ? Object.fromEntries(data.query.entries()) : {},
+        path: data.match?.params,
+      },
+    });
+  };
+
   __secret_internals.addRealTimeDataInspectHook?.(
     ({ changeType, tplStateStoreId, detail }) => {
       sendMessage<PreviewMessagePreviewerRealTimeDataInspectChange>({
@@ -667,10 +685,12 @@ export default async function connect(
 
   window.addEventListener("route.render", () => {
     setupRealTimeDataInspect(true);
+    setupRuntimeValueInspect();
   });
 
   setupContentScroll();
   setupRealTimeDataInspect(true);
+  setupRuntimeValueInspect();
 
   const mutationCallback = (): void => {
     setupContentScroll();

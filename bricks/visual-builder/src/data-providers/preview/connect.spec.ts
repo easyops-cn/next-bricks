@@ -63,6 +63,12 @@ jest
   .spyOn(runtime.__secret_internals, "getAllContextValues")
   .mockImplementation();
 
+jest.spyOn(runtime.__secret_internals, "getLegalRuntimeValue").mockReturnValue({
+  app: { homepage: "/cmdb" },
+  sys: { username: "easyops" },
+  query: new URLSearchParams("a=x"),
+} as any);
+
 const realTimeDataInspectHooks: any = [];
 jest
   .spyOn(runtime.__secret_internals, "addRealTimeDataInspectHook")
@@ -146,7 +152,7 @@ describe("connect", () => {
     });
     expect(history.reload).toBeCalledTimes(1);
     expect(setPreviewFromOrigin).toBeCalledWith("http://localhost:8081");
-    expect(parentPostMessage).toBeCalledTimes(3);
+    expect(parentPostMessage).toBeCalledTimes(4);
     expect(parentPostMessage).toHaveBeenNthCalledWith(
       1,
       {
@@ -175,9 +181,24 @@ describe("connect", () => {
     );
 
     history.push("/b");
-    expect(parentPostMessage).toBeCalledTimes(5);
+    expect(parentPostMessage).toBeCalledTimes(6);
+
     expect(parentPostMessage).toHaveBeenNthCalledWith(
       4,
+      {
+        sender: "previewer",
+        type: "inspect-runtime-data-value",
+        data: {
+          app: { homepage: "/cmdb" },
+          sys: { username: "easyops" },
+          query: { a: "x" },
+        },
+      },
+      "http://localhost:8081"
+    );
+
+    expect(parentPostMessage).toHaveBeenNthCalledWith(
+      5,
       {
         sender: "previewer",
         type: "url-change",
@@ -186,7 +207,7 @@ describe("connect", () => {
       "http://localhost:8081"
     );
     expect(parentPostMessage).toHaveBeenNthCalledWith(
-      5,
+      6,
       {
         sender: "previewer",
         type: "route-match-change",
@@ -197,7 +218,7 @@ describe("connect", () => {
 
     // Ignore re-start.
     connect("http://localhost:8081", { appId: "test" });
-    expect(parentPostMessage).toBeCalledTimes(5);
+    expect(parentPostMessage).toBeCalledTimes(6);
 
     const listener = addEventListener.mock.calls[0][1] as EventListener;
     listener({
@@ -251,9 +272,9 @@ describe("connect", () => {
         iid: "i-01",
       },
     } as any);
-    expect(parentPostMessage).toBeCalledTimes(6);
+    expect(parentPostMessage).toBeCalledTimes(7);
     expect(parentPostMessage).toHaveBeenNthCalledWith(
-      6,
+      7,
       {
         sender: "previewer",
         type: "highlight-brick",
@@ -274,9 +295,9 @@ describe("connect", () => {
         iid: "i-01",
       },
     } as any);
-    expect(parentPostMessage).toBeCalledTimes(7);
+    expect(parentPostMessage).toBeCalledTimes(8);
     expect(parentPostMessage).toHaveBeenNthCalledWith(
-      7,
+      8,
       {
         sender: "previewer",
         type: "highlight-brick",
@@ -297,9 +318,9 @@ describe("connect", () => {
         iid: null,
       },
     } as any);
-    expect(parentPostMessage).toBeCalledTimes(8);
+    expect(parentPostMessage).toBeCalledTimes(9);
     expect(parentPostMessage).toHaveBeenNthCalledWith(
-      8,
+      9,
       {
         sender: "previewer",
         type: "highlight-brick",
@@ -384,11 +405,11 @@ describe("connect", () => {
       },
     } as any);
     expect(capture).toHaveBeenNthCalledWith(1, 200, 150);
-    expect(parentPostMessage).toBeCalledTimes(8);
-    await (global as any).flushPromises();
     expect(parentPostMessage).toBeCalledTimes(9);
+    await (global as any).flushPromises();
+    expect(parentPostMessage).toBeCalledTimes(10);
     expect(parentPostMessage).toHaveBeenNthCalledWith(
-      9,
+      10,
       {
         sender: "previewer",
         type: "capture-ok",
@@ -408,11 +429,11 @@ describe("connect", () => {
       },
     } as any);
     expect(capture).toHaveBeenNthCalledWith(2, 400, 300);
-    expect(parentPostMessage).toBeCalledTimes(9);
-    await (global as any).flushPromises();
     expect(parentPostMessage).toBeCalledTimes(10);
+    await (global as any).flushPromises();
+    expect(parentPostMessage).toBeCalledTimes(11);
     expect(parentPostMessage).toHaveBeenNthCalledWith(
-      10,
+      11,
       {
         sender: "previewer",
         type: "capture-failed",
@@ -434,9 +455,9 @@ describe("connect", () => {
         ],
       },
     } as any);
-    expect(parentPostMessage).toBeCalledTimes(11);
+    expect(parentPostMessage).toBeCalledTimes(12);
     expect(parentPostMessage).toHaveBeenNthCalledWith(
-      11,
+      12,
       {
         sender: "previewer",
         type: "highlight-context",
@@ -678,7 +699,7 @@ describe("connect", () => {
     } as any);
 
     expect(parentPostMessage).toHaveBeenNthCalledWith(
-      16,
+      17,
       {
         sender: "previewer",
         type: "inspect-data-value-error",
@@ -781,7 +802,7 @@ describe("connect", () => {
     await (global as any).flushPromises();
 
     expect(parentPostMessage).toHaveBeenNthCalledWith(
-      19,
+      20,
       {
         sender: "previewer",
         type: "debug-data-value-error",
@@ -831,7 +852,7 @@ describe("connect", () => {
       appId: "my-app",
     });
 
-    expect(parentPostMessage).toBeCalledTimes(3);
+    expect(parentPostMessage).toBeCalledTimes(4);
 
     const listener = addEventListener.mock.calls[0][1] as EventListener;
 
@@ -845,9 +866,9 @@ describe("connect", () => {
         iid: "i-02",
       },
     } as any);
-    expect(parentPostMessage).toBeCalledTimes(4);
+    expect(parentPostMessage).toBeCalledTimes(5);
     expect(parentPostMessage).toHaveBeenNthCalledWith(
-      4,
+      5,
       {
         sender: "previewer",
         type: "highlight-brick",
@@ -874,7 +895,7 @@ describe("connect", () => {
       templateId: "my-tpl",
     });
 
-    expect(parentPostMessage).toBeCalledTimes(3);
+    expect(parentPostMessage).toBeCalledTimes(4);
 
     const listener = addEventListener.mock.calls[0][1] as EventListener;
 
@@ -888,9 +909,9 @@ describe("connect", () => {
         iid: "i-01",
       },
     } as any);
-    expect(parentPostMessage).toBeCalledTimes(4);
+    expect(parentPostMessage).toBeCalledTimes(5);
     expect(parentPostMessage).toHaveBeenNthCalledWith(
-      4,
+      5,
       {
         sender: "previewer",
         type: "highlight-brick",
@@ -906,9 +927,9 @@ describe("connect", () => {
     pageView.shadowRoot
       .querySelector(".content")
       .dispatchEvent(new Event("scroll"));
-    expect(parentPostMessage).toBeCalledTimes(5);
+    expect(parentPostMessage).toBeCalledTimes(6);
     expect(parentPostMessage).toHaveBeenNthCalledWith(
-      5,
+      6,
       {
         sender: "previewer",
         type: "content-scroll",
