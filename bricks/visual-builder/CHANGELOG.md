@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.18.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.17.0...@next-bricks/visual-builder@1.18.0) (2024-06-17)
+
+
+### Features
+
+* inspect runtime value ([582fc56](https://github.com/easyops-cn/next-bricks/commit/582fc5669b072aef450fdf387b0a692a87c1ec54))
+* support formily schema formmater ([f95708f](https://github.com/easyops-cn/next-bricks/commit/f95708f1e8902eb9c03f18a4d3f5fc2b2d284afd))
+
+
+
+
+
 # [1.17.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.16.4...@next-bricks/visual-builder@1.17.0) (2024-06-13)
 
 
