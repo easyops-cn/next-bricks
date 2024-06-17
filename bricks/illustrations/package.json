@@ -59,7 +59,7 @@
   "dependencies": {
     "@next-core/illustrations": "^0.11.31",
     "@next-core/types": "^1.11.1",
-    "@next-core/utils": "^1.7.7",
+    "@next-core/utils": "^1.7.8",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
