@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.19.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.19.0...@next-bricks/basic@1.19.1) (2024-06-18)
+
+
+### Bug Fixes
+
+* fix eo-text type ([0b394fd](https://github.com/easyops-cn/next-bricks/commit/0b394fd7a4f17a10d89514c31fd6a4f930edf4b9))
+
+
+
+
+
 # [1.19.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.18.0...@next-bricks/basic@1.19.0) (2024-06-17)
 
 
