@@ -14,6 +14,7 @@ import {
   onFieldValueChange,
   onFieldInit,
   onFieldInitialValueChange,
+  onFormValidateSuccess,
 } from "@formily/core";
 import { createSchemaField, FormProvider, ISchema } from "@formily/react";
 import { ConfigProvider, theme } from "antd";
@@ -73,9 +74,29 @@ export interface EditorComponentProps {
     onFieldInit: typeof onFieldInit;
     onFieldValueChange: typeof onFieldValueChange;
     onFieldInitialValueChange: typeof onFieldInitialValueChange;
+    onFormValidateSuccess: typeof onFormValidateSuccess;
     // support any effects
   };
+  scope: {
+    dataList: DataItem[];
+  };
 }
+
+export interface DefinitionItem {
+  name: string;
+  type: string;
+  enum: string;
+  fileds: DefinitionItem[];
+}
+
+export interface DataItem {
+  name: string;
+  value: string;
+  definition: DefinitionItem[];
+  [k: string]: any;
+}
+
+export { DataNode };
 
 /**
  * 构件 `visual-builder.property-editor`
@@ -105,6 +126,11 @@ class PropertyEditor extends ReactNextElement {
     type: Boolean,
   })
   accessor advancedMode: boolean | undefined;
+
+  @property({
+    attribute: false,
+  })
+  accessor dataList: DataItem[];
 
   /**
    * 表单验证成功时触发事件
@@ -141,6 +167,7 @@ class PropertyEditor extends ReactNextElement {
         editorName={this.editorName}
         values={this.values}
         advancedMode={this.advancedMode}
+        dataList={this.dataList}
       />
     );
   }
@@ -150,10 +177,11 @@ export interface PropertyEditorProps {
   values: any;
   editorName: string;
   advancedMode?: boolean;
+  dataList: DataItem[];
 }
 
 export function LegacyPropertyEditor(
-  { advancedMode, values, editorName }: PropertyEditorProps,
+  { advancedMode, values, editorName, dataList }: PropertyEditorProps,
   ref: any
 ) {
   const currentTheme = useCurrentTheme();
@@ -221,10 +249,14 @@ export function LegacyPropertyEditor(
               advancedMode={advancedMode}
               SchemaFieldComponent={SchemaField}
               form={form}
+              scope={{
+                dataList,
+              }}
               effects={{
                 onFieldInit,
                 onFieldValueChange,
                 onFieldInitialValueChange,
+                onFormValidateSuccess,
               }}
               formilySchemaFormatter={formilySchemaFormatter}
             />
