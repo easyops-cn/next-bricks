@@ -19,6 +19,7 @@ import classNames from "classnames";
 import { useChatViewContext } from "../ChatViewContext.js";
 import { AgentDetailItem } from "./QuickAnswerList/index";
 import { ChatBody } from "../ChatService.js";
+import { ReactUseMultipleBricks } from "@next-core/react-runtime";
 
 export interface SearchInputRef {
   handleInsertQuestion: (value: string) => void;
@@ -31,7 +32,7 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 const PREFIX_WORD = "@";
 
 export function LegacySearchInput(
-  _: any,
+  props: any,
   ref: React.Ref<SearchInputRef>
 ): React.ReactNode {
   const [value, setValue] = useState<string>("");
@@ -399,6 +400,11 @@ export function LegacySearchInput(
       ref={searchInputBoxRef}
     >
       {mentions}
+      {props.inputToolbarBrick && (
+        <div className="input-toobar">
+          <ReactUseMultipleBricks {...props.inputToolbarBrick} />
+        </div>
+      )}
       <div
         className={classNames("input-box", {
           active,
