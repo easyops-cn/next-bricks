@@ -13,6 +13,8 @@ describe("visual-builder.property-editor", () => {
       "visual-builder.property-editor"
     ) as PropertyEditor;
 
+    element.editorName = "eo-button-editor";
+
     expect(element.shadowRoot).toBeFalsy();
 
     act(() => {
