@@ -10,9 +10,12 @@ import "@next-core/theme";
 import "./host-context.css";
 import "./index.css";
 import { commandBrickConf } from "./ChatViewContext";
+import { UseBrickConf } from "@next-core/types";
 import { ChatBody } from "./ChatService.js";
 
 const { defineElement, property, method } = createDecorators();
+
+type InputToolbarBrick = { useBrick: UseBrickConf };
 
 export interface ChatViewProps {
   agentId: string;
@@ -28,6 +31,7 @@ export interface ChatViewProps {
   debug?: boolean;
   commandBricks?: commandBrickConf;
   answerLanguage?: string;
+  inputToolbarBrick?: InputToolbarBrick;
 }
 
 export function LegacyChatViewComponent(
@@ -45,6 +49,7 @@ export function LegacyChatViewComponent(
     debug = false,
     commandBricks,
     answerLanguage,
+    inputToolbarBrick,
   }: ChatViewProps,
   ref: React.Ref<SearchInputRef>
 ) {
@@ -113,7 +118,9 @@ export function LegacyChatViewComponent(
         )}
         <div className="chat-view-content">
           <MessageList showAvatar={showAvatar} />
-          {!readonly && <SearchInput ref={ref} />}
+          {!readonly && (
+            <SearchInput inputToolbarBrick={inputToolbarBrick} ref={ref} />
+          )}
         </div>
       </div>
     </ChatViewContext.Provider>
@@ -230,6 +237,14 @@ class ChatView extends ReactNextElement {
   })
   accessor commandBricks: commandBrickConf | undefined;
 
+  /**
+   * 输入框工具栏 useBrick
+   */
+  @property({
+    attribute: false,
+  })
+  accessor inputToolbarBrick: InputToolbarBrick | undefined;
+
   #ref = React.createRef<SearchInputRef>();
 
   /**
@@ -267,6 +282,7 @@ class ChatView extends ReactNextElement {
         enterInterval={this.enterInterval}
         commandBricks={this.commandBricks}
         answerLanguage={this.answerLanguage}
+        inputToolbarBrick={this.inputToolbarBrick}
         ref={this.#ref}
       />
     );
