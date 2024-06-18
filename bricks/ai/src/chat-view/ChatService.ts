@@ -12,6 +12,7 @@ export interface SSEMessageItem {
   };
   taskId?: string;
   agentId?: string;
+  robotId?: string;
 }
 
 export interface QueueItem {
@@ -30,6 +31,7 @@ export interface SessionItem {
 
 export interface ChatItem {
   agentId: string;
+  robotId: string;
   conversationId: string;
   input: string;
   output: string;
@@ -56,6 +58,7 @@ export class ChatService {
   #debug: boolean;
   #ctrl?: AbortController;
   #agentId: string;
+  #robotId: string;
   #enterInterval: number;
   #charting = false;
   #isStartEmitEvent = false;
@@ -74,16 +77,19 @@ export class ChatService {
 
   constructor({
     agentId,
+    robotId,
     enterInterval = 50,
     debug = false,
     answerLanguage,
   }: {
     agentId: string;
+    robotId: string;
     enterInterval: number;
     debug: boolean;
     answerLanguage?: string;
   }) {
     this.#agentId = agentId;
+    this.#robotId = robotId;
     this.#enterInterval = enterInterval;
     this.#debug = debug;
     this.#answerLanguage = answerLanguage;
@@ -326,6 +332,7 @@ export class ChatService {
         signal: this.#ctrl.signal,
         body: JSON.stringify({
           agentId: this.#agentId,
+          robotId: this.#robotId,
           conversationId: this.#conversationId,
           stream: true,
           config: {
@@ -387,6 +394,7 @@ export class ChatService {
                   content: `\`【数据格式错误】:\` ${data}`,
                 },
                 agentId: this.#agentId,
+                robotId: this.#robotId,
               },
             });
             this.#ctrl!.abort();
@@ -406,6 +414,7 @@ export class ChatService {
                   content: "`无法识别`",
                 },
                 agentId: this.#agentId,
+                robotId: this.#robotId,
                 created: moment().format("YYYY-MM-DD HH:mm:ss"),
               },
             });
