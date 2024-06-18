@@ -44,10 +44,20 @@ export const eoSearchBarSchema = {
           layout: "horizontal",
         },
       },
-      enum: ["start", "center", "end"].map((item) => ({
-        label: item,
-        value: item,
-      })),
+      enum: [
+        {
+          label: "左",
+          value: "left",
+        },
+        {
+          label: "中",
+          value: "center",
+        },
+        {
+          label: "右",
+          value: "right",
+        },
+      ],
       component: {
         name: "Radio.Group",
         props: {

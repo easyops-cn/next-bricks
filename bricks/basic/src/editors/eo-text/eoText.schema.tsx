@@ -94,9 +94,32 @@ export const eoTextSchema = {
       name: "textAlign",
       title: "字体对齐方式",
       type: "string",
-      component: {
+      decorator: {
+        name: "FormItem",
         props: {
-          placeholder: "left",
+          layout: "horizontal",
+        },
+      },
+      enum: [
+        {
+          label: "左",
+          value: "left",
+        },
+        {
+          label: "中",
+          value: "center",
+        },
+        {
+          label: "右",
+          value: "right",
+        },
+      ],
+      component: {
+        name: "Radio.Group",
+        props: {
+          size: "small",
+          optionType: "button",
+          defaultValue: "leftt",
         },
       },
     },
