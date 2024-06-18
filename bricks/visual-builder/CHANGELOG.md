@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.19.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.18.0...@next-bricks/visual-builder@1.19.0) (2024-06-18)
+
+
+### Features
+
+* editor add dataList scope ([9135caf](https://github.com/easyops-cn/next-bricks/commit/9135caf543c80f157ce466aae4f63e8960fd4eda))
+* **visual-builder:** add check-editor-by-name ([326f1c0](https://github.com/easyops-cn/next-bricks/commit/326f1c0073ad17dfd03c6e8b1688240d333a959d))
+
+
+
+
+
 # [1.18.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.17.0...@next-bricks/visual-builder@1.18.0) (2024-06-17)
 
 

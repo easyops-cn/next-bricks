@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.20.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.19.1...@next-bricks/basic@1.20.0) (2024-06-18)
+
+
+### Features
+
+* editor add dataList scope ([9135caf](https://github.com/easyops-cn/next-bricks/commit/9135caf543c80f157ce466aae4f63e8960fd4eda))
+
+
+
+
+
 ## [1.19.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.19.0...@next-bricks/basic@1.19.1) (2024-06-18)
 
 
