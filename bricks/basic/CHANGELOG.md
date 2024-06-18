@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.20.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.20.0...@next-bricks/basic@1.20.1) (2024-06-18)
+
+
+### Bug Fixes
+
+* fix align schema ([96f2387](https://github.com/easyops-cn/next-bricks/commit/96f2387104d8567320b2a2859354f95e588cb0ed))
+* fix schema ([d0249c0](https://github.com/easyops-cn/next-bricks/commit/d0249c0ebd1097abb0ba599f86b2da69137647b2))
+* text spin and searchbar schema ([c931ca3](https://github.com/easyops-cn/next-bricks/commit/c931ca35088ce71edbe2431cf4fc901f4b722d5a))
+
+
+
+
+
 # [1.20.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.19.1...@next-bricks/basic@1.20.0) (2024-06-18)
 
 
