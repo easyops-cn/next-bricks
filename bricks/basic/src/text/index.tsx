@@ -13,7 +13,7 @@ export type TextType =
   | "disabled"
   | "code"
   | "keyboard"
-  | undefined;
+  | "default";
 
 const typeElementNameMap: Record<string, keyof JSX.IntrinsicElements> = {
   code: "code",
@@ -21,7 +21,7 @@ const typeElementNameMap: Record<string, keyof JSX.IntrinsicElements> = {
 };
 
 export interface TextProps {
-  type?: TextType;
+  type: TextType;
   color?: CSSProperties["color"];
   fontSize?: CSSProperties["fontSize"];
   fontWeight?: CSSProperties["fontWeight"];
@@ -45,10 +45,10 @@ const { defineElement, property } = createDecorators();
 class Text extends ReactNextElement implements TextProps {
   /**
    * 文本类型
-   * @default -
+   * @default "default"
    */
   @property()
-  accessor type: TextType;
+  accessor type: TextType = "default";
 
   /**
    * 字体大小
