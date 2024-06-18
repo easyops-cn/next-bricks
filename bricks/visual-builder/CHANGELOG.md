@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.20.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.20.0...@next-bricks/visual-builder@1.20.1) (2024-06-18)
+
+
+### Bug Fixes
+
+* enable form-builder preview ([9fa4783](https://github.com/easyops-cn/next-bricks/commit/9fa47830cdd3c81baffe37f91538929862861a38))
+
+
+
+
+
 # [1.20.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.19.0...@next-bricks/visual-builder@1.20.0) (2024-06-18)
 
 
