@@ -1,4 +1,4 @@
-export const eoTextSchema = {
+export const eoTagSchema = {
   name: "layout",
   type: "void",
   component: {
@@ -9,12 +9,39 @@ export const eoTextSchema = {
   },
   children: [
     {
-      name: "categoryTitle_basic",
-      type: "void",
+      name: "size",
+      title: "按钮大小",
+      type: "string",
       decorator: {
-        name: "CategoryTitle",
+        name: "FormItem",
         props: {
-          text: "基础",
+          layout: "horizontal",
+        },
+      },
+      enum: [
+        {
+          label: "大",
+          value: "large",
+        },
+        {
+          label: "中",
+          value: "medium",
+        },
+        {
+          label: "小",
+          value: "small",
+        },
+        {
+          label: "超小",
+          value: "xs",
+        },
+      ],
+      component: {
+        name: "Radio.Group",
+        props: {
+          size: "small",
+          optionType: "button",
+          defaultValue: "medium",
         },
       },
     },
@@ -119,7 +146,7 @@ export const eoTextSchema = {
         props: {
           size: "small",
           optionType: "button",
-          defaultValue: "left",
+          defaultValue: "leftt",
         },
       },
     },
