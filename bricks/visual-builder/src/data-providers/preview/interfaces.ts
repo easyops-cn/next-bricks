@@ -471,14 +471,14 @@ export interface BrickOutline {
   hasContentScroll?: boolean;
 }
 
-export type UpdateStoryboardType = "route" | "template" | "snippet";
+export type UpdateStoryboardType = "route" | "template" | "snippet" | "form";
 
 export interface PreviewStartOptions {
   appId: string;
   routeId?: string;
   templateId?: string;
   formId?: string;
-  // formData?: FormData;
+  formData?: FormData;
   snippetData?: any;
   routePath?: string;
   routeExact?: boolean;
