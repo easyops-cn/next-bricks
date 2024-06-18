@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.21.7...@next-bricks/ai@1.22.0) (2024-06-18)
+
+
+### Features
+
+* **chat-view:**  add robotId ([5907886](https://github.com/easyops-cn/next-bricks/commit/590788631dda83d9cfa2f84cd73c5e898b010669))
+
+
+
+
+
 ## [1.21.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.21.6...@next-bricks/ai@1.21.7) (2024-06-17)
 
 **Note:** Version bump only for package @next-bricks/ai
