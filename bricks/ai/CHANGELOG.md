@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.23.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.22.0...@next-bricks/ai@1.23.0) (2024-06-18)
+
+
+### Features
+
+* **chat-view:** add inputToolbarBrick ([73714da](https://github.com/easyops-cn/next-bricks/commit/73714daae619f8752ca396beeeea6f22713f287a))
+
+
+
+
+
 # [1.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.21.7...@next-bricks/ai@1.22.0) (2024-06-18)
 
 
