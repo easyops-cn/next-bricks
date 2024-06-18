@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.20.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.19.0...@next-bricks/visual-builder@1.20.0) (2024-06-18)
+
+
+### Features
+
+* vb support property-editor ([c97ee62](https://github.com/easyops-cn/next-bricks/commit/c97ee6281cdf483c4c47688f4f1d986adc3dc869))
+
+
+
+
+
 # [1.19.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.18.0...@next-bricks/visual-builder@1.19.0) (2024-06-18)
 
 
