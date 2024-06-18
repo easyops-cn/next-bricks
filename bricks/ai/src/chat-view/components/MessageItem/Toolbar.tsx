@@ -35,7 +35,7 @@ export function Toolbar({
   );
   const isChattingItem = useMemo(() => chatting, [chatting]);
   const { showLike, showShare, readonly, handleIsLike } = useChatViewContext();
-  const { agentId, conversationId } = useMsgItemContext();
+  const { agentId, robotId, conversationId } = useMsgItemContext();
   const handleCopy = () => {
     copyToClipboard(content.text)
       .then(() => showNotification({ type: "success", message: "复制成功" }))
@@ -44,7 +44,7 @@ export function Toolbar({
 
   const handleShare = () => {
     copyToClipboard(
-      `${location.origin}${getBasePath()}ai-center/share?agentId=${agentId}&conversationId=${conversationId}`
+      `${location.origin}${getBasePath()}ai-center/share?agentId=${agentId}&robotId=${robotId}&conversationId=${conversationId}`
     )
       .then(() =>
         showNotification({ type: "success", message: "会话链接已复制到剪贴板" })

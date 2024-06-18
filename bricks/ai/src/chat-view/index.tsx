@@ -16,6 +16,7 @@ const { defineElement, property, method } = createDecorators();
 
 export interface ChatViewProps {
   agentId: string;
+  robotId: string;
   sessionId?: string;
   readonly?: boolean;
   showAvatar?: boolean;
@@ -32,6 +33,7 @@ export interface ChatViewProps {
 export function LegacyChatViewComponent(
   {
     agentId,
+    robotId,
     sessionId,
     showAvatar,
     showSessionList = true,
@@ -68,6 +70,7 @@ export function LegacyChatViewComponent(
     querySessionHistory,
   } = useChatViewInfo({
     agentId,
+    robotId,
     sessionId,
     enterInterval,
     debug,
@@ -137,6 +140,12 @@ class ChatView extends ReactNextElement {
    */
   @property()
   accessor agentId!: string;
+
+  /**
+   * 机器人id
+   */
+  @property()
+  accessor robotId!: string;
 
   /**
    * 指定智能体回答代码时所使用的语言
@@ -246,6 +255,7 @@ class ChatView extends ReactNextElement {
     return (
       <ChatViewComponent
         agentId={this.agentId}
+        robotId={this.robotId}
         debug={this.debug}
         sessionId={this.sessionId}
         readonly={this.readonly}

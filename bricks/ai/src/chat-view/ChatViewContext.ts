@@ -24,6 +24,7 @@ export interface MessageItem {
   conversationId?: string;
   taskId?: string;
   agentId?: string;
+  robotId?: string;
   chatting?: boolean;
   tag?: {
     isLike?: boolean;
