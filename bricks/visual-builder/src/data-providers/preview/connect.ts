@@ -235,14 +235,14 @@ export default async function connect(
     getHistory().reload();
   };
 
-  /* const updateFormPreviewSettings = (): void => {
-    __secret_internals.updateFormPreviewSettings(
+  const updateFormPreviewSettings = (): void => {
+    (__secret_internals as any).updateFormPreviewSettings(
       options.appId,
       options.formId,
       options.formData
     );
     getHistory().reload();
-  }; */
+  };
 
   const handlePreviewData = (name: string, option: PreviewDataOption): void => {
     try {
@@ -395,22 +395,25 @@ export default async function connect(
                     bricks: BrickConf[];
                   }
                 );
-              } /* else if (data.options.updateStoryboardType === "form") {
-                __secret_internals.updateFormPreviewSettings(
+              } else if (data.options.updateStoryboardType === "form") {
+                (__secret_internals as any).updateFormPreviewSettings(
                   options.appId,
                   options.formId,
-                  data.storyboardPatch as FormDataProperties
+                  data.storyboardPatch
                 );
-              } */
+              }
 
-              const newContracts = await (
-                __secret_internals as any
-              ).getAddedContracts?.(data.storyboardPatch, {
-                appId: options.appId,
-                updateStoryboardType: data.options.updateStoryboardType,
-                formId: options.formId,
-                collectUsedContracts,
-              });
+              let newContracts;
+              if (data.options?.updateStoryboardType !== "form") {
+                newContracts = await (
+                  __secret_internals as any
+                ).getAddedContracts?.(data.storyboardPatch, {
+                  appId: options.appId,
+                  updateStoryboardType: data.options.updateStoryboardType,
+                  formId: options.formId,
+                  collectUsedContracts,
+                });
+              }
 
               if (!isEmpty(newContracts)) {
                 sendMessage<PreviewMessagePreviewContractUpdate>({
@@ -432,9 +435,9 @@ export default async function connect(
             if (options.templateId) {
               lastTemplatePreviewSettings = data.settings;
               updateTemplatePreviewSettings();
-            } /* else if (options.formId || options.formData) {
+            } else if (options.formId || options.formData) {
               updateFormPreviewSettings();
-            } */ else if (data.options?.snippetData) {
+            } else if (data.options?.snippetData) {
               options.snippetData = data.options.snippetData;
               updateSnippetPreviewSettings();
             } else {
@@ -560,7 +563,7 @@ export default async function connect(
         });
         placeholderLoadObserver.observe(mainMountPoint, { childList: true });
       }
-      /* if (options.formId && !previewPageMatch && match) {
+      if (options.formId && !previewPageMatch && match) {
         const mainMountPoint = document.querySelector("#main-mount-point");
         const placeholderLoadObserver = new MutationObserver(() => {
           // We observe when the placeholder is appeared.
@@ -574,7 +577,7 @@ export default async function connect(
           }
         });
         placeholderLoadObserver.observe(mainMountPoint, { childList: true });
-      } */
+      }
       if (options.snippetData && !previewPageMatch && match) {
         const mainMountPoint = document.querySelector("#main-mount-point")!;
         const placeholderLoadObserver = new MutationObserver(() => {
@@ -602,9 +605,9 @@ export default async function connect(
     updateTemplatePreviewSettings();
   }
 
-  /* if (options.formId || options.formData) {
+  if (options.formId || options.formData) {
     updateFormPreviewSettings();
-  } */
+  }
 
   if (options.snippetData) {
     updateSnippetPreviewSettings();

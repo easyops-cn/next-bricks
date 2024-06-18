@@ -69,6 +69,8 @@ jest.spyOn(runtime.__secret_internals, "getLegalRuntimeValue").mockReturnValue({
   query: new URLSearchParams("a=x"),
 } as any);
 
+(runtime.__secret_internals as any).updateFormPreviewSettings = jest.fn();
+
 const realTimeDataInspectHooks: any = [];
 jest
   .spyOn(runtime.__secret_internals, "addRealTimeDataInspectHook")
