@@ -25,7 +25,12 @@ interface AdvancedFormItemProps extends IFormItemProps {
 export function AdvancedFormItem(props: AdvancedFormItemProps) {
   const form = useForm();
   const field = useField();
-  const [mode, setMode] = useState<Mode>("normal");
+  const [mode, setMode] = useState<Mode>(
+    typeof (field as any).value === "string" &&
+      isEvaluable((field as any).value)
+      ? "advanced"
+      : "normal"
+  );
   const isAdvanced = useMemo(() => mode === "advanced", [mode]);
   const fieldOriginComponent = useMemo<any>(() => field.component, [field]);
 

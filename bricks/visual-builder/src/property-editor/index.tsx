@@ -4,6 +4,7 @@ import React, {
   useMemo,
   createRef,
   useState,
+  useCallback,
 } from "react";
 import { createDecorators, EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
@@ -15,6 +16,7 @@ import {
   onFieldInit,
   onFieldInitialValueChange,
   onFormValidateSuccess,
+  onFormValuesChange,
 } from "@formily/core";
 import { createSchemaField, FormProvider, ISchema } from "@formily/react";
 import { ConfigProvider, theme } from "antd";
@@ -78,6 +80,7 @@ export interface EditorComponentProps {
     // support any effects
   };
   scope: {
+    advancedMode: boolean;
     dataList: DataItem[];
   };
 }
@@ -160,6 +163,13 @@ class PropertyEditor extends ReactNextElement {
       });
   }
 
+  @event({ type: "values.change" })
+  accessor #valuesChangeEvent!: EventEmitter<any>;
+
+  #handleValuesChange = (value: any) => {
+    this.#valuesChangeEvent.emit(value);
+  };
+
   render() {
     return (
       <PropertyEditorComponent
@@ -168,6 +178,7 @@ class PropertyEditor extends ReactNextElement {
         values={this.values}
         advancedMode={this.advancedMode}
         dataList={this.dataList}
+        handleValuesChange={this.#handleValuesChange}
       />
     );
   }
@@ -178,56 +189,69 @@ export interface PropertyEditorProps {
   editorName: string;
   advancedMode?: boolean;
   dataList: DataItem[];
+  handleValuesChange: (value: any) => void;
 }
 
 export function LegacyPropertyEditor(
-  { advancedMode, values, editorName, dataList }: PropertyEditorProps,
+  {
+    advancedMode,
+    values,
+    editorName,
+    dataList,
+    handleValuesChange,
+  }: PropertyEditorProps,
   ref: any
 ) {
   const currentTheme = useCurrentTheme();
   const cache = useMemo(() => createCache(), []);
   const form = useMemo(() => createForm(), []);
-  const [Editor, setEditor] =
-    useState<(props: EditorComponentProps) => React.ReactElement>(null);
+  const [Editor, setEditor] = useState<
+    (props: EditorComponentProps) => React.ReactElement
+  >(() => customEditors.get(editorName) as any);
 
   useImperativeHandle(ref, () => ({
     getFormInstance: () => form,
   }));
 
-  const load = async (editorName: string) => {
+  const load = useCallback(async () => {
     // TODO: cache editors
     await __secret_internals.loadEditors([editorName]);
     setEditor(() => customEditors.get(editorName) as any);
-  };
-
-  useEffect(() => {
-    editorName && load(editorName);
   }, [editorName]);
 
   useEffect(() => {
-    if (Editor) {
-      form.setInitialValues(values);
-    }
-  }, [form, values, Editor]);
+    load();
+  }, [load]);
+
+  useEffect(() => {
+    if (Editor) form.setInitialValues(values);
+  }, [Editor]);
 
   useEffect(() => {
     const { values } = form.getState();
     if (advancedMode) {
-      form.setValuesIn(
-        ADVANCED_FORM_KEY,
-        _.isEmpty(values)
+      form.setInitialValues({
+        [ADVANCED_FORM_KEY]: _.isEmpty(values)
           ? ""
-          : yaml.safeDump(_.omit(values, [ADVANCED_FORM_KEY]))
-      );
+          : yaml.safeDump(_.omit(values, [ADVANCED_FORM_KEY])),
+      });
     } else {
       const realValue = values[ADVANCED_FORM_KEY];
       if (realValue) {
-        form.setValues(yaml.safeLoad(realValue));
+        form.setInitialValues(yaml.safeLoad(realValue));
       } else {
-        form.setValues(values);
+        form.setInitialValues(values);
       }
     }
   }, [advancedMode, form]);
+
+  useEffect(() => {
+    form.addEffects("onValueChange", () => {
+      onFormValuesChange((form) => {
+        handleValuesChange(form.values);
+      });
+    });
+  }, []);
 
   if (!Editor) return <div>无数据</div>;
 
@@ -251,6 +275,7 @@ export function LegacyPropertyEditor(
               form={form}
               scope={{
                 dataList,
+                advancedMode,
               }}
               effects={{
                 onFieldInit,

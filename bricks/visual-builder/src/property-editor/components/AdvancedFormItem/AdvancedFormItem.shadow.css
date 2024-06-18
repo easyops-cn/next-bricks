@@ -9,7 +9,7 @@
     eo-icon[icon="code"] {
       cursor: pointer;
       padding: 2px 4px;
-      background: #f2f2f2;
+      background: var(--palette-gray-7);
       border-radius: 6px;
 
       &.isActive {
