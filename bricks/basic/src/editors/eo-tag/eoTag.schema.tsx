@@ -9,8 +9,18 @@ export const eoTagSchema = {
   },
   children: [
     {
+      name: "categoryTitle_basic",
+      type: "void",
+      decorator: {
+        name: "CategoryTitle",
+        props: {
+          text: "基础",
+        },
+      },
+    },
+    {
       name: "size",
-      title: "按钮大小",
+      title: "大小",
       type: "string",
       decorator: {
         name: "FormItem",
@@ -24,7 +34,7 @@ export const eoTagSchema = {
           value: "large",
         },
         {
-          label: "中",
+          label: "标准",
           value: "medium",
         },
         {
@@ -46,119 +56,64 @@ export const eoTagSchema = {
       },
     },
     {
-      name: "textContent",
-      title: "文本",
+      name: "icon",
+      title: "图标",
       type: "string",
-      required: true,
-    },
-    {
-      name: "type",
-      title: "文本类型",
-      type: "string",
-      descorator: "FormItem",
-      component: {
-        name: "Select",
-        props: {
-          placeholder: "default",
-          allowClear: true,
-          options: [
-            "default",
-            "secondary",
-            "success",
-            "warning",
-            "danger",
-            "disabled",
-            "code",
-            "keyboard",
-          ].map((item) => ({
-            label: item,
-            value: item,
-          })),
-        },
-      },
-    },
-    {
-      name: "fontSize",
-      title: "字体大小",
-      type: "string",
-      component: {
-        props: {
-          placeholder: "14px",
-        },
-      },
-    },
-    {
-      name: "fontWeight",
-      title: "字体粗细",
-      type: "string",
-      component: {
-        props: {
-          placeholder: "normal",
-        },
-      },
+      component: "IconSelect",
     },
     {
       name: "color",
-      title: "字体颜色",
+      title: "颜色",
       type: "string",
-      component: {
-        props: {
-          placeholder: "black",
-        },
-      },
     },
     {
-      name: "lineHeight",
-      title: "字体行高",
-      type: "string",
-      component: {
-        props: {
-          placeholder: "14px",
-        },
-      },
+      name: "disabled",
+      title: "禁用",
+      type: "boolean",
     },
     {
-      name: "textAlign",
-      title: "字体对齐方式",
-      type: "string",
-      decorator: {
-        name: "FormItem",
-        props: {
-          layout: "horizontal",
-        },
-      },
-      enum: [
-        {
-          label: "左",
-          value: "left",
-        },
-        {
-          label: "中",
-          value: "center",
-        },
-        {
-          label: "右",
-          value: "right",
-        },
-      ],
+      name: "closable",
+      title: "允许关闭",
+      type: "boolean",
+    },
+    {
+      name: "checkable",
+      title: "允许选择",
+      type: "boolean",
       component: {
-        name: "Radio.Group",
+        name: "Switch",
         props: {
           size: "small",
-          optionType: "button",
-          defaultValue: "leftt",
+          defaultValue: false,
         },
       },
+      "x-reactions": [
+        {
+          target: "checked",
+          fulfill: {
+            state: {
+              visible: "{{$self.value}}",
+            },
+          },
+        },
+      ],
     },
     {
-      name: "display",
-      title: "显示类型",
+      name: "checked",
+      title: "选择状态",
+      type: "boolean",
+    },
+    {
+      name: "ellipsisWidth",
+      title: "文本显示上限宽度",
       type: "string",
-      component: {
-        props: {
-          placeholder: "inline",
-        },
-      },
+    },
+    {
+      name: "tagStyle",
+      title: "自定义样式",
+      type: "string",
+      component: "CodeEditor",
+      decorator: "FormItemWithoutAdvanced",
     },
   ],
 };
