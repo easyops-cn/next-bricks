@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.8.34](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.33...@next-shared/general@0.8.34) (2024-06-20)
+
+**Note:** Version bump only for package @next-shared/general
+
+
+
+
+
 ## [0.8.33](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.32...@next-shared/general@0.8.33) (2024-06-17)
 
 **Note:** Version bump only for package @next-shared/general

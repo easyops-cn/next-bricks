@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.21.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.20.1...@next-bricks/basic@1.21.0) (2024-06-20)
+
+
+### Bug Fixes
+
+* update schema ([56fa84b](https://github.com/easyops-cn/next-bricks/commit/56fa84b12754a1edec9ec0414ee584df2353c57a))
+* update schema ([39951b6](https://github.com/easyops-cn/next-bricks/commit/39951b665cd61f5fd10cf10407b475bd26fcc36c))
+
+
+### Features
+
+* update Editor code & add onSubmitEffect ([aa427ce](https://github.com/easyops-cn/next-bricks/commit/aa427ce0e106e1ad905866761c0ece3f65c855ce))
+
+
+
+
+
 ## [1.20.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.20.0...@next-bricks/basic@1.20.1) (2024-06-18)
 
 

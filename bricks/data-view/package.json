@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/data-view",
-  "version": "1.1.18",
+  "version": "1.1.19",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/data-view",
   "repository": {
     "type": "git",
@@ -41,7 +41,7 @@
     "@next-core/react-runtime": "^1.6.8",
     "@next-core/types": "^1.11.1",
     "@next-core/utils": "^1.7.12",
-    "@next-shared/general": "^0.8.33",
+    "@next-shared/general": "^0.8.34",
     "@tweenjs/tween.js": "^19.0.0",
     "classnames": "^2.3.2",
     "d3-hierarchy": "^3.1.2",

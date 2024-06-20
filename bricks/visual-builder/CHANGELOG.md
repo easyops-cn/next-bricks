@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.21.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.20.1...@next-bricks/visual-builder@1.21.0) (2024-06-20)
+
+
+### Features
+
+* update Editor code & add onSubmitEffect ([aa427ce](https://github.com/easyops-cn/next-bricks/commit/aa427ce0e106e1ad905866761c0ece3f65c855ce))
+
+
+
+
+
 ## [1.20.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.20.0...@next-bricks/visual-builder@1.20.1) (2024-06-18)
 
 
