@@ -16,3 +16,4 @@ import "./pre-generated-table-view/index.js";
 import "./pre-generated-container/index.js";
 import "./property-editor/index.js";
 import "./data-providers/check-editor-by-name.js";
+import "./data-providers/get-data-dependency.js";
