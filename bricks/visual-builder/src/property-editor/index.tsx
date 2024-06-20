@@ -5,6 +5,7 @@ import React, {
   createRef,
   useState,
   useCallback,
+  useRef,
 } from "react";
 import { createDecorators, EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
@@ -53,6 +54,7 @@ const { defineElement, property, method, event } = createDecorators();
 const PropertyEditorComponent = React.forwardRef(LegacyPropertyEditor);
 
 const BEFORE_SUBMIT_KEY = "before_submit";
+const ADVANCED_CHANGE_KEY = "on_advanced_change";
 
 const SchemaField = createSchemaField({
   components: {
@@ -82,7 +84,10 @@ export interface EditorComponentProps {
     onFieldInitialValueChange: typeof onFieldInitialValueChange;
     onFormInitialValuesChange: typeof onFormInitialValuesChange;
     onFormValidateSuccess: typeof onFormValidateSuccess;
-    onSubmit: (listener: (form: Form) => any) => void;
+    onSubmit: (listener: (value: any, form: Form) => any) => void;
+    onAdvancedChange: (
+      listener: (advancedMode: boolean, form: Form) => any
+    ) => void;
     // support any effects
   };
   scope: {
@@ -160,15 +165,14 @@ class PropertyEditor extends ReactNextElement {
     form
       .validate()
       .then(() => {
-        form.notify(BEFORE_SUBMIT_KEY);
-        if (this.#submitValue) {
-          return this.#submitValue;
-        }
-
         const realValue = this.advancedMode
           ? yaml.load(form.values[ADVANCED_FORM_KEY])
           : _.omit(form.values, [ADVANCED_FORM_KEY]);
 
+        form.notify(BEFORE_SUBMIT_KEY, realValue);
+        if (this.#submitValue) {
+          this.#successEvent.emit(this.#submitValue);
+        }
         this.#successEvent.emit({ ...realValue });
       })
       .catch((err: any[]) => {
@@ -187,8 +191,8 @@ class PropertyEditor extends ReactNextElement {
 
   #onSubmitEffect = createEffectHook(
     BEFORE_SUBMIT_KEY,
-    (form) => (listener) => {
-      this.#submitValue = listener(form);
+    (values, form) => (listener) => {
+      this.#submitValue = listener(values, form);
     }
   );
 
@@ -213,7 +217,7 @@ export interface PropertyEditorProps {
   advancedMode?: boolean;
   dataList: DataItem[];
   handleValuesChange: (value: any) => void;
-  onSubmitEffect: (listener: (form: Form) => any) => void;
+  onSubmitEffect: (listener: (value: any, form: Form) => any) => void;
 }
 
 export function LegacyPropertyEditor(
@@ -232,7 +236,16 @@ export function LegacyPropertyEditor(
   const form = useMemo(() => createForm(), []);
   const [Editor, setEditor] = useState<
     (props: EditorComponentProps) => React.ReactElement
-  >(() => customEditors.get(editorName) as any);
+  >(() => customEditors.get(editorName)?.(React) as any);
+  const transformValueRef = useRef<any>(null);
+
+  const onAdvancedChangeEffect = useMemo(
+    () =>
+      createEffectHook(ADVANCED_CHANGE_KEY, (options, form) => (listener) => {
+        transformValueRef.current = listener(options, form);
+      }),
+    [editorName]
+  );
 
   useImperativeHandle(ref, () => ({
     getFormInstance: () => form,
@@ -241,8 +254,24 @@ export function LegacyPropertyEditor(
   const load = useCallback(async () => {
     // TODO: cache editors
     await __secret_internals.loadEditors([editorName]);
-    setEditor(() => customEditors.get(editorName)(React) as any);
+    setEditor(() => customEditors.get(editorName)?.(React) as any);
   }, [editorName]);
+
+  const defaultTransform = useCallback((values: any, advancedMode: boolean) => {
+    if (advancedMode) {
+      return {
+        [ADVANCED_FORM_KEY]: _.isEmpty(values)
+          ? ""
+          : yaml.safeDump(_.omit(values, [ADVANCED_FORM_KEY])),
+      };
+    }
+    const realValue = values[ADVANCED_FORM_KEY];
+    if (realValue) {
+      return yaml.safeLoad(realValue);
+    } else {
+      return values;
+    }
+  }, []);
 
   useEffect(() => {
     load();
@@ -254,21 +283,14 @@ export function LegacyPropertyEditor(
 
   useEffect(() => {
     const { values } = form.getState();
-    if (advancedMode) {
-      form.setInitialValues({
-        [ADVANCED_FORM_KEY]: _.isEmpty(values)
-          ? ""
-          : yaml.safeDump(_.omit(values, [ADVANCED_FORM_KEY])),
-      });
-    } else {
-      const realValue = values[ADVANCED_FORM_KEY];
-      if (realValue) {
-        form.setInitialValues(yaml.safeLoad(realValue));
-      } else {
-        form.setInitialValues(values);
-      }
-    }
-  }, [advancedMode, form]);
+    transformValueRef.current = null;
+
+    form.notify(ADVANCED_CHANGE_KEY, advancedMode);
+
+    const formData =
+      transformValueRef.current ?? defaultTransform(values, advancedMode);
+    form.setValues(formData);
+  }, [advancedMode, form, defaultTransform]);
 
   useEffect(() => {
     form.addEffects("onValueChange", () => {
@@ -309,6 +331,7 @@ export function LegacyPropertyEditor(
                 onFormInitialValuesChange,
                 onFormValidateSuccess,
                 onSubmit: onSubmitEffect,
+                onAdvancedChange: onAdvancedChangeEffect,
               }}
               formilySchemaFormatter={formilySchemaFormatter}
             />
