@@ -40,7 +40,7 @@ export const eoSearchSchema = {
     },
     {
       name: "trim",
-      title: "自动剔除值首尾空格",
+      title: "自动去除输入的首尾空格",
       type: "boolean",
     },
     {
