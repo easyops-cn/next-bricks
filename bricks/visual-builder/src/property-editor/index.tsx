@@ -15,8 +15,10 @@ import {
   onFieldValueChange,
   onFieldInit,
   onFieldInitialValueChange,
+  onFormInitialValuesChange,
   onFormValidateSuccess,
   onFormValuesChange,
+  createEffectHook,
 } from "@formily/core";
 import { createSchemaField, FormProvider, ISchema } from "@formily/react";
 import { ConfigProvider, theme } from "antd";
@@ -50,6 +52,8 @@ const { defineElement, property, method, event } = createDecorators();
 
 const PropertyEditorComponent = React.forwardRef(LegacyPropertyEditor);
 
+const BEFORE_SUBMIT_KEY = "before_submit";
+
 const SchemaField = createSchemaField({
   components: {
     FormLayout,
@@ -70,13 +74,15 @@ const SchemaField = createSchemaField({
 export interface EditorComponentProps {
   advancedMode?: boolean;
   SchemaFieldComponent: typeof SchemaField;
-  formilySchemaFormatter: (data: DataNode, advancedMode: boolean) => ISchema;
+  formilySchemaFormatter: (data: any, advancedMode?: boolean) => ISchema;
   form: Form<any>;
   effects: {
     onFieldInit: typeof onFieldInit;
     onFieldValueChange: typeof onFieldValueChange;
     onFieldInitialValueChange: typeof onFieldInitialValueChange;
+    onFormInitialValuesChange: typeof onFormInitialValuesChange;
     onFormValidateSuccess: typeof onFormValidateSuccess;
+    onSubmit: (listener: (form: Form) => any) => void;
     // support any effects
   };
   scope: {
@@ -148,14 +154,21 @@ class PropertyEditor extends ReactNextElement {
 
   @method()
   validate() {
-    const form = this.#formRef.current?.getFormInstance();
+    const form: Form = this.#formRef.current?.getFormInstance();
+    this.#submitValue = null;
 
     form
       .validate()
       .then(() => {
+        form.notify(BEFORE_SUBMIT_KEY);
+        if (this.#submitValue) {
+          return this.#submitValue;
+        }
+
         const realValue = this.advancedMode
           ? yaml.load(form.values[ADVANCED_FORM_KEY])
           : _.omit(form.values, [ADVANCED_FORM_KEY]);
+
         this.#successEvent.emit({ ...realValue });
       })
       .catch((err: any[]) => {
@@ -170,6 +183,15 @@ class PropertyEditor extends ReactNextElement {
     this.#valuesChangeEvent.emit(value);
   };
 
+  #submitValue: any;
+
+  #onSubmitEffect = createEffectHook(
+    BEFORE_SUBMIT_KEY,
+    (form) => (listener) => {
+      this.#submitValue = listener(form);
+    }
+  );
+
   render() {
     return (
       <PropertyEditorComponent
@@ -179,6 +201,7 @@ class PropertyEditor extends ReactNextElement {
         advancedMode={this.advancedMode}
         dataList={this.dataList}
         handleValuesChange={this.#handleValuesChange}
+        onSubmitEffect={this.#onSubmitEffect}
       />
     );
   }
@@ -190,6 +213,7 @@ export interface PropertyEditorProps {
   advancedMode?: boolean;
   dataList: DataItem[];
   handleValuesChange: (value: any) => void;
+  onSubmitEffect: (listener: (form: Form) => any) => void;
 }
 
 export function LegacyPropertyEditor(
@@ -199,6 +223,7 @@ export function LegacyPropertyEditor(
     editorName,
     dataList,
     handleValuesChange,
+    onSubmitEffect,
   }: PropertyEditorProps,
   ref: any
 ) {
@@ -216,7 +241,7 @@ export function LegacyPropertyEditor(
   const load = useCallback(async () => {
     // TODO: cache editors
     await __secret_internals.loadEditors([editorName]);
-    setEditor(() => customEditors.get(editorName) as any);
+    setEditor(() => customEditors.get(editorName)(React) as any);
   }, [editorName]);
 
   useEffect(() => {
@@ -281,7 +306,9 @@ export function LegacyPropertyEditor(
                 onFieldInit,
                 onFieldValueChange,
                 onFieldInitialValueChange,
+                onFormInitialValuesChange,
                 onFormValidateSuccess,
+                onSubmit: onSubmitEffect,
               }}
               formilySchemaFormatter={formilySchemaFormatter}
             />
