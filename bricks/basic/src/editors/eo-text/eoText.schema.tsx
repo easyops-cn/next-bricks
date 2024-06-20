@@ -133,5 +133,12 @@ export const eoTextSchema = {
         },
       },
     },
+    {
+      name: "customStyle",
+      title: "自定义样式",
+      type: "string",
+      component: "CodeEditor",
+      decorator: "FormItemWithoutAdvanced",
+    },
   ],
 };
