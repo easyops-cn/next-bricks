@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.23.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.22.0...@next-bricks/basic@1.23.0) (2024-06-21)
+
+
+### Features
+
+* 新增 eo-submit-button 构件 ([0db4d0b](https://github.com/easyops-cn/next-bricks/commit/0db4d0b4e38b5ecdc05ceba0479dec82fdf3fe7d))
+
+
+
+
+
 # [1.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.21.1...@next-bricks/basic@1.22.0) (2024-06-21)
 
 
