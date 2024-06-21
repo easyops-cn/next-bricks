@@ -45,7 +45,7 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "@next-core/build-next-libs": "^1.0.17",
-    "@next-core/test-next": "^1.1.3"
+    "@next-core/build-next-libs": "^1.0.18",
+    "@next-core/test-next": "^1.1.4"
   }
 }
