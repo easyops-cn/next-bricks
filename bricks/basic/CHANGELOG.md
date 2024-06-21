@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.21.1...@next-bricks/basic@1.22.0) (2024-06-21)
+
+
+### Features
+
+* **eo-mini-actions:** Add url support for non-dropdown action ([caab00c](https://github.com/easyops-cn/next-bricks/commit/caab00c04d57e151ac048e24b97a5764dbc9bd44))
+
+
+
+
+
 ## [1.21.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.21.0...@next-bricks/basic@1.21.1) (2024-06-21)
 
 **Note:** Version bump only for package @next-bricks/basic
