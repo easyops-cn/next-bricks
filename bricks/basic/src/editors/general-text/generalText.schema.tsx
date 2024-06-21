@@ -1,4 +1,4 @@
-export const eoTextSchema = {
+export const generalTextSchema = {
   name: "layout",
   type: "void",
   component: {
@@ -22,32 +22,6 @@ export const eoTextSchema = {
       name: "textContent",
       title: "文本",
       type: "string",
-    },
-    {
-      name: "type",
-      title: "文本类型",
-      type: "string",
-      descorator: "FormItem",
-      component: {
-        name: "Select",
-        props: {
-          placeholder: "default",
-          allowClear: true,
-          options: [
-            "default",
-            "secondary",
-            "success",
-            "warning",
-            "danger",
-            "disabled",
-            "code",
-            "keyboard",
-          ].map((item) => ({
-            label: item,
-            value: item,
-          })),
-        },
-      },
     },
     {
       name: "fontSize",
