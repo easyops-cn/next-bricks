@@ -49,7 +49,7 @@ export const popoverContainerSchema = {
       decorator: "FormItemWithoutAdvanced",
     },
     {
-      name: "categoryTitle_basic",
+      name: "categoryTitle_style",
       type: "void",
       decorator: {
         name: "CategoryTitle",
@@ -246,7 +246,7 @@ export const popoverContainerSchema = {
       decorator: "FormItemWithoutAdvanced",
     },
     {
-      name: "categoryTitle_basic",
+      name: "categoryTitle_topo",
       type: "void",
       decorator: {
         name: "CategoryTitle",

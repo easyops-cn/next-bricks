@@ -144,7 +144,7 @@ export const brickGeneralSearchSchema = {
       decorator: "FormItemWithoutAdvanced",
     },
     {
-      name: "categoryTitle_basic",
+      name: "categoryTitle_style",
       type: "void",
       decorator: {
         name: "CategoryTitle",

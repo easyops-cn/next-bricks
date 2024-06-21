@@ -1,4 +1,4 @@
-export const brickTagSchema = {
+export const lineChartSchema = {
   name: "layout",
   type: "void",
   component: {
@@ -14,10 +14,54 @@ export const brickTagSchema = {
       decorator: {
         name: "CategoryTitle",
         props: {
-          text: "基础",
+          text: "数据",
         },
       },
     },
+    {
+      name: "data",
+      title: "选择数据",
+      type: "string",
+      component: "CodeEditor",
+      decorator: "FormItemWithoutAdvanced",
+      required: true,
+    },
+    {
+      type: "string",
+      title: "选择x轴",
+      component: {
+        name: "Select",
+        props: {
+          placeholder: "请选择x轴",
+          allowClear: true,
+          options: [].map((item) => ({
+            label: item,
+            value: item,
+          })),
+        },
+      },
+    },
+    {
+      name: "doubleYaxis",
+      title: "是否双y轴",
+      type: "boolean",
+    },
+    {
+      type: "string",
+      title: "左Y轴",
+      component: {
+        name: "Select",
+        props: {
+          placeholder: "请选择x轴",
+          allowClear: true,
+          options: [].map((item) => ({
+            label: item,
+            value: item,
+          })),
+        },
+      },
+    },
+
     {
       name: "componentType",
       title: "标签类型",
@@ -137,7 +181,7 @@ export const brickTagSchema = {
       type: "string",
     },
     {
-      name: "categoryTitle_style",
+      name: "categoryTitle_basic",
       type: "void",
       decorator: {
         name: "CategoryTitle",
@@ -215,7 +259,7 @@ export const brickTagSchema = {
       decorator: "FormItemWithoutAdvanced",
     },
     {
-      name: "categoryTitle_other",
+      name: "categoryTitle_basic",
       type: "void",
       decorator: {
         name: "CategoryTitle",
