@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
+import type { EoTooltip, ToolTipProps } from "../tooltip";
 import type {
   GeneralIcon,
   GeneralIconProps,
@@ -27,6 +28,7 @@ export { ExtendedLocationDescriptor } from "./getExtendedLocationDescriptor.js";
 export { Target } from "../interface.js";
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
+const WrappedTooltip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");
 
 export interface LinkProps {
   type?: LinkType;
@@ -39,6 +41,7 @@ export interface LinkProps {
   underline?: boolean;
   replace?: boolean;
   danger?: boolean;
+  tooltip?: string;
   linkStyle?: React.CSSProperties;
 }
 
@@ -127,6 +130,11 @@ class Link extends ReactNextElement implements LinkProps {
   accessor danger: boolean | undefined;
 
   /**
+   * 文字提示
+   */
+  @property() accessor tooltip: string | undefined;
+
+  /**
    * 链接样式
    * @group other
    */
@@ -148,6 +156,7 @@ class Link extends ReactNextElement implements LinkProps {
         danger={this.danger}
         linkStyle={this.linkStyle}
         replace={this.replace}
+        tooltip={this.tooltip}
       />
     );
   }
@@ -168,6 +177,7 @@ export function LinkComponent({
   underline,
   danger,
   replace,
+  tooltip,
   linkStyle,
 }: LinkProps) {
   const history = getHistory();
@@ -237,24 +247,32 @@ export function LinkComponent({
     };
   });
 
+  const linkNode = (
+    <a
+      part="link"
+      className={classNames({
+        [type]: type,
+        danger: danger,
+        disabled: disabled,
+        underline: underline,
+      })}
+      style={linkStyle}
+      href={isEmpty(computedHref) ? undefined : computedHref}
+      target={target}
+      ref={linkRef}
+    >
+      {icon && <WrappedIcon className="prefix-icon" part="icon" {...icon} />}
+      <slot />
+    </a>
+  );
+
   return (
     <>
-      <a
-        part="link"
-        className={classNames({
-          [type]: type,
-          danger: danger,
-          disabled: disabled,
-          underline: underline,
-        })}
-        style={linkStyle}
-        href={isEmpty(computedHref) ? undefined : computedHref}
-        target={target}
-        ref={linkRef}
-      >
-        {icon && <WrappedIcon className="prefix-icon" part="icon" {...icon} />}
-        <slot />
-      </a>
+      {tooltip ? (
+        <WrappedTooltip content={tooltip}>{linkNode}</WrappedTooltip>
+      ) : (
+        linkNode
+      )}
       {showExternalIcon && (
         <WrappedIcon
           className="external-icon"
