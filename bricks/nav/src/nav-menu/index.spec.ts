@@ -87,6 +87,11 @@ describe("eo-nav-menu", () => {
               },
             ],
           },
+          {
+            title: "filterItem",
+            type: "subMenu",
+            items: [],
+          },
         ],
       };
       document.body.appendChild(element);

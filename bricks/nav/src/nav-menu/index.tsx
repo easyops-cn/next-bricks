@@ -372,15 +372,28 @@ function NavMenuComponent(props: NavMenuProps) {
   );
   const { pathname, search } = location;
 
+  const menuItems = useMemo(() => {
+    return (menu?.menuItems ?? []).filter(
+      (item) =>
+        // 默认
+        item.type === "default" ||
+        // 没有类型
+        !item.type ||
+        // 分组类型并且没有子项，过滤
+        (["group", "subMenu"].includes(item.type) &&
+          (item as SidebarMenuGroup).items?.length)
+    );
+  }, [menu?.menuItems]);
+
   const selectedKey = useMemo(() => {
     const { selectedKeys } = initMenuItemAndMatchCurrentPathKeys(
-      menu?.menuItems ?? [],
+      menuItems ?? [],
       pathname,
       search,
       ""
     );
     return selectedKeys;
-  }, [menu?.menuItems, pathname, search]);
+  }, [menuItems, pathname, search]);
 
   useEffect(() => {
     const unListen: UnregisterCallback = history.listen((location) => {
@@ -434,17 +447,17 @@ function NavMenuComponent(props: NavMenuProps) {
     (): SidebarMenuItem => ({
       type: "subMenu",
       title: "···",
-      items: menu?.menuItems.slice(
+      items: menuItems.slice(
         overflowIndex,
-        menu.menuItems.length
+        menuItems.length
       ) as SidebarMenuItem[],
     }),
-    [menu?.menuItems, overflowIndex]
+    [menuItems, overflowIndex]
   );
 
   return (
     <div ref={navMenuWrapperRef} className="nav-menu-wrapper">
-      {menu?.menuItems.map((item, index) => {
+      {menuItems.map((item, index) => {
         const isHidden = overflowIndex <= index;
         return (
           <React.Fragment key={item.key}>
@@ -482,7 +495,7 @@ function NavMenuComponent(props: NavMenuProps) {
         );
       })}
       <RenderMenuItemCom
-        hidden={overflowIndex > (menu?.menuItems?.length ?? 0)}
+        hidden={overflowIndex > menuItems.length}
         item={overflowMenu}
         showTooltip={showTooltip}
         selectedKey={selectedKey}
