@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.21.0...@next-bricks/visual-builder@1.22.0) (2024-06-21)
+
+
+### Features
+
+* data dependency provider ([d10207c](https://github.com/easyops-cn/next-bricks/commit/d10207cceedfd1eeb32f1cbaa647526516c6d836))
+* fetch by editorPackages ([bbed0dc](https://github.com/easyops-cn/next-bricks/commit/bbed0dc35c2b546f6b7384507a4aa068366fbe07))
+* **property-editor:**  add onAdvancedChangeEffect ([d9c510b](https://github.com/easyops-cn/next-bricks/commit/d9c510bce23bd4fc6f62b898987506967b7eb36c))
+
+
+
+
+
 # [1.21.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.20.1...@next-bricks/visual-builder@1.21.0) (2024-06-20)
 
 

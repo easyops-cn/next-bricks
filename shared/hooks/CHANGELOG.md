@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.8](https://github.com/easyops-cn/next-bricks/compare/@next-shared/hooks@0.0.7...@next-shared/hooks@0.0.8) (2024-06-21)
+
+**Note:** Version bump only for package @next-shared/hooks
+
+
+
+
+
 ## [0.0.7](https://github.com/easyops-cn/next-bricks/compare/@next-shared/hooks@0.0.6...@next-shared/hooks@0.0.7) (2024-06-11)
 
 

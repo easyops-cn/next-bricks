@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@1.1.18...@next-bricks/v2-adapter@1.2.0) (2024-06-21)
+
+
+### Features
+
+* **v2-adapter:** add customEditors ([ea8bdd5](https://github.com/easyops-cn/next-bricks/commit/ea8bdd51b9f618676844972561b8c535fe1c349d))
+
+
+
+
+
 ## [1.1.18](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/v2-adapter@1.1.17...@next-bricks/v2-adapter@1.1.18) (2024-06-20)
 
 **Note:** Version bump only for package @next-bricks/v2-adapter
