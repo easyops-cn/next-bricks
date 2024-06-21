@@ -48,6 +48,7 @@ import {
 import "./style.css";
 import yaml from "js-yaml";
 import _ from "lodash";
+import { BrickPackage } from "@next-core/types";
 
 const { defineElement, property, method, event } = createDecorators();
 
@@ -146,6 +147,11 @@ class PropertyEditor extends ReactNextElement {
   })
   accessor dataList: DataItem[];
 
+  @property({
+    attribute: false,
+  })
+  accessor editorPackages: BrickPackage[];
+
   /**
    * 表单验证成功时触发事件
    */
@@ -204,6 +210,7 @@ class PropertyEditor extends ReactNextElement {
         values={this.values}
         advancedMode={this.advancedMode}
         dataList={this.dataList}
+        editorPackages={this.editorPackages}
         handleValuesChange={this.#handleValuesChange}
         onSubmitEffect={this.#onSubmitEffect}
       />
@@ -216,6 +223,7 @@ export interface PropertyEditorProps {
   editorName: string;
   advancedMode?: boolean;
   dataList: DataItem[];
+  editorPackages: BrickPackage[];
   handleValuesChange: (value: any) => void;
   onSubmitEffect: (listener: (value: any, form: Form) => any) => void;
 }
@@ -226,6 +234,7 @@ export function LegacyPropertyEditor(
     values,
     editorName,
     dataList,
+    editorPackages,
     handleValuesChange,
     onSubmitEffect,
   }: PropertyEditorProps,
@@ -253,9 +262,9 @@ export function LegacyPropertyEditor(
 
   const load = useCallback(async () => {
     // TODO: cache editors
-    await __secret_internals.loadEditors([editorName]);
+    await __secret_internals.loadEditors([editorName], editorPackages);
     setEditor(() => customEditors.get(editorName)?.(React) as any);
-  }, [editorName]);
+  }, [editorName, editorPackages]);
 
   const defaultTransform = useCallback((values: any, advancedMode: boolean) => {
     if (advancedMode) {
@@ -279,7 +288,7 @@ export function LegacyPropertyEditor(
 
   useEffect(() => {
     if (Editor) form.setInitialValues(values);
-  }, [Editor]);
+  }, [Editor, values, form]);
 
   useEffect(() => {
     const { values } = form.getState();
@@ -300,7 +309,7 @@ export function LegacyPropertyEditor(
     });
   }, []);
 
-  if (!Editor) return <div>无数据</div>;
+  if (!Editor) return null;
 
   return (
     <div className="property-form-wrapper">
