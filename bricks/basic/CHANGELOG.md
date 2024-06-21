@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.24.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.23.0...@next-bricks/basic@1.24.0) (2024-06-21)
+
+
+### Features
+
+* **link:** add tooltip property ([983ba9e](https://github.com/easyops-cn/next-bricks/commit/983ba9e02c421b947e64a397cb7ce2bfcbb116cd))
+
+
+
+
+
 # [1.23.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.22.0...@next-bricks/basic@1.23.0) (2024-06-21)
 
 
