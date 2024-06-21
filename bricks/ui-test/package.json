@@ -42,7 +42,7 @@
     "@next-core/element": "^1.2.10",
     "@next-core/i18n": "^1.0.55",
     "@next-core/react-element": "^1.0.29",
-    "@next-core/runtime": "^1.49.6",
+    "@next-core/runtime": "^1.49.7",
     "@next-core/theme": "^1.5.2",
     "@next-shared/ui-test": "^1.0.15",
     "classnames": "^2.3.2",
@@ -53,7 +53,7 @@
     "react": "0.0.0-experimental-ee8509801-20230117"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.22.2",
+    "@next-core/build-next-bricks": "^1.22.3",
     "@next-core/test-next": "^1.1.4"
   },
   "peerDependencies": {

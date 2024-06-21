@@ -45,7 +45,7 @@
     "react-rnd": "^10.4.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.22.2",
+    "@next-core/build-next-bricks": "^1.22.3",
     "@next-core/test-next": "^1.1.4"
   },
   "peerDependencies": {
