@@ -4,6 +4,8 @@ import React, {
   useMemo,
   createRef,
   useState,
+  useCallback,
+  useRef,
 } from "react";
 import { createDecorators, EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
@@ -14,6 +16,10 @@ import {
   onFieldValueChange,
   onFieldInit,
   onFieldInitialValueChange,
+  onFormInitialValuesChange,
+  onFormValidateSuccess,
+  onFormValuesChange,
+  createEffectHook,
 } from "@formily/core";
 import { createSchemaField, FormProvider, ISchema } from "@formily/react";
 import { ConfigProvider, theme } from "antd";
@@ -42,10 +48,14 @@ import {
 import "./style.css";
 import yaml from "js-yaml";
 import _ from "lodash";
+import { BrickPackage } from "@next-core/types";
 
 const { defineElement, property, method, event } = createDecorators();
 
 const PropertyEditorComponent = React.forwardRef(LegacyPropertyEditor);
+
+const BEFORE_SUBMIT_KEY = "before_submit";
+const ADVANCED_CHANGE_KEY = "on_advanced_change";
 
 const SchemaField = createSchemaField({
   components: {
@@ -67,15 +77,41 @@ const SchemaField = createSchemaField({
 export interface EditorComponentProps {
   advancedMode?: boolean;
   SchemaFieldComponent: typeof SchemaField;
-  formilySchemaFormatter: (data: DataNode, advancedMode: boolean) => ISchema;
+  formilySchemaFormatter: (data: any, advancedMode?: boolean) => ISchema;
   form: Form<any>;
   effects: {
     onFieldInit: typeof onFieldInit;
     onFieldValueChange: typeof onFieldValueChange;
     onFieldInitialValueChange: typeof onFieldInitialValueChange;
+    onFormInitialValuesChange: typeof onFormInitialValuesChange;
+    onFormValidateSuccess: typeof onFormValidateSuccess;
+    onSubmit: (listener: (value: any, form: Form) => any) => void;
+    onAdvancedChange: (
+      listener: (advancedMode: boolean, form: Form) => any
+    ) => void;
     // support any effects
   };
+  scope: {
+    advancedMode: boolean;
+    dataList: DataItem[];
+  };
 }
+
+export interface DefinitionItem {
+  name: string;
+  type: string;
+  enum: string;
+  fileds: DefinitionItem[];
+}
+
+export interface DataItem {
+  name: string;
+  value: string;
+  definition: DefinitionItem[];
+  [k: string]: any;
+}
+
+export { DataNode };
 
 /**
  * 构件 `visual-builder.property-editor`
@@ -106,6 +142,16 @@ class PropertyEditor extends ReactNextElement {
   })
   accessor advancedMode: boolean | undefined;
 
+  @property({
+    attribute: false,
+  })
+  accessor dataList: DataItem[];
+
+  @property({
+    attribute: false,
+  })
+  accessor editorPackages: BrickPackage[];
+
   /**
    * 表单验证成功时触发事件
    */
@@ -119,7 +165,8 @@ class PropertyEditor extends ReactNextElement {
 
   @method()
   validate() {
-    const form = this.#formRef.current?.getFormInstance();
+    const form: Form = this.#formRef.current?.getFormInstance();
+    this.#submitValue = null;
 
     form
       .validate()
@@ -127,12 +174,33 @@ class PropertyEditor extends ReactNextElement {
         const realValue = this.advancedMode
           ? yaml.load(form.values[ADVANCED_FORM_KEY])
           : _.omit(form.values, [ADVANCED_FORM_KEY]);
+
+        form.notify(BEFORE_SUBMIT_KEY, realValue);
+        if (this.#submitValue) {
+          this.#successEvent.emit(this.#submitValue);
+        }
         this.#successEvent.emit({ ...realValue });
       })
       .catch((err: any[]) => {
         this.#errorEvent.emit(err);
       });
   }
+
+  @event({ type: "values.change" })
+  accessor #valuesChangeEvent!: EventEmitter<any>;
+
+  #handleValuesChange = (value: any) => {
+    this.#valuesChangeEvent.emit(value);
+  };
+
+  #submitValue: any;
+
+  #onSubmitEffect = createEffectHook(
+    BEFORE_SUBMIT_KEY,
+    (values, form) => (listener) => {
+      this.#submitValue = listener(values, form);
+    }
+  );
 
   render() {
     return (
@@ -141,6 +209,10 @@ class PropertyEditor extends ReactNextElement {
         editorName={this.editorName}
         values={this.values}
         advancedMode={this.advancedMode}
+        dataList={this.dataList}
+        editorPackages={this.editorPackages}
+        handleValuesChange={this.#handleValuesChange}
+        onSubmitEffect={this.#onSubmitEffect}
       />
     );
   }
@@ -150,58 +222,94 @@ export interface PropertyEditorProps {
   values: any;
   editorName: string;
   advancedMode?: boolean;
+  dataList: DataItem[];
+  editorPackages: BrickPackage[];
+  handleValuesChange: (value: any) => void;
+  onSubmitEffect: (listener: (value: any, form: Form) => any) => void;
 }
 
 export function LegacyPropertyEditor(
-  { advancedMode, values, editorName }: PropertyEditorProps,
+  {
+    advancedMode,
+    values,
+    editorName,
+    dataList,
+    editorPackages,
+    handleValuesChange,
+    onSubmitEffect,
+  }: PropertyEditorProps,
   ref: any
 ) {
   const currentTheme = useCurrentTheme();
   const cache = useMemo(() => createCache(), []);
   const form = useMemo(() => createForm(), []);
-  const [Editor, setEditor] =
-    useState<(props: EditorComponentProps) => React.ReactElement>(null);
+  const [Editor, setEditor] = useState<
+    (props: EditorComponentProps) => React.ReactElement
+  >(() => customEditors.get(editorName)?.(React) as any);
+  const transformValueRef = useRef<any>(null);
+
+  const onAdvancedChangeEffect = useMemo(
+    () =>
+      createEffectHook(ADVANCED_CHANGE_KEY, (options, form) => (listener) => {
+        transformValueRef.current = listener(options, form);
+      }),
+    [editorName]
+  );
 
   useImperativeHandle(ref, () => ({
     getFormInstance: () => form,
   }));
 
-  const load = async (editorName: string) => {
+  const load = useCallback(async () => {
     // TODO: cache editors
-    await __secret_internals.loadEditors([editorName]);
-    setEditor(() => customEditors.get(editorName) as any);
-  };
+    await __secret_internals.loadEditors([editorName], editorPackages);
+    setEditor(() => customEditors.get(editorName)?.(React) as any);
+  }, [editorName, editorPackages]);
 
-  useEffect(() => {
-    editorName && load(editorName);
-  }, [editorName]);
-
-  useEffect(() => {
-    if (Editor) {
-      form.setInitialValues(values);
+  const defaultTransform = useCallback((values: any, advancedMode: boolean) => {
+    if (advancedMode) {
+      return {
+        [ADVANCED_FORM_KEY]: _.isEmpty(values)
+          ? ""
+          : yaml.safeDump(_.omit(values, [ADVANCED_FORM_KEY])),
+      };
     }
-  }, [form, values, Editor]);
+    const realValue = values[ADVANCED_FORM_KEY];
+    if (realValue) {
+      return yaml.safeLoad(realValue);
+    } else {
+      return values;
+    }
+  }, []);
+
+  useEffect(() => {
+    load();
+  }, [load]);
+
+  useEffect(() => {
+    if (Editor) form.setInitialValues(values);
+  }, [Editor, values, form]);
 
   useEffect(() => {
     const { values } = form.getState();
-    if (advancedMode) {
-      form.setValuesIn(
-        ADVANCED_FORM_KEY,
-        _.isEmpty(values)
-          ? ""
-          : yaml.safeDump(_.omit(values, [ADVANCED_FORM_KEY]))
-      );
-    } else {
-      const realValue = values[ADVANCED_FORM_KEY];
-      if (realValue) {
-        form.setValues(yaml.safeLoad(realValue));
-      } else {
-        form.setValues(values);
-      }
-    }
-  }, [advancedMode, form]);
+    transformValueRef.current = null;
 
-  if (!Editor) return <div>无数据</div>;
+    form.notify(ADVANCED_CHANGE_KEY, advancedMode);
+
+    const formData =
+      transformValueRef.current ?? defaultTransform(values, advancedMode);
+    form.setValues(formData);
+  }, [advancedMode, form, defaultTransform]);
+
+  useEffect(() => {
+    form.addEffects("onValueChange", () => {
+      onFormValuesChange((form) => {
+        handleValuesChange(form.values);
+      });
+    });
+  }, []);
+
+  if (!Editor) return null;
 
   return (
     <div className="property-form-wrapper">
@@ -221,10 +329,18 @@ export function LegacyPropertyEditor(
               advancedMode={advancedMode}
               SchemaFieldComponent={SchemaField}
               form={form}
+              scope={{
+                dataList,
+                advancedMode,
+              }}
               effects={{
                 onFieldInit,
                 onFieldValueChange,
                 onFieldInitialValueChange,
+                onFormInitialValuesChange,
+                onFormValidateSuccess,
+                onSubmit: onSubmitEffect,
+                onAdvancedChange: onAdvancedChangeEffect,
               }}
               formilySchemaFormatter={formilySchemaFormatter}
             />

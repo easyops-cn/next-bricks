@@ -13,7 +13,7 @@ import type {
   CustomTemplate,
   RouteConf,
 } from "@next-core/types";
-import { isEmpty, throttle } from "lodash";
+import { isEmpty, throttle, omit } from "lodash";
 import type {
   BrickOutline,
   HighLightNode,
@@ -39,6 +39,7 @@ import type {
   PreviewSettings,
   PreviewStartOptions,
   PreviewDebugData,
+  PreviewMessagePreviewInspectRuntimeValue,
 } from "./interfaces.js";
 import { capture } from "./capture.js";
 import {
@@ -234,14 +235,14 @@ export default async function connect(
     getHistory().reload();
   };
 
-  /* const updateFormPreviewSettings = (): void => {
-    __secret_internals.updateFormPreviewSettings(
+  const updateFormPreviewSettings = (): void => {
+    (__secret_internals as any).updateFormPreviewSettings(
       options.appId,
       options.formId,
       options.formData
     );
     getHistory().reload();
-  }; */
+  };
 
   const handlePreviewData = (name: string, option: PreviewDataOption): void => {
     try {
@@ -302,7 +303,7 @@ export default async function connect(
   const debugDataValue = async (
     data: PreviewDebugData,
     contractData: Contract,
-    options: PreviewDataOption
+    previewOption: PreviewDataOption
   ) => {
     try {
       if (contractData) {
@@ -310,7 +311,10 @@ export default async function connect(
       }
       const value = await __secret_internals.debugDataValue(data, {
         tplStateStoreId:
-          options.dataType === "state" ? getRootTplStateStoreId() : undefined,
+          previewOption.dataType === "state"
+            ? getRootTplStateStoreId()
+            : undefined,
+        routeId: options.routeId,
       });
 
       sendMessage<PreviewMessagePreviewDebugValueSuccess>({
@@ -391,22 +395,25 @@ export default async function connect(
                     bricks: BrickConf[];
                   }
                 );
-              } /* else if (data.options.updateStoryboardType === "form") {
-                __secret_internals.updateFormPreviewSettings(
+              } else if (data.options.updateStoryboardType === "form") {
+                (__secret_internals as any).updateFormPreviewSettings(
                   options.appId,
                   options.formId,
-                  data.storyboardPatch as FormDataProperties
+                  data.storyboardPatch
                 );
-              } */
+              }
 
-              const newContracts = await (
-                __secret_internals as any
-              ).getAddedContracts?.(data.storyboardPatch, {
-                appId: options.appId,
-                updateStoryboardType: data.options.updateStoryboardType,
-                formId: options.formId,
-                collectUsedContracts,
-              });
+              let newContracts;
+              if (data.options?.updateStoryboardType !== "form") {
+                newContracts = await (
+                  __secret_internals as any
+                ).getAddedContracts?.(data.storyboardPatch, {
+                  appId: options.appId,
+                  updateStoryboardType: data.options.updateStoryboardType,
+                  formId: options.formId,
+                  collectUsedContracts,
+                });
+              }
 
               if (!isEmpty(newContracts)) {
                 sendMessage<PreviewMessagePreviewContractUpdate>({
@@ -428,9 +435,9 @@ export default async function connect(
             if (options.templateId) {
               lastTemplatePreviewSettings = data.settings;
               updateTemplatePreviewSettings();
-            } /* else if (options.formId || options.formData) {
+            } else if (options.formId || options.formData) {
               updateFormPreviewSettings();
-            } */ else if (data.options?.snippetData) {
+            } else if (data.options?.snippetData) {
               options.snippetData = data.options.snippetData;
               updateSnippetPreviewSettings();
             } else {
@@ -556,7 +563,7 @@ export default async function connect(
         });
         placeholderLoadObserver.observe(mainMountPoint, { childList: true });
       }
-      /* if (options.formId && !previewPageMatch && match) {
+      if (options.formId && !previewPageMatch && match) {
         const mainMountPoint = document.querySelector("#main-mount-point");
         const placeholderLoadObserver = new MutationObserver(() => {
           // We observe when the placeholder is appeared.
@@ -570,7 +577,7 @@ export default async function connect(
           }
         });
         placeholderLoadObserver.observe(mainMountPoint, { childList: true });
-      } */
+      }
       if (options.snippetData && !previewPageMatch && match) {
         const mainMountPoint = document.querySelector("#main-mount-point")!;
         const placeholderLoadObserver = new MutationObserver(() => {
@@ -598,9 +605,9 @@ export default async function connect(
     updateTemplatePreviewSettings();
   }
 
-  /* if (options.formId || options.formData) {
+  if (options.formId || options.formData) {
     updateFormPreviewSettings();
-  } */
+  }
 
   if (options.snippetData) {
     updateSnippetPreviewSettings();
@@ -626,6 +633,20 @@ export default async function connect(
       },
     });
   }
+
+  const setupRuntimeValueInspect = () => {
+    const routeId = options.routeId;
+
+    const data = __secret_internals.getLegalRuntimeValue({ routeId });
+    sendMessage<PreviewMessagePreviewInspectRuntimeValue>({
+      type: "inspect-runtime-data-value",
+      data: {
+        ...omit(data, "query"),
+        query: data.query ? Object.fromEntries(data.query.entries()) : {},
+        path: data.match?.params,
+      },
+    });
+  };
 
   __secret_internals.addRealTimeDataInspectHook?.(
     ({ changeType, tplStateStoreId, detail }) => {
@@ -667,10 +688,12 @@ export default async function connect(
 
   window.addEventListener("route.render", () => {
     setupRealTimeDataInspect(true);
+    setupRuntimeValueInspect();
   });
 
   setupContentScroll();
   setupRealTimeDataInspect(true);
+  setupRuntimeValueInspect();
 
   const mutationCallback = (): void => {
     setupContentScroll();

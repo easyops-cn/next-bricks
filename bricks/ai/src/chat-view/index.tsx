@@ -10,12 +10,16 @@ import "@next-core/theme";
 import "./host-context.css";
 import "./index.css";
 import { commandBrickConf } from "./ChatViewContext";
+import { UseBrickConf } from "@next-core/types";
 import { ChatBody } from "./ChatService.js";
 
 const { defineElement, property, method } = createDecorators();
 
+type InputToolbarBrick = { useBrick: UseBrickConf };
+
 export interface ChatViewProps {
   agentId: string;
+  robotId: string;
   sessionId?: string;
   readonly?: boolean;
   showAvatar?: boolean;
@@ -27,11 +31,13 @@ export interface ChatViewProps {
   debug?: boolean;
   commandBricks?: commandBrickConf;
   answerLanguage?: string;
+  inputToolbarBrick?: InputToolbarBrick;
 }
 
 export function LegacyChatViewComponent(
   {
     agentId,
+    robotId,
     sessionId,
     showAvatar,
     showSessionList = true,
@@ -43,6 +49,7 @@ export function LegacyChatViewComponent(
     debug = false,
     commandBricks,
     answerLanguage,
+    inputToolbarBrick,
   }: ChatViewProps,
   ref: React.Ref<SearchInputRef>
 ) {
@@ -68,6 +75,7 @@ export function LegacyChatViewComponent(
     querySessionHistory,
   } = useChatViewInfo({
     agentId,
+    robotId,
     sessionId,
     enterInterval,
     debug,
@@ -110,7 +118,9 @@ export function LegacyChatViewComponent(
         )}
         <div className="chat-view-content">
           <MessageList showAvatar={showAvatar} />
-          {!readonly && <SearchInput ref={ref} />}
+          {!readonly && (
+            <SearchInput inputToolbarBrick={inputToolbarBrick} ref={ref} />
+          )}
         </div>
       </div>
     </ChatViewContext.Provider>
@@ -137,6 +147,12 @@ class ChatView extends ReactNextElement {
    */
   @property()
   accessor agentId!: string;
+
+  /**
+   * 机器人id
+   */
+  @property()
+  accessor robotId!: string;
 
   /**
    * 指定智能体回答代码时所使用的语言
@@ -221,6 +237,14 @@ class ChatView extends ReactNextElement {
   })
   accessor commandBricks: commandBrickConf | undefined;
 
+  /**
+   * 输入框工具栏 useBrick
+   */
+  @property({
+    attribute: false,
+  })
+  accessor inputToolbarBrick: InputToolbarBrick | undefined;
+
   #ref = React.createRef<SearchInputRef>();
 
   /**
@@ -246,6 +270,7 @@ class ChatView extends ReactNextElement {
     return (
       <ChatViewComponent
         agentId={this.agentId}
+        robotId={this.robotId}
         debug={this.debug}
         sessionId={this.sessionId}
         readonly={this.readonly}
@@ -257,6 +282,7 @@ class ChatView extends ReactNextElement {
         enterInterval={this.enterInterval}
         commandBricks={this.commandBricks}
         answerLanguage={this.answerLanguage}
+        inputToolbarBrick={this.inputToolbarBrick}
         ref={this.#ref}
       />
     );

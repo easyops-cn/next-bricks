@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.36](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.35...@next-bricks/icons@1.1.36) (2024-06-21)
+
+**Note:** Version bump only for package @next-bricks/icons
+
+
+
+
+
+## [1.1.35](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.34...@next-bricks/icons@1.1.35) (2024-06-20)
+
+**Note:** Version bump only for package @next-bricks/icons
+
+
+
+
+
+## [1.1.34](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.33...@next-bricks/icons@1.1.34) (2024-06-17)
+
+**Note:** Version bump only for package @next-bricks/icons
+
+
+
+
+
 ## [1.1.33](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.32...@next-bricks/icons@1.1.33) (2024-06-13)
 
 **Note:** Version bump only for package @next-bricks/icons

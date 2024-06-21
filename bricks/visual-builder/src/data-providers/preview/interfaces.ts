@@ -98,6 +98,7 @@ export type PreviewMessageFromPreviewer =
   | PreviewMessagePreviewDataValueSuccess
   | PreviewMessagePreviewDataValueError
   | PreviewMessagePreviewDebugValueSuccess
+  | PreviewMessagePreviewInspectRuntimeValue
   | PreviewMessagePreviewDebugValueError
   | PreviewMessagePreviewContractUpdate;
 
@@ -299,6 +300,17 @@ export interface PreviewMessagePreviewDebugValueError
   data: unknown;
 }
 
+export interface PreviewMessagePreviewInspectRuntimeValue
+  extends PreviewBaseMessage {
+  sender: "previewer";
+  type: "inspect-runtime-data-value";
+  data: {
+    query?: Record<string, string>;
+    path?: Record<string, string>;
+    [key: string]: unknown;
+  };
+}
+
 export interface PreviewMessagePreviewContractUpdateDetail {
   add?: string[];
 }
@@ -459,13 +471,14 @@ export interface BrickOutline {
   hasContentScroll?: boolean;
 }
 
-export type UpdateStoryboardType = "route" | "template" | "snippet";
+export type UpdateStoryboardType = "route" | "template" | "snippet" | "form";
 
 export interface PreviewStartOptions {
   appId: string;
+  routeId?: string;
   templateId?: string;
   formId?: string;
-  // formData?: FormData;
+  formData?: FormData;
   snippetData?: any;
   routePath?: string;
   routeExact?: boolean;

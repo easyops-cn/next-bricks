@@ -359,11 +359,17 @@
   max-width: 100%;
   box-sizing: border-box;
 
+  .input-toobar {
+    position: absolute;
+    bottom: 100%;
+  }
+
   .mentions-list-wrapper {
     position: absolute;
     bottom: 100%;
     left: 12px;
     right: 12px;
+    z-index: 1;
 
     .content {
       background-color: var(--antd-input-bg);

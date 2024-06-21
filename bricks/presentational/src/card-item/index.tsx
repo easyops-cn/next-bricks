@@ -304,6 +304,10 @@ interface EoCardItemComponentProps extends EoCardItemProps {
   onTagClick?: () => void;
 }
 
+const preventDefaultListener = (e: Event) => {
+  e.preventDefault();
+};
+
 export function EoCardItemComponent(props: EoCardItemComponentProps) {
   const {
     hasHeader,
@@ -341,11 +345,15 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
     return (
       <WrappedMiniActions
         onActionClick={handleActionClick}
-        onClickCapture={(e) => {
-          e.preventDefault();
-        }}
         className="operator"
         actions={actions}
+        ref={(el) => {
+          el?.addEventListener("click", preventDefaultListener);
+
+          return () => {
+            el?.removeEventListener("click", preventDefaultListener);
+          };
+        }}
       />
     );
   }, [actions, handleActionClick]);

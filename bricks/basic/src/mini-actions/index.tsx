@@ -5,6 +5,7 @@ import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
+import type { Link, LinkProps } from "../link";
 import type {
   Popover,
   PopoverProps,
@@ -29,6 +30,7 @@ const WrappedTooltip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");
 const { defineElement, property, event } = createDecorators();
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
+const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 const WrappedPopover = wrapBrick<
   Popover,
   PopoverProps,
@@ -113,6 +115,10 @@ interface EoMiniActionsComponentProps extends EoMiniActionsProps {
   onActionClick: (action: SimpleActionType) => void;
 }
 
+const stopPropagationListener = (e: Event) => {
+  e.stopPropagation();
+};
+
 export function EoMiniActionsComponent(props: EoMiniActionsComponentProps) {
   const { actions, onActionClick } = props;
 
@@ -148,6 +154,31 @@ export function EoMiniActionsComponent(props: EoMiniActionsComponentProps) {
   return (
     <div className="group-wrapper">
       {outSideActions.map((action, i) => {
+        let contentNode = (
+          <WrappedIcon className="button-item-icon" {...action.icon!} />
+        );
+
+        if (action.url || action.href) {
+          contentNode = (
+            <WrappedLink
+              type="plain"
+              href={action.href}
+              target={action.target}
+              url={action.url}
+              disabled={action.disabled}
+              ref={(el) => {
+                el?.addEventListener("click", stopPropagationListener);
+
+                return () => {
+                  el?.removeEventListener("click", stopPropagationListener);
+                };
+              }}
+            >
+              {contentNode}
+            </WrappedLink>
+          );
+        }
+
         return (
           <div
             key={i}
@@ -162,10 +193,10 @@ export function EoMiniActionsComponent(props: EoMiniActionsComponentProps) {
                 key={i}
                 content={action.tooltip}
               >
-                <WrappedIcon className="button-item-icon" {...action.icon!} />
+                {contentNode}
               </WrappedTooltip>
             ) : (
-              <WrappedIcon className="button-item-icon" {...action.icon!} />
+              contentNode
             )}
           </div>
         );

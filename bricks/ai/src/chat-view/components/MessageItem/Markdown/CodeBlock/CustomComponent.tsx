@@ -52,7 +52,8 @@ export default function CustomComponent({
   language: string;
 }) {
   const { commandBricks } = useChatViewContext();
-  const { chatting, agentId, conversationId, taskId } = useMsgItemContext();
+  const { chatting, agentId, robotId, conversationId, taskId } =
+    useMsgItemContext();
 
   const { parseData, isError } = useData({
     text,
@@ -65,6 +66,7 @@ export default function CustomComponent({
       const data = {
         data: parseData,
         agentId,
+        robotId,
         conversationId,
         taskId,
       };
@@ -79,7 +81,15 @@ export default function CustomComponent({
       component: null,
       showOriginData: true,
     };
-  }, [commandBricks, language, parseData, agentId, conversationId, taskId]);
+  }, [
+    commandBricks,
+    language,
+    parseData,
+    agentId,
+    robotId,
+    conversationId,
+    taskId,
+  ]);
 
   return (
     <div className="custom-component-wrapper">

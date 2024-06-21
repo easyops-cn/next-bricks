@@ -1,28 +1,26 @@
-import React, { createElement } from "react";
+import type _React from "react";
 import { customEditors } from "@next-core/runtime";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import type { EditorComponentProps } from "@next-bricks/visual-builder/property-editor";
 import { eoButtonSchema } from "./eoButton.schema";
-// import { newSchema } from "./new.schema";
 
-function EoButtonComponent(props: EditorComponentProps): React.ReactElement {
-  const { SchemaFieldComponent, formilySchemaFormatter, advancedMode } = props;
+function EoButtonComponentFactory(React: typeof _React) {
+  return function EoButtonComponent(
+    props: EditorComponentProps
+  ): React.ReactElement {
+    const {
+      SchemaFieldComponent,
+      formilySchemaFormatter,
+      advancedMode,
+      scope,
+    } = props;
 
-  // 设置表达 effect
-  // useEffect(() => {
-  //   // console.log(props);
-  //   const { onFieldValueChange } = props.effects;
-  //   props.form.addEffects('abc',() => {
-  //     onFieldValueChange("url", (field) => {
-  //       console.log(field);
-  //     });
-  //   })
-  // }, []);
-
-  return createElement(SchemaFieldComponent, {
-    schema: formilySchemaFormatter(eoButtonSchema, advancedMode),
-  });
+    return React.createElement(SchemaFieldComponent, {
+      schema: formilySchemaFormatter(eoButtonSchema as any, advancedMode!),
+      scope,
+    });
+  };
 }
 
-customEditors.define("eo-button-editor", EoButtonComponent);
+customEditors.define("eo-button", EoButtonComponentFactory);

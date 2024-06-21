@@ -1,6 +1,6 @@
 {
   "name": "@next-shared/markdown",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/shared/markdown",
   "repository": {
     "type": "git",
@@ -45,7 +45,7 @@
     "unist-util-visit": "^5.0.0"
   },
   "devDependencies": {
-    "@next-core/build-next-libs": "^1.0.17",
-    "@next-core/test-next": "^1.1.3"
+    "@next-core/build-next-libs": "^1.0.18",
+    "@next-core/test-next": "^1.1.4"
   }
 }

@@ -13,12 +13,14 @@ const NEW_SESSION_ID = "new_session_id";
 
 export function useChatViewInfo({
   agentId,
+  robotId,
   sessionId,
   enterInterval = 50,
   debug,
   answerLanguage,
 }: {
   agentId: string;
+  robotId: string;
   sessionId?: string;
   enterInterval?: number;
   debug: boolean;
@@ -41,11 +43,12 @@ export function useChatViewInfo({
     () =>
       new ChatService({
         agentId,
+        robotId,
         enterInterval,
         debug,
         answerLanguage,
       }),
-    [agentId, enterInterval, debug, answerLanguage]
+    [agentId, robotId, enterInterval, debug, answerLanguage]
   );
 
   const defaultNewSessionItem = useMemo(
@@ -98,6 +101,7 @@ export function useChatViewInfo({
           newList.unshift(
             {
               agentId: item.agentId,
+              robotId: item.robotId,
               taskId: item.taskId,
               conversationId: item.conversationId,
               role: "user",

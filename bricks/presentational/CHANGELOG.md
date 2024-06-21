@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.14...@next-bricks/presentational@1.8.0) (2024-06-21)
+
+
+### Features
+
+* **eo-mini-actions:** Add url support for non-dropdown action ([caab00c](https://github.com/easyops-cn/next-bricks/commit/caab00c04d57e151ac048e24b97a5764dbc9bd44))
+
+
+
+
+
+## [1.7.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.13...@next-bricks/presentational@1.7.14) (2024-06-21)
+
+**Note:** Version bump only for package @next-bricks/presentational
+
+
+
+
+
+## [1.7.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.12...@next-bricks/presentational@1.7.13) (2024-06-20)
+
+**Note:** Version bump only for package @next-bricks/presentational
+
+
+
+
+
+## [1.7.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.11...@next-bricks/presentational@1.7.12) (2024-06-17)
+
+**Note:** Version bump only for package @next-bricks/presentational
+
+
+
+
+
 ## [1.7.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.7.10...@next-bricks/presentational@1.7.11) (2024-06-11)
 
 
