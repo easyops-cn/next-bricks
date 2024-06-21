@@ -20,7 +20,7 @@ describe("visual-builder.property-editor", () => {
     act(() => {
       document.body.appendChild(element);
     });
-    expect(element.innerHTML).toBe("<div>无数据</div>");
+    expect(element.innerHTML).toBe("");
 
     act(() => {
       document.body.removeChild(element);
