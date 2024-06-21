@@ -30,13 +30,13 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-core/easyops-runtime": "^0.10.18",
+    "@next-core/easyops-runtime": "^0.10.20",
     "@next-core/element": "^1.2.9",
     "@next-core/http": "^1.2.4",
     "@next-core/i18n": "^1.0.54",
-    "@next-core/loader": "^1.6.0",
+    "@next-core/loader": "^1.6.1",
     "@next-core/react-element": "^1.0.28",
-    "@next-core/runtime": "^1.49.4",
+    "@next-core/runtime": "^1.49.5",
     "@next-core/theme": "^1.5.2",
     "@next-core/utils": "^1.7.12",
     "history": "^4.10.1",
@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@next-core/brick-dll-v3": "^0.8.8",
-    "@next-core/build-next-bricks": "^1.22.0",
+    "@next-core/build-next-bricks": "^1.22.1",
     "@next-core/styles-v3": "^0.3.3",
     "@next-core/test-next": "^1.1.3",
     "@next-dll/ace": "^2.0.749",
