@@ -5,7 +5,7 @@ import { customEditors } from "@next-core/runtime";
 import type { EditorComponentProps } from "@next-bricks/visual-builder/property-editor";
 import { eoSwitchSchema } from "./eoSwitch.schema";
 
-function EoButtonComponent(props: EditorComponentProps): React.ReactElement {
+function EoSwitchComponent(props: EditorComponentProps): React.ReactElement {
   const { SchemaFieldComponent, formilySchemaFormatter, advancedMode } = props;
 
   return createElement(SchemaFieldComponent, {
@@ -13,4 +13,4 @@ function EoButtonComponent(props: EditorComponentProps): React.ReactElement {
   });
 }
 
-customEditors.define("eo-radio-editor", EoButtonComponent);
+customEditors.define("eo-radio-editor", EoSwitchComponent);

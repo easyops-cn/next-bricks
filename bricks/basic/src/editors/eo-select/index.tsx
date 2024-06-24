@@ -3,9 +3,9 @@ import { customEditors } from "@next-core/runtime";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import type { EditorComponentProps } from "@next-bricks/visual-builder/property-editor";
-import { eoSelectSchema } from "./eoInput.select";
+import { eoSelectSchema } from "./eoSelect.schema";
 
-function EoButtonComponent(props: EditorComponentProps): React.ReactElement {
+function EoSelectComponent(props: EditorComponentProps): React.ReactElement {
   const { SchemaFieldComponent, formilySchemaFormatter, advancedMode } = props;
 
   return createElement(SchemaFieldComponent, {
@@ -13,4 +13,4 @@ function EoButtonComponent(props: EditorComponentProps): React.ReactElement {
   });
 }
 
-customEditors.define("eo-select-editor", EoButtonComponent);
+customEditors.define("eo-select-editor", EoSelectComponent);

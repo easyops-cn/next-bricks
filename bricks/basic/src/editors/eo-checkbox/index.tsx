@@ -5,7 +5,7 @@ import { customEditors } from "@next-core/runtime";
 import type { EditorComponentProps } from "@next-bricks/visual-builder/property-editor";
 import { eoCheckboxSchema } from "./eoCheckbox.schema";
 
-function EoButtonComponent(props: EditorComponentProps): React.ReactElement {
+function EoCheckboxComponent(props: EditorComponentProps): React.ReactElement {
   const { SchemaFieldComponent, formilySchemaFormatter, advancedMode } = props;
 
   return createElement(SchemaFieldComponent, {
@@ -13,4 +13,4 @@ function EoButtonComponent(props: EditorComponentProps): React.ReactElement {
   });
 }
 
-customEditors.define("eo-checkbox-editor", EoButtonComponent);
+customEditors.define("eo-checkbox-editor", EoCheckboxComponent);
