@@ -7,3 +7,4 @@ import "./eo-tag/index.js";
 import "./eo-popover/index.js";
 import "./eo-search/index.js";
 import "./eo-category/index.js";
+import "./eo-input/index.js";
