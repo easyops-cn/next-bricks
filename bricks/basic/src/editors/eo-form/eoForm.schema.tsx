@@ -26,9 +26,13 @@ export const eoFormSchema = {
         props: {
           placeholder: "请选择文本框类型",
           allowClear: true,
-          options: ["horizontal", "vertical", "inline"].map((item) => ({
-            label: item,
-            value: item,
+          options: [
+            { label: "水平", value: "horizontal" },
+            { label: "垂直", value: "vertical" },
+            { label: "行内", value: "inline" },
+          ].map((item) => ({
+            label: item.label,
+            value: item.value,
           })),
         },
       },
@@ -72,6 +76,7 @@ export const eoFormSchema = {
     {
       name: "labelCol",
       title: "标签列布局样式",
+      type: "string",
       component: {
         name: "CodeEditor",
       },
@@ -80,6 +85,7 @@ export const eoFormSchema = {
     {
       name: "wrapperCol",
       title: "输入控件列布局样式",
+      type: "string",
       component: {
         name: "CodeEditor",
       },
@@ -88,6 +94,7 @@ export const eoFormSchema = {
     {
       name: "formStyle",
       title: "表单样式",
+      type: "string",
       component: {
         name: "CodeEditor",
       },

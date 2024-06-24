@@ -54,9 +54,21 @@ export const eoSwitchSchema = {
       type: "string",
     },
     {
+      name: "checkedIcon",
+      title: "选中时的图标",
+      type: "string",
+      component: "IconSelect",
+    },
+    {
       name: "unCheckedText",
       title: "非选中时的文本	",
       type: "string",
+    },
+    {
+      name: "unCheckedIcon",
+      title: "非选中时的图标",
+      type: "string",
+      component: "IconSelect",
     },
     {
       name: "size",
@@ -85,18 +97,6 @@ export const eoSwitchSchema = {
           optionType: "button",
         },
       },
-    },
-    {
-      name: "checkedIcon",
-      title: "选中时的图标",
-      type: "string",
-      component: "IconSelect",
-    },
-    {
-      name: "unCheckedIcon",
-      title: "非选中时的图标",
-      type: "string",
-      component: "IconSelect",
     },
   ],
 };

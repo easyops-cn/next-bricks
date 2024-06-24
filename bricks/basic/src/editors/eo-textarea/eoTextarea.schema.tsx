@@ -73,7 +73,7 @@ export const eoTextareaSchema = {
     },
     {
       name: "autoSize",
-      title: "大小设置",
+      title: "大小自适应设置",
       component: {
         name: "CodeEditor",
       },

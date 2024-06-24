@@ -32,6 +32,10 @@ export const eoCheckboxSchema = {
       name: "value",
       title: "值",
       type: "string",
+      component: {
+        name: "CodeEditor",
+      },
+      decorator: "FormItemWithoutAdvanced",
     },
     {
       name: "disabled",
@@ -50,7 +54,8 @@ export const eoCheckboxSchema = {
     },
     {
       name: "options",
-      title: "多选框选项",
+      type: "string",
+      title: "选项",
       component: {
         name: "CodeEditor",
       },
@@ -76,14 +81,6 @@ export const eoCheckboxSchema = {
       name: "isGroup",
       title: "是否为分组复选框",
       type: "boolean",
-    },
-    {
-      name: "options",
-      title: "分组数据",
-      component: {
-        name: "CodeEditor",
-      },
-      decorator: "FormItemWithoutAdvanced",
     },
     {
       name: "categoryTitle_validator",
