@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.24.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.24.0...@next-bricks/basic@1.24.1) (2024-06-25)
+
+
+### Bug Fixes
+
+* fixV2Schema ([d99e2b2](https://github.com/easyops-cn/next-bricks/commit/d99e2b20aac321f175b40518a830903276345477))
+* fixV2Schema ([c06e7c3](https://github.com/easyops-cn/next-bricks/commit/c06e7c34baa76b9701f1ae8f351ae5063e7660d9))
+* fixV2Schema ([5550f03](https://github.com/easyops-cn/next-bricks/commit/5550f03746cb51d89ec89eb05df63f338bb03c08))
+* fixV2Schema ([8069932](https://github.com/easyops-cn/next-bricks/commit/8069932c5d6cbdfa27bd105f89657988bcd1c7fc))
+* fixV2Schema ([b6fc533](https://github.com/easyops-cn/next-bricks/commit/b6fc533fc152811916987c58ed622ccd3b5203db))
+* fixV2Schema ([917882f](https://github.com/easyops-cn/next-bricks/commit/917882fd51739883d0adf5f759f7532a3685cc23))
+* fixV2Schema ([54350b9](https://github.com/easyops-cn/next-bricks/commit/54350b977a391a25dab88923a563315ee94af7d6))
+
+
+
+
+
 # [1.24.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.23.0...@next-bricks/basic@1.24.0) (2024-06-21)
 
 

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-platform@0.4.6...@next-bricks/form-platform@0.4.7) (2024-06-25)
+
+**Note:** Version bump only for package @next-bricks/form-platform
+
+
+
+
+
 ## [0.4.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-platform@0.4.5...@next-bricks/form-platform@0.4.6) (2024-06-21)
 
 **Note:** Version bump only for package @next-bricks/form-platform
