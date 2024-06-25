@@ -3,10 +3,10 @@ import { customEditors } from "@next-core/runtime";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import type { EditorComponentProps } from "@next-bricks/visual-builder/property-editor";
-import { eoCategorySchema } from "./eoCategory.schema";
+import { popoverContainerSchema } from "./popoverContainer.schema";
 
-function EoCategoryComponentFactory(React: typeof _React) {
-  return function EoCategoryComponent(
+function PopoverContainerComponentFactory(React: typeof _React) {
+  return function PopoverContainerComponent(
     props: EditorComponentProps
   ): React.ReactElement {
     const {
@@ -17,10 +17,16 @@ function EoCategoryComponentFactory(React: typeof _React) {
     } = props;
 
     return React.createElement(SchemaFieldComponent, {
-      schema: formilySchemaFormatter(eoCategorySchema as any, advancedMode!),
+      schema: formilySchemaFormatter(
+        popoverContainerSchema as any,
+        advancedMode!
+      ),
       scope,
     });
   };
 }
-
-customEditors.define("eo-category", EoCategoryComponentFactory);
+// basic-bricks.popover-container
+customEditors.define(
+  "basic.popover-container",
+  PopoverContainerComponentFactory
+);

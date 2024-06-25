@@ -3,10 +3,10 @@ import { customEditors } from "@next-core/runtime";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import type { EditorComponentProps } from "@next-bricks/visual-builder/property-editor";
-import { eoCategorySchema } from "./eoCategory.schema";
+import { brickTagSchema } from "./brickTag.schema";
 
-function EoCategoryComponentFactory(React: typeof _React) {
-  return function EoCategoryComponent(
+function BrickTagComponentFactory(React: typeof _React) {
+  return function BrickTagComponent(
     props: EditorComponentProps
   ): React.ReactElement {
     const {
@@ -14,13 +14,22 @@ function EoCategoryComponentFactory(React: typeof _React) {
       formilySchemaFormatter,
       advancedMode,
       scope,
+      form,
     } = props;
 
+    React.useEffect(() => {
+      form.setInitialValues({
+        componentType: "Tag",
+        multipleCheck: true,
+        closable: false,
+      });
+    }, [form]);
+
     return React.createElement(SchemaFieldComponent, {
-      schema: formilySchemaFormatter(eoCategorySchema as any, advancedMode!),
+      schema: formilySchemaFormatter(brickTagSchema as any, advancedMode!),
       scope,
     });
   };
 }
-
-customEditors.define("eo-category", EoCategoryComponentFactory);
+// presentational-bricks.brick-tag
+customEditors.define("basic.brick-tag", BrickTagComponentFactory);

@@ -3,10 +3,10 @@ import { customEditors } from "@next-core/runtime";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import type { EditorComponentProps } from "@next-bricks/visual-builder/property-editor";
-import { eoCategorySchema } from "./eoCategory.schema";
+import { loadingContainerSchema } from "./loadingContainer.schema";
 
-function EoCategoryComponentFactory(React: typeof _React) {
-  return function EoCategoryComponent(
+function LoadingContainerComponentFactory(React: typeof _React) {
+  return function LoadingContainerComponent(
     props: EditorComponentProps
   ): React.ReactElement {
     const {
@@ -17,10 +17,17 @@ function EoCategoryComponentFactory(React: typeof _React) {
     } = props;
 
     return React.createElement(SchemaFieldComponent, {
-      schema: formilySchemaFormatter(eoCategorySchema as any, advancedMode!),
+      schema: formilySchemaFormatter(
+        loadingContainerSchema as any,
+        advancedMode!
+      ),
       scope,
     });
   };
 }
 
-customEditors.define("eo-category", EoCategoryComponentFactory);
+// container-brick.loading-container
+customEditors.define(
+  "basic.loading-container",
+  LoadingContainerComponentFactory
+);
