@@ -1,6 +1,6 @@
 通用标签构件
 
-```yaml preview
+```yaml preview gap
 - brick: eo-tag
   properties:
     textContent: Normal Item
@@ -10,7 +10,7 @@
 
 ### Closable & Event
 
-```yaml preview
+```yaml preview gap
 - brick: eo-tag
   properties:
     textContent: Normal Item
@@ -27,7 +27,7 @@
 
 ### Checkable & Event
 
-```yaml preview
+```yaml preview gap
 - brick: eo-tag
   properties:
     checkable: true
@@ -51,7 +51,7 @@
 
 ### Disabled
 
-```yaml preview
+```yaml preview gap
 - brick: eo-tag
   properties:
     closable: true
@@ -62,7 +62,7 @@
 
 ### Size
 
-```yaml preview
+```yaml preview gap
 - brick: eo-tag
   properties:
     size: large
@@ -79,7 +79,7 @@
 
 ### Color
 
-```yaml preview
+```yaml preview gap
 - brick: div
   properties:
     textContent: "Normal:"
@@ -170,7 +170,7 @@
 
 ### TagStyle
 
-```yaml preview
+```yaml preview gap
 - brick: eo-tag
   properties:
     textContent: TagStyle
@@ -181,7 +181,7 @@
 
 ### EllipsisWidth
 
-```yaml preview
+```yaml preview gap
 - brick: eo-tag
   properties:
     textContent: Hello World, This is over flow test
