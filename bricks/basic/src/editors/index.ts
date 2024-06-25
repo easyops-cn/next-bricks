@@ -15,4 +15,4 @@ import "./brick-general-search/index.js";
 import "./brick-tag/index.js";
 import "./brick-general-search/index.js";
 import "./popover-container/index.js";
-// import "./line-chart/index.js";
+import "./line-chart/index.js";

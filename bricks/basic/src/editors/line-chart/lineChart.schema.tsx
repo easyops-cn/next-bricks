@@ -22,166 +22,166 @@ export const lineChartSchema = {
       name: "data",
       title: "选择数据",
       type: "string",
-      component: "CodeEditor",
-      decorator: "FormItemWithoutAdvanced",
       required: true,
-    },
-    {
-      type: "string",
-      title: "选择x轴",
       component: {
         name: "Select",
         props: {
-          placeholder: "请选择x轴",
+          placeholder: "请选择数据",
           allowClear: true,
-          options: [].map((item) => ({
-            label: item,
-            value: item,
-          })),
+          options: [],
+        },
+      },
+    },
+    {
+      type: "string",
+      name: "xField",
+      required: true,
+      title: "选择X轴",
+      component: {
+        name: "Select",
+        props: {
+          placeholder: "请选择X轴",
+          allowClear: true,
+          options: [],
         },
       },
     },
     {
       name: "doubleYaxis",
-      title: "是否双y轴",
+      title: "是否双Y轴",
       type: "boolean",
+      "x-reactions": [
+        {
+          target: "leftYField",
+          fulfill: {
+            state: {
+              visible: "{{$self.value}}",
+            },
+          },
+        },
+        {
+          target: "rightYField",
+          fulfill: {
+            state: {
+              visible: "{{$self.value}}",
+            },
+          },
+        },
+        {
+          target: "categoryTitle_yAxisRight",
+          fulfill: {
+            state: {
+              visible: "{{$self.value}}",
+            },
+          },
+        },
+        {
+          target: "rightYFieldPrecision",
+          fulfill: {
+            state: {
+              visible: "{{$self.value}}",
+            },
+          },
+        },
+        {
+          target: "rightYFieldUnit",
+          fulfill: {
+            state: {
+              visible: "{{$self.value}}",
+            },
+          },
+        },
+        {
+          target: "rightYFieldShape",
+          fulfill: {
+            state: {
+              visible: "{{$self.value}}",
+            },
+          },
+        },
+        {
+          target: "rightYFieldMax",
+          fulfill: {
+            state: {
+              visible: "{{$self.value}}",
+            },
+          },
+        },
+        {
+          target: "rightYFieldMin",
+          fulfill: {
+            state: {
+              visible: "{{$self.value}}",
+            },
+          },
+        },
+        {
+          target: "yField",
+          fulfill: {
+            state: {
+              visible: "{{!$self.value}}",
+            },
+          },
+        },
+      ],
     },
     {
       type: "string",
       title: "左Y轴",
+      name: "leftYField",
+      required: true,
       component: {
         name: "Select",
         props: {
-          placeholder: "请选择x轴",
+          placeholder: "请选择左Y轴",
           allowClear: true,
-          options: [].map((item) => ({
-            label: item,
-            value: item,
-          })),
+          options: [],
         },
       },
     },
-
     {
-      name: "componentType",
-      title: "标签类型",
       type: "string",
-      decorator: {
-        name: "FormItem",
-        props: {
-          layout: "horizontal",
-        },
-      },
-      enum: [
-        {
-          label: "默认",
-          value: "Tag",
-        },
-        {
-          label: "可选标签",
-          value: "CheckableTag",
-        },
-      ],
+      title: "右Y轴",
+      name: "rightYField",
+      required: true,
       component: {
-        name: "Radio.Group",
+        name: "Select",
         props: {
-          size: "small",
-          optionType: "button",
-          defaultValue: "Tag",
+          placeholder: "请选择右Y轴",
+          allowClear: true,
+          options: [],
         },
       },
-      "x-reactions": [
-        {
-          target: "multipleCheck",
-          fulfill: {
-            state: {
-              visible: "{{$self.value==='CheckableTag'}}",
-            },
-          },
-        },
-        {
-          dependencies: ["multipleCheck"],
-          target: "cancelable",
-          fulfill: {
-            state: {
-              visible: "{{$self.value==='CheckableTag'&&$deps[0]===false}}",
-            },
-          },
-        },
-        {
-          target: "default",
-          fulfill: {
-            state: {
-              visible: "{{$self.value==='CheckableTag'}}",
-            },
-          },
-        },
-        {
-          dependencies: ["closable"],
-          target: "color",
-          fulfill: {
-            state: {
-              visible: "{{$self.value==='Tag'&&$deps[0]===false}}",
-            },
-          },
-        },
-        {
-          target: "configProps",
-          fulfill: {
-            state: {
-              visible: "{{$self.value==='Tag'}}",
-            },
-          },
-        },
-      ],
     },
     {
-      name: "tagList",
-      title: "标签列表",
       type: "string",
-      component: "CodeEditor",
-      decorator: "FormItemWithoutAdvanced",
-    },
-    {
-      name: "multipleCheck",
-      title: "允许多选",
-      type: "boolean",
+      title: "选择Y轴",
+      name: "yField",
+      required: true,
       component: {
+        name: "Select",
         props: {
-          size: "small",
-          defaultValue: true,
-        },
-      },
-      "x-reactions": [
-        {
-          dependencies: ["componentType"],
-          target: "cancelable",
-          fulfill: {
-            state: {
-              visible: "{{$self.value===false&&$deps[0]==='checkableTag'}}",
-            },
-          },
-        },
-      ],
-    },
-    {
-      name: "cancelable",
-      title: "允许取消选中",
-      type: "boolean",
-      component: {
-        props: {
-          size: "small",
-          defaultValue: true,
+          placeholder: "请选择Y轴",
+          allowClear: true,
+          options: [],
         },
       },
     },
     {
-      name: "default",
-      title: "默认值",
       type: "string",
+      title: "分组字段",
+      name: "groupField",
+      component: {
+        name: "Select",
+        props: {
+          placeholder: "分组字段",
+          allowClear: true,
+          options: [],
+        },
+      },
     },
     {
-      name: "categoryTitle_basic",
+      name: "categoryTitle_style",
       type: "void",
       decorator: {
         name: "CategoryTitle",
@@ -191,75 +191,354 @@ export const lineChartSchema = {
       },
     },
     {
-      name: "showTagCircle",
-      title: "标签内显示圆点",
+      name: "height",
+      title: "高度",
+      decorator: "FormItem",
+      type: "number",
+      required: true,
+      component: "NumberPicker",
+    },
+    {
+      name: "width",
+      title: "宽度",
+      decorator: "FormItem",
+      type: "number",
+      component: "NumberPicker",
+    },
+    {
+      name: "showPoint",
+      title: "是否显示数据点",
       type: "boolean",
     },
     {
-      name: "showCard",
-      title: "显示卡片容器",
+      name: "connectNulls",
+      title: "折线连接空值",
+      type: "boolean",
+    },
+    {
+      name: "showExportButton",
+      title: "显示导出数据按钮",
+      type: "boolean",
+    },
+    {
+      name: "legends",
+      title: "是否显示图例",
       type: "boolean",
       component: {
         props: {
-          size: "small",
           defaultValue: true,
+          size: "small",
         },
       },
-    },
-    {
-      name: "closable",
-      title: "允许关闭",
-      type: "boolean",
       "x-reactions": [
         {
-          dependencies: ["componentType"],
-          target: "color",
+          target: "position",
           fulfill: {
             state: {
-              visible: "{{$self.value===false&&$deps[0]==='Tag'}}",
+              visible: "{{$self.value}}",
             },
           },
         },
       ],
     },
     {
-      name: "textEllipsis",
-      title: "是否溢出省略",
+      name: "position",
+      title: "图例位置",
+      type: "string",
+      descorator: "FormItem",
+      component: {
+        name: "Select",
+        props: {
+          allowClear: true,
+          options: [
+            "top",
+            "top-left",
+            "top-right",
+            "bottom",
+            "bottom-left",
+            "bottom-right",
+            "right",
+            "right-top",
+            "right-bottom",
+            "left",
+            "left-top",
+            "left-bottom",
+          ].map((item) => ({
+            label: item,
+            value: item,
+          })),
+        },
+      },
+    },
+    {
+      name: "fillOpacity",
+      title: "折线透明度",
+      decorator: "FormItem",
+      type: "number",
+      component: "NumberPicker",
+    },
+    {
+      name: "categoryTitle_xAxis",
+      type: "void",
+      decorator: {
+        name: "CategoryTitle",
+        props: {
+          text: "X轴",
+        },
+      },
+    },
+    {
+      name: "timeType",
+      title: "时间类型",
       type: "boolean",
+      "x-reactions": [
+        {
+          target: "timeFormat",
+          fulfill: {
+            state: {
+              visible: "{{$self.value}}",
+            },
+          },
+        },
+      ],
     },
     {
-      name: "label",
-      title: "文案",
+      name: "timeFormat",
+      title: "时间格式",
       type: "string",
     },
     {
-      name: "color",
-      title: "颜色",
-      type: "string",
-    },
-    {
-      name: "tagStyle",
-      title: "自定义样式",
-      type: "string",
-      component: "CodeEditor",
-      decorator: "FormItemWithoutAdvanced",
-    },
-    {
-      name: "tagCheckedStyle",
-      title: "选中自定义样式",
+      name: "xRange",
+      title: "范围设置",
       type: "string",
       component: "CodeEditor",
       decorator: "FormItemWithoutAdvanced",
     },
     {
-      name: "tagHoverStyle",
-      title: "悬浮自定义样式",
-      type: "string",
-      component: "CodeEditor",
-      decorator: "FormItemWithoutAdvanced",
+      name: "categoryTitle_yAxis",
+      type: "void",
+      decorator: {
+        name: "CategoryTitle",
+        props: {
+          text: "Y轴",
+        },
+      },
     },
     {
-      name: "categoryTitle_basic",
+      name: "precision",
+      title: "小数位数",
+      decorator: "FormItem",
+      type: "number",
+      component: {
+        name: "NumberPicker",
+        props: {
+          placeholder: 2,
+        },
+      },
+    },
+    {
+      name: "unit",
+      title: "单位",
+      type: "string",
+    },
+    {
+      name: "shape",
+      title: "形状",
+      type: "string",
+      descorator: "FormItem",
+      component: {
+        name: "Select",
+        defaultValue: "line",
+        props: {
+          allowClear: true,
+          options: [
+            "line",
+            "dot",
+            "dash",
+            "smooth",
+            "hv",
+            "vh",
+            "hvh",
+            "vhv",
+          ].map((item) => ({
+            label: item,
+            value: item,
+          })),
+        },
+      },
+    },
+    {
+      name: "max",
+      title: "最大值",
+      decorator: "FormItem",
+      type: "number",
+      component: "NumberPicker",
+    },
+    {
+      name: "min",
+      title: "最小值",
+      decorator: "FormItem",
+      type: "number",
+      component: "NumberPicker",
+    },
+    {
+      name: "categoryTitle_yAxisRight",
+      type: "void",
+      decorator: {
+        name: "CategoryTitle",
+        props: {
+          text: "右Y轴",
+        },
+      },
+    },
+    {
+      name: "rightYFieldPrecision",
+      title: "小数位数",
+      decorator: "FormItem",
+      type: "number",
+      component: {
+        name: "NumberPicker",
+        props: {
+          placeholder: 2,
+        },
+      },
+    },
+    {
+      name: "rightYFieldUnit",
+      title: "单位",
+      type: "string",
+    },
+    {
+      name: "rightYFieldShape",
+      title: "形状",
+      type: "string",
+      descorator: "FormItem",
+      component: {
+        name: "Select",
+        defaultValue: "line",
+        props: {
+          allowClear: true,
+          options: [
+            "line",
+            "dot",
+            "dash",
+            "smooth",
+            "hv",
+            "vh",
+            "hvh",
+            "vhv",
+          ].map((item) => ({
+            label: item,
+            value: item,
+          })),
+        },
+      },
+    },
+    {
+      name: "rightYFieldMax",
+      title: "最大值",
+      decorator: "FormItem",
+      type: "number",
+      component: "NumberPicker",
+    },
+    {
+      name: "rightYFieldMin",
+      title: "最小值",
+      decorator: "FormItem",
+      type: "number",
+      component: "NumberPicker",
+    },
+    // {
+    //   name: "categoryTitle_thresholds",
+    //   type: "void",
+    //   decorator: {
+    //     name: "CategoryTitle",
+    //     props: {
+    //       text: "阈值线",
+    //     },
+    //   },
+    // },
+    // {
+    //   name: "thresholdsOperator",
+    //   title: "比较符",
+    //   type: "string",
+    //   decorator: {
+    //     name: "FormItem",
+    //     props: {
+    //       layout: "horizontal",
+    //     },
+    //   },
+    //   enum: [
+    //     {
+    //       label: "大于",
+    //       value: "gt",
+    //     },
+    //     {
+    //       label: "小于",
+    //       value: "lt",
+    //     },
+    //   ],
+    //   component: {
+    //     name: "Radio.Group",
+    //     props: {
+    //       size: "small",
+    //       optionType: "button",
+    //       defaultValue: "gt",
+    //     },
+    //   },
+    // },
+    // {
+    //   name: "thresholdsValue",
+    //   title: "阈值",
+    //   decorator: "FormItem",
+    //   type: "number",
+    //   component: "NumberPicker",
+    // },
+    // {
+    //   name: "thresholdsColor",
+    //   title: "阈值线颜色",
+    //   type: "string",
+    // },
+    // {
+    //   name: "thresholdsFill",
+    //   title: "是否显示阈值蒙层",
+    //   type: "boolean",
+    // },
+    // {
+    //   name: "thresholdsShape",
+    //   title: "阈值线形状",
+    //   type: "string",
+    //   decorator: {
+    //     name: "FormItem",
+    //     props: {
+    //       layout: "horizontal",
+    //     },
+    //   },
+    //   enum: [
+    //     {
+    //       label: "Dash",
+    //       value: "dash",
+    //     },
+    //     {
+    //       label: "Line",
+    //       value: "line",
+    //     },
+    //     {
+    //       label: "None",
+    //       value: "none",
+    //     },
+    //   ],
+    //   component: {
+    //     name: "Radio.Group",
+    //     props: {
+    //       size: "small",
+    //       optionType: "button",
+    //       defaultValue: "dash",
+    //     },
+    //   },
+    // },
+    {
+      name: "categoryTitle_other",
       type: "void",
       decorator: {
         name: "CategoryTitle",
@@ -269,27 +548,22 @@ export const lineChartSchema = {
       },
     },
     {
-      name: "disabledTooltip",
-      title: "禁用提示",
-      type: "string",
-    },
-    {
-      name: "tooltipProps",
-      title: "提示配置",
+      name: "thresholds",
+      title: "阈值线",
       type: "string",
       component: "CodeEditor",
       decorator: "FormItemWithoutAdvanced",
     },
     {
-      name: "configProps",
-      title: "额外配置",
+      name: "marker",
+      title: "呼吸点",
       type: "string",
       component: "CodeEditor",
       decorator: "FormItemWithoutAdvanced",
     },
     {
-      name: "afterBrick",
-      title: "尾部插入构件",
+      name: "interactions",
+      title: "调用交互",
       type: "string",
       component: "CodeEditor",
       decorator: "FormItemWithoutAdvanced",
