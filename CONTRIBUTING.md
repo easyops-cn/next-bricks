@@ -73,6 +73,8 @@ export default {
 };
 ```
 
+注意：现在可以在 v3 仓库中使用 `yarn serve:playground` 并配合 `dev.config.mjs` 来在本地调试其他仓库（包括 v2）的构件属性编辑器，如上按需配置 `brickFolders` 即可。
+
 ### SVG
 
 在构件 JS/TS 代码中引入 SVG 文件时，默认会像 PNG/JPEG 一样打包成图片资源文件，例如：

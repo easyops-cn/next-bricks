@@ -3,283 +3,158 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.5.17](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.5.16...@next-bricks/containers@1.5.17) (2024-06-21)
+## [1.5.18](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.5.17...@next-bricks/containers@1.5.18) (2024-06-25)
 
 **Note:** Version bump only for package @next-bricks/containers
 
+## [1.5.17](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.5.16...@next-bricks/containers@1.5.17) (2024-06-21)
 
-
-
+**Note:** Version bump only for package @next-bricks/containers
 
 ## [1.5.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.5.15...@next-bricks/containers@1.5.16) (2024-06-20)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [1.5.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.5.14...@next-bricks/containers@1.5.15) (2024-06-17)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [1.5.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.5.13...@next-bricks/containers@1.5.14) (2024-06-11)
-
 
 ### Bug Fixes
 
-* add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
-
-
-
-
+- add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
 
 ## [1.5.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.5.12...@next-bricks/containers@1.5.13) (2024-06-03)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [1.5.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.5.11...@next-bricks/containers@1.5.12) (2024-05-22)
 
 **Note:** Version bump only for package @next-bricks/containers
-
-
-
-
 
 ## [1.5.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.5.10...@next-bricks/containers@1.5.11) (2024-05-21)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [1.5.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.5.9...@next-bricks/containers@1.5.10) (2024-05-17)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [1.5.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.5.8...@next-bricks/containers@1.5.9) (2024-05-17)
-
 
 ### Bug Fixes
 
-* style fix ([f1c94de](https://github.com/easyops-cn/next-bricks/commit/f1c94dee8e9f98f3b40798f98f90776995047b4c))
-
-
-
-
+- style fix ([f1c94de](https://github.com/easyops-cn/next-bricks/commit/f1c94dee8e9f98f3b40798f98f90776995047b4c))
 
 ## [1.5.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.5.7...@next-bricks/containers@1.5.8) (2024-05-17)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [1.5.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.5.6...@next-bricks/containers@1.5.7) (2024-05-15)
 
 **Note:** Version bump only for package @next-bricks/containers
-
-
-
-
 
 ## [1.5.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.5.5...@next-bricks/containers@1.5.6) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [1.5.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.5.4...@next-bricks/containers@1.5.5) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/containers
-
-
-
-
 
 ## [1.5.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.5.3...@next-bricks/containers@1.5.4) (2024-05-08)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [1.5.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.5.2...@next-bricks/containers@1.5.3) (2024-04-16)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [1.5.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.5.1...@next-bricks/containers@1.5.2) (2024-04-11)
-
 
 ### Bug Fixes
 
-* **popup:** fix content height not fill container ([8abdf50](https://github.com/easyops-cn/next-bricks/commit/8abdf50330007bb97e19a68f82f52390047fb4e9))
-
-
-
-
+- **popup:** fix content height not fill container ([8abdf50](https://github.com/easyops-cn/next-bricks/commit/8abdf50330007bb97e19a68f82f52390047fb4e9))
 
 ## [1.5.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.5.0...@next-bricks/containers@1.5.1) (2024-04-11)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 # [1.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.4.4...@next-bricks/containers@1.5.0) (2024-04-11)
-
 
 ### Features
 
-* popup cache size ([8b2fe4d](https://github.com/easyops-cn/next-bricks/commit/8b2fe4d347f6aa4255d4ce0f5cf1b958e6ac241b))
-* **popup:** use react-rnd ([2acc805](https://github.com/easyops-cn/next-bricks/commit/2acc8058bd17e127b9eb79c829ff1c3342ea6a09))
-* update code ([33c95a3](https://github.com/easyops-cn/next-bricks/commit/33c95a3ec924f78f5c3f3755e6806293e5b90a05))
-
-
-
-
+- popup cache size ([8b2fe4d](https://github.com/easyops-cn/next-bricks/commit/8b2fe4d347f6aa4255d4ce0f5cf1b958e6ac241b))
+- **popup:** use react-rnd ([2acc805](https://github.com/easyops-cn/next-bricks/commit/2acc8058bd17e127b9eb79c829ff1c3342ea6a09))
+- update code ([33c95a3](https://github.com/easyops-cn/next-bricks/commit/33c95a3ec924f78f5c3f3755e6806293e5b90a05))
 
 ## [1.4.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.4.3...@next-bricks/containers@1.4.4) (2024-04-08)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [1.4.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.4.2...@next-bricks/containers@1.4.3) (2024-04-03)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [1.4.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.4.1...@next-bricks/containers@1.4.2) (2024-04-02)
-
 
 ### Bug Fixes
 
-* drawer mask merge custom css propperties ([bd7c6c2](https://github.com/easyops-cn/next-bricks/commit/bd7c6c2125ab41cfa2de63873b062dcb645fab73))
-
-
-
-
+- drawer mask merge custom css propperties ([bd7c6c2](https://github.com/easyops-cn/next-bricks/commit/bd7c6c2125ab41cfa2de63873b062dcb645fab73))
 
 ## [1.4.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.4.0...@next-bricks/containers@1.4.1) (2024-04-01)
 
-
 ### Bug Fixes
 
-* **eo-popup:** fix moving will change content width ([93071f2](https://github.com/easyops-cn/next-bricks/commit/93071f2e56d08c6d6df5670818fbf8525334e042))
-
-
-
-
+- **eo-popup:** fix moving will change content width ([93071f2](https://github.com/easyops-cn/next-bricks/commit/93071f2e56d08c6d6df5670818fbf8525334e042))
 
 # [1.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.3.1...@next-bricks/containers@1.4.0) (2024-03-29)
 
-
 ### Bug Fixes
 
-* resize overflow to screen ([58310e8](https://github.com/easyops-cn/next-bricks/commit/58310e86b872f35f34658e19c76e5b10c79f9048))
-
+- resize overflow to screen ([58310e8](https://github.com/easyops-cn/next-bricks/commit/58310e86b872f35f34658e19c76e5b10c79f9048))
 
 ### Features
 
-* **eo-popup:** init ([f0e6d81](https://github.com/easyops-cn/next-bricks/commit/f0e6d81bb4d7d62f9fd7a489895a409321e2ebb2))
-* update unit test ([7fba180](https://github.com/easyops-cn/next-bricks/commit/7fba18052b44fced806faf71b2f24d2a5977c253))
-
-
-
-
+- **eo-popup:** init ([f0e6d81](https://github.com/easyops-cn/next-bricks/commit/f0e6d81bb4d7d62f9fd7a489895a409321e2ebb2))
+- update unit test ([7fba180](https://github.com/easyops-cn/next-bricks/commit/7fba18052b44fced806faf71b2f24d2a5977c253))
 
 ## [1.3.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.3.0...@next-bricks/containers@1.3.1) (2024-03-27)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 # [1.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.2.1...@next-bricks/containers@1.3.0) (2024-03-25)
-
 
 ### Features
 
-* **eo-main-view:** add showBanner and fillScreen ([#918](https://github.com/easyops-cn/next-bricks/issues/918)) ([55d431c](https://github.com/easyops-cn/next-bricks/commit/55d431c330bbe47047c1a8d50bb40bd56dfe9796))
-
-
-
-
+- **eo-main-view:** add showBanner and fillScreen ([#918](https://github.com/easyops-cn/next-bricks/issues/918)) ([55d431c](https://github.com/easyops-cn/next-bricks/commit/55d431c330bbe47047c1a8d50bb40bd56dfe9796))
 
 ## [1.2.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.2.0...@next-bricks/containers@1.2.1) (2024-03-12)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 # [1.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.1.1...@next-bricks/containers@1.2.0) (2024-03-04)
-
 
 ### Features
 
-* **card:** add bodyStyle property ([489333c](https://github.com/easyops-cn/next-bricks/commit/489333cc927f9ed3a2fbf0402c51de84dc1c65bb))
-
-
-
-
+- **card:** add bodyStyle property ([489333c](https://github.com/easyops-cn/next-bricks/commit/489333cc927f9ed3a2fbf0402c51de84dc1c65bb))
 
 ## [1.1.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.1.0...@next-bricks/containers@1.1.1) (2024-02-29)
 
-
 ### Bug Fixes
 
-* modal scrollable ([db3242b](https://github.com/easyops-cn/next-bricks/commit/db3242b3e62228638fae3dafc4ff46d641c53c27))
-
-
-
-
+- modal scrollable ([db3242b](https://github.com/easyops-cn/next-bricks/commit/db3242b3e62228638fae3dafc4ff46d641c53c27))
 
 # [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.0.10...@next-bricks/containers@1.1.0) (2024-02-19)
 
-
 ### Bug Fixes
 
-* use new brick names ([2a7ac9d](https://github.com/easyops-cn/next-bricks/commit/2a7ac9d454a06bfd51cc12a4a9cdf219d1d97f2f))
-
+- use new brick names ([2a7ac9d](https://github.com/easyops-cn/next-bricks/commit/2a7ac9d454a06bfd51cc12a4a9cdf219d1d97f2f))
 
 ### Features
 
-* **eo-tab:** add content-style property ([3c0cb1e](https://github.com/easyops-cn/next-bricks/commit/3c0cb1eee0f40b663833558b1d5623ff11127951))
-
-
-
-
+- **eo-tab:** add content-style property ([3c0cb1e](https://github.com/easyops-cn/next-bricks/commit/3c0cb1eee0f40b663833558b1d5623ff11127951))
 
 ## [1.0.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.0.9...@next-bricks/containers@1.0.10) (2024-02-08)
 

@@ -3,680 +3,351 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.1.36](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.35...@next-bricks/icons@1.1.36) (2024-06-21)
+## [1.1.37](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.36...@next-bricks/icons@1.1.37) (2024-06-25)
 
 **Note:** Version bump only for package @next-bricks/icons
 
+## [1.1.36](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.35...@next-bricks/icons@1.1.36) (2024-06-21)
 
-
-
+**Note:** Version bump only for package @next-bricks/icons
 
 ## [1.1.35](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.34...@next-bricks/icons@1.1.35) (2024-06-20)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [1.1.34](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.33...@next-bricks/icons@1.1.34) (2024-06-17)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [1.1.33](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.32...@next-bricks/icons@1.1.33) (2024-06-13)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [1.1.32](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.31...@next-bricks/icons@1.1.32) (2024-06-11)
-
 
 ### Bug Fixes
 
-* add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
-
-
-
-
+- add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
 
 ## [1.1.31](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.30...@next-bricks/icons@1.1.31) (2024-06-03)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [1.1.30](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.29...@next-bricks/icons@1.1.30) (2024-05-22)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [1.1.29](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.28...@next-bricks/icons@1.1.29) (2024-05-21)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [1.1.28](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.27...@next-bricks/icons@1.1.28) (2024-05-17)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [1.1.27](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.26...@next-bricks/icons@1.1.27) (2024-05-17)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [1.1.26](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.25...@next-bricks/icons@1.1.26) (2024-05-15)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [1.1.25](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.24...@next-bricks/icons@1.1.25) (2024-05-15)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [1.1.24](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.23...@next-bricks/icons@1.1.24) (2024-05-15)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [1.1.23](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.22...@next-bricks/icons@1.1.23) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [1.1.22](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.21...@next-bricks/icons@1.1.22) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [1.1.21](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.20...@next-bricks/icons@1.1.21) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [1.1.20](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.19...@next-bricks/icons@1.1.20) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [1.1.19](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.18...@next-bricks/icons@1.1.19) (2024-05-08)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [1.1.18](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.17...@next-bricks/icons@1.1.18) (2024-05-06)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [1.1.17](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.16...@next-bricks/icons@1.1.17) (2024-04-26)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [1.1.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.15...@next-bricks/icons@1.1.16) (2024-04-23)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [1.1.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.14...@next-bricks/icons@1.1.15) (2024-04-18)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [1.1.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.13...@next-bricks/icons@1.1.14) (2024-04-16)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [1.1.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.12...@next-bricks/icons@1.1.13) (2024-04-09)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [1.1.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.11...@next-bricks/icons@1.1.12) (2024-04-08)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [1.1.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.10...@next-bricks/icons@1.1.11) (2024-04-03)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [1.1.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.9...@next-bricks/icons@1.1.10) (2024-04-02)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [1.1.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.8...@next-bricks/icons@1.1.9) (2024-04-02)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [1.1.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.7...@next-bricks/icons@1.1.8) (2024-04-01)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [1.1.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.6...@next-bricks/icons@1.1.7) (2024-03-27)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [1.1.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.5...@next-bricks/icons@1.1.6) (2024-03-25)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [1.1.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.4...@next-bricks/icons@1.1.5) (2024-03-22)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [1.1.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.3...@next-bricks/icons@1.1.4) (2024-03-19)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [1.1.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.2...@next-bricks/icons@1.1.3) (2024-03-13)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [1.1.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.1...@next-bricks/icons@1.1.2) (2024-03-12)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [1.1.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.0...@next-bricks/icons@1.1.1) (2024-03-08)
-
 
 ### Bug Fixes
 
-* support set icon fallback to image ([b0c732e](https://github.com/easyops-cn/next-bricks/commit/b0c732e59b707cec5b9a670908befa8ba3944e28))
-
-
-
-
+- support set icon fallback to image ([b0c732e](https://github.com/easyops-cn/next-bricks/commit/b0c732e59b707cec5b9a670908befa8ba3944e28))
 
 # [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.0.12...@next-bricks/icons@1.1.0) (2024-03-08)
 
-
 ### Features
 
-* support icon fallback ([2191068](https://github.com/easyops-cn/next-bricks/commit/2191068d7b5f337d24b92e597942f8bb4c29609c))
-
-
-
-
+- support icon fallback ([2191068](https://github.com/easyops-cn/next-bricks/commit/2191068d7b5f337d24b92e597942f8bb4c29609c))
 
 ## [1.0.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.0.11...@next-bricks/icons@1.0.12) (2024-02-27)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [1.0.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.0.10...@next-bricks/icons@1.0.11) (2024-02-21)
-
 
 ### Bug Fixes
 
-* update antd to the latest ([fea4ac8](https://github.com/easyops-cn/next-bricks/commit/fea4ac81493d49a61fef7b856e50a9532db8645e))
-
-
-
-
+- update antd to the latest ([fea4ac8](https://github.com/easyops-cn/next-bricks/commit/fea4ac81493d49a61fef7b856e50a9532db8645e))
 
 ## [1.0.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.0.9...@next-bricks/icons@1.0.10) (2024-02-19)
 
-
 ### Bug Fixes
 
-* use new brick names ([2a7ac9d](https://github.com/easyops-cn/next-bricks/commit/2a7ac9d454a06bfd51cc12a4a9cdf219d1d97f2f))
-
-
-
-
+- use new brick names ([2a7ac9d](https://github.com/easyops-cn/next-bricks/commit/2a7ac9d454a06bfd51cc12a4a9cdf219d1d97f2f))
 
 ## [1.0.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.0.8...@next-bricks/icons@1.0.9) (2024-02-07)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [1.0.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.0.7...@next-bricks/icons@1.0.8) (2024-02-05)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [1.0.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.0.6...@next-bricks/icons@1.0.7) (2024-02-01)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [1.0.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.0.5...@next-bricks/icons@1.0.6) (2024-01-19)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [1.0.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.0.4...@next-bricks/icons@1.0.5) (2024-01-10)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [1.0.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.0.3...@next-bricks/icons@1.0.4) (2024-01-08)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [1.0.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.0.2...@next-bricks/icons@1.0.3) (2024-01-03)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [1.0.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.0.1...@next-bricks/icons@1.0.2) (2024-01-02)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [1.0.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.8.4...@next-bricks/icons@1.0.1) (2024-01-02)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [0.8.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.8.3...@next-bricks/icons@0.8.4) (2024-01-02)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [0.8.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.8.2...@next-bricks/icons@0.8.3) (2023-12-28)
-
 
 ### Bug Fixes
 
-* fix ci cache for icons ([43348e3](https://github.com/easyops-cn/next-bricks/commit/43348e3809297bf3ab845b12b828adfa8f7fb927))
-
-
-
-
+- fix ci cache for icons ([43348e3](https://github.com/easyops-cn/next-bricks/commit/43348e3809297bf3ab845b12b828adfa8f7fb927))
 
 ## [0.8.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.8.1...@next-bricks/icons@0.8.2) (2023-12-27)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [0.8.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.8.0...@next-bricks/icons@0.8.1) (2023-12-25)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 # [0.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.7.5...@next-bricks/icons@0.8.0) (2023-12-22)
-
 
 ### Features
 
-* migrate icons ([30893f0](https://github.com/easyops-cn/next-bricks/commit/30893f0f5ae1192aa666efede41e21164e8a24c2))
-
-
-
-
+- migrate icons ([30893f0](https://github.com/easyops-cn/next-bricks/commit/30893f0f5ae1192aa666efede41e21164e8a24c2))
 
 ## [0.7.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.7.4...@next-bricks/icons@0.7.5) (2023-12-22)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [0.7.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.7.3...@next-bricks/icons@0.7.4) (2023-12-22)
-
 
 ### Bug Fixes
 
-* keep color for masks, remove titles in svg ([8cab821](https://github.com/easyops-cn/next-bricks/commit/8cab821a3dcaf0b8f2d1766fd13e795d5203dc8e))
-
-
-
-
+- keep color for masks, remove titles in svg ([8cab821](https://github.com/easyops-cn/next-bricks/commit/8cab821a3dcaf0b8f2d1766fd13e795d5203dc8e))
 
 ## [0.7.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.7.2...@next-bricks/icons@0.7.3) (2023-12-19)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [0.7.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.7.1...@next-bricks/icons@0.7.2) (2023-12-18)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [0.7.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.7.0...@next-bricks/icons@0.7.1) (2023-12-15)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 # [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.6.28...@next-bricks/icons@0.7.0) (2023-12-13)
-
 
 ### Features
 
-* support svg image as icon by default ([d4d3176](https://github.com/easyops-cn/next-bricks/commit/d4d317632710c5bb386eba8f0528475a5f73e926))
-
-
-
-
+- support svg image as icon by default ([d4d3176](https://github.com/easyops-cn/next-bricks/commit/d4d317632710c5bb386eba8f0528475a5f73e926))
 
 ## [0.6.28](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.6.27...@next-bricks/icons@0.6.28) (2023-12-12)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [0.6.27](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.6.26...@next-bricks/icons@0.6.27) (2023-12-11)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [0.6.26](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.6.25...@next-bricks/icons@0.6.26) (2023-12-08)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [0.6.25](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.6.24...@next-bricks/icons@0.6.25) (2023-12-07)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [0.6.24](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.6.23...@next-bricks/icons@0.6.24) (2023-12-06)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [0.6.23](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.6.22...@next-bricks/icons@0.6.23) (2023-12-05)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [0.6.22](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.6.21...@next-bricks/icons@0.6.22) (2023-11-30)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [0.6.21](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.6.20...@next-bricks/icons@0.6.21) (2023-11-30)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [0.6.20](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.6.19...@next-bricks/icons@0.6.20) (2023-11-29)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [0.6.19](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.6.18...@next-bricks/icons@0.6.19) (2023-11-23)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [0.6.18](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.6.17...@next-bricks/icons@0.6.18) (2023-11-17)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [0.6.17](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.6.16...@next-bricks/icons@0.6.17) (2023-11-17)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [0.6.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.6.15...@next-bricks/icons@0.6.16) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [0.6.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.6.14...@next-bricks/icons@0.6.15) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [0.6.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.6.13...@next-bricks/icons@0.6.14) (2023-11-15)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [0.6.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.6.12...@next-bricks/icons@0.6.13) (2023-11-13)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [0.6.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.6.11...@next-bricks/icons@0.6.12) (2023-11-09)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [0.6.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.6.10...@next-bricks/icons@0.6.11) (2023-11-07)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [0.6.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.6.9...@next-bricks/icons@0.6.10) (2023-11-06)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [0.6.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.6.8...@next-bricks/icons@0.6.9) (2023-11-03)
 
 **Note:** Version bump only for package @next-bricks/icons
 
-
-
-
-
 ## [0.6.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.6.7...@next-bricks/icons@0.6.8) (2023-11-01)
 
 **Note:** Version bump only for package @next-bricks/icons
-
-
-
-
 
 ## [0.6.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@0.6.6...@next-bricks/icons@0.6.7) (2023-11-01)
 

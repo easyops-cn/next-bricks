@@ -3,958 +3,512 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.10.6...@next-bricks/form@1.10.7) (2024-06-25)
+
+**Note:** Version bump only for package @next-bricks/form
+
 ## [1.10.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.10.5...@next-bricks/form@1.10.6) (2024-06-21)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [1.10.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.10.4...@next-bricks/form@1.10.5) (2024-06-20)
-
 
 ### Bug Fixes
 
-* 修改eo-search分类 ([7c3ec49](https://github.com/easyops-cn/next-bricks/commit/7c3ec491b9cf1d501409f664b8694fc08457ec0a))
-
-
-
-
+- 修改eo-search分类 ([7c3ec49](https://github.com/easyops-cn/next-bricks/commit/7c3ec491b9cf1d501409f664b8694fc08457ec0a))
 
 ## [1.10.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.10.3...@next-bricks/form@1.10.4) (2024-06-17)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [1.10.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.10.2...@next-bricks/form@1.10.3) (2024-06-11)
-
 
 ### Bug Fixes
 
-* add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
-
-
-
-
+- add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
 
 ## [1.10.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.10.1...@next-bricks/form@1.10.2) (2024-06-03)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [1.10.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.10.0...@next-bricks/form@1.10.1) (2024-06-03)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 # [1.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.23...@next-bricks/form@1.10.0) (2024-05-23)
-
 
 ### Features
 
-* add export message part for form-item bricks ([e82d7e4](https://github.com/easyops-cn/next-bricks/commit/e82d7e433b56b0646c06875d5523f8affc5740cc))
-
-
-
-
+- add export message part for form-item bricks ([e82d7e4](https://github.com/easyops-cn/next-bricks/commit/e82d7e433b56b0646c06875d5523f8affc5740cc))
 
 ## [1.9.23](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.22...@next-bricks/form@1.9.23) (2024-05-22)
 
-
 ### Bug Fixes
 
-* **form-item:**  not unsubscribe in first time ([86def3e](https://github.com/easyops-cn/next-bricks/commit/86def3e7b1254296ca8eda5e87da1a0a385a6749))
-
-
-
-
+- **form-item:** not unsubscribe in first time ([86def3e](https://github.com/easyops-cn/next-bricks/commit/86def3e7b1254296ca8eda5e87da1a0a385a6749))
 
 ## [1.9.22](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.21...@next-bricks/form@1.9.22) (2024-05-21)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [1.9.21](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.20...@next-bricks/form@1.9.21) (2024-05-18)
-
 
 ### Bug Fixes
 
-* use fork of rc-trigger to fix events in nested shadow dom ([0f173b6](https://github.com/easyops-cn/next-bricks/commit/0f173b64d8e6f4b51d3e1f0b34cbd96edbda9521))
-
-
-
-
+- use fork of rc-trigger to fix events in nested shadow dom ([0f173b6](https://github.com/easyops-cn/next-bricks/commit/0f173b64d8e6f4b51d3e1f0b34cbd96edbda9521))
 
 ## [1.9.20](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.19...@next-bricks/form@1.9.20) (2024-05-17)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [1.9.19](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.18...@next-bricks/form@1.9.19) (2024-05-17)
 
 **Note:** Version bump only for package @next-bricks/form
-
-
-
-
 
 ## [1.9.18](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.17...@next-bricks/form@1.9.18) (2024-05-17)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [1.9.17](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.16...@next-bricks/form@1.9.17) (2024-05-15)
-
 
 ### Bug Fixes
 
-* revert data value passed by eo-dynamic-form-item ([71ef0ca](https://github.com/easyops-cn/next-bricks/commit/71ef0ca26c47651cdf47d67d6cec24d7c7c51abc))
-
-
-
-
+- revert data value passed by eo-dynamic-form-item ([71ef0ca](https://github.com/easyops-cn/next-bricks/commit/71ef0ca26c47651cdf47d67d6cec24d7c7c51abc))
 
 ## [1.9.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.15...@next-bricks/form@1.9.16) (2024-05-15)
 
-
 ### Bug Fixes
 
-* **dynamic-form-item:** do not pass value as data to useBrick ([c4e87c5](https://github.com/easyops-cn/next-bricks/commit/c4e87c5ac95436508ef859d494a930b74fd145fb))
-* fix range picker ([1fc8e68](https://github.com/easyops-cn/next-bricks/commit/1fc8e68022330166a2ff2a26ed0aa537d53a3e44))
-* handle no date in init ([213c6ea](https://github.com/easyops-cn/next-bricks/commit/213c6ea59cf08ccdd8b75948f4223bcad44c178f))
-* update antd to latest ([4de0052](https://github.com/easyops-cn/next-bricks/commit/4de0052c56197297f519af72722591263611db21))
-
-
-
-
+- **dynamic-form-item:** do not pass value as data to useBrick ([c4e87c5](https://github.com/easyops-cn/next-bricks/commit/c4e87c5ac95436508ef859d494a930b74fd145fb))
+- fix range picker ([1fc8e68](https://github.com/easyops-cn/next-bricks/commit/1fc8e68022330166a2ff2a26ed0aa537d53a3e44))
+- handle no date in init ([213c6ea](https://github.com/easyops-cn/next-bricks/commit/213c6ea59cf08ccdd8b75948f4223bcad44c178f))
+- update antd to latest ([4de0052](https://github.com/easyops-cn/next-bricks/commit/4de0052c56197297f519af72722591263611db21))
 
 ## [1.9.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.14...@next-bricks/form@1.9.15) (2024-05-15)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [1.9.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.13...@next-bricks/form@1.9.14) (2024-05-11)
-
 
 ### Bug Fixes
 
-* **select:** fix style ([2818ddf](https://github.com/easyops-cn/next-bricks/commit/2818ddf08d7e485e44be50236b18231107e212b0))
-
-
-
-
+- **select:** fix style ([2818ddf](https://github.com/easyops-cn/next-bricks/commit/2818ddf08d7e485e44be50236b18231107e212b0))
 
 ## [1.9.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.12...@next-bricks/form@1.9.13) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [1.9.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.11...@next-bricks/form@1.9.12) (2024-05-09)
-
 
 ### Bug Fixes
 
-* fix select suffix useBrick  notWork ([be69cbf](https://github.com/easyops-cn/next-bricks/commit/be69cbf4cfd7adb77e326b7c7f4d3c18e9633f4b))
-
-
-
-
+- fix select suffix useBrick notWork ([be69cbf](https://github.com/easyops-cn/next-bricks/commit/be69cbf4cfd7adb77e326b7c7f4d3c18e9633f4b))
 
 ## [1.9.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.10...@next-bricks/form@1.9.11) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [1.9.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.9...@next-bricks/form@1.9.10) (2024-05-08)
 
 **Note:** Version bump only for package @next-bricks/form
-
-
-
-
 
 ## [1.9.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.8...@next-bricks/form@1.9.9) (2024-05-06)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [1.9.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.7...@next-bricks/form@1.9.8) (2024-04-26)
 
 **Note:** Version bump only for package @next-bricks/form
-
-
-
-
 
 ## [1.9.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.6...@next-bricks/form@1.9.7) (2024-04-16)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [1.9.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.5...@next-bricks/form@1.9.6) (2024-04-16)
-
 
 ### Bug Fixes
 
-* **select:** fix default value null was error ([0fa18a4](https://github.com/easyops-cn/next-bricks/commit/0fa18a4b8b78f1e5c75627a0cab11bded071d511))
-
-
-
-
+- **select:** fix default value null was error ([0fa18a4](https://github.com/easyops-cn/next-bricks/commit/0fa18a4b8b78f1e5c75627a0cab11bded071d511))
 
 ## [1.9.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.4...@next-bricks/form@1.9.5) (2024-04-15)
 
-
 ### Bug Fixes
 
-* tag mode value is undefined error ([18b8c4f](https://github.com/easyops-cn/next-bricks/commit/18b8c4f7ea8e0872723b4b825fd82235484205dc))
-
-
-
-
+- tag mode value is undefined error ([18b8c4f](https://github.com/easyops-cn/next-bricks/commit/18b8c4f7ea8e0872723b4b825fd82235484205dc))
 
 ## [1.9.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.3...@next-bricks/form@1.9.4) (2024-04-15)
 
-
 ### Bug Fixes
 
-* formStore resetFields and select tag mode ([81dd947](https://github.com/easyops-cn/next-bricks/commit/81dd9471001e2ad30b324c4014006b715d8dda9e))
-* **select:** tag mode and value isn't array ([743ec0e](https://github.com/easyops-cn/next-bricks/commit/743ec0ee5de1f3d06be61c278ef79cf0666c69bf))
-
-
-
-
+- formStore resetFields and select tag mode ([81dd947](https://github.com/easyops-cn/next-bricks/commit/81dd9471001e2ad30b324c4014006b715d8dda9e))
+- **select:** tag mode and value isn't array ([743ec0e](https://github.com/easyops-cn/next-bricks/commit/743ec0ee5de1f3d06be61c278ef79cf0666c69bf))
 
 ## [1.9.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.2...@next-bricks/form@1.9.3) (2024-04-09)
 
-
 ### Bug Fixes
 
-* 上传图片无法预览 ([b87d3ad](https://github.com/easyops-cn/next-bricks/commit/b87d3ad5c36f99e215562079c9cec5139a5d23fe))
-
-
-
-
+- 上传图片无法预览 ([b87d3ad](https://github.com/easyops-cn/next-bricks/commit/b87d3ad5c36f99e215562079c9cec5139a5d23fe))
 
 ## [1.9.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.1...@next-bricks/form@1.9.2) (2024-04-08)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [1.9.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.9.0...@next-bricks/form@1.9.1) (2024-04-03)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 # [1.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.8.1...@next-bricks/form@1.9.0) (2024-04-02)
-
 
 ### Features
 
-* form-item add labelBrick ([2c9db05](https://github.com/easyops-cn/next-bricks/commit/2c9db05bbfc9596d53bb4bd806ea7c3f4dff0d15))
-
-
-
-
+- form-item add labelBrick ([2c9db05](https://github.com/easyops-cn/next-bricks/commit/2c9db05bbfc9596d53bb4bd806ea7c3f4dff0d15))
 
 ## [1.8.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.8.0...@next-bricks/form@1.8.1) (2024-04-02)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 # [1.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.7.3...@next-bricks/form@1.8.0) (2024-03-25)
-
 
 ### Features
 
-* update chart basic dep code ([4619d6f](https://github.com/easyops-cn/next-bricks/commit/4619d6f88a6009b043a73a934e54185447491183))
-
-
-
-
+- update chart basic dep code ([4619d6f](https://github.com/easyops-cn/next-bricks/commit/4619d6f88a6009b043a73a934e54185447491183))
 
 ## [1.7.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.7.2...@next-bricks/form@1.7.3) (2024-03-19)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [1.7.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.7.1...@next-bricks/form@1.7.2) (2024-03-15)
-
 
 ### Bug Fixes
 
-* **form:** setInitValue not update ([01e88b4](https://github.com/easyops-cn/next-bricks/commit/01e88b4883a5938aa59bcb372dbc4f792d5d23c4))
-
-
-
-
+- **form:** setInitValue not update ([01e88b4](https://github.com/easyops-cn/next-bricks/commit/01e88b4883a5938aa59bcb372dbc4f792d5d23c4))
 
 ## [1.7.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.7.0...@next-bricks/form@1.7.1) (2024-03-12)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 # [1.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.6.2...@next-bricks/form@1.7.0) (2024-03-08)
-
 
 ### Features
 
-* **form:**  setInitValue method add options ([efa9916](https://github.com/easyops-cn/next-bricks/commit/efa9916da4299ceb15c4353c922addaaf4a9c34b))
-* **form:** update unit test ([8b5e3ad](https://github.com/easyops-cn/next-bricks/commit/8b5e3ad5326b6bdf6e9a835273c9c5cd3734e903))
-
-
-
-
+- **form:** setInitValue method add options ([efa9916](https://github.com/easyops-cn/next-bricks/commit/efa9916da4299ceb15c4353c922addaaf4a9c34b))
+- **form:** update unit test ([8b5e3ad](https://github.com/easyops-cn/next-bricks/commit/8b5e3ad5326b6bdf6e9a835273c9c5cd3734e903))
 
 ## [1.6.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.6.1...@next-bricks/form@1.6.2) (2024-03-04)
 
-
 ### Bug Fixes
 
-* **textarea:** fix the gap at the bottom ([5585bfb](https://github.com/easyops-cn/next-bricks/commit/5585bfb2e4b6c98c4864ba95d106cfcc5f2c02d8))
-
-
-
-
+- **textarea:** fix the gap at the bottom ([5585bfb](https://github.com/easyops-cn/next-bricks/commit/5585bfb2e4b6c98c4864ba95d106cfcc5f2c02d8))
 
 ## [1.6.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.6.0...@next-bricks/form@1.6.1) (2024-03-01)
 
-
 ### Bug Fixes
 
-* form value should not with notRender item ([f0b98ca](https://github.com/easyops-cn/next-bricks/commit/f0b98ca23dfc5c7b4110a89837c21571c104a3af))
-
-
-
-
+- form value should not with notRender item ([f0b98ca](https://github.com/easyops-cn/next-bricks/commit/f0b98ca23dfc5c7b4110a89837c21571c104a3af))
 
 # [1.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.5.1...@next-bricks/form@1.6.0) (2024-03-01)
 
-
 ### Features
 
-* **form-item:** update type ([fba3e4f](https://github.com/easyops-cn/next-bricks/commit/fba3e4fcf4fe734764170189c666927b3f9ba77f))
-
-
-
-
+- **form-item:** update type ([fba3e4f](https://github.com/easyops-cn/next-bricks/commit/fba3e4fcf4fe734764170189c666927b3f9ba77f))
 
 ## [1.5.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.5.0...@next-bricks/form@1.5.1) (2024-02-29)
 
-
 ### Bug Fixes
 
-* **eo-textarea:** value was null not update ([b0abc5f](https://github.com/easyops-cn/next-bricks/commit/b0abc5f30a072162c7d32a6ba961f233ade77cf7))
-
-
-
-
+- **eo-textarea:** value was null not update ([b0abc5f](https://github.com/easyops-cn/next-bricks/commit/b0abc5f30a072162c7d32a6ba961f233ade77cf7))
 
 # [1.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.4.0...@next-bricks/form@1.5.0) (2024-02-29)
 
-
 ### Features
 
-* common-bricks.json ([41498fa](https://github.com/easyops-cn/next-bricks/commit/41498fac482beaaab266b85b9913cdd7b5937def))
-* contract-select ([3a16fe4](https://github.com/easyops-cn/next-bricks/commit/3a16fe4cae51a5740ebea396c19dde566241674d))
-
-
-
-
+- common-bricks.json ([41498fa](https://github.com/easyops-cn/next-bricks/commit/41498fac482beaaab266b85b9913cdd7b5937def))
+- contract-select ([3a16fe4](https://github.com/easyops-cn/next-bricks/commit/3a16fe4cae51a5740ebea396c19dde566241674d))
 
 # [1.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.3.4...@next-bricks/form@1.4.0) (2024-02-22)
 
-
 ### Features
 
-* **form:** support eo-color-picker ([c820b7e](https://github.com/easyops-cn/next-bricks/commit/c820b7e4331ee8469224158b178e27d641f8c0cd))
-
-
-
-
+- **form:** support eo-color-picker ([c820b7e](https://github.com/easyops-cn/next-bricks/commit/c820b7e4331ee8469224158b178e27d641f8c0cd))
 
 ## [1.3.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.3.3...@next-bricks/form@1.3.4) (2024-02-21)
 
-
 ### Bug Fixes
 
-* update antd to the latest ([fea4ac8](https://github.com/easyops-cn/next-bricks/commit/fea4ac81493d49a61fef7b856e50a9532db8645e))
-
-
-
-
+- update antd to the latest ([fea4ac8](https://github.com/easyops-cn/next-bricks/commit/fea4ac81493d49a61fef7b856e50a9532db8645e))
 
 ## [1.3.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.3.2...@next-bricks/form@1.3.3) (2024-02-19)
 
-
 ### Bug Fixes
 
-* use new brick names ([2a7ac9d](https://github.com/easyops-cn/next-bricks/commit/2a7ac9d454a06bfd51cc12a4a9cdf219d1d97f2f))
-
-
-
-
+- use new brick names ([2a7ac9d](https://github.com/easyops-cn/next-bricks/commit/2a7ac9d454a06bfd51cc12a4a9cdf219d1d97f2f))
 
 ## [1.3.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.3.1...@next-bricks/form@1.3.2) (2024-02-07)
 
-
 ### Bug Fixes
 
-* autoFocus not work ([049ee81](https://github.com/easyops-cn/next-bricks/commit/049ee81857a0044981fcbd434243c1097a4e7036))
-
-
-
-
+- autoFocus not work ([049ee81](https://github.com/easyops-cn/next-bricks/commit/049ee81857a0044981fcbd434243c1097a4e7036))
 
 ## [1.3.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.3.0...@next-bricks/form@1.3.1) (2024-02-06)
 
-
 ### Bug Fixes
 
-* **radio:**  form value only value ([9c5064a](https://github.com/easyops-cn/next-bricks/commit/9c5064a94db48c482d0c86c1ca29a39b0bbf1d4a))
-
-
-
-
+- **radio:** form value only value ([9c5064a](https://github.com/easyops-cn/next-bricks/commit/9c5064a94db48c482d0c86c1ca29a39b0bbf1d4a))
 
 # [1.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.2.3...@next-bricks/form@1.3.0) (2024-02-05)
 
-
 ### Features
 
-* update form-item unit test ([c3df8fc](https://github.com/easyops-cn/next-bricks/commit/c3df8fc4ec2a2911642e8efc7e96a8cbeae10be9))
-* update monaco-editor and auto-complete ([ce6a80d](https://github.com/easyops-cn/next-bricks/commit/ce6a80d6bf607360cf939586a0ed76f1c3733797))
-
-
-
-
+- update form-item unit test ([c3df8fc](https://github.com/easyops-cn/next-bricks/commit/c3df8fc4ec2a2911642e8efc7e96a8cbeae10be9))
+- update monaco-editor and auto-complete ([ce6a80d](https://github.com/easyops-cn/next-bricks/commit/ce6a80d6bf607360cf939586a0ed76f1c3733797))
 
 ## [1.2.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.2.2...@next-bricks/form@1.2.3) (2024-02-05)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [1.2.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.2.1...@next-bricks/form@1.2.2) (2024-02-01)
-
 
 ### Bug Fixes
 
-* radio change event only emit value ([9393373](https://github.com/easyops-cn/next-bricks/commit/93933734649fbfefefc91cf4977e0667d581b544))
-
-
-
-
+- radio change event only emit value ([9393373](https://github.com/easyops-cn/next-bricks/commit/93933734649fbfefefc91cf4977e0667d581b544))
 
 ## [1.2.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.2.0...@next-bricks/form@1.2.1) (2024-01-19)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 # [1.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.1.2...@next-bricks/form@1.2.0) (2024-01-16)
-
 
 ### Features
 
-* **upload-image:** add max count ([e04fc4e](https://github.com/easyops-cn/next-bricks/commit/e04fc4ec1ebe5846faba6f27b8c9b700e47c4d47))
-
-
-
-
+- **upload-image:** add max count ([e04fc4e](https://github.com/easyops-cn/next-bricks/commit/e04fc4ec1ebe5846faba6f27b8c9b700e47c4d47))
 
 ## [1.1.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.1.1...@next-bricks/form@1.1.2) (2024-01-11)
 
-
 ### Bug Fixes
 
-* **input:** fix style in Firefox ([082a18a](https://github.com/easyops-cn/next-bricks/commit/082a18aac05f313a3411e668212160bcf42a3447))
-
-
-
-
+- **input:** fix style in Firefox ([082a18a](https://github.com/easyops-cn/next-bricks/commit/082a18aac05f313a3411e668212160bcf42a3447))
 
 ## [1.1.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.1.0...@next-bricks/form@1.1.1) (2024-01-05)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 # [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.0.3...@next-bricks/form@1.1.0) (2024-01-04)
-
 
 ### Features
 
-* update radio style ([0c218b4](https://github.com/easyops-cn/next-bricks/commit/0c218b4f428845a0fcf94c92a25524f1a1b645ad))
-
-
-
-
+- update radio style ([0c218b4](https://github.com/easyops-cn/next-bricks/commit/0c218b4f428845a0fcf94c92a25524f1a1b645ad))
 
 ## [1.0.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.0.2...@next-bricks/form@1.0.3) (2024-01-03)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [1.0.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.0.1...@next-bricks/form@1.0.2) (2024-01-02)
 
 **Note:** Version bump only for package @next-bricks/form
-
-
-
-
 
 ## [1.0.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.27.9...@next-bricks/form@1.0.1) (2024-01-02)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [0.27.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.27.8...@next-bricks/form@0.27.9) (2023-12-28)
 
 **Note:** Version bump only for package @next-bricks/form
-
-
-
-
 
 ## [0.27.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.27.7...@next-bricks/form@0.27.8) (2023-12-27)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [0.27.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.27.6...@next-bricks/form@0.27.7) (2023-12-26)
 
 **Note:** Version bump only for package @next-bricks/form
-
-
-
-
 
 ## [0.27.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.27.5...@next-bricks/form@0.27.6) (2023-12-25)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [0.27.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.27.4...@next-bricks/form@0.27.5) (2023-12-22)
 
 **Note:** Version bump only for package @next-bricks/form
-
-
-
-
 
 ## [0.27.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.27.3...@next-bricks/form@0.27.4) (2023-12-15)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [0.27.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.27.2...@next-bricks/form@0.27.3) (2023-12-13)
-
 
 ### Bug Fixes
 
-* fix popover hide and select hover ([1a2ef0e](https://github.com/easyops-cn/next-bricks/commit/1a2ef0eb32795bd3354d1bc2cc9cb00d3d003e53))
-* hover and show close btn ([c6b687e](https://github.com/easyops-cn/next-bricks/commit/c6b687e445bb32971df8fe6151de12264889b8ad))
-
-
-
-
+- fix popover hide and select hover ([1a2ef0e](https://github.com/easyops-cn/next-bricks/commit/1a2ef0eb32795bd3354d1bc2cc9cb00d3d003e53))
+- hover and show close btn ([c6b687e](https://github.com/easyops-cn/next-bricks/commit/c6b687e445bb32971df8fe6151de12264889b8ad))
 
 ## [0.27.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.27.1...@next-bricks/form@0.27.2) (2023-12-12)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [0.27.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.27.0...@next-bricks/form@0.27.1) (2023-12-11)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 # [0.27.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.26.4...@next-bricks/form@0.27.0) (2023-12-07)
-
 
 ### Features
 
-* update docs ([95267ac](https://github.com/easyops-cn/next-bricks/commit/95267ac0b22d78c30cf46b29b9ef477954d45d05))
-
-
-
-
+- update docs ([95267ac](https://github.com/easyops-cn/next-bricks/commit/95267ac0b22d78c30cf46b29b9ef477954d45d05))
 
 ## [0.26.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.26.3...@next-bricks/form@0.26.4) (2023-12-06)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [0.26.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.26.2...@next-bricks/form@0.26.3) (2023-12-05)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [0.26.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.26.1...@next-bricks/form@0.26.2) (2023-12-01)
-
 
 ### Bug Fixes
 
-* select Enter should not work when ([b1f5c4b](https://github.com/easyops-cn/next-bricks/commit/b1f5c4b511db49cfd06c93bbfb97fa89c5bd2ed5))
-
-
-
-
+- select Enter should not work when ([b1f5c4b](https://github.com/easyops-cn/next-bricks/commit/b1f5c4b511db49cfd06c93bbfb97fa89c5bd2ed5))
 
 ## [0.26.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.26.0...@next-bricks/form@0.26.1) (2023-11-30)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 # [0.26.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.25.14...@next-bricks/form@0.26.0) (2023-11-27)
-
 
 ### Features
 
-* add workbench layout ([847e5d0](https://github.com/easyops-cn/next-bricks/commit/847e5d08f5aef4ca11285a3d3c638fcd56ded6b5))
-* update type ([693513e](https://github.com/easyops-cn/next-bricks/commit/693513e1ceae6efcfb560d58153a69ca1a8c99c8))
-
-
-
-
+- add workbench layout ([847e5d0](https://github.com/easyops-cn/next-bricks/commit/847e5d08f5aef4ca11285a3d3c638fcd56ded6b5))
+- update type ([693513e](https://github.com/easyops-cn/next-bricks/commit/693513e1ceae6efcfb560d58153a69ca1a8c99c8))
 
 ## [0.25.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.25.13...@next-bricks/form@0.25.14) (2023-11-23)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [0.25.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.25.12...@next-bricks/form@0.25.13) (2023-11-22)
 
 **Note:** Version bump only for package @next-bricks/form
-
-
-
-
 
 ## [0.25.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.25.11...@next-bricks/form@0.25.12) (2023-11-22)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [0.25.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.25.10...@next-bricks/form@0.25.11) (2023-11-21)
 
 **Note:** Version bump only for package @next-bricks/form
-
-
-
-
 
 ## [0.25.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.25.9...@next-bricks/form@0.25.10) (2023-11-21)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [0.25.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.25.8...@next-bricks/form@0.25.9) (2023-11-21)
 
 **Note:** Version bump only for package @next-bricks/form
-
-
-
-
 
 ## [0.25.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.25.7...@next-bricks/form@0.25.8) (2023-11-20)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [0.25.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.25.6...@next-bricks/form@0.25.7) (2023-11-17)
 
 **Note:** Version bump only for package @next-bricks/form
-
-
-
-
 
 ## [0.25.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.25.5...@next-bricks/form@0.25.6) (2023-11-17)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [0.25.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.25.4...@next-bricks/form@0.25.5) (2023-11-17)
-
 
 ### Bug Fixes
 
-* depends on others bricks of current workspace ([4b835f9](https://github.com/easyops-cn/next-bricks/commit/4b835f902d58d6fa08a5239fb077053121c3df9f))
-
-
-
-
+- depends on others bricks of current workspace ([4b835f9](https://github.com/easyops-cn/next-bricks/commit/4b835f902d58d6fa08a5239fb077053121c3df9f))
 
 ## [0.25.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.25.3...@next-bricks/form@0.25.4) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [0.25.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.25.2...@next-bricks/form@0.25.3) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/form
-
-
-
-
 
 ## [0.25.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.25.1...@next-bricks/form@0.25.2) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [0.25.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.25.0...@next-bricks/form@0.25.1) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 # [0.25.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.24.8...@next-bricks/form@0.25.0) (2023-11-15)
-
 
 ### Features
 
-* **sidebar:** update style ([4dbdb31](https://github.com/easyops-cn/next-bricks/commit/4dbdb314165195229b2e19a24bc3043ebe685ef6))
-
-
-
-
+- **sidebar:** update style ([4dbdb31](https://github.com/easyops-cn/next-bricks/commit/4dbdb314165195229b2e19a24bc3043ebe685ef6))
 
 ## [0.24.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.24.7...@next-bricks/form@0.24.8) (2023-11-13)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [0.24.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.24.6...@next-bricks/form@0.24.7) (2023-11-10)
 
 **Note:** Version bump only for package @next-bricks/form
-
-
-
-
 
 ## [0.24.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.24.5...@next-bricks/form@0.24.6) (2023-11-10)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [0.24.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.24.4...@next-bricks/form@0.24.5) (2023-11-09)
 
 **Note:** Version bump only for package @next-bricks/form
-
-
-
-
 
 ## [0.24.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.24.3...@next-bricks/form@0.24.4) (2023-11-08)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [0.24.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.24.2...@next-bricks/form@0.24.3) (2023-11-08)
 
 **Note:** Version bump only for package @next-bricks/form
-
-
-
-
 
 ## [0.24.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.24.1...@next-bricks/form@0.24.2) (2023-11-08)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [0.24.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.24.0...@next-bricks/form@0.24.1) (2023-11-07)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 # [0.24.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.23.1...@next-bricks/form@0.24.0) (2023-11-07)
-
 
 ### Features
 
-* upload image support limitSize ([dbbe097](https://github.com/easyops-cn/next-bricks/commit/dbbe097dc01f3de0dc2867569745a74e5318387c))
-
-
-
-
+- upload image support limitSize ([dbbe097](https://github.com/easyops-cn/next-bricks/commit/dbbe097dc01f3de0dc2867569745a74e5318387c))
 
 ## [0.23.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.23.0...@next-bricks/form@0.23.1) (2023-11-06)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 # [0.23.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.22.0...@next-bricks/form@0.23.0) (2023-11-06)
-
 
 ### Features
 
-* support limitSize and related button properties ([c34f27a](https://github.com/easyops-cn/next-bricks/commit/c34f27acbb99083460245af3a24a92c9b7f608b7))
-
-
-
-
+- support limitSize and related button properties ([c34f27a](https://github.com/easyops-cn/next-bricks/commit/c34f27acbb99083460245af3a24a92c9b7f608b7))
 
 # [0.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.21.2...@next-bricks/form@0.22.0) (2023-11-03)
 
-
 ### Bug Fixes
 
-* default vertical layout in v3 form ([245e21b](https://github.com/easyops-cn/next-bricks/commit/245e21b33dc6b4e271e4f74796c3d723b7bd3749))
-
+- default vertical layout in v3 form ([245e21b](https://github.com/easyops-cn/next-bricks/commit/245e21b33dc6b4e271e4f74796c3d723b7bd3749))
 
 ### Features
 
-* form support labelCol and wrapperCol ([f26906c](https://github.com/easyops-cn/next-bricks/commit/f26906cd8959a24b088506d1069f1d8ab12bc3a3))
-
-
-
-
+- form support labelCol and wrapperCol ([f26906c](https://github.com/easyops-cn/next-bricks/commit/f26906cd8959a24b088506d1069f1d8ab12bc3a3))
 
 ## [0.21.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.21.1...@next-bricks/form@0.21.2) (2023-11-02)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [0.21.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.21.0...@next-bricks/form@0.21.1) (2023-11-01)
 
 **Note:** Version bump only for package @next-bricks/form
-
-
-
-
 
 # [0.21.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@0.20.12...@next-bricks/form@0.21.0) (2023-11-01)
 

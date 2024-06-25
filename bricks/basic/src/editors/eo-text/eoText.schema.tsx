@@ -22,7 +22,6 @@ export const eoTextSchema = {
       name: "textContent",
       title: "文本",
       type: "string",
-      required: true,
     },
     {
       name: "type",

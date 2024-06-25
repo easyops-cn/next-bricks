@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/vb-experiment",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/vb-experiment",
   "repository": {
     "type": "git",
@@ -36,7 +36,7 @@
     "@babel/standalone": "^7.22.9",
     "@babel/types": "^7.22.5",
     "@next-core/types": "^1.11.2",
-    "@next-core/utils": "^1.7.13",
+    "@next-core/utils": "^1.7.14",
     "file-saver": "^2.0.5",
     "jszip": "^3.10.1",
     "prettier": "^3.0.3",

@@ -3,754 +3,395 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.8.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.8.2...@next-bricks/vs@1.8.3) (2024-06-21)
+## [1.8.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.8.3...@next-bricks/vs@1.8.4) (2024-06-25)
 
 **Note:** Version bump only for package @next-bricks/vs
 
+## [1.8.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.8.2...@next-bricks/vs@1.8.3) (2024-06-21)
 
-
-
+**Note:** Version bump only for package @next-bricks/vs
 
 ## [1.8.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.8.1...@next-bricks/vs@1.8.2) (2024-06-20)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [1.8.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.8.0...@next-bricks/vs@1.8.1) (2024-06-17)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 # [1.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.7.3...@next-bricks/vs@1.8.0) (2024-06-13)
-
 
 ### Features
 
-* support semantic validate ([945cb32](https://github.com/easyops-cn/next-bricks/commit/945cb329facab524bcffe34111d0b5f602d2558f))
-* 编辑器在 brick_yaml 下自动补全 ([2215071](https://github.com/easyops-cn/next-bricks/commit/22150711295e30b3e04070abc4a0f85510c08377))
-
-
-
-
+- support semantic validate ([945cb32](https://github.com/easyops-cn/next-bricks/commit/945cb329facab524bcffe34111d0b5f602d2558f))
+- 编辑器在 brick_yaml 下自动补全 ([2215071](https://github.com/easyops-cn/next-bricks/commit/22150711295e30b3e04070abc4a0f85510c08377))
 
 ## [1.7.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.7.2...@next-bricks/vs@1.7.3) (2024-06-11)
 
-
 ### Bug Fixes
 
-* add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
-
-
-
-
+- add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
 
 ## [1.7.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.7.1...@next-bricks/vs@1.7.2) (2024-06-03)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [1.7.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.7.0...@next-bricks/vs@1.7.1) (2024-06-03)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 # [1.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.6.18...@next-bricks/vs@1.7.0) (2024-05-23)
-
 
 ### Features
 
-* add export message part for form-item bricks ([e82d7e4](https://github.com/easyops-cn/next-bricks/commit/e82d7e433b56b0646c06875d5523f8affc5740cc))
-
-
-
-
+- add export message part for form-item bricks ([e82d7e4](https://github.com/easyops-cn/next-bricks/commit/e82d7e433b56b0646c06875d5523f8affc5740cc))
 
 ## [1.6.18](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.6.17...@next-bricks/vs@1.6.18) (2024-05-22)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [1.6.17](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.6.16...@next-bricks/vs@1.6.17) (2024-05-21)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [1.6.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.6.15...@next-bricks/vs@1.6.16) (2024-05-17)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [1.6.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.6.14...@next-bricks/vs@1.6.15) (2024-05-17)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [1.6.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.6.13...@next-bricks/vs@1.6.14) (2024-05-15)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [1.6.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.6.12...@next-bricks/vs@1.6.13) (2024-05-15)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [1.6.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.6.11...@next-bricks/vs@1.6.12) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [1.6.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.6.10...@next-bricks/vs@1.6.11) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [1.6.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.6.9...@next-bricks/vs@1.6.10) (2024-05-08)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [1.6.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.6.8...@next-bricks/vs@1.6.9) (2024-05-06)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [1.6.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.6.7...@next-bricks/vs@1.6.8) (2024-04-26)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [1.6.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.6.6...@next-bricks/vs@1.6.7) (2024-04-16)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [1.6.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.6.5...@next-bricks/vs@1.6.6) (2024-04-15)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [1.6.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.6.4...@next-bricks/vs@1.6.5) (2024-04-08)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [1.6.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.6.3...@next-bricks/vs@1.6.4) (2024-04-03)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [1.6.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.6.2...@next-bricks/vs@1.6.3) (2024-04-02)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [1.6.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.6.1...@next-bricks/vs@1.6.2) (2024-03-25)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [1.6.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.6.0...@next-bricks/vs@1.6.1) (2024-03-19)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 # [1.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.5.1...@next-bricks/vs@1.6.0) (2024-03-15)
-
 
 ### Features
 
-* **code-editor:** update theme and support CTX.DS & DS token ([71d4067](https://github.com/easyops-cn/next-bricks/commit/71d4067dc5154f4c0a9a7457580804ef85bad074))
-
-
-
-
+- **code-editor:** update theme and support CTX.DS & DS token ([71d4067](https://github.com/easyops-cn/next-bricks/commit/71d4067dc5154f4c0a9a7457580804ef85bad074))
 
 ## [1.5.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.5.0...@next-bricks/vs@1.5.1) (2024-03-12)
 
-
 ### Bug Fixes
 
-* fix code editor update height and scroll to top ([e7b5134](https://github.com/easyops-cn/next-bricks/commit/e7b51340e2e57baea2c14289f202eabf813464a8))
-
-
-
-
+- fix code editor update height and scroll to top ([e7b5134](https://github.com/easyops-cn/next-bricks/commit/e7b51340e2e57baea2c14289f202eabf813464a8))
 
 # [1.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.4.2...@next-bricks/vs@1.5.0) (2024-03-08)
 
-
 ### Features
 
-* code-editor support folding ([1b02569](https://github.com/easyops-cn/next-bricks/commit/1b025697cdc3a725683fa4430a88fbaac7db9117))
-
-
-
-
+- code-editor support folding ([1b02569](https://github.com/easyops-cn/next-bricks/commit/1b025697cdc3a725683fa4430a88fbaac7db9117))
 
 ## [1.4.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.4.1...@next-bricks/vs@1.4.2) (2024-03-05)
 
-
 ### Bug Fixes
 
-* **monaco-editor:** fix set value and focus to header & expand height fix ([b4c6fb7](https://github.com/easyops-cn/next-bricks/commit/b4c6fb7d0bb776fc8456ee9a173039242e76abf3))
-
-
-
-
+- **monaco-editor:** fix set value and focus to header & expand height fix ([b4c6fb7](https://github.com/easyops-cn/next-bricks/commit/b4c6fb7d0bb776fc8456ee9a173039242e76abf3))
 
 ## [1.4.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.4.0...@next-bricks/vs@1.4.1) (2024-03-01)
 
-
 ### Bug Fixes
 
-* form value should not with notRender item ([f0b98ca](https://github.com/easyops-cn/next-bricks/commit/f0b98ca23dfc5c7b4110a89837c21571c104a3af))
-
-
-
-
+- form value should not with notRender item ([f0b98ca](https://github.com/easyops-cn/next-bricks/commit/f0b98ca23dfc5c7b4110a89837c21571c104a3af))
 
 # [1.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.3.1...@next-bricks/vs@1.4.0) (2024-02-23)
 
-
 ### Features
 
-* **monaco-editor:** add helpBrick & labelBrick ([139cdb1](https://github.com/easyops-cn/next-bricks/commit/139cdb10629f83e9e6041ec3b2f14c13b89d6eb8))
-
-
-
-
+- **monaco-editor:** add helpBrick & labelBrick ([139cdb1](https://github.com/easyops-cn/next-bricks/commit/139cdb10629f83e9e6041ec3b2f14c13b89d6eb8))
 
 ## [1.3.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.3.0...@next-bricks/vs@1.3.1) (2024-02-22)
 
-
 ### Bug Fixes
 
-* **monaco-editor:** onChange should emit ([28d4cba](https://github.com/easyops-cn/next-bricks/commit/28d4cbacba21eb5184723016d5b7ef2d16b2497e))
-
-
-
-
+- **monaco-editor:** onChange should emit ([28d4cba](https://github.com/easyops-cn/next-bricks/commit/28d4cbacba21eb5184723016d5b7ef2d16b2497e))
 
 # [1.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.2.0...@next-bricks/vs@1.3.0) (2024-02-20)
 
-
 ### Features
 
-* **monaco-editor:** add toolbar ([9229055](https://github.com/easyops-cn/next-bricks/commit/9229055f596b19aed982d8db44a6666c7c6769a8))
-
-
-
-
+- **monaco-editor:** add toolbar ([9229055](https://github.com/easyops-cn/next-bricks/commit/9229055f596b19aed982d8db44a6666c7c6769a8))
 
 # [1.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.1.2...@next-bricks/vs@1.2.0) (2024-02-19)
 
-
 ### Features
 
-* **monaco-editor:** add unit test and css update ([aaeffc1](https://github.com/easyops-cn/next-bricks/commit/aaeffc121c9055df40a54f0d030a3960a3b01436))
-
-
-
-
+- **monaco-editor:** add unit test and css update ([aaeffc1](https://github.com/easyops-cn/next-bricks/commit/aaeffc121c9055df40a54f0d030a3960a3b01436))
 
 ## [1.1.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.1.1...@next-bricks/vs@1.1.2) (2024-02-07)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [1.1.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.1.0...@next-bricks/vs@1.1.1) (2024-02-06)
-
 
 ### Bug Fixes
 
-* **code-editor:** support string content ([d01f83b](https://github.com/easyops-cn/next-bricks/commit/d01f83b21e322c0aa2a6c60b31d5e7f39fc841b3))
-
-
-
-
+- **code-editor:** support string content ([d01f83b](https://github.com/easyops-cn/next-bricks/commit/d01f83b21e322c0aa2a6c60b31d5e7f39fc841b3))
 
 # [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.0.7...@next-bricks/vs@1.1.0) (2024-02-05)
 
-
 ### Features
 
-* update monaco-editor and auto-complete ([ce6a80d](https://github.com/easyops-cn/next-bricks/commit/ce6a80d6bf607360cf939586a0ed76f1c3733797))
-
-
-
-
+- update monaco-editor and auto-complete ([ce6a80d](https://github.com/easyops-cn/next-bricks/commit/ce6a80d6bf607360cf939586a0ed76f1c3733797))
 
 ## [1.0.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.0.6...@next-bricks/vs@1.0.7) (2024-02-05)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [1.0.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.0.5...@next-bricks/vs@1.0.6) (2024-02-01)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [1.0.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.0.4...@next-bricks/vs@1.0.5) (2024-01-19)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [1.0.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.0.3...@next-bricks/vs@1.0.4) (2024-01-05)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [1.0.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.0.2...@next-bricks/vs@1.0.3) (2024-01-03)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [1.0.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.0.1...@next-bricks/vs@1.0.2) (2024-01-02)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [1.0.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.8.6...@next-bricks/vs@1.0.1) (2024-01-02)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [0.8.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.8.5...@next-bricks/vs@0.8.6) (2023-12-27)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [0.8.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.8.4...@next-bricks/vs@0.8.5) (2023-12-26)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [0.8.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.8.3...@next-bricks/vs@0.8.4) (2023-12-25)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [0.8.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.8.2...@next-bricks/vs@0.8.3) (2023-12-22)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [0.8.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.8.1...@next-bricks/vs@0.8.2) (2023-12-12)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [0.8.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.8.0...@next-bricks/vs@0.8.1) (2023-12-11)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 # [0.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.7.8...@next-bricks/vs@0.8.0) (2023-12-07)
-
 
 ### Features
 
-* update docs ([95267ac](https://github.com/easyops-cn/next-bricks/commit/95267ac0b22d78c30cf46b29b9ef477954d45d05))
-
-
-
-
+- update docs ([95267ac](https://github.com/easyops-cn/next-bricks/commit/95267ac0b22d78c30cf46b29b9ef477954d45d05))
 
 ## [0.7.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.7.7...@next-bricks/vs@0.7.8) (2023-12-06)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [0.7.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.7.6...@next-bricks/vs@0.7.7) (2023-12-05)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [0.7.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.7.5...@next-bricks/vs@0.7.6) (2023-11-30)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [0.7.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.7.4...@next-bricks/vs@0.7.5) (2023-11-23)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [0.7.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.7.3...@next-bricks/vs@0.7.4) (2023-11-22)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [0.7.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.7.2...@next-bricks/vs@0.7.3) (2023-11-22)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [0.7.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.7.1...@next-bricks/vs@0.7.2) (2023-11-21)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [0.7.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.7.0...@next-bricks/vs@0.7.1) (2023-11-21)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 # [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.6.2...@next-bricks/vs@0.7.0) (2023-11-21)
-
 
 ### Bug Fixes
 
-*  completion items repeat ([937bb9c](https://github.com/easyops-cn/next-bricks/commit/937bb9c08c85f70ae00ce73dfbd51f08e7eac698))
-
+- completion items repeat ([937bb9c](https://github.com/easyops-cn/next-bricks/commit/937bb9c08c85f70ae00ce73dfbd51f08e7eac698))
 
 ### Features
 
-* monaco editor computed move to worker ([866db5a](https://github.com/easyops-cn/next-bricks/commit/866db5a9ef1554c1099d48c9f490c8f9b1d891e2))
-* worker only init once ([9eda703](https://github.com/easyops-cn/next-bricks/commit/9eda70339864939c1bc5f56adab75ab5ce66b88c))
-
-
-
-
+- monaco editor computed move to worker ([866db5a](https://github.com/easyops-cn/next-bricks/commit/866db5a9ef1554c1099d48c9f490c8f9b1d891e2))
+- worker only init once ([9eda703](https://github.com/easyops-cn/next-bricks/commit/9eda70339864939c1bc5f56adab75ab5ce66b88c))
 
 ## [0.6.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.6.1...@next-bricks/vs@0.6.2) (2023-11-21)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [0.6.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.6.0...@next-bricks/vs@0.6.1) (2023-11-20)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 # [0.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.35...@next-bricks/vs@0.6.0) (2023-11-17)
-
 
 ### Features
 
-* **vsCodeEditor:** add border ([5c8a70f](https://github.com/easyops-cn/next-bricks/commit/5c8a70f6f2f4f833fa765ca2992f3201d05a4bf8))
-
-
-
-
+- **vsCodeEditor:** add border ([5c8a70f](https://github.com/easyops-cn/next-bricks/commit/5c8a70f6f2f4f833fa765ca2992f3201d05a4bf8))
 
 ## [0.5.35](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.34...@next-bricks/vs@0.5.35) (2023-11-17)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [0.5.34](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.33...@next-bricks/vs@0.5.34) (2023-11-17)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [0.5.33](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.32...@next-bricks/vs@0.5.33) (2023-11-17)
-
 
 ### Bug Fixes
 
-* depends on others bricks of current workspace ([4b835f9](https://github.com/easyops-cn/next-bricks/commit/4b835f902d58d6fa08a5239fb077053121c3df9f))
-
-
-
-
+- depends on others bricks of current workspace ([4b835f9](https://github.com/easyops-cn/next-bricks/commit/4b835f902d58d6fa08a5239fb077053121c3df9f))
 
 ## [0.5.32](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.31...@next-bricks/vs@0.5.32) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [0.5.31](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.30...@next-bricks/vs@0.5.31) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [0.5.30](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.29...@next-bricks/vs@0.5.30) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [0.5.29](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.28...@next-bricks/vs@0.5.29) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [0.5.28](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.27...@next-bricks/vs@0.5.28) (2023-11-15)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [0.5.27](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.26...@next-bricks/vs@0.5.27) (2023-11-13)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [0.5.26](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.25...@next-bricks/vs@0.5.26) (2023-11-10)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [0.5.25](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.24...@next-bricks/vs@0.5.25) (2023-11-10)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [0.5.24](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.23...@next-bricks/vs@0.5.24) (2023-11-09)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [0.5.23](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.22...@next-bricks/vs@0.5.23) (2023-11-08)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [0.5.22](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.21...@next-bricks/vs@0.5.22) (2023-11-08)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [0.5.21](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.20...@next-bricks/vs@0.5.21) (2023-11-08)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [0.5.20](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.19...@next-bricks/vs@0.5.20) (2023-11-07)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [0.5.19](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.18...@next-bricks/vs@0.5.19) (2023-11-07)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [0.5.18](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.17...@next-bricks/vs@0.5.18) (2023-11-06)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [0.5.17](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.16...@next-bricks/vs@0.5.17) (2023-11-06)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [0.5.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.15...@next-bricks/vs@0.5.16) (2023-11-03)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [0.5.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.14...@next-bricks/vs@0.5.15) (2023-11-02)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [0.5.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.13...@next-bricks/vs@0.5.14) (2023-11-01)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [0.5.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@0.5.12...@next-bricks/vs@0.5.13) (2023-11-01)
 

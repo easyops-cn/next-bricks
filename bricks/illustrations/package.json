@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/illustrations",
-  "version": "1.0.24",
+  "version": "1.0.25",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/illustrations",
   "repository": {
     "type": "git",
@@ -59,7 +59,7 @@
   "dependencies": {
     "@next-core/illustrations": "^0.11.31",
     "@next-core/types": "^1.11.2",
-    "@next-core/utils": "^1.7.13",
+    "@next-core/utils": "^1.7.14",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
