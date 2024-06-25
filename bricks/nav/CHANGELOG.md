@@ -7,55 +7,29 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @next-bricks/nav
 
-
-
-
-
 ## [1.11.21](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.11.20...@next-bricks/nav@1.11.21) (2024-06-21)
-
 
 ### Bug Fixes
 
-* nav-menu filter menuItems ([4404cfe](https://github.com/easyops-cn/next-bricks/commit/4404cfeb5732308da6c69fe3a495947a73dcfe5a))
-
-
-
-
+- nav-menu filter menuItems ([4404cfe](https://github.com/easyops-cn/next-bricks/commit/4404cfeb5732308da6c69fe3a495947a73dcfe5a))
 
 ## [1.11.20](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.11.19...@next-bricks/nav@1.11.20) (2024-06-21)
 
 **Note:** Version bump only for package @next-bricks/nav
 
-
-
-
-
 ## [1.11.19](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.11.18...@next-bricks/nav@1.11.19) (2024-06-20)
 
 **Note:** Version bump only for package @next-bricks/nav
-
-
-
-
 
 ## [1.11.18](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.11.17...@next-bricks/nav@1.11.18) (2024-06-17)
 
 **Note:** Version bump only for package @next-bricks/nav
 
-
-
-
-
 ## [1.11.17](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.11.16...@next-bricks/nav@1.11.17) (2024-06-11)
-
 
 ### Bug Fixes
 
-* add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
-
-
-
-
+- add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
 
 ## [1.11.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.11.15...@next-bricks/nav@1.11.16) (2024-06-05)
 

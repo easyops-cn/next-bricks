@@ -7,44 +7,23 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [1.1.20](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.19...@next-bricks/data-view@1.1.20) (2024-06-21)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [1.1.19](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.18...@next-bricks/data-view@1.1.19) (2024-06-20)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [1.1.18](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.17...@next-bricks/data-view@1.1.18) (2024-06-17)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [1.1.17](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.16...@next-bricks/data-view@1.1.17) (2024-06-11)
-
 
 ### Bug Fixes
 
-* add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
-
-
-
-
+- add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
 
 ## [1.1.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.15...@next-bricks/data-view@1.1.16) (2024-06-05)
 

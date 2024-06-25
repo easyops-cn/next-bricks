@@ -7,103 +7,59 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @next-bricks/visual-builder
 
-
-
-
-
 # [1.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.21.0...@next-bricks/visual-builder@1.22.0) (2024-06-21)
-
 
 ### Features
 
-* data dependency provider ([d10207c](https://github.com/easyops-cn/next-bricks/commit/d10207cceedfd1eeb32f1cbaa647526516c6d836))
-* fetch by editorPackages ([bbed0dc](https://github.com/easyops-cn/next-bricks/commit/bbed0dc35c2b546f6b7384507a4aa068366fbe07))
-* **property-editor:**  add onAdvancedChangeEffect ([d9c510b](https://github.com/easyops-cn/next-bricks/commit/d9c510bce23bd4fc6f62b898987506967b7eb36c))
-
-
-
-
+- data dependency provider ([d10207c](https://github.com/easyops-cn/next-bricks/commit/d10207cceedfd1eeb32f1cbaa647526516c6d836))
+- fetch by editorPackages ([bbed0dc](https://github.com/easyops-cn/next-bricks/commit/bbed0dc35c2b546f6b7384507a4aa068366fbe07))
+- **property-editor:** add onAdvancedChangeEffect ([d9c510b](https://github.com/easyops-cn/next-bricks/commit/d9c510bce23bd4fc6f62b898987506967b7eb36c))
 
 # [1.21.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.20.1...@next-bricks/visual-builder@1.21.0) (2024-06-20)
 
-
 ### Features
 
-* update Editor code & add onSubmitEffect ([aa427ce](https://github.com/easyops-cn/next-bricks/commit/aa427ce0e106e1ad905866761c0ece3f65c855ce))
-
-
-
-
+- update Editor code & add onSubmitEffect ([aa427ce](https://github.com/easyops-cn/next-bricks/commit/aa427ce0e106e1ad905866761c0ece3f65c855ce))
 
 ## [1.20.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.20.0...@next-bricks/visual-builder@1.20.1) (2024-06-18)
 
-
 ### Bug Fixes
 
-* enable form-builder preview ([9fa4783](https://github.com/easyops-cn/next-bricks/commit/9fa47830cdd3c81baffe37f91538929862861a38))
-
-
-
-
+- enable form-builder preview ([9fa4783](https://github.com/easyops-cn/next-bricks/commit/9fa47830cdd3c81baffe37f91538929862861a38))
 
 # [1.20.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.19.0...@next-bricks/visual-builder@1.20.0) (2024-06-18)
 
-
 ### Features
 
-* vb support property-editor ([c97ee62](https://github.com/easyops-cn/next-bricks/commit/c97ee6281cdf483c4c47688f4f1d986adc3dc869))
-
-
-
-
+- vb support property-editor ([c97ee62](https://github.com/easyops-cn/next-bricks/commit/c97ee6281cdf483c4c47688f4f1d986adc3dc869))
 
 # [1.19.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.18.0...@next-bricks/visual-builder@1.19.0) (2024-06-18)
 
-
 ### Features
 
-* editor add dataList scope ([9135caf](https://github.com/easyops-cn/next-bricks/commit/9135caf543c80f157ce466aae4f63e8960fd4eda))
-* **visual-builder:** add check-editor-by-name ([326f1c0](https://github.com/easyops-cn/next-bricks/commit/326f1c0073ad17dfd03c6e8b1688240d333a959d))
-
-
-
-
+- editor add dataList scope ([9135caf](https://github.com/easyops-cn/next-bricks/commit/9135caf543c80f157ce466aae4f63e8960fd4eda))
+- **visual-builder:** add check-editor-by-name ([326f1c0](https://github.com/easyops-cn/next-bricks/commit/326f1c0073ad17dfd03c6e8b1688240d333a959d))
 
 # [1.18.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.17.0...@next-bricks/visual-builder@1.18.0) (2024-06-17)
 
-
 ### Features
 
-* inspect runtime value ([582fc56](https://github.com/easyops-cn/next-bricks/commit/582fc5669b072aef450fdf387b0a692a87c1ec54))
-* support formily schema formmater ([f95708f](https://github.com/easyops-cn/next-bricks/commit/f95708f1e8902eb9c03f18a4d3f5fc2b2d284afd))
-
-
-
-
+- inspect runtime value ([582fc56](https://github.com/easyops-cn/next-bricks/commit/582fc5669b072aef450fdf387b0a692a87c1ec54))
+- support formily schema formmater ([f95708f](https://github.com/easyops-cn/next-bricks/commit/f95708f1e8902eb9c03f18a4d3f5fc2b2d284afd))
 
 # [1.17.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.16.4...@next-bricks/visual-builder@1.17.0) (2024-06-13)
 
-
 ### Features
 
-* add advancedMode ([a0cec99](https://github.com/easyops-cn/next-bricks/commit/a0cec99a8780a853a8976c55991006fcf3dcc729))
-* add schemaFormatter ([8ffa6c1](https://github.com/easyops-cn/next-bricks/commit/8ffa6c1b30cef75628111c73441173c4f7582389))
-* support property-editor ([97b4014](https://github.com/easyops-cn/next-bricks/commit/97b4014c0ecadf0ae3758890763530f5880355e9))
-
-
-
-
+- add advancedMode ([a0cec99](https://github.com/easyops-cn/next-bricks/commit/a0cec99a8780a853a8976c55991006fcf3dcc729))
+- add schemaFormatter ([8ffa6c1](https://github.com/easyops-cn/next-bricks/commit/8ffa6c1b30cef75628111c73441173c4f7582389))
+- support property-editor ([97b4014](https://github.com/easyops-cn/next-bricks/commit/97b4014c0ecadf0ae3758890763530f5880355e9))
 
 ## [1.16.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.16.3...@next-bricks/visual-builder@1.16.4) (2024-06-11)
 
-
 ### Bug Fixes
 
-* add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
-
-
-
-
+- add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
 
 ## [1.16.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.16.2...@next-bricks/visual-builder@1.16.3) (2024-06-05)
 

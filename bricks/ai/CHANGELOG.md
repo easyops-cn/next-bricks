@@ -7,78 +7,42 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @next-bricks/ai
 
-
-
-
-
 ## [1.23.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.1...@next-bricks/ai@1.23.2) (2024-06-21)
 
 **Note:** Version bump only for package @next-bricks/ai
-
-
-
-
 
 ## [1.23.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.0...@next-bricks/ai@1.23.1) (2024-06-20)
 
 **Note:** Version bump only for package @next-bricks/ai
 
-
-
-
-
 # [1.23.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.22.0...@next-bricks/ai@1.23.0) (2024-06-18)
-
 
 ### Features
 
-* **chat-view:** add inputToolbarBrick ([73714da](https://github.com/easyops-cn/next-bricks/commit/73714daae619f8752ca396beeeea6f22713f287a))
-
-
-
-
+- **chat-view:** add inputToolbarBrick ([73714da](https://github.com/easyops-cn/next-bricks/commit/73714daae619f8752ca396beeeea6f22713f287a))
 
 # [1.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.21.7...@next-bricks/ai@1.22.0) (2024-06-18)
 
-
 ### Features
 
-* **chat-view:**  add robotId ([5907886](https://github.com/easyops-cn/next-bricks/commit/590788631dda83d9cfa2f84cd73c5e898b010669))
-
-
-
-
+- **chat-view:** add robotId ([5907886](https://github.com/easyops-cn/next-bricks/commit/590788631dda83d9cfa2f84cd73c5e898b010669))
 
 ## [1.21.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.21.6...@next-bricks/ai@1.21.7) (2024-06-17)
 
 **Note:** Version bump only for package @next-bricks/ai
 
-
-
-
-
 ## [1.21.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.21.5...@next-bricks/ai@1.21.6) (2024-06-11)
-
 
 ### Bug Fixes
 
-* add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
-
-
-
-
+- add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
 
 ## [1.21.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.21.4...@next-bricks/ai@1.21.5) (2024-06-06)
 
-
 ### Bug Fixes
 
-* 只要是命令字，且命令字不等于easy_cmd_progress的时候就直接返回 ([c841ebb](https://github.com/easyops-cn/next-bricks/commit/c841ebbc20cfca85670038a1a400fbe35df42887))
-* 只要是命令字，且命令字不等于easy_cmd_progress的时候就直接返回 ([8778739](https://github.com/easyops-cn/next-bricks/commit/8778739f0a1fbcb645339e7a796b3dcf0724f8df))
-
-
-
-
+- 只要是命令字，且命令字不等于easy_cmd_progress的时候就直接返回 ([c841ebb](https://github.com/easyops-cn/next-bricks/commit/c841ebbc20cfca85670038a1a400fbe35df42887))
+- 只要是命令字，且命令字不等于easy_cmd_progress的时候就直接返回 ([8778739](https://github.com/easyops-cn/next-bricks/commit/8778739f0a1fbcb645339e7a796b3dcf0724f8df))
 
 ## [1.21.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.21.3...@next-bricks/ai@1.21.4) (2024-06-05)
 

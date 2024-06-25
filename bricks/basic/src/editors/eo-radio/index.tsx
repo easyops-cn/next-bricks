@@ -3,10 +3,10 @@ import { customEditors } from "@next-core/runtime";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import type { EditorComponentProps } from "@next-bricks/visual-builder/property-editor";
-import { eoSubmitButtonsSchema } from "./eoSubmitButton.schema";
+import { eoRadioSchema } from "./eoRadio.schema";
 
-function EoSubmitButtonsComponentFactory(React: typeof _React) {
-  return function EoSubmitButtonsComponent(
+function EoRadioComponentFactory(React: typeof _React) {
+  return function EoButtonComponent(
     props: EditorComponentProps
   ): React.ReactElement {
     const {
@@ -17,13 +17,10 @@ function EoSubmitButtonsComponentFactory(React: typeof _React) {
     } = props;
 
     return React.createElement(SchemaFieldComponent, {
-      schema: formilySchemaFormatter(
-        eoSubmitButtonsSchema as any,
-        advancedMode!
-      ),
+      schema: formilySchemaFormatter(eoRadioSchema as any, advancedMode!),
       scope,
     });
   };
 }
 
-customEditors.define("eo-switch", EoSubmitButtonsComponentFactory);
+customEditors.define("eo-radio", EoRadioComponentFactory);

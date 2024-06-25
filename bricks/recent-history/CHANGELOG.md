@@ -7,44 +7,23 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [1.0.32](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.31...@next-bricks/recent-history@1.0.32) (2024-06-21)
 
 **Note:** Version bump only for package @next-bricks/recent-history
-
-
-
-
 
 ## [1.0.31](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.30...@next-bricks/recent-history@1.0.31) (2024-06-20)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [1.0.30](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.29...@next-bricks/recent-history@1.0.30) (2024-06-17)
 
 **Note:** Version bump only for package @next-bricks/recent-history
 
-
-
-
-
 ## [1.0.29](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.28...@next-bricks/recent-history@1.0.29) (2024-06-11)
-
 
 ### Bug Fixes
 
-* add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
-
-
-
-
+- add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
 
 ## [1.0.28](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.27...@next-bricks/recent-history@1.0.28) (2024-06-05)
 

@@ -7,380 +7,191 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.67](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.66...@next-bricks/form-renderer@0.1.67) (2024-06-21)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
-
-
-
-
 
 ## [0.1.66](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.65...@next-bricks/form-renderer@0.1.66) (2024-06-20)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.65](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.64...@next-bricks/form-renderer@0.1.65) (2024-06-17)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.64](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.63...@next-bricks/form-renderer@0.1.64) (2024-06-11)
-
 
 ### Bug Fixes
 
-* add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
-
-
-
-
+- add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
 
 ## [0.1.63](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.62...@next-bricks/form-renderer@0.1.63) (2024-06-03)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.62](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.61...@next-bricks/form-renderer@0.1.62) (2024-05-22)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
-
-
-
-
 
 ## [0.1.61](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.60...@next-bricks/form-renderer@0.1.61) (2024-05-21)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.60](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.59...@next-bricks/form-renderer@0.1.60) (2024-05-17)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
-
-
-
-
 
 ## [0.1.59](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.58...@next-bricks/form-renderer@0.1.59) (2024-05-17)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.58](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.57...@next-bricks/form-renderer@0.1.58) (2024-05-15)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
-
-
-
-
 
 ## [0.1.57](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.56...@next-bricks/form-renderer@0.1.57) (2024-05-15)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.56](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.55...@next-bricks/form-renderer@0.1.56) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
-
-
-
-
 
 ## [0.1.55](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.54...@next-bricks/form-renderer@0.1.55) (2024-05-09)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.54](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.53...@next-bricks/form-renderer@0.1.54) (2024-05-08)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
-
-
-
-
 
 ## [0.1.53](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.52...@next-bricks/form-renderer@0.1.53) (2024-05-06)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.52](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.51...@next-bricks/form-renderer@0.1.52) (2024-04-26)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
-
-
-
-
 
 ## [0.1.51](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.50...@next-bricks/form-renderer@0.1.51) (2024-04-16)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.50](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.49...@next-bricks/form-renderer@0.1.50) (2024-04-08)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
-
-
-
-
 
 ## [0.1.49](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.48...@next-bricks/form-renderer@0.1.49) (2024-04-03)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.48](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.47...@next-bricks/form-renderer@0.1.48) (2024-04-02)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
-
-
-
-
 
 ## [0.1.47](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.46...@next-bricks/form-renderer@0.1.47) (2024-03-25)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.46](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.45...@next-bricks/form-renderer@0.1.46) (2024-03-19)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
-
-
-
-
 
 ## [0.1.45](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.44...@next-bricks/form-renderer@0.1.45) (2024-03-12)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.44](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.43...@next-bricks/form-renderer@0.1.44) (2024-02-07)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
-
-
-
-
 
 ## [0.1.43](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.42...@next-bricks/form-renderer@0.1.43) (2024-02-05)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.42](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.41...@next-bricks/form-renderer@0.1.42) (2024-02-01)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
-
-
-
-
 
 ## [0.1.41](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.40...@next-bricks/form-renderer@0.1.41) (2024-01-03)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.40](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.39...@next-bricks/form-renderer@0.1.40) (2024-01-02)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
-
-
-
-
 
 ## [0.1.39](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.38...@next-bricks/form-renderer@0.1.39) (2024-01-02)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.38](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.37...@next-bricks/form-renderer@0.1.38) (2023-12-27)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
-
-
-
-
 
 ## [0.1.37](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.36...@next-bricks/form-renderer@0.1.37) (2023-12-25)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.36](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.35...@next-bricks/form-renderer@0.1.36) (2023-12-22)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
-
-
-
-
 
 ## [0.1.35](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.34...@next-bricks/form-renderer@0.1.35) (2023-12-12)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.34](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.33...@next-bricks/form-renderer@0.1.34) (2023-12-11)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
-
-
-
-
 
 ## [0.1.33](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.32...@next-bricks/form-renderer@0.1.33) (2023-12-06)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.32](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.31...@next-bricks/form-renderer@0.1.32) (2023-12-05)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
-
-
-
-
 
 ## [0.1.31](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.30...@next-bricks/form-renderer@0.1.31) (2023-11-30)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.30](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.29...@next-bricks/form-renderer@0.1.30) (2023-11-23)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
-
-
-
-
 
 ## [0.1.29](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.28...@next-bricks/form-renderer@0.1.29) (2023-11-17)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.28](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.27...@next-bricks/form-renderer@0.1.28) (2023-11-16)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
-
-
-
-
 
 ## [0.1.27](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.26...@next-bricks/form-renderer@0.1.27) (2023-11-15)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.26](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.25...@next-bricks/form-renderer@0.1.26) (2023-11-13)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
-
-
-
-
 
 ## [0.1.25](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.24...@next-bricks/form-renderer@0.1.25) (2023-11-07)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.24](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.23...@next-bricks/form-renderer@0.1.24) (2023-11-06)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
-
-
-
-
 
 ## [0.1.23](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.22...@next-bricks/form-renderer@0.1.23) (2023-11-03)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
 
-
-
-
-
 ## [0.1.22](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.21...@next-bricks/form-renderer@0.1.22) (2023-11-01)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
-
-
-
-
 
 ## [0.1.21](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.20...@next-bricks/form-renderer@0.1.21) (2023-11-01)
 

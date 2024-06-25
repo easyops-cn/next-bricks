@@ -5,148 +5,88 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.24.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.24.0...@next-bricks/basic@1.24.1) (2024-06-25)
 
-
 ### Bug Fixes
 
-* fixV2Schema ([d99e2b2](https://github.com/easyops-cn/next-bricks/commit/d99e2b20aac321f175b40518a830903276345477))
-* fixV2Schema ([c06e7c3](https://github.com/easyops-cn/next-bricks/commit/c06e7c34baa76b9701f1ae8f351ae5063e7660d9))
-* fixV2Schema ([5550f03](https://github.com/easyops-cn/next-bricks/commit/5550f03746cb51d89ec89eb05df63f338bb03c08))
-* fixV2Schema ([8069932](https://github.com/easyops-cn/next-bricks/commit/8069932c5d6cbdfa27bd105f89657988bcd1c7fc))
-* fixV2Schema ([b6fc533](https://github.com/easyops-cn/next-bricks/commit/b6fc533fc152811916987c58ed622ccd3b5203db))
-* fixV2Schema ([917882f](https://github.com/easyops-cn/next-bricks/commit/917882fd51739883d0adf5f759f7532a3685cc23))
-* fixV2Schema ([54350b9](https://github.com/easyops-cn/next-bricks/commit/54350b977a391a25dab88923a563315ee94af7d6))
-
-
-
-
+- fixV2Schema ([d99e2b2](https://github.com/easyops-cn/next-bricks/commit/d99e2b20aac321f175b40518a830903276345477))
+- fixV2Schema ([c06e7c3](https://github.com/easyops-cn/next-bricks/commit/c06e7c34baa76b9701f1ae8f351ae5063e7660d9))
+- fixV2Schema ([5550f03](https://github.com/easyops-cn/next-bricks/commit/5550f03746cb51d89ec89eb05df63f338bb03c08))
+- fixV2Schema ([8069932](https://github.com/easyops-cn/next-bricks/commit/8069932c5d6cbdfa27bd105f89657988bcd1c7fc))
+- fixV2Schema ([b6fc533](https://github.com/easyops-cn/next-bricks/commit/b6fc533fc152811916987c58ed622ccd3b5203db))
+- fixV2Schema ([917882f](https://github.com/easyops-cn/next-bricks/commit/917882fd51739883d0adf5f759f7532a3685cc23))
+- fixV2Schema ([54350b9](https://github.com/easyops-cn/next-bricks/commit/54350b977a391a25dab88923a563315ee94af7d6))
 
 # [1.24.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.23.0...@next-bricks/basic@1.24.0) (2024-06-21)
 
-
 ### Features
 
-* **link:** add tooltip property ([983ba9e](https://github.com/easyops-cn/next-bricks/commit/983ba9e02c421b947e64a397cb7ce2bfcbb116cd))
-
-
-
-
+- **link:** add tooltip property ([983ba9e](https://github.com/easyops-cn/next-bricks/commit/983ba9e02c421b947e64a397cb7ce2bfcbb116cd))
 
 # [1.23.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.22.0...@next-bricks/basic@1.23.0) (2024-06-21)
 
-
 ### Features
 
-* 新增 eo-submit-button 构件 ([0db4d0b](https://github.com/easyops-cn/next-bricks/commit/0db4d0b4e38b5ecdc05ceba0479dec82fdf3fe7d))
-
-
-
-
+- 新增 eo-submit-button 构件 ([0db4d0b](https://github.com/easyops-cn/next-bricks/commit/0db4d0b4e38b5ecdc05ceba0479dec82fdf3fe7d))
 
 # [1.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.21.1...@next-bricks/basic@1.22.0) (2024-06-21)
 
-
 ### Features
 
-* **eo-mini-actions:** Add url support for non-dropdown action ([caab00c](https://github.com/easyops-cn/next-bricks/commit/caab00c04d57e151ac048e24b97a5764dbc9bd44))
-
-
-
-
+- **eo-mini-actions:** Add url support for non-dropdown action ([caab00c](https://github.com/easyops-cn/next-bricks/commit/caab00c04d57e151ac048e24b97a5764dbc9bd44))
 
 ## [1.21.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.21.0...@next-bricks/basic@1.21.1) (2024-06-21)
 
 **Note:** Version bump only for package @next-bricks/basic
 
-
-
-
-
 # [1.21.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.20.1...@next-bricks/basic@1.21.0) (2024-06-20)
-
 
 ### Bug Fixes
 
-* update schema ([56fa84b](https://github.com/easyops-cn/next-bricks/commit/56fa84b12754a1edec9ec0414ee584df2353c57a))
-* update schema ([39951b6](https://github.com/easyops-cn/next-bricks/commit/39951b665cd61f5fd10cf10407b475bd26fcc36c))
-
+- update schema ([56fa84b](https://github.com/easyops-cn/next-bricks/commit/56fa84b12754a1edec9ec0414ee584df2353c57a))
+- update schema ([39951b6](https://github.com/easyops-cn/next-bricks/commit/39951b665cd61f5fd10cf10407b475bd26fcc36c))
 
 ### Features
 
-* update Editor code & add onSubmitEffect ([aa427ce](https://github.com/easyops-cn/next-bricks/commit/aa427ce0e106e1ad905866761c0ece3f65c855ce))
-
-
-
-
+- update Editor code & add onSubmitEffect ([aa427ce](https://github.com/easyops-cn/next-bricks/commit/aa427ce0e106e1ad905866761c0ece3f65c855ce))
 
 ## [1.20.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.20.0...@next-bricks/basic@1.20.1) (2024-06-18)
 
-
 ### Bug Fixes
 
-* fix align schema ([96f2387](https://github.com/easyops-cn/next-bricks/commit/96f2387104d8567320b2a2859354f95e588cb0ed))
-* fix schema ([d0249c0](https://github.com/easyops-cn/next-bricks/commit/d0249c0ebd1097abb0ba599f86b2da69137647b2))
-* text spin and searchbar schema ([c931ca3](https://github.com/easyops-cn/next-bricks/commit/c931ca35088ce71edbe2431cf4fc901f4b722d5a))
-
-
-
-
+- fix align schema ([96f2387](https://github.com/easyops-cn/next-bricks/commit/96f2387104d8567320b2a2859354f95e588cb0ed))
+- fix schema ([d0249c0](https://github.com/easyops-cn/next-bricks/commit/d0249c0ebd1097abb0ba599f86b2da69137647b2))
+- text spin and searchbar schema ([c931ca3](https://github.com/easyops-cn/next-bricks/commit/c931ca35088ce71edbe2431cf4fc901f4b722d5a))
 
 # [1.20.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.19.1...@next-bricks/basic@1.20.0) (2024-06-18)
 
-
 ### Features
 
-* editor add dataList scope ([9135caf](https://github.com/easyops-cn/next-bricks/commit/9135caf543c80f157ce466aae4f63e8960fd4eda))
-
-
-
-
+- editor add dataList scope ([9135caf](https://github.com/easyops-cn/next-bricks/commit/9135caf543c80f157ce466aae4f63e8960fd4eda))
 
 ## [1.19.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.19.0...@next-bricks/basic@1.19.1) (2024-06-18)
 
-
 ### Bug Fixes
 
-* fix eo-text type ([0b394fd](https://github.com/easyops-cn/next-bricks/commit/0b394fd7a4f17a10d89514c31fd6a4f930edf4b9))
-
-
-
-
+- fix eo-text type ([0b394fd](https://github.com/easyops-cn/next-bricks/commit/0b394fd7a4f17a10d89514c31fd6a4f930edf4b9))
 
 # [1.19.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.18.0...@next-bricks/basic@1.19.0) (2024-06-17)
 
-
 ### Features
 
-* support formily schema formmater ([f95708f](https://github.com/easyops-cn/next-bricks/commit/f95708f1e8902eb9c03f18a4d3f5fc2b2d284afd))
-
-
-
-
+- support formily schema formmater ([f95708f](https://github.com/easyops-cn/next-bricks/commit/f95708f1e8902eb9c03f18a4d3f5fc2b2d284afd))
 
 # [1.18.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.17.4...@next-bricks/basic@1.18.0) (2024-06-13)
 
-
 ### Features
 
-* add advancedMode ([a0cec99](https://github.com/easyops-cn/next-bricks/commit/a0cec99a8780a853a8976c55991006fcf3dcc729))
-* add schemaFormatter ([8ffa6c1](https://github.com/easyops-cn/next-bricks/commit/8ffa6c1b30cef75628111c73441173c4f7582389))
-* support property-editor ([97b4014](https://github.com/easyops-cn/next-bricks/commit/97b4014c0ecadf0ae3758890763530f5880355e9))
-
-
-
-
+- add advancedMode ([a0cec99](https://github.com/easyops-cn/next-bricks/commit/a0cec99a8780a853a8976c55991006fcf3dcc729))
+- add schemaFormatter ([8ffa6c1](https://github.com/easyops-cn/next-bricks/commit/8ffa6c1b30cef75628111c73441173c4f7582389))
+- support property-editor ([97b4014](https://github.com/easyops-cn/next-bricks/commit/97b4014c0ecadf0ae3758890763530f5880355e9))
 
 ## [1.17.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.17.3...@next-bricks/basic@1.17.4) (2024-06-11)
 
-
 ### Bug Fixes
 
-* add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
-
-
-
-
+- add repository directory in package.json ([da2f6d1](https://github.com/easyops-cn/next-bricks/commit/da2f6d11bc112d4901adc4beb744e8f5b945c01d))
 
 ## [1.17.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.17.2...@next-bricks/basic@1.17.3) (2024-06-05)
 
