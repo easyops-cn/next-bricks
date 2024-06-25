@@ -32,6 +32,10 @@ export const eoRadioSchema = {
       name: "value",
       title: "值",
       type: "string",
+      component: {
+        name: "CodeEditor",
+      },
+      decorator: "FormItemWithoutAdvanced",
     },
     {
       name: "disabled",
@@ -88,9 +92,12 @@ export const eoRadioSchema = {
         props: {
           placeholder: "请选择ui样式",
           allowClear: true,
-          options: ["default", "dashboard"].map((item) => ({
-            label: item,
-            value: item,
+          options: [
+            { label: "默认", value: "default" },
+            { label: "卡片", value: "dashboard" },
+          ].map((item) => ({
+            label: item.label,
+            value: item.value,
           })),
         },
       },

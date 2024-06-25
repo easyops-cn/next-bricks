@@ -32,6 +32,10 @@ export const eoTextareaSchema = {
       name: "value",
       title: "值",
       type: "string",
+      component: {
+        name: "Input.TextArea",
+      },
+      decorator: "FormItem",
     },
     {
       name: "disabled",

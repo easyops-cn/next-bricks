@@ -31,7 +31,7 @@ export const eoSwitchSchema = {
     {
       name: "value",
       title: "值",
-      type: "string",
+      type: "boolean",
     },
     {
       name: "disabled",

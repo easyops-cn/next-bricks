@@ -32,6 +32,10 @@ export const eoSelectSchema = {
       name: "value",
       title: "值",
       type: "string",
+      component: {
+        name: "CodeEditor",
+      },
+      decorator: "FormItemWithoutAdvanced",
     },
     {
       name: "disabled",
