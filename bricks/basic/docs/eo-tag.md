@@ -125,6 +125,10 @@
     textContent: " 紫色 "
 - brick: div
   properties:
+    style:
+      flexBasis: 100%
+- brick: div
+  properties:
     textContent: "Inverse:"
 - brick: eo-tag
   properties:
