@@ -23,3 +23,7 @@ import "./brick-tag/index.js";
 import "./brick-general-search/index.js";
 import "./popover-container/index.js";
 import "./line-chart/index.js";
+import "./tabs-container/index.js";
+import "./eo-tab-list/index.js";
+import "./general-drawer/index.js";
+import "./eo-drawer/index.js";
