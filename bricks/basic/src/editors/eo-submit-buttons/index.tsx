@@ -26,4 +26,4 @@ function EoSubmitButtonsComponentFactory(React: typeof _React) {
   };
 }
 
-customEditors.define("eo-switch", EoSubmitButtonsComponentFactory);
+customEditors.define("eo-submit-buttons", EoSubmitButtonsComponentFactory);
