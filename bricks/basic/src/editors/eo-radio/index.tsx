@@ -6,7 +6,7 @@ import type { EditorComponentProps } from "@next-bricks/visual-builder/property-
 import { eoRadioSchema } from "./eoRadio.schema";
 
 function EoRadioComponentFactory(React: typeof _React) {
-  return function EoButtonComponent(
+  return function EoRadioComponent(
     props: EditorComponentProps
   ): React.ReactElement {
     const {

@@ -6,7 +6,7 @@ import type { EditorComponentProps } from "@next-bricks/visual-builder/property-
 import { eoSelectSchema } from "./eoSelect.schema";
 
 function EoSelectComponentFactory(React: typeof _React) {
-  return function EoButtonComponent(
+  return function EoSelectComponent(
     props: EditorComponentProps
   ): React.ReactElement {
     const {
