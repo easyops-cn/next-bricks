@@ -2,7 +2,12 @@ import React, { useCallback, useMemo, useState } from "react";
 import { FormItem, IFormItemProps } from "@formily/antd-v5";
 import { wrapBrick } from "@next-core/react-element";
 import { GeneralIcon, GeneralIconProps } from "@next-bricks/icons/general-icon";
-import { useField, useForm, useFormEffects } from "@formily/react";
+import {
+  useExpressionScope,
+  useField,
+  useForm,
+  useFormEffects,
+} from "@formily/react";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { EoTooltip, ToolTipProps } from "@next-bricks/basic/src/tooltip";
@@ -25,6 +30,7 @@ interface AdvancedFormItemProps extends IFormItemProps {
 export function AdvancedFormItem(props: AdvancedFormItemProps) {
   const form = useForm();
   const field = useField();
+  const scope = useExpressionScope();
   const [mode, setMode] = useState<Mode>(
     typeof (field as any).value === "string" &&
       isEvaluable((field as any).value)
@@ -41,7 +47,7 @@ export function AdvancedFormItem(props: AdvancedFormItemProps) {
     field.setComponent(
       isAdvancedMode ? "CodeEditor" : fieldOriginComponent[0],
       {
-        ...(isAdvancedMode ? fieldOriginComponent[1] : {}),
+        ...(isAdvancedMode ? scope : fieldOriginComponent[1]),
       }
     );
 
@@ -64,14 +70,14 @@ export function AdvancedFormItem(props: AdvancedFormItemProps) {
         "overwrite"
       );
     }
-  }, [form, field, isAdvanced, fieldOriginComponent]);
+  }, [form, field, isAdvanced, fieldOriginComponent, scope]);
 
   useFormEffects(() => {
     onFieldInitialValueChange(field.props.name, ({ value }) => {
       if (typeof value === "string" && isEvaluable(value)) {
         setMode("advanced");
 
-        field.setComponent("CodeEditor");
+        field.setComponent("CodeEditor", scope);
       }
     });
   });

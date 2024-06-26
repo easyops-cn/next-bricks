@@ -3,10 +3,10 @@ import { customEditors } from "@next-core/runtime";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import type { EditorComponentProps } from "@next-bricks/visual-builder/property-editor";
-import { brickTagSchema } from "./brickTag.schema";
+import { eoTabListSchema } from "./eoTabList.schema";
 
-function BrickTagComponentFactory(React: typeof _React) {
-  return function BrickTagComponent(
+function EoTabListComponentFactory(React: typeof _React) {
+  return function EoTabListComponent(
     props: EditorComponentProps
   ): React.ReactElement {
     const {
@@ -14,22 +14,13 @@ function BrickTagComponentFactory(React: typeof _React) {
       formilySchemaFormatter,
       advancedMode,
       scope,
-      form,
     } = props;
 
-    React.useEffect(() => {
-      form.setInitialValues({
-        componentType: "Tag",
-        multipleCheck: true,
-        closable: false,
-      });
-    }, [form]);
-
     return React.createElement(SchemaFieldComponent, {
-      schema: formilySchemaFormatter(brickTagSchema as any, advancedMode!),
+      schema: formilySchemaFormatter(eoTabListSchema as any, advancedMode!),
       scope,
     });
   };
 }
-// presentational-bricks.brick-tag
-customEditors.define("basic.brick-tag", BrickTagComponentFactory);
+
+customEditors.define("eo-tab-list", EoTabListComponentFactory);

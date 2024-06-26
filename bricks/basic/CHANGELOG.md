@@ -3,6 +3,82 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.26.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.26.0...@next-bricks/basic@1.26.1) (2024-06-26)
+
+
+### Bug Fixes
+
+* migrate chart-v2 schema ([2fdc1ab](https://github.com/easyops-cn/next-bricks/commit/2fdc1abc82f6e8461e1a1d20e68f4a567aa948db))
+* migrate V3 bricks schema ([96d8fb6](https://github.com/easyops-cn/next-bricks/commit/96d8fb6367106e9e7a6b684773458a25675c5e19))
+* migrate V3 bricks schema ([3731749](https://github.com/easyops-cn/next-bricks/commit/3731749e382ae99548659fa670987048489791a1))
+* migrate V3 bricks schema ([9fd4340](https://github.com/easyops-cn/next-bricks/commit/9fd4340cb520cf5598aab6e41af28d15894358d0))
+
+
+
+
+
+# [1.26.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.25.3...@next-bricks/basic@1.26.0) (2024-06-26)
+
+
+### Features
+
+* support colorPickComponent  and fix format ([2195a0d](https://github.com/easyops-cn/next-bricks/commit/2195a0deb7e75422ee2cd772df6e4b7c76c1642e))
+
+
+
+
+
+## [1.25.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.25.2...@next-bricks/basic@1.25.3) (2024-06-26)
+
+
+### Bug Fixes
+
+* edit colorPicker ([6c83a25](https://github.com/easyops-cn/next-bricks/commit/6c83a2524a9273e54bd6b01e78fe23b48374c0ff))
+
+
+
+
+
+## [1.25.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.25.1...@next-bricks/basic@1.25.2) (2024-06-26)
+
+**Note:** Version bump only for package @next-bricks/basic
+
+
+
+
+
+## [1.25.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.25.0...@next-bricks/basic@1.25.1) (2024-06-26)
+
+
+### Bug Fixes
+
+* 6.25 schema ([05874b0](https://github.com/easyops-cn/next-bricks/commit/05874b082bcf595a02a367e2aa4cceb65490c39e))
+
+
+
+
+
+# [1.25.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.24.1...@next-bricks/basic@1.25.0) (2024-06-25)
+
+
+### Bug Fixes
+
+* 修复textarea引入问题 refs BRICK-355 ([0154d36](https://github.com/easyops-cn/next-bricks/commit/0154d364111dd86d54168d3ab6d2aaa374e7aad3))
+* 修改discussion refs BRICK-355 ([bbe46c5](https://github.com/easyops-cn/next-bricks/commit/bbe46c590d7f72ce2686c8a8af307ad957debf70))
+* 更新index引入 refs BRICK-355 ([9ebd5d6](https://github.com/easyops-cn/next-bricks/commit/9ebd5d6b684a4645b25446676fa9179186bf87f9))
+* 更新index文件写法 refs BRICK-355 ([eed79a1](https://github.com/easyops-cn/next-bricks/commit/eed79a100e41a9180548bd9ec00eddd2dbf6379d))
+* 更新文件 refs BRICK-355 ([49015a3](https://github.com/easyops-cn/next-bricks/commit/49015a393d783e5ec9f5a4aa6e9d056ae72a4461))
+* 调整函数名称 refs BRICK-355 ([779335e](https://github.com/easyops-cn/next-bricks/commit/779335e1dda6b9798a8236678f4bdc2cfd931b34))
+
+
+### Features
+
+* v3构件 refs BRICK-355 ([12e6fa4](https://github.com/easyops-cn/next-bricks/commit/12e6fa487b52199ab571189f4fa4a93ba9d26cbf))
+
+
+
+
+
 ## [1.24.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.24.0...@next-bricks/basic@1.24.1) (2024-06-25)
 
 ### Bug Fixes

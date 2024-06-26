@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.8.6...@next-bricks/vs@1.8.7) (2024-06-26)
+
+
+### Bug Fixes
+
+* code Editor output and update Editor refresh values ([9f33078](https://github.com/easyops-cn/next-bricks/commit/9f330787f9b9dd742f3970d8f6ef6bfe0ef2056a))
+
+
+
+
+
+## [1.8.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.8.5...@next-bricks/vs@1.8.6) (2024-06-26)
+
+**Note:** Version bump only for package @next-bricks/vs
+
+
+
+
+
+## [1.8.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.8.4...@next-bricks/vs@1.8.5) (2024-06-25)
+
+**Note:** Version bump only for package @next-bricks/vs
+
+
+
+
+
 ## [1.8.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.8.3...@next-bricks/vs@1.8.4) (2024-06-25)
 
 **Note:** Version bump only for package @next-bricks/vs

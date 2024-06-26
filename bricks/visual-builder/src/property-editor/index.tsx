@@ -39,6 +39,7 @@ import { CategoryTitle } from "./components/CategoryTitle";
 import { AdvancedFormItem } from "./components/AdvancedFormItem";
 import { CodeEditorComponent } from "./components/common/CodeEditorComponent";
 import { IconSelectComponent } from "./components/common/IconSelectComponent";
+import { ColorPickerComponent } from "./components/common/ColorPickerComponent";
 import { __secret_internals, customEditors } from "@next-core/runtime";
 import {
   ADVANCED_FORM_KEY,
@@ -49,6 +50,7 @@ import "./style.css";
 import yaml from "js-yaml";
 import _ from "lodash";
 import { BrickPackage } from "@next-core/types";
+import { NORMAL_FORM_KEY } from "./utils/formilySchemaFormatter";
 
 const { defineElement, property, method, event } = createDecorators();
 
@@ -71,6 +73,7 @@ const SchemaField = createSchemaField({
     CategoryTitle,
     CodeEditor: CodeEditorComponent,
     IconSelect: IconSelectComponent,
+    ColorPicker: ColorPickerComponent,
   },
 });
 
@@ -94,6 +97,9 @@ export interface EditorComponentProps {
   scope: {
     advancedMode: boolean;
     dataList: DataItem[];
+    extraLibs: any;
+    links: any;
+    tokenClick: (token: CustomEvent<string>) => void;
   };
 }
 
@@ -152,6 +158,16 @@ class PropertyEditor extends ReactNextElement {
   })
   accessor editorPackages: BrickPackage[];
 
+  @property({
+    attribute: false,
+  })
+  accessor links: any;
+
+  @property({
+    attribute: false,
+  })
+  accessor extraLibs: any;
+
   /**
    * 表单验证成功时触发事件
    */
@@ -178,8 +194,9 @@ class PropertyEditor extends ReactNextElement {
         form.notify(BEFORE_SUBMIT_KEY, realValue);
         if (this.#submitValue) {
           this.#successEvent.emit(this.#submitValue);
+        } else {
+          this.#successEvent.emit({ ...realValue });
         }
-        this.#successEvent.emit({ ...realValue });
       })
       .catch((err: any[]) => {
         this.#errorEvent.emit(err);
@@ -191,6 +208,13 @@ class PropertyEditor extends ReactNextElement {
 
   #handleValuesChange = (value: any) => {
     this.#valuesChangeEvent.emit(value);
+  };
+
+  @event({ type: "token.click" })
+  accessor #tokenClick!: EventEmitter<string>;
+
+  #handleTokenClick = (value: string): void => {
+    this.#tokenClick.emit(value);
   };
 
   #submitValue: any;
@@ -210,8 +234,11 @@ class PropertyEditor extends ReactNextElement {
         values={this.values}
         advancedMode={this.advancedMode}
         dataList={this.dataList}
+        extraLibs={this.extraLibs}
+        links={this.links}
         editorPackages={this.editorPackages}
         handleValuesChange={this.#handleValuesChange}
+        handleTokenClick={this.#handleTokenClick}
         onSubmitEffect={this.#onSubmitEffect}
       />
     );
@@ -223,8 +250,11 @@ export interface PropertyEditorProps {
   editorName: string;
   advancedMode?: boolean;
   dataList: DataItem[];
+  extraLibs: any;
+  links: any;
   editorPackages: BrickPackage[];
   handleValuesChange: (value: any) => void;
+  handleTokenClick: (token: string) => void;
   onSubmitEffect: (listener: (value: any, form: Form) => any) => void;
 }
 
@@ -235,7 +265,10 @@ export function LegacyPropertyEditor(
     editorName,
     dataList,
     editorPackages,
+    extraLibs,
+    links,
     handleValuesChange,
+    handleTokenClick,
     onSubmitEffect,
   }: PropertyEditorProps,
   ref: any
@@ -247,13 +280,14 @@ export function LegacyPropertyEditor(
     (props: EditorComponentProps) => React.ReactElement
   >(() => customEditors.get(editorName)?.(React) as any);
   const transformValueRef = useRef<any>(null);
+  const initRef = useRef<any>(false);
 
   const onAdvancedChangeEffect = useMemo(
     () =>
       createEffectHook(ADVANCED_CHANGE_KEY, (options, form) => (listener) => {
         transformValueRef.current = listener(options, form);
       }),
-    [editorName]
+    []
   );
 
   useImperativeHandle(ref, () => ({
@@ -268,18 +302,16 @@ export function LegacyPropertyEditor(
 
   const defaultTransform = useCallback((values: any, advancedMode: boolean) => {
     if (advancedMode) {
+      const filterValue = _.omit(values, [ADVANCED_FORM_KEY]);
       return {
-        [ADVANCED_FORM_KEY]: _.isEmpty(values)
+        [ADVANCED_FORM_KEY]: _.isEmpty(filterValue)
           ? ""
-          : yaml.safeDump(_.omit(values, [ADVANCED_FORM_KEY])),
+          : yaml.safeDump(filterValue, {
+              skipInvalid: true,
+            }),
       };
     }
-    const realValue = values[ADVANCED_FORM_KEY];
-    if (realValue) {
-      return yaml.safeLoad(realValue);
-    } else {
-      return values;
-    }
+    return values[ADVANCED_FORM_KEY] ?? values;
   }, []);
 
   useEffect(() => {
@@ -287,23 +319,40 @@ export function LegacyPropertyEditor(
   }, [load]);
 
   useEffect(() => {
-    if (Editor) form.setInitialValues(values);
-  }, [Editor, values, form]);
+    if (Editor) {
+      initRef.current = true;
+      form.setValues(values ?? {}, "overwrite");
+    }
+  }, [Editor]);
 
   useEffect(() => {
     const { values } = form.getState();
     transformValueRef.current = null;
 
+    form.reset();
     form.notify(ADVANCED_CHANGE_KEY, advancedMode);
 
-    const formData =
-      transformValueRef.current ?? defaultTransform(values, advancedMode);
+    form.query(NORMAL_FORM_KEY).take((field) => {
+      field.display = !advancedMode ? "visible" : "hidden";
+    });
+    form.query(ADVANCED_FORM_KEY).take((field) => {
+      field.display = advancedMode ? "visible" : "hidden";
+    });
+
+    const formData = defaultTransform(
+      transformValueRef.current ?? values,
+      advancedMode
+    );
     form.setValues(formData);
-  }, [advancedMode, form, defaultTransform]);
+  }, [advancedMode, form, defaultTransform, Editor]);
 
   useEffect(() => {
     form.addEffects("onValueChange", () => {
       onFormValuesChange((form) => {
+        if (initRef.current) {
+          initRef.current = false;
+          return;
+        }
         handleValuesChange(form.values);
       });
     });
@@ -332,6 +381,10 @@ export function LegacyPropertyEditor(
               scope={{
                 dataList,
                 advancedMode,
+                extraLibs,
+                links,
+                tokenClick: (event: CustomEvent<string>) =>
+                  handleTokenClick(event.detail),
               }}
               effects={{
                 onFieldInit,

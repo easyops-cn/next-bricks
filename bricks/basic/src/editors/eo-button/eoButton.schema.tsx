@@ -76,6 +76,7 @@ export const eoButtonSchema = {
     {
       type: "string",
       title: "按钮类型",
+      name: "type",
       component: {
         name: "Select",
         props: {

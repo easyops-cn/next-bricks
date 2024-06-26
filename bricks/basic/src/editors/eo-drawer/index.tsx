@@ -3,10 +3,10 @@ import { customEditors } from "@next-core/runtime";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import type { EditorComponentProps } from "@next-bricks/visual-builder/property-editor";
-import { generalTextSchema } from "./generalText.schema";
+import { eoDrawerSchema } from "./eoDrawer.schema";
 
-function GeneralTextComponentFactory(React: typeof _React) {
-  return function GeneralTextComponent(
+function EoDrawerComponentFactory(React: typeof _React) {
+  return function EoDrawerComponent(
     props: EditorComponentProps
   ): React.ReactElement {
     const {
@@ -14,14 +14,21 @@ function GeneralTextComponentFactory(React: typeof _React) {
       formilySchemaFormatter,
       advancedMode,
       scope,
+      form,
     } = props;
 
+    React.useEffect(() => {
+      form.setInitialValues({
+        mask: true,
+        placement: "right",
+      });
+    }, [form]);
+
     return React.createElement(SchemaFieldComponent, {
-      schema: formilySchemaFormatter(generalTextSchema as any, advancedMode!),
+      schema: formilySchemaFormatter(eoDrawerSchema as any, advancedMode!),
       scope,
     });
   };
 }
 
-// basic-bricks.general-text
-customEditors.define("basic.general-text", GeneralTextComponentFactory);
+customEditors.define("eo-drawer", EoDrawerComponentFactory);
