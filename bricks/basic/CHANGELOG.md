@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.25.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.25.0...@next-bricks/basic@1.25.1) (2024-06-26)
+
+
+### Bug Fixes
+
+* 6.25 schema ([05874b0](https://github.com/easyops-cn/next-bricks/commit/05874b082bcf595a02a367e2aa4cceb65490c39e))
+
+
+
+
+
 # [1.25.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.24.1...@next-bricks/basic@1.25.0) (2024-06-25)
 
 
