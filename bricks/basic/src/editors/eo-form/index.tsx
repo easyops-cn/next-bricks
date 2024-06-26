@@ -6,7 +6,7 @@ import type { EditorComponentProps } from "@next-bricks/visual-builder/property-
 import { eoFormSchema } from "./eoForm.schema";
 
 function EoFormComponentFactory(React: typeof _React) {
-  return function EoButtonComponent(
+  return function EoFormComponent(
     props: EditorComponentProps
   ): React.ReactElement {
     const {
