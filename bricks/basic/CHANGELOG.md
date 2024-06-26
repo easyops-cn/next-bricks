@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.26.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.26.0...@next-bricks/basic@1.26.1) (2024-06-26)
+
+
+### Bug Fixes
+
+* migrate chart-v2 schema ([2fdc1ab](https://github.com/easyops-cn/next-bricks/commit/2fdc1abc82f6e8461e1a1d20e68f4a567aa948db))
+* migrate V3 bricks schema ([96d8fb6](https://github.com/easyops-cn/next-bricks/commit/96d8fb6367106e9e7a6b684773458a25675c5e19))
+* migrate V3 bricks schema ([3731749](https://github.com/easyops-cn/next-bricks/commit/3731749e382ae99548659fa670987048489791a1))
+* migrate V3 bricks schema ([9fd4340](https://github.com/easyops-cn/next-bricks/commit/9fd4340cb520cf5598aab6e41af28d15894358d0))
+
+
+
+
+
 # [1.26.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.25.3...@next-bricks/basic@1.26.0) (2024-06-26)
 
 
