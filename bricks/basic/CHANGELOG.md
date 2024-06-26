@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.26.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.25.3...@next-bricks/basic@1.26.0) (2024-06-26)
+
+
+### Features
+
+* support colorPickComponent  and fix format ([2195a0d](https://github.com/easyops-cn/next-bricks/commit/2195a0deb7e75422ee2cd772df6e4b7c76c1642e))
+
+
+
+
+
 ## [1.25.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.25.2...@next-bricks/basic@1.25.3) (2024-06-26)
 
 
