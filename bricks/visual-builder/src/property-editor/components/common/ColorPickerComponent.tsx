@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ColorPicker } from "antd";
 import { ColorPickerProps } from "antd/lib/color-picker";
 import {
+  compressPresets,
   presets,
   transformCssVariablesToColor,
   trasnformColorToCssVariables,
@@ -14,6 +15,7 @@ export function ColorPickerComponent(
   props: ColorPickerComponentProps
 ): React.ReactElement {
   const [value, setValue] = useState<string>();
+  const transformPresets = useMemo(() => compressPresets(presets), []);
 
   const handleChange = (color: string) => {
     props.onChange?.(trasnformColorToCssVariables(presets, color));
@@ -32,7 +34,7 @@ export function ColorPickerComponent(
   return (
     <ColorPicker
       showText={true}
-      presets={presets}
+      presets={transformPresets}
       {...props}
       value={value}
       onChange={(_, hex) => {

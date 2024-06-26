@@ -1,4 +1,6 @@
 import {
+  Presets,
+  compressPresets,
   transformCssVariablesToColor,
   trasnformColorToCssVariables,
 } from "./colorTransform";
@@ -6,35 +8,13 @@ import {
 const mockPresets = [
   {
     label: "blue",
-    colors: [
-      {
-        metaColor: {
-          originalInput: "#aaa",
-        },
-      },
-      {
-        metaColor: {
-          originalInput: "#bbb",
-        },
-      },
-    ],
+    colors: ["#aaa", "#bbb"],
   },
   {
     label: "red",
-    colors: [
-      {
-        metaColor: {
-          originalInput: "#ccc",
-        },
-      },
-      {
-        metaColor: {
-          originalInput: "#ddd",
-        },
-      },
-    ],
+    colors: ["#ccc", "#ddd"],
   },
-];
+] as Presets;
 
 describe("Color transform", () => {
   it.each<[string, string]>([
@@ -43,6 +23,7 @@ describe("Color transform", () => {
     ["var(--palette-red-1)", "#ccc"],
     ["var(--palette-red-3)", "var(--palette-red-3)"],
     ["var(--palette-random-1)", "var(--palette-random-1)"],
+    ["--palette-random-1", "--palette-random-1"],
   ])("trasnformColorToCssVariables %s should get %s", (color, result) => {
     expect(transformCssVariablesToColor(mockPresets, color)).toBe(result);
   });
@@ -55,5 +36,13 @@ describe("Color transform", () => {
     ["var(--palette-random-1)", "var(--palette-random-1)"],
   ])("trasnformColorToCssVariables %s should get %s", (color, result) => {
     expect(trasnformColorToCssVariables(mockPresets, color)).toBe(result);
+  });
+});
+
+describe("compressPresets", () => {
+  it("should work", () => {
+    expect(compressPresets(mockPresets)).toEqual([
+      { colors: ["#aaa", "#bbb", "#ccc", "#ddd"], label: "系统默认" },
+    ]);
   });
 });
