@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.26.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.26.1...@next-bricks/basic@1.26.2) (2024-06-26)
+
+
+### Bug Fixes
+
+* eo-submit-buttons修改 refs BRICK-355 ([456b5b4](https://github.com/easyops-cn/next-bricks/commit/456b5b4e984f0c8d5994bacd290c28aaeb6fb6a7))
+* 修改函数名称 refs BRICK-355 ([abd455e](https://github.com/easyops-cn/next-bricks/commit/abd455efff8305a6b183e50fb4a1f8c5793af006))
+
+
+
+
+
 ## [1.26.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.26.0...@next-bricks/basic@1.26.1) (2024-06-26)
 
 
