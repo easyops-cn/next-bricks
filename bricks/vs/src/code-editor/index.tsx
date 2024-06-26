@@ -461,10 +461,11 @@ export function CodeEditorComponent({
     ({ init = false }: { init?: boolean }) => {
       if (language !== "brick_next_yaml" || !editorRef.current) return;
       const workerInstance = VSWorkers.getInstance(workerId);
+      const currentModel = editorRef.current.getModel();
       workerInstance.postMessage({
         token: "parse_yaml",
         data: {
-          value,
+          value: currentModel?.getValue(),
           links,
           markers,
         },
@@ -472,7 +473,7 @@ export function CodeEditorComponent({
         init,
       });
     },
-    [language, value, tokenConfig, links, markers, workerId]
+    [language, tokenConfig, links, markers, workerId]
   );
 
   const debounceParse = useMemo(() => debounce(parseYaml, 300), [parseYaml]);

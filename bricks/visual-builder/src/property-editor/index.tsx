@@ -99,7 +99,7 @@ export interface EditorComponentProps {
     dataList: DataItem[];
     extraLibs: any;
     links: any;
-    tokenClick: (token: string) => void;
+    tokenClick: (token: CustomEvent<string>) => void;
   };
 }
 
@@ -280,6 +280,7 @@ export function LegacyPropertyEditor(
     (props: EditorComponentProps) => React.ReactElement
   >(() => customEditors.get(editorName)?.(React) as any);
   const transformValueRef = useRef<any>(null);
+  const initRef = useRef<any>(false);
 
   const onAdvancedChangeEffect = useMemo(
     () =>
@@ -318,8 +319,11 @@ export function LegacyPropertyEditor(
   }, [load]);
 
   useEffect(() => {
-    if (Editor) form.setInitialValues(values);
-  }, [Editor, values, form]);
+    if (Editor) {
+      initRef.current = true;
+      form.setValues(values ?? {}, "overwrite");
+    }
+  }, [Editor]);
 
   useEffect(() => {
     const { values } = form.getState();
@@ -345,6 +349,10 @@ export function LegacyPropertyEditor(
   useEffect(() => {
     form.addEffects("onValueChange", () => {
       onFormValuesChange((form) => {
+        if (initRef.current) {
+          initRef.current = false;
+          return;
+        }
         handleValuesChange(form.values);
       });
     });
@@ -375,7 +383,8 @@ export function LegacyPropertyEditor(
                 advancedMode,
                 extraLibs,
                 links,
-                tokenClick: handleTokenClick,
+                tokenClick: (event: CustomEvent<string>) =>
+                  handleTokenClick(event.detail),
               }}
               effects={{
                 onFieldInit,

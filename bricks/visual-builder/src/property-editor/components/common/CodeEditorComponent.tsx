@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { wrapBrick } from "@next-core/react-element";
 import { CodeEditor, CodeEditorProps } from "@next-bricks/vs/code-editor";
+import yaml from "js-yaml";
 
 interface CodeEditorComponentProps extends CodeEditorProps {
   onChange?: (value?: any) => void;
   tokenClick?: (value?: any) => void;
+  scope: any;
 }
 
 interface CodeEditorEvents {
@@ -30,14 +32,36 @@ const WrappedCodeEditor = wrapBrick<
 export function CodeEditorComponent(
   props: CodeEditorComponentProps
 ): React.ReactElement {
+  const [initValue, setInitValue] = useState<string>();
+  const [value, setValue] = useState<string>();
+
+  const handleChange = (event: any) => {
+    setValue(event.detail ? event.detail : undefined);
+    props.onChange(event.detail ? yaml.safeLoad(event.detail) : undefined);
+  };
+
+  useEffect(() => {
+    if (props.value && !initValue) {
+      let value = props.value;
+      if (value && typeof value !== "string") {
+        value = yaml.safeDump(value, {
+          skipInvalid: true,
+        });
+      }
+
+      setInitValue(value);
+    }
+  }, [props.value, initValue]);
+
   return (
     <WrappedCodeEditor
       minLines={5}
       automaticLayout="fit-content"
       language={"brick_next_yaml"}
       theme={"vs-dark"}
-      links={["CTX"]}
       {...props}
+      value={value ?? initValue}
+      onChange={handleChange}
     />
   );
 }
