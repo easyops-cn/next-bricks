@@ -14,6 +14,5 @@ import "./eo-radio/index.js";
 import "./eo-select/index.js";
 import "./eo-switch/index.js";
 import "./eo-textarea/index.js";
-import "./line-chart/index.js";
 import "./eo-tab-list/index.js";
 import "./eo-drawer/index.js";
