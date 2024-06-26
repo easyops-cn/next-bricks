@@ -1,6 +1,7 @@
 import type { ISchema } from "@formily/react";
 import { omit } from "lodash";
 
+export const NORMAL_FORM_KEY = "#normal_form";
 export const ADVANCED_FORM_KEY = "#advanced_form";
 
 type ComponentType =
@@ -33,37 +34,20 @@ function transformComponent(
   }
   return {
     [`x-${key}`]: data.name,
-    [`x-${key}-props`]: data.props,
+    [`x-${key}-props`]: {
+      ...(data.name === "CodeBlock"
+        ? {
+            extraLibs: "{{extraLibs}}",
+            links: "{{links}}",
+            tokenClick: "{{tokenClick}}",
+          }
+        : {}),
+      ...(data.props ?? {}),
+    },
   };
 }
 
-export function formilySchemaFormatter(
-  data: DataNode,
-  advancedMode = false
-): ISchema {
-  if (advancedMode) {
-    return {
-      type: "object",
-      properties: {
-        layout: {
-          type: "void",
-          "x-component": "FormLayout",
-          "x-component-props": {
-            layout: "vertical",
-          },
-          properties: {
-            [ADVANCED_FORM_KEY]: {
-              title: "属性",
-              type: "string",
-              "x-decorator": "FormItemWithoutAdvanced",
-              "x-component": "CodeEditor",
-            },
-          },
-        },
-      },
-    };
-  }
-
+export function formilySchemaFormatter(data: DataNode): ISchema {
   const walk = (data: DataNode): Record<string, any> => {
     let children: Record<string, any>[] | undefined;
     let result: Record<string, any> = {};
@@ -119,7 +103,7 @@ export function formilySchemaFormatter(
       ),
     };
 
-    if (name) {
+    if (typeof name === "string") {
       result[name] = childNode;
     } else {
       result = childNode;
@@ -128,7 +112,7 @@ export function formilySchemaFormatter(
     if (children) {
       childNode.properties = {};
       for (const item of children) {
-        if (item.name) {
+        if (typeof item.name === "string") {
           childNode.properties[item.name] = item;
         } else {
           childNode.properties = {
@@ -141,8 +125,41 @@ export function formilySchemaFormatter(
     return result;
   };
 
+  const defaultFields = [
+    {
+      name: "id",
+      title: "id",
+      type: "string",
+    },
+    {
+      name: "hidden",
+      title: "hidden",
+      type: "boolean",
+    },
+  ] as DataNode[];
+
   return {
     type: "object",
-    properties: walk(data),
+    properties: {
+      [NORMAL_FORM_KEY]: {
+        type: "void",
+        properties: walk({
+          ...data,
+          children: [...defaultFields, ...data.children],
+        }),
+      },
+      [ADVANCED_FORM_KEY]: {
+        title: "属性",
+        name: ADVANCED_FORM_KEY,
+        type: "string",
+        "x-decorator": "FormItemWithoutAdvanced",
+        "x-component": "CodeEditor",
+        "x-component-props": {
+          extraLibs: "{{extraLibs}}",
+          links: "{{links}}",
+          tokenClick: "{{tokenClick}}",
+        },
+      },
+    },
   };
 }
