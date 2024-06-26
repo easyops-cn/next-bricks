@@ -65,6 +65,7 @@ export const eoTagSchema = {
       name: "color",
       title: "颜色",
       type: "string",
+      component: "ColorPicker",
     },
     {
       name: "disabled",

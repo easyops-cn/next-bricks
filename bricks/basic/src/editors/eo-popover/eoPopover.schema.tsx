@@ -116,6 +116,16 @@ export const eoPopoverSchema = {
       },
     },
     {
+      name: "categoryTitle_advanced",
+      type: "void",
+      decorator: {
+        name: "CategoryTitle",
+        props: {
+          text: "高级",
+        },
+      },
+    },
+    {
       name: "sync",
       title: "弹出层与锚点同步基准",
       type: "string",

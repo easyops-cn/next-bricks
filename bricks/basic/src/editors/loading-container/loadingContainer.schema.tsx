@@ -72,6 +72,7 @@ export const loadingContainerSchema = {
       name: "maskColor",
       title: "蒙层背景颜色",
       type: "string",
+      component: "ColorPicker",
     },
     {
       name: "maskMaxHeight",

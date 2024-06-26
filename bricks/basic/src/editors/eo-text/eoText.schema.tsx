@@ -74,6 +74,7 @@ export const eoTextSchema = {
       title: "字体颜色",
       type: "string",
       component: {
+        name: "ColorPicker",
         props: {
           placeholder: "black",
         },
