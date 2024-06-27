@@ -47,6 +47,50 @@ properties:
       event: download
 ```
 
+### showActions
+
+```yaml preview
+brick: eo-card-item
+properties:
+  style:
+    width: 300px
+  hasHeader: true
+  auxiliaryText: 初级应用
+  cardTitle: 资源监控微应用
+  description: 资源监控微应用相关前后台
+  avatar:
+    icon:
+      lib: easyops
+      category: default
+      icon: monitor
+    color: "#167be0"
+    size: 20
+    bgColor: var(--theme-geekblue-background)
+  actions:
+    - icon:
+        lib: antd
+        theme: outlined
+        icon: star
+      isDropdown: false
+      event: collect
+    - icon:
+        lib: antd
+        icon: copy
+        theme: outlined
+      text: 复制链接
+      isDropdown: true
+      event: copy
+    - icon:
+        lib: antd
+        icon: download
+        theme: outlined
+      text: 下载
+      isDropdown: true
+      disabled: true
+      event: download
+  showActions: hover
+```
+
 ### Single Expanded Area
 
 ```yaml preview gap
@@ -232,6 +276,19 @@ properties:
         event: download
 ```
 
+### cardStyle
+
+```yaml preview
+- brick: eo-card-item
+  properties:
+    style:
+      width: 280px
+    cardStyle:
+      backgroundColor: var(--palette-gray-blue-6)
+    cardTitle: 信息卡片
+    description: 这是一只可爱的北极熊
+```
+
 ### Style type
 
 ```yaml preview
@@ -250,6 +307,38 @@ properties:
       category: default
       icon: monitor
     size: 20
+```
+
+### selected
+
+```yaml preview
+- brick: eo-card-item
+  properties:
+    selected: true
+    style:
+      width: 300px
+    cardTitle: 资源监控微应用
+    description: 资源监控微应用相关前后台
+    avatar:
+      icon:
+        lib: easyops
+        category: default
+        icon: monitor
+      size: 20
+- brick: eo-card-item
+  properties:
+    styleType: grayish
+    selected: true
+    style:
+      width: 300px
+    cardTitle: 资源监控微应用
+    description: 资源监控微应用相关前后台
+    avatar:
+      icon:
+        lib: easyops
+        category: default
+        icon: monitor
+      size: 20
 ```
 
 ### Tag

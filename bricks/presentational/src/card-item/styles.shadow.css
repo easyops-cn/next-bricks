@@ -117,6 +117,14 @@ eo-link {
   right: 8px;
 }
 
+.card-wrapper.show-actions-hover .operator {
+  visibility: hidden;
+}
+
+.card-wrapper.show-actions-hover:hover .operator {
+  visibility: visible;
+}
+
 /* content */
 :host(:not([has-header])) .card-content {
   padding-top: 16px;
