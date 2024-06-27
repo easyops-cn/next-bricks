@@ -9,11 +9,16 @@ function EoTextComponentFactory(React: typeof _React) {
   return function EoTextComponent(
     props: EditorComponentProps
   ): React.ReactElement {
-    const { SchemaFieldComponent, formilySchemaFormatter, advancedMode } =
-      props;
+    const {
+      SchemaFieldComponent,
+      formilySchemaFormatter,
+      advancedMode,
+      scope,
+    } = props;
 
     return React.createElement(SchemaFieldComponent, {
       schema: formilySchemaFormatter(eoTextSchema, advancedMode),
+      scope,
     });
   };
 }
