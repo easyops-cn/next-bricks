@@ -90,7 +90,7 @@ export interface CodeEditorProps {
   links?: string[];
   showExpandButton?: boolean;
   showCopyButton?: boolean;
-  hideLineNumber?: boolean;
+  lineNumbers?: monaco.editor.LineNumbersType;
   validateState?: string;
 }
 
@@ -202,10 +202,10 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
   accessor showExpandButton: boolean | undefined;
 
   /**
-   * 隐藏行数
+   * 行数配置
    */
-  @property({ type: Boolean })
-  accessor hideLineNumber: boolean | undefined;
+  @property()
+  accessor lineNumbers: monaco.editor.LineNumbersType | undefined;
 
   /**
    * 自定义高亮配置
@@ -304,7 +304,7 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
           markers={this.markers}
           links={this.links}
           tokenConfig={this.tokenConfig}
-          hideLineNumber={this.hideLineNumber}
+          lineNumbers={this.lineNumbers}
           showCopyButton={this.showCopyButton}
           showExpandButton={this.showExpandButton}
           validateState={this.validateState}
@@ -335,7 +335,7 @@ export function CodeEditorComponent({
   },
   showExpandButton,
   showCopyButton = true,
-  hideLineNumber = false,
+  lineNumbers = "on",
   validateState,
   onChange,
   onTokenClick,
@@ -620,8 +620,10 @@ export function CodeEditorComponent({
       overviewRulerBorder: false,
       mouseWheelScrollSensitivity: 0.5,
       fixedOverflowWidgets: true,
-      lineNumbers: hideLineNumber ? "off" : "on",
-      lineNumbersMinChars: hideLineNumber ? 0 : 3,
+      lineNumbers: lineNumbers,
+      lineNumbersMinChars: 3,
+      glyphMargin: lineNumbers === "off",
+      folding: lineNumbers === "off",
       suggest: {
         insertMode: "insert",
         preview: true,

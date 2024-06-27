@@ -48,7 +48,7 @@ export function AdvancedFormItem(props: AdvancedFormItemProps) {
       isAdvancedMode ? "CodeEditor" : fieldOriginComponent[0],
       {
         ...(isAdvancedMode
-          ? { ...(scope ?? {}), hideLineNumber: true }
+          ? { ...(scope ?? {}), lineNumbers: "off" }
           : fieldOriginComponent[1]),
       }
     );
@@ -81,7 +81,7 @@ export function AdvancedFormItem(props: AdvancedFormItemProps) {
 
         field.setComponent("CodeEditor", {
           ...(scope ?? {}),
-          hideLineNumber: true,
+          lineNumbers: "off",
         });
       }
     });

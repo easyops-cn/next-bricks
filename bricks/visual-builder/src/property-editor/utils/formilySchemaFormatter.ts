@@ -40,7 +40,7 @@ function transformComponent(
             extraLibs: "{{extraLibs}}",
             links: "{{links}}",
             tokenClick: "{{tokenClick}}",
-            hideLineNumber: true,
+            lineNumbers: "off",
           }
         : {}),
       ...(data.props ?? {}),
