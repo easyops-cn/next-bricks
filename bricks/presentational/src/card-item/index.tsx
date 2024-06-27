@@ -79,6 +79,7 @@ export interface EoCardItemProps {
   url?: LinkProps["url"];
   target?: LinkProps["target"];
   actions?: ActionType[];
+  showActions?: "always" | "hover";
   hasExpandedArea1?: boolean;
   hasExpandedArea2?: boolean;
   selected?: boolean;
@@ -89,6 +90,7 @@ export interface EoCardItemProps {
   tagConfig?: TagConfig;
   avatarPosition?: "content" | "cover";
   coverImageSize?: React.CSSProperties["backgroundSize"];
+  cardStyle?: React.CSSProperties;
 }
 
 /**
@@ -163,6 +165,12 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
   accessor actions: ActionType[] | undefined;
 
   /**
+   * 展示操作按钮组
+   */
+  @property()
+  accessor showActions: "always" | "hover" = "always";
+
+  /**
    * 是否选中
    */
   @property({
@@ -218,6 +226,14 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
     attribute: false,
   })
   accessor tagConfig: TagConfig | undefined;
+
+  /**
+   * 卡片样式
+   */
+  @property({
+    attribute: false,
+  })
+  accessor cardStyle: React.CSSProperties;
 
   /**
    * 是否有扩展区域 1
@@ -279,6 +295,7 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
         auxiliaryText={this.auxiliaryText}
         avatar={this.avatar}
         actions={this.actions}
+        showActions={this.showActions}
         selected={this.selected}
         href={this.href}
         url={this.url}
@@ -293,6 +310,7 @@ class EoCardItem extends ReactNextElement implements EoCardItemProps {
         onTagClick={this.#handleTagClick}
         coverImageSize={this.coverImageSize}
         styleType={this.styleType}
+        cardStyle={this.cardStyle}
       />
     );
   }
@@ -315,6 +333,7 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
     description,
     auxiliaryText,
     actions,
+    showActions,
     selected,
     avatar,
     url,
@@ -330,6 +349,7 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
     onActionClick,
     onTagClick,
     coverImageSize,
+    cardStyle,
   } = props;
 
   const theme = useCurrentTheme();
@@ -421,7 +441,14 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
   return (
     <WrappedLink type="plain" url={url} target={target} href={href}>
       <div
-        className={classNames("card-wrapper", theme, styleType, { selected })}
+        className={classNames(
+          "card-wrapper",
+          theme,
+          styleType,
+          `show-actions-${showActions}`,
+          { selected }
+        )}
+        style={cardStyle}
         ref={callback}
       >
         {hasCover && (
