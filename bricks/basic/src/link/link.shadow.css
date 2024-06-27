@@ -19,6 +19,7 @@ a {
 .link {
   display: inline-flex;
   align-items: center;
+  gap: 4px;
   color: var(--antd-btn-link-color);
 }
 
@@ -65,10 +66,6 @@ a {
 
 eo-icon {
   line-height: 1em;
-}
-
-.prefix-icon {
-  margin-right: 4px;
 }
 
 .external-icon {
