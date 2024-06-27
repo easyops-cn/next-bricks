@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.27.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.26.3...@next-bricks/basic@1.27.0) (2024-06-27)
+
+
+### Features
+
+* **text:** add editable property, change and update event ([0b70b3b](https://github.com/easyops-cn/next-bricks/commit/0b70b3b704789804e4534e45fa59b56211af06be))
+
+
+
+
+
 ## [1.26.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.26.2...@next-bricks/basic@1.26.3) (2024-06-27)
 
 
