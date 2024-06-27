@@ -58,12 +58,12 @@ describe("formilySchemaFormatter", () => {
   "properties": {
     "#advanced_form": {
       "name": "#advanced_form",
-      "title": "属性",
       "type": "string",
       "x-component": "CodeEditor",
       "x-component-props": {
         "extraLibs": "{{extraLibs}}",
         "links": "{{links}}",
+        "minLines": 5,
         "tokenClick": "{{tokenClick}}",
       },
       "x-decorator": "FormItemWithoutAdvanced",

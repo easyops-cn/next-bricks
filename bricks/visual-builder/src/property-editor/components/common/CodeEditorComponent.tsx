@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { wrapBrick } from "@next-core/react-element";
 import { CodeEditor, CodeEditorProps } from "@next-bricks/vs/code-editor";
 import yaml from "js-yaml";
@@ -35,10 +35,14 @@ export function CodeEditorComponent(
   const [initValue, setInitValue] = useState<string>();
   const [value, setValue] = useState<string>();
 
-  const handleChange = (event: any) => {
-    setValue(event.detail ? event.detail : undefined);
-    props.onChange(event.detail ? yaml.safeLoad(event.detail) : undefined);
-  };
+  const handleChange = useCallback(
+    (event: any) => {
+      setValue(event.detail ? event.detail : undefined);
+      const value = event.detail ? yaml.safeLoad(event.detail) : undefined;
+      props?.onChange?.(value);
+    },
+    [props]
+  );
 
   useEffect(() => {
     if (props.value && !initValue) {
@@ -55,7 +59,7 @@ export function CodeEditorComponent(
 
   return (
     <WrappedCodeEditor
-      minLines={5}
+      minLines={props.minLines ?? 1}
       automaticLayout="fit-content"
       language={"brick_next_yaml"}
       theme={"vs-dark"}

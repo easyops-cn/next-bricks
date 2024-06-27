@@ -4,6 +4,7 @@ import { customEditors } from "@next-core/runtime";
 // @ts-ignore
 import type { EditorComponentProps } from "@next-bricks/visual-builder/property-editor";
 import { eoButtonSchema } from "./eoButton.schema";
+import { omit } from "lodash";
 
 function EoButtonComponentFactory(React: typeof _React) {
   return function EoButtonComponent(
@@ -12,12 +13,23 @@ function EoButtonComponentFactory(React: typeof _React) {
     const {
       SchemaFieldComponent,
       formilySchemaFormatter,
-      advancedMode,
       scope,
+      form,
+      effects,
     } = props;
 
+    React.useEffect(() => {
+      const { onSubmit } = effects;
+
+      form.addEffects("submit", () => {
+        onSubmit((value: any) => {
+          return omit(value, ["link"]);
+        });
+      });
+    }, [effects, form]);
+
     return React.createElement(SchemaFieldComponent, {
-      schema: formilySchemaFormatter(eoButtonSchema as any, advancedMode!),
+      schema: formilySchemaFormatter(eoButtonSchema as any),
       scope,
     });
   };

@@ -90,6 +90,7 @@ export interface CodeEditorProps {
   links?: string[];
   showExpandButton?: boolean;
   showCopyButton?: boolean;
+  hideLineNumber?: boolean;
   validateState?: string;
 }
 
@@ -201,6 +202,12 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
   accessor showExpandButton: boolean | undefined;
 
   /**
+   * 隐藏行数
+   */
+  @property({ type: Boolean })
+  accessor hideLineNumber: boolean | undefined;
+
+  /**
    * 自定义高亮配置
    */
   @property({
@@ -297,6 +304,7 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
           markers={this.markers}
           links={this.links}
           tokenConfig={this.tokenConfig}
+          hideLineNumber={this.hideLineNumber}
           showCopyButton={this.showCopyButton}
           showExpandButton={this.showExpandButton}
           validateState={this.validateState}
@@ -327,6 +335,7 @@ export function CodeEditorComponent({
   },
   showExpandButton,
   showCopyButton = true,
+  hideLineNumber = false,
   validateState,
   onChange,
   onTokenClick,
@@ -490,6 +499,12 @@ export function CodeEditorComponent({
     }
   }, [value, debounceParse]);
 
+  useEffect(() => {
+    debounceParse({
+      init: true,
+    });
+  }, []);
+
   useLayoutEffect(() => {
     if (automaticLayoutRef.current !== "fit-content" || !containerRef.current) {
       return;
@@ -605,7 +620,8 @@ export function CodeEditorComponent({
       overviewRulerBorder: false,
       mouseWheelScrollSensitivity: 0.5,
       fixedOverflowWidgets: true,
-      lineNumbersMinChars: 3,
+      lineNumbers: hideLineNumber ? "off" : "on",
+      lineNumbersMinChars: hideLineNumber ? 0 : 3,
       suggest: {
         insertMode: "insert",
         preview: true,
@@ -690,16 +706,12 @@ export function CodeEditorComponent({
         });
       });
 
-      debounceParse({
-        init: true,
-      });
-
       return () => {
         mouseOverEvent?.dispose();
         editorMouseDownEvent?.dispose();
       };
     }
-  }, [language, onTokenClick, systemTheme, theme, debounceParse]);
+  }, [language, onTokenClick, systemTheme, theme]);
 
   useEffect(() => {
     const editor = editorRef.current;
