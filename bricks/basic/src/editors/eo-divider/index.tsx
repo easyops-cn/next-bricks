@@ -3,10 +3,10 @@ import { customEditors } from "@next-core/runtime";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import type { EditorComponentProps } from "@next-bricks/visual-builder/property-editor";
-import { eoSpinSchema } from "./eoSpin.schema";
+import { eoDividerSchema } from "./eoDivider.schema";
 
-function EoSpinComponentFactory(React: typeof _React) {
-  return function EoSpinComponent(
+function EoDividerComponentFactory(React: typeof _React) {
+  return function EoDividerComponent(
     props: EditorComponentProps
   ): React.ReactElement {
     const {
@@ -14,13 +14,20 @@ function EoSpinComponentFactory(React: typeof _React) {
       formilySchemaFormatter,
       advancedMode,
       scope,
+      form,
     } = props;
 
+    React.useEffect(() => {
+      form.setInitialValues({
+        type: "horizontal",
+      });
+    }, [form]);
+
     return React.createElement(SchemaFieldComponent, {
-      schema: formilySchemaFormatter(eoSpinSchema, advancedMode!),
+      schema: formilySchemaFormatter(eoDividerSchema as any, advancedMode!),
       scope,
     });
   };
 }
 
-customEditors.define("eo-spin", EoSpinComponentFactory);
+customEditors.define("eo-divider", EoDividerComponentFactory);

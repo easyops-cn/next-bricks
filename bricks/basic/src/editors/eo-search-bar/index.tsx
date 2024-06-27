@@ -9,11 +9,16 @@ function EoSearchBarComponentFactory(React: typeof _React) {
   return function EoSearchBarComponent(
     props: EditorComponentProps
   ): React.ReactElement {
-    const { SchemaFieldComponent, formilySchemaFormatter, advancedMode } =
-      props;
+    const {
+      SchemaFieldComponent,
+      formilySchemaFormatter,
+      advancedMode,
+      scope,
+    } = props;
 
     return React.createElement(SchemaFieldComponent, {
       schema: formilySchemaFormatter(eoSearchBarSchema, advancedMode!),
+      scope,
     });
   };
 }

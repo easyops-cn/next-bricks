@@ -9,8 +9,13 @@ function EoSpinComponentFactory(React: typeof _React) {
   return function EoTagComponent(
     props: EditorComponentProps
   ): React.ReactElement {
-    const { SchemaFieldComponent, formilySchemaFormatter, advancedMode, form } =
-      props;
+    const {
+      SchemaFieldComponent,
+      formilySchemaFormatter,
+      advancedMode,
+      form,
+      scope,
+    } = props;
 
     React.useEffect(() => {
       form.setInitialValues({ checkable: false });
@@ -18,6 +23,7 @@ function EoSpinComponentFactory(React: typeof _React) {
 
     return React.createElement(SchemaFieldComponent, {
       schema: formilySchemaFormatter(eoTagSchema, advancedMode),
+      scope,
     });
   };
 }

@@ -3,10 +3,10 @@ import { customEditors } from "@next-core/runtime";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import type { EditorComponentProps } from "@next-bricks/visual-builder/property-editor";
-import { eoSpinSchema } from "./eoSpin.schema";
+import { eoModalSchema } from "./eoModal.schema";
 
-function EoSpinComponentFactory(React: typeof _React) {
-  return function EoSpinComponent(
+function EoModalComponentFactory(React: typeof _React) {
+  return function EoModalComponent(
     props: EditorComponentProps
   ): React.ReactElement {
     const {
@@ -17,10 +17,10 @@ function EoSpinComponentFactory(React: typeof _React) {
     } = props;
 
     return React.createElement(SchemaFieldComponent, {
-      schema: formilySchemaFormatter(eoSpinSchema, advancedMode!),
+      schema: formilySchemaFormatter(eoModalSchema as any, advancedMode!),
       scope,
     });
   };
 }
 
-customEditors.define("eo-spin", EoSpinComponentFactory);
+customEditors.define("eo-modal", EoModalComponentFactory);
