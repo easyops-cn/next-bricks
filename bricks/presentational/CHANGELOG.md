@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.8.3...@next-bricks/presentational@1.9.0) (2024-06-27)
+
+
+### Features
+
+* **card-item:** add showActions and cardStyle properties ([97325f8](https://github.com/easyops-cn/next-bricks/commit/97325f8093fa8b8ebbf08c5ebcc9638d02be66e6))
+
+
+
+
+
 ## [1.8.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.8.2...@next-bricks/presentational@1.8.3) (2024-06-26)
 
 **Note:** Version bump only for package @next-bricks/presentational
