@@ -14,7 +14,16 @@ function EoInputComponentFactory(React: typeof _React) {
       formilySchemaFormatter,
       advancedMode,
       scope,
+      form,
     } = props;
+
+    React.useEffect(() => {
+      form.setInitialValues({
+        type: "text",
+        required: false,
+        pattern: "",
+      });
+    }, [form]);
 
     return React.createElement(SchemaFieldComponent, {
       schema: formilySchemaFormatter(eoInputSchema as any, advancedMode!),

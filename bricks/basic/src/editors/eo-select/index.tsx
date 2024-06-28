@@ -14,7 +14,34 @@ function EoSelectComponentFactory(React: typeof _React) {
       formilySchemaFormatter,
       advancedMode,
       scope,
+      form,
+      effects,
     } = props;
+
+    React.useEffect(() => {
+      form.setInitialValues({
+        mode: "",
+        required: false,
+      });
+    }, [form]);
+
+    React.useEffect(() => {
+      const { onSubmit } = effects;
+      form.addEffects("formEffect", () => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        onSubmit((value) => {
+          if (value.fieldLabel || value.fieldValue) {
+            const { fieldLabel, fieldValue, ...newValue } = value;
+            return {
+              ...newValue,
+              fields: { label: fieldLabel, value: fieldValue },
+            };
+          }
+          return { ...value };
+        });
+      });
+    }, []);
 
     return React.createElement(SchemaFieldComponent, {
       schema: formilySchemaFormatter(eoSelectSchema as any, advancedMode!),

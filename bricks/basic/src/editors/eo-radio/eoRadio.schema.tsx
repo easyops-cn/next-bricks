@@ -166,16 +166,28 @@ export const eoRadioSchema = {
     },
     {
       name: "required",
-      title: "是否必填",
+      title: "必填",
       type: "boolean",
+      component: {
+        props: {
+          size: "small",
+        },
+      },
+      "x-reactions": [
+        {
+          target: "requiredValidatorText",
+          fulfill: {
+            state: {
+              visible: "{{$self.value}}",
+            },
+          },
+        },
+      ],
     },
     {
-      name: "message",
-      title: "校验文本",
-      component: {
-        name: "CodeEditor",
-      },
-      decorator: "FormItemWithoutAdvanced",
+      name: "requiredValidatorText",
+      title: "必填提示文字",
+      type: "string",
     },
   ],
 };
