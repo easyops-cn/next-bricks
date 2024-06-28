@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.30.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.30.0...@next-bricks/basic@1.30.1) (2024-06-28)
+
+
+### Bug Fixes
+
+* add card item schema ([0e71d10](https://github.com/easyops-cn/next-bricks/commit/0e71d104a9842ce657c86214c41a344d85233ac7))
+
+
+
+
+
 # [1.30.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.29.0...@next-bricks/basic@1.30.0) (2024-06-28)
 
 
