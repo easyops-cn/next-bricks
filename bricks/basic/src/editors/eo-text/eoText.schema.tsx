@@ -100,28 +100,7 @@ export const eoTextSchema = {
           layout: "horizontal",
         },
       },
-      enum: [
-        {
-          label: "左",
-          value: "left",
-        },
-        {
-          label: "中",
-          value: "center",
-        },
-        {
-          label: "右",
-          value: "right",
-        },
-      ],
-      component: {
-        name: "Radio.Group",
-        props: {
-          size: "small",
-          optionType: "button",
-          defaultValue: "left",
-        },
-      },
+      component: "TextAlignRadio",
     },
     {
       name: "display",

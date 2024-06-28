@@ -131,10 +131,16 @@ export function formilySchemaFormatter(data: DataNode): ISchema {
       name: "id",
       title: "id",
       type: "string",
+      decorator: {
+        name: "FormItem",
+        props: {
+          layout: "horizontal",
+        },
+      },
     },
     {
       name: "hidden",
-      title: "hidden",
+      title: "隐藏",
       type: "boolean",
     },
   ] as DataNode[];

@@ -3,8 +3,10 @@
 
   .advanced-mode-check-wrapper {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 6px;
+    right: 6px;
+    line-height: 0;
+    z-index: 1;
 
     eo-icon[icon="code"] {
       cursor: pointer;

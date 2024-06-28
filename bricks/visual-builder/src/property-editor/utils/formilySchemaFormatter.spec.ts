@@ -126,7 +126,7 @@ describe("formilySchemaFormatter", () => {
             },
             "hidden": {
               "name": "hidden",
-              "title": "hidden",
+              "title": "隐藏",
               "type": "boolean",
               "x-component": "Switch",
               "x-component-props": {
@@ -144,7 +144,9 @@ describe("formilySchemaFormatter", () => {
               "x-component": "Input",
               "x-component-props": {},
               "x-decorator": "FormItem",
-              "x-decorator-props": {},
+              "x-decorator-props": {
+                "layout": "horizontal",
+              },
             },
           },
           "type": "void",
