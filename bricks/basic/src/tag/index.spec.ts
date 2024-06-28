@@ -65,7 +65,7 @@ describe("eo-tag", () => {
     const div = document.createElement("div");
     div.textContent = "Hello world";
     element.appendChild(div);
-    element.color = "pink";
+    element.color = "#000";
     element.disabled = true;
     element.closable = true;
 
@@ -82,7 +82,7 @@ describe("eo-tag", () => {
     expect(
       (element.shadowRoot?.querySelector(".tag") as HTMLElement).style
         .background
-    ).toBe("pink");
+    ).toBe("rgb(0, 0, 0)");
     expect(
       element.shadowRoot?.querySelector(".tag-icon.close-icon")
     ).toBeFalsy();
