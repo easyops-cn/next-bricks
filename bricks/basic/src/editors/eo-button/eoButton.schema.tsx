@@ -29,23 +29,34 @@ export const eoButtonSchema = {
       type: "boolean",
     },
     {
-      name: "url",
-      title: "内链地址",
+      name: "link",
+      title: "链接",
       type: "string",
-    },
-    {
-      name: "href",
-      title: "外链地址",
-      type: "string",
+      component: {
+        name: "InputWithUrl",
+        props: {
+          transform: {
+            url: "url",
+            href: "href",
+          },
+        },
+      },
     },
     {
       name: "target",
-      title: "链接类型",
+      title: "跳转方式",
       type: "string",
-      descorator: "FormItem",
-      component: {
-        name: "Select",
+      decorator: {
+        name: "FormItem",
         props: {
+          layout: "horizontal",
+        },
+      },
+      component: {
+        name: "Radio.Group",
+        props: {
+          size: "small",
+          optionType: "button",
           options: [
             {
               label: "当前页面加载",
@@ -130,6 +141,7 @@ export const eoButtonSchema = {
         props: {
           size: "small",
           optionType: "button",
+          defaultValue: "medium",
         },
       },
     },
@@ -148,16 +160,23 @@ export const eoButtonSchema = {
       name: "shape",
       title: "形状",
       type: "string",
-      component: {
-        name: "Select",
+      decorator: {
+        name: "FormItem",
         props: {
-          placeholder: "请选择按钮形状",
-          allowClear: true,
+          layout: "horizontal",
+        },
+      },
+      component: {
+        name: "Radio.Group",
+        props: {
+          size: "small",
           options: [
             { label: "圆形", value: "circle" },
             { label: "圆弧形", value: "round" },
             { label: "默认", value: "default" },
           ],
+          optionType: "button",
+          defaultValue: "default",
         },
       },
     },

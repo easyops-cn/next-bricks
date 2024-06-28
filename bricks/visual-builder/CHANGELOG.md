@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.25.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.24.1...@next-bricks/visual-builder@1.25.0) (2024-06-28)
+
+
+### Features
+
+* code editor add hideLineNumber and fix property-editor ([b32699f](https://github.com/easyops-cn/next-bricks/commit/b32699fe82670a9b384c5f1649427c608c229a01))
+* update hideNumber property ([a4267bc](https://github.com/easyops-cn/next-bricks/commit/a4267bcfccfd2450925238879e369537bdfd6710))
+
+
+
+
+
 ## [1.24.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.24.0...@next-bricks/visual-builder@1.24.1) (2024-06-26)
 
 

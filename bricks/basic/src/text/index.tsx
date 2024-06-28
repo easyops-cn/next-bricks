@@ -1,9 +1,34 @@
-import React, { CSSProperties } from "react";
-import { createDecorators } from "@next-core/element";
-import { ReactNextElement } from "@next-core/react-element";
+import React, { CSSProperties, useCallback, useState } from "react";
+import { EventEmitter, createDecorators } from "@next-core/element";
+import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import classNames from "classnames";
 
+import { Link, LinkProps } from "../link";
+
 import styleText from "./text.shadow.css";
+
+interface InputProps {
+  value?: string;
+}
+interface InputEvents {
+  change: CustomEvent<string>;
+  blur: FocusEvent;
+}
+interface InputEventsMap {
+  onChange: "change";
+  onBlur: "blur";
+}
+
+const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
+const WrappedInput = wrapBrick<
+  ReactNextElement & { focusInput: () => void },
+  InputProps,
+  InputEvents,
+  InputEventsMap
+>("eo-input", {
+  onChange: "change",
+  onBlur: "blur",
+});
 
 export type TextType =
   | "secondary"
@@ -22,6 +47,7 @@ const typeElementNameMap: Record<string, keyof JSX.IntrinsicElements> = {
 
 export interface TextProps {
   type: TextType;
+  editable?: boolean | undefined;
   color?: CSSProperties["color"];
   fontSize?: CSSProperties["fontSize"];
   fontWeight?: CSSProperties["fontWeight"];
@@ -30,7 +56,7 @@ export interface TextProps {
   display?: CSSProperties["display"];
   customStyle?: CSSProperties | undefined;
 }
-const { defineElement, property } = createDecorators();
+const { defineElement, property, event } = createDecorators();
 
 /**
  * 通用文本构件
@@ -49,6 +75,12 @@ class Text extends ReactNextElement implements TextProps {
    */
   @property()
   accessor type: TextType = "default";
+
+  /**
+   * 是否可编辑
+   */
+  @property({ type: Boolean })
+  accessor editable: boolean | undefined;
 
   /**
    * 字体大小
@@ -99,10 +131,31 @@ class Text extends ReactNextElement implements TextProps {
     | CSSProperties
     | undefined;
 
+  /**
+   * 值改变事件
+   */
+  @event({ type: "change" })
+  accessor #changeEvent!: EventEmitter<string>;
+
+  /**
+   * 值更新事件
+   */
+  @event({ type: "update" })
+  accessor #updateEvent!: EventEmitter<string>;
+
+  #handleChange = (value: string) => {
+    this.#changeEvent.emit(value);
+  };
+
+  #handleUpdate = (value: string) => {
+    this.#updateEvent.emit(value);
+  };
+
   render() {
     return (
       <TextComponent
         type={this.type}
+        editable={this.editable}
         color={this.color}
         fontSize={this.fontSize}
         fontWeight={this.fontWeight}
@@ -110,13 +163,22 @@ class Text extends ReactNextElement implements TextProps {
         display={this.display}
         textAlign={this.textAlign}
         customStyle={this.customStyle}
+        onChange={this.#handleChange}
+        onUpdate={this.#handleUpdate}
       />
     );
   }
 }
-export function TextComponent(props: TextProps): React.ReactElement {
+
+export interface TextComponentProps extends TextProps {
+  onChange?: (value: string) => void;
+  onUpdate?: (value: string) => void;
+}
+
+export function TextComponent(props: TextComponentProps): React.ReactElement {
   const {
     type,
+    editable,
     color,
     fontSize,
     fontWeight,
@@ -124,11 +186,42 @@ export function TextComponent(props: TextProps): React.ReactElement {
     display,
     textAlign,
     customStyle,
+    onChange,
+    onUpdate,
   } = props;
   const TextElementName: keyof JSX.IntrinsicElements =
     typeElementNameMap[type as string] || "span";
+  const [value, _setValue] = useState<string>("");
+  const [editing, setEditing] = useState(false);
+  const [editingValue, setEditingValue] = useState<string>("");
 
-  return (
+  const setValue = useCallback((e: Event) => {
+    _setValue(
+      ((e.target as HTMLSlotElement).getRootNode() as ShadowRoot).host
+        .textContent as string
+    );
+  }, []);
+
+  return editing ? (
+    <WrappedInput
+      value={editingValue}
+      onBlur={() => {
+        setEditing(false);
+        editingValue !== value && onUpdate?.(editingValue);
+      }}
+      onChange={(e) => {
+        const value = (e as CustomEvent<string>).detail;
+
+        setEditingValue(value);
+        onChange?.(value);
+      }}
+      style={{ width: "100%" }}
+      ref={(el) => {
+        el && queueMicrotask(() => el?.focusInput?.());
+      }}
+      data-testid="edit-control"
+    />
+  ) : (
     <TextElementName
       className={classNames(type)}
       style={
@@ -143,7 +236,31 @@ export function TextComponent(props: TextProps): React.ReactElement {
         } as React.CSSProperties
       }
     >
-      <slot />
+      <slot
+        ref={(el) => {
+          el?.addEventListener("slotchange", setValue);
+
+          return () => {
+            el?.removeEventListener("slotchange", setValue);
+          };
+        }}
+      />
+      {editable && (
+        <WrappedLink
+          icon={{
+            lib: "antd",
+            icon: "edit",
+          }}
+          style={{
+            marginLeft: 3,
+          }}
+          onClick={() => {
+            setEditing(true);
+            setEditingValue(value);
+          }}
+          data-testid="edit-button"
+        />
+      )}
     </TextElementName>
   );
 }

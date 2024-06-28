@@ -47,7 +47,9 @@ export function AdvancedFormItem(props: AdvancedFormItemProps) {
     field.setComponent(
       isAdvancedMode ? "CodeEditor" : fieldOriginComponent[0],
       {
-        ...(isAdvancedMode ? scope : fieldOriginComponent[1]),
+        ...(isAdvancedMode
+          ? { ...(scope ?? {}), lineNumbers: "off" }
+          : fieldOriginComponent[1]),
       }
     );
 
@@ -77,7 +79,10 @@ export function AdvancedFormItem(props: AdvancedFormItemProps) {
       if (typeof value === "string" && isEvaluable(value)) {
         setMode("advanced");
 
-        field.setComponent("CodeEditor", scope);
+        field.setComponent("CodeEditor", {
+          ...(scope ?? {}),
+          lineNumbers: "off",
+        });
       }
     });
   });

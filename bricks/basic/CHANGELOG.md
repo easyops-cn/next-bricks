@@ -3,6 +3,51 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.28.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.27.0...@next-bricks/basic@1.28.0) (2024-06-28)
+
+
+### Features
+
+* code editor add hideLineNumber and fix property-editor ([b32699f](https://github.com/easyops-cn/next-bricks/commit/b32699fe82670a9b384c5f1649427c608c229a01))
+
+
+
+
+
+# [1.27.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.26.3...@next-bricks/basic@1.27.0) (2024-06-27)
+
+
+### Features
+
+* **text:** add editable property, change and update event ([0b70b3b](https://github.com/easyops-cn/next-bricks/commit/0b70b3b704789804e4534e45fa59b56211af06be))
+
+
+
+
+
+## [1.26.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.26.2...@next-bricks/basic@1.26.3) (2024-06-27)
+
+
+### Bug Fixes
+
+* add divider and modal schema ([f069c79](https://github.com/easyops-cn/next-bricks/commit/f069c79d319335434cc9482402765eb983756b50))
+
+
+
+
+
+## [1.26.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.26.1...@next-bricks/basic@1.26.2) (2024-06-26)
+
+
+### Bug Fixes
+
+* eo-submit-buttons修改 refs BRICK-355 ([456b5b4](https://github.com/easyops-cn/next-bricks/commit/456b5b4e984f0c8d5994bacd290c28aaeb6fb6a7))
+* 修改函数名称 refs BRICK-355 ([abd455e](https://github.com/easyops-cn/next-bricks/commit/abd455efff8305a6b183e50fb4a1f8c5793af006))
+
+
+
+
+
 ## [1.26.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.26.0...@next-bricks/basic@1.26.1) (2024-06-26)
 
 

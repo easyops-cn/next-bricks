@@ -16,3 +16,5 @@ import "./eo-switch/index.js";
 import "./eo-textarea/index.js";
 import "./eo-tab-list/index.js";
 import "./eo-drawer/index.js";
+import "./eo-divider/index.js";
+import "./eo-modal/index.js";

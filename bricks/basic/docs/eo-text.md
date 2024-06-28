@@ -41,6 +41,20 @@
     textContent: Hello World
 ```
 
+### editable
+
+```yaml preview
+- brick: eo-text
+  properties:
+    editable: true
+    textContent: Hello World
+  events:
+    change:
+      - action: console.log
+    update:
+      - action: console.log
+```
+
 ### CustomStyle
 
 ```yaml preview
