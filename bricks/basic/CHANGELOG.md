@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.29.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.28.1...@next-bricks/basic@1.29.0) (2024-06-28)
+
+
+### Features
+
+* fix style and support textAlignRadio ([6514e93](https://github.com/easyops-cn/next-bricks/commit/6514e9316fb4d5b448609125fe7d337d31f55510))
+
+
+
+
+
 ## [1.28.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.28.0...@next-bricks/basic@1.28.1) (2024-06-28)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.26.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.25.0...@next-bricks/visual-builder@1.26.0) (2024-06-28)
+
+
+### Features
+
+* fix style and support textAlignRadio ([6514e93](https://github.com/easyops-cn/next-bricks/commit/6514e9316fb4d5b448609125fe7d337d31f55510))
+
+
+
+
+
 # [1.25.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.24.1...@next-bricks/visual-builder@1.25.0) (2024-06-28)
 
 
