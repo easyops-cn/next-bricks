@@ -199,6 +199,7 @@ export const eoPopoverSchema = {
       name: "arrowColor",
       title: "箭头颜色",
       type: "string",
+      component: "ColorPicker",
     },
     {
       name: "shiftPadding",
