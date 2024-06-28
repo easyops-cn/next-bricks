@@ -123,6 +123,14 @@
   properties:
     color: purple
     textContent: " 紫色 "
+- brick: eo-tag
+  properties:
+    color: teal
+    textContent: " 青绿色 "
+- brick: eo-tag
+  properties:
+    color: pink
+    textContent: " 粉色 "
 - brick: div
   properties:
     style:
@@ -170,6 +178,14 @@
   properties:
     color: purple-inverse
     textContent: " 紫色 "
+- brick: eo-tag
+  properties:
+    color: teal-inverse
+    textContent: " 青绿色 "
+- brick: eo-tag
+  properties:
+    color: pink-inverse
+    textContent: " 粉色 "
 ```
 
 ### TagStyle
