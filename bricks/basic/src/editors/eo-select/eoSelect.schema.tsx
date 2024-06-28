@@ -61,7 +61,7 @@ export const eoSelectSchema = {
       decorator: "FormItemWithoutAdvanced",
     },
     {
-      name: "type",
+      name: "mode",
       title: "类型",
       type: "string",
       component: {
@@ -69,17 +69,30 @@ export const eoSelectSchema = {
         props: {
           placeholder: "请选择选择框类型",
           allowClear: true,
-          options: ["tag", "multiple"].map((item) => ({
-            label: item,
-            value: item,
-          })),
+          options: [
+            { label: "标签", value: "tag" },
+            { label: "多个", value: "multiple" },
+          ],
         },
       },
-    },
-    {
-      name: "placeholder",
-      title: "占位文本",
-      type: "string",
+      "x-reactions": [
+        {
+          target: "maxTagCount",
+          fulfill: {
+            state: {
+              visible: "{{!!$self.value}}",
+            },
+          },
+        },
+        {
+          target: "tokenSeparators",
+          fulfill: {
+            state: {
+              visible: `{{$self.value == "tag"}}`,
+            },
+          },
+        },
+      ],
     },
     {
       name: "maxTagCount",
@@ -89,6 +102,16 @@ export const eoSelectSchema = {
       },
       decorator: "FormItem",
       type: "number",
+    },
+    {
+      name: "tokenSeparators",
+      title: "自动分词的分隔符",
+      type: "string",
+    },
+    {
+      name: "placeholder",
+      title: "占位文本",
+      type: "string",
     },
     {
       name: "clearable",
@@ -101,12 +124,26 @@ export const eoSelectSchema = {
       type: "string",
     },
     {
-      name: "fields",
-      title: "列表指定字段",
+      name: "fieldLabel",
+      title: "选项显示字段",
+      type: "string",
       component: {
-        name: "CodeEditor",
+        name: "Input",
+        props: {
+          placeholder: "选项中显示文字的字段",
+        },
       },
-      decorator: "FormItemWithoutAdvanced",
+    },
+    {
+      name: "fieldValue",
+      title: "选项值字段",
+      type: "string",
+      component: {
+        name: "Input",
+        props: {
+          placeholder: "选项中选择后得到的字段",
+        },
+      },
     },
     {
       name: "inputStyle",
@@ -128,8 +165,28 @@ export const eoSelectSchema = {
     },
     {
       name: "required",
-      title: "是否必填",
+      title: "必填",
       type: "boolean",
+      component: {
+        props: {
+          size: "small",
+        },
+      },
+      "x-reactions": [
+        {
+          target: "requiredValidatorText",
+          fulfill: {
+            state: {
+              visible: "{{$self.value}}",
+            },
+          },
+        },
+      ],
+    },
+    {
+      name: "requiredValidatorText",
+      title: "必填提示文字",
+      type: "string",
     },
   ],
 };

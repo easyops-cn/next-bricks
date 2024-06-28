@@ -78,10 +78,30 @@ export const eoTextareaSchema = {
     {
       name: "autoSize",
       title: "大小自适应设置",
+      type: "boolean",
       component: {
-        name: "CodeEditor",
+        props: {
+          defaultValue: false,
+        },
       },
-      decorator: "FormItemWithoutAdvanced",
+    },
+    {
+      name: "minRows",
+      title: "最小行数",
+      type: "number",
+      component: {
+        name: "NumberPicker",
+      },
+      decorator: "FormItem",
+    },
+    {
+      name: "maxRows",
+      title: "最大行数",
+      type: "number",
+      component: {
+        name: "NumberPicker",
+      },
+      decorator: "FormItem",
     },
     {
       name: "textareaStyle",
@@ -103,12 +123,47 @@ export const eoTextareaSchema = {
     },
     {
       name: "required",
-      title: "是否必填",
+      title: "必填",
       type: "boolean",
+      component: {
+        props: {
+          size: "small",
+        },
+      },
+      "x-reactions": [
+        {
+          target: "requiredValidatorText",
+          fulfill: {
+            state: {
+              visible: "{{$self.value}}",
+            },
+          },
+        },
+      ],
+    },
+    {
+      name: "requiredValidatorText",
+      title: "必填提示文字",
+      type: "string",
     },
     {
       name: "pattern",
       title: "正则校验规则",
+      type: "string",
+      "x-reactions": [
+        {
+          target: "patternValidatorText",
+          fulfill: {
+            state: {
+              visible: "{{$self.value}}",
+            },
+          },
+        },
+      ],
+    },
+    {
+      name: "patternValidatorText",
+      title: "正则提示文字",
       type: "string",
     },
     {
@@ -128,14 +183,6 @@ export const eoTextareaSchema = {
         name: "NumberPicker",
       },
       decorator: "FormItem",
-    },
-    {
-      name: "message",
-      title: "校验文本",
-      component: {
-        name: "CodeEditor",
-      },
-      decorator: "FormItemWithoutAdvanced",
     },
   ],
 };

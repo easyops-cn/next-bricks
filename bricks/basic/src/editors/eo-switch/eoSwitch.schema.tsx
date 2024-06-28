@@ -82,8 +82,8 @@ export const eoSwitchSchema = {
       },
       enum: [
         {
-          label: "大",
-          value: "large",
+          label: "普通",
+          value: "default",
         },
         {
           label: "小",
@@ -95,6 +95,7 @@ export const eoSwitchSchema = {
         props: {
           size: "small",
           optionType: "button",
+          defaultValue: "default",
         },
       },
     },

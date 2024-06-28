@@ -22,6 +22,12 @@ export const eoSubmitButtonsSchema = {
       name: "submitText",
       title: "按钮文字",
       type: "string",
+      component: {
+        name: "Input",
+        props: {
+          placeholder: "提交",
+        },
+      },
     },
     {
       name: "submitType",
@@ -32,18 +38,33 @@ export const eoSubmitButtonsSchema = {
         props: {
           placeholder: "请选择按钮类型",
           allowClear: true,
+          defaultValue: "primary",
           options: [
-            "primary",
-            "default",
-            "dashed",
-            "ghost",
-            "link",
-            "text",
-            "icon",
-          ].map((item) => ({
-            label: item,
-            value: item,
-          })),
+            {
+              label: "主要",
+              value: "primary",
+            },
+            {
+              label: "默认",
+              value: "default",
+            },
+            {
+              label: "虚线",
+              value: "dashed",
+            },
+            {
+              label: "重影",
+              value: "ghost",
+            },
+            {
+              label: "链接",
+              value: "link",
+            },
+            {
+              label: "文字",
+              value: "text",
+            },
+          ],
         },
       },
     },
@@ -81,18 +102,33 @@ export const eoSubmitButtonsSchema = {
         props: {
           placeholder: "请选择按钮类型",
           allowClear: true,
+          defaultValue: "link",
           options: [
-            "primary",
-            "default",
-            "dashed",
-            "ghost",
-            "link",
-            "text",
-            "icon",
-          ].map((item) => ({
-            label: item,
-            value: item,
-          })),
+            {
+              label: "主要",
+              value: "primary",
+            },
+            {
+              label: "默认",
+              value: "default",
+            },
+            {
+              label: "虚线",
+              value: "dashed",
+            },
+            {
+              label: "重影",
+              value: "ghost",
+            },
+            {
+              label: "链接",
+              value: "link",
+            },
+            {
+              label: "文字",
+              value: "text",
+            },
+          ],
         },
       },
     },

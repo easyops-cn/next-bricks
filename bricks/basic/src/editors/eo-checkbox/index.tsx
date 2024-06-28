@@ -14,7 +14,15 @@ function EoButtonComponentFactory(React: typeof _React) {
       formilySchemaFormatter,
       advancedMode,
       scope,
+      form,
     } = props;
+
+    React.useEffect(() => {
+      form.setInitialValues({
+        required: false,
+        isGroup: false,
+      });
+    }, [form]);
 
     // TODO codeEditor模式的
     // React.useEffect(() => {

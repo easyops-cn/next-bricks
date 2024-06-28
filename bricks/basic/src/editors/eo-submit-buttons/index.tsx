@@ -14,7 +14,21 @@ function EoSubmitButtonsComponentFactory(React: typeof _React) {
       formilySchemaFormatter,
       advancedMode,
       scope,
+      form,
+      effects,
     } = props;
+
+    React.useEffect(() => {
+      const { onSubmit } = effects;
+      form.addEffects("formEffect", () => {
+        onSubmit((value) => {
+          if (!value.submitText) {
+            return { ...value, submitText: "提交" };
+          }
+          return { ...value };
+        });
+      });
+    }, []);
 
     return React.createElement(SchemaFieldComponent, {
       schema: formilySchemaFormatter(

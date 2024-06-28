@@ -125,21 +125,18 @@ export const eoInputSchema = {
     },
     {
       name: "maxLength",
-      title: "最大长度",
+      title: "最大输入长度",
       type: "number",
       component: {
         name: "NumberPicker",
       },
-      decorator: "FormItem",
-    },
-    {
-      name: "minLength",
-      title: "最小长度",
-      type: "number",
-      component: {
-        name: "NumberPicker",
+      decorator: {
+        name: "FormItem",
+        props: {
+          layout: "vertical",
+          tooltip: "限制输入长度, 没有校验信息",
+        },
       },
-      decorator: "FormItem",
     },
     {
       name: "categoryTitle_validator",
@@ -153,12 +150,47 @@ export const eoInputSchema = {
     },
     {
       name: "required",
-      title: "是否必填",
+      title: "必填",
       type: "boolean",
+      component: {
+        props: {
+          size: "small",
+        },
+      },
+      "x-reactions": [
+        {
+          target: "requiredValidatorText",
+          fulfill: {
+            state: {
+              visible: "{{$self.value}}",
+            },
+          },
+        },
+      ],
+    },
+    {
+      name: "requiredValidatorText",
+      title: "必填提示文字",
+      type: "string",
     },
     {
       name: "pattern",
       title: "正则校验规则",
+      type: "string",
+      "x-reactions": [
+        {
+          target: "patternValidatorText",
+          fulfill: {
+            state: {
+              visible: "{{$self.value}}",
+            },
+          },
+        },
+      ],
+    },
+    {
+      name: "patternValidatorText",
+      title: "正则提示文字",
       type: "string",
     },
     {
@@ -168,7 +200,13 @@ export const eoInputSchema = {
       component: {
         name: "NumberPicker",
       },
-      decorator: "FormItem",
+      decorator: {
+        name: "FormItem",
+        props: {
+          layout: "vertical",
+          tooltip: "校验最大长度",
+        },
+      },
     },
     {
       name: "min",
@@ -177,25 +215,13 @@ export const eoInputSchema = {
       component: {
         name: "NumberPicker",
       },
-      decorator: "FormItem",
-    },
-    {
-      name: "message",
-      title: "校验文本",
-      type: "string",
-      component: {
-        name: "CodeEditor",
+      decorator: {
+        name: "FormItem",
+        props: {
+          layout: "vertical",
+          tooltip: "校验最小长度",
+        },
       },
-      decorator: "FormItemWithoutAdvanced",
-    },
-    {
-      name: "validator",
-      title: "表单校验方法",
-      type: "string",
-      component: {
-        name: "CodeEditor",
-      },
-      decorator: "FormItemWithoutAdvanced",
     },
   ],
 };
