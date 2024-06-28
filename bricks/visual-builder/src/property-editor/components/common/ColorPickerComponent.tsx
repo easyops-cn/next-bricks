@@ -33,6 +33,7 @@ export function ColorPickerComponent(
 
   return (
     <ColorPicker
+      getPopupContainer={() => document.body}
       showText={true}
       presets={transformPresets}
       {...props}

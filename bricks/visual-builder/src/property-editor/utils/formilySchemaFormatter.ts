@@ -35,11 +35,12 @@ function transformComponent(
   return {
     [`x-${key}`]: data.name,
     [`x-${key}-props`]: {
-      ...(data.name === "CodeBlock"
+      ...(data.name === "CodeEditor"
         ? {
             extraLibs: "{{extraLibs}}",
             links: "{{links}}",
             tokenClick: "{{tokenClick}}",
+            lineNumbers: "off",
           }
         : {}),
       ...(data.props ?? {}),
@@ -149,7 +150,6 @@ export function formilySchemaFormatter(data: DataNode): ISchema {
         }),
       },
       [ADVANCED_FORM_KEY]: {
-        title: "属性",
         name: ADVANCED_FORM_KEY,
         type: "string",
         "x-decorator": "FormItemWithoutAdvanced",
@@ -158,6 +158,7 @@ export function formilySchemaFormatter(data: DataNode): ISchema {
           extraLibs: "{{extraLibs}}",
           links: "{{links}}",
           tokenClick: "{{tokenClick}}",
+          minLines: 5,
         },
       },
     },

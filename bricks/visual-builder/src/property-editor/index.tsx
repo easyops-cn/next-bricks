@@ -40,6 +40,7 @@ import { AdvancedFormItem } from "./components/AdvancedFormItem";
 import { CodeEditorComponent } from "./components/common/CodeEditorComponent";
 import { IconSelectComponent } from "./components/common/IconSelectComponent";
 import { ColorPickerComponent } from "./components/common/ColorPickerComponent";
+import { InputWithUrlComponent } from "./components/common/InputWithUrlComponent";
 import { __secret_internals, customEditors } from "@next-core/runtime";
 import {
   ADVANCED_FORM_KEY,
@@ -47,7 +48,6 @@ import {
   formilySchemaFormatter,
 } from "./utils/formilySchemaFormatter";
 import "./style.css";
-import yaml from "js-yaml";
 import _ from "lodash";
 import { BrickPackage } from "@next-core/types";
 import { NORMAL_FORM_KEY } from "./utils/formilySchemaFormatter";
@@ -56,8 +56,8 @@ const { defineElement, property, method, event } = createDecorators();
 
 const PropertyEditorComponent = React.forwardRef(LegacyPropertyEditor);
 
-const BEFORE_SUBMIT_KEY = "before_submit";
-const ADVANCED_CHANGE_KEY = "on_advanced_change";
+export const BEFORE_SUBMIT_KEY = "before_submit";
+export const ADVANCED_CHANGE_KEY = "on_advanced_change";
 
 const SchemaField = createSchemaField({
   components: {
@@ -74,6 +74,7 @@ const SchemaField = createSchemaField({
     CodeEditor: CodeEditorComponent,
     IconSelect: IconSelectComponent,
     ColorPicker: ColorPickerComponent,
+    InputWithUrl: InputWithUrlComponent,
   },
 });
 
@@ -183,19 +184,20 @@ class PropertyEditor extends ReactNextElement {
   validate() {
     const form: Form = this.#formRef.current?.getFormInstance();
     this.#submitValue = null;
+    const getRealValue = () => {
+      return this.advancedMode
+        ? form.values[ADVANCED_FORM_KEY]
+        : _.omit(form.values, [ADVANCED_FORM_KEY]);
+    };
 
     form
       .validate()
       .then(() => {
-        const realValue = this.advancedMode
-          ? yaml.load(form.values[ADVANCED_FORM_KEY])
-          : _.omit(form.values, [ADVANCED_FORM_KEY]);
-
-        form.notify(BEFORE_SUBMIT_KEY, realValue);
+        form.notify(BEFORE_SUBMIT_KEY, getRealValue());
         if (this.#submitValue) {
           this.#successEvent.emit(this.#submitValue);
         } else {
-          this.#successEvent.emit({ ...realValue });
+          this.#successEvent.emit(getRealValue());
         }
       })
       .catch((err: any[]) => {
@@ -273,14 +275,14 @@ export function LegacyPropertyEditor(
   }: PropertyEditorProps,
   ref: any
 ) {
-  const currentTheme = useCurrentTheme();
-  const cache = useMemo(() => createCache(), []);
-  const form = useMemo(() => createForm(), []);
   const [Editor, setEditor] = useState<
     (props: EditorComponentProps) => React.ReactElement
   >(() => customEditors.get(editorName)?.(React) as any);
+  const currentTheme = useCurrentTheme();
+  const cache = useMemo(() => createCache(), []);
+  // should update form instance when Editor change
+  const form = useMemo(() => createForm(), [Editor]);
   const transformValueRef = useRef<any>(null);
-  const initRef = useRef<any>(false);
 
   const onAdvancedChangeEffect = useMemo(
     () =>
@@ -296,6 +298,10 @@ export function LegacyPropertyEditor(
 
   const load = useCallback(async () => {
     // TODO: cache editors
+    if (customEditors.get(editorName)) {
+      setEditor(() => customEditors.get(editorName)?.(React) as any);
+      return;
+    }
     await __secret_internals.loadEditors([editorName], editorPackages);
     setEditor(() => customEditors.get(editorName)?.(React) as any);
   }, [editorName, editorPackages]);
@@ -304,11 +310,7 @@ export function LegacyPropertyEditor(
     if (advancedMode) {
       const filterValue = _.omit(values, [ADVANCED_FORM_KEY]);
       return {
-        [ADVANCED_FORM_KEY]: _.isEmpty(filterValue)
-          ? ""
-          : yaml.safeDump(filterValue, {
-              skipInvalid: true,
-            }),
+        [ADVANCED_FORM_KEY]: _.isEmpty(filterValue) ? "" : filterValue,
       };
     }
     return values[ADVANCED_FORM_KEY] ?? values;
@@ -320,16 +322,13 @@ export function LegacyPropertyEditor(
 
   useEffect(() => {
     if (Editor) {
-      initRef.current = true;
-      form.setValues(values ?? {}, "overwrite");
+      form.setInitialValues(values);
     }
-  }, [Editor]);
+  }, [Editor, form]);
 
   useEffect(() => {
-    const { values } = form.getState();
     transformValueRef.current = null;
 
-    form.reset();
     form.notify(ADVANCED_CHANGE_KEY, advancedMode);
 
     form.query(NORMAL_FORM_KEY).take((field) => {
@@ -339,24 +338,21 @@ export function LegacyPropertyEditor(
       field.display = advancedMode ? "visible" : "hidden";
     });
 
+    const { values } = form.getState();
     const formData = defaultTransform(
       transformValueRef.current ?? values,
       advancedMode
     );
-    form.setValues(formData);
+    form.setValues(formData, "overwrite");
   }, [advancedMode, form, defaultTransform, Editor]);
 
   useEffect(() => {
     form.addEffects("onValueChange", () => {
       onFormValuesChange((form) => {
-        if (initRef.current) {
-          initRef.current = false;
-          return;
-        }
         handleValuesChange(form.values);
       });
     });
-  }, []);
+  }, [form]);
 
   if (!Editor) return null;
 
