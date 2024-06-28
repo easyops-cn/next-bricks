@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.28.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.27.0...@next-bricks/basic@1.28.0) (2024-06-28)
+
+
+### Features
+
+* code editor add hideLineNumber and fix property-editor ([b32699f](https://github.com/easyops-cn/next-bricks/commit/b32699fe82670a9b384c5f1649427c608c229a01))
+
+
+
+
+
 # [1.27.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.26.3...@next-bricks/basic@1.27.0) (2024-06-27)
 
 

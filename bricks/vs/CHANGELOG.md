@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.8.7...@next-bricks/vs@1.9.0) (2024-06-28)
+
+
+### Features
+
+* code editor add hideLineNumber and fix property-editor ([b32699f](https://github.com/easyops-cn/next-bricks/commit/b32699fe82670a9b384c5f1649427c608c229a01))
+* update hideNumber property ([a4267bc](https://github.com/easyops-cn/next-bricks/commit/a4267bcfccfd2450925238879e369537bdfd6710))
+
+
+
+
+
 ## [1.8.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.8.6...@next-bricks/vs@1.8.7) (2024-06-26)
 
 
