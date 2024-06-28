@@ -622,8 +622,8 @@ export function CodeEditorComponent({
       fixedOverflowWidgets: true,
       lineNumbers: lineNumbers,
       lineNumbersMinChars: 3,
-      glyphMargin: lineNumbers === "off",
-      folding: lineNumbers === "off",
+      glyphMargin: lineNumbers !== "off",
+      folding: lineNumbers !== "off",
       suggest: {
         insertMode: "insert",
         preview: true,
