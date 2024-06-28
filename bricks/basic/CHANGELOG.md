@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.30.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.29.0...@next-bricks/basic@1.30.0) (2024-06-28)
+
+
+### Features
+
+* **tag:** add pink color ([50f4df5](https://github.com/easyops-cn/next-bricks/commit/50f4df5cfab88d01961b445295cb9adffc24a9c1))
+
+
+
+
+
 # [1.29.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.28.1...@next-bricks/basic@1.29.0) (2024-06-28)
 
 
