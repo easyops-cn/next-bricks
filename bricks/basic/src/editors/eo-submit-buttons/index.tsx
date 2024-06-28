@@ -21,6 +21,8 @@ function EoSubmitButtonsComponentFactory(React: typeof _React) {
     React.useEffect(() => {
       const { onSubmit } = effects;
       form.addEffects("formEffect", () => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         onSubmit((value) => {
           if (!value.submitText) {
             return { ...value, submitText: "提交" };

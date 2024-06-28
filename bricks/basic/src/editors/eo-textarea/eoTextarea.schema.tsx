@@ -84,6 +84,24 @@ export const eoTextareaSchema = {
           defaultValue: false,
         },
       },
+      "x-reactions": [
+        {
+          target: "minRows",
+          fulfill: {
+            state: {
+              visible: "{{!$self.value}}",
+            },
+          },
+        },
+        {
+          target: "maxRows",
+          fulfill: {
+            state: {
+              visible: "{{!$self.value}}",
+            },
+          },
+        },
+      ],
     },
     {
       name: "minRows",
