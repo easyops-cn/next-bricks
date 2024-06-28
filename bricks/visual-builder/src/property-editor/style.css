@@ -1,2 +1,11 @@
 @import url("./components/AdvancedFormItem/AdvancedFormItem.shadow.css");
 @import url("./components/CategoryTitle/CategoryTitle.shadow.css");
+
+.property-form-wrapper {
+  .antdV5-formily-item-feedback-layout-loose {
+    margin-bottom: 10px;
+  }
+  .antdV5-formily-item .antdV5-formily-item-control {
+    align-self: center;
+  }
+}

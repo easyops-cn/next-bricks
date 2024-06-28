@@ -1,12 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-// import { Input } from "@formily/antd-v5";
-import { wrapBrick } from "@next-core/react-element";
-import type {
-  Input,
-  InputProps,
-  InputEvents,
-  InputEventsMap,
-} from "@next-bricks/form/input";
+import { Input } from "@formily/antd-v5";
 import { useField, useForm } from "@formily/react";
 import {
   createEffectHook,
@@ -14,13 +7,6 @@ import {
   onFormInitialValuesChange,
 } from "@formily/core";
 import { ADVANCED_CHANGE_KEY } from "../../index.js";
-
-const WrappedInput = wrapBrick<Input, InputProps, InputEvents, InputEventsMap>(
-  "eo-input",
-  {
-    onChange: "change",
-  }
-);
 
 interface InputWithUrlComponentProps {
   onChange: (value: string) => void;
@@ -98,18 +84,18 @@ export function InputWithUrlComponent(props: InputWithUrlComponentProps) {
   }, []);
 
   return (
-    <WrappedInput
+    <Input
       {...props}
-      style={{ width: "100%" }}
+      suffix={
+        <div
+          style={{ cursor: "pointer" }}
+          slot="suffix"
+          onClick={handleModeClick}
+        >
+          {suffixText}
+        </div>
+      }
       onChange={handleChange as any}
-    >
-      <div
-        style={{ cursor: "pointer" }}
-        slot="suffix"
-        onClick={handleModeClick}
-      >
-        {suffixText}
-      </div>
-    </WrappedInput>
+    />
   );
 }

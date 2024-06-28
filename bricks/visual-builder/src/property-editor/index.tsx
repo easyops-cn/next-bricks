@@ -41,6 +41,7 @@ import { CodeEditorComponent } from "./components/common/CodeEditorComponent";
 import { IconSelectComponent } from "./components/common/IconSelectComponent";
 import { ColorPickerComponent } from "./components/common/ColorPickerComponent";
 import { InputWithUrlComponent } from "./components/common/InputWithUrlComponent";
+import { TextAlignRadioComponent } from "./components/common/TextAlignRadioComponent";
 import { __secret_internals, customEditors } from "@next-core/runtime";
 import {
   ADVANCED_FORM_KEY,
@@ -75,6 +76,7 @@ const SchemaField = createSchemaField({
     IconSelect: IconSelectComponent,
     ColorPicker: ColorPickerComponent,
     InputWithUrl: InputWithUrlComponent,
+    TextAlignRadio: TextAlignRadioComponent,
   },
 });
 
@@ -365,6 +367,15 @@ export function LegacyPropertyEditor(
             currentTheme === "dark-v2"
               ? theme.darkAlgorithm
               : theme.defaultAlgorithm,
+          components: {
+            // Form: {
+            //   not work
+            //   itemMarginBottom: 10,
+            // }
+            InputNumber: {
+              handleVisible: true,
+            },
+          },
         }}
         getPopupContainer={(trigger) => trigger!}
       >
