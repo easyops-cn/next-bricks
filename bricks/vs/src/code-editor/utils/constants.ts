@@ -59,6 +59,7 @@ export const builtInKeywordDeclare = `
   declare const EVENT;
   declare const FLAGS;
   declare const ANCHOR;
+  declare const HASH;
   declare namespace INSTALLED_APPS {
     function has(appId: string):boolean
   }
@@ -75,6 +76,8 @@ export const builtInKeywordDeclare = `
   declare const PROCESSORS;
   declare const QUERY_ARRAY;
   declare const TPL;
+  declare const PIPES;
+  declare const _;
   declare namespace SYS {
     const username:string;
     const userInstanceId:string;
@@ -89,8 +92,8 @@ export const builtInKeywordDeclare = `
   declare namespace IMG {
     function get(src: string): string;
   }
-  declare function I18N(key: string): string;
-  declare function i18nText(data: {[language: string]: string}):string;
+  declare function I18N(key: string, options?: string | Record<string, unknown>): string;
+  declare function I18N_TEXT(data: {[language: string]: string}):string;
   declare namespace PERMISSIONS {
     function check(...action: string[]):boolean;
   }

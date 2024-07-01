@@ -91,6 +91,7 @@ export interface CodeEditorProps {
   showExpandButton?: boolean;
   showCopyButton?: boolean;
   validateState?: string;
+  customValidationInBrickNextYaml?: boolean;
 }
 
 export interface Marker {
@@ -209,6 +210,15 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
   accessor tokenConfig: TokenConfig | undefined;
 
   /**
+   * 在 brick_next_yaml 中是否开启语义相关校验
+   * @default false
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor customValidationInBrickNextYaml: boolean | undefined;
+
+  /**
    * 是否展示复制按钮
    * @default true
    */
@@ -302,6 +312,7 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
           validateState={this.validateState}
           onChange={this.#handleChange}
           onTokenClick={this.#handleTokenClick}
+          customValidationInBrickNextYaml={this.customValidationInBrickNextYaml}
         />
       </WrappedFormItem>
     );
@@ -330,6 +341,7 @@ export function CodeEditorComponent({
   validateState,
   onChange,
   onTokenClick,
+  customValidationInBrickNextYaml,
 }: CodeEditorProps & {
   onChange(
     value: string,
@@ -791,6 +803,8 @@ export function CodeEditorComponent({
           const embeddedContext = EmbeddedModelContext.getInstance(workerId);
 
           embeddedContext.updateState({ content, range, offset });
+
+          if (!customValidationInBrickNextYaml) return;
 
           const getWorker =
             await monaco.languages.typescript.getJavaScriptWorker();

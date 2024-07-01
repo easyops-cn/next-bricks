@@ -86,7 +86,7 @@ export function getMicroAppDeclare() {
 
   const fields = [];
   for (const [k, v] of Object.entries(appProperties)) {
-    fields.push(`const ${k}: ${v.type}`);
+    fields.push(`const ${k}: ${v.type ?? "any"}`);
   }
 
   return `
