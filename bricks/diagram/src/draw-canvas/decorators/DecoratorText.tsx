@@ -38,6 +38,13 @@ export function DecoratorText({
       element.textContent = currentLabel;
     }
   }, [currentLabel]);
+  useEffect(() => {
+    const parentElement = ref.current?.parentElement;
+    if (parentElement) {
+      cell.view.width = parentElement.clientWidth;
+      cell.view.height = parentElement.clientHeight;
+    }
+  }, [currentLabel, cell.id]);
 
   useEffect(() => {
     if (editingLabel && ref.current) {
