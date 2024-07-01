@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.38.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.37.17...@next-bricks/diagram@0.38.0) (2024-07-01)
+
+
+### Features
+
+* 框选支持文字 ([806c6c6](https://github.com/easyops-cn/next-bricks/commit/806c6c60939a45a877537642684a52e7a18170ee))
+
+
+
+
+
 ## [0.37.17](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.37.16...@next-bricks/diagram@0.37.17) (2024-06-26)
 
 **Note:** Version bump only for package @next-bricks/diagram

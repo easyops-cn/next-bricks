@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.9.1...@next-bricks/vs@1.9.2) (2024-07-01)
+
+
+### Bug Fixes
+
+* refine declare ([8a72a7b](https://github.com/easyops-cn/next-bricks/commit/8a72a7bb604f547667d3aa22292be327e0367058))
+
+
+
+
+
 ## [1.9.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.9.0...@next-bricks/vs@1.9.1) (2024-06-28)
 
 
