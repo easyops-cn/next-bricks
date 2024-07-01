@@ -1,17 +1,27 @@
+body {
+  background-color: transparent;
+}
+
 #preview-root {
   padding: 0;
-  height: 100vh;
+  height: auto;
+  max-height: 100vh;
   overflow-y: auto;
   border: 1px solid var(--theme-gray-border-color);
   border-radius: 4px;
+  background: var(--body-background);
 }
 
 .head-cell {
   position: sticky;
   top: 0;
-  background: var(--body-background);
   z-index: 1;
   font-weight: bold;
+}
+
+.head-cell,
+.body-cell {
+  background: var(--body-background);
 }
 
 .last-col-cell {
@@ -20,4 +30,8 @@
 
 .last-row-cell {
   border-bottom-color: transparent;
+}
+
+.form-container > ::part(message) {
+  display: none;
 }
