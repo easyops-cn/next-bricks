@@ -31,14 +31,16 @@ function EoSelectComponentFactory(React: typeof _React) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         onSubmit((value) => {
+          const options = JSON.parse(JSON.stringify(value.options));
+          let result = { ...value, options };
           if (value.fieldLabel || value.fieldValue) {
-            const { fieldLabel, fieldValue, ...newValue } = value;
-            return {
+            const { fieldLabel, fieldValue, ...newValue } = result;
+            result = {
               ...newValue,
               fields: { label: fieldLabel, value: fieldValue },
             };
           }
-          return { ...value };
+          return result;
         });
       });
     }, []);

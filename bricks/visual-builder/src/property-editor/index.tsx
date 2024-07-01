@@ -33,6 +33,8 @@ import {
   Radio,
   Select,
   Switch,
+  ArrayItems,
+  Space,
 } from "@formily/antd-v5";
 import { useCurrentTheme } from "@next-core/react-runtime";
 import { CategoryTitle } from "./components/CategoryTitle";
@@ -71,6 +73,8 @@ const SchemaField = createSchemaField({
     Radio,
     Select,
     Switch,
+    ArrayItems,
+    Space,
     CategoryTitle,
     CodeEditor: CodeEditorComponent,
     IconSelect: IconSelectComponent,

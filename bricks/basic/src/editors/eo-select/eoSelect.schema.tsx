@@ -55,10 +55,54 @@ export const eoSelectSchema = {
     {
       name: "options",
       title: "选项列表",
+      type: "array",
       component: {
-        name: "CodeEditor",
+        name: "ArrayItems",
       },
-      decorator: "FormItemWithoutAdvanced",
+      decorator: {
+        name: "FormItem",
+      },
+      items: {
+        type: "object",
+        properties: {
+          space: {
+            type: "void",
+            "x-component": "Space",
+            properties: {
+              label: {
+                type: "string",
+                title: "标签",
+                "x-decorator": "FormItemWithoutAdvanced",
+                "x-component": "Input",
+              },
+              value: {
+                type: "string",
+                title: "值",
+                "x-decorator": "FormItemWithoutAdvanced",
+                "x-component": "Input",
+              },
+              disabled: {
+                type: "boolean",
+                title: "禁用",
+                "x-decorator": "FormItemWithoutAdvanced",
+                "x-component": "Switch",
+              },
+              remove: {
+                type: "void",
+                "x-decorator": "FormItemWithoutAdvanced",
+                "x-component": "ArrayItems.Remove",
+              },
+            },
+          },
+        },
+      },
+      properties: {
+        add: {
+          type: "void",
+          title: "添加条目",
+          "x-component": "ArrayItems.Addition",
+        },
+      },
     },
     {
       name: "mode",
