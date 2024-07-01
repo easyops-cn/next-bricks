@@ -3,7 +3,6 @@ import { act } from "react-dom/test-utils";
 import { describe, test, expect } from "@jest/globals";
 import { render, fireEvent } from "@testing-library/react";
 import { DecoratorText } from "./DecoratorText";
-
 describe("DecoratorText", () => {
   test("basic usage", () => {
     const onDecoratorTextEditing = jest.fn();
@@ -54,7 +53,7 @@ describe("DecoratorText", () => {
     });
     expect(onDecoratorTextChange).toHaveBeenCalledWith({
       id: "1",
-      view: { x: 1, y: 2, width: 3, height: 4, text: "Updated" },
+      view: { x: 1, y: 2, width: 0, height: 0, text: "Updated" },
     });
   });
 });

@@ -35,3 +35,7 @@ export function isNodeOrAreaDecoratorCell(
     (cell.type === "decorator" && cell.decorator === "area")
   );
 }
+
+export function isTextDecoratorCell(cell: Cell): cell is DecoratorCell {
+  return cell.type === "decorator" && cell.decorator === "text";
+}

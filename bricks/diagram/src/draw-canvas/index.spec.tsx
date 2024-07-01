@@ -970,7 +970,7 @@ describe("eo-draw-canvas", () => {
     });
     expect(onDecoratorTextChange).toHaveBeenCalledWith({
       id: "x",
-      view: { x: 20, y: 30, text: "Updated" },
+      view: { x: 20, y: 30, height: 0, width: 0, text: "Updated" },
     });
 
     act(() => {

@@ -45,7 +45,11 @@ import type {
 } from "./interfaces";
 import { rootReducer } from "./reducers";
 import { MarkerComponent } from "../diagram/MarkerComponent";
-import { isNodeCell, isNodeOrAreaDecoratorCell } from "./processors/asserts";
+import {
+  isNodeCell,
+  isNodeOrAreaDecoratorCell,
+  isTextDecoratorCell,
+} from "./processors/asserts";
 import type { MoveCellPayload, ResizeCellPayload } from "./reducers/interfaces";
 import { sameTarget } from "./processors/sameTarget";
 import { handleKeyboard } from "./processors/handleKeyboard";
@@ -931,9 +935,7 @@ function LegacyEoDrawCanvasComponent(
           setLassoRect(null);
           const lassoedCells: (NodeCell | DecoratorCell)[] = [];
           for (const cell of cells) {
-            // Currently only nodes and area decorators are supported to be lassoed.
-            // Because edges and text decorators currently has no accurate size info.
-            if (isNodeOrAreaDecoratorCell(cell)) {
+            if (isNodeOrAreaDecoratorCell(cell) || isTextDecoratorCell(cell)) {
               const x = cell.view.x;
               const y = cell.view.y;
               if (
