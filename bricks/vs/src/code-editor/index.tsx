@@ -91,6 +91,7 @@ export interface CodeEditorProps {
   showExpandButton?: boolean;
   showCopyButton?: boolean;
   lineNumbers?: monaco.editor.LineNumbersType;
+  glyphMargin?: boolean;
   validateState?: string;
   customValidationInBrickNextYaml?: boolean;
 }
@@ -232,6 +233,9 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
   @property({ type: Boolean })
   accessor showCopyButton: boolean | undefined;
 
+  @property({ type: Boolean })
+  accessor glyphMargin: boolean | undefined;
+
   /**
    * @description 额外声明的 lib 库
    */
@@ -315,6 +319,7 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
           links={this.links}
           tokenConfig={this.tokenConfig}
           lineNumbers={this.lineNumbers}
+          glyphMargin={this.glyphMargin}
           showCopyButton={this.showCopyButton}
           showExpandButton={this.showExpandButton}
           validateState={this.validateState}
@@ -347,6 +352,7 @@ export function CodeEditorComponent({
   showExpandButton,
   showCopyButton = true,
   lineNumbers = "on",
+  glyphMargin = true,
   validateState,
   onChange,
   onTokenClick,
@@ -634,7 +640,7 @@ export function CodeEditorComponent({
       fixedOverflowWidgets: true,
       lineNumbers: lineNumbers,
       lineNumbersMinChars: 3,
-      glyphMargin: lineNumbers !== "off",
+      glyphMargin: glyphMargin,
       folding: lineNumbers !== "off",
       suggest: {
         insertMode: "insert",

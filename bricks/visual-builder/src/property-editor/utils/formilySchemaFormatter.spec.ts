@@ -62,6 +62,7 @@ describe("formilySchemaFormatter", () => {
       "x-component": "CodeEditor",
       "x-component-props": {
         "extraLibs": "{{extraLibs}}",
+        "glyphMargin": false,
         "links": "{{links}}",
         "minLines": 5,
         "tokenClick": "{{tokenClick}}",
