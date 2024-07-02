@@ -1,7 +1,11 @@
 import React, { forwardRef } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
-import { ChatViewContext, QuickAnswerConfig } from "./ChatViewContext.js";
+import {
+  ChatViewContext,
+  QuickAnswerConfig,
+  snippet,
+} from "./ChatViewContext.js";
 import { MessageList } from "./components/MessageList.js";
 import { useChatViewInfo } from "./hooks/useChatViewInfo.js";
 import { SessionList } from "./components/SessionList.js";
@@ -27,6 +31,7 @@ export interface ChatViewProps {
   showLike?: boolean;
   showShare?: boolean;
   quickAnswerConfig?: QuickAnswerConfig;
+  snippetList?: snippet[];
   enterInterval?: number;
   debug?: boolean;
   commandBricks?: commandBrickConf;
@@ -45,6 +50,7 @@ export function LegacyChatViewComponent(
     showLike = true,
     showShare = true,
     quickAnswerConfig,
+    snippetList,
     enterInterval,
     debug = false,
     commandBricks,
@@ -98,6 +104,7 @@ export function LegacyChatViewComponent(
         showShare,
         readonly,
         quickAnswerConfig,
+        snippetList,
         commandBricks,
         setAgent,
         handleIsLike,
@@ -230,6 +237,14 @@ class ChatView extends ReactNextElement {
   accessor quickAnswerConfig: QuickAnswerConfig | undefined;
 
   /**
+   * 常用语列表
+   */
+  @property({
+    attribute: false,
+  })
+  accessor snippetList: snippet[] | undefined;
+
+  /**
    * 自定义语言配置
    */
   @property({
@@ -279,6 +294,7 @@ class ChatView extends ReactNextElement {
         showLike={this.showLike}
         showShare={this.showShare}
         quickAnswerConfig={this.quickAnswerConfig}
+        snippetList={this.snippetList}
         enterInterval={this.enterInterval}
         commandBricks={this.commandBricks}
         answerLanguage={this.answerLanguage}

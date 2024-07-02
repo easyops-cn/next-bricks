@@ -35,6 +35,12 @@ export interface QuickAnswerConfig {
   tip: string;
   list: AgentDetailItem[];
 }
+
+export interface snippet {
+  content: string;
+  name: string;
+}
+
 interface ChatViewContextProps {
   sessionEnd: boolean;
   sessionLoading: boolean;
@@ -50,6 +56,7 @@ interface ChatViewContextProps {
   showShare: boolean;
   readonly: boolean;
   quickAnswerConfig?: QuickAnswerConfig;
+  snippetList?: snippet[];
   commandBricks?: commandBrickConf;
   setAgent: (id: string) => void;
   handleIsLike: (id: string, isLike: boolean) => Promise<boolean>;
