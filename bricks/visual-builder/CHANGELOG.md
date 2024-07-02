@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.27.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.26.0...@next-bricks/visual-builder@1.27.0) (2024-07-02)
+
+
+### Features
+
+* parse path provider ([6444988](https://github.com/easyops-cn/next-bricks/commit/64449887ef416618721fe4b77bd5560b5b744ffb))
+
+
+
+
+
 # [1.26.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.25.0...@next-bricks/visual-builder@1.26.0) (2024-06-28)
 
 
