@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.9.2...@next-bricks/vs@1.10.0) (2024-07-02)
+
+
+### Features
+
+* **code-editor:** add glyphMargin ([b242f55](https://github.com/easyops-cn/next-bricks/commit/b242f551ba92bfaf15dd0435c1a27c8eee52df86))
+
+
+
+
+
 ## [1.9.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.9.1...@next-bricks/vs@1.9.2) (2024-07-01)
 
 
