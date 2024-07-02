@@ -16,7 +16,7 @@ import type {
 import type { EoTooltip, ToolTipProps } from "@next-bricks/basic/tooltip";
 import calculateAutoSizeStyle from "./utils/calculateAutoSizeStyle.js";
 import classNames from "classnames";
-import { useChatViewContext } from "../ChatViewContext.js";
+import { snippet, useChatViewContext } from "../ChatViewContext.js";
 import { AgentDetailItem } from "./QuickAnswerList/index";
 import { ChatBody } from "../ChatService.js";
 import { ReactUseMultipleBricks } from "@next-core/react-runtime";
@@ -41,6 +41,11 @@ export function LegacySearchInput(
   const [autoSizeStyle, setAutoSizeStyle] = useState<React.CSSProperties>();
   const [isFillContent, setIsFillContent] = useState<boolean>(false);
 
+  // snippets
+  const [snippetOpen, setSnippetOpen] = useState<boolean>(false);
+  const [matchSnippetList, setMatchSnippetList] = useState<snippet[]>([]);
+  const [matchSnippetIndex, setMatchSnippetIndex] = useState<number>(0);
+
   // mention
   const [mentionOpen, setMentionOpen] = useState<boolean>(false);
   const [matchPrefixIndex, setMatchPrefixIndex] = useState<number>(-1);
@@ -48,6 +53,7 @@ export function LegacySearchInput(
   const [matchMentionsIndex, setMatchMentionsIndex] = useState<number>(0);
 
   const mentionsRef = useRef<HTMLDivElement>(null);
+  const snippetsRef = useRef<HTMLDivElement>(null);
   const searchInputBoxRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const hadExpanded = useRef<boolean>(false);
@@ -62,6 +68,7 @@ export function LegacySearchInput(
     setSearchStr,
     handleChat,
     setAgent,
+    snippetList,
   } = useChatViewContext();
 
   const agentList = useMemo(
@@ -117,6 +124,29 @@ export function LegacySearchInput(
     [matchPrefixInfo, value]
   );
 
+  const handleSnippetItemSelect = useCallback(
+    (item: snippet) => {
+      const regex = /@([\u4e00-\u9fa5|\w|\d]+)/g;
+      const matches = [];
+      let match;
+      // 在字符串中循环匹配正则表达式,将匹配的@技能放入数组中
+      while ((match = regex.exec(value)) !== null) {
+        matches.push(match[0]);
+      }
+      if (matches.length) {
+        setValue(matches.join(" ") + " " + item.content);
+      } else {
+        setValue(item.content);
+      }
+      setSnippetOpen(false);
+      setMatchSnippetIndex(0);
+      setTimeout(() => {
+        textareaRef.current!.focus();
+      }, 0);
+    },
+    [value]
+  );
+
   const isShowMentions = useMemo(() => {
     return matchAgentList.length && mentionOpen;
   }, [matchAgentList, mentionOpen]);
@@ -125,7 +155,7 @@ export function LegacySearchInput(
     return isShowMentions ? (
       <div className="mentions-list-wrapper" ref={mentionsRef}>
         <div className="content">
-          <div className="mentions-title">Agents</div>
+          <div className="mentions-title">技能</div>
           <div className="mentions-list">
             {matchAgentList.slice(0, 10).map((item, index) => {
               return (
@@ -160,6 +190,41 @@ export function LegacySearchInput(
     handleAgentItemSelect,
   ]);
 
+  const isShowSnippets = useMemo(() => {
+    return !isShowMentions && matchSnippetList.length && snippetOpen;
+  }, [isShowMentions, matchSnippetList, snippetOpen]);
+
+  const snippets = useMemo(() => {
+    return isShowSnippets ? (
+      <div className="snippets-list-wrapper" ref={snippetsRef}>
+        <div className="content">
+          <div className="snippets-title">常用语</div>
+          <div className="snippets-list">
+            {matchSnippetList.slice(0, 10).map((item, index) => {
+              return (
+                <div
+                  className={classNames("snippets-item", {
+                    active: index === matchSnippetIndex,
+                  })}
+                  key={index}
+                  onClick={() => handleSnippetItemSelect(item)}
+                >
+                  <div className="name">{item.name}</div>
+                  <div className="description">{item.content}</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    ) : null;
+  }, [
+    matchSnippetList,
+    matchSnippetIndex,
+    isShowSnippets,
+    handleSnippetItemSelect,
+  ]);
+
   const computedAutoSize = useCallback(
     (size = defaultSize) => {
       if (hadExpanded.current && expand) return;
@@ -183,8 +248,24 @@ export function LegacySearchInput(
       const value = typeof e === "string" ? e : e.target.value;
       setValue(value);
       textareaRef.current!.value = value;
+
+      // 获取snippet关键词
+      const keyword = value
+        .replaceAll(/@([\u4e00-\u9fa5|\w|\d]+)\s/g, "")
+        .trim();
+
+      // 过滤出matchSnippetList
+      if (keyword) {
+        const filterResult =
+          snippetList?.filter((item) => item.name.includes(keyword)) ?? [];
+        setMatchSnippetList(filterResult);
+        setSnippetOpen(!!filterResult.length);
+      } else {
+        setMatchSnippetList([]);
+        setSnippetOpen(false);
+      }
     },
-    []
+    [snippetList]
   );
 
   const handleCompositionStart = () => {
@@ -248,6 +329,8 @@ export function LegacySearchInput(
         e.preventDefault();
         if (isShowMentions) {
           handleAgentItemSelect(matchAgentList[matchMentionsIndex]);
+        } else if (isShowSnippets) {
+          handleSnippetItemSelect(matchSnippetList[matchSnippetIndex]);
         } else {
           handleSubmit();
         }
@@ -263,14 +346,29 @@ export function LegacySearchInput(
             Math.min(matchAgentList.length - 1, index + 1)
           );
         }
+      } else if (isShowSnippets) {
+        if (e.key === "ArrowUp") {
+          e.preventDefault();
+          setMatchSnippetIndex((index) => Math.max(0, index - 1));
+        }
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          setMatchSnippetIndex((index) =>
+            Math.min(matchSnippetList.length - 1, index + 1)
+          );
+        }
       }
     },
     [
       handleSubmit,
       handleAgentItemSelect,
+      handleSnippetItemSelect,
       isShowMentions,
       matchAgentList,
       matchMentionsIndex,
+      isShowSnippets,
+      matchSnippetList,
+      matchSnippetIndex,
     ]
   );
 
@@ -369,6 +467,15 @@ export function LegacySearchInput(
   }, [matchMentionsIndex]);
 
   useEffect(() => {
+    if (matchSnippetIndex >= 0 && snippetsRef.current) {
+      const element = snippetsRef.current.querySelector(
+        ".snippets-item.active"
+      );
+      element?.scrollIntoView({ block: "nearest" });
+    }
+  }, [matchSnippetIndex]);
+
+  useEffect(() => {
     const handleDocumentClick = (e: any) => {
       const mentionsElemnt = mentionsRef.current;
       if (mentionsElemnt && !mentionsElemnt.contains(e.composedPath()[0])) {
@@ -400,6 +507,7 @@ export function LegacySearchInput(
       ref={searchInputBoxRef}
     >
       {mentions}
+      {snippets}
       {props.inputToolbarBrick && (
         <div className="input-toobar">
           <ReactUseMultipleBricks {...props.inputToolbarBrick} />
