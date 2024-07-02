@@ -41,6 +41,7 @@ function transformComponent(
             links: "{{links}}",
             tokenClick: "{{tokenClick}}",
             lineNumbers: "off",
+            glyphMargin: false,
           }
         : {}),
       ...(data.props ?? {}),
@@ -165,6 +166,7 @@ export function formilySchemaFormatter(data: DataNode): ISchema {
           links: "{{links}}",
           tokenClick: "{{tokenClick}}",
           minLines: 5,
+          glyphMargin: false,
         },
       },
     },
