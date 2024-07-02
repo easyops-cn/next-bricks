@@ -31,6 +31,7 @@ export interface PopoverProps extends SlPopupProps {
   disabled?: boolean;
   arrowColor?: string;
   anchorDisplay?: CSSProperties["display"];
+  zIndex?: number;
 }
 
 export interface PopoverEvents {
@@ -93,7 +94,7 @@ class Popover extends ReactNextElement implements PopoverProps {
    * 发生移位行为之前超出的填充量
    */
   @property({
-    type: Number
+    type: Number,
   })
   accessor shiftPadding: number | undefined;
 
@@ -138,6 +139,12 @@ class Popover extends ReactNextElement implements PopoverProps {
   accessor anchorDisplay: CSSProperties["display"];
 
   /**
+   * 弹出层的 Z 轴顺序
+   */
+  @property({ type: Number })
+  accessor zIndex: number | undefined;
+
+  /**
    * 当弹出层可见性变化之后触发
    * @detail 当前是否可见
    */
@@ -176,6 +183,7 @@ class Popover extends ReactNextElement implements PopoverProps {
         beforeVisibleChange={this.#handleBeforeVisibleChange}
         distance={this.distance}
         anchorDisplay={this.anchorDisplay}
+        zIndex={this.zIndex}
       />
     );
   }
@@ -198,6 +206,7 @@ function PopoverComponent(props: PopoverComponentProps) {
     beforeVisibleChange,
     distance = props.arrow ? POPUP_DISTANCE + ARROW_SIZE : POPUP_DISTANCE,
     anchorDisplay = "inline-block",
+    zIndex,
   } = props;
   const firstRendered = useRef(true);
   const popoverRef = useRef<SlPopupElement>(null);
@@ -375,6 +384,15 @@ function PopoverComponent(props: PopoverComponentProps) {
       );
     }
   }, [arrowColor]);
+
+  useEffect(() => {
+    if (zIndex !== undefined) {
+      popoverRef.current?.style.setProperty(
+        "--eo-popover-z-index",
+        String(zIndex)
+      );
+    }
+  }, [zIndex]);
 
   return (
     <WrappedSlPopup

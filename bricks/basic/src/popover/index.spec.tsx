@@ -435,4 +435,41 @@ describe("eo-popover", () => {
 
     expect(document.body.contains(element)).toBeFalsy();
   });
+
+  test("should work with zIndex", async () => {
+    const element = document.createElement("eo-popover") as Popover;
+    element.active = true;
+
+    const button = document.createElement("button");
+    button.slot = "anchor";
+    button.textContent = "btn";
+
+    const content = document.createElement("div");
+    content.textContent = "hello world";
+
+    element.arrow = true;
+    element.zIndex = 1000;
+
+    element.append(button);
+    element.append(content);
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    await act(async () => {
+      button.click();
+    });
+    jest.runAllTimers();
+
+    expect(
+      (
+        element.shadowRoot?.querySelector("sl-popup") as HTMLElement
+      ).style.getPropertyValue("--eo-popover-z-index")
+    ).toBe("1000");
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
 });

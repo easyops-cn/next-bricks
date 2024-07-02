@@ -1,9 +1,10 @@
 :host {
   --eo-popover-arrow-color: var(--color-fill-bg-container-4);
+  --eo-popover-z-index: 1030;
 }
 
 sl-popup::part(popup) {
-  z-index: 1030;
+  z-index: var(--eo-popover-z-index);
 }
 
 sl-popup[data-current-placement^="top"]::part(popup) {
