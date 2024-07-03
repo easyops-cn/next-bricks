@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.6...@next-bricks/ai@1.23.7) (2024-07-03)
+
+
+### Bug Fixes
+
+* AI聊天框【停止生成】会跟助手名称重叠 ([b79a23a](https://github.com/easyops-cn/next-bricks/commit/b79a23afd94ed5fa2e94cead36be706b0251f003))
+
+
+
+
+
 ## [1.23.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.5...@next-bricks/ai@1.23.6) (2024-07-03)
 
 
