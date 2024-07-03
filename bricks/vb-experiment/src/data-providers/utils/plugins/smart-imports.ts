@@ -21,6 +21,7 @@ const EXPRESSION_GLOBALS = new Set([
   "INSTALLED_APPS",
   "ITEM",
   "INDEX",
+  "SIZE",
   "LOCAL_STORAGE",
   "MEDIA",
   "MISC",
@@ -43,7 +44,7 @@ const EXPRESSION_GLOBALS = new Set([
 const SmartImports = "smart-imports";
 registerPlugin(
   SmartImports,
-  (api: unknown, opts?: { imports: Set<string> }) => ({
+  (_api: unknown, opts?: { imports: Set<string> }) => ({
     name: SmartImports,
     visitor: {
       Identifier(path) {
