@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.5...@next-bricks/ai@1.23.6) (2024-07-03)
+
+
+### Bug Fixes
+
+* 输入框增加常用提示词管理以及输入 ([b973b58](https://github.com/easyops-cn/next-bricks/commit/b973b58fc380b75c2fb86f069e3f3cdf24c50d7f))
+
+
+
+
+
 ## [1.23.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.4...@next-bricks/ai@1.23.5) (2024-06-26)
 
 **Note:** Version bump only for package @next-bricks/ai
