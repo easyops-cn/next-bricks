@@ -213,7 +213,7 @@
       padding-right: 40px;
 
       &:last-child {
-        margin-bottom: 40px;
+        margin-bottom: 10px;
       }
 
       &.user {
@@ -352,7 +352,7 @@
 .search-input-box {
   display: flex;
   flex-direction: column;
-  height: 75px;
+  height: 87px;
   padding: 12px;
   position: relative;
   margin: 0 auto;
@@ -361,7 +361,9 @@
 
   .input-toobar {
     position: absolute;
-    bottom: 100%;
+    bottom: 71%;
+    left: 12px;
+    right: 12px;
   }
 
   .mentions-list-wrapper {
