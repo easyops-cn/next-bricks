@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.10.1...@next-bricks/vs@1.10.2) (2024-07-03)
+
+
+### Bug Fixes
+
+* code editor focus change ([6664827](https://github.com/easyops-cn/next-bricks/commit/6664827b8519260ab0b4ac1a640cd28288292939))
+
+
+
+
+
 ## [1.10.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.10.0...@next-bricks/vs@1.10.1) (2024-07-03)
 
 
