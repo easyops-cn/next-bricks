@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.10.0...@next-bricks/vs@1.10.1) (2024-07-03)
+
+
+### Bug Fixes
+
+* add new keyword`SIZE`, add missing types for builtin keywords ([0370f34](https://github.com/easyops-cn/next-bricks/commit/0370f34c23269512fef23188b84b42006aa21d04))
+
+
+
+
+
 # [1.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.9.2...@next-bricks/vs@1.10.0) (2024-07-02)
 
 
