@@ -506,9 +506,14 @@ export function CodeEditorComponent({
   const debounceParse = useMemo(() => debounce(parseYaml, 300), [parseYaml]);
 
   useEffect(() => {
-    if (editorRef.current) {
-      const currentModel = editorRef.current.getModel();
-      if (currentModel?.getValue && value !== currentModel.getValue()) {
+    const editor = editorRef.current;
+    if (editor) {
+      const currentModel = editor.getModel();
+      if (
+        currentModel?.getValue &&
+        value !== currentModel.getValue() &&
+        !editor.hasTextFocus()
+      ) {
         currentModel.setValue(value as string);
         debounceParse({
           init: true,
