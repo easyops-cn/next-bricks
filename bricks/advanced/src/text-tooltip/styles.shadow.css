@@ -1,0 +1,17 @@
+:host {
+  display: inline-block;
+  width: fit-content;
+  max-width: 100%;
+}
+
+:host([hidden]) {
+  display: none;
+}
+.ellipsisWrap {
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--line-clamp);
+  overflow: hidden;
+}
