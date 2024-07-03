@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.43.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.42.1...@next-shared/common-bricks@0.43.0) (2024-07-03)
+
+
+### Features
+
+* **eo-text-tooltip:** 新增一个文本展示构件，文本超出才展示tip ([16028bb](https://github.com/easyops-cn/next-bricks/commit/16028bbc61d3ca92ecac17a18f170298b9b38e05))
+
+
+
+
+
 ## [0.42.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.42.0...@next-shared/common-bricks@0.42.1) (2024-06-11)
 
 
