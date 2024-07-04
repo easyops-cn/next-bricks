@@ -44,6 +44,10 @@ describe("eo-tree-select", () => {
         ],
       },
     ];
+    element.suffixIcon = {
+      icon: "calendar",
+      lib: "easyops",
+    };
 
     const mockChangeEvent = jest.fn();
     const mockSearchEvent = jest.fn();
