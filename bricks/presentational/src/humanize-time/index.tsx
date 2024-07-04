@@ -25,6 +25,7 @@ export interface EoHumanizeTimeProps {
   isCostTime?: boolean;
   inputFormat?: string;
   outputFormat?: string;
+  type?: "datetime" | "date";
   link?: LinkInfo;
 }
 
@@ -61,6 +62,13 @@ class EoHumanizeTime extends ReactNextElement {
    */
   @property()
   accessor outputFormat: string;
+
+  /**
+   * 使用日期+时间格式输出还是仅日期。
+   * @default "datetime"
+   */
+  @property()
+  accessor type: "datetime" | "date";
 
   /**
    * 是否展示为耗费时间，例如：'1 个月 20 天'
@@ -108,6 +116,7 @@ class EoHumanizeTime extends ReactNextElement {
     return (
       <HumanizeTimeComponent
         value={this.value}
+        type={this.type}
         formatter={this.formatter}
         isMicrosecond={this.isMicrosecond}
         isCostTime={this.isCostTime}
@@ -121,6 +130,7 @@ class EoHumanizeTime extends ReactNextElement {
 
 export function HumanizeTimeComponent({
   value,
+  type,
   isMicrosecond,
   inputFormat,
   outputFormat,
@@ -146,7 +156,7 @@ export function HumanizeTimeComponent({
   } else {
     label = isCostTime
       ? costTime(ts)
-      : humanizeTime(ts, HumanizeTimeFormat[formatter]);
+      : humanizeTime(ts, HumanizeTimeFormat[formatter], type);
   }
 
   if (link) {
