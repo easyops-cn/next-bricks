@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.34.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.34.0...@next-bricks/advanced@0.34.1) (2024-07-04)
+
+
+### Bug Fixes
+
+* **eo-text-tooltip:** 修复在v2构件中导致样式不对的问题 ([0eae306](https://github.com/easyops-cn/next-bricks/commit/0eae306233736af15af89760f0969fc5cb05b657))
+
+
+
+
+
 # [0.34.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.33.9...@next-bricks/advanced@0.34.0) (2024-07-03)
 
 
