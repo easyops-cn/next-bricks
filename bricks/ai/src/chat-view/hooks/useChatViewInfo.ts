@@ -305,7 +305,6 @@ export function useChatViewInfo({
     // chat listener
     const listener = (msgItem?: SSEMessageItem) => {
       if (!msgItem) return;
-      chatingText.current = chatingText.current + msgItem.delta.content;
       if (activeSessionId === NEW_SESSION_ID && msgItem.conversationId) {
         // 如果当前会话属于新建会话，更新会话历史数据
         setSessionList((list) => {
@@ -319,22 +318,48 @@ export function useChatViewInfo({
         });
         setActiveSessionId(msgItem.conversationId);
       }
-      // eslint-disable-next-line no-console
-      // console.log(chatingText.current);
-      chatingMessageItem.current = {
-        ...msgItem,
-        role: "assistant",
-        content: {
-          type: "markdown",
-          text: chatingText.current,
-        },
-        chatting: true,
-        created: moment(msgItem?.created).format("YYYY-MM-DD HH:mm:ss"),
-      };
-      setMsgList((list) => {
-        list.pop();
-        return list.concat(chatingMessageItem.current!);
-      });
+
+      if (
+        !chatingMessageItem.current ||
+        msgItem.taskId === chatingMessageItem.current?.taskId
+      ) {
+        // 同一taskId的消息处理
+        chatingText.current = chatingText.current + msgItem.delta.content;
+        // eslint-disable-next-line no-console
+        // console.log(chatingText.current);
+        chatingMessageItem.current = {
+          ...msgItem,
+          role: "assistant",
+          content: {
+            type: "markdown",
+            text: chatingText.current,
+          },
+          chatting: true,
+          created: moment(msgItem?.created).format("YYYY-MM-DD HH:mm:ss"),
+        };
+        setMsgList((list) => {
+          list.pop();
+          return list.concat(chatingMessageItem.current!);
+        });
+      } else {
+        // 当一次chat过程中，又出现不同taskId的消息，需要分开消息框展示
+        chatingText.current = msgItem.delta.content;
+        chatingMessageItem.current = {
+          ...msgItem,
+          role: "assistant",
+          content: {
+            type: "markdown",
+            text: chatingText.current,
+          },
+          chatting: true,
+          created: moment(msgItem?.created).format("YYYY-MM-DD HH:mm:ss"),
+        };
+        setMsgList((list) => {
+          return list
+            .map((item) => ({ ...item, chatting: false }))
+            .concat(chatingMessageItem.current! as any);
+        });
+      }
     };
     const reset = () => {
       chatingText.current = "";
