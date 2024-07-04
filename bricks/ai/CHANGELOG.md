@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.7...@next-bricks/ai@1.23.8) (2024-07-04)
+
+
+### Bug Fixes
+
+* 多agent的回答需要拆分消息框展示 ([9723a56](https://github.com/easyops-cn/next-bricks/commit/9723a56d3ae7831a8a4c8409c731bde3a84828bb))
+
+
+
+
+
 ## [1.23.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.6...@next-bricks/ai@1.23.7) (2024-07-03)
 
 
