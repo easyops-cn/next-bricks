@@ -230,8 +230,8 @@
           .message-content {
             justify-content: end;
             .wrapper {
-              display: flex;
-              flex-direction: row-reverse;
+              /* display: flex;
+              flex-direction: row-reverse; */
               .content {
                 background-color: #606f7c;
                 color: #fff;
@@ -241,13 +241,13 @@
                   color: #fff;
                 }
               }
-              &:hover {
+              /* &:hover {
                 .content-tip {
                   display: block;
                 }
-              }
+              } */
 
-              .content-tip {
+              /* .content-tip {
                 display: none;
 
                 eo-icon {
@@ -255,7 +255,7 @@
                   color: #606f7c;
                   cursor: pointer;
                 }
-              }
+              } */
             }
           }
         }
