@@ -61,3 +61,13 @@
     outputFormat: LLL
     value: "2020-02-27 16:36"
 ```
+
+### 仅日期
+
+```yaml preview
+- brick: eo-humanize-time
+  properties:
+    formatter: full
+    type: date
+    value: 1714026348
+```

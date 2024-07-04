@@ -35,11 +35,6 @@ describe("humanizeTime", () => {
     expect(humanizeTime(0)).toBe("1970年1月1日 早上8:00");
   });
 
-  it("return null when given +/-Infinity", function () {
-    expect(humanizeTime(Infinity)).toBe(null);
-    expect(humanizeTime(-Infinity)).toBe(null);
-  });
-
   it("compute humanized time from a Date object", function () {
     expect(humanizeTime(new Date("2016-03-07T15:42:00+08:00"))).toBe(
       "2016年3月7日 下午3:42"
@@ -51,6 +46,56 @@ describe("humanizeTime", () => {
       humanizeTime(moment("2016-03-07 15:43:00", "YYYY-MM-DD HH:mm:ss"))
     ).toBe("2016年3月7日 下午3:43");
   });
+
+  it("return null when given +/-Infinity", function () {
+    expect(humanizeTime(Infinity)).toBe(null);
+    expect(humanizeTime(-Infinity)).toBe(null);
+  });
+
+  it("compute humanized time from a date string as date-only", function () {
+    expect(humanizeTime("2016-03-07 15:40:00", undefined, "date")).toBe(
+      "2016年3月7日"
+    );
+  });
+
+  it("compute humanized time from a date string of current year as date-only", function () {
+    expect(humanizeTime("2017-03-07 15:40:00", undefined, "date")).toBe(
+      "3月7日"
+    );
+  });
+
+  it("compute humanized time from a date string in en-US as date-only", function () {
+    i18n.changeLanguage("en-US");
+    moment.locale(i18n.language);
+    expect(humanizeTime("2016-03-07 15:40:00", undefined, "date")).toBe(
+      "March 7, 2016"
+    );
+  });
+
+  it("compute humanized time from a number in milliseconds as date-only", function () {
+    expect(humanizeTime(1457336460000, undefined, "date")).toBe("2016年3月7日");
+  });
+
+  it("compute humanized time from number 0 as date-only", function () {
+    expect(humanizeTime(0, undefined, "date")).toBe("1970年1月1日");
+  });
+
+  it("compute humanized time from a Date object as date-only", function () {
+    expect(
+      humanizeTime(new Date("2016-03-07T15:42:00+08:00"), undefined, "date")
+    ).toBe("2016年3月7日");
+  });
+
+  it("compute humanized time from a Moment object as date-only", function () {
+    expect(
+      humanizeTime(
+        moment("2016-03-07 15:43:00", "YYYY-MM-DD HH:mm:ss"),
+        undefined,
+        "date"
+      )
+    ).toBe("2016年3月7日");
+  });
+
   it("formats as the specific format", function () {
     const m1 = moment("2016-03-07 15:48:00", "YYYY-MM-DD HH:mm:ss");
     expect(humanizeTime(m1, HumanizeTimeFormat.full)).toBe(
@@ -87,7 +132,7 @@ describe("humanizeTime", () => {
   it("won't show year if the time is two days before", function () {
     const m = moment("2017-03-03 16:48:00", "YYYY-MM-DD HH:mm:ss");
     expect(humanizeTime(m, HumanizeTimeFormat.accurate)).toBe(
-      m.format(i18n.t(`${NS_LIBS_DATETIME}:${K.FORMAT_SHORT_DAY}`))
+      m.format(i18n.t(`${NS_LIBS_DATETIME}:${K.FORMAT_SHORT_DAY_DATETIME}`))
     );
   });
 
