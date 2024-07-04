@@ -11,7 +11,7 @@ import { ChatItemLoading } from "../Loading.js";
 import { TextItem } from "./TextItem.js";
 import { Toolbar } from "./Toolbar.js";
 import { Time } from "./Time.js";
-import { ContentTip } from "./ContentTip.js";
+// import { ContentTip } from "./ContentTip.js";
 import { MsgItemContext } from "./MsgItemContext.js";
 
 const NOT_AGENT_MATCH = "no_agent";
@@ -66,8 +66,8 @@ export function MessageNode(props: MessageItem): React.ReactNode {
         <div className="message-content">
           <div className="wrapper">
             <div className="content">{messageNode}</div>
-
-            <ContentTip {...props} />
+            {/* 按钮统一放到toolbar */}
+            {/* <ContentTip {...props} /> */}
             <Toolbar {...props} />
           </div>
         </div>
