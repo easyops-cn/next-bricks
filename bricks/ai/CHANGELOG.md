@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.8...@next-bricks/ai@1.23.9) (2024-07-04)
+
+
+### Bug Fixes
+
+* 把重新提问按钮放到toolbar ([80acba2](https://github.com/easyops-cn/next-bricks/commit/80acba2dd9cae0db59ccc267b3180bfecf9e3488))
+
+
+
+
+
 ## [1.23.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.7...@next-bricks/ai@1.23.8) (2024-07-04)
 
 
