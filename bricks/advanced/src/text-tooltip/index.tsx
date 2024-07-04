@@ -1,9 +1,20 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
-import { Tooltip } from "antd";
+import { Tooltip, ConfigProvider } from "antd";
+import {
+  StyleProvider,
+  createCache,
+  legacyLogicalPropertiesTransformer,
+} from "@ant-design/cssinjs";
 
 const { defineElement, property } = createDecorators();
 
@@ -55,22 +66,39 @@ export function EoTextTooltipComponent(props: TooltipPropsEoTextTooltipProps) {
     const { offsetWidth, offsetHeight, scrollWidth, scrollHeight } = parentDom;
     return offsetWidth < scrollWidth || offsetHeight < scrollHeight;
   }, [lineClamp, label]);
+
+  const cache = useMemo(() => {
+    return createCache();
+  }, []);
+
   useEffect(() => {
     setShow(isEllipsis());
   }, [isEllipsis]);
   return (
-    <Tooltip title={show ? label : null}>
-      <div
-        ref={ref}
-        className="ellipsisWrap"
-        style={
-          {
-            "--line-clamp": lineClamp,
-          } as React.CSSProperties
-        }
+    <ConfigProvider prefixCls="antdV5">
+      <StyleProvider
+        cache={cache}
+        transformers={[legacyLogicalPropertiesTransformer]}
       >
-        {label}
-      </div>
-    </Tooltip>
+        <Tooltip
+          title={
+            /* istanbul ignore next */
+            show ? label : null
+          }
+        >
+          <div
+            ref={ref}
+            className="ellipsisWrap"
+            style={
+              {
+                "--line-clamp": lineClamp,
+              } as React.CSSProperties
+            }
+          >
+            {label}
+          </div>
+        </Tooltip>
+      </StyleProvider>
+    </ConfigProvider>
   );
 }
