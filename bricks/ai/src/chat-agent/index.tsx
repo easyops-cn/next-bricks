@@ -17,6 +17,7 @@ const { defineElement, property, event, method } = createDecorators();
 
 export interface ChatAgentProps {
   agentId?: string;
+  robotId?: string;
   conversationId?: string;
 }
 
@@ -50,6 +51,9 @@ export
 class ChatAgent extends ReactNextElement implements ChatAgentProps {
   @property()
   accessor agentId: string | undefined;
+
+  @property()
+  accessor robotId: string | undefined;
 
   @property()
   accessor conversationId: string | undefined;
@@ -104,6 +108,7 @@ class ChatAgent extends ReactNextElement implements ChatAgentProps {
       <ChatAgentComponent
         ref={this.#ref}
         agentId={this.agentId}
+        robotId={this.robotId}
         conversationId={this.conversationId}
         // onMessageChunkPush={this.#handleMessageChunkPush}
         onMessagesUpdate={this.#handleMessagesUpdate}
@@ -134,6 +139,7 @@ export interface ChatAgentRef {
 export function LegacyChatAgentComponent(
   {
     agentId,
+    robotId,
     conversationId: propConversationId,
     onMessageChunkPush,
     onMessagesUpdate,
@@ -319,6 +325,7 @@ export function LegacyChatAgentComponent(
             method: "POST",
             body: JSON.stringify({
               agentId,
+              robotId,
               input: content,
               stream: true,
               conversationId,
@@ -339,7 +346,7 @@ export function LegacyChatAgentComponent(
         }
       },
     }),
-    [agentId, conversationId, onBusyChange, sendRequest]
+    [agentId, robotId, conversationId, onBusyChange, sendRequest]
   );
 
   useEffect(() => {
