@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.39.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.38.0...@next-bricks/diagram@0.39.0) (2024-07-08)
+
+
+### Features
+
+* 新版拓扑图支持容器元素 ([b284867](https://github.com/easyops-cn/next-bricks/commit/b284867758385e5399c33ad3ad89041f4eb9af9e))
+
+
+
+
+
 # [0.38.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.37.17...@next-bricks/diagram@0.38.0) (2024-07-01)
 
 
