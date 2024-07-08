@@ -33,6 +33,7 @@ export interface BaseBrickCell extends BaseCell {
 export interface BaseNodeCell extends BaseCell {
   type: "node";
   id: NodeId;
+  containerId?: NodeId;
   view: NodeView;
   [SYMBOL_FOR_SIZE_INITIALIZED]?: boolean;
   [SYMBOL_FOR_LAYOUT_INITIALIZED]?: boolean;
@@ -45,7 +46,8 @@ export interface BaseEdgeCell extends BaseCell {
   // view: EdgeView;
 }
 
-export type DecoratorType = "text" | "area";
+export type DecoratorType = "text" | "area" | "container";
+export type Direction = "top" | "right" | "bottom" | "left";
 
 export interface DecoratorCell extends BaseCell {
   type: "decorator";
@@ -66,6 +68,7 @@ export interface NodeView extends InitialNodeView {
 
 export interface DecoratorView extends NodeView {
   text?: string;
+  direction?: Direction;
 }
 
 export interface InitialNodeView {

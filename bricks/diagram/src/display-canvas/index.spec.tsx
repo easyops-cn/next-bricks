@@ -66,6 +66,19 @@ describe("eo-display-canvas", () => {
           y: 160,
         },
       },
+      {
+        type: "decorator",
+        id: "container-1",
+        decorator: "container",
+        view: {
+          x: 50,
+          y: 400,
+          width: 280,
+          height: 120,
+          direction: "top",
+          text: " 上层服务",
+        },
+      },
     ] as Cell[];
 
     act(() => {
@@ -82,7 +95,7 @@ describe("eo-display-canvas", () => {
       [...element.shadowRoot!.querySelectorAll(".cells .cell")].map((cell) =>
         cell.classList.contains("faded")
       )
-    ).toEqual([true, false, false, false, true]);
+    ).toEqual([true, false, false, false, true, true]);
 
     // MouseLeave node b
     act(() => {
@@ -91,7 +104,7 @@ describe("eo-display-canvas", () => {
     // No effects
     expect(
       element.shadowRoot!.querySelectorAll(".cells .cell.faded").length
-    ).toBe(2);
+    ).toBe(3);
 
     // MouseLeave node a
     act(() => {

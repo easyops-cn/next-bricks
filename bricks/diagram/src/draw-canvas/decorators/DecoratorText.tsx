@@ -108,7 +108,7 @@ export function DecoratorText({
   );
 }
 
-function selectAllText(element: HTMLElement) {
+export function selectAllText(element: HTMLElement) {
   const range = document.createRange();
   range.selectNodeContents(element);
   const selection = window.getSelection()!;

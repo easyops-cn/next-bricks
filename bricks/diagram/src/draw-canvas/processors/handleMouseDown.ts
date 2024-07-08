@@ -76,7 +76,6 @@ export function handleMouseDown(
   function getMovement(e: MouseEvent): PositionTuple {
     return [(e.clientX - from[0]) / scale, (e.clientY - from[1]) / scale];
   }
-
   let moved = false;
 
   const handleMove = (e: MouseEvent, finished?: boolean) => {
@@ -92,6 +91,9 @@ export function handleMouseDown(
           id: cell.id,
           x: position[0] + movement[0],
           y: position[1] + movement[1],
+          width: cell.view.width,
+          height: cell.view.height,
+          decorator: isDecoratorCell(cell) ? cell.decorator : undefined,
         }));
         (finished ? onCellsMoved : onCellsMoving)?.(payloads);
       } else {
