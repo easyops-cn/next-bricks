@@ -2,6 +2,7 @@ import type { SizeTuple } from "../../diagram/interfaces";
 import type {
   Cell,
   DecoratorCell,
+  DecoratorType,
   EdgeCell,
   NodeCell,
   NodeId,
@@ -71,6 +72,10 @@ export interface MoveCellPayload {
   id: NodeId;
   x: number;
   y: number;
+  width?: number;
+  height?: number;
+  decorator?: DecoratorType;
+  containerCell?: DecoratorCell;
 }
 
 export interface ResizeCellPayload {

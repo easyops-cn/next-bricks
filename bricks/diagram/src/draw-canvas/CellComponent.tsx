@@ -73,7 +73,6 @@ export function CellComponent({
   onCellMouseLeave,
 }: CellComponentProps): JSX.Element | null {
   const gRef = useRef<SVGGElement>(null);
-
   const unrelated = useMemo(
     () => unrelatedCells.some((item) => sameTarget(item, cell)),
     [cell, unrelatedCells]

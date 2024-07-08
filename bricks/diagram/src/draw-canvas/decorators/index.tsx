@@ -2,6 +2,7 @@ import React from "react";
 import type { BasicDecoratorProps } from "../interfaces";
 import { DecoratorArea } from "./DecoratorArea";
 import { DecoratorText } from "./DecoratorText";
+import { DecoratorContainer } from "./DecoratorContainer";
 
 export function DecoratorComponent({
   cell,
@@ -18,6 +19,9 @@ export function DecoratorComponent({
   let SpecifiedComponent: (props: BasicDecoratorProps) => JSX.Element | null;
 
   switch (cell.decorator) {
+    case "container":
+      SpecifiedComponent = DecoratorContainer;
+      break;
     case "area":
       SpecifiedComponent = DecoratorArea;
       break;

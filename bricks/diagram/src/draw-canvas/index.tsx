@@ -42,10 +42,12 @@ import type {
   NodeView,
   LayoutType,
   LayoutOptions,
+  Direction,
 } from "./interfaces";
 import { rootReducer } from "./reducers";
 import { MarkerComponent } from "../diagram/MarkerComponent";
 import {
+  isEdgeCell,
   isNodeCell,
   isNodeOrAreaDecoratorCell,
   isTextDecoratorCell,
@@ -74,6 +76,7 @@ import { handleLasso } from "./processors/handleLasso";
 import styleText from "../shared/canvas/styles.shadow.css";
 import zoomBarStyleText from "../shared/canvas/ZoomBarComponent.shadow.css";
 import { cellToTarget } from "./processors/cellToTarget";
+import { handleNodeContainedChanege } from "./processors/handleNodeContainedChanege";
 
 const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
   "basic.lock-body-scroll"
@@ -114,6 +117,7 @@ export interface DropDecoratorInfo {
   /** [PointerEvent::clientX, PointerEvent::clientY] */
   position: PositionTuple;
   text?: string;
+  direction?: Direction;
 }
 
 export interface AddNodeInfo {
@@ -332,6 +336,16 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
   };
 
   /**
+   * node节点跟容器组关系改变事件，有containerCell是新增关系，否则删除关系
+   */
+  @event({ type: "node.container.change" })
+  accessor #containerContainerChange!: EventEmitter<MoveCellPayload[]>;
+
+  #handleContainerContainerChange = (detail: MoveCellPayload[]) => {
+    this.#containerContainerChange.emit(detail);
+  };
+
+  /**
    * 缩放变化后，从素材库拖拽元素进画布时，拖拽图像应设置对应的缩放比例。
    */
   @event({ type: "scale.change" })
@@ -387,6 +401,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
     position,
     decorator,
     text,
+    direction,
   }: DropDecoratorInfo): Promise<DecoratorCell | null> {
     // Drag and then drop a node
     const droppedInside = document
@@ -406,6 +421,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
           width: DEFAULT_AREA_WIDTH,
           height: DEFAULT_AREA_HEIGHT,
           text,
+          direction,
         },
       };
       this.#canvasRef.current?.dropDecorator(newDecorator);
@@ -519,6 +535,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         onCellsDelete={this.#handleCellsDelete}
         onCellContextMenu={this.#handleCellContextMenu}
         onDecoratorTextChange={this.#handleDecoratorTextChange}
+        onContainerContainerChange={this.#handleContainerContainerChange}
         onScaleChange={this.#handleScaleChange}
       />
     );
@@ -536,6 +553,7 @@ export interface EoDrawCanvasComponentProps extends EoDrawCanvasProps {
   onCellsDelete(cells: Cell[]): void;
   onCellContextMenu(detail: CellContextMenuDetail): void;
   onDecoratorTextChange(detail: DecoratorTextChangeDetail): void;
+  onContainerContainerChange(detail: MoveCellPayload[]): void;
   onScaleChange(scale: number): void;
 }
 
@@ -589,6 +607,7 @@ function LegacyEoDrawCanvasComponent(
     onCellContextMenu,
     onDecoratorTextChange,
     onScaleChange,
+    onContainerContainerChange,
   }: EoDrawCanvasComponentProps,
   ref: React.Ref<DrawCanvasRef>
 ) {
@@ -856,8 +875,9 @@ function LegacyEoDrawCanvasComponent(
       if (info.length === 1) {
         onCellMove(info[0]);
       }
+      handleNodeContainedChanege(info, cells, onContainerContainerChange);
     },
-    [onCellMove, onCellsMove]
+    [onCellMove, onCellsMove, cells, onContainerContainerChange]
   );
 
   const handleCellResizing = useCallback((info: ResizeCellPayload) => {
@@ -992,7 +1012,7 @@ function LegacyEoDrawCanvasComponent(
           >
             {cells.map((cell) => (
               <CellComponent
-                key={`${cell.type}:${cell.type === "edge" ? `${cell.source}~${cell.target}` : cell.id}`}
+                key={`${cell.type}:${isEdgeCell(cell) ? `${cell.source}~${cell.target}` : cell.id}`}
                 layout={layout}
                 cell={cell}
                 cells={cells}
