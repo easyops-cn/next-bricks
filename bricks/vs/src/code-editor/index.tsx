@@ -271,11 +271,13 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
     this.#tokenClickEvent.emit(word);
   };
 
-  #handleValidtor = (value: string) => {
-    try {
-      yaml.load(value);
-    } catch {
-      return "请填写正确的格式";
+  #handleValidator = (value: string) => {
+    if (this.language === "brick_next_yaml" || this.language === "yaml") {
+      try {
+        yaml.load(value);
+      } catch {
+        return "请填写正确的格式";
+      }
     }
     return "";
   };
@@ -301,7 +303,7 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
         helpBrick={this.helpBrick}
         labelBrick={this.labelBrick}
         notRender={this.notRender}
-        validator={this.#handleValidtor}
+        validator={this.#handleValidator}
       >
         <CodeEditorComponent
           value={this.value}
