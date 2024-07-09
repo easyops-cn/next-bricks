@@ -1,0 +1,31 @@
+.customTabWrapper {
+  .customTabList {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    justify-items: flex-start;
+    margin-bottom: 8px;
+
+    .customTabItem {
+      position: relative;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+      border-radius: 4px;
+      transform: translateZ(0);
+
+      &.active {
+        background-color: var(--palette-gray-6);
+        box-shadow:
+          0 1px 2px 0 rgba(0, 0, 0, 0.03),
+          0 1px 6px -1px rgba(0, 0, 0, 0.02),
+          0 2px 4px 0 rgba(0, 0, 0, 0.02);
+        color: #fff;
+      }
+
+      .customTabItemLabel {
+        padding: 2px 12px;
+      }
+    }
+  }
+}

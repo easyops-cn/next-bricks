@@ -42,6 +42,10 @@ import { IconSelectComponent } from "./components/common/IconSelectComponent";
 import { ColorPickerComponent } from "./components/common/ColorPickerComponent";
 import { InputWithUrlComponent } from "./components/common/InputWithUrlComponent";
 import { TextAlignRadioComponent } from "./components/common/TextAlignRadioComponent";
+import { InputWithUnitComponent } from "./components/common/InputWithUnitComponent";
+import { UseChildrenSelectComponent } from "./components/common/UseChildrenSelectComponent";
+import { BoxSizeComponent } from "./components/common/BoxSizeComponent";
+import { CustomTab } from "./components/common/CustomTab";
 import { __secret_internals, customEditors } from "@next-core/runtime";
 import {
   ADVANCED_FORM_KEY,
@@ -75,10 +79,16 @@ const SchemaField = createSchemaField({
     CodeEditor: CodeEditorComponent,
     IconSelect: IconSelectComponent,
     ColorPicker: ColorPickerComponent,
+    UseChildrenSelect: UseChildrenSelectComponent,
     InputWithUrl: InputWithUrlComponent,
+    InputWithUnit: InputWithUnitComponent,
     TextAlignRadio: TextAlignRadioComponent,
+    BoxSize: BoxSizeComponent,
+    CustomTab,
   },
 });
+
+type SelectOptions = { label: string; value: string }[];
 
 export interface EditorComponentProps {
   advancedMode?: boolean;
@@ -100,9 +110,11 @@ export interface EditorComponentProps {
   scope: {
     advancedMode: boolean;
     dataList: DataItem[];
-    extraLibs: any;
+    childSlots: SelectOptions;
+    extraLibs: SelectOptions;
     links: any;
     tokenClick: (token: CustomEvent<string>) => void;
+    triggerAction: (action: string) => void;
   };
 }
 
@@ -169,7 +181,12 @@ class PropertyEditor extends ReactNextElement {
   @property({
     attribute: false,
   })
-  accessor extraLibs: any;
+  accessor extraLibs: SelectOptions;
+
+  @property({
+    attribute: false,
+  })
+  accessor childSlots: SelectOptions;
 
   /**
    * 表单验证成功时触发事件
@@ -196,11 +213,8 @@ class PropertyEditor extends ReactNextElement {
       .validate()
       .then(() => {
         form.notify(BEFORE_SUBMIT_KEY, getRealValue());
-        if (this.#submitValue) {
-          this.#successEvent.emit(this.#submitValue);
-        } else {
-          this.#successEvent.emit(getRealValue());
-        }
+        // transformStyle(this.#submitValue || getRealValue(), this.advancedMode);
+        this.#successEvent.emit(this.#submitValue ?? getRealValue());
       })
       .catch((err: any[]) => {
         this.#errorEvent.emit(err);
@@ -230,6 +244,13 @@ class PropertyEditor extends ReactNextElement {
     }
   );
 
+  @event({ type: "trigger.action" })
+  accessor #triggerActionEvent!: EventEmitter<string>;
+
+  #handleTriggerAction = (action: string) => {
+    this.#triggerActionEvent.emit(action);
+  };
+
   render() {
     return (
       <PropertyEditorComponent
@@ -240,9 +261,11 @@ class PropertyEditor extends ReactNextElement {
         dataList={this.dataList}
         extraLibs={this.extraLibs}
         links={this.links}
+        childSlots={this.childSlots}
         editorPackages={this.editorPackages}
         handleValuesChange={this.#handleValuesChange}
         handleTokenClick={this.#handleTokenClick}
+        handleTriggerAction={this.#handleTriggerAction}
         onSubmitEffect={this.#onSubmitEffect}
       />
     );
@@ -253,12 +276,14 @@ export interface PropertyEditorProps {
   values: any;
   editorName: string;
   advancedMode?: boolean;
+  childSlots?: SelectOptions;
+  extraLibs: SelectOptions;
   dataList: DataItem[];
-  extraLibs: any;
   links: any;
   editorPackages: BrickPackage[];
   handleValuesChange: (value: any) => void;
   handleTokenClick: (token: string) => void;
+  handleTriggerAction: (action: string) => void;
   onSubmitEffect: (listener: (value: any, form: Form) => any) => void;
 }
 
@@ -270,9 +295,11 @@ export function LegacyPropertyEditor(
     dataList,
     editorPackages,
     extraLibs,
+    childSlots,
     links,
     handleValuesChange,
     handleTokenClick,
+    handleTriggerAction,
     onSubmitEffect,
   }: PropertyEditorProps,
   ref: any
@@ -388,10 +415,12 @@ export function LegacyPropertyEditor(
               scope={{
                 dataList,
                 advancedMode,
+                childSlots,
                 extraLibs,
                 links,
                 tokenClick: (event: CustomEvent<string>) =>
                   handleTokenClick(event.detail),
+                triggerAction: handleTriggerAction,
               }}
               effects={{
                 onFieldInit,

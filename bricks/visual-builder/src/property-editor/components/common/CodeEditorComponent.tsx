@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { wrapBrick } from "@next-core/react-element";
 import { CodeEditor, CodeEditorProps } from "@next-bricks/vs/code-editor";
 import yaml from "js-yaml";
+import { isEmpty } from "lodash";
 
 interface CodeEditorComponentProps extends CodeEditorProps {
   onChange?: (value?: any) => void;
@@ -48,7 +49,17 @@ export function CodeEditorComponent(
     if (props.value && !initValue) {
       let value = props.value;
       if (value && typeof value !== "string") {
-        value = yaml.safeDump(value, {
+        const filterValue = Object.fromEntries(
+          Object.entries(value)
+            .map(([k, v]) => {
+              if (isEmpty(v)) {
+                return null;
+              }
+              return [k, v];
+            })
+            .filter(Boolean)
+        );
+        value = yaml.safeDump(filterValue, {
           skipInvalid: true,
         });
       }

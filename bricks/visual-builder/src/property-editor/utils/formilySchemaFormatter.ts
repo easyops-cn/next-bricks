@@ -1,5 +1,6 @@
 import type { ISchema } from "@formily/react";
 import { omit } from "lodash";
+import { stylesSchema } from "../schema/styles.schema";
 
 export const NORMAL_FORM_KEY = "#normal_form";
 export const ADVANCED_FORM_KEY = "#advanced_form";
@@ -151,10 +152,34 @@ export function formilySchemaFormatter(data: DataNode): ISchema {
     properties: {
       [NORMAL_FORM_KEY]: {
         type: "void",
-        properties: walk({
-          ...data,
-          children: [...defaultFields, ...data.children],
-        }),
+        "x-component": "CustomTab",
+        "x-component-props": {
+          activeTab: "property",
+        },
+        properties: {
+          property: {
+            type: "void",
+            "x-component": "CustomTab.TabPanel",
+            "x-component-props": {
+              title: "属性",
+              tab: "property",
+            },
+            properties: walk({
+              ...data,
+              children: [...defaultFields, ...data.children],
+            }),
+          },
+          style: {
+            type: "object",
+            name: "style",
+            "x-component": "CustomTab.TabPanel",
+            "x-component-props": {
+              title: "样式",
+              tab: "style",
+            },
+            properties: walk(stylesSchema),
+          },
+        },
       },
       [ADVANCED_FORM_KEY]: {
         name: ADVANCED_FORM_KEY,

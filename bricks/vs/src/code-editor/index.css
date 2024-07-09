@@ -1,5 +1,5 @@
 .highlight {
-  color: rgb(74 170 189) !important;
+  text-decoration-color: rgb(74 170 189);
   text-decoration: underline;
   font-weight: bold;
   font-style: oblique;

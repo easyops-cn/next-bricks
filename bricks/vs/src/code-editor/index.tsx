@@ -257,8 +257,10 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
     isInit: boolean = false
   ) => {
     this.value = value;
-    !isInit && this.getFormElement()?.formStore.onChange(this.name!, value);
-    this.#codeChange.emit(value);
+    if (!isInit) {
+      this.getFormElement()?.formStore.onChange(this.name!, value);
+      this.#codeChange.emit(value);
+    }
     if (!isFlush) {
       this.#userInput.emit(parseValue);
     }
