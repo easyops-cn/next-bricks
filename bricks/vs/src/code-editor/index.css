@@ -1,8 +1,5 @@
 .highlight {
-  text-decoration-color: rgb(74 170 189);
-  text-decoration: underline;
-  font-weight: bold;
-  font-style: oblique;
+  box-shadow: rgb(74 170 189) 0px 1px 0px 0px;
 }
 
 .pointer {
