@@ -221,7 +221,7 @@ export class ChatService {
         {
           method: "POST",
           body: JSON.stringify({
-            limit: 15,
+            limit: 1000,
             next_token: this.#messageNextToken,
           }),
         }
