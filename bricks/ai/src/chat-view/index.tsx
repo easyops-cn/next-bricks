@@ -220,7 +220,8 @@ class ChatView extends ReactNextElement {
   accessor showShare: boolean | undefined;
 
   /**
-   * 输入间隔
+   * 输入间隔，设置为 -1 使用新的方式对大段消息进行模拟打字效果节流输出
+   *
    * @default 50
    */
   @property({
