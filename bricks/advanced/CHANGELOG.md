@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.35.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.35.0...@next-bricks/advanced@0.35.1) (2024-07-09)
+
+
+### Bug Fixes
+
+* **eo-workbench-layout-v2:** 修复拖动时卡死，位置便宜问题 ([c492ba7](https://github.com/easyops-cn/next-bricks/commit/c492ba76a4af87ab8f1325cab90b15d09253d223))
+
+
+
+
+
 # [0.35.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.34.2...@next-bricks/advanced@0.35.0) (2024-07-09)
 
 
