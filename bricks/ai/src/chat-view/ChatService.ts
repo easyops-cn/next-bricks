@@ -331,6 +331,7 @@ export class ChatService {
       {
         method: "POST",
         signal: this.#ctrl.signal,
+        openWhenHidden: true,
         body: JSON.stringify({
           agentId: this.#agentId,
           robotId: this.#robotId,
@@ -440,9 +441,7 @@ export class ChatService {
           this.#ctrl!.abort();
         },
         onerror: (err) => {
-          // eslint-disable-next-line no-console
-          console.log("err", err);
-          this.#ctrl!.abort();
+          throw err;
         },
       }
     );
