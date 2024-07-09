@@ -31,7 +31,7 @@ import type {
 } from "@next-bricks/form/checkbox";
 import styles from "./styles.module.css";
 const { defineElement, property, event } = createDecorators();
-
+import "./styles.css";
 type Item = {
   position: Layout;
   key: string;
