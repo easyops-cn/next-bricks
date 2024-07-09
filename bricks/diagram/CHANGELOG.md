@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.40.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.39.0...@next-bricks/diagram@0.40.0) (2024-07-09)
+
+
+### Features
+
+* 自动模式，根据containerId关系的节点的位置大小，计算对应容器元素的位置大小 ([ff98c58](https://github.com/easyops-cn/next-bricks/commit/ff98c58bdd9aac2093b8487b3a898956b9ccb66c))
+
+
+
+
+
 # [0.39.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.38.0...@next-bricks/diagram@0.39.0) (2024-07-08)
 
 
