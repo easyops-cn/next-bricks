@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.32.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.31.0...@next-bricks/basic@1.32.0) (2024-07-09)
+
+
+### Features
+
+* active element blur ([96dc497](https://github.com/easyops-cn/next-bricks/commit/96dc497cb61ebf8b5e86e8c645d3ef9a012cefc2))
+
+
+
+
+
 # [1.31.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.30.1...@next-bricks/basic@1.31.0) (2024-07-02)
 
 
