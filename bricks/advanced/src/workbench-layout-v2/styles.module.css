@@ -1,0 +1,105 @@
+@import url("react-grid-layout/css/styles.css");
+@import url("react-resizable/css/styles.css");
+
+.gridLayoutWrapper {
+  display: flex;
+  height: 100%;
+  position: relative;
+  .componentWrapper {
+    width: 170px;
+    padding: 6px 12px;
+    overflow-y: scroll;
+    box-shadow: 1px 0 0 0 var(--palette-gray-5);
+    background: var(--color-fill-bg-container-1);
+    z-index: 999;
+    position: sticky;
+    top: 0;
+
+    .componentTitle {
+      font-size: 16px;
+      padding: 6px 0;
+      font-weight: 500;
+    }
+
+    .componentList {
+      margin-top: 6px;
+      eo-checkbox::part(checkbox-wrapper) {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      eo-checkbox::part(checkbox-option) {
+        margin-left: 0;
+        width: 100%;
+        background: none;
+      }
+    }
+  }
+
+  .layoutWrapper {
+    flex: 1;
+
+    .layout {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .actionsWrapper {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      margin-left: 1px;
+      display: flex;
+      gap: 8px;
+      justify-content: end;
+      background: var(--color-fill-bg-container-1);
+      padding: 8px 12px;
+      box-shadow: 0 1px 1px 0 var(--palette-gray-5);
+    }
+
+    .editMask {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 45px;
+      bottom: 0;
+      z-index: 10;
+    }
+
+    .deleteIcon {
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--color-fill-bg-container-1);
+      color: var(--color-normal-text);
+    }
+
+    .deleteIcon:hover {
+      color: var(--color-error);
+    }
+
+    .deleteIcon:active {
+      color: var(--color-error-active);
+    }
+  }
+}
+
+.reactGridItem.reactGridPlaceholder {
+  background-color: #ddd;
+}
+
+.reactGridItem.reactDraggableDragging {
+  pointer-events: none;
+}
+
+.reactGridItem.reactGridPlaceholder.forbidden {
+  background-color: red;
+}

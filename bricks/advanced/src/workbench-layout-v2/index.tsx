@@ -8,7 +8,10 @@ import React, {
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import { UseSingleBrickConf } from "@next-core/types";
-import { ReactUseBrick } from "@next-core/react-runtime";
+import {
+  ReactUseBrick,
+  ReactUseMultipleBricks,
+} from "@next-core/react-runtime";
 import {
   ItemCallback,
   Layout,
@@ -16,7 +19,6 @@ import {
   WidthProvider,
 } from "react-grid-layout";
 import "@next-core/theme";
-import styleText from "./styles.shadow.css";
 import type {
   GeneralIcon,
   GeneralIconProps,
@@ -27,7 +29,7 @@ import type {
   CheckboxOptionType,
   CheckboxProps,
 } from "@next-bricks/form/checkbox";
-
+import styles from "./styles.module.css";
 const { defineElement, property, event } = createDecorators();
 
 type Item = {
@@ -58,13 +60,13 @@ const WrappedCheckbox = wrapBrick<
 });
 
 /**
- * 工作台布局
+ * 工作台布局V2,未使用shadow dom
  */
 export
-@defineElement("eo-workbench-layout", {
-  styleTexts: [styleText],
+@defineElement("eo-workbench-layout-v2", {
+  shadowOptions: false,
 })
-class EoWorkbenchLayout extends ReactNextElement {
+class EoWorkbenchLayoutV2 extends ReactNextElement {
   @property()
   accessor cardTitle: string | undefined;
 
@@ -77,6 +79,15 @@ class EoWorkbenchLayout extends ReactNextElement {
     attribute: false,
   })
   accessor layouts: Layout[] | undefined;
+
+  @property({
+    attribute: false,
+  })
+  accessor toolbarBricks:
+    | {
+        useBrick: UseSingleBrickConf[];
+      }
+    | undefined;
 
   @property({
     attribute: false,
@@ -106,6 +117,7 @@ class EoWorkbenchLayout extends ReactNextElement {
       <EoWorkbenchLayoutComponent
         cardTitle={this.cardTitle}
         layouts={this.layouts}
+        toolbarBricks={this.toolbarBricks}
         componentList={this.componentList}
         isEdit={this.isEdit}
         onSave={this.#handleSaveLayout}
@@ -115,9 +127,12 @@ class EoWorkbenchLayout extends ReactNextElement {
   }
 }
 
-export interface EoWorkbenchLayoutProps {
+export interface EoWorkbenchLayoutV2Props {
   cardTitle?: string;
   layouts?: Layout[];
+  toolbarBricks?: {
+    useBrick: UseSingleBrickConf[];
+  };
   componentList?: Item[];
   isEdit?: boolean;
   onSave?: (layout: Layout[]) => void;
@@ -130,11 +145,12 @@ const getRealKey = (key: string): string =>
 export function EoWorkbenchLayoutComponent({
   cardTitle = "卡片列表",
   layouts: layoutsProps,
+  toolbarBricks,
   componentList = [],
   isEdit,
   onSave,
   onCancel,
-}: EoWorkbenchLayoutProps) {
+}: EoWorkbenchLayoutV2Props) {
   const ResponsiveReactGridLayout = useMemo(
     () => WidthProvider(Responsive),
     []
@@ -287,14 +303,17 @@ export function EoWorkbenchLayoutComponent({
               className="drag-box"
             >
               {isEdit && (
-                <div className="edit-mask" onMouseDown={handleEditMaskClcik} />
+                <div
+                  className={styles.editMask}
+                  onMouseDown={handleEditMaskClcik}
+                />
               )}
               <ReactUseBrick useBrick={component.useBrick} />
               {isEdit && (
                 <WrappedIcon
                   icon="delete"
                   lib="antd"
-                  className="delete-icon"
+                  className={styles.deleteIcon}
                   onClick={(e) => handleDeleteItem(e, component)}
                 />
               )}
@@ -345,27 +364,29 @@ export function EoWorkbenchLayoutComponent({
   }, [isEdit, handleWatchLayoutSizeChange, layoutsProps]);
 
   return (
-    <div className="grid-layout-wrapper" ref={gridLayoutRef}>
+    <div className={styles.gridLayoutWrapper} ref={gridLayoutRef}>
       {isEdit && (
-        <div className="component-wrapper">
-          <div className="component-title">{cardTitle}</div>
-          <div className="component-list">
+        <div className={styles.componentWrapper}>
+          <div className={styles.componentTitle}>{cardTitle}</div>
+          <div className={styles.componentList}>
             <WrappedCheckbox
               options={computedOptions}
               value={computedSelectedComponentKeys}
               onChange={handleCheckBoxChange as any}
             />
-            <slot name="toolbar"></slot>
+            {toolbarBricks?.useBrick && (
+              <ReactUseMultipleBricks useBrick={toolbarBricks.useBrick} />
+            )}
           </div>
         </div>
       )}
       <div
-        className="layout-wrapper"
+        className={styles.layoutWrapper}
         ref={layoutWrapperRef}
         style={layoutWrapperStyle}
       >
         {isEdit && (
-          <div className="actions-wrapper">
+          <div className={styles.actionsWrapper}>
             <WrappedButton type="primary" onClick={handleSave}>
               保存
             </WrappedButton>
@@ -376,8 +397,8 @@ export function EoWorkbenchLayoutComponent({
           </div>
         )}
         <ResponsiveReactGridLayout
-          className="layout"
-          draggableCancel=".delete-icon,.edit-actions,.ingore-item"
+          className={styles.layout}
+          draggableCancel={`${styles.deleteIcon},.edit-actions,.ingore-item`}
           breakpoints={{ lg: 1300, md: 1024, sm: 768 }}
           rowHeight={1}
           cols={{ lg: 3, md: 3, sm: 1 }}
