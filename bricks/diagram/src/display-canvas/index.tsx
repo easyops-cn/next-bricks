@@ -381,7 +381,7 @@ function EoDisplayCanvasComponent({
             {cells.map((cell) => (
               <CellComponent
                 key={`${cell.type}:${isEdgeCell(cell) ? `${cell.source}~${cell.target}` : cell.id}`}
-                layout={undefined}
+                layout={layout}
                 cell={cell}
                 cells={cells}
                 degraded={degraded}

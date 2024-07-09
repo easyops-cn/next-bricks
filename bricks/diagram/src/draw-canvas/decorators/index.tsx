@@ -6,8 +6,10 @@ import { DecoratorContainer } from "./DecoratorContainer";
 
 export function DecoratorComponent({
   cell,
+  view,
   transform,
   readOnly,
+  layout,
   activeTarget,
   cells,
   onCellResizing,
@@ -38,8 +40,10 @@ export function DecoratorComponent({
   return (
     <SpecifiedComponent
       cell={cell}
+      view={view}
       transform={transform}
       readOnly={readOnly}
+      layout={layout}
       activeTarget={activeTarget}
       cells={cells}
       onCellResizing={onCellResizing}

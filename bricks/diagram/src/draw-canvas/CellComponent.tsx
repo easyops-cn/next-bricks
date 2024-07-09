@@ -6,11 +6,19 @@ import type {
   CellContextMenuDetail,
   ComputedEdgeLineConf,
   DecoratorTextChangeDetail,
+  DecoratorView,
   EdgeCell,
   LayoutType,
   NodeBrickConf,
+  NodeCell,
 } from "./interfaces";
-import { isDecoratorCell, isEdgeCell, isNodeCell } from "./processors/asserts";
+import {
+  isContainerDecoratorCell,
+  isDecoratorCell,
+  isEdgeCell,
+  isNoManualLayout,
+  isNodeCell,
+} from "./processors/asserts";
 import { EdgeComponent } from "./EdgeComponent";
 import { NodeComponent } from "./NodeComponent";
 import { handleMouseDown } from "./processors/handleMouseDown";
@@ -20,7 +28,8 @@ import { cellToTarget } from "./processors/cellToTarget";
 import type { SizeTuple, TransformLiteral } from "../diagram/interfaces";
 import { sameTarget } from "./processors/sameTarget";
 import { targetIsActive } from "./processors/targetIsActive";
-
+import { computeContainerRect } from "./processors/computeContainerRect";
+import { get } from "lodash";
 export interface CellComponentProps {
   layout: LayoutType;
   cell: Cell;
@@ -77,6 +86,19 @@ export function CellComponent({
     () => unrelatedCells.some((item) => sameTarget(item, cell)),
     [cell, unrelatedCells]
   );
+  const containerRect = useMemo((): DecoratorView => {
+    if (isContainerDecoratorCell(cell) && isNoManualLayout(layout)) {
+      const containCells = cells.filter(
+        (c): c is NodeCell => isNodeCell(c) && c.containerId === cell.id
+      );
+      const view = {
+        ...cell.view,
+        ...computeContainerRect(containCells),
+      };
+      return view;
+    }
+    return get(cell, "view", { x: 0, y: 0, width: 0, height: 0 });
+  }, [layout, cell, cells]);
 
   useEffect(() => {
     const g = gRef.current;
@@ -84,7 +106,10 @@ export function CellComponent({
       return;
     }
     const onMouseDown = (event: MouseEvent) => {
-      if (readOnly) {
+      if (
+        readOnly ||
+        (isContainerDecoratorCell(cell) && isNoManualLayout(layout))
+      ) {
         event.stopPropagation();
       } else {
         handleMouseDown(event, {
@@ -165,7 +190,7 @@ export function CellComponent({
       transform={
         cell.type === "edge" || cell.view.x == null
           ? undefined
-          : `translate(${cell.view.x} ${cell.view.y})`
+          : `translate(${containerRect.x} ${containerRect.y})`
       }
       onContextMenu={handleContextMenu}
       onClick={handleCellClick}
@@ -185,8 +210,10 @@ export function CellComponent({
       ) : isDecoratorCell(cell) ? (
         <DecoratorComponent
           cell={cell}
+          view={containerRect}
           transform={transform}
           readOnly={readOnly}
+          layout={layout}
           activeTarget={activeTarget}
           cells={cells}
           onCellResizing={onCellResizing}

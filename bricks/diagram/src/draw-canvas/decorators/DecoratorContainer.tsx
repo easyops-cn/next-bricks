@@ -10,11 +10,14 @@ import { handleMouseDown } from "../processors/handleMouseDown";
 import classNames from "classnames";
 import { get } from "lodash";
 import { selectAllText } from "./DecoratorText";
+import { isNoManualLayout } from "../processors/asserts";
 
 export function DecoratorContainer({
   cell,
   transform,
   readOnly,
+  layout,
+  view,
   activeTarget,
   cells,
   onCellResizing,
@@ -25,18 +28,17 @@ export function DecoratorContainer({
 }: BasicDecoratorProps): JSX.Element {
   const label = get(cell.view, "text", "");
   const direction = get(cell.view, "direction", "top");
-  const titleForeignRef = useRef({
-    x: 0,
-    y: 0,
-    width: cell.view.width,
-    height: cell.view.height,
-  });
   const textRef = useRef<HTMLDivElement>(null);
   const resizeHandleRef = React.useRef<SVGGElement>(null);
   const [editingLabel, setEditingLabel] = useState(false);
   const [currentLabel, setCurrentLabel] = useState<string>(label);
   const [shouldEmitLabelChange, setShouldEmitLabelChange] = useState(false);
-
+  const [titleForeignRect, setTitleForeignRect] = useState({
+    x: 0,
+    y: 0,
+    width: cell.view.width,
+    height: cell.view.height,
+  });
   const handleEnableEdit = useCallback(
     (e: React.MouseEvent) => {
       if (readOnly) {
@@ -78,22 +80,24 @@ export function DecoratorContainer({
     if (textParentEle) {
       const { clientWidth, clientHeight } = textParentEle;
       if (["left", "right"].includes(direction)) {
-        titleForeignRef.current = {
+        const rect = {
           width: clientWidth,
-          height: cell.view.height,
-          x: direction === "left" ? -clientWidth : cell.view.width,
+          height: view.height,
+          x: direction === "left" ? -clientWidth : view.width,
           y: 0,
         };
+        setTitleForeignRect(rect);
       } else {
-        titleForeignRef.current = {
-          width: cell.view.width,
+        const rect = {
+          width: view.width,
           height: clientHeight,
           x: 0,
-          y: direction === "top" ? -clientHeight : cell.view.height,
+          y: direction === "top" ? -clientHeight : view.height,
         };
+        setTitleForeignRect(rect);
       }
     }
-  }, [cell.view.width, cell.view.height, currentLabel, direction]);
+  }, [view, currentLabel, direction]);
 
   useEffect(() => {
     if (editingLabel && textRef.current) {
@@ -107,11 +111,12 @@ export function DecoratorContainer({
     if (shouldEmitLabelChange) {
       onDecoratorTextChange?.({
         id: cell.id,
-        view: { ...cell.view, text: currentLabel },
+        view: { ...view, text: currentLabel },
       });
       setShouldEmitLabelChange(false);
     }
-  }, [cell, currentLabel, onDecoratorTextChange, shouldEmitLabelChange]);
+  }, [cell, view, currentLabel, onDecoratorTextChange, shouldEmitLabelChange]);
+
   useEffect(() => {
     const resizeHandle = resizeHandleRef.current;
     if (!resizeHandle || readOnly) {
@@ -146,7 +151,7 @@ export function DecoratorContainer({
 
   return (
     <g className="decorator-container">
-      <foreignObject {...titleForeignRef.current}>
+      <foreignObject {...titleForeignRect}>
         <div
           className={classNames("text-container", {
             editing: editingLabel,
@@ -164,16 +169,12 @@ export function DecoratorContainer({
           />
         </div>
       </foreignObject>
-      <rect
-        width={cell.view.width}
-        height={cell.view.height}
-        className="container"
-      />
-      {!readOnly && (
+      <rect width={view.width} height={view.height} className="container" />
+      {!readOnly && !isNoManualLayout(layout) && (
         <g
           ref={resizeHandleRef}
           className="resize-handle"
-          transform={`translate(${cell.view.width - 20} ${cell.view.height - 20})`}
+          transform={`translate(${view.width - 20} ${view.height - 20})`}
         >
           <rect width={20} height={20} />
           <path d="M10 18L18 10 M15 18L18 15" />
