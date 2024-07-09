@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.10...@next-bricks/ai@1.23.11) (2024-07-09)
+
+
+### Bug Fixes
+
+* make enter interval more efficient ([557ffa2](https://github.com/easyops-cn/next-bricks/commit/557ffa2fdde4c1b253e5e39f10d684343ebb4f5c))
+
+
+
+
+
 ## [1.23.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.9...@next-bricks/ai@1.23.10) (2024-07-09)
 
 
