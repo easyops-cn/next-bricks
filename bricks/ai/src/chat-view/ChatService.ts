@@ -2,6 +2,7 @@ import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { http } from "@next-core/http";
 import { getBasePath } from "@next-core/runtime";
 import moment from "moment";
+import _ from "lodash";
 
 export interface SSEMessageItem {
   conversationId?: string;
@@ -60,7 +61,7 @@ export class ChatService {
   #agentId: string;
   #robotId: string;
   #enterInterval: number;
-  #charting = false;
+  #chatting = false;
   #isStartEmitEvent = false;
   #emitTimer: NodeJS.Timeout | undefined;
   #messageQueue: Array<QueueItem> = [];
@@ -324,7 +325,7 @@ export class ChatService {
   async chat(msg: string | ChatBody): Promise<void> {
     this.#ctrl = new AbortController();
     let hadMatchMessage = false;
-    this.#charting = true;
+    this.#chatting = true;
     await fetchEventSource(
       `${getBasePath()}api/gateway/easyops.api.aiops_chat.manage.LLMChatProxy@1.0.0/api/aiops_chat/v1/chat/completions`,
       {
@@ -372,7 +373,24 @@ export class ChatService {
               this.setConversationId(result.conversationId);
             }
             const wordList = this.splitWord(result.delta.content);
-            wordList.forEach((word) => {
+
+            // 一段消息最多拆分为 50-100 段内容
+            let chunkedWords = wordList;
+            const maxChunks = 100;
+            if (wordList.length > maxChunks) {
+              const minChunks = 50;
+              const chunkSize = Math.ceil(
+                wordList.length /
+                  (Math.floor(Math.random() * (maxChunks - minChunks + 1)) +
+                    minChunks)
+              );
+              chunkedWords = _.chunk(wordList, chunkSize).map((chunk) =>
+                chunk.join("")
+              );
+            }
+
+            chunkedWords.forEach((word) => {
+              // wordList.forEach((word) => {
               this.enqueue({
                 topic: "add",
                 message: {
@@ -429,13 +447,13 @@ export class ChatService {
       }
     );
 
-    this.#charting = false;
+    this.#chatting = false;
   }
 
   stop() {
-    clearInterval(this.#emitTimer);
+    clearTimeout(this.#emitTimer);
     this.#ctrl && this.#ctrl?.abort();
-    this.#charting = false;
+    this.#chatting = false;
     this.#emitTimer = undefined;
     this.#isStartEmitEvent = false;
     this.#clear();
@@ -447,18 +465,45 @@ export class ChatService {
     this.#isStartEmitEvent = true;
     // 轮训队列，每隔 #enterInterval(默认 50ms) 推出第一条数据，获取到 text，推送给组件，组件接受后进行渲染
     // 直到聊天结束，并且消息队列数据为空时，停止 emit
-    this.#emitTimer = setInterval(() => {
-      if (this.#charting || this.getMessageQueue().length) {
+    const callback = () => {
+      if (this.#chatting || this.#messageQueue.length) {
         const messageItem = this.dequeue()!;
         messageItem && this.notifySubscribers(messageItem);
+        this.#emitTimer = setTimeout(
+          callback,
+          getRandomInterval(this.#enterInterval, this.#messageQueue.length)
+        );
       } else {
-        clearInterval(this.#emitTimer);
+        clearTimeout(this.#emitTimer);
         this.#emitTimer = undefined;
         this.#isStartEmitEvent = false;
         this.notifySubscribers({ topic: "finish" });
       }
-    }, this.#enterInterval);
+    };
+
+    this.#emitTimer = setTimeout(
+      callback,
+      getRandomInterval(this.#enterInterval, this.#messageQueue.length)
+    );
   }
+}
+
+function getRandomInterval(
+  enterInterval: number,
+  messagesInQueue: number
+): number {
+  // 如果设置了 enterInterval >= 0，使用该值作为间隔
+  if (enterInterval >= 0) {
+    return enterInterval;
+  }
+  // 否则，根据消息队列中的消息数量动态调整间隔时间
+  // 当队列中消息很多时，尽快输出内容
+  if (messagesInQueue > 50) {
+    return 16;
+  }
+  const value = Math.floor(Math.random() * 11);
+  // 当队列消息不多时，20% 的概率返回 50ms，80% 的概率返回 50-300ms 之间的随机数
+  return value < 9 ? 50 : Math.floor(Math.random() * 251) + 50;
 }
 
 // export const chartService = new ChatService();
