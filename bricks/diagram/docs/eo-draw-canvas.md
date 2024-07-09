@@ -451,6 +451,19 @@
                 height: 300,
               },
             },
+             {
+              type: "decorator",
+              id: "container-1",
+              decorator: "container",
+              view: {
+               x: 50,
+                y: 400,
+                width: 280,
+                height: 120,
+                direction: "top",
+                text: " 上层服务"
+              },
+            },
             {
               type: "edge",
               source: "X",
@@ -468,6 +481,7 @@
             ["X", "Y", "Z", "W"].map((id) => ({
               type: "node",
               id,
+              containerId: ["X","Y","Z"].includes(id)?"container-1":undefined,
               data: {
                 name: `Node ${id}`,
               },
@@ -837,6 +851,19 @@
               },
             },
             {
+              type: "decorator",
+              id: "container-1",
+              decorator: "container",
+              view: {
+               x: 50,
+                y: 400,
+                width: 280,
+                height: 120,
+                direction: "top",
+                text: " 上层服务"
+              },
+            },
+            {
               type: "edge",
               source: "X",
               target: "Y",
@@ -853,6 +880,7 @@
             ["X", "Y", "Z", "W"].map((id) => ({
               type: "node",
               id,
+              containerId: ["W","Z"].includes(id)?"container-1":undefined,
               data: {
                 name: `Node ${id}`,
               },

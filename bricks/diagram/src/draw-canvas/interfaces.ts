@@ -147,6 +147,8 @@ export interface BasicDecoratorProps {
   cell: DecoratorCell;
   transform: TransformLiteral;
   readOnly?: boolean;
+  layout?: LayoutType;
+  view: DecoratorView;
   activeTarget: ActiveTarget | null | undefined;
   cells: Cell[];
   onCellResizing?(info: ResizeCellPayload): void;

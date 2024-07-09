@@ -4,6 +4,7 @@ import type {
   EdgeCell,
   InitialCell,
   InitialNodeCell,
+  LayoutType,
   NodeCell,
 } from "../interfaces";
 import { MoveCellPayload } from "../reducers/interfaces";
@@ -50,4 +51,8 @@ export function isTextDecoratorCell(cell: Cell): cell is DecoratorCell {
 }
 export function isContainerDecoratorCell(cell: Cell): cell is DecoratorCell {
   return cell.type === "decorator" && cell.decorator === "container";
+}
+
+export function isNoManualLayout(layout: LayoutType) {
+  return !["manual"].includes(layout!);
 }
