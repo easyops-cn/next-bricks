@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.9...@next-bricks/ai@1.23.10) (2024-07-09)
+
+
+### Bug Fixes
+
+* fix scroll bug ([711ff7f](https://github.com/easyops-cn/next-bricks/commit/711ff7f1bb55e15011c935dc7e19fb66adf56127))
+
+
+
+
+
 ## [1.23.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.8...@next-bricks/ai@1.23.9) (2024-07-04)
 
 
