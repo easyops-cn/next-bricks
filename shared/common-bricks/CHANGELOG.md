@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.44.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.43.0...@next-shared/common-bricks@0.44.0) (2024-07-09)
+
+
+### Features
+
+* 新增eo-workbench-layout-v2支持嵌入v2构件 ([407e648](https://github.com/easyops-cn/next-bricks/commit/407e64876ca9b8a04399ebfb804de769cf268dfe))
+
+
+
+
+
 # [0.43.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.42.1...@next-shared/common-bricks@0.43.0) (2024-07-03)
 
 

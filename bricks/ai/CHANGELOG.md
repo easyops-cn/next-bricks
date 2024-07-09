@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.11...@next-bricks/ai@1.23.12) (2024-07-09)
+
+
+### Bug Fixes
+
+* Browser change tab and stop sse ([6b90665](https://github.com/easyops-cn/next-bricks/commit/6b90665f398df979c5046ca1aed316a42e59a525))
+
+
+
+
+
 ## [1.23.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.10...@next-bricks/ai@1.23.11) (2024-07-09)
 
 
