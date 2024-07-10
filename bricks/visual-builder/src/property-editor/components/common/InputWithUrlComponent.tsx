@@ -45,10 +45,10 @@ export function InputWithUrlComponent(props: InputWithUrlComponentProps) {
   }, [mode, form, url, props.value, href]);
 
   const handleChange = useCallback(
-    (event: CustomEvent<string>) => {
-      props.onChange(event.detail);
+    (value: string) => {
+      props.onChange(value);
 
-      form.setValues({ [mode ? url : href]: event.detail });
+      form.setValues({ [mode ? url : href]: value });
     },
     [props, form, mode, url, href]
   );
@@ -95,7 +95,7 @@ export function InputWithUrlComponent(props: InputWithUrlComponentProps) {
           {suffixText}
         </div>
       }
-      onChange={handleChange as any}
+      onChange={(event) => handleChange(event.target.value)}
     />
   );
 }
