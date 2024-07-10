@@ -10,6 +10,8 @@ import {
 } from "../ChatService.js";
 
 const NEW_SESSION_ID = "new_session_id";
+export const RELATED_QUESTIONS_TYPE = "RELATED_QUESTIONS";
+export const DEFAULT_TYPE = "TEXT";
 
 export function useChatViewInfo({
   agentId,
@@ -111,6 +113,7 @@ export function useChatViewInfo({
               },
               key: `user_${item.taskId}`,
               created: item.time,
+              type: DEFAULT_TYPE,
             },
             {
               agentId: item.agentId,
@@ -124,6 +127,7 @@ export function useChatViewInfo({
               key: `assistant_${item.taskId}`,
               created: item.inputTime,
               tag: item.tag,
+              type: DEFAULT_TYPE,
             }
           );
         });
@@ -224,25 +228,29 @@ export function useChatViewInfo({
       setChatting(true);
       chatService.chat(msg);
       setMsgList((list) => {
-        return list.concat([
-          {
-            role: "user",
-            content: {
-              type: "markdown",
-              text: inputMsg,
+        return list
+          .filter((item) => item.type !== RELATED_QUESTIONS_TYPE)
+          .concat([
+            {
+              role: "user",
+              content: {
+                type: "markdown",
+                text: inputMsg,
+              },
+              created: moment().format("YYYY-MM-DD HH:mm:ss"),
+              type: DEFAULT_TYPE,
             },
-            created: moment().format("YYYY-MM-DD HH:mm:ss"),
-          },
-          {
-            role: "assistant",
-            content: {
-              type: "load",
-              text: "",
+            {
+              role: "assistant",
+              content: {
+                type: "load",
+                text: "",
+              },
+              chatting: true,
+              created: "Now",
+              type: DEFAULT_TYPE,
             },
-            chatting: true,
-            created: "Now",
-          },
-        ]);
+          ]);
       });
     },
     [chatService, activeSessionId]
@@ -305,60 +313,93 @@ export function useChatViewInfo({
     // chat listener
     const listener = (msgItem?: SSEMessageItem) => {
       if (!msgItem) return;
-      if (activeSessionId === NEW_SESSION_ID && msgItem.conversationId) {
+
+      const msgItemData = {
+        type: DEFAULT_TYPE,
+        ...msgItem,
+      };
+
+      if (activeSessionId === NEW_SESSION_ID && msgItemData.conversationId) {
         // 如果当前会话属于新建会话，更新会话历史数据
         setSessionList((list) => {
           return list.map((item) => ({
             ...item,
             conversationId:
               item.conversationId === NEW_SESSION_ID
-                ? msgItem.conversationId!
+                ? msgItemData.conversationId!
                 : item.conversationId,
           }));
         });
-        setActiveSessionId(msgItem.conversationId);
+        setActiveSessionId(msgItemData.conversationId);
       }
 
       if (
         !chatingMessageItem.current ||
-        msgItem.taskId === chatingMessageItem.current?.taskId
+        (msgItemData.type === chatingMessageItem.current?.type &&
+          msgItemData.taskId === chatingMessageItem.current?.taskId)
       ) {
-        // 同一taskId的消息处理
-        chatingText.current = chatingText.current + msgItem.delta.content;
-        // eslint-disable-next-line no-console
-        // console.log(chatingText.current);
+        // 当初次触发chat,或者chat过程中持续对同一type同一taskId的消息进行处理
+        chatingText.current = chatingText.current + msgItemData.delta.content;
         chatingMessageItem.current = {
-          ...msgItem,
+          ...msgItemData,
           role: "assistant",
           content: {
             type: "markdown",
             text: chatingText.current,
           },
           chatting: true,
-          created: moment(msgItem?.created).format("YYYY-MM-DD HH:mm:ss"),
+          created: moment(msgItemData?.created).format("YYYY-MM-DD HH:mm:ss"),
         };
         setMsgList((list) => {
           list.pop();
           return list.concat(chatingMessageItem.current!);
         });
-      } else {
-        // 当一次chat过程中，又出现不同taskId的消息，需要分开消息框展示
-        chatingText.current = msgItem.delta.content;
+      } else if (
+        msgItemData.type === chatingMessageItem.current?.type &&
+        msgItemData.taskId !== chatingMessageItem.current?.taskId
+      ) {
+        // 对于同一type不同taskId的消息，需要分开消息框展示
+        chatingText.current = msgItemData.delta.content;
         chatingMessageItem.current = {
-          ...msgItem,
+          ...msgItemData,
           role: "assistant",
           content: {
             type: "markdown",
             text: chatingText.current,
           },
           chatting: true,
-          created: moment(msgItem?.created).format("YYYY-MM-DD HH:mm:ss"),
+          created: moment(msgItemData?.created).format("YYYY-MM-DD HH:mm:ss"),
         };
         setMsgList((list) => {
           return list
             .map((item) => ({ ...item, chatting: false }))
             .concat(chatingMessageItem.current! as any);
         });
+      } else if (msgItemData.type !== chatingMessageItem.current?.type) {
+        // 当消息type发生变化，需要拆分
+        switch (msgItemData.type) {
+          case RELATED_QUESTIONS_TYPE:
+          default:
+            chatingText.current = msgItemData.delta.content;
+            chatingMessageItem.current = {
+              ...msgItemData,
+              role: "assistant",
+              content: {
+                type: "markdown",
+                text: chatingText.current,
+              },
+              chatting: true,
+              created: moment(msgItemData?.created).format(
+                "YYYY-MM-DD HH:mm:ss"
+              ),
+            };
+            setMsgList((list) => {
+              return list
+                .map((item) => ({ ...item, chatting: false }))
+                .filter((item) => item.type !== RELATED_QUESTIONS_TYPE)
+                .concat(chatingMessageItem.current! as any);
+            });
+        }
       }
     };
     const reset = () => {

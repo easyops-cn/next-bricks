@@ -29,6 +29,7 @@ export interface MessageItem {
   tag?: {
     isLike?: boolean;
   };
+  type?: string;
 }
 
 export interface QuickAnswerConfig {
