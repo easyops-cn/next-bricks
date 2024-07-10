@@ -13,11 +13,15 @@ import { Toolbar } from "./Toolbar.js";
 import { Time } from "./Time.js";
 // import { ContentTip } from "./ContentTip.js";
 import { MsgItemContext } from "./MsgItemContext.js";
+import {
+  DEFAULT_TYPE,
+  RELATED_QUESTIONS_TYPE,
+} from "../../hooks/useChatViewInfo.js";
 
 const NOT_AGENT_MATCH = "no_agent";
 
 export function MessageNode(props: MessageItem): React.ReactNode {
-  const { content, created, role, agentId } = props;
+  const { content, created, role, agentId, type: itemType, chatting } = props;
   const isUser = useMemo(() => role === "user", [role]);
   const { quickAnswerConfig } = useChatViewContext();
 
@@ -52,26 +56,62 @@ export function MessageNode(props: MessageItem): React.ReactNode {
     return agentList.find((item) => item.id === agentId);
   }, [agentList, agentId]);
 
+  const getMsgNode = useCallback(() => {
+    switch (itemType) {
+      case RELATED_QUESTIONS_TYPE:
+        return (
+          <>
+            <div className="message-top">
+              <div style={{ color: "gray" }}>推荐提问</div>
+            </div>
+            <div className="message-content">
+              <div className="wrapper">
+                {chatting ? (
+                  <div className="content">
+                    <ChatItemLoading />
+                  </div>
+                ) : (
+                  <>{messageNode}</>
+                )}
+              </div>
+            </div>
+          </>
+        );
+      case DEFAULT_TYPE:
+      default:
+        return (
+          <>
+            <div className="message-top">
+              {isUser
+                ? "我"
+                : !agentId || agentId === NOT_AGENT_MATCH || !matchAgent
+                  ? "AI助手"
+                  : matchAgent.name}
+              <Time time={created} />
+            </div>
+            <div className="message-content">
+              <div className="wrapper">
+                <div className="content">{messageNode}</div>
+                <Toolbar {...props} />
+              </div>
+            </div>
+          </>
+        );
+    }
+  }, [
+    itemType,
+    isUser,
+    agentId,
+    matchAgent,
+    created,
+    chatting,
+    messageNode,
+    props,
+  ]);
+
   return (
     <MsgItemContext.Provider value={props}>
-      <div className="message-box">
-        <div className="message-top">
-          {isUser
-            ? "我"
-            : !agentId || agentId === NOT_AGENT_MATCH || !matchAgent
-              ? "AI助手"
-              : matchAgent.name}
-          <Time time={created} />
-        </div>
-        <div className="message-content">
-          <div className="wrapper">
-            <div className="content">{messageNode}</div>
-            {/* 按钮统一放到toolbar */}
-            {/* <ContentTip {...props} /> */}
-            <Toolbar {...props} />
-          </div>
-        </div>
-      </div>
+      <div className="message-box">{getMsgNode()}</div>
     </MsgItemContext.Provider>
   );
 }

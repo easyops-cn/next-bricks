@@ -14,6 +14,7 @@ export interface SSEMessageItem {
   taskId?: string;
   agentId?: string;
   robotId?: string;
+  type?: string;
 }
 
 export interface QueueItem {

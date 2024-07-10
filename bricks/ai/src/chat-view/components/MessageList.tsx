@@ -13,6 +13,7 @@ import { MessageNode } from "./MessageItem/index.js";
 import { QuickAnswerList } from "./QuickAnswerList/index.js";
 // import { debounce } from "lodash";
 import { StopBtn } from "./StopBtn.js";
+import { DEFAULT_TYPE, RELATED_QUESTIONS_TYPE } from "../hooks/useChatViewInfo";
 
 interface MessageListProps {
   showAvatar?: boolean;
@@ -34,15 +35,31 @@ export function MessageList({
 
   const getMsgItemNode = useCallback(
     (item: MessageItem, index: number = 0) => {
-      return (
-        <div
-          className={classNames("message-item", { user: item.role === "user" })}
-          key={index}
-        >
-          {showAvatar && <Avatar role={item.role} agentId={item.agentId} />}
-          <MessageNode {...item} />
-        </div>
-      );
+      switch (item.type) {
+        case RELATED_QUESTIONS_TYPE:
+          return (
+            <div
+              className={classNames("message-item")}
+              style={{ marginTop: "-36px", marginLeft: "44px" }}
+              key={index}
+            >
+              <MessageNode {...item} />
+            </div>
+          );
+        case DEFAULT_TYPE:
+        default:
+          return (
+            <div
+              className={classNames("message-item", {
+                user: item.role === "user",
+              })}
+              key={index}
+            >
+              {showAvatar && <Avatar role={item.role} agentId={item.agentId} />}
+              <MessageNode {...item} />
+            </div>
+          );
+      }
     },
     [showAvatar]
   );
@@ -53,7 +70,11 @@ export function MessageList({
         return (
           <>
             {getMsgItemNode(item, index)}
-            {chatting && index === msgList.length - 1 ? <StopBtn /> : null}
+            {chatting &&
+            index === msgList.length - 1 &&
+            item.type !== RELATED_QUESTIONS_TYPE ? (
+              <StopBtn />
+            ) : null}
           </>
         );
       } else {
