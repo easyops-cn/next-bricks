@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.12...@next-bricks/ai@1.23.13) (2024-07-10)
+
+
+### Bug Fixes
+
+* 支持推荐提问 ([8f88fbb](https://github.com/easyops-cn/next-bricks/commit/8f88fbbd01ec722275ac464e0fb06009d3e2257e))
+
+
+
+
+
 ## [1.23.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.11...@next-bricks/ai@1.23.12) (2024-07-09)
 
 
