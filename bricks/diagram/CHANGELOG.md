@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.40.1...@next-bricks/diagram@0.40.2) (2024-07-10)
+
+
+### Bug Fixes
+
+* update dagre, fix a browser compatibility issue ([eca9a43](https://github.com/easyops-cn/next-bricks/commit/eca9a43c65ecbfaaae1f6676eaa453b65392bec0))
+
+
+
+
+
 ## [0.40.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.40.0...@next-bricks/diagram@0.40.1) (2024-07-10)
 
 
