@@ -10,7 +10,7 @@
   align-items: baseline;
   cursor: pointer;
   line-height: 22px;
-  text-align: center;
+  text-align: left;
   box-sizing: 22px;
   padding: 1px 4px;
   border-radius: var(--medius-border-radius);
