@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.10.3...@next-bricks/vs@1.11.0) (2024-07-10)
+
+
+### Bug Fixes
+
+* editor set value not work ([9e0ba14](https://github.com/easyops-cn/next-bricks/commit/9e0ba14df700ea22cd90c944c6a3accbc579e255))
+
+
+### Features
+
+* add Style schema and fix code editor default emit event ([ee64a48](https://github.com/easyops-cn/next-bricks/commit/ee64a4867734b8804fd8f8fae209e460e0a83a77))
+
+
+
+
+
 ## [1.10.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.10.2...@next-bricks/vs@1.10.3) (2024-07-08)
 
 
