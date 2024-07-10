@@ -141,6 +141,7 @@
 }
 
 .cell .node > * {
+  position: fixed;
   pointer-events: auto;
 }
 
