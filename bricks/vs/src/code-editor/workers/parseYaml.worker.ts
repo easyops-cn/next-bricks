@@ -5,7 +5,7 @@ self.onmessage = onMessage;
 let parseYaml: any;
 
 async function onMessage(message: MessageEvent): Promise<void> {
-  const { token, data, id, options, init } = message.data;
+  const { token, data, id, options } = message.data;
   if (!parseYaml) {
     parseYaml = await getParseYaml(options);
   }
@@ -17,13 +17,11 @@ async function onMessage(message: MessageEvent): Promise<void> {
           token: "parse_yaml",
           data: result,
           id,
-          init,
         });
       } catch {
         self.postMessage({
           token: "parse_yaml_error",
           id,
-          init,
         });
       }
       break;
