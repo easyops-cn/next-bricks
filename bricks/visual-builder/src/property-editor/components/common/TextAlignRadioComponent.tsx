@@ -12,9 +12,11 @@ export function TextAlignRadioComponent(props: any): React.ReactElement {
       <Radio.Button value="left">
         <AlignLeftOutlined />
       </Radio.Button>
-      <Radio.Button value="center">
-        <AlignCenterOutlined />
-      </Radio.Button>
+      {!props.hideCenter && (
+        <Radio.Button value="center">
+          <AlignCenterOutlined />
+        </Radio.Button>
+      )}
       <Radio.Button value="right">
         <AlignRightOutlined />
       </Radio.Button>
