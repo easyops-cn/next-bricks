@@ -15,6 +15,7 @@ import previewStyleText from "./preview.shadow.css";
 const { defineElement, property } = createDecorators();
 
 export interface RawPreviewProps {
+  previewUrl?: string;
   generations?: AttributeGeneration[];
   category?: PreviewCategory;
   theme?: string;
@@ -49,6 +50,9 @@ export
   styleTexts: [styleText],
 })
 class RawDataPreview extends ReactNextElement {
+  @property()
+  accessor previewUrl: string | undefined;
+
   @property({ attribute: false })
   accessor generations: AttributeGeneration[] | undefined;
 
@@ -70,6 +74,7 @@ class RawDataPreview extends ReactNextElement {
   render() {
     return (
       <RawDataPreviewComponent
+        previewUrl={this.previewUrl}
         generations={this.generations}
         category={this.category}
         theme={this.theme}
@@ -85,6 +90,7 @@ export interface RawDataPreviewComponentProps extends RawPreviewProps {
 }
 
 export function RawDataPreviewComponent({
+  previewUrl,
   generations,
   category,
   theme,
@@ -124,9 +130,11 @@ export function RawDataPreviewComponent({
 
     const fixedPkg = {
       ...pkg,
-      filePath: `${location.origin}${getBasePath()}${
-        window.PUBLIC_ROOT ?? ""
-      }${pkg.filePath}`,
+      filePath: previewUrl
+        ? new URL(pkg.filePath, new URL(previewUrl, location.origin)).toString()
+        : `${location.origin}${getBasePath()}${
+            window.PUBLIC_ROOT ?? ""
+          }${pkg.filePath}`,
     };
 
     Promise.allSettled(
@@ -191,7 +199,7 @@ export function RawDataPreviewComponent({
       tableChildren.push({
         brick: "div",
         properties: {
-          textContent: `${generation.objectName} - ${generation.propertyName}`,
+          textContent: `${generation.objectName ?? generation.objectId} - ${generation.propertyName ?? generation.propertyId}`,
           className: classNames("body-cell", {
             "last-row-cell": isLastRow,
           }),
@@ -262,7 +270,7 @@ export function RawDataPreviewComponent({
     <div className={classNames("container")}>
       <iframe
         ref={iframeRef}
-        src={`${getBasePath()}_brick-preview-v3_/preview/`}
+        src={previewUrl ?? `${getBasePath()}_brick-preview-v3_/preview/`}
         loading="lazy"
         onLoad={handleIframeLoad}
       />

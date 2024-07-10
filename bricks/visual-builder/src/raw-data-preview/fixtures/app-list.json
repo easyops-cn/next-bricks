@@ -1,0 +1,193 @@
+[
+  {
+    "name": "App1",
+    "appId": "APP12345",
+    "memo": "This is a test application",
+    "releaseAbbreviation": "v1.0",
+    "releaseDate": "2023-01-01 12:00:00",
+    "releaseNum": "R1001",
+    "releaseTimes": "1",
+    "_hierarchy": "接入上层",
+    "_updatable": 1,
+    "appStatus": "运营中",
+    "runningState": "运行中",
+    "status": "上线",
+    "__pipeline": [
+      {
+        "name": "Pipeline1",
+        "category": "Category1",
+        "flowId": "F12345",
+        "flowVersion": 1,
+        "templateId": "T12345",
+        "templateVersion": 1,
+        "rules": "rule1,rule2",
+        "subscribers": ["user1", "user2"],
+        "subscribedChannel": "channel1",
+        "noticeMethods": ["email", "sms"],
+        "metadata": "metadata1"
+      },
+      {
+        "name": "Pipeline2",
+        "category": "Category2",
+        "flowId": "F23456",
+        "flowVersion": 2,
+        "templateId": "T23456",
+        "templateVersion": 2,
+        "rules": "rule3,rule4",
+        "subscribers": ["user3", "user4"],
+        "subscribedChannel": "channel2",
+        "noticeMethods": ["email"],
+        "metadata": "metadata2"
+      }
+    ],
+    "_defaultDeployStrategy": [
+      { "clusterType": "Type1", "strategyId": "S12345" },
+      { "clusterType": "Type2", "strategyId": "S23456" }
+    ],
+    "_packageList": [
+      {
+        "name": "Package1",
+        "packageId": "P12345",
+        "installPath": "/opt/package1",
+        "isMaster": "true",
+        "platform": "Linux",
+        "preStop": 1,
+        "forceUpdate": 1,
+        "postRestart": 1,
+        "autoStart": 1,
+        "targetVersion": "1.0.0",
+        "userCheck": 1,
+        "fullUpdate": 1,
+        "fileCheckType": "full"
+      },
+      {
+        "name": "Package2",
+        "packageId": "P23456",
+        "installPath": "/opt/package2",
+        "isMaster": "false",
+        "platform": "Windows",
+        "preStop": 0,
+        "forceUpdate": 0,
+        "postRestart": 0,
+        "autoStart": 0,
+        "targetVersion": "2.0.0",
+        "userCheck": 0,
+        "fullUpdate": 0,
+        "fileCheckType": "diff"
+      }
+    ]
+  },
+  {
+    "name": "App2",
+    "appId": "APP67890",
+    "memo": "Another test application",
+    "releaseAbbreviation": "v2.0",
+    "releaseDate": "2023-02-01 12:00:00",
+    "releaseNum": "R2001",
+    "releaseTimes": "2",
+    "_hierarchy": "接入中层",
+    "_updatable": 1,
+    "appStatus": "已停用",
+    "runningState": "已下线",
+    "status": "下线",
+    "__pipeline": [
+      {
+        "name": "Pipeline3",
+        "category": "Category3",
+        "flowId": "F34567",
+        "flowVersion": 3,
+        "templateId": "T34567",
+        "templateVersion": 3,
+        "rules": "rule5,rule6",
+        "subscribers": ["user5", "user6"],
+        "subscribedChannel": "channel3",
+        "noticeMethods": ["sms"],
+        "metadata": "metadata3"
+      }
+    ],
+    "_defaultDeployStrategy": [
+      { "clusterType": "Type3", "strategyId": "S34567" }
+    ],
+    "_packageList": [
+      {
+        "name": "Package3",
+        "packageId": "P34567",
+        "installPath": "/opt/package3",
+        "isMaster": "true",
+        "platform": "Linux",
+        "preStop": 1,
+        "forceUpdate": 1,
+        "postRestart": 1,
+        "autoStart": 1,
+        "targetVersion": "1.0.0",
+        "userCheck": 1,
+        "fullUpdate": 1,
+        "fileCheckType": "full"
+      }
+    ]
+  },
+  {
+    "name": "App3",
+    "appId": "APP01234",
+    "memo": "Third test application",
+    "releaseAbbreviation": "v3.0",
+    "releaseDate": "2023-03-01 12:00:00",
+    "releaseNum": "R3001",
+    "releaseTimes": "3",
+    "_hierarchy": "接入下层",
+    "_updatable": 1,
+    "appStatus": "运营中",
+    "runningState": "运行中",
+    "status": "上线",
+    "__pipeline": [
+      {
+        "name": "Pipeline4",
+        "category": "Category4",
+        "flowId": "F45678",
+        "flowVersion": 4,
+        "templateId": "T45678",
+        "templateVersion": 4,
+        "rules": "rule7,rule8",
+        "subscribers": ["user7", "user8"],
+        "subscribedChannel": "channel4",
+        "noticeMethods": ["email", "sms"],
+        "metadata": "metadata4"
+      }
+    ],
+    "_defaultDeployStrategy": [
+      { "clusterType": "Type4", "strategyId": "S45678" }
+    ],
+    "_packageList": [
+      {
+        "name": "Package4",
+        "packageId": "P45678",
+        "installPath": "/opt/package4",
+        "isMaster": "true",
+        "platform": "Linux",
+        "preStop": 1,
+        "forceUpdate": 1,
+        "postRestart": 1,
+        "autoStart": 1,
+        "targetVersion": "1.0.0",
+        "userCheck": 1,
+        "fullUpdate": 1,
+        "fileCheckType": "full"
+      },
+      {
+        "name": "Package5",
+        "packageId": "P56789",
+        "installPath": "/opt/package5",
+        "isMaster": "false",
+        "platform": "Windows",
+        "preStop": 0,
+        "forceUpdate": 0,
+        "postRestart": 0,
+        "autoStart": 0,
+        "targetVersion": "2.0.0",
+        "userCheck": 0,
+        "fullUpdate": 0,
+        "fileCheckType": "diff"
+      }
+    ]
+  }
+]

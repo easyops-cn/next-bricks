@@ -1,0 +1,77 @@
+[
+  {
+    "label": "Service1",
+    "name": "Service Name 1",
+    "accessAddress": "http://service1.example.com",
+    "artifactSource": "TDSQL",
+    "category": "Database",
+    "clusterMode": "Single",
+    "discoveryMethod": "DNS",
+    "ip": "192.168.1.1",
+    "provider": "Tencent",
+    "version": "1.0.0",
+    "collectedDataStatus": "normal",
+    "hasTrace": true,
+    "markedLostTs": 0,
+    "port": 8080,
+    "apdexConfig": { "threshold": 0.5, "enable": true },
+    "capacityConfig": {
+      "enabled": true,
+      "resourceType": "HOST",
+      "metrics": ["cpu_usage", "memory_usage"],
+      "expression": "p95",
+      "highThreshold": 80,
+      "lowThreshold": 20
+    }
+  },
+  {
+    "label": "Service2",
+    "name": "Service Name 2",
+    "accessAddress": "http://service2.example.com",
+    "artifactSource": "TDSQL",
+    "category": "Web",
+    "clusterMode": "Cluster",
+    "discoveryMethod": "Consul",
+    "ip": "192.168.1.2",
+    "provider": "Tencent",
+    "version": "2.0.0",
+    "collectedDataStatus": "normal",
+    "hasTrace": false,
+    "markedLostTs": 0,
+    "port": 8081,
+    "apdexConfig": { "threshold": 0.4, "enable": false },
+    "capacityConfig": {
+      "enabled": false,
+      "resourceType": "KUBERNETES_POD@ONEMODEL",
+      "metrics": [],
+      "expression": "avg",
+      "highThreshold": 90,
+      "lowThreshold": 10
+    }
+  },
+  {
+    "label": "Service3",
+    "name": "Service Name 3",
+    "accessAddress": "http://service3.example.com",
+    "artifactSource": "TDSQL",
+    "category": "Storage",
+    "clusterMode": "Single",
+    "discoveryMethod": "Etcd",
+    "ip": "192.168.1.3",
+    "provider": "Tencent",
+    "version": "3.0.0",
+    "collectedDataStatus": "normal",
+    "hasTrace": true,
+    "markedLostTs": 0,
+    "port": 8082,
+    "apdexConfig": { "threshold": 0.6, "enable": true },
+    "capacityConfig": {
+      "enabled": true,
+      "resourceType": "HOST",
+      "metrics": ["disk_usage"],
+      "expression": "max",
+      "highThreshold": 95,
+      "lowThreshold": 5
+    }
+  }
+]
