@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.30.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.29.0...@next-bricks/visual-builder@1.30.0) (2024-07-10)
+
+
+### Features
+
+* support eo-card editor ([34d7ade](https://github.com/easyops-cn/next-bricks/commit/34d7adee4de5ae4d8a127316a17c697c4c65e3f4))
+
+
+
+
+
 # [1.29.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.28.0...@next-bricks/visual-builder@1.29.0) (2024-07-10)
 
 
