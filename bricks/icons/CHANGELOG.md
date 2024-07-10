@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.40...@next-bricks/icons@1.2.0) (2024-07-10)
+
+
+### Features
+
+* support link & icon editor ([09dce45](https://github.com/easyops-cn/next-bricks/commit/09dce452e477c3d33c06588dc3b89ca5cf949f63))
+
+
+
+
+
 ## [1.1.40](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.1.39...@next-bricks/icons@1.1.40) (2024-06-27)
 
 **Note:** Version bump only for package @next-bricks/icons

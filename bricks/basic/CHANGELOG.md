@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.33.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.32.0...@next-bricks/basic@1.33.0) (2024-07-10)
+
+
+### Features
+
+* support link & icon editor ([09dce45](https://github.com/easyops-cn/next-bricks/commit/09dce452e477c3d33c06588dc3b89ca5cf949f63))
+
+
+
+
+
 # [1.32.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.31.0...@next-bricks/basic@1.32.0) (2024-07-09)
 
 
