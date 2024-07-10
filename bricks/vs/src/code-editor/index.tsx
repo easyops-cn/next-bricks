@@ -248,20 +248,16 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
   accessor #codeChange!: EventEmitter<string>;
 
   @event({ type: "user.input" })
-  accessor #userInput!: EventEmitter<string>;
+  accessor #userInput!: EventEmitter<any>;
 
-  #handleChange = (
-    value: string,
-    parseValue: any,
-    isFlush: boolean,
-    isInit: boolean = false
-  ) => {
+  #handleChange = (value: string) => {
     this.value = value;
-    !isInit && this.getFormElement()?.formStore.onChange(this.name!, value);
+    this.getFormElement()?.formStore.onChange(this.name!, value);
     this.#codeChange.emit(value);
-    if (!isFlush) {
-      this.#userInput.emit(parseValue);
-    }
+  };
+
+  #handleUserInput = (value: any) => {
+    this.#userInput.emit(value);
   };
 
   @event({ type: "token.click" })
@@ -326,6 +322,7 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
           showExpandButton={this.showExpandButton}
           validateState={this.validateState}
           onChange={this.#handleChange}
+          onUserInput={this.#handleUserInput}
           onTokenClick={this.#handleTokenClick}
           customValidationInBrickNextYaml={this.customValidationInBrickNextYaml}
         />
@@ -357,15 +354,12 @@ export function CodeEditorComponent({
   glyphMargin = true,
   validateState,
   onChange,
+  onUserInput,
   onTokenClick,
   customValidationInBrickNextYaml,
 }: CodeEditorProps & {
-  onChange(
-    value: string,
-    parseValue: any,
-    isFlush: boolean,
-    isInit: boolean
-  ): void;
+  onChange(value: string): void;
+  onUserInput: (value: any) => void;
   onTokenClick(word: string): void;
 }) {
   const value = _value ?? "";
@@ -396,11 +390,9 @@ export function CodeEditorComponent({
     if (language !== "brick_next_yaml") return;
     const workerInstance = VSWorkers.getInstance(workerId);
     const id = workerInstance.addEventListener("message", (message: any) => {
-      const { token, data, init = false } = message.data;
+      const { token, data } = message.data;
       const model = editorRef.current!.getModel();
       if (!model) return;
-      const originValue = model.getValue();
-
       switch (token) {
         case "parse_yaml": {
           const { value, tokens, markers } = data;
@@ -419,13 +411,13 @@ export function CodeEditorComponent({
             }))
           );
           monaco.editor.setModelMarkers(model, "brick_next_yaml", markers);
-          onChange(originValue, value, false, init);
+          onUserInput(value);
           break;
         }
         case "parse_yaml_error": {
           monaco.editor.setModelMarkers(model, "brick_next_yaml", []);
           decorationsCollection?.current?.set([]);
-          onChange(originValue, undefined, false, init);
+          onUserInput(undefined);
           break;
         }
       }
@@ -486,24 +478,20 @@ export function CodeEditorComponent({
     }
   }, [completers, advancedCompleters, language]);
 
-  const parseYaml = useCallback(
-    ({ init = false }: { init?: boolean }) => {
-      if (language !== "brick_next_yaml" || !editorRef.current) return;
-      const workerInstance = VSWorkers.getInstance(workerId);
-      const currentModel = editorRef.current.getModel();
-      workerInstance.postMessage({
-        token: "parse_yaml",
-        data: {
-          value: currentModel?.getValue(),
-          links,
-          markers,
-        },
-        options: tokenConfig,
-        init,
-      });
-    },
-    [language, tokenConfig, links, markers, workerId]
-  );
+  const parseYaml = useCallback(() => {
+    if (language !== "brick_next_yaml" || !editorRef.current) return;
+    const workerInstance = VSWorkers.getInstance(workerId);
+    const currentModel = editorRef.current.getModel();
+    workerInstance.postMessage({
+      token: "parse_yaml",
+      data: {
+        value: currentModel?.getValue(),
+        links,
+        markers,
+      },
+      options: tokenConfig,
+    });
+  }, [language, tokenConfig, links, markers, workerId]);
 
   const debounceParse = useMemo(() => debounce(parseYaml, 300), [parseYaml]);
 
@@ -511,23 +499,15 @@ export function CodeEditorComponent({
     const editor = editorRef.current;
     if (editor) {
       const currentModel = editor.getModel();
-      if (
-        currentModel?.getValue &&
-        value !== currentModel.getValue() &&
-        !editor.hasTextFocus()
-      ) {
+      if (currentModel?.getValue && value !== currentModel.getValue()) {
         currentModel.setValue(value as string);
-        debounceParse({
-          init: true,
-        });
+        debounceParse();
       }
     }
   }, [value, debounceParse]);
 
   useEffect(() => {
-    debounceParse({
-      init: true,
-    });
+    debounceParse();
   }, []);
 
   useLayoutEffect(() => {
@@ -877,12 +857,9 @@ export function CodeEditorComponent({
 
       if (["brick_next_yaml"].includes(language)) {
         embeddedModelProcessor(currentModel, editorRef.current!.getPosition()!);
-        debounceParse({
-          init: false,
-        });
-      } else {
-        onChange(currentModel.getValue(), undefined, false, false);
+        debounceParse();
       }
+      onChange(currentModel.getValue());
     });
     return () => {
       listener.dispose();
