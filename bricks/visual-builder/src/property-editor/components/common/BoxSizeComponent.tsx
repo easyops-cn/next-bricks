@@ -14,7 +14,7 @@ enum DirectionEnum {
 }
 
 type BoxValue = {
-  [key in Direction]: number;
+  [key in Direction]: number | string;
 };
 
 interface BoxSizeComponentProps {
@@ -70,12 +70,23 @@ export function BoxSizeComponent({
   const transfrom = useCallback((value: string) => {
     const realValue = (value ?? "0px 0px 0px 0px").match(/(\d+)/g);
 
-    setTransformValue({
-      top: +realValue[0],
-      right: +realValue[1],
-      bottom: +realValue[2],
-      left: +realValue[3],
-    });
+    if (realValue.length === 1) {
+      setConnect(true);
+
+      setTransformValue({
+        top: realValue[0],
+        right: realValue[0],
+        bottom: realValue[0],
+        left: realValue[0],
+      });
+    } else {
+      setTransformValue({
+        top: realValue[0],
+        right: realValue[1],
+        bottom: realValue[2] ?? realValue[0],
+        left: realValue[3] ?? realValue[1],
+      });
+    }
   }, []);
 
   useEffect(() => {

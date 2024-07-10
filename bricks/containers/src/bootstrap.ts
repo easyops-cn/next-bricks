@@ -12,3 +12,4 @@ import "./search-bar/index.js";
 import "./views.js";
 import "./content-layout/index.js";
 import "./popup/index.js";
+import "./editors/index.js";
