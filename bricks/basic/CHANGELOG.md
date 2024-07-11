@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.34.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.33.1...@next-bricks/basic@1.34.0) (2024-07-11)
+
+
+### Features
+
+* add eo-min-actions ([2822ba5](https://github.com/easyops-cn/next-bricks/commit/2822ba5949260b424cf8b0e83cfea33cdb7e9604))
+
+
+
+
+
 ## [1.33.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.33.0...@next-bricks/basic@1.33.1) (2024-07-11)
 
 
