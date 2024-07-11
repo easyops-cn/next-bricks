@@ -20,3 +20,4 @@ import "./eo-divider/index.js";
 import "./eo-modal/index.js";
 import "./eo-card-item/index.js";
 import "./eo-link/index.js";
+import "./eo-mini-actions/index.js";

@@ -45,6 +45,7 @@ import { TextAlignRadioComponent } from "./components/common/TextAlignRadioCompo
 import { InputWithUnitComponent } from "./components/common/InputWithUnitComponent";
 import { UseChildrenSelectComponent } from "./components/common/UseChildrenSelectComponent";
 import { BoxSizeComponent } from "./components/common/BoxSizeComponent";
+import { CustomOptionsComponent } from "./components/common/CustomOptionsComponent";
 import { CustomTab } from "./components/common/CustomTab";
 import { __secret_internals, customEditors } from "@next-core/runtime";
 import {
@@ -64,7 +65,7 @@ const PropertyEditorComponent = React.forwardRef(LegacyPropertyEditor);
 export const BEFORE_SUBMIT_KEY = "before_submit";
 export const ADVANCED_CHANGE_KEY = "on_advanced_change";
 
-const SchemaField = createSchemaField({
+export const SchemaField = createSchemaField({
   components: {
     FormLayout,
     Input,
@@ -83,6 +84,7 @@ const SchemaField = createSchemaField({
     InputWithUrl: InputWithUrlComponent,
     InputWithUnit: InputWithUnitComponent,
     TextAlignRadio: TextAlignRadioComponent,
+    CustomOptions: CustomOptionsComponent,
     BoxSize: BoxSizeComponent,
     CustomTab,
   },
@@ -93,7 +95,7 @@ type SelectOptions = { label: string; value: string }[];
 export interface EditorComponentProps {
   advancedMode?: boolean;
   SchemaFieldComponent: typeof SchemaField;
-  formilySchemaFormatter: (data: any, advancedMode?: boolean) => ISchema;
+  formilySchemaFormatter: (data: any) => ISchema;
   form: Form<any>;
   effects: {
     onFieldInit: typeof onFieldInit;
@@ -256,7 +258,7 @@ class PropertyEditor extends ReactNextElement {
       <PropertyEditorComponent
         ref={this.#formRef}
         editorName={this.editorName}
-        values={this.values}
+        values={this.values === "undefined" ? undefined : this.values}
         advancedMode={this.advancedMode}
         dataList={this.dataList}
         extraLibs={this.extraLibs}
@@ -367,13 +369,16 @@ export function LegacyPropertyEditor(
       field.display = advancedMode ? "visible" : "hidden";
     });
 
-    const { values } = form.getState();
+    const formValues = form.getState().values;
     const formData = defaultTransform(
-      transformValueRef.current ?? values,
+      {
+        ...values,
+        ...(transformValueRef.current ?? formValues),
+      },
       advancedMode
     );
     form.setValues(formData, "overwrite");
-  }, [advancedMode, form, defaultTransform, Editor]);
+  }, [advancedMode, form, values, defaultTransform, Editor]);
 
   useEffect(() => {
     form.addEffects("onValueChange", () => {
