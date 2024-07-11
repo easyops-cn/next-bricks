@@ -47,21 +47,23 @@ export function CodeEditorComponent(
 
   useEffect(() => {
     if (props.value && !initValue) {
-      let value = props.value;
+      let value = props.value as any;
       if (value && typeof value !== "string") {
-        const filterValue = Object.fromEntries(
-          Object.entries(value)
-            .map(([k, v]) => {
-              if (isEmpty(v)) {
-                return null;
-              }
-              return [k, v];
-            })
-            .filter(Boolean)
-        );
-        value = yaml.safeDump(filterValue, {
-          skipInvalid: true,
-        });
+        if (isEmpty(value)) {
+          value = "";
+        } else {
+          value = yaml.safeDump(
+            Array.isArray(value)
+              ? value
+              : {
+                  ...value,
+                  style: isEmpty(value.style) ? undefined : value.style,
+                },
+            {
+              skipInvalid: true,
+            }
+          );
+        }
       }
 
       setInitValue(value);
