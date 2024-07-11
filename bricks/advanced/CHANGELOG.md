@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.35.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.35.2...@next-bricks/advanced@0.35.3) (2024-07-11)
+
+
+### Bug Fixes
+
+* **eo-workbench-layout-v2:** 修复拖动时颜色不对，或者全选字体的问题 ([320c543](https://github.com/easyops-cn/next-bricks/commit/320c543f2b6558aac452cfa0149e121797566de8))
+
+
+
+
+
 ## [0.35.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.35.1...@next-bricks/advanced@0.35.2) (2024-07-11)
 
 **Note:** Version bump only for package @next-bricks/advanced
