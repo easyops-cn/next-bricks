@@ -18,4 +18,4 @@ function EoMiniActionsComponentFactory(React: typeof _React) {
   };
 }
 
-customEditors.define("eo-min-actions", EoMiniActionsComponentFactory);
+customEditors.define("eo-mini-actions", EoMiniActionsComponentFactory);
