@@ -29,6 +29,10 @@ export interface SessionItem {
   title: string;
   user: string;
   _row_id: string;
+  handleEditSession?: (
+    conversationId: string,
+    rawData: Partial<SessionItem>
+  ) => void;
 }
 
 export interface ChatItem {
@@ -73,6 +77,7 @@ export class ChatService {
   // 会话
   #sessionNextToken?: string;
   #cacheLimit?: number;
+  #cacheQuery?: string;
 
   // 消息
   #messageNextToken?: string;
@@ -168,9 +173,19 @@ export class ChatService {
     this.#conversationId = id;
   }
 
-  async getSessionHistory(limit?: number): Promise<SessionItem[]> {
+  async getSessionHistory(
+    limit?: number,
+    query?: string
+  ): Promise<SessionItem[]> {
     if (limit) {
       this.#cacheLimit = limit;
+    }
+    if (!_.isNil(query)) {
+      if (this.#cacheQuery !== query) {
+        // 说明进行了搜索，需要重置token
+        this.#sessionNextToken = undefined;
+      }
+      this.#cacheQuery = query;
     }
     try {
       const {
@@ -187,6 +202,7 @@ export class ChatService {
           method: "POST",
           body: JSON.stringify({
             limit: this.#cacheLimit ?? 20,
+            query: this.#cacheQuery,
             next_token: this.#sessionNextToken,
           }),
         }
@@ -250,6 +266,31 @@ export class ChatService {
           method: "POST",
           body: JSON.stringify({
             conversationIds: id,
+          }),
+        }
+      );
+      if (code === 0) {
+        flag = true;
+      }
+    } catch {
+      flag = false;
+    }
+    return flag;
+  }
+
+  async updateSession(
+    id: string,
+    data: Partial<SessionItem>
+  ): Promise<boolean> {
+    if (!id) return false;
+    let flag: boolean = false;
+    try {
+      const { code } = await http.request<{ code: number }>(
+        `${getBasePath()}api/gateway/easyops.api.aiops_chat.conversation.UpdateConversation/conversation/update/${id}`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            updateData: data,
           }),
         }
       );

@@ -66,8 +66,9 @@ interface ChatViewContextProps {
   checkSession: (id?: string, isInit?: boolean) => void;
   createSession: () => void;
   deleteSession: (ids: string[]) => Promise<boolean>;
+  updateSession: (id: string, data: Partial<SessionItem>) => Promise<boolean>;
   setSearchStr: (str: string) => void;
-  querySessionHistory: (limit?: number) => void;
+  querySessionHistory: (limit?: number, query?: string) => void;
 }
 
 export const ChatViewContext = createContext<ChatViewContextProps>(
