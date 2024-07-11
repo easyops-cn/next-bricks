@@ -28,8 +28,6 @@ export function ColorPickerComponent(
         props.value as string
       );
       setValue(value);
-    } else {
-      setValue((props.value as string) ?? "");
     }
   }, [props.value]);
 

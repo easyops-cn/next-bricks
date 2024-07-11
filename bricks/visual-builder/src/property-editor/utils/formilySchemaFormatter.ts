@@ -50,16 +50,7 @@ function transformComponent(
   };
 }
 
-type formilySchemaFormatterOptions = {
-  isDefault: boolean;
-};
-
-export function formilySchemaFormatter(
-  data: DataNode,
-  options?: formilySchemaFormatterOptions
-): ISchema {
-  const { isDefault = true } = typeof options === "object" ? options : {};
-
+export function formilySchemaFormatter(data: DataNode): ISchema {
   const walk = (data: DataNode): Record<string, any> => {
     let children: Record<string, any>[] | undefined;
     let result: Record<string, any> = {};
@@ -155,10 +146,6 @@ export function formilySchemaFormatter(
       type: "boolean",
     },
   ] as DataNode[];
-
-  if (!isDefault) {
-    return walk(data);
-  }
 
   return {
     type: "object",
