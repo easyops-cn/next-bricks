@@ -88,15 +88,3 @@
     }
   }
 }
-
-.reactGridItem.reactGridPlaceholder {
-  background-color: #ddd;
-}
-
-.reactGridItem.reactDraggableDragging {
-  pointer-events: none;
-}
-
-.reactGridItem.reactGridPlaceholder.forbidden {
-  background-color: red;
-}
