@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.14...@next-bricks/ai@1.23.15) (2024-07-11)
+
+
+### Bug Fixes
+
+* 会话历史支持搜索和编辑 ([ad3b081](https://github.com/easyops-cn/next-bricks/commit/ad3b0815096e6c844355add59ca684fe501ce3e1))
+
+
+
+
+
 ## [1.23.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.13...@next-bricks/ai@1.23.14) (2024-07-11)
 
 **Note:** Version bump only for package @next-bricks/ai
