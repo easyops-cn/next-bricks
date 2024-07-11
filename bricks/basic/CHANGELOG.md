@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.33.0...@next-bricks/basic@1.33.1) (2024-07-11)
+
+
+### Bug Fixes
+
+* fix tooltip style ([ca2cd71](https://github.com/easyops-cn/next-bricks/commit/ca2cd711e866a7c15606d2eba7bc65c54a0ef767))
+
+
+
+
+
 # [1.33.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.32.0...@next-bricks/basic@1.33.0) (2024-07-10)
 
 

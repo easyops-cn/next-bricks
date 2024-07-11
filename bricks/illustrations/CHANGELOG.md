@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.27](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.0.26...@next-bricks/illustrations@1.0.27) (2024-07-11)
+
+**Note:** Version bump only for package @next-bricks/illustrations
+
+
+
+
+
 ## [1.0.26](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.0.25...@next-bricks/illustrations@1.0.26) (2024-06-25)
 
 **Note:** Version bump only for package @next-bricks/illustrations
