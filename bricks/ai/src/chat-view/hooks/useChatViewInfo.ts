@@ -41,6 +41,7 @@ export function useChatViewInfo({
   const [searchStr, setSearchStr] = useState<string>("");
   const chatingText = useRef<string>("");
   const chatingMessageItem = useRef<MessageItem>();
+  const sessionSearchQuery = useRef<string | undefined>();
   const chatService = useMemo(
     () =>
       new ChatService({
@@ -194,22 +195,57 @@ export function useChatViewInfo({
     [activeSessionId, chatService, chatting, defaultNewSessionItem, stopChat]
   );
 
+  const updateSession = useCallback(
+    async (id: string, data: Partial<SessionItem>): Promise<boolean> => {
+      const result = await chatService.updateSession(id, data);
+      if (result && data?.title) {
+        // 如果成功修改title，需要修改本地展示
+        setSessionList((list: any) => {
+          return list.map((item: any) => ({
+            ...item,
+            title: item.conversationId === id ? data.title : item?.title,
+          }));
+        });
+      }
+      return result;
+    },
+    [activeSessionId, chatService, chatting, defaultNewSessionItem, stopChat]
+  );
+
   const querySessionHistory = useCallback(
-    async (limit?: number) => {
+    async (limit?: number, query?: string) => {
       setSessionLoading(true);
-      const list = await chatService.getSessionHistory(limit);
+      const list = await chatService.getSessionHistory(limit, query);
+      let newSessionList = list;
       if (!activeSessionId) {
         // 如果没有 activeSessionId, 默认新增会话
         setActiveSessionId(NEW_SESSION_ID);
+        setMsgList([]);
       }
-      setSessionList((preList) => {
-        return !activeSessionId
-          ? [defaultNewSessionItem].concat([...preList, ...list])
-          : preList.concat(list);
-      });
+      if (!query || sessionSearchQuery.current === query) {
+        // 如果没有搜索或者搜索关键词相同，则直接拼接
+        newSessionList = [...sessionList].concat(newSessionList);
+      } else {
+        // 如果搜索关键词不同
+        setSessionEnd(false);
+      }
+
+      if (!activeSessionId) {
+        // 如果没有 activeSessionId, 补充一个新增会话项
+        newSessionList = [defaultNewSessionItem].concat(newSessionList);
+      }
+
+      sessionSearchQuery.current = query;
+      setSessionList(newSessionList);
       setSessionLoading(false);
     },
-    [chatService, activeSessionId, defaultNewSessionItem]
+    [
+      chatService,
+      activeSessionId,
+      sessionList,
+      defaultNewSessionItem,
+      sessionSearchQuery,
+    ]
   );
 
   const handleChat = useCallback(
@@ -470,6 +506,7 @@ export function useChatViewInfo({
     stopChat,
     createSession,
     deleteSession,
+    updateSession,
     checkSession,
     setSearchStr,
     querySessionHistory,
