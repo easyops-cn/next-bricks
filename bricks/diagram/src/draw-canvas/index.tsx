@@ -47,6 +47,7 @@ import type {
 import { rootReducer } from "./reducers";
 import { MarkerComponent } from "../diagram/MarkerComponent";
 import {
+  isContainerDecoratorCell,
   isEdgeCell,
   isNodeCell,
   isNodeOrAreaDecoratorCell,
@@ -955,7 +956,11 @@ function LegacyEoDrawCanvasComponent(
           setLassoRect(null);
           const lassoedCells: (NodeCell | DecoratorCell)[] = [];
           for (const cell of cells) {
-            if (isNodeOrAreaDecoratorCell(cell) || isTextDecoratorCell(cell)) {
+            if (
+              isContainerDecoratorCell(cell) ||
+              isNodeOrAreaDecoratorCell(cell) ||
+              isTextDecoratorCell(cell)
+            ) {
               const x = cell.view.x;
               const y = cell.view.y;
               if (

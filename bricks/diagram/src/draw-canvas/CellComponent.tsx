@@ -95,6 +95,7 @@ export function CellComponent({
         ...cell.view,
         ...computeContainerRect(containCells),
       };
+      cell.view = view; //Update the rect container to make sure Lasso gets the correct size
       return view;
     }
     return get(cell, "view", { x: 0, y: 0, width: 0, height: 0 });

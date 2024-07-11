@@ -54,5 +54,5 @@ export function isContainerDecoratorCell(cell: Cell): cell is DecoratorCell {
 }
 
 export function isNoManualLayout(layout: LayoutType) {
-  return !["manual"].includes(layout!);
+  return !["manual", undefined].includes(layout!);
 }
