@@ -12,7 +12,7 @@ properties:
   uiVersion: "8.2"
   generations: <% CTX.generations ?? [] %>
   style:
-    height: 100vh
+    height: calc(100vh - 4em)
 context:
   - name: hostList
     resolve:
@@ -33,7 +33,7 @@ context:
     resolve:
       useProvider: basic.http-request
       args:
-        - /preview/bricks/visual-builder/dist/fixtures/raw-generations.json
+        - /preview/bricks/visual-builder/dist/fixtures/raw-generations.json?v=2
   - name: generations
     value: |
       <%

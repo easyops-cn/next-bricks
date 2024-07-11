@@ -34,8 +34,11 @@ export interface VisualConfig {
   /** 最多显示的列表项数量，当结构体列表数据降级显示时使用 */
   maxItems?: number;
 
-  /** 内容，当结构体或结构体列表数据降级显示时使用 */
-  content?: string;
+  /** 尽显示列表类数据的数量 */
+  countOnly?: number;
+
+  /** 主字段名，当结构体或结构体列表数据降级显示时，仅显示该字段值 */
+  mainField?: string;
 
   /** 使用表格时的字段配置 */
   columns?: VisualField[];

@@ -21,6 +21,14 @@ export function convertToStoryboard(
       const brickItem = getPlainBrick(config, attr, baseValue);
       const maxItems = Number(config.maxItems) || 3;
       if (config.type === "struct-list" || config.type === "array") {
+        if (config.countOnly) {
+          return {
+            brick: "span",
+            properties: {
+              textContent: `<% \`\${DATA.${attr}.length}\` %>`,
+            },
+          };
+        }
         return {
           brick: "span",
           children: [
@@ -65,8 +73,9 @@ export function convertToStoryboard(
       return {
         brick: "eo-descriptions",
         errorBoundary: true,
-        dataSource: baseValue,
         properties: {
+          dataSource: baseValue,
+          column: 1,
           list: config.fields?.map((field) => ({
             label: field.title,
             field: field.dataIndex,
@@ -79,7 +88,8 @@ export function convertToStoryboard(
         errorBoundary: true,
         properties: {
           dataSource: `<% { list: DATA.${attr} } %>`,
-          columns: config.columns?.map((column) => ({
+          pagination: false,
+          columns: config.columns?.slice(0, 5).map((column) => ({
             title: column.title,
             dataIndex: column.dataIndex,
           })),
@@ -129,9 +139,13 @@ function getPlainBrick(
   attr: string,
   baseValue: string
 ): BrickConf {
-  const value = config.content
-    ? config.content.replace(/\bDATA\./g, `DATA.${attr}.`)
-    : baseValue;
+  const value =
+    (config.type === "struct" ||
+      config.type === "struct-list" ||
+      config.type === "array") &&
+    config.mainField
+      ? `<% ${config.type === "struct" ? `DATA[${JSON.stringify(attr)}]` : "ITEM"}[${JSON.stringify(config.mainField)}] %>`
+      : baseValue;
   switch (config.formatter?.type) {
     case "number":
       return {
@@ -161,7 +175,7 @@ function getPlainBrick(
       };
     case "cost-time":
       return {
-        brick: "eo-formatter-number",
+        brick: "eo-humanize-time",
         errorBoundary: true,
         properties: {
           value,
@@ -209,8 +223,7 @@ function getPlainStyle(
       style.fontSize = "var(--normal-font-size)";
       break;
     case "large":
-      style.fontSize = "var(--title-font-size)";
-      break;
+      style.fontSize = "var(--card-title-font-size)";
       break;
     case "x-large":
       style.fontSize = "var(--title-font-size-larger)";

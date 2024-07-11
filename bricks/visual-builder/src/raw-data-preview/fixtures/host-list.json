@@ -2,31 +2,30 @@
   {
     "hostname": "host1.example.com",
     "_agentStatus": "正常",
-    "cpuModel": "Intel Xeon E5-2690 v4",
-    "env": "开发环境",
+    "cpuModel": "Intel Xeon E5-2620 v4",
+    "env": "预发布环境",
     "installedPatch": [
       {
         "articleId": "KB123456",
-        "installedTime": "2023-01-01 10:00:00"
+        "installedTime": "2024-07-01 10:30:00"
       },
       {
         "articleId": "KB789012",
-        "installedTime": "2023-01-02 11:00:00"
+        "installedTime": "2024-07-02 11:45:00"
       }
     ],
     "isSinglePower": false,
-    "location": "北京",
-    "product": "Dell PowerEdge R740",
-    "proj": ["项目A", "项目B"],
-    "use": "数据库服务器",
-    "version": "v1.0.0",
+    "location": "Beijing",
+    "product": "Product A",
+    "use": "Web Server",
+    "version": "1.0.0",
     "vmType": "kvm",
-    "aliveDate": "2023-01-01",
-    "vmName": "VM1",
-    "creat_time": "2023-01-01 00:00:00",
+    "aliveDate": "2024-07-15",
+    "vmName": "vm1",
+    "creat_time": "2024-07-01 09:00:00",
     "_mac": "00:11:22:33:44:55",
     "_uuid": "123e4567-e89b-12d3-a456-426614174000",
-    "agentVersion": "2.1.0",
+    "agentVersion": "2.3.1",
     "eth": [
       {
         "name": "eth0",
@@ -40,56 +39,56 @@
       {
         "name": "eth1",
         "status": "down",
-        "ip": "",
-        "mask": "",
-        "speed": 0,
+        "ip": "192.168.1.11",
+        "mask": "255.255.255.0",
+        "speed": 1000,
         "mac": "00:11:22:33:44:56",
-        "broadcast": ""
+        "broadcast": "192.168.1.255"
       }
     ],
-    "memo": "这是主机1的备注信息",
+    "memo": "This is a test host.",
     "osArchitecture": "x86_64",
-    "osDistro": "CentOS",
-    "osRelease": "7.9",
+    "osDistro": "Ubuntu",
+    "osRelease": "18.04",
     "osSystem": "Linux",
-    "osVersion": "3.10.0-1160.62.1.el7.x86_64",
+    "osVersion": "Ubuntu 18.04.5 LTS (Bionic Beaver)",
     "provider": "Dell",
     "service": [
       {
         "name": "nginx",
-        "cwd": "/var/www/html",
+        "cwd": "/",
         "exe": "/usr/sbin/nginx",
         "listening_ip": "0.0.0.0",
         "listening_port": 80,
-        "pname": "nginx: master process /usr/sbin/nginx",
-        "username": "nginx"
+        "pname": "nginx",
+        "username": "root"
       },
       {
-        "name": "mysqld",
-        "cwd": "/var/lib/mysql",
-        "exe": "/usr/sbin/mysqld",
-        "listening_ip": "127.0.0.1",
-        "listening_port": 3306,
-        "pname": "mysqld",
-        "username": "mysql"
+        "name": "ssh",
+        "cwd": "/",
+        "exe": "/usr/sbin/sshd",
+        "listening_ip": "0.0.0.0",
+        "listening_port": 22,
+        "pname": "sshd",
+        "username": "root"
       }
     ],
-    "status": "运行中",
-    "deviceId": "1234567890",
-    "_agentHeartBeat": 1672531200,
+    "status": "运营中",
+    "deviceId": "123456789",
+    "_agentHeartBeat": 1689082238,
     "time_sync": "是",
-    "maintenance_window": "2023-01-01 02:00:00",
-    "uptime": "12345678",
+    "maintenance_window": "02:00-06:00",
+    "uptime": "1 day, 12:34:56",
     "NTP": "ntp.example.com",
-    "customer": "客户A",
-    "host_spec": "16C/32G/1T",
-    "create_time": "2023-01-01",
-    "device_model": "R740",
-    "RPO": "1H",
+    "customer": "Customer A",
+    "host_spec": "Standard",
+    "create_time": "2024-07-01",
+    "device_model": "PowerEdge R740",
+    "RPO": "1 hour",
     "vmware_host": "否",
-    "is_database": true,
+    "is_database": false,
     "resourceType": "X86物理机",
-    "type": "物理机",
+    "type": "Physical",
     "hosts": [
       {
         "ip": "192.168.1.10",
@@ -100,120 +99,125 @@
         "hostname": "host2.example.com"
       }
     ],
-    "sn": "SN1234567890",
-    "vg": {
-      "VG_Name": "vg0",
-      "VG_Size": "100G",
-      "PE_Size": "4M",
-      "Total_PE": "25600",
-      "Free_PE": "1024",
-      "VG_UUID": "vg0-uuid"
-    },
-    "date": "2023-01-01",
-    "ticket_num": "T123456",
+    "sn": "SN123456789",
+    "vg": [
+      {
+        "VG_Name": "vg0",
+        "VG_Size": "100G",
+        "PE_Size": "4M",
+        "Total_PE": "25600",
+        "Free_PE": "1000",
+        "VG_UUID": "vg0-uuid"
+      }
+    ],
+    "date": "2024-07-11",
+    "ticket_num": "TICKET-1234",
     "cloud_type": "aliyun",
-    "pv": {
-      "PV_Name": "pv0",
-      "VG_Name": "vg0",
-      "PV_Size": "100G",
-      "PE_Size": "4M",
-      "Total_PE": "25600",
-      "Free_PE": "1024",
-      "PV_UUID": "pv0-uuid"
-    },
+    "pv": [
+      {
+        "PV_Name": "pv0",
+        "VG_Name": "vg0",
+        "PV_Size": "100G",
+        "PE_Size": "4M",
+        "Total_PE": "25600",
+        "Free_PE": "1000",
+        "PV_UUID": "pv0-uuid"
+      }
+    ],
     "businessIP": "192.168.1.10",
     "time_zone": "Asia/Shanghai",
     "DNS": "8.8.8.8",
-    "samplerVersion": "1.0.0",
-    "RTO": "1H",
+    "samplerVersion": "1.2.3",
+    "RTO": "2 hours",
     "producer": "Dell",
-    "ip2": ["192.168.1.10", "192.168.1.11"],
     "crontabs": [
       {
         "index": "1",
         "time": "0 1 * * *",
-        "content": "/usr/local/bin/backup.sh",
+        "content": "echo 'Cron job 1' >> /var/log/cron.log",
         "user": "root"
       },
       {
         "index": "2",
         "time": "0 2 * * *",
-        "content": "/usr/local/bin/cleanup.sh",
+        "content": "echo 'Cron job 2' >> /var/log/cron.log",
         "user": "root"
       }
     ],
-    "remote_ip": "192.168.1.1",
-    "usbkey": {
-      "key": "key1",
-      "key_sn": "SN1234567890"
-    },
+    "remote_ip": "192.168.1.10",
+    "usbkey": [
+      {
+        "key": "key1",
+        "key_sn": "SN123456789"
+      }
+    ],
     "charset": "UTF-8",
-    "openstack_server_id": "OS123456",
+    "openstack_server_id": "os-123456789",
     "host_price": 1200.5,
     "outer_ip": "192.168.1.1",
     "ip": "10.0.0.1",
     "cpu": {
-      "brand": "Intel(R) Xeon(R) CPU",
+      "brand": "Intel(R) Xeon(R) Gold 6240 CPU @ 2.60GHz",
       "architecture": "x86_64",
       "cpu_pieces": "2",
-      "physical_cores": 8,
-      "logical_cores": 16,
-      "hz": "3.20GHz"
+      "physical_cores": 20,
+      "logical_cores": 40,
+      "hz": "2600 MHz"
     },
-    "cpuHz": 3200,
-    "cpus": 2,
-    "cpuNumber": 16,
-    "diskTotal": "1TB",
+    "cpuHz": 2600,
+    "cpus": 20,
+    "cpuNumber": 40,
+    "diskTotal": "1.8 TB",
     "disk": [
       {
-        "device": "/dev/sda",
+        "device": "/dev/sda1",
         "fstype": "ext4",
         "mountpoint": "/",
-        "size": 500000,
+        "size": 1024000,
         "provider": "local"
       },
       {
-        "device": "/dev/sdb",
+        "device": "/dev/sdb1",
         "fstype": "xfs",
         "mountpoint": "/data",
-        "size": 1000000,
+        "size": 1024000,
         "provider": "local"
       }
     ],
-    "diskSize": 1500000,
-    "memSize": 32768,
+    "diskSize": 2048000,
+    "memSize": 16384,
     "_occupiedU": 2,
     "_startU": 1,
     "_environment": "生产",
-    "asset_belong_to": "体业务",
-    "applicant": "John Doe",
-    "maintenance_time_start": "2023-01-01",
-    "propertyid": "PROP1234",
-    "asset_id": "ASSET1234",
-    "maintenance_time_end": "2023-12-31",
+    "asset_belong_to": "鞋类",
+    "applicant": "张三",
+    "maintenance_time_start": "2021-07-11",
+    "propertyid": "AS-12345",
+    "asset_id": "FA-12345",
+    "maintenance_time_end": "2024-07-11",
     "maintenanceExpireYearsNumber": 3,
-    "maintenanceState": "未到期",
-    "age": "2023-03-15 12:00:00",
+    "maintenanceState": "维保中",
+    "age": "2020-07-11 12:00:00",
     "annotations": [
       {
         "key": "owner",
-        "value": "John Doe"
+        "value": "运维部"
       },
       {
-        "key": "department",
-        "value": "IT"
+        "key": "location",
+        "value": "机房A"
       }
     ],
-    "appServicePort": "80,443",
+    "appServicePort": "80,443,8080",
     "filesystem": [
       {
         "filesystem": "ext4",
-        "size": 500000,
+        "size": 1024000,
         "mountPoint": "/"
       },
       {
         "filesystem": "xfs",
-        "size": 1000000,
+        "size": 1024000,
         "mountPoint": "/data"
       }
     ],
@@ -224,7 +228,7 @@
         "major": 8,
         "minor": 0,
         "readyOnly": "0",
-        "size": 500000,
+        "size": 1024000,
         "mountPoints": "/"
       },
       {
@@ -233,7 +237,7 @@
         "major": 8,
         "minor": 16,
         "readyOnly": "0",
-        "size": 1000000,
+        "size": 1024000,
         "mountPoints": "/data"
       }
     ],
@@ -252,9 +256,9 @@
         "isIPv6": false,
         "chain": "OUTPUT",
         "target": "ACCEPT",
-        "protocol": "tcp",
+        "protocol": "udp",
         "source": "",
-        "destination": "",
+        "destination": "192.168.2.0/24",
         "module": "",
         "options": ""
       }
@@ -264,27 +268,24 @@
     "labels": [
       {
         "key": "app",
-        "values": ["nginx"]
+        "values": ["nginx", "apache"]
       },
       {
         "key": "env",
-        "values": ["production"]
+        "values": ["prod"]
       }
     ],
-    "nodeConditions": ["Ready", "MemoryPressure"],
     "nodeLabels": [
-      {
-        "key": "kubernetes.io/hostname",
-        "value": "node1"
-      },
       {
         "key": "beta.kubernetes.io/os",
         "value": "linux"
+      },
+      {
+        "key": "kubernetes.io/arch",
+        "value": "amd64"
       }
     ],
     "nodeName": "node1",
-    "nodeOriginalStatus": "Ready",
-    "nodeRoles": ["master", "worker"],
     "nodeStatus": "Ready",
     "taints": [
       {
@@ -298,8 +299,8 @@
         "name": "HTTP",
         "enabled": true,
         "direction": "Inbound",
-        "profile": "Any",
-        "group": "",
+        "profile": "Domain",
+        "group": "Web",
         "localIp": "",
         "remoteIp": "",
         "protocol": "TCP",
@@ -312,8 +313,8 @@
         "name": "HTTPS",
         "enabled": true,
         "direction": "Inbound",
-        "profile": "Any",
-        "group": "",
+        "profile": "Domain",
+        "group": "Web",
         "localIp": "",
         "remoteIp": "",
         "protocol": "TCP",
@@ -325,33 +326,32 @@
     ],
     "collectedDataStatus": "normal",
     "markedLostTs": 0,
-    "resourceId": "RES1234",
-    "resourceInstanceId": "RESINST1234"
+    "resourceId": "res-12345",
+    "resourceInstanceId": "inst-12345"
   },
   {
     "hostname": "host2.example.com",
-    "_agentStatus": "正常",
-    "cpuModel": "Intel Xeon E5-2690 v4",
-    "env": "测试环境",
+    "_agentStatus": "异常",
+    "cpuModel": "Intel Xeon E5-2620 v4",
+    "env": "开发环境",
     "installedPatch": [
       {
         "articleId": "KB123456",
-        "installedTime": "2023-01-01 10:00:00"
+        "installedTime": "2024-07-01 10:30:00"
       }
     ],
-    "isSinglePower": false,
-    "location": "上海",
-    "product": "Dell PowerEdge R740",
-    "proj": ["项目C"],
-    "use": "Web服务器",
-    "version": "v1.0.0",
-    "vmType": "kvm",
-    "aliveDate": "2023-01-01",
-    "vmName": "VM2",
-    "creat_time": "2023-01-01 00:00:00",
+    "isSinglePower": true,
+    "location": "Shanghai",
+    "product": "Product B",
+    "use": "Database Server",
+    "version": "2.0.0",
+    "vmType": "docker",
+    "aliveDate": "2024-07-15",
+    "vmName": "vm2",
+    "creat_time": "2024-07-01 09:00:00",
     "_mac": "00:11:22:33:44:56",
     "_uuid": "123e4567-e89b-12d3-a456-426614174001",
-    "agentVersion": "2.1.0",
+    "agentVersion": "2.3.1",
     "eth": [
       {
         "name": "eth0",
@@ -363,143 +363,160 @@
         "broadcast": "192.168.1.255"
       }
     ],
-    "memo": "这是主机2的备注信息",
+    "memo": "This is a test host.",
     "osArchitecture": "x86_64",
-    "osDistro": "CentOS",
-    "osRelease": "7.9",
+    "osDistro": "Ubuntu",
+    "osRelease": "18.04",
     "osSystem": "Linux",
-    "osVersion": "3.10.0-1160.62.1.el7.x86_64",
+    "osVersion": "Ubuntu 18.04.5 LTS (Bionic Beaver)",
     "provider": "Dell",
     "service": [
       {
-        "name": "nginx",
-        "cwd": "/var/www/html",
-        "exe": "/usr/sbin/nginx",
+        "name": "mysql",
+        "cwd": "/",
+        "exe": "/usr/sbin/mysqld",
         "listening_ip": "0.0.0.0",
-        "listening_port": 80,
-        "pname": "nginx: master process /usr/sbin/nginx",
-        "username": "nginx"
+        "listening_port": 3306,
+        "pname": "mysqld",
+        "username": "mysql"
       }
     ],
-    "status": "运行中",
-    "deviceId": "1234567891",
-    "_agentHeartBeat": 1672531200,
-    "time_sync": "是",
-    "maintenance_window": "2023-01-01 02:00:00",
-    "uptime": "12345678",
+    "status": "维修中",
+    "deviceId": "123456789",
+    "_agentHeartBeat": 1689082238,
+    "time_sync": "否",
+    "maintenance_window": "02:00-06:00",
+    "uptime": "1 day, 12:34:56",
     "NTP": "ntp.example.com",
-    "customer": "客户B",
-    "host_spec": "16C/32G/1T",
-    "create_time": "2023-01-01",
-    "device_model": "R740",
-    "RPO": "1H",
+    "customer": "Customer A",
+    "host_spec": "Standard",
+    "create_time": "2024-07-01",
+    "device_model": "PowerEdge R740",
+    "RPO": "1 hour",
     "vmware_host": "否",
-    "is_database": false,
+    "is_database": true,
     "resourceType": "X86物理机",
-    "type": "物理机",
+    "type": "Physical",
     "hosts": [
       {
         "ip": "192.168.1.11",
         "hostname": "host2.example.com"
       }
     ],
-    "sn": "SN1234567891",
-    "vg": {
-      "VG_Name": "vg0",
-      "VG_Size": "100G",
-      "PE_Size": "4M",
-      "Total_PE": "25600",
-      "Free_PE": "1024",
-      "VG_UUID": "vg0-uuid"
-    },
-    "date": "2023-01-01",
-    "ticket_num": "T123457",
+    "sn": "SN123456789",
+    "vg": [
+      {
+        "VG_Name": "vg0",
+        "VG_Size": "100G",
+        "PE_Size": "4M",
+        "Total_PE": "25600",
+        "Free_PE": "1000",
+        "VG_UUID": "vg0-uuid"
+      }
+    ],
+    "date": "2024-07-11",
+    "ticket_num": "TICKET-1234",
     "cloud_type": "aliyun",
-    "pv": {
-      "PV_Name": "pv0",
-      "VG_Name": "vg0",
-      "PV_Size": "100G",
-      "PE_Size": "4M",
-      "Total_PE": "25600",
-      "Free_PE": "1024",
-      "PV_UUID": "pv0-uuid"
-    },
+    "pv": [
+      {
+        "PV_Name": "pv0",
+        "VG_Name": "vg0",
+        "PV_Size": "100G",
+        "PE_Size": "4M",
+        "Total_PE": "25600",
+        "Free_PE": "1000",
+        "PV_UUID": "pv0-uuid"
+      }
+    ],
     "businessIP": "192.168.1.11",
     "time_zone": "Asia/Shanghai",
     "DNS": "8.8.8.8",
-    "samplerVersion": "1.0.0",
-    "RTO": "1H",
+    "samplerVersion": "1.2.3",
+    "RTO": "2 hours",
     "producer": "Dell",
-    "ip2": ["192.168.1.11"],
     "crontabs": [
       {
         "index": "1",
         "time": "0 1 * * *",
-        "content": "/usr/local/bin/backup.sh",
+        "content": "echo 'Cron job 1' >> /var/log/cron.log",
         "user": "root"
       }
     ],
-    "remote_ip": "192.168.1.1",
-    "usbkey": {
-      "key": "key2",
-      "key_sn": "SN1234567891"
-    },
+    "remote_ip": "192.168.1.11",
+    "usbkey": [
+      {
+        "key": "key1",
+        "key_sn": "SN123456789"
+      }
+    ],
     "charset": "UTF-8",
-    "openstack_server_id": "OS654321",
+    "openstack_server_id": "os-987654321",
     "host_price": 1500,
     "outer_ip": "192.168.1.2",
     "ip": "10.0.0.2",
     "cpu": {
-      "brand": "AMD Ryzen 7",
+      "brand": "AMD EPYC 7502 32-Core Processor",
       "architecture": "x86_64",
-      "cpu_pieces": "1",
-      "physical_cores": 8,
-      "logical_cores": 16,
-      "hz": "3.60GHz"
+      "cpu_pieces": "2",
+      "physical_cores": 64,
+      "logical_cores": 128,
+      "hz": "2500 MHz"
     },
-    "cpuHz": 3600,
-    "cpus": 1,
-    "cpuNumber": 16,
-    "diskTotal": "500GB",
+    "cpuHz": 2500,
+    "cpus": 64,
+    "cpuNumber": 128,
+    "diskTotal": "3.6 TB",
     "disk": [
       {
-        "device": "/dev/sda",
+        "device": "/dev/sda1",
         "fstype": "ext4",
         "mountpoint": "/",
-        "size": 500000,
+        "size": 1024000,
+        "provider": "local"
+      },
+      {
+        "device": "/dev/sdb1",
+        "fstype": "xfs",
+        "mountpoint": "/data",
+        "size": 2048000,
         "provider": "local"
       }
     ],
-    "diskSize": 500000,
-    "memSize": 16384,
-    "_occupiedU": 2,
+    "diskSize": 3072000,
+    "memSize": 32768,
+    "_occupiedU": 3,
     "_startU": 1,
     "_environment": "测试",
-    "asset_belong_to": "物流程",
-    "applicant": "Jane Doe",
-    "maintenance_time_start": "2023-01-01",
-    "propertyid": "PROP6789",
-    "asset_id": "ASSET6789",
-    "maintenance_time_end": "2023-12-31",
-    "maintenanceExpireYearsNumber": 2,
-    "maintenanceState": "未到期",
-    "age": "2023-03-15 12:00:00",
+    "asset_belong_to": "体育",
+    "applicant": "李四",
+    "maintenance_time_start": "2022-01-01",
+    "propertyid": "AS-67890",
+    "asset_id": "FA-67890",
+    "maintenance_time_end": "2025-01-01",
+    "maintenanceExpireYearsNumber": 3,
+    "maintenanceState": "维保中",
+    "age": "2021-01-01 10:00:00",
     "annotations": [
       {
         "key": "owner",
-        "value": "Jane Doe"
+        "value": "测试部"
       },
       {
-        "key": "department",
-        "value": "QA"
+        "key": "location",
+        "value": "机房B"
       }
     ],
-    "appServicePort": "8080",
+    "appServicePort": "8081,8082",
     "filesystem": [
       {
         "filesystem": "ext4",
-        "size": 500000,
+        "size": 1024000,
         "mountPoint": "/"
+      },
+      {
+        "filesystem": "xfs",
+        "size": 2048000,
+        "mountPoint": "/data"
       }
     ],
     "hardDevices": [
@@ -509,8 +526,17 @@
         "major": 8,
         "minor": 0,
         "readyOnly": "0",
-        "size": 500000,
+        "size": 1024000,
         "mountPoints": "/"
+      },
+      {
+        "name": "/dev/sdb",
+        "type": "disk",
+        "major": 8,
+        "minor": 16,
+        "readyOnly": "0",
+        "size": 2048000,
+        "mountPoints": "/data"
       }
     ],
     "iptables": [
@@ -523,10 +549,20 @@
         "destination": "",
         "module": "",
         "options": ""
+      },
+      {
+        "isIPv6": false,
+        "chain": "OUTPUT",
+        "target": "ACCEPT",
+        "protocol": "udp",
+        "source": "",
+        "destination": "192.168.2.0/24",
+        "module": "",
+        "options": ""
       }
     ],
-    "k8sProxyVersion": "1.21.0",
-    "k8sVersion": "1.21.0",
+    "k8sProxyVersion": "1.22.0",
+    "k8sVersion": "1.22.0",
     "labels": [
       {
         "key": "app",
@@ -537,33 +573,50 @@
         "values": ["test"]
       }
     ],
-    "nodeConditions": ["Ready"],
     "nodeLabels": [
-      {
-        "key": "kubernetes.io/hostname",
-        "value": "node2"
-      },
       {
         "key": "beta.kubernetes.io/os",
         "value": "linux"
+      },
+      {
+        "key": "kubernetes.io/arch",
+        "value": "amd64"
       }
     ],
     "nodeName": "node2",
-    "nodeOriginalStatus": "Ready",
-    "nodeRoles": ["worker"],
     "nodeStatus": "Ready",
-    "taints": [],
+    "taints": [
+      {
+        "key": "node-role.kubernetes.io/test",
+        "value": "",
+        "effect": "NoSchedule"
+      }
+    ],
     "windowsFirewallRules": [
       {
         "name": "HTTP",
         "enabled": true,
         "direction": "Inbound",
-        "profile": "Any",
-        "group": "",
+        "profile": "Domain",
+        "group": "Web",
         "localIp": "",
         "remoteIp": "",
         "protocol": "TCP",
-        "localPort": "8080",
+        "localPort": "80",
+        "remotePort": "",
+        "edgeTraversal": "",
+        "action": "Allow"
+      },
+      {
+        "name": "HTTPS",
+        "enabled": true,
+        "direction": "Inbound",
+        "profile": "Domain",
+        "group": "Web",
+        "localIp": "",
+        "remoteIp": "",
+        "protocol": "TCP",
+        "localPort": "443",
         "remotePort": "",
         "edgeTraversal": "",
         "action": "Allow"
@@ -571,37 +624,27 @@
     ],
     "collectedDataStatus": "normal",
     "markedLostTs": 0,
-    "resourceId": "RES6789",
-    "resourceInstanceId": "RESINST6789"
+    "resourceId": "res-67890",
+    "resourceInstanceId": "inst-67890"
   },
   {
     "hostname": "host3.example.com",
-    "_agentStatus": "正常",
-    "cpuModel": "Intel Xeon E5-2690 v4",
-    "env": "生产环境",
-    "installedPatch": [
-      {
-        "articleId": "KB123456",
-        "installedTime": "2023-01-01 10:00:00"
-      },
-      {
-        "articleId": "KB789012",
-        "installedTime": "2023-01-02 11:00:00"
-      }
-    ],
+    "_agentStatus": "未安装",
+    "cpuModel": "Intel Xeon E5-2620 v4",
+    "env": "开发环境",
+    "installedPatch": [],
     "isSinglePower": false,
-    "location": "广州",
-    "product": "Dell PowerEdge R740",
-    "proj": ["项目D"],
-    "use": "文件服务器",
-    "version": "v1.0.0",
-    "vmType": "kvm",
-    "aliveDate": "2023-01-01",
-    "vmName": "VM3",
-    "creat_time": "2023-01-01 00:00:00",
+    "location": "Guangzhou",
+    "product": "Product C",
+    "use": "Application Server",
+    "version": "3.0.0",
+    "vmType": "lxc",
+    "aliveDate": "2024-07-15",
+    "vmName": "vm3",
+    "creat_time": "2024-07-01 09:00:00",
     "_mac": "00:11:22:33:44:57",
     "_uuid": "123e4567-e89b-12d3-a456-426614174002",
-    "agentVersion": "2.1.0",
+    "agentVersion": "2.3.1",
     "eth": [
       {
         "name": "eth0",
@@ -613,143 +656,153 @@
         "broadcast": "192.168.1.255"
       }
     ],
-    "memo": "这是主机3的备注信息",
+    "memo": "This is a test host.",
     "osArchitecture": "x86_64",
-    "osDistro": "CentOS",
-    "osRelease": "7.9",
+    "osDistro": "Ubuntu",
+    "osRelease": "18.04",
     "osSystem": "Linux",
-    "osVersion": "3.10.0-1160.62.1.el7.x86_64",
+    "osVersion": "Ubuntu 18.04.5 LTS (Bionic Beaver)",
     "provider": "Dell",
     "service": [
       {
-        "name": "samba",
-        "cwd": "/var/lib/samba",
-        "exe": "/usr/sbin/smbd",
-        "listening_ip": "127.0.0.1",
-        "listening_port": 445,
-        "pname": "smbd",
-        "username": "samba"
+        "name": "tomcat",
+        "cwd": "/",
+        "exe": "/usr/sbin/tomcat",
+        "listening_ip": "0.0.0.0",
+        "listening_port": 8080,
+        "pname": "tomcat",
+        "username": "tomcat"
       }
     ],
-    "status": "运行中",
-    "deviceId": "1234567892",
-    "_agentHeartBeat": 1672531200,
+    "status": "未上线",
+    "deviceId": "123456789",
+    "_agentHeartBeat": 1689082238,
     "time_sync": "是",
-    "maintenance_window": "2023-01-01 02:00:00",
-    "uptime": "12345678",
+    "maintenance_window": "02:00-06:00",
+    "uptime": "1 day, 12:34:56",
     "NTP": "ntp.example.com",
-    "customer": "客户C",
-    "host_spec": "16C/32G/1T",
-    "create_time": "2023-01-01",
-    "device_model": "R740",
-    "RPO": "1H",
+    "customer": "Customer A",
+    "host_spec": "Standard",
+    "create_time": "2024-07-01",
+    "device_model": "PowerEdge R740",
+    "RPO": "1 hour",
     "vmware_host": "否",
     "is_database": false,
     "resourceType": "X86物理机",
-    "type": "物理机",
+    "type": "Physical",
     "hosts": [
       {
         "ip": "192.168.1.12",
         "hostname": "host3.example.com"
       }
     ],
-    "sn": "SN1234567892",
-    "vg": {
-      "VG_Name": "vg0",
-      "VG_Size": "100G",
-      "PE_Size": "4M",
-      "Total_PE": "25600",
-      "Free_PE": "1024",
-      "VG_UUID": "vg0-uuid"
-    },
-    "date": "2023-01-01",
-    "ticket_num": "T123458",
+    "sn": "SN123456789",
+    "vg": [
+      {
+        "VG_Name": "vg0",
+        "VG_Size": "100G",
+        "PE_Size": "4M",
+        "Total_PE": "25600",
+        "Free_PE": "1000",
+        "VG_UUID": "vg0-uuid"
+      }
+    ],
+    "date": "2024-07-11",
+    "ticket_num": "TICKET-1234",
     "cloud_type": "aliyun",
-    "pv": {
-      "PV_Name": "pv0",
-      "VG_Name": "vg0",
-      "PV_Size": "100G",
-      "PE_Size": "4M",
-      "Total_PE": "25600",
-      "Free_PE": "1024",
-      "PV_UUID": "pv0-uuid"
-    },
+    "pv": [
+      {
+        "PV_Name": "pv0",
+        "VG_Name": "vg0",
+        "PV_Size": "100G",
+        "PE_Size": "4M",
+        "Total_PE": "25600",
+        "Free_PE": "1000",
+        "PV_UUID": "pv0-uuid"
+      }
+    ],
     "businessIP": "192.168.1.12",
     "time_zone": "Asia/Shanghai",
     "DNS": "8.8.8.8",
-    "samplerVersion": "1.0.0",
-    "RTO": "1H",
+    "samplerVersion": "1.2.3",
+    "RTO": "2 hours",
     "producer": "Dell",
-    "ip2": ["192.168.1.12"],
-    "crontabs": [
+    "crontabs": [],
+    "remote_ip": "192.168.1.12",
+    "usbkey": [
       {
-        "index": "1",
-        "time": "0 1 * * *",
-        "content": "/usr/local/bin/backup.sh",
-        "user": "root"
+        "key": "key1",
+        "key_sn": "SN123456789"
       }
     ],
-    "remote_ip": "192.168.1.1",
-    "usbkey": {
-      "key": "key3",
-      "key_sn": "SN1234567892"
-    },
     "charset": "UTF-8",
-    "openstack_server_id": "OS987654",
+    "openstack_server_id": "os-111111111",
     "host_price": 1000,
     "outer_ip": "192.168.1.3",
     "ip": "10.0.0.3",
     "cpu": {
-      "brand": "Intel(R) Core(TM) i7",
+      "brand": "Intel(R) Xeon(R) Gold 6130 CPU @ 2.10GHz",
       "architecture": "x86_64",
-      "cpu_pieces": "1",
-      "physical_cores": 6,
-      "logical_cores": 12,
-      "hz": "2.90GHz"
+      "cpu_pieces": "2",
+      "physical_cores": 16,
+      "logical_cores": 32,
+      "hz": "2100 MHz"
     },
-    "cpuHz": 2900,
-    "cpus": 1,
-    "cpuNumber": 12,
-    "diskTotal": "250GB",
+    "cpuHz": 2100,
+    "cpus": 16,
+    "cpuNumber": 32,
+    "diskTotal": "1.2 TB",
     "disk": [
       {
-        "device": "/dev/sda",
+        "device": "/dev/sda1",
         "fstype": "ext4",
         "mountpoint": "/",
-        "size": 250000,
+        "size": 1024000,
+        "provider": "local"
+      },
+      {
+        "device": "/dev/sdb1",
+        "fstype": "xfs",
+        "mountpoint": "/data",
+        "size": 1024000,
         "provider": "local"
       }
     ],
-    "diskSize": 250000,
-    "memSize": 8192,
-    "_occupiedU": 2,
+    "diskSize": 2048000,
+    "memSize": 16384,
+    "_occupiedU": 1,
     "_startU": 1,
     "_environment": "开发",
-    "asset_belong_to": "物公用",
-    "applicant": "John Smith",
-    "maintenance_time_start": "2023-01-01",
-    "propertyid": "PROP4567",
-    "asset_id": "ASSET4567",
-    "maintenance_time_end": "2023-12-31",
-    "maintenanceExpireYearsNumber": 1,
-    "maintenanceState": "未到期",
-    "age": "2023-03-15 12:00:00",
+    "asset_belong_to": "鞋体公用",
+    "applicant": "王五",
+    "maintenance_time_start": "2023-03-15",
+    "propertyid": "AS-11111",
+    "asset_id": "FA-11111",
+    "maintenance_time_end": "2026-03-15",
+    "maintenanceExpireYearsNumber": 3,
+    "maintenanceState": "维保中",
+    "age": "2022-03-15 14:00:00",
     "annotations": [
       {
         "key": "owner",
-        "value": "John Smith"
+        "value": "开发部"
       },
       {
-        "key": "department",
-        "value": "Dev"
+        "key": "location",
+        "value": "机房C"
       }
     ],
-    "appServicePort": "8081",
+    "appServicePort": "8083",
     "filesystem": [
       {
         "filesystem": "ext4",
-        "size": 250000,
+        "size": 1024000,
         "mountPoint": "/"
+      },
+      {
+        "filesystem": "xfs",
+        "size": 1024000,
+        "mountPoint": "/data"
       }
     ],
     "hardDevices": [
@@ -759,8 +812,17 @@
         "major": 8,
         "minor": 0,
         "readyOnly": "0",
-        "size": 250000,
+        "size": 1024000,
         "mountPoints": "/"
+      },
+      {
+        "name": "/dev/sdb",
+        "type": "disk",
+        "major": 8,
+        "minor": 16,
+        "readyOnly": "0",
+        "size": 1024000,
+        "mountPoints": "/data"
       }
     ],
     "iptables": [
@@ -773,10 +835,20 @@
         "destination": "",
         "module": "",
         "options": ""
+      },
+      {
+        "isIPv6": false,
+        "chain": "OUTPUT",
+        "target": "ACCEPT",
+        "protocol": "udp",
+        "source": "",
+        "destination": "192.168.2.0/24",
+        "module": "",
+        "options": ""
       }
     ],
-    "k8sProxyVersion": "1.21.0",
-    "k8sVersion": "1.21.0",
+    "k8sProxyVersion": "1.23.0",
+    "k8sVersion": "1.23.0",
     "labels": [
       {
         "key": "app",
@@ -787,33 +859,50 @@
         "values": ["dev"]
       }
     ],
-    "nodeConditions": ["Ready"],
     "nodeLabels": [
-      {
-        "key": "kubernetes.io/hostname",
-        "value": "node3"
-      },
       {
         "key": "beta.kubernetes.io/os",
         "value": "linux"
+      },
+      {
+        "key": "kubernetes.io/arch",
+        "value": "amd64"
       }
     ],
     "nodeName": "node3",
-    "nodeOriginalStatus": "Ready",
-    "nodeRoles": ["worker"],
     "nodeStatus": "Ready",
-    "taints": [],
+    "taints": [
+      {
+        "key": "node-role.kubernetes.io/dev",
+        "value": "",
+        "effect": "NoSchedule"
+      }
+    ],
     "windowsFirewallRules": [
       {
         "name": "HTTP",
         "enabled": true,
         "direction": "Inbound",
-        "profile": "Any",
-        "group": "",
+        "profile": "Domain",
+        "group": "Web",
         "localIp": "",
         "remoteIp": "",
         "protocol": "TCP",
-        "localPort": "8081",
+        "localPort": "80",
+        "remotePort": "",
+        "edgeTraversal": "",
+        "action": "Allow"
+      },
+      {
+        "name": "HTTPS",
+        "enabled": true,
+        "direction": "Inbound",
+        "profile": "Domain",
+        "group": "Web",
+        "localIp": "",
+        "remoteIp": "",
+        "protocol": "TCP",
+        "localPort": "443",
         "remotePort": "",
         "edgeTraversal": "",
         "action": "Allow"
@@ -821,7 +910,7 @@
     ],
     "collectedDataStatus": "normal",
     "markedLostTs": 0,
-    "resourceId": "RES4567",
-    "resourceInstanceId": "RESINST4567"
+    "resourceId": "res-11111",
+    "resourceInstanceId": "inst-11111"
   }
 ]
