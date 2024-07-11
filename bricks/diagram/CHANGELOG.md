@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.41.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.40.3...@next-bricks/diagram@0.41.0) (2024-07-11)
+
+
+### Features
+
+* 容器支持框选 ([da74939](https://github.com/easyops-cn/next-bricks/commit/da749391c895e6e93ea29307441646364723862b))
+
+
+
+
+
 ## [0.40.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.40.2...@next-bricks/diagram@0.40.3) (2024-07-11)
 
 **Note:** Version bump only for package @next-bricks/diagram
