@@ -556,9 +556,10 @@ describe("eo-draw-canvas", () => {
         view: {
           x: 620,
           y: 480,
-          width: 100,
-          height: 60,
+          width: 180,
+          height: 120,
           text: "Hello",
+          direction: undefined,
         },
       });
     });
