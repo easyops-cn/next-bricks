@@ -7,6 +7,7 @@
 }
 
 sl-tooltip {
+  --max-width: max-width;
   --sl-tooltip-background-color: var(--antd-tooltip-bg);
   --sl-tooltip-padding: 5px 8px;
   --sl-tooltip-color: var(--antd-tooltip-color);
