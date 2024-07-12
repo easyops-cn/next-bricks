@@ -25,10 +25,20 @@ const WrappedTag = wrapBrick<Tag, TagProps, TagEvents, TagMapEvents>("eo-tag", {
   onClose: "close",
 });
 
-type tagListItem = TagProps & { text: string; key?: string };
+export type TagListItem = TagProps & { text: string; key?: string };
 
-interface TagListComponentProps {
-  list?: Array<tagListItem | string>;
+export interface TagListProps
+  extends Pick<
+    TagProps,
+    | "size"
+    | "color"
+    | "outline"
+    | "disabled"
+    | "closable"
+    | "checkable"
+    | "tagStyle"
+  > {
+  list?: Array<TagListItem | string>;
   showTagCircle?: boolean;
   multiple?: boolean;
 }
@@ -37,20 +47,20 @@ interface TagListComponentProps {
  * 标签列表构件
  * @author sailor
  *
- * @categoru display-component
+ * @category display-component
  */
 @defineElement("eo-tag-list", {
   alias: ["basic.general-tag-list"],
   styleTexts: [styleText],
 })
-class TagList extends ReactNextElement {
+class TagList extends ReactNextElement implements TagListProps {
   /**
    * 标签列表
    */
   @property({
     attribute: false,
   })
-  accessor list: Array<tagListItem | string> | undefined;
+  accessor list: Array<TagListItem | string> | undefined;
 
   /**
    * 按钮大小
@@ -64,8 +74,14 @@ class TagList extends ReactNextElement {
   @property()
   accessor color: TagColor | string | undefined;
 
+  /** 是否有边线 */
+  @property({
+    type: Boolean,
+  })
+  accessor outline: boolean | undefined;
+
   /**
-   * 颜色
+   * 显示圆点
    */
   @property({
     type: Boolean,
@@ -123,11 +139,11 @@ class TagList extends ReactNextElement {
    */
   @event({ type: "check" })
   accessor #checkEvent!: EventEmitter<{
-    item: tagListItem | string | undefined;
-    list: tagListItem[];
+    item: TagListItem | string | undefined;
+    list: TagListItem[];
   }>;
 
-  handleCheck = (item: tagListItem, list: tagListItem[]): void => {
+  handleCheck = (item: TagListItem, list: TagListItem[]): void => {
     this.#checkEvent.emit({
       item: this.#matchItem(item.text),
       list,
@@ -139,11 +155,11 @@ class TagList extends ReactNextElement {
    */
   @event({ type: "close" })
   accessor #closeEvent!: EventEmitter<{
-    item: tagListItem | string | undefined;
-    list: tagListItem[];
+    item: TagListItem | string | undefined;
+    list: TagListItem[];
   }>;
 
-  handleClose = (item: tagListItem, list: tagListItem[]): void => {
+  handleClose = (item: TagListItem, list: TagListItem[]): void => {
     this.#closeEvent.emit({
       item: this.#matchItem(item.text),
       list,
@@ -156,6 +172,7 @@ class TagList extends ReactNextElement {
         list={this.list}
         size={this.size}
         color={this.color}
+        outline={this.outline}
         disabled={this.disabled}
         showTagCircle={this.showTagCircle}
         closable={this.closable}
@@ -169,10 +186,16 @@ class TagList extends ReactNextElement {
   }
 }
 
+interface TagListComponentProps extends TagListProps {
+  onCheck: (item: TagListItem, list: TagListItem[]) => void;
+  onClose: (item: TagListItem, list: TagListItem[]) => void;
+}
+
 function TagListComponent({
   list,
   size = "medium",
   color,
+  outline,
   disabled,
   closable,
   checkable,
@@ -181,11 +204,7 @@ function TagListComponent({
   tagStyle,
   onCheck,
   onClose,
-}: TagListComponentProps &
-  TagProps & {
-    onCheck: (item: tagListItem, list: tagListItem[]) => void;
-    onClose: (item: tagListItem, list: tagListItem[]) => void;
-  }) {
+}: TagListComponentProps) {
   const [tagList, setTagList] = useState(list ?? []);
   const computedList = useMemo(() => {
     return (
@@ -201,7 +220,7 @@ function TagListComponent({
   }, [tagList]);
 
   const handleCheck = useCallback(
-    (tag: tagListItem): void => {
+    (tag: TagListItem): void => {
       if (multiple) {
         tag.checked = !tag.checked;
       } else {
@@ -225,12 +244,15 @@ function TagListComponent({
   );
 
   const handleClose = useCallback(
-    (tag: tagListItem) => {
+    (tag: TagListItem) => {
       tag.hidden = !tag.hidden;
       if (tag.checked) {
         handleCheck(tag);
       }
-      onClose?.(tag, computedList?.filter((item) => !item.hidden));
+      onClose?.(
+        tag,
+        computedList?.filter((item) => !item.hidden)
+      );
     },
     [computedList, handleCheck, onClose]
   );
@@ -246,6 +268,7 @@ function TagListComponent({
           <WrappedTag
             size={size}
             color={color}
+            outline={outline}
             disabled={disabled}
             closable={closable}
             checkable={checkable}
