@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.2.1...@next-bricks/icons@1.2.2) (2024-07-12)
+
+
+### Bug Fixes
+
+* use types from @next-shared/property-editor ([8b2d1d5](https://github.com/easyops-cn/next-bricks/commit/8b2d1d50c8629455e7e81d4e734a8ee31c5272a5))
+
+
+
+
+
 ## [1.2.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.2.0...@next-bricks/icons@1.2.1) (2024-07-11)
 
 **Note:** Version bump only for package @next-bricks/icons
