@@ -21,7 +21,7 @@ import {
   onFormValuesChange,
   createEffectHook,
 } from "@formily/core";
-import { createSchemaField, FormProvider, ISchema } from "@formily/react";
+import { createSchemaField, FormProvider } from "@formily/react";
 import { ConfigProvider, theme } from "antd";
 import { StyleProvider, createCache } from "@ant-design/cssinjs";
 import {
@@ -35,6 +35,11 @@ import {
   Switch,
 } from "@formily/antd-v5";
 import { useCurrentTheme } from "@next-core/react-runtime";
+import {
+  EditorComponentProps,
+  DataItem,
+  SelectOptions,
+} from "@next-shared/property-editor";
 import { CategoryTitle } from "./components/CategoryTitle";
 import { AdvancedFormItem } from "./components/AdvancedFormItem";
 import { CodeEditorComponent } from "./components/common/CodeEditorComponent";
@@ -90,51 +95,7 @@ export const SchemaField = createSchemaField({
   },
 });
 
-type SelectOptions = { label: string; value: string }[];
-
-export interface EditorComponentProps {
-  advancedMode?: boolean;
-  SchemaFieldComponent: typeof SchemaField;
-  formilySchemaFormatter: (data: any) => ISchema;
-  form: Form<any>;
-  effects: {
-    onFieldInit: typeof onFieldInit;
-    onFieldValueChange: typeof onFieldValueChange;
-    onFieldInitialValueChange: typeof onFieldInitialValueChange;
-    onFormInitialValuesChange: typeof onFormInitialValuesChange;
-    onFormValidateSuccess: typeof onFormValidateSuccess;
-    onSubmit: (listener: (value: any, form: Form) => any) => void;
-    onAdvancedChange: (
-      listener: (advancedMode: boolean, form: Form) => any
-    ) => void;
-    // support any effects
-  };
-  scope: {
-    advancedMode: boolean;
-    dataList: DataItem[];
-    childSlots: SelectOptions;
-    extraLibs: SelectOptions;
-    links: any;
-    tokenClick: (token: CustomEvent<string>) => void;
-    triggerAction: (action: string) => void;
-  };
-}
-
-export interface DefinitionItem {
-  name: string;
-  type: string;
-  enum: string;
-  fileds: DefinitionItem[];
-}
-
-export interface DataItem {
-  name: string;
-  value: string;
-  definition: DefinitionItem[];
-  [k: string]: any;
-}
-
-export { DataNode };
+export type { DataNode };
 
 /**
  * 构件 `visual-builder.property-editor`
@@ -307,7 +268,7 @@ export function LegacyPropertyEditor(
   ref: any
 ) {
   const [Editor, setEditor] = useState<
-    (props: EditorComponentProps) => React.ReactElement
+    (props: EditorComponentProps<typeof SchemaField>) => React.ReactElement
   >(() => customEditors.get(editorName)?.(React) as any);
   const currentTheme = useCurrentTheme();
   const cache = useMemo(() => createCache(), []);

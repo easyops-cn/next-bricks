@@ -56,7 +56,7 @@ type formilySchemaFormatterOptions = {
 
 export function formilySchemaFormatter(
   data: DataNode,
-  options?: formilySchemaFormatterOptions
+  options?: formilySchemaFormatterOptions | boolean
 ): ISchema {
   const { isDefault = true } = typeof options === "object" ? options : {};
 
