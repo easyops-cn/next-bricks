@@ -26,7 +26,7 @@
 - brick: eo-humanize-time
   properties:
     formatter: relative
-    isMicrosecond: true
+    isMillisecond: true
     value: 1714026348000
 ```
 
