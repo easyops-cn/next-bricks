@@ -13,5 +13,7 @@ export default {
     "<rootDir>/src/pre-generated-",
     "<rootDir>/src/data-providers/chat-preview/",
     "<rootDir>/src/data-providers/inject-chat-preview-agent",
+    // Todo(sailor): Work in progress
+    "<rootDir>/src/property-editor",
   ],
 };
