@@ -13,7 +13,11 @@ export interface EditorComponentProps<
 > {
   advancedMode?: boolean;
   SchemaFieldComponent: T;
-  formilySchemaFormatter: (data: any) => ISchema;
+  formilySchemaFormatter: (
+    data: any,
+    // Todo(sailor): fix the type of options
+    options?: boolean | { isDefault: boolean }
+  ) => ISchema;
   form: Form<any>;
   effects: {
     onFieldInit: typeof onFieldInit;
