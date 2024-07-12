@@ -3,32 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.27](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@1.0.26...@next-bricks/vb-experiment@1.0.27) (2024-07-12)
+
+**Note:** Version bump only for package @next-bricks/vb-experiment
+
 ## [1.0.26](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@1.0.25...@next-bricks/vb-experiment@1.0.26) (2024-07-11)
 
 **Note:** Version bump only for package @next-bricks/vb-experiment
 
-
-
-
-
 ## [1.0.25](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@1.0.24...@next-bricks/vb-experiment@1.0.25) (2024-07-03)
-
 
 ### Bug Fixes
 
-* add new keyword`SIZE`, add missing types for builtin keywords ([0370f34](https://github.com/easyops-cn/next-bricks/commit/0370f34c23269512fef23188b84b42006aa21d04))
-
-
-
-
+- add new keyword`SIZE`, add missing types for builtin keywords ([0370f34](https://github.com/easyops-cn/next-bricks/commit/0370f34c23269512fef23188b84b42006aa21d04))
 
 ## [1.0.24](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@1.0.23...@next-bricks/vb-experiment@1.0.24) (2024-06-25)
 
 **Note:** Version bump only for package @next-bricks/vb-experiment
-
-
-
-
 
 ## [1.0.23](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vb-experiment@1.0.22...@next-bricks/vb-experiment@1.0.23) (2024-06-25)
 

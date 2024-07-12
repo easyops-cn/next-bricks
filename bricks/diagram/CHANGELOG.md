@@ -3,95 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.41.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.40.3...@next-bricks/diagram@0.41.0) (2024-07-11)
+## [0.41.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.41.0...@next-bricks/diagram@0.41.1) (2024-07-12)
 
+**Note:** Version bump only for package @next-bricks/diagram
+
+# [0.41.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.40.3...@next-bricks/diagram@0.41.0) (2024-07-11)
 
 ### Features
 
-* 容器支持框选 ([da74939](https://github.com/easyops-cn/next-bricks/commit/da749391c895e6e93ea29307441646364723862b))
-
-
-
-
+- 容器支持框选 ([da74939](https://github.com/easyops-cn/next-bricks/commit/da749391c895e6e93ea29307441646364723862b))
 
 ## [0.40.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.40.2...@next-bricks/diagram@0.40.3) (2024-07-11)
 
 **Note:** Version bump only for package @next-bricks/diagram
 
-
-
-
-
 ## [0.40.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.40.1...@next-bricks/diagram@0.40.2) (2024-07-10)
-
 
 ### Bug Fixes
 
-* update dagre, fix a browser compatibility issue ([eca9a43](https://github.com/easyops-cn/next-bricks/commit/eca9a43c65ecbfaaae1f6676eaa453b65392bec0))
-
-
-
-
+- update dagre, fix a browser compatibility issue ([eca9a43](https://github.com/easyops-cn/next-bricks/commit/eca9a43c65ecbfaaae1f6676eaa453b65392bec0))
 
 ## [0.40.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.40.0...@next-bricks/diagram@0.40.1) (2024-07-10)
 
-
 ### Bug Fixes
 
-* Safari  foreignobject render ([1ff68b7](https://github.com/easyops-cn/next-bricks/commit/1ff68b72c426e634700d9d847d72c3b71d328590))
-
-
-
-
+- Safari foreignobject render ([1ff68b7](https://github.com/easyops-cn/next-bricks/commit/1ff68b72c426e634700d9d847d72c3b71d328590))
 
 # [0.40.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.39.0...@next-bricks/diagram@0.40.0) (2024-07-09)
 
-
 ### Features
 
-* 自动模式，根据containerId关系的节点的位置大小，计算对应容器元素的位置大小 ([ff98c58](https://github.com/easyops-cn/next-bricks/commit/ff98c58bdd9aac2093b8487b3a898956b9ccb66c))
-
-
-
-
+- 自动模式，根据containerId关系的节点的位置大小，计算对应容器元素的位置大小 ([ff98c58](https://github.com/easyops-cn/next-bricks/commit/ff98c58bdd9aac2093b8487b3a898956b9ccb66c))
 
 # [0.39.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.38.0...@next-bricks/diagram@0.39.0) (2024-07-08)
 
-
 ### Features
 
-* 新版拓扑图支持容器元素 ([b284867](https://github.com/easyops-cn/next-bricks/commit/b284867758385e5399c33ad3ad89041f4eb9af9e))
-
-
-
-
+- 新版拓扑图支持容器元素 ([b284867](https://github.com/easyops-cn/next-bricks/commit/b284867758385e5399c33ad3ad89041f4eb9af9e))
 
 # [0.38.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.37.17...@next-bricks/diagram@0.38.0) (2024-07-01)
 
-
 ### Features
 
-* 框选支持文字 ([806c6c6](https://github.com/easyops-cn/next-bricks/commit/806c6c60939a45a877537642684a52e7a18170ee))
-
-
-
-
+- 框选支持文字 ([806c6c6](https://github.com/easyops-cn/next-bricks/commit/806c6c60939a45a877537642684a52e7a18170ee))
 
 ## [0.37.17](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.37.16...@next-bricks/diagram@0.37.17) (2024-06-26)
 
 **Note:** Version bump only for package @next-bricks/diagram
 
-
-
-
-
 ## [0.37.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.37.15...@next-bricks/diagram@0.37.16) (2024-06-25)
 
 **Note:** Version bump only for package @next-bricks/diagram
-
-
-
-
 
 ## [0.37.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.37.14...@next-bricks/diagram@0.37.15) (2024-06-25)
 

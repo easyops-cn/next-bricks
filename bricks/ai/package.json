@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/ai",
-  "version": "1.23.15",
+  "version": "1.23.16",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/ai",
   "repository": {
     "type": "git",
@@ -58,8 +58,8 @@
   },
   "peerDependencies": {
     "@next-bricks/basic": "*",
-    "@next-bricks/form": "*",
     "@next-bricks/containers": "*",
+    "@next-bricks/form": "*",
     "@next-bricks/icons": "*"
   }
 }

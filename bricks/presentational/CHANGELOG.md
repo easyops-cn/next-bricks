@@ -3,63 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.10.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.1...@next-bricks/presentational@1.10.2) (2024-07-12)
+## [1.10.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.2...@next-bricks/presentational@1.10.3) (2024-07-12)
 
+**Note:** Version bump only for package @next-bricks/presentational
+
+## [1.10.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.1...@next-bricks/presentational@1.10.2) (2024-07-12)
 
 ### Bug Fixes
 
-* **eo-descriptions:** support field ([8574836](https://github.com/easyops-cn/next-bricks/commit/85748362abbbe88c9a269c42b617cacda9c011ab))
-* use millisecond instead of microsecond ([88bb535](https://github.com/easyops-cn/next-bricks/commit/88bb53582130e06800dcefd9b58c1851bf49971c))
-
-
-
-
+- **eo-descriptions:** support field ([8574836](https://github.com/easyops-cn/next-bricks/commit/85748362abbbe88c9a269c42b617cacda9c011ab))
+- use millisecond instead of microsecond ([88bb535](https://github.com/easyops-cn/next-bricks/commit/88bb53582130e06800dcefd9b58c1851bf49971c))
 
 ## [1.10.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.0...@next-bricks/presentational@1.10.1) (2024-07-11)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 # [1.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.9.0...@next-bricks/presentational@1.10.0) (2024-07-04)
-
 
 ### Features
 
-* **humanize-time:** support date only type ([e0a86a7](https://github.com/easyops-cn/next-bricks/commit/e0a86a767dee77e4ff39dba183c7d8f3c10ff515))
-
-
-
-
+- **humanize-time:** support date only type ([e0a86a7](https://github.com/easyops-cn/next-bricks/commit/e0a86a767dee77e4ff39dba183c7d8f3c10ff515))
 
 # [1.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.8.3...@next-bricks/presentational@1.9.0) (2024-06-27)
 
-
 ### Features
 
-* **card-item:** add showActions and cardStyle properties ([97325f8](https://github.com/easyops-cn/next-bricks/commit/97325f8093fa8b8ebbf08c5ebcc9638d02be66e6))
-
-
-
-
+- **card-item:** add showActions and cardStyle properties ([97325f8](https://github.com/easyops-cn/next-bricks/commit/97325f8093fa8b8ebbf08c5ebcc9638d02be66e6))
 
 ## [1.8.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.8.2...@next-bricks/presentational@1.8.3) (2024-06-26)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [1.8.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.8.1...@next-bricks/presentational@1.8.2) (2024-06-25)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [1.8.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.8.0...@next-bricks/presentational@1.8.1) (2024-06-25)
 

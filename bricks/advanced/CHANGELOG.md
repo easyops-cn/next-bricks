@@ -3,95 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.35.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.35.2...@next-bricks/advanced@0.35.3) (2024-07-11)
+## [0.35.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.35.3...@next-bricks/advanced@0.35.4) (2024-07-12)
 
+**Note:** Version bump only for package @next-bricks/advanced
+
+## [0.35.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.35.2...@next-bricks/advanced@0.35.3) (2024-07-11)
 
 ### Bug Fixes
 
-* **eo-workbench-layout-v2:** 修复拖动时颜色不对，或者全选字体的问题 ([320c543](https://github.com/easyops-cn/next-bricks/commit/320c543f2b6558aac452cfa0149e121797566de8))
-
-
-
-
+- **eo-workbench-layout-v2:** 修复拖动时颜色不对，或者全选字体的问题 ([320c543](https://github.com/easyops-cn/next-bricks/commit/320c543f2b6558aac452cfa0149e121797566de8))
 
 ## [0.35.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.35.1...@next-bricks/advanced@0.35.2) (2024-07-11)
 
 **Note:** Version bump only for package @next-bricks/advanced
 
-
-
-
-
 ## [0.35.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.35.0...@next-bricks/advanced@0.35.1) (2024-07-09)
-
 
 ### Bug Fixes
 
-* **eo-workbench-layout-v2:** 修复拖动时卡死，位置便宜问题 ([c492ba7](https://github.com/easyops-cn/next-bricks/commit/c492ba76a4af87ab8f1325cab90b15d09253d223))
-
-
-
-
+- **eo-workbench-layout-v2:** 修复拖动时卡死，位置便宜问题 ([c492ba7](https://github.com/easyops-cn/next-bricks/commit/c492ba76a4af87ab8f1325cab90b15d09253d223))
 
 # [0.35.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.34.2...@next-bricks/advanced@0.35.0) (2024-07-09)
 
-
 ### Features
 
-* 新增eo-workbench-layout-v2支持嵌入v2构件 ([407e648](https://github.com/easyops-cn/next-bricks/commit/407e64876ca9b8a04399ebfb804de769cf268dfe))
-
-
-
-
+- 新增eo-workbench-layout-v2支持嵌入v2构件 ([407e648](https://github.com/easyops-cn/next-bricks/commit/407e64876ca9b8a04399ebfb804de769cf268dfe))
 
 ## [0.34.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.34.1...@next-bricks/advanced@0.34.2) (2024-07-04)
 
-
 ### Bug Fixes
 
-* layouts未监听，希望编辑情况下能动态改变参数 ([e871172](https://github.com/easyops-cn/next-bricks/commit/e871172dc453eabb6adbf8ce15989968ed2c1106))
-
-
-
-
+- layouts未监听，希望编辑情况下能动态改变参数 ([e871172](https://github.com/easyops-cn/next-bricks/commit/e871172dc453eabb6adbf8ce15989968ed2c1106))
 
 ## [0.34.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.34.0...@next-bricks/advanced@0.34.1) (2024-07-04)
 
-
 ### Bug Fixes
 
-* **eo-text-tooltip:** 修复在v2构件中导致样式不对的问题 ([0eae306](https://github.com/easyops-cn/next-bricks/commit/0eae306233736af15af89760f0969fc5cb05b657))
-
-
-
-
+- **eo-text-tooltip:** 修复在v2构件中导致样式不对的问题 ([0eae306](https://github.com/easyops-cn/next-bricks/commit/0eae306233736af15af89760f0969fc5cb05b657))
 
 # [0.34.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.33.9...@next-bricks/advanced@0.34.0) (2024-07-03)
 
-
 ### Features
 
-* **eo-text-tooltip:** 新增一个文本展示构件，文本超出才展示tip ([16028bb](https://github.com/easyops-cn/next-bricks/commit/16028bbc61d3ca92ecac17a18f170298b9b38e05))
-
-
-
-
+- **eo-text-tooltip:** 新增一个文本展示构件，文本超出才展示tip ([16028bb](https://github.com/easyops-cn/next-bricks/commit/16028bbc61d3ca92ecac17a18f170298b9b38e05))
 
 ## [0.33.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.33.8...@next-bricks/advanced@0.33.9) (2024-06-26)
 
 **Note:** Version bump only for package @next-bricks/advanced
 
-
-
-
-
 ## [0.33.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.33.7...@next-bricks/advanced@0.33.8) (2024-06-25)
 
 **Note:** Version bump only for package @next-bricks/advanced
-
-
-
-
 
 ## [0.33.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.33.6...@next-bricks/advanced@0.33.7) (2024-06-25)
 
