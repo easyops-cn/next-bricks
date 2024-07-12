@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.35.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.35.4...@next-bricks/advanced@0.35.5) (2024-07-12)
+
+
+### Bug Fixes
+
+* **eo-workbench-layout-v2:** 编辑时点击删除按钮没响应 ([1698c57](https://github.com/easyops-cn/next-bricks/commit/1698c57d4bd746cd5a888da28e8321a36c569a19))
+
+
+
+
+
 ## [0.35.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.35.3...@next-bricks/advanced@0.35.4) (2024-07-12)
 
 **Note:** Version bump only for package @next-bricks/advanced
