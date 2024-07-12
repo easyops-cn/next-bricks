@@ -15,5 +15,4 @@
   <div style="background: black">第六个 div</div>
   <div style="background: gray">第七个 div</div>
 </eo-grid-layout>
->
 ```

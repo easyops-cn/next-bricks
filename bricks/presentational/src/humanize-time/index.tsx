@@ -20,7 +20,7 @@ export interface LinkInfo {
 
 export interface EoHumanizeTimeProps {
   value: number | string;
-  isMicrosecond?: boolean;
+  isMillisecond?: boolean;
   formatter?: HumanizeTimeFormat;
   isCostTime?: boolean;
   inputFormat?: string;
@@ -89,12 +89,22 @@ class EoHumanizeTime extends ReactNextElement {
   accessor formatter: HumanizeTimeFormat;
 
   /**
-   * value 值的单位是否为毫秒
+   * value 值的单位是否为毫秒（此处属性 id 写错，实际表达意义为 isMillisecond）
+   *
+   * @deprecated 请使用 `isMillisecond`
    */
   @property({
     type: Boolean,
   })
   accessor isMicrosecond: boolean;
+
+  /**
+   * value 值的单位是否为毫秒
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor isMillisecond: boolean;
 
   /**
    * 跳转链接，默认为空
@@ -118,7 +128,7 @@ class EoHumanizeTime extends ReactNextElement {
         value={this.value}
         type={this.type}
         formatter={this.formatter}
-        isMicrosecond={this.isMicrosecond}
+        isMillisecond={this.isMillisecond ?? this.isMicrosecond}
         isCostTime={this.isCostTime}
         link={this.link}
         inputFormat={this.inputFormat}
@@ -131,7 +141,7 @@ class EoHumanizeTime extends ReactNextElement {
 export function HumanizeTimeComponent({
   value,
   type,
-  isMicrosecond,
+  isMillisecond,
   inputFormat,
   outputFormat,
   isCostTime,
@@ -144,7 +154,7 @@ export function HumanizeTimeComponent({
 
   let ts;
   if (typeof value === "number") {
-    ts = isMicrosecond ? value : Number(value) * 1000;
+    ts = isMillisecond ? value : Number(value) * 1000;
   } else {
     const time = moment(value, inputFormat);
     ts = time.unix() * 1000;

@@ -284,9 +284,10 @@
   properties:
     dataSource:
       text: Hello world
+      name: Tom
     list:
       - label: 姓名
-        text: Tom
+        field: name
       - label: 年龄
         text: 18
       - label: 身高

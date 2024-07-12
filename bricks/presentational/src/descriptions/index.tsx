@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import type { Card, CardProps } from "@next-bricks/containers/card";
@@ -138,20 +138,18 @@ export function DescriptionsComponent(props: DescriptionsProps) {
     layout = "horizontal",
     bordered = false,
     hideGroups,
-    dataSource,
+    dataSource: _dataSource,
   } = props;
+  const dataSource = useMemo(() => _dataSource ?? {}, [_dataSource]);
   const [hideGroupsSet, setHideGroupsSet] = useState<Set<string>>();
 
   const renderItem = (item: DescriptionItem) => {
     if (item.useBrick) {
       return (
-        <ReactUseMultipleBricks
-          useBrick={item.useBrick}
-          data={dataSource ?? {}}
-        />
+        <ReactUseMultipleBricks useBrick={item.useBrick} data={dataSource} />
       );
     }
-    return item.text;
+    return item.field != null ? String(dataSource[item.field]) : item.text;
   };
 
   useEffect(() => {
