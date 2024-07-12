@@ -67,7 +67,6 @@
 /* Size */
 .tag.small {
   font-size: 12px;
-  list-style: 20px;
   line-height: 14px;
   height: 18px;
   padding: 0px 8px;
@@ -75,14 +74,12 @@
 
 .tag.medium {
   font-size: 14px;
-  list-style: 22px;
   height: 24px;
   padding: 0px 8px;
 }
 
 .tag.large {
   font-size: 16px;
-  list-style: 24px;
   line-height: 28px;
   height: 30px;
   padding: 0px 16px;
@@ -241,4 +238,58 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+:host([outline]) .tag {
+  outline-offset: -1px;
+  outline-width: 1px;
+  outline-style: solid;
+}
+
+:host([outline]) .color-blue {
+  outline-color: rgba(var(--palette-blue-6-channel), 0.5);
+}
+
+:host([outline]) .color-cyan {
+  outline-color: rgba(var(--palette-cyan-6-channel), 0.5);
+}
+
+:host([outline]) .color-geekblue {
+  outline-color: rgba(var(--palette-indigo-6-channel), 0.5);
+}
+
+:host([outline]) .color-grayblue {
+  outline-color: rgba(var(--palette-gray-blue-6-channel), 0.5);
+}
+
+:host([outline]) .color-gray {
+  outline-color: rgba(var(--palette-gray-6-channel), 0.5);
+}
+
+:host([outline]) .color-green {
+  outline-color: rgba(var(--palette-green-6-channel), 0.5);
+}
+
+:host([outline]) .color-orange {
+  outline-color: rgba(var(--palette-orange-6-channel), 0.5);
+}
+
+:host([outline]) .color-purple {
+  outline-color: rgba(var(--palette-purple-6-channel), 0.5);
+}
+
+:host([outline]) .color-red {
+  outline-color: rgba(var(--palette-red-6-channel), 0.5);
+}
+
+:host([outline]) .color-yellow {
+  outline-color: rgba(var(--palette-yellow-6-channel), 0.5);
+}
+
+:host([outline]) .color-teal {
+  outline-color: rgba(var(--palette-teal-6-channel), 0.5);
+}
+
+:host([outline]) .color-pink {
+  outline-color: rgba(var(--palette-pink-6-channel), 0.5);
 }

@@ -10,6 +10,7 @@ import { ComponentSize } from "../interface.js";
 import styleText from "./tag.shadow.css";
 import "@next-core/theme";
 import { omit } from "lodash";
+import { ALLOWED_COMPONENT_SIZES } from "../constants.js";
 
 const { defineElement, property, event } = createDecorators();
 
@@ -52,6 +53,7 @@ export interface TagProps {
   size?: ComponentSize;
   icon?: GeneralIconProps;
   color?: TagColor | string;
+  outline?: boolean;
   closable?: boolean;
   disabled?: boolean;
   checkable?: boolean;
@@ -101,6 +103,13 @@ class Tag extends ReactNextElement implements TagProps {
    */
   @property()
   accessor color: TagColor | string | undefined;
+
+  /** 是否有边线 */
+  @property({
+    type: Boolean,
+    render: false,
+  })
+  accessor outline: boolean | undefined;
 
   /**
    * 是否禁用
@@ -199,7 +208,7 @@ function TagComponent(props: TagComponentProps) {
   const {
     size = "medium",
     icon,
-    color,
+    color: _color,
     disabled,
     closable,
     ellipsisWidth,
@@ -209,6 +218,7 @@ function TagComponent(props: TagComponentProps) {
     onCheck,
     onClose,
   } = props;
+  const color = _color ?? "gray";
   const [checked, setChecked] = useState(isChecked);
 
   const useDefineColor = useMemo(() => {
@@ -248,13 +258,17 @@ function TagComponent(props: TagComponentProps) {
 
   return (
     <div
-      className={classNames("tag", size, {
-        [`color-${color}`]: useDefineColor,
-        checkable,
-        checked,
-        disabled,
-        closable,
-      })}
+      className={classNames(
+        "tag",
+        ALLOWED_COMPONENT_SIZES.includes(size) ? size : "medium",
+        {
+          [`color-${color}`]: useDefineColor,
+          checkable,
+          checked,
+          disabled,
+          closable,
+        }
+      )}
       style={{
         ...(!useDefineColor && color
           ? {
