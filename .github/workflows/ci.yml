@@ -22,6 +22,14 @@ jobs:
         timezone: Asia/Shanghai
 
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    # https://github.com/codecov/codecov-action/issues/597
+    - name: Get SHA ancestor to origin/master
+      run: |
+        echo "SHA_ANCESTOR=$(git merge-base origin/master HEAD)" >> $GITHUB_ENV
+      if: github.event_name == 'pull_request'
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
@@ -79,6 +87,7 @@ jobs:
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         files: bricks/*/.coverage/cobertura-coverage.xml,shared/*/.coverage/cobertura-coverage.xml,!.cache/**/*
+        commit_parent: ${{ env.SHA_ANCESTOR }}
 
     - uses: easyops-cn/actions-next-publish-from-tags@master
       with:
