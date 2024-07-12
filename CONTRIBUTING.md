@@ -6,7 +6,7 @@
 
 运行 `yarn serve:playground` 然后打开浏览器访问 `http://localhost:8082/`。
 
-Playground 左侧可以编写 HTML 或 YAML 代码，右侧显示实时预览。可以下拉选择预设的示例，或选择 `- local -` 进行本地代码编写。
+Playground 左侧可以编写 YAML 或 HTML 代码，右侧显示实时预览。可以下拉选择预设的示例，或选择 `- local -` 进行本地代码编写。
 
 ### Playground 示例
 
@@ -138,7 +138,7 @@ import MySvgComp from "./icon.svg";
 
 第二部分是场景化示例列表，示例应进行分类，每个分类的标题使用第三级标题，例如 `### Types`。如有需要，分类中可以有附带描述说明性内容，每个分类也可以有多个示例。
 
-示例可以用 HTML 或 YAML 编写。通常来说，如果可以只使用简单属性（可以使用 HTML attributes）完成的编排，应使用 HTML；而如果涉及复合类型属性（需要使用 properties）或配置事件等编排，应使用 YAML。
+示例可以通常用 YAML 编写。
 
 使用 ` ```html preview ` 或 ` ```yaml preview `标注的代码块，可以在文档中实时预览、并在 playground 中作为示例。例如：
 
@@ -148,9 +148,9 @@ import MySvgComp from "./icon.svg";
 ```
 ````
 
-我们提供了示例 HTML 与 YAML 之间的自动的相互转译，开发者可以只编写其中一种，文档站点上用户可以自由切换示例语言。
+我们提供了示例 YAML 与 HTML 之间的自动的相互转译，开发者可以只编写其中一种，文档站点上用户可以自由切换示例语言。
 
-为了使 HTML 与 YAML 的自动转译正常工作，示例的编写有一些规则需要遵守：
+为了使 YAML 与 HTML 的自动转译正常工作，示例的编写有一些规则需要遵守：
 
 - 不要在 HTML 中使用 `<script>`，涉及复合属性和事件的编排请使用 YAML；
 - 事件配置中尽量只使用 `console.*`、`message.*` 或调用构件方法、设置构件属性；
