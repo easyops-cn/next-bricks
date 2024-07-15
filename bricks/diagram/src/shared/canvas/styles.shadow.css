@@ -81,6 +81,11 @@
   stroke-width: 1;
 }
 
+.container-active .decorator-container .container {
+  stroke: var(--palette-blue-5);
+  stroke-width: 1;
+}
+
 .cell:not(.read-only) {
   user-select: none;
 }
@@ -134,6 +139,10 @@
 
 .cell.faded {
   opacity: 0.3;
+}
+
+.cell.container-active {
+  opacity: 1;
 }
 
 .cell .node {

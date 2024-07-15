@@ -57,16 +57,19 @@ export function handleMouseDown(
   if (isEdgeCell(cell)) {
     return;
   }
-  const activeCells =
+  const activeCells: Cell[] = [];
+  const actives =
     activeTarget?.type === "multi" && action === "move"
       ? cells.filter((c) => targetIsActive(c, activeTarget))
-      : isContainerDecoratorCell(cell) && action === "move"
-        ? [
-            cell,
-            ...cells.filter((c) => isNodeCell(c) && c.containerId === cell.id),
-          ]
-        : [cell];
-
+      : [cell];
+  actives.forEach((a) => {
+    activeCells.push(a);
+    if (isContainerDecoratorCell(a) && action === "move") {
+      activeCells.push(
+        ...cells.filter((c) => isNodeCell(c) && c.containerId === a.id)
+      );
+    }
+  });
   const movableActiveCells = activeCells.filter(
     (c) => (isNodeCell(c) && !isAutoLayout) || isDecoratorCell(c)
   ) as (NodeCell | DecoratorCell)[];
