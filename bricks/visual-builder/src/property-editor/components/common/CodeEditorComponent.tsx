@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { wrapBrick } from "@next-core/react-element";
 import { CodeEditor, CodeEditorProps } from "@next-bricks/vs/code-editor";
 import yaml from "js-yaml";
-import { isEmpty } from "lodash";
+import { isEmpty, omit } from "lodash";
 
 interface CodeEditorComponentProps extends CodeEditorProps {
   onChange?: (value?: any) => void;
@@ -55,10 +55,7 @@ export function CodeEditorComponent(
           value = yaml.safeDump(
             Array.isArray(value)
               ? value
-              : {
-                  ...value,
-                  style: isEmpty(value.style) ? undefined : value.style,
-                },
+              : omit(value, isEmpty(value.style) ? ["style"] : []),
             {
               skipInvalid: true,
             }
