@@ -1,8 +1,6 @@
 import type _React from "react";
 import { customEditors } from "@next-core/runtime";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import type { EditorComponentProps } from "@next-bricks/visual-builder/property-editor";
+import type { EditorComponentProps } from "@next-shared/property-editor";
 import { eoDividerSchema } from "./eoDivider.schema";
 
 function EoDividerComponentFactory(React: typeof _React) {

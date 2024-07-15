@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/form-renderer",
-  "version": "0.1.70",
+  "version": "0.1.72",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/form-renderer",
   "repository": {
     "type": "git",
@@ -35,11 +35,11 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-core/element": "^1.2.10",
-    "@next-core/runtime": "^1.49.9"
+    "@next-core/element": "^1.2.11",
+    "@next-core/runtime": "^1.51.0"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.22.3",
-    "@next-core/test-next": "^1.1.4"
+    "@next-core/build-next-bricks": "^1.22.4",
+    "@next-core/test-next": "^1.1.5"
   }
 }

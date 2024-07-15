@@ -155,6 +155,10 @@
       - text: Item A
         key: Item A
         color: red
+      - text: Item A+
+        key: Item A+
+        color: red
+        outline: true
       - text: Item B
         key: Item B
         color: red-inverse

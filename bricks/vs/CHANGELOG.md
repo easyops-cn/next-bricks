@@ -3,55 +3,80 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.9.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.9.0...@next-bricks/vs@1.9.1) (2024-06-28)
+## [1.11.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.11.1...@next-bricks/vs@1.11.2) (2024-07-12)
 
+**Note:** Version bump only for package @next-bricks/vs
+
+## [1.11.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.11.0...@next-bricks/vs@1.11.1) (2024-07-11)
+
+**Note:** Version bump only for package @next-bricks/vs
+
+# [1.11.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.10.3...@next-bricks/vs@1.11.0) (2024-07-10)
 
 ### Bug Fixes
 
-* hide line Numbers ([e667995](https://github.com/easyops-cn/next-bricks/commit/e667995f39a3763f19c5aa0ce890ac18cbf2a44f))
-
-
-
-
-
-# [1.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.8.7...@next-bricks/vs@1.9.0) (2024-06-28)
-
+- editor set value not work ([9e0ba14](https://github.com/easyops-cn/next-bricks/commit/9e0ba14df700ea22cd90c944c6a3accbc579e255))
 
 ### Features
 
-* code editor add hideLineNumber and fix property-editor ([b32699f](https://github.com/easyops-cn/next-bricks/commit/b32699fe82670a9b384c5f1649427c608c229a01))
-* update hideNumber property ([a4267bc](https://github.com/easyops-cn/next-bricks/commit/a4267bcfccfd2450925238879e369537bdfd6710))
+- add Style schema and fix code editor default emit event ([ee64a48](https://github.com/easyops-cn/next-bricks/commit/ee64a4867734b8804fd8f8fae209e460e0a83a77))
 
-
-
-
-
-## [1.8.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.8.6...@next-bricks/vs@1.8.7) (2024-06-26)
-
+## [1.10.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.10.2...@next-bricks/vs@1.10.3) (2024-07-08)
 
 ### Bug Fixes
 
-* code Editor output and update Editor refresh values ([9f33078](https://github.com/easyops-cn/next-bricks/commit/9f330787f9b9dd742f3970d8f6ef6bfe0ef2056a))
+- **code-editor:** only validate yaml, for now ([009acf6](https://github.com/easyops-cn/next-bricks/commit/009acf6846a813c4157aad3fba8a01c08e38e270))
 
+## [1.10.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.10.1...@next-bricks/vs@1.10.2) (2024-07-03)
 
+### Bug Fixes
 
+- code editor focus change ([6664827](https://github.com/easyops-cn/next-bricks/commit/6664827b8519260ab0b4ac1a640cd28288292939))
 
+## [1.10.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.10.0...@next-bricks/vs@1.10.1) (2024-07-03)
+
+### Bug Fixes
+
+- add new keyword`SIZE`, add missing types for builtin keywords ([0370f34](https://github.com/easyops-cn/next-bricks/commit/0370f34c23269512fef23188b84b42006aa21d04))
+
+# [1.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.9.2...@next-bricks/vs@1.10.0) (2024-07-02)
+
+### Features
+
+- **code-editor:** add glyphMargin ([b242f55](https://github.com/easyops-cn/next-bricks/commit/b242f551ba92bfaf15dd0435c1a27c8eee52df86))
+
+## [1.9.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.9.1...@next-bricks/vs@1.9.2) (2024-07-01)
+
+### Bug Fixes
+
+- refine declare ([8a72a7b](https://github.com/easyops-cn/next-bricks/commit/8a72a7bb604f547667d3aa22292be327e0367058))
+
+## [1.9.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.9.0...@next-bricks/vs@1.9.1) (2024-06-28)
+
+### Bug Fixes
+
+- hide line Numbers ([e667995](https://github.com/easyops-cn/next-bricks/commit/e667995f39a3763f19c5aa0ce890ac18cbf2a44f))
+
+# [1.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.8.7...@next-bricks/vs@1.9.0) (2024-06-28)
+
+### Features
+
+- code editor add hideLineNumber and fix property-editor ([b32699f](https://github.com/easyops-cn/next-bricks/commit/b32699fe82670a9b384c5f1649427c608c229a01))
+- update hideNumber property ([a4267bc](https://github.com/easyops-cn/next-bricks/commit/a4267bcfccfd2450925238879e369537bdfd6710))
+
+## [1.8.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.8.6...@next-bricks/vs@1.8.7) (2024-06-26)
+
+### Bug Fixes
+
+- code Editor output and update Editor refresh values ([9f33078](https://github.com/easyops-cn/next-bricks/commit/9f330787f9b9dd742f3970d8f6ef6bfe0ef2056a))
 
 ## [1.8.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.8.5...@next-bricks/vs@1.8.6) (2024-06-26)
 
 **Note:** Version bump only for package @next-bricks/vs
 
-
-
-
-
 ## [1.8.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.8.4...@next-bricks/vs@1.8.5) (2024-06-25)
 
 **Note:** Version bump only for package @next-bricks/vs
-
-
-
-
 
 ## [1.8.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.8.3...@next-bricks/vs@1.8.4) (2024-06-25)
 

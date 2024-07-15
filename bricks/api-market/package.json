@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/api-market",
-  "version": "0.1.29",
+  "version": "0.1.31",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/api-market",
   "repository": {
     "type": "git",
@@ -35,15 +35,15 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-core/element": "^1.2.10",
-    "@next-core/i18n": "^1.0.56",
-    "@next-core/react-element": "^1.0.29",
+    "@next-core/element": "^1.2.11",
+    "@next-core/i18n": "^1.0.58",
+    "@next-core/react-element": "^1.0.30",
     "@next-core/theme": "^1.5.2",
     "react": "0.0.0-experimental-ee8509801-20230117"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.22.3",
-    "@next-core/test-next": "^1.1.4"
+    "@next-core/build-next-bricks": "^1.22.4",
+    "@next-core/test-next": "^1.1.5"
   },
   "peerDependencies": {
     "@next-bricks/basic": "*",

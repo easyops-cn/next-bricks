@@ -30,6 +30,19 @@
               },
             },
             {
+              type: "decorator",
+              id: "container-1",
+              decorator: "container",
+              view: {
+               x: 50,
+                y: 400,
+                width: 280,
+                height: 120,
+                direction: "top",
+                text: " 上层服务"
+              },
+            },
+            {
               type: "edge",
               source: "X",
               target: "Y",
@@ -46,6 +59,7 @@
             ["X", "Y", "Z", "W"].map((id) => ({
               type: "node",
               id,
+              containerId: id==="W"?"container-1":undefined,
               data: {
                 name: `Node ${id}`,
               },
@@ -90,6 +104,8 @@
           display: flex
           flexDirection: column
           gap: 1em
+          border-right: "1px solid #ccc"
+          overflow: scroll
       children:
         - brick: eo-button
           properties:
@@ -240,6 +256,10 @@
           dataSource:
             - area
             - text
+            - container.top
+            - container.right
+            - container.bottom
+            - container.left
           children:
             - brick: diagram.experimental-node
               properties:
@@ -251,7 +271,7 @@
                   args:
                     - dragging
                     - |
-                      <% {position: EVENT.detail, type: "decorator", decorator: ITEM} %>
+                      <% {position: EVENT.detail, type: "decorator", decorator: ITEM.split(".")[0]} %>
                 drag.end:
                   - action: context.replace
                     args:
@@ -261,8 +281,9 @@
                     method: dropDecorator
                     args:
                       - position: <% EVENT.detail %>
-                        decorator: <% ITEM %>
-                        text: '<% ITEM === "text" ? "Text" : undefined %>'
+                        decorator: <% ITEM.split(".")[0] %>
+                        text: <% ITEM %>
+                        direction: <% ITEM.split(".").pop() %>
                     callback:
                       success:
                         if: <% EVENT.detail %>
@@ -347,6 +368,10 @@
               action: message.info
               args:
                 - <% JSON.stringify(EVENT.detail) %>
+            node.container.change:
+              action: message.info
+              args:
+                - <% JSON.stringify(EVENT.detail) %>
             scale.change:
               action: context.replace
               args:
@@ -426,6 +451,19 @@
                 height: 300,
               },
             },
+             {
+              type: "decorator",
+              id: "container-1",
+              decorator: "container",
+              view: {
+               x: 50,
+                y: 400,
+                width: 280,
+                height: 120,
+                direction: "top",
+                text: " 上层服务"
+              },
+            },
             {
               type: "edge",
               source: "X",
@@ -443,6 +481,7 @@
             ["X", "Y", "Z", "W"].map((id) => ({
               type: "node",
               id,
+              containerId: ["X","Y","Z"].includes(id)?"container-1":undefined,
               data: {
                 name: `Node ${id}`,
               },
@@ -812,6 +851,19 @@
               },
             },
             {
+              type: "decorator",
+              id: "container-1",
+              decorator: "container",
+              view: {
+               x: 50,
+                y: 400,
+                width: 280,
+                height: 120,
+                direction: "top",
+                text: " 上层服务"
+              },
+            },
+            {
               type: "edge",
               source: "X",
               target: "Y",
@@ -828,6 +880,7 @@
             ["X", "Y", "Z", "W"].map((id) => ({
               type: "node",
               id,
+              containerId: ["W","Z"].includes(id)?"container-1":undefined,
               data: {
                 name: `Node ${id}`,
               },

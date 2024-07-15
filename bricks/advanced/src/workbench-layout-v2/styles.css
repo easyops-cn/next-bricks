@@ -1,0 +1,14 @@
+@import url("react-grid-layout/css/styles.css");
+@import url("react-resizable/css/styles.css");
+
+.react-grid-item.react-grid-placeholder {
+  background-color: #ddd;
+}
+
+.react-grid-item.react-draggable-dragging {
+  pointer-events: none;
+}
+
+.react-grid-item.react-grid-placeholder.forbidden {
+  background-color: red;
+}

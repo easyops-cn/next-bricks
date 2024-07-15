@@ -20,11 +20,12 @@ export interface LinkInfo {
 
 export interface EoHumanizeTimeProps {
   value: number | string;
-  isMicrosecond?: boolean;
+  isMillisecond?: boolean;
   formatter?: HumanizeTimeFormat;
   isCostTime?: boolean;
   inputFormat?: string;
   outputFormat?: string;
+  type?: "datetime" | "date";
   link?: LinkInfo;
 }
 
@@ -63,6 +64,13 @@ class EoHumanizeTime extends ReactNextElement {
   accessor outputFormat: string;
 
   /**
+   * 使用日期+时间格式输出还是仅日期。
+   * @default "datetime"
+   */
+  @property()
+  accessor type: "datetime" | "date";
+
+  /**
    * 是否展示为耗费时间，例如：'1 个月 20 天'
    */
   @property({
@@ -81,12 +89,22 @@ class EoHumanizeTime extends ReactNextElement {
   accessor formatter: HumanizeTimeFormat;
 
   /**
-   * value 值的单位是否为毫秒
+   * value 值的单位是否为毫秒（此处属性 id 写错，实际表达意义为 isMillisecond）
+   *
+   * @deprecated 请使用 `isMillisecond`
    */
   @property({
     type: Boolean,
   })
   accessor isMicrosecond: boolean;
+
+  /**
+   * value 值的单位是否为毫秒
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor isMillisecond: boolean;
 
   /**
    * 跳转链接，默认为空
@@ -108,8 +126,9 @@ class EoHumanizeTime extends ReactNextElement {
     return (
       <HumanizeTimeComponent
         value={this.value}
+        type={this.type}
         formatter={this.formatter}
-        isMicrosecond={this.isMicrosecond}
+        isMillisecond={this.isMillisecond ?? this.isMicrosecond}
         isCostTime={this.isCostTime}
         link={this.link}
         inputFormat={this.inputFormat}
@@ -121,7 +140,8 @@ class EoHumanizeTime extends ReactNextElement {
 
 export function HumanizeTimeComponent({
   value,
-  isMicrosecond,
+  type,
+  isMillisecond,
   inputFormat,
   outputFormat,
   isCostTime,
@@ -134,7 +154,7 @@ export function HumanizeTimeComponent({
 
   let ts;
   if (typeof value === "number") {
-    ts = isMicrosecond ? value : Number(value) * 1000;
+    ts = isMillisecond ? value : Number(value) * 1000;
   } else {
     const time = moment(value, inputFormat);
     ts = time.unix() * 1000;
@@ -146,7 +166,7 @@ export function HumanizeTimeComponent({
   } else {
     label = isCostTime
       ? costTime(ts)
-      : humanizeTime(ts, HumanizeTimeFormat[formatter]);
+      : humanizeTime(ts, HumanizeTimeFormat[formatter], type);
   }
 
   if (link) {

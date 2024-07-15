@@ -1,6 +1,6 @@
 {
   "name": "@next-shared/datetime",
-  "version": "0.1.30",
+  "version": "0.2.2",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/shared/datetime",
   "repository": {
     "type": "git",
@@ -35,12 +35,12 @@
     "test:ci": "cross-env NODE_ENV='test' CI=true test-next"
   },
   "dependencies": {
-    "@next-core/i18n": "^1.0.56",
+    "@next-core/i18n": "^1.0.58",
     "lodash": "^4.17.21",
     "moment": "^2.29.4"
   },
   "devDependencies": {
     "@next-core/build-next-libs": "^1.0.18",
-    "@next-core/test-next": "^1.1.4"
+    "@next-core/test-next": "^1.1.5"
   }
 }

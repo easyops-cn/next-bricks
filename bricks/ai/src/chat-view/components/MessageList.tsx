@@ -11,15 +11,16 @@ import classNames from "classnames";
 import { CommonLoading, MessageListLoading } from "./Loading.js";
 import { MessageNode } from "./MessageItem/index.js";
 import { QuickAnswerList } from "./QuickAnswerList/index.js";
-import { debounce } from "lodash";
+// import { debounce } from "lodash";
 import { StopBtn } from "./StopBtn.js";
+import { DEFAULT_TYPE, RELATED_QUESTIONS_TYPE } from "../hooks/useChatViewInfo";
 
 interface MessageListProps {
   showAvatar?: boolean;
 }
 
 const DEFAULT_OFFSET_HEIGHT = 80;
-const CACHE_HEIGHT = 200;
+// const CACHE_HEIGHT = 200;
 
 export function MessageList({
   showAvatar = true,
@@ -29,27 +30,36 @@ export function MessageList({
   const [preHeight, setPreHeight] = useState<number>(0);
   const isCustomScroll = useRef<boolean>(false);
 
-  const {
-    msgLoading,
-    msgEnd,
-    msgList,
-    loading,
-    activeSessionId,
-    chatting,
-    checkSession,
-  } = useChatViewContext();
+  const { msgLoading, msgEnd, msgList, loading, activeSessionId, chatting } =
+    useChatViewContext();
 
   const getMsgItemNode = useCallback(
     (item: MessageItem, index: number = 0) => {
-      return (
-        <div
-          className={classNames("message-item", { user: item.role === "user" })}
-          key={index}
-        >
-          {showAvatar && <Avatar role={item.role} agentId={item.agentId} />}
-          <MessageNode {...item} />
-        </div>
-      );
+      switch (item.type) {
+        case RELATED_QUESTIONS_TYPE:
+          return (
+            <div
+              className={classNames("message-item")}
+              style={{ marginTop: "-36px", marginLeft: "44px" }}
+              key={index}
+            >
+              <MessageNode {...item} />
+            </div>
+          );
+        case DEFAULT_TYPE:
+        default:
+          return (
+            <div
+              className={classNames("message-item", {
+                user: item.role === "user",
+              })}
+              key={index}
+            >
+              {showAvatar && <Avatar role={item.role} agentId={item.agentId} />}
+              <MessageNode {...item} />
+            </div>
+          );
+      }
     },
     [showAvatar]
   );
@@ -60,7 +70,11 @@ export function MessageList({
         return (
           <>
             {getMsgItemNode(item, index)}
-            {chatting && index === msgList.length - 1 ? <StopBtn /> : null}
+            {chatting &&
+            index === msgList.length - 1 &&
+            item.type !== RELATED_QUESTIONS_TYPE ? (
+              <StopBtn />
+            ) : null}
           </>
         );
       } else {
@@ -69,30 +83,30 @@ export function MessageList({
     });
   }, [msgList, chatting, getMsgItemNode]);
 
-  const handleScroll = useCallback(() => {
-    const messageList = chatViewRef.current;
-    if (messageList) {
-      const { scrollHeight, clientHeight, scrollTop } = messageList;
-      // 滚动到底部所需的高度 = 总高度 - 视图高度
-      const isBottom = scrollHeight - clientHeight === scrollTop;
-      if (!isBottom) {
-        isCustomScroll.current = true;
-      } else if (isBottom && isCustomScroll.current) {
-        // 自动吸低
-        isCustomScroll.current = false;
-      }
-      if (
-        !msgLoading &&
-        !msgEnd &&
-        scrollTop < CACHE_HEIGHT &&
-        activeSessionId
-      ) {
-        checkSession();
-      }
-    }
-  }, [msgEnd, msgLoading, activeSessionId, checkSession]);
+  // const handleScroll = useCallback(() => {
+  //   const messageList = chatViewRef.current;
+  //   if (messageList) {
+  //     const { scrollHeight, clientHeight, scrollTop } = messageList;
+  //     // 滚动到底部所需的高度 = 总高度 - 视图高度
+  //     const isBottom = scrollHeight - clientHeight === scrollTop;
+  //     if (!isBottom) {
+  //       isCustomScroll.current = true;
+  //     } else if (isBottom && isCustomScroll.current) {
+  //       // 自动吸低
+  //       isCustomScroll.current = false;
+  //     }
+  //     if (
+  //       !msgLoading &&
+  //       !msgEnd &&
+  //       scrollTop < CACHE_HEIGHT &&
+  //       activeSessionId
+  //     ) {
+  //       checkSession();
+  //     }
+  //   }
+  // }, [msgEnd, msgLoading, activeSessionId, checkSession]);
 
-  const debounceHandleScroll = debounce(handleScroll, 200);
+  // const debounceHandleScroll = debounce(handleScroll, 200);
 
   useEffect(() => {
     if (chatting || activeSessionId) {
@@ -133,7 +147,7 @@ export function MessageList({
     <div
       className="chat-view"
       ref={chatViewRef}
-      onScroll={debounceHandleScroll}
+      // onScroll={debounceHandleScroll}
     >
       <div className="message-list">
         <div className="message-list-box" ref={messgetListBoxRef}>

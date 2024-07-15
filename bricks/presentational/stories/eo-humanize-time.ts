@@ -68,7 +68,7 @@ export const eoHumanizeTimeStory = {
           brick: "eo-humanize-time",
           properties: {
             value: 1571017058000,
-            isMicrosecond: true,
+            isMillisecond: true,
             formatter: "relative",
           },
         },

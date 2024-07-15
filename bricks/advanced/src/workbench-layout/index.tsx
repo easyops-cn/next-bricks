@@ -141,13 +141,14 @@ export function EoWorkbenchLayoutComponent({
   );
   const gridLayoutRef = useRef<HTMLDivElement>(null);
   const layoutCacheRef = useRef<Layout[]>();
-  const layoutWarpperRef = useRef<HTMLDivElement>(null);
+  const layoutWrapperRef = useRef<HTMLDivElement>(null);
 
   const [layouts, setLayouts] = useState<Layout[]>(layoutsProps ?? []);
   const [cols, setCols] = useState<number>(3);
   const [layoutWrapperStyle, setLayoutWrapperStyle] =
     useState<React.CSSProperties>();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDragCallback: ItemCallback = (layout, oldItem, newItem) => {
     const placeholderDOM = gridLayoutRef.current?.querySelector(
       ".react-grid-placeholder"
@@ -188,19 +189,18 @@ export function EoWorkbenchLayoutComponent({
       }
     }
     if (!isAllowAction) {
-      setLayouts(
-        (items) =>
-          items?.map((item) => {
-            const matchLayout = layoutCacheRef.current?.find(
-              (layout) => getRealKey(layout.i) === getRealKey(item.i)
-            );
-            // should update key to refresh layout
-            const key = `${getRealKey(item.i)}:${Math.random()}`;
-            return {
-              ...matchLayout,
-              i: key,
-            } as Layout;
-          })
+      setLayouts((items) =>
+        items?.map((item) => {
+          const matchLayout = layoutCacheRef.current?.find(
+            (layout) => getRealKey(layout.i) === getRealKey(item.i)
+          );
+          // should update key to refresh layout
+          const key = `${getRealKey(item.i)}:${Math.random()}`;
+          return {
+            ...matchLayout,
+            i: key,
+          } as Layout;
+        })
       );
       return;
     }
@@ -321,9 +321,9 @@ export function EoWorkbenchLayoutComponent({
   );
 
   const handleWatchLayoutSizeChange = useCallback(() => {
-    if (layoutWarpperRef && isEdit) {
+    if (layoutWrapperRef && isEdit) {
       const { top } =
-        layoutWarpperRef.current?.getClientRects()?.[0] ?? ({} as DOMRect);
+        layoutWrapperRef.current?.getClientRects()?.[0] ?? ({} as DOMRect);
       top !== undefined &&
         setLayoutWrapperStyle({
           height: document.body.clientHeight - top,
@@ -335,13 +335,14 @@ export function EoWorkbenchLayoutComponent({
   useEffect(() => {
     if (isEdit) {
       handleWatchLayoutSizeChange();
+      setLayouts(layoutsProps || []); // 编辑的情况下需要动态改变一些布局
       window.addEventListener("resize", handleWatchLayoutSizeChange);
 
       return () => {
         window.removeEventListener("resize", handleWatchLayoutSizeChange);
       };
     }
-  }, [isEdit, handleWatchLayoutSizeChange]);
+  }, [isEdit, handleWatchLayoutSizeChange, layoutsProps]);
 
   return (
     <div className="grid-layout-wrapper" ref={gridLayoutRef}>
@@ -360,7 +361,7 @@ export function EoWorkbenchLayoutComponent({
       )}
       <div
         className="layout-wrapper"
-        ref={layoutWarpperRef}
+        ref={layoutWrapperRef}
         style={layoutWrapperStyle}
       >
         {isEdit && (

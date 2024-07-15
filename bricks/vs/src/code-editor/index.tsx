@@ -91,7 +91,9 @@ export interface CodeEditorProps {
   showExpandButton?: boolean;
   showCopyButton?: boolean;
   lineNumbers?: monaco.editor.LineNumbersType;
+  glyphMargin?: boolean;
   validateState?: string;
+  customValidationInBrickNextYaml?: boolean;
 }
 
 export interface Marker {
@@ -216,11 +218,23 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
   accessor tokenConfig: TokenConfig | undefined;
 
   /**
+   * 在 brick_next_yaml 中是否开启语义相关校验
+   * @default false
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor customValidationInBrickNextYaml: boolean | undefined;
+
+  /**
    * 是否展示复制按钮
    * @default true
    */
   @property({ type: Boolean })
   accessor showCopyButton: boolean | undefined;
+
+  @property({ type: Boolean })
+  accessor glyphMargin: boolean | undefined;
 
   /**
    * @description 额外声明的 lib 库
@@ -234,20 +248,16 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
   accessor #codeChange!: EventEmitter<string>;
 
   @event({ type: "user.input" })
-  accessor #userInput!: EventEmitter<string>;
+  accessor #userInput!: EventEmitter<any>;
 
-  #handleChange = (
-    value: string,
-    parseValue: any,
-    isFlush: boolean,
-    isInit: boolean = false
-  ) => {
+  #handleChange = (value: string) => {
     this.value = value;
-    !isInit && this.getFormElement()?.formStore.onChange(this.name!, value);
+    this.getFormElement()?.formStore.onChange(this.name!, value);
     this.#codeChange.emit(value);
-    if (!isFlush) {
-      this.#userInput.emit(parseValue);
-    }
+  };
+
+  #handleUserInput = (value: any) => {
+    this.#userInput.emit(value);
   };
 
   @event({ type: "token.click" })
@@ -257,11 +267,13 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
     this.#tokenClickEvent.emit(word);
   };
 
-  #handleValidtor = (value: string) => {
-    try {
-      yaml.load(value);
-    } catch {
-      return "请填写正确的格式";
+  #handleValidator = (value: string) => {
+    if (this.language === "brick_next_yaml" || this.language === "yaml") {
+      try {
+        yaml.load(value);
+      } catch {
+        return "请填写正确的格式";
+      }
     }
     return "";
   };
@@ -287,7 +299,7 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
         helpBrick={this.helpBrick}
         labelBrick={this.labelBrick}
         notRender={this.notRender}
-        validator={this.#handleValidtor}
+        validator={this.#handleValidator}
       >
         <CodeEditorComponent
           value={this.value}
@@ -305,11 +317,14 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
           links={this.links}
           tokenConfig={this.tokenConfig}
           lineNumbers={this.lineNumbers}
+          glyphMargin={this.glyphMargin}
           showCopyButton={this.showCopyButton}
           showExpandButton={this.showExpandButton}
           validateState={this.validateState}
           onChange={this.#handleChange}
+          onUserInput={this.#handleUserInput}
           onTokenClick={this.#handleTokenClick}
+          customValidationInBrickNextYaml={this.customValidationInBrickNextYaml}
         />
       </WrappedFormItem>
     );
@@ -336,16 +351,15 @@ export function CodeEditorComponent({
   showExpandButton,
   showCopyButton = true,
   lineNumbers = "on",
+  glyphMargin = true,
   validateState,
   onChange,
+  onUserInput,
   onTokenClick,
+  customValidationInBrickNextYaml,
 }: CodeEditorProps & {
-  onChange(
-    value: string,
-    parseValue: any,
-    isFlush: boolean,
-    isInit: boolean
-  ): void;
+  onChange(value: string): void;
+  onUserInput: (value: any) => void;
   onTokenClick(word: string): void;
 }) {
   const value = _value ?? "";
@@ -376,11 +390,9 @@ export function CodeEditorComponent({
     if (language !== "brick_next_yaml") return;
     const workerInstance = VSWorkers.getInstance(workerId);
     const id = workerInstance.addEventListener("message", (message: any) => {
-      const { token, data, init = false } = message.data;
+      const { token, data } = message.data;
       const model = editorRef.current!.getModel();
       if (!model) return;
-      const originValue = model.getValue();
-
       switch (token) {
         case "parse_yaml": {
           const { value, tokens, markers } = data;
@@ -399,13 +411,13 @@ export function CodeEditorComponent({
             }))
           );
           monaco.editor.setModelMarkers(model, "brick_next_yaml", markers);
-          onChange(originValue, value, false, init);
+          onUserInput(value);
           break;
         }
         case "parse_yaml_error": {
           monaco.editor.setModelMarkers(model, "brick_next_yaml", []);
           decorationsCollection?.current?.set([]);
-          onChange(originValue, undefined, false, init);
+          onUserInput(undefined);
           break;
         }
       }
@@ -466,43 +478,36 @@ export function CodeEditorComponent({
     }
   }, [completers, advancedCompleters, language]);
 
-  const parseYaml = useCallback(
-    ({ init = false }: { init?: boolean }) => {
-      if (language !== "brick_next_yaml" || !editorRef.current) return;
-      const workerInstance = VSWorkers.getInstance(workerId);
-      const currentModel = editorRef.current.getModel();
-      workerInstance.postMessage({
-        token: "parse_yaml",
-        data: {
-          value: currentModel?.getValue(),
-          links,
-          markers,
-        },
-        options: tokenConfig,
-        init,
-      });
-    },
-    [language, tokenConfig, links, markers, workerId]
-  );
+  const parseYaml = useCallback(() => {
+    if (language !== "brick_next_yaml" || !editorRef.current) return;
+    const workerInstance = VSWorkers.getInstance(workerId);
+    const currentModel = editorRef.current.getModel();
+    workerInstance.postMessage({
+      token: "parse_yaml",
+      data: {
+        value: currentModel?.getValue(),
+        links,
+        markers,
+      },
+      options: tokenConfig,
+    });
+  }, [language, tokenConfig, links, markers, workerId]);
 
   const debounceParse = useMemo(() => debounce(parseYaml, 300), [parseYaml]);
 
   useEffect(() => {
-    if (editorRef.current) {
-      const currentModel = editorRef.current.getModel();
+    const editor = editorRef.current;
+    if (editor) {
+      const currentModel = editor.getModel();
       if (currentModel?.getValue && value !== currentModel.getValue()) {
         currentModel.setValue(value as string);
-        debounceParse({
-          init: true,
-        });
+        debounceParse();
       }
     }
   }, [value, debounceParse]);
 
   useEffect(() => {
-    debounceParse({
-      init: true,
-    });
+    debounceParse();
   }, []);
 
   useLayoutEffect(() => {
@@ -622,7 +627,7 @@ export function CodeEditorComponent({
       fixedOverflowWidgets: true,
       lineNumbers: lineNumbers,
       lineNumbersMinChars: 3,
-      glyphMargin: lineNumbers !== "off",
+      glyphMargin: glyphMargin,
       folding: lineNumbers !== "off",
       suggest: {
         insertMode: "insert",
@@ -806,6 +811,8 @@ export function CodeEditorComponent({
 
           embeddedContext.updateState({ content, range, offset });
 
+          if (!customValidationInBrickNextYaml) return;
+
           const getWorker =
             await monaco.languages.typescript.getJavaScriptWorker();
 
@@ -850,12 +857,9 @@ export function CodeEditorComponent({
 
       if (["brick_next_yaml"].includes(language)) {
         embeddedModelProcessor(currentModel, editorRef.current!.getPosition()!);
-        debounceParse({
-          init: false,
-        });
-      } else {
-        onChange(currentModel.getValue(), undefined, false, false);
+        debounceParse();
       }
+      onChange(currentModel.getValue());
     });
     return () => {
       listener.dispose();

@@ -33,13 +33,27 @@ export function Toolbar({
     () => role === "assistant" && content.type !== "load",
     [role, content.type]
   );
+  const isUser = useMemo(() => role === "user", [role]);
+
   const isChattingItem = useMemo(() => chatting, [chatting]);
-  const { showLike, showShare, readonly, handleIsLike } = useChatViewContext();
+  const {
+    showLike,
+    chatting: globalChatting,
+    showShare,
+    readonly,
+    handleIsLike,
+    setSearchStr,
+  } = useChatViewContext();
   const { agentId, robotId, conversationId } = useMsgItemContext();
+
   const handleCopy = () => {
     copyToClipboard(content.text)
       .then(() => showNotification({ type: "success", message: "复制成功" }))
       .catch(() => showNotification({ type: "error", message: "复制失败" }));
+  };
+
+  const handleRequestion = () => {
+    setSearchStr(content.text);
   };
 
   const handleShare = () => {
@@ -100,6 +114,12 @@ export function Toolbar({
           <WrapperIcon lib="antd" icon="share-alt" onClick={handleShare} />
         </WrappedToolTip>
       )}
+    </div>
+  ) : !readonly && isUser && !globalChatting ? (
+    <div className="message-toolbar">
+      <WrappedToolTip content="点击再次提问" hoist>
+        <WrapperIcon lib="antd" icon="edit" onClick={handleRequestion} />
+      </WrappedToolTip>
     </div>
   ) : null;
 }

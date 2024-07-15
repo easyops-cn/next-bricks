@@ -1,0 +1,26 @@
+{
+  "name": "@next-shared/property-editor",
+  "version": "0.1.1",
+  "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/shared/property-editor",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:easyops-cn/next-bricks.git",
+    "directory": "shared/property-editor"
+  },
+  "license": "GPL-3.0",
+  "sideEffects": false,
+  "type": "module",
+  "files": [
+    "index.d.ts"
+  ],
+  "exports": {
+    ".": {
+      "types": "./index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "@formily/core": "^2.3.1",
+    "@formily/react": "^2.3.1"
+  }
+}

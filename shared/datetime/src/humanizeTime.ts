@@ -18,7 +18,9 @@ export enum HumanizeTimeFormat {
 
 export const humanizeTime = (
   time: moment.MomentInput,
-  format: HumanizeTimeFormat = HumanizeTimeFormat.auto
+  format: HumanizeTimeFormat = HumanizeTimeFormat.auto,
+  /** 默认为 "datetime" */
+  type?: "datetime" | "date"
 ): string | null => {
   if (
     time === undefined ||
@@ -30,11 +32,17 @@ export const humanizeTime = (
   }
   const m = moment(time);
   const now = moment().add(TIME_OFFSET);
-  const fFull = "LL HH:mm";
-  const fMedium = i18n.t(`${NS_LIBS_DATETIME}:${K.FORMAT_MEDIUM}`);
-  const fShort = i18n.t(`${NS_LIBS_DATETIME}:${K.FORMAT_SHORT}`);
-  const fShort24 = i18n.t(`${NS_LIBS_DATETIME}:${K.FORMAT_SHORT_DAY}`);
-  const fDefault = "LL HH:mm:ss";
+  const fFull = type === "date" ? "LL" : "LL HH:mm";
+  const fMedium = i18n.t(
+    `${NS_LIBS_DATETIME}:${type === "date" ? K.FORMAT_MEDIUM_DATE : K.FORMAT_MEDIUM_DATETIME}`
+  );
+  const fShort = i18n.t(
+    `${NS_LIBS_DATETIME}:${type === "date" ? K.FORMAT_SHORT_DATE : K.FORMAT_SHORT_DATETIME}`
+  );
+  const fShort24 = i18n.t(
+    `${NS_LIBS_DATETIME}:${type === "date" ? K.FORMAT_SHORT_DAY_DATE : K.FORMAT_SHORT_DAY_DATETIME}`
+  );
+  const fDefault = type === "date" ? "LL" : "LL HH:mm:ss";
   const fHourMinute = "HH:mm";
   let text;
 
@@ -62,16 +70,10 @@ export const humanizeTime = (
                   : "default";
     switch (retVal) {
       case "sameDay":
-        _text =
-          i18n.t(`${NS_LIBS_DATETIME}:${K.TODAY}`) +
-          " " +
-          m.format(fHourMinute);
-        break;
       case "yesterday":
-        _text =
-          i18n.t(`${NS_LIBS_DATETIME}:${K.YESTERDAY}`) +
-          " " +
-          m.format(fHourMinute);
+        _text = `${i18n.t(`${NS_LIBS_DATETIME}:${retVal === "yesterday" ? K.YESTERDAY : K.TODAY}`)}${
+          type === "date" ? "" : ` ${m.format(fHourMinute)}`
+        }`;
         break;
       case "lastYear":
         _text = m.format(fFull);

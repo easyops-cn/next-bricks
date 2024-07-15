@@ -556,9 +556,10 @@ describe("eo-draw-canvas", () => {
         view: {
           x: 620,
           y: 480,
-          width: 100,
-          height: 60,
+          width: 180,
+          height: 120,
           text: "Hello",
+          direction: undefined,
         },
       });
     });
@@ -957,7 +958,8 @@ describe("eo-draw-canvas", () => {
       );
     });
 
-    element.shadowRoot!.querySelector(".text")!.textContent = "Updated";
+    element.shadowRoot!.querySelector(".decorator-text .text")!.textContent =
+      "Updated";
     act(() => {
       fireEvent.input(
         element.shadowRoot!.querySelector(".decorator-text .text")!
@@ -970,7 +972,111 @@ describe("eo-draw-canvas", () => {
     });
     expect(onDecoratorTextChange).toHaveBeenCalledWith({
       id: "x",
-      view: { x: 20, y: 30, text: "Updated" },
+      view: { x: 20, y: 30, height: 0, width: 0, text: "Updated" },
+    });
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("edit decorator container", async () => {
+    const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
+    element.cells = [
+      {
+        type: "decorator",
+        decorator: "container",
+        id: "container-1",
+        view: {
+          x: 50,
+          y: 400,
+          width: 280,
+          height: 120,
+          text: "上层服务",
+        },
+      } as Cell,
+      {
+        type: "decorator",
+        decorator: "container",
+        id: "container-2",
+        view: {
+          x: 50,
+          y: 400,
+          width: 80,
+          height: 60,
+          direction: "right",
+          text: "上游系统",
+        },
+      } as Cell,
+      {
+        type: "decorator",
+        decorator: "container",
+        id: "container-3",
+        view: {
+          x: 50,
+          y: 400,
+          width: 80,
+          height: 60,
+          direction: "bottom",
+          text: "中台层",
+        },
+      } as Cell,
+      {
+        type: "decorator",
+        decorator: "container",
+        id: "container-4",
+        view: {
+          x: 500,
+          y: 200,
+          width: 380,
+          height: 120,
+          direction: "left",
+          text: "接入层",
+        },
+      } as Cell,
+    ];
+
+    const onDecoratorTextChange = jest.fn();
+    element.addEventListener("decorator.text.change", (e) =>
+      onDecoratorTextChange((e as CustomEvent).detail)
+    );
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+
+    act(() => {
+      fireEvent.doubleClick(
+        element.shadowRoot!.querySelector(
+          ".decorator-container .text-container"
+        )!
+      );
+    });
+
+    element.shadowRoot!.querySelector(
+      ".decorator-container .text"
+    )!.textContent = "Updated";
+    act(() => {
+      fireEvent.input(
+        element.shadowRoot!.querySelector(".decorator-container .text")!
+      );
+    });
+    act(() => {
+      fireEvent.blur(
+        element.shadowRoot!.querySelector(".decorator-container .text")!
+      );
+    });
+    expect(onDecoratorTextChange).toHaveBeenCalledWith({
+      id: "container-1",
+      view: {
+        x: 50,
+        y: 400,
+        width: 280,
+        height: 120,
+        text: "Updated",
+      },
     });
 
     act(() => {

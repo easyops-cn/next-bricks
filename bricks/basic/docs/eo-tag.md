@@ -86,51 +86,118 @@
 - brick: eo-tag
   properties:
     color: gray
-    textContent: " 灰色 "
+    textContent: 灰色
 - brick: eo-tag
   properties:
     color: red
-    textContent: " 红色 "
+    textContent: 红色
 - brick: eo-tag
   properties:
     color: orange
-    textContent: " 橙色 "
+    textContent: 橙色
 - brick: eo-tag
   properties:
     color: yellow
-    textContent: " 黄色 "
+    textContent: 黄色
 - brick: eo-tag
   properties:
     color: blue
-    textContent: " 蓝色 "
+    textContent: 蓝色
 - brick: eo-tag
   properties:
     color: geekblue
-    textContent: " 深蓝色 "
+    textContent: 深蓝色
 - brick: eo-tag
   properties:
     color: grayblue
-    textContent: " 灰蓝色 "
+    textContent: 灰蓝色
 - brick: eo-tag
   properties:
     color: cyan
-    textContent: " 浅蓝色 "
+    textContent: 浅蓝色
 - brick: eo-tag
   properties:
     color: green
-    textContent: " 绿色 "
+    textContent: 绿色
 - brick: eo-tag
   properties:
     color: purple
-    textContent: " 紫色 "
+    textContent: 紫色
 - brick: eo-tag
   properties:
     color: teal
-    textContent: " 青绿色 "
+    textContent: 青绿色
 - brick: eo-tag
   properties:
     color: pink
-    textContent: " 粉色 "
+    textContent: 粉色
+- brick: div
+  properties:
+    style:
+      flexBasis: 100%
+- brick: div
+  properties:
+    textContent: "Outline:"
+- brick: eo-tag
+  properties:
+    color: gray
+    outline: true
+    textContent: 灰色
+- brick: eo-tag
+  properties:
+    color: red
+    outline: true
+    textContent: 红色
+- brick: eo-tag
+  properties:
+    color: orange
+    outline: true
+    textContent: 橙色
+- brick: eo-tag
+  properties:
+    color: yellow
+    outline: true
+    textContent: 黄色
+- brick: eo-tag
+  properties:
+    color: blue
+    outline: true
+    textContent: 蓝色
+- brick: eo-tag
+  properties:
+    color: geekblue
+    outline: true
+    textContent: 深蓝色
+- brick: eo-tag
+  properties:
+    color: grayblue
+    outline: true
+    textContent: 灰蓝色
+- brick: eo-tag
+  properties:
+    color: cyan
+    outline: true
+    textContent: 浅蓝色
+- brick: eo-tag
+  properties:
+    color: green
+    outline: true
+    textContent: 绿色
+- brick: eo-tag
+  properties:
+    color: purple
+    outline: true
+    textContent: 紫色
+- brick: eo-tag
+  properties:
+    color: teal
+    outline: true
+    textContent: 青绿色
+- brick: eo-tag
+  properties:
+    color: pink
+    outline: true
+    textContent: 粉色
 - brick: div
   properties:
     style:
@@ -141,51 +208,51 @@
 - brick: eo-tag
   properties:
     color: gray-inverse
-    textContent: " 灰色 "
+    textContent: 灰色
 - brick: eo-tag
   properties:
     color: red-inverse
-    textContent: " 红色 "
+    textContent: 红色
 - brick: eo-tag
   properties:
     color: orange-inverse
-    textContent: " 橙色 "
+    textContent: 橙色
 - brick: eo-tag
   properties:
     color: yellow-inverse
-    textContent: " 黄色 "
+    textContent: 黄色
 - brick: eo-tag
   properties:
     color: blue-inverse
-    textContent: " 蓝色 "
+    textContent: 蓝色
 - brick: eo-tag
   properties:
     color: geekblue-inverse
-    textContent: " 深蓝色 "
+    textContent: 深蓝色
 - brick: eo-tag
   properties:
     color: grayblue-inverse
-    textContent: " 灰蓝色 "
+    textContent: 灰蓝色
 - brick: eo-tag
   properties:
     color: cyan-inverse
-    textContent: " 浅蓝色 "
+    textContent: 浅蓝色
 - brick: eo-tag
   properties:
     color: green-inverse
-    textContent: " 绿色 "
+    textContent: 绿色
 - brick: eo-tag
   properties:
     color: purple-inverse
-    textContent: " 紫色 "
+    textContent: 紫色
 - brick: eo-tag
   properties:
     color: teal-inverse
-    textContent: " 青绿色 "
+    textContent: 青绿色
 - brick: eo-tag
   properties:
     color: pink-inverse
-    textContent: " 粉色 "
+    textContent: 粉色
 ```
 
 ### TagStyle

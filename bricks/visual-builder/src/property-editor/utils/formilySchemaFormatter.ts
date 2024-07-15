@@ -1,5 +1,6 @@
 import type { ISchema } from "@formily/react";
 import { omit } from "lodash";
+import { stylesSchema } from "../schema/styles.schema";
 
 export const NORMAL_FORM_KEY = "#normal_form";
 export const ADVANCED_FORM_KEY = "#advanced_form";
@@ -41,6 +42,7 @@ function transformComponent(
             links: "{{links}}",
             tokenClick: "{{tokenClick}}",
             lineNumbers: "off",
+            glyphMargin: false,
           }
         : {}),
       ...(data.props ?? {}),
@@ -48,7 +50,16 @@ function transformComponent(
   };
 }
 
-export function formilySchemaFormatter(data: DataNode): ISchema {
+type formilySchemaFormatterOptions = {
+  isDefault: boolean;
+};
+
+export function formilySchemaFormatter(
+  data: DataNode,
+  options?: formilySchemaFormatterOptions | boolean
+): ISchema {
+  const { isDefault = true } = typeof options === "object" ? options : {};
+
   const walk = (data: DataNode): Record<string, any> => {
     let children: Record<string, any>[] | undefined;
     let result: Record<string, any> = {};
@@ -145,15 +156,43 @@ export function formilySchemaFormatter(data: DataNode): ISchema {
     },
   ] as DataNode[];
 
+  if (!isDefault) {
+    return walk(data);
+  }
+
   return {
     type: "object",
     properties: {
       [NORMAL_FORM_KEY]: {
         type: "void",
-        properties: walk({
-          ...data,
-          children: [...defaultFields, ...data.children],
-        }),
+        "x-component": "CustomTab",
+        "x-component-props": {
+          activeTab: "property",
+        },
+        properties: {
+          property: {
+            type: "void",
+            "x-component": "CustomTab.TabPanel",
+            "x-component-props": {
+              title: "属性",
+              tab: "property",
+            },
+            properties: walk({
+              ...data,
+              children: [...defaultFields, ...data.children],
+            }),
+          },
+          style: {
+            type: "object",
+            name: "style",
+            "x-component": "CustomTab.TabPanel",
+            "x-component-props": {
+              title: "样式",
+              tab: "style",
+            },
+            properties: walk(stylesSchema),
+          },
+        },
       },
       [ADVANCED_FORM_KEY]: {
         name: ADVANCED_FORM_KEY,
@@ -165,6 +204,7 @@ export function formilySchemaFormatter(data: DataNode): ISchema {
           links: "{{links}}",
           tokenClick: "{{tokenClick}}",
           minLines: 5,
+          glyphMargin: false,
         },
       },
     },

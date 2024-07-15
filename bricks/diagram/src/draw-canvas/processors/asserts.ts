@@ -4,10 +4,12 @@ import type {
   EdgeCell,
   InitialCell,
   InitialNodeCell,
+  LayoutType,
   NodeCell,
 } from "../interfaces";
+import { MoveCellPayload } from "../reducers/interfaces";
 
-export function isNodeCell(cell: Cell): cell is NodeCell {
+export function isNodeCell(cell: Cell | MoveCellPayload): cell is NodeCell {
   return cell.type === "node";
 }
 
@@ -34,4 +36,23 @@ export function isNodeOrAreaDecoratorCell(
     cell.type === "node" ||
     (cell.type === "decorator" && cell.decorator === "area")
   );
+}
+export function isNodeOrTextDecoratorCell(
+  cell: Cell | MoveCellPayload
+): cell is NodeCell | DecoratorCell {
+  return (
+    cell.type === "node" ||
+    (cell.type === "decorator" && cell.decorator === "text")
+  );
+}
+
+export function isTextDecoratorCell(cell: Cell): cell is DecoratorCell {
+  return cell.type === "decorator" && cell.decorator === "text";
+}
+export function isContainerDecoratorCell(cell: Cell): cell is DecoratorCell {
+  return cell.type === "decorator" && cell.decorator === "container";
+}
+
+export function isNoManualLayout(layout: LayoutType) {
+  return !["manual", undefined].includes(layout!);
 }

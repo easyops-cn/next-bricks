@@ -3,74 +3,95 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.26.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.25.0...@next-bricks/visual-builder@1.26.0) (2024-06-28)
+## [1.32.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.32.1...@next-bricks/visual-builder@1.32.2) (2024-07-12)
 
+**Note:** Version bump only for package @next-bricks/visual-builder
+
+## [1.32.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.32.0...@next-bricks/visual-builder@1.32.1) (2024-07-12)
+
+### Bug Fixes
+
+- fix types ([5c5280f](https://github.com/easyops-cn/next-bricks/commit/5c5280f73d344e446f7317860b324ae982b78944))
+- use types from @next-shared/property-editor ([8b2d1d5](https://github.com/easyops-cn/next-bricks/commit/8b2d1d50c8629455e7e81d4e734a8ee31c5272a5))
+
+# [1.32.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.31.1...@next-bricks/visual-builder@1.32.0) (2024-07-11)
 
 ### Features
 
-* fix style and support textAlignRadio ([6514e93](https://github.com/easyops-cn/next-bricks/commit/6514e9316fb4d5b448609125fe7d337d31f55510))
+- add eo-min-actions ([2822ba5](https://github.com/easyops-cn/next-bricks/commit/2822ba5949260b424cf8b0e83cfea33cdb7e9604))
 
+## [1.31.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.31.0...@next-bricks/visual-builder@1.31.1) (2024-07-11)
 
+**Note:** Version bump only for package @next-bricks/visual-builder
 
+# [1.31.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.30.0...@next-bricks/visual-builder@1.31.0) (2024-07-10)
 
+### Features
+
+- support link & icon editor ([09dce45](https://github.com/easyops-cn/next-bricks/commit/09dce452e477c3d33c06588dc3b89ca5cf949f63))
+
+# [1.30.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.29.0...@next-bricks/visual-builder@1.30.0) (2024-07-10)
+
+### Features
+
+- support eo-card editor ([34d7ade](https://github.com/easyops-cn/next-bricks/commit/34d7adee4de5ae4d8a127316a17c697c4c65e3f4))
+
+# [1.29.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.28.0...@next-bricks/visual-builder@1.29.0) (2024-07-10)
+
+### Features
+
+- add Style schema and fix code editor default emit event ([ee64a48](https://github.com/easyops-cn/next-bricks/commit/ee64a4867734b8804fd8f8fae209e460e0a83a77))
+
+# [1.28.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.27.0...@next-bricks/visual-builder@1.28.0) (2024-07-02)
+
+### Features
+
+- **code-editor:** add glyphMargin ([b242f55](https://github.com/easyops-cn/next-bricks/commit/b242f551ba92bfaf15dd0435c1a27c8eee52df86))
+
+# [1.27.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.26.0...@next-bricks/visual-builder@1.27.0) (2024-07-02)
+
+### Features
+
+- parse path provider ([6444988](https://github.com/easyops-cn/next-bricks/commit/64449887ef416618721fe4b77bd5560b5b744ffb))
+
+# [1.26.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.25.0...@next-bricks/visual-builder@1.26.0) (2024-06-28)
+
+### Features
+
+- fix style and support textAlignRadio ([6514e93](https://github.com/easyops-cn/next-bricks/commit/6514e9316fb4d5b448609125fe7d337d31f55510))
 
 # [1.25.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.24.1...@next-bricks/visual-builder@1.25.0) (2024-06-28)
 
-
 ### Features
 
-* code editor add hideLineNumber and fix property-editor ([b32699f](https://github.com/easyops-cn/next-bricks/commit/b32699fe82670a9b384c5f1649427c608c229a01))
-* update hideNumber property ([a4267bc](https://github.com/easyops-cn/next-bricks/commit/a4267bcfccfd2450925238879e369537bdfd6710))
-
-
-
-
+- code editor add hideLineNumber and fix property-editor ([b32699f](https://github.com/easyops-cn/next-bricks/commit/b32699fe82670a9b384c5f1649427c608c229a01))
+- update hideNumber property ([a4267bc](https://github.com/easyops-cn/next-bricks/commit/a4267bcfccfd2450925238879e369537bdfd6710))
 
 ## [1.24.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.24.0...@next-bricks/visual-builder@1.24.1) (2024-06-26)
 
-
 ### Bug Fixes
 
-* code Editor output and update Editor refresh values ([9f33078](https://github.com/easyops-cn/next-bricks/commit/9f330787f9b9dd742f3970d8f6ef6bfe0ef2056a))
-
-
-
-
+- code Editor output and update Editor refresh values ([9f33078](https://github.com/easyops-cn/next-bricks/commit/9f330787f9b9dd742f3970d8f6ef6bfe0ef2056a))
 
 # [1.24.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.23.0...@next-bricks/visual-builder@1.24.0) (2024-06-26)
 
-
 ### Bug Fixes
 
-* update color match RegExp ([9b44d57](https://github.com/easyops-cn/next-bricks/commit/9b44d578529ee4909683f9fc9e19bfd17b3b3e66))
-
+- update color match RegExp ([9b44d57](https://github.com/easyops-cn/next-bricks/commit/9b44d578529ee4909683f9fc9e19bfd17b3b3e66))
 
 ### Features
 
-* support colorPickComponent  and fix format ([2195a0d](https://github.com/easyops-cn/next-bricks/commit/2195a0deb7e75422ee2cd772df6e4b7c76c1642e))
-
-
-
-
+- support colorPickComponent and fix format ([2195a0d](https://github.com/easyops-cn/next-bricks/commit/2195a0deb7e75422ee2cd772df6e4b7c76c1642e))
 
 # [1.23.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.22.2...@next-bricks/visual-builder@1.23.0) (2024-06-26)
 
-
 ### Features
 
-* data dependency provider ([a55ec2a](https://github.com/easyops-cn/next-bricks/commit/a55ec2a606f53cff6f293304d2058e53e9312843))
-
-
-
-
+- data dependency provider ([a55ec2a](https://github.com/easyops-cn/next-bricks/commit/a55ec2a606f53cff6f293304d2058e53e9312843))
 
 ## [1.22.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.22.1...@next-bricks/visual-builder@1.22.2) (2024-06-25)
 
 **Note:** Version bump only for package @next-bricks/visual-builder
-
-
-
-
 
 ## [1.22.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.22.0...@next-bricks/visual-builder@1.22.1) (2024-06-25)
 

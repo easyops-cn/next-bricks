@@ -3,13 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.5.19](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.5.18...@next-bricks/containers@1.5.19) (2024-06-25)
+## [1.6.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.6.3...@next-bricks/containers@1.6.4) (2024-07-12)
 
 **Note:** Version bump only for package @next-bricks/containers
 
+## [1.6.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.6.2...@next-bricks/containers@1.6.3) (2024-07-12)
 
+**Note:** Version bump only for package @next-bricks/containers
 
+## [1.6.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.6.1...@next-bricks/containers@1.6.2) (2024-07-12)
 
+### Bug Fixes
+
+- use types from @next-shared/property-editor ([8b2d1d5](https://github.com/easyops-cn/next-bricks/commit/8b2d1d50c8629455e7e81d4e734a8ee31c5272a5))
+
+## [1.6.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.6.0...@next-bricks/containers@1.6.1) (2024-07-11)
+
+**Note:** Version bump only for package @next-bricks/containers
+
+# [1.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.5.19...@next-bricks/containers@1.6.0) (2024-07-10)
+
+### Features
+
+- support eo-card editor ([34d7ade](https://github.com/easyops-cn/next-bricks/commit/34d7adee4de5ae4d8a127316a17c697c4c65e3f4))
+
+## [1.5.19](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.5.18...@next-bricks/containers@1.5.19) (2024-06-25)
+
+**Note:** Version bump only for package @next-bricks/containers
 
 ## [1.5.18](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.5.17...@next-bricks/containers@1.5.18) (2024-06-25)
 

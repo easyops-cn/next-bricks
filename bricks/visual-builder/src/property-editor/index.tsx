@@ -21,7 +21,7 @@ import {
   onFormValuesChange,
   createEffectHook,
 } from "@formily/core";
-import { createSchemaField, FormProvider, ISchema } from "@formily/react";
+import { createSchemaField, FormProvider } from "@formily/react";
 import { ConfigProvider, theme } from "antd";
 import { StyleProvider, createCache } from "@ant-design/cssinjs";
 import {
@@ -37,6 +37,11 @@ import {
   Space,
 } from "@formily/antd-v5";
 import { useCurrentTheme } from "@next-core/react-runtime";
+import {
+  EditorComponentProps,
+  DataItem,
+  SelectOptions,
+} from "@next-shared/property-editor";
 import { CategoryTitle } from "./components/CategoryTitle";
 import { AdvancedFormItem } from "./components/AdvancedFormItem";
 import { CodeEditorComponent } from "./components/common/CodeEditorComponent";
@@ -44,6 +49,11 @@ import { IconSelectComponent } from "./components/common/IconSelectComponent";
 import { ColorPickerComponent } from "./components/common/ColorPickerComponent";
 import { InputWithUrlComponent } from "./components/common/InputWithUrlComponent";
 import { TextAlignRadioComponent } from "./components/common/TextAlignRadioComponent";
+import { InputWithUnitComponent } from "./components/common/InputWithUnitComponent";
+import { UseChildrenSelectComponent } from "./components/common/UseChildrenSelectComponent";
+import { BoxSizeComponent } from "./components/common/BoxSizeComponent";
+import { CustomOptionsComponent } from "./components/common/CustomOptionsComponent";
+import { CustomTab } from "./components/common/CustomTab";
 import { __secret_internals, customEditors } from "@next-core/runtime";
 import {
   ADVANCED_FORM_KEY,
@@ -62,7 +72,7 @@ const PropertyEditorComponent = React.forwardRef(LegacyPropertyEditor);
 export const BEFORE_SUBMIT_KEY = "before_submit";
 export const ADVANCED_CHANGE_KEY = "on_advanced_change";
 
-const SchemaField = createSchemaField({
+export const SchemaField = createSchemaField({
   components: {
     FormLayout,
     Input,
@@ -79,52 +89,17 @@ const SchemaField = createSchemaField({
     CodeEditor: CodeEditorComponent,
     IconSelect: IconSelectComponent,
     ColorPicker: ColorPickerComponent,
+    UseChildrenSelect: UseChildrenSelectComponent,
     InputWithUrl: InputWithUrlComponent,
+    InputWithUnit: InputWithUnitComponent,
     TextAlignRadio: TextAlignRadioComponent,
+    CustomOptions: CustomOptionsComponent,
+    BoxSize: BoxSizeComponent,
+    CustomTab,
   },
 });
 
-export interface EditorComponentProps {
-  advancedMode?: boolean;
-  SchemaFieldComponent: typeof SchemaField;
-  formilySchemaFormatter: (data: any, advancedMode?: boolean) => ISchema;
-  form: Form<any>;
-  effects: {
-    onFieldInit: typeof onFieldInit;
-    onFieldValueChange: typeof onFieldValueChange;
-    onFieldInitialValueChange: typeof onFieldInitialValueChange;
-    onFormInitialValuesChange: typeof onFormInitialValuesChange;
-    onFormValidateSuccess: typeof onFormValidateSuccess;
-    onSubmit: (listener: (value: any, form: Form) => any) => void;
-    onAdvancedChange: (
-      listener: (advancedMode: boolean, form: Form) => any
-    ) => void;
-    // support any effects
-  };
-  scope: {
-    advancedMode: boolean;
-    dataList: DataItem[];
-    extraLibs: any;
-    links: any;
-    tokenClick: (token: CustomEvent<string>) => void;
-  };
-}
-
-export interface DefinitionItem {
-  name: string;
-  type: string;
-  enum: string;
-  fileds: DefinitionItem[];
-}
-
-export interface DataItem {
-  name: string;
-  value: string;
-  definition: DefinitionItem[];
-  [k: string]: any;
-}
-
-export { DataNode };
+export type { DataNode };
 
 /**
  * 构件 `visual-builder.property-editor`
@@ -173,7 +148,12 @@ class PropertyEditor extends ReactNextElement {
   @property({
     attribute: false,
   })
-  accessor extraLibs: any;
+  accessor extraLibs: SelectOptions;
+
+  @property({
+    attribute: false,
+  })
+  accessor childSlots: SelectOptions;
 
   /**
    * 表单验证成功时触发事件
@@ -200,11 +180,8 @@ class PropertyEditor extends ReactNextElement {
       .validate()
       .then(() => {
         form.notify(BEFORE_SUBMIT_KEY, getRealValue());
-        if (this.#submitValue) {
-          this.#successEvent.emit(this.#submitValue);
-        } else {
-          this.#successEvent.emit(getRealValue());
-        }
+        // transformStyle(this.#submitValue || getRealValue(), this.advancedMode);
+        this.#successEvent.emit(this.#submitValue ?? getRealValue());
       })
       .catch((err: any[]) => {
         this.#errorEvent.emit(err);
@@ -234,19 +211,28 @@ class PropertyEditor extends ReactNextElement {
     }
   );
 
+  @event({ type: "trigger.action" })
+  accessor #triggerActionEvent!: EventEmitter<string>;
+
+  #handleTriggerAction = (action: string) => {
+    this.#triggerActionEvent.emit(action);
+  };
+
   render() {
     return (
       <PropertyEditorComponent
         ref={this.#formRef}
         editorName={this.editorName}
-        values={this.values}
+        values={this.values === "undefined" ? undefined : this.values}
         advancedMode={this.advancedMode}
         dataList={this.dataList}
         extraLibs={this.extraLibs}
         links={this.links}
+        childSlots={this.childSlots}
         editorPackages={this.editorPackages}
         handleValuesChange={this.#handleValuesChange}
         handleTokenClick={this.#handleTokenClick}
+        handleTriggerAction={this.#handleTriggerAction}
         onSubmitEffect={this.#onSubmitEffect}
       />
     );
@@ -257,12 +243,14 @@ export interface PropertyEditorProps {
   values: any;
   editorName: string;
   advancedMode?: boolean;
+  childSlots?: SelectOptions;
+  extraLibs: SelectOptions;
   dataList: DataItem[];
-  extraLibs: any;
   links: any;
   editorPackages: BrickPackage[];
   handleValuesChange: (value: any) => void;
   handleTokenClick: (token: string) => void;
+  handleTriggerAction: (action: string) => void;
   onSubmitEffect: (listener: (value: any, form: Form) => any) => void;
 }
 
@@ -274,15 +262,17 @@ export function LegacyPropertyEditor(
     dataList,
     editorPackages,
     extraLibs,
+    childSlots,
     links,
     handleValuesChange,
     handleTokenClick,
+    handleTriggerAction,
     onSubmitEffect,
   }: PropertyEditorProps,
   ref: any
 ) {
   const [Editor, setEditor] = useState<
-    (props: EditorComponentProps) => React.ReactElement
+    (props: EditorComponentProps<typeof SchemaField>) => React.ReactElement
   >(() => customEditors.get(editorName)?.(React) as any);
   const currentTheme = useCurrentTheme();
   const cache = useMemo(() => createCache(), []);
@@ -344,13 +334,16 @@ export function LegacyPropertyEditor(
       field.display = advancedMode ? "visible" : "hidden";
     });
 
-    const { values } = form.getState();
+    const formValues = form.getState().values;
     const formData = defaultTransform(
-      transformValueRef.current ?? values,
+      {
+        ...values,
+        ...(transformValueRef.current ?? formValues),
+      },
       advancedMode
     );
     form.setValues(formData, "overwrite");
-  }, [advancedMode, form, defaultTransform, Editor]);
+  }, [advancedMode, form, values, defaultTransform, Editor]);
 
   useEffect(() => {
     form.addEffects("onValueChange", () => {
@@ -392,10 +385,12 @@ export function LegacyPropertyEditor(
               scope={{
                 dataList,
                 advancedMode,
+                childSlots,
                 extraLibs,
                 links,
                 tokenClick: (event: CustomEvent<string>) =>
                   handleTokenClick(event.detail),
+                triggerAction: handleTriggerAction,
               }}
               effects={{
                 onFieldInit,

@@ -100,7 +100,7 @@ class FormItem extends FormItemElementBase implements FormItemProps {
   accessor min: number | undefined;
 
   /**
-   * 表单项是否必填
+   * 表单项是否为必填
    * @group basicFormItem
    */
   @property({

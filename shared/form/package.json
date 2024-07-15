@@ -1,6 +1,6 @@
 {
   "name": "@next-shared/form",
-  "version": "0.6.9",
+  "version": "0.6.11",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/shared/form",
   "repository": {
     "type": "git",
@@ -35,13 +35,13 @@
     "test:ci": "cross-env NODE_ENV='test' CI=true test-next"
   },
   "dependencies": {
-    "@next-core/element": "^1.2.10",
-    "@next-core/react-element": "^1.0.29",
+    "@next-core/element": "^1.2.11",
+    "@next-core/react-element": "^1.0.30",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@next-core/build-next-libs": "^1.0.18",
-    "@next-core/test-next": "^1.1.4",
+    "@next-core/test-next": "^1.1.5",
     "concurrently": "^8.2.2"
   }
 }

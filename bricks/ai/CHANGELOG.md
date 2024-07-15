@@ -3,21 +3,75 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.15...@next-bricks/ai@1.23.16) (2024-07-12)
+
+**Note:** Version bump only for package @next-bricks/ai
+
+## [1.23.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.14...@next-bricks/ai@1.23.15) (2024-07-11)
+
+### Bug Fixes
+
+- 会话历史支持搜索和编辑 ([ad3b081](https://github.com/easyops-cn/next-bricks/commit/ad3b0815096e6c844355add59ca684fe501ce3e1))
+
+## [1.23.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.13...@next-bricks/ai@1.23.14) (2024-07-11)
+
+**Note:** Version bump only for package @next-bricks/ai
+
+## [1.23.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.12...@next-bricks/ai@1.23.13) (2024-07-10)
+
+### Bug Fixes
+
+- 支持推荐提问 ([8f88fbb](https://github.com/easyops-cn/next-bricks/commit/8f88fbbd01ec722275ac464e0fb06009d3e2257e))
+
+## [1.23.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.11...@next-bricks/ai@1.23.12) (2024-07-09)
+
+### Bug Fixes
+
+- Browser change tab and stop sse ([6b90665](https://github.com/easyops-cn/next-bricks/commit/6b90665f398df979c5046ca1aed316a42e59a525))
+
+## [1.23.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.10...@next-bricks/ai@1.23.11) (2024-07-09)
+
+### Bug Fixes
+
+- make enter interval more efficient ([557ffa2](https://github.com/easyops-cn/next-bricks/commit/557ffa2fdde4c1b253e5e39f10d684343ebb4f5c))
+
+## [1.23.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.9...@next-bricks/ai@1.23.10) (2024-07-09)
+
+### Bug Fixes
+
+- fix scroll bug ([711ff7f](https://github.com/easyops-cn/next-bricks/commit/711ff7f1bb55e15011c935dc7e19fb66adf56127))
+
+## [1.23.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.8...@next-bricks/ai@1.23.9) (2024-07-04)
+
+### Bug Fixes
+
+- 把重新提问按钮放到toolbar ([80acba2](https://github.com/easyops-cn/next-bricks/commit/80acba2dd9cae0db59ccc267b3180bfecf9e3488))
+
+## [1.23.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.7...@next-bricks/ai@1.23.8) (2024-07-04)
+
+### Bug Fixes
+
+- 多agent的回答需要拆分消息框展示 ([9723a56](https://github.com/easyops-cn/next-bricks/commit/9723a56d3ae7831a8a4c8409c731bde3a84828bb))
+
+## [1.23.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.6...@next-bricks/ai@1.23.7) (2024-07-03)
+
+### Bug Fixes
+
+- AI聊天框【停止生成】会跟助手名称重叠 ([b79a23a](https://github.com/easyops-cn/next-bricks/commit/b79a23afd94ed5fa2e94cead36be706b0251f003))
+
+## [1.23.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.5...@next-bricks/ai@1.23.6) (2024-07-03)
+
+### Bug Fixes
+
+- 输入框增加常用提示词管理以及输入 ([b973b58](https://github.com/easyops-cn/next-bricks/commit/b973b58fc380b75c2fb86f069e3f3cdf24c50d7f))
+
 ## [1.23.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.4...@next-bricks/ai@1.23.5) (2024-06-26)
 
 **Note:** Version bump only for package @next-bricks/ai
 
-
-
-
-
 ## [1.23.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.3...@next-bricks/ai@1.23.4) (2024-06-25)
 
 **Note:** Version bump only for package @next-bricks/ai
-
-
-
-
 
 ## [1.23.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.2...@next-bricks/ai@1.23.3) (2024-06-25)
 

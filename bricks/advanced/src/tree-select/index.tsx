@@ -263,6 +263,7 @@ function TreeSelectElement(props: TreeSelectProps): React.ReactElement {
     <ConfigProvider
       theme={{
         algorithm:
+          /* istanbul ignore next */
           currentTheme === "dark-v2"
             ? theme.darkAlgorithm
             : theme.defaultAlgorithm,

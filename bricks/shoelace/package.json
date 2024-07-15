@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/shoelace",
-  "version": "1.0.17",
+  "version": "1.0.19",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/shoelace",
   "repository": {
     "type": "git",
@@ -50,7 +50,7 @@
     "@shoelace-style/shoelace": "^2.15.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.22.3",
+    "@next-core/build-next-bricks": "^1.22.4",
     "copy-webpack-plugin": "^11.0.0"
   }
 }

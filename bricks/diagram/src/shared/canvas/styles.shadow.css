@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
 }
+
 :host {
   display: block;
   position: relative;
@@ -41,21 +42,25 @@
     stroke-dashoffset: 0;
   }
 }
+
 @keyframes solidAnimation {
   to {
     stroke-dashoffset: 0;
   }
 }
+
 .solid-animation {
   stroke-dasharray: var(--solid-length);
   stroke-dashoffset: var(--solid-length);
   animation: solidAnimation var(--time) linear infinite;
 }
+
 .dashed-animation {
   animation: dashedAnimation var(--time) linear infinite;
 }
 
-.decorator-area .area {
+.decorator-area .area,
+.decorator-container .container {
   fill: rgba(119, 141, 195, 0.1);
   stroke: none;
   stroke-width: 0;
@@ -67,6 +72,8 @@
 }
 
 .cell.active .decorator-area .area,
+.cell.active .decorator-container .container,
+.cell:not(.read-only) .decorator-container .container:hover,
 .allowEdgeToArea .decorator-area .area:hover,
 .cell.active .line-active-bg {
   stroke: var(--palette-blue-5);
@@ -95,7 +102,8 @@
 }
 
 .cell.active .decorator-area .resize-handle,
-.decorator-area:hover .resize-handle {
+.decorator-area:hover .resize-handle,
+.decorator-container:hover .resize-handle {
   opacity: 1;
 }
 
@@ -133,6 +141,7 @@
 }
 
 .cell .node > * {
+  position: fixed;
   pointer-events: auto;
 }
 
@@ -154,4 +163,26 @@
 .degraded:hover circle,
 .degraded:hover text {
   fill: var(--color-brand);
+}
+
+.decorator-container {
+  .text-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5em;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: rgba(119, 141, 195, 0.6);
+  }
+  .horizontal {
+    height: max-content;
+    width: 100%;
+  }
+  .vertical {
+    width: max-content;
+    height: 100%;
+    writing-mode: vertical-rl;
+  }
 }

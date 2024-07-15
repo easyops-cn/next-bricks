@@ -18,3 +18,4 @@ import "./property-editor/index.js";
 import "./data-providers/check-editor-by-name.js";
 import "./data-providers/get-data-dependency.js";
 import "./data-providers/get-dependency-tree.js";
+import "./data-providers/parse-path.js";
