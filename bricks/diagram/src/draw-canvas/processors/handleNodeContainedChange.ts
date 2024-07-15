@@ -7,8 +7,16 @@ export function handleNodeContainedChange(
   cells: Cell[],
   onContainerContainerChange?: (detail: MoveCellPayload[]) => void
 ) {
-  const nodePayloads = payloads.filter((p) => isNodeCell(p));
   const nodeCells = cells.filter((c): c is NodeCell => isNodeCell(c));
+  const containerIds = payloads
+    .filter((p) => isContainerDecoratorCell(p))
+    .map((v) => v.id);
+  const nodePayloads = payloads.filter((p) => {
+    const nodeCell = nodeCells.find((v) => v.id === p.id)!;
+    const includeNodeFlag =
+      nodeCell?.containerId && containerIds.includes(nodeCell.containerId);
+    return isNodeCell(p) && !includeNodeFlag;
+  });
   nodePayloads.forEach((payload) => {
     const left = payload.x;
     const right = payload.x + payload.width!;
