@@ -315,8 +315,8 @@ export function LegacyChatAgentComponent(
           await checkNewConversation();
 
           if (isLowLevel) {
-            const delta = (value as LowLevelMessageChunk).choices[0].delta;
-            if (delta.content) {
+            const delta = (value as LowLevelMessageChunk).choices?.[0]?.delta;
+            if (delta?.content) {
               pushPartialMessage({
                 delta: {
                   role: delta.role,
