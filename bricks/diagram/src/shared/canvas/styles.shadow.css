@@ -173,8 +173,8 @@
     padding: 0.5em;
     text-align: center;
     font-size: 16px;
-    font-weight: 600;
     background-color: rgba(119, 141, 195, 0.6);
+    overflow: hidden;
   }
   .horizontal {
     height: max-content;
