@@ -222,6 +222,7 @@
       width: 0;
       height: 0;
       position: absolute;
+      appearance: none;
     }
 
     .button-content {
@@ -311,6 +312,7 @@
     input[type="radio"] {
       width: 0;
       height: 0;
+      appearance: none;
     }
 
     &:not(.disabled):hover {
