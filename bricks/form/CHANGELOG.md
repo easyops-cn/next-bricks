@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.10.13...@next-bricks/form@1.10.14) (2024-07-15)
+
+
+### Bug Fixes
+
+* fix firefox style bug ([758542a](https://github.com/easyops-cn/next-bricks/commit/758542afc664cb006467a9688bef3930e6b2d55a))
+
+
+
+
+
 ## [1.10.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.10.12...@next-bricks/form@1.10.13) (2024-07-15)
 
 
