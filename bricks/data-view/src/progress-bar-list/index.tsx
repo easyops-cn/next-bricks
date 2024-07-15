@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState, CSSProperties } from "react";
+import React, { useEffect, useState, CSSProperties } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 
 import { maxBy } from "lodash";
+import { useResizeObserver } from "../hooks/index.js";
 
 const { defineElement, property } = createDecorators();
 
@@ -42,25 +43,15 @@ interface Data {
 }
 export function ProgressBarListComponent(props: ProgressBarListProps) {
   const { dataSource = [] } = props;
-  const containerRef = useRef<HTMLDivElement>(null);
   const [barWidth, setBarWidth] = useState<number>();
   const [list, setList] = useState<(Data & { width: number })[]>([]);
-
+  const [containerRef, { clientWidth }] = useResizeObserver<HTMLDivElement>();
   useEffect(() => {
     const element = containerRef.current;
     if (element) {
-      const observer = new ResizeObserver((entries) => {
-        let containerWidth: number = 0;
-        for (const entry of entries) {
-          containerWidth = entry.contentRect.width;
-        }
-        setBarWidth(containerWidth - 225);
-      });
-
-      observer.observe(element);
-      return () => observer.disconnect();
+      setBarWidth(clientWidth - 225);
     }
-  }, []);
+  }, [clientWidth]);
   useEffect(() => {
     if (barWidth && dataSource.length) {
       const maxData = maxBy(dataSource, "count");

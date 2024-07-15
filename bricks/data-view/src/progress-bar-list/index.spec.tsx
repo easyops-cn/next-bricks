@@ -5,11 +5,16 @@ import type { ProgressBarList } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
-window.ResizeObserver = jest.fn().mockImplementation(() => ({
-  disconnect: jest.fn(),
-  observe: jest.fn(),
-  unobserve: jest.fn(),
-}));
+jest.mock("../hooks/index.js", () => {
+  return {
+    useResizeObserver: jest
+      .fn()
+      .mockReturnValue([
+        { current: null },
+        { clientWidth: 462, clientHeight: 500 },
+      ]),
+  };
+});
 
 describe("data-view.progress-bar-list", () => {
   test("basic usage", async () => {
