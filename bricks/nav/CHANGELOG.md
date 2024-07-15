@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.28](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.11.27...@next-bricks/nav@1.11.28) (2024-07-15)
+
+
+### Bug Fixes
+
+* 去掉directory-tree样式 refs SHLSTYYWPT-186 ([a945f04](https://github.com/easyops-cn/next-bricks/commit/a945f04693afaab9088ed874ff45b3f0797baf0a))
+
+
+
+
+
 ## [1.11.27](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.11.26...@next-bricks/nav@1.11.27) (2024-07-15)
 
 **Note:** Version bump only for package @next-bricks/nav
