@@ -171,6 +171,7 @@
 
 :host([type="button"]) {
   width: max-content;
+  -webkit-appearance: none;
   .radio-group {
     gap: 0;
   }
