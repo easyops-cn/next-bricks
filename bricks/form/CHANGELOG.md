@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.10.14...@next-bricks/form@1.10.15) (2024-07-15)
+
+
+### Bug Fixes
+
+* radio style bug ([28a949e](https://github.com/easyops-cn/next-bricks/commit/28a949e1bba7322e15de34fad0b9c2f9fb86197e))
+
+
+
+
+
 ## [1.10.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.10.13...@next-bricks/form@1.10.14) (2024-07-15)
 
 
