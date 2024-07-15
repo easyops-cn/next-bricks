@@ -49,7 +49,7 @@
       margin-left: 1px;
       display: flex;
       gap: 8px;
-      justify-content: end;
+      justify-content: flex-end;
       background: var(--color-fill-bg-container-1);
       padding: 8px 12px;
       box-shadow: 0 1px 1px 0 var(--palette-gray-5);
