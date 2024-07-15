@@ -59,16 +59,22 @@ export function convertToStoryboard(
       }
       return brickItem;
     }
-    case "tag":
+    case "tag": {
+      const colorSuffix =
+        config.style?.variant === "background" ? "-inverse" : "";
       return {
         brick: "eo-tag",
         errorBoundary: true,
         properties: {
           textContent: baseValue,
           size: getTagSize(config.style?.size),
-          color: `<% (${JSON.stringify(config.style?.palette ?? {})})[DATA.${attr}] %>`,
+          color: config.style?.background
+            ? `${config.style.background}${colorSuffix}`
+            : `<% \`\${(${JSON.stringify(config.style?.palette ?? {})})[DATA.${attr}] ?? "gray"}${colorSuffix}\` %>`,
+          outline: config.style?.variant === "outline",
         },
       };
+    }
     case "detail":
       return {
         brick: "eo-descriptions",
@@ -83,6 +89,9 @@ export function convertToStoryboard(
         },
       };
     case "table":
+      if (config.type !== "struct-list") {
+        return null;
+      }
       return {
         brick: "eo-next-table",
         errorBoundary: true,
@@ -96,6 +105,9 @@ export function convertToStoryboard(
         },
       };
     case "card-list": {
+      if (config.type !== "struct-list") {
+        return null;
+      }
       const titleKey = config.keys?.title ?? "name";
       const descKey = config.keys?.description ?? "description";
       return {

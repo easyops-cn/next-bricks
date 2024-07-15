@@ -75,6 +75,9 @@ export interface VisualStyle {
     | "var(--text-color-disabled)"
     | "var(--color-brand)";
 
+  /** 标签变种形式：默认、边框、背景色 */
+  variant?: "default" | "outline" | "background";
+
   /** 背景颜色使用预设的 CSS 变量 */
   background?: VisualBackground;
 

@@ -100,30 +100,26 @@
       }
     ],
     "sn": "SN123456789",
-    "vg": [
-      {
-        "VG_Name": "vg0",
-        "VG_Size": "100G",
-        "PE_Size": "4M",
-        "Total_PE": "25600",
-        "Free_PE": "1000",
-        "VG_UUID": "vg0-uuid"
-      }
-    ],
+    "vg": {
+      "VG_Name": "vg0",
+      "VG_Size": "100G",
+      "PE_Size": "4M",
+      "Total_PE": "25600",
+      "Free_PE": "1000",
+      "VG_UUID": "vg0-uuid"
+    },
     "date": "2024-07-11",
     "ticket_num": "TICKET-1234",
     "cloud_type": "aliyun",
-    "pv": [
-      {
-        "PV_Name": "pv0",
-        "VG_Name": "vg0",
-        "PV_Size": "100G",
-        "PE_Size": "4M",
-        "Total_PE": "25600",
-        "Free_PE": "1000",
-        "PV_UUID": "pv0-uuid"
-      }
-    ],
+    "pv": {
+      "PV_Name": "pv0",
+      "VG_Name": "vg0",
+      "PV_Size": "100G",
+      "PE_Size": "4M",
+      "Total_PE": "25600",
+      "Free_PE": "1000",
+      "PV_UUID": "pv0-uuid"
+    },
     "businessIP": "192.168.1.10",
     "time_zone": "Asia/Shanghai",
     "DNS": "8.8.8.8",
@@ -145,12 +141,10 @@
       }
     ],
     "remote_ip": "192.168.1.10",
-    "usbkey": [
-      {
-        "key": "key1",
-        "key_sn": "SN123456789"
-      }
-    ],
+    "usbkey": {
+      "key": "key1",
+      "key_sn": "SN123456789"
+    },
     "charset": "UTF-8",
     "openstack_server_id": "os-123456789",
     "host_price": 1200.5,
@@ -404,30 +398,26 @@
       }
     ],
     "sn": "SN123456789",
-    "vg": [
-      {
-        "VG_Name": "vg0",
-        "VG_Size": "100G",
-        "PE_Size": "4M",
-        "Total_PE": "25600",
-        "Free_PE": "1000",
-        "VG_UUID": "vg0-uuid"
-      }
-    ],
+    "vg": {
+      "VG_Name": "vg0",
+      "VG_Size": "100G",
+      "PE_Size": "4M",
+      "Total_PE": "25600",
+      "Free_PE": "1000",
+      "VG_UUID": "vg0-uuid"
+    },
     "date": "2024-07-11",
     "ticket_num": "TICKET-1234",
     "cloud_type": "aliyun",
-    "pv": [
-      {
-        "PV_Name": "pv0",
-        "VG_Name": "vg0",
-        "PV_Size": "100G",
-        "PE_Size": "4M",
-        "Total_PE": "25600",
-        "Free_PE": "1000",
-        "PV_UUID": "pv0-uuid"
-      }
-    ],
+    "pv": {
+      "PV_Name": "pv0",
+      "VG_Name": "vg0",
+      "PV_Size": "100G",
+      "PE_Size": "4M",
+      "Total_PE": "25600",
+      "Free_PE": "1000",
+      "PV_UUID": "pv0-uuid"
+    },
     "businessIP": "192.168.1.11",
     "time_zone": "Asia/Shanghai",
     "DNS": "8.8.8.8",
@@ -443,12 +433,10 @@
       }
     ],
     "remote_ip": "192.168.1.11",
-    "usbkey": [
-      {
-        "key": "key1",
-        "key_sn": "SN123456789"
-      }
-    ],
+    "usbkey": {
+      "key": "key1",
+      "key_sn": "SN123456789"
+    },
     "charset": "UTF-8",
     "openstack_server_id": "os-987654321",
     "host_price": 1500,
@@ -697,30 +685,26 @@
       }
     ],
     "sn": "SN123456789",
-    "vg": [
-      {
-        "VG_Name": "vg0",
-        "VG_Size": "100G",
-        "PE_Size": "4M",
-        "Total_PE": "25600",
-        "Free_PE": "1000",
-        "VG_UUID": "vg0-uuid"
-      }
-    ],
+    "vg": {
+      "VG_Name": "vg0",
+      "VG_Size": "100G",
+      "PE_Size": "4M",
+      "Total_PE": "25600",
+      "Free_PE": "1000",
+      "VG_UUID": "vg0-uuid"
+    },
     "date": "2024-07-11",
     "ticket_num": "TICKET-1234",
     "cloud_type": "aliyun",
-    "pv": [
-      {
-        "PV_Name": "pv0",
-        "VG_Name": "vg0",
-        "PV_Size": "100G",
-        "PE_Size": "4M",
-        "Total_PE": "25600",
-        "Free_PE": "1000",
-        "PV_UUID": "pv0-uuid"
-      }
-    ],
+    "pv": {
+      "PV_Name": "pv0",
+      "VG_Name": "vg0",
+      "PV_Size": "100G",
+      "PE_Size": "4M",
+      "Total_PE": "25600",
+      "Free_PE": "1000",
+      "PV_UUID": "pv0-uuid"
+    },
     "businessIP": "192.168.1.12",
     "time_zone": "Asia/Shanghai",
     "DNS": "8.8.8.8",
@@ -729,12 +713,10 @@
     "producer": "Dell",
     "crontabs": [],
     "remote_ip": "192.168.1.12",
-    "usbkey": [
-      {
-        "key": "key1",
-        "key_sn": "SN123456789"
-      }
-    ],
+    "usbkey": {
+      "key": "key1",
+      "key_sn": "SN123456789"
+    },
     "charset": "UTF-8",
     "openstack_server_id": "os-111111111",
     "host_price": 1000,

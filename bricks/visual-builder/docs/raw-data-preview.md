@@ -18,7 +18,7 @@ context:
     resolve:
       useProvider: basic.http-request
       args:
-        - /preview/bricks/visual-builder/dist/fixtures/host-list.json
+        - /preview/bricks/visual-builder/dist/fixtures/host-list.json?v=1
   - name: appList
     resolve:
       useProvider: basic.http-request
@@ -33,7 +33,7 @@ context:
     resolve:
       useProvider: basic.http-request
       args:
-        - /preview/bricks/visual-builder/dist/fixtures/raw-generations.json?v=2
+        - /preview/bricks/visual-builder/dist/fixtures/raw-generations.json?v=4
   - name: generations
     value: |
       <%
