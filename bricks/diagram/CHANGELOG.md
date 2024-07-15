@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.42.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.41.2...@next-bricks/diagram@0.42.0) (2024-07-15)
+
+
+### Features
+
+* 支持容器移动，有关系的节点也跟随移动 ([88afe94](https://github.com/easyops-cn/next-bricks/commit/88afe9474649d3952c89310b5133a6fc42ae8724))
+* 节点拖入到容器，需要高亮提示 ([2deb95b](https://github.com/easyops-cn/next-bricks/commit/2deb95bcb3902cb27ac073aa4b2c50c89d6f1886))
+
+
+
+
+
 ## [0.41.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.41.1...@next-bricks/diagram@0.41.2) (2024-07-15)
 
 **Note:** Version bump only for package @next-bricks/diagram
