@@ -8,7 +8,6 @@
 
 .directory-container {
   background-color: var(--color-fill-global-bg-3);
-  padding: 20px 12px 24px 20px;
 
   .directory-title-container {
     margin-bottom: 24px;
