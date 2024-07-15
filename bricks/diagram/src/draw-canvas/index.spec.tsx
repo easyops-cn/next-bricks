@@ -563,6 +563,26 @@ describe("eo-draw-canvas", () => {
         },
       });
     });
+    await act(async () => {
+      const dropResult3 = await element.dropDecorator({
+        decorator: "container",
+        position: [800, 600],
+        text: "上层服务",
+      });
+      expect(dropResult3).toEqual({
+        type: "decorator",
+        decorator: "container",
+        id: expect.any(String),
+        view: {
+          x: 620,
+          y: 480,
+          width: 180,
+          height: 120,
+          text: "上层服务",
+          direction: undefined,
+        },
+      });
+    });
     document.elementsFromPoint = originalElementsFromPoint;
 
     act(() => {

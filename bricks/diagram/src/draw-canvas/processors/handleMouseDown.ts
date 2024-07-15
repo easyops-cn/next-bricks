@@ -10,7 +10,12 @@ import type {
   MoveCellPayload,
   ResizeCellPayload,
 } from "../reducers/interfaces";
-import { isDecoratorCell, isEdgeCell, isNodeCell } from "./asserts";
+import {
+  isContainerDecoratorCell,
+  isDecoratorCell,
+  isEdgeCell,
+  isNodeCell,
+} from "./asserts";
 import { cellToTarget } from "./cellToTarget";
 import { targetIsActive } from "./targetIsActive";
 
@@ -52,12 +57,19 @@ export function handleMouseDown(
   if (isEdgeCell(cell)) {
     return;
   }
-
-  const activeCells =
+  const activeCells: Cell[] = [];
+  const actives =
     activeTarget?.type === "multi" && action === "move"
       ? cells.filter((c) => targetIsActive(c, activeTarget))
       : [cell];
-
+  actives.forEach((a) => {
+    activeCells.push(a);
+    if (isContainerDecoratorCell(a) && action === "move") {
+      activeCells.push(
+        ...cells.filter((c) => isNodeCell(c) && c.containerId === a.id)
+      );
+    }
+  });
   const movableActiveCells = activeCells.filter(
     (c) => (isNodeCell(c) && !isAutoLayout) || isDecoratorCell(c)
   ) as (NodeCell | DecoratorCell)[];

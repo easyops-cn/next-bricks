@@ -81,6 +81,11 @@
   stroke-width: 1;
 }
 
+.container-active .decorator-container .container {
+  stroke: var(--palette-blue-5);
+  stroke-width: 1;
+}
+
 .cell:not(.read-only) {
   user-select: none;
 }
@@ -136,6 +141,10 @@
   opacity: 0.3;
 }
 
+.cell.container-active {
+  opacity: 1;
+}
+
 .cell .node {
   pointer-events: none;
 }
@@ -173,8 +182,8 @@
     padding: 0.5em;
     text-align: center;
     font-size: 16px;
-    font-weight: 600;
     background-color: rgba(119, 141, 195, 0.6);
+    overflow: hidden;
   }
   .horizontal {
     height: max-content;

@@ -2,10 +2,10 @@ import { Cell, DecoratorCell, NodeCell } from "../interfaces";
 import { MoveCellPayload } from "../reducers/interfaces";
 import { isContainerDecoratorCell, isNodeCell } from "./asserts";
 
-export function handleNodeContainedChanege(
+export function handleNodeContainedChange(
   payloads: MoveCellPayload[],
   cells: Cell[],
-  onContainerContainerChange: (detail: MoveCellPayload[]) => void
+  onContainerContainerChange?: (detail: MoveCellPayload[]) => void
 ) {
   const nodePayloads = payloads.filter((p) => isNodeCell(p));
   const nodeCells = cells.filter((c): c is NodeCell => isNodeCell(c));
@@ -33,14 +33,16 @@ export function handleNodeContainedChanege(
       }
     }
   });
-  const containedChaneges = nodePayloads.filter((payload) => {
+  let containedChanges = [];
+  containedChanges = nodePayloads.filter((payload) => {
     const nodeCell = nodeCells.find((c) => c.id === payload.id);
     const containerId = nodeCell?.containerId;
     const containerCellId = payload.containerCell?.id;
     //过滤掉一直没有combo关系或者combo关系没有改变的
     return containerId !== containerCellId;
   });
-  if (containedChaneges.length > 0) {
-    onContainerContainerChange(containedChaneges);
+  if (containedChanges.length > 0) {
+    onContainerContainerChange?.(containedChanges);
   }
+  return containedChanges;
 }

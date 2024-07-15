@@ -1,8 +1,8 @@
 import { describe, test, expect } from "@jest/globals";
-import { handleNodeContainedChanege } from "./handleNodeContainedChanege";
+import { handleNodeContainedChange } from "./handleNodeContainedChange";
 import { Cell } from "../interfaces";
 import { MoveCellPayload } from "../reducers/interfaces";
-describe("handleNodeContainedChanege", () => {
+describe("handleNodeContainedChange", () => {
   const cells = [
     {
       type: "decorator",
@@ -78,11 +78,11 @@ describe("handleNodeContainedChanege", () => {
   ] as unknown as MoveCellPayload[];
   const onContainerContainerChange = jest.fn();
   test("Executing the onContainerContainerChange", () => {
-    handleNodeContainedChanege(payloads, cells, onContainerContainerChange);
+    handleNodeContainedChange(payloads, cells, onContainerContainerChange);
     expect(onContainerContainerChange).toHaveBeenCalled();
   });
   test("Not executing the onContainerContainerChange", () => {
-    handleNodeContainedChanege(
+    handleNodeContainedChange(
       [
         {
           type: "node",

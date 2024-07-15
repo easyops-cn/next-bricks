@@ -70,6 +70,102 @@ describe("handleMouseDown", () => {
     document.body.replaceChildren();
   });
 
+  test("move container node", () => {
+    const mousedown = new MouseEvent("mousedown", { clientX: 10, clientY: 20 });
+    handleMouseDown(mousedown, {
+      action: "move",
+      cell: {
+        type: "decorator",
+        id: "container-1",
+        decorator: "container",
+        view: { x: 4, y: 6 },
+      } as any,
+      ...methods,
+      cells: [
+        {
+          type: "node",
+          id: "a",
+          containerId: "container-1",
+          view: {
+            x: 20,
+            y: 50,
+            width: 60,
+            height: 60,
+          },
+        },
+        {
+          type: "decorator",
+          id: "container-1",
+          decorator: "container",
+          view: {
+            x: 50,
+            y: 400,
+            width: 280,
+            height: 120,
+            direction: "top",
+            text: " 上层服务",
+          },
+        },
+      ],
+    });
+
+    expect(onSwitchActiveTarget).toHaveBeenCalledWith({
+      type: "decorator",
+      id: "container-1",
+    });
+
+    fireEvent.mouseMove(document, { clientX: 11, clientY: 22 });
+    expect(onCellsMoving).not.toBeCalled();
+
+    fireEvent.mouseMove(document, { clientX: 25, clientY: 50 });
+    expect(onCellsMoving).toBeCalledWith([
+      {
+        decorator: "container",
+        height: undefined,
+        id: "container-1",
+        type: "decorator",
+        width: undefined,
+        x: 19,
+        y: 36,
+      },
+      {
+        decorator: undefined,
+        height: 60,
+        id: "a",
+        type: "node",
+        width: 60,
+        x: 35,
+        y: 80,
+      },
+    ]);
+
+    fireEvent.mouseUp(document, { clientX: 26, clientY: 51 });
+    expect(onCellsMoved).toBeCalledWith([
+      {
+        decorator: "container",
+        height: undefined,
+        id: "container-1",
+        type: "decorator",
+        width: undefined,
+        x: 20,
+        y: 37,
+      },
+      {
+        id: "a",
+        type: "node",
+        decorator: undefined,
+        width: 60,
+        height: 60,
+        x: 36,
+        y: 81,
+      },
+    ]);
+
+    expect(onSwitchActiveTarget).toHaveBeenCalledTimes(1);
+
+    document.body.replaceChildren();
+  });
+
   test("move multi nodes", () => {
     const mousedown = new MouseEvent("mousedown", { clientX: 10, clientY: 20 });
     handleMouseDown(mousedown, {

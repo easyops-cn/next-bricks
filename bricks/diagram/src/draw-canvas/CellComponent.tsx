@@ -42,6 +42,7 @@ export interface CellComponentProps {
   activeTarget: ActiveTarget | null | undefined;
   readOnly?: boolean;
   unrelatedCells: Cell[];
+  dragNodeToContainerActive?: boolean;
   onCellsMoving?(info: MoveCellPayload[]): void;
   onCellsMoved?(info: MoveCellPayload[]): void;
   onCellResizing?(info: ResizeCellPayload): void;
@@ -65,6 +66,7 @@ export function CellComponent({
   defaultNodeBricks,
   lineConfMap,
   activeTarget,
+  dragNodeToContainerActive,
   readOnly,
   transform,
   unrelatedCells,
@@ -179,13 +181,13 @@ export function CellComponent({
   const handleMouseLeave = useCallback(() => {
     onCellMouseLeave?.(cell);
   }, [cell, onCellMouseLeave]);
-
   return (
     <g
       className={classNames("cell", {
         active: targetIsActive(cell, activeTarget),
         faded: unrelated,
         "read-only": readOnly,
+        "container-active": dragNodeToContainerActive,
       })}
       ref={gRef}
       transform={

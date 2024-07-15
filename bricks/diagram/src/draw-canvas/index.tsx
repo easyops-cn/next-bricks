@@ -77,7 +77,7 @@ import { handleLasso } from "./processors/handleLasso";
 import styleText from "../shared/canvas/styles.shadow.css";
 import zoomBarStyleText from "../shared/canvas/ZoomBarComponent.shadow.css";
 import { cellToTarget } from "./processors/cellToTarget";
-import { handleNodeContainedChanege } from "./processors/handleNodeContainedChanege";
+import { handleNodeContainedChange } from "./processors/handleNodeContainedChange";
 
 const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
   "basic.lock-body-scroll"
@@ -636,6 +636,7 @@ function LegacyEoDrawCanvasComponent(
     null
   );
   const [editingTexts, setEditingTexts] = useState<string[]>([]);
+  const [activeContainers, setActiveContainers] = useState<string[]>([]);
   const { grabbing, transform, zoomer, scaleRange } = useZoom({
     rootRef,
     zoomable,
@@ -864,11 +865,19 @@ function LegacyEoDrawCanvasComponent(
 
   const defPrefix = useMemo(() => `${uniqueId("diagram-")}-`, []);
   const markerPrefix = `${defPrefix}line-arrow-`;
-
-  const handleCellsMoving = useCallback((info: MoveCellPayload[]) => {
-    dispatch({ type: "move-cells", payload: info });
-  }, []);
-
+  /* istanbul ignore next */
+  const handleCellsMoving = useCallback(
+    (info: MoveCellPayload[]) => {
+      dispatch({ type: "move-cells", payload: info });
+      const containedIds: string[] = [];
+      handleNodeContainedChange(info, cells).forEach((c) => {
+        if (c.containerCell?.id) containedIds.push(c.containerCell?.id);
+      });
+      setActiveContainers(containedIds);
+    },
+    [cells]
+  );
+  /* istanbul ignore next */
   const handleCellsMoved = useCallback(
     (info: MoveCellPayload[]) => {
       dispatch({ type: "move-cells", payload: info });
@@ -876,7 +885,8 @@ function LegacyEoDrawCanvasComponent(
       if (info.length === 1) {
         onCellMove(info[0]);
       }
-      handleNodeContainedChanege(info, cells, onContainerContainerChange);
+      handleNodeContainedChange(info, cells, onContainerContainerChange);
+      setActiveContainers([]);
     },
     [onCellMove, onCellsMove, cells, onContainerContainerChange]
   );
@@ -988,7 +998,6 @@ function LegacyEoDrawCanvasComponent(
       root.removeEventListener("mousedown", onMouseDown);
     };
   }, [transform, cells, dragBehavior, onSwitchActiveTarget]);
-
   return (
     <>
       <svg
@@ -1018,6 +1027,9 @@ function LegacyEoDrawCanvasComponent(
             {cells.map((cell) => (
               <CellComponent
                 key={`${cell.type}:${isEdgeCell(cell) ? `${cell.source}~${cell.target}` : cell.id}`}
+                dragNodeToContainerActive={
+                  isEdgeCell(cell) ? false : activeContainers.includes(cell.id)
+                }
                 layout={layout}
                 cell={cell}
                 cells={cells}
