@@ -1,10 +1,17 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { FormItem, IFormItemProps } from "@formily/antd-v5";
 import { wrapBrick } from "@next-core/react-element";
 import { GeneralIcon, GeneralIconProps } from "@next-bricks/icons/general-icon";
 import {
   useExpressionScope,
   useField,
+  useFieldSchema,
   useForm,
   useFormEffects,
 } from "@formily/react";
@@ -30,17 +37,16 @@ interface AdvancedFormItemProps extends IFormItemProps {
 export function AdvancedFormItem(props: AdvancedFormItemProps) {
   const form = useForm();
   const field = useField();
+  const schema = useFieldSchema();
   const scope = useExpressionScope();
   const [mode, setMode] = useState<Mode>(
-    typeof (field as any).value === "string" &&
-      isEvaluable((field as any).value)
-      ? "advanced"
-      : "normal"
+    (field.component as any)?.[0] === "CodeEditor" ? "advanced" : "normal"
   );
   const isAdvanced = useMemo(() => mode === "advanced", [mode]);
-  const fieldOriginComponent = useMemo<any>(() => field.component, [field]);
+  const fieldOriginComponentRef = useRef<any>([]);
 
   const handleModeCheck = useCallback(() => {
+    const fieldOriginComponent = fieldOriginComponentRef.current;
     const updateMode = isAdvanced ? "normal" : "advanced";
     const isAdvancedMode = updateMode === "advanced";
     setMode(updateMode);
@@ -72,7 +78,7 @@ export function AdvancedFormItem(props: AdvancedFormItemProps) {
         "overwrite"
       );
     }
-  }, [form, field, isAdvanced, fieldOriginComponent, scope]);
+  }, [form, field, isAdvanced, scope]);
 
   useFormEffects(() => {
     onFieldInitialValueChange(field.props.name, ({ value }) => {
@@ -87,6 +93,13 @@ export function AdvancedFormItem(props: AdvancedFormItemProps) {
       }
     });
   });
+
+  useEffect(() => {
+    fieldOriginComponentRef.current = [
+      schema["x-component"],
+      schema["x-component-props"],
+    ];
+  }, [schema]);
 
   return (
     <div className="advanced-form-item">

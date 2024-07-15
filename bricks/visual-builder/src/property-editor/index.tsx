@@ -275,6 +275,7 @@ export function LegacyPropertyEditor(
   // should update form instance when Editor change
   const form = useMemo(() => createForm(), [Editor]);
   const transformValueRef = useRef<any>(null);
+  const advancedChangeRef = useRef<boolean>(false);
 
   const onAdvancedChangeEffect = useMemo(
     () =>
@@ -314,11 +315,12 @@ export function LegacyPropertyEditor(
 
   useEffect(() => {
     if (Editor) {
-      form.setInitialValues(values);
+      form.setInitialValues(values, "overwrite");
     }
   }, [Editor, form]);
 
   useEffect(() => {
+    advancedChangeRef.current = true;
     transformValueRef.current = null;
 
     form.notify(ADVANCED_CHANGE_KEY, advancedMode);
@@ -332,22 +334,22 @@ export function LegacyPropertyEditor(
 
     const formValues = form.getState().values;
     const formData = defaultTransform(
-      {
-        ...values,
-        ...(transformValueRef.current ?? formValues),
-      },
+      transformValueRef.current ?? formValues,
       advancedMode
     );
+
     form.setValues(formData, "overwrite");
-  }, [advancedMode, form, values, defaultTransform, Editor]);
+    advancedChangeRef.current = false;
+  }, [advancedMode, form, defaultTransform, Editor]);
 
   useEffect(() => {
     form.addEffects("onValueChange", () => {
       onFormValuesChange((form) => {
+        if (advancedChangeRef.current) return;
         handleValuesChange(form.values);
       });
     });
-  }, [form]);
+  }, [form, handleValuesChange]);
 
   if (!Editor) return null;
 
