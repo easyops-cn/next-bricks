@@ -75,6 +75,19 @@ describe("handleNodeContainedChange", () => {
       width: 60,
       height: 60,
     },
+    {
+      type: "decorator",
+      id: "container-1",
+      decorator: "container",
+      view: {
+        x: 50,
+        y: 400,
+        width: 280,
+        height: 120,
+        direction: "top",
+        text: " 上层服务",
+      },
+    },
   ] as unknown as MoveCellPayload[];
   const onContainerContainerChange = jest.fn();
   test("Executing the onContainerContainerChange", () => {

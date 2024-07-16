@@ -49,7 +49,9 @@ export function isNodeOrTextDecoratorCell(
 export function isTextDecoratorCell(cell: Cell): cell is DecoratorCell {
   return cell.type === "decorator" && cell.decorator === "text";
 }
-export function isContainerDecoratorCell(cell: Cell): cell is DecoratorCell {
+export function isContainerDecoratorCell(
+  cell: Cell | MoveCellPayload
+): cell is DecoratorCell {
   return cell.type === "decorator" && cell.decorator === "container";
 }
 
