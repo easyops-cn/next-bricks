@@ -1,5 +1,5 @@
-import React, { forwardRef } from "react";
-import { createDecorators } from "@next-core/element";
+import React, { forwardRef, useEffect } from "react";
+import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import {
   ChatViewContext,
@@ -17,7 +17,7 @@ import { commandBrickConf } from "./ChatViewContext";
 import { UseBrickConf } from "@next-core/types";
 import { ChatBody } from "./ChatService.js";
 
-const { defineElement, property, method } = createDecorators();
+const { defineElement, property, method, event } = createDecorators();
 
 type InputToolbarBrick = { useBrick: UseBrickConf };
 
@@ -37,6 +37,8 @@ export interface ChatViewProps {
   commandBricks?: commandBrickConf;
   answerLanguage?: string;
   inputToolbarBrick?: InputToolbarBrick;
+  onSessionIdChange: (sessionId: string | undefined) => void;
+  onQaFinish: (sessionId: string | undefined) => void;
 }
 
 export function LegacyChatViewComponent(
@@ -56,6 +58,8 @@ export function LegacyChatViewComponent(
     commandBricks,
     answerLanguage,
     inputToolbarBrick,
+    onSessionIdChange,
+    onQaFinish,
   }: ChatViewProps,
   ref: React.Ref<SearchInputRef>
 ) {
@@ -88,6 +92,20 @@ export function LegacyChatViewComponent(
     debug,
     answerLanguage,
   });
+
+  useEffect(() => {
+    if (activeSessionId) {
+      onSessionIdChange(activeSessionId);
+    }
+  }, [activeSessionId]);
+
+  useEffect(() => {
+    if (!chatting && activeSessionId) {
+      // 当此时存在activeSessionId，且chatting是从true变为false时触发，不需要加入activeSessionId的依赖判断
+      onQaFinish(activeSessionId);
+    }
+  }, [chatting]);
+
   return (
     <ChatViewContext.Provider
       value={{
@@ -265,6 +283,20 @@ class ChatView extends ReactNextElement {
 
   #ref = React.createRef<SearchInputRef>();
 
+  @event({ type: "sessionId.change" })
+  accessor #sessionIdChange!: EventEmitter<string | undefined>;
+
+  #handleSessionIdChange = (activeSessionId: string | undefined) => {
+    this.#sessionIdChange.emit(activeSessionId);
+  };
+
+  @event({ type: "qa.finish" })
+  accessor #qaFinish!: EventEmitter<string | undefined>;
+
+  #handleQaFinish = (activeSessionId: string | undefined) => {
+    this.#qaFinish.emit(activeSessionId);
+  };
+
   /**
    *
    * @description 调用方法进行提问
@@ -302,6 +334,8 @@ class ChatView extends ReactNextElement {
         commandBricks={this.commandBricks}
         answerLanguage={this.answerLanguage}
         inputToolbarBrick={this.inputToolbarBrick}
+        onSessionIdChange={this.#handleSessionIdChange}
+        onQaFinish={this.#handleQaFinish}
         ref={this.#ref}
       />
     );
