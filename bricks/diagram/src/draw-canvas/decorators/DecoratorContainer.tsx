@@ -1,16 +1,11 @@
-import React, {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import type { BasicDecoratorProps } from "../interfaces";
 import { handleMouseDown } from "../processors/handleMouseDown";
 import classNames from "classnames";
 import { get } from "lodash";
 import { selectAllText } from "./DecoratorText";
 import { isNoManualLayout } from "../processors/asserts";
+import { uuidV4 } from "..";
 
 export function DecoratorContainer({
   cell,
@@ -33,6 +28,7 @@ export function DecoratorContainer({
   const [editingLabel, setEditingLabel] = useState(false);
   const [currentLabel, setCurrentLabel] = useState<string>(label);
   const [shouldEmitLabelChange, setShouldEmitLabelChange] = useState(false);
+  const [recomputation, setRecomputation] = useState<string>();
   const [titleForeignRect, setTitleForeignRect] = useState({
     x: 0,
     y: 0,
@@ -66,9 +62,13 @@ export function DecoratorContainer({
     }
     setEditingLabel(false);
     setShouldEmitLabelChange(true);
+    setRecomputation(uuidV4());
   }, [readOnly]);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    setCurrentLabel(label);
+  }, [label]);
+  useEffect(() => {
     const element = textRef.current;
     if (element && element.textContent !== currentLabel) {
       element.textContent = currentLabel;
@@ -97,7 +97,7 @@ export function DecoratorContainer({
         setTitleForeignRect(rect);
       }
     }
-  }, [view, currentLabel, direction]);
+  }, [view, currentLabel, direction, recomputation]);
 
   useEffect(() => {
     if (editingLabel && textRef.current) {

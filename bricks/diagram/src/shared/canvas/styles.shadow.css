@@ -175,6 +175,7 @@
 }
 
 .decorator-container {
+  --defaultSize: 24px;
   .text-container {
     display: flex;
     align-items: center;
@@ -188,10 +189,16 @@
   .horizontal {
     height: max-content;
     width: 100%;
+    .text {
+      min-height: var(--defaultSize);
+    }
   }
   .vertical {
     width: max-content;
     height: 100%;
     writing-mode: vertical-rl;
+    .text {
+      min-width: var(--defaultSize);
+    }
   }
 }
