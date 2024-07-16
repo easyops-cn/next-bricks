@@ -303,11 +303,40 @@ export class ChatService {
     return flag;
   }
 
+  getCustomSplit() {
+    return {
+      [Symbol.split](str: string) {
+        let pos = 0;
+        const result = [];
+        let cache = "";
+        while (pos < str.length) {
+          const matchStr = str.substring(pos, pos + 1);
+          // 如果是中文，单个输出
+          if (/[\u4e00-\u9fa5]/.test(matchStr)) {
+            result.push(cache + matchStr);
+            cache = "";
+          } else {
+            // 否则，遇到空格或者标点符号再分词
+            if (!/\s|[，。；《》?!,.:<>？！]]/.test(matchStr)) {
+              cache = cache + matchStr;
+            } else {
+              result.push(cache + matchStr);
+              cache = "";
+            }
+          }
+          pos++;
+        }
+        if (cache) result.push(cache);
+        return result;
+      },
+    };
+  }
+
   splitWord(str: string): string[] {
     if (!str) return [];
     // 单词长度小于 5 直接返回, 否则做单词分割处理
     if (str?.length < 5) return [str];
-    const list = [];
+    let list = [];
 
     // 只要是命令字，且命令字不等于easy_cmd_progress的时候就直接返回
     if (
@@ -318,44 +347,26 @@ export class ChatService {
     }
 
     if (window.Intl) {
-      const segmenterFr = new Intl.Segmenter("zh-Hans-CN", {
-        granularity: "word",
-      });
-      const iterator = segmenterFr.segment(str)[Symbol.iterator]();
+      try {
+        const segmenterFr = new Intl.Segmenter("zh-Hans-CN", {
+          granularity: "word",
+        });
+        const iterator = segmenterFr.segment(str)[Symbol.iterator]();
 
-      let nextWord = iterator.next();
-      while (!nextWord.done) {
-        list.push(nextWord.value.segment);
-        nextWord = iterator.next();
+        let nextWord = iterator.next();
+        while (!nextWord.done) {
+          list.push(nextWord.value.segment);
+          nextWord = iterator.next();
+        }
+      } catch {
+        list = [];
+        const customSplit = this.getCustomSplit();
+        str.split(customSplit).forEach((word) => {
+          list.push(word);
+        });
       }
     } else {
-      const customSplit = {
-        [Symbol.split](str: string) {
-          let pos = 0;
-          const result = [];
-          let cache = "";
-          while (pos < str.length) {
-            const matchStr = str.substring(pos, pos + 1);
-            // 如果是中文，单个输出
-            if (/[\u4e00-\u9fa5]/.test(matchStr)) {
-              result.push(cache + matchStr);
-              cache = "";
-            } else {
-              // 否则，遇到空格或者标点符号再分词
-              if (!/\s|[，。；《》?!,.:<>？！]]/.test(matchStr)) {
-                cache = cache + matchStr;
-              } else {
-                result.push(cache + matchStr);
-                cache = "";
-              }
-            }
-            pos++;
-          }
-          if (cache) result.push(cache);
-          return result;
-        },
-      };
-
+      const customSplit = this.getCustomSplit();
       str.split(customSplit).forEach((word) => {
         list.push(word);
       });

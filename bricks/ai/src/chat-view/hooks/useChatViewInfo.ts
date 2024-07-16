@@ -9,7 +9,7 @@ import {
   SSEMessageItem,
 } from "../ChatService.js";
 
-const NEW_SESSION_ID = "new_session_id";
+export const NEW_SESSION_ID = "new_session_id";
 export const RELATED_QUESTIONS_TYPE = "RELATED_QUESTIONS";
 export const DEFAULT_TYPE = "TEXT";
 
@@ -330,6 +330,10 @@ export function useChatViewInfo({
   useEffect(() => {
     if (sessionId) {
       checkSession(sessionId);
+    } else {
+      // 因为在sessionList内部会有一次querySessionHistory的初始调用，设置activeSessionId等
+      // 此处兼容处理不显示sessionList时的场景（如，嵌入iframe）
+      querySessionHistory(30);
     }
   }, [sessionId]);
 
