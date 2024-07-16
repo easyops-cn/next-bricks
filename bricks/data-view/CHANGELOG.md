@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.26...@next-bricks/data-view@1.2.0) (2024-07-16)
+
+
+### Features
+
+* CSNSHDP-24 无形资产构件开发-条状图 ref CSNSHDP-24 ([a8ab4fc](https://github.com/easyops-cn/next-bricks/commit/a8ab4fc2aacefd299a5d35f2f313b7eadec33ff4))
+* CSNSHDP-24 无形资产构件开发-条状图 ref CSNSHDP-24 ([380ddc4](https://github.com/easyops-cn/next-bricks/commit/380ddc4d74c644d48a38ee29b250326d24d3a69b))
+
+
+
+
+
 ## [1.1.26](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.25...@next-bricks/data-view@1.1.26) (2024-07-15)
 
 **Note:** Version bump only for package @next-bricks/data-view
