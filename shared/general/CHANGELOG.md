@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.41...@next-shared/general@0.9.0) (2024-07-16)
+
+
+### Features
+
+* **matchMenuItem:** activeIncludes and activeExcludes of item support MatchOptions ([e8017aa](https://github.com/easyops-cn/next-bricks/commit/e8017aa137aed1c4ded2a7905a7069a977b18d4e))
+
+
+
+
+
 ## [0.8.41](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.40...@next-shared/general@0.8.41) (2024-07-15)
 
 **Note:** Version bump only for package @next-shared/general
