@@ -252,7 +252,7 @@
             flex-direction: row-reverse;
           }
           .message-content {
-            justify-content: end;
+            justify-content: flex-end;
             .wrapper {
               /* display: flex;
               flex-direction: row-reverse; */
@@ -329,7 +329,7 @@
             .message-toolbar {
               display: flex;
               gap: 12px;
-              justify-content: end;
+              justify-content: flex-end;
               margin-top: 4px;
 
               eo-icon {
@@ -621,7 +621,7 @@
 
   .search-input-toolbar {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     position: absolute;
     right: 12px;
     bottom: 0px;
