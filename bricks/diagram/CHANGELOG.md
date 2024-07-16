@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.42.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.42.1...@next-bricks/diagram@0.42.2) (2024-07-16)
+
+
+### Bug Fixes
+
+* 容器名称不更新的问题 ([8afadea](https://github.com/easyops-cn/next-bricks/commit/8afadea79082ad91abee2fb2eb77895bfde05fd6))
+
+
+
+
+
 ## [0.42.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.42.0...@next-bricks/diagram@0.42.1) (2024-07-16)
 
 
