@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.18](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.17...@next-bricks/ai@1.23.18) (2024-07-16)
+
+
+### Bug Fixes
+
+* 兼容chrome85版本 ([52eae45](https://github.com/easyops-cn/next-bricks/commit/52eae4568c7cd21d3f662807feeac59a26050fd8))
+* 支持qa.finish和session.change事件 ([c10e31c](https://github.com/easyops-cn/next-bricks/commit/c10e31c52564e700f2b9d1ca86f88f4f364f0d20))
+* 新建会话不显示删除改名按钮 ([c1090d1](https://github.com/easyops-cn/next-bricks/commit/c1090d11fbc9ab5782f2a87c10e2a7a40dde84e4))
+
+
+
+
+
 ## [1.23.17](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.16...@next-bricks/ai@1.23.17) (2024-07-15)
 
 **Note:** Version bump only for package @next-bricks/ai
