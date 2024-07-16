@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.42.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.42.0...@next-bricks/diagram@0.42.1) (2024-07-16)
+
+
+### Bug Fixes
+
+* 修复拖动容器,关联的节点不应该触发onContainerContainerChange事件 ([83bd0ed](https://github.com/easyops-cn/next-bricks/commit/83bd0ed785891ea7a918757a100fed5c3af5ddfe))
+
+
+
+
+
 # [0.42.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.41.2...@next-bricks/diagram@0.42.0) (2024-07-15)
 
 
