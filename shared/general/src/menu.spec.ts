@@ -90,27 +90,47 @@ describe("matchMenuItem", () => {
   });
 
   it("matchMenuItem with activeIncludes", () => {
-    const item = {
+    const item1 = {
       text: "mysql资源管理",
       to: "/mysql-resource/detail",
       exact: true,
-      activeIncludes: ["/home", "/home/aaa"],
+      activeIncludes: ["/home"],
     };
-    const pathname = "/home";
-    expect(matchMenuItem(item, pathname, "")).toBe(true);
+    const item2 = {
+      text: "mysql资源管理",
+      to: "/mysql-resource/detail",
+      exact: true,
+      activeIncludes: [{ path: "/home", exact: false }],
+    };
+    const pathname1 = "/home";
+    const pathname2 = "/home/aaa";
+    expect(matchMenuItem(item1, pathname1, "")).toBe(true);
+    expect(matchMenuItem(item1, pathname2, "")).toBe(false);
+    expect(matchMenuItem(item2, pathname2, "")).toBe(true);
   });
 
   it("matchMenuItem with activeExcludes", () => {
-    const item = {
+    const item1 = {
       text: "mysql资源管理",
       to: "/mysql-resource/detail",
       exact: false,
-      activeExcludes: ["/mysql-resource/detail/monitor/xxx"],
+      activeExcludes: ["/mysql-resource/detail/monitor"],
     };
-    const pathname = "/mysql-resource/detail/aaaa";
-    expect(matchMenuItem(item, pathname, "")).toBe(true);
-    const pathname2 = "/mysql-resource/detail/monitor/xxx";
-    expect(matchMenuItem(item, pathname2, "")).toBe(false);
+    const item2 = {
+      text: "mysql资源管理",
+      to: "/mysql-resource/detail",
+      exact: false,
+      activeExcludes: [
+        { path: "/mysql-resource/detail/monitor", exact: false },
+      ],
+    };
+    const pathname1 = "/mysql-resource/detail/aaaa";
+    const pathname2 = "/mysql-resource/detail/monitor";
+    const pathname3 = "/mysql-resource/detail/monitor/xxx";
+    expect(matchMenuItem(item1, pathname1, "")).toBe(true);
+    expect(matchMenuItem(item1, pathname2, "")).toBe(false);
+    expect(matchMenuItem(item1, pathname3, "")).toBe(true);
+    expect(matchMenuItem(item2, pathname3, "")).toBe(false);
   });
 
   it("matchMenuItem with activeMatchSearch", () => {
