@@ -9,7 +9,7 @@ import {
   SSEMessageItem,
 } from "../ChatService.js";
 
-const NEW_SESSION_ID = "new_session_id";
+export const NEW_SESSION_ID = "new_session_id";
 export const RELATED_QUESTIONS_TYPE = "RELATED_QUESTIONS";
 export const DEFAULT_TYPE = "TEXT";
 

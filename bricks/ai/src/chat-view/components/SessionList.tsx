@@ -26,6 +26,7 @@ import {
   FormMapEvents,
   FormProps,
 } from "@next-bricks/form/form";
+import { NEW_SESSION_ID } from "../hooks/useChatViewInfo";
 
 const WrappedToolTip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");
 
@@ -263,14 +264,16 @@ function SessionItem({
           {title}
         </div>
       </div>
-
-      <div className="session-edit-btn" onClick={handleEditSessionItem}>
-        <WrappedIcon icon="edit" lib="antd" />
-      </div>
-
-      <div className="session-close-btn" onClick={handleDeleteSession}>
-        <WrappedIcon icon="close" lib="antd" />
-      </div>
+      {conversationId !== NEW_SESSION_ID && (
+        <>
+          <div className="session-edit-btn" onClick={handleEditSessionItem}>
+            <WrappedIcon icon="edit" lib="antd" />
+          </div>
+          <div className="session-close-btn" onClick={handleDeleteSession}>
+            <WrappedIcon icon="close" lib="antd" />
+          </div>
+        </>
+      )}
     </div>
   );
 }
