@@ -248,6 +248,31 @@ children:
     links:
       - CTX
       - FN
+- brick: vs.code-editor
+  events:
+    highlight.click:
+      - action: console.log
+  properties:
+    language: brick_next_yaml
+    value: |
+      '<% CTX.a %>'
+    automaticLayout: fit-content
+    links:
+      - CTX
+      - FN
+- brick: vs.code-editor
+  events:
+    highlight.click:
+      - action: console.log
+  properties:
+    language: brick_next_yaml
+    value: |
+      |-
+        <% CTX.a %>
+    automaticLayout: fit-content
+    links:
+      - CTX
+      - FN
 ```
 
 ### Show CTX.DS

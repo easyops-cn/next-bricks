@@ -39,7 +39,10 @@ class BrickNextYamlSourceMap {
         this.#recordLastWord = curWord;
       }
       if (this.#isEvaluable(result)) {
-        let source = result;
+        const specilStringPrefix = /(\|-|>-)/.test(
+          state.input.substring(this.#prefixPosition, position - 1)
+        );
+        let source = result + (specilStringPrefix ? "\n" : "");
         let startLineNumber = this.#isString ? 1 : line + 1;
         let endLineNumber = this.#isString ? line : line + 1;
         let startColumn = this.#isString
@@ -48,7 +51,8 @@ class BrickNextYamlSourceMap {
         let endColumn = this.#isString
           ? position
           : position - lineStart - state.lineIndent;
-        const wrapLength = result.match(/\n/g)?.length;
+
+        const wrapLength = source.match(/\n/g)?.length;
         if (wrapLength) {
           let nearWrapIndex = this.#prefixPosition;
           for (let i = this.#prefixPosition; i < state.input.length; i++) {
@@ -57,12 +61,8 @@ class BrickNextYamlSourceMap {
               break;
             }
           }
-          const specilStringPrefix = /(\|-|>-)/.test(
-            state.input.substring(this.#prefixPosition, position - 1)
-          );
           source = state.input.substring(nearWrapIndex, position - 1);
-          startLineNumber =
-            state.line - wrapLength + 1 - Number(specilStringPrefix);
+          startLineNumber = state.line - wrapLength + 1;
           endLineNumber = line;
           startColumn = 0;
           endColumn = 0;
@@ -73,9 +73,9 @@ class BrickNextYamlSourceMap {
           endLineNumber,
           startColumn,
           endColumn,
-          isString: ['"', "'"].includes(
-            state.input[lineStart + startColumn - 2]
-          ),
+          isString:
+            ['"', "'"].includes(state.input[lineStart + startColumn - 2]) ||
+            ['"', "'"].includes(state.input[0]),
         };
         !this.#recordsToken.find((item) => isEqual(item, token)) &&
           this.#recordsToken.push(token);

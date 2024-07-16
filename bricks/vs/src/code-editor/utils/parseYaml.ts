@@ -48,7 +48,7 @@ const getParseYaml = async ({ showDSKey = false }) => {
         map.getTokens().forEach((item) => {
           const { startLineNumber, endLineNumber, startColumn } = item;
           const globalNodes: MemberExpression[] = [];
-          const result = preevaluate(isString ? value : item.source, {
+          const result = preevaluate(item.source, {
             hooks: {
               beforeVisit(node) {
                 if (
@@ -97,13 +97,15 @@ const getParseYaml = async ({ showDSKey = false }) => {
                     ? result.prefix.length
                     : 0) +
                   (loc?.start?.column as number) +
-                  1,
+                  1 +
+                  Number(item.isString),
                 endColumn:
                   (hadWrap && loc?.start.line === 1
                     ? result.prefix.length
                     : 0) +
                   (loc?.end?.column as number) +
-                  1,
+                  1 +
+                  Number(item.isString),
               });
             } else {
               tokens.push({
