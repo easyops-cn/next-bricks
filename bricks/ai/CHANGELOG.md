@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.23.19](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.18...@next-bricks/ai@1.23.19) (2024-07-17)
+
+
+### Bug Fixes
+
+* 对于敏感词和超过资源配额报错做优化处理 ([ee14b71](https://github.com/easyops-cn/next-bricks/commit/ee14b717d0abb8321d9385c7060226839b4fd0bc))
+* 支持有sessionList的情况下,初始化activeSessionId ([29aa122](https://github.com/easyops-cn/next-bricks/commit/29aa1222cd32f406e296b38e10e3b3cb4c82b268))
+
+
+
+
+
 ## [1.23.18](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.17...@next-bricks/ai@1.23.18) (2024-07-16)
 
 
