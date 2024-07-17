@@ -279,9 +279,16 @@ export function LegacyPropertyEditor(
 
   const onAdvancedChangeEffect = useMemo(
     () =>
-      createEffectHook(ADVANCED_CHANGE_KEY, (options, form) => (listener) => {
-        transformValueRef.current = listener(options, form);
-      }),
+      createEffectHook(
+        ADVANCED_CHANGE_KEY,
+        (advancedMode, form) => (listener) => {
+          const values =
+            !advancedMode && form.values[ADVANCED_FORM_KEY]
+              ? form.values[ADVANCED_FORM_KEY]
+              : form.values;
+          transformValueRef.current = listener(advancedMode, form, values);
+        }
+      ),
     []
   );
 
