@@ -196,7 +196,9 @@
   .vertical {
     width: max-content;
     height: 100%;
-    writing-mode: vertical-rl;
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+    letter-spacing: 4px;
     .text {
       min-width: var(--defaultSize);
     }
