@@ -15,6 +15,7 @@ export interface SSEMessageItem {
   agentId?: string;
   robotId?: string;
   type?: string;
+  error?: string;
 }
 
 export interface QueueItem {
@@ -457,13 +458,27 @@ export class ChatService {
               });
             });
           } catch {
+            result = JSON.parse(data);
+
+            const SENSITIVE_WORDS_ERROR =
+              "input messages contains sensitive words";
+            const EXCEED_TOKENS_ERROR = "exceed tokens resource limit";
+            let content = `\`【数据格式错误】:\` ${data}`;
+
+            if (result?.error?.includes(SENSITIVE_WORDS_ERROR)) {
+              content =
+                "触发敏感词限制，请换一个问题，或找管理员修改敏感词配置";
+            } else if (result?.error?.includes(EXCEED_TOKENS_ERROR)) {
+              content = "超过资源配额限制，请找管理员增加资源配额";
+            }
+
             this.enqueue({
               topic: "add",
               message: {
                 created: moment().format("YYYY-MM-DD HH:mm:ss"),
                 delta: {
                   role: "assistant",
-                  content: `\`【数据格式错误】:\` ${data}`,
+                  content: content,
                 },
                 agentId: this.#agentId,
                 robotId: this.#robotId,
