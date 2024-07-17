@@ -30,7 +30,9 @@ export function useChatViewInfo({
 }) {
   const [sessionEnd, setSessionEnd] = useState<boolean>(false);
   const [sessionLoading, setSessionLoading] = useState<boolean>(false);
-  const [activeSessionId, setActiveSessionId] = useState<string>();
+  const [activeSessionId, setActiveSessionId] = useState<string | undefined>(
+    sessionId || NEW_SESSION_ID
+  );
   const [loading, setLoading] = useState<boolean>(false);
   const [chatting, setChatting] = useState<boolean>(false);
   const [sessionList, setSessionList] = useState<SessionItem[]>([]);
@@ -42,6 +44,8 @@ export function useChatViewInfo({
   const chatingText = useRef<string>("");
   const chatingMessageItem = useRef<MessageItem>();
   const sessionSearchQuery = useRef<string | undefined>();
+  const haveCreatedSession = useRef<boolean>(false);
+
   const chatService = useMemo(
     () =>
       new ChatService({
@@ -233,6 +237,14 @@ export function useChatViewInfo({
       if (!activeSessionId) {
         // 如果没有 activeSessionId, 补充一个新增会话项
         newSessionList = [defaultNewSessionItem].concat(newSessionList);
+      } else if (activeSessionId && !haveCreatedSession.current) {
+        // 对于初始化时有activeSessionId的场景，也需要补充一个新增会话项
+        const hasNewOne = sessionList.find(
+          (item) => item.conversationId === NEW_SESSION_ID
+        );
+        if (!hasNewOne) {
+          newSessionList = [defaultNewSessionItem].concat(newSessionList);
+        }
       }
 
       sessionSearchQuery.current = query;
@@ -245,6 +257,7 @@ export function useChatViewInfo({
       sessionList,
       defaultNewSessionItem,
       sessionSearchQuery,
+      haveCreatedSession.current,
     ]
   );
 
@@ -260,6 +273,7 @@ export function useChatViewInfo({
               item.conversationId === NEW_SESSION_ID ? inputMsg : item.title,
           }));
         });
+        haveCreatedSession.current = true;
       }
       setChatting(true);
       chatService.chat(msg);
