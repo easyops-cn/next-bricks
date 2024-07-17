@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.33.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.32.5...@next-bricks/visual-builder@1.33.0) (2024-07-17)
+
+
+### Features
+
+* advancedChangeEffect add form Values ([cecf16c](https://github.com/easyops-cn/next-bricks/commit/cecf16cf349cb8757fc59815b3c4f3d04282f368))
+* advancedChangeEffect add form Values ([f08b174](https://github.com/easyops-cn/next-bricks/commit/f08b174bf6dfd46655e3002138430cb0aea67081))
+* advancedChangeEffect add form Values ([06d52dc](https://github.com/easyops-cn/next-bricks/commit/06d52dc9444d44da908214a84112181934d4433d))
+
+
+
+
+
 ## [1.32.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.32.4...@next-bricks/visual-builder@1.32.5) (2024-07-16)
 
 **Note:** Version bump only for package @next-bricks/visual-builder
