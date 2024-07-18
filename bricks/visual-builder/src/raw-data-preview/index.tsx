@@ -171,7 +171,7 @@ export function RawDataPreviewComponent({
           textContent: "视觉重量",
           className: "head-cell last-col-cell",
           style: {
-            gridColumn: "span 5",
+            gridColumn: "span 4",
             textAlign: "center",
           },
         },
@@ -181,7 +181,7 @@ export function RawDataPreviewComponent({
       brick: "visual-builder.pre-generated-table-view",
       properties: {
         style: {
-          gridTemplateColumns: "120px repeat(5, 1fr)",
+          gridTemplateColumns: "120px repeat(4, 1fr)",
         },
       },
       children: tableChildren,
@@ -199,14 +199,20 @@ export function RawDataPreviewComponent({
       tableChildren.push({
         brick: "div",
         properties: {
-          textContent: `${generation.objectName ?? generation.objectId} - ${generation.propertyName ?? generation.propertyId}`,
+          // textContent: `${generation.objectName ?? generation.objectId} - ${generation.propertyName ?? generation.propertyId}`,
+          textContent: `${generation.propertyName ?? generation.propertyId}`,
           className: classNames("body-cell", {
             "last-row-cell": isLastRow,
           }),
         },
       });
 
-      for (let i = -2; i < 3; i++) {
+      const dataSource =
+        generation.mockData[
+          Math.floor(Math.random() * generation.mockData.length)
+        ] ?? {};
+
+      for (let i = -1; i < 3; i++) {
         const candidate = candidatesByVisualWeight.get(i);
 
         let container: BrickConf;
@@ -218,10 +224,7 @@ export function RawDataPreviewComponent({
             brick: "visual-builder.pre-generated-container",
             properties: {
               useBrick: children,
-              dataSource:
-                generation.mockData[
-                  Math.floor(Math.random() * generation.mockData.length)
-                ] ?? {},
+              dataSource,
             },
             errorBoundary: true,
           };

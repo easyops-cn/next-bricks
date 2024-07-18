@@ -1,9 +1,9 @@
 export interface VisualConfig {
-  /** 视觉重量，整型，默认为 0，减轻视觉重量取值 -1 / -2 等，加强则取值 1 / 2 等，范围在 -2 到 2 之间 */
+  /** 视觉重量，整型，默认为 0，取值范围 [-1, 2] */
   visualWeight: number;
 
   /** 显示形式，默认为 text */
-  display: "text" | "tag" | "icon" | "file" | "detail" | "table" | "card-list";
+  display: "text" | "tag" | "link" | "icon" | "file";
 
   /** 原始数据类型 */
   type:
@@ -15,8 +15,8 @@ export interface VisualConfig {
     | "enum-list"
     | "struct"
     | "struct-list"
-    | "array"
-    | "json"
+    // | "array"
+    // | "json"
     | "date"
     | "date-time";
 
@@ -37,20 +37,8 @@ export interface VisualConfig {
   /** 尽显示列表类数据的数量 */
   countOnly?: number;
 
-  /** 主字段名，当结构体或结构体列表数据降级显示时，仅显示该字段值 */
-  mainField?: string;
-
-  /** 使用表格时的字段配置 */
-  columns?: VisualField[];
-
-  /** 使用详情信息时的字段配置 */
-  fields?: VisualField[];
-
-  /** 使用卡片列表时的键名配置 */
-  keys?: {
-    title: string;
-    description?: string;
-  };
+  /** 当结构体或结构体列表数据降级显示时，仅显示该字段值 */
+  field?: string;
 }
 
 export interface VisualStyle {
@@ -59,7 +47,7 @@ export interface VisualStyle {
    *
    * @default "medium"
    */
-  size?: "x-small" | "small" | "medium" | "large" | "x-large";
+  size?: "small" | "medium" | "large" | "x-large";
 
   /**
    * 字重
@@ -150,9 +138,4 @@ export interface FileFormatter {
 
   /** 文件类型，例如 markdown / js / css / php 等 */
   fileType: string;
-}
-
-export interface VisualField {
-  title: string;
-  dataIndex: string;
 }
