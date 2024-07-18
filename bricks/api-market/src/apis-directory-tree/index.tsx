@@ -53,6 +53,7 @@ export interface ApisDirectoryTreeProps {
   data: TreeItem[];
   directoryTitle?: string;
   searchable?: boolean;
+  hiddenNodeSuffix?: boolean;
   placeholder?: string;
   selectedKeys?: string[];
   expandedKeys?: string[];
@@ -88,6 +89,14 @@ class ApisDirectoryTree extends ReactNextElement {
     type: Boolean,
   })
   accessor searchable: boolean | undefined;
+
+  /**
+   * 隐藏node节点右侧操作
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor hiddenNodeSuffix: boolean = false;
 
   /**
    * 搜索占位说明
@@ -191,6 +200,7 @@ class ApisDirectoryTree extends ReactNextElement {
         searchFields={this.searchFields}
         selectedKeys={this.selectedKeys}
         expandedKeys={this.expandedKeys}
+        hiddenNodeSuffix={this.hiddenNodeSuffix}
         onExpand={this.#handleExpand}
         onSelect={this.#handleSelect}
         onSuffixActionsClick={this.#handleActionClick}
@@ -216,6 +226,7 @@ export function ApisDirectoryTreeComponent(
     searchable,
     searchFields,
     placeholder,
+    hiddenNodeSuffix,
     onSelect,
     onExpand,
     onSuffixActionsClick,
@@ -278,7 +289,10 @@ export function ApisDirectoryTreeComponent(
           />
         )}
         <div className="tree">
-          <Tree treeData={treeData} />
+          <Tree
+            treeData={treeData}
+            hiddenNodeSuffix={hiddenNodeSuffix as boolean}
+          />
         </div>
       </div>
     </DirectoryTreeContext.Provider>
