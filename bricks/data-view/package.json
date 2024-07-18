@@ -38,7 +38,7 @@
     "@next-core/element": "^1.2.11",
     "@next-core/i18n": "^1.0.58",
     "@next-core/react-element": "^1.0.30",
-    "@next-core/react-runtime": "^1.6.18",
+    "@next-core/react-runtime": "^1.6.19",
     "@next-core/types": "^1.11.2",
     "@next-core/utils": "^1.7.16",
     "@next-shared/general": "^0.9.0",
