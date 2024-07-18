@@ -198,7 +198,7 @@ export class FormStore extends PubSub {
         required &&
         (typeof value === "object"
           ? isEmpty(value)
-          : value === undefined || value === null)
+          : value === undefined || value === null || value === "")
       ) {
         return messageBody(message?.required || `${label}为必填项`);
       }

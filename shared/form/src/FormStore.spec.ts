@@ -31,6 +31,7 @@ describe("FormStore", () => {
 
     store.setInitValue({
       a: "hello",
+      b: "",
     });
 
     const result2 = store.validateFields(mockValidateFields);
