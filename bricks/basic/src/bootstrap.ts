@@ -42,3 +42,4 @@ import "./data-providers/show-watermark/show-watermark.js";
 import "./formatter-number/index.js";
 import "./editors/index.js";
 import "./data-providers/active-element-blur.js";
+import "./data-providers/httpProxyRequest.js";
