@@ -17,7 +17,7 @@ describe("FormStore", () => {
     const result1 = store.validateFields(mockValidateFields);
 
     expect(mockValidateFields).toHaveBeenNthCalledWith(1, true, [
-      { message: "字段A为必填项", type: "error" },
+      { name: "a", message: "字段A为必填项", type: "error" },
     ]);
 
     expect(result1).toBe(false);
@@ -31,12 +31,13 @@ describe("FormStore", () => {
 
     store.setInitValue({
       a: "hello",
+      b: "",
     });
 
     const result2 = store.validateFields(mockValidateFields);
 
     expect(mockValidateFields).toHaveBeenNthCalledWith(2, true, [
-      { message: "b为必填项", type: "error" },
+      { name: "b", message: "b为必填项", type: "error" },
     ]);
 
     expect(result2).toBe(false);
@@ -74,8 +75,8 @@ describe("FormStore", () => {
     const result4 = store.validateFields(mockValidateFields);
 
     expect(mockValidateFields).toHaveBeenNthCalledWith(4, true, [
-      { message: "字段A为必填项", type: "error" },
-      { message: "校验测试字段至少包含 5 个字符", type: "error" },
+      { name: "a", message: "字段A为必填项", type: "error" },
+      { name: "c", message: "校验测试字段至少包含 5 个字符", type: "error" },
     ]);
     expect(result4).toBe(false);
 
@@ -87,7 +88,7 @@ describe("FormStore", () => {
     const result5 = store.validateFields(mockValidateFields);
 
     expect(mockValidateFields).toHaveBeenNthCalledWith(5, true, [
-      { message: "校验测试字段不能超过 10 个字符", type: "error" },
+      { name: "c", message: "校验测试字段不能超过 10 个字符", type: "error" },
     ]);
     expect(result5).toBe(false);
 
@@ -99,7 +100,7 @@ describe("FormStore", () => {
     store.validateFields(mockValidateFields);
 
     expect(mockValidateFields).toHaveBeenNthCalledWith(6, true, [
-      { message: "校验测试字段没有匹配正则 \\d+", type: "error" },
+      { name: "c", message: "校验测试字段没有匹配正则 \\d+", type: "error" },
     ]);
 
     store.setInitValue({
@@ -199,6 +200,7 @@ describe("FormStore", () => {
 
     expect(mockValidateFields).toHaveBeenNthCalledWith(10, true, [
       {
+        name: "validator-item",
         message: "名字不能为空",
         type: "error",
       },
@@ -223,7 +225,11 @@ describe("FormStore", () => {
 
     const validateResult = store.validateField("validator-item");
 
-    expect(validateResult).toEqual({ message: "", type: "normal" });
+    expect(validateResult).toEqual({
+      name: "validator-item",
+      message: "",
+      type: "normal",
+    });
 
     expect(store.getFieldsValue("a")).toBe(123);
     expect(store.getFieldsValue()).toEqual({

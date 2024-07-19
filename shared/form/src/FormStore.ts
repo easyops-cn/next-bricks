@@ -198,7 +198,7 @@ export class FormStore extends PubSub {
         required &&
         (typeof value === "object"
           ? isEmpty(value)
-          : value === undefined || value === null)
+          : value === undefined || value === null || value === "")
       ) {
         return messageBody(message?.required || `${label}为必填项`);
       }
@@ -244,7 +244,7 @@ export class FormStore extends PubSub {
       return messageBody("", "normal");
     };
 
-    const result = valid(validate, validateValue as string);
+    const result = { name, ...valid(validate, validateValue as string) };
     this.publish(`${name}.validate`, result);
     return result;
   }

@@ -147,7 +147,7 @@ class Form extends ReactNextElement implements FormProps, AbstractForm {
    * 表单验证报错时触发事件
    */
   @event({ type: "validate.error" }) accessor #errorEvent!: EventEmitter<
-    MessageBody[]
+    (MessageBody & { name: string })[]
   >;
 
   /**
