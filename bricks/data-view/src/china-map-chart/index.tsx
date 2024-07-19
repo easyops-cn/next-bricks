@@ -328,11 +328,11 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
         scene.addMarker(marker);
         scene.addMarker(imgMarker);
       });
-
-      return () => {
-        scene.destroy();
-      };
     });
+
+    return () => {
+      scene.destroy();
+    };
   }, []);
 
   useEffect(() => {

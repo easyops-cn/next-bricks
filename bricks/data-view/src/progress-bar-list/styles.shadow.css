@@ -52,6 +52,7 @@
 .container {
   width: 100%;
   min-width: 300px;
+  display: grid;
 }
 
 .outermostContainer {

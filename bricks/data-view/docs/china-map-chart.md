@@ -11,32 +11,24 @@
       bricks:
         - brick: div
           properties:
-            textContent:
+            textContent: 内容区
   events:
     detail.open.change:
       - action: console.log
   properties:
     detailContentStyle:
-      background: "red"
+      background: "yellow"
     dataSource:
-      - text: "西藏 1234"
+      - text: "西藏 12311"
         detailDisplayLocation: "textBottom"
-        lngLat:
-          lng: 90.132212
-          lat: 30.660361
-      - text: "四川 8978569"
+        city: 西藏
+      - text: "四川 89781169"
         detailDisplayLocation: "textBottom"
-        lngLat:
-          lng: 103.065735
-          lat: 30.659462
-      - text: "台湾 2348"
+        city: 四川
+      - text: "台湾 234181"
         detailDisplayLocation: "pageCenter"
-        lngLat:
-          lng: 121.509062
-          lat: 24.044332
-      - text: "湖北 2348"
+        city: 台湾
+      - text: "江西 21348"
         detailDisplayLocation: "pageCenter"
-        lngLat:
-          lng: 112.598572
-          lat: 30.984355
+        city: 江西
 ```
