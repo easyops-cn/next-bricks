@@ -120,16 +120,18 @@ function SuffixTag(props: SuffixTagProps) {
 
 interface SuffixComponentProps {
   treeData: TreeData;
+  hiddenNodeSuffix: boolean;
 }
 
 function SuffixComponent(props: SuffixComponentProps) {
-  const { treeData } = props;
+  const { treeData, hiddenNodeSuffix } = props;
 
   if (treeData.data.type === "item") {
     return <SuffixTag treeData={treeData} />;
   }
 
   if (
+    !hiddenNodeSuffix &&
     treeData.data.type === "group" &&
     treeData.data.key.split("-").length < 3
   ) {
@@ -141,10 +143,11 @@ function SuffixComponent(props: SuffixComponentProps) {
 
 interface TreeLeafProps {
   treeData: TreeData;
+  hiddenNodeSuffix: boolean;
 }
 
 function TreeLeaf(props: TreeLeafProps) {
-  const { treeData } = props;
+  const { treeData, hiddenNodeSuffix } = props;
   const { data, index, depth } = treeData;
   const { selectedKeysSet, onSelect } = useDirectoryTreeContext();
 
@@ -164,7 +167,10 @@ function TreeLeaf(props: TreeLeafProps) {
     >
       <span title={data.title}>{data.title}</span>
       <div slot="suffix">
-        <SuffixComponent treeData={treeData} />
+        <SuffixComponent
+          treeData={treeData}
+          hiddenNodeSuffix={hiddenNodeSuffix}
+        />
       </div>
     </WrappedTreeLeaf>
   );
@@ -172,10 +178,11 @@ function TreeLeaf(props: TreeLeafProps) {
 
 interface TreeInternalNodeProps {
   treeData: TreeData;
+  hiddenNodeSuffix: boolean;
 }
 
 function TreeInternalNode(props: TreeInternalNodeProps) {
-  const { treeData } = props;
+  const { treeData, hiddenNodeSuffix } = props;
   const { data, index, depth } = treeData;
   const { expandedKeysSet, onExpand } = useDirectoryTreeContext();
 
@@ -202,7 +209,10 @@ function TreeInternalNode(props: TreeInternalNodeProps) {
         {data.title} <span>({data.children?.length})</span>
       </span>
       <div slot="suffix">
-        <SuffixComponent treeData={treeData} />
+        <SuffixComponent
+          treeData={treeData}
+          hiddenNodeSuffix={hiddenNodeSuffix}
+        />
       </div>
     </WrappedTreeInternalNode>
   );
@@ -210,27 +220,31 @@ function TreeInternalNode(props: TreeInternalNodeProps) {
 
 interface TreeNodeProps {
   treeData: TreeData;
+  hiddenNodeSuffix: boolean;
 }
 
 function TreeNode(props: TreeNodeProps) {
-  const { treeData } = props;
+  const { treeData, hiddenNodeSuffix } = props;
   const isLeaf = !Array.isArray(treeData.children);
 
   return isLeaf ? (
-    <TreeLeaf treeData={treeData} />
+    <TreeLeaf treeData={treeData} hiddenNodeSuffix={hiddenNodeSuffix} />
   ) : (
-    <TreeInternalNode treeData={treeData} />
+    <TreeInternalNode treeData={treeData} hiddenNodeSuffix={hiddenNodeSuffix} />
   );
 }
 
 interface TreeProps {
   treeData: TreeData[];
+  hiddenNodeSuffix: boolean;
 }
 
 export function Tree(props: TreeProps) {
-  const { treeData } = props;
+  const { treeData, hiddenNodeSuffix } = props;
 
   return treeData.map((v) => {
-    return <TreeNode key={v.key} treeData={v} />;
+    return (
+      <TreeNode key={v.key} treeData={v} hiddenNodeSuffix={hiddenNodeSuffix} />
+    );
   });
 }
