@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.10.16...@next-bricks/form@1.11.0) (2024-07-19)
+
+
+### Features
+
+* **FormStore:** add name field to validateField return value ([5e7d273](https://github.com/easyops-cn/next-bricks/commit/5e7d2731aebba214358ab5ab8db7d9f89178a845))
+
+
+
+
+
 ## [1.10.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.10.15...@next-bricks/form@1.10.16) (2024-07-19)
 
 **Note:** Version bump only for package @next-bricks/form

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/form@0.6.11...@next-shared/form@0.7.0) (2024-07-19)
+
+
+### Bug Fixes
+
+* **FormStore:** required validate support empty string ([5da5c48](https://github.com/easyops-cn/next-bricks/commit/5da5c484fbb330913d2c38c0e7978561c04b4220))
+
+
+### Features
+
+* **FormStore:** add name field to validateField return value ([5e7d273](https://github.com/easyops-cn/next-bricks/commit/5e7d2731aebba214358ab5ab8db7d9f89178a845))
+
+
+
+
+
 ## [0.6.11](https://github.com/easyops-cn/next-bricks/compare/@next-shared/form@0.6.10...@next-shared/form@0.6.11) (2024-07-12)
 
 **Note:** Version bump only for package @next-shared/form
