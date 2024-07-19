@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.35.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.34.6...@next-bricks/basic@1.35.0) (2024-07-19)
+
+
+### Features
+
+* update basic.http-proxy-request ([e4e57ad](https://github.com/easyops-cn/next-bricks/commit/e4e57adb20e0511378680260bf9c561177329075))
+
+
+
+
+
 ## [1.34.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.34.5...@next-bricks/basic@1.34.6) (2024-07-19)
 
 
