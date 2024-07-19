@@ -38,3 +38,4 @@ import "./data-display-flipper-fifth/index.js";
 import "./data-display-flipper-sixth/index.js";
 import "./indicator-card/index.js";
 import "./progress-bar-list/index.js";
+import "./china-map-chart/index.js";

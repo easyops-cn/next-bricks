@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="32px" viewBox="0 0 28 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>标记黄色</title>
+    <defs>
+        <linearGradient x1="80.4156079%" y1="35.3286023%" x2="50%" y2="64.6713977%" id="linearGradient-1">
+            <stop stop-color="#F7B500" offset="0%"></stop>
+            <stop stop-color="#F7B500" stop-opacity="0.01" offset="100%"></stop>
+        </linearGradient>
+        <path d="M12.9276058,29.9162112 C18.7980419,29.9162112 23.5569706,27.2571854 23.5569706,23.9771109 C23.5569706,20.6970364 18.7980419,18.0380106 12.9276058,18.0380106 C7.05716975,18.0380106 2.29824104,20.6970364 2.29824104,23.9771109 C2.29824104,27.2571854 7.05716975,29.9162112 12.9276058,29.9162112 Z" id="path-2"></path>
+        <mask id="mask-3" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="21.2587296" height="11.8782006" fill="white">
+            <use xlink:href="#path-2"></use>
+        </mask>
+        <linearGradient x1="64.2431266%" y1="50%" x2="43.5217613%" y2="7.61122154%" id="linearGradient-4">
+            <stop stop-color="#FA6400" offset="0%"></stop>
+            <stop stop-color="#F7B500" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-5">
+            <stop stop-color="#FFCA79" offset="0%"></stop>
+            <stop stop-color="#FFEB86" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="综合大屏" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-696.000000, -411.000000)" id="编组-18">
+            <g transform="translate(489.000000, 231.000000)">
+                <g id="中国地图" transform="translate(42.000000, 0.000000)">
+                    <g id="编组-5" transform="translate(159.000000, 63.312612)">
+                        <g id="点备份-4" transform="translate(7.000000, 105.000000)">
+                            <g id="标记黄色" transform="translate(0.000000, 11.687388)">
+                                <path d="M17.0759538,17.3929087 C15.7674284,17.1509126 14.3642337,17.0196078 12.9044238,17.0196078 C5.77750731,17.0196078 0,20.1492252 0,24.0098039 M12.9044238,31 C20.0313402,31 25.8088475,27.8703826 25.8088475,24.0098039" id="形状备份" stroke="url(#linearGradient-1)" stroke-width="0.6" stroke-linejoin="round"></path>
+                                <g id="编组-6备份-11">
+                                    <use id="椭圆形" stroke="#FFD97E" mask="url(#mask-3)" stroke-width="2.86949324" stroke-linejoin="round" stroke-dasharray="1.723089838027954,2.297453355789184" xlink:href="#path-2"></use>
+                                    <g id="编组-5">
+                                        <polygon id="路径-12" fill="url(#linearGradient-4)" points="0 1.23004096 3.36093586 0 13.092437 2.97282694 13.092437 19.9089135"></polygon>
+                                        <polygon id="路径-12" fill="url(#linearGradient-4)" transform="translate(19.453782, 9.954457) scale(-1, 1) translate(-19.453782, -9.954457) " points="12.907563 1.23004096 16.2684989 0 26 2.97282694 26 19.9089135"></polygon>
+                                        <polygon id="路径-11" fill="#F7B500" points="12.8460384 6.59760294 12.8460384 26.5053007 25.9384754 1.23004096"></polygon>
+                                        <polygon id="路径-11" fill="url(#linearGradient-5)" transform="translate(6.546218, 13.867671) scale(-1, 1) translate(-6.546218, -13.867671) " points="0 6.59760294 0 26.5053007 13.092437 1.23004096"></polygon>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
