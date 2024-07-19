@@ -216,8 +216,8 @@ describe("eo-time-range-picker", () => {
         contentList?.[1]?.querySelector("[title='2023-11-16']") as HTMLElement
       )?.click();
     });
-    // NOTE: change called times changed from 3 to 2 after upgrade antd.
-    expect(onChangeMock).toBeCalledTimes(1);
+    // NOTE: change called times changed from 1 to 2 after upgrade antd.
+    expect(onChangeMock).toBeCalledTimes(2);
     expect(onChangeMock).toHaveBeenLastCalledWith({
       endTime: "2023-11-16",
       startTime: "2023-10-10",
