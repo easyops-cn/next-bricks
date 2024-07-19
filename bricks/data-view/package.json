@@ -47,7 +47,9 @@
     "d3-hierarchy": "^3.1.2",
     "react": "0.0.0-experimental-ee8509801-20230117",
     "resize-observer-polyfill": "^1.5.1",
-    "three": "^0.150.1"
+    "three": "^0.150.1",
+    "@antv/l7": "2.22.0",
+    "@antv/l7-maps": "2.22.0"
   },
   "devDependencies": {
     "@next-core/build-next-bricks": "^1.22.4",

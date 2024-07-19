@@ -1,0 +1,39 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+.text {
+  position: absolute;
+  z-index: 5;
+  height: 24px;
+  background: linear-gradient(
+    262deg,
+    rgba(237, 196, 0, 0) 0%,
+    rgba(237, 196, 0, 0.3) 100%
+  );
+  border-radius: 15px 0px 0px 1px;
+  border: 2px solid;
+  border-image: radial-gradient(
+      circle,
+      rgba(237, 196, 0, 1),
+      rgba(237, 196, 0, 1),
+      rgba(237, 196, 0, 1),
+      rgba(237, 196, 0, 0)
+    )
+    2 2;
+  backdrop-filter: blur(2px);
+  transform: translate(15%, 10%) !important;
+  border-right-style: none;
+  color: rgba(255, 255, 255, 1);
+}
+
+.iconImg {
+  position: absolute;
+  z-index: 5;
+  src: "./assets/default.png";
+  backdrop-filter: blur(2px);
+  transform: translate(-50%, 50%) !important;
+}
