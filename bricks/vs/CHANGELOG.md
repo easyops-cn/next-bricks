@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.11.4...@next-bricks/vs@1.11.5) (2024-07-19)
+
+
+### Bug Fixes
+
+* upgrade monaco-editor ([ee71712](https://github.com/easyops-cn/next-bricks/commit/ee71712e8105750155378b14fc05ebf9eeed1979))
+
+
+
+
+
 ## [1.11.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.11.3...@next-bricks/vs@1.11.4) (2024-07-16)
 
 
