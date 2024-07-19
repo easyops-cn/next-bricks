@@ -1,8 +1,13 @@
 :host {
   display: inline-block;
 }
+
 :host([hidden]) {
   display: none;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 .tag {
@@ -13,10 +18,11 @@
   height: auto;
   font-size: 12px;
   line-height: 20px;
+  height: 24px;
+  padding: 2px 8px;
   border-radius: var(--small-border-radius);
   white-space: nowrap;
   background: var(--antd-background-color-light);
-  opacity: 1;
   transition: all 0.3s ease 0s;
 }
 
@@ -24,7 +30,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2px 4px;
 }
 
 .tag:not([class*="color-"]) {
@@ -66,23 +71,16 @@
 
 /* Size */
 .tag.small {
-  font-size: 12px;
+  font-size: 11px;
   line-height: 14px;
   height: 18px;
-  padding: 0px 8px;
-}
-
-.tag.medium {
-  font-size: 14px;
-  height: 24px;
-  padding: 0px 8px;
 }
 
 .tag.large {
-  font-size: 16px;
-  line-height: 28px;
+  font-size: 14px;
+  line-height: 26px;
   height: 30px;
-  padding: 0px 16px;
+  padding: 2px 16px;
 }
 /* Size */
 
