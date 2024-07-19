@@ -41,7 +41,7 @@
       "assignees": ["weareoutman"]
     },
     {
-      "matchPackageNames": ["antd"],
+      "matchPackageNames": ["antd", "@easyops-cn/rc-trigger"],
       "matchPackagePatterns": ["^@ant-design/"],
       "enabled": true,
       "groupName": "ant-design packages",
