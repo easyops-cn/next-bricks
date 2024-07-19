@@ -33,6 +33,31 @@
       "enabled": true,
       "groupName": "legacy v2 packages",
       "assignees": ["weareoutman"]
+    },
+    {
+      "matchPackagePatterns": ["^@fortawesome/"],
+      "enabled": true,
+      "groupName": "font-awesome packages",
+      "assignees": ["weareoutman"]
+    },
+    {
+      "matchPackageNames": ["antd"],
+      "matchPackagePatterns": ["^@ant-design/"],
+      "enabled": true,
+      "groupName": "ant-design packages",
+      "assignees": ["weareoutman"]
+    },
+    {
+      "matchPackagePatterns": ["^d3-"],
+      "enabled": true,
+      "groupName": "d3 packages",
+      "assignees": ["weareoutman"]
+    },
+    {
+      "matchPackageNames": ["monaco-editor", "monaco-editor-webpack-plugin"],
+      "enabled": true,
+      "groupName": "monaco-editor packages",
+      "assignees": ["weareoutman"]
     }
   ],
   "postUpdateOptions": ["yarnDedupeHighest"]
