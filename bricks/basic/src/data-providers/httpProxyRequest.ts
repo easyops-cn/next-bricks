@@ -10,6 +10,9 @@ export interface HttpProxyData {
   timeout?: number;
 }
 
+/**
+ * 用于对接第三方接口，请求将会被后台代理转发
+ */
 export async function httpProxyRequest(data: HttpProxyData) {
   const result = await http.post(
     "api/gateway/logic.next_builder_service/api/v1/next-builder/proxy-http",
