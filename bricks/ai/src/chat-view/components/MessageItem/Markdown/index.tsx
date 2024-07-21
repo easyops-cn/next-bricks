@@ -30,16 +30,16 @@ export function MarkdownItem({ text }: { text: string }) {
   );
 }
 
-function hasURLProtocol(url: any) {
-  return (
-    url.startsWith("http://") ||
-    url.startsWith("https://") ||
-    url.startsWith("file://") ||
-    url.startsWith("data:") ||
-    url.startsWith("ts://?ts") ||
-    url.startsWith("ts:?ts")
-  );
-}
+// function hasURLProtocol(url: any) {
+//   return (
+//     url.startsWith("http://") ||
+//     url.startsWith("https://") ||
+//     url.startsWith("file://") ||
+//     url.startsWith("data:") ||
+//     url.startsWith("ts://?ts") ||
+//     url.startsWith("ts:?ts")
+//   );
+// }
 
 export function MarkdownDisplay({ value }: { value: string }): React.ReactNode {
   const nodeViewFactory = useNodeViewFactory();
@@ -50,15 +50,15 @@ export function MarkdownDisplay({ value }: { value: string }): React.ReactNode {
     if (found && found.marks.length > 0) {
       const mark = found.marks.find((m) => m.type.name === "link");
       const href = mark?.attrs.href;
-      let path: string;
+      // let path: string;
 
-      if (hasURLProtocol(href)) {
-        path = href;
-      } else {
-        path = encodeURIComponent(href);
-      }
+      // if (hasURLProtocol(href)) {
+      //   path = href;
+      // } else {
+      //   path = encodeURIComponent(href);
+      // }
 
-      window.open(path, "_blank");
+      window.open(href, "_blank");
     }
     return true;
   };
