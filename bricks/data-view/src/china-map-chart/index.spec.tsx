@@ -13,6 +13,7 @@ jest.mock("@antv/l7", () => ({
     (this as any).on = jest.fn();
     (this as any).destroy = jest.fn();
     (this as any).addImage = jest.fn();
+    (this as any).setMapStatus = jest.fn();
   },
   LineLayer: jest.fn(),
   PointLayer: jest.fn(),
