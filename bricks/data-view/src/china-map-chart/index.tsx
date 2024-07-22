@@ -77,6 +77,7 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
     detailContentStyle = {},
   } = props;
   const mapRef = useRef<HTMLDivElement>();
+  const slotRef = useRef<HTMLSlotElement>();
   const [showData, setShowData] = useState<DataSource>();
   const showDataRef = useRef<DataSource>();
   const [textPosition, setTextPosition] = useState<{
@@ -337,7 +338,8 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
   }, []);
 
   useEffect(() => {
-    const handleClick = () => {
+    const handleClick = (e: MouseEvent) => {
+      if (slotRef.current && e.composedPath().includes(slotRef.current)) return;
       setShowData(null);
     };
     document?.addEventListener("click", handleClick);
@@ -374,7 +376,9 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
             ...detailContentStyle,
           }}
         >
-          <slot name="detail">/</slot>
+          <slot name="detail" ref={slotRef}>
+            /
+          </slot>
         </div>
       )}
     </div>
