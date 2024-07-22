@@ -1,0 +1,41 @@
+[
+  {
+    "name": "PackageA",
+    "installPath": "/usr/local/PackageA",
+    "packageId": "pkgA123",
+    "platform": "Linux",
+    "targetVersion": "1.2.3",
+    "autoStart": 1,
+    "forceUpdate": 0,
+    "isMaster": "true",
+    "postRestart": 1,
+    "preStop": 1,
+    "userCheck": 1
+  },
+  {
+    "name": "PackageB",
+    "installPath": "/opt/PackageB",
+    "packageId": "pkgB456",
+    "platform": "Windows",
+    "targetVersion": "2.3.4",
+    "autoStart": 0,
+    "forceUpdate": 1,
+    "isMaster": "false",
+    "postRestart": 0,
+    "preStop": 1,
+    "userCheck": 0
+  },
+  {
+    "name": "PackageC",
+    "installPath": "/Applications/PackageC",
+    "packageId": "pkgC789",
+    "platform": "MacOS",
+    "targetVersion": "3.4.5",
+    "autoStart": 1,
+    "forceUpdate": 0,
+    "isMaster": "false",
+    "postRestart": 1,
+    "preStop": 0,
+    "userCheck": 1
+  }
+]

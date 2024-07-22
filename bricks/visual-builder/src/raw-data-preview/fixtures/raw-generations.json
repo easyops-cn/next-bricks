@@ -5914,5 +5914,3971 @@
         }
       }
     ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "closeReason",
+    "propertyName": "关闭原因",
+    "input": "现在有“想法”模型的“关闭原因”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"background\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "background"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "confirmUrl",
+    "propertyName": "验收链接",
+    "input": "现在有“想法”模型的“验收链接”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"link\",\n    \"type\": \"string\"\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"background\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "link",
+        "type": "string"
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "background"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "createRole",
+    "propertyName": "创建idea的用户角色",
+    "input": "现在有“想法”模型的“创建idea的用户角色”属性，类型是字符串，创建者角色。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"default\",\n      \"background\": \"var(--tag-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"background\",\n      \"background\": \"var(--tag-color-highlight)\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "default",
+          "background": "var(--tag-color-default)"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "background",
+          "background": "var(--tag-color-highlight)"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "description",
+    "propertyName": "面临/希望解决的问题",
+    "input": "现在有“想法”模型的“面临/希望解决的问题”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"link\",\n    \"type\": \"string\"\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "link",
+        "type": "string"
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "default"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "enterpriseVersion",
+    "propertyName": "发行版版本",
+    "input": "现在有“想法”模型的“发行版版本”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "default"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "finishTime",
+    "propertyName": "结束时间",
+    "input": "现在有“想法”模型的“结束时间”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "对于“想法”模型的“结束时间”属性，类型是字符串，但根据上下文理解，这应该是一个日期时间类型的数据。按视觉重量从低到高，有以下几种显示方案：\n\n1. 使用中等字号，次级文本颜色显示，格式化为相对时间；\n2. 使用中等字号，默认颜色文本显示，格式化为精确时间；\n3. 使用标签形式，显示精确时间，使用默认样式。\n\n期望返回结果：\n\n```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"formatter\": {\n      \"type\": \"date\",\n      \"format\": \"relative\"\n    },\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"formatter\": {\n      \"type\": \"date\",\n      \"format\": \"precise\"\n    },\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"formatter\": {\n      \"type\": \"date\",\n      \"format\": \"precise\"\n    },\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "formatter": {
+          "type": "date",
+          "format": "relative"
+        },
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "formatter": {
+          "type": "date",
+          "format": "precise"
+        },
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "string",
+        "formatter": {
+          "type": "date",
+          "format": "precise"
+        },
+        "style": {
+          "variant": "default"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "number",
+    "propertyName": "序号",
+    "input": "现在有“想法”模型的“序号”属性，类型是字符串，自增ID。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"large\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "large",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "pdReviewComment",
+    "propertyName": "PD评审意见",
+    "input": "现在有“想法”模型的“PD评审意见”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"link\",\n    \"type\": \"string\"\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "link",
+        "type": "string"
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "default"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "pmoReviewComment",
+    "propertyName": "PMO评审意见",
+    "input": "现在有“想法”模型的“PMO评审意见”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"link\",\n    \"type\": \"string\"\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "link",
+        "type": "string"
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "default"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "productLine",
+    "propertyName": "产品线",
+    "input": "现在有“想法”模型的“产品线”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"background\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "background"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "resolveTime",
+    "propertyName": "解决时间",
+    "input": "现在有“想法”模型的“解决时间”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "对于“想法”模型的“解决时间”属性，类型是字符串，按视觉重量从低到高，有以下几种显示方案：\n\n1. 使用中等字号，次级文本颜色显示；\n2. 使用中等字号，默认颜色文本显示；\n3. 使用大号字号，字重加粗，默认颜色文本显示；\n\n由于“解决时间”通常是一个日期时间类型，但在这里被定义为字符串，我们假设它存储的是一个日期时间的字符串表示。因此，我们将使用日期时间的格式化方式来展示这个属性。\n\n期望返回结果：\n\n```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"formatter\": {\n      \"type\": \"datetime\",\n      \"format\": \"relative\"\n    },\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"formatter\": {\n      \"type\": \"datetime\",\n      \"format\": \"relative\"\n    },\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"formatter\": {\n      \"type\": \"datetime\",\n      \"format\": \"relative\"\n    },\n    \"style\": {\n      \"size\": \"large\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "formatter": {
+          "type": "datetime",
+          "format": "relative"
+        },
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "formatter": {
+          "type": "datetime",
+          "format": "relative"
+        },
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "text",
+        "type": "string",
+        "formatter": {
+          "type": "datetime",
+          "format": "relative"
+        },
+        "style": {
+          "size": "large",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "source",
+    "propertyName": "客户来源(微信端传参)",
+    "input": "现在有“想法”模型的“客户来源(微信端传参)”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"default\",\n      \"background\": \"var(--background-color-tag-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"background\",\n      \"background\": \"var(--background-color-tag-highlight)\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "default",
+          "background": "var(--background-color-tag-default)"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "background",
+          "background": "var(--background-color-tag-highlight)"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "stage",
+    "propertyName": "项目阶段",
+    "input": "现在有“想法”模型的“项目阶段”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"background\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "background"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "value",
+    "propertyName": "想法价值",
+    "input": "现在有“想法”模型的“想法价值”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"background\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "background"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "category",
+    "propertyName": "想法分类",
+    "input": "现在有“想法”模型的“想法分类”属性，类型是枚举：sowClearRequirementsDefinition、instructionsRequirementsDefinition、functionalRequirements、displaceRequirements、optimizedRequirements、performance，该字段仅在 PMO 看板中提想法时出现。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"default\",\n      \"palette\": {\n        \"sowClearRequirementsDefinition\": \"gray\",\n        \"instructionsRequirementsDefinition\": \"blue\",\n        \"functionalRequirements\": \"green\",\n        \"displaceRequirements\": \"orange\",\n        \"optimizedRequirements\": \"purple\",\n        \"performance\": \"red\"\n      }\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"background\",\n      \"palette\": {\n        \"sowClearRequirementsDefinition\": \"gray\",\n        \"instructionsRequirementsDefinition\": \"blue\",\n        \"functionalRequirements\": \"green\",\n        \"displaceRequirements\": \"orange\",\n        \"optimizedRequirements\": \"purple\",\n        \"performance\": \"red\"\n      }\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "enum",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "enum",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "default",
+          "palette": {
+            "sowClearRequirementsDefinition": "gray",
+            "instructionsRequirementsDefinition": "blue",
+            "functionalRequirements": "green",
+            "displaceRequirements": "orange",
+            "optimizedRequirements": "purple",
+            "performance": "red"
+          }
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "background",
+          "palette": {
+            "sowClearRequirementsDefinition": "gray",
+            "instructionsRequirementsDefinition": "blue",
+            "functionalRequirements": "green",
+            "displaceRequirements": "orange",
+            "optimizedRequirements": "purple",
+            "performance": "red"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "classification",
+    "propertyName": "想法类型",
+    "input": "现在有“想法”模型的“想法类型”属性，类型是枚举：feature、requirement、optimization、deliveryCustomization。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"default\",\n      \"palette\": {\n        \"feature\": \"blue\",\n        \"requirement\": \"purple\",\n        \"optimization\": \"yellow\",\n        \"deliveryCustomization\": \"orange\"\n      }\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"outline\",\n      \"palette\": {\n        \"feature\": \"blue\",\n        \"requirement\": \"purple\",\n        \"optimization\": \"yellow\",\n        \"deliveryCustomization\": \"orange\"\n      }\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"background\",\n      \"palette\": {\n        \"feature\": \"blue\",\n        \"requirement\": \"purple\",\n        \"optimization\": \"yellow\",\n        \"deliveryCustomization\": \"orange\"\n      }\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "enum",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "default",
+          "palette": {
+            "feature": "blue",
+            "requirement": "purple",
+            "optimization": "yellow",
+            "deliveryCustomization": "orange"
+          }
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "outline",
+          "palette": {
+            "feature": "blue",
+            "requirement": "purple",
+            "optimization": "yellow",
+            "deliveryCustomization": "orange"
+          }
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "background",
+          "palette": {
+            "feature": "blue",
+            "requirement": "purple",
+            "optimization": "yellow",
+            "deliveryCustomization": "orange"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "confirmDeliveryTime",
+    "propertyName": "确认交付时间",
+    "input": "现在有“想法”模型的“确认交付时间”属性，类型是日期时间。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"formatter\": {\n      \"type\": \"relative\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"formatter\": {\n      \"type\": \"datetime\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"formatter\": {\n      \"type\": \"datetime\"\n    },\n    \"style\": {\n      \"fontWeight\": \"bold\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"link\",\n    \"type\": \"datetime\",\n    \"formatter\": {\n      \"type\": \"datetime\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "datetime",
+        "formatter": {
+          "type": "relative"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "datetime",
+        "formatter": {
+          "type": "datetime"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "text",
+        "type": "datetime",
+        "formatter": {
+          "type": "datetime"
+        },
+        "style": {
+          "fontWeight": "bold"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "link",
+        "type": "datetime",
+        "formatter": {
+          "type": "datetime"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "deliveryConfirm",
+    "propertyName": "交付确认",
+    "input": "现在有“想法”模型的“交付确认”属性，类型是布尔。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"boolean\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"boolean\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"boolean\",\n    \"style\": {\n      \"variant\": \"default\",\n      \"palette\": {\n        \"true\": \"green\",\n        \"false\": \"red\"\n      }\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"boolean\",\n    \"style\": {\n      \"variant\": \"background\",\n      \"palette\": {\n        \"true\": \"green\",\n        \"false\": \"red\"\n      }\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "boolean",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "boolean",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "boolean",
+        "style": {
+          "variant": "default",
+          "palette": {
+            "true": "green",
+            "false": "red"
+          }
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "boolean",
+        "style": {
+          "variant": "background",
+          "palette": {
+            "true": "green",
+            "false": "red"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "deliveryStatus",
+    "propertyName": "交付验收状态",
+    "input": "现在有“想法”模型的“交付验收状态”属性，类型是枚举：passed、unpassed、unconfirmed。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"default\",\n      \"palette\": {\n        \"passed\": \"green\",\n        \"unpassed\": \"red\",\n        \"unconfirmed\": \"gray\"\n      }\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"outline\",\n      \"palette\": {\n        \"passed\": \"green\",\n        \"unpassed\": \"red\",\n        \"unconfirmed\": \"gray\"\n      }\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"background\",\n      \"palette\": {\n        \"passed\": \"green\",\n        \"unpassed\": \"red\",\n        \"unconfirmed\": \"gray\"\n      }\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "enum",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "default",
+          "palette": {
+            "passed": "green",
+            "unpassed": "red",
+            "unconfirmed": "gray"
+          }
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "outline",
+          "palette": {
+            "passed": "green",
+            "unpassed": "red",
+            "unconfirmed": "gray"
+          }
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "background",
+          "palette": {
+            "passed": "green",
+            "unpassed": "red",
+            "unconfirmed": "gray"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "endDate",
+    "propertyName": "完成时间",
+    "input": "现在有“想法”模型的“完成时间”属性，类型是日期。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "对于“想法”模型的“完成时间”属性，类型是日期，按视觉重量从低到高，有以下几种显示方案：\n\n1. 使用中等字号，次级文本颜色显示，格式化为相对时间；\n2. 使用中等字号，默认颜色文本显示，格式化为精确时间；\n3. 使用大号字号，字重加粗，默认颜色文本显示，格式化为精确时间。\n\n期望返回结果：\n\n```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"date\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    },\n    \"formatter\": {\n      \"type\": \"relative\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"date\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    },\n    \"formatter\": {\n      \"type\": \"datetime\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"text\",\n    \"type\": \"date\",\n    \"style\": {\n      \"size\": \"large\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    },\n    \"formatter\": {\n      \"type\": \"datetime\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "date",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        },
+        "formatter": {
+          "type": "relative"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "date",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        },
+        "formatter": {
+          "type": "datetime"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "text",
+        "type": "date",
+        "style": {
+          "size": "large",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        },
+        "formatter": {
+          "type": "datetime"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "expectReleaseDate",
+    "propertyName": "期望最迟交付的日期",
+    "input": "现在有“想法”模型的“期望最迟交付的日期”属性，类型是日期。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "对于“想法”模型的“期望最迟交付的日期”属性，类型是日期，按视觉重量从低到高，有以下几种显示方案：\n\n1. 使用中等字号，次级文本颜色显示，使用相对时间格式；\n2. 使用中等字号，默认颜色文本显示，使用精确时间格式；\n3. 使用大号字号，字重加粗，默认颜色文本显示，使用精确时间格式。\n\n期望返回结果：\n\n```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"date\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    },\n    \"formatter\": {\n      \"type\": \"relative\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"date\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    },\n    \"formatter\": {\n      \"type\": \"datetime\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"text\",\n    \"type\": \"date\",\n    \"style\": {\n      \"size\": \"large\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    },\n    \"formatter\": {\n      \"type\": \"datetime\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "date",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        },
+        "formatter": {
+          "type": "relative"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "date",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        },
+        "formatter": {
+          "type": "datetime"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "text",
+        "type": "date",
+        "style": {
+          "size": "large",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        },
+        "formatter": {
+          "type": "datetime"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "initialScore",
+    "propertyName": "PMO初评分",
+    "input": "现在有“想法”模型的“PMO初评分”属性，类型是浮点型。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"float\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    },\n    \"formatter\": {\n      \"type\": \"number\",\n      \"format\": \"decimal\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"float\",\n    \"formatter\": {\n      \"type\": \"number\",\n      \"format\": \"decimal\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"text\",\n    \"type\": \"float\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"fontWeight\": \"bold\"\n    },\n    \"formatter\": {\n      \"type\": \"number\",\n      \"format\": \"decimal\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"text\",\n    \"type\": \"float\",\n    \"style\": {\n      \"size\": \"large\",\n      \"fontWeight\": \"bold\"\n    },\n    \"formatter\": {\n      \"type\": \"number\",\n      \"format\": \"decimal\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "float",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        },
+        "formatter": {
+          "type": "number",
+          "format": "decimal"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "float",
+        "formatter": {
+          "type": "number",
+          "format": "decimal"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "text",
+        "type": "float",
+        "style": {
+          "size": "medium",
+          "fontWeight": "bold"
+        },
+        "formatter": {
+          "type": "number",
+          "format": "decimal"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "text",
+        "type": "float",
+        "style": {
+          "size": "large",
+          "fontWeight": "bold"
+        },
+        "formatter": {
+          "type": "number",
+          "format": "decimal"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "op_plan_month",
+    "propertyName": "是否是运营每月10个需求",
+    "input": "现在有“想法”模型的“是否是运营每月10个需求”属性，类型是布尔。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"boolean\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"boolean\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"boolean\",\n    \"style\": {\n      \"variant\": \"default\",\n      \"palette\": {\n        \"true\": \"green\",\n        \"false\": \"red\"\n      }\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"boolean\",\n    \"style\": {\n      \"variant\": \"background\",\n      \"palette\": {\n        \"true\": \"green\",\n        \"false\": \"red\"\n      }\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "boolean",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "boolean",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "boolean",
+        "style": {
+          "variant": "default",
+          "palette": {
+            "true": "green",
+            "false": "red"
+          }
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "boolean",
+        "style": {
+          "variant": "background",
+          "palette": {
+            "true": "green",
+            "false": "red"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "pdReviewDate",
+    "propertyName": "PD评审日期",
+    "input": "现在有“想法”模型的“PD评审日期”属性，类型是日期。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "对于“想法”模型的“PD评审日期”属性，类型是日期，按视觉重量从低到高，有以下几种显示方案：\n\n1. 使用中等字号，次级文本颜色显示，使用相对时间格式；\n2. 使用中等字号，默认颜色文本显示，使用精确时间格式；\n3. 使用大号字号，字重加粗，默认颜色文本显示，使用精确时间格式。\n\n期望返回结果：\n\n```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"date\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    },\n    \"formatter\": {\n      \"type\": \"relative\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"date\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    },\n    \"formatter\": {\n      \"type\": \"datetime\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"text\",\n    \"type\": \"date\",\n    \"style\": {\n      \"size\": \"large\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    },\n    \"formatter\": {\n      \"type\": \"datetime\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "date",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        },
+        "formatter": {
+          "type": "relative"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "date",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        },
+        "formatter": {
+          "type": "datetime"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "text",
+        "type": "date",
+        "style": {
+          "size": "large",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        },
+        "formatter": {
+          "type": "datetime"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "pdReviewResult",
+    "propertyName": "PD评审结果",
+    "input": "现在有“想法”模型的“PD评审结果”属性，类型是布尔。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"boolean\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"boolean\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"boolean\",\n    \"style\": {\n      \"variant\": \"default\",\n      \"palette\": {\n        \"false\": \"gray\",\n        \"true\": \"green\"\n      }\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"boolean\",\n    \"style\": {\n      \"variant\": \"background\",\n      \"palette\": {\n        \"false\": \"gray\",\n        \"true\": \"green\"\n      }\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "boolean",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "boolean",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "boolean",
+        "style": {
+          "variant": "default",
+          "palette": {
+            "false": "gray",
+            "true": "green"
+          }
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "boolean",
+        "style": {
+          "variant": "background",
+          "palette": {
+            "false": "gray",
+            "true": "green"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "pdReviewTime",
+    "propertyName": "pd评审时间",
+    "input": "现在有“想法”模型的“pd评审时间”属性，类型是日期时间。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "对于“想法”模型的“pd评审时间”属性，类型是日期时间，按视觉重量从低到高，有以下几种显示方案：\n\n1. 使用中等字号，次级文本颜色显示，使用相对时间格式；\n2. 使用中等字号，默认颜色文本显示，使用精确时间格式；\n3. 使用大号字号，字重加粗，默认颜色文本显示，使用精确时间格式。\n\n期望返回结果：\n\n```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    },\n    \"formatter\": {\n      \"type\": \"relative\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    },\n    \"formatter\": {\n      \"type\": \"exact\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"style\": {\n      \"size\": \"large\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    },\n    \"formatter\": {\n      \"type\": \"exact\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "datetime",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        },
+        "formatter": {
+          "type": "relative"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "datetime",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        },
+        "formatter": {
+          "type": "exact"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "text",
+        "type": "datetime",
+        "style": {
+          "size": "large",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        },
+        "formatter": {
+          "type": "exact"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "planStartDate",
+    "propertyName": "计划开始时间",
+    "input": "现在有“想法”模型的“计划开始时间”属性，类型是日期。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"date\",\n    \"formatter\": {\n      \"type\": \"date\",\n      \"format\": \"relative\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"date\",\n    \"formatter\": {\n      \"type\": \"date\",\n      \"format\": \"datetime\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"text\",\n    \"type\": \"date\",\n    \"formatter\": {\n      \"type\": \"date\",\n      \"format\": \"datetime\"\n    },\n    \"style\": {\n      \"size\": \"medium\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"text\",\n    \"type\": \"date\",\n    \"formatter\": {\n      \"type\": \"date\",\n      \"format\": \"datetime\"\n    },\n    \"style\": {\n      \"size\": \"large\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "date",
+        "formatter": {
+          "type": "date",
+          "format": "relative"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "date",
+        "formatter": {
+          "type": "date",
+          "format": "datetime"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "text",
+        "type": "date",
+        "formatter": {
+          "type": "date",
+          "format": "datetime"
+        },
+        "style": {
+          "size": "medium",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "text",
+        "type": "date",
+        "formatter": {
+          "type": "date",
+          "format": "datetime"
+        },
+        "style": {
+          "size": "large",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "planStartTime",
+    "propertyName": "计划开始日期",
+    "input": "现在有“想法”模型的“计划开始日期”属性，类型是日期时间。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "对于“想法”模型的“计划开始日期”属性，类型是日期时间，按视觉重量从低到高，有以下几种显示方案：\n\n1. 使用中等字号，次级文本颜色显示，使用相对时间格式；\n2. 使用中等字号，默认颜色文本显示，使用精确时间格式；\n3. 使用大号字号，字重加粗，默认颜色文本显示，使用精确时间格式。\n\n期望返回结果：\n\n```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    },\n    \"formatter\": {\n      \"type\": \"relative-time\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    },\n    \"formatter\": {\n      \"type\": \"exact-time\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"style\": {\n      \"size\": \"large\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    },\n    \"formatter\": {\n      \"type\": \"exact-time\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "datetime",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        },
+        "formatter": {
+          "type": "relative-time"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "datetime",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        },
+        "formatter": {
+          "type": "exact-time"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "text",
+        "type": "datetime",
+        "style": {
+          "size": "large",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        },
+        "formatter": {
+          "type": "exact-time"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "pmoReviewDate",
+    "propertyName": "PMO初评日期",
+    "input": "现在有“想法”模型的“PMO初评日期”属性，类型是日期。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"date\",\n    \"formatter\": {\n      \"type\": \"relative\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"date\",\n    \"formatter\": {\n      \"type\": \"datetime\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"date\",\n    \"formatter\": {\n      \"type\": \"datetime\"\n    },\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"date\",\n    \"formatter\": {\n      \"type\": \"datetime\"\n    },\n    \"style\": {\n      \"variant\": \"background\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "date",
+        "formatter": {
+          "type": "relative"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "date",
+        "formatter": {
+          "type": "datetime"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "date",
+        "formatter": {
+          "type": "datetime"
+        },
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "date",
+        "formatter": {
+          "type": "datetime"
+        },
+        "style": {
+          "variant": "background"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "pmoReviewResult",
+    "propertyName": "PMO评审结果",
+    "input": "现在有“想法”模型的“PMO评审结果”属性，类型是布尔。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"boolean\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"boolean\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"boolean\",\n    \"style\": {\n      \"variant\": \"default\",\n      \"palette\": {\n        \"false\": \"gray\",\n        \"true\": \"green\"\n      }\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"boolean\",\n    \"style\": {\n      \"variant\": \"background\",\n      \"palette\": {\n        \"false\": \"gray\",\n        \"true\": \"green\"\n      }\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "boolean",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "boolean",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "boolean",
+        "style": {
+          "variant": "default",
+          "palette": {
+            "false": "gray",
+            "true": "green"
+          }
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "boolean",
+        "style": {
+          "variant": "background",
+          "palette": {
+            "false": "gray",
+            "true": "green"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "pmoReviewTime",
+    "propertyName": "PMO评审时间",
+    "input": "现在有“想法”模型的“PMO评审时间”属性，类型是日期时间。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    },\n    \"formatter\": {\n      \"type\": \"relative\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"formatter\": {\n      \"type\": \"datetime\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"fontWeight\": \"bold\"\n    },\n    \"formatter\": {\n      \"type\": \"datetime\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"style\": {\n      \"size\": \"large\",\n      \"fontWeight\": \"bold\"\n    },\n    \"formatter\": {\n      \"type\": \"datetime\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "datetime",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        },
+        "formatter": {
+          "type": "relative"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "datetime",
+        "formatter": {
+          "type": "datetime"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "text",
+        "type": "datetime",
+        "style": {
+          "size": "medium",
+          "fontWeight": "bold"
+        },
+        "formatter": {
+          "type": "datetime"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "text",
+        "type": "datetime",
+        "style": {
+          "size": "large",
+          "fontWeight": "bold"
+        },
+        "formatter": {
+          "type": "datetime"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "predictDeliveryTime",
+    "propertyName": "预计交付时间",
+    "input": "现在有“想法”模型的“预计交付时间”属性，类型是日期时间。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    },\n    \"formatter\": {\n      \"type\": \"relative\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"formatter\": {\n      \"type\": \"datetime\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"fontWeight\": \"bold\"\n    },\n    \"formatter\": {\n      \"type\": \"datetime\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"style\": {\n      \"size\": \"large\",\n      \"fontWeight\": \"bold\"\n    },\n    \"formatter\": {\n      \"type\": \"datetime\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "datetime",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        },
+        "formatter": {
+          "type": "relative"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "datetime",
+        "formatter": {
+          "type": "datetime"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "text",
+        "type": "datetime",
+        "style": {
+          "size": "medium",
+          "fontWeight": "bold"
+        },
+        "formatter": {
+          "type": "datetime"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "text",
+        "type": "datetime",
+        "style": {
+          "size": "large",
+          "fontWeight": "bold"
+        },
+        "formatter": {
+          "type": "datetime"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "realStoryPoint",
+    "propertyName": "实际消耗人天",
+    "input": "现在有“想法”模型的“实际消耗人天”属性，类型是浮点型。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"float\",\n    \"formatter\": {\n      \"type\": \"number\",\n      \"format\": \"decimal\"\n    },\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"float\",\n    \"formatter\": {\n      \"type\": \"number\",\n      \"format\": \"decimal\"\n    },\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"text\",\n    \"type\": \"float\",\n    \"formatter\": {\n      \"type\": \"number\",\n      \"format\": \"decimal\"\n    },\n    \"style\": {\n      \"size\": \"medium\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"text\",\n    \"type\": \"float\",\n    \"formatter\": {\n      \"type\": \"number\",\n      \"format\": \"decimal\"\n    },\n    \"style\": {\n      \"size\": \"large\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "float",
+        "formatter": {
+          "type": "number",
+          "format": "decimal"
+        },
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "float",
+        "formatter": {
+          "type": "number",
+          "format": "decimal"
+        },
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "text",
+        "type": "float",
+        "formatter": {
+          "type": "number",
+          "format": "decimal"
+        },
+        "style": {
+          "size": "medium",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "text",
+        "type": "float",
+        "formatter": {
+          "type": "number",
+          "format": "decimal"
+        },
+        "style": {
+          "size": "large",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "score",
+    "propertyName": "需求得分",
+    "input": "现在有“想法”模型的“需求得分”属性，类型是浮点型。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"float\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    },\n    \"formatter\": {\n      \"type\": \"number\",\n      \"format\": \"decimal\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"float\",\n    \"formatter\": {\n      \"type\": \"number\",\n      \"format\": \"decimal\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"text\",\n    \"type\": \"float\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"fontWeight\": \"bold\"\n    },\n    \"formatter\": {\n      \"type\": \"number\",\n      \"format\": \"decimal\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"text\",\n    \"type\": \"float\",\n    \"style\": {\n      \"size\": \"large\",\n      \"fontWeight\": \"bold\"\n    },\n    \"formatter\": {\n      \"type\": \"number\",\n      \"format\": \"decimal\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "float",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        },
+        "formatter": {
+          "type": "number",
+          "format": "decimal"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "float",
+        "formatter": {
+          "type": "number",
+          "format": "decimal"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "text",
+        "type": "float",
+        "style": {
+          "size": "medium",
+          "fontWeight": "bold"
+        },
+        "formatter": {
+          "type": "number",
+          "format": "decimal"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "text",
+        "type": "float",
+        "style": {
+          "size": "large",
+          "fontWeight": "bold"
+        },
+        "formatter": {
+          "type": "number",
+          "format": "decimal"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "startDate",
+    "propertyName": "开始时间",
+    "input": "现在有“想法”模型的“开始时间”属性，类型是日期。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "对于“想法”模型的“开始时间”属性，类型是日期，按视觉重量从低到高，有以下几种显示方案：\n\n1. 使用中等字号，次级文本颜色显示，格式化为相对时间；\n2. 使用中等字号，默认颜色文本显示，格式化为相对时间；\n3. 使用中等字号，默认颜色文本显示，格式化为精确日期时间；\n4. 使用大号字号，字重加粗，默认颜色文本显示，格式化为精确日期时间。\n\n期望返回结果：\n\n```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"date\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    },\n    \"formatter\": {\n      \"type\": \"relative-time\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"date\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    },\n    \"formatter\": {\n      \"type\": \"relative-time\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"text\",\n    \"type\": \"date\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    },\n    \"formatter\": {\n      \"type\": \"datetime\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"text\",\n    \"type\": \"date\",\n    \"style\": {\n      \"size\": \"large\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    },\n    \"formatter\": {\n      \"type\": \"datetime\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "date",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        },
+        "formatter": {
+          "type": "relative-time"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "date",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        },
+        "formatter": {
+          "type": "relative-time"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "text",
+        "type": "date",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        },
+        "formatter": {
+          "type": "datetime"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "text",
+        "type": "date",
+        "style": {
+          "size": "large",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        },
+        "formatter": {
+          "type": "datetime"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "status",
+    "propertyName": "状态",
+    "input": "现在有“想法”模型的“状态”属性，类型是枚举：waitInitialScore、waitAssess、waitPlan、waitRelease、waitIterate、released、refused、closed、waitProducerDesigned、producerReview、waitTechDesigned、techReview、ready、pointEstimation。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"default\",\n      \"palette\": {\n        \"waitInitialScore\": \"gray\",\n        \"waitAssess\": \"gray\",\n        \"waitPlan\": \"gray\",\n        \"waitRelease\": \"gray\",\n        \"waitIterate\": \"gray\",\n        \"released\": \"green\",\n        \"refused\": \"red\",\n        \"closed\": \"blue\",\n        \"waitProducerDesigned\": \"gray\",\n        \"producerReview\": \"gray\",\n        \"waitTechDesigned\": \"gray\",\n        \"techReview\": \"gray\",\n        \"ready\": \"orange\",\n        \"pointEstimation\": \"gray\"\n      }\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"outline\",\n      \"palette\": {\n        \"waitInitialScore\": \"gray\",\n        \"waitAssess\": \"gray\",\n        \"waitPlan\": \"gray\",\n        \"waitRelease\": \"gray\",\n        \"waitIterate\": \"gray\",\n        \"released\": \"green\",\n        \"refused\": \"red\",\n        \"closed\": \"blue\",\n        \"waitProducerDesigned\": \"gray\",\n        \"producerReview\": \"gray\",\n        \"waitTechDesigned\": \"gray\",\n        \"techReview\": \"gray\",\n        \"ready\": \"orange\",\n        \"pointEstimation\": \"gray\"\n      }\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"background\",\n      \"palette\": {\n        \"waitInitialScore\": \"gray\",\n        \"waitAssess\": \"gray\",\n        \"waitPlan\": \"gray\",\n        \"waitRelease\": \"gray\",\n        \"waitIterate\": \"gray\",\n        \"released\": \"green\",\n        \"refused\": \"red\",\n        \"closed\": \"blue\",\n        \"waitProducerDesigned\": \"gray\",\n        \"producerReview\": \"gray\",\n        \"waitTechDesigned\": \"gray\",\n        \"techReview\": \"gray\",\n        \"ready\": \"orange\",\n        \"pointEstimation\": \"gray\"\n      }\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "enum",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "default",
+          "palette": {
+            "waitInitialScore": "gray",
+            "waitAssess": "gray",
+            "waitPlan": "gray",
+            "waitRelease": "gray",
+            "waitIterate": "gray",
+            "released": "green",
+            "refused": "red",
+            "closed": "blue",
+            "waitProducerDesigned": "gray",
+            "producerReview": "gray",
+            "waitTechDesigned": "gray",
+            "techReview": "gray",
+            "ready": "orange",
+            "pointEstimation": "gray"
+          }
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "outline",
+          "palette": {
+            "waitInitialScore": "gray",
+            "waitAssess": "gray",
+            "waitPlan": "gray",
+            "waitRelease": "gray",
+            "waitIterate": "gray",
+            "released": "green",
+            "refused": "red",
+            "closed": "blue",
+            "waitProducerDesigned": "gray",
+            "producerReview": "gray",
+            "waitTechDesigned": "gray",
+            "techReview": "gray",
+            "ready": "orange",
+            "pointEstimation": "gray"
+          }
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "background",
+          "palette": {
+            "waitInitialScore": "gray",
+            "waitAssess": "gray",
+            "waitPlan": "gray",
+            "waitRelease": "gray",
+            "waitIterate": "gray",
+            "released": "green",
+            "refused": "red",
+            "closed": "blue",
+            "waitProducerDesigned": "gray",
+            "producerReview": "gray",
+            "waitTechDesigned": "gray",
+            "techReview": "gray",
+            "ready": "orange",
+            "pointEstimation": "gray"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "customerConfirm",
+    "propertyName": "客户确认情况",
+    "input": "现在有“想法”模型的“客户确认情况”属性，类型是结构体。该结构体定义的字段有：确认状态（ID 是 confirm，类型是结构体）、拒绝原因（ID 是 rejectReason，类型是结构体）、客户验收时间（ID 是 confirmTime，类型是结构体）。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。\n\n注意给出 `field` 字段名。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"struct\",\n    \"field\": \"confirm\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"struct\",\n    \"field\": \"confirm\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"struct\",\n    \"field\": \"confirm\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"struct\",\n    \"field\": \"confirm\",\n    \"style\": {\n      \"variant\": \"outline\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "struct",
+        "field": "confirm",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "struct",
+        "field": "confirm",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "struct",
+        "field": "confirm",
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "struct",
+        "field": "confirm",
+        "style": {
+          "variant": "outline"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "document",
+    "propertyName": "文档链接",
+    "input": "现在有“想法”模型的“文档链接”属性，类型是结构体。该结构体定义的字段有：研发文档链接（ID 是 developUrl，类型是结构体）、需求文档链接（ID 是 requirementUrl，类型是结构体）。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。\n\n注意给出 `field` 字段名。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"struct\",\n    \"field\": \"requirementUrl\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"link\",\n    \"type\": \"struct\",\n    \"field\": \"requirementUrl\"\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"struct\",\n    \"field\": \"requirementUrl\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"struct\",\n    \"field\": \"requirementUrl\",\n    \"style\": {\n      \"variant\": \"background\"\n    }\n  }\n]\n```\n\n但是，由于 `requirementUrl` 和 `developUrl` 都是结构体类型，它们内部可能包含更具体的链接信息（例如，URL 字段）。因此，更合理的方案是将这些结构体中的 URL 字段提取出来作为显示内容。考虑到这一点，我们应当修改 `field` 的值，使其指向结构体内部的 URL 字段。然而，由于原始定义中未提供这些结构体的内部字段详情，我们假设每个结构体中有一个 `url` 字段，用于存储实际的链接。基于这个假设，我们更新 JSON 结果如下：\n\n```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"struct\",\n    \"field\": \"requirementUrl.url\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"link\",\n    \"type\": \"struct\",\n    \"field\": \"requirementUrl.url\"\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"struct\",\n    \"field\": \"requirementUrl.url\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"struct\",\n    \"field\": \"requirementUrl.url\",\n    \"style\": {\n      \"variant\": \"background\"\n    }\n  }\n]\n```\n\n然而，考虑到 `developUrl` 也应当有类似的显示方案，我们可以进一步扩展 JSON 结果，以包含 `developUrl` 的显示方案：\n\n```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"struct\",\n    \"field\": \"requirementUrl.url\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"link\",\n    \"type\": \"struct\",\n    \"field\": \"requirementUrl.url\"\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"struct\",\n    \"field\": \"requirementUrl.url\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"struct\",\n    \"field\": \"requirementUrl.url\",\n    \"style\": {\n      \"variant\": \"background\"\n    }\n  },\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"struct\",\n    \"field\": \"developUrl.url\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"link\",\n    \"type\": \"struct\",\n    \"field\": \"developUrl.url\"\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"struct\",\n    \"field\": \"developUrl.url\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"struct\",\n    \"field\": \"developUrl.url\",\n    \"style\": {\n      \"variant\": \"background\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "struct",
+        "field": "requirementUrl",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "link",
+        "type": "struct",
+        "field": "requirementUrl"
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "struct",
+        "field": "requirementUrl",
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "struct",
+        "field": "requirementUrl",
+        "style": {
+          "variant": "background"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "gradeInfo",
+    "propertyName": "评价信息",
+    "input": "现在有“想法”模型的“评价信息”属性，类型是结构体。该结构体定义的字段有：分数（ID 是 grade，类型是结构体）、说明（ID 是 memo，类型是结构体）、评价时间（ID 是 gradeTime，类型是结构体）。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。\n\n注意给出 `field` 字段名。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"struct\",\n    \"field\": \"grade\",\n    \"formatter\": {\n      \"type\": \"number\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"struct\",\n    \"field\": \"memo\"\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"struct\",\n    \"field\": \"gradeTime\",\n    \"formatter\": {\n      \"type\": \"datetime\"\n    },\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"link\",\n    \"type\": \"struct\",\n    \"field\": \"gradeTime\",\n    \"formatter\": {\n      \"type\": \"datetime\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "struct",
+        "field": "grade",
+        "formatter": {
+          "type": "number"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "struct",
+        "field": "memo"
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "struct",
+        "field": "gradeTime",
+        "formatter": {
+          "type": "datetime"
+        },
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "link",
+        "type": "struct",
+        "field": "gradeTime",
+        "formatter": {
+          "type": "datetime"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "humanCost",
+    "propertyName": "人力评估",
+    "input": "现在有“想法”模型的“人力评估”属性，类型是结构体。该结构体定义的字段有：前端（ID 是 frontend，类型是结构体）、后端（ID 是 backend，类型是结构体）。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。\n\n注意给出 `field` 字段名。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"struct\",\n    \"field\": \"frontend\"\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"link\",\n    \"type\": \"struct\",\n    \"field\": \"backend\"\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"struct\",\n    \"field\": \"frontend\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"struct\",\n    \"field\": \"backend\",\n    \"style\": {\n      \"variant\": \"outline\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "struct",
+        "field": "frontend"
+      },
+      {
+        "visualWeight": 0,
+        "display": "link",
+        "type": "struct",
+        "field": "backend"
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "struct",
+        "field": "frontend",
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "struct",
+        "field": "backend",
+        "style": {
+          "variant": "outline"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "ratingDetails",
+    "propertyName": "评分详情",
+    "input": "现在有“想法”模型的“评分详情”属性，类型是结构体列表。该结构体定义的字段有：类型（ID 是 type，类型是结构体列表）、需求价值（ID 是 value，类型是结构体列表）、触达范围（ID 是 reach，类型是结构体列表）、预估成本（ID 是 effort，类型是结构体列表）、使用频率（ID 是 frequency，类型是结构体列表）、紧急程度（ID 是 urgent，类型是结构体列表）。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。\n\n注意给出 `field` 字段名。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"struct-list\",\n    \"countOnly\": true,\n    \"field\": \"type\"\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"link\",\n    \"type\": \"struct-list\",\n    \"countOnly\": true,\n    \"field\": \"type\"\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"struct-list\",\n    \"field\": \"type\",\n    \"maxItems\": 2,\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"struct-list\",\n    \"field\": \"type\",\n    \"maxItems\": 2,\n    \"style\": {\n      \"variant\": \"outline\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "struct-list",
+        "countOnly": true,
+        "field": "type"
+      },
+      {
+        "visualWeight": 0,
+        "display": "link",
+        "type": "struct-list",
+        "countOnly": true,
+        "field": "type"
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "struct-list",
+        "field": "type",
+        "maxItems": 2,
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "struct-list",
+        "field": "type",
+        "maxItems": 2,
+        "style": {
+          "variant": "outline"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "IDEA@EASYOPS",
+    "objectName": "想法",
+    "propertyId": "speedUp",
+    "propertyName": "加速标志",
+    "input": "现在有“想法”模型的“加速标志”属性，类型是结构体列表。该结构体定义的字段有：标志（ID 是 mark，类型是结构体列表）、加速原因（ID 是 reason，类型是结构体列表）、加速分数（ID 是 score，类型是结构体列表）。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。\n\n注意给出 `field` 字段名。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"struct-list\",\n    \"countOnly\": true,\n    \"field\": \"mark\"\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"link\",\n    \"type\": \"struct-list\",\n    \"countOnly\": true,\n    \"field\": \"mark\"\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"struct-list\",\n    \"field\": \"mark\",\n    \"maxItems\": 2,\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"struct-list\",\n    \"field\": \"mark\",\n    \"maxItems\": 2,\n    \"style\": {\n      \"variant\": \"outline\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "struct-list",
+        "countOnly": true,
+        "field": "mark"
+      },
+      {
+        "visualWeight": 0,
+        "display": "link",
+        "type": "struct-list",
+        "countOnly": true,
+        "field": "mark"
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "struct-list",
+        "field": "mark",
+        "maxItems": 2,
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "struct-list",
+        "field": "mark",
+        "maxItems": 2,
+        "style": {
+          "variant": "outline"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "LOG_PROCESSOR@EASYOPS",
+    "objectName": "日志处理流程",
+    "propertyId": "jobName",
+    "propertyName": "处理流名称",
+    "input": "现在有“日志处理流程”模型的“处理流名称”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"large\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "large",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "LOG_PROCESSOR@EASYOPS",
+    "objectName": "日志处理流程",
+    "propertyId": "objectId",
+    "propertyName": "模型ID",
+    "input": "现在有“日志处理流程”模型的“模型ID”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"link\",\n    \"type\": \"string\"\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "link",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "objectId": "LOG_PROCESSOR@EASYOPS",
+    "objectName": "日志处理流程",
+    "propertyId": "filter",
+    "propertyName": "过滤条件",
+    "input": "现在有“日志处理流程”模型的“过滤条件”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"link\",\n    \"type\": \"string\"\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "link",
+        "type": "string"
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "default"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "LOG_PROCESSOR@EASYOPS",
+    "objectName": "日志处理流程",
+    "propertyId": "agentType",
+    "propertyName": "agentType",
+    "input": "现在有“日志处理流程”模型的“agentType”属性，类型是枚举：filebeat、log_sampler。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"default\",\n      \"palette\": {\n        \"filebeat\": \"blue\",\n        \"log_sampler\": \"purple\"\n      }\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"background\",\n      \"palette\": {\n        \"filebeat\": \"blue\",\n        \"log_sampler\": \"purple\"\n      }\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "enum",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "enum",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "default",
+          "palette": {
+            "filebeat": "blue",
+            "log_sampler": "purple"
+          }
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "background",
+          "palette": {
+            "filebeat": "blue",
+            "log_sampler": "purple"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "LOG_PROCESSOR@EASYOPS",
+    "objectName": "日志处理流程",
+    "propertyId": "enabled",
+    "propertyName": "是否启用",
+    "input": "现在有“日志处理流程”模型的“是否启用”属性，类型是布尔，是否启用日志处理流。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"boolean\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"boolean\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"boolean\",\n    \"style\": {\n      \"variant\": \"default\",\n      \"palette\": {\n        \"false\": \"gray\",\n        \"true\": \"green\"\n      }\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"boolean\",\n    \"style\": {\n      \"variant\": \"background\",\n      \"palette\": {\n        \"false\": \"gray\",\n        \"true\": \"green\"\n      }\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "boolean",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "boolean",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "boolean",
+        "style": {
+          "variant": "default",
+          "palette": {
+            "false": "gray",
+            "true": "green"
+          }
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "boolean",
+        "style": {
+          "variant": "background",
+          "palette": {
+            "false": "gray",
+            "true": "green"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "LOG_PROCESSOR@EASYOPS",
+    "objectName": "日志处理流程",
+    "propertyId": "jobType",
+    "propertyName": "采集类型",
+    "input": "现在有“日志处理流程”模型的“采集类型”属性，类型是枚举：COMMON、APM、KEYWORD、LOG。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"default\",\n      \"palette\": {\n        \"COMMON\": \"gray\",\n        \"APM\": \"blue\",\n        \"KEYWORD\": \"orange\",\n        \"LOG\": \"green\"\n      }\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"background\",\n      \"palette\": {\n        \"COMMON\": \"gray\",\n        \"APM\": \"blue\",\n        \"KEYWORD\": \"orange\",\n        \"LOG\": \"green\"\n      }\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "enum",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "enum",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "default",
+          "palette": {
+            "COMMON": "gray",
+            "APM": "blue",
+            "KEYWORD": "orange",
+            "LOG": "green"
+          }
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "background",
+          "palette": {
+            "COMMON": "gray",
+            "APM": "blue",
+            "KEYWORD": "orange",
+            "LOG": "green"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "LOG_PROCESSOR@EASYOPS",
+    "objectName": "日志处理流程",
+    "propertyId": "logTimeType",
+    "propertyName": "日志时间采集方式",
+    "input": "现在有“日志处理流程”模型的“日志时间采集方式”属性，类型是枚举：system、log，日志时间使用系统时间或日志上报的时间。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"default\",\n      \"palette\": {\n        \"system\": \"gray\",\n        \"log\": \"blue\"\n      }\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"background\",\n      \"palette\": {\n        \"system\": \"gray\",\n        \"log\": \"blue\"\n      }\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "enum",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "enum",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "default",
+          "palette": {
+            "system": "gray",
+            "log": "blue"
+          }
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "background",
+          "palette": {
+            "system": "gray",
+            "log": "blue"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "LOG_PROCESSOR@EASYOPS",
+    "objectName": "日志处理流程",
+    "propertyId": "customizeMetrics",
+    "propertyName": "自定义指标",
+    "input": "现在有“日志处理流程”模型的“自定义指标”属性，类型是结构体列表。该结构体定义的字段有：指标id（ID 是 id，类型是结构体列表）、过滤器（ID 是 filter，类型是结构体列表）、汇聚表达式（ID 是 expression，类型是结构体列表）。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。\n\n注意给出 `field` 字段名。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"struct-list\",\n    \"field\": \"id\",\n    \"countOnly\": true\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"link\",\n    \"type\": \"struct-list\",\n    \"field\": \"id\",\n    \"countOnly\": true\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"struct-list\",\n    \"field\": \"id\",\n    \"maxItems\": 2,\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"struct-list\",\n    \"field\": \"id\",\n    \"maxItems\": 2,\n    \"style\": {\n      \"variant\": \"outline\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "struct-list",
+        "field": "id",
+        "countOnly": true
+      },
+      {
+        "visualWeight": 0,
+        "display": "link",
+        "type": "struct-list",
+        "field": "id",
+        "countOnly": true
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "struct-list",
+        "field": "id",
+        "maxItems": 2,
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "struct-list",
+        "field": "id",
+        "maxItems": 2,
+        "style": {
+          "variant": "outline"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "LOG_PROCESSOR@EASYOPS",
+    "objectName": "日志处理流程",
+    "propertyId": "instanceMapping",
+    "propertyName": "实例映射规则",
+    "input": "现在有“日志处理流程”模型的“实例映射规则”属性，类型是结构体列表。该结构体定义的字段有：key（ID 是 key，类型是结构体列表）、paramType（ID 是 paramType，类型是结构体列表）、paramValue（ID 是 paramValue，类型是结构体列表）。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。\n\n注意给出 `field` 字段名。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"struct-list\",\n    \"countOnly\": true,\n    \"field\": \"key\"\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"link\",\n    \"type\": \"struct-list\",\n    \"countOnly\": true,\n    \"field\": \"key\"\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"struct-list\",\n    \"field\": \"key\",\n    \"maxItems\": 2,\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"struct-list\",\n    \"field\": \"key\",\n    \"maxItems\": 2,\n    \"style\": {\n      \"variant\": \"outline\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "struct-list",
+        "countOnly": true,
+        "field": "key"
+      },
+      {
+        "visualWeight": 0,
+        "display": "link",
+        "type": "struct-list",
+        "countOnly": true,
+        "field": "key"
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "struct-list",
+        "field": "key",
+        "maxItems": 2,
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "struct-list",
+        "field": "key",
+        "maxItems": 2,
+        "style": {
+          "variant": "outline"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "LOG_PROCESSOR@EASYOPS",
+    "objectName": "日志处理流程",
+    "propertyId": "processSteps",
+    "propertyName": "日志处理流程",
+    "input": "现在有“日志处理流程”模型的“日志处理流程”属性，类型是结构体列表。该结构体定义的字段有：处理名称（ID 是 name，类型是结构体列表）、上一级处理步骤名称列表（ID 是 parents，类型是结构体列表）、输出（ID 是 output，类型是结构体列表）、处理动作（ID 是 action，类型是结构体列表）。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。\n\n注意给出 `field` 字段名。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"struct-list\",\n    \"countOnly\": true,\n    \"field\": \"name\"\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"link\",\n    \"type\": \"struct-list\",\n    \"countOnly\": true,\n    \"field\": \"name\"\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"struct-list\",\n    \"field\": \"name\",\n    \"maxItems\": 2,\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"struct-list\",\n    \"field\": \"name\",\n    \"maxItems\": 2,\n    \"style\": {\n      \"variant\": \"outline\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "struct-list",
+        "countOnly": true,
+        "field": "name"
+      },
+      {
+        "visualWeight": 0,
+        "display": "link",
+        "type": "struct-list",
+        "countOnly": true,
+        "field": "name"
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "struct-list",
+        "field": "name",
+        "maxItems": 2,
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "struct-list",
+        "field": "name",
+        "maxItems": 2,
+        "style": {
+          "variant": "outline"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "PACKAGE",
+    "objectName": "包",
+    "propertyId": "name",
+    "propertyName": "包名称",
+    "input": "现在有“包”模型的“包名称”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"large\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "large",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "PACKAGE",
+    "objectName": "包",
+    "propertyId": "installPath",
+    "propertyName": "安装路径",
+    "input": "现在有“包”模型的“安装路径”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"link\",\n    \"type\": \"string\"\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "link",
+        "type": "string"
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "default"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "PACKAGE",
+    "objectName": "包",
+    "propertyId": "packageId",
+    "propertyName": "包ID",
+    "input": "现在有“包”模型的“包ID”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"large\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "large",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "PACKAGE",
+    "objectName": "包",
+    "propertyId": "platform",
+    "propertyName": "系统类型",
+    "input": "现在有“包”模型的“系统类型”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"background\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "background"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "PACKAGE",
+    "objectName": "包",
+    "propertyId": "targetVersion",
+    "propertyName": "目标版本",
+    "input": "现在有“包”模型的“目标版本”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "default"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "PACKAGE",
+    "objectName": "包",
+    "propertyId": "autoStart",
+    "propertyName": "安装完自动启动",
+    "input": "现在有“包”模型的“安装完自动启动”属性，类型是整型。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"integer\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"integer\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"integer\",\n    \"style\": {\n      \"variant\": \"default\",\n      \"palette\": {\n        \"0\": \"gray\",\n        \"1\": \"green\"\n      }\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"integer\",\n    \"style\": {\n      \"variant\": \"background\",\n      \"palette\": {\n        \"0\": \"gray\",\n        \"1\": \"green\"\n      }\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "integer",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "integer",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "integer",
+        "style": {
+          "variant": "default",
+          "palette": {
+            "0": "gray",
+            "1": "green"
+          }
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "integer",
+        "style": {
+          "variant": "background",
+          "palette": {
+            "0": "gray",
+            "1": "green"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "PACKAGE",
+    "objectName": "包",
+    "propertyId": "forceUpdate",
+    "propertyName": "强制升级",
+    "input": "现在有“包”模型的“强制升级”属性，类型是整型。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"integer\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"integer\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"integer\",\n    \"style\": {\n      \"variant\": \"default\",\n      \"background\": \"gray\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"integer\",\n    \"style\": {\n      \"variant\": \"background\",\n      \"background\": \"gray\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "integer",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "integer",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "integer",
+        "style": {
+          "variant": "default",
+          "background": "gray"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "integer",
+        "style": {
+          "variant": "background",
+          "background": "gray"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "PACKAGE",
+    "objectName": "包",
+    "propertyId": "isMaster",
+    "propertyName": "是否主程序包",
+    "input": "现在有“包”模型的“是否主程序包”属性，类型是枚举：true、false。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"default\",\n      \"palette\": {\n        \"true\": \"green\",\n        \"false\": \"red\"\n      }\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"background\",\n      \"palette\": {\n        \"true\": \"green\",\n        \"false\": \"red\"\n      }\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "enum",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "enum",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "default",
+          "palette": {
+            "true": "green",
+            "false": "red"
+          }
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "background",
+          "palette": {
+            "true": "green",
+            "false": "red"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "PACKAGE",
+    "objectName": "包",
+    "propertyId": "postRestart",
+    "propertyName": "升级后重启",
+    "input": "现在有“包”模型的“升级后重启”属性，类型是整型。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"integer\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"integer\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"integer\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"integer\",\n    \"style\": {\n      \"variant\": \"background\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "integer",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "integer",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "integer",
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "integer",
+        "style": {
+          "variant": "background"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "PACKAGE",
+    "objectName": "包",
+    "propertyId": "preStop",
+    "propertyName": "升级前停止",
+    "input": "现在有“包”模型的“升级前停止”属性，类型是整型。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"integer\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"integer\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"integer\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"integer\",\n    \"style\": {\n      \"variant\": \"background\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "integer",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "integer",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "integer",
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "integer",
+        "style": {
+          "variant": "background"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "PACKAGE",
+    "objectName": "包",
+    "propertyId": "userCheck",
+    "propertyName": "发布后检查",
+    "input": "现在有“包”模型的“发布后检查”属性，类型是整型。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"integer\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"integer\",\n    \"formatter\": {\n      \"type\": \"number\",\n      \"format\": \"decimal\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"integer\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"integer\",\n    \"style\": {\n      \"variant\": \"background\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "integer",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "integer",
+        "formatter": {
+          "type": "number",
+          "format": "decimal"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "integer",
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "integer",
+        "style": {
+          "variant": "background"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "CONTAINER@ONEMODEL",
+    "objectName": "容器",
+    "propertyId": "uniqueName",
+    "propertyName": "唯一名称标识",
+    "input": "现在有“容器”模型的“唯一名称标识”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"link\",\n    \"type\": \"string\"\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "link",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "objectId": "CONTAINER@ONEMODEL",
+    "objectName": "容器",
+    "propertyId": "name",
+    "propertyName": "名称",
+    "input": "现在有“容器”模型的“名称”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"large\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "large",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "CONTAINER@ONEMODEL",
+    "objectName": "容器",
+    "propertyId": "image",
+    "propertyName": "镜像",
+    "input": "现在有“容器”模型的“镜像”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"background\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "background"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "CONTAINER@ONEMODEL",
+    "objectName": "容器",
+    "propertyId": "resourceInstanceId",
+    "propertyName": "资源实例ID",
+    "input": "现在有“容器”模型的“资源实例ID”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"link\",\n    \"type\": \"string\"\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "link",
+        "type": "string"
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "default"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "CONTAINER@ONEMODEL",
+    "objectName": "容器",
+    "propertyId": "containerId",
+    "propertyName": "containerId",
+    "input": "现在有“容器”模型的“containerId”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"link\",\n    \"type\": \"string\"\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "link",
+        "type": "string"
+      }
+    ]
+  },
+  {
+    "objectId": "CONTAINER@ONEMODEL",
+    "objectName": "容器",
+    "propertyId": "cpusetCpus",
+    "propertyName": "允许使用的CPU",
+    "input": "现在有“容器”模型的“允许使用的CPU”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "default"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "CONTAINER@ONEMODEL",
+    "objectName": "容器",
+    "propertyId": "resourceId",
+    "propertyName": "资源ID",
+    "input": "现在有“容器”模型的“资源ID”属性，类型是字符串。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"string\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"link\",\n    \"type\": \"string\"\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"string\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "string",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "link",
+        "type": "string"
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "string",
+        "style": {
+          "variant": "default"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "CONTAINER@ONEMODEL",
+    "objectName": "容器",
+    "propertyId": "collectedDataStatus",
+    "propertyName": "采集数据状态",
+    "input": "现在有“容器”模型的“采集数据状态”属性，类型是枚举：normal、lost。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"default\",\n      \"palette\": {\n        \"normal\": \"green\",\n        \"lost\": \"red\"\n      }\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"outline\",\n      \"palette\": {\n        \"normal\": \"green\",\n        \"lost\": \"red\"\n      }\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"background\",\n      \"palette\": {\n        \"normal\": \"green\",\n        \"lost\": \"red\"\n      }\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "enum",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "default",
+          "palette": {
+            "normal": "green",
+            "lost": "red"
+          }
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "outline",
+          "palette": {
+            "normal": "green",
+            "lost": "red"
+          }
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "background",
+          "palette": {
+            "normal": "green",
+            "lost": "red"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "CONTAINER@ONEMODEL",
+    "objectName": "容器",
+    "propertyId": "finishedAt",
+    "propertyName": "终止时间",
+    "input": "现在有“容器”模型的“终止时间”属性，类型是日期时间。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "对于“容器”模型的“终止时间”属性，类型是日期时间，按视觉重量从低到高，有以下几种显示方案：\n\n1. 使用中等字号，次级文本颜色显示，使用相对时间格式；\n2. 使用中等字号，默认颜色文本显示，使用精确时间格式；\n3. 使用大号字号，字重加粗，默认颜色文本显示，使用精确时间格式。\n\n期望返回结果：\n\n```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    },\n    \"formatter\": {\n      \"type\": \"relative-time\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    },\n    \"formatter\": {\n      \"type\": \"exact-time\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"style\": {\n      \"size\": \"large\",\n      \"fontWeight\": \"bold\",\n      \"color\": \"var(--text-color-default)\"\n    },\n    \"formatter\": {\n      \"type\": \"exact-time\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "datetime",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        },
+        "formatter": {
+          "type": "relative-time"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "datetime",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        },
+        "formatter": {
+          "type": "exact-time"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "text",
+        "type": "datetime",
+        "style": {
+          "size": "large",
+          "fontWeight": "bold",
+          "color": "var(--text-color-default)"
+        },
+        "formatter": {
+          "type": "exact-time"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "CONTAINER@ONEMODEL",
+    "objectName": "容器",
+    "propertyId": "markedLostTs",
+    "propertyName": "被标记为lost状态时间",
+    "input": "现在有“容器”模型的“被标记为lost状态时间”属性，类型是整型，耗时，单位秒。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"integer\",\n    \"formatter\": {\n      \"type\": \"duration\",\n      \"unit\": \"second\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"integer\",\n    \"formatter\": {\n      \"type\": \"duration\",\n      \"unit\": \"second\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"link\",\n    \"type\": \"integer\",\n    \"formatter\": {\n      \"type\": \"duration\",\n      \"unit\": \"second\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"integer\",\n    \"formatter\": {\n      \"type\": \"duration\",\n      \"unit\": \"second\"\n    },\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "integer",
+        "formatter": {
+          "type": "duration",
+          "unit": "second"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "integer",
+        "formatter": {
+          "type": "duration",
+          "unit": "second"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "link",
+        "type": "integer",
+        "formatter": {
+          "type": "duration",
+          "unit": "second"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "integer",
+        "formatter": {
+          "type": "duration",
+          "unit": "second"
+        },
+        "style": {
+          "variant": "default"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "CONTAINER@ONEMODEL",
+    "objectName": "容器",
+    "propertyId": "memory",
+    "propertyName": "内存限制",
+    "input": "现在有“容器”模型的“内存限制”属性，类型是整型，原始单位 MiB。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"integer\",\n    \"formatter\": {\n      \"type\": \"number\",\n      \"format\": \"decimal\",\n      \"unit\": \"MiB\"\n    },\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"integer\",\n    \"formatter\": {\n      \"type\": \"number\",\n      \"format\": \"decimal\",\n      \"unit\": \"MiB\"\n    },\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"integer\",\n    \"formatter\": {\n      \"type\": \"number\",\n      \"format\": \"decimal\",\n      \"unit\": \"MiB\"\n    },\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"integer\",\n    \"formatter\": {\n      \"type\": \"number\",\n      \"format\": \"decimal\",\n      \"unit\": \"MiB\"\n    },\n    \"style\": {\n      \"variant\": \"background\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "integer",
+        "formatter": {
+          "type": "number",
+          "format": "decimal",
+          "unit": "MiB"
+        },
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "integer",
+        "formatter": {
+          "type": "number",
+          "format": "decimal",
+          "unit": "MiB"
+        },
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "integer",
+        "formatter": {
+          "type": "number",
+          "format": "decimal",
+          "unit": "MiB"
+        },
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "integer",
+        "formatter": {
+          "type": "number",
+          "format": "decimal",
+          "unit": "MiB"
+        },
+        "style": {
+          "variant": "background"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "CONTAINER@ONEMODEL",
+    "objectName": "容器",
+    "propertyId": "startedAt",
+    "propertyName": "启动时间",
+    "input": "现在有“容器”模型的“启动时间”属性，类型是日期时间。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    },\n    \"formatter\": {\n      \"type\": \"relative\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"formatter\": {\n      \"type\": \"datetime\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"fontWeight\": \"bold\"\n    },\n    \"formatter\": {\n      \"type\": \"datetime\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"text\",\n    \"type\": \"datetime\",\n    \"style\": {\n      \"size\": \"large\",\n      \"fontWeight\": \"bold\"\n    },\n    \"formatter\": {\n      \"type\": \"datetime\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "datetime",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        },
+        "formatter": {
+          "type": "relative"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "datetime",
+        "formatter": {
+          "type": "datetime"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "text",
+        "type": "datetime",
+        "style": {
+          "size": "medium",
+          "fontWeight": "bold"
+        },
+        "formatter": {
+          "type": "datetime"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "text",
+        "type": "datetime",
+        "style": {
+          "size": "large",
+          "fontWeight": "bold"
+        },
+        "formatter": {
+          "type": "datetime"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "CONTAINER@ONEMODEL",
+    "objectName": "容器",
+    "propertyId": "type",
+    "propertyName": "类型",
+    "input": "现在有“容器”模型的“类型”属性，类型是枚举：k8s、docker。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-secondary)\"\n    }\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"text\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"size\": \"medium\",\n      \"color\": \"var(--text-color-default)\"\n    }\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"default\",\n      \"palette\": {\n        \"k8s\": \"blue\",\n        \"docker\": \"green\"\n      }\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"enum\",\n    \"style\": {\n      \"variant\": \"background\",\n      \"palette\": {\n        \"k8s\": \"blue\",\n        \"docker\": \"green\"\n      }\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "enum",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-secondary)"
+        }
+      },
+      {
+        "visualWeight": 0,
+        "display": "text",
+        "type": "enum",
+        "style": {
+          "size": "medium",
+          "color": "var(--text-color-default)"
+        }
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "default",
+          "palette": {
+            "k8s": "blue",
+            "docker": "green"
+          }
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "enum",
+        "style": {
+          "variant": "background",
+          "palette": {
+            "k8s": "blue",
+            "docker": "green"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "CONTAINER@ONEMODEL",
+    "objectName": "容器",
+    "propertyId": "config",
+    "propertyName": "配置信息",
+    "input": "现在有“容器”模型的“配置信息”属性，类型是结构体。该结构体定义的字段有：启动脚本路径（ID 是 path，类型是字符串）、PID（ID 是 pid，类型是整型）、退出码（ID 是 exitCode，类型是整型）、退出的错误信息（ID 是 error，类型是字符串）。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。\n\n注意给出 `field` 字段名。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"struct\",\n    \"field\": \"path\"\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"link\",\n    \"type\": \"struct\",\n    \"field\": \"pid\"\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"struct\",\n    \"field\": \"exitCode\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"struct\",\n    \"field\": \"error\",\n    \"style\": {\n      \"variant\": \"outline\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "struct",
+        "field": "path"
+      },
+      {
+        "visualWeight": 0,
+        "display": "link",
+        "type": "struct",
+        "field": "pid"
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "struct",
+        "field": "exitCode",
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "struct",
+        "field": "error",
+        "style": {
+          "variant": "outline"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "CONTAINER@ONEMODEL",
+    "objectName": "容器",
+    "propertyId": "imageInfo",
+    "propertyName": "镜像信息",
+    "input": "现在有“容器”模型的“镜像信息”属性，类型是结构体。该结构体定义的字段有：镜像仓库（ID 是 repository，类型是字符串）、镜像版本（ID 是 imageTag，类型是字符串）、镜像指纹信息（ID 是 imageSHA256，类型是字符串）。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。\n\n注意给出 `field` 字段名。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"struct\",\n    \"field\": \"repository\"\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"link\",\n    \"type\": \"struct\",\n    \"field\": \"repository\"\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"struct\",\n    \"field\": \"repository\",\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"struct\",\n    \"field\": \"repository\",\n    \"style\": {\n      \"variant\": \"outline\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "struct",
+        "field": "repository"
+      },
+      {
+        "visualWeight": 0,
+        "display": "link",
+        "type": "struct",
+        "field": "repository"
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "struct",
+        "field": "repository",
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "struct",
+        "field": "repository",
+        "style": {
+          "variant": "outline"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "CONTAINER@ONEMODEL",
+    "objectName": "容器",
+    "propertyId": "labels",
+    "propertyName": "标签",
+    "input": "现在有“容器”模型的“标签”属性，类型是结构体列表。该结构体定义的字段有：键（ID 是 key，类型是字符串）、值（ID 是 value，类型是字符串）。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。\n\n注意给出 `field` 字段名。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"struct-list\",\n    \"field\": \"key\",\n    \"countOnly\": true\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"link\",\n    \"type\": \"struct-list\",\n    \"field\": \"key\",\n    \"countOnly\": true\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"struct-list\",\n    \"field\": \"key\",\n    \"maxItems\": 2,\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"struct-list\",\n    \"field\": \"key\",\n    \"maxItems\": 2,\n    \"style\": {\n      \"variant\": \"outline\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "struct-list",
+        "field": "key",
+        "countOnly": true
+      },
+      {
+        "visualWeight": 0,
+        "display": "link",
+        "type": "struct-list",
+        "field": "key",
+        "countOnly": true
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "struct-list",
+        "field": "key",
+        "maxItems": 2,
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "struct-list",
+        "field": "key",
+        "maxItems": 2,
+        "style": {
+          "variant": "outline"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "CONTAINER@ONEMODEL",
+    "objectName": "容器",
+    "propertyId": "mounts",
+    "propertyName": "挂载点",
+    "input": "现在有“容器”模型的“挂载点”属性，类型是结构体列表。该结构体定义的字段有：名称（ID 是 name，类型是字符串）、类型（ID 是 type，类型是枚举）、来源（ID 是 source，类型是字符串）、目标（ID 是 destination，类型是字符串）、驱动（ID 是 driver，类型是字符串）、模式（ID 是 mode，类型是字符串）、读写（ID 是 rw，类型是布尔）、传播（ID 是 propagation，类型是字符串）。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。\n\n注意给出 `field` 字段名。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"struct-list\",\n    \"countOnly\": true,\n    \"field\": \"name\"\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"link\",\n    \"type\": \"struct-list\",\n    \"countOnly\": true,\n    \"field\": \"name\"\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"struct-list\",\n    \"field\": \"type\",\n    \"maxItems\": 2,\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"struct-list\",\n    \"field\": \"type\",\n    \"maxItems\": 2,\n    \"style\": {\n      \"variant\": \"outline\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "struct-list",
+        "countOnly": true,
+        "field": "name"
+      },
+      {
+        "visualWeight": 0,
+        "display": "link",
+        "type": "struct-list",
+        "countOnly": true,
+        "field": "name"
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "struct-list",
+        "field": "type",
+        "maxItems": 2,
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "struct-list",
+        "field": "type",
+        "maxItems": 2,
+        "style": {
+          "variant": "outline"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "CONTAINER@ONEMODEL",
+    "objectName": "容器",
+    "propertyId": "portBindings",
+    "propertyName": "端口绑定",
+    "input": "现在有“容器”模型的“端口绑定”属性，类型是结构体列表。该结构体定义的字段有：端口（ID 是 port，类型是字符串）、主机IP（ID 是 hostIp，类型是字符串）、主机端口（ID 是 hostPort，类型是整型）。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。\n\n注意给出 `field` 字段名。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"struct-list\",\n    \"countOnly\": true,\n    \"field\": \"port\"\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"link\",\n    \"type\": \"struct-list\",\n    \"countOnly\": true,\n    \"field\": \"port\"\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"struct-list\",\n    \"field\": \"port\",\n    \"maxItems\": 2,\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"struct-list\",\n    \"field\": \"port\",\n    \"maxItems\": 2,\n    \"style\": {\n      \"variant\": \"outline\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "struct-list",
+        "countOnly": true,
+        "field": "port"
+      },
+      {
+        "visualWeight": 0,
+        "display": "link",
+        "type": "struct-list",
+        "countOnly": true,
+        "field": "port"
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "struct-list",
+        "field": "port",
+        "maxItems": 2,
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "struct-list",
+        "field": "port",
+        "maxItems": 2,
+        "style": {
+          "variant": "outline"
+        }
+      }
+    ]
+  },
+  {
+    "objectId": "CONTAINER@ONEMODEL",
+    "objectName": "容器",
+    "propertyId": "ports",
+    "propertyName": "端口信息",
+    "input": "现在有“容器”模型的“端口信息”属性，类型是结构体列表。该结构体定义的字段有：端口（ID 是 containerPort，类型是整型）、协议（ID 是 protocol，类型是字符串）。按视觉重量从低到高，给出2-4种候选显示方案的编排 storyboards。\n\n`visualWeight` 的取值在 -1 至 2 之间。不要给不同的视觉重量输出相同的方案了。\n\n格式化为数字、日期时间，或使用详情信息、表格、卡片列表这几种形式时，不设置 style。\n\n可选的显示形式只有：文本、链接、标签。通常只有列表类型或表示状态的属性会使用标签形式。\n\n注意给出 `field` 字段名。",
+    "output": "```json\n[\n  {\n    \"visualWeight\": -1,\n    \"display\": \"text\",\n    \"type\": \"struct-list\",\n    \"field\": \"containerPort\",\n    \"countOnly\": true\n  },\n  {\n    \"visualWeight\": 0,\n    \"display\": \"link\",\n    \"type\": \"struct-list\",\n    \"field\": \"containerPort\",\n    \"countOnly\": true\n  },\n  {\n    \"visualWeight\": 1,\n    \"display\": \"tag\",\n    \"type\": \"struct-list\",\n    \"field\": \"containerPort\",\n    \"maxItems\": 2,\n    \"style\": {\n      \"variant\": \"default\"\n    }\n  },\n  {\n    \"visualWeight\": 2,\n    \"display\": \"tag\",\n    \"type\": \"struct-list\",\n    \"field\": \"containerPort\",\n    \"maxItems\": 2,\n    \"style\": {\n      \"variant\": \"outline\"\n    }\n  }\n]\n```",
+    "json": [
+      {
+        "visualWeight": -1,
+        "display": "text",
+        "type": "struct-list",
+        "field": "containerPort",
+        "countOnly": true
+      },
+      {
+        "visualWeight": 0,
+        "display": "link",
+        "type": "struct-list",
+        "field": "containerPort",
+        "countOnly": true
+      },
+      {
+        "visualWeight": 1,
+        "display": "tag",
+        "type": "struct-list",
+        "field": "containerPort",
+        "maxItems": 2,
+        "style": {
+          "variant": "default"
+        }
+      },
+      {
+        "visualWeight": 2,
+        "display": "tag",
+        "type": "struct-list",
+        "field": "containerPort",
+        "maxItems": 2,
+        "style": {
+          "variant": "outline"
+        }
+      }
+    ]
   }
 ]

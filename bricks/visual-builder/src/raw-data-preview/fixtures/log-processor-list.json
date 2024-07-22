@@ -1,0 +1,160 @@
+[
+  {
+    "jobName": "系统日志处理流1",
+    "objectId": "obj12345",
+    "filter": "error",
+    "agentType": "filebeat",
+    "enabled": true,
+    "jobType": "COMMON",
+    "logTimeType": "system",
+    "customizeMetrics": [
+      {
+        "id": "metric1",
+        "filter": { "type": "keyword", "value": "error" },
+        "expression": { "type": "count" }
+      },
+      {
+        "id": "metric2",
+        "filter": { "type": "keyword", "value": "warning" },
+        "expression": { "type": "count" }
+      }
+    ],
+    "instanceMapping": [
+      {
+        "key": "host",
+        "paramType": "cmdb",
+        "paramValue": { "query": "host:server1" }
+      },
+      { "key": "app", "paramType": "const", "paramValue": { "value": "app1" } }
+    ],
+    "processSteps": [
+      {
+        "name": "解析",
+        "parents": [],
+        "output": { "fields": ["timestamp", "message", "level"] },
+        "action": { "type": "parser", "parser": "json" }
+      },
+      {
+        "name": "过滤",
+        "parents": ["解析"],
+        "output": { "fields": ["message", "level"] },
+        "action": {
+          "type": "filter",
+          "filter": { "type": "keyword", "value": "error" }
+        }
+      },
+      {
+        "name": "归档",
+        "parents": ["过滤"],
+        "output": {},
+        "action": {
+          "type": "archive",
+          "archive": { "location": "/var/log/archives" }
+        }
+      }
+    ]
+  },
+  {
+    "jobName": "应用日志处理流2",
+    "objectId": "obj67890",
+    "filter": "app",
+    "agentType": "log_sampler",
+    "enabled": true,
+    "jobType": "APM",
+    "logTimeType": "log",
+    "customizeMetrics": [
+      {
+        "id": "metric3",
+        "filter": { "type": "keyword", "value": "transaction" },
+        "expression": { "type": "sum", "field": "duration" }
+      }
+    ],
+    "instanceMapping": [
+      {
+        "key": "host",
+        "paramType": "cmdb",
+        "paramValue": { "query": "host:server2" }
+      },
+      { "key": "app", "paramType": "const", "paramValue": { "value": "app2" } }
+    ],
+    "processSteps": [
+      {
+        "name": "解析",
+        "parents": [],
+        "output": { "fields": ["timestamp", "transaction", "duration"] },
+        "action": { "type": "parser", "parser": "regex" }
+      },
+      {
+        "name": "过滤",
+        "parents": ["解析"],
+        "output": { "fields": ["transaction", "duration"] },
+        "action": {
+          "type": "filter",
+          "filter": { "type": "range", "field": "duration", "min": 1000 }
+        }
+      },
+      {
+        "name": "汇总",
+        "parents": ["过滤"],
+        "output": { "fields": ["transaction", "total_duration"] },
+        "action": {
+          "type": "aggregate",
+          "aggregate": { "field": "duration", "operation": "sum" }
+        }
+      }
+    ]
+  },
+  {
+    "jobName": "安全日志处理流3",
+    "objectId": "obj11111",
+    "filter": "security",
+    "agentType": "filebeat",
+    "enabled": false,
+    "jobType": "KEYWORD",
+    "logTimeType": "system",
+    "customizeMetrics": [
+      {
+        "id": "metric4",
+        "filter": { "type": "keyword", "value": "login" },
+        "expression": { "type": "count" }
+      }
+    ],
+    "instanceMapping": [
+      {
+        "key": "host",
+        "paramType": "cmdb",
+        "paramValue": { "query": "host:server3" }
+      },
+      { "key": "app", "paramType": "const", "paramValue": { "value": "app3" } }
+    ],
+    "processSteps": [
+      {
+        "name": "解析",
+        "parents": [],
+        "output": { "fields": ["timestamp", "user", "action"] },
+        "action": { "type": "parser", "parser": "json" }
+      },
+      {
+        "name": "过滤",
+        "parents": ["解析"],
+        "output": { "fields": ["user", "action"] },
+        "action": {
+          "type": "filter",
+          "filter": { "type": "keyword", "value": "login" }
+        }
+      },
+      {
+        "name": "告警",
+        "parents": ["过滤"],
+        "output": {},
+        "action": {
+          "type": "alert",
+          "alert": {
+            "condition": "user:admin",
+            "message": "Admin login detected"
+          }
+        }
+      }
+    ]
+  }
+]

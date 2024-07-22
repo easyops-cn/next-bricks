@@ -1,0 +1,218 @@
+[
+  {
+    "closeReason": "项目完成",
+    "confirmUrl": "https://example.com/idea1/confirm",
+    "createRole": "admin",
+    "description": "提升用户界面的响应速度",
+    "enterpriseVersion": "v2.1.0",
+    "finishTime": "2024-07-20 18:00:00",
+    "number": "001",
+    "pdReviewComment": "界面响应速度提升方案可行，需进一步细化。",
+    "pmoReviewComment": "项目价值高，建议优先处理。",
+    "productLine": "Web Platform",
+    "resolveTime": "2024-07-15 10:00:00",
+    "source": "WeChat",
+    "stage": "Design",
+    "value": "提升用户体验，增加用户粘性",
+    "category": "optimizedRequirements",
+    "classification": "optimization",
+    "confirmDeliveryTime": "2024-07-20 18:00:00",
+    "deliveryConfirm": true,
+    "deliveryStatus": "passed",
+    "endDate": "2024-07-20",
+    "expectReleaseDate": "2024-07-18",
+    "initialScore": 8.5,
+    "op_plan_month": false,
+    "pdReviewDate": "2024-07-10",
+    "pdReviewResult": true,
+    "pdReviewTime": "2024-07-10 14:00:00",
+    "planStartDate": "2024-07-12",
+    "planStartTime": "2024-07-12 09:00:00",
+    "pmoReviewDate": "2024-07-08",
+    "pmoReviewResult": true,
+    "pmoReviewTime": "2024-07-08 16:00:00",
+    "predictDeliveryTime": "2024-07-20 18:00:00",
+    "realStoryPoint": 12.5,
+    "score": 9.0,
+    "startDate": "2024-07-12",
+    "status": "released",
+    "customerConfirm": {
+      "confirm": 1,
+      "rejectReason": "",
+      "confirmTime": "2024-07-20 18:00:00"
+    },
+    "document": {
+      "developUrl": "https://example.com/idea1/develop",
+      "requirementUrl": "https://example.com/idea1/requirement"
+    },
+    "gradeInfo": {
+      "grade": 9,
+      "memo": "项目完成度高，用户反馈良好。",
+      "gradeTime": "2024-07-20 18:00:00"
+    },
+    "humanCost": { "frontend": 5.0, "backend": 7.5 },
+    "ratingDetails": [
+      {
+        "type": "value",
+        "value": 9,
+        "reach": 8,
+        "effort": 6,
+        "frequency": 7,
+        "urgent": 10
+      },
+      {
+        "type": "efficiency",
+        "value": 8,
+        "reach": 7,
+        "effort": 5,
+        "frequency": 6,
+        "urgent": 9
+      }
+    ],
+    "speedUp": [{ "mark": true, "reason": "客户强烈需求", "score": 1.5 }]
+  },
+  {
+    "closeReason": "需求变更",
+    "confirmUrl": "https://example.com/idea2/confirm",
+    "createRole": "user",
+    "description": "增加移动端支付功能",
+    "enterpriseVersion": "v2.2.0",
+    "finishTime": "2024-07-25 14:00:00",
+    "number": "002",
+    "pdReviewComment": "支付功能需考虑安全性与兼容性。",
+    "pmoReviewComment": "项目价值中等，需与其他需求平衡。",
+    "productLine": "Mobile App",
+    "resolveTime": "2024-07-18 10:00:00",
+    "source": "WeChat",
+    "stage": "Development",
+    "value": "增加支付功能，提高交易便利性",
+    "category": "functionalRequirements",
+    "classification": "feature",
+    "confirmDeliveryTime": "2024-07-25 14:00:00",
+    "deliveryConfirm": false,
+    "deliveryStatus": "unconfirmed",
+    "endDate": "2024-07-25",
+    "expectReleaseDate": "2024-07-23",
+    "initialScore": 7.0,
+    "op_plan_month": false,
+    "pdReviewDate": "2024-07-12",
+    "pdReviewResult": true,
+    "pdReviewTime": "2024-07-12 14:00:00",
+    "planStartDate": "2024-07-15",
+    "planStartTime": "2024-07-15 09:00:00",
+    "pmoReviewDate": "2024-07-10",
+    "pmoReviewResult": true,
+    "pmoReviewTime": "2024-07-10 16:00:00",
+    "predictDeliveryTime": "2024-07-25 14:00:00",
+    "realStoryPoint": 15.0,
+    "score": 7.5,
+    "startDate": "2024-07-15",
+    "status": "waitIterate",
+    "customerConfirm": {
+      "confirm": 0,
+      "rejectReason": "功能未完全满足需求",
+      "confirmTime": "2024-07-25 14:00:00"
+    },
+    "document": {
+      "developUrl": "https://example.com/idea2/develop",
+      "requirementUrl": "https://example.com/idea2/requirement"
+    },
+    "gradeInfo": {
+      "grade": 7,
+      "memo": "项目完成度一般，需进一步优化。",
+      "gradeTime": "2024-07-25 14:00:00"
+    },
+    "humanCost": { "frontend": 8.0, "backend": 10.0 },
+    "ratingDetails": [
+      {
+        "type": "value",
+        "value": 7,
+        "reach": 6,
+        "effort": 8,
+        "frequency": 7,
+        "urgent": 8
+      },
+      {
+        "type": "efficiency",
+        "value": 6,
+        "reach": 5,
+        "effort": 7,
+        "frequency": 6,
+        "urgent": 7
+      }
+    ],
+    "speedUp": [{ "mark": false, "reason": "", "score": 0.0 }]
+  },
+  {
+    "closeReason": "项目延期",
+    "confirmUrl": "https://example.com/idea3/confirm",
+    "createRole": "guest",
+    "description": "优化搜索算法，提高搜索结果准确性",
+    "enterpriseVersion": "v2.3.0",
+    "finishTime": "2024-07-30 16:00:00",
+    "number": "003",
+    "pdReviewComment": "搜索算法优化需考虑性能与用户体验。",
+    "pmoReviewComment": "项目价值高，但需评估资源分配。",
+    "productLine": "Search Engine",
+    "resolveTime": "2024-07-22 10:00:00",
+    "source": "WeChat",
+    "stage": "Testing",
+    "value": "优化搜索算法，提升搜索结果质量",
+    "category": "performance",
+    "classification": "optimization",
+    "confirmDeliveryTime": "2024-07-30 16:00:00",
+    "deliveryConfirm": false,
+    "deliveryStatus": "unconfirmed",
+    "endDate": "2024-07-30",
+    "expectReleaseDate": "2024-07-28",
+    "initialScore": 9.0,
+    "op_plan_month": false,
+    "pdReviewDate": "2024-07-15",
+    "pdReviewResult": true,
+    "pdReviewTime": "2024-07-15 14:00:00",
+    "planStartDate": "2024-07-18",
+    "planStartTime": "2024-07-18 09:00:00",
+    "pmoReviewDate": "2024-07-13",
+    "pmoReviewResult": true,
+    "pmoReviewTime": "2024-07-13 16:00:00",
+    "predictDeliveryTime": "2024-07-30 16:00:00",
+    "realStoryPoint": 18.0,
+    "score": 8.5,
+    "startDate": "2024-07-18",
+    "status": "waitRelease",
+    "customerConfirm": {
+      "confirm": 0,
+      "rejectReason": "测试中发现部分问题",
+      "confirmTime": "2024-07-30 16:00:00"
+    },
+    "document": {
+      "developUrl": "https://example.com/idea3/develop",
+      "requirementUrl": "https://example.com/idea3/requirement"
+    },
+    "gradeInfo": {
+      "grade": 8,
+      "memo": "项目完成度良好，需解决测试阶段问题。",
+      "gradeTime": "2024-07-30 16:00:00"
+    },
+    "humanCost": { "frontend": 6.0, "backend": 12.0 },
+    "ratingDetails": [
+      {
+        "type": "value",
+        "value": 9,
+        "reach": 7,
+        "effort": 9,
+        "frequency": 8,
+        "urgent": 9
+      },
+      {
+        "type": "efficiency",
+        "value": 8,
+        "reach": 6,
+        "effort": 8,
+        "frequency": 7,
+        "urgent": 8
+      }
+    ],
+    "speedUp": [{ "mark": true, "reason": "市场竞争力需求", "score": 1.0 }]
+  }
+]

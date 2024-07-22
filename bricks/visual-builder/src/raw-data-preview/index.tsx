@@ -17,6 +17,7 @@ const { defineElement, property } = createDecorators();
 export interface RawPreviewProps {
   previewUrl?: string;
   generations?: AttributeGeneration[];
+  mockIndex?: number;
   category?: PreviewCategory;
   theme?: string;
   uiVersion?: string;
@@ -56,6 +57,9 @@ class RawDataPreview extends ReactNextElement {
   @property({ attribute: false })
   accessor generations: AttributeGeneration[] | undefined;
 
+  @property({ type: Number })
+  accessor mockIndex: number | undefined;
+
   /**
    * @default "value"
    */
@@ -76,6 +80,7 @@ class RawDataPreview extends ReactNextElement {
       <RawDataPreviewComponent
         previewUrl={this.previewUrl}
         generations={this.generations}
+        mockIndex={this.mockIndex}
         category={this.category}
         theme={this.theme}
         uiVersion={this.uiVersion}
@@ -92,6 +97,7 @@ export interface RawDataPreviewComponentProps extends RawPreviewProps {
 export function RawDataPreviewComponent({
   previewUrl,
   generations,
+  mockIndex,
   category,
   theme,
   uiVersion,
@@ -207,10 +213,42 @@ export function RawDataPreviewComponent({
         },
       });
 
-      const dataSource =
-        generation.mockData[
-          Math.floor(Math.random() * generation.mockData.length)
-        ] ?? {};
+      const mockList = generation.mockData ?? [];
+      let dataSource: unknown;
+
+      // 从 mock 数据中获取可用的数据值
+      if (mockList.length === 0) {
+        dataSource = {};
+      } else if (mockIndex >= 0) {
+        // 指定了 mockIndex，使用指定的 mock 数据，取模。
+        dataSource = mockList[mockIndex % mockList.length];
+      } else {
+        // 如果有一项是数组，则优先使用长度最长的数组；
+        // 否则，优先使用非空值，最后使用空值；
+        const availableDataValues = mockList.map((object) => {
+          return object?.[generation.propertyId];
+        });
+        availableDataValues.sort((a, b) => {
+          const aIsArray = Array.isArray(a);
+          const bIsArray = Array.isArray(b);
+          if (aIsArray || bIsArray) {
+            return (bIsArray ? b.length : -1) - (aIsArray ? a.length : -1);
+          }
+          const aIsNil = a == null;
+          const bIsNil = b == null;
+          if (aIsNil || bIsNil) {
+            return (bIsNil ? 0 : 1) - (aIsNil ? 0 : 1);
+          }
+
+          const aIsEmpty = typeof a === "string" && a.length === 0;
+          const bIsEmpty = typeof b === "string" && b.length === 0;
+          if (aIsEmpty || bIsEmpty) {
+            return (bIsEmpty ? 0 : 1) - (aIsEmpty ? 0 : 1);
+          }
+          return 0;
+        });
+        dataSource = { [generation.propertyId]: availableDataValues[0] };
+      }
 
       for (let i = -1; i < 3; i++) {
         const candidate = candidatesByVisualWeight.get(i);
@@ -267,7 +305,7 @@ export function RawDataPreviewComponent({
         styleText: previewStyleText,
       }
     );
-  }, [app, injected, generations, theme, uiVersion, category]);
+  }, [app, injected, generations, theme, uiVersion, category, mockIndex]);
 
   return (
     <div className={classNames("container")}>

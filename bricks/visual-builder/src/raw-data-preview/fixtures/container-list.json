@@ -1,0 +1,182 @@
+[
+  {
+    "uniqueName": "container1",
+    "name": "Container One",
+    "image": "nginx:latest",
+    "resourceInstanceId": "res12345",
+    "containerId": "cont12345",
+    "cpusetCpus": "0-3",
+    "resourceId": "resId1",
+    "collectedDataStatus": "normal",
+    "finishedAt": "2024-07-22 17:00:00",
+    "markedLostTs": 0,
+    "memory": 1024,
+    "startedAt": "2024-07-22 16:30:00",
+    "type": "docker",
+    "config": {
+      "path": "/usr/local/bin/start.sh",
+      "args": ["--config", "nginx.conf"],
+      "pid": 1234,
+      "exitCode": 0,
+      "error": "",
+      "binds": ["/var/log/nginx"],
+      "restartPolicy": { "Name": "always", "MaximumRetryCount": 0 },
+      "dns": ["8.8.8.8", "8.8.4.4"],
+      "cmd": ["nginx", "-g", "daemon off;"],
+      "volumes": ["/var/log/nginx"]
+    },
+    "imageInfo": {
+      "repository": "nginx",
+      "imageTag": "latest",
+      "imageSHA256": "sha256:1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
+    },
+    "labels": [
+      { "key": "com.example.app", "value": "nginx" },
+      { "key": "com.example.version", "value": "1.0" }
+    ],
+    "mounts": [
+      {
+        "name": "log",
+        "type": "bind",
+        "source": "/var/log",
+        "destination": "/var/log/nginx",
+        "driver": "",
+        "mode": "rw",
+        "rw": true,
+        "propagation": "rprivate"
+      },
+      {
+        "name": "config",
+        "type": "volume",
+        "source": "nginx-conf",
+        "destination": "/etc/nginx",
+        "driver": "",
+        "mode": "ro",
+        "rw": false,
+        "propagation": "rprivate"
+      }
+    ],
+    "portBindings": [
+      { "port": "80/tcp", "hostIp": "0.0.0.0", "hostPort": 8080 },
+      { "port": "443/tcp", "hostIp": "0.0.0.0", "hostPort": 8443 }
+    ],
+    "ports": [
+      { "containerPort": 80, "protocol": "tcp" },
+      { "containerPort": 443, "protocol": "tcp" }
+    ]
+  },
+  {
+    "uniqueName": "container2",
+    "name": "Container Two",
+    "image": "mysql:8.0",
+    "resourceInstanceId": "res67890",
+    "containerId": "cont67890",
+    "cpusetCpus": "4-7",
+    "resourceId": "resId2",
+    "collectedDataStatus": "lost",
+    "finishedAt": "2024-07-22 16:45:00",
+    "markedLostTs": 1689999300,
+    "memory": 2048,
+    "startedAt": "2024-07-22 16:15:00",
+    "type": "k8s",
+    "config": {
+      "path": "/usr/local/bin/start-mysql.sh",
+      "args": ["--user=root", "--password=secret"],
+      "pid": 2345,
+      "exitCode": 1,
+      "error": "Database connection failed",
+      "binds": ["/var/lib/mysql"],
+      "restartPolicy": { "Name": "on-failure", "MaximumRetryCount": 3 },
+      "dns": ["8.8.8.8"],
+      "cmd": ["mysqld"],
+      "volumes": ["/var/lib/mysql"]
+    },
+    "imageInfo": {
+      "repository": "mysql",
+      "imageTag": "8.0",
+      "imageSHA256": "sha256:0987654321fedcba0987654321fedcba0987654321fedcba0987654321fedcba"
+    },
+    "labels": [
+      { "key": "com.example.app", "value": "mysql" },
+      { "key": "com.example.version", "value": "8.0" }
+    ],
+    "mounts": [
+      {
+        "name": "data",
+        "type": "volume",
+        "source": "mysql-data",
+        "destination": "/var/lib/mysql",
+        "driver": "",
+        "mode": "rw",
+        "rw": true,
+        "propagation": "rprivate"
+      },
+      {
+        "name": "config",
+        "type": "bind",
+        "source": "/etc/mysql",
+        "destination": "/etc/mysql",
+        "driver": "",
+        "mode": "ro",
+        "rw": false,
+        "propagation": "rprivate"
+      }
+    ],
+    "portBindings": [
+      { "port": "3306/tcp", "hostIp": "0.0.0.0", "hostPort": 3306 }
+    ],
+    "ports": [{ "containerPort": 3306, "protocol": "tcp" }]
+  },
+  {
+    "uniqueName": "container3",
+    "name": "Container Three",
+    "image": "redis:alpine",
+    "resourceInstanceId": "res01234",
+    "containerId": "cont01234",
+    "cpusetCpus": "8-11",
+    "resourceId": "resId3",
+    "collectedDataStatus": "normal",
+    "finishedAt": "2024-07-22 17:30:00",
+    "markedLostTs": 0,
+    "memory": 512,
+    "startedAt": "2024-07-22 17:00:00",
+    "type": "docker",
+    "config": {
+      "path": "/usr/local/bin/start-redis.sh",
+      "args": ["--appendonly", "yes"],
+      "pid": 3456,
+      "exitCode": 0,
+      "error": "",
+      "binds": ["/data"],
+      "restartPolicy": { "Name": "no", "MaximumRetryCount": 0 },
+      "dns": [],
+      "cmd": ["redis-server"],
+      "volumes": ["/data"]
+    },
+    "imageInfo": {
+      "repository": "redis",
+      "imageTag": "alpine",
+      "imageSHA256": "sha256:fedcba0987654321abcdef0987654321abcdef0987654321abcdef0987654321abcdef"
+    },
+    "labels": [
+      { "key": "com.example.app", "value": "redis" },
+      { "key": "com.example.version", "value": "alpine" }
+    ],
+    "mounts": [
+      {
+        "name": "data",
+        "type": "volume",
+        "source": "redis-data",
+        "destination": "/data",
+        "driver": "",
+        "mode": "rw",
+        "rw": true,
+        "propagation": "rprivate"
+      }
+    ],
+    "portBindings": [
+      { "port": "6379/tcp", "hostIp": "0.0.0.0", "hostPort": 6379 }
+    ],
+    "ports": [{ "containerPort": 6379, "protocol": "tcp" }]
+  }
+]

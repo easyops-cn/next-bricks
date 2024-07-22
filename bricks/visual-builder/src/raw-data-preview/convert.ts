@@ -64,7 +64,7 @@ export function convertToStoryboard(
     properties: {
       style: {
         display: "inline-flex",
-        gap: "0.25em",
+        gap: "0.5em",
       },
     },
     children: [
