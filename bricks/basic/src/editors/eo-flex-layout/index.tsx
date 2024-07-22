@@ -1,13 +1,12 @@
 import type _React from "react";
 import { customEditors } from "@next-core/runtime";
-import type { EditorComponentProps } from "@next-shared/property-editor";
 import { eoFlexLayoutSchema } from "./eoFlexLayout.schema";
 import { get, omit } from "lodash";
 
 const transformNormal2Advanced = (rawValue: any) => {
   const res = {
     ...omit(rawValue, ["flexWrap"]),
-    ...(rawValue.flexWrap
+    ...(rawValue?.flexWrap && rawValue?.flexWrap !== "nowrap"
       ? {
           flexWrap: "wrap",
         }
@@ -35,9 +34,7 @@ const transformAdvanced2Normal = (rawValue: any) => {
 };
 
 function EoFlexLayoutComponentFactory(React: typeof _React) {
-  return function EoFlexLayoutComponent(
-    props: EditorComponentProps
-  ): React.ReactElement {
+  return function EoFlexLayoutComponent(props: any): React.ReactElement {
     const {
       SchemaFieldComponent,
       formilySchemaFormatter,
@@ -56,11 +53,10 @@ function EoFlexLayoutComponentFactory(React: typeof _React) {
 
       // 监听模式切换
       form.addEffects("onAdvancedChange", () => {
-        onAdvancedChange((advancedMode: boolean, form: any) => {
-          const rawValue = form.getState()?.values ?? {};
+        onAdvancedChange((advancedMode: boolean, _: any, values: any) => {
           return advancedMode
-            ? transformNormal2Advanced(rawValue)
-            : transformAdvanced2Normal(rawValue);
+            ? transformNormal2Advanced(values)
+            : transformAdvanced2Normal(values);
         });
       });
 
