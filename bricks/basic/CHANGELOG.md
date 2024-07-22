@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.36.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.35.0...@next-bricks/basic@1.36.0) (2024-07-22)
+
+
+### Features
+
+* **dropdown-button:** add action.click event ([695a216](https://github.com/easyops-cn/next-bricks/commit/695a216343efd81240af078f4ae0ba56eae3edf3))
+
+
+
+
+
 # [1.35.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.34.6...@next-bricks/basic@1.35.0) (2024-07-19)
 
 

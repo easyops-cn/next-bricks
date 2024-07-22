@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.36.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.35.10...@next-bricks/advanced@0.36.0) (2024-07-22)
+
+
+### Features
+
+* **workbench-layout:** add saveAsTemplate and loadFromTemplate actions and action.click event ([85c2475](https://github.com/easyops-cn/next-bricks/commit/85c2475716c5df9b0d85a7689057fb16014daede))
+* **workbench-layout:** add setLayouts method ([c84db64](https://github.com/easyops-cn/next-bricks/commit/c84db64517c5367e68a4590933d3695aff62ff95))
+
+
+
+
+
 ## [0.35.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.35.9...@next-bricks/advanced@0.35.10) (2024-07-21)
 
 **Note:** Version bump only for package @next-bricks/advanced
