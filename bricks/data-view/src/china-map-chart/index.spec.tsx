@@ -41,6 +41,12 @@ describe("data-view.china-map-chart", () => {
     });
     expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
 
+    expect(element.shadowRoot?.querySelector("div")).toBeTruthy();
+
+    act(() => {
+      (element.shadowRoot?.querySelector("div") as HTMLElement).click();
+    });
+
     act(() => {
       document.body.removeChild(element);
     });
