@@ -24,6 +24,7 @@ export const eoGridLayoutSchema = {
       type: "number",
       component: "NumberPicker",
       decorator: {
+        name: "FormItem",
         props: {
           tooltip: "各列等宽",
         },
@@ -40,6 +41,7 @@ export const eoGridLayoutSchema = {
         },
       },
       decorator: {
+        name: "FormItem",
         props: {
           tooltip: "通常不需设置，各行高度由内容决定。设置为>1时，各行高度相同",
         },
