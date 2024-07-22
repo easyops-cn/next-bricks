@@ -9,24 +9,32 @@ import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import { UseSingleBrickConf } from "@next-core/types";
 import { ReactUseBrick } from "@next-core/react-runtime";
+import { auth } from "@next-core/easyops-runtime";
+import "@next-core/theme";
 import {
   ItemCallback,
   Layout,
   Responsive,
   WidthProvider,
 } from "react-grid-layout";
-import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
 import type { Button, ButtonProps } from "@next-bricks/basic/button";
+import {
+  DropdownButton,
+  DropdownButtonEvents,
+  DropdownButtonEventsMap,
+  DropdownButtonProps,
+} from "@next-bricks/basic/dropdown-button";
 import type {
   Checkbox,
   CheckboxOptionType,
   CheckboxProps,
 } from "@next-bricks/form/checkbox";
+import { SimpleAction } from "@next-bricks/basic/actions";
 
 const { defineElement, property, event } = createDecorators();
 
@@ -47,6 +55,14 @@ interface CheckboxEventsMap {
 }
 
 const WrappedButton = wrapBrick<Button, ButtonProps>("eo-button");
+const WrappedDropdownButton = wrapBrick<
+  DropdownButton,
+  DropdownButtonProps,
+  DropdownButtonEvents,
+  DropdownButtonEventsMap
+>("eo-dropdown-button", {
+  onActionClick: "action.click",
+});
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 const WrappedCheckbox = wrapBrick<
   Checkbox,
@@ -101,6 +117,27 @@ class EoWorkbenchLayout extends ReactNextElement {
     this.#cancelEvent.emit();
   };
 
+  /**
+   * 操作点击事件
+   * @detail {
+        action: SimpleAction;
+        layouts: Layout[];
+      }
+   */
+  @event({
+    type: "action.click",
+  })
+  accessor #actionClickEvent!: EventEmitter<{
+    action: SimpleAction;
+    layouts: Layout[];
+  }>;
+
+  #handleActionClick = (action: SimpleAction, layouts: Layout[]): void => {
+    this.#actionClickEvent.emit({ action, layouts });
+    action.event &&
+      this.dispatchEvent(new CustomEvent(action.event, { detail: layouts }));
+  };
+
   render() {
     return (
       <EoWorkbenchLayoutComponent
@@ -110,6 +147,7 @@ class EoWorkbenchLayout extends ReactNextElement {
         isEdit={this.isEdit}
         onSave={this.#handleSaveLayout}
         onCancel={this.#handleCancel}
+        onActionClick={this.#handleActionClick}
       />
     );
   }
@@ -120,12 +158,18 @@ export interface EoWorkbenchLayoutProps {
   layouts?: Layout[];
   componentList?: Item[];
   isEdit?: boolean;
+}
+
+export interface EoWorkbenchLayoutComponentProps
+  extends EoWorkbenchLayoutProps {
   onSave?: (layout: Layout[]) => void;
   onCancel?: () => void;
+  onActionClick?: (action: SimpleAction, layouts: Layout[]) => void;
 }
 
 const getRealKey = (key: string): string =>
   key?.includes(":") ? key.split(":")[0] : key;
+const { isAdmin } = auth.getAuth();
 
 export function EoWorkbenchLayoutComponent({
   cardTitle = "卡片列表",
@@ -134,7 +178,8 @@ export function EoWorkbenchLayoutComponent({
   isEdit,
   onSave,
   onCancel,
-}: EoWorkbenchLayoutProps) {
+  onActionClick,
+}: EoWorkbenchLayoutComponentProps) {
   const ResponsiveReactGridLayout = useMemo(
     () => WidthProvider(Responsive),
     []
@@ -248,6 +293,18 @@ export function EoWorkbenchLayoutComponent({
 
   const handleCancel = () => {
     onCancel?.();
+  };
+
+  const handleActionClick = (action: SimpleAction) => {
+    const { event } = action;
+
+    switch (event) {
+      case "clear":
+        handleClearLayout();
+        break;
+      default:
+        onActionClick?.(action, layouts);
+    }
   };
 
   const handleDeleteItem = useCallback(
@@ -369,10 +426,25 @@ export function EoWorkbenchLayoutComponent({
             <WrappedButton type="primary" onClick={handleSave}>
               保存
             </WrappedButton>
-            <WrappedButton danger={true} onClick={handleClearLayout}>
-              清除
-            </WrappedButton>
             <WrappedButton onClick={handleCancel}>取消</WrappedButton>
+            <WrappedDropdownButton
+              btnText="更多"
+              icon={{
+                lib: "antd",
+                icon: "down",
+              }}
+              actions={[
+                ...(isAdmin
+                  ? [{ text: "另存为模板", event: "saveAsTemplate" }]
+                  : []),
+                { text: "从模版加载", event: "loadFromTemplate" },
+                { text: "清除", danger: true, event: "clear" },
+              ]}
+              onActionClick={(e) => {
+                handleActionClick(e.detail);
+              }}
+              data-testid="edit-layout-actions"
+            />
           </div>
         )}
         <ResponsiveReactGridLayout
