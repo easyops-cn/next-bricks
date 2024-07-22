@@ -106,6 +106,7 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
         zoom: 1,
       }),
     });
+    scene.setMapStatus({ doubleClickZoom: false, zoomEnable: false });
     const defaultImg = new Image();
     defaultImg.src = defaultPng;
 
@@ -199,7 +200,7 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
         {
           parser: {
             type: "image",
-            extent: [74.33, 17.9, 134.85, 53.33],
+            extent: [73.33, 17.9, 134.85, 53.73],
           },
         }
       );
@@ -354,6 +355,7 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
       <div id="map" ref={mapRef}></div>
       {showData && (
         <div
+          className="detailContent"
           onClick={(e) => {
             e.stopPropagation();
           }}
@@ -362,17 +364,12 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
               ? {
                   left: textPosition.left,
                   top: textPosition.top,
-                  position: "absolute",
-                  zIndex: "20",
-                  opacity: "0.8",
+                  transform: "translate(22px, -6px)",
                 }
               : {
                   transform: "translate(-50%, 0%)",
-                  position: "absolute",
-                  zIndex: "20",
                   top: "50%",
                   left: "50%",
-                  opacity: "0.8",
                 }),
             ...detailContentStyle,
           }}
