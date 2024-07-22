@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.11.6...@next-bricks/vs@1.11.7) (2024-07-22)
+
+
+### Bug Fixes
+
+* fix code-editor outline ([8bac783](https://github.com/easyops-cn/next-bricks/commit/8bac78324675795beaf5dc3b0d9dedf1910b10ea))
+
+
+
+
+
 ## [1.11.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.11.5...@next-bricks/vs@1.11.6) (2024-07-19)
 
 **Note:** Version bump only for package @next-bricks/vs
