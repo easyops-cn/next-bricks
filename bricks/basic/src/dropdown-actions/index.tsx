@@ -123,7 +123,7 @@ class EoDropdownActions
       <EoDropdownActionsComponent
         actions={this.actions}
         disabled={this.disabled}
-        handleActionClick={this.#handleClick}
+        onActionClick={this.#handleClick}
         onVisibleChange={this.#handleVisibleChange}
         checkedKeys={this.checkedKeys}
       />
@@ -132,7 +132,7 @@ class EoDropdownActions
 }
 
 interface DropdownActionsComponentProps extends DropdownActionsProps {
-  handleActionClick?: (action: SimpleAction) => void;
+  onActionClick?: (action: SimpleAction) => void;
   onVisibleChange?: (event: boolean) => void;
 }
 
@@ -140,17 +140,17 @@ export function EoDropdownActionsComponent({
   actions,
   checkedKeys,
   disabled,
-  handleActionClick,
+  onActionClick,
   onVisibleChange,
 }: DropdownActionsComponentProps) {
   const [visible, setVisible] = useState(false);
 
-  const onActionClick = useCallback(
+  const handleActionClick = useCallback(
     (e: CustomEvent<SimpleAction>) => {
       setVisible(false);
-      handleActionClick?.(e.detail);
+      onActionClick?.(e.detail);
     },
-    [handleActionClick]
+    [onActionClick]
   );
 
   return (
@@ -169,7 +169,7 @@ export function EoDropdownActionsComponent({
       <slot slot="anchor" />
       <WrappedActions
         actions={actions}
-        onActionClick={onActionClick}
+        onActionClick={handleActionClick}
         checkedKeys={checkedKeys}
       />
     </WrappedPopover>

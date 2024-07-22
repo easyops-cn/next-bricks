@@ -1,3 +1,4 @@
+import { getByTestId, fireEvent } from "@testing-library/dom";
 import { describe, test, expect, jest } from "@jest/globals";
 import { act } from "react-dom/test-utils";
 import "./";
@@ -86,8 +87,10 @@ describe("eo-workbench-layout", () => {
 
     const mockSaveEvent = jest.fn();
     const mockCancelEvent = jest.fn();
+    const mockActionClickEventHandler = jest.fn();
     element.addEventListener("save", mockSaveEvent);
     element.addEventListener("cancel", mockCancelEvent);
+    element.addEventListener("action.click", mockActionClickEventHandler);
 
     act(() => {
       document.body.appendChild(element);
@@ -243,9 +246,13 @@ describe("eo-workbench-layout", () => {
 
     // reset
     await act(async () => {
-      (
-        element.shadowRoot?.querySelector("eo-button[danger]") as HTMLElement
-      ).click();
+      fireEvent(
+        getByTestId(
+          element.shadowRoot as unknown as HTMLElement,
+          "edit-layout-actions"
+        ),
+        new CustomEvent("action.click", { detail: { event: "clear" } })
+      );
     });
 
     expect(
@@ -259,11 +266,30 @@ describe("eo-workbench-layout", () => {
 
     act(() => {
       (
-        element.shadowRoot?.querySelectorAll("eo-button")[2] as HTMLElement
+        element.shadowRoot?.querySelectorAll("eo-button")[1] as HTMLElement
       ).click();
     });
 
     expect(mockCancelEvent).toBeCalledTimes(1);
+
+    // action.click
+    const actionEvent = "saveAsTemplate";
+    await act(async () => {
+      fireEvent(
+        getByTestId(
+          element.shadowRoot as unknown as HTMLElement,
+          "edit-layout-actions"
+        ),
+        new CustomEvent("action.click", { detail: { event: actionEvent } })
+      );
+    });
+    expect(mockActionClickEventHandler).toBeCalledWith(
+      expect.objectContaining({
+        detail: expect.objectContaining({
+          action: expect.objectContaining({ event: actionEvent }),
+        }),
+      })
+    );
 
     act(() => {
       document.body.removeChild(element);

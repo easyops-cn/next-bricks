@@ -1,5 +1,5 @@
 import React from "react";
-import { createDecorators } from "@next-core/element";
+import { createDecorators, EventEmitter } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import type { ButtonProps, Button } from "../button/index.jsx";
 import type { GeneralIconProps } from "@next-bricks/icons/general-icon";
@@ -13,7 +13,7 @@ import type { Action, SimpleAction } from "../actions";
 import type { ButtonType, ComponentSize, Shape } from "../interface.js";
 import styleText from "./dropdown-button.shadow.css";
 
-const { defineElement, property } = createDecorators();
+const { defineElement, property, event } = createDecorators();
 
 const WrappedButton = wrapBrick<Button, ButtonProps>("eo-button");
 const WrappedDropdownActions = wrapBrick<
@@ -26,14 +26,20 @@ const WrappedDropdownActions = wrapBrick<
   onVisibleChange: "visible.change",
 });
 
-interface DropButtonProps {
-  actions?: Action[];
+export interface DropdownButtonEvents
+  extends Pick<DropdownActionsEvents, "action.click"> {}
+
+export interface DropdownButtonEventsMap
+  extends Pick<DropdownActionsEventsMapping, "onActionClick"> {}
+
+export interface DropdownButtonProps
+  extends Pick<DropdownActionsProps, "actions" | "disabled">,
+    Pick<ButtonProps, "size" | "shape" | "type" | "icon"> {
   btnText?: string;
-  size?: ComponentSize;
-  shape?: Shape;
-  icon?: GeneralIconProps;
-  disabled?: boolean;
-  handleClick: (action: SimpleAction) => void;
+}
+
+interface DropdownButtonComponentProps extends DropdownButtonProps {
+  onActionClick?: (action: SimpleAction) => void;
 }
 
 const defaultIcon: GeneralIconProps = {
@@ -102,7 +108,17 @@ class DropdownButton extends ReactNextElement {
   @property()
   accessor shape: Shape | undefined;
 
-  #handleClick = (action: SimpleAction): void => {
+  /**
+   * 操作点击事件
+   * @detail SimpleAction
+   */
+  @event({
+    type: "action.click",
+  })
+  accessor #actionClickEvent!: EventEmitter<SimpleAction>;
+
+  #handleActionClick = (action: SimpleAction): void => {
+    this.#actionClickEvent.emit(action);
     action.event && this.dispatchEvent(new CustomEvent(action.event));
   };
 
@@ -116,7 +132,7 @@ class DropdownButton extends ReactNextElement {
         shape={this.shape}
         type={this.type}
         disabled={this.disabled}
-        handleClick={this.#handleClick}
+        onActionClick={this.#handleActionClick}
       />
     );
   }
@@ -130,13 +146,13 @@ function DropdownButtonComponent({
   shape,
   type,
   disabled,
-  handleClick,
-}: DropButtonProps & ButtonProps) {
+  onActionClick,
+}: DropdownButtonComponentProps) {
   return (
     <WrappedDropdownActions
       actions={actions}
       disabled={disabled}
-      onActionClick={(e) => handleClick?.(e.detail)}
+      onActionClick={(e) => onActionClick?.(e.detail)}
     >
       <WrappedButton
         size={size}

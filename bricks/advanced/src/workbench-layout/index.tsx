@@ -1,6 +1,9 @@
 import React, {
+  createRef,
+  forwardRef,
   useCallback,
   useEffect,
+  useImperativeHandle,
   useMemo,
   useRef,
   useState,
@@ -9,26 +12,34 @@ import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import { UseSingleBrickConf } from "@next-core/types";
 import { ReactUseBrick } from "@next-core/react-runtime";
+import { auth } from "@next-core/easyops-runtime";
+import "@next-core/theme";
 import {
   ItemCallback,
   Layout,
   Responsive,
   WidthProvider,
 } from "react-grid-layout";
-import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
 import type { Button, ButtonProps } from "@next-bricks/basic/button";
+import {
+  DropdownButton,
+  DropdownButtonEvents,
+  DropdownButtonEventsMap,
+  DropdownButtonProps,
+} from "@next-bricks/basic/dropdown-button";
 import type {
   Checkbox,
   CheckboxOptionType,
   CheckboxProps,
 } from "@next-bricks/form/checkbox";
+import { SimpleAction } from "@next-bricks/basic/actions";
 
-const { defineElement, property, event } = createDecorators();
+const { defineElement, property, event, method } = createDecorators();
 
 type Item = {
   position: Layout;
@@ -47,6 +58,14 @@ interface CheckboxEventsMap {
 }
 
 const WrappedButton = wrapBrick<Button, ButtonProps>("eo-button");
+const WrappedDropdownButton = wrapBrick<
+  DropdownButton,
+  DropdownButtonProps,
+  DropdownButtonEvents,
+  DropdownButtonEventsMap
+>("eo-dropdown-button", {
+  onActionClick: "action.click",
+});
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 const WrappedCheckbox = wrapBrick<
   Checkbox,
@@ -57,84 +76,43 @@ const WrappedCheckbox = wrapBrick<
   onChange: "change",
 });
 
-/**
- * 工作台布局
- */
-export
-@defineElement("eo-workbench-layout", {
-  styleTexts: [styleText],
-})
-class EoWorkbenchLayout extends ReactNextElement {
-  @property()
-  accessor cardTitle: string | undefined;
-
-  @property({
-    type: Boolean,
-  })
-  accessor isEdit: boolean | undefined;
-
-  @property({
-    attribute: false,
-  })
-  accessor layouts: Layout[] | undefined;
-
-  @property({
-    attribute: false,
-  })
-  accessor componentList: Item[] | undefined;
-
-  @event({
-    type: "save",
-  })
-  accessor #saveLayoutEvent!: EventEmitter<Layout[]>;
-
-  #handleSaveLayout = (layout: Layout[]) => {
-    this.#saveLayoutEvent.emit(layout);
-  };
-
-  @event({
-    type: "cancel",
-  })
-  accessor #cancelEvent!: EventEmitter<void>;
-
-  #handleCancel = () => {
-    this.#cancelEvent.emit();
-  };
-
-  render() {
-    return (
-      <EoWorkbenchLayoutComponent
-        cardTitle={this.cardTitle}
-        layouts={this.layouts}
-        componentList={this.componentList}
-        isEdit={this.isEdit}
-        onSave={this.#handleSaveLayout}
-        onCancel={this.#handleCancel}
-      />
-    );
-  }
-}
-
 export interface EoWorkbenchLayoutProps {
   cardTitle?: string;
   layouts?: Layout[];
   componentList?: Item[];
   isEdit?: boolean;
+}
+
+export interface EoWorkbenchLayoutComponentRef {
+  setLayouts(layouts: Layout[]): void;
+}
+
+export interface EoWorkbenchLayoutComponentProps
+  extends EoWorkbenchLayoutProps {
   onSave?: (layout: Layout[]) => void;
   onCancel?: () => void;
+  onActionClick?: (action: SimpleAction, layouts: Layout[]) => void;
 }
 
 const getRealKey = (key: string): string =>
   key?.includes(":") ? key.split(":")[0] : key;
+const { isAdmin } = auth.getAuth();
 
-export function EoWorkbenchLayoutComponent({
-  cardTitle = "卡片列表",
-  layouts: layoutsProps,
-  componentList = [],
-  isEdit,
-  onSave,
-  onCancel,
-}: EoWorkbenchLayoutProps) {
+export const EoWorkbenchLayoutComponent = forwardRef<
+  EoWorkbenchLayoutComponentRef,
+  EoWorkbenchLayoutComponentProps
+>(function EoWorkbenchLayoutComponent(
+  {
+    cardTitle = "卡片列表",
+    layouts: layoutsProps,
+    componentList = [],
+    isEdit,
+    onSave,
+    onCancel,
+    onActionClick,
+  },
+  ref
+) {
   const ResponsiveReactGridLayout = useMemo(
     () => WidthProvider(Responsive),
     []
@@ -147,6 +125,10 @@ export function EoWorkbenchLayoutComponent({
   const [cols, setCols] = useState<number>(3);
   const [layoutWrapperStyle, setLayoutWrapperStyle] =
     useState<React.CSSProperties>();
+
+  useImperativeHandle(ref, () => ({
+    setLayouts,
+  }));
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDragCallback: ItemCallback = (layout, oldItem, newItem) => {
@@ -248,6 +230,18 @@ export function EoWorkbenchLayoutComponent({
 
   const handleCancel = () => {
     onCancel?.();
+  };
+
+  const handleActionClick = (action: SimpleAction) => {
+    const { event } = action;
+
+    switch (event) {
+      case "clear":
+        handleClearLayout();
+        break;
+      default:
+        onActionClick?.(action, layouts);
+    }
   };
 
   const handleDeleteItem = useCallback(
@@ -369,10 +363,25 @@ export function EoWorkbenchLayoutComponent({
             <WrappedButton type="primary" onClick={handleSave}>
               保存
             </WrappedButton>
-            <WrappedButton danger={true} onClick={handleClearLayout}>
-              清除
-            </WrappedButton>
             <WrappedButton onClick={handleCancel}>取消</WrappedButton>
+            <WrappedDropdownButton
+              btnText="更多"
+              icon={{
+                lib: "antd",
+                icon: "down",
+              }}
+              actions={[
+                ...(isAdmin
+                  ? [{ text: "另存为模板", event: "saveAsTemplate" }]
+                  : []),
+                { text: "从模版加载", event: "loadFromTemplate" },
+                { text: "清除", danger: true, event: "clear" },
+              ]}
+              onActionClick={(e) => {
+                handleActionClick(e.detail);
+              }}
+              data-testid="edit-layout-actions"
+            />
           </div>
         )}
         <ResponsiveReactGridLayout
@@ -392,4 +401,92 @@ export function EoWorkbenchLayoutComponent({
       </div>
     </div>
   );
+});
+
+/**
+ * 工作台布局
+ */
+export
+@defineElement("eo-workbench-layout", {
+  styleTexts: [styleText],
+})
+class EoWorkbenchLayout extends ReactNextElement {
+  #componentRef = createRef<EoWorkbenchLayoutComponentRef>();
+
+  @property()
+  accessor cardTitle: string | undefined;
+
+  @property({
+    type: Boolean,
+  })
+  accessor isEdit: boolean | undefined;
+
+  @property({
+    attribute: false,
+  })
+  accessor layouts: Layout[] | undefined;
+
+  @property({
+    attribute: false,
+  })
+  accessor componentList: Item[] | undefined;
+
+  @event({
+    type: "save",
+  })
+  accessor #saveLayoutEvent!: EventEmitter<Layout[]>;
+
+  #handleSaveLayout = (layout: Layout[]) => {
+    this.#saveLayoutEvent.emit(layout);
+  };
+
+  @event({
+    type: "cancel",
+  })
+  accessor #cancelEvent!: EventEmitter<void>;
+
+  #handleCancel = () => {
+    this.#cancelEvent.emit();
+  };
+
+  /**
+   * 操作点击事件
+   * @detail {
+        action: SimpleAction;
+        layouts: Layout[];
+      }
+   */
+  @event({
+    type: "action.click",
+  })
+  accessor #actionClickEvent!: EventEmitter<{
+    action: SimpleAction;
+    layouts: Layout[];
+  }>;
+
+  #handleActionClick = (action: SimpleAction, layouts: Layout[]): void => {
+    this.#actionClickEvent.emit({ action, layouts });
+    action.event &&
+      this.dispatchEvent(new CustomEvent(action.event, { detail: layouts }));
+  };
+
+  @method()
+  setLayouts(layouts: Layout[]) {
+    this.#componentRef.current?.setLayouts(layouts);
+  }
+
+  render() {
+    return (
+      <EoWorkbenchLayoutComponent
+        cardTitle={this.cardTitle}
+        layouts={this.layouts}
+        componentList={this.componentList}
+        isEdit={this.isEdit}
+        onSave={this.#handleSaveLayout}
+        onCancel={this.#handleCancel}
+        onActionClick={this.#handleActionClick}
+        ref={this.#componentRef}
+      />
+    );
+  }
 }
