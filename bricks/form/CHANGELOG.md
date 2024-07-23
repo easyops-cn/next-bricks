@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.11.2...@next-bricks/form@1.11.3) (2024-07-23)
+
+
+### Bug Fixes
+
+* **eo-select:** only add margin for select options if needed ([ba6446d](https://github.com/easyops-cn/next-bricks/commit/ba6446d6f77ba2bd3845f8ff9f481fdc9d35fcf0))
+
+
+
+
+
 ## [1.11.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.11.1...@next-bricks/form@1.11.2) (2024-07-21)
 
 **Note:** Version bump only for package @next-bricks/form
