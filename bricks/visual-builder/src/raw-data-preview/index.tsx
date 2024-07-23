@@ -182,12 +182,19 @@ export function RawDataPreviewComponent({
           },
         },
       },
+      {
+        brick: "div",
+        properties: {
+          textContent: "批注",
+          className: "head-cell",
+        },
+      },
     ];
     const table: BrickConf = {
       brick: "visual-builder.pre-generated-table-view",
       properties: {
         style: {
-          gridTemplateColumns: "120px repeat(4, 1fr)",
+          gridTemplateColumns: "120px repeat(5, 1fr)",
         },
       },
       children: tableChildren,
@@ -286,6 +293,19 @@ export function RawDataPreviewComponent({
             : [],
         });
       }
+
+      tableChildren.push({
+        brick: "eo-input",
+        properties: {
+          placeholder: "AI 生成的结果不符合预期？请告诉 AI 应该如何调整",
+        },
+        events: {
+          keydown: {
+            if: "<% EVENT.code === 'Enter' %>",
+            action: "console.log",
+          },
+        },
+      });
     }
 
     render(
