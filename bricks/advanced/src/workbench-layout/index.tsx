@@ -240,7 +240,13 @@ export const EoWorkbenchLayoutComponent = forwardRef<
         handleClearLayout();
         break;
       default:
-        onActionClick?.(action, layouts);
+        onActionClick?.(
+          action,
+          (layouts ?? []).map((item) => ({
+            ...item,
+            i: getRealKey(item.i),
+          }))
+        );
     }
   };
 
