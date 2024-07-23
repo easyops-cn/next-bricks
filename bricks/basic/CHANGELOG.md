@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.36.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.36.0...@next-bricks/basic@1.36.1) (2024-07-23)
+
+
+### Bug Fixes
+
+* layout schema ([9d2ea8b](https://github.com/easyops-cn/next-bricks/commit/9d2ea8b9906a4e7da3acfc8bfdb6b79d70fc9e3a))
+* numberPiker要加上formitem ([514c145](https://github.com/easyops-cn/next-bricks/commit/514c14565b787987edc075a63cfe8da6534441e8))
+* v3 easy-view schema ([b99a3d0](https://github.com/easyops-cn/next-bricks/commit/b99a3d08e26eff1ef864ce5fa0a545b4b6bb10be))
+* v3 easy-view schema ([59cbd5d](https://github.com/easyops-cn/next-bricks/commit/59cbd5d4c4ccc45bb4d3c2c28617b98d0d8579c8))
+* v3 flex bug ([9a738ec](https://github.com/easyops-cn/next-bricks/commit/9a738ec154d1c4a18f1fe3c7bc85949f972347b6))
+
+
+
+
+
 # [1.36.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.35.0...@next-bricks/basic@1.36.0) (2024-07-22)
 
 
