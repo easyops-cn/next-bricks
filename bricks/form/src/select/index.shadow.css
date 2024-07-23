@@ -266,6 +266,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.select-option-selected .option:not(:last-child) {
   margin-right: 22px;
 }
 
@@ -273,6 +276,9 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.dropdown-list .option .label:not(:last-child) {
   margin-right: 8px;
 }
 
