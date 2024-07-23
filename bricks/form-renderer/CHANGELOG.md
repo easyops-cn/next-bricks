@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.74...@next-bricks/form-renderer@0.2.0) (2024-07-23)
+
+
+### Features
+
+* form-builder custom provider ([956ee50](https://github.com/easyops-cn/next-bricks/commit/956ee50f3df527265c282cb939064b30f4f40e62))
+
+
+
+
+
 ## [0.1.74](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.1.73...@next-bricks/form-renderer@0.1.74) (2024-07-19)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
