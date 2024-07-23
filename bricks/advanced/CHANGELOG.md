@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.36.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.36.0...@next-bricks/advanced@0.36.1) (2024-07-23)
+
+
+### Bug Fixes
+
+* **workbench-layout:** fix layouts data of action.click event detail ([0097272](https://github.com/easyops-cn/next-bricks/commit/00972720c5fb3993c3fc1ed116e0423943ceba4c))
+
+
+
+
+
 # [0.36.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.35.10...@next-bricks/advanced@0.36.0) (2024-07-22)
 
 
