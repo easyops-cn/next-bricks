@@ -519,15 +519,15 @@ export function SelectComponent(props: SelectProps) {
         : props.value;
     setValue(computedValue);
     // 设置回填option
-    if (computedValue) {
-      setSelectedOptions(
-        computedOptions.filter((item) =>
-          multiple
-            ? computedValue.includes(item.value)
-            : item.value === props.value
-        )
-      );
-    }
+    setSelectedOptions(
+      computedValue
+        ? computedOptions.filter((item) =>
+            multiple
+              ? computedValue.includes(item.value)
+              : item.value === props.value
+          )
+        : []
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.value, options]);
 
