@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.37.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.36.1...@next-bricks/basic@1.37.0) (2024-07-24)
+
+
+### Features
+
+* new brick: eo-event-agent ([cc36bbc](https://github.com/easyops-cn/next-bricks/commit/cc36bbc9c5ffb9d4772eb0f0d4dd66a0b52accb4))
+
+
+
+
+
 ## [1.36.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.36.0...@next-bricks/basic@1.36.1) (2024-07-23)
 
 
