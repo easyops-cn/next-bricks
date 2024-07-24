@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.3.3...@next-bricks/data-view@1.3.4) (2024-07-24)
+
+
+### Bug Fixes
+
+* CSNSHDP-23 地图优化 ref CSNSHDP-23 ([58bfbb0](https://github.com/easyops-cn/next-bricks/commit/58bfbb061095e5efc2068e555369305e714ca529))
+
+
+
+
+
 ## [1.3.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.3.2...@next-bricks/data-view@1.3.3) (2024-07-22)
 
 
