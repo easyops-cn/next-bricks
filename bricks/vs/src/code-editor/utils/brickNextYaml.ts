@@ -101,22 +101,40 @@ export const isInEvaluateBody = (
     null,
     false
   );
+
+  const prefixRange = prefixEvaluateOperator?.range;
+  const suffixRange = suffixEvaluateOperator?.range;
+
   const isInEvaluateBody =
-    prefixEvaluateOperator?.range.startLineNumber &&
-    suffixEvaluateOperator?.range.startLineNumber &&
-    prefixEvaluateOperator.range.startLineNumber <= position.lineNumber &&
-    suffixEvaluateOperator.range.endLineNumber >= position.lineNumber;
+    prefixRange?.startLineNumber &&
+    suffixRange?.startLineNumber &&
+    prefixRange.startLineNumber <= position.lineNumber &&
+    suffixRange.endLineNumber >= position.lineNumber &&
+    // 正确匹配当前表达式，防止匹配到上一个表达式<%的开始，下一个表达式的结尾%>
+    !model.findMatches(
+      "<%|%>",
+      new monaco.Range(
+        prefixRange.endLineNumber,
+        prefixRange.endColumn,
+        suffixRange.startLineNumber,
+        suffixRange.startColumn
+      ),
+      true,
+      false,
+      null,
+      true
+    )?.length;
 
   if (isInEvaluateBody) {
     const { parentKey: prefixParentKey } = findKeys(
       model,
-      prefixEvaluateOperator.range,
-      prefixEvaluateOperator?.range.startLineNumber
+      prefixRange,
+      prefixRange.startLineNumber
     );
     const { parentKey: suffixParentKey } = findKeys(
       model,
-      suffixEvaluateOperator.range,
-      suffixEvaluateOperator?.range.startLineNumber
+      suffixRange,
+      suffixRange.startLineNumber
     );
     const { keyList } = findKeys(model, word, position.lineNumber);
     if (
@@ -151,7 +169,7 @@ export const brickNextYAMLProviderCompletionItems = (
       };
     const DSToken = tokenConfig.showDSKey ? ["CTX.DS", "DS"] : [];
     const word = model.getWordUntilPosition(position);
-    const { word: prefixWord, token: _prefixToken } = getPrefixWord(
+    const { word: prefixWord, token: prefixToken } = getPrefixWord(
       model,
       position,
       tokenConfig
@@ -277,7 +295,7 @@ export const brickNextYAMLProviderCompletionItems = (
       }
     }
 
-    if (isInEvaluateBody(model, position)) {
+    if (isInEvaluateBody(model, position) && prefixToken !== ":") {
       const embeddedContext = EmbeddedModelContext.getInstance(id);
 
       const suggestions = await provideJsSuggestItems(
