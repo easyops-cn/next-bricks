@@ -43,6 +43,22 @@ children:
         }
 ```
 
+### Placeholder
+
+```yaml preview
+brick: div
+properties:
+  style:
+    height: 200px
+children:
+  - brick: vs.code-editor
+    properties:
+      language: typescript
+      placeholder: |
+        Hello World~
+        Try to enter something!
+```
+
 ### Brick Next YAML
 
 ```yaml preview

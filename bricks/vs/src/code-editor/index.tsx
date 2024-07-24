@@ -76,6 +76,7 @@ export interface CodeEditorProps {
   value?: string;
   language?: string;
   theme?: string;
+  placeholder?: string;
   required?: boolean;
   readOnly?: boolean;
   automaticLayout?: "fit-container" | "fit-content" | "none";
@@ -197,6 +198,9 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
   @property()
   accessor message: string | undefined;
 
+  @property()
+  accessor placeholder: string | undefined;
+
   /**
    * 是否展示展开按钮
    */
@@ -233,6 +237,10 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
   @property({ type: Boolean })
   accessor showCopyButton: boolean | undefined;
 
+  /**
+   * 显示字形边距
+   * @default false
+   */
   @property({ type: Boolean })
   accessor glyphMargin: boolean | undefined;
 
@@ -318,6 +326,7 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
           tokenConfig={this.tokenConfig}
           lineNumbers={this.lineNumbers}
           glyphMargin={this.glyphMargin}
+          placeholder={this.placeholder}
           showCopyButton={this.showCopyButton}
           showExpandButton={this.showExpandButton}
           validateState={this.validateState}
@@ -351,7 +360,8 @@ export function CodeEditorComponent({
   showExpandButton,
   showCopyButton = true,
   lineNumbers = "on",
-  glyphMargin = true,
+  glyphMargin = false,
+  placeholder,
   validateState,
   onChange,
   onUserInput,
@@ -919,6 +929,7 @@ export function CodeEditorComponent({
           overflow: expanded ? "scroll" : "",
         }}
       />
+      {!value && <div className="monaco-placeholder">{placeholder}</div>}
       <div className="toolbar">
         {showCopyButton && (
           <WrappedTooltip content={t(K.COPY) as string}>
