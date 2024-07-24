@@ -403,6 +403,7 @@ export function LegacyPropertyEditor(
                 onFieldInitialValueChange,
                 onFormInitialValuesChange,
                 onFormValidateSuccess,
+                onFormValuesChange,
                 onSubmit: onSubmitEffect,
                 onAdvancedChange: onAdvancedChangeEffect,
               }}

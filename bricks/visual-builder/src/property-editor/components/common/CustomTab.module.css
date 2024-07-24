@@ -4,7 +4,11 @@
     display: flex;
     align-items: stretch;
     justify-items: flex-start;
-    margin-bottom: 8px;
+    margin-bottom: 16px;
+    border-radius: 4px;
+    background-color: var(--palette-gray-blue-3);
+    padding: 2px;
+    width: 108px;
 
     .customTabItem {
       position: relative;
@@ -15,17 +19,21 @@
       transform: translateZ(0);
 
       &.active {
-        background-color: var(--palette-gray-6);
+        background-color: var(--palette-gray-2);
         box-shadow:
           0 1px 2px 0 rgba(0, 0, 0, 0.03),
           0 1px 6px -1px rgba(0, 0, 0, 0.02),
           0 2px 4px 0 rgba(0, 0, 0, 0.02);
-        color: #fff;
+        color: var(--color-brand);
       }
 
       .customTabItemLabel {
         padding: 2px 12px;
       }
+    }
+
+    .customTabItem:hover {
+      color: var(--color-brand-hover);
     }
   }
 }
