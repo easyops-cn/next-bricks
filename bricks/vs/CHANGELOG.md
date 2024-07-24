@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.11.7...@next-bricks/vs@1.12.0) (2024-07-24)
+
+
+### Features
+
+* CodeEditor add placeholder ([ab0bd8c](https://github.com/easyops-cn/next-bricks/commit/ab0bd8cb9da86e019ee96296f0d9e43fb1ebd0c1))
+
+
+
+
+
 ## [1.11.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.11.6...@next-bricks/vs@1.11.7) (2024-07-22)
 
 
