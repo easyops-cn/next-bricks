@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.11.3...@next-bricks/form@1.11.4) (2024-07-24)
+
+
+### Bug Fixes
+
+* **select:** fix selectedOptions not being cleared when value changed to falsy value ([260d5a9](https://github.com/easyops-cn/next-bricks/commit/260d5a94a3f5b8f3704f75630b86b587c84f57c4))
+
+
+
+
+
 ## [1.11.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.11.2...@next-bricks/form@1.11.3) (2024-07-23)
 
 
