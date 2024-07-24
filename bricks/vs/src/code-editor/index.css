@@ -2,6 +2,17 @@
   box-shadow: rgb(74 170 189) 0px 1px 0px 0px;
 }
 
+.monaco-placeholder {
+  position: absolute;
+  white-space: pre-wrap;
+  top: 6px;
+  left: 50px;
+  font-size: 16px;
+  color: rgba(var(--theme-gray-color-rgb-channel), 0.4);
+  pointer-events: none;
+  user-select: none;
+}
+
 .pointer {
   cursor: pointer;
 }
