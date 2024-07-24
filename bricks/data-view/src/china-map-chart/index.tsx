@@ -119,10 +119,19 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
     scene.addImage("chinaBg", chinaPng);
 
     scene.on("loaded", () => {
-      const data = CHINA;
-
+      const data = {
+        ...CHINA,
+        features: CHINA.features.slice(0, CHINA.features.length - 2),
+      };
+      const southSeaData = {
+        ...CHINA,
+        features: CHINA.features.slice(
+          CHINA.features.length - 2,
+          CHINA.features.length
+        ),
+      };
       const seventhPolygonLayer = new PolygonLayer({
-        autoFit: true,
+        autoFit: false,
       }).source(data);
 
       seventhPolygonLayer
@@ -136,7 +145,7 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
         });
 
       const sixthPolygonLayer = new PolygonLayer({
-        autoFit: true,
+        autoFit: false,
       }).source(data);
 
       sixthPolygonLayer.shape("extrude").color("rgba(14, 11, 75, 0.58)").style({
@@ -147,7 +156,7 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
       });
 
       const fifthPolygonLayer = new PolygonLayer({
-        autoFit: true,
+        autoFit: false,
       }).source(data);
 
       fifthPolygonLayer.shape("extrude").color("rgba(190, 225, 226, 1)").style({
@@ -157,7 +166,7 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
         raisingHeight: -900000,
       });
       const fourthPolygonLayer = new PolygonLayer({
-        autoFit: true,
+        autoFit: false,
       }).source(data);
 
       fourthPolygonLayer.shape("extrude").color("rgba(18, 26, 45, 1)").style({
@@ -168,7 +177,7 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
       });
 
       const thirdPolygonLayer = new PolygonLayer({
-        autoFit: true,
+        autoFit: false,
       }).source(data);
 
       thirdPolygonLayer.shape("extrude").color("#111D3C").style({
@@ -178,7 +187,7 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
         raisingHeight: -500000,
       });
       const secondPolygonLayer = new PolygonLayer({
-        autoFit: true,
+        autoFit: false,
       }).source(data);
 
       secondPolygonLayer.shape("extrude").color("#121A2D").style({
@@ -192,19 +201,20 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
         autoFit: true,
       }).source(data);
 
-      firstPolygonLayer.shape("fill").color("rgba(8, 77, 255, 0.60)").select({
-        color: "rgba(177, 254, 254, 1)",
-      });
+      firstPolygonLayer.shape("fill").color("rgba(8, 77, 255, 0.60)");
+      // .select({
+      //   color: "rgba(177, 254, 254, 1)",
+      // });//编排上层缩放会影响到高亮功能，还不知道怎么解决，暂时不实现。
 
-      const chinaImgLayer = new ImageLayer({ autoFit: true, zIndex: 1 }).source(
-        chinaPng,
-        {
-          parser: {
-            type: "image",
-            extent: [73.33, 17.9, 134.85, 53.73],
-          },
-        }
-      );
+      const chinaImgLayer = new ImageLayer({
+        autoFit: false,
+        zIndex: 1,
+      }).source(chinaPng, {
+        parser: {
+          type: "image",
+          extent: [73.33, 17.9, 134.85, 53.73],
+        },
+      });
 
       chinaImgLayer.shape("img").style({
         opacity: 1,
@@ -249,33 +259,33 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
           type: "quantile",
         });
 
-      const hightLayer = new LineLayer({
-        zIndex: 10, // 设置显示层级
-        name: "hightlight",
-      })
-        .source({
-          type: "FeatureCollection",
-          features: [],
-        })
-        .shape("line")
-        .size(2)
-        .color("rgba(177, 254, 254, 1)")
-        .style({
-          opacity: 1,
-        });
-      const hightPolygonLayer = new PolygonLayer({})
-        .source({
-          type: "FeatureCollection",
-          features: [],
-        })
-        .shape("fill")
-        .color("rgba(177, 254, 254, 1)")
-        .style({
-          heightfixed: true,
-          pickLight: true,
-          opacity: 1,
-          raisingHeight: 0,
-        }); //自定义选择高亮
+      // const hightLayer = new LineLayer({
+      //   zIndex: 10, // 设置显示层级
+      //   name: "hightlight",
+      // })
+      //   .source({
+      //     type: "FeatureCollection",
+      //     features: [],
+      //   })
+      //   .shape("line")
+      //   .size(2)
+      //   .color("rgba(177, 254, 254, 1)")
+      //   .style({
+      //     opacity: 1,
+      //   });
+      // const hightPolygonLayer = new PolygonLayer({zIndex: 10})
+      //   .source({
+      //     type: "FeatureCollection",
+      //     features: [],
+      //   })
+      //   .shape("fill")
+      //   .color("rgba(177, 254, 254, 1)")
+      //   .style({
+      //     heightfixed: true,
+      //     pickLight: true,
+      //     opacity: 1,
+      //     raisingHeight: 0,
+      //   }); //自定义选择高亮
 
       scene.addLayer(seventhPolygonLayer);
       scene.addLayer(sixthPolygonLayer);
@@ -284,8 +294,8 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
       scene.addLayer(thirdPolygonLayer);
       scene.addLayer(secondPolygonLayer);
       scene.addLayer(chinaImgLayer);
-      scene.addLayer(hightLayer);
-      scene.addLayer(hightPolygonLayer);
+      // scene.addLayer(hightLayer);
+      // scene.addLayer(hightPolygonLayer);
       scene.addLayer(firstPolygonLayer);
 
       scene.addLayer(fourthLineLayer);
@@ -293,17 +303,37 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
       scene.addLayer(secondLineLayer);
       scene.addLayer(firstLineLayer);
 
-      firstPolygonLayer.on("click", (e) => {
-        const { feature } = e;
-        hightPolygonLayer.setData({
-          type: "FeatureCollection",
-          features: [feature],
+      // firstPolygonLayer.on("click", (e) => {
+      //   const { feature } = e;
+      //   hightPolygonLayer.setData({
+      //     type: "FeatureCollection",
+      //     features: [feature],
+      //   });
+      //   hightLayer.setData({
+      //     type: "FeatureCollection",
+      //     features: [feature],
+      //   });
+      // });
+
+      const southSeaPolygonLayer = new PolygonLayer({
+        autoFit: false,
+      }).source(southSeaData);
+
+      southSeaPolygonLayer.shape("fill").color("black");
+
+      const southSeaLineLayer = new LineLayer({ zIndex: 2 })
+        .source(southSeaData)
+        .shape("line")
+        .color("rgba(30, 144, 255, 1)")
+        .size(0.5)
+        .style({
+          raisingHeight: 0,
+        })
+        .scale("density", {
+          type: "quantile",
         });
-        hightLayer.setData({
-          type: "FeatureCollection",
-          features: [feature],
-        });
-      });
+      scene.addLayer(southSeaPolygonLayer);
+      scene.addLayer(southSeaLineLayer);
 
       dataSource.map((i) => {
         const el = document.createElement("div");
@@ -354,7 +384,7 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
   }, [showData]);
   return (
     <div>
-      <div id="map" ref={mapRef}></div>
+      <div id="map" ref={mapRef} className="map"></div>
       {showData && (
         <div
           className="detailContent"
@@ -366,7 +396,7 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
               ? {
                   left: textPosition.left,
                   top: textPosition.top,
-                  transform: "translate(22px, -6px)",
+                  transform: "translate(0px, -40px)",
                 }
               : {
                   transform: "translate(-50%, 0%)",
