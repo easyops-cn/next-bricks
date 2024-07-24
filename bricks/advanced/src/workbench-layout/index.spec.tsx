@@ -1,10 +1,23 @@
 import { getByTestId, fireEvent } from "@testing-library/dom";
 import { describe, test, expect, jest } from "@jest/globals";
 import { act } from "react-dom/test-utils";
+import * as utilsGeneral from "@next-core/utils/general";
 import "./";
 import type { EoWorkbenchLayout } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
+jest.mock("@next-core/utils/general", () => {
+  const mockedUnwrapedProvider = jest.fn();
+
+  return {
+    ...(jest.requireActual("@next-core/utils/general") as Record<
+      string,
+      unknown
+    >),
+    mockedUnwrapedProvider,
+    unwrapProvider: jest.fn(() => mockedUnwrapedProvider),
+  };
+});
 
 describe("eo-workbench-layout", () => {
   test("basic usage", async () => {
@@ -125,8 +138,8 @@ describe("eo-workbench-layout", () => {
       1,
       expect.objectContaining({
         detail: [
-          { w: 2, h: 1, x: 0, y: 0, i: "card-1", moved: false, static: false },
-          { w: 1, h: 1, x: 0, y: 1, i: "card-2", moved: false, static: false },
+          { w: 2, h: 1, x: 0, y: 0, i: "card-1" },
+          { w: 1, h: 1, x: 0, y: 1, i: "card-2" },
         ],
       })
     );
@@ -245,6 +258,11 @@ describe("eo-workbench-layout", () => {
     ).toBe(1);
 
     // reset
+    (
+      utilsGeneral as unknown as {
+        mockedUnwrapedProvider: jest.Mock<() => Promise<void>>;
+      }
+    ).mockedUnwrapedProvider.mockResolvedValueOnce();
     await act(async () => {
       fireEvent(
         getByTestId(
@@ -253,6 +271,7 @@ describe("eo-workbench-layout", () => {
         ),
         new CustomEvent("action.click", { detail: { event: "clear" } })
       );
+      await (global as any).flushPromises();
     });
 
     expect(
