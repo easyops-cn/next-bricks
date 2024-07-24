@@ -32,7 +32,8 @@
     "eo-avatar-group",
     "eo-actions",
     "eo-context-menu",
-    "eo-formatter-number"
+    "eo-formatter-number",
+    "eo-event-agent"
   ],
   "icons": [
     "eo-antd-icon",
