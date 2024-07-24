@@ -19,6 +19,7 @@ export interface ChatAgentProps {
   agentId?: string;
   robotId?: string;
   conversationId?: string;
+  alwaysUseNewConversation?: boolean;
 }
 
 export interface Message extends BaseMessage {
@@ -68,6 +69,9 @@ class ChatAgent extends ReactNextElement implements ChatAgentProps {
 
   @property()
   accessor conversationId: string | undefined;
+
+  @property()
+  accessor alwaysUseNewConversation: boolean | undefined;
 
   /**
    * 发送消息到默认的聊天 API
@@ -147,6 +151,7 @@ class ChatAgent extends ReactNextElement implements ChatAgentProps {
         agentId={this.agentId}
         robotId={this.robotId}
         conversationId={this.conversationId}
+        alwaysUseNewConversation={this.alwaysUseNewConversation}
         // onMessageChunkPush={this.#handleMessageChunkPush}
         onMessagesUpdate={this.#handleMessagesUpdate}
         onBusyChange={this.#handleBusyChange}
@@ -183,6 +188,7 @@ export function LegacyChatAgentComponent(
     agentId,
     robotId,
     conversationId: propConversationId,
+    alwaysUseNewConversation,
     onMessageChunkPush,
     onMessagesUpdate,
     onBusyChange,
@@ -240,6 +246,9 @@ export function LegacyChatAgentComponent(
       if (busyRef.current) {
         return null;
       }
+      if (alwaysUseNewConversation || isLowLevel) {
+        setFullMessages((prev) => (prev.length === 0 ? prev : []));
+      }
       const thisChatId = chatIdRef.current;
       let newConversationError: Error | undefined;
       const checkNewConversation = async () => {
@@ -254,7 +263,8 @@ export function LegacyChatAgentComponent(
 
       const userKey = getMessageChunkKey();
       const assistantKey = getMessageChunkKey();
-      let currentConversationId = isLowLevel ? null : conversationId;
+      let currentConversationId =
+        alwaysUseNewConversation || isLowLevel ? null : conversationId;
 
       onBusyChange?.((busyRef.current = true));
 
@@ -333,6 +343,7 @@ export function LegacyChatAgentComponent(
               partial: true,
             });
             if (
+              !alwaysUseNewConversation &&
               (value as MessageChunk).conversationId &&
               !currentConversationId
             ) {
@@ -392,7 +403,13 @@ export function LegacyChatAgentComponent(
 
       return currentConversationId;
     },
-    [conversationId, getMessageChunkKey, onBusyChange, pushPartialMessage]
+    [
+      conversationId,
+      alwaysUseNewConversation,
+      getMessageChunkKey,
+      onBusyChange,
+      pushPartialMessage,
+    ]
   );
 
   useImperativeHandle(
@@ -412,7 +429,10 @@ export function LegacyChatAgentComponent(
               robotId,
               input: content,
               stream: true,
-              conversationId,
+              conversationId:
+                alwaysUseNewConversation || conversationId === null
+                  ? undefined
+                  : conversationId,
             }),
             headers: {
               "giraffe-contract-name":
@@ -430,7 +450,14 @@ export function LegacyChatAgentComponent(
         }
       },
     }),
-    [agentId, robotId, conversationId, onBusyChange, legacySendRequest]
+    [
+      legacySendRequest,
+      agentId,
+      robotId,
+      alwaysUseNewConversation,
+      conversationId,
+      onBusyChange,
+    ]
   );
 
   useEffect(() => {
