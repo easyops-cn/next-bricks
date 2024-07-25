@@ -54,9 +54,9 @@ function EoNextTableComponentFactory(React: typeof _React) {
       } = effects;
 
       form.setInitialValues({
-        childrenColumnName: "children",
         size: "large",
-        showHeader: true,
+        frontSearch: false,
+        isPagination: true,
       });
 
       // 当data变化时

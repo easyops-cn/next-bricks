@@ -118,6 +118,7 @@ export const eoNextTableSchema = {
       component: {
         props: {
           defaultValue: true,
+          size: "small",
         },
       },
       "x-reactions": [
@@ -286,6 +287,7 @@ export const eoNextTableSchema = {
       component: {
         props: {
           defaultValue: true,
+          size: "small",
         },
       },
     },
