@@ -337,9 +337,56 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
 
       dataSource.map((i) => {
         const el = document.createElement("div");
+        let classNameText = "text";
         el.textContent = i.text;
-        el.className = "text";
+        const city = data.features.find((f) =>
+          f.properties.name.includes(i.city)
+        );
+        //先手动调整位置，缓解重叠的问题
+        if (
+          [
+            "410000",
+            "820000",
+            "140000",
+            "110000",
+            "420000",
+            "430000",
+            "450000",
+            "500000",
+            "520000",
+            "530000",
+            "510000",
+            "610000",
+            "640000",
+            "150000",
+            "630000",
+            "540000",
+            "340000",
+          ].includes(city.id)
+        ) {
+          classNameText = `${classNameText} leftText`;
+          i.isLeftOffset = true;
+        }
+        if (
+          [
+            "620000",
+            "640000",
+            "450000",
+            "440000",
+            "120000",
+            "340000",
+            "510000",
+            "150000",
+            "320000",
+          ].includes(city.id)
+        ) {
+          classNameText = `${classNameText} topText`;
+          i.isTopOffset = true;
+        }
+        el.className = classNameText;
+
         el.onclick = (e) => {
+          i.width = el.getBoundingClientRect().width;
           textClick(e, i);
         };
 
@@ -347,16 +394,29 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
         imgEl.src = defaultPng;
         imgEl.className = "iconImg";
 
-        const center = data.features.find((f) =>
-          f.properties.name.includes(i.city)
-        ).properties.center;
+        const center = city.properties.center;
+        let lat = center[1];
+        if (
+          [
+            "530000",
+            "520000",
+            "430000",
+            "360000",
+            "330000",
+            "610000",
+            "370000",
+            "130000",
+          ].includes(city.id)
+        ) {
+          lat -= 1;
+        }
 
         const marker = new Marker({
           element: el,
-        }).setLnglat({ lng: center[0], lat: center[1] });
+        }).setLnglat({ lng: center[0], lat });
         const imgMarker = new Marker({
           element: imgEl,
-        }).setLnglat({ lng: center[0], lat: center[1] });
+        }).setLnglat({ lng: center[0], lat });
         scene.addMarker(marker);
         scene.addMarker(imgMarker);
       });
@@ -396,7 +456,7 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
               ? {
                   left: textPosition.left,
                   top: textPosition.top,
-                  transform: "translate(0px, -40px)",
+                  transform: `translate(${showData.isLeftOffset ? -showData.width : 0}px, ${showData.isTopOffset ? -50 : -40}px)`,
                 }
               : {
                   transform: "translate(-50%, 0%)",
@@ -406,9 +466,7 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
             ...detailContentStyle,
           }}
         >
-          <slot name="detail" ref={slotRef}>
-            /
-          </slot>
+          <slot name="detail" ref={slotRef}></slot>
         </div>
       )}
     </div>
