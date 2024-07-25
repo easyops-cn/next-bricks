@@ -189,10 +189,8 @@ describe("formilySchemaFormatter", () => {
                   "name": "height",
                   "title": "高度",
                   "type": "string",
-                  "x-component": "InputWithUnit",
-                  "x-component-props": {
-                    "suffix": "px",
-                  },
+                  "x-component": "Input",
+                  "x-component-props": {},
                   "x-decorator": "FormItemWithoutAdvanced",
                   "x-decorator-props": {
                     "layout": "vertail",
@@ -233,10 +231,8 @@ describe("formilySchemaFormatter", () => {
                   "name": "width",
                   "title": "宽度",
                   "type": "string",
-                  "x-component": "InputWithUnit",
-                  "x-component-props": {
-                    "suffix": "px",
-                  },
+                  "x-component": "Input",
+                  "x-component-props": {},
                   "x-decorator": "FormItemWithoutAdvanced",
                   "x-decorator-props": {
                     "layout": "vertail",

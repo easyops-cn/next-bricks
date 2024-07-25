@@ -59,7 +59,7 @@ import {
   formilySchemaFormatter,
 } from "./utils/formilySchemaFormatter";
 import "./style.css";
-import _ from "lodash";
+import _, { isEmpty, omit } from "lodash";
 import { BrickPackage } from "@next-core/types";
 import { NORMAL_FORM_KEY } from "./utils/formilySchemaFormatter";
 
@@ -214,12 +214,29 @@ class PropertyEditor extends ReactNextElement {
     this.#triggerActionEvent.emit(action);
   };
 
+  #filterData = (data?: Record<string, any> | string) => {
+    const transformData =
+      typeof data === "string" && data === "undefined"
+        ? undefined
+        : omit(data as any, ["dataset.testid"]);
+    const shouldFilterFields = [];
+    isEmpty(transformData?.dataset) && shouldFilterFields.push("dataset");
+    isEmpty(transformData?.style) && shouldFilterFields.push("style");
+
+    const filterData = omit(transformData, shouldFilterFields);
+    if (isEmpty(filterData)) {
+      return undefined;
+    }
+    return filterData;
+  };
+
   render() {
     return (
       <PropertyEditorComponent
         ref={this.#formRef}
         editorName={this.editorName}
-        values={this.values === "undefined" ? undefined : this.values}
+        values={this.#filterData(this.values)}
+        // values={this.values}
         advancedMode={this.advancedMode}
         dataList={this.dataList}
         extraLibs={this.extraLibs}
