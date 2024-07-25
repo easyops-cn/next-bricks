@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.36.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.36.1...@next-bricks/advanced@0.36.2) (2024-07-25)
+
+
+### Bug Fixes
+
+* **workbench-layout:** 清空操作增加确认 ([e484026](https://github.com/easyops-cn/next-bricks/commit/e4840267ceb057e44a8ac1edfad59d4c0309c5dc))
+
+
+
+
+
 ## [0.36.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.36.0...@next-bricks/advanced@0.36.1) (2024-07-23)
 
 
