@@ -24,3 +24,4 @@ import "./eo-mini-actions/index.js";
 import "./eo-flex-layout/index.js";
 import "./eo-grid-layout/index.js";
 import "./eo-easy-view/index.js";
+import "./eo-next-table/index.js";
