@@ -50,6 +50,7 @@ import type { showNotification as _showNotification } from "@next-bricks/basic/d
 import classNames from "classnames";
 import "./index.css";
 import { EmbeddedModelContext } from "./utils/embeddedModelState.js";
+import { PlaceholderContentWidget } from "./widget/Placeholder.js";
 
 initializeReactI18n(NS, locales);
 
@@ -898,6 +899,18 @@ export function CodeEditorComponent({
     };
   }, []);
 
+  useEffect(() => {
+    if (!editorRef.current && !placeholder) return;
+    const placeholderWidget = new PlaceholderContentWidget(
+      placeholder!,
+      editorRef.current!
+    );
+
+    return () => {
+      placeholderWidget.dispose();
+    };
+  }, [placeholder]);
+
   const handleCopyIconClick = useCallback(() => {
     if (editorRef.current) {
       const currentModel = editorRef.current.getModel()!;
@@ -929,7 +942,6 @@ export function CodeEditorComponent({
           overflow: expanded ? "scroll" : "",
         }}
       />
-      {!value && <div className="monaco-placeholder">{placeholder}</div>}
       <div className="toolbar">
         {showCopyButton && (
           <WrappedTooltip content={t(K.COPY) as string}>
