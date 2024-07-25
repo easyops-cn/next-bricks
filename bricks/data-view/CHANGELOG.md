@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.3.4...@next-bricks/data-view@1.3.5) (2024-07-25)
+
+
+### Bug Fixes
+
+* CSNSHDP-23 地图文本位置手动调整，缓解重叠问题 ref CSNSHDP-23 ([11ad5e9](https://github.com/easyops-cn/next-bricks/commit/11ad5e96fbede33262694482535120ac3d85f4cd))
+
+
+
+
+
 ## [1.3.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.3.3...@next-bricks/data-view@1.3.4) (2024-07-24)
 
 
