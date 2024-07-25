@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.37.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.37.0...@next-bricks/basic@1.37.1) (2024-07-25)
+
+
+### Bug Fixes
+
+* add v3 table schema ([478e5fc](https://github.com/easyops-cn/next-bricks/commit/478e5fcec47903e7098dad62ee37b0b640076302))
+* add v3 table schema ([ddfce63](https://github.com/easyops-cn/next-bricks/commit/ddfce63ef068769f4dfe8c20561bb8abb3828a25))
+
+
+
+
+
 # [1.37.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.36.1...@next-bricks/basic@1.37.0) (2024-07-24)
 
 
