@@ -10,6 +10,7 @@ import React, {
 } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
+import { unwrapProvider } from "@next-core/utils/general";
 import { UseSingleBrickConf } from "@next-core/types";
 import { ReactUseBrick } from "@next-core/react-runtime";
 import { auth } from "@next-core/easyops-runtime";
@@ -37,6 +38,7 @@ import type {
   CheckboxOptionType,
   CheckboxProps,
 } from "@next-bricks/form/checkbox";
+import type { showDialog as _showDialog } from "@next-bricks/basic/data-providers/show-dialog/show-dialog";
 import { SimpleAction } from "@next-bricks/basic/actions";
 
 const { defineElement, property, event, method } = createDecorators();
@@ -75,6 +77,7 @@ const WrappedCheckbox = wrapBrick<
 >("eo-checkbox", {
   onChange: "change",
 });
+const showDialog = unwrapProvider<typeof _showDialog>("basic.show-dialog");
 
 export interface EoWorkbenchLayoutProps {
   cardTitle?: string;
@@ -121,10 +124,15 @@ export const EoWorkbenchLayoutComponent = forwardRef<
   const layoutCacheRef = useRef<Layout[]>();
   const layoutWrapperRef = useRef<HTMLDivElement>(null);
 
-  const [layouts, setLayouts] = useState<Layout[]>(layoutsProps ?? []);
+  const [layouts, _setLayouts] = useState<Layout[]>(layoutsProps ?? []);
   const [cols, setCols] = useState<number>(3);
   const [layoutWrapperStyle, setLayoutWrapperStyle] =
     useState<React.CSSProperties>();
+
+  const setLayouts = useCallback((layouts: Layout[]) => {
+    layoutCacheRef.current = layouts;
+    _setLayouts(layouts);
+  }, []);
 
   useImperativeHandle(ref, () => ({
     setLayouts,
@@ -171,7 +179,7 @@ export const EoWorkbenchLayoutComponent = forwardRef<
       }
     }
     if (!isAllowAction) {
-      setLayouts((items) =>
+      _setLayouts((items) =>
         items?.map((item) => {
           const matchLayout = layoutCacheRef.current?.find(
             (layout) => getRealKey(layout.i) === getRealKey(item.i)
@@ -206,7 +214,7 @@ export const EoWorkbenchLayoutComponent = forwardRef<
           y: Infinity,
         }));
 
-      setLayouts((layouts) => {
+      _setLayouts((layouts) => {
         return layouts
           .filter((layout) => checkedKeys.includes(getRealKey(layout.i)))
           .concat(addItems);
@@ -237,7 +245,11 @@ export const EoWorkbenchLayoutComponent = forwardRef<
 
     switch (event) {
       case "clear":
-        handleClearLayout();
+        showDialog({
+          type: "confirm",
+          title: "清空确认",
+          content: "将清空所有卡片，从零开始编辑，该操作无法撤回。",
+        }).then(handleClearLayout);
         break;
       default:
         onActionClick?.(
@@ -381,7 +393,7 @@ export const EoWorkbenchLayoutComponent = forwardRef<
                   ? [{ text: "另存为模板", event: "saveAsTemplate" }]
                   : []),
                 { text: "从模版加载", event: "loadFromTemplate" },
-                { text: "清除", danger: true, event: "clear" },
+                { text: "清空所有", danger: true, event: "clear" },
               ]}
               onActionClick={(e) => {
                 handleActionClick(e.detail);
