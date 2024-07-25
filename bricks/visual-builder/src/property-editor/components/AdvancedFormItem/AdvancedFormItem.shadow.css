@@ -11,12 +11,12 @@
     eo-icon[icon="code"] {
       cursor: pointer;
       padding: 2px 4px;
-      background: var(--palette-gray-7);
       border-radius: 6px;
+      color: var(--text-color-secondary);
 
       &.isActive {
         background: var(--color-brand);
-        color: #fff;
+        color: var(--color-normal-text);
       }
     }
   }

@@ -23,6 +23,7 @@ export interface EditorComponentProps<
     onFieldInit: typeof onFieldInit;
     onFieldValueChange: typeof onFieldValueChange;
     onFieldInitialValueChange: typeof onFieldInitialValueChange;
+    onFormValuesChange: typeof onFormValuesChange;
     onFormInitialValuesChange: typeof onFormInitialValuesChange;
     onFormValidateSuccess: typeof onFormValidateSuccess;
     onSubmit: (listener: (value: any, form: Form) => any) => void;

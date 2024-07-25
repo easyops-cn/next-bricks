@@ -2,10 +2,19 @@
 @import url("./components/CategoryTitle/CategoryTitle.shadow.css");
 
 .property-form-wrapper {
+  padding-left: 16px;
+  padding-right: 16px;
+
   .antdV5-formily-item-feedback-layout-loose {
     margin-bottom: 10px;
   }
   .antdV5-formily-item .antdV5-formily-item-control {
     align-self: center;
+  }
+
+  .antdV5-formily-item-layout-vertical .antdV5-formily-item-label {
+    line-height: 32px;
+    min-height: 30px;
+    padding: 0;
   }
 }

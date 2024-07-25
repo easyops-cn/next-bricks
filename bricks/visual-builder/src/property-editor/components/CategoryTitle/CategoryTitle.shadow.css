@@ -1,12 +1,10 @@
 .custom-category-title {
   font-size: 14px;
   font-weight: 600;
-  line-height: 14px;
-  margin-bottom: 12px;
-  border-left: 2px solid;
-  padding-left: 6px;
-  border-color: #8d8d8d;
-  margin-top: 18px;
+  line-height: 28px;
+  margin: 16px -16px 6px -16px;
+  padding-left: 16px;
+  background-color: var(--palette-gray-6);
 
   &:first-child {
     margin-top: 0;
