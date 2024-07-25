@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.12.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.12.0...@next-bricks/vs@1.12.1) (2024-07-25)
+
+
+### Bug Fixes
+
+* 修复在某些场景下错误提示的问题 ([045c6e7](https://github.com/easyops-cn/next-bricks/commit/045c6e7f282b2aabdfdb25be3d95c6bec5fd329f))
+
+
+
+
+
 # [1.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.11.7...@next-bricks/vs@1.12.0) (2024-07-24)
 
 
