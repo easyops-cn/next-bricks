@@ -15,10 +15,7 @@ export const stylesSchema: DataNode = {
         },
       },
       component: {
-        name: "InputWithUnit",
-        props: {
-          suffix: "px",
-        },
+        name: "Input",
       },
     },
     {
@@ -32,10 +29,7 @@ export const stylesSchema: DataNode = {
         },
       },
       component: {
-        name: "InputWithUnit",
-        props: {
-          suffix: "px",
-        },
+        name: "Input",
       },
     },
     {

@@ -63,6 +63,7 @@ export function CodeEditorComponent(
         }
       }
 
+      setValue(value);
       setInitValue(value);
     }
   }, [props.value, initValue]);
@@ -74,7 +75,7 @@ export function CodeEditorComponent(
       language={"brick_next_yaml"}
       theme={"vs-dark"}
       {...props}
-      value={value ?? initValue}
+      value={value}
       onChange={handleChange}
     />
   );
