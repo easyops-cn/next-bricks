@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.33.4...@next-bricks/visual-builder@1.33.5) (2024-07-26)
+
+
+### Bug Fixes
+
+* 恢复 form-builder 相关代码 ([8386743](https://github.com/easyops-cn/next-bricks/commit/83867436083d5246bfce6a9ce204018c55df782a))
+
+
+
+
+
 ## [1.33.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.33.3...@next-bricks/visual-builder@1.33.4) (2024-07-25)
 
 
