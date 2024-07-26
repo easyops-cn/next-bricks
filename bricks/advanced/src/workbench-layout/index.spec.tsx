@@ -1,7 +1,10 @@
+import React from "react";
 import { getByTestId, fireEvent } from "@testing-library/dom";
 import { describe, test, expect, jest } from "@jest/globals";
 import { act } from "react-dom/test-utils";
 import * as utilsGeneral from "@next-core/utils/general";
+import { Layout, ResponsiveProps, WidthProvider } from "react-grid-layout";
+import { last } from "lodash";
 import "./";
 import type { EoWorkbenchLayout } from "./index.js";
 
@@ -18,6 +21,14 @@ jest.mock("@next-core/utils/general", () => {
     unwrapProvider: jest.fn(() => mockedUnwrapedProvider),
   };
 });
+jest.mock("react-grid-layout");
+
+const MockedReactGridLayoutComponent = jest.fn(
+  ({ className, children }: ResponsiveProps) => (
+    <div className={className}>{children}</div>
+  )
+);
+(WidthProvider as jest.Mock).mockReturnValue(MockedReactGridLayoutComponent);
 
 describe("eo-workbench-layout", () => {
   test("basic usage", async () => {
@@ -98,9 +109,11 @@ describe("eo-workbench-layout", () => {
 
     expect(element.shadowRoot).toBeFalsy();
 
+    const mockChangeEvent = jest.fn();
     const mockSaveEvent = jest.fn();
     const mockCancelEvent = jest.fn();
     const mockActionClickEventHandler = jest.fn();
+    element.addEventListener("change", mockChangeEvent);
     element.addEventListener("save", mockSaveEvent);
     element.addEventListener("cancel", mockCancelEvent);
     element.addEventListener("action.click", mockActionClickEventHandler);
@@ -108,8 +121,23 @@ describe("eo-workbench-layout", () => {
     act(() => {
       document.body.appendChild(element);
     });
-    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
 
+    const triggerLayoutChange = (layout: Layout[]) => {
+      act(() => {
+        last(MockedReactGridLayoutComponent.mock.calls)?.[0].onLayoutChange?.(
+          layout,
+          { lg: layout }
+        );
+      });
+    };
+    const newLayout1 = [
+      { w: 2, h: 1, x: 0, y: 0, i: "card-1" },
+      { w: 1, h: 1, x: 0, y: 1, i: "card-2" },
+    ];
+
+    triggerLayoutChange(newLayout1);
+
+    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
     expect(
       (
         element.shadowRoot?.querySelector("eo-checkbox") as HTMLElement
@@ -137,14 +165,13 @@ describe("eo-workbench-layout", () => {
     expect(mockSaveEvent).nthCalledWith(
       1,
       expect.objectContaining({
-        detail: [
-          { w: 2, h: 1, x: 0, y: 0, i: "card-1" },
-          { w: 1, h: 1, x: 0, y: 1, i: "card-2" },
-        ],
+        detail: newLayout1,
       })
     );
 
     // insert element
+    mockChangeEvent.mockClear();
+
     await act(async () => {
       await element.shadowRoot?.querySelector("eo-checkbox")?.dispatchEvent(
         new CustomEvent("change", {
@@ -176,9 +203,40 @@ describe("eo-workbench-layout", () => {
       );
     });
 
+    const newLayout2 = [
+      { w: 2, h: 1, x: 0, y: 0, i: "card-1", moved: false, static: false },
+      {
+        w: 1,
+        h: 2,
+        x: 0,
+        y: 1,
+        i: "card-2",
+        minH: 1,
+        moved: false,
+        static: false,
+      },
+      {
+        w: 1,
+        h: 2,
+        x: 1,
+        y: 1,
+        i: "card-3",
+        minH: 2,
+        moved: false,
+        static: false,
+      },
+    ];
+
+    triggerLayoutChange(newLayout2);
+
     expect(
       element.shadowRoot?.querySelector(".layout")?.childNodes.length
     ).toBe(3);
+    expect(mockChangeEvent).toBeCalledWith(
+      expect.objectContaining({
+        detail: newLayout2,
+      })
+    );
 
     act(() => {
       clickSaveBtn();
@@ -187,37 +245,16 @@ describe("eo-workbench-layout", () => {
     expect(mockSaveEvent).nthCalledWith(
       2,
       expect.objectContaining({
-        detail: [
-          { w: 2, h: 1, x: 0, y: 0, i: "card-1", moved: false, static: false },
-          {
-            w: 1,
-            h: 2,
-            x: 0,
-            y: 1,
-            i: "card-2",
-            minH: 1,
-            moved: false,
-            static: false,
-          },
-          {
-            w: 1,
-            h: 2,
-            x: 1,
-            y: 1,
-            i: "card-3",
-            minH: 2,
-            moved: false,
-            static: false,
-          },
-        ],
+        detail: newLayout2,
       })
     );
-
     expect(
       element.shadowRoot?.querySelector(".layout")?.childNodes.length
     ).toBe(3);
 
     // delete element
+    mockChangeEvent.mockClear();
+
     await act(async () => {
       (
         element.shadowRoot?.querySelectorAll(
@@ -226,9 +263,30 @@ describe("eo-workbench-layout", () => {
       ).click();
     });
 
+    const newLayout3 = [
+      { w: 2, h: 1, x: 0, y: 0, i: "card-1", moved: false, static: false },
+      {
+        w: 1,
+        h: 2,
+        x: 1,
+        y: 1,
+        i: "card-3",
+        minH: 2,
+        moved: false,
+        static: false,
+      },
+    ];
+
+    triggerLayoutChange(newLayout3);
+
     expect(
       element.shadowRoot?.querySelector(".layout")?.childNodes.length
     ).toBe(2);
+    expect(mockChangeEvent).toBeCalledWith(
+      expect.objectContaining({
+        detail: newLayout3,
+      })
+    );
 
     // delete component item
     await act(async () => {
@@ -258,11 +316,13 @@ describe("eo-workbench-layout", () => {
     ).toBe(1);
 
     // reset
+    mockChangeEvent.mockClear();
     (
       utilsGeneral as unknown as {
         mockedUnwrapedProvider: jest.Mock<() => Promise<void>>;
       }
     ).mockedUnwrapedProvider.mockResolvedValueOnce();
+
     await act(async () => {
       fireEvent(
         getByTestId(
@@ -282,6 +342,9 @@ describe("eo-workbench-layout", () => {
         element.shadowRoot?.querySelector("eo-checkbox") as HTMLElement
       ).getAttribute("value")
     ).toBe("");
+    expect(mockChangeEvent).toBeCalledWith(
+      expect.objectContaining({ detail: [] })
+    );
 
     act(() => {
       (
@@ -307,6 +370,45 @@ describe("eo-workbench-layout", () => {
         detail: expect.objectContaining({
           action: expect.objectContaining({ event: actionEvent }),
         }),
+      })
+    );
+
+    // onLayoutChange called with w > 1 and x > 0 layout
+    mockChangeEvent.mockClear();
+
+    const newLayout4 = [
+      { w: 2, h: 1, x: 1, y: 0, i: "card-1", moved: false, static: false },
+      {
+        w: 1,
+        h: 2,
+        x: 1,
+        y: 1,
+        i: "card-3",
+        minH: 2,
+        moved: false,
+        static: false,
+      },
+    ];
+
+    triggerLayoutChange(newLayout4);
+
+    expect(mockChangeEvent).not.toBeCalledWith(
+      expect.objectContaining({
+        detail: newLayout4,
+      })
+    );
+
+    // onLayoutChange called when isEdit is false
+    mockChangeEvent.mockClear();
+
+    await act(async () => {
+      element.isEdit = false;
+    });
+    triggerLayoutChange(newLayout3);
+
+    expect(mockChangeEvent).not.toBeCalledWith(
+      expect.objectContaining({
+        detail: newLayout3,
       })
     );
 
