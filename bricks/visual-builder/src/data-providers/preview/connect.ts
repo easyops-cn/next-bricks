@@ -493,7 +493,7 @@ export default async function connect(
           case "debug-data-value":
             debugDataValue(data.debugData, data.contractData, data.options);
             break;
-          /* case "excute-proxy-method": {
+          case "excute-proxy-method": {
             const [ref, method, args = []] = data.proxyMethodArgs;
             try {
               const result = document.body.querySelector(ref)[method](...args);
@@ -506,11 +506,11 @@ export default async function connect(
               window.parent.postMessage({
                 sender: "previewer",
                 type: "excute-proxy-method-error",
-                data: { method: method, res: err.message },
+                data: { method: method, res: (err as Error).message },
               });
             }
             break;
-          } */
+          }
         }
     }
   );

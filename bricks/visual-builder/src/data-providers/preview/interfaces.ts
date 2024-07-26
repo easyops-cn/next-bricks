@@ -117,7 +117,8 @@ export type PreviewMessageToPreviewer =
   | PreviewMessageContainerUpdatePreviewUrl
   | PreviewMessageContainerUpdatePreviewRoute
   | PreviewMessageContainerInspectDataValue
-  | PreviewMessageContainerDebugDataValue;
+  | PreviewMessageContainerDebugDataValue
+  | PreviewMessageContainerProxyMethod;
 
 export type PreviewMessageFromContainer =
   | PreviewMessageContainerBuilderHoverOnIframe
@@ -368,6 +369,12 @@ export interface PreviewMessageContainerCapture extends PreviewBaseMessage {
   type: "capture";
   maxWidth: number;
   maxHeight: number;
+}
+
+export interface PreviewMessageContainerProxyMethod extends PreviewBaseMessage {
+  sender: "preview-container";
+  type: "excute-proxy-method";
+  proxyMethodArgs: [ref: any, method: string, args?: any[]];
 }
 
 export interface PreviewMessageContainerBuilderHoverOnIframe
