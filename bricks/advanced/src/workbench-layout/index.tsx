@@ -92,6 +92,7 @@ export interface EoWorkbenchLayoutComponentRef {
 
 export interface EoWorkbenchLayoutComponentProps
   extends EoWorkbenchLayoutProps {
+  onChange?: (layout: Layout[]) => void;
   onSave?: (layout: Layout[]) => void;
   onCancel?: () => void;
   onActionClick?: (action: SimpleAction, layouts: Layout[]) => void;
@@ -110,6 +111,7 @@ export const EoWorkbenchLayoutComponent = forwardRef<
     layouts: layoutsProps,
     componentList = [],
     isEdit,
+    onChange,
     onSave,
     onCancel,
     onActionClick,
@@ -121,10 +123,10 @@ export const EoWorkbenchLayoutComponent = forwardRef<
     []
   );
   const gridLayoutRef = useRef<HTMLDivElement>(null);
-  const layoutCacheRef = useRef<Layout[]>();
   const layoutWrapperRef = useRef<HTMLDivElement>(null);
+  const layoutCacheRef = useRef<Layout[]>(layoutsProps ?? []);
 
-  const [layouts, _setLayouts] = useState<Layout[]>(layoutsProps ?? []);
+  const [layouts, _setLayouts] = useState<Layout[]>(layoutCacheRef.current);
   const [cols, setCols] = useState<number>(3);
   const [layoutWrapperStyle, setLayoutWrapperStyle] =
     useState<React.CSSProperties>();
@@ -137,6 +139,14 @@ export const EoWorkbenchLayoutComponent = forwardRef<
   useImperativeHandle(ref, () => ({
     setLayouts,
   }));
+
+  const handleChange = useCallback(
+    (layouts: Layout[]) => {
+      setLayouts(layouts);
+      onChange?.(layouts);
+    },
+    [onChange, setLayouts]
+  );
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDragCallback: ItemCallback = (layout, oldItem, newItem) => {
@@ -154,49 +164,58 @@ export const EoWorkbenchLayoutComponent = forwardRef<
     }
   };
 
-  const handleLayoutChange = useCallback((currentLayout: Layout[]) => {
-    if (!layoutCacheRef.current) {
-      layoutCacheRef.current = currentLayout;
-    }
-    let isAllowAction = true;
-    for (let t = 0; t < currentLayout.length; t++) {
-      const { x, w, y, h, i, minH } = currentLayout[t];
-      if (w > 1 && x > 0) {
-        isAllowAction = false;
-        break;
+  const handleLayoutChange = useCallback(
+    (currentLayout: Layout[]) => {
+      if (!isEdit) {
+        return;
       }
-      if (w === 1 && x < 2) {
-        const matchItem = currentLayout.find(
-          (item) => item.i !== i && item.w === 1 && item.y === y && x < 2
-        );
-        if (matchItem) {
-          currentLayout[t].minH = currentLayout[t].minH ?? h;
-          currentLayout[t].h = Math.max(matchItem.h, h);
-        }
-      } else {
-        currentLayout[t].h = minH ?? h;
-        currentLayout[t].minH = undefined;
-      }
-    }
-    if (!isAllowAction) {
-      _setLayouts((items) =>
-        items?.map((item) => {
-          const matchLayout = layoutCacheRef.current?.find(
-            (layout) => getRealKey(layout.i) === getRealKey(item.i)
-          );
-          // should update key to refresh layout
-          const key = `${getRealKey(item.i)}:${Math.random()}`;
-          return {
-            ...matchLayout,
-            i: key,
-          } as Layout;
-        })
-      );
-      return;
-    }
 
-    layoutCacheRef.current = currentLayout;
-  }, []);
+      let isAllowAction = true;
+
+      for (let t = 0; t < currentLayout.length; t++) {
+        const { x, w, y, h, i, minH } = currentLayout[t];
+        if (w > 1 && x > 0) {
+          isAllowAction = false;
+          break;
+        }
+        if (w === 1 && x < 2) {
+          const matchItem = currentLayout.find(
+            (item) => item.i !== i && item.w === 1 && item.y === y && x < 2
+          );
+          if (matchItem) {
+            currentLayout[t].minH = currentLayout[t].minH ?? h;
+            currentLayout[t].h = Math.max(matchItem.h, h);
+          }
+        } else {
+          currentLayout[t].h = minH ?? h;
+          currentLayout[t].minH = undefined;
+        }
+      }
+
+      handleChange(
+        !isAllowAction
+          ? // revert to previous layouts
+            layoutCacheRef.current.map((item) => {
+              const { w, i } = item;
+              // should update key to refresh layout
+              const key = `${getRealKey(i)}:${Math.random()}`;
+              let x = item.x;
+
+              if (w > 1 && x > 0) {
+                x = 0;
+              }
+
+              return {
+                ...item,
+                x,
+                i: key,
+              } as Layout;
+            })
+          : currentLayout
+      );
+    },
+    [handleChange, isEdit]
+  );
 
   const handleBreakpointChange = (_newBreakpoint: string, newCols: number) => {
     setCols(newCols);
@@ -214,27 +233,27 @@ export const EoWorkbenchLayoutComponent = forwardRef<
           y: Infinity,
         }));
 
-      _setLayouts((layouts) => {
-        return layouts
+      handleChange(
+        layouts
           .filter((layout) => checkedKeys.includes(getRealKey(layout.i)))
-          .concat(addItems);
-      });
+          .concat(addItems)
+      );
     },
-    [layouts, cols]
+    [layouts, handleChange, cols]
   );
 
   const handleClearLayout = () => {
-    setLayouts([]);
+    handleChange([]);
   };
 
   const handleSave = useCallback(() => {
     onSave?.(
-      (layoutCacheRef.current ?? []).map((item) => ({
+      layouts.map((item) => ({
         ...item,
         i: getRealKey(item.i),
       }))
     );
-  }, [onSave]);
+  }, [layouts, onSave]);
 
   const handleCancel = () => {
     onCancel?.();
@@ -263,15 +282,13 @@ export const EoWorkbenchLayoutComponent = forwardRef<
   };
 
   const handleDeleteItem = useCallback(
-    (e: React.MouseEvent, deteleItem: Item) => {
+    (e: React.MouseEvent, deletedItem: Item) => {
       e.stopPropagation();
-      setLayouts(
-        layoutCacheRef.current?.filter(
-          (item) => getRealKey(item.i) !== deteleItem.key
-        ) ?? []
+      handleChange(
+        layouts.filter((item) => getRealKey(item.i) !== deletedItem.key) ?? []
       );
     },
-    []
+    [handleChange, layouts]
   );
 
   const handleEditMaskClcik = (e: React.MouseEvent) => {
@@ -354,7 +371,7 @@ export const EoWorkbenchLayoutComponent = forwardRef<
         window.removeEventListener("resize", handleWatchLayoutSizeChange);
       };
     }
-  }, [isEdit, handleWatchLayoutSizeChange, layoutsProps]);
+  }, [isEdit, handleWatchLayoutSizeChange, layoutsProps, setLayouts]);
 
   return (
     <div className="grid-layout-wrapper" ref={gridLayoutRef}>
@@ -407,7 +424,7 @@ export const EoWorkbenchLayoutComponent = forwardRef<
           draggableCancel=".delete-icon,.edit-actions,.ingore-item"
           breakpoints={{ lg: 1300, md: 1024, sm: 768 }}
           rowHeight={1}
-          cols={{ lg: 3, md: 3, sm: 1 }}
+          cols={{ lg: 3, md: 3, sm: isEdit ? 3 : 1 }}
           isResizable={false}
           isDraggable={isEdit}
           onDrag={handleDragCallback}
@@ -450,12 +467,21 @@ class EoWorkbenchLayout extends ReactNextElement {
   accessor componentList: Item[] | undefined;
 
   @event({
+    type: "change",
+  })
+  accessor #changeEvent!: EventEmitter<Layout[]>;
+
+  #handleChange = (layouts: Layout[]) => {
+    this.#changeEvent.emit(layouts);
+  };
+
+  @event({
     type: "save",
   })
-  accessor #saveLayoutEvent!: EventEmitter<Layout[]>;
+  accessor #saveEvent!: EventEmitter<Layout[]>;
 
-  #handleSaveLayout = (layout: Layout[]) => {
-    this.#saveLayoutEvent.emit(layout);
+  #handleSave = (layouts: Layout[]) => {
+    this.#saveEvent.emit(layouts);
   };
 
   @event({
@@ -500,7 +526,8 @@ class EoWorkbenchLayout extends ReactNextElement {
         layouts={this.layouts}
         componentList={this.componentList}
         isEdit={this.isEdit}
-        onSave={this.#handleSaveLayout}
+        onChange={this.#handleChange}
+        onSave={this.#handleSave}
         onCancel={this.#handleCancel}
         onActionClick={this.#handleActionClick}
         ref={this.#componentRef}
