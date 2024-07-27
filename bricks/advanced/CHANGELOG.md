@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.37.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.36.2...@next-bricks/advanced@0.37.0) (2024-07-27)
+
+
+### Features
+
+* **workbench-layout:** add change event ([a3ae2b6](https://github.com/easyops-cn/next-bricks/commit/a3ae2b68dfea17ba7804aa6e69772c9ba1effb94))
+
+
+
+
+
 ## [0.36.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.36.1...@next-bricks/advanced@0.36.2) (2024-07-25)
 
 
