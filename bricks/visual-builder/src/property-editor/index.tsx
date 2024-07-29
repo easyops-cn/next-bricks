@@ -97,6 +97,8 @@ export const SchemaField = createSchemaField({
 
 export type { DataNode };
 
+let cacheCustomEditor: Function;
+
 /**
  * 构件 `visual-builder.property-editor`
  */
@@ -236,7 +238,6 @@ class PropertyEditor extends ReactNextElement {
         ref={this.#formRef}
         editorName={this.editorName}
         values={this.#filterData(this.values)}
-        // values={this.values}
         advancedMode={this.advancedMode}
         dataList={this.dataList}
         extraLibs={this.extraLibs}
@@ -286,7 +287,7 @@ export function LegacyPropertyEditor(
 ) {
   const [Editor, setEditor] = useState<
     (props: EditorComponentProps<typeof SchemaField>) => React.ReactElement
-  >(() => customEditors.get(editorName)?.(React) as any);
+  >(cacheCustomEditor as any);
   const currentTheme = useCurrentTheme();
   const cache = useMemo(() => createCache(), []);
   // should update form instance when Editor change
@@ -320,7 +321,8 @@ export function LegacyPropertyEditor(
       return;
     }
     await __secret_internals.loadEditors([editorName], editorPackages);
-    setEditor(() => customEditors.get(editorName)?.(React) as any);
+    cacheCustomEditor = () => customEditors.get(editorName)?.(React);
+    setEditor(cacheCustomEditor as any);
   }, [editorName, editorPackages]);
 
   const defaultTransform = useCallback((values: any, advancedMode: boolean) => {
