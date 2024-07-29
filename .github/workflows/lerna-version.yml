@@ -27,6 +27,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Lerna Version
-      run: npx lerna@8.1.2 version --yes --conventional-commits --create-release github
+      run: npx lerna version --yes --conventional-commits --create-release github
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN_EVE }}
