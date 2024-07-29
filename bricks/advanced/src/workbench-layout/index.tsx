@@ -209,7 +209,7 @@ export const EoWorkbenchLayoutComponent = forwardRef<
                 ...item,
                 x,
                 i: key,
-              } as Layout;
+              };
             })
           : currentLayout
       );
@@ -291,7 +291,7 @@ export const EoWorkbenchLayoutComponent = forwardRef<
     [handleChange, layouts]
   );
 
-  const handleEditMaskClcik = (e: React.MouseEvent) => {
+  const handleEditMaskClick = (e: React.MouseEvent) => {
     e.preventDefault();
   };
 
@@ -316,7 +316,7 @@ export const EoWorkbenchLayoutComponent = forwardRef<
               className="drag-box"
             >
               {isEdit && (
-                <div className="edit-mask" onMouseDown={handleEditMaskClcik} />
+                <div className="edit-mask" onMouseDown={handleEditMaskClick} />
               )}
               <ReactUseBrick useBrick={component.useBrick} />
               {isEdit && (
@@ -421,7 +421,7 @@ export const EoWorkbenchLayoutComponent = forwardRef<
         )}
         <ResponsiveReactGridLayout
           className="layout"
-          draggableCancel=".delete-icon,.edit-actions,.ingore-item"
+          draggableCancel=".delete-icon,.edit-actions,.ignore-item"
           breakpoints={{ lg: 1300, md: 1024, sm: 768 }}
           rowHeight={1}
           cols={{ lg: 3, md: 3, sm: isEdit ? 3 : 1 }}
@@ -440,6 +440,7 @@ export const EoWorkbenchLayoutComponent = forwardRef<
 
 /**
  * 工作台布局
+ * @deprecated Please use eo-workbench-layout-v2 which support global styles instead
  */
 export
 @defineElement("eo-workbench-layout", {

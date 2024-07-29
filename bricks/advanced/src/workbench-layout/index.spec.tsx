@@ -122,6 +122,8 @@ describe("eo-workbench-layout", () => {
       document.body.appendChild(element);
     });
 
+    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
+
     const triggerLayoutChange = (layout: Layout[]) => {
       act(() => {
         last(MockedReactGridLayoutComponent.mock.calls)?.[0].onLayoutChange?.(
@@ -131,13 +133,12 @@ describe("eo-workbench-layout", () => {
       });
     };
     const newLayout1 = [
-      { w: 2, h: 1, x: 0, y: 0, i: "card-1" },
-      { w: 1, h: 1, x: 0, y: 1, i: "card-2" },
+      { w: 2, h: 1, x: 0, y: 0, i: "card-1", moved: false, static: false },
+      { w: 1, h: 1, x: 0, y: 1, i: "card-2", moved: false, static: false },
     ];
 
     triggerLayoutChange(newLayout1);
 
-    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
     expect(
       (
         element.shadowRoot?.querySelector("eo-checkbox") as HTMLElement
@@ -170,8 +171,6 @@ describe("eo-workbench-layout", () => {
     );
 
     // insert element
-    mockChangeEvent.mockClear();
-
     await act(async () => {
       await element.shadowRoot?.querySelector("eo-checkbox")?.dispatchEvent(
         new CustomEvent("change", {
@@ -253,8 +252,6 @@ describe("eo-workbench-layout", () => {
     ).toBe(3);
 
     // delete element
-    mockChangeEvent.mockClear();
-
     await act(async () => {
       (
         element.shadowRoot?.querySelectorAll(
@@ -316,7 +313,6 @@ describe("eo-workbench-layout", () => {
     ).toBe(1);
 
     // reset
-    mockChangeEvent.mockClear();
     (
       utilsGeneral as unknown as {
         mockedUnwrapedProvider: jest.Mock<() => Promise<void>>;
@@ -346,6 +342,7 @@ describe("eo-workbench-layout", () => {
       expect.objectContaining({ detail: [] })
     );
 
+    // cancel
     act(() => {
       (
         element.shadowRoot?.querySelectorAll("eo-button")[1] as HTMLElement
@@ -374,8 +371,6 @@ describe("eo-workbench-layout", () => {
     );
 
     // onLayoutChange called with w > 1 and x > 0 layout
-    mockChangeEvent.mockClear();
-
     const newLayout4 = [
       { w: 2, h: 1, x: 1, y: 0, i: "card-1", moved: false, static: false },
       {
@@ -400,7 +395,6 @@ describe("eo-workbench-layout", () => {
 
     // onLayoutChange called when isEdit is false
     mockChangeEvent.mockClear();
-
     await act(async () => {
       element.isEdit = false;
     });
