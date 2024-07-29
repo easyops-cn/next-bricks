@@ -151,7 +151,7 @@ export function RawDataPreviewComponent({
     ).then(() => {
       setInjected(true);
     });
-  }, [ready]);
+  }, [previewUrl, ready]);
 
   useEffect(() => {
     if (!injected) {
@@ -174,7 +174,7 @@ export function RawDataPreviewComponent({
       {
         brick: "div",
         properties: {
-          textContent: "视觉重量",
+          textContent: "视觉重量 (由低至高)",
           className: "head-cell last-col-cell",
           style: {
             gridColumn: "span 4",
