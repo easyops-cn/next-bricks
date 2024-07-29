@@ -8,8 +8,22 @@
   "ignorePresets": [":ignoreModulesAndTests"],
   "packageRules": [
     {
-      "excludePackagePatterns": ["^@next-core/", "^@next-dll/"],
-      "excludePackageNames": ["@shoelace-style/shoelace"],
+      "excludePackagePatterns": [
+        "^@next-core/",
+        "^@next-dll/",
+        "^@typescript-eslint/",
+        "^eslint"
+      ],
+      "excludePackageNames": [
+        "@shoelace-style/shoelace",
+        "concurrently",
+        "cross-env",
+        "husky",
+        "lerna",
+        "lint-staged",
+        "prettier",
+        "typescript"
+      ],
       "matchManagers": ["npm"],
       "enabled": false
     },
