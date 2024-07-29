@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.37.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.37.1...@next-bricks/basic@1.37.2) (2024-07-29)
+
+
+### Bug Fixes
+
+* v3 desc schema ([be61c54](https://github.com/easyops-cn/next-bricks/commit/be61c5418f41f7124c98e32a8db43582c2e90f24))
+
+
+
+
+
 ## [1.37.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.37.0...@next-bricks/basic@1.37.1) (2024-07-25)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.38.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.37.0...@next-bricks/advanced@0.38.0) (2024-07-29)
+
+
+### Features
+
+* **workbench-layout:** Mark eo-workbench-layout as deprecated and synchronize changes to eo-workbench-layout-v2 ([ff6f0ff](https://github.com/easyops-cn/next-bricks/commit/ff6f0ffc5ba887834f59caf3f46c1c1b79609eef))
+
+
+
+
+
 # [0.37.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.36.2...@next-bricks/advanced@0.37.0) (2024-07-27)
 
 

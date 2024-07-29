@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.33.5...@next-bricks/visual-builder@1.33.6) (2024-07-29)
+
+
+### Bug Fixes
+
+* fix property-editor update refresh ([31c78ad](https://github.com/easyops-cn/next-bricks/commit/31c78addd8bc44d57579f1b9d3dc088f81781217))
+
+
+
+
+
 ## [1.33.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.33.4...@next-bricks/visual-builder@1.33.5) (2024-07-26)
 
 
