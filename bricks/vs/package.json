@@ -35,13 +35,13 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-core/cook": "^2.4.7",
+    "@next-core/cook": "^2.4.8",
     "@next-core/element": "^1.2.11",
     "@next-core/monaco-contributions": "^0.3.9",
     "@next-core/react-element": "^1.0.30",
-    "@next-core/react-runtime": "^1.6.19",
-    "@next-core/theme": "^1.5.3",
-    "@next-core/utils": "^1.7.16",
+    "@next-core/react-runtime": "^1.6.28",
+    "@next-core/theme": "^1.5.4",
+    "@next-core/utils": "^1.7.19",
     "@next-shared/form": "^0.7.0",
     "monaco-editor": "^0.50.0",
     "monaco-editor-webpack-plugin": "^7.1.0",
