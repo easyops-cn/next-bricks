@@ -357,6 +357,7 @@ export const eoNextTableSchema = {
         name: "FormItemWithoutAdvanced",
         props: {
           tooltip: "输入对应的column.key",
+          layout: "horizontal",
         },
       },
     },

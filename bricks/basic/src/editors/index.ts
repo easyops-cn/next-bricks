@@ -26,3 +26,4 @@ import "./eo-grid-layout/index.js";
 import "./eo-easy-view/index.js";
 import "./eo-next-table/index.js";
 import "./eo-descriptions/index.js";
+import "./eo-alert/index.js";
