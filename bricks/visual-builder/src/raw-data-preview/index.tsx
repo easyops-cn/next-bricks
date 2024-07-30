@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { createDecorators } from "@next-core/element";
+import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
-import type { BrickConf, MicroApp } from "@next-core/types";
+import type { BrickConf, ContextConf, MicroApp } from "@next-core/types";
 import classNames from "classnames";
 import { __secret_internals, getBasePath } from "@next-core/runtime";
 import type { PreviewWindow } from "@next-core/preview/types";
@@ -12,12 +12,12 @@ import { convertToStoryboard } from "./convert";
 import styleText from "./styles.shadow.css";
 import previewStyleText from "./preview.shadow.css";
 
-const { defineElement, property } = createDecorators();
+const { defineElement, property, event } = createDecorators();
 
 export interface RawPreviewProps {
   previewUrl?: string;
   generations?: AttributeGeneration[];
-  mockIndex?: number;
+  busy?: boolean;
   category?: PreviewCategory;
   theme?: string;
   uiVersion?: string;
@@ -25,13 +25,32 @@ export interface RawPreviewProps {
 }
 
 export interface AttributeGeneration {
+  generationId?: string;
   objectId: string;
   objectName: string;
   propertyId: string;
   propertyName: string;
-  candidates: VisualConfig[];
+  propertyInstanceId?: string;
+  comment?: string;
+  candidates: VisualConfig[] | null;
   mockData: Record<string, unknown>[];
 }
+
+export interface CommentDetail {
+  comment: string;
+  propertyInstanceId?: string;
+}
+
+interface BasePreviewMessage {
+  channel: "raw-data-preview";
+}
+
+interface CommentMessage extends BasePreviewMessage {
+  type: "comment";
+  payload: CommentDetail;
+}
+
+type PreviewMessage = CommentMessage;
 
 export type PreviewCategory =
   | "detail-item"
@@ -57,8 +76,8 @@ class RawDataPreview extends ReactNextElement {
   @property({ attribute: false })
   accessor generations: AttributeGeneration[] | undefined;
 
-  @property({ type: Number })
-  accessor mockIndex: number | undefined;
+  @property({ type: Boolean })
+  accessor busy: boolean | undefined;
 
   /**
    * @default "value"
@@ -75,33 +94,42 @@ class RawDataPreview extends ReactNextElement {
   @property()
   accessor app: MicroApp | undefined;
 
+  @event({ type: "comment" })
+  accessor #commentEvent: EventEmitter<CommentDetail>;
+
+  #handleComment = (detail: CommentDetail) => {
+    this.#commentEvent.emit(detail);
+  };
+
   render() {
     return (
       <RawDataPreviewComponent
         previewUrl={this.previewUrl}
         generations={this.generations}
-        mockIndex={this.mockIndex}
+        busy={this.busy}
         category={this.category}
         theme={this.theme}
         uiVersion={this.uiVersion}
         app={this.app}
+        onComment={this.#handleComment}
       />
     );
   }
 }
 
 export interface RawDataPreviewComponentProps extends RawPreviewProps {
-  //
+  onComment: (detail: CommentDetail) => void;
 }
 
 export function RawDataPreviewComponent({
   previewUrl,
   generations,
-  mockIndex,
+  busy,
   category,
   theme,
   uiVersion,
   app,
+  onComment,
 }: RawDataPreviewComponentProps) {
   const iframeRef = useRef<HTMLIFrameElement>();
   const [ready, setReady] = useState(false);
@@ -118,6 +146,39 @@ export function RawDataPreviewComponent({
     };
     check();
   }, []);
+
+  useEffect(() => {
+    if (ready) {
+      const iframeWin = iframeRef.current!.contentWindow as PreviewWindow;
+      iframeWin.postMessage(
+        {
+          channel: "raw-data-preview",
+          type: "busy",
+          payload: busy,
+        },
+        location.origin
+      );
+    }
+  }, [busy, ready]);
+
+  useEffect(() => {
+    if (ready) {
+      const iframeWin = iframeRef.current!.contentWindow as PreviewWindow;
+      const onMessage = ({ data }: MessageEvent<PreviewMessage>) => {
+        if (data?.channel === "raw-data-preview") {
+          switch (data.type) {
+            case "comment":
+              onComment(data.payload);
+              break;
+          }
+        }
+      };
+      iframeWin.addEventListener("message", onMessage);
+      return () => {
+        iframeWin.removeEventListener("message", onMessage);
+      };
+    }
+  }, [onComment, ready]);
 
   useEffect(() => {
     if (!ready) {
@@ -174,6 +235,13 @@ export function RawDataPreviewComponent({
       {
         brick: "div",
         properties: {
+          textContent: "",
+          className: "head-cell",
+        },
+      },
+      {
+        brick: "div",
+        properties: {
           textContent: "视觉重量 (由低至高)",
           className: "head-cell last-col-cell",
           style: {
@@ -190,11 +258,20 @@ export function RawDataPreviewComponent({
         },
       },
     ];
-    const table: BrickConf = {
+    const table: BrickConf & { context?: ContextConf[] } = {
       brick: "visual-builder.pre-generated-table-view",
+      context: [
+        {
+          name: "propertyToggleState",
+          value: [],
+        },
+        {
+          name: "busy",
+        },
+      ],
       properties: {
         style: {
-          gridTemplateColumns: "120px repeat(5, 1fr)",
+          gridTemplateColumns: "auto 32px repeat(5, 1fr)",
         },
       },
       children: tableChildren,
@@ -205,118 +282,239 @@ export function RawDataPreviewComponent({
       const isLastRow = i === size - 1;
 
       const candidatesByVisualWeight = new Map<number, VisualConfig>();
-      for (const candidate of generation.candidates) {
+      for (const candidate of generation.candidates ?? []) {
         candidatesByVisualWeight.set(candidate.visualWeight ?? 0, candidate);
       }
 
-      tableChildren.push({
-        brick: "div",
-        properties: {
-          // textContent: `${generation.objectName ?? generation.objectId} - ${generation.propertyName ?? generation.propertyId}`,
-          textContent: `${generation.propertyName ?? generation.propertyId}`,
-          className: classNames("body-cell", {
-            "last-row-cell": isLastRow,
-          }),
+      tableChildren.push(
+        {
+          brick: "div",
+          properties: {
+            // textContent: `${generation.propertyName ?? generation.propertyId}`,
+            className: classNames("body-cell", {
+              "last-row-cell": isLastRow,
+            }),
+            style: {
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            },
+          },
+          children: [
+            {
+              brick: "span",
+              properties: {
+                textContent: `${generation.propertyName ?? generation.propertyId}`,
+              },
+            },
+            {
+              brick: "eo-button",
+              properties: {
+                type: "text",
+                icon: `<%=
+                  {
+                    lib: "fa",
+                    prefix: "fas",
+                    icon: CTX.propertyToggleState.includes(${JSON.stringify(generation.propertyId)}) ? "chevron-up" : "chevron-down",
+                  }
+                %>`,
+              },
+              events: {
+                click: {
+                  action: "context.replace",
+                  args: [
+                    "propertyToggleState",
+                    `<%
+                      CTX.propertyToggleState.includes(${JSON.stringify(generation.propertyId)})
+                        ? CTX.propertyToggleState.filter((id) => id !== ${JSON.stringify(generation.propertyId)})
+                        : CTX.propertyToggleState.concat(${JSON.stringify(generation.propertyId)})
+                    %>`,
+                  ],
+                },
+              },
+            },
+          ],
         },
+        {
+          brick: "div",
+          properties: {
+            className: classNames("body-cell", {
+              "last-row-cell": isLastRow,
+            }),
+          },
+          children: generation.candidates?.length
+            ? [
+                {
+                  brick: "eo-icon",
+                  properties: {
+                    lib: "fa",
+                    ...(generation.generationId
+                      ? {
+                          prefix: "far",
+                          icon: "circle-check",
+                          style: {
+                            color: "var(--palette-green-6)",
+                          },
+                        }
+                      : {
+                          prefix: "fas",
+                          icon: "circle",
+                          style: {
+                            color: "var(--palette-gray-6)",
+                            transformOrigin: "center center",
+                            transform: "scale(0.5)",
+                          },
+                        }),
+                  },
+                },
+              ]
+            : undefined,
+        }
+      );
+
+      const mockList = (generation.mockData ?? []).slice();
+
+      mockList.sort((ma, mb) => {
+        const a = ma?.[generation.propertyId];
+        const b = mb?.[generation.propertyId];
+        const aIsArray = Array.isArray(a);
+        const bIsArray = Array.isArray(b);
+        if (aIsArray || bIsArray) {
+          return (bIsArray ? b.length : -1) - (aIsArray ? a.length : -1);
+        }
+        const aIsNil = a == null;
+        const bIsNil = b == null;
+        if (aIsNil || bIsNil) {
+          return (bIsNil ? 0 : 1) - (aIsNil ? 0 : 1);
+        }
+
+        const aIsEmpty = typeof a === "string" && a.length === 0;
+        const bIsEmpty = typeof b === "string" && b.length === 0;
+        if (aIsEmpty || bIsEmpty) {
+          return (bIsEmpty ? 0 : 1) - (aIsEmpty ? 0 : 1);
+        }
+        return 0;
       });
-
-      const mockList = generation.mockData ?? [];
-      let dataSource: unknown;
-
-      // 从 mock 数据中获取可用的数据值
-      if (mockList.length === 0) {
-        dataSource = {};
-      } else if (mockIndex >= 0) {
-        // 指定了 mockIndex，使用指定的 mock 数据，取模。
-        dataSource = mockList[mockIndex % mockList.length];
-      } else {
-        // 如果有一项是数组，则优先使用长度最长的数组；
-        // 否则，优先使用非空值，最后使用空值；
-        const availableDataValues = mockList.map((object) => {
-          return object?.[generation.propertyId];
-        });
-        availableDataValues.sort((a, b) => {
-          const aIsArray = Array.isArray(a);
-          const bIsArray = Array.isArray(b);
-          if (aIsArray || bIsArray) {
-            return (bIsArray ? b.length : -1) - (aIsArray ? a.length : -1);
-          }
-          const aIsNil = a == null;
-          const bIsNil = b == null;
-          if (aIsNil || bIsNil) {
-            return (bIsNil ? 0 : 1) - (aIsNil ? 0 : 1);
-          }
-
-          const aIsEmpty = typeof a === "string" && a.length === 0;
-          const bIsEmpty = typeof b === "string" && b.length === 0;
-          if (aIsEmpty || bIsEmpty) {
-            return (bIsEmpty ? 0 : 1) - (aIsEmpty ? 0 : 1);
-          }
-          return 0;
-        });
-        dataSource = { [generation.propertyId]: availableDataValues[0] };
-      }
 
       for (let i = -1; i < 3; i++) {
         const candidate = candidatesByVisualWeight.get(i);
 
-        let container: BrickConf;
+        let brick: BrickConf;
         if (candidate) {
-          const brick = convertToStoryboard(candidate, generation.propertyId);
-          const children = brick ? [brick] : [];
-
-          container = {
-            brick: "visual-builder.pre-generated-container",
-            properties: {
-              useBrick: children,
-              dataSource,
-            },
-            errorBoundary: true,
-          };
+          brick = convertToStoryboard(candidate, generation.propertyId);
         }
 
         tableChildren.push({
           brick: "div",
           properties: {
             className: classNames("body-cell", {
-              "last-col-cell": i === 2,
               "last-row-cell": isLastRow,
             }),
           },
-          children: container
-            ? [
-                {
-                  ...container,
-                  errorBoundary: true,
+          children: [
+            {
+              brick: "div",
+              properties: {
+                style: {
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "8px",
                 },
-              ]
-            : [],
+              },
+              children: brick
+                ? mockList.map((dataSource, index) => ({
+                    brick: "visual-builder.pre-generated-container",
+                    if:
+                      index === 0
+                        ? true
+                        : `<%= CTX.propertyToggleState.includes(${JSON.stringify(generation.propertyId)}) %>`,
+                    properties: {
+                      useBrick: [brick],
+                      dataSource,
+                    },
+                    errorBoundary: true,
+                  }))
+                : undefined,
+            },
+          ],
         });
       }
 
       tableChildren.push({
-        brick: "eo-input",
+        brick: "div",
         properties: {
-          placeholder: "AI 生成的结果不符合预期？请告诉 AI 应该如何调整",
+          className: classNames("body-cell", {
+            "last-col-cell": true,
+            "last-row-cell": isLastRow,
+          }),
         },
-        events: {
-          keydown: {
-            if: "<% EVENT.code === 'Enter' %>",
-            action: "console.log",
-          },
-        },
+        children: generation.candidates
+          ? [
+              {
+                brick: "eo-textarea",
+                properties: {
+                  value: generation.comment
+                    ? `<% ${JSON.stringify(generation.comment)} %>`
+                    : undefined,
+                  placeholder:
+                    "不合预期？请补充说明 （按住 ⌘ 或 ctrl 并回车提交）",
+                  autoSize: true,
+                  style: {
+                    width: "100%",
+                  },
+                  disabled: "<%= CTX.busy %>",
+                },
+                events: {
+                  keydown: {
+                    if: "<% EVENT.code === 'Enter' && (EVENT.metaKey || EVENT.ctrlKey) %>",
+                    action: "window.postMessage",
+                    args: [
+                      {
+                        channel: "raw-data-preview",
+                        type: "comment",
+                        payload: {
+                          comment: "<% EVENT.target.value %>",
+                          propertyInstanceId: generation.propertyInstanceId,
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            ]
+          : undefined,
       });
     }
 
     render(
       "yaml",
       {
-        yaml: safeDump(table, {
-          schema: JSON_SCHEMA,
-          skipInvalid: true,
-          noRefs: true,
-          noCompatMode: true,
-        }),
+        yaml: safeDump(
+          [
+            table,
+            {
+              brick: "eo-message-listener",
+              properties: {
+                sameOrigin: true,
+              },
+              events: {
+                message: {
+                  if: "<% EVENT.detail.data?.channel === 'raw-data-preview' && EVENT.detail.data.type === 'busy' %>",
+                  action: "context.replace",
+                  args: ["busy", "<% EVENT.detail.data.payload %>"],
+                },
+              },
+              portal: true,
+              errorBoundary: true,
+            },
+          ],
+          {
+            schema: JSON_SCHEMA,
+            skipInvalid: true,
+            noRefs: true,
+            noCompatMode: true,
+          }
+        ),
       },
       {
         app,
@@ -325,7 +523,7 @@ export function RawDataPreviewComponent({
         styleText: previewStyleText,
       }
     );
-  }, [app, injected, generations, theme, uiVersion, category, mockIndex]);
+  }, [app, injected, generations, theme, uiVersion, category]);
 
   return (
     <div className={classNames("container")}>
