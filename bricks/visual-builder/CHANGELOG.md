@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.34.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.33.8...@next-bricks/visual-builder@1.34.0) (2024-07-31)
+
+
+### Features
+
+* experimental: raw-data-preview ([099f34b](https://github.com/easyops-cn/next-bricks/commit/099f34b7e457a932dd9ed2220661323dbce26489))
+* new provider: batch-update-raw-data-generated-view ([6b12d6c](https://github.com/easyops-cn/next-bricks/commit/6b12d6c4d9a5e31fe19f67a7b64de6c7e0b91d0b))
+
+
+
+
+
 ## [1.33.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.33.7...@next-bricks/visual-builder@1.33.8) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/visual-builder
