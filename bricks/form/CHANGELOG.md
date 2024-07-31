@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.11.5...@next-bricks/form@1.11.6) (2024-07-31)
+
+
+### Bug Fixes
+
+* **textarea:** refine default height when auto-size enabled ([830d64d](https://github.com/easyops-cn/next-bricks/commit/830d64d19afc48960e28d881ae000e938c47d8ae))
+
+
+
+
+
 ## [1.11.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.11.4...@next-bricks/form@1.11.5) (2024-07-29)
 
 **Note:** Version bump only for package @next-bricks/form
