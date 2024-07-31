@@ -3031,10 +3031,10 @@
     "@babel/preset-typescript" "^7.24.7"
     "@babel/runtime" "^7.24.7"
 
-"@next-core/brick-container@^3.18.7":
-  version "3.18.7"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.18.7.tgz#c27b3898bbacd48c8335a477094a6d71fa88cc41"
-  integrity sha512-WiCBma7Tr7YYNJF651oYWaRmokStzdREjSctQdQjw1f9auSBNDqVwhgYPZhTiMQKhNE57wSDg8vPFFi0BNoVRw==
+"@next-core/brick-container@^3.18.8":
+  version "3.18.8"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.18.8.tgz#abbd41e1966d52457a95af2a514871dc0ead035c"
+  integrity sha512-V6lTH3eBxpP54S43ipPoGuZRPWZyfez4Hr8GJUvR5Ev6nWcAXz2t6E4A6NVmuMLIkwDbhmLyZ4eUd2zEnRaEOw==
   dependencies:
     "@next-core/serve-helpers" "^1.2.4"
     body-parser "^1.20.1"
@@ -3060,10 +3060,10 @@
   resolved "https://registry.yarnpkg.com/@next-core/brick-manifest/-/brick-manifest-0.7.1.tgz#3c11e7108b2bd147a4e9876fe95e2eb0d723e2dd"
   integrity sha512-g+4m/Ran4ZBIUpIMhqx/fH91F2lYmci18tlI9TCRte2AFnmA/jsTFULdbPQtd/OMIhodrGnjkhN0WshbqeTzew==
 
-"@next-core/brick-playground@^1.15.9":
-  version "1.15.9"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.15.9.tgz#bd22df99b791ffe3294bd7f62dfa7b42f5026f8a"
-  integrity sha512-G3Gn0S4gv3OW2i9TbIgf0rWI6WklorAPPaX7o6asdzGR1xImImCGCwBpE7Ke/vfB/pe2jUA+S8qByQ6dOj+sug==
+"@next-core/brick-playground@^1.15.10":
+  version "1.15.10"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.15.10.tgz#39e16d837097347d954cb9a2e919e8c302df67d8"
+  integrity sha512-6ia04WjpRGO4/laiKD/qL7Z7fQi6yRwX/WaExqxnoRjVa7M5Hxbia6XGhY9Rt7+LmHsc13D/G0vZPe3+hBWWiA==
   dependencies:
     "@next-core/doc-helpers" "^0.2.13"
     "@next-core/serve-helpers" "^1.2.4"
@@ -3081,10 +3081,10 @@
   resolved "https://registry.yarnpkg.com/@next-core/browserslist-config-next/-/browserslist-config-next-1.1.1.tgz#b7ab1a8ab4fd9af83c91b2a8f85ebea9b11728d5"
   integrity sha512-AOUcPfKeTje+zLIU8Wi2fkYDmzkPWCVp9YeohNLlfMQHK9UMEPF7sIKehah22S9wS8wAoPbqM3DFwCXR27cicg==
 
-"@next-core/build-next-bricks@^1.22.4":
-  version "1.22.4"
-  resolved "https://registry.yarnpkg.com/@next-core/build-next-bricks/-/build-next-bricks-1.22.4.tgz#6e5a3ad26fc99d70d3945a47dbc9508fc9ca9c1f"
-  integrity sha512-3uaeRj3/g/d8I3XXgVFxtw6TrlGJHAoWrp34V5MQ88M99NG0JvdLkScmedF4GAFN9+0sKxIOg8IHVEI0GVsayA==
+"@next-core/build-next-bricks@^1.23.0":
+  version "1.23.0"
+  resolved "https://registry.yarnpkg.com/@next-core/build-next-bricks/-/build-next-bricks-1.23.0.tgz#7b8c48ea2e9979f6b90ebb0814ecdfd0b98fb12d"
+  integrity sha512-TirMXcmlSN2dUA8X6RVBGBHJMYkYq+i7jamuy9aAhjMU9jSdSSj0VAl93UVZI87VO1EfWI1yzfsvAoOjmiY3uQ==
   dependencies:
     "@babel/parser" "^7.24.7"
     "@babel/traverse" "^7.24.7"
@@ -3221,10 +3221,10 @@
     lodash "^4.17.21"
     moment "^2.30.1"
 
-"@next-core/preview@^0.7.9":
-  version "0.7.9"
-  resolved "https://registry.yarnpkg.com/@next-core/preview/-/preview-0.7.9.tgz#cc121c0c1cc33b614a9082fe9e5de9c05dcc1365"
-  integrity sha512-+06zlFco3QRVpOWzDqTp0oTtTz0i36UF1f+6QreOLeDy3IjI0bcGEl+8vcyDZcrirCmrgBVxfKu+NJAc2RxPfQ==
+"@next-core/preview@^0.7.10":
+  version "0.7.10"
+  resolved "https://registry.yarnpkg.com/@next-core/preview/-/preview-0.7.10.tgz#0462b08fe2a5e3b9fe8d42b36f331cc64f1ebce7"
+  integrity sha512-4IfjnIkLw5i5uHGaJ/4A8JSry2ilWvyBQWnquSxzcSL2TAwnLr7zIoLXKeyya1I7kDNbLmY9FvNKc1R/tY2OGw==
 
 "@next-core/react-element@^1.0.30":
   version "1.0.30"
@@ -3333,10 +3333,10 @@
     file-saver "^2.0.5"
     lodash "^4.17.21"
 
-"@next-core/yo@^1.5.72":
-  version "1.5.72"
-  resolved "https://registry.yarnpkg.com/@next-core/yo/-/yo-1.5.72.tgz#267e0b9c8a3d49b67c6c519f66c80dd91fff84a9"
-  integrity sha512-fj/S/LDS5FLdp+/ddtoHrksX9zC9azmUzlZxZcSxl8HQvs30ninnJqu5G39pGl0TzU1+F1IGK/IfAqJ0jG62yg==
+"@next-core/yo@^1.5.73":
+  version "1.5.73"
+  resolved "https://registry.yarnpkg.com/@next-core/yo/-/yo-1.5.73.tgz#a51dda1c81669838cce767ba5cf4ee011ba7135f"
+  integrity sha512-bIiNdxiQEo3RUUmFNok2hPrTzPI5sPH4tav779Dce0J3ieJckpwAN7wXKasf6UetTcLyDVNZA8jg4aAxdu6uDw==
   dependencies:
     minimist "^1.2.8"
     plop "^4.0.1"

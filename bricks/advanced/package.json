@@ -61,7 +61,7 @@
     "react-grid-layout": "^1.4.3"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.22.4",
+    "@next-core/build-next-bricks": "^1.23.0",
     "@next-core/test-next": "^1.1.5"
   },
   "peerDependencies": {
