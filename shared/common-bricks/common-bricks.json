@@ -33,7 +33,8 @@
     "eo-actions",
     "eo-context-menu",
     "eo-formatter-number",
-    "eo-event-agent"
+    "eo-event-agent",
+    "eo-message-listener"
   ],
   "icons": [
     "eo-antd-icon",
