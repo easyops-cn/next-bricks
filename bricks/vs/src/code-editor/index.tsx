@@ -647,6 +647,9 @@ export function CodeEditorComponent({
       readOnly: readOnly,
       quickSuggestions: { strings: true, other: true, comments: true },
       renderLineHighlightOnlyWhenFocus: true,
+      unicodeHighlight: {
+        ambiguousCharacters: false,
+      },
     });
 
     decorationsCollection.current =
