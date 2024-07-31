@@ -58,8 +58,8 @@
   },
   "dependencies": {
     "@next-core/illustrations": "^0.11.31",
-    "@next-core/types": "^1.12.0",
-    "@next-core/utils": "^1.7.19",
+    "@next-core/types": "^1.12.1",
+    "@next-core/utils": "^1.7.20",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
