@@ -103,4 +103,40 @@ describe("eo-textarea", () => {
       document.body.removeChild(element);
     });
   });
+
+  test("auto size default height without minRows", () => {
+    const element = document.createElement("eo-textarea") as Textarea;
+
+    element.autoSize = {
+      maxRows: 5,
+    };
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(element.shadowRoot?.querySelector("textarea")?.style.height).toBe(
+      "32px"
+    );
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("auto size default height autoSize: true", () => {
+    const element = document.createElement("eo-textarea") as Textarea;
+
+    element.autoSize = true;
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(element.shadowRoot?.querySelector("textarea")?.style.height).toBe(
+      "32px"
+    );
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
 });

@@ -13,8 +13,8 @@ const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 type AutoSize =
   | boolean
   | {
-      minRows: number;
-      maxRows: number;
+      minRows?: number;
+      maxRows?: number;
     };
 
 export interface TextareaProps extends FormItemProps {
@@ -239,7 +239,12 @@ export function TextareaComponent(props: TextareaProps) {
         disabled={disabled}
         style={{
           display: "block",
-          height: 94,
+          // Use the minimal height when auto-size enabled, prevent layout shift.
+          // By default, the height is 21px each row + 10px (padding & border).
+          height: autoSize
+            ? (typeof autoSize === "object" ? autoSize.minRows ?? 1 : 1) * 21 +
+              10
+            : 94,
           ...textareaStyle,
           ...autoSizeStyle,
         }}
