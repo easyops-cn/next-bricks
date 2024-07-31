@@ -6,6 +6,7 @@ export default {
     "<rootDir>/src/chat-conversation/",
     "<rootDir>/src/chat-preview/",
     "<rootDir>/src/pre-generated-",
+    "<rootDir>/src/raw-data-preview/",
   ],
   coveragePathIgnorePatterns: [
     "<rootDir>/src/chat-conversation/",
@@ -15,5 +16,6 @@ export default {
     "<rootDir>/src/data-providers/inject-chat-preview-agent",
     // Todo(sailor): Work in progress
     "<rootDir>/src/property-editor/",
+    "<rootDir>/src/raw-data-preview/",
   ],
 };

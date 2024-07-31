@@ -17,7 +17,9 @@ const { defineElement, property, event, method } = createDecorators();
 
 export interface ChatAgentProps {
   agentId?: string;
+  robotId?: string;
   conversationId?: string;
+  alwaysUseNewConversation?: boolean;
 }
 
 export interface Message extends BaseMessage {
@@ -38,6 +40,17 @@ export interface MessageChunk {
   partial?: boolean;
 }
 
+export interface LowLevelMessageChunk {
+  choices: LowLevelChoice[];
+}
+
+export interface LowLevelChoice {
+  delta: {
+    role: "assistant";
+    content?: string;
+  };
+}
+
 export const ChatAgentComponent = forwardRef(LegacyChatAgentComponent);
 
 /**
@@ -52,16 +65,48 @@ class ChatAgent extends ReactNextElement implements ChatAgentProps {
   accessor agentId: string | undefined;
 
   @property()
+  accessor robotId: string | undefined;
+
+  @property()
   accessor conversationId: string | undefined;
 
+  @property()
+  accessor alwaysUseNewConversation: boolean | undefined;
+
+  /**
+   * 发送消息到默认的聊天 API
+   */
   @method()
   postMessage(content: string) {
     return this.#ref.current?.postMessage(content);
   }
 
+  /**
+   * 发送聊天请求到指定的 URL
+   */
   @method()
-  sendRequest(content: string, url: string, options: Options<MessageChunk>) {
-    return this.#ref.current?.sendRequest(content, url, options);
+  sendRequest(
+    leadingMessages: string | BaseMessage[],
+    url: string,
+    options: Options<MessageChunk>
+  ) {
+    return this.#ref.current?.sendRequest(leadingMessages, url, options);
+  }
+
+  /**
+   * 发送底层聊天请求到指定的 URL。接口的请求和响应的数据结构和 OpenAI 聊天接口一致。
+   */
+  @method()
+  lowLevelSendRequest(
+    leadingMessages: string | BaseMessage[],
+    url: string,
+    options: Options<MessageChunk>
+  ) {
+    return this.#ref.current?.lowLevelSendRequest(
+      leadingMessages,
+      url,
+      options
+    );
   }
 
   @method()
@@ -104,7 +149,9 @@ class ChatAgent extends ReactNextElement implements ChatAgentProps {
       <ChatAgentComponent
         ref={this.#ref}
         agentId={this.agentId}
+        robotId={this.robotId}
         conversationId={this.conversationId}
+        alwaysUseNewConversation={this.alwaysUseNewConversation}
         // onMessageChunkPush={this.#handleMessageChunkPush}
         onMessagesUpdate={this.#handleMessagesUpdate}
         onBusyChange={this.#handleBusyChange}
@@ -124,7 +171,12 @@ export interface ChatAgentComponentProps extends ChatAgentProps {
 export interface ChatAgentRef {
   postMessage(content: string): Promise<string | null>;
   sendRequest(
-    content: string,
+    leadingMessages: string | BaseMessage[],
+    url: string,
+    options: Options<MessageChunk>
+  ): Promise<string | null>;
+  lowLevelSendRequest(
+    leadingMessages: string | BaseMessage[],
     url: string,
     options: Options<MessageChunk>
   ): Promise<string | null>;
@@ -134,7 +186,9 @@ export interface ChatAgentRef {
 export function LegacyChatAgentComponent(
   {
     agentId,
+    robotId,
     conversationId: propConversationId,
+    alwaysUseNewConversation,
     onMessageChunkPush,
     onMessagesUpdate,
     onBusyChange,
@@ -181,11 +235,19 @@ export function LegacyChatAgentComponent(
     [onMessageChunkPush]
   );
 
-  const sendRequest = useCallback(
-    async (content: string, url: string, options: Options<MessageChunk>) => {
+  const legacySendRequest = useCallback(
+    async (
+      isLowLevel: boolean,
+      leadingMessages: string | BaseMessage[],
+      url: string,
+      options: Options<MessageChunk | LowLevelMessageChunk>
+    ) => {
       // Use ref instead of state to handle sync sequential calls.
       if (busyRef.current) {
         return null;
+      }
+      if (alwaysUseNewConversation || isLowLevel) {
+        setFullMessages((prev) => (prev.length === 0 ? prev : []));
       }
       const thisChatId = chatIdRef.current;
       let newConversationError: Error | undefined;
@@ -201,19 +263,35 @@ export function LegacyChatAgentComponent(
 
       const userKey = getMessageChunkKey();
       const assistantKey = getMessageChunkKey();
-      let currentConversationId = conversationId;
+      let currentConversationId =
+        alwaysUseNewConversation || isLowLevel ? null : conversationId;
 
       onBusyChange?.((busyRef.current = true));
 
       try {
-        pushPartialMessage?.({
-          key: userKey,
-          delta: {
-            content: content,
-            role: "user",
-          },
-        });
-        const request = createSSEStream<MessageChunk>(
+        if (Array.isArray(leadingMessages)) {
+          for (const msg of leadingMessages) {
+            const isAssistant = msg.role === "assistant";
+            if (isAssistant || msg.role === "user") {
+              pushPartialMessage?.({
+                key: isAssistant ? assistantKey : userKey,
+                delta: {
+                  role: msg.role,
+                  content: msg.content,
+                },
+              });
+            }
+          }
+        } else {
+          pushPartialMessage?.({
+            key: userKey,
+            delta: {
+              content: leadingMessages,
+              role: "user",
+            },
+          });
+        }
+        const request = createSSEStream<MessageChunk | LowLevelMessageChunk>(
           new URL(url, `${location.origin}${getBasePath()}`).toString(),
           options
         );
@@ -246,13 +324,34 @@ export function LegacyChatAgentComponent(
 
           await checkNewConversation();
 
-          pushPartialMessage?.({
-            delta: value.delta,
-            key: assistantKey,
-            partial: true,
-          });
-          if (value.conversationId && !currentConversationId) {
-            setConversationId((currentConversationId = value.conversationId));
+          if (isLowLevel) {
+            const delta = (value as LowLevelMessageChunk).choices?.[0]?.delta;
+            if (delta?.content) {
+              pushPartialMessage({
+                delta: {
+                  role: delta.role,
+                  content: delta.content,
+                },
+                key: assistantKey,
+                partial: true,
+              });
+            }
+          } else {
+            pushPartialMessage?.({
+              delta: (value as MessageChunk).delta,
+              key: assistantKey,
+              partial: true,
+            });
+            if (
+              !alwaysUseNewConversation &&
+              (value as MessageChunk).conversationId &&
+              !currentConversationId
+            ) {
+              setConversationId(
+                (currentConversationId = (value as MessageChunk)
+                  .conversationId!)
+              );
+            }
           }
         }
 
@@ -304,24 +403,36 @@ export function LegacyChatAgentComponent(
 
       return currentConversationId;
     },
-    [conversationId, getMessageChunkKey, onBusyChange, pushPartialMessage]
+    [
+      conversationId,
+      alwaysUseNewConversation,
+      getMessageChunkKey,
+      onBusyChange,
+      pushPartialMessage,
+    ]
   );
 
   useImperativeHandle(
     ref,
     () => ({
-      sendRequest,
+      lowLevelSendRequest: (...args) => legacySendRequest(true, ...args),
+      sendRequest: (...args) => legacySendRequest(false, ...args),
       postMessage(content: string) {
-        return sendRequest(
+        return legacySendRequest(
+          false,
           content,
           "api/gateway/easyops.api.aiops_chat.manage.LLMChatProxy@1.0.0/api/aiops_chat/v1/chat/completions",
           {
             method: "POST",
             body: JSON.stringify({
               agentId,
+              robotId,
               input: content,
               stream: true,
-              conversationId,
+              conversationId:
+                alwaysUseNewConversation || conversationId === null
+                  ? undefined
+                  : conversationId,
             }),
             headers: {
               "giraffe-contract-name":
@@ -339,7 +450,14 @@ export function LegacyChatAgentComponent(
         }
       },
     }),
-    [agentId, conversationId, onBusyChange, sendRequest]
+    [
+      legacySendRequest,
+      agentId,
+      robotId,
+      alwaysUseNewConversation,
+      conversationId,
+      onBusyChange,
+    ]
   );
 
   useEffect(() => {
