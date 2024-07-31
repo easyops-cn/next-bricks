@@ -56,7 +56,7 @@
   },
   "devDependencies": {
     "@next-api-sdk/cmdb-sdk": "^1.1.0",
-    "@next-core/build-next-bricks": "^1.22.4",
+    "@next-core/build-next-bricks": "^1.23.0",
     "@next-core/test-next": "^1.1.5"
   },
   "peerDependencies": {
