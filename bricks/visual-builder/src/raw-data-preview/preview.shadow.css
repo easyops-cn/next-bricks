@@ -24,6 +24,11 @@ body {
   background: var(--body-background);
 }
 
+.body-cell {
+  display: flex;
+  align-items: center;
+}
+
 .last-col-cell {
   border-right-color: transparent;
 }

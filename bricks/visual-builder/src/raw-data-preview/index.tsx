@@ -1,0 +1,557 @@
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { createDecorators, type EventEmitter } from "@next-core/element";
+import { ReactNextElement } from "@next-core/react-element";
+import "@next-core/theme";
+import type { BrickConf, ContextConf, MicroApp } from "@next-core/types";
+import classNames from "classnames";
+import { __secret_internals, getBasePath } from "@next-core/runtime";
+import type { PreviewWindow } from "@next-core/preview/types";
+import { JSON_SCHEMA, safeDump } from "js-yaml";
+import type { VisualConfig } from "./raw-data-interfaces";
+import { convertToStoryboard } from "./convert";
+import styleText from "./styles.shadow.css";
+import previewStyleText from "./preview.shadow.css";
+
+const { defineElement, property, event } = createDecorators();
+
+export interface RawPreviewProps {
+  previewUrl?: string;
+  generations?: AttributeGeneration[];
+  busy?: boolean;
+  category?: PreviewCategory;
+  theme?: string;
+  uiVersion?: string;
+  app?: MicroApp;
+}
+
+export interface AttributeGeneration {
+  generationId?: string;
+  objectId: string;
+  objectName: string;
+  propertyId: string;
+  propertyName: string;
+  propertyInstanceId?: string;
+  comment?: string;
+  candidates: VisualConfig[] | null;
+  mockData: Record<string, unknown>[];
+}
+
+export interface CommentDetail {
+  comment: string;
+  propertyInstanceId?: string;
+}
+
+interface BasePreviewMessage {
+  channel: "raw-data-preview";
+}
+
+interface CommentMessage extends BasePreviewMessage {
+  type: "comment";
+  payload: CommentDetail;
+}
+
+interface UpdatePropertyToggleStateMessage extends BasePreviewMessage {
+  type: "updatePropertyToggleState";
+  payload: string[];
+}
+
+type PreviewMessage = CommentMessage | UpdatePropertyToggleStateMessage;
+
+export type PreviewCategory =
+  | "detail-item"
+  | "form-item"
+  | "table-column"
+  | "card-item"
+  | "metric-item"
+  | "value";
+
+/**
+ * 构件 `visual-builder.raw-data-preview`
+ *
+ * @internal
+ */
+export
+@defineElement("visual-builder.raw-data-preview", {
+  styleTexts: [styleText],
+})
+class RawDataPreview extends ReactNextElement {
+  @property()
+  accessor previewUrl: string | undefined;
+
+  @property({ attribute: false })
+  accessor generations: AttributeGeneration[] | undefined;
+
+  @property({ type: Boolean })
+  accessor busy: boolean | undefined;
+
+  /**
+   * @default "value"
+   */
+  @property()
+  accessor category: PreviewCategory | undefined;
+
+  @property()
+  accessor theme: string | undefined;
+
+  @property()
+  accessor uiVersion: string | undefined;
+
+  @property()
+  accessor app: MicroApp | undefined;
+
+  @event({ type: "comment" })
+  accessor #commentEvent: EventEmitter<CommentDetail>;
+
+  #handleComment = (detail: CommentDetail) => {
+    this.#commentEvent.emit(detail);
+  };
+
+  render() {
+    return (
+      <RawDataPreviewComponent
+        previewUrl={this.previewUrl}
+        generations={this.generations}
+        busy={this.busy}
+        category={this.category}
+        theme={this.theme}
+        uiVersion={this.uiVersion}
+        app={this.app}
+        onComment={this.#handleComment}
+      />
+    );
+  }
+}
+
+export interface RawDataPreviewComponentProps extends RawPreviewProps {
+  onComment: (detail: CommentDetail) => void;
+}
+
+export function RawDataPreviewComponent({
+  previewUrl,
+  generations,
+  busy,
+  category,
+  theme,
+  uiVersion,
+  app,
+  onComment,
+}: RawDataPreviewComponentProps) {
+  const iframeRef = useRef<HTMLIFrameElement>();
+  const [ready, setReady] = useState(false);
+  const [injected, setInjected] = useState(false);
+  const propertyToggleStateRef = useRef<string[]>([]);
+
+  const handleIframeLoad = useCallback(() => {
+    const check = () => {
+      const iframeWin = iframeRef.current?.contentWindow as PreviewWindow;
+      if (iframeWin?._preview_only_render) {
+        setReady(true);
+      } else {
+        setTimeout(check, 100);
+      }
+    };
+    check();
+  }, []);
+
+  useEffect(() => {
+    if (ready) {
+      const iframeWin = iframeRef.current!.contentWindow as PreviewWindow;
+      iframeWin.postMessage(
+        {
+          channel: "raw-data-preview",
+          type: "busy",
+          payload: busy,
+        },
+        location.origin
+      );
+    }
+  }, [busy, ready]);
+
+  useEffect(() => {
+    if (ready) {
+      const iframeWin = iframeRef.current!.contentWindow as PreviewWindow;
+      const onMessage = ({ data }: MessageEvent<PreviewMessage>) => {
+        if (data?.channel === "raw-data-preview") {
+          switch (data.type) {
+            case "comment":
+              onComment(data.payload);
+              break;
+            case "updatePropertyToggleState":
+              propertyToggleStateRef.current = data.payload;
+              break;
+          }
+        }
+      };
+      iframeWin.addEventListener("message", onMessage);
+      return () => {
+        iframeWin.removeEventListener("message", onMessage);
+      };
+    }
+  }, [onComment, ready]);
+
+  useEffect(() => {
+    if (!ready) {
+      return;
+    }
+    const pkg = __secret_internals.getBrickPackagesById(
+      "bricks/visual-builder"
+    );
+    if (!pkg) {
+      throw new Error(
+        "Cannot find preview agent package: bricks/visual-builder"
+      );
+    }
+    const inject = (iframeRef.current!.contentWindow as PreviewWindow)!
+      ._preview_only_inject;
+
+    const fixedPkg = {
+      ...pkg,
+      filePath: previewUrl
+        ? new URL(pkg.filePath, new URL(previewUrl, location.origin)).toString()
+        : `${location.origin}${getBasePath()}${
+            window.PUBLIC_ROOT ?? ""
+          }${pkg.filePath}`,
+    };
+
+    Promise.allSettled(
+      [
+        "visual-builder.pre-generated-table-view",
+        "visual-builder.pre-generated-container",
+      ].map((brick) => inject(brick, fixedPkg, undefined, true))
+    ).then(() => {
+      setInjected(true);
+    });
+  }, [previewUrl, ready]);
+
+  useEffect(() => {
+    if (!injected) {
+      return;
+    }
+    const render = (iframeRef.current?.contentWindow as PreviewWindow)
+      ?._preview_only_render;
+    if (!render) {
+      return;
+    }
+
+    const tableChildren: BrickConf[] = [
+      {
+        brick: "div",
+        properties: {
+          textContent: "属性",
+          className: "head-cell",
+        },
+      },
+      {
+        brick: "div",
+        properties: {
+          textContent: "",
+          className: "head-cell",
+        },
+      },
+      {
+        brick: "div",
+        properties: {
+          textContent: "视觉重量 (由低至高)",
+          className: "head-cell last-col-cell",
+          style: {
+            gridColumn: "span 4",
+            textAlign: "center",
+          },
+        },
+      },
+      {
+        brick: "div",
+        properties: {
+          textContent: "批注",
+          className: "head-cell",
+        },
+      },
+    ];
+    const table: BrickConf & { context?: ContextConf[] } = {
+      brick: "visual-builder.pre-generated-table-view",
+      context: [
+        {
+          name: "propertyToggleState",
+          value: propertyToggleStateRef.current,
+          onChange: {
+            action: "window.postMessage",
+            args: [
+              {
+                channel: "raw-data-preview",
+                type: "updatePropertyToggleState",
+                payload: "<% CTX.propertyToggleState %>",
+              },
+            ],
+          },
+        },
+        {
+          name: "busy",
+        },
+      ],
+      properties: {
+        style: {
+          gridTemplateColumns: "auto 32px repeat(5, 1fr)",
+        },
+      },
+      children: tableChildren,
+    };
+
+    for (let i = 0, size = generations.length; i < size; i++) {
+      const generation = generations[i];
+      const isLastRow = i === size - 1;
+
+      const candidatesByVisualWeight = new Map<number, VisualConfig>();
+      for (const candidate of generation.candidates ?? []) {
+        candidatesByVisualWeight.set(candidate.visualWeight ?? 0, candidate);
+      }
+
+      tableChildren.push(
+        {
+          brick: "div",
+          properties: {
+            // textContent: `${generation.propertyName ?? generation.propertyId}`,
+            className: classNames("body-cell", {
+              "last-row-cell": isLastRow,
+            }),
+            style: {
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            },
+          },
+          children: [
+            {
+              brick: "span",
+              properties: {
+                textContent: `${generation.propertyName ?? generation.propertyId}`,
+              },
+            },
+            {
+              brick: "eo-button",
+              properties: {
+                type: "text",
+                icon: `<%=
+                  {
+                    lib: "fa",
+                    prefix: "fas",
+                    icon: CTX.propertyToggleState.includes(${JSON.stringify(generation.propertyId)}) ? "chevron-up" : "chevron-down",
+                  }
+                %>`,
+              },
+              events: {
+                click: {
+                  action: "context.replace",
+                  args: [
+                    "propertyToggleState",
+                    `<%
+                      CTX.propertyToggleState.includes(${JSON.stringify(generation.propertyId)})
+                        ? CTX.propertyToggleState.filter((id) => id !== ${JSON.stringify(generation.propertyId)})
+                        : CTX.propertyToggleState.concat(${JSON.stringify(generation.propertyId)})
+                    %>`,
+                  ],
+                },
+              },
+            },
+          ],
+        },
+        {
+          brick: "div",
+          properties: {
+            className: classNames("body-cell", {
+              "last-row-cell": isLastRow,
+            }),
+          },
+          children: generation.candidates?.length
+            ? [
+                {
+                  brick: "eo-icon",
+                  properties: {
+                    lib: "fa",
+                    ...(generation.generationId
+                      ? {
+                          prefix: "far",
+                          icon: "circle-check",
+                          style: {
+                            color: "var(--palette-green-6)",
+                          },
+                        }
+                      : {
+                          prefix: "fas",
+                          icon: "circle",
+                          style: {
+                            color: "var(--palette-gray-6)",
+                            transformOrigin: "center center",
+                            transform: "scale(0.5)",
+                          },
+                        }),
+                  },
+                },
+              ]
+            : undefined,
+        }
+      );
+
+      const mockList = (generation.mockData ?? []).slice();
+
+      mockList.sort((ma, mb) => {
+        const a = ma?.[generation.propertyId];
+        const b = mb?.[generation.propertyId];
+        const aIsArray = Array.isArray(a);
+        const bIsArray = Array.isArray(b);
+        if (aIsArray || bIsArray) {
+          return (bIsArray ? b.length : -1) - (aIsArray ? a.length : -1);
+        }
+        const aIsNil = a == null;
+        const bIsNil = b == null;
+        if (aIsNil || bIsNil) {
+          return (bIsNil ? 0 : 1) - (aIsNil ? 0 : 1);
+        }
+
+        const aIsEmpty = typeof a === "string" && a.length === 0;
+        const bIsEmpty = typeof b === "string" && b.length === 0;
+        if (aIsEmpty || bIsEmpty) {
+          return (bIsEmpty ? 0 : 1) - (aIsEmpty ? 0 : 1);
+        }
+        return 0;
+      });
+
+      for (let i = -1; i < 3; i++) {
+        const candidate = candidatesByVisualWeight.get(i);
+
+        let brick: BrickConf;
+        if (candidate) {
+          brick = convertToStoryboard(candidate, generation.propertyId);
+        }
+
+        tableChildren.push({
+          brick: "div",
+          properties: {
+            className: classNames("body-cell", {
+              "last-row-cell": isLastRow,
+            }),
+          },
+          children: [
+            {
+              brick: "div",
+              properties: {
+                style: {
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "8px",
+                },
+              },
+              children: brick
+                ? mockList.map((dataSource, index) => ({
+                    brick: "visual-builder.pre-generated-container",
+                    if:
+                      index === 0
+                        ? true
+                        : `<%= CTX.propertyToggleState.includes(${JSON.stringify(generation.propertyId)}) %>`,
+                    properties: {
+                      useBrick: [brick],
+                      dataSource,
+                    },
+                    errorBoundary: true,
+                  }))
+                : undefined,
+            },
+          ],
+        });
+      }
+
+      tableChildren.push({
+        brick: "div",
+        properties: {
+          className: classNames("body-cell", {
+            "last-col-cell": true,
+            "last-row-cell": isLastRow,
+          }),
+        },
+        children: generation.candidates
+          ? [
+              {
+                brick: "eo-textarea",
+                properties: {
+                  value: generation.comment
+                    ? `<% ${JSON.stringify(generation.comment)} %>`
+                    : undefined,
+                  placeholder:
+                    "不合预期？请补充说明 （按住 ⌘ 或 ctrl 并回车提交）",
+                  autoSize: true,
+                  style: {
+                    width: "100%",
+                  },
+                  disabled: "<%= CTX.busy %>",
+                },
+                events: {
+                  keydown: {
+                    if: "<% EVENT.code === 'Enter' && (EVENT.metaKey || EVENT.ctrlKey) %>",
+                    action: "window.postMessage",
+                    args: [
+                      {
+                        channel: "raw-data-preview",
+                        type: "comment",
+                        payload: {
+                          comment: "<% EVENT.target.value %>",
+                          propertyInstanceId: generation.propertyInstanceId,
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            ]
+          : undefined,
+      });
+    }
+
+    render(
+      "yaml",
+      {
+        yaml: safeDump(
+          [
+            table,
+            {
+              brick: "eo-message-listener",
+              properties: {
+                sameOrigin: true,
+              },
+              events: {
+                message: {
+                  if: "<% EVENT.detail.data?.channel === 'raw-data-preview' && EVENT.detail.data.type === 'busy' %>",
+                  action: "context.replace",
+                  args: ["busy", "<% EVENT.detail.data.payload %>"],
+                },
+              },
+              portal: true,
+              errorBoundary: true,
+            },
+          ],
+          {
+            schema: JSON_SCHEMA,
+            skipInvalid: true,
+            noRefs: true,
+            noCompatMode: true,
+          }
+        ),
+      },
+      {
+        app,
+        theme,
+        uiVersion,
+        styleText: previewStyleText,
+      }
+    );
+  }, [app, injected, generations, theme, uiVersion, category]);
+
+  return (
+    <div className={classNames("container")}>
+      <iframe
+        ref={iframeRef}
+        src={previewUrl ?? `${getBasePath()}_brick-preview-v3_/preview/`}
+        loading="lazy"
+        onLoad={handleIframeLoad}
+      />
+    </div>
+  );
+}
