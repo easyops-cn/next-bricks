@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.46.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.45.0...@next-shared/common-bricks@0.46.0) (2024-07-31)
+
+
+### Features
+
+* new brick: eo-message-listener ([62a31b2](https://github.com/easyops-cn/next-bricks/commit/62a31b24f823dea285c2c78ede4694029bfe2e9c))
+
+
+
+
+
 # [0.45.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.44.1...@next-shared/common-bricks@0.45.0) (2024-07-24)
 
 

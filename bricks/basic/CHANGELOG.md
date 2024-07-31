@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.38.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.37.4...@next-bricks/basic@1.38.0) (2024-07-31)
+
+
+### Features
+
+* new brick: eo-message-listener ([62a31b2](https://github.com/easyops-cn/next-bricks/commit/62a31b24f823dea285c2c78ede4694029bfe2e9c))
+
+
+
+
+
 ## [1.37.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.37.3...@next-bricks/basic@1.37.4) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/basic
