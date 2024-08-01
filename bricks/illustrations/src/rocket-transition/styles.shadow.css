@@ -6,7 +6,6 @@
   height: 238px;
   position: relative;
   overflow: hidden;
-  transform: scale(calc(100vw / 335px));
 }
 
 :host([hidden]) {
@@ -17,9 +16,10 @@ div {
   background-size: 100%;
   background-repeat: no-repeat;
   position: absolute;
-  animation-duration: 4.5s;
+  animation-duration: 2s;
   animation-iteration-count: infinite;
-  animation-timing-function: ease-in;
+  animation-direction: alternate;
+  animation-timing-function: ease-out;
 }
 
 .rocket {
@@ -87,11 +87,8 @@ div {
   0% {
     top: 60px;
   }
-  44.44% {
-    top: 23px;
-  }
   100% {
-    top: 60px;
+    top: 23px;
   }
 }
 
@@ -99,11 +96,8 @@ div {
   0% {
     top: 60px;
   }
-  44.44% {
-    top: 72px;
-  }
   100% {
-    top: 60px;
+    top: 72px;
   }
 }
 
@@ -111,11 +105,8 @@ div {
   0% {
     top: 172px;
   }
-  44.44% {
-    top: 77px;
-  }
   100% {
-    top: 172px;
+    top: 77px;
   }
 }
 
@@ -123,11 +114,8 @@ div {
   0% {
     top: 187px;
   }
-  44.44% {
-    top: 145px;
-  }
   100% {
-    top: 187px;
+    top: 145px;
   }
 }
 
@@ -135,10 +123,13 @@ div {
   0% {
     top: 213px;
   }
-  44.44% {
+  100% {
     top: 95px;
   }
-  100% {
-    top: 213px;
+}
+
+@media (max-width: 359px) {
+  :host {
+    transform: scale(calc(320 / 360));
   }
 }
