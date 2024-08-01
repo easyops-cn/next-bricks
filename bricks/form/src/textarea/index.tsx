@@ -1,4 +1,12 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  createRef,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { FormItemElementBase } from "@next-shared/form";
 import calculateAutoSizeStyle from "./calculateAutoSizeStyle.js";
@@ -16,6 +24,9 @@ type AutoSize =
       minRows?: number;
       maxRows?: number;
     };
+export interface TextareaComponentRef {
+  focus(): void;
+}
 
 export interface TextareaProps extends FormItemProps {
   name?: string;
@@ -27,10 +38,13 @@ export interface TextareaProps extends FormItemProps {
   maxLength?: number;
   autoSize?: AutoSize;
   validateState?: string;
+}
+
+export interface TextareaComponentProps extends TextareaProps {
   onInputChange: (value: string) => void;
 }
 
-const { defineElement, property, event } = createDecorators();
+const { defineElement, property, event, method } = createDecorators();
 
 /**
  * 通用多行文本输入框构件
@@ -41,7 +55,9 @@ const { defineElement, property, event } = createDecorators();
   styleTexts: [styleText],
   alias: ["form.general-textarea"],
 })
-class Textarea extends FormItemElementBase {
+class Textarea extends FormItemElementBase implements TextareaProps {
+  #componentRef = createRef<TextareaComponentRef>();
+
   /**
    * 字段名称
    */
@@ -140,6 +156,14 @@ class Textarea extends FormItemElementBase {
   @event({ type: "change" })
   accessor #InputChangeEvent!: EventEmitter<string>;
 
+  /**
+   * focus
+   */
+  @method({ bound: true })
+  focusTextarea() {
+    return this.#componentRef.current?.focus();
+  }
+
   handleInputChange = (value: string) => {
     this.value = value;
     this.#InputChangeEvent.emit(value);
@@ -147,6 +171,7 @@ class Textarea extends FormItemElementBase {
 
   render() {
     return (
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       <TextareaComponent
         curElement={this}
         formElement={this.getFormElement()}
@@ -168,13 +193,17 @@ class Textarea extends FormItemElementBase {
         min={this.min}
         message={this.message}
         trigger="handleInputChange"
+        ref={this.#componentRef}
         onInputChange={this.handleInputChange}
       />
     );
   }
 }
 
-export function TextareaComponent(props: TextareaProps) {
+export const TextareaComponent = forwardRef<
+  TextareaComponentRef,
+  TextareaComponentProps
+>(function TextareaComponent(props, ref) {
   const {
     name,
     placeholder,
@@ -189,7 +218,6 @@ export function TextareaComponent(props: TextareaProps) {
   const [value, setValue] = useState(props.value ?? "");
   const [autoSizeStyle, setAutoSizeStyle] = useState<React.CSSProperties>();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-
   const [minRows, maxRows] = React.useMemo(() => {
     if (autoSize && typeof autoSize === "object") {
       return [autoSize.minRows, autoSize.maxRows];
@@ -198,8 +226,25 @@ export function TextareaComponent(props: TextareaProps) {
     return [];
   }, [autoSize]);
 
+  useImperativeHandle(
+    ref,
+    () => ({
+      focus: () => {
+        const textarea = textareaRef.current;
+
+        if (textarea) {
+          const valueLength = textarea.value?.length;
+
+          textarea.focus();
+          valueLength && textarea.setSelectionRange(valueLength, valueLength);
+        }
+      },
+    }),
+    []
+  );
+
   const setAutoSize = useCallback(() => {
-    const textareaElement = textareaRef.current as HTMLTextAreaElement;
+    const textareaElement = textareaRef.current;
     if (textareaElement && autoSize) {
       const textareaStyles = calculateAutoSizeStyle(
         textareaElement,
@@ -224,8 +269,8 @@ export function TextareaComponent(props: TextareaProps) {
   }, [props.value]);
 
   useEffect(() => {
-    setAutoSize();
-  }, [maxRows, minRows, setAutoSize]);
+    requestAnimationFrame(setAutoSize);
+  }, [setAutoSize, value]);
 
   return (
     <WrappedFormItem exportparts="message" {...props}>
@@ -242,7 +287,8 @@ export function TextareaComponent(props: TextareaProps) {
           // Use the minimal height when auto-size enabled, prevent layout shift.
           // By default, the height is 21px each row + 10px (padding & border).
           height: autoSize
-            ? (typeof autoSize === "object" ? autoSize.minRows ?? 1 : 1) * 21 +
+            ? (typeof autoSize === "object" ? (autoSize.minRows ?? 1) : 1) *
+                21 +
               10
             : 94,
           ...textareaStyle,
@@ -255,6 +301,6 @@ export function TextareaComponent(props: TextareaProps) {
       />
     </WrappedFormItem>
   );
-}
+});
 
 export { Textarea };
