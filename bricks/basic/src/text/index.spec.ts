@@ -66,12 +66,25 @@ describe("eo-text", () => {
       fireEvent.click(editButton);
     });
 
-    const editControl = getByTestId(
+    let editControl = getByTestId(
       element.shadowRoot as unknown as HTMLElement,
       "edit-control"
     );
 
     expect(editControl).not.toBeNull();
+    expect(editControl.tagName).toBe("EO-INPUT");
+
+    // specify edit control
+    await act(async () => {
+      element.editable = { control: "textarea" };
+    });
+
+    editControl = getByTestId(
+      element.shadowRoot as unknown as HTMLElement,
+      "edit-control"
+    );
+
+    expect(editControl.tagName).toBe("EO-TEXTAREA");
 
     // todo: editControl.value 暂时取不到值
     // expect((editControl as HTMLElement & { value?: string }).value).toBe("a");

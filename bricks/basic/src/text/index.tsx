@@ -2,10 +2,15 @@ import React, { CSSProperties, useCallback, useState } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import classNames from "classnames";
+import { isObject } from "lodash";
 
 import { Link, LinkProps } from "../link";
 
 import styleText from "./text.shadow.css";
+
+type InputElementType = ReactNextElement & { focusInput: () => void };
+
+type TextareaElementType = ReactNextElement & { focusTextarea: () => void };
 
 interface InputProps {
   value?: string;
@@ -19,13 +24,29 @@ interface InputEventsMap {
   onBlur: "blur";
 }
 
+type AutoSize =
+  | boolean
+  | {
+      minRows?: number;
+      maxRows?: number;
+    };
+
 const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 const WrappedInput = wrapBrick<
-  ReactNextElement & { focusInput: () => void },
+  InputElementType,
   InputProps,
   InputEvents,
   InputEventsMap
 >("eo-input", {
+  onChange: "change",
+  onBlur: "blur",
+});
+const WrappedTextarea = wrapBrick<
+  TextareaElementType,
+  InputProps & { autoSize?: AutoSize },
+  InputEvents,
+  InputEventsMap
+>("eo-textarea", {
   onChange: "change",
   onBlur: "blur",
 });
@@ -40,6 +61,13 @@ export type TextType =
   | "keyboard"
   | "default";
 
+export type EditControl = "input" | "textarea";
+
+export interface EditableConfig {
+  control?: EditControl;
+  autoSize?: AutoSize;
+}
+
 const typeElementNameMap: Record<string, keyof JSX.IntrinsicElements> = {
   code: "code",
   keyboard: "kbd",
@@ -47,7 +75,7 @@ const typeElementNameMap: Record<string, keyof JSX.IntrinsicElements> = {
 
 export interface TextProps {
   type: TextType;
-  editable?: boolean | undefined;
+  editable?: boolean | EditableConfig | undefined;
   color?: CSSProperties["color"];
   fontSize?: CSSProperties["fontSize"];
   fontWeight?: CSSProperties["fontWeight"];
@@ -79,8 +107,8 @@ class Text extends ReactNextElement implements TextProps {
   /**
    * 是否可编辑
    */
-  @property({ type: Boolean })
-  accessor editable: boolean | undefined;
+  @property({ attribute: false })
+  accessor editable: boolean | EditableConfig | undefined;
 
   /**
    * 字体大小
@@ -194,6 +222,33 @@ export function TextComponent(props: TextComponentProps): React.ReactElement {
   const [value, _setValue] = useState<string>("");
   const [editing, setEditing] = useState(false);
   const [editingValue, setEditingValue] = useState<string>("");
+  const { control, autoSize } = isObject(editable)
+    ? editable
+    : ({} as EditableConfig);
+  const editControlProps = {
+    value: editingValue,
+    onBlur: () => {
+      setEditing(false);
+      editingValue !== value && onUpdate?.(editingValue);
+    },
+    onChange: (e: CustomEvent<string>) => {
+      const value = e.detail;
+
+      setEditingValue(value);
+      onChange?.(value);
+    },
+    style: { width: "100%" },
+    ref: (el: ReactNextElement) => {
+      el &&
+        queueMicrotask(() =>
+          (
+            (el as InputElementType).focusInput ||
+            (el as TextareaElementType).focusTextarea
+          )?.()
+        );
+    },
+    "data-testid": "edit-control",
+  };
 
   const setValue = useCallback((e: Event) => {
     _setValue(
@@ -203,24 +258,20 @@ export function TextComponent(props: TextComponentProps): React.ReactElement {
   }, []);
 
   return editing ? (
-    <WrappedInput
-      value={editingValue}
-      onBlur={() => {
-        setEditing(false);
-        editingValue !== value && onUpdate?.(editingValue);
-      }}
-      onChange={(e) => {
-        const value = (e as CustomEvent<string>).detail;
-
-        setEditingValue(value);
-        onChange?.(value);
-      }}
-      style={{ width: "100%" }}
-      ref={(el) => {
-        el && queueMicrotask(() => el?.focusInput?.());
-      }}
-      data-testid="edit-control"
-    />
+    control === "textarea" ? (
+      <WrappedTextarea
+        {...(editControlProps as unknown as React.ComponentPropsWithRef<
+          typeof WrappedTextarea
+        >)}
+        autoSize={autoSize}
+      />
+    ) : (
+      <WrappedInput
+        {...(editControlProps as unknown as React.ComponentPropsWithRef<
+          typeof WrappedInput
+        >)}
+      />
+    )
   ) : (
     <TextElementName
       className={classNames(type)}
