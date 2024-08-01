@@ -137,6 +137,6 @@ div {
 
 @media (max-width: 359px) {
   :host {
-    transform: scale(calc(320 / 360));
+    transform: scale(0.9);
   }
 }

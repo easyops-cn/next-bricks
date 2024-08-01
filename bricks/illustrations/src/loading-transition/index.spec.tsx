@@ -1,15 +1,15 @@
 import { describe, test, expect, jest } from "@jest/globals";
 import { act } from "react-dom/test-utils";
 import "./";
-import type { RocketTransition } from "./index.js";
+import type { LoadingTransition } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
-describe("illustrations.rocket-transition", () => {
+describe("illustrations.loading-transition", () => {
   test("basic usage", async () => {
     const element = document.createElement(
-      "illustrations.rocket-transition"
-    ) as RocketTransition;
+      "illustrations.loading-transition"
+    ) as LoadingTransition;
 
     expect(element.shadowRoot).toBeFalsy();
 

@@ -6,19 +6,19 @@ import styleText from "./styles.shadow.css";
 const { defineElement } = createDecorators();
 
 /**
- * 构件 `illustrations.rocket-transition`
+ * 构件 `illustrations.loading-transition`
  */
 export
-@defineElement("illustrations.rocket-transition", {
+@defineElement("illustrations.loading-transition", {
   styleTexts: [styleText],
 })
-class RocketTransition extends ReactNextElement {
+class LoadingTransition extends ReactNextElement {
   render() {
-    return <RocketTransitionComponent />;
+    return <LoadingTransitionComponent />;
   }
 }
 
-export function RocketTransitionComponent() {
+export function LoadingTransitionComponent() {
   return (
     <>
       <div className="bg"></div>

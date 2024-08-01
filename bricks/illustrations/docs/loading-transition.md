@@ -1,4 +1,4 @@
-构件 `illustrations.rocket-transition`
+构件 `illustrations.loading-transition`
 
 ## Examples
 
@@ -14,5 +14,5 @@ properties:
     width: 100%
     height: calc(100vh - 4em)
 children:
-  - brick: illustrations.rocket-transition
+  - brick: illustrations.loading-transition
 ```
