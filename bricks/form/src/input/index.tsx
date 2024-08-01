@@ -204,7 +204,7 @@ class Input extends FormItemElementBase {
   /**
    * focus
    */
-  @method()
+  @method({ bound: true })
   focusInput() {
     return this.#RCInputRef.current?.focus();
   }
@@ -346,7 +346,7 @@ export const RCInput = forwardRef<RCInputRef, RCInputProps>((props, ref) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const inputAffixWrapperRef = useRef<HTMLInputElement>(null);
 
-  const [value, setValue] = useState<string>();
+  const [value, setValue] = useState(props.value ?? "");
   const [focused, setFocused] = useState<boolean>();
 
   const searchInputRef = React.useCallback((element: HTMLInputElement) => {
@@ -364,12 +364,19 @@ export const RCInput = forwardRef<RCInputRef, RCInputProps>((props, ref) => {
   const mergeInputRef = useMergeRefs([inputRef, searchInputRef]);
 
   useEffect(() => {
-    setValue(props.value);
+    setValue(props.value ?? "");
   }, [props.value]);
 
   useImperativeHandle(ref, () => ({
     focus: (options?: FocusOptions) => {
-      inputRef.current?.focus(options);
+      const input = inputRef.current;
+
+      if (input) {
+        const valueLength = input.value?.length;
+
+        input.focus(options);
+        valueLength && input.setSelectionRange(valueLength, valueLength);
+      }
     },
     blur: () => {
       inputRef.current?.blur();
