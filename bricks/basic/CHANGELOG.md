@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.39.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.38.0...@next-bricks/basic@1.39.0) (2024-08-01)
+
+
+### Features
+
+* new brick: eo-broadcast-channel ([6e44af1](https://github.com/easyops-cn/next-bricks/commit/6e44af112987097b9f1790bed98620d5ea2787c2))
+
+
+
+
+
 # [1.38.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.37.4...@next-bricks/basic@1.38.0) (2024-07-31)
 
 
