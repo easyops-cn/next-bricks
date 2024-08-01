@@ -1,0 +1,144 @@
+:host {
+  display: block;
+  background: url("./images/bg@2x.png") no-repeat;
+  background-size: 335px 231px;
+  width: 335px;
+  height: 238px;
+  position: relative;
+  overflow: hidden;
+  transform: scale(calc(100vw / 335px));
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+div {
+  background-size: 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+  animation-duration: 4.5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in;
+}
+
+.rocket {
+  background-image: url("./images/rocket@2x.png");
+  left: 100px;
+  top: 60px;
+  width: 128px;
+  height: 161px;
+  animation-name: rocket;
+}
+
+.ring {
+  background-image: url("./images/ring@2x.png");
+  left: -4px;
+  top: 60px;
+  width: 133px;
+  height: 20px;
+  animation-name: ring;
+}
+
+.ball-1 {
+  background-image: url("./images/ball-1@2x.png");
+  left: -5px;
+  top: 0;
+  width: 20px;
+  height: 15px;
+}
+
+.ball-2 {
+  background-image: url("./images/ball-2@2x.png");
+  left: 117px;
+  top: -2px;
+  width: 13px;
+  height: 11px;
+}
+
+.diamond-1 {
+  background-image: url("./images/diamond-1@2x.png");
+  left: 11px;
+  top: 172px;
+  width: 15px;
+  height: 15px;
+  animation-name: diamond-1;
+}
+
+.diamond-2 {
+  background-image: url("./images/diamond-2@2x.png");
+  left: 258px;
+  top: 187px;
+  width: 15px;
+  height: 15px;
+  animation-name: diamond-2;
+}
+
+.diamond-3 {
+  background-image: url("./images/diamond-3@2x.png");
+  left: 302px;
+  top: 213px;
+  width: 25px;
+  height: 25px;
+  animation-name: diamond-3;
+}
+
+@keyframes rocket {
+  0% {
+    top: 60px;
+  }
+  44.44% {
+    top: 23px;
+  }
+  100% {
+    top: 60px;
+  }
+}
+
+@keyframes ring {
+  0% {
+    top: 60px;
+  }
+  44.44% {
+    top: 72px;
+  }
+  100% {
+    top: 60px;
+  }
+}
+
+@keyframes diamond-1 {
+  0% {
+    top: 172px;
+  }
+  44.44% {
+    top: 77px;
+  }
+  100% {
+    top: 172px;
+  }
+}
+
+@keyframes diamond-2 {
+  0% {
+    top: 187px;
+  }
+  44.44% {
+    top: 145px;
+  }
+  100% {
+    top: 187px;
+  }
+}
+
+@keyframes diamond-3 {
+  0% {
+    top: 213px;
+  }
+  44.44% {
+    top: 95px;
+  }
+  100% {
+    top: 213px;
+  }
+}
