@@ -45,3 +45,4 @@ import "./data-providers/active-element-blur.js";
 import "./data-providers/httpProxyRequest.js";
 import "./event-agent/index.js";
 import "./message-listener/index.js";
+import "./broadcast-channel/index.js";

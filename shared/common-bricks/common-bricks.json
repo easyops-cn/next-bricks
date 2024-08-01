@@ -34,7 +34,8 @@
     "eo-context-menu",
     "eo-formatter-number",
     "eo-event-agent",
-    "eo-message-listener"
+    "eo-message-listener",
+    "eo-broadcast-channel"
   ],
   "icons": [
     "eo-antd-icon",
