@@ -1,7 +1,5 @@
 :host {
   display: block;
-  background: url("./images/bg@2x.png") no-repeat;
-  background-size: 335px 231px;
   width: 335px;
   height: 238px;
   position: relative;
@@ -13,17 +11,26 @@
 }
 
 div {
-  background-size: 100%;
-  background-repeat: no-repeat;
   position: absolute;
+  background-image: url("./images/sprite@2x.png");
+  background-size: 335px 420px;
+  background-repeat: no-repeat;
   animation-duration: 2s;
   animation-iteration-count: infinite;
   animation-direction: alternate;
   animation-timing-function: ease-out;
 }
 
+.bg {
+  background-position: -0px -1px;
+  top: 0;
+  left: 0;
+  width: 335px;
+  height: 231px;
+}
+
 .rocket {
-  background-image: url("./images/rocket@2x.png");
+  background-position: -207px -233px;
   left: 100px;
   top: 60px;
   width: 128px;
@@ -32,7 +39,7 @@ div {
 }
 
 .ring {
-  background-image: url("./images/ring@2x.png");
+  background-position: -202px -400px;
   left: -4px;
   top: 60px;
   width: 133px;
@@ -41,7 +48,7 @@ div {
 }
 
 .ball-1 {
-  background-image: url("./images/ball-1@2x.png");
+  background-position: -109px -405px;
   left: -5px;
   top: 0;
   width: 20px;
@@ -49,7 +56,7 @@ div {
 }
 
 .ball-2 {
-  background-image: url("./images/ball-2@2x.png");
+  background-position: -130px -409px;
   left: 117px;
   top: -2px;
   width: 13px;
@@ -57,7 +64,7 @@ div {
 }
 
 .diamond-1 {
-  background-image: url("./images/diamond-1@2x.png");
+  background-position: -144px -405px;
   left: 11px;
   top: 172px;
   width: 15px;
@@ -66,7 +73,7 @@ div {
 }
 
 .diamond-2 {
-  background-image: url("./images/diamond-2@2x.png");
+  background-position: -160px -405px;
   left: 258px;
   top: 187px;
   width: 15px;
@@ -75,7 +82,7 @@ div {
 }
 
 .diamond-3 {
-  background-image: url("./images/diamond-3@2x.png");
+  background-position: -176px -395px;
   left: 302px;
   top: 213px;
   width: 25px;

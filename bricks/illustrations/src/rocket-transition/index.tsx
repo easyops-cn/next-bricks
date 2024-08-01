@@ -21,6 +21,7 @@ class RocketTransition extends ReactNextElement {
 export function RocketTransitionComponent() {
   return (
     <>
+      <div className="bg"></div>
       <div className="rocket">
         <div className="ring">
           <div className="ball-1"></div>
