@@ -4,7 +4,7 @@
 
 ### Basic
 
-```yaml preview
+```yaml preview minHeight="300px"
 brick: div
 properties:
   style:
