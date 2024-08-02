@@ -3333,10 +3333,10 @@
     file-saver "^2.0.5"
     lodash "^4.17.21"
 
-"@next-core/yo@^1.5.74":
-  version "1.5.74"
-  resolved "https://registry.yarnpkg.com/@next-core/yo/-/yo-1.5.74.tgz#e90e9a4772286e957cef060e996995471cc92d7a"
-  integrity sha512-iVYyHIUR0Andknuz1P61mRDsW6zgb2XtL7rymFanTeLPpjI531xhfraT6+uEqi5/7AhFAKiC9MFNYYFV1qA3kQ==
+"@next-core/yo@^1.5.75":
+  version "1.5.75"
+  resolved "https://registry.yarnpkg.com/@next-core/yo/-/yo-1.5.75.tgz#1a95ab1536270add8a2a77361b96b7c5075e03dc"
+  integrity sha512-twVQy8/bQ/fB0bJLJbknhliv1OrdURDklfYKv2S25wO4FvYXvsu9Rt3R0fPKgIinPH16mytRHtdN+rWj+5BlfQ==
   dependencies:
     minimist "^1.2.8"
     plop "^4.0.1"

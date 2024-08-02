@@ -52,7 +52,7 @@
     "@next-core/eslint-config-next": "^2.0.23",
     "@next-core/preview": "^0.7.11",
     "@next-core/test-next": "^1.1.5",
-    "@next-core/yo": "^1.5.74",
+    "@next-core/yo": "^1.5.75",
     "@types/d3-force": "^3.0.9",
     "@types/d3-hierarchy": "^3.1.2",
     "@types/d3-selection": "^3.0.10",
