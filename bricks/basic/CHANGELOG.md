@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.40.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.39.0...@next-bricks/basic@1.40.0) (2024-08-02)
+
+
+### Features
+
+* **text:** support for specifying textarea as edit control ([d848343](https://github.com/easyops-cn/next-bricks/commit/d848343a3b23f0b1d90e750d17948ec73cd4e33a))
+
+
+
+
+
 # [1.39.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.38.0...@next-bricks/basic@1.39.0) (2024-08-01)
 
 

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.11.7...@next-bricks/form@1.12.0) (2024-08-02)
+
+
+### Bug Fixes
+
+* **input:** fix cursor not point at the end of content after calling focusInput method ([0f51b5e](https://github.com/easyops-cn/next-bricks/commit/0f51b5e2f42d5f00fd20208cf5970bf84f1ac194))
+
+
+### Features
+
+* **textarea:** add focusTextarea method and fix autoSize not working when changing value ([2d8a4c7](https://github.com/easyops-cn/next-bricks/commit/2d8a4c759b5f50dfcd88c5266dafd58829544002))
+
+
+
+
+
 ## [1.11.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.11.6...@next-bricks/form@1.11.7) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/form
