@@ -44,11 +44,14 @@ describe("eo-input", () => {
     element.clearable = true;
 
     expect(element.shadowRoot).toBeFalsy();
+
     act(() => {
       document.body.appendChild(element);
     });
+
     expect(element.shadowRoot).toBeTruthy();
     expect(element.shadowRoot?.childNodes.length).toBe(2);
+
     const inputElement = element.shadowRoot?.querySelector(
       "input"
     ) as HTMLInputElement;
@@ -62,7 +65,6 @@ describe("eo-input", () => {
     });
 
     expect(inputElement.value).toBe("你好");
-
     expect(mockChangeEvent).toBeCalledWith(
       expect.objectContaining({
         detail: "你好",
@@ -72,11 +74,35 @@ describe("eo-input", () => {
     expect(mockFocusEvent).not.toBeCalled();
     expect(mockBlurEvent).not.toBeCalled();
 
+    // focusInput
+    const mockedFocus = jest.spyOn(inputElement, "focus");
+    const mockedSetSelectionRange = jest.spyOn(inputElement, "setSelectionRange");
+
+    await act(async () => {
+      element.value = undefined;
+    });
+
     act(() => {
       element.focusInput();
     });
 
     expect(mockFocusEvent).toBeCalled();
+    expect(mockedFocus).toBeCalledTimes(1);
+    expect(mockedSetSelectionRange).not.toBeCalled();
+
+    const value = "a";
+    const valueLength = value.length;
+
+    await act(async () => {
+      element.value = value;
+    });
+
+    act(() => {
+      element.focusInput();
+    });
+
+    expect(mockedFocus).toBeCalledTimes(2);
+    expect(mockedSetSelectionRange).toBeCalledWith(valueLength, valueLength);
 
     act(() => {
       element.blurInput();

@@ -7,6 +7,20 @@ import { fireEvent } from "@testing-library/react";
 jest.mock("@next-core/theme", () => ({}));
 
 describe("eo-textarea", () => {
+  beforeEach(() => {
+    jest.spyOn(window, "requestAnimationFrame").mockImplementation((cb) => {
+      queueMicrotask(() => {
+        cb(0);
+      });
+
+      return 0;
+    });
+  });
+
+  afterEach(() => {
+    (window.requestAnimationFrame as jest.Mock).mockRestore();
+  });
+
   test("basic usage", async () => {
     const element = document.createElement("eo-textarea") as Textarea;
 
@@ -18,15 +32,17 @@ describe("eo-textarea", () => {
     element.addEventListener("blur", mockBlurEvent);
 
     expect(element.shadowRoot).toBeFalsy();
-    act(() => {
+    await act(async () => {
       document.body.appendChild(element);
     });
     expect(element.shadowRoot).toBeTruthy();
     expect(element.shadowRoot?.childNodes.length).toBe(2);
 
+    const textareaElement = element.shadowRoot?.querySelector("textarea") as HTMLTextAreaElement;
+
     expect(
       (
-        element.shadowRoot?.querySelector("textarea")?.style as Record<
+        textareaElement?.style as Record<
           string,
           any
         >
@@ -37,10 +53,10 @@ describe("eo-textarea", () => {
     });
 
     act(() => {
-      element.shadowRoot?.querySelector("textarea")?.focus();
-      element.shadowRoot?.querySelector("textarea")?.blur();
+      textareaElement?.focus();
+      textareaElement?.blur();
       fireEvent.change(
-        element.shadowRoot?.querySelector("textarea") as HTMLElement,
+        textareaElement as HTMLElement,
         { target: { value: "a" } }
       );
     });
@@ -49,15 +65,40 @@ describe("eo-textarea", () => {
     expect(mockBlurEvent).toBeCalledTimes(1);
     expect(mockChangeEvent).toBeCalledTimes(1);
 
-    expect(element.shadowRoot?.querySelector("textarea")?.textContent).toBe(
+    expect(textareaElement?.textContent).toBe(
       "a"
     );
 
     await act(async () => {
-      await (element.value = undefined);
+      element.value = undefined;
     });
 
-    expect(element.shadowRoot?.querySelector("textarea")?.textContent).toBe("");
+    expect(textareaElement?.textContent).toBe("");
+
+    // focusTextarea
+    const mockedFocus = jest.spyOn(textareaElement, "focus");
+    const mockedSetSelectionRange = jest.spyOn(textareaElement, "setSelectionRange");
+
+    act(() => {
+      element.focusTextarea();
+    });
+
+    expect(mockedFocus).toBeCalledTimes(1);
+    expect(mockedSetSelectionRange).not.toBeCalled();
+
+    const value = "a";
+    const valueLength = value.length;
+
+    await act(async () => {
+      element.value = value;
+    });
+
+    act(() => {
+      element.focusTextarea();
+    });
+
+    expect(mockedFocus).toBeCalledTimes(2);
+    expect(mockedSetSelectionRange).toBeCalledWith(valueLength, valueLength);
 
     act(() => {
       document.body.removeChild(element);
@@ -65,7 +106,7 @@ describe("eo-textarea", () => {
     expect(element.shadowRoot?.childNodes.length).toBe(0);
   });
 
-  test("auto size should work", () => {
+  test("auto size should work", async () => {
     jest
       .spyOn(document.documentElement, "scrollHeight", "get")
       .mockImplementation(() => 100);
@@ -75,11 +116,12 @@ describe("eo-textarea", () => {
     });
     const element = document.createElement("eo-textarea") as Textarea;
 
+    element.value = "a";
     element.autoSize = {
       minRows: 2,
       maxRows: 5,
     };
-    act(() => {
+    await act(async () => {
       document.body.appendChild(element);
     });
 
@@ -104,13 +146,13 @@ describe("eo-textarea", () => {
     });
   });
 
-  test("auto size default height without minRows", () => {
+  test("auto size default height without minRows", async () => {
     const element = document.createElement("eo-textarea") as Textarea;
 
     element.autoSize = {
       maxRows: 5,
     };
-    act(() => {
+    await act(async () => {
       document.body.appendChild(element);
     });
 
@@ -123,11 +165,11 @@ describe("eo-textarea", () => {
     });
   });
 
-  test("auto size default height autoSize: true", () => {
+  test("auto size default height autoSize: true", async () => {
     const element = document.createElement("eo-textarea") as Textarea;
 
     element.autoSize = true;
-    act(() => {
+    await act(async () => {
       document.body.appendChild(element);
     });
 
