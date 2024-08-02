@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.0.31...@next-bricks/illustrations@1.1.0) (2024-08-02)
+
+
+### Bug Fixes
+
+* alternate animation ([e22e927](https://github.com/easyops-cn/next-bricks/commit/e22e927f782745a3692e7427c5b118bfa24a5835))
+* use sprite image ([0507cb8](https://github.com/easyops-cn/next-bricks/commit/0507cb83494c0612fff63a1906a1e353cdb1525c))
+
+
+### Features
+
+* new brick: rocket-transition ([890d3e4](https://github.com/easyops-cn/next-bricks/commit/890d3e45ede83f37476e3da3955c052153edd849))
+* rename loading-transition ([b64fe29](https://github.com/easyops-cn/next-bricks/commit/b64fe29cc1ec68071202f9f217d5089d73baa017))
+
+
+
+
+
 ## [1.0.31](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.0.30...@next-bricks/illustrations@1.0.31) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/illustrations
