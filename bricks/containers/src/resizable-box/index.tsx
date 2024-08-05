@@ -24,7 +24,12 @@ export interface ResizableBoxProps {
 export type ResizeDirection = "left" | "right" | "top" | "bottom";
 
 /**
- * 可以左右或上下调整尺寸的容器
+ * 可以左右或上下调整尺寸的容器。
+ *
+ * 注意与 v2 构件 `basic-bricks.resizable-box` 的差别：
+ *
+ * - 移除属性 `resizable`，改为使用 `disabled` 控制是否可调整尺寸；
+ * - 放在 `containers-NB` 包，而不是 `basic-bricks-NB`。
  */
 export
 @defineElement("eo-resizable-box", {
@@ -59,7 +64,10 @@ class ResizableBox extends ReactNextElement implements ResizableBoxProps {
   accessor minSize: number | undefined;
 
   /**
-   * 留给其他部分的最小空间（即控制尺寸不超过 `documentElement.clientWidth - minSpace`）
+   * 留给其他部分的最小空间。
+   *
+   * 即：控制尺寸不超过 `documentElement.clientWidth - minSpace`（水平方向时）。
+   *
    * @default 300
    */
   @property({ type: Number })
