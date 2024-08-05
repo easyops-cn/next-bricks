@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.38.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.38.2...@next-bricks/advanced@0.38.3) (2024-08-05)
+
+
+### Bug Fixes
+
+* deprecate event `page.size.change` of `eo-next-table` ([9f84b0b](https://github.com/easyops-cn/next-bricks/commit/9f84b0b143bbf9383667c464e6fe6b2cff518dc4))
+
+
+
+
+
 ## [0.38.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.38.1...@next-bricks/advanced@0.38.2) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/advanced

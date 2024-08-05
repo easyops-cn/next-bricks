@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.48.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.47.0...@next-shared/common-bricks@0.48.0) (2024-08-05)
+
+
+### Features
+
+* new brick: eo-resizable-box ([9312abc](https://github.com/easyops-cn/next-bricks/commit/9312abc70bd8bacb101dbdd1f70c4f69dafaf7f0))
+
+
+
+
+
 # [0.47.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.46.0...@next-shared/common-bricks@0.47.0) (2024-08-01)
 
 
