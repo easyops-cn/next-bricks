@@ -213,6 +213,7 @@ class EoNextTable extends ReactNextElement {
   /**
    * pageSize 变化的回调
    * @detail 改变后的页码及每页条数
+   * @deprecated 统一用 `page.change` 事件
    */
   @event({ type: "page.size.change" })
   accessor #pageSizeChangeEvent!: EventEmitter<{
