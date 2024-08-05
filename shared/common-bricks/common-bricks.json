@@ -64,7 +64,8 @@
     "eo-narrow-view",
     "eo-banner",
     "eo-content-layout",
-    "eo-popup"
+    "eo-popup",
+    "eo-resizable-box"
   ],
   "form": [
     "eo-textarea",
