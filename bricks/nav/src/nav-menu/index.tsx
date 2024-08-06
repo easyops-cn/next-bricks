@@ -58,6 +58,7 @@ const GAP_WIDTH = 8;
 interface NavMenuProps {
   menu?: SidebarMenu;
   showTooltip?: boolean;
+  mainMenuTitleStyle: CSSProperties | undefined;
 }
 
 interface MenuItemComProps {
@@ -68,6 +69,7 @@ interface MenuItemComProps {
   selectedKey?: string[];
   showTooltip?: boolean;
   overflow?: boolean;
+  mainMenuTitleStyle?: CSSProperties;
 }
 interface SimpleMenuItemComProps extends MenuItemComProps {
   item: SidebarMenuSimpleItem;
@@ -98,7 +100,7 @@ function SimpleMenuItemCom(props: SimpleMenuItemComProps) {
       title={showTooltip ? item.text : ""}
       active={item.key ? selectedKey.includes(item.key) : false}
     >
-      {renderLinkCom(item, { width: "100%" })}
+      {renderLinkCom(item, { width: "100%" }, props.mainMenuTitleStyle)}
     </WrappedMenuItem>
   );
 }
@@ -125,6 +127,7 @@ function SubMenuItemCom({
   showTooltip,
   selectedKey = [],
   overflow,
+  mainMenuTitleStyle,
 }: MenuGroupComProps) {
   return item.items?.length > 0 ? (
     <WrappedPopover
@@ -141,12 +144,12 @@ function SubMenuItemCom({
       strategy="fixed"
     >
       <WrappedMenuItem
-        className="sub-menu-item-label"
+        className="sub-menu-item-label 22"
         key={item.key}
         slot="anchor"
         title={showTooltip ? item.title : ""}
       >
-        {renderSpanCom(item, !topData)}
+        {renderSpanCom(item, !topData, { ...mainMenuTitleStyle })}
       </WrappedMenuItem>
       <div
         className={classnames("sub-menu-wrapper", {
@@ -219,6 +222,7 @@ function ThreeLevelMenuCom({
   showTooltip,
   placement = "bottom-start",
   anchorDisplay,
+  mainMenuTitleStyle,
 }: {
   index?: number;
   hidden?: boolean;
@@ -227,6 +231,7 @@ function ThreeLevelMenuCom({
   showTooltip?: boolean;
   placement?: Placement;
   anchorDisplay?: CSSProperties["display"];
+  mainMenuTitleStyle?: CSSProperties;
 }) {
   return item.items?.length > 0 ? (
     <WrappedPopover
@@ -249,7 +254,7 @@ function ThreeLevelMenuCom({
         slot="anchor"
         title={showTooltip ? item.title : ""}
       >
-        {renderSpanCom(item)}
+        {renderSpanCom(item, false, mainMenuTitleStyle)}
       </WrappedMenuItem>
       <div className="sub-menu-wrapper">
         <ThreeLevelMenuPopoverContent
@@ -270,6 +275,7 @@ function SitMapMenCom({
   placement = "bottom-start",
   anchorDisplay,
   topData,
+  mainMenuTitleStyle,
 }: {
   index?: number;
   hidden?: boolean;
@@ -279,6 +285,7 @@ function SitMapMenCom({
   placement?: Placement;
   anchorDisplay?: CSSProperties["display"];
   topData?: boolean;
+  mainMenuTitleStyle?: CSSProperties;
 }) {
   const [visible, setVisible] = useState<boolean>();
 
@@ -308,7 +315,7 @@ function SitMapMenCom({
         slot="anchor"
         title={showTooltip ? item.title : ""}
       >
-        {renderSpanCom(item)}
+        {renderSpanCom(item, false, mainMenuTitleStyle)}
       </WrappedMenuItem>
       <div
         className={classnames("sub-menu-sit-map-wrapper", {
@@ -348,6 +355,11 @@ class NavMenu extends ReactNextElement {
   })
   accessor menu: SidebarMenu | undefined;
 
+  @property({
+    attribute: false,
+  })
+  accessor mainMenuTitleStyle: CSSProperties | undefined;
+
   /**
    * 是否显示 tooltip
    */
@@ -357,7 +369,13 @@ class NavMenu extends ReactNextElement {
   accessor showTooltip: boolean | undefined;
 
   render() {
-    return <NavMenuComponent menu={this.menu} showTooltip={this.showTooltip} />;
+    return (
+      <NavMenuComponent
+        menu={this.menu}
+        showTooltip={this.showTooltip}
+        mainMenuTitleStyle={this.mainMenuTitleStyle}
+      />
+    );
   }
 }
 
@@ -470,6 +488,7 @@ function NavMenuComponent(props: NavMenuProps) {
                 item={item as SidebarMenuGroup}
                 showTooltip={showTooltip}
                 selectedKey={selectedKey}
+                mainMenuTitleStyle={props.mainMenuTitleStyle}
               />
             ) : (item as SidebarMenuGroup).type === "group" &&
               (item as SidebarMenuGroup).childLayout === "siteMap" ? (
@@ -480,6 +499,7 @@ function NavMenuComponent(props: NavMenuProps) {
                 showTooltip={showTooltip}
                 selectedKey={selectedKey}
                 topData={true}
+                mainMenuTitleStyle={props.mainMenuTitleStyle}
               />
             ) : (
               <RenderMenuItemCom
@@ -489,6 +509,7 @@ function NavMenuComponent(props: NavMenuProps) {
                 showTooltip={showTooltip}
                 selectedKey={selectedKey}
                 topData={true}
+                mainMenuTitleStyle={props.mainMenuTitleStyle}
               />
             )}
           </React.Fragment>
@@ -501,6 +522,7 @@ function NavMenuComponent(props: NavMenuProps) {
         selectedKey={selectedKey}
         overflow={true}
         topData={true}
+        mainMenuTitleStyle={props.mainMenuTitleStyle}
       />
     </div>
   );

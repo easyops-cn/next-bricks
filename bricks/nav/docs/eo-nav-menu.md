@@ -5,54 +5,105 @@
 ### basic
 
 ```yaml preview minHeight="300px"
-brick: eo-nav-menu
-properties:
-  menu:
-    title: mock data
-    menuItems:
-      - text: 创造
-        to: /a
-        type: default
-      - title: 资源库
-        type: subMenu
-        items:
-          - text: 构件库
-            to: /b
-            type: default
-          - title: 契约中心
-            to: /c
-            type: subMenu
-            items:
-              - text: cmdb契约
-                to: /cmdb
-                type: default
-              - title: devops契约
-                type: subMenu
-                items:
-                  - text: flow
-                    to: /flow
-                    type: default
-                  - text: tool
-                    to: /tool
-                    type: default
-      - text: 文档中心
-        href: "http://www.baidu.com"
-        type: default
-      - title: 接口与数据
-        type: subMenu
-        items:
-          - text: Api Gateway
-            to: /d
-            type: default
-          - title: 测试组
-            type: group
-            items:
-              - text: 挂件
-                to: /e
-                type: default
-              - text: 构件
-                to: /f
-                type: default
+- brick: eo-nav-menu
+  properties:
+    menu:
+      title: mock data
+      menuItems:
+        - text: 创造
+          to: /a
+          type: default
+        - title: 资源库
+          type: subMenu
+          items:
+            - text: 构件库
+              to: /b
+              type: default
+            - title: 契约中心
+              to: /c
+              type: subMenu
+              items:
+                - text: cmdb契约
+                  to: /cmdb
+                  type: default
+                - title: devops契约
+                  type: subMenu
+                  items:
+                    - text: flow
+                      to: /flow
+                      type: default
+                    - text: tool
+                      to: /tool
+                      type: default
+        - text: 文档中心
+          href: "http://www.baidu.com"
+          type: default
+        - title: 接口与数据
+          type: subMenu
+          items:
+            - text: Api Gateway
+              to: /d
+              type: default
+            - title: 测试组
+              type: group
+              items:
+                - text: 挂件
+                  to: /e
+                  type: default
+                - text: 构件
+                  to: /f
+                  type: default
+- brick: div
+- brick: eo-nav-menu
+  properties:
+    mainMenuTitleStyle:
+      color: purple
+    menu:
+      title: mock data
+      menuItems:
+        - text: 创造
+          to: /a
+          type: default
+        - title: 资源库
+          type: subMenu
+          items:
+            - text: 构件库
+              to: /b
+              type: default
+            - title: 契约中心
+              to: /c
+              type: subMenu
+              items:
+                - text: cmdb契约
+                  to: /cmdb
+                  type: default
+                - title: devops契约
+                  type: subMenu
+                  items:
+                    - text: flow
+                      to: /flow
+                      type: default
+                    - text: tool
+                      to: /tool
+                      type: default
+        - text: 文档中心
+          href: "http://www.baidu.com"
+          type: default
+        - title: 接口与数据
+          type: subMenu
+          items:
+            - text: Api Gateway
+              to: /d
+              type: default
+            - title: 测试组
+              type: group
+              items:
+                - text: 挂件
+                  to: /e
+                  type: default
+                - text: 构件
+                  to: /f
+                  type: default
 ```
 
 ### overflow
