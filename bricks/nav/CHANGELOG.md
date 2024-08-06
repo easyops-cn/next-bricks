@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.11.33...@next-bricks/nav@1.12.0) (2024-08-06)
+
+
+### Features
+
+* 支持自定义菜单字体颜色 ([42e10d7](https://github.com/easyops-cn/next-bricks/commit/42e10d7568b1323b4ccf58034cbe5132c622eeb5))
+
+
+
+
+
 ## [1.11.33](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.11.32...@next-bricks/nav@1.11.33) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/nav
