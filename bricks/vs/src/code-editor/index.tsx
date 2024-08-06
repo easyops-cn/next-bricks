@@ -380,6 +380,8 @@ export function CodeEditorComponent({
   const maxLines = _maxLines ?? Infinity;
   const height = _height ?? 500;
   const [expanded, setExpanded] = useState(false);
+  const [placeholderInstance, setPlaceholderInstance] =
+    useState<PlaceholderContentWidget>();
   const workerId = useMemo(() => uniqueId("worker"), []);
 
   const { t } = useTranslation(NS);
@@ -909,10 +911,31 @@ export function CodeEditorComponent({
       editorRef.current!
     );
 
+    setPlaceholderInstance(placeholderWidget);
+
     return () => {
       placeholderWidget.dispose();
     };
   }, [placeholder]);
+
+  useEffect(() => {
+    if (
+      placeholderInstance &&
+      editorRef.current &&
+      editorRef.current.getDomNode
+    ) {
+      const node = placeholderInstance.getDomNode();
+      const rect = node.getBoundingClientRect();
+      const originWidth = editorRef.current
+        ?.getDomNode()
+        ?.getBoundingClientRect().width;
+
+      editorRef.current?.layout({
+        width: originWidth!,
+        height: rect.height + 25,
+      });
+    }
+  }, [placeholderInstance]);
 
   const handleCopyIconClick = useCallback(() => {
     if (editorRef.current) {

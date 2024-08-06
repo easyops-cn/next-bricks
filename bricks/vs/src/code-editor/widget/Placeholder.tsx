@@ -39,7 +39,7 @@ export class PlaceholderContentWidget implements monaco.editor.IContentWidget {
       this.domNode.style.fontStyle = "italic";
       this.domNode.style.color =
         "rgba(var(--theme-gray-color-rgb-channel), 0.4)";
-      this.editor.applyFontInfo(this.domNode);
+      this.editor?.applyFontInfo?.(this.domNode);
     }
 
     return this.domNode;
