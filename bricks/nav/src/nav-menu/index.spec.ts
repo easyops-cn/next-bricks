@@ -94,6 +94,9 @@ describe("eo-nav-menu", () => {
           },
         ],
       };
+      element.mainMenuTitleStyle = {
+        color: "red",
+      };
       document.body.appendChild(element);
     });
     expect(element.shadowRoot).toBeTruthy();

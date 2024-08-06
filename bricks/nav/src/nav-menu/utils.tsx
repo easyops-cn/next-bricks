@@ -33,7 +33,8 @@ export function isSimple(item: SidebarMenuItem): item is SidebarMenuSimpleItem {
 
 export const renderLinkCom = (
   item: SidebarMenuSimpleItem,
-  linkStyle?: React.CSSProperties
+  linkStyle?: React.CSSProperties,
+  labelStyle?: React.CSSProperties
 ): React.ReactElement => {
   return (
     <WrappedLinkItem
@@ -44,17 +45,20 @@ export const renderLinkCom = (
       target={item.target as LinkProps["target"]}
       style={linkStyle}
     >
-      <span className="menu-item-label">{item.text}</span>
+      <span className="menu-item-label" style={{ ...labelStyle }}>
+        {item.text}
+      </span>
     </WrappedLinkItem>
   );
 };
 
 export const renderSpanCom = (
   item: SidebarMenuGroup,
-  subMenu?: boolean
+  subMenu?: boolean,
+  style?: React.CSSProperties
 ): React.ReactElement => {
   return (
-    <span key={item.key} className="menu-item-label">
+    <span key={item.key} className="menu-item-label" style={{ ...style }}>
       {item.title}
       {subMenu && <WrappedIcon lib="fa" icon="angle-right" />}
     </span>
