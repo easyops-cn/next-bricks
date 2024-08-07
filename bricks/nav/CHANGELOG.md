@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.13.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.12.0...@next-bricks/nav@1.13.0) (2024-08-07)
+
+
+### Features
+
+* new brick: nav.poll-announce ([ce0e77a](https://github.com/easyops-cn/next-bricks/commit/ce0e77aef33afe818e4ce9730d0f00f56584f881))
+
+
+
+
+
 # [1.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.11.33...@next-bricks/nav@1.12.0) (2024-08-06)
 
 

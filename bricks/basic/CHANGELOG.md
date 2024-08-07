@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.41.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.40.0...@next-bricks/basic@1.41.0) (2024-08-07)
+
+
+### Features
+
+* **show-notification:** support html message and confirm link options ([0e56c95](https://github.com/easyops-cn/next-bricks/commit/0e56c95985cd56bead25193c6e93c35326aa2821))
+
+
+
+
+
 # [1.40.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.39.0...@next-bricks/basic@1.40.0) (2024-08-02)
 
 
