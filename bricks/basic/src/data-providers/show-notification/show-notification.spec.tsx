@@ -96,7 +96,7 @@ describe("showNotification", () => {
     let promise: Promise<void> | undefined;
     act(() => {
       promise = showNotification({
-        message: "Normal Message",
+        htmlMessage: "<b>Normal Message</b>",
         placement: "topRight",
         closable: true,
         icon: { lib: "antd", icon: "search" },
@@ -125,7 +125,7 @@ describe("showNotification", () => {
     let promise: Promise<void> | undefined;
     act(() => {
       promise = showNotification({
-        message: "Normal Message",
+        title: "Normal Message",
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         placement: "topLeft",

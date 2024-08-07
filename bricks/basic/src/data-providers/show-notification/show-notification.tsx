@@ -1,22 +1,23 @@
 import React, { useCallback, useMemo, useRef } from "react";
 import { createProviderClass } from "@next-core/utils/general";
 import { wrapBrick } from "@next-core/react-element";
-import styles from "./notification.module.css";
 import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
 import classnames from "classnames";
-import { WrappedSlAlert, SlAlertElement } from "./sl-alert.js";
-import type { Link, LinkProps } from "../../link/index.js";
+import { sanitize } from "dompurify";
 import { i18n, initializeI18n } from "@next-core/i18n";
-import { K, NS, locales } from "../show-dialog/i18n";
 import { createRoot } from "react-dom/client";
+import { WrappedSlAlert, SlAlertElement } from "./sl-alert.js";
+import type { Link, LinkProps, Target } from "../../link/index.js";
+import { K, NS, locales } from "../show-dialog/i18n";
 import {
   activeKeyframeAnimationOptions,
   animations,
   hideKeyframeAnimationOptions,
 } from "./constants";
+import styles from "./notification.module.css";
 
 initializeI18n(NS, locales);
 
@@ -31,23 +32,33 @@ export interface NotificationOptions {
   /** 弹出位置，默认居中 */
   placement?: "center" | "topRight";
   /** 通知标题 */
-  title?: string;
+  title?: string | null;
   /** 通知内容 */
-  message: string;
+  message?: string | null;
+  /** HTML 格式的通知内容，该内容会被 dom-purify sanitize */
+  htmlMessage?: string;
   /** 允许手动关闭消息提示 */
   closable?: boolean;
   /** 自定义图标 */
-  icon?: GeneralIconProps;
+  icon?: GeneralIconProps & { style?: React.CSSProperties };
   /**样式类型，默认圆角样式 */
   styleType?: "circleAngle" | "rectAngle";
   /** 确认文本 */
   confirmText?: string;
+  /** 确认链接选项 */
+  confirmLink?: LinkOptions;
   /** 取消文本 */
   cancelText?: string;
   /** 展示确认按钮 */
   showConfirm?: boolean;
   /** 展示取消按钮 */
   showCancel?: boolean;
+}
+
+export interface LinkOptions {
+  url?: string;
+  href?: string;
+  target?: Target;
 }
 
 /**
@@ -127,6 +138,7 @@ export async function showNotification(
 function NotificationComponent({
   type,
   message,
+  htmlMessage,
   title,
   placement = "center",
   closable,
@@ -134,6 +146,7 @@ function NotificationComponent({
   duration = 3000,
   styleType = "circleAngle",
   confirmText,
+  confirmLink,
   cancelText,
   showConfirm = false,
   showCancel = false,
@@ -192,19 +205,20 @@ function NotificationComponent({
     };
   }, [icon, type]);
 
-  const handleHide = useCallback(() => {
+  const handleSlHide = useCallback(() => {
     onHide?.();
-  }, [onHide]);
+    onCancel?.();
+  }, [onCancel, onHide]);
 
   const onOkClick = useCallback(() => {
-    handleHide();
+    onHide?.();
     onOk?.();
-  }, [onOk, handleHide]);
+  }, [onHide, onOk]);
 
   const onCancelClick = useCallback(() => {
-    handleHide();
+    onHide?.();
     onCancel?.();
-  }, [onCancel, handleHide]);
+  }, [onCancel, onHide]);
 
   return (
     <WrappedSlAlert
@@ -216,15 +230,22 @@ function NotificationComponent({
         styles[styleType]
       )}
       {...alertProps}
-      onSlHide={handleHide}
+      onSlHide={handleSlHide}
     >
       <WrappedIcon slot="icon" {...iconProps}></WrappedIcon>
       {title && <div className={styles.title}>{title}</div>}
-      {message && <div className={styles.message}>{message}</div>}
+      {htmlMessage ? (
+        <div
+          className={styles.message}
+          dangerouslySetInnerHTML={{ __html: sanitize(htmlMessage) }}
+        />
+      ) : message ? (
+        <div className={styles.message}>{message}</div>
+      ) : null}
       {(showConfirm || showCancel) && (
         <div className={styles.operateWrapper}>
           {showConfirm && (
-            <WrappedLink onClick={onOkClick}>
+            <WrappedLink {...confirmLink} onClick={onOkClick}>
               {confirmText ?? i18n.t(`${NS}:${K.OK}`)}
             </WrappedLink>
           )}
