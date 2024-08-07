@@ -19,3 +19,4 @@ import "./directory-tree/index.js";
 import "./directory-tree/directory-tree-leaf/index.js";
 import "./directory-tree/directory-tree-internal-node/index.js";
 import "./nav-logo/index.js";
+import "./poll-announce/index.js";
