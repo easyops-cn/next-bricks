@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.44](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.43...@next-bricks/recent-history@1.0.44) (2024-08-07)
+
+
+### Bug Fixes
+
+* refine recent-visit tag style ([847d7f7](https://github.com/easyops-cn/next-bricks/commit/847d7f7b5e5043bc00a7593fc6212920f12baa9b))
+
+
+
+
+
 ## [1.0.43](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/recent-history@1.0.42...@next-bricks/recent-history@1.0.43) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/recent-history
