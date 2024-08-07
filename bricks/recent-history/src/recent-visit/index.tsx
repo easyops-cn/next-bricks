@@ -73,7 +73,7 @@ class RecentVisit extends ReactNextElement {
 }
 
 const parseTemplate = (template: string, context: Record<string, any>) => {
-  return template?.replace(/{{(.*?)}}/g, (match: string, key: string) => {
+  return template?.replace(/{{(.*?)}}/g, (_match: string, key: string) => {
     const value = get(context, key);
     return value;
   });
@@ -126,7 +126,18 @@ export function RecentVisitComponent(props: RecentVisitProps) {
       {recentVisits.map((data) => {
         return (
           <WrappedLink key={data.key} url={parseTemplate(urlTemplate!, data)}>
-            <WrappedTag color="blue">{data.name}</WrappedTag>
+            {/* Make the tag style the same as v2 brick visit-history.recent-visit */}
+            <WrappedTag
+              outline
+              tagStyle={{
+                borderRadius: "9999px",
+                color: "var(--antd-text-color)",
+                background: "var(--tag-blue-background)",
+                outlineColor: "var(--tag-blue-border-color)",
+              }}
+            >
+              {data.name}
+            </WrappedTag>
           </WrappedLink>
         );
       })}
