@@ -83,23 +83,28 @@ export class ChatService {
   // 消息
   #messageNextToken?: string;
 
+  #useSpiltWord = false;
+
   constructor({
     agentId,
     robotId,
     enterInterval = 50,
     debug = false,
     answerLanguage,
+    useSpiltWord,
   }: {
     agentId: string;
     robotId: string;
     enterInterval: number;
     debug: boolean;
     answerLanguage?: string;
+    useSpiltWord?: boolean;
   }) {
     this.#agentId = agentId;
     this.#robotId = robotId;
     this.#enterInterval = enterInterval;
     this.#debug = debug;
+    this.#useSpiltWord = useSpiltWord ?? false;
     this.#answerLanguage = answerLanguage;
   }
 
@@ -427,36 +432,49 @@ export class ChatService {
             if (!this.#conversationId) {
               this.setConversationId(result.conversationId);
             }
-            const wordList = this.splitWord(result.delta.content);
+            if (this.#useSpiltWord) {
+              const wordList = this.splitWord(result.delta.content);
 
-            // 一段消息最多拆分为 50-100 段内容
-            let chunkedWords = wordList;
-            const maxChunks = 100;
-            if (wordList.length > maxChunks) {
-              const minChunks = 50;
-              const chunkSize = Math.ceil(
-                wordList.length /
-                  (Math.floor(Math.random() * (maxChunks - minChunks + 1)) +
-                    minChunks)
-              );
-              chunkedWords = _.chunk(wordList, chunkSize).map((chunk) =>
-                chunk.join("")
-              );
-            }
+              // 一段消息最多拆分为 50-100 段内容
+              let chunkedWords = wordList;
+              const maxChunks = 100;
+              if (wordList.length > maxChunks) {
+                const minChunks = 50;
+                const chunkSize = Math.ceil(
+                  wordList.length /
+                    (Math.floor(Math.random() * (maxChunks - minChunks + 1)) +
+                      minChunks)
+                );
+                chunkedWords = _.chunk(wordList, chunkSize).map((chunk) =>
+                  chunk.join("")
+                );
+              }
 
-            chunkedWords.forEach((word) => {
-              // wordList.forEach((word) => {
+              chunkedWords.forEach((word) => {
+                // wordList.forEach((word) => {
+                this.enqueue({
+                  topic: "add",
+                  message: {
+                    ...result,
+                    delta: {
+                      role: "assistant",
+                      content: word,
+                    },
+                  },
+                });
+              });
+            } else {
               this.enqueue({
                 topic: "add",
                 message: {
                   ...result,
                   delta: {
                     role: "assistant",
-                    content: word,
+                    content: result.delta.content,
                   },
                 },
               });
-            });
+            }
           } catch {
             result = JSON.parse(data);
 

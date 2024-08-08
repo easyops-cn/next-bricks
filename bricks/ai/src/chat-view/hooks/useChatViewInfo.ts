@@ -20,6 +20,7 @@ export function useChatViewInfo({
   enterInterval = 50,
   debug,
   answerLanguage,
+  useSpiltWord,
 }: {
   agentId: string;
   robotId: string;
@@ -27,6 +28,7 @@ export function useChatViewInfo({
   enterInterval?: number;
   debug: boolean;
   answerLanguage?: string;
+  useSpiltWord?: boolean;
 }) {
   const [sessionEnd, setSessionEnd] = useState<boolean>(false);
   const [sessionLoading, setSessionLoading] = useState<boolean>(false);
@@ -54,8 +56,9 @@ export function useChatViewInfo({
         enterInterval,
         debug,
         answerLanguage,
+        useSpiltWord,
       }),
-    [agentId, robotId, enterInterval, debug, answerLanguage]
+    [agentId, robotId, enterInterval, debug, answerLanguage, useSpiltWord]
   );
 
   const defaultNewSessionItem = useMemo(
