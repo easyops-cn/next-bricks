@@ -30,6 +30,7 @@ export interface ChatViewProps {
   showSessionList?: boolean;
   showLike?: boolean;
   showShare?: boolean;
+  useSpiltWord?: boolean;
   quickAnswerConfig?: QuickAnswerConfig;
   snippetList?: snippet[];
   enterInterval?: number;
@@ -55,6 +56,7 @@ export function LegacyChatViewComponent(
     snippetList,
     enterInterval,
     debug = false,
+    useSpiltWord = false,
     commandBricks,
     answerLanguage,
     inputToolbarBrick,
@@ -91,6 +93,7 @@ export function LegacyChatViewComponent(
     enterInterval,
     debug,
     answerLanguage,
+    useSpiltWord,
   });
 
   useEffect(() => {
@@ -240,6 +243,15 @@ class ChatView extends ReactNextElement {
   accessor showShare: boolean | undefined;
 
   /**
+   * 是否开启前端分词
+   * @default false
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor useSpiltWord: boolean | undefined;
+
+  /**
    * 输入间隔，设置为 -1 使用新的方式对大段消息进行模拟打字效果节流输出
    *
    * @default 50
@@ -328,6 +340,7 @@ class ChatView extends ReactNextElement {
         showSessionList={this.showSessionList}
         showLike={this.showLike}
         showShare={this.showShare}
+        useSpiltWord={this.useSpiltWord}
         quickAnswerConfig={this.quickAnswerConfig}
         snippetList={this.snippetList}
         enterInterval={this.enterInterval}
