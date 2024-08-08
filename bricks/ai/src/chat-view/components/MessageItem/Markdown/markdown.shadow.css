@@ -6,6 +6,7 @@
   white-space: break-spaces;
   font-variant-ligatures: none;
   font-feature-settings: "liga" 0;
+  font-weight: 400;
 }
 
 .ProseMirror pre {
@@ -129,6 +130,10 @@ img.ProseMirror-separator {
   font-weight: 400;
   --tw-text-opacity: 1;
   color: rgb(94 129 172 / var(--tw-text-opacity));
+}
+
+.user .milkdown-theme-nord code {
+  color: rgb(120 168 237);
 }
 
 .milkdown-theme-nord pre code {
@@ -257,6 +262,12 @@ img.ProseMirror-separator {
 .prose :where(strong):not(:where([class~="not-prose"] *)) {
   color: var(--color-strong-text);
   font-weight: 600;
+}
+
+.user .prose :where(strong):not(:where([class~="not-prose"] *)) {
+  color: inherit;
+  font-weight: 600;
+  padding: 0 2px;
 }
 
 .prose :where(a strong):not(:where([class~="not-prose"] *)) {
