@@ -76,7 +76,10 @@ export function PdfViewerComponent({
   });
 
   return (
-    <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+    // See: https://react-pdf-viewer.dev/examples/compile-and-set-the-worker-source-with-webpack/
+    <Worker
+      workerUrl={`${process.env.NODE_ENV === "test" ? "" : __webpack_public_path__}pdf.worker.min.js`}
+    >
       <div style={viewerStyle}>
         <Viewer
           fileUrl={url}
