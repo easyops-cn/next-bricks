@@ -7,3 +7,4 @@ import "./data-providers/capture-snapshot.js";
 import "./tree/index.js";
 import "./tree-select/index.js";
 import "./text-tooltip/index.js";
+import "./pdf-viewer/index.js";
