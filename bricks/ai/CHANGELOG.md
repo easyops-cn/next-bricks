@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.25.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.24.0...@next-bricks/ai@1.25.0) (2024-08-08)
+
+
+### Features
+
+* chat-view add useSplitWord flag ([9b951af](https://github.com/easyops-cn/next-bricks/commit/9b951af6014708bd1e0ee813270024d6b1fef098))
+
+
+
+
+
 # [1.24.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.24...@next-bricks/ai@1.24.0) (2024-07-31)
 
 

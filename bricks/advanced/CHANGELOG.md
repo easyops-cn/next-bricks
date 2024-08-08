@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.39.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.38.3...@next-bricks/advanced@0.39.0) (2024-08-08)
+
+
+### Features
+
+* support pdf viewer ([34f37b6](https://github.com/easyops-cn/next-bricks/commit/34f37b66eba8e753bdcfebe4480ffafea65defb4))
+
+
+
+
+
 ## [0.38.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.38.2...@next-bricks/advanced@0.38.3) (2024-08-05)
 
 
