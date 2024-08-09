@@ -64,10 +64,10 @@ export function MarkdownDisplay({ value }: { value: string }): React.ReactNode {
   };
 
   const transformOpenAIToCodeBlock = (str: string) => {
-    if (/^<.+>.+<\/.+>$/.test(str)) {
+    if (/<tool_call>(.+)<\/tool_call>/.test(str)) {
       return str.replace(
-        /^<(.+)>(.+)<\/(.+)>$/,
-        (_, $1, $2) => `\`\`\`easy_cmd_${$1}\n${$2}\n\`\`\`\n`
+        /<tool_call>(.+?)<\/tool_call>/,
+        (_, $1) => `\n\`\`\`easy_cmd_tool_call\n${$1}\n\`\`\`\n`
       );
     }
     return str;
