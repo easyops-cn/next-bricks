@@ -610,6 +610,8 @@ export function CodeEditorComponent({
       model,
       minimap: {
         enabled: false,
+        showRegionSectionHeaders: false,
+        showMarkSectionHeaders: false,
       },
       scrollBeyondLastLine: false,
       tabSize: 2,
