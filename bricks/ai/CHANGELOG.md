@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.27.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.27.0...@next-bricks/ai@1.27.1) (2024-08-09)
+
+
+### Bug Fixes
+
+* openAI match key ([ab310f8](https://github.com/easyops-cn/next-bricks/commit/ab310f8f988a05ba09355cacd2bcf5bd55e5c2ae))
+
+
+
+
+
 # [1.27.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.26.0...@next-bricks/ai@1.27.0) (2024-08-09)
 
 
