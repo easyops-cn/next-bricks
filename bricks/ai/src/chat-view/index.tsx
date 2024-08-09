@@ -39,6 +39,7 @@ export interface ChatViewProps {
   answerLanguage?: string;
   inputToolbarBrick?: InputToolbarBrick;
   onSessionIdChange: (sessionId: string | undefined) => void;
+  onRobotIdChange: (robotId: string | undefined) => void;
   onQaFinish: (sessionId: string | undefined) => void;
 }
 
@@ -61,6 +62,7 @@ export function LegacyChatViewComponent(
     answerLanguage,
     inputToolbarBrick,
     onSessionIdChange,
+    onRobotIdChange,
     onQaFinish,
   }: ChatViewProps,
   ref: React.Ref<SearchInputRef>
@@ -99,8 +101,12 @@ export function LegacyChatViewComponent(
   useEffect(() => {
     if (activeSessionId) {
       onSessionIdChange(activeSessionId);
+      onRobotIdChange(
+        sessionList.find((item) => item.conversationId === activeSessionId)
+          ?.robotId
+      );
     }
-  }, [activeSessionId]);
+  }, [activeSessionId, onRobotIdChange, onSessionIdChange, sessionList]);
 
   useEffect(() => {
     if (!chatting && activeSessionId) {
@@ -302,6 +308,13 @@ class ChatView extends ReactNextElement {
     this.#sessionIdChange.emit(activeSessionId);
   };
 
+  @event({ type: "robotId.change" })
+  accessor #robotIdChange!: EventEmitter<string | undefined>;
+
+  #handleRobotIdChange = (robotId: string | undefined) => {
+    this.#robotIdChange.emit(robotId);
+  };
+
   @event({ type: "qa.finish" })
   accessor #qaFinish!: EventEmitter<string | undefined>;
 
@@ -348,6 +361,7 @@ class ChatView extends ReactNextElement {
         answerLanguage={this.answerLanguage}
         inputToolbarBrick={this.inputToolbarBrick}
         onSessionIdChange={this.#handleSessionIdChange}
+        onRobotIdChange={this.#handleRobotIdChange}
         onQaFinish={this.#handleQaFinish}
         ref={this.#ref}
       />

@@ -30,6 +30,7 @@ export interface SessionItem {
   title: string;
   user: string;
   _row_id: string;
+  robotId: string;
   handleEditSession?: (
     conversationId: string,
     rawData: Partial<SessionItem>
