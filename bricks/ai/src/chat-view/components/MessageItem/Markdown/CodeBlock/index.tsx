@@ -60,19 +60,20 @@ export const CodeBlock = () => {
   const renderContent = useMemo(() => {
     if (!node.firstChild?.text) return null;
     const text = node.firstChild?.textContent;
-    if (commandBricks && commandBricks[language]) {
+    const lang = language || node.attrs?.language;
+    if (commandBricks && commandBricks[lang]) {
       // 使 markdown 默认样式不生效, 防止样式穿透
       view.dom.classList.contains("prose") &&
         view.dom.classList.replace("prose", "not-prose");
-      return <CustomComponent text={text} language={language} />;
+      return <CustomComponent text={text} language={lang} />;
     }
-    switch (language) {
+    switch (lang) {
       case "easy_cmd_progress":
         return <ProgressText text={text} />;
       default:
         return defaultContent;
     }
-  }, [node, language, view, defaultContent, commandBricks]);
+  }, [node, view, language, defaultContent, commandBricks]);
 
   useEffect(() => {
     if (!language) {
