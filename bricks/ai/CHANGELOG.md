@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.28.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.27.1...@next-bricks/ai@1.28.0) (2024-08-09)
+
+
+### Features
+
+* chat-view support robotIdChange ([cf1a89b](https://github.com/easyops-cn/next-bricks/commit/cf1a89b2567e6f2134b402d0f30409e1edf6a4c7))
+
+
+
+
+
 ## [1.27.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.27.0...@next-bricks/ai@1.27.1) (2024-08-09)
 
 
