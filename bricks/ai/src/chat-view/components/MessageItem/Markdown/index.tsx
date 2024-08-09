@@ -63,6 +63,16 @@ export function MarkdownDisplay({ value }: { value: string }): React.ReactNode {
     return true;
   };
 
+  const transformOpenAIToCodeBlock = (str: string) => {
+    if (/^<.+>.+<\/.+>$/.test(str)) {
+      return str.replace(
+        /^<(.+)>(.+)<\/(.+)>$/,
+        (_, $1, $2) => `\`\`\`easy_cmd_${$1}\n${$2}\n\`\`\`\n`
+      );
+    }
+    return str;
+  };
+
   const { get } = useEditor((root) => {
     return Editor.make()
       .config((ctx) => {
@@ -73,7 +83,8 @@ export function MarkdownDisplay({ value }: { value: string }): React.ReactNode {
           handleClickOn: (view: EditorView, pos: number) =>
             handleClick(view, pos),
         }));
-        value && ctx.set(defaultValueCtx, value);
+        const realValue = transformOpenAIToCodeBlock(value);
+        realValue && ctx.set(defaultValueCtx, realValue);
         //拦截link的默认点击事件以支持通过新窗口弹出页面，如果后续有其他的定制化需求可以改用custom widget的方式写link widget
         const observer = new MutationObserver(() => {
           const links = Array.from(root.querySelectorAll("a"));
@@ -99,7 +110,8 @@ export function MarkdownDisplay({ value }: { value: string }): React.ReactNode {
 
   useEffect(() => {
     if (value !== undefined) {
-      get()?.action(replaceAll(value));
+      const realValue = transformOpenAIToCodeBlock(value);
+      get()?.action(replaceAll(realValue));
     }
   }, [get, value]);
 
