@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.27.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.26.0...@next-bricks/ai@1.27.0) (2024-08-09)
+
+
+### Features
+
+* chat-view support openAI message ([52e5e87](https://github.com/easyops-cn/next-bricks/commit/52e5e876ad9e7a9a5c7e93231510707cc0affafd))
+
+
+
+
+
 # [1.26.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.25.0...@next-bricks/ai@1.26.0) (2024-08-08)
 
 
