@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.13.3...@next-bricks/vs@1.13.4) (2024-08-09)
+
+
+### Bug Fixes
+
+* showRegionSectionHeaders/showMarkSectionHeaders specially set to false ([8fe0914](https://github.com/easyops-cn/next-bricks/commit/8fe09147d05615084bc2ea5af3e63b909bc7b465))
+
+
+
+
+
 ## [1.13.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.13.2...@next-bricks/vs@1.13.3) (2024-07-31)
 
 
