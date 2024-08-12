@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.41.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.41.0...@next-bricks/basic@1.41.1) (2024-08-12)
+
+
+### Bug Fixes
+
+* fix form-item labelBrick alignCenter ([b7ff399](https://github.com/easyops-cn/next-bricks/commit/b7ff3997c4baa838969414244042855c5150c363))
+
+
+
+
+
 # [1.41.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.40.0...@next-bricks/basic@1.41.0) (2024-08-07)
 
 
