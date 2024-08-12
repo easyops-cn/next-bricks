@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.1.1...@next-bricks/illustrations@1.2.0) (2024-08-12)
+
+
+### Features
+
+* new brick: illustrations.error-message ([470e91c](https://github.com/easyops-cn/next-bricks/commit/470e91c25015d331ae7a22dd8d3a05c3791f0e52))
+
+
+
+
+
 ## [1.1.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.1.0...@next-bricks/illustrations@1.1.1) (2024-08-05)
 
 **Note:** Version bump only for package @next-bricks/illustrations
