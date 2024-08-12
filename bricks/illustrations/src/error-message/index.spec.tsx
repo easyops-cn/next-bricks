@@ -66,6 +66,43 @@ describe("illustrations.error-message", () => {
     expect(element.shadowRoot?.childNodes.length).toBe(0);
   });
 
+  test("not found", async () => {
+    const element = document.createElement(
+      "illustrations.error-message"
+    ) as ErrorMessage;
+    element.variant = "not-found";
+
+    expect(element.shadowRoot).toBeFalsy();
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes).toMatchInlineSnapshot(`
+      NodeList [
+        <style>
+          styles.shadow.css
+        </style>,
+        <div
+          class="image"
+        >
+          <img
+            src="exception/http-404.svg"
+          />
+        </div>,
+        <div
+          class="extra"
+        >
+          <slot />
+        </div>,
+      ]
+    `);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+    expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
+
   test("unknown error", async () => {
     const element = document.createElement(
       "illustrations.error-message"

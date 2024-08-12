@@ -24,6 +24,7 @@ export type ErrorMessageVariant =
   | "internet-disconnected"
   | "no-permission"
   | "license-expired"
+  | "not-found"
   | "unknown-error";
 
 /**
@@ -66,6 +67,7 @@ export function ErrorMessageComponent({
   const theme = useCurrentTheme();
 
   const image = useMemo(() => {
+    let category = "easyops2";
     let name: string;
     switch (variant) {
       case "internet-disconnected":
@@ -73,10 +75,14 @@ export function ErrorMessageComponent({
       case "license-expired":
         name = variant;
         break;
+      case "not-found":
+        name = "http-404";
+        category = "exception";
+        break;
       default:
         name = "unknown-error";
     }
-    return getIllustration({ name, category: "easyops2", theme });
+    return getIllustration({ category, name, theme });
   }, [variant, theme]);
 
   return (
