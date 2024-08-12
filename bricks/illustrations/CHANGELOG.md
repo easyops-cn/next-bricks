@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.2.0...@next-bricks/illustrations@1.2.1) (2024-08-12)
+
+
+### Bug Fixes
+
+* **error-message:** new variant: not-found ([1bc9556](https://github.com/easyops-cn/next-bricks/commit/1bc9556b20796a456b6ae0ba76e34a5f2136d6a3))
+
+
+
+
+
 # [1.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.1.1...@next-bricks/illustrations@1.2.0) (2024-08-12)
 
 
