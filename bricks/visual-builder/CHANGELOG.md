@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.36.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.35.0...@next-bricks/visual-builder@1.36.0) (2024-08-13)
+
+
+### Features
+
+* remove bricks: inject-preview-agent and collect-used-contract ([e29dc07](https://github.com/easyops-cn/next-bricks/commit/e29dc072ea57cee49f8a857eb8fb970631da0ae8))
+
+
+
+
+
 # [1.35.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.34.0...@next-bricks/visual-builder@1.35.0) (2024-08-13)
 
 
