@@ -6,7 +6,6 @@ import type {
   InspectSelector,
   InspectTarget,
 } from "./interfaces.js";
-import { getElementsIncludingInShadowDOM } from "../preview/connect.js";
 
 let isInspecting = false;
 const IID_ITEM_PREFIX = "item:";
@@ -29,6 +28,36 @@ export function toggleInspecting(inspecting: boolean): void {
   window[method]("pointerup", onMouseEvent as EventListener, true);
   window[method]("pointerleave", onPointerLeave as EventListener, true);
   window[method]("pointermove", onPointerMove as EventListener, true);
+}
+
+function getElementsIncludingInShadowDOM(
+  iid: string,
+  isRoot?: boolean
+): HTMLElement[] {
+  const elements: HTMLElement[] = [];
+
+  function walk(root: Document | ShadowRoot) {
+    const candidates = root.querySelectorAll<HTMLElement>(
+      isRoot ? iid : `[data-iid="${iid}"]`
+    );
+    elements.push(...candidates);
+
+    // If elements are found in the document, we should stop searching in shadow DOM.
+    if (root === document && candidates.length > 0) {
+      return;
+    }
+
+    // These useBrick in v3 bricks will be inside shadow DOM.
+    for (const item of root.querySelectorAll("*")) {
+      if (item.shadowRoot) {
+        walk(item.shadowRoot);
+      }
+    }
+  }
+
+  walk(document);
+
+  return elements;
 }
 
 export function select(selector: InspectSelector) {
