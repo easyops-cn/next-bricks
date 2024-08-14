@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.42.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.41.2...@next-bricks/basic@1.42.0) (2024-08-14)
+
+
+### Features
+
+* tooltip add icon ([5da53f4](https://github.com/easyops-cn/next-bricks/commit/5da53f476d3782bf76409091c3fafd1b0c51a88f))
+
+
+
+
+
 ## [1.41.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.41.1...@next-bricks/basic@1.41.2) (2024-08-13)
 
 **Note:** Version bump only for package @next-bricks/basic

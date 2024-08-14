@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.29.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.28.1...@next-bricks/ai@1.29.0) (2024-08-14)
+
+
+### Features
+
+* chat-view replace all tool_call ([3965e5c](https://github.com/easyops-cn/next-bricks/commit/3965e5c97e8ce063ce32f424a307dd3dfb59055a))
+
+
+
+
+
 ## [1.28.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.28.0...@next-bricks/ai@1.28.1) (2024-08-13)
 
 **Note:** Version bump only for package @next-bricks/ai
