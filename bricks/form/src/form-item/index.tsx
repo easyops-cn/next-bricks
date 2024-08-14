@@ -342,9 +342,13 @@ export function FormItemComponent(props: FormItemProps) {
           })}
         >
           <slot></slot>
-          {helpBrick?.useBrick ? (
-            <ReactUseMultipleBricks {...helpBrick}></ReactUseMultipleBricks>
-          ) : null}
+          <div className="help-brick">
+            {typeof helpBrick === "string" || typeof helpBrick === "number" ? (
+              helpBrick
+            ) : helpBrick?.useBrick ? (
+              <ReactUseMultipleBricks {...helpBrick}></ReactUseMultipleBricks>
+            ) : null}
+          </div>
         </div>
         {formElement ? (
           <div
