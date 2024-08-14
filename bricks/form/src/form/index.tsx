@@ -67,6 +67,11 @@ class Form extends ReactNextElement implements FormProps, AbstractForm {
     this.formStore.setInitValue(values, this.defaultEmitValuesChange);
   }
 
+  @property({
+    attribute: false,
+  })
+  accessor staticValues: Record<string, unknown> | undefined;
+
   /**
    * 布局方式(默认 vertical 布局)
    * @default vertical
@@ -159,7 +164,10 @@ class Form extends ReactNextElement implements FormProps, AbstractForm {
       if (err) {
         this.#errorEvent.emit(values);
       } else {
-        this.#successEvent.emit(values);
+        this.#successEvent.emit({
+          ...(this.staticValues ?? {}),
+          ...values,
+        });
       }
     });
   }
