@@ -45,15 +45,15 @@
     "moment": "^2.29.4"
   },
   "devDependencies": {
-    "@next-core/brick-dll-v3": "^0.8.17",
+    "@next-core/brick-dll-v3": "^0.8.18",
     "@next-core/build-next-bricks": "^1.23.0",
     "@next-core/styles-v3": "^0.3.5",
     "@next-core/test-next": "^1.1.5",
-    "@next-dll/ace": "^2.0.767",
+    "@next-dll/ace": "^2.0.768",
     "@next-dll/d3": "^2.0.82",
     "@next-dll/echarts": "^2.0.83",
-    "@next-dll/editor-bricks-helper": "^0.38.112",
-    "@next-dll/react-dnd": "^0.1.705",
+    "@next-dll/editor-bricks-helper": "^0.38.113",
+    "@next-dll/react-dnd": "^0.1.706",
     "copy-webpack-plugin": "^11.0.0"
   }
 }
