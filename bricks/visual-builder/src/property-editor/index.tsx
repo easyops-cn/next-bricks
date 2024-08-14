@@ -168,18 +168,18 @@ class PropertyEditor extends ReactNextElement {
   validate() {
     const form: Form = this.#formRef.current?.getFormInstance();
     this.#submitValue = null;
-    const getRealValue = () => {
-      return this.advancedMode
-        ? form.values[ADVANCED_FORM_KEY]
-        : _.omit(form.values, [ADVANCED_FORM_KEY]);
-    };
 
     form
       .validate()
       .then(() => {
-        form.notify(BEFORE_SUBMIT_KEY, getRealValue());
-        // transformStyle(this.#submitValue || getRealValue(), this.advancedMode);
-        this.#successEvent.emit(this.#submitValue ?? getRealValue());
+        if (this.advancedMode) {
+          // 高级模式直接输出 form.values[ADVANCED_FORM_KEY]
+          this.#successEvent.emit(form.values[ADVANCED_FORM_KEY]);
+        } else {
+          const value = _.omit(form.values, [ADVANCED_FORM_KEY]);
+          form.notify(BEFORE_SUBMIT_KEY, value);
+          this.#successEvent.emit(this.#submitValue ?? value);
+        }
       })
       .catch((err: any[]) => {
         this.#errorEvent.emit(err);
