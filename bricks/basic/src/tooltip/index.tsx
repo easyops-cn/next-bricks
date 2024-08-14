@@ -1,6 +1,6 @@
 import React, { CSSProperties, useEffect, useRef, useState } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
-import { ReactNextElement } from "@next-core/react-element";
+import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import {
@@ -10,14 +10,17 @@ import {
   ARROW_SIZE,
   DISTANCE,
 } from "./sl-tooltip.js";
+import { GeneralIcon, GeneralIconProps } from "@next-bricks/icons/general-icon";
 
 const { defineElement, property, method, event } = createDecorators();
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 export interface ToolTipProps
   extends Pick<
     SlTooltipProps,
     "content" | "placement" | "disabled" | "open" | "trigger" | "hoist"
   > {
+  icon?: GeneralIconProps;
   maxWidth?: string;
 }
 
@@ -44,6 +47,13 @@ export
   styleTexts: [styleText],
 })
 class EoTooltip extends ReactNextElement implements ToolTipProps {
+  /**
+   * 图标
+   */
+  @property({
+    attribute: false,
+  })
+  accessor icon: GeneralIconProps | undefined;
   /**
    * 内容
    */
@@ -126,6 +136,7 @@ class EoTooltip extends ReactNextElement implements ToolTipProps {
   render() {
     return (
       <EoTooltipComponent
+        icon={this.icon}
         content={this.content}
         placement={this.placement}
         disabled={this.disabled}
@@ -154,6 +165,7 @@ export function EoTooltipComponent(props: ToolTipComponentProps) {
     trigger,
     hoist,
     maxWidth,
+    icon,
     onOpenChange,
     onAfterOpenChange,
   } = props;
@@ -194,6 +206,7 @@ export function EoTooltipComponent(props: ToolTipComponentProps) {
       onSlAfterShow={() => onAfterOpenChange?.(true)}
       onSlAfterHide={() => onAfterOpenChange?.(false)}
     >
+      {icon ? <WrappedIcon {...icon} /> : null}
       <slot ref={contentSlotRef} name="content" slot="content">
         {content}
       </slot>

@@ -32,6 +32,34 @@ children:
           textContent: hover
 ```
 
+### Icon
+
+```yaml preview
+brick: div
+properties:
+  style:
+    margin: 50px
+children:
+  - brick: eo-tooltip
+    properties:
+      content: This is a tooltip
+      icon:
+        lib: antd
+        icon: search
+      trigger: hover
+    events:
+      open.change:
+        - action: console.log
+          args:
+            - open.change
+            - <% EVENT.detail %>
+      after.open.change:
+        - action: console.log
+          args:
+            - after.open.change
+            - <% EVENT.detail %>
+```
+
 ### Trigger
 
 ```yaml preview
