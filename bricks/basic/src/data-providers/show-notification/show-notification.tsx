@@ -207,8 +207,8 @@ function NotificationComponent({
 
   const handleSlHide = useCallback(() => {
     onHide?.();
-    onCancel?.();
-  }, [onCancel, onHide]);
+    showConfirm && showCancel ? onCancel?.() : onOk?.();
+  }, [onCancel, onHide, onOk, showCancel, showConfirm]);
 
   const onOkClick = useCallback(() => {
     onHide?.();

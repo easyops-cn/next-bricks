@@ -1,6 +1,12 @@
 显示通知消息。
 
+默认情况下，当通知框以任何形式关闭时，将触发 `callback.success`。
+
+如果同时设置 `showConfirm: true` 和 `showCancel: true`，则只有 confirm 按钮按下时触发 `callback.success`，其他原因引起的通知框关闭，都将触发 `callback.error`。
+
 ## Examples
+
+### Types
 
 ```yaml preview
 brick: div
@@ -46,7 +52,7 @@ children:
             type: warn
 ```
 
-### placement
+### Placement
 
 ```yaml preview minHeight="500px"
 brick: div
@@ -67,7 +73,7 @@ children:
             styleType: rectAngle
 ```
 
-### icon 、title
+### Icon and title
 
 ```yaml preview
 brick: div
@@ -92,7 +98,7 @@ children:
               lib: antd
 ```
 
-### closable
+### Closable
 
 ```yaml preview
 brick: div
@@ -113,7 +119,7 @@ children:
             closable: true
 ```
 
-### opertate
+### Operations
 
 ```yaml preview minHeight="500px"
 brick: div
@@ -191,6 +197,10 @@ children:
             - action: message.success
               args:
                 - You just confirm
+          error:
+            - action: message.error
+              args:
+                - This should never happen
 ```
 
 ## Usage in pro-code
