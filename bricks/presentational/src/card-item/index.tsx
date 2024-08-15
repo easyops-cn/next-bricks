@@ -32,6 +32,9 @@ const WrappedMiniActions = wrapBrick<
   onActionClick: "action.click",
 });
 
+const ALLOWED_SHOW_ACTIONS = ["always", "hover"] as const;
+const ALLOWED_STYLE_TYPES = ["grayish"] as const;
+
 interface IconAvatar {
   containerSize?: string;
   icon: GeneralIconProps;
@@ -444,8 +447,10 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
         className={classNames(
           "card-wrapper",
           theme,
-          styleType,
-          `show-actions-${showActions}`,
+          ALLOWED_STYLE_TYPES.includes(styleType) ? styleType : null,
+          ALLOWED_SHOW_ACTIONS.includes(showActions)
+            ? `show-actions-${showActions}`
+            : null,
           { selected }
         )}
         style={cardStyle}
