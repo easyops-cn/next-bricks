@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.11.13...@next-bricks/markdown@1.12.0) (2024-08-15)
+
+
+### Features
+
+* new brick: eo-markdown-display ([12af87a](https://github.com/easyops-cn/next-bricks/commit/12af87ad7b6047eff8b10bbb1fac700977225239))
+
+
+
+
+
 ## [1.11.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.11.12...@next-bricks/markdown@1.11.13) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/markdown

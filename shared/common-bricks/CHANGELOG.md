@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.49.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.48.0...@next-shared/common-bricks@0.49.0) (2024-08-15)
+
+
+### Features
+
+* new brick: eo-markdown-display ([12af87a](https://github.com/easyops-cn/next-bricks/commit/12af87ad7b6047eff8b10bbb1fac700977225239))
+
+
+
+
+
 # [0.48.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.47.0...@next-shared/common-bricks@0.48.0) (2024-08-05)
 
 
