@@ -166,6 +166,47 @@ describe("eo-card-item", () => {
         .classList.contains("selected")
     ).toBeTruthy();
 
+    await act(async () => {
+      element.styleType = "grayish";
+    });
+    expect(
+      element.shadowRoot
+        ?.querySelector(".card-wrapper")
+        ?.classList.contains("grayish")
+    ).toBe(true);
+
+    await act(async () => {
+      element.styleType = "oops" as "grayish";
+    });
+    expect(
+      element.shadowRoot
+        ?.querySelector(".card-wrapper")
+        ?.classList.contains("oops")
+    ).toBe(false);
+
+    await act(async () => {
+      element.styleType = "oops" as "grayish";
+    });
+    expect(
+      element.shadowRoot
+        ?.querySelector(".card-wrapper")
+        ?.classList.contains("oops")
+    ).toBe(false);
+
+    expect(
+      element.shadowRoot
+        ?.querySelector(".card-wrapper")
+        ?.classList.contains("show-actions-always")
+    ).toBe(true);
+    await act(async () => {
+      element.showActions = "hover";
+    });
+    expect(
+      element.shadowRoot
+        ?.querySelector(".card-wrapper")
+        ?.classList.contains("show-actions-hover")
+    ).toBe(true);
+
     act(() => {
       document.body.removeChild(element);
     });
