@@ -148,4 +148,54 @@ describe("showNotification", () => {
 
     await expect(promise).rejects.toEqual(undefined);
   });
+
+  test("sl-hide with rejects", async () => {
+    let promise: Promise<void> | undefined;
+    act(() => {
+      promise = showNotification({
+        title: "Normal Message",
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        placement: "topLeft",
+        closable: true,
+        icon: { lib: "antd", icon: "search" },
+        duration: 3000,
+        showConfirm: true,
+        showCancel: true,
+        confirmText: "确认吗",
+        cancelText: "取消吗",
+      });
+    });
+
+    act(() => {
+      fireEvent(document.querySelector("sl-alert")!, new Event("sl-hide"));
+    });
+
+    await expect(promise).rejects.toEqual(undefined);
+  });
+
+  test("sl-hide with resolves", async () => {
+    let promise: Promise<void> | undefined;
+    act(() => {
+      promise = showNotification({
+        title: "Normal Message",
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        placement: "topLeft",
+        closable: true,
+        icon: { lib: "antd", icon: "search" },
+        duration: 3000,
+        showConfirm: true,
+        // showCancel: true,
+        confirmText: "确认吗",
+        cancelText: "取消吗",
+      });
+    });
+
+    act(() => {
+      fireEvent(document.querySelector("sl-alert")!, new Event("sl-hide"));
+    });
+
+    await expect(promise).resolves.toEqual(undefined);
+  });
 });
