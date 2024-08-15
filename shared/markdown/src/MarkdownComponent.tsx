@@ -9,7 +9,7 @@ import { rehypePrism } from "./rehypePrism.js";
 const production = { Fragment, jsx, jsxs };
 
 export interface MarkdownComponentProps {
-  content: string;
+  content?: string;
 }
 
 // Reference https://github.com/remarkjs/react-remark/blob/39553e5f5c9e9b903bebf261788ff45130668de0/src/index.ts

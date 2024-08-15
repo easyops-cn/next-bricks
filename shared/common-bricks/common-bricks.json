@@ -112,7 +112,7 @@
     "eo-tree-select",
     "eo-text-tooltip"
   ],
-  "markdown": ["eo-markdown-editor"],
+  "markdown": ["eo-markdown-editor", "eo-markdown-display"],
   "shoelace": [
     "sl-alert",
     "sl-animated-image",
