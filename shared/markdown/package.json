@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "hast-util-to-string": "^3.0.0",
+    "is-absolute-url": "^4.0.1",
     "prismjs": "^1.29.0",
     "react": "0.0.0-experimental-ee8509801-20230117",
     "refractor": "^4.8.1",

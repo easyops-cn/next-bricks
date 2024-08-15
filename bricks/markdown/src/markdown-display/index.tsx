@@ -2,7 +2,7 @@ import React from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
-import { MarkdownComponent } from "@next-shared/markdown";
+import { MarkdownComponent, type LinkOptions } from "@next-shared/markdown";
 import styleText from "./styles.shadow.css";
 import "./host-context.css";
 
@@ -23,7 +23,15 @@ class MarkdownDisplay extends ReactNextElement implements MarkdownDisplayProps {
   @property()
   accessor content: string | undefined;
 
+  @property({ attribute: false })
+  accessor linkOptions: LinkOptions | undefined;
+
   render() {
-    return <MarkdownComponent content={this.content} />;
+    return (
+      <MarkdownComponent
+        content={this.content}
+        linkOptions={this.linkOptions}
+      />
+    );
   }
 }

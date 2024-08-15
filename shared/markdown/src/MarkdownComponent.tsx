@@ -5,15 +5,22 @@ import remarkParse from "remark-parse";
 import remarkToRehype from "remark-rehype";
 import rehypeReact, { Options as RehypeReactOptions } from "rehype-react";
 import { rehypePrism } from "./rehypePrism.js";
+import { rehypeLinks, type LinkOptions } from "./rehypeLinks.js";
 
 const production = { Fragment, jsx, jsxs };
 
 export interface MarkdownComponentProps {
   content?: string;
+  linkOptions?: LinkOptions;
 }
 
+export type { LinkOptions };
+
 // Reference https://github.com/remarkjs/react-remark/blob/39553e5f5c9e9b903bebf261788ff45130668de0/src/index.ts
-export function MarkdownComponent({ content }: MarkdownComponentProps) {
+export function MarkdownComponent({
+  content,
+  linkOptions,
+}: MarkdownComponentProps) {
   const [reactContent, setReactContent] = useState<JSX.Element | null>(null);
 
   useEffect(() => {
@@ -21,7 +28,8 @@ export function MarkdownComponent({ content }: MarkdownComponentProps) {
     unified()
       .use(remarkParse)
       .use(remarkToRehype)
-      .use([rehypePrism])
+      .use(rehypePrism)
+      .use(rehypeLinks, linkOptions)
       .use(rehypeReact, production as RehypeReactOptions)
       .process(content)
       .then((vFile) => {
@@ -39,7 +47,7 @@ export function MarkdownComponent({ content }: MarkdownComponentProps) {
     return () => {
       ignore = true;
     };
-  }, [content]);
+  }, [content, linkOptions]);
 
   return reactContent;
 }

@@ -39,7 +39,9 @@ properties:
         - carrot
         - broccoli
 
-    A [link](http://example.com).
+    An [external link](http://example.com).
+
+    An [internal link](/playground).
 
     ![Image](https://upload.wikimedia.org/wikipedia/commons/5/5c/Icon-pictures.png "icon")
 
