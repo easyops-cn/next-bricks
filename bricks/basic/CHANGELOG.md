@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.42.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.42.0...@next-bricks/basic@1.42.1) (2024-08-15)
+
+
+### Bug Fixes
+
+* **show-notification:** emit success when notification closed by default ([a233742](https://github.com/easyops-cn/next-bricks/commit/a233742bd180df709df3f313d379a691ad87712d))
+
+
+
+
+
 # [1.42.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.41.2...@next-bricks/basic@1.42.0) (2024-08-14)
 
 
