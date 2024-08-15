@@ -51,6 +51,7 @@
     "@next-api-sdk/object-store-sdk": "1.1.0",
     "@next-core/theme": "^1.5.4",
     "@next-shared/form": "^0.7.0",
+    "@next-shared/markdown": "^0.1.5",
     "@prosemirror-adapter/react": "^0.2.2",
     "@type-config/strict": "^1.2.1",
     "react": "0.0.0-experimental-ee8509801-20230117",
