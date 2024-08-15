@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.11...@next-bricks/presentational@1.10.12) (2024-08-15)
+
+
+### Bug Fixes
+
+* **eo-card-item:** make card-content grow ([62aebf9](https://github.com/easyops-cn/next-bricks/commit/62aebf981c1708546437bcf9e8a9608e34891ebd))
+
+
+
+
+
 ## [1.10.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.10...@next-bricks/presentational@1.10.11) (2024-08-14)
 
 **Note:** Version bump only for package @next-bricks/presentational
