@@ -1,4 +1,5 @@
 import { describe, test, expect } from "@jest/globals";
+import { getByTestId, fireEvent } from "@testing-library/dom";
 import { act } from "react-dom/test-utils";
 import "./";
 import { Modal } from "./index.js";
@@ -73,10 +74,12 @@ describe("eo-modal", () => {
     expect(element.visible).toBeTruthy();
 
     await act(async () => {
-      (
-        element.shadowRoot?.querySelector(".modal-footer")
-          ?.lastChild as HTMLElement
-      ).click();
+      fireEvent.click(
+        getByTestId(
+          element.shadowRoot as unknown as HTMLElement,
+          "confirm-button"
+        )
+      );
     });
 
     expect(element.visible).toBeFalsy();
@@ -89,10 +92,12 @@ describe("eo-modal", () => {
     });
 
     await act(async () => {
-      (
-        element.shadowRoot?.querySelector(".modal-footer")
-          ?.firstChild as HTMLElement
-      ).click();
+      fireEvent.click(
+        getByTestId(
+          element.shadowRoot as unknown as HTMLElement,
+          "cancel-button"
+        )
+      );
     });
 
     expect(element.visible).toBeFalsy();
@@ -139,10 +144,12 @@ describe("eo-modal", () => {
     });
 
     await act(async () => {
-      (
-        element.shadowRoot?.querySelector(".modal-footer")
-          ?.lastChild as HTMLElement
-      ).click();
+      fireEvent.click(
+        getByTestId(
+          element.shadowRoot as unknown as HTMLElement,
+          "confirm-button"
+        )
+      );
     });
 
     expect(mockConfirmEvent).toBeCalledTimes(1);

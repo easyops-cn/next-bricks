@@ -81,12 +81,17 @@
   overflow: auto;
 }
 
+.modal-footer,
+.modal-footer-buttons {
+  display: flex;
+  gap: var(--toolbar-button-gap);
+}
+
 .modal-footer {
   padding: 10px 24px;
   background-color: var(--color-fill-bg-base-3);
-  text-align: right;
 }
 
-.modal-footer button + button {
-  margin-left: 8px;
+.modal-footer-buttons {
+  margin-left: auto;
 }
