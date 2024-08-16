@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 import { unified } from "unified";
 import remarkParse from "remark-parse";
+import remarkGfm from "remark-gfm";
 import remarkToRehype from "remark-rehype";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize from "rehype-sanitize";
 import rehypeReact, { Options as RehypeReactOptions } from "rehype-react";
 import { rehypePrism } from "./rehypePrism.js";
 import { rehypeLinks, type LinkOptions } from "./rehypeLinks.js";
@@ -27,7 +30,10 @@ export function MarkdownComponent({
     let ignore = false;
     unified()
       .use(remarkParse)
-      .use(remarkToRehype)
+      .use(remarkGfm)
+      .use(remarkToRehype, { allowDangerousHtml: true })
+      .use(rehypeRaw)
+      .use(rehypeSanitize)
       .use(rehypePrism)
       .use(rehypeLinks, linkOptions)
       .use(rehypeReact, production as RehypeReactOptions)

@@ -3,8 +3,8 @@ import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import { MarkdownComponent, type LinkOptions } from "@next-shared/markdown";
+import "@next-shared/markdown/dist/esm/host-context.css";
 import styleText from "./styles.shadow.css";
-import "./host-context.css";
 
 const { defineElement, property } = createDecorators();
 

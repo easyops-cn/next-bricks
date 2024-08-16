@@ -1,0 +1,48 @@
+pre {
+  white-space: pre-wrap;
+  background-color: var(--palette-gray-3);
+  border-radius: 6px;
+  padding: 1em;
+}
+
+:not(pre) > code {
+  color: var(--shared-markdown-code-color);
+  background: var(--shared-markdown-code-background);
+  margin: 0 2px;
+  padding: 1px 6px;
+  white-space: nowrap;
+  border-radius: 3px;
+}
+
+blockquote {
+  border-left: 6px solid #bcc0c5;
+  padding: 0 1em;
+}
+
+:not(blockquote) > blockquote {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+img {
+  max-width: 100%;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 1em 0;
+}
+
+th,
+td {
+  border: 1px solid var(--shared-markdown-table-border-color);
+  padding: 6px 13px;
+}
+
+tr {
+  background-color: var(--shared-markdown-tr-background);
+}
+
+tr:nth-child(2n) {
+  background-color: var(--shared-markdown-tr-background-alt);
+}
