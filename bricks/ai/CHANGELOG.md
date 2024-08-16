@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.29.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.29.1...@next-bricks/ai@1.29.2) (2024-08-16)
+
+
+### Bug Fixes
+
+* stop message auto-scroll after user manual scrolled ([515eea3](https://github.com/easyops-cn/next-bricks/commit/515eea33bdd4123eab8811f23c9362dc69d9abbd))
+
+
+
+
+
 ## [1.29.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.29.0...@next-bricks/ai@1.29.1) (2024-08-15)
 
 
