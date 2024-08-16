@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.7.1...@next-bricks/containers@1.8.0) (2024-08-16)
+
+
+### Features
+
+* **modal:** add footer slot ([07ef145](https://github.com/easyops-cn/next-bricks/commit/07ef1455cdb1edd6b6f6031b6f539512dd0c0007))
+
+
+
+
+
 ## [1.7.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.7.0...@next-bricks/containers@1.7.1) (2024-08-06)
 
 **Note:** Version bump only for package @next-bricks/containers
