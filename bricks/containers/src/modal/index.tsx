@@ -296,6 +296,7 @@ function ModalComponent({
           theme="outlined"
           icon="close"
           onClick={onModalClose}
+          data-testid="close-button"
         />
       </div>
     ),
@@ -318,18 +319,26 @@ function ModalComponent({
   const footer = useMemo(
     () => (
       <div className="modal-footer">
-        {!hideCancelButton && (
-          <WrappedButton type="text" onClick={handleCancelClick}>
-            {cancelText}
+        <slot name="footer"></slot>
+        <div className="modal-footer-buttons">
+          {!hideCancelButton && (
+            <WrappedButton
+              type="text"
+              onClick={handleCancelClick}
+              data-testid="cancel-button"
+            >
+              {cancelText}
+            </WrappedButton>
+          )}
+          <WrappedButton
+            type="primary"
+            disabled={confirmDisabled}
+            onClick={handleConfirmClick}
+            data-testid="confirm-button"
+          >
+            {confirmText}
           </WrappedButton>
-        )}
-        <WrappedButton
-          type="primary"
-          disabled={confirmDisabled}
-          onClick={handleConfirmClick}
-        >
-          {confirmText}
-        </WrappedButton>
+        </div>
       </div>
     ),
     [
