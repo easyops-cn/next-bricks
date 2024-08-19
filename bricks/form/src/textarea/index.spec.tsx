@@ -1,10 +1,24 @@
 import { describe, test, expect } from "@jest/globals";
 import { act } from "react-dom/test-utils";
+import ResizeObserver from "resize-observer-polyfill";
 import "./";
 import { Textarea } from "./index.js";
 import { fireEvent } from "@testing-library/react";
 
 jest.mock("@next-core/theme", () => ({}));
+jest.mock("resize-observer-polyfill");
+
+let observerCallback: ResizeObserverCallback | undefined;
+
+(ResizeObserver as jest.Mock).mockImplementation(function (
+  callback: ResizeObserverCallback
+) {
+  observerCallback = callback;
+  return {
+    observe: jest.fn(),
+    disconnect: jest.fn(),
+  };
+} as any);
 
 describe("eo-textarea", () => {
   beforeEach(() => {
@@ -38,36 +52,27 @@ describe("eo-textarea", () => {
     expect(element.shadowRoot).toBeTruthy();
     expect(element.shadowRoot?.childNodes.length).toBe(2);
 
-    const textareaElement = element.shadowRoot?.querySelector("textarea") as HTMLTextAreaElement;
+    const textareaElement = element.shadowRoot?.querySelector(
+      "textarea"
+    ) as HTMLTextAreaElement;
 
-    expect(
-      (
-        textareaElement?.style as Record<
-          string,
-          any
-        >
-      )?._values
-    ).toEqual({
-      display: "block",
+    expect((textareaElement?.style as Record<string, any>)?._values).toEqual({
       height: "94px",
     });
 
     act(() => {
       textareaElement?.focus();
       textareaElement?.blur();
-      fireEvent.change(
-        textareaElement as HTMLElement,
-        { target: { value: "a" } }
-      );
+      fireEvent.change(textareaElement as HTMLElement, {
+        target: { value: "a" },
+      });
     });
 
     expect(mockFocusEvent).toBeCalledTimes(1);
     expect(mockBlurEvent).toBeCalledTimes(1);
     expect(mockChangeEvent).toBeCalledTimes(1);
 
-    expect(textareaElement?.textContent).toBe(
-      "a"
-    );
+    expect(textareaElement?.textContent).toBe("a");
 
     await act(async () => {
       element.value = undefined;
@@ -77,7 +82,10 @@ describe("eo-textarea", () => {
 
     // focusTextarea
     const mockedFocus = jest.spyOn(textareaElement, "focus");
-    const mockedSetSelectionRange = jest.spyOn(textareaElement, "setSelectionRange");
+    const mockedSetSelectionRange = jest.spyOn(
+      textareaElement,
+      "setSelectionRange"
+    );
 
     act(() => {
       element.focusTextarea();
@@ -133,7 +141,6 @@ describe("eo-textarea", () => {
         >
       )?._values
     ).toEqual({
-      display: "block",
       height: "54px",
       "max-height": "120px",
       "min-height": "54px",
@@ -176,6 +183,44 @@ describe("eo-textarea", () => {
     expect(element.shadowRoot?.querySelector("textarea")?.style.height).toBe(
       "32px"
     );
+
+    expect(requestAnimationFrame).toBeCalledTimes(1);
+
+    act(() => {
+      observerCallback?.(
+        [
+          {
+            contentBoxSize: [{ inlineSize: 300, blockSize: 100 }],
+          } as any,
+        ],
+        null!
+      );
+    });
+
+    // `inlineSize` not changed, will not trigger `setAutoSize`
+    act(() => {
+      observerCallback?.(
+        [
+          {
+            contentBoxSize: [{ inlineSize: 300, blockSize: 120 }],
+          } as any,
+        ],
+        null!
+      );
+    });
+    expect(requestAnimationFrame).toBeCalledTimes(1);
+
+    act(() => {
+      observerCallback?.(
+        [
+          {
+            contentBoxSize: [{ inlineSize: 320, blockSize: 120 }],
+          } as any,
+        ],
+        null!
+      );
+    });
+    expect(requestAnimationFrame).toBeCalledTimes(2);
 
     act(() => {
       document.body.removeChild(element);
