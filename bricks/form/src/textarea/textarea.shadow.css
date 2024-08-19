@@ -1,4 +1,17 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+eo-form-item {
+  display: block;
+}
+
 textarea {
+  display: block;
   width: 100%;
   padding: 4px 11px;
   color: var(--antd-input-color);

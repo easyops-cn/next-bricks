@@ -9,12 +9,13 @@ import React, {
 } from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { FormItemElementBase } from "@next-shared/form";
-import calculateAutoSizeStyle from "./calculateAutoSizeStyle.js";
-import styleText from "./textarea.shadow.css";
+import ResizeObserver from "resize-observer-polyfill";
 import { wrapBrick } from "@next-core/react-element";
 import classNames from "classnames";
-import type { FormItem, FormItemProps } from "../form-item/index.jsx";
 import "@next-core/theme";
+import calculateAutoSizeStyle from "./calculateAutoSizeStyle.js";
+import type { FormItem, FormItemProps } from "../form-item/index.jsx";
+import styleText from "./textarea.shadow.css";
 
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 
@@ -272,8 +273,35 @@ export const TextareaComponent = forwardRef<
     requestAnimationFrame(setAutoSize);
   }, [setAutoSize, value]);
 
+  const formItemRef = useRef<FormItem>(null);
+
+  useEffect(() => {
+    const container = formItemRef.current;
+    if (!container || !autoSize) {
+      return;
+    }
+    let previousInlineSize: number | undefined;
+    const observer = new ResizeObserver((entries) => {
+      const currentInlineSize = entries[0]?.contentBoxSize[0]?.inlineSize;
+      if (
+        currentInlineSize !== undefined &&
+        currentInlineSize !== previousInlineSize
+      ) {
+        const isInitial = !previousInlineSize;
+        previousInlineSize = currentInlineSize;
+        if (!isInitial) {
+          requestAnimationFrame(setAutoSize);
+        }
+      }
+    });
+    observer.observe(container);
+    return () => {
+      observer.disconnect();
+    };
+  }, [autoSize, setAutoSize]);
+
   return (
-    <WrappedFormItem exportparts="message" {...props}>
+    <WrappedFormItem exportparts="message" {...props} ref={formItemRef}>
       <textarea
         ref={textareaRef}
         className={classNames({
@@ -283,7 +311,6 @@ export const TextareaComponent = forwardRef<
         value={value}
         disabled={disabled}
         style={{
-          display: "block",
           // Use the minimal height when auto-size enabled, prevent layout shift.
           // By default, the height is 21px each row + 10px (padding & border).
           height: autoSize
