@@ -17,6 +17,7 @@ const { defineElement, property, event } = createDecorators();
 export interface RawPreviewProps {
   previewUrl?: string;
   generations?: AttributeGeneration[];
+  mocks?: Record<string, unknown>[];
   busy?: boolean;
   category?: PreviewCategory;
   theme?: string;
@@ -81,6 +82,9 @@ class RawDataPreview extends ReactNextElement {
   @property({ attribute: false })
   accessor generations: AttributeGeneration[] | undefined;
 
+  @property({ attribute: false })
+  accessor mocks: Record<string, unknown>[] | undefined;
+
   @property({ type: Boolean })
   accessor busy: boolean | undefined;
 
@@ -111,6 +115,7 @@ class RawDataPreview extends ReactNextElement {
       <RawDataPreviewComponent
         previewUrl={this.previewUrl}
         generations={this.generations}
+        mocks={this.mocks}
         busy={this.busy}
         category={this.category}
         theme={this.theme}
@@ -129,6 +134,7 @@ export interface RawDataPreviewComponentProps extends RawPreviewProps {
 export function RawDataPreviewComponent({
   previewUrl,
   generations,
+  mocks,
   busy,
   category,
   theme,
@@ -251,8 +257,15 @@ export function RawDataPreviewComponent({
       {
         brick: "div",
         properties: {
+          textContent: "原始数据",
+          className: "head-cell",
+        },
+      },
+      {
+        brick: "div",
+        properties: {
           textContent: "视觉重量 (由低至高)",
-          className: "head-cell last-col-cell",
+          className: "head-cell",
           style: {
             gridColumn: "span 4",
             textAlign: "center",
@@ -263,7 +276,7 @@ export function RawDataPreviewComponent({
         brick: "div",
         properties: {
           textContent: "批注",
-          className: "head-cell",
+          className: "head-cell last-col-cell",
         },
       },
     ];
@@ -290,7 +303,7 @@ export function RawDataPreviewComponent({
       ],
       properties: {
         style: {
-          gridTemplateColumns: "auto 32px repeat(5, 1fr)",
+          gridTemplateColumns: "auto 32px repeat(6, 1fr)",
         },
       },
       children: tableChildren,
@@ -391,7 +404,7 @@ export function RawDataPreviewComponent({
         }
       );
 
-      const mockList = (generation.mockData ?? []).slice();
+      const mockList = (generation.mockData ?? mocks ?? []).slice();
 
       mockList.sort((ma, mb) => {
         const a = ma?.[generation.propertyId];
@@ -415,6 +428,41 @@ export function RawDataPreviewComponent({
         return 0;
       });
 
+      tableChildren.push({
+        brick: "div",
+        properties: {
+          className: classNames("body-cell", {
+            "last-row-cell": isLastRow,
+          }),
+        },
+        children: [
+          {
+            brick: "div",
+            properties: {
+              className: "list",
+            },
+            children: mockList.map(
+              ({ [generation.propertyId]: mock }, index) => ({
+                brick: "div",
+                if:
+                  index === 0
+                    ? true
+                    : `<%= CTX.propertyToggleState.includes(${JSON.stringify(generation.propertyId)}) %>`,
+                properties: {
+                  className: "raw-content",
+                  textContent:
+                    mock === undefined
+                      ? ""
+                      : typeof mock === "string"
+                        ? mock
+                        : JSON.stringify(mock, null, 2),
+                },
+              })
+            ),
+          },
+        ],
+      });
+
       for (let i = -1; i < 3; i++) {
         const candidate = candidatesByVisualWeight.get(i);
 
@@ -434,11 +482,7 @@ export function RawDataPreviewComponent({
             {
               brick: "div",
               properties: {
-                style: {
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "8px",
-                },
+                className: "list",
               },
               children: brick
                 ? mockList.map((dataSource, index) => ({
@@ -542,7 +586,7 @@ export function RawDataPreviewComponent({
         styleText: previewStyleText,
       }
     );
-  }, [app, injected, generations, theme, uiVersion, category]);
+  }, [app, injected, generations, theme, uiVersion, category, mocks]);
 
   return (
     <div className={classNames("container")}>
