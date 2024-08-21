@@ -5,7 +5,7 @@
   width: 48px;
   height: 48px;
   font-size: 24px;
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--vb-workbench-action-color);
   position: relative;
   transition: none;
 }
@@ -17,10 +17,10 @@
   bottom: 0;
   left: 0;
   width: 2px;
-  background-color: white;
+  background-color: var(--vb-workbench-action-active-border-color);
 }
 
 .action.active::part(link),
 .action::part(link):hover {
-  color: white;
+  color: var(--vb-workbench-active-color);
 }

@@ -12,6 +12,7 @@ import {
   SidebarMenuItem,
 } from "@next-shared/general/types";
 import { GeneralIconProps } from "@next-bricks/icons/general-icon";
+import "./host-context.css";
 import styleText from "./workbench-action-list.shadow.css";
 
 export interface SidebarMenu {
