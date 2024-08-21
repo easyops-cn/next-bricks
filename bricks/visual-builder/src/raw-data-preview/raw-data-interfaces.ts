@@ -3,7 +3,7 @@ export interface VisualConfig {
   visualWeight: number;
 
   /** 显示形式，默认为 text */
-  display: "text" | "tag" | "link" | "icon" | "file";
+  display: "text" | "tag" | "link" | "icon" | "icon+text";
 
   /** 原始数据类型 */
   type:
@@ -29,7 +29,14 @@ export interface VisualConfig {
   /** 格式化设置 */
   formatter?: VisualFormatter;
 
+  /** 显示的图标 */
   icon?: string;
+
+  /** 值为 true 时的显示配置 */
+  true?: VisualValueConfig;
+
+  /** 值为 false 时的显示配置 */
+  false?: VisualValueConfig;
 
   /** 最多显示的列表项数量，当结构体列表数据降级显示时使用 */
   maxItems?: number;
@@ -39,6 +46,17 @@ export interface VisualConfig {
 
   /** 当结构体或结构体列表数据降级显示时，仅显示该字段值 */
   field?: string;
+}
+
+export interface VisualValueConfig {
+  /** 显示的图标 */
+  icon?: string;
+
+  /** 显示的文本 */
+  text?: string;
+
+  /** 样式设置 */
+  style?: VisualStyle;
 }
 
 export interface VisualStyle {

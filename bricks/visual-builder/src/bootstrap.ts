@@ -20,3 +20,4 @@ import "./data-providers/get-dependency-tree.js";
 import "./raw-data-preview/index.js";
 import "./data-providers/parse-path.js";
 import "./data-providers/batch-update-raw-data-generated-view.js";
+import "./data-providers/get-raw-data-system-prompts.js";
