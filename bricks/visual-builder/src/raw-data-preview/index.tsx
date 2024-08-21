@@ -278,6 +278,21 @@ export function RawDataPreviewComponent({
           textContent: "批注",
           className: "head-cell last-col-cell",
         },
+        children: [
+          {
+            brick: "span",
+            properties: {
+              textContent: "批注",
+            },
+          },
+          {
+            brick: "span",
+            properties: {
+              className: "tips",
+              textContent: "（补充提示词，按住 ⌘ 或 ctrl + 回车提交）",
+            },
+          },
+        ],
       },
     ];
     const table: BrickConf & { context?: ContextConf[] } = {
@@ -519,8 +534,6 @@ export function RawDataPreviewComponent({
                   value: generation.comment
                     ? `<% ${JSON.stringify(generation.comment)} %>`
                     : undefined,
-                  placeholder:
-                    "不合预期？请补充说明 （按住 ⌘ 或 ctrl 并回车提交）",
                   autoSize: true,
                   style: {
                     width: "100%",
