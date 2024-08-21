@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.13.6...@next-bricks/vs@1.13.7) (2024-08-21)
+
+
+### Bug Fixes
+
+* allow vs code to run on Chrome 89 ([94812a9](https://github.com/easyops-cn/next-bricks/commit/94812a92aa45f246339453ce31df5bf3c1710a7f))
+
+
+
+
+
 ## [1.13.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.13.5...@next-bricks/vs@1.13.6) (2024-08-14)
 
 **Note:** Version bump only for package @next-bricks/vs
