@@ -275,7 +275,6 @@ export function RawDataPreviewComponent({
       {
         brick: "div",
         properties: {
-          textContent: "批注",
           className: "head-cell last-col-cell",
         },
         children: [
