@@ -3,9 +3,5 @@
   flex-direction: column;
   width: min-content;
   height: 100%;
-  background-color: #4297ff;
-}
-:host-context(html[data-theme="dark-v2"]) .workBenchActionList,
-:host-context([data-override-theme="dark-v2"]) .workBenchActionList {
-  background-color: #323237;
+  background-color: var(--vb-workbench-action-list-background);
 }

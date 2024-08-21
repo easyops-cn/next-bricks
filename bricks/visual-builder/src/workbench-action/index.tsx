@@ -6,8 +6,9 @@ import type {
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
-import styleText from "./workbench-action.shadow.css";
 import classNames from "classnames";
+import "./host-context.css";
+import styleText from "./workbench-action.shadow.css";
 
 const { defineElement, property } = createDecorators();
 

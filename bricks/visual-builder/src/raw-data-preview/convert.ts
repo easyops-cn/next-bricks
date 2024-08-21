@@ -49,6 +49,27 @@ export function convertToStoryboard(
       };
       break;
     }
+    case "icon": {
+      brickItem = getIconBrick(config, attrAccessor);
+      break;
+    }
+    case "icon+text": {
+      const iconBrick = getIconBrick(config, attrAccessor);
+      const textBrick = getPlainBrick(config, attrAccessor);
+      brickItem = {
+        brick: "span",
+        errorBoundary: true,
+        properties: {
+          style: {
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.5em",
+          },
+        },
+        children: [iconBrick, textBrick],
+      };
+      break;
+    }
     default:
       return null;
   }
@@ -64,6 +85,7 @@ export function convertToStoryboard(
     properties: {
       style: {
         display: "inline-flex",
+        alignItems: "center",
         gap: "0.5em",
       },
     },
@@ -84,6 +106,35 @@ export function convertToStoryboard(
   };
 }
 
+function getIconBrick(config: VisualConfig, attrAccessor: string): BrickConf {
+  if (config.type === "boolean") {
+    const valueAccessor = getValueAccessor(config, attrAccessor);
+    const trueIcon = config.true?.icon ?? "check";
+    const falseIcon = config.false?.icon ?? "xmark";
+    const trueStyle = getPlainStyle(config.true?.style);
+    const falseStyle = getPlainStyle(config.false?.style);
+    return {
+      brick: "eo-icon",
+      errorBoundary: true,
+      properties: {
+        lib: "fa",
+        prefix: "fas",
+        icon: `<% ${valueAccessor} ? ${JSON.stringify(trueIcon)} : ${JSON.stringify(falseIcon)} %>`,
+        style: `<% ${valueAccessor} ? ${JSON.stringify(trueStyle)} : ${JSON.stringify(falseStyle)} %>`,
+      },
+    };
+  }
+  return {
+    brick: "eo-icon",
+    errorBoundary: true,
+    properties: {
+      lib: "fa",
+      prefix: "fas",
+      icon: config.icon,
+    },
+  };
+}
+
 function getPlainBrick(config: VisualConfig, attrAccessor: string): BrickConf {
   if (config.type === "struct-list" && config.countOnly) {
     return {
@@ -94,7 +145,8 @@ function getPlainBrick(config: VisualConfig, attrAccessor: string): BrickConf {
     };
   }
 
-  const value = `<% ${getValueAccessor(config, attrAccessor)} %>`;
+  const valueAccessor = getValueAccessor(config, attrAccessor);
+  const value = `<% ${valueAccessor} %>`;
   switch (config.formatter?.type) {
     case "number":
       return {
@@ -112,6 +164,7 @@ function getPlainBrick(config: VisualConfig, attrAccessor: string): BrickConf {
           ]),
         },
       };
+    case "date":
     case "date-time":
       return {
         brick: "eo-humanize-time",
@@ -131,15 +184,29 @@ function getPlainBrick(config: VisualConfig, attrAccessor: string): BrickConf {
           isCostTime: true,
         },
       };
-    default:
+    default: {
+      let textContent: string | undefined;
+      let style: CSSProperties | string | undefined;
+      if (config.type === "boolean") {
+        const trueContent = config.true?.text ?? "Yes";
+        const falseContent = config.false?.text ?? "No";
+        const trueStyle = getPlainStyle(config.true?.style);
+        const falseStyle = getPlainStyle(config.false?.style);
+        textContent = `<% ${valueAccessor} ? ${JSON.stringify(trueContent)} : ${JSON.stringify(falseContent)} %>`;
+        style = `<% ${valueAccessor} ? ${JSON.stringify(trueStyle)} : ${JSON.stringify(falseStyle)} %>`;
+      } else {
+        textContent = value;
+        style = getPlainStyle(config.style);
+      }
       return {
         brick: "span",
         errorBoundary: true,
         properties: {
-          textContent: value,
-          style: getPlainStyle(config.style),
+          textContent,
+          style,
         },
       };
+    }
   }
 }
 
