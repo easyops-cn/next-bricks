@@ -51,3 +51,8 @@ body {
   white-space: pre-wrap;
   color: var(--text-color-secondary);
 }
+
+.tips {
+  color: var(--text-color-secondary);
+  font-weight: normal;
+}
