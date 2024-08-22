@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.29.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.29.2...@next-bricks/ai@1.29.3) (2024-08-22)
+
+
+### Bug Fixes
+
+* refine chat view scroll detection ([00d2927](https://github.com/easyops-cn/next-bricks/commit/00d2927330280e6c48c51aa493e888caf21f733a))
+
+
+
+
+
 ## [1.29.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.29.1...@next-bricks/ai@1.29.2) (2024-08-16)
 
 
