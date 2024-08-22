@@ -99,7 +99,7 @@ export function convertToStoryboard(
         brick: "eo-link",
         if: `<% DATA${attrAccessor}.length > ${maxItems} %>`,
         properties: {
-          textContent: `<% \`+ \${DATA${attrAccessor}.length - ${maxItems}} 项\` %>`,
+          textContent: `<% \`+ \${DATA${attrAccessor}.length - ${maxItems}}\` %>`,
         },
       },
     ],
