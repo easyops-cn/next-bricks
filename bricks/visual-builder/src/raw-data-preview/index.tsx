@@ -31,14 +31,21 @@ export interface AttributeGeneration {
   objectName: string;
   propertyId: string;
   propertyName: string;
+  propertyType?: string;
   propertyInstanceId?: string;
   comment?: string;
+  approved?: boolean;
   candidates: VisualConfig[] | null;
   mockData: Record<string, unknown>[];
 }
 
 export interface CommentDetail {
   comment: string;
+  propertyInstanceId?: string;
+}
+
+export interface ApproveDetail {
+  approved: boolean;
   propertyInstanceId?: string;
 }
 
@@ -51,12 +58,32 @@ interface CommentMessage extends BasePreviewMessage {
   payload: CommentDetail;
 }
 
+interface ApproveMessage extends BasePreviewMessage {
+  type: "approve";
+  payload: ApproveDetail;
+}
+
 interface UpdatePropertyToggleStateMessage extends BasePreviewMessage {
   type: "updatePropertyToggleState";
   payload: string[];
 }
 
-type PreviewMessage = CommentMessage | UpdatePropertyToggleStateMessage;
+interface UpdatePropertyExpandStateMessage extends BasePreviewMessage {
+  type: "updatePropertyExpandState";
+  payload: string[];
+}
+
+interface UpdatePropertyApproveStateMessage extends BasePreviewMessage {
+  type: "updatePropertyApproveState";
+  payload: string[];
+}
+
+type PreviewMessage =
+  | CommentMessage
+  | ApproveMessage
+  | UpdatePropertyToggleStateMessage
+  | UpdatePropertyExpandStateMessage
+  | UpdatePropertyApproveStateMessage;
 
 export type PreviewCategory =
   | "detail-item"
@@ -110,6 +137,13 @@ class RawDataPreview extends ReactNextElement {
     this.#commentEvent.emit(detail);
   };
 
+  @event({ type: "approve" })
+  accessor #approveEvent: EventEmitter<ApproveDetail>;
+
+  #handleApprove = (detail: ApproveDetail) => {
+    this.#approveEvent.emit(detail);
+  };
+
   render() {
     return (
       <RawDataPreviewComponent
@@ -122,6 +156,7 @@ class RawDataPreview extends ReactNextElement {
         uiVersion={this.uiVersion}
         app={this.app}
         onComment={this.#handleComment}
+        onApprove={this.#handleApprove}
       />
     );
   }
@@ -129,6 +164,7 @@ class RawDataPreview extends ReactNextElement {
 
 export interface RawDataPreviewComponentProps extends RawPreviewProps {
   onComment: (detail: CommentDetail) => void;
+  onApprove: (detail: ApproveDetail) => void;
 }
 
 export function RawDataPreviewComponent({
@@ -141,11 +177,21 @@ export function RawDataPreviewComponent({
   uiVersion,
   app,
   onComment,
+  onApprove,
 }: RawDataPreviewComponentProps) {
   const iframeRef = useRef<HTMLIFrameElement>();
   const [ready, setReady] = useState(false);
   const [injected, setInjected] = useState(false);
   const propertyToggleStateRef = useRef<string[]>([]);
+  const propertyExpandStateRef = useRef<string[]>([]);
+  const propertyApproveStateRef = useRef<string[]>([]);
+
+  useEffect(() => {
+    propertyApproveStateRef.current =
+      generations
+        ?.filter((generation) => generation.approved)
+        .map((generation) => generation.propertyId) ?? [];
+  }, [generations]);
 
   const handleIframeLoad = useCallback(() => {
     const check = () => {
@@ -182,8 +228,17 @@ export function RawDataPreviewComponent({
             case "comment":
               onComment(data.payload);
               break;
+            case "approve":
+              onApprove(data.payload);
+              break;
             case "updatePropertyToggleState":
               propertyToggleStateRef.current = data.payload;
+              break;
+            case "updatePropertyExpandState":
+              propertyExpandStateRef.current = data.payload;
+              break;
+            case "updatePropertyApproveState":
+              propertyApproveStateRef.current = data.payload;
               break;
           }
         }
@@ -193,7 +248,7 @@ export function RawDataPreviewComponent({
         iframeWin.removeEventListener("message", onMessage);
       };
     }
-  }, [onComment, ready]);
+  }, [onApprove, onComment, ready]);
 
   useEffect(() => {
     if (!ready) {
@@ -257,6 +312,13 @@ export function RawDataPreviewComponent({
       {
         brick: "div",
         properties: {
+          textContent: "类型",
+          className: "head-cell",
+        },
+      },
+      {
+        brick: "div",
+        properties: {
           textContent: "原始数据",
           className: "head-cell",
         },
@@ -270,6 +332,13 @@ export function RawDataPreviewComponent({
             gridColumn: "span 4",
             textAlign: "center",
           },
+        },
+      },
+      {
+        brick: "div",
+        properties: {
+          textContent: "确认",
+          className: "head-cell",
         },
       },
       {
@@ -312,12 +381,41 @@ export function RawDataPreviewComponent({
           },
         },
         {
+          name: "propertyExpandState",
+          value: propertyExpandStateRef.current,
+          onChange: {
+            action: "window.postMessage",
+            args: [
+              {
+                channel: "raw-data-preview",
+                type: "updatePropertyExpandState",
+                payload: "<% CTX.propertyExpandState %>",
+              },
+            ],
+          },
+        },
+        {
+          name: "propertyApproveState",
+          value: propertyApproveStateRef.current,
+          onChange: {
+            action: "window.postMessage",
+            args: [
+              {
+                channel: "raw-data-preview",
+                type: "updatePropertyApproveState",
+                payload: "<% CTX.propertyApproveState %>",
+              },
+            ],
+          },
+        },
+        {
           name: "busy",
         },
       ],
       properties: {
         style: {
-          gridTemplateColumns: "auto 32px repeat(6, 1fr)",
+          gridTemplateColumns:
+            "minmax(120px, 0.5fr) 32px auto repeat(5, 1fr) auto 1fr",
         },
       },
       children: tableChildren,
@@ -336,15 +434,9 @@ export function RawDataPreviewComponent({
         {
           brick: "div",
           properties: {
-            // textContent: `${generation.propertyName ?? generation.propertyId}`,
             className: classNames("body-cell", {
               "last-row-cell": isLastRow,
             }),
-            style: {
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            },
           },
           children: [
             {
@@ -354,8 +446,10 @@ export function RawDataPreviewComponent({
               },
             },
             {
+              // 多个示例的展开/收起按钮
               brick: "eo-button",
               properties: {
+                className: "btn-toggle",
                 type: "text",
                 icon: `<%=
                   {
@@ -382,6 +476,7 @@ export function RawDataPreviewComponent({
           ],
         },
         {
+          // 绿色圆点表示已生成
           brick: "div",
           properties: {
             className: classNames("body-cell", {
@@ -394,27 +489,28 @@ export function RawDataPreviewComponent({
                   brick: "eo-icon",
                   properties: {
                     lib: "fa",
-                    ...(generation.generationId
-                      ? {
-                          prefix: "far",
-                          icon: "circle-check",
-                          style: {
-                            color: "var(--palette-green-6)",
-                          },
-                        }
-                      : {
-                          prefix: "fas",
-                          icon: "circle",
-                          style: {
-                            color: "var(--palette-gray-6)",
-                            transformOrigin: "center center",
-                            transform: "scale(0.5)",
-                          },
-                        }),
+                    prefix: "fas",
+                    icon: "circle",
+                    style: {
+                      color: generation.generationId
+                        ? "var(--palette-green-6)"
+                        : "var(--palette-gray-6)",
+                      transformOrigin: "center center",
+                      transform: "scale(0.5)",
+                    },
                   },
                 },
               ]
             : undefined,
+        },
+        {
+          brick: "div",
+          properties: {
+            className: classNames("body-cell", {
+              "last-row-cell": isLastRow,
+            }),
+            textContent: generation.propertyType,
+          },
         }
       );
 
@@ -442,6 +538,7 @@ export function RawDataPreviewComponent({
         return 0;
       });
 
+      // 原始数据
       tableChildren.push({
         brick: "div",
         properties: {
@@ -463,7 +560,7 @@ export function RawDataPreviewComponent({
                     ? true
                     : `<%= CTX.propertyToggleState.includes(${JSON.stringify(generation.propertyId)}) %>`,
                 properties: {
-                  className: "raw-content",
+                  className: `<%= \`raw-content\${ CTX.propertyExpandState.includes(${JSON.stringify(generation.propertyId)}) ? " expand" : "" }\` %>`,
                   textContent:
                     mock === undefined
                       ? ""
@@ -474,9 +571,38 @@ export function RawDataPreviewComponent({
               })
             ),
           },
+          {
+            // 原始数据的展开/收起按钮
+            brick: "eo-button",
+            properties: {
+              className: "btn-toggle",
+              type: "text",
+              icon: `<%=
+                {
+                  lib: "fa",
+                  prefix: "fas",
+                  icon: CTX.propertyExpandState.includes(${JSON.stringify(generation.propertyId)}) ? "chevron-up" : "chevron-down",
+                }
+              %>`,
+            },
+            events: {
+              click: {
+                action: "context.replace",
+                args: [
+                  "propertyExpandState",
+                  `<%
+                    CTX.propertyExpandState.includes(${JSON.stringify(generation.propertyId)})
+                      ? CTX.propertyExpandState.filter((id) => id !== ${JSON.stringify(generation.propertyId)})
+                      : CTX.propertyExpandState.concat(${JSON.stringify(generation.propertyId)})
+                  %>`,
+                ],
+              },
+            },
+          },
         ],
       });
 
+      // 生成的编排
       for (let i = -1; i < 3; i++) {
         const candidate = candidatesByVisualWeight.get(i);
 
@@ -517,48 +643,100 @@ export function RawDataPreviewComponent({
         });
       }
 
-      tableChildren.push({
-        brick: "div",
-        properties: {
-          className: classNames("body-cell", {
-            "last-col-cell": true,
-            "last-row-cell": isLastRow,
-          }),
-        },
-        children: generation.candidates
-          ? [
-              {
-                brick: "eo-textarea",
-                properties: {
-                  value: generation.comment
-                    ? `<% ${JSON.stringify(generation.comment)} %>`
-                    : undefined,
-                  autoSize: true,
-                  style: {
-                    width: "100%",
+      tableChildren.push(
+        {
+          // 确认 checkbox
+          brick: "div",
+          properties: {
+            className: classNames("body-cell", {
+              "last-row-cell": isLastRow,
+            }),
+          },
+          children: generation.candidates
+            ? [
+                {
+                  brick: "eo-checkbox",
+                  properties: {
+                    value: `<%= CTX.propertyApproveState.includes(${JSON.stringify(generation.propertyId)}) ? ["approved"] : [] %>`,
+                    options: [{ label: "", value: "approved" }],
+                    disabled: "<%= CTX.busy %>",
                   },
-                  disabled: "<%= CTX.busy %>",
-                },
-                events: {
-                  keydown: {
-                    if: "<% EVENT.code === 'Enter' && (EVENT.metaKey || EVENT.ctrlKey) %>",
-                    action: "window.postMessage",
-                    args: [
+                  events: {
+                    change: [
                       {
-                        channel: "raw-data-preview",
-                        type: "comment",
-                        payload: {
-                          comment: "<% EVENT.target.value %>",
-                          propertyInstanceId: generation.propertyInstanceId,
-                        },
+                        action: "window.postMessage",
+                        args: [
+                          {
+                            channel: "raw-data-preview",
+                            type: "approve",
+                            payload: {
+                              approved: "<% EVENT.detail.length > 0 %>",
+                              propertyInstanceId: generation.propertyInstanceId,
+                            },
+                          },
+                        ],
+                      },
+                      {
+                        action: "context.replace",
+                        args: [
+                          "propertyApproveState",
+                          `<%
+                  EVENT.detail.length > 0
+                    ? CTX.propertyApproveState.concat(${JSON.stringify(generation.propertyId)})
+                    : CTX.propertyApproveState.filter((id) => id !== ${JSON.stringify(generation.propertyId)})
+                %>`,
+                        ],
                       },
                     ],
                   },
                 },
-              },
-            ]
-          : undefined,
-      });
+              ]
+            : undefined,
+        },
+        {
+          // 批注 textarea
+          brick: "div",
+          properties: {
+            className: classNames("body-cell", {
+              "last-col-cell": true,
+              "last-row-cell": isLastRow,
+            }),
+          },
+          children: generation.candidates
+            ? [
+                {
+                  brick: "eo-textarea",
+                  properties: {
+                    value: generation.comment
+                      ? `<% ${JSON.stringify(generation.comment)} %>`
+                      : undefined,
+                    autoSize: true,
+                    style: {
+                      width: "100%",
+                    },
+                    disabled: `<%= CTX.busy || CTX.propertyApproveState.includes(${JSON.stringify(generation.propertyId)}) %>`,
+                  },
+                  events: {
+                    keydown: {
+                      if: "<% EVENT.code === 'Enter' && (EVENT.metaKey || EVENT.ctrlKey) %>",
+                      action: "window.postMessage",
+                      args: [
+                        {
+                          channel: "raw-data-preview",
+                          type: "comment",
+                          payload: {
+                            comment: "<% EVENT.target.value %>",
+                            propertyInstanceId: generation.propertyInstanceId,
+                          },
+                        },
+                      ],
+                    },
+                  },
+                },
+              ]
+            : undefined,
+        }
+      );
     }
 
     render(
