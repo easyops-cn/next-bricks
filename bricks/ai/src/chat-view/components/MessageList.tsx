@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import ResizeObserver from "resize-observer-polyfill";
 import { MessageItem, useChatViewContext } from "../ChatViewContext";
 import { Avatar } from "./MessageItem/Avatar.js";
@@ -72,7 +78,8 @@ export function MessageList({
     });
   }, [msgList, chatting, getMsgItemNode]);
 
-  const [manualScrolled, setManualScrolled] = React.useState(false);
+  const [manualScrolled, setManualScrolled] = useState(false);
+  const autoScrollingRef = useRef(false);
 
   useEffect(() => {
     const chatView = chatViewRef.current;
@@ -80,10 +87,13 @@ export function MessageList({
       return;
     }
     const handleScroll = () => {
-      // Make a small buffer of 6px
-      setManualScrolled(
-        chatView.scrollTop + chatView.clientHeight! + 6 < chatView.scrollHeight
-      );
+      if (!autoScrollingRef.current) {
+        // Make a small buffer of 6px
+        setManualScrolled(
+          chatView.scrollTop + chatView.clientHeight! + 6 <
+            chatView.scrollHeight
+        );
+      }
     };
     chatView.addEventListener("scroll", handleScroll);
     return () => {
@@ -99,7 +109,11 @@ export function MessageList({
       return;
     }
     const observer = new ResizeObserver(() => {
+      autoScrollingRef.current = true;
       chatView.scroll({ top: chatView.scrollHeight });
+      requestAnimationFrame(() => {
+        autoScrollingRef.current = false;
+      });
     });
     observer.observe(element);
     return () => observer.disconnect();
