@@ -3,6 +3,7 @@
   flex-wrap: wrap;
   gap: 12px 16px;
 }
+
 .checkboxLabel {
   font-size: 14px;
   line-height: 1.57;
@@ -10,8 +11,8 @@
   align-items: baseline;
   cursor: pointer;
   line-height: 22px;
+  min-height: 22px;
   text-align: left;
-  box-sizing: 22px;
   padding: 1px 4px;
   border-radius: var(--medius-border-radius);
 }
@@ -129,6 +130,10 @@
 
 .checkboxLabel .checkboxText {
   padding: 0 8px;
+}
+
+.checkboxText:empty {
+  display: none;
 }
 
 .iconCheckbox,
