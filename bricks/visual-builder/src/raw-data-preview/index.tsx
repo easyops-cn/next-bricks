@@ -63,6 +63,11 @@ interface ApproveMessage extends BasePreviewMessage {
   payload: ApproveDetail;
 }
 
+interface ViewAttrPromptMessage extends BasePreviewMessage {
+  type: "viewAttrPrompt";
+  payload: AttributeGeneration;
+}
+
 interface UpdatePropertyToggleStateMessage extends BasePreviewMessage {
   type: "updatePropertyToggleState";
   payload: string[];
@@ -81,6 +86,7 @@ interface UpdatePropertyApproveStateMessage extends BasePreviewMessage {
 type PreviewMessage =
   | CommentMessage
   | ApproveMessage
+  | ViewAttrPromptMessage
   | UpdatePropertyToggleStateMessage
   | UpdatePropertyExpandStateMessage
   | UpdatePropertyApproveStateMessage;
@@ -144,6 +150,13 @@ class RawDataPreview extends ReactNextElement {
     this.#approveEvent.emit(detail);
   };
 
+  @event({ type: "view.attr.prompt" })
+  accessor #viewAttrPromptEvent: EventEmitter<AttributeGeneration>;
+
+  #handleViewAttrPrompt = (detail: AttributeGeneration) => {
+    this.#viewAttrPromptEvent.emit(detail);
+  };
+
   render() {
     return (
       <RawDataPreviewComponent
@@ -157,6 +170,7 @@ class RawDataPreview extends ReactNextElement {
         app={this.app}
         onComment={this.#handleComment}
         onApprove={this.#handleApprove}
+        onViewAttrPrompt={this.#handleViewAttrPrompt}
       />
     );
   }
@@ -165,6 +179,7 @@ class RawDataPreview extends ReactNextElement {
 export interface RawDataPreviewComponentProps extends RawPreviewProps {
   onComment: (detail: CommentDetail) => void;
   onApprove: (detail: ApproveDetail) => void;
+  onViewAttrPrompt: (detail: AttributeGeneration) => void;
 }
 
 export function RawDataPreviewComponent({
@@ -178,6 +193,7 @@ export function RawDataPreviewComponent({
   app,
   onComment,
   onApprove,
+  onViewAttrPrompt,
 }: RawDataPreviewComponentProps) {
   const iframeRef = useRef<HTMLIFrameElement>();
   const [ready, setReady] = useState(false);
@@ -230,6 +246,9 @@ export function RawDataPreviewComponent({
               break;
             case "approve":
               onApprove(data.payload);
+              break;
+            case "viewAttrPrompt":
+              onViewAttrPrompt(data.payload);
               break;
             case "updatePropertyToggleState":
               propertyToggleStateRef.current = data.payload;
@@ -509,8 +528,28 @@ export function RawDataPreviewComponent({
             className: classNames("body-cell", {
               "last-row-cell": isLastRow,
             }),
-            textContent: generation.propertyType,
           },
+          children: [
+            {
+              brick: "eo-link",
+              properties: {
+                type: "text",
+                textContent: generation.propertyType,
+              },
+              events: {
+                click: {
+                  action: "window.postMessage",
+                  args: [
+                    {
+                      channel: "raw-data-preview",
+                      type: "viewAttrPrompt",
+                      payload: generation,
+                    },
+                  ],
+                },
+              },
+            },
+          ],
         }
       );
 
@@ -681,10 +720,10 @@ export function RawDataPreviewComponent({
                         args: [
                           "propertyApproveState",
                           `<%
-                  EVENT.detail.length > 0
-                    ? CTX.propertyApproveState.concat(${JSON.stringify(generation.propertyId)})
-                    : CTX.propertyApproveState.filter((id) => id !== ${JSON.stringify(generation.propertyId)})
-                %>`,
+                            EVENT.detail.length > 0
+                              ? CTX.propertyApproveState.concat(${JSON.stringify(generation.propertyId)})
+                              : CTX.propertyApproveState.filter((id) => id !== ${JSON.stringify(generation.propertyId)})
+                          %>`,
                         ],
                       },
                     ],
