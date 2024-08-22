@@ -386,10 +386,8 @@ function CheckboxComponent(props: CheckboxProps) {
                 </span>
 
                 <span className={classNames({ checkboxText: true })}>
-                  <slot>
-                    {getIcon(item)}
-                    {item.label}
-                  </slot>
+                  {getIcon(item)}
+                  {item.label}
                 </span>
               </label>
             );
