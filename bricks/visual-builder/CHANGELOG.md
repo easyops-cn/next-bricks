@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.36.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.36.8...@next-bricks/visual-builder@1.36.9) (2024-08-22)
+
+
+### Bug Fixes
+
+* **raw-data-preview:** add event: view.attr.prompt ([c259093](https://github.com/easyops-cn/next-bricks/commit/c2590936cb3c738d22355236789e379ac7a2c158))
+
+
+
+
+
 ## [1.36.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.36.7...@next-bricks/visual-builder@1.36.8) (2024-08-22)
 
 
