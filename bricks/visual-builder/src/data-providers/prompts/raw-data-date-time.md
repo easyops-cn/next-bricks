@@ -101,11 +101,37 @@ interface VisualConfig {
   /** 显示形式，默认为 text */
   display: "text";
 
+  /** 样式设置 */
+  style?: Style;
+
   /** 格式化设置 */
   formatter?: DateTimeFormatter;
 }
 
 type Result = VisualConfig[];
+
+interface Style {
+  /**
+   * 尺寸
+   *
+   * @default "medium"
+   */
+  size?: "small" | "medium" | "large" | "x-large";
+
+  /**
+   * 字重
+   *
+   * @default "normal"
+   */
+  fontWeight?: "normal" | "bold";
+
+  /** 内容颜色使用预设的 CSS 变量 */
+  color?:
+    "var(--text-color-default)" |
+    "var(--text-color-secondary)" |
+    "var(--text-color-disabled)" |
+    "var(--color-brand)";
+}
 
 interface DateTimeFormatter {
   type: "date" | "date-time";

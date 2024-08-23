@@ -131,6 +131,7 @@ function getIconBrick(config: VisualConfig, attrAccessor: string): BrickConf {
       lib: "fa",
       prefix: "fas",
       icon: config.icon,
+      style: getPlainStyle(config.style),
     },
   };
 }
@@ -162,6 +163,7 @@ function getPlainBrick(config: VisualConfig, attrAccessor: string): BrickConf {
             "decimals",
             "thousandsSeparator",
           ]),
+          style: getPlainStyle(config.style),
         },
       };
     case "date":
@@ -173,6 +175,7 @@ function getPlainBrick(config: VisualConfig, attrAccessor: string): BrickConf {
           value,
           type: config.type === "date" ? "date" : undefined,
           formatter: config.formatter.format,
+          style: getPlainStyle(config.style),
         },
       };
     case "cost-time":
@@ -182,6 +185,7 @@ function getPlainBrick(config: VisualConfig, attrAccessor: string): BrickConf {
         properties: {
           value,
           isCostTime: true,
+          style: getPlainStyle(config.style),
         },
       };
     default: {

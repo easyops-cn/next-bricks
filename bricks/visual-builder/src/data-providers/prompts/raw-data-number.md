@@ -280,8 +280,6 @@ interface Style {
     "var(--color-brand)";
 }
 
-type Background = "blue" | "cyan" | "geekblue" | "grayblue" | "gray" | "green" | "orange" | "purple" | "red" | "yellow" | "teal";
-
 interface Range {
   start?: number;
   end?: number;
