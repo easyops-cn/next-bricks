@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.2...@next-bricks/form@1.13.3) (2024-08-23)
+
+
+### Bug Fixes
+
+* refine textarea auto size ([b6e3cb7](https://github.com/easyops-cn/next-bricks/commit/b6e3cb73947c3330a6a0a496269e75e05fa39b54))
+
+
+
+
+
 ## [1.13.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.1...@next-bricks/form@1.13.2) (2024-08-22)
 
 
