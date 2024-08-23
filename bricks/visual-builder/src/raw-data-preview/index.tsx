@@ -32,6 +32,7 @@ export interface AttributeGeneration {
   propertyId: string;
   propertyName: string;
   propertyType?: string;
+  propertyValues?: unknown[];
   propertyInstanceId?: string;
   comment?: string;
   approved?: boolean;
@@ -553,29 +554,32 @@ export function RawDataPreviewComponent({
         }
       );
 
-      const mockList = (generation.mockData ?? mocks ?? []).slice();
+      let values = generation.propertyValues;
+      if (!values) {
+        const mockList = (generation.mockData ?? mocks ?? []).slice();
+        mockList.sort((ma, mb) => {
+          const a = ma?.[generation.propertyId];
+          const b = mb?.[generation.propertyId];
+          const aIsArray = Array.isArray(a);
+          const bIsArray = Array.isArray(b);
+          if (aIsArray || bIsArray) {
+            return (bIsArray ? b.length : -1) - (aIsArray ? a.length : -1);
+          }
+          const aIsNil = a == null;
+          const bIsNil = b == null;
+          if (aIsNil || bIsNil) {
+            return (bIsNil ? 0 : 1) - (aIsNil ? 0 : 1);
+          }
 
-      mockList.sort((ma, mb) => {
-        const a = ma?.[generation.propertyId];
-        const b = mb?.[generation.propertyId];
-        const aIsArray = Array.isArray(a);
-        const bIsArray = Array.isArray(b);
-        if (aIsArray || bIsArray) {
-          return (bIsArray ? b.length : -1) - (aIsArray ? a.length : -1);
-        }
-        const aIsNil = a == null;
-        const bIsNil = b == null;
-        if (aIsNil || bIsNil) {
-          return (bIsNil ? 0 : 1) - (aIsNil ? 0 : 1);
-        }
-
-        const aIsEmpty = typeof a === "string" && a.length === 0;
-        const bIsEmpty = typeof b === "string" && b.length === 0;
-        if (aIsEmpty || bIsEmpty) {
-          return (bIsEmpty ? 0 : 1) - (aIsEmpty ? 0 : 1);
-        }
-        return 0;
-      });
+          const aIsEmpty = typeof a === "string" && a.length === 0;
+          const bIsEmpty = typeof b === "string" && b.length === 0;
+          if (aIsEmpty || bIsEmpty) {
+            return (bIsEmpty ? 0 : 1) - (aIsEmpty ? 0 : 1);
+          }
+          return 0;
+        });
+        values = mockList.map((mock) => mock[generation.propertyId]);
+      }
 
       // 原始数据
       tableChildren.push({
@@ -591,24 +595,22 @@ export function RawDataPreviewComponent({
             properties: {
               className: "list",
             },
-            children: mockList.map(
-              ({ [generation.propertyId]: mock }, index) => ({
-                brick: "div",
-                if:
-                  index === 0
-                    ? true
-                    : `<%= CTX.propertyToggleState.includes(${JSON.stringify(generation.propertyId)}) %>`,
-                properties: {
-                  className: `<%= \`raw-content\${ CTX.propertyExpandState.includes(${JSON.stringify(generation.propertyId)}) ? " expand" : "" }\` %>`,
-                  textContent:
-                    mock === undefined
-                      ? ""
-                      : typeof mock === "string"
-                        ? mock
-                        : JSON.stringify(mock, null, 2),
-                },
-              })
-            ),
+            children: values.map((mock, index) => ({
+              brick: "div",
+              if:
+                index === 0
+                  ? true
+                  : `<%= CTX.propertyToggleState.includes(${JSON.stringify(generation.propertyId)}) %>`,
+              properties: {
+                className: `<%= \`raw-content\${ CTX.propertyExpandState.includes(${JSON.stringify(generation.propertyId)}) ? " expand" : "" }\` %>`,
+                textContent:
+                  mock === undefined
+                    ? ""
+                    : typeof mock === "string"
+                      ? mock
+                      : JSON.stringify(mock, null, 2),
+              },
+            })),
           },
           {
             // 原始数据的展开/收起按钮
@@ -664,7 +666,7 @@ export function RawDataPreviewComponent({
                 className: "list",
               },
               children: brick
-                ? mockList.map((dataSource, index) => ({
+                ? values.map((mock, index) => ({
                     brick: "visual-builder.pre-generated-container",
                     if:
                       index === 0
@@ -672,7 +674,9 @@ export function RawDataPreviewComponent({
                         : `<%= CTX.propertyToggleState.includes(${JSON.stringify(generation.propertyId)}) %>`,
                     properties: {
                       useBrick: [brick],
-                      dataSource,
+                      dataSource: {
+                        [generation.propertyId]: mock,
+                      },
                     },
                     errorBoundary: true,
                   }))
