@@ -67,8 +67,10 @@ export default function calculateAutoSizeStyle(
 
   if (minRows !== null || maxRows !== null) {
     // measure height of a textarea with a single row
-    hiddenTextarea.value = " ";
-    const singleRowHeight = hiddenTextarea.scrollHeight - paddingSize;
+    // hiddenTextarea.value = " ";
+    // const singleRowHeight = hiddenTextarea.scrollHeight - paddingSize;
+    // const singleRowHeight = parseFloat((window.getComputedStyle(hiddenTextarea).getPropertyValue("line-height")));
+    const singleRowHeight = 22;
     if (minRows !== null) {
       minHeight = singleRowHeight * minRows + paddingSize + borderSize;
       height = Math.max(minHeight, height);
