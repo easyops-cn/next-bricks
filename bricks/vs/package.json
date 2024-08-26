@@ -43,7 +43,7 @@
     "@next-core/theme": "^1.5.4",
     "@next-core/utils": "^1.7.20",
     "@next-shared/form": "^0.7.0",
-    "monaco-editor": "^0.50.0",
+    "monaco-editor": "^0.51.0",
     "monaco-editor-webpack-plugin": "^7.1.0",
     "react": "0.0.0-experimental-ee8509801-20230117"
   },
