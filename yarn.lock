@@ -3063,10 +3063,10 @@
   resolved "https://registry.yarnpkg.com/@next-core/brick-manifest/-/brick-manifest-0.7.1.tgz#3c11e7108b2bd147a4e9876fe95e2eb0d723e2dd"
   integrity sha512-g+4m/Ran4ZBIUpIMhqx/fH91F2lYmci18tlI9TCRte2AFnmA/jsTFULdbPQtd/OMIhodrGnjkhN0WshbqeTzew==
 
-"@next-core/brick-playground@^1.15.19":
-  version "1.15.19"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.15.19.tgz#b620c41d728d0f26c7295dc862a53b6b9f1c6f54"
-  integrity sha512-B+4RZZdL9Sqf9Z1Yilr6q71Ug0oqVbuZ2USkhvnmZwt6lPSEiXlXd9fBN88V+effnsnruZcCi3PxZWamZw7xuA==
+"@next-core/brick-playground@^1.15.20":
+  version "1.15.20"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.15.20.tgz#b4d59358a4709aea51f999c5b06bc2951939da70"
+  integrity sha512-cbgvuBz9OZfgdFwT7POLfbwmr8HHn93GTyxfznsRweBqpGt7XXjFh1TX6Dqqcn7/fSyvURWW4wnnvTTYiltd7Q==
   dependencies:
     "@next-core/doc-helpers" "^0.2.14"
     "@next-core/serve-helpers" "^1.2.4"
@@ -3209,10 +3209,10 @@
   resolved "https://registry.yarnpkg.com/@next-core/loader/-/loader-1.6.8.tgz#530b266f68bb76bc4ef6de210cc58aee41b28721"
   integrity sha512-T4xXiCTlHh6J7ohC2IYzApVvuump44tRq+N+mDybK+6OE7P8VNYd8nMsQDGPOjT+daskQjtFBS4IQ1Zu0pzeJA==
 
-"@next-core/monaco-contributions@^0.3.10":
-  version "0.3.10"
-  resolved "https://registry.yarnpkg.com/@next-core/monaco-contributions/-/monaco-contributions-0.3.10.tgz#637e549778ce2dfe4cdb3eafadf4b8822a90eafc"
-  integrity sha512-OpHqHoDQDAH/TjRSYdeJBV7LnW7ByJt0HhdBR1JFz6wCWcCxQ+7t3UqDeJ5mkGnjn86GBm8FHWFUTvEqZp7lUA==
+"@next-core/monaco-contributions@^0.3.11":
+  version "0.3.11"
+  resolved "https://registry.yarnpkg.com/@next-core/monaco-contributions/-/monaco-contributions-0.3.11.tgz#98292b44df89729ffb97cde6fef22e679ac82b4f"
+  integrity sha512-C7k3zeEGqLgIH67M7bz1foIbU7haI/ONv/EeK/pDbVslWMk2DjxpBXQ03SvurGneBxtw3h6tOx5CONPwN6Jolw==
 
 "@next-core/pipes@^2.0.25":
   version "2.0.25"
