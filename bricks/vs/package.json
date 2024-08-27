@@ -37,7 +37,7 @@
   "dependencies": {
     "@next-core/cook": "^2.4.9",
     "@next-core/element": "^1.2.12",
-    "@next-core/monaco-contributions": "^0.3.10",
+    "@next-core/monaco-contributions": "^0.3.11",
     "@next-core/react-element": "^1.0.31",
     "@next-core/react-runtime": "^1.6.37",
     "@next-core/theme": "^1.5.4",
