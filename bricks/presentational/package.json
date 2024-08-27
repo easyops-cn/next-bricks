@@ -35,12 +35,12 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-core/element": "^1.2.11",
-    "@next-core/i18n": "^1.0.62",
-    "@next-core/react-element": "^1.0.30",
-    "@next-core/react-runtime": "^1.6.35",
-    "@next-core/types": "^1.12.1",
-    "@next-core/utils": "^1.7.20",
+    "@next-core/element": "^1.2.12",
+    "@next-core/i18n": "^1.0.64",
+    "@next-core/react-element": "^1.0.31",
+    "@next-core/react-runtime": "^1.6.37",
+    "@next-core/types": "^1.12.3",
+    "@next-core/utils": "^1.7.22",
     "@next-shared/datetime": "^0.2.4",
     "@next-shared/general": "^0.9.5",
     "classnames": "^2.3.2",
@@ -51,8 +51,8 @@
     "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.23.0",
-    "@next-core/test-next": "^1.1.5",
+    "@next-core/build-next-bricks": "^1.23.1",
+    "@next-core/test-next": "^1.1.6",
     "babel-plugin-prismjs": "^2.1.0"
   },
   "peerDependencies": {

@@ -38,13 +38,13 @@
     "@ant-design/cssinjs": "^1.21.0",
     "@dagrejs/dagre": "^1.1.3",
     "@next-api-sdk/cmdb-sdk": "^1.1.0",
-    "@next-core/element": "^1.2.11",
-    "@next-core/i18n": "^1.0.62",
-    "@next-core/react-element": "^1.0.30",
-    "@next-core/react-runtime": "^1.6.35",
-    "@next-core/runtime": "^1.54.12",
+    "@next-core/element": "^1.2.12",
+    "@next-core/i18n": "^1.0.64",
+    "@next-core/react-element": "^1.0.31",
+    "@next-core/react-runtime": "^1.6.37",
+    "@next-core/runtime": "^1.54.14",
     "@next-core/theme": "^1.5.4",
-    "@next-core/utils": "^1.7.20",
+    "@next-core/utils": "^1.7.22",
     "antd": "^5.19.3",
     "classnames": "^2.3.2",
     "d3-drag": "^3.0.0",
@@ -57,8 +57,8 @@
     "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.23.0",
-    "@next-core/test-next": "^1.1.5"
+    "@next-core/build-next-bricks": "^1.23.1",
+    "@next-core/test-next": "^1.1.6"
   },
   "peerDependencies": {
     "@next-bricks/basic": "*"
