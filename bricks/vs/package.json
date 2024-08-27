@@ -35,21 +35,21 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-core/cook": "^2.4.8",
-    "@next-core/element": "^1.2.11",
-    "@next-core/monaco-contributions": "^0.3.9",
-    "@next-core/react-element": "^1.0.30",
-    "@next-core/react-runtime": "^1.6.35",
+    "@next-core/cook": "^2.4.9",
+    "@next-core/element": "^1.2.12",
+    "@next-core/monaco-contributions": "^0.3.10",
+    "@next-core/react-element": "^1.0.31",
+    "@next-core/react-runtime": "^1.6.37",
     "@next-core/theme": "^1.5.4",
-    "@next-core/utils": "^1.7.20",
+    "@next-core/utils": "^1.7.22",
     "@next-shared/form": "^0.7.0",
     "monaco-editor": "^0.50.0",
     "monaco-editor-webpack-plugin": "^7.1.0",
     "react": "0.0.0-experimental-ee8509801-20230117"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.23.0",
-    "@next-core/test-next": "^1.1.5",
+    "@next-core/build-next-bricks": "^1.23.1",
+    "@next-core/test-next": "^1.1.6",
     "resize-observer-polyfill": "^1.5.1"
   },
   "peerDependencies": {
