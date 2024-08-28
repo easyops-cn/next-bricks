@@ -119,6 +119,11 @@ const stopPropagationListener = (e: Event) => {
   e.stopPropagation();
 };
 
+const preventDefaultAndStopPropagationListener = (e: Event) => {
+  e.preventDefault();
+  e.stopPropagation();
+};
+
 export function EoMiniActionsComponent(props: EoMiniActionsComponentProps) {
   const { actions, onActionClick } = props;
 
@@ -162,6 +167,7 @@ export function EoMiniActionsComponent(props: EoMiniActionsComponentProps) {
           contentNode = (
             <WrappedLink
               type="plain"
+              className="button-item-link"
               href={action.href}
               target={action.target}
               url={action.url}
@@ -208,6 +214,19 @@ export function EoMiniActionsComponent(props: EoMiniActionsComponentProps) {
           arrow={false}
           active={dropdownVisible}
           beforeVisibleChange={handlePopoverVisibleChange}
+          ref={(el) => {
+            el?.addEventListener(
+              "click",
+              preventDefaultAndStopPropagationListener
+            );
+
+            return () => {
+              el?.removeEventListener(
+                "click",
+                preventDefaultAndStopPropagationListener
+              );
+            };
+          }}
         >
           <div
             slot="anchor"

@@ -83,6 +83,9 @@ function SubMenuItemCom({
                 icon={innerItem.icon}
                 disabled={innerItem.disabled}
                 onClick={(e: React.MouseEvent) => {
+                  if (!innerItem.url && !innerItem.href) {
+                    e.preventDefault();
+                  }
                   e.stopPropagation();
                   onSubMenuClick?.(innerItem);
                 }}
@@ -300,6 +303,9 @@ export function EoActionsComponent({
                   icon={action.icon}
                   disabled={action.disabled}
                   onClick={(e: React.MouseEvent) => {
+                    if (!action.url && !action.href) {
+                      e.preventDefault();
+                    }
                     e.stopPropagation();
                     onActionClick?.(action);
                   }}

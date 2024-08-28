@@ -325,8 +325,9 @@ interface EoCardItemComponentProps extends EoCardItemProps {
   onTagClick?: () => void;
 }
 
-const preventDefaultListener = (e: Event) => {
+const preventDefaultAndStopPropagationListener = (e: Event) => {
   e.preventDefault();
+  e.stopPropagation();
 };
 
 export function EoCardItemComponent(props: EoCardItemComponentProps) {
@@ -371,10 +372,16 @@ export function EoCardItemComponent(props: EoCardItemComponentProps) {
         className="operator"
         actions={actions}
         ref={(el) => {
-          el?.addEventListener("click", preventDefaultListener);
+          el?.addEventListener(
+            "click",
+            preventDefaultAndStopPropagationListener
+          );
 
           return () => {
-            el?.removeEventListener("click", preventDefaultListener);
+            el?.removeEventListener(
+              "click",
+              preventDefaultAndStopPropagationListener
+            );
           };
         }}
       />
