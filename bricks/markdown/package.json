@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/markdown",
-  "version": "1.12.0",
+  "version": "1.12.1",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/markdown",
   "repository": {
     "type": "git",
@@ -50,8 +50,8 @@
     "@milkdown/utils": "7.2.0",
     "@next-api-sdk/object-store-sdk": "1.1.0",
     "@next-core/theme": "^1.5.4",
-    "@next-shared/form": "^0.7.0",
-    "@next-shared/markdown": "^0.2.0",
+    "@next-shared/form": "^0.7.1",
+    "@next-shared/markdown": "^0.2.1",
     "@prosemirror-adapter/react": "^0.2.2",
     "@type-config/strict": "^1.2.1",
     "react": "0.0.0-experimental-ee8509801-20230117",

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/markdown@0.2.0...@next-shared/markdown@0.2.1) (2024-08-28)
+
+**Note:** Version bump only for package @next-shared/markdown
+
+
+
+
+
 # [0.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/markdown@0.1.5...@next-shared/markdown@0.2.0) (2024-08-15)
 
 
