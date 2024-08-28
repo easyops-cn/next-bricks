@@ -1,6 +1,6 @@
 import { describe, test, expect, jest } from "@jest/globals";
 import { act } from "react-dom/test-utils";
-import { fireEvent } from "@testing-library/react";
+import { fireEvent, createEvent } from "@testing-library/dom";
 import "./";
 import type { EoActions } from "./index.js";
 
@@ -93,11 +93,13 @@ describe("eo-actions", () => {
         .classList.contains("menu-item-danger")
     ).toBeTruthy();
 
+    let clickEventOfMenuItem0: Event | undefined;
     act(() => {
-      fireEvent.click(
-        element.shadowRoot?.querySelectorAll("eo-menu-item")[0] as HTMLElement
-      );
+      const target = element.shadowRoot!.querySelectorAll("eo-menu-item")[0];
+      clickEventOfMenuItem0 = createEvent.click(target);
+      fireEvent(target, clickEventOfMenuItem0);
     });
+    expect(clickEventOfMenuItem0?.defaultPrevented).toBeFalsy();
     expect(onActionClick).lastCalledWith(
       expect.objectContaining({
         detail: {
@@ -107,6 +109,14 @@ describe("eo-actions", () => {
         },
       })
     );
+
+    let clickEventOfMenuItem2: Event | undefined;
+    act(() => {
+      const target = element.shadowRoot!.querySelectorAll("eo-menu-item")[2];
+      clickEventOfMenuItem2 = createEvent.click(target);
+      fireEvent(target, clickEventOfMenuItem2);
+    });
+    expect(clickEventOfMenuItem2?.defaultPrevented).toBeTruthy();
 
     act(() => {
       fireEvent.click(
@@ -118,6 +128,14 @@ describe("eo-actions", () => {
     expect(
       element.shadowRoot?.querySelectorAll("eo-link")[1].getAttribute("url")
     ).toBe("/h");
+
+    act(() => {
+      fireEvent.click(
+        element
+          .shadowRoot!.querySelectorAll("eo-link")[1]
+          .querySelector("eo-menu-item")!
+      );
+    });
 
     act(() => {
       document.body.removeChild(element);
@@ -173,5 +191,9 @@ describe("eo-actions", () => {
       );
     });
     expect(onItemDragEnd).toBeCalled();
+
+    act(() => {
+      document.body.removeChild(element);
+    });
   });
 });

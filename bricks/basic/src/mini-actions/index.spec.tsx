@@ -1,5 +1,5 @@
 import { describe, test, expect, jest } from "@jest/globals";
-import { fireEvent } from "@testing-library/react";
+import { fireEvent, createEvent } from "@testing-library/dom";
 import { act } from "react-dom/test-utils";
 import "./index.jsx";
 import { ActionType, EoMiniActions } from "./index.jsx";
@@ -93,6 +93,16 @@ describe("eo-mini-actions", () => {
       );
     });
     expect(copyClick).toHaveBeenCalled();
+
+    let popoverClick: Event | undefined;
+    act(() => {
+      const target = element.shadowRoot?.querySelector(
+        "eo-popover"
+      ) as HTMLElement;
+      popoverClick = createEvent.click(target);
+      fireEvent(target, popoverClick);
+    });
+    expect(popoverClick?.defaultPrevented).toBeTruthy();
 
     act(() => {
       fireEvent(
