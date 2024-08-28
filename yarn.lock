@@ -3053,10 +3053,10 @@
     mockdate "^3.0.5"
     ws "^8.18.0"
 
-"@next-core/brick-dll-v3@^0.8.18":
-  version "0.8.18"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-dll-v3/-/brick-dll-v3-0.8.18.tgz#189e475b6a8b9564042858405962103abd5d8e77"
-  integrity sha512-Nm4tQi69hjrQNiDqrBqq6VfDHr32BB0ipCDV7M5yYUAYAUgD4l2YgV9wO2JZO24z0d4slw+HJJsY5XJ9RdeYLQ==
+"@next-core/brick-dll-v3@^0.8.20":
+  version "0.8.20"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-dll-v3/-/brick-dll-v3-0.8.20.tgz#e4fa61f51713c8f1b2e7bc4ad6e659737746cb24"
+  integrity sha512-SxaHMWAazLOp38cWn/SRGMZFrmNNt7wFYoms3DISwdZmPtytbZR5UhWsLtFCBgmT/LCijvylBi1YjHRAgdv/7g==
 
 "@next-core/brick-manifest@^0.7.1":
   version "0.7.1"
@@ -3344,30 +3344,30 @@
     minimist "^1.2.8"
     plop "^4.0.1"
 
-"@next-dll/ace@^2.0.768":
-  version "2.0.768"
-  resolved "https://registry.yarnpkg.com/@next-dll/ace/-/ace-2.0.768.tgz#08177f137aaa794eb503d8f4fc05fecee09d5c3f"
-  integrity sha512-VloMkDu5Dj38R4zykOdAmxFQUM5kAaFvxT6L6NmLbYBhBHBMzT6Y8ZrcvYm/QEbn+NkNGjStfvvw+zhyo7Zfaw==
+"@next-dll/ace@^2.0.772":
+  version "2.0.772"
+  resolved "https://registry.yarnpkg.com/@next-dll/ace/-/ace-2.0.772.tgz#516305b7a9e8a174f9e8b3bbbb85dc98b9130842"
+  integrity sha512-SKZTKgVMqDTXvFcC4SnHgk+ugYsDXTE3gdmxvxIJhLX6G8fKzM5ICO99sojvjPllu0VjkrC/v1fx0zBWwxKVwg==
 
-"@next-dll/d3@^2.0.82":
-  version "2.0.82"
-  resolved "https://registry.yarnpkg.com/@next-dll/d3/-/d3-2.0.82.tgz#ac29102d55903d657925687ebfdaf63cdbca5716"
-  integrity sha512-0sXYNjBwPlHt78uthw402POXiOZkcpk0HJxq4KUOn2xXkDPf05B810OCS+Z88mUZDxu3txnEL09AX0GbXQUW3w==
-
-"@next-dll/echarts@^2.0.83":
+"@next-dll/d3@^2.0.83":
   version "2.0.83"
-  resolved "https://registry.yarnpkg.com/@next-dll/echarts/-/echarts-2.0.83.tgz#f4f39fa3384b33b856cab40256da47f088fb1e33"
-  integrity sha512-Ex9DjutWpEWVCuM/AwltXyKCrwqx7U0f9SzAUBF7AcY5XGrYuayMiEJcjploKRBgcR92GjVCnAJ94Z9a5VM1SA==
+  resolved "https://registry.yarnpkg.com/@next-dll/d3/-/d3-2.0.83.tgz#673a9e4f5f9d414f14fb654e7c7fb06f0d806b17"
+  integrity sha512-G3ZXRWzXFGZy4wsq1AjzMXyN/kGx9XfW2oRJaM/u+mCe4mJvz4IQvEzt9+/wPnRAUEr7p/BsbkXxCSTEockvqQ==
 
-"@next-dll/editor-bricks-helper@^0.38.113":
-  version "0.38.113"
-  resolved "https://registry.yarnpkg.com/@next-dll/editor-bricks-helper/-/editor-bricks-helper-0.38.113.tgz#ef814ce2ec532bcb90f52e98c7e9ed15bdf097ae"
-  integrity sha512-SgF/z/+yO+fOFL5lYJ73dIPTuQ6I6O1eXZ/kqF2qQ0uIkosVECMoOJU/7OndEVw8ruXkSmJvQRNusRngeVmRgw==
+"@next-dll/echarts@^2.0.84":
+  version "2.0.84"
+  resolved "https://registry.yarnpkg.com/@next-dll/echarts/-/echarts-2.0.84.tgz#fbc6ec7854be65906b6a358a780d5bd775dba09c"
+  integrity sha512-oFBQE3FCZWvw1IoY86tX8Lazqz96+0TwalF0e7TdAY+8oX/1dEHiY0IVYoQO3ONdrb+33bEBANb/b296v8WaEg==
 
-"@next-dll/react-dnd@^0.1.706":
-  version "0.1.706"
-  resolved "https://registry.yarnpkg.com/@next-dll/react-dnd/-/react-dnd-0.1.706.tgz#6fa58fe779ed22bd46692ff20e0335d621dbb31b"
-  integrity sha512-ObUk1BeiP4U7K+3qfbUu/6F+Fb5ug8nGsQB357BA4tSKVejItq9YoCAX9iDwMN/slhiq6/OSsXsrPM33kfvFKw==
+"@next-dll/editor-bricks-helper@^0.38.117":
+  version "0.38.117"
+  resolved "https://registry.yarnpkg.com/@next-dll/editor-bricks-helper/-/editor-bricks-helper-0.38.117.tgz#28c55ada203a985b33ebb2b531c72a5ae8ecd96e"
+  integrity sha512-or290VggWAb0vwXQK3PTQDNzPRNAqDyPXrt5d5P8amyaci5yeIg2vXvwrsoBeP9e/qB5xaDr/Yrt0Beirgazyw==
+
+"@next-dll/react-dnd@^0.1.710":
+  version "0.1.710"
+  resolved "https://registry.yarnpkg.com/@next-dll/react-dnd/-/react-dnd-0.1.710.tgz#e17e435a7a3624c0b1cc57edd12d6b5ee9eb205a"
+  integrity sha512-x3GFFeh9fso4e+qdspE4T+mQ6dAdu92fkCsr/KcvOyBxi3PZBReZNTzIU5GINpoe2E/jtPEEyhasWWfDkOrK0w==
 
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3":
   version "2.1.8-no-fsevents.3"
