@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.13...@next-bricks/presentational@1.10.14) (2024-08-28)
+
+
+### Bug Fixes
+
+* handle click event for eo-card-item with actions ([3538879](https://github.com/easyops-cn/next-bricks/commit/35388792e121afdcf40dc793ad6306351b2ae8e5))
+
+
+
+
+
 ## [1.10.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.12...@next-bricks/presentational@1.10.13) (2024-08-28)
 
 **Note:** Version bump only for package @next-bricks/presentational
