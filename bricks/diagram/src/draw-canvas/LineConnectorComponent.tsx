@@ -1,5 +1,5 @@
 // istanbul ignore file: experimental
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { useHoverStateContext } from "./HoverStateContext";
 import type { ActiveTarget, ConnectLineState, NodeCell } from "./interfaces";
 import { targetIsActive } from "./processors/targetIsActive";
@@ -129,13 +129,22 @@ function ConnectPointComponent({
     setSmartConnectLineState,
     onConnect,
   } = useHoverStateContext();
-  const handleMouseEnter = useCallback(() => {
-    unsetTimeout();
-    setHoverState({ ...hoverState!, activePointIndex: index });
+  const ref = useRef<SVGGElement>(null);
+
+  useEffect(() => {
+    const handleMouseEnter = () => {
+      unsetTimeout();
+      setHoverState({ ...hoverState!, activePointIndex: index });
+    };
+    const g = ref.current;
+    g?.addEventListener("mouseenter", handleMouseEnter);
+    return () => {
+      g?.removeEventListener("mouseenter", handleMouseEnter);
+    };
   }, [hoverState, index, setHoverState, unsetTimeout]);
 
-  const handleMouseDown = useCallback(
-    (e: React.MouseEvent) => {
+  useEffect(() => {
+    const handleMouseDown = (e: MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
       const rect = rootRef.current!.getBoundingClientRect();
@@ -147,12 +156,16 @@ function ConnectPointComponent({
         offset: [rect.left, rect.top],
         exitPosition: hoverState!.relativePoints[index],
       });
-    },
-    [hoverState, index, rootRef, setSmartConnectLineState]
-  );
+    };
+    const g = ref.current;
+    g?.addEventListener("mousedown", handleMouseDown);
+    return () => {
+      g?.removeEventListener("mousedown", handleMouseDown);
+    };
+  }, [hoverState, index, rootRef, setSmartConnectLineState]);
 
-  const handleMouseUp = useCallback(
-    (e: React.MouseEvent) => {
+  useEffect(() => {
+    const handleMouseUp = (e: MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
       if (smartConnectLineState) {
@@ -166,17 +179,24 @@ function ConnectPointComponent({
         }
         setSmartConnectLineState(null);
       }
-    },
-    [smartConnectLineState, hoverState, onConnect, setSmartConnectLineState]
-  );
+    };
+    const g = ref.current;
+    g?.addEventListener("mouseup", handleMouseUp);
+    return () => {
+      g?.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [smartConnectLineState, hoverState, onConnect, setSmartConnectLineState]);
+
+  useEffect(() => {
+    const g = ref.current;
+    g?.addEventListener("mouseleave", unsetActivePointIndex);
+    return () => {
+      g?.removeEventListener("mouseleave", unsetActivePointIndex);
+    };
+  }, [unsetActivePointIndex]);
 
   return (
-    <g
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={unsetActivePointIndex}
-      onMouseDown={handleMouseDown}
-      onMouseUp={handleMouseUp}
-    >
+    <g ref={ref}>
       <circle
         cx={point.x}
         cy={point.y}
