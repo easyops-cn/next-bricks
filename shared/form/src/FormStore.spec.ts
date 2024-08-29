@@ -1,7 +1,69 @@
 import { FormStore } from "./FormStore";
 
 describe("FormStore", () => {
-  it("general", () => {
+  test("type number", () => {
+    const store = new FormStore();
+    store.setField("n", {
+      name: "n",
+      label: "count",
+      validate: {
+        type: "number",
+        min: 1,
+        max: 10,
+      },
+    });
+
+    store.setInitValue({
+      n: "",
+    });
+
+    const mockValidateFields = jest.fn();
+    const result1 = store.validateFields(mockValidateFields);
+    expect(mockValidateFields).toHaveBeenNthCalledWith(1, false, {
+      n: "",
+    });
+    expect(result1).toEqual({ n: "" });
+
+    store.setInitValue({
+      n: "0",
+    });
+
+    const result2 = store.validateFields(mockValidateFields);
+    expect(mockValidateFields).toHaveBeenNthCalledWith(2, true, [
+      {
+        name: "n",
+        message: "count不能小于 1",
+        type: "error",
+      },
+    ]);
+    expect(result2).toBe(false);
+
+    store.setInitValue({
+      n: 12,
+    });
+
+    const result3 = store.validateFields(mockValidateFields);
+    expect(mockValidateFields).toHaveBeenNthCalledWith(3, true, [
+      {
+        name: "n",
+        message: "count不能大于 10",
+        type: "error",
+      },
+    ]);
+    expect(result3).toBe(false);
+
+    store.setInitValue({
+      n: "5",
+    });
+
+    const result4 = store.validateFields(mockValidateFields);
+    expect(mockValidateFields).toHaveBeenNthCalledWith(4, false, {
+      n: "5",
+    });
+    expect(result4).toEqual({ n: "5" });
+  });
+
+  test("general", () => {
     const store = new FormStore();
 
     store.setField("a", {

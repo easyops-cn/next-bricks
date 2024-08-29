@@ -26,6 +26,7 @@ export interface WatchOptions {
 interface Validate {
   required?: boolean;
   pattern?: string;
+  type?: string;
   min?: number;
   max?: number;
   message?: {
@@ -190,34 +191,60 @@ export class FormStore extends PubSub {
 
     const getName = () => label ?? name;
 
-    const valid = (validate: Validate, value: string): MessageBody => {
-      const { required, pattern, message, min, max, validator } = validate;
+    const valid = (
+      validate: Validate,
+      value: string | number | null | undefined
+    ): MessageBody => {
+      const { required, pattern, message, type, min, max, validator } =
+        validate;
       const label = getName();
 
       if (
-        required &&
-        (typeof value === "object"
+        typeof value === "object"
           ? isEmpty(value)
-          : value === undefined || value === null || value === "")
+          : value === undefined || value === ""
       ) {
-        return messageBody(message?.required || `${label}为必填项`);
+        if (required) {
+          return messageBody(message?.required || `${label}为必填项`);
+        }
+        return messageBody("", "normal");
       }
 
-      if (pattern && value) {
+      const stringValue = String(value);
+
+      if (pattern) {
         const reg = new RegExp(pattern);
-        if (!reg.test(value)) {
+        if (!reg.test(stringValue)) {
           return messageBody(
             message?.pattern || `${label}没有匹配正则 ${pattern}`
           );
         }
       }
 
-      if (min && (!value || value.length < min)) {
-        return messageBody(message?.min || `${label}至少包含 ${min} 个字符`);
-      }
-
-      if (max && value && value.length > max) {
-        return messageBody(message?.max || `${label}不能超过 ${max} 个字符`);
+      const checkMin = typeof min === "number";
+      const checkMax = typeof max === "number";
+      if (checkMin || checkMax) {
+        if (type === "number") {
+          const numberValue =
+            typeof value === "number" ? value : parseFloat(value as string);
+          if (checkMin && numberValue < min) {
+            return messageBody(message?.min || `${label}不能小于 ${min}`);
+          }
+          if (checkMax && numberValue > max) {
+            return messageBody(message?.max || `${label}不能大于 ${max}`);
+          }
+        } else {
+          if (checkMin && stringValue.length < min) {
+            return messageBody(
+              message?.min || `${label}至少包含 ${min} 个字符`
+            );
+          }
+          if (checkMax && stringValue.length > max) {
+            return messageBody(
+              message?.max || `${label}不能超过 ${max} 个字符`
+            );
+          }
+        }
       }
 
       if (validator) {

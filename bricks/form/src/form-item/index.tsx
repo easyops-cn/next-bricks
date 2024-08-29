@@ -32,6 +32,7 @@ export interface FormItemProps {
   current?: HTMLElement;
   required?: boolean;
   pattern?: string;
+  type?: string;
   min?: number;
   max?: number;
   labelCol?: ColProps;
@@ -88,6 +89,8 @@ class FormItem extends FormItemElementBase implements FormItemProps {
     attribute: false,
   })
   accessor message: Record<string, string> | undefined;
+
+  @property() accessor type: string | undefined;
 
   @property({
     type: Number,
@@ -175,6 +178,7 @@ class FormItem extends FormItemElementBase implements FormItemProps {
         name={this.name}
         required={this.required}
         pattern={this.pattern}
+        type={this.type}
         min={this.min}
         max={this.max}
         message={this.message}
@@ -202,6 +206,7 @@ export function FormItemComponent(props: FormItemProps) {
     label,
     required,
     pattern,
+    type,
     max,
     min,
     message,
@@ -283,6 +288,7 @@ export function FormItemComponent(props: FormItemProps) {
       validate: {
         required,
         pattern,
+        type,
         max,
         min,
         message,
@@ -300,6 +306,7 @@ export function FormItemComponent(props: FormItemProps) {
     formInstance,
     label,
     layout,
+    type,
     max,
     message,
     min,
