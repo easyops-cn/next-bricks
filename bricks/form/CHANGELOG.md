@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.4...@next-bricks/form@1.13.5) (2024-08-29)
+
+
+### Bug Fixes
+
+* fix min max validation for eo-input[type=number] ([7720b74](https://github.com/easyops-cn/next-bricks/commit/7720b7455141dbe4e09d47d2685eb493fb8eecca))
+
+
+
+
+
 ## [1.13.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.3...@next-bricks/form@1.13.4) (2024-08-28)
 
 **Note:** Version bump only for package @next-bricks/form
