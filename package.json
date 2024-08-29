@@ -27,8 +27,8 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run --record",
     "cypress:run:no-record": "cypress run",
-    "size-check": "npx start-server-and-test serve:size-check http://localhost:8081/ cypress:run:no-record",
-    "size-check:ci": "npx start-server-and-test serve:size-check http://localhost:8081/ cypress:run",
+    "size-check": "npx start-server-and-test serve:size-check http-get://localhost:8081/ cypress:run:no-record",
+    "size-check:ci": "npx start-server-and-test serve:size-check http-get://localhost:8081/ cypress:run",
     "lint-staged": "lint-staged",
     "yo": "yo"
   },
