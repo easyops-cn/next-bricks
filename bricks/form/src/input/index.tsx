@@ -38,6 +38,8 @@ export interface InputProps extends FormItemProps {
   autoFocus?: boolean;
   type?: InputType;
   size?: ComponentSize;
+  min?: number;
+  max?: number;
   maxLength?: number;
   minLength?: number;
   validateState?: string;
@@ -101,7 +103,7 @@ class Input extends FormItemElementBase {
   @property() accessor pattern: string | undefined;
 
   /**
-   * 表单校验最大长度
+   * 表单校验最大长度（当 type 为 number 时，表示最大值）
    */
   @property({
     type: Number,
@@ -109,7 +111,7 @@ class Input extends FormItemElementBase {
   accessor max: number | undefined;
 
   /**
-   * 表单校验最小长度
+   * 表单校验最小长度（当 type 为 number 时，表示最小值）
    */
   @property({
     type: Number,
@@ -179,7 +181,7 @@ class Input extends FormItemElementBase {
   accessor minLength: number | undefined;
 
   /**
-   * 最大长度
+   * 最大长度（用户无法输入超过此最大长度的字符串）
    */
   @property({ type: Number })
   accessor maxLength: number | undefined;
@@ -336,6 +338,8 @@ export const RCInput = forwardRef<RCInputRef, RCInputProps>((props, ref) => {
     autoFocus,
     size = "medium",
     type = "text",
+    min,
+    max,
     maxLength,
     minLength,
     validateState,
@@ -456,6 +460,8 @@ export const RCInput = forwardRef<RCInputRef, RCInputProps>((props, ref) => {
           <input
             part="input"
             placeholder={placeholder}
+            min={min}
+            max={max}
             maxLength={maxLength}
             minLength={minLength}
             ref={mergeInputRef}

@@ -219,7 +219,7 @@ class Radio extends FormItemElementBase {
   }
 }
 
-interface RadioComponentProps extends RadioProps, FormItemProps {
+interface RadioComponentProps extends RadioProps, Omit<FormItemProps, "type"> {
   onChange?: (value: any) => void;
   optionsChange?: (options: any, name: string) => void;
 }
