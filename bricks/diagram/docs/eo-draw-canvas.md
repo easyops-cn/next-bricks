@@ -310,6 +310,10 @@
             fadeUnrelatedCells: true
             allowEdgeToArea: true
             dragBehavior: lasso
+            layoutOptions:
+              snap:
+                # grid: true
+                object: true
             # Initial nodes only
             defaultNodeSize: [60, 60]
             defaultNodeBricks:
@@ -334,6 +338,7 @@
               - if: <% DATA.edge.data?.virtual %>
                 dashed: true
             cells: <% CTX.initialCells %>
+            lineConnector: true
           events:
             activeTarget.change:
               action: context.replace
@@ -364,6 +369,11 @@
                 args:
                   - targetCell
                   - <% EVENT.detail.cell %>
+            edge.add:
+              action: message.info
+              args:
+                - |
+                  <% `Added an nice edge: ${JSON.stringify(EVENT.detail)}` %>
             decorator.text.change:
               action: message.info
               args:
@@ -419,11 +429,11 @@
         - <% CTX.targetCell.id %>
       callback:
         success:
-          target: eo-draw-canvas
-          method: addEdge
-          args:
-            - source: <% EVENT.detail.source.id %>
-              target: <% EVENT.detail.target.id %>
+          - target: eo-draw-canvas
+            method: addEdge
+            args:
+              - source: <% EVENT.detail.source.id %>
+                target: <% EVENT.detail.target.id %>
 ```
 
 ### Force layout

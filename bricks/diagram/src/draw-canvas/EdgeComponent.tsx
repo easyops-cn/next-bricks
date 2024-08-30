@@ -1,15 +1,20 @@
 import React, { useMemo, useRef } from "react";
 import classNames from "classnames";
+import { omitBy } from "lodash";
 import type {
   Cell,
   ComputedEdgeLineConf,
   EdgeCell,
-  NodeView,
+  EdgeView,
 } from "./interfaces";
 import { getDirectLinePoints } from "../diagram/lines/getDirectLinePoints";
 import type { NodeRect } from "../diagram/interfaces";
+import { findNode } from "./processors/findNode";
 import { isEdgeCell } from "./processors/asserts";
 import { DEFAULT_LINE_INTERACT_ANIMATE_DURATION } from "./constants";
+import { curveLine } from "../diagram/lines/curveLine";
+import { nodeViewToNodeRect } from "../shared/canvas/processors/nodeViewToNodeRect";
+import { getSmartLinePoints } from "../shared/canvas/processors/getSmartLinePoints";
 import { findNodeOrAreaDecorator } from "./processors/findNodeOrAreaDecorator";
 
 export interface EdgeComponentProps {
@@ -32,45 +37,70 @@ export function EdgeComponent({
     () => findNodeOrAreaDecorator(cells, edge.target),
     [cells, edge.target]
   );
-  const lineConf = useMemo(() => lineConfMap.get(edge)!, [edge, lineConfMap]);
+  const lineConf = useMemo(
+    () => ({
+      ...lineConfMap.get(edge)!,
+      ...omitBy(
+        edge.view,
+        (value, key) => value === undefined || key === "$markerUrl"
+      ),
+    }),
+    [edge, lineConfMap]
+  );
 
   const parallelGap = useMemo(() => {
     const hasOppositeEdge = cells.some(
       (cell) =>
         isEdgeCell(cell) &&
         cell.source === edge.target &&
-        cell.target === edge.source
+        cell.target === edge.source &&
+        !(edge.view?.exitPosition && edge.view.entryPosition)
     );
     return hasOppositeEdge ? lineConf.parallelGap : 0;
   }, [cells, edge, lineConf.parallelGap]);
 
   const padding = 5;
-  const line = useMemo(
-    () =>
+
+  const line = useMemo(() => {
+    const points =
       sourceNode &&
       targetNode &&
       sourceNode.view.x != null &&
       targetNode.view.x != null
-        ? getDirectLinePoints(
-            nodeViewToNodeRect(sourceNode.view, padding),
-            nodeViewToNodeRect(targetNode.view, padding),
-            parallelGap
-          )
-        : null,
-    [parallelGap, sourceNode, targetNode]
-  );
+        ? edge.view?.exitPosition && edge.view.entryPosition
+          ? getSmartLinePoints(
+              sourceNode.view,
+              targetNode.view,
+              edge.view as Required<
+                Pick<EdgeView, "exitPosition" | "entryPosition">
+              >
+            )
+          : getDirectLinePoints(
+              nodeViewToNodeRect(sourceNode.view, padding),
+              nodeViewToNodeRect(targetNode.view, padding),
+              parallelGap
+            )
+        : null;
+    const fixedLineType = lineConf.type === "auto" ? "polyline" : lineConf.type;
+    return curveLine(
+      points,
+      fixedLineType === "curve" ? lineConf.curveType : "curveLinear",
+      0,
+      1
+    );
+  }, [edge.view, lineConf, parallelGap, sourceNode, targetNode]);
 
   if (!line) {
     // This happens when source or target is not found,
     // or when source or target has not been positioned yet.
     return null;
   }
-  const d = `M${line[0].x} ${line[0].y}L${line[1].x} ${line[1].y}`;
+
   return (
     <>
       <path
         // This `path` is made for expanding interaction area of graph lines.
-        d={d}
+        d={line}
         fill="none"
         stroke="transparent"
         strokeWidth={lineConf.interactStrokeWidth}
@@ -88,23 +118,14 @@ export function EdgeComponent({
             "--solid-length": pathRef.current?.getTotalLength?.(),
           } as React.CSSProperties
         }
-        d={d}
+        d={line}
         fill="none"
         stroke={lineConf.strokeColor}
         strokeWidth={lineConf.strokeWidth}
-        markerStart={lineConf.showStartArrow ? lineConf.markerArrow : ""}
-        markerEnd={lineConf.showEndArrow ? lineConf.markerArrow : ""}
+        markerStart={lineConf.showStartArrow ? lineConf.$markerUrl : ""}
+        markerEnd={lineConf.showEndArrow ? lineConf.$markerUrl : ""}
       />
-      <path className="line-active-bg" d={d} fill="none" />
+      <path className="line-active-bg" d={line} fill="none" />
     </>
   );
-}
-
-function nodeViewToNodeRect(view: NodeView, padding: number): NodeRect {
-  return {
-    x: view.x + view.width / 2,
-    y: view.y + view.height / 2,
-    width: view.width + padding,
-    height: view.height + padding,
-  };
 }

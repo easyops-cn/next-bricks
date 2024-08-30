@@ -1150,7 +1150,14 @@ describe("eo-draw-canvas", () => {
     element.cells = new Array(400).fill(null).map((_, i) => ({
       type: "node",
       id: `node-${i}`,
+      view: {
+        x: 20 + (i % 20) * 20,
+        y: 20 + Math.floor(i / 20) * 20,
+        width: 16,
+        height: 16,
+      },
     }));
+    element.lineConnector = true;
 
     act(() => {
       document.body.appendChild(element);
@@ -1159,6 +1166,13 @@ describe("eo-draw-canvas", () => {
 
     expect(element.shadowRoot?.querySelectorAll(".degraded").length).toBe(0);
     expect(element.shadowRoot?.querySelectorAll("strong").length).toBe(400);
+
+    act(() => {
+      fireEvent.mouseEnter(element.shadowRoot!.querySelector(".cell")!);
+    });
+    act(() => {
+      fireEvent.mouseLeave(element.shadowRoot!.querySelector(".cell")!);
+    });
 
     await act(async () => {
       await element.addNodes(

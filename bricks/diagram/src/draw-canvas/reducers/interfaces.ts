@@ -1,4 +1,4 @@
-import type { SizeTuple } from "../../diagram/interfaces";
+import type { PositionTuple, SizeTuple } from "../../diagram/interfaces";
 import type {
   Cell,
   DecoratorCell,
@@ -67,6 +67,8 @@ export interface UpdateNodeSizeAction {
   layoutKey: number;
 }
 
+export type LineTuple = [start: PositionTuple, end: PositionTuple];
+
 export interface MoveCellPayload {
   type: "node" | "decorator";
   id: NodeId;
@@ -76,6 +78,7 @@ export interface MoveCellPayload {
   height?: number;
   decorator?: DecoratorType;
   containerCell?: DecoratorCell;
+  guideLines?: LineTuple[];
 }
 
 export interface ResizeCellPayload {

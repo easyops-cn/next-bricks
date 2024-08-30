@@ -112,7 +112,7 @@ describe("cells reducer", () => {
       [{ id: "2", type: "node", view: { x: 0, y: 0 } } as any],
       {
         type: "move-cells",
-        payload: [{ type: "node", id: "2", x: 1, y: 2 }],
+        payload: [{ type: "node", id: "2", x: 1, y: 2, guideLines: [] }],
       }
     );
     expect(newCells).toEqual([
@@ -129,7 +129,7 @@ describe("cells reducer", () => {
       [{ id: "2", type: "node", view: { x: 0, y: 0 } } as any],
       {
         type: "move-cells",
-        payload: [{ type: "node", id: "3", x: 1, y: 2 }],
+        payload: [{ type: "node", id: "3", x: 1, y: 2, guideLines: [] }],
       }
     );
     expect(newCells).toEqual([

@@ -8,6 +8,7 @@ import type {
   DecoratorTextChangeDetail,
   DecoratorView,
   EdgeCell,
+  LayoutOptions,
   LayoutType,
   NodeBrickConf,
   NodeCell,
@@ -32,6 +33,7 @@ import { computeContainerRect } from "./processors/computeContainerRect";
 import { get } from "lodash";
 export interface CellComponentProps {
   layout: LayoutType;
+  layoutOptions?: LayoutOptions;
   cell: Cell;
   cells: Cell[];
   degraded: boolean;
@@ -59,6 +61,7 @@ export interface CellComponentProps {
 
 export function CellComponent({
   layout,
+  layoutOptions,
   cell,
   cells,
   degraded,
@@ -88,7 +91,8 @@ export function CellComponent({
     () => unrelatedCells.some((item) => sameTarget(item, cell)),
     [cell, unrelatedCells]
   );
-  const containerRect = useMemo((): DecoratorView => {
+  // `containerRect` is undefined when it's an edge cell.
+  const containerRect = useMemo((): DecoratorView | undefined => {
     if (isContainerDecoratorCell(cell) && isNoManualLayout(layout)) {
       const containCells = cells.filter(
         (c): c is NodeCell => isNodeCell(c) && c.containerId === cell.id
@@ -100,7 +104,9 @@ export function CellComponent({
       cell.view = view; //Update the rect container to make sure Lasso gets the correct size
       return view;
     }
-    return get(cell, "view", { x: 0, y: 0, width: 0, height: 0 });
+    return isEdgeCell(cell)
+      ? undefined
+      : get(cell, "view", { x: 0, y: 0, width: 0, height: 0 });
   }, [layout, cell, cells]);
 
   useEffect(() => {
@@ -117,6 +123,7 @@ export function CellComponent({
       } else {
         handleMouseDown(event, {
           layout,
+          layoutOptions,
           action: "move",
           cell,
           scale: transform.k,
@@ -134,6 +141,7 @@ export function CellComponent({
     };
   }, [
     layout,
+    layoutOptions,
     cell,
     activeTarget,
     cells,
@@ -193,7 +201,7 @@ export function CellComponent({
       transform={
         cell.type === "edge" || cell.view.x == null
           ? undefined
-          : `translate(${containerRect.x} ${containerRect.y})`
+          : `translate(${containerRect!.x} ${containerRect!.y})`
       }
       onContextMenu={handleContextMenu}
       onClick={handleCellClick}
@@ -213,10 +221,11 @@ export function CellComponent({
       ) : isDecoratorCell(cell) ? (
         <DecoratorComponent
           cell={cell}
-          view={containerRect}
+          view={containerRect!}
           transform={transform}
           readOnly={readOnly}
           layout={layout}
+          layoutOptions={layoutOptions}
           activeTarget={activeTarget}
           cells={cells}
           onCellResizing={onCellResizing}

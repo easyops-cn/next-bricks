@@ -11,13 +11,14 @@ import React, {
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import type { UseSingleBrickConf } from "@next-core/react-runtime";
-import { unwrapProvider } from "@next-core/utils/general";
+import { isObject, unwrapProvider } from "@next-core/utils/general";
 import "@next-core/theme";
 import { uniqueId } from "lodash";
 import classNames from "classnames";
 import { select } from "d3-selection";
 import type { lockBodyScroll as _lockBodyScroll } from "@next-bricks/basic/data-providers/lock-body-scroll/lock-body-scroll";
 import type {
+  NodePosition,
   PositionTuple,
   RangeTuple,
   SizeTuple,
@@ -42,6 +43,8 @@ import type {
   NodeView,
   LayoutType,
   LayoutOptions,
+  SmartConnectLineState,
+  LineConnecterConf,
   Direction,
 } from "./interfaces";
 import { rootReducer } from "./reducers";
@@ -53,7 +56,11 @@ import {
   isNodeOrAreaDecoratorCell,
   isTextDecoratorCell,
 } from "./processors/asserts";
-import type { MoveCellPayload, ResizeCellPayload } from "./reducers/interfaces";
+import type {
+  LineTuple,
+  MoveCellPayload,
+  ResizeCellPayload,
+} from "./reducers/interfaces";
 import { sameTarget } from "./processors/sameTarget";
 import { handleKeyboard } from "./processors/handleKeyboard";
 import { CellComponent } from "./CellComponent";
@@ -73,9 +80,13 @@ import { ZoomBarComponent } from "../shared/canvas/ZoomBarComponent";
 import { useLayout } from "../shared/canvas/useLayout";
 import { useReady } from "../shared/canvas/useReady";
 import { useLineMarkers } from "../shared/canvas/useLineMarkers";
+import { getConnectPointsOfRectangle } from "../shared/canvas/shapes/Rectangle";
+import { LineConnectorComponent } from "./LineConnectorComponent";
+import { HoverStateContext, type HoverState } from "./HoverStateContext";
 import { handleLasso } from "./processors/handleLasso";
 import styleText from "../shared/canvas/styles.shadow.css";
 import zoomBarStyleText from "../shared/canvas/ZoomBarComponent.shadow.css";
+import { SmartConnectLineComponent } from "./SmartConnectLineComponent";
 import { cellToTarget } from "./processors/cellToTarget";
 import { handleNodeContainedChange } from "./processors/handleNodeContainedChange";
 
@@ -102,6 +113,7 @@ export interface EoDrawCanvasProps {
   dragBehavior?: DragBehavior;
   ctrlDragBehavior?: CtrlDragBehavior;
   scaleRange?: RangeTuple;
+  lineConnector?: LineConnecterConf | boolean;
   allowEdgeToArea?: boolean;
 }
 
@@ -185,7 +197,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
   @property({ type: Number })
   accessor degradedThreshold: number | undefined;
 
-  // Set `attribute` to `false` event if it accepts string value.
+  // Set `attribute` to `false` even if it accepts string value.
   // Because when passing like "<% DATA.node.data.name %>", it will be
   // evaluated as object temporarily.
   /**
@@ -227,9 +239,6 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
   accessor pannable: boolean | undefined = true;
 
   @property({ type: Boolean })
-  accessor selectable: boolean | undefined = true;
-
-  @property({ type: Boolean })
   accessor allowEdgeToArea: boolean | undefined = false;
 
   /**
@@ -255,6 +264,9 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
 
   @property({ attribute: false })
   accessor scaleRange: RangeTuple | undefined;
+
+  @property({ attribute: false })
+  accessor lineConnector: LineConnecterConf | boolean | undefined;
 
   @event({ type: "activeTarget.change" })
   accessor #activeTargetChangeEvent!: EventEmitter<ActiveTarget | null>;
@@ -327,6 +339,16 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
 
   #handleCellContextMenu = (detail: CellContextMenuDetail) => {
     this.#cellContextMenu.emit(detail);
+  };
+
+  /**
+   * 通过画布绘图的方式添加边（手动调用 `addEdge` 方法不会触发该事件）。
+   */
+  @event({ type: "edge.add" })
+  accessor #edgeAdd!: EventEmitter<EdgeCell>;
+
+  #handleEdgeAdd = (edge: EdgeCell) => {
+    this.#edgeAdd.emit(edge);
   };
 
   @event({ type: "decorator.text.change" })
@@ -526,6 +548,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         dragBehavior={this.dragBehavior}
         ctrlDragBehavior={this.ctrlDragBehavior}
         scaleRange={this.scaleRange}
+        lineConnector={this.lineConnector}
         allowEdgeToArea={this.allowEdgeToArea}
         onActiveTargetChange={this.#handleActiveTargetChange}
         onSwitchActiveTarget={this.#handleSwitchActiveTarget}
@@ -534,6 +557,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         onCellResize={this.#handleCellResize}
         onCellDelete={this.#handleCellDelete}
         onCellsDelete={this.#handleCellsDelete}
+        onEdgeAdd={this.#handleEdgeAdd}
         onCellContextMenu={this.#handleCellContextMenu}
         onDecoratorTextChange={this.#handleDecoratorTextChange}
         onContainerContainerChange={this.#handleContainerContainerChange}
@@ -553,6 +577,7 @@ export interface EoDrawCanvasComponentProps extends EoDrawCanvasProps {
   onCellsMove(info: MoveCellPayload[]): void;
   onCellsDelete(cells: Cell[]): void;
   onCellContextMenu(detail: CellContextMenuDetail): void;
+  onEdgeAdd(detail: EdgeCell): void;
   onDecoratorTextChange(detail: DecoratorTextChangeDetail): void;
   onContainerContainerChange(detail: MoveCellPayload[]): void;
   onScaleChange(scale: number): void;
@@ -597,6 +622,7 @@ function LegacyEoDrawCanvasComponent(
     dragBehavior,
     ctrlDragBehavior,
     scaleRange: _scaleRange,
+    lineConnector,
     allowEdgeToArea,
     onActiveTargetChange,
     onSwitchActiveTarget,
@@ -606,6 +632,7 @@ function LegacyEoDrawCanvasComponent(
     onCellsMove,
     onCellsDelete,
     onCellContextMenu,
+    onEdgeAdd,
     onDecoratorTextChange,
     onScaleChange,
     onContainerContainerChange,
@@ -804,10 +831,15 @@ function LegacyEoDrawCanvasComponent(
     },
     [cells]
   );
+  const [smartConnectLineState, setSmartConnectLineState] =
+    useState<SmartConnectLineState | null>(null);
 
   useEffect(() => {
-    lockBodyScroll(host, !!(connectLineState || lassoRect));
-  }, [connectLineState, host, lassoRect]);
+    lockBodyScroll(
+      host,
+      !!(connectLineState || !!smartConnectLineState || lassoRect)
+    );
+  }, [connectLineState, host, smartConnectLineState, lassoRect]);
 
   const activeTarget = useActiveTarget({
     cellsRef,
@@ -865,6 +897,9 @@ function LegacyEoDrawCanvasComponent(
 
   const defPrefix = useMemo(() => `${uniqueId("diagram-")}-`, []);
   const markerPrefix = `${defPrefix}line-arrow-`;
+
+  const [guideLines, setGuideLines] = useState<LineTuple[]>([]);
+
   /* istanbul ignore next */
   const handleCellsMoving = useCallback(
     (info: MoveCellPayload[]) => {
@@ -874,9 +909,11 @@ function LegacyEoDrawCanvasComponent(
         if (c.containerCell?.id) containedIds.push(c.containerCell?.id);
       });
       setActiveContainers(containedIds);
+      setGuideLines(info.flatMap((c) => c.guideLines ?? []));
     },
     [cells]
   );
+
   /* istanbul ignore next */
   const handleCellsMoved = useCallback(
     (info: MoveCellPayload[]) => {
@@ -887,6 +924,7 @@ function LegacyEoDrawCanvasComponent(
       }
       handleNodeContainedChange(info, cells, onContainerContainerChange);
       setActiveContainers([]);
+      setGuideLines([]);
     },
     [onCellMove, onCellsMove, cells, onContainerContainerChange]
   );
@@ -941,13 +979,80 @@ function LegacyEoDrawCanvasComponent(
   const reCenter = useCallback(() => {
     setCentered(false);
   }, [setCentered]);
-  const [lineConfMap, markers] = useLineMarkers({
+  const { lineConfMap, lineConnectorConf, markers } = useLineMarkers({
     cells,
     defaultEdgeLines,
+    lineConnector,
     markerPrefix,
   });
 
   const ready = useReady({ cells, layout, centered });
+
+  const [hoverState, setHoverState] = useState<HoverState | null>(null);
+  const unsetHoverStateTimeoutRef = useRef<number | null>(null);
+
+  const handleCellMouseEnter = useCallback(
+    (cell: Cell) => {
+      if (lineConnectorConf && isNodeCell(cell)) {
+        if (unsetHoverStateTimeoutRef.current !== null) {
+          clearTimeout(unsetHoverStateTimeoutRef.current);
+          unsetHoverStateTimeoutRef.current = null;
+        }
+        const relativePoints = getConnectPointsOfRectangle();
+        setHoverState({
+          cell,
+          relativePoints,
+          points: getConnectPoints(relativePoints, cell.view),
+        });
+      }
+    },
+    [lineConnectorConf]
+  );
+
+  const handleCellMouseLeave = useCallback(
+    (cell: Cell) => {
+      if (lineConnectorConf && isNodeCell(cell)) {
+        unsetHoverStateTimeoutRef.current = setTimeout(() => {
+          setHoverState(null);
+        }) as unknown as number;
+      }
+    },
+    [lineConnectorConf]
+  );
+
+  const hoverStateContextValue = useMemo(
+    () => ({
+      rootRef,
+      smartConnectLineState,
+      unsetHoverStateTimeoutRef,
+      hoverState,
+      setHoverState,
+      setSmartConnectLineState,
+      onConnect(
+        source: NodeCell,
+        target: NodeCell,
+        exitPosition: NodePosition,
+        entryPosition: NodePosition
+      ) {
+        const newEdge: EdgeCell = {
+          type: "edge",
+          source: source.id,
+          target: target.id,
+          view: {
+            exitPosition,
+            entryPosition,
+            ...(isObject(lineConnector) ? lineConnector : null),
+          },
+        };
+        dispatch({
+          type: "add-edge",
+          payload: newEdge,
+        });
+        onEdgeAdd(newEdge);
+      },
+    }),
+    [smartConnectLineState, hoverState, lineConnector, onEdgeAdd]
+  );
 
   useEffect(() => {
     const root = rootRef.current;
@@ -998,8 +1103,9 @@ function LegacyEoDrawCanvasComponent(
       root.removeEventListener("mousedown", onMouseDown);
     };
   }, [transform, cells, dragBehavior, onSwitchActiveTarget]);
+
   return (
-    <>
+    <HoverStateContext.Provider value={hoverStateContextValue}>
       <svg
         width="100%"
         height="100%"
@@ -1031,6 +1137,7 @@ function LegacyEoDrawCanvasComponent(
                   isEdgeCell(cell) ? false : activeContainers.includes(cell.id)
                 }
                 layout={layout}
+                layoutOptions={layoutOptions}
                 cell={cell}
                 cells={cells}
                 degraded={degraded}
@@ -1049,6 +1156,8 @@ function LegacyEoDrawCanvasComponent(
                 onDecoratorTextChange={onDecoratorTextChange}
                 onDecoratorTextEditing={handleDecoratorTextEditing}
                 onNodeBrickResize={handleNodeBrickResize}
+                onCellMouseEnter={handleCellMouseEnter}
+                onCellMouseLeave={handleCellMouseLeave}
               />
             ))}
           </g>
@@ -1070,7 +1179,30 @@ function LegacyEoDrawCanvasComponent(
               strokeDasharray={2}
             />
           )}
+          {lineConnectorConf && (
+            <SmartConnectLineComponent
+              smartConnectLineState={smartConnectLineState}
+              transform={transform}
+              options={lineConnectorConf}
+            />
+          )}
+          {guideLines.map((line, index) => (
+            <path
+              key={index}
+              d={`M${line[0].join(" ")} L${line[1].join(" ")}`}
+              stroke="var(--palette-orange-5)"
+              fill="none"
+            />
+          ))}
         </g>
+        {lineConnectorConf && (
+          <LineConnectorComponent
+            activeTarget={activeTarget}
+            transform={transform}
+            disabled={!!connectLineState}
+            smartConnectLineState={smartConnectLineState}
+          />
+        )}
       </svg>
       <ZoomBarComponent
         shadowRoot={host.shadowRoot!}
@@ -1079,7 +1211,7 @@ function LegacyEoDrawCanvasComponent(
         onZoomChange={handleZoomSlide}
         onReCenter={reCenter}
       />
-    </>
+    </HoverStateContext.Provider>
   );
 }
 
@@ -1089,4 +1221,22 @@ export function uuidV4() {
       v = c == "x" ? r : (r & 0x3) | 0x8;
     return v.toString(16);
   });
+}
+
+function getConnectPoints(
+  relativePoints: ReadonlyArray<NodePosition>,
+  view: NodeView,
+  border = 1
+) {
+  const viewWithBorder: NodeView = {
+    x: view.x + border / 2,
+    y: view.y + border / 2,
+    width: view.width - border,
+    height: view.height - border,
+  };
+
+  return relativePoints.map((p) => ({
+    x: viewWithBorder.x + p.x * viewWithBorder.width,
+    y: viewWithBorder.y + p.y * viewWithBorder.height,
+  }));
 }

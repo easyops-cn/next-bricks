@@ -2,13 +2,16 @@ import type { UseSingleBrickConf } from "@next-core/react-runtime";
 import type { SimulationLinkDatum, SimulationNodeDatum } from "d3-force";
 import type { ResizeCellPayload } from "./reducers/interfaces";
 import type {
+  CurveType,
+  LineType,
+  NodePosition,
   PartialRectTuple,
   PositionTuple,
   TransformLiteral,
 } from "../diagram/interfaces";
-import {
+import type {
   SYMBOL_FOR_SIZE_INITIALIZED,
-  type SYMBOL_FOR_LAYOUT_INITIALIZED,
+  SYMBOL_FOR_LAYOUT_INITIALIZED,
 } from "./constants";
 
 export type Cell = NodeCell | EdgeCell | DecoratorCell;
@@ -43,7 +46,7 @@ export interface BaseEdgeCell extends BaseCell {
   type: "edge";
   source: NodeId;
   target: NodeId;
-  // view: EdgeView;
+  view?: EdgeView;
 }
 
 export type DecoratorType = "text" | "area" | "container";
@@ -89,31 +92,48 @@ export interface NodeBrickConf {
   if?: string | boolean | null;
 }
 
-export interface EdgeLineConf
-  extends Omit<Partial<ComputedEdgeLineConf>, "markerArrow"> {
+export interface EdgeView extends BaseEdgeLineConf {
+  // controlPoints?: NodePosition[];
+  exitPosition?: NodePosition;
+  entryPosition?: NodePosition;
+}
+
+export interface EdgeLineConf extends BaseEdgeLineConf {
   if?: string | boolean | null;
 }
+
 export interface LineAnimate {
   useAnimate: boolean;
   duration: number;
 }
 
-export interface ComputedEdgeLineConf {
-  dashed: boolean;
-  strokeWidth: number;
-  strokeColor: string;
-  interactStrokeWidth: number;
-  parallelGap: number;
-  markerEnd: string;
-  markerArrow: string;
-  showStartArrow: boolean;
-  showEndArrow: boolean;
-  animate: LineAnimate;
+export interface ComputedEdgeLineConf extends Required<BaseEdgeLineConf> {
+  $markerUrl: string;
+}
+
+export interface BaseEdgeLineConf {
+  type?: LineType;
+  curveType?: CurveType;
+  dashed?: boolean;
+  strokeWidth?: number;
+  strokeColor?: string;
+  interactStrokeWidth?: number;
+  parallelGap?: number;
+  showStartArrow?: boolean;
+  showEndArrow?: boolean;
+  animate?: LineAnimate;
 }
 
 export interface LineMarker {
   strokeColor: string;
 }
+
+export type LineConnecterConf = Pick<
+  BaseEdgeLineConf,
+  "type" | "strokeWidth" | "strokeColor" | "showStartArrow" | "showEndArrow"
+>;
+
+export type ComputedLineConnecterConf = ComputedEdgeLineConf;
 
 export type ActiveTarget = ActiveTargetOfSingular | ActiveTargetOfMulti;
 
@@ -149,6 +169,7 @@ export interface BasicDecoratorProps {
   readOnly?: boolean;
   layout?: LayoutType;
   view: DecoratorView;
+  layoutOptions?: LayoutOptions;
   activeTarget: ActiveTarget | null | undefined;
   cells: Cell[];
   onCellResizing?(info: ResizeCellPayload): void;
@@ -170,6 +191,13 @@ export interface ConnectLineState {
   offset: PositionTuple;
 }
 
+export interface SmartConnectLineState {
+  source: NodeCell;
+  from: PositionTuple;
+  offset: PositionTuple;
+  exitPosition: NodeConnectPoint;
+}
+
 export interface Deferred<T> {
   resolve: (value: T) => void;
   reject: (reason: unknown) => void;
@@ -187,7 +215,34 @@ export interface DecoratorTextChangeDetail {
 
 export type LayoutType = "manual" | "force" | "dagre" | undefined;
 
-export type LayoutOptions = LayoutOptionsDagre | LayoutOptionsForce;
+export type LayoutOptions =
+  | LayoutOptionsManual
+  | LayoutOptionsDagre
+  | LayoutOptionsForce;
+
+export interface LayoutOptionsManual extends LayoutSnapOptions {}
+
+export interface LayoutSnapOptions {
+  /** Snap options. Setting to true means enable all snap options */
+  snap?: boolean | SnapOptions;
+}
+
+export interface SnapOptions {
+  /** Snap to grid */
+  grid?: boolean | SnapToGridOptions;
+  /** Snap to object */
+  object?: boolean | SnapToObjectOptions;
+}
+
+export interface SnapToGridOptions {
+  /** @default 10 */
+  size?: number;
+}
+
+export interface SnapToObjectOptions {
+  /** @default 5 */
+  distance?: number;
+}
 
 export interface LayoutOptionsDagre extends BaseLayoutOptions {
   rankdir?: "TB" | "BT" | "LR" | "RL";
@@ -207,7 +262,7 @@ export interface ForceCollideOptions {
   iterations?: number;
 }
 
-export interface BaseLayoutOptions {
+export interface BaseLayoutOptions extends LayoutSnapOptions {
   nodePadding?: PartialRectTuple;
 
   /**
@@ -241,3 +296,7 @@ export interface ForceNode extends SimulationNodeDatum {
 }
 
 export type ForceLink = SimulationLinkDatum<ForceNode>;
+
+export interface NodeConnectPoint extends NodePosition {
+  d: Direction[];
+}
