@@ -117,6 +117,7 @@ describe("handleNodeContainedChange", () => {
               text: " 上层服务",
             },
           },
+          guideLines: [],
         },
       ],
       cells,

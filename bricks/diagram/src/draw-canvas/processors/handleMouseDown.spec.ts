@@ -57,6 +57,7 @@ describe("handleMouseDown", () => {
         id: "b",
         x: 19,
         y: 36,
+        guideLines: [],
       },
     ]);
 
@@ -127,6 +128,7 @@ describe("handleMouseDown", () => {
         width: undefined,
         x: 19,
         y: 36,
+        guideLines: [],
       },
       {
         decorator: undefined,
@@ -136,6 +138,7 @@ describe("handleMouseDown", () => {
         width: 60,
         x: 35,
         y: 80,
+        guideLines: [],
       },
     ]);
 
@@ -172,7 +175,9 @@ describe("handleMouseDown", () => {
       action: "move",
       cell: { type: "node", id: "b", view: { x: 4, y: 6 } } as any,
       layoutOptions: {
-        snapToGrid: true,
+        snap: {
+          grid: true,
+        },
       },
       ...methods,
     });
@@ -189,12 +194,91 @@ describe("handleMouseDown", () => {
         id: "b",
         x: 20,
         y: 40,
+        guideLines: [],
       },
     ]);
 
     fireEvent.mouseUp(document, { clientX: 26, clientY: 51 });
     expect(onCellsMoved).toBeCalledWith([
       { type: "node", id: "b", x: 20, y: 40 },
+    ]);
+
+    expect(onSwitchActiveTarget).toHaveBeenCalledTimes(1);
+
+    document.body.replaceChildren();
+  });
+
+  test("move node and snap to object", () => {
+    const mousedown = new MouseEvent("mousedown", { clientX: 10, clientY: 20 });
+    const cells: Cell[] = [
+      { type: "node", id: "a", view: { x: 44, y: 46, width: 100, height: 60 } },
+      { type: "node", id: "b", view: { x: 4, y: 6, width: 100, height: 60 } },
+      {
+        type: "node",
+        id: "c",
+        view: { x: 144, y: 146, width: 100, height: 60 },
+      },
+    ];
+    handleMouseDown(mousedown, {
+      action: "move",
+      cell: cells[1],
+      layoutOptions: {
+        snap: {
+          object: true,
+        },
+      },
+      ...methods,
+      cells,
+    });
+
+    expect(onSwitchActiveTarget).toHaveBeenCalledWith({
+      type: "node",
+      id: "b",
+    });
+
+    fireEvent.mouseMove(document, { clientX: 50, clientY: 50 });
+    expect(onCellsMoving).toHaveBeenNthCalledWith(1, [
+      {
+        type: "node",
+        id: "b",
+        x: 44,
+        y: 36,
+        width: 100,
+        height: 60,
+        guideLines: [
+          [
+            [94, 76],
+            [94, 66],
+          ],
+        ],
+      },
+    ]);
+
+    fireEvent.mouseMove(document, { clientX: 50, clientY: 56 });
+    expect(onCellsMoving).toHaveBeenNthCalledWith(2, [
+      {
+        type: "node",
+        id: "b",
+        x: 44,
+        y: 46,
+        width: 100,
+        height: 60,
+        guideLines: [
+          [
+            [94, 46],
+            [94, 106],
+          ],
+          [
+            [44, 76],
+            [144, 76],
+          ],
+        ],
+      },
+    ]);
+
+    fireEvent.mouseUp(document, { clientX: 26, clientY: 56 });
+    expect(onCellsMoved).toBeCalledWith([
+      { type: "node", id: "b", x: 20, y: 46, width: 100, height: 60 },
     ]);
 
     expect(onSwitchActiveTarget).toHaveBeenCalledTimes(1);
@@ -238,12 +322,14 @@ describe("handleMouseDown", () => {
         id: "b",
         x: 19,
         y: 36,
+        guideLines: [],
       },
       {
         type: "node",
         id: "c",
         x: 159,
         y: 176,
+        guideLines: [],
       },
     ]);
 

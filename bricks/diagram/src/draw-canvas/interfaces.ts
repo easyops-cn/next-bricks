@@ -227,8 +227,28 @@ export type LayoutOptions =
   | LayoutOptionsDagre
   | LayoutOptionsForce;
 
-export interface LayoutOptionsManual {
-  snapToGrid?: boolean | snapToGridOptions;
+export interface LayoutOptionsManual extends LayoutSnapOptions {}
+
+export interface LayoutSnapOptions {
+  /** Snap options. Setting to true means enable all snap options */
+  snap?: boolean | SnapOptions;
+}
+
+export interface SnapOptions {
+  /** Snap to grid */
+  grid?: boolean | SnapToGridOptions;
+  /** Snap to object */
+  object?: boolean | SnapToObjectOptions;
+}
+
+export interface SnapToGridOptions {
+  /** @default 10 */
+  size?: number;
+}
+
+export interface SnapToObjectOptions {
+  /** @default 5 */
+  distance?: number;
 }
 
 export interface LayoutOptionsDagre extends BaseLayoutOptions {
@@ -249,9 +269,8 @@ export interface ForceCollideOptions {
   iterations?: number;
 }
 
-export interface BaseLayoutOptions {
+export interface BaseLayoutOptions extends LayoutSnapOptions {
   nodePadding?: PartialRectTuple;
-  snapToGrid?: boolean | snapToGridOptions;
 
   /**
    * 根据节点什么位置进行对齐，支持关键字、百分比和比例值。
@@ -272,11 +291,6 @@ export interface BaseLayoutOptions {
    * ["right", "bottom"]
    */
   alignOrigin?: AlignOrigin;
-}
-
-export interface snapToGridOptions {
-  /** @default 10 */
-  size?: number;
 }
 
 export type AlignOrigin = [x: string | number, y: string | number];

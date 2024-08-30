@@ -56,7 +56,11 @@ import {
   isNodeOrAreaDecoratorCell,
   isTextDecoratorCell,
 } from "./processors/asserts";
-import type { MoveCellPayload, ResizeCellPayload } from "./reducers/interfaces";
+import type {
+  LineTuple,
+  MoveCellPayload,
+  ResizeCellPayload,
+} from "./reducers/interfaces";
 import { sameTarget } from "./processors/sameTarget";
 import { handleKeyboard } from "./processors/handleKeyboard";
 import { CellComponent } from "./CellComponent";
@@ -880,6 +884,9 @@ function LegacyEoDrawCanvasComponent(
 
   const defPrefix = useMemo(() => `${uniqueId("diagram-")}-`, []);
   const markerPrefix = `${defPrefix}line-arrow-`;
+
+  const [guideLines, setGuideLines] = useState<LineTuple[]>([]);
+
   /* istanbul ignore next */
   const handleCellsMoving = useCallback(
     (info: MoveCellPayload[]) => {
@@ -889,9 +896,11 @@ function LegacyEoDrawCanvasComponent(
         if (c.containerCell?.id) containedIds.push(c.containerCell?.id);
       });
       setActiveContainers(containedIds);
+      setGuideLines(info.flatMap((c) => c.guideLines ?? []));
     },
     [cells]
   );
+
   /* istanbul ignore next */
   const handleCellsMoved = useCallback(
     (info: MoveCellPayload[]) => {
@@ -902,6 +911,7 @@ function LegacyEoDrawCanvasComponent(
       }
       handleNodeContainedChange(info, cells, onContainerContainerChange);
       setActiveContainers([]);
+      setGuideLines([]);
     },
     [onCellMove, onCellsMove, cells, onContainerContainerChange]
   );
@@ -1160,6 +1170,14 @@ function LegacyEoDrawCanvasComponent(
               options={lineConnectorConf}
             />
           )}
+          {guideLines.map((line, index) => (
+            <path
+              key={index}
+              d={`M${line[0].join(" ")} L${line[1].join(" ")}`}
+              stroke="var(--palette-orange-5)"
+              fill="none"
+            />
+          ))}
         </g>
         {lineConnectorConf && (
           <LineConnectorComponent

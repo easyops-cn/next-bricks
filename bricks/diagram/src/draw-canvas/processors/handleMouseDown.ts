@@ -1,5 +1,4 @@
 import type { PositionTuple } from "../../diagram/interfaces";
-import { DEFAULT_SNAP_GRID_SIZE } from "../constants";
 import type {
   ActiveTarget,
   Cell,
@@ -7,6 +6,7 @@ import type {
   DecoratorCell,
   LayoutType,
   NodeCell,
+  NodeView,
 } from "../interfaces";
 import type {
   MoveCellPayload,
@@ -19,6 +19,7 @@ import {
   isNodeCell,
 } from "./asserts";
 import { cellToTarget } from "./cellToTarget";
+import { normalizeSnapOptions } from "./normalizeSnapOptions";
 import { targetIsActive } from "./targetIsActive";
 
 export function handleMouseDown(
@@ -68,9 +69,11 @@ export function handleMouseDown(
       : [cell];
   actives.forEach((a) => {
     activeCells.push(a);
-    if (isContainerDecoratorCell(a) && action === "move") {
+    if (action === "move" && isContainerDecoratorCell(a)) {
       activeCells.push(
-        ...cells.filter((c) => isNodeCell(c) && c.containerId === a.id)
+        ...cells.filter(
+          (c) => isNodeCell(c) && c.containerId === a.id && !actives.includes(c)
+        )
       );
     }
   });
@@ -82,24 +85,37 @@ export function handleMouseDown(
     return;
   }
 
-  const snapToGrid = layoutOptions?.snapToGrid
-    ? layoutOptions.snapToGrid === true
-      ? {}
-      : layoutOptions.snapToGrid
-    : null;
-  const snapToGridSize = snapToGrid?.size ?? DEFAULT_SNAP_GRID_SIZE;
+  const snap = normalizeSnapOptions(layoutOptions?.snap);
 
   const from: PositionTuple = [event.clientX, event.clientY];
   const originals = movableActiveCells.map<{
     cell: NodeCell | DecoratorCell;
     position: PositionTuple;
+    center: PositionTuple | null;
   }>((c) => ({
     cell: c,
     position:
       action === "move" ? [c.view.x, c.view.y] : [c.view.width, c.view.height],
+    center:
+      action === "move" && !isEdgeCell(c) ? getCenterPosition(c.view) : null,
   }));
   const firstOriginalPosition = originals[0].position;
   let previousPositions = originals.map(({ position }) => position);
+
+  // Get the positions of the objects (cells that are not active) to snap to
+  let snapToObjectTargets: {
+    cell: NodeCell | DecoratorCell;
+    center: PositionTuple;
+  }[] = [];
+  if (action === "move" && snap.object) {
+    const objectCells = cells.filter(
+      (c) => !isEdgeCell(c) && !activeCells.includes(c)
+    ) as (NodeCell | DecoratorCell)[];
+    snapToObjectTargets = objectCells.map((c) => ({
+      cell: c,
+      center: getCenterPosition(c.view),
+    }));
+  }
 
   function getMovement(e: MouseEvent): PositionTuple {
     return [(e.clientX - from[0]) / scale, (e.clientY - from[1]) / scale];
@@ -110,9 +126,13 @@ export function handleMouseDown(
     // Respect the scale
     const movement = getMovement(e);
     let newPositions: PositionTuple[];
+    let xAlign: [PositionTuple, PositionTuple] | undefined;
+    let yAlign: [PositionTuple, PositionTuple] | undefined;
+    let xAlignCell: Cell | undefined;
+    let yAlignCell: Cell | undefined;
 
     // Use alt key (or option key ⌥ on Mac) to disable snap
-    if (!snapToGrid || e.altKey) {
+    if ((!snap.grid && !snap.object) || e.altKey) {
       // No snap
       newPositions = originals.map(({ position }) => [
         position[0] + movement[0],
@@ -122,24 +142,108 @@ export function handleMouseDown(
         moved = movement[0] ** 2 + movement[1] ** 2 >= 9;
       }
     } else {
-      // Snap: use the first cell to decide the snap position
-      const firstNewPosition: PositionTuple = [
-        Math.round((firstOriginalPosition[0] + movement[0]) / snapToGridSize) *
-          snapToGridSize,
-        Math.round((firstOriginalPosition[1] + movement[1]) / snapToGridSize) *
-          snapToGridSize,
-      ];
-      const snapMovement: PositionTuple = [
-        firstNewPosition[0] - firstOriginalPosition[0],
-        firstNewPosition[1] - firstOriginalPosition[1],
-      ];
+      // Snap
+      let diffX = Infinity;
+      let diffY = Infinity;
+      const snapMovement: PositionTuple = [...movement];
+
+      if (snap.object) {
+        const snapToObjectDistance = snap.object.distance;
+        let xAlignFrom: PositionTuple | undefined;
+        let yAlignFrom: PositionTuple | undefined;
+        let xAlignTarget: NodeCell | DecoratorCell | undefined;
+        let yAlignTarget: NodeCell | DecoratorCell | undefined;
+        let xAlignToY = 0;
+        let yAlignToX = 0;
+        for (const {
+          cell: target,
+          center: [x, y],
+        } of snapToObjectTargets) {
+          for (const { cell: c, center } of originals) {
+            const [cx, cy] = center!;
+            const dX = Math.abs(cx + movement[0] - x);
+            const dY = Math.abs(cy + movement[1] - y);
+            const xSnapped = dX < snapToObjectDistance && dX < diffX;
+            const ySnapped = dY < snapToObjectDistance && dY < diffY;
+            if (xSnapped) {
+              diffX = dX;
+              snapMovement[0] = x - cx;
+              xAlignCell = c;
+              xAlignTarget = target;
+              xAlignFrom = [x, y];
+              xAlignToY = cy;
+            }
+            if (ySnapped) {
+              diffY = dY;
+              snapMovement[1] = y - cy;
+              yAlignCell = c;
+              yAlignTarget = target;
+              yAlignFrom = [x, y];
+              yAlignToX = cx;
+            }
+          }
+        }
+
+        if (xAlignTarget && xAlignTarget === yAlignTarget) {
+          // Handle special case when both x and y are snapped to the same target.
+          const halfHeight = xAlignTarget.view.height / 2;
+          const halfWidth = xAlignTarget.view.width / 2;
+          xAlign = [
+            [xAlignFrom![0], xAlignFrom![1] - halfHeight],
+            [xAlignFrom![0], xAlignFrom![1] + halfHeight],
+          ];
+          yAlign = [
+            [yAlignFrom![0] - halfWidth, yAlignFrom![1]],
+            [yAlignFrom![0] + halfWidth, yAlignFrom![1]],
+          ];
+        } else {
+          if (xAlignFrom) {
+            xAlign = [xAlignFrom, [xAlignFrom[0], xAlignToY + snapMovement[1]]];
+          }
+          if (yAlignFrom) {
+            yAlign = [yAlignFrom, [yAlignToX + snapMovement[0], yAlignFrom[1]]];
+          }
+        }
+      }
+
+      if (snap.grid) {
+        const snapToGridSize = snap.grid.size;
+        // Use the first cell to decide the snap to grid position
+        const firstNewPosition: PositionTuple = [
+          Math.round(
+            (firstOriginalPosition[0] + movement[0]) / snapToGridSize
+          ) * snapToGridSize,
+          Math.round(
+            (firstOriginalPosition[1] + movement[1]) / snapToGridSize
+          ) * snapToGridSize,
+        ];
+        const snapToGridMovement: PositionTuple = [
+          firstNewPosition[0] - firstOriginalPosition[0],
+          firstNewPosition[1] - firstOriginalPosition[1],
+        ];
+        const snapToGridDiffX = Math.abs(snapToGridMovement[0] - movement[0]);
+        const snapToGridDiffY = Math.abs(snapToGridMovement[1] - movement[1]);
+        if (snapToGridDiffX < diffX) {
+          diffX = snapToGridDiffX;
+          snapMovement[0] = snapToGridMovement[0];
+          xAlign = undefined;
+          xAlignCell = undefined;
+        }
+        if (snapToGridDiffY < diffY) {
+          diffY = snapToGridDiffY;
+          snapMovement[1] = snapToGridMovement[1];
+          yAlign = undefined;
+          yAlignCell = undefined;
+        }
+      }
+
       newPositions = originals.map(({ position }) => [
         Math.round(position[0] + snapMovement[0]),
         Math.round(position[1] + snapMovement[1]),
       ]);
       const changed =
-        firstNewPosition[0] !== previousPositions[0][0] ||
-        firstNewPosition[1] !== previousPositions[0][1];
+        newPositions[0][0] !== previousPositions[0][0] ||
+        newPositions[0][1] !== previousPositions[0][1];
       if (changed) {
         previousPositions = newPositions;
         moved = true;
@@ -148,14 +252,20 @@ export function handleMouseDown(
 
     if (moved) {
       if (action === "move") {
-        const payloads = originals.map(({ cell }, index) => ({
-          type: cell.type,
-          id: cell.id,
+        const payloads = originals.map(({ cell: c }, index) => ({
+          type: c.type,
+          id: c.id,
           x: newPositions[index][0],
           y: newPositions[index][1],
-          width: cell.view.width,
-          height: cell.view.height,
-          decorator: isDecoratorCell(cell) ? cell.decorator : undefined,
+          width: c.view.width,
+          height: c.view.height,
+          decorator: isDecoratorCell(c) ? c.decorator : undefined,
+          guideLines: finished
+            ? undefined
+            : [
+                ...(xAlignCell === c ? [xAlign!] : []),
+                ...(yAlignCell === c ? [yAlign!] : []),
+              ],
         }));
         (finished ? onCellsMoved : onCellsMoving)?.(payloads);
       } else {
@@ -180,4 +290,8 @@ export function handleMouseDown(
   };
   document.addEventListener("mousemove", onMouseMove);
   document.addEventListener("mouseup", onMouseUp);
+}
+
+function getCenterPosition(view: NodeView): PositionTuple {
+  return [view.x + view.width / 2, view.y + view.height / 2];
 }
