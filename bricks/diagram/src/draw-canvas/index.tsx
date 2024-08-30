@@ -341,6 +341,16 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
     this.#cellContextMenu.emit(detail);
   };
 
+  /**
+   * 通过画布绘图的方式添加边（手动调用 `addEdge` 方法不会触发该事件）。
+   */
+  @event({ type: "edge.add" })
+  accessor #edgeAdd!: EventEmitter<EdgeCell>;
+
+  #handleEdgeAdd = (edge: EdgeCell) => {
+    this.#edgeAdd.emit(edge);
+  };
+
   @event({ type: "decorator.text.change" })
   accessor #decoratorTextChange!: EventEmitter<DecoratorTextChangeDetail>;
 
@@ -547,6 +557,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         onCellResize={this.#handleCellResize}
         onCellDelete={this.#handleCellDelete}
         onCellsDelete={this.#handleCellsDelete}
+        onEdgeAdd={this.#handleEdgeAdd}
         onCellContextMenu={this.#handleCellContextMenu}
         onDecoratorTextChange={this.#handleDecoratorTextChange}
         onContainerContainerChange={this.#handleContainerContainerChange}
@@ -566,6 +577,7 @@ export interface EoDrawCanvasComponentProps extends EoDrawCanvasProps {
   onCellsMove(info: MoveCellPayload[]): void;
   onCellsDelete(cells: Cell[]): void;
   onCellContextMenu(detail: CellContextMenuDetail): void;
+  onEdgeAdd(detail: EdgeCell): void;
   onDecoratorTextChange(detail: DecoratorTextChangeDetail): void;
   onContainerContainerChange(detail: MoveCellPayload[]): void;
   onScaleChange(scale: number): void;
@@ -620,6 +632,7 @@ function LegacyEoDrawCanvasComponent(
     onCellsMove,
     onCellsDelete,
     onCellContextMenu,
+    onEdgeAdd,
     onDecoratorTextChange,
     onScaleChange,
     onContainerContainerChange,
@@ -1021,22 +1034,24 @@ function LegacyEoDrawCanvasComponent(
         exitPosition: NodePosition,
         entryPosition: NodePosition
       ) {
+        const newEdge: EdgeCell = {
+          type: "edge",
+          source: source.id,
+          target: target.id,
+          view: {
+            exitPosition,
+            entryPosition,
+            ...(isObject(lineConnector) ? lineConnector : null),
+          },
+        };
         dispatch({
           type: "add-edge",
-          payload: {
-            type: "edge",
-            source: source.id,
-            target: target.id,
-            view: {
-              exitPosition,
-              entryPosition,
-              ...(isObject(lineConnector) ? lineConnector : null),
-            },
-          },
+          payload: newEdge,
         });
+        onEdgeAdd(newEdge);
       },
     }),
-    [smartConnectLineState, hoverState, lineConnector]
+    [smartConnectLineState, hoverState, lineConnector, onEdgeAdd]
   );
 
   useEffect(() => {
@@ -1088,6 +1103,7 @@ function LegacyEoDrawCanvasComponent(
       root.removeEventListener("mousedown", onMouseDown);
     };
   }, [transform, cells, dragBehavior, onSwitchActiveTarget]);
+
   return (
     <HoverStateContext.Provider value={hoverStateContextValue}>
       <svg
@@ -1183,6 +1199,7 @@ function LegacyEoDrawCanvasComponent(
           <LineConnectorComponent
             activeTarget={activeTarget}
             transform={transform}
+            disabled={!!connectLineState}
             smartConnectLineState={smartConnectLineState}
           />
         )}

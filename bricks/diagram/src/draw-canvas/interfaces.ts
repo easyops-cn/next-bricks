@@ -198,13 +198,6 @@ export interface SmartConnectLineState {
   exitPosition: NodeConnectPoint;
 }
 
-export interface SmartConnectLineState {
-  source: NodeCell;
-  from: PositionTuple;
-  offset: PositionTuple;
-  exitPosition: NodeConnectPoint;
-}
-
 export interface Deferred<T> {
   resolve: (value: T) => void;
   reject: (reason: unknown) => void;

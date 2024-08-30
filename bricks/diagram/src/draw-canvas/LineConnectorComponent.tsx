@@ -9,17 +9,20 @@ const HELPER_IMAGE =
   "data:image/svg+xml;base64,PCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj48c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHdpZHRoPSI1cHgiIGhlaWdodD0iNXB4IiB2ZXJzaW9uPSIxLjEiPjxwYXRoIGQ9Im0gMCAwIEwgNSA1IE0gMCA1IEwgNSAwIiBzdHJva2Utd2lkdGg9IjIiIHN0eWxlPSJzdHJva2Utb3BhY2l0eTowLjQiIHN0cm9rZT0iI2ZmZmZmZiIvPjxwYXRoIGQ9Im0gMCAwIEwgNSA1IE0gMCA1IEwgNSAwIiBzdHJva2U9IiMyOWI2ZjIiLz48L3N2Zz4=";
 const HELPER_RADIUS = 5;
 const HELPER_BG_RADIUS = 8;
+const HALF_HELPER_RADIUS = HELPER_RADIUS / 2;
 
 export interface LineConnectorComponentProps {
   activeTarget: ActiveTarget | null;
   transform: TransformLiteral;
   smartConnectLineState: ConnectLineState | null;
+  disabled?: boolean;
 }
 
 export function LineConnectorComponent({
   activeTarget,
   transform,
   smartConnectLineState,
+  disabled,
 }: LineConnectorComponentProps): JSX.Element | null {
   const { unsetHoverStateTimeoutRef, hoverState, setHoverState } =
     useHoverStateContext();
@@ -47,6 +50,7 @@ export function LineConnectorComponent({
   }, [setHoverState, unsetHoverStateTimeoutRef]);
 
   const available =
+    !disabled &&
     hoverState &&
     (!!smartConnectLineState || !targetIsActive(hoverState.cell, activeTarget));
 
@@ -204,8 +208,8 @@ function ConnectPointComponent({
         fill="transparent"
       />
       <image
-        x={point.x - HELPER_RADIUS / 2}
-        y={point.y - HELPER_RADIUS / 2}
+        x={point.x - HALF_HELPER_RADIUS}
+        y={point.y - HALF_HELPER_RADIUS}
         width={HELPER_RADIUS}
         height={HELPER_RADIUS}
         xlinkHref={HELPER_IMAGE}

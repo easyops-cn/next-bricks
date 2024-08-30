@@ -369,6 +369,11 @@
                 args:
                   - targetCell
                   - <% EVENT.detail.cell %>
+            edge.add:
+              action: message.info
+              args:
+                - |
+                  <% `Added an nice edge: ${JSON.stringify(EVENT.detail)}` %>
             decorator.text.change:
               action: message.info
               args:
@@ -424,11 +429,11 @@
         - <% CTX.targetCell.id %>
       callback:
         success:
-          target: eo-draw-canvas
-          method: addEdge
-          args:
-            - source: <% EVENT.detail.source.id %>
-              target: <% EVENT.detail.target.id %>
+          - target: eo-draw-canvas
+            method: addEdge
+            args:
+              - source: <% EVENT.detail.source.id %>
+                target: <% EVENT.detail.target.id %>
 ```
 
 ### Force layout
