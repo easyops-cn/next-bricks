@@ -166,6 +166,16 @@ class TagList extends ReactNextElement implements TagListProps {
     });
   };
 
+  /**
+   * 点击标签事件
+   */
+  @event({ type: "tag.click" })
+  accessor #tagClickEvent!: EventEmitter<TagListItem | string | undefined>;
+
+  handleTagClick = (item: TagListItem): void => {
+    this.#tagClickEvent.emit(this.#matchItem(item.text));
+  };
+
   render() {
     return (
       <TagListComponent
@@ -181,6 +191,7 @@ class TagList extends ReactNextElement implements TagListProps {
         tagStyle={this.tagStyle}
         onCheck={this.handleCheck}
         onClose={this.handleClose}
+        onTagClick={this.handleTagClick}
       />
     );
   }
@@ -189,6 +200,7 @@ class TagList extends ReactNextElement implements TagListProps {
 interface TagListComponentProps extends TagListProps {
   onCheck: (item: TagListItem, list: TagListItem[]) => void;
   onClose: (item: TagListItem, list: TagListItem[]) => void;
+  onTagClick: (item: TagListItem) => void;
 }
 
 function TagListComponent({
@@ -204,6 +216,7 @@ function TagListComponent({
   tagStyle,
   onCheck,
   onClose,
+  onTagClick,
 }: TagListComponentProps) {
   const [tagList, setTagList] = useState(list ?? []);
   const computedList = useMemo(() => {
@@ -277,6 +290,7 @@ function TagListComponent({
             {...tag}
             onCheck={() => handleCheck(tag)}
             onClose={() => handleClose(tag)}
+            onClick={() => onTagClick(tag)}
           >
             {showTagCircle && (
               <WrappedIcon
