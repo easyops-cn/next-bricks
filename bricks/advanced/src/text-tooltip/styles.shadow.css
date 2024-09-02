@@ -1,5 +1,5 @@
 :host {
-  display: inline-block;
+  display: inline;
   width: fit-content;
   max-width: 100%;
 }
@@ -8,9 +8,9 @@
   display: none;
 }
 .ellipsisWrap {
+  display: -webkit-box;
   word-break: break-all;
   text-overflow: ellipsis;
-  display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: var(--line-clamp);
   white-space: normal;
