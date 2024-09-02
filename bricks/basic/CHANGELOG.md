@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.43.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.42.3...@next-bricks/basic@1.43.0) (2024-09-02)
+
+
+### Features
+
+* **eo-tag-list:** support event: tag.click ([287496a](https://github.com/easyops-cn/next-bricks/commit/287496af9349962b161df4fc873ab4e539770913))
+
+
+
+
+
 ## [1.42.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.42.2...@next-bricks/basic@1.42.3) (2024-08-28)
 
 
