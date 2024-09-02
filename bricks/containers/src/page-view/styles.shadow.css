@@ -2,12 +2,23 @@
   --local-footer-height: 62px;
 
   display: flex;
-  flex-direction: column;
   height: 100%;
 }
 
 :host([hidden]) {
   display: none;
+}
+
+.header-and-main,
+.aside {
+  height: 100%;
+  min-width: 0;
+}
+
+.header-and-main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .header,

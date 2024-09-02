@@ -107,27 +107,32 @@ export function EoPageViewComponent({
 
   return (
     <>
-      <div className="header">
-        <slot name="header" />
-      </div>
-      <div className="main">
-        <div className="sidebar">
-          <slot name="sidebar" />
+      <div className="header-and-main">
+        <div className="header">
+          <slot name="header" />
         </div>
-        <div className="sub-sidebar">
-          <slot name="subSidebar" />
-        </div>
-        <div className="content">
-          <slot />
-          <div
-            className={classNames("footer", { pinned: footerPinned })}
-            ref={footerRef}
-          >
-            <WrappedNarrowView size={narrow}>
-              <slot name="footer" />
-            </WrappedNarrowView>
+        <div className="main">
+          <div className="sidebar">
+            <slot name="sidebar" />
+          </div>
+          <div className="sub-sidebar">
+            <slot name="subSidebar" />
+          </div>
+          <div className="content">
+            <slot />
+            <div
+              className={classNames("footer", { pinned: footerPinned })}
+              ref={footerRef}
+            >
+              <WrappedNarrowView size={narrow}>
+                <slot name="footer" />
+              </WrappedNarrowView>
+            </div>
           </div>
         </div>
+      </div>
+      <div className="aside">
+        <slot name="aside" />
       </div>
     </>
   );
