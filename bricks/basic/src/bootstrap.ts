@@ -46,3 +46,4 @@ import "./data-providers/httpProxyRequest.js";
 import "./event-agent/index.js";
 import "./message-listener/index.js";
 import "./broadcast-channel/index.js";
+import "./home-redirect/index.js";
