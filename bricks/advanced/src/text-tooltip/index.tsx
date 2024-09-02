@@ -78,6 +78,7 @@ export function EoTextTooltipComponent(props: TooltipPropsEoTextTooltipProps) {
     <ConfigProvider prefixCls="antdV5">
       <StyleProvider
         cache={cache}
+        hashPriority="high"
         transformers={[legacyLogicalPropertiesTransformer]}
       >
         <Tooltip
