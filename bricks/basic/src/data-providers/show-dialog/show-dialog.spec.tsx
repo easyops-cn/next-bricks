@@ -3,6 +3,8 @@ import { describe, test, expect } from "@jest/globals";
 import { waitFor, act, render, fireEvent } from "@testing-library/react";
 import { showDialog, DialogComponent } from "./show-dialog.js";
 
+jest.mock("@next-core/theme", () => ({}));
+
 // <sl-dialog> uses those API which is not supported in jsdom.
 Element.prototype.getAnimations = jest.fn().mockReturnValue([]);
 Element.prototype.animate = jest.fn().mockReturnValue({
