@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.5...@next-bricks/form@1.13.6) (2024-09-03)
+
+
+### Bug Fixes
+
+* fix story types ([c2eab4d](https://github.com/easyops-cn/next-bricks/commit/c2eab4dd97a83502f68c25e82f5cbe818c3c180b))
+
+
+
+
+
 ## [1.13.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.4...@next-bricks/form@1.13.5) (2024-08-29)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.8.1...@next-bricks/containers@1.8.2) (2024-09-03)
+
+
+### Bug Fixes
+
+* fix story types ([c2eab4d](https://github.com/easyops-cn/next-bricks/commit/c2eab4dd97a83502f68c25e82f5cbe818c3c180b))
+
+
+
+
+
 ## [1.8.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.8.0...@next-bricks/containers@1.8.1) (2024-08-28)
 
 **Note:** Version bump only for package @next-bricks/containers
