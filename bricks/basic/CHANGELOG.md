@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.44.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.43.0...@next-bricks/basic@1.44.0) (2024-09-03)
+
+
+### Features
+
+* new brick: home-redirect ([54762bc](https://github.com/easyops-cn/next-bricks/commit/54762bc56f7a8a8f60a370183e30be672ed2ecf1))
+
+
+
+
+
 # [1.43.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.42.3...@next-bricks/basic@1.43.0) (2024-09-02)
 
 
