@@ -1,6 +1,7 @@
+import { Story } from "@next-shared/story";
 import { eoDatePickerBasicSvg, eoDatePickerSvg } from "./images";
 
-export const eoDatePickerStory = {
+export const eoDatePickerStory: Story = {
   storyId: "eo-date-picker",
   text: {
     en: "Date Picker",
@@ -17,9 +18,6 @@ export const eoDatePickerStory = {
     {
       bricks: [
         {
-          description: {
-            title: "基本都用法",
-          },
           brick: "eo-date-picker",
           properties: {
             name: "date",

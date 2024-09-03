@@ -1,10 +1,11 @@
+import { Story } from "@next-shared/story";
 import {
   eoCodeDiplayCssSvg,
   eoCodeDiplayJsSvg,
   eoCodeDiplaySvg,
 } from "./images";
 
-export const eoCodeDisplayStory = {
+export const eoCodeDisplayStory: Story = {
   storyId: "eo-code-display",
   text: {
     en: "Code Display",

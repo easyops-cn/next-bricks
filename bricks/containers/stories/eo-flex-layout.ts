@@ -1,13 +1,13 @@
+import { Story } from "@next-shared/story";
 import {
   eoFlexLayoutBasicSvg,
   eoFlexLayoutGapSvg,
   eoFlexLayoutSvg,
 } from "./images";
 
-export const eoFlexLayoutStory = {
+export const eoFlexLayoutStory: Story = {
   storyId: "eo-flex-layout",
   category: "container-layout",
-  type: "brick",
   author: "kehua",
   text: {
     en: "Flex Layout Container",
@@ -25,10 +25,6 @@ export const eoFlexLayoutStory = {
       bricks: [
         {
           brick: "eo-flex-layout",
-          description: {
-            title: "基本使用",
-            message: "",
-          },
           properties: {
             justifyContent: "space-between",
             alignItems: "center",
@@ -73,10 +69,6 @@ export const eoFlexLayoutStory = {
       bricks: [
         {
           brick: "eo-flex-layout",
-          description: {
-            title: "使用gap改变元素间隙",
-            message: "",
-          },
           properties: {
             gap: "20px",
             flexWrap: "wrap",

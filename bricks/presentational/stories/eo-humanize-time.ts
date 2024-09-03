@@ -1,3 +1,4 @@
+import { Story } from "@next-shared/story";
 import {
   eoHumanizeTimeAccurateSvg,
   eoHumanizeTimeCostSvg,
@@ -7,7 +8,7 @@ import {
   eoHumanizeTimeSvg,
 } from "./images";
 
-export const eoHumanizeTimeStory = {
+export const eoHumanizeTimeStory: Story = {
   storyId: "eo-humanize-time",
   text: {
     en: "humanize time",

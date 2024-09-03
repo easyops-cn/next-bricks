@@ -1,6 +1,7 @@
+import { Story } from "@next-shared/story";
 import { eoModalBasicSvg, eoModalFullScreenSvg, eoModalSvg } from "./images";
 
-export const eoModalStory = {
+export const eoModalStory: Story = {
   storyId: "eo-modal",
   text: {
     en: "General Modal",
@@ -54,9 +55,6 @@ export const eoModalStory = {
     {
       bricks: [
         {
-          description: {
-            title: "全屏模式",
-          },
           brick: "eo-modal",
           properties: {
             fullscreen: true,

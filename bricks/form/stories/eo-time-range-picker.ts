@@ -1,6 +1,7 @@
+import { Story } from "@next-shared/story";
 import { eoTimeRangePickerBasicSvg, eoTimeRangePickerSvg } from "./images";
 
-export const eoTimeRangePickerStory = {
+export const eoTimeRangePickerStory: Story = {
   storyId: "eo-time-range-picker",
   text: {
     en: "Time Range Picker",

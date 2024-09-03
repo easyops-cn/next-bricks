@@ -1,10 +1,11 @@
+import { Story } from "@next-shared/story";
 import {
   eoMainViewBasicSvg,
   eoMainViewSvg,
   eoMainViewWithBannerSvg,
 } from "./images";
 
-export const eoMainViewStory = {
+export const eoMainViewStory: Story = {
   storyId: "eo-main-view",
   text: {
     en: "Eo Main View",
@@ -94,9 +95,6 @@ export const eoMainViewStory = {
     {
       bricks: [
         {
-          description: {
-            title: "使用 banner",
-          },
           brick: "eo-main-view",
           properties: {
             bannerAlone: true,

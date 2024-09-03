@@ -1,6 +1,7 @@
+import { Story } from "@next-shared/story";
 import { eoTextareaBasicSvg, eoTextareaSvg } from "./images";
 
-export const eoTextareaStory = {
+export const eoTextareaStory: Story = {
   storyId: "eo-textarea",
   text: {
     en: "Text Area",

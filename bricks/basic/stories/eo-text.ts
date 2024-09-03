@@ -1,3 +1,4 @@
+import { Story } from "@next-shared/story";
 import {
   eoTextAuxiliaryTextSvg,
   eoTextBannerTitleSvg,
@@ -7,7 +8,7 @@ import {
   eoTextSvg,
 } from "./images/index.js";
 
-export const eoTextStory = {
+export const eoTextStory: Story = {
   storyId: "eo-text",
   text: {
     en: "General text",

@@ -1,3 +1,4 @@
+import { Story } from "@next-shared/story";
 import {
   eoLinkNormalSvg,
   eoLinkOutsideSvg,
@@ -5,7 +6,7 @@ import {
   eoLinkWithIconEventsSvg,
 } from "./images/index.js";
 
-export const eoLinkStory = {
+export const eoLinkStory: Story = {
   storyId: "eo-link",
   icon: {
     imgSrc: eoLinkSvg,

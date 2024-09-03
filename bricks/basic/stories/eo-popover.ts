@@ -1,6 +1,7 @@
+import { Story } from "@next-shared/story";
 import { eoPopoverBasicSvg, eoPopoverSvg } from "./images";
 
-export const eoPopoverStory = {
+export const eoPopoverStory: Story = {
   storyId: "eo-popover",
   text: {
     en: "popover container",
@@ -17,6 +18,10 @@ export const eoPopoverStory = {
     {
       snippetId: "eo-popover[basic]",
       thumbnail: eoPopoverBasicSvg,
+      title: {
+        en: "Basic popover",
+        zh: "基础的气泡卡片",
+      },
       bricks: [
         {
           brick: "eo-popover",

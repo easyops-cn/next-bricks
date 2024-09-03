@@ -1,6 +1,7 @@
+import { Story } from "@next-shared/story";
 import { eoDynamicFormItemBasicSvg, eoDynamicFormItemSvg } from "./images";
 
-export const eoDynamicFormItemStory = {
+export const eoDynamicFormItemStory: Story = {
   storyId: "eo-dynamic-form-item",
   text: {
     en: "Dynamic Form Item",

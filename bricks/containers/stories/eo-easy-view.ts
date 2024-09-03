@@ -1,10 +1,11 @@
+import { Story } from "@next-shared/story";
 import {
   eoEasyViewGridAreasSvg,
   eoEasyViewGridTemplateAreasSvg,
   eoEasyViewSvg,
 } from "./images";
 
-export const eoEasyViewStory = {
+export const eoEasyViewStory: Story = {
   storyId: "eo-easy-view",
   text: {
     en: "Grid Layout Container - Supports Grid Area",
@@ -143,6 +144,10 @@ export const eoEasyViewStory = {
         },
       ],
       snippetId: "eo-easy-view[basic]",
+      title: {
+        en: "Easy-view basic usage",
+        zh: "Easy-view 基础用",
+      },
       thumbnail: eoEasyViewSvg,
     },
     {
@@ -208,8 +213,8 @@ export const eoEasyViewStory = {
       ],
       snippetId: "eo-easy-view[grid-areas]",
       title: {
-        en: "Easy View Dividing By Grid Areas",
-        zh: "由gridAreas划分区域的easy-view",
+        en: "Easy-view dividing by grid areas",
+        zh: "由 grid areas 划分区域的 easy-view",
       },
       thumbnail: eoEasyViewGridAreasSvg,
     },
@@ -290,8 +295,8 @@ export const eoEasyViewStory = {
       ],
       snippetId: "eo-easy-view[grid-template-areas]",
       title: {
-        en: "Easy View Dividing By Grid Template Areas",
-        zh: "由grid-template-areas划分区域的easy-view",
+        en: "Easy-view dividing by grid template areas",
+        zh: "由 grid template areas 划分区域的 easy-view",
       },
       thumbnail: eoEasyViewGridTemplateAreasSvg,
     },

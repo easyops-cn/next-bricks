@@ -1,6 +1,7 @@
+import { Story } from "@next-shared/story";
 import { eoDescriptionsNormalSvg, eoDescriptionsSvg } from "./images";
 
-export const eoDescriptionsStory = {
+export const eoDescriptionsStory: Story = {
   storyId: "eo-descriptions",
   text: {
     en: "Descriptions",
@@ -16,7 +17,7 @@ export const eoDescriptionsStory = {
   conf: [
     {
       snippetId: "eo-descriptions[normal]",
-      text: {
+      title: {
         zh: "描述列表",
         en: "Description list",
       },

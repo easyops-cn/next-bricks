@@ -1,10 +1,11 @@
+import { Story } from "@next-shared/story";
 import {
   eoUserOrUserGroupSelectBasicSvg,
   eoUserOrUserGroupSelectBlankListSvg,
   eoUserOrUserGroupSelectSvg,
 } from "./images";
 
-export const eoUserGroupSelectStory = {
+export const eoUserGroupSelectStory: Story = {
   storyId: "eo-user-or-user-group-select",
   text: {
     en: "user-or-user-group-select",
@@ -21,9 +22,6 @@ export const eoUserGroupSelectStory = {
     {
       bricks: [
         {
-          description: {
-            title: "基本用法",
-          },
           brick: "eo-user-or-user-group-select",
           events: {
             "user.group.change": {
@@ -51,9 +49,6 @@ export const eoUserGroupSelectStory = {
     {
       bricks: [
         {
-          description: {
-            title: "支持白名单配置",
-          },
           brick: "eo-user-or-user-group-select",
           events: {
             "user.group.change": {

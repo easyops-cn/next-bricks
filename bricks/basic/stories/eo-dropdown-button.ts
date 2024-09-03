@@ -1,6 +1,7 @@
+import { Story } from "@next-shared/story";
 import { eoDropdownSvg, eoDropdownNormalSvg } from "./images";
 
-export const eoDropdownButtonStory = {
+export const eoDropdownButtonStory: Story = {
   storyId: "eo-dropdown-button",
   text: {
     en: "Dropdown Button",

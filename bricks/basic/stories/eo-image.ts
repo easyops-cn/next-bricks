@@ -1,6 +1,7 @@
+import { Story } from "@next-shared/story";
 import { eoImageNormalSvg, eoImageSvg } from "./images";
 
-export const eoImageStory = {
+export const eoImageStory: Story = {
   storyId: "eo-button",
   text: {
     en: "General Image",
@@ -23,9 +24,6 @@ export const eoImageStory = {
       thumbnail: eoImageNormalSvg,
       bricks: [
         {
-          description: {
-            title: "基本用法",
-          },
           brick: "eo-image",
           properties: {
             imgList: [

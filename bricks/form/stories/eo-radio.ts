@@ -1,3 +1,4 @@
+import { Story } from "@next-shared/story";
 import {
   eoRadioBasicSvg,
   eoRadioButtonSvg,
@@ -7,7 +8,7 @@ import {
   eoRadioWithIconSvg,
 } from "./images";
 
-export const eoRadioStory = {
+export const eoRadioStory: Story = {
   storyId: "eo-radio",
   text: {
     en: "Radio",
@@ -78,9 +79,6 @@ export const eoRadioStory = {
       bricks: [
         {
           brick: "eo-radio",
-          description: {
-            title: "当type = default时，给radio设置图标",
-          },
           properties: {
             label: "城市",
             name: "city",
@@ -138,9 +136,6 @@ export const eoRadioStory = {
     {
       bricks: [
         {
-          description: {
-            title: "使用图标按钮样式",
-          },
           brick: "eo-radio",
           events: {
             "general.radio.change": {
@@ -200,9 +195,6 @@ export const eoRadioStory = {
     {
       bricks: [
         {
-          description: {
-            title: "使用icon类型样式案例",
-          },
           brick: "eo-radio",
           properties: {
             label: "图标",

@@ -1,3 +1,4 @@
+import { Story } from "@next-shared/story";
 import {
   eoButtonSvg,
   eoButtonbasicSvg,
@@ -9,7 +10,7 @@ import {
   eoButtonTextSvg,
 } from "./images/index.js";
 
-export const eoButtonStory = {
+export const eoButtonStory: Story = {
   storyId: "eo-button",
   icon: {
     imgSrc: eoButtonSvg,
@@ -150,10 +151,6 @@ export const eoButtonStory = {
       bricks: [
         {
           brick: "eo-button",
-          description: {
-            title: "文字按钮",
-            message: "默认和平台文字颜色一致",
-          },
           properties: {
             type: "text",
             textContent: "更多",

@@ -1,9 +1,9 @@
+import { Story } from "@next-shared/story";
 import { eoGridLayoutBasicSvg, eoGridLayoutSvg } from "./images";
 
-export const eoGridLayoutStory = {
+export const eoGridLayoutStory: Story = {
   storyId: "eo-grid-layout",
   category: "container-layout",
-  type: "brick",
   author: "steve",
   text: {
     en: "Grid Layout",

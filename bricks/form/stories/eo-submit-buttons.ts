@@ -1,6 +1,7 @@
+import { Story } from "@next-shared/story";
 import { eoSubmitButtonsBasicSvg, eoSubmitButtonsSvg } from "./images";
 
-export const eoSubmitButtonsStory = {
+export const eoSubmitButtonsStory: Story = {
   storyId: "eo-checkbox",
   text: {
     en: "General buttons",

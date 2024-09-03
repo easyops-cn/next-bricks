@@ -1,6 +1,7 @@
+import { Story } from "@next-shared/story";
 import { eoDividerNormalsSvg, eoDividersSvg } from "./images";
 
-export const eoDividerStory = {
+export const eoDividerStory: Story = {
   storyId: "eo-divider",
   text: {
     en: "divider",

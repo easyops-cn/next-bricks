@@ -1,6 +1,7 @@
+import { Story } from "@next-shared/story";
 import { eoDrawerBasicSvg, eoDrawerSvg } from "./images";
 
-export const eoDrawerStory = {
+export const eoDrawerStory: Story = {
   storyId: "eo-drawer",
   text: {
     en: "General Drawer",

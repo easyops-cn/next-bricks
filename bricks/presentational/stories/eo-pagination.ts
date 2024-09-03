@@ -1,6 +1,7 @@
+import { Story } from "@next-shared/story";
 import { eoPaginationNormalSvg, eoPaginationSvg } from "./images";
 
-export const eoPaginationStory = {
+export const eoPaginationStory: Story = {
   storyId: "eo-pagination",
   text: {
     en: "General pagination",
@@ -18,7 +19,7 @@ export const eoPaginationStory = {
       snippetId: "eo-pagination[normal]",
       thumbnail: eoPaginationNormalSvg,
       title: {
-        en: "",
+        en: "Basic pagination",
         zh: "基础分页",
       },
       bricks: [
