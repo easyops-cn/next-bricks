@@ -1147,7 +1147,8 @@ describe("eo-draw-canvas", () => {
   test("degraded diagram", async () => {
     const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
     element.defaultNodeBricks = [{ useBrick: { brick: "strong" } }];
-    element.cells = new Array(400).fill(null).map((_, i) => ({
+    element.degradedThreshold = 50;
+    element.cells = new Array(40).fill(null).map((_, i) => ({
       type: "node",
       id: `node-${i}`,
       view: {
@@ -1165,7 +1166,7 @@ describe("eo-draw-canvas", () => {
     await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
 
     expect(element.shadowRoot?.querySelectorAll(".degraded").length).toBe(0);
-    expect(element.shadowRoot?.querySelectorAll("strong").length).toBe(400);
+    expect(element.shadowRoot?.querySelectorAll("strong").length).toBe(40);
 
     act(() => {
       fireEvent.mouseEnter(element.shadowRoot!.querySelector(".cell")!);
@@ -1176,14 +1177,14 @@ describe("eo-draw-canvas", () => {
 
     await act(async () => {
       await element.addNodes(
-        new Array(100).fill(null).map((_, i) => ({
+        new Array(10).fill(null).map((_, i) => ({
           type: "node",
-          id: `node-${i + 400}`,
+          id: `node-${i + 40}`,
         }))
       );
     });
 
-    expect(element.shadowRoot?.querySelectorAll(".degraded").length).toBe(500);
+    expect(element.shadowRoot?.querySelectorAll(".degraded").length).toBe(50);
     expect(element.shadowRoot?.querySelectorAll("strong").length).toBe(0);
 
     act(() => {
