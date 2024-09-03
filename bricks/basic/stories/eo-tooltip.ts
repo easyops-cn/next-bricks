@@ -1,6 +1,7 @@
+import { Story } from "@next-shared/story";
 import { eoTooltipNormalSvg, eoTooltipSvg } from "./images";
 
-export const eoToolTipStory = {
+export const eoToolTipStory: Story = {
   storyId: "eo-tooltip",
   icon: {
     imgSrc: eoTooltipSvg,

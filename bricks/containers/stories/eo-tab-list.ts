@@ -1,6 +1,7 @@
+import { Story } from "@next-shared/story";
 import { eoTabListNormalSvg, eoTabListPanelSvg, eoTabListSvg } from "./images";
 
-export const eoTabListStory = {
+export const eoTabListStory: Story = {
   storyId: "eo-tab-list",
   text: {
     en: "Tabs Container",

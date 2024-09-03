@@ -1,6 +1,7 @@
+import { Story } from "@next-shared/story";
 import { eoUploadImgBasicSvg, eoUploadImgSvg } from "./images";
 
-export const eoUploadImageStory = {
+export const eoUploadImageStory: Story = {
   storyId: "eo-upload-image",
   text: {
     en: "upload img",

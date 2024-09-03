@@ -1,10 +1,11 @@
+import { Story } from "@next-shared/story";
 import {
   eoTagListDisabledWithCloseSvg,
   eoTagListNormalSvg,
   eoTagListSvg,
 } from "./images";
 
-export const eoTagListStory = {
+export const eoTagListStory: Story = {
   storyId: "eo-tab-list",
   text: {
     en: "Tag Label",

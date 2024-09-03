@@ -1,6 +1,7 @@
+import { Story } from "@next-shared/story";
 import { eoFormBasicSvg, eoFormDynamicSvg, eoFormSvg } from "./images";
 
-export const eoFormStory = {
+export const eoFormStory: Story = {
   storyId: "eo-form",
   text: {
     en: "General Form",
@@ -17,10 +18,6 @@ export const eoFormStory = {
     {
       bricks: [
         {
-          description: {
-            title: "基础表单",
-            message: "基础用法",
-          },
           brick: "eo-form",
           properties: {
             name: "basic-form",
@@ -79,11 +76,6 @@ export const eoFormStory = {
     {
       bricks: [
         {
-          description: {
-            title: "动态表单",
-            message:
-              "通过表单子项的notRender属性和setNotRender方法，实现动态表单",
-          },
           brick: "eo-form",
           properties: {
             name: "hello",

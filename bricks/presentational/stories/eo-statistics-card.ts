@@ -1,6 +1,7 @@
+import { Story } from "@next-shared/story";
 import { eoStatisticCardSvg } from "./images";
 
-export const eoStatisticsCardStory = {
+export const eoStatisticsCardStory: Story = {
   storyId: "eo-statistics-card",
   text: {
     en: "Statistic Card",
@@ -18,8 +19,8 @@ export const eoStatisticsCardStory = {
     {
       snippetId: "eo-statistics-card[normal]",
       title: {
+        en: "Basic statistics card",
         zh: "基础统计卡片",
-        en: "",
       },
       thumbnail: eoStatisticCardSvg,
       bricks: [

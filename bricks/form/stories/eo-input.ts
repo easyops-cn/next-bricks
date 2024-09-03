@@ -1,3 +1,4 @@
+import { Story } from "@next-shared/story";
 import {
   eoInputBasicSvg,
   // eoInputCopyableSvg,
@@ -6,7 +7,7 @@ import {
   eoInputWithAddonSvg,
 } from "./images";
 
-export const eoInputStory = {
+export const eoInputStory: Story = {
   storyId: "eo-input",
   text: {
     en: "Input",
@@ -24,9 +25,6 @@ export const eoInputStory = {
       bricks: [
         {
           brick: "eo-input",
-          description: {
-            title: "基本使用",
-          },
           properties: {
             name: "username",
             type: "text",
@@ -47,9 +45,6 @@ export const eoInputStory = {
       bricks: [
         {
           brick: "eo-input",
-          description: {
-            title: "密码框",
-          },
           properties: {
             name: "password",
             type: "password",
@@ -70,9 +65,6 @@ export const eoInputStory = {
       bricks: [
         {
           brick: "eo-input",
-          description: {
-            title: "前缀，后缀",
-          },
           properties: {
             placeholder: "addon slot",
           },

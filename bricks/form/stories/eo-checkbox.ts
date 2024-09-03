@@ -1,3 +1,4 @@
+import { Story } from "@next-shared/story";
 import {
   eoCheckboxBasicSvg,
   eoCheckboxCustomIconSvg,
@@ -10,7 +11,7 @@ import {
   eoCheckboxWithIconSvg,
 } from "./images";
 
-export const eoCheckboxStory = {
+export const eoCheckboxStory: Story = {
   storyId: "eo-checkbox",
   text: {
     en: "Checkbox",
@@ -70,11 +71,6 @@ export const eoCheckboxStory = {
       bricks: [
         {
           brick: "eo-checkbox",
-          description: {
-            title: "设置选项颜色",
-            message:
-              "在为checkbox（type = default）传入options时，可传入「checkboxColor」属性设置选框颜色，可用颜色包括：red、orange、amber、yellow、green、teal、cyan、blue、indigo、purple、deep-purple、pink 和 blue-gray。",
-          },
           properties: {
             name: "user",
             label: "用户",
@@ -103,11 +99,6 @@ export const eoCheckboxStory = {
       bricks: [
         {
           brick: "eo-checkbox",
-          description: {
-            title: "设置checkbox图标",
-            message:
-              "在为checkbox（type = default）传入options时，可传入「icon」属性为其设置图标，图标来源可以为src（httpSrc/DataSrc）或平台的图标库。",
-          },
           properties: {
             label: "用户列表",
             name: "user",
@@ -162,11 +153,6 @@ export const eoCheckboxStory = {
       bricks: [
         {
           brick: "eo-checkbox",
-          description: {
-            title: "分组复选框",
-            message:
-              "上层复选框仅作为分类标识，不作为表单数据项，勾选／取消勾选上层复选框可全选／取消全选。每个分组下可包含多个复选框。",
-          },
           properties: {
             name: "goods",
             label: "商品",
@@ -211,10 +197,6 @@ export const eoCheckboxStory = {
     {
       bricks: [
         {
-          description: {
-            title: "使用icon类型样式案例",
-            message: "icon图标来源可以为src（httpSrc/DataSrc）或平台的图标库",
-          },
           brick: "eo-checkbox",
           properties: {
             name: "icon",
@@ -263,9 +245,6 @@ export const eoCheckboxStory = {
     {
       bricks: [
         {
-          description: {
-            title: "在icon模式下自定义样式案例",
-          },
           brick: "eo-checkbox",
           properties: {
             name: "icon",

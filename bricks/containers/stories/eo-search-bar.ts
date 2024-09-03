@@ -1,10 +1,11 @@
+import { Story } from "@next-shared/story";
 import {
   eoSearchBarSvg,
   eoSearchBarBasicSvg,
   eoSearchBarWithEndSlotSvg,
 } from "./images";
 
-export const eoSearchBarStory = {
+export const eoSearchBarStory: Story = {
   storyId: "eo-search-bar",
   text: {
     en: "Search Bar Container",

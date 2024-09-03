@@ -1,6 +1,7 @@
+import { Story } from "@next-shared/story";
 import { eoSelectBasicSvg, eoSelectMultiSvg, eoSelectSvg } from "./images";
 
-export const eoSelectStory = {
+export const eoSelectStory: Story = {
   storyId: "eo-select",
   text: {
     en: "Select",

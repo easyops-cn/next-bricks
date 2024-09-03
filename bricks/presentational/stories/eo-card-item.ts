@@ -1,3 +1,4 @@
+import { Story } from "@next-shared/story";
 import {
   cardBlueSvg,
   eoCardItemNormalSvg,
@@ -5,7 +6,7 @@ import {
   // eoCardItemWithRightTagSvg,
 } from "./images";
 
-export const eoCardItemStory = {
+export const eoCardItemStory: Story = {
   storyId: "eo-card-item",
   text: {
     en: "Information Display Card",
@@ -33,12 +34,6 @@ export const eoCardItemStory = {
       bricks: [
         {
           brick: "eo-card-item",
-          description: {
-            title:
-              "卡片布局为 `icon-small-align-left` 类型，小尺寸 icon 位于左边。",
-            message:
-              "可以配置 `expanded-area-1`,`expanded-area-2` 等操作区的插槽。适用场景：用户可凭借图标颜色来区分不同卡片，图标具有分类意义（区分类型／状态）而存在。",
-          },
           properties: {
             cardTitle: "资源监控微应用",
             description: "资源监控微应用相关前后台",

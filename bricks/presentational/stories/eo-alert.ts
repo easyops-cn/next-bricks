@@ -1,3 +1,4 @@
+import { Story } from "@next-shared/story";
 import {
   eoAlertInfoTipsWithIconSvg,
   eoAlertSuccessTipsSvg,
@@ -6,7 +7,7 @@ import {
   eoAleryWithSlotSvg,
 } from "./images";
 
-export const eoAlertStory = {
+export const eoAlertStory: Story = {
   storyId: "eo-alert",
   text: {
     en: "Alert",

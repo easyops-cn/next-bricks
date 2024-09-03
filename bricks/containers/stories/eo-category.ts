@@ -1,6 +1,7 @@
+import { Story } from "@next-shared/story";
 import { eoCategoryNormalSvg, eoCategorySvg } from "./images";
 
-export const eoCategoryStory = {
+export const eoCategoryStory: Story = {
   storyId: "eo-category",
   text: {
     en: "information-category-container",
