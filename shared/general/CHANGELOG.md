@@ -3,80 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.9.7](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.9.6...@next-shared/general@0.9.7) (2024-09-03)
+## [0.9.8](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.9.7...@next-shared/general@0.9.8) (2024-09-03)
 
 **Note:** Version bump only for package @next-shared/general
 
+## [0.9.7](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.9.6...@next-shared/general@0.9.7) (2024-09-03)
 
-
-
+**Note:** Version bump only for package @next-shared/general
 
 ## [0.9.6](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.9.5...@next-shared/general@0.9.6) (2024-08-28)
 
 **Note:** Version bump only for package @next-shared/general
 
-
-
-
-
 ## [0.9.5](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.9.4...@next-shared/general@0.9.5) (2024-08-14)
 
 **Note:** Version bump only for package @next-shared/general
-
-
-
-
 
 ## [0.9.4](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.9.3...@next-shared/general@0.9.4) (2024-08-13)
 
 **Note:** Version bump only for package @next-shared/general
 
-
-
-
-
 ## [0.9.3](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.9.2...@next-shared/general@0.9.3) (2024-07-31)
 
 **Note:** Version bump only for package @next-shared/general
-
-
-
-
 
 ## [0.9.2](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.9.1...@next-shared/general@0.9.2) (2024-07-29)
 
 **Note:** Version bump only for package @next-shared/general
 
-
-
-
-
 ## [0.9.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.9.0...@next-shared/general@0.9.1) (2024-07-19)
 
 **Note:** Version bump only for package @next-shared/general
 
-
-
-
-
 # [0.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.41...@next-shared/general@0.9.0) (2024-07-16)
-
 
 ### Features
 
-* **matchMenuItem:** activeIncludes and activeExcludes of item support MatchOptions ([e8017aa](https://github.com/easyops-cn/next-bricks/commit/e8017aa137aed1c4ded2a7905a7069a977b18d4e))
-
-
-
-
+- **matchMenuItem:** activeIncludes and activeExcludes of item support MatchOptions ([e8017aa](https://github.com/easyops-cn/next-bricks/commit/e8017aa137aed1c4ded2a7905a7069a977b18d4e))
 
 ## [0.8.41](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.40...@next-shared/general@0.8.41) (2024-07-15)
 
 **Note:** Version bump only for package @next-shared/general
-
-
-
-
 
 ## [0.8.40](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.8.39...@next-shared/general@0.8.40) (2024-07-12)
 

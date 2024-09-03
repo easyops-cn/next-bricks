@@ -3,232 +3,132 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.13.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.5...@next-bricks/form@1.13.6) (2024-09-03)
+## [1.13.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.6...@next-bricks/form@1.13.7) (2024-09-03)
 
+**Note:** Version bump only for package @next-bricks/form
+
+## [1.13.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.5...@next-bricks/form@1.13.6) (2024-09-03)
 
 ### Bug Fixes
 
-* fix story types ([c2eab4d](https://github.com/easyops-cn/next-bricks/commit/c2eab4dd97a83502f68c25e82f5cbe818c3c180b))
-
-
-
-
+- fix story types ([c2eab4d](https://github.com/easyops-cn/next-bricks/commit/c2eab4dd97a83502f68c25e82f5cbe818c3c180b))
 
 ## [1.13.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.4...@next-bricks/form@1.13.5) (2024-08-29)
 
-
 ### Bug Fixes
 
-* fix min max validation for eo-input[type=number] ([7720b74](https://github.com/easyops-cn/next-bricks/commit/7720b7455141dbe4e09d47d2685eb493fb8eecca))
-
-
-
-
+- fix min max validation for eo-input[type=number] ([7720b74](https://github.com/easyops-cn/next-bricks/commit/7720b7455141dbe4e09d47d2685eb493fb8eecca))
 
 ## [1.13.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.3...@next-bricks/form@1.13.4) (2024-08-28)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [1.13.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.2...@next-bricks/form@1.13.3) (2024-08-23)
-
 
 ### Bug Fixes
 
-* refine textarea auto size ([b6e3cb7](https://github.com/easyops-cn/next-bricks/commit/b6e3cb73947c3330a6a0a496269e75e05fa39b54))
-
-
-
-
+- refine textarea auto size ([b6e3cb7](https://github.com/easyops-cn/next-bricks/commit/b6e3cb73947c3330a6a0a496269e75e05fa39b54))
 
 ## [1.13.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.1...@next-bricks/form@1.13.2) (2024-08-22)
 
-
 ### Bug Fixes
 
-* **eo-checkbox:** remove slot, refine style when text is empty ([50178b1](https://github.com/easyops-cn/next-bricks/commit/50178b1a8039ae5909fa51db173fe0b9f407f766))
-
-
-
-
+- **eo-checkbox:** remove slot, refine style when text is empty ([50178b1](https://github.com/easyops-cn/next-bricks/commit/50178b1a8039ae5909fa51db173fe0b9f407f766))
 
 ## [1.13.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.0...@next-bricks/form@1.13.1) (2024-08-19)
 
-
 ### Bug Fixes
 
-* **textarea:** handle container resize if autoSize enabled ([fd57d6e](https://github.com/easyops-cn/next-bricks/commit/fd57d6e7ef94a7fb8a3ad296ef9d8dee09f2bbcc))
-
-
-
-
+- **textarea:** handle container resize if autoSize enabled ([fd57d6e](https://github.com/easyops-cn/next-bricks/commit/fd57d6e7ef94a7fb8a3ad296ef9d8dee09f2bbcc))
 
 # [1.13.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.12.2...@next-bricks/form@1.13.0) (2024-08-14)
 
-
 ### Features
 
-* form add staticValues ([c873b85](https://github.com/easyops-cn/next-bricks/commit/c873b85cd83400e8f00bff38a83edd1687f3c56f))
-* update form-item helpBrick ([244e3ee](https://github.com/easyops-cn/next-bricks/commit/244e3ee38288d5228f16e95fd6048f5de3fc1165))
-
-
-
-
+- form add staticValues ([c873b85](https://github.com/easyops-cn/next-bricks/commit/c873b85cd83400e8f00bff38a83edd1687f3c56f))
+- update form-item helpBrick ([244e3ee](https://github.com/easyops-cn/next-bricks/commit/244e3ee38288d5228f16e95fd6048f5de3fc1165))
 
 ## [1.12.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.12.1...@next-bricks/form@1.12.2) (2024-08-13)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [1.12.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.12.0...@next-bricks/form@1.12.1) (2024-08-12)
-
 
 ### Bug Fixes
 
-* fix form-item labelBrick alignCenter ([b7ff399](https://github.com/easyops-cn/next-bricks/commit/b7ff3997c4baa838969414244042855c5150c363))
-
-
-
-
+- fix form-item labelBrick alignCenter ([b7ff399](https://github.com/easyops-cn/next-bricks/commit/b7ff3997c4baa838969414244042855c5150c363))
 
 # [1.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.11.7...@next-bricks/form@1.12.0) (2024-08-02)
 
-
 ### Bug Fixes
 
-* **input:** fix cursor not point at the end of content after calling focusInput method ([0f51b5e](https://github.com/easyops-cn/next-bricks/commit/0f51b5e2f42d5f00fd20208cf5970bf84f1ac194))
-
+- **input:** fix cursor not point at the end of content after calling focusInput method ([0f51b5e](https://github.com/easyops-cn/next-bricks/commit/0f51b5e2f42d5f00fd20208cf5970bf84f1ac194))
 
 ### Features
 
-* **textarea:** add focusTextarea method and fix autoSize not working when changing value ([2d8a4c7](https://github.com/easyops-cn/next-bricks/commit/2d8a4c759b5f50dfcd88c5266dafd58829544002))
-
-
-
-
+- **textarea:** add focusTextarea method and fix autoSize not working when changing value ([2d8a4c7](https://github.com/easyops-cn/next-bricks/commit/2d8a4c759b5f50dfcd88c5266dafd58829544002))
 
 ## [1.11.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.11.6...@next-bricks/form@1.11.7) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [1.11.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.11.5...@next-bricks/form@1.11.6) (2024-07-31)
-
 
 ### Bug Fixes
 
-* **textarea:** refine default height when auto-size enabled ([830d64d](https://github.com/easyops-cn/next-bricks/commit/830d64d19afc48960e28d881ae000e938c47d8ae))
-
-
-
-
+- **textarea:** refine default height when auto-size enabled ([830d64d](https://github.com/easyops-cn/next-bricks/commit/830d64d19afc48960e28d881ae000e938c47d8ae))
 
 ## [1.11.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.11.4...@next-bricks/form@1.11.5) (2024-07-29)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [1.11.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.11.3...@next-bricks/form@1.11.4) (2024-07-24)
-
 
 ### Bug Fixes
 
-* **select:** fix selectedOptions not being cleared when value changed to falsy value ([260d5a9](https://github.com/easyops-cn/next-bricks/commit/260d5a94a3f5b8f3704f75630b86b587c84f57c4))
-
-
-
-
+- **select:** fix selectedOptions not being cleared when value changed to falsy value ([260d5a9](https://github.com/easyops-cn/next-bricks/commit/260d5a94a3f5b8f3704f75630b86b587c84f57c4))
 
 ## [1.11.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.11.2...@next-bricks/form@1.11.3) (2024-07-23)
 
-
 ### Bug Fixes
 
-* **eo-select:** only add margin for select options if needed ([ba6446d](https://github.com/easyops-cn/next-bricks/commit/ba6446d6f77ba2bd3845f8ff9f481fdc9d35fcf0))
-
-
-
-
+- **eo-select:** only add margin for select options if needed ([ba6446d](https://github.com/easyops-cn/next-bricks/commit/ba6446d6f77ba2bd3845f8ff9f481fdc9d35fcf0))
 
 ## [1.11.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.11.1...@next-bricks/form@1.11.2) (2024-07-21)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [1.11.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.11.0...@next-bricks/form@1.11.1) (2024-07-19)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 # [1.11.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.10.16...@next-bricks/form@1.11.0) (2024-07-19)
-
 
 ### Features
 
-* **FormStore:** add name field to validateField return value ([5e7d273](https://github.com/easyops-cn/next-bricks/commit/5e7d2731aebba214358ab5ab8db7d9f89178a845))
-
-
-
-
+- **FormStore:** add name field to validateField return value ([5e7d273](https://github.com/easyops-cn/next-bricks/commit/5e7d2731aebba214358ab5ab8db7d9f89178a845))
 
 ## [1.10.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.10.15...@next-bricks/form@1.10.16) (2024-07-19)
 
 **Note:** Version bump only for package @next-bricks/form
 
-
-
-
-
 ## [1.10.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.10.14...@next-bricks/form@1.10.15) (2024-07-15)
-
 
 ### Bug Fixes
 
-* radio style bug ([28a949e](https://github.com/easyops-cn/next-bricks/commit/28a949e1bba7322e15de34fad0b9c2f9fb86197e))
-
-
-
-
+- radio style bug ([28a949e](https://github.com/easyops-cn/next-bricks/commit/28a949e1bba7322e15de34fad0b9c2f9fb86197e))
 
 ## [1.10.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.10.13...@next-bricks/form@1.10.14) (2024-07-15)
 
-
 ### Bug Fixes
 
-* fix firefox style bug ([758542a](https://github.com/easyops-cn/next-bricks/commit/758542afc664cb006467a9688bef3930e6b2d55a))
-
-
-
-
+- fix firefox style bug ([758542a](https://github.com/easyops-cn/next-bricks/commit/758542afc664cb006467a9688bef3930e6b2d55a))
 
 ## [1.10.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.10.12...@next-bricks/form@1.10.13) (2024-07-15)
 
-
 ### Bug Fixes
 
-* radio style ([5f5eba9](https://github.com/easyops-cn/next-bricks/commit/5f5eba9160448425c8f89a076d879c72dd44f1f9))
-
-
-
-
+- radio style ([5f5eba9](https://github.com/easyops-cn/next-bricks/commit/5f5eba9160448425c8f89a076d879c72dd44f1f9))
 
 ## [1.10.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.10.11...@next-bricks/form@1.10.12) (2024-07-12)
 

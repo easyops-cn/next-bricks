@@ -3,118 +3,67 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.13.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.13.3...@next-bricks/nav@1.13.4) (2024-09-03)
+## [1.13.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.13.4...@next-bricks/nav@1.13.5) (2024-09-03)
 
 **Note:** Version bump only for package @next-bricks/nav
 
+## [1.13.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.13.3...@next-bricks/nav@1.13.4) (2024-09-03)
 
-
-
+**Note:** Version bump only for package @next-bricks/nav
 
 ## [1.13.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.13.2...@next-bricks/nav@1.13.3) (2024-08-28)
 
 **Note:** Version bump only for package @next-bricks/nav
 
-
-
-
-
 ## [1.13.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.13.1...@next-bricks/nav@1.13.2) (2024-08-14)
 
 **Note:** Version bump only for package @next-bricks/nav
-
-
-
-
 
 ## [1.13.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.13.0...@next-bricks/nav@1.13.1) (2024-08-13)
 
 **Note:** Version bump only for package @next-bricks/nav
 
-
-
-
-
 # [1.13.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.12.0...@next-bricks/nav@1.13.0) (2024-08-07)
-
 
 ### Features
 
-* new brick: nav.poll-announce ([ce0e77a](https://github.com/easyops-cn/next-bricks/commit/ce0e77aef33afe818e4ce9730d0f00f56584f881))
-
-
-
-
+- new brick: nav.poll-announce ([ce0e77a](https://github.com/easyops-cn/next-bricks/commit/ce0e77aef33afe818e4ce9730d0f00f56584f881))
 
 # [1.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.11.33...@next-bricks/nav@1.12.0) (2024-08-06)
 
-
 ### Features
 
-* 支持自定义菜单字体颜色 ([42e10d7](https://github.com/easyops-cn/next-bricks/commit/42e10d7568b1323b4ccf58034cbe5132c622eeb5))
-
-
-
-
+- 支持自定义菜单字体颜色 ([42e10d7](https://github.com/easyops-cn/next-bricks/commit/42e10d7568b1323b4ccf58034cbe5132c622eeb5))
 
 ## [1.11.33](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.11.32...@next-bricks/nav@1.11.33) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/nav
 
-
-
-
-
 ## [1.11.32](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.11.31...@next-bricks/nav@1.11.32) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/nav
-
-
-
-
 
 ## [1.11.31](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.11.30...@next-bricks/nav@1.11.31) (2024-07-29)
 
 **Note:** Version bump only for package @next-bricks/nav
 
-
-
-
-
 ## [1.11.30](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.11.29...@next-bricks/nav@1.11.30) (2024-07-19)
 
 **Note:** Version bump only for package @next-bricks/nav
-
-
-
-
 
 ## [1.11.29](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.11.28...@next-bricks/nav@1.11.29) (2024-07-16)
 
 **Note:** Version bump only for package @next-bricks/nav
 
-
-
-
-
 ## [1.11.28](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.11.27...@next-bricks/nav@1.11.28) (2024-07-15)
-
 
 ### Bug Fixes
 
-* 去掉directory-tree样式 refs SHLSTYYWPT-186 ([a945f04](https://github.com/easyops-cn/next-bricks/commit/a945f04693afaab9088ed874ff45b3f0797baf0a))
-
-
-
-
+- 去掉directory-tree样式 refs SHLSTYYWPT-186 ([a945f04](https://github.com/easyops-cn/next-bricks/commit/a945f04693afaab9088ed874ff45b3f0797baf0a))
 
 ## [1.11.27](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.11.26...@next-bricks/nav@1.11.27) (2024-07-15)
 
 **Note:** Version bump only for package @next-bricks/nav
-
-
-
-
 
 ## [1.11.26](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.11.25...@next-bricks/nav@1.11.26) (2024-07-12)
 

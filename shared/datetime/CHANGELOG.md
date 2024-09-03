@@ -3,37 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.2.6](https://github.com/easyops-cn/next-bricks/compare/@next-shared/datetime@0.2.5...@next-shared/datetime@0.2.6) (2024-09-03)
+## [0.2.7](https://github.com/easyops-cn/next-bricks/compare/@next-shared/datetime@0.2.6...@next-shared/datetime@0.2.7) (2024-09-03)
 
 **Note:** Version bump only for package @next-shared/datetime
 
+## [0.2.6](https://github.com/easyops-cn/next-bricks/compare/@next-shared/datetime@0.2.5...@next-shared/datetime@0.2.6) (2024-09-03)
 
-
-
+**Note:** Version bump only for package @next-shared/datetime
 
 ## [0.2.5](https://github.com/easyops-cn/next-bricks/compare/@next-shared/datetime@0.2.4...@next-shared/datetime@0.2.5) (2024-08-28)
 
 **Note:** Version bump only for package @next-shared/datetime
 
-
-
-
-
 ## [0.2.4](https://github.com/easyops-cn/next-bricks/compare/@next-shared/datetime@0.2.3...@next-shared/datetime@0.2.4) (2024-07-31)
 
 **Note:** Version bump only for package @next-shared/datetime
 
-
-
-
-
 ## [0.2.3](https://github.com/easyops-cn/next-bricks/compare/@next-shared/datetime@0.2.2...@next-shared/datetime@0.2.3) (2024-07-29)
 
 **Note:** Version bump only for package @next-shared/datetime
-
-
-
-
 
 ## [0.2.2](https://github.com/easyops-cn/next-bricks/compare/@next-shared/datetime@0.2.1...@next-shared/datetime@0.2.2) (2024-07-12)
 

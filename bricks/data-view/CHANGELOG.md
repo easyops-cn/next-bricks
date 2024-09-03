@@ -3,164 +3,93 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.3.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.3.11...@next-bricks/data-view@1.3.12) (2024-09-03)
+## [1.3.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.3.12...@next-bricks/data-view@1.3.13) (2024-09-03)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
+## [1.3.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.3.11...@next-bricks/data-view@1.3.12) (2024-09-03)
 
-
-
+**Note:** Version bump only for package @next-bricks/data-view
 
 ## [1.3.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.3.10...@next-bricks/data-view@1.3.11) (2024-08-28)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [1.3.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.3.9...@next-bricks/data-view@1.3.10) (2024-08-14)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [1.3.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.3.8...@next-bricks/data-view@1.3.9) (2024-08-13)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [1.3.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.3.7...@next-bricks/data-view@1.3.8) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [1.3.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.3.6...@next-bricks/data-view@1.3.7) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [1.3.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.3.5...@next-bricks/data-view@1.3.6) (2024-07-29)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [1.3.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.3.4...@next-bricks/data-view@1.3.5) (2024-07-25)
-
 
 ### Bug Fixes
 
-* CSNSHDP-23 地图文本位置手动调整，缓解重叠问题 ref CSNSHDP-23 ([11ad5e9](https://github.com/easyops-cn/next-bricks/commit/11ad5e96fbede33262694482535120ac3d85f4cd))
-
-
-
-
+- CSNSHDP-23 地图文本位置手动调整，缓解重叠问题 ref CSNSHDP-23 ([11ad5e9](https://github.com/easyops-cn/next-bricks/commit/11ad5e96fbede33262694482535120ac3d85f4cd))
 
 ## [1.3.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.3.3...@next-bricks/data-view@1.3.4) (2024-07-24)
 
-
 ### Bug Fixes
 
-* CSNSHDP-23 地图优化 ref CSNSHDP-23 ([58bfbb0](https://github.com/easyops-cn/next-bricks/commit/58bfbb061095e5efc2068e555369305e714ca529))
-
-
-
-
+- CSNSHDP-23 地图优化 ref CSNSHDP-23 ([58bfbb0](https://github.com/easyops-cn/next-bricks/commit/58bfbb061095e5efc2068e555369305e714ca529))
 
 ## [1.3.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.3.2...@next-bricks/data-view@1.3.3) (2024-07-22)
 
-
 ### Bug Fixes
 
-* CSNSHDP-23 地图优化 ref CSNSHDP-23 ([de623f2](https://github.com/easyops-cn/next-bricks/commit/de623f29e0e2bf74bbcdf945ee5816b1a396f9f5))
-
-
-
-
+- CSNSHDP-23 地图优化 ref CSNSHDP-23 ([de623f2](https://github.com/easyops-cn/next-bricks/commit/de623f29e0e2bf74bbcdf945ee5816b1a396f9f5))
 
 ## [1.3.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.3.1...@next-bricks/data-view@1.3.2) (2024-07-22)
 
-
 ### Bug Fixes
 
-* CSNSHDP-23 地图优化 ref CSNSHDP-23 ([834abbc](https://github.com/easyops-cn/next-bricks/commit/834abbc2011797b816bf06da32ac5ab23628cbbb))
-
-
-
-
+- CSNSHDP-23 地图优化 ref CSNSHDP-23 ([834abbc](https://github.com/easyops-cn/next-bricks/commit/834abbc2011797b816bf06da32ac5ab23628cbbb))
 
 ## [1.3.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.3.0...@next-bricks/data-view@1.3.1) (2024-07-19)
 
-
 ### Bug Fixes
 
-* CSNSHDP-23 资产地图构件开发问题修复 ref CSNSHDP-23 ([8ddb8f3](https://github.com/easyops-cn/next-bricks/commit/8ddb8f349db087ce5795b1ec2c6257a71e508817))
-
-
-
-
+- CSNSHDP-23 资产地图构件开发问题修复 ref CSNSHDP-23 ([8ddb8f3](https://github.com/easyops-cn/next-bricks/commit/8ddb8f349db087ce5795b1ec2c6257a71e508817))
 
 # [1.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.2.2...@next-bricks/data-view@1.3.0) (2024-07-19)
 
-
 ### Features
 
-* CSNSHDP-23 资产地图构件开发 ref CSNSHDP-23 ([f59fc48](https://github.com/easyops-cn/next-bricks/commit/f59fc486ee5aafb70b5a00c285cbf84c41040eb8))
-* CSNSHDP-23 资产地图构件开发 ref CSNSHDP-23 ([1bd63e6](https://github.com/easyops-cn/next-bricks/commit/1bd63e62aa1e66272c5feeebd1d159c287eb7834))
-
-
-
-
+- CSNSHDP-23 资产地图构件开发 ref CSNSHDP-23 ([f59fc48](https://github.com/easyops-cn/next-bricks/commit/f59fc486ee5aafb70b5a00c285cbf84c41040eb8))
+- CSNSHDP-23 资产地图构件开发 ref CSNSHDP-23 ([1bd63e6](https://github.com/easyops-cn/next-bricks/commit/1bd63e62aa1e66272c5feeebd1d159c287eb7834))
 
 ## [1.2.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.2.1...@next-bricks/data-view@1.2.2) (2024-07-19)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 ## [1.2.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.2.0...@next-bricks/data-view@1.2.1) (2024-07-16)
 
 **Note:** Version bump only for package @next-bricks/data-view
 
-
-
-
-
 # [1.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.26...@next-bricks/data-view@1.2.0) (2024-07-16)
-
 
 ### Features
 
-* CSNSHDP-24 无形资产构件开发-条状图 ref CSNSHDP-24 ([a8ab4fc](https://github.com/easyops-cn/next-bricks/commit/a8ab4fc2aacefd299a5d35f2f313b7eadec33ff4))
-* CSNSHDP-24 无形资产构件开发-条状图 ref CSNSHDP-24 ([380ddc4](https://github.com/easyops-cn/next-bricks/commit/380ddc4d74c644d48a38ee29b250326d24d3a69b))
-
-
-
-
+- CSNSHDP-24 无形资产构件开发-条状图 ref CSNSHDP-24 ([a8ab4fc](https://github.com/easyops-cn/next-bricks/commit/a8ab4fc2aacefd299a5d35f2f313b7eadec33ff4))
+- CSNSHDP-24 无形资产构件开发-条状图 ref CSNSHDP-24 ([380ddc4](https://github.com/easyops-cn/next-bricks/commit/380ddc4d74c644d48a38ee29b250326d24d3a69b))
 
 ## [1.1.26](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.25...@next-bricks/data-view@1.1.26) (2024-07-15)
 
 **Note:** Version bump only for package @next-bricks/data-view
-
-
-
-
 
 ## [1.1.25](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.1.24...@next-bricks/data-view@1.1.25) (2024-07-12)
 

@@ -3,215 +3,122 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.29.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.29.4...@next-bricks/ai@1.29.5) (2024-09-03)
+## [1.29.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.29.5...@next-bricks/ai@1.29.6) (2024-09-03)
 
 **Note:** Version bump only for package @next-bricks/ai
 
+## [1.29.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.29.4...@next-bricks/ai@1.29.5) (2024-09-03)
 
-
-
+**Note:** Version bump only for package @next-bricks/ai
 
 ## [1.29.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.29.3...@next-bricks/ai@1.29.4) (2024-08-28)
 
 **Note:** Version bump only for package @next-bricks/ai
 
-
-
-
-
 ## [1.29.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.29.2...@next-bricks/ai@1.29.3) (2024-08-22)
-
 
 ### Bug Fixes
 
-* refine chat view scroll detection ([00d2927](https://github.com/easyops-cn/next-bricks/commit/00d2927330280e6c48c51aa493e888caf21f733a))
-
-
-
-
+- refine chat view scroll detection ([00d2927](https://github.com/easyops-cn/next-bricks/commit/00d2927330280e6c48c51aa493e888caf21f733a))
 
 ## [1.29.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.29.1...@next-bricks/ai@1.29.2) (2024-08-16)
 
-
 ### Bug Fixes
 
-* stop message auto-scroll after user manual scrolled ([515eea3](https://github.com/easyops-cn/next-bricks/commit/515eea33bdd4123eab8811f23c9362dc69d9abbd))
-
-
-
-
+- stop message auto-scroll after user manual scrolled ([515eea3](https://github.com/easyops-cn/next-bricks/commit/515eea33bdd4123eab8811f23c9362dc69d9abbd))
 
 ## [1.29.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.29.0...@next-bricks/ai@1.29.1) (2024-08-15)
 
-
 ### Bug Fixes
 
-* **eo-card-item:** make card-content grow ([62aebf9](https://github.com/easyops-cn/next-bricks/commit/62aebf981c1708546437bcf9e8a9608e34891ebd))
-
-
-
-
+- **eo-card-item:** make card-content grow ([62aebf9](https://github.com/easyops-cn/next-bricks/commit/62aebf981c1708546437bcf9e8a9608e34891ebd))
 
 # [1.29.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.28.1...@next-bricks/ai@1.29.0) (2024-08-14)
 
-
 ### Features
 
-* chat-view replace all tool_call ([3965e5c](https://github.com/easyops-cn/next-bricks/commit/3965e5c97e8ce063ce32f424a307dd3dfb59055a))
-
-
-
-
+- chat-view replace all tool_call ([3965e5c](https://github.com/easyops-cn/next-bricks/commit/3965e5c97e8ce063ce32f424a307dd3dfb59055a))
 
 ## [1.28.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.28.0...@next-bricks/ai@1.28.1) (2024-08-13)
 
 **Note:** Version bump only for package @next-bricks/ai
 
-
-
-
-
 # [1.28.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.27.1...@next-bricks/ai@1.28.0) (2024-08-09)
-
 
 ### Features
 
-* chat-view support robotIdChange ([cf1a89b](https://github.com/easyops-cn/next-bricks/commit/cf1a89b2567e6f2134b402d0f30409e1edf6a4c7))
-
-
-
-
+- chat-view support robotIdChange ([cf1a89b](https://github.com/easyops-cn/next-bricks/commit/cf1a89b2567e6f2134b402d0f30409e1edf6a4c7))
 
 ## [1.27.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.27.0...@next-bricks/ai@1.27.1) (2024-08-09)
 
-
 ### Bug Fixes
 
-* openAI match key ([ab310f8](https://github.com/easyops-cn/next-bricks/commit/ab310f8f988a05ba09355cacd2bcf5bd55e5c2ae))
-
-
-
-
+- openAI match key ([ab310f8](https://github.com/easyops-cn/next-bricks/commit/ab310f8f988a05ba09355cacd2bcf5bd55e5c2ae))
 
 # [1.27.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.26.0...@next-bricks/ai@1.27.0) (2024-08-09)
 
-
 ### Features
 
-* chat-view support openAI message ([52e5e87](https://github.com/easyops-cn/next-bricks/commit/52e5e876ad9e7a9a5c7e93231510707cc0affafd))
-
-
-
-
+- chat-view support openAI message ([52e5e87](https://github.com/easyops-cn/next-bricks/commit/52e5e876ad9e7a9a5c7e93231510707cc0affafd))
 
 # [1.26.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.25.0...@next-bricks/ai@1.26.0) (2024-08-08)
 
-
 ### Features
 
-* update markdown style ([00b6b53](https://github.com/easyops-cn/next-bricks/commit/00b6b53e04a4d15e3188e8d0523b02f543b4524a))
-
-
-
-
+- update markdown style ([00b6b53](https://github.com/easyops-cn/next-bricks/commit/00b6b53e04a4d15e3188e8d0523b02f543b4524a))
 
 # [1.25.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.24.0...@next-bricks/ai@1.25.0) (2024-08-08)
 
-
 ### Features
 
-* chat-view add useSplitWord flag ([9b951af](https://github.com/easyops-cn/next-bricks/commit/9b951af6014708bd1e0ee813270024d6b1fef098))
-
-
-
-
+- chat-view add useSplitWord flag ([9b951af](https://github.com/easyops-cn/next-bricks/commit/9b951af6014708bd1e0ee813270024d6b1fef098))
 
 # [1.24.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.24...@next-bricks/ai@1.24.0) (2024-07-31)
 
-
 ### Features
 
-* **chat-agent:** support low level send request ([ae736ed](https://github.com/easyops-cn/next-bricks/commit/ae736ed57203086bd1a46579ae4a23ffbc28d841))
-
-
-
-
+- **chat-agent:** support low level send request ([ae736ed](https://github.com/easyops-cn/next-bricks/commit/ae736ed57203086bd1a46579ae4a23ffbc28d841))
 
 ## [1.23.24](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.23...@next-bricks/ai@1.23.24) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/ai
 
-
-
-
-
 ## [1.23.23](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.22...@next-bricks/ai@1.23.23) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/ai
-
-
-
-
 
 ## [1.23.22](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.21...@next-bricks/ai@1.23.22) (2024-07-29)
 
 **Note:** Version bump only for package @next-bricks/ai
 
-
-
-
-
 ## [1.23.21](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.20...@next-bricks/ai@1.23.21) (2024-07-21)
-
 
 ### Bug Fixes
 
-* fix ai-chat-view link bug ([fdefc53](https://github.com/easyops-cn/next-bricks/commit/fdefc532befa57922270f6d11610151f61760145))
-
-
-
-
+- fix ai-chat-view link bug ([fdefc53](https://github.com/easyops-cn/next-bricks/commit/fdefc532befa57922270f6d11610151f61760145))
 
 ## [1.23.20](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.19...@next-bricks/ai@1.23.20) (2024-07-19)
 
 **Note:** Version bump only for package @next-bricks/ai
 
-
-
-
-
 ## [1.23.19](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.18...@next-bricks/ai@1.23.19) (2024-07-17)
-
 
 ### Bug Fixes
 
-* 对于敏感词和超过资源配额报错做优化处理 ([ee14b71](https://github.com/easyops-cn/next-bricks/commit/ee14b717d0abb8321d9385c7060226839b4fd0bc))
-* 支持有sessionList的情况下,初始化activeSessionId ([29aa122](https://github.com/easyops-cn/next-bricks/commit/29aa1222cd32f406e296b38e10e3b3cb4c82b268))
-
-
-
-
+- 对于敏感词和超过资源配额报错做优化处理 ([ee14b71](https://github.com/easyops-cn/next-bricks/commit/ee14b717d0abb8321d9385c7060226839b4fd0bc))
+- 支持有sessionList的情况下,初始化activeSessionId ([29aa122](https://github.com/easyops-cn/next-bricks/commit/29aa1222cd32f406e296b38e10e3b3cb4c82b268))
 
 ## [1.23.18](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.17...@next-bricks/ai@1.23.18) (2024-07-16)
 
-
 ### Bug Fixes
 
-* 兼容chrome85版本 ([52eae45](https://github.com/easyops-cn/next-bricks/commit/52eae4568c7cd21d3f662807feeac59a26050fd8))
-* 支持qa.finish和session.change事件 ([c10e31c](https://github.com/easyops-cn/next-bricks/commit/c10e31c52564e700f2b9d1ca86f88f4f364f0d20))
-* 新建会话不显示删除改名按钮 ([c1090d1](https://github.com/easyops-cn/next-bricks/commit/c1090d11fbc9ab5782f2a87c10e2a7a40dde84e4))
-
-
-
-
+- 兼容chrome85版本 ([52eae45](https://github.com/easyops-cn/next-bricks/commit/52eae4568c7cd21d3f662807feeac59a26050fd8))
+- 支持qa.finish和session.change事件 ([c10e31c](https://github.com/easyops-cn/next-bricks/commit/c10e31c52564e700f2b9d1ca86f88f4f364f0d20))
+- 新建会话不显示删除改名按钮 ([c1090d1](https://github.com/easyops-cn/next-bricks/commit/c1090d11fbc9ab5782f2a87c10e2a7a40dde84e4))
 
 ## [1.23.17](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.16...@next-bricks/ai@1.23.17) (2024-07-15)
 
 **Note:** Version bump only for package @next-bricks/ai
-
-
-
-
 
 ## [1.23.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.23.15...@next-bricks/ai@1.23.16) (2024-07-12)
 

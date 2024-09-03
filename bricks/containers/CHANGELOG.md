@@ -3,78 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.8.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.8.1...@next-bricks/containers@1.8.2) (2024-09-03)
+## [1.8.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.8.2...@next-bricks/containers@1.8.3) (2024-09-03)
 
+**Note:** Version bump only for package @next-bricks/containers
+
+## [1.8.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.8.1...@next-bricks/containers@1.8.2) (2024-09-03)
 
 ### Bug Fixes
 
-* fix story types ([c2eab4d](https://github.com/easyops-cn/next-bricks/commit/c2eab4dd97a83502f68c25e82f5cbe818c3c180b))
-
-
-
-
+- fix story types ([c2eab4d](https://github.com/easyops-cn/next-bricks/commit/c2eab4dd97a83502f68c25e82f5cbe818c3c180b))
 
 ## [1.8.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.8.0...@next-bricks/containers@1.8.1) (2024-08-28)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 # [1.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.7.1...@next-bricks/containers@1.8.0) (2024-08-16)
-
 
 ### Features
 
-* **modal:** add footer slot ([07ef145](https://github.com/easyops-cn/next-bricks/commit/07ef1455cdb1edd6b6f6031b6f539512dd0c0007))
-
-
-
-
+- **modal:** add footer slot ([07ef145](https://github.com/easyops-cn/next-bricks/commit/07ef1455cdb1edd6b6f6031b6f539512dd0c0007))
 
 ## [1.7.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.7.0...@next-bricks/containers@1.7.1) (2024-08-06)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 # [1.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.6.7...@next-bricks/containers@1.7.0) (2024-08-05)
-
 
 ### Features
 
-* new brick: eo-resizable-box ([9312abc](https://github.com/easyops-cn/next-bricks/commit/9312abc70bd8bacb101dbdd1f70c4f69dafaf7f0))
-
-
-
-
+- new brick: eo-resizable-box ([9312abc](https://github.com/easyops-cn/next-bricks/commit/9312abc70bd8bacb101dbdd1f70c4f69dafaf7f0))
 
 ## [1.6.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.6.6...@next-bricks/containers@1.6.7) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [1.6.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.6.5...@next-bricks/containers@1.6.6) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/containers
 
-
-
-
-
 ## [1.6.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.6.4...@next-bricks/containers@1.6.5) (2024-07-29)
 
 **Note:** Version bump only for package @next-bricks/containers
-
-
-
-
 
 ## [1.6.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.6.3...@next-bricks/containers@1.6.4) (2024-07-12)
 

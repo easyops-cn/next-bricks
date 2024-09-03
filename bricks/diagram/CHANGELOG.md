@@ -3,154 +3,89 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.43.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.43.1...@next-bricks/diagram@0.43.2) (2024-09-03)
+
+**Note:** Version bump only for package @next-bricks/diagram
+
 ## [0.43.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.43.0...@next-bricks/diagram@0.43.1) (2024-09-03)
 
 **Note:** Version bump only for package @next-bricks/diagram
 
-
-
-
-
 # [0.43.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.42.12...@next-bricks/diagram@0.43.0) (2024-09-02)
-
 
 ### Bug Fixes
 
-* **draw-canvas:** new event: edge.add ([620ddbb](https://github.com/easyops-cn/next-bricks/commit/620ddbbb887d63f8c1ddf2c71ee71aecaf86597d))
-* use native event listener for line connector events to avoid conflicts with drag behavior ([4cb74f9](https://github.com/easyops-cn/next-bricks/commit/4cb74f986b47be8d63ac029b18f6bd271163b7b0))
-
+- **draw-canvas:** new event: edge.add ([620ddbb](https://github.com/easyops-cn/next-bricks/commit/620ddbbb887d63f8c1ddf2c71ee71aecaf86597d))
+- use native event listener for line connector events to avoid conflicts with drag behavior ([4cb74f9](https://github.com/easyops-cn/next-bricks/commit/4cb74f986b47be8d63ac029b18f6bd271163b7b0))
 
 ### Features
 
-* line connector ([f887216](https://github.com/easyops-cn/next-bricks/commit/f887216ac1f0e64d4a309b5d368cfb9e09e2c2bd))
-* support snap to grid ([a5ed427](https://github.com/easyops-cn/next-bricks/commit/a5ed4277ef0fd3983bb22cfa501f242259c83f71))
-* support snap to object ([ae302a2](https://github.com/easyops-cn/next-bricks/commit/ae302a2f9b296b3dc9efc7a4bb2d78ac24127cd2))
-
-
-
-
+- line connector ([f887216](https://github.com/easyops-cn/next-bricks/commit/f887216ac1f0e64d4a309b5d368cfb9e09e2c2bd))
+- support snap to grid ([a5ed427](https://github.com/easyops-cn/next-bricks/commit/a5ed4277ef0fd3983bb22cfa501f242259c83f71))
+- support snap to object ([ae302a2](https://github.com/easyops-cn/next-bricks/commit/ae302a2f9b296b3dc9efc7a4bb2d78ac24127cd2))
 
 ## [0.42.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.42.11...@next-bricks/diagram@0.42.12) (2024-08-28)
 
 **Note:** Version bump only for package @next-bricks/diagram
 
-
-
-
-
 ## [0.42.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.42.10...@next-bricks/diagram@0.42.11) (2024-08-14)
 
 **Note:** Version bump only for package @next-bricks/diagram
-
-
-
-
 
 ## [0.42.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.42.9...@next-bricks/diagram@0.42.10) (2024-08-13)
 
 **Note:** Version bump only for package @next-bricks/diagram
 
-
-
-
-
 ## [0.42.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.42.8...@next-bricks/diagram@0.42.9) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/diagram
-
-
-
-
 
 ## [0.42.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.42.7...@next-bricks/diagram@0.42.8) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/diagram
 
-
-
-
-
 ## [0.42.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.42.6...@next-bricks/diagram@0.42.7) (2024-07-29)
 
 **Note:** Version bump only for package @next-bricks/diagram
-
-
-
-
 
 ## [0.42.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.42.5...@next-bricks/diagram@0.42.6) (2024-07-21)
 
 **Note:** Version bump only for package @next-bricks/diagram
 
-
-
-
-
 ## [0.42.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.42.4...@next-bricks/diagram@0.42.5) (2024-07-19)
 
 **Note:** Version bump only for package @next-bricks/diagram
-
-
-
-
 
 ## [0.42.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.42.3...@next-bricks/diagram@0.42.4) (2024-07-19)
 
 **Note:** Version bump only for package @next-bricks/diagram
 
-
-
-
-
 ## [0.42.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.42.2...@next-bricks/diagram@0.42.3) (2024-07-17)
 
 **Note:** Version bump only for package @next-bricks/diagram
 
-
-
-
-
 ## [0.42.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.42.1...@next-bricks/diagram@0.42.2) (2024-07-16)
-
 
 ### Bug Fixes
 
-* 容器名称不更新的问题 ([8afadea](https://github.com/easyops-cn/next-bricks/commit/8afadea79082ad91abee2fb2eb77895bfde05fd6))
-
-
-
-
+- 容器名称不更新的问题 ([8afadea](https://github.com/easyops-cn/next-bricks/commit/8afadea79082ad91abee2fb2eb77895bfde05fd6))
 
 ## [0.42.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.42.0...@next-bricks/diagram@0.42.1) (2024-07-16)
 
-
 ### Bug Fixes
 
-* 修复拖动容器,关联的节点不应该触发onContainerContainerChange事件 ([83bd0ed](https://github.com/easyops-cn/next-bricks/commit/83bd0ed785891ea7a918757a100fed5c3af5ddfe))
-
-
-
-
+- 修复拖动容器,关联的节点不应该触发onContainerContainerChange事件 ([83bd0ed](https://github.com/easyops-cn/next-bricks/commit/83bd0ed785891ea7a918757a100fed5c3af5ddfe))
 
 # [0.42.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.41.2...@next-bricks/diagram@0.42.0) (2024-07-15)
 
-
 ### Features
 
-* 支持容器移动，有关系的节点也跟随移动 ([88afe94](https://github.com/easyops-cn/next-bricks/commit/88afe9474649d3952c89310b5133a6fc42ae8724))
-* 节点拖入到容器，需要高亮提示 ([2deb95b](https://github.com/easyops-cn/next-bricks/commit/2deb95bcb3902cb27ac073aa4b2c50c89d6f1886))
-
-
-
-
+- 支持容器移动，有关系的节点也跟随移动 ([88afe94](https://github.com/easyops-cn/next-bricks/commit/88afe9474649d3952c89310b5133a6fc42ae8724))
+- 节点拖入到容器，需要高亮提示 ([2deb95b](https://github.com/easyops-cn/next-bricks/commit/2deb95bcb3902cb27ac073aa4b2c50c89d6f1886))
 
 ## [0.41.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.41.1...@next-bricks/diagram@0.41.2) (2024-07-15)
 
 **Note:** Version bump only for package @next-bricks/diagram
-
-
-
-
 
 ## [0.41.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.41.0...@next-bricks/diagram@0.41.1) (2024-07-12)
 

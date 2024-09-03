@@ -3,75 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.12.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.12.2...@next-bricks/markdown@1.12.3) (2024-09-03)
+## [1.12.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.12.3...@next-bricks/markdown@1.12.4) (2024-09-03)
 
+**Note:** Version bump only for package @next-bricks/markdown
+
+## [1.12.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.12.2...@next-bricks/markdown@1.12.3) (2024-09-03)
 
 ### Bug Fixes
 
-* fix story types ([c2eab4d](https://github.com/easyops-cn/next-bricks/commit/c2eab4dd97a83502f68c25e82f5cbe818c3c180b))
-
-
-
-
+- fix story types ([c2eab4d](https://github.com/easyops-cn/next-bricks/commit/c2eab4dd97a83502f68c25e82f5cbe818c3c180b))
 
 ## [1.12.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.12.1...@next-bricks/markdown@1.12.2) (2024-08-29)
 
 **Note:** Version bump only for package @next-bricks/markdown
 
-
-
-
-
 ## [1.12.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.12.0...@next-bricks/markdown@1.12.1) (2024-08-28)
 
 **Note:** Version bump only for package @next-bricks/markdown
 
-
-
-
-
 # [1.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.11.13...@next-bricks/markdown@1.12.0) (2024-08-15)
-
 
 ### Features
 
-* new brick: eo-markdown-display ([12af87a](https://github.com/easyops-cn/next-bricks/commit/12af87ad7b6047eff8b10bbb1fac700977225239))
-
-
-
-
+- new brick: eo-markdown-display ([12af87a](https://github.com/easyops-cn/next-bricks/commit/12af87ad7b6047eff8b10bbb1fac700977225239))
 
 ## [1.11.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.11.12...@next-bricks/markdown@1.11.13) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/markdown
 
-
-
-
-
 ## [1.11.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.11.11...@next-bricks/markdown@1.11.12) (2024-07-29)
 
 **Note:** Version bump only for package @next-bricks/markdown
-
-
-
-
 
 ## [1.11.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.11.10...@next-bricks/markdown@1.11.11) (2024-07-19)
 
 **Note:** Version bump only for package @next-bricks/markdown
 
-
-
-
-
 ## [1.11.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.11.9...@next-bricks/markdown@1.11.10) (2024-07-19)
 
 **Note:** Version bump only for package @next-bricks/markdown
-
-
-
-
 
 ## [1.11.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.11.8...@next-bricks/markdown@1.11.9) (2024-07-12)
 

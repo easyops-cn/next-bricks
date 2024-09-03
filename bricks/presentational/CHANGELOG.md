@@ -3,110 +3,63 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.10.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.14...@next-bricks/presentational@1.10.15) (2024-09-03)
+## [1.10.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.15...@next-bricks/presentational@1.10.16) (2024-09-03)
 
+**Note:** Version bump only for package @next-bricks/presentational
+
+## [1.10.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.14...@next-bricks/presentational@1.10.15) (2024-09-03)
 
 ### Bug Fixes
 
-* fix story types ([c2eab4d](https://github.com/easyops-cn/next-bricks/commit/c2eab4dd97a83502f68c25e82f5cbe818c3c180b))
-
-
-
-
+- fix story types ([c2eab4d](https://github.com/easyops-cn/next-bricks/commit/c2eab4dd97a83502f68c25e82f5cbe818c3c180b))
 
 ## [1.10.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.13...@next-bricks/presentational@1.10.14) (2024-08-28)
 
-
 ### Bug Fixes
 
-* handle click event for eo-card-item with actions ([3538879](https://github.com/easyops-cn/next-bricks/commit/35388792e121afdcf40dc793ad6306351b2ae8e5))
-
-
-
-
+- handle click event for eo-card-item with actions ([3538879](https://github.com/easyops-cn/next-bricks/commit/35388792e121afdcf40dc793ad6306351b2ae8e5))
 
 ## [1.10.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.12...@next-bricks/presentational@1.10.13) (2024-08-28)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [1.10.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.11...@next-bricks/presentational@1.10.12) (2024-08-15)
-
 
 ### Bug Fixes
 
-* **eo-card-item:** make card-content grow ([62aebf9](https://github.com/easyops-cn/next-bricks/commit/62aebf981c1708546437bcf9e8a9608e34891ebd))
-
-
-
-
+- **eo-card-item:** make card-content grow ([62aebf9](https://github.com/easyops-cn/next-bricks/commit/62aebf981c1708546437bcf9e8a9608e34891ebd))
 
 ## [1.10.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.10...@next-bricks/presentational@1.10.11) (2024-08-14)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [1.10.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.9...@next-bricks/presentational@1.10.10) (2024-08-13)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [1.10.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.8...@next-bricks/presentational@1.10.9) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [1.10.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.7...@next-bricks/presentational@1.10.8) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [1.10.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.6...@next-bricks/presentational@1.10.7) (2024-07-29)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [1.10.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.5...@next-bricks/presentational@1.10.6) (2024-07-19)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [1.10.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.4...@next-bricks/presentational@1.10.5) (2024-07-16)
 
 **Note:** Version bump only for package @next-bricks/presentational
 
-
-
-
-
 ## [1.10.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.3...@next-bricks/presentational@1.10.4) (2024-07-15)
 
 **Note:** Version bump only for package @next-bricks/presentational
-
-
-
-
 
 ## [1.10.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.2...@next-bricks/presentational@1.10.3) (2024-07-12)
 

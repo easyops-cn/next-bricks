@@ -3,204 +3,114 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.40.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.40.4...@next-bricks/advanced@0.40.5) (2024-09-03)
+## [0.40.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.40.5...@next-bricks/advanced@0.40.6) (2024-09-03)
 
 **Note:** Version bump only for package @next-bricks/advanced
 
+## [0.40.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.40.4...@next-bricks/advanced@0.40.5) (2024-09-03)
 
-
-
+**Note:** Version bump only for package @next-bricks/advanced
 
 ## [0.40.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.40.3...@next-bricks/advanced@0.40.4) (2024-09-02)
 
 **Note:** Version bump only for package @next-bricks/advanced
 
-
-
-
-
 ## [0.40.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.40.2...@next-bricks/advanced@0.40.3) (2024-08-28)
 
 **Note:** Version bump only for package @next-bricks/advanced
-
-
-
-
 
 ## [0.40.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.40.1...@next-bricks/advanced@0.40.2) (2024-08-14)
 
 **Note:** Version bump only for package @next-bricks/advanced
 
-
-
-
-
 ## [0.40.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.40.0...@next-bricks/advanced@0.40.1) (2024-08-13)
 
 **Note:** Version bump only for package @next-bricks/advanced
 
-
-
-
-
 # [0.40.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.39.0...@next-bricks/advanced@0.40.0) (2024-08-08)
-
 
 ### Features
 
-* pdf-viewer use local worker js ([dd5fc19](https://github.com/easyops-cn/next-bricks/commit/dd5fc1976effba8f310b67ab68a35dd57f0a4f7d))
-
-
-
-
+- pdf-viewer use local worker js ([dd5fc19](https://github.com/easyops-cn/next-bricks/commit/dd5fc1976effba8f310b67ab68a35dd57f0a4f7d))
 
 # [0.39.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.38.3...@next-bricks/advanced@0.39.0) (2024-08-08)
 
-
 ### Features
 
-* support pdf viewer ([34f37b6](https://github.com/easyops-cn/next-bricks/commit/34f37b66eba8e753bdcfebe4480ffafea65defb4))
-
-
-
-
+- support pdf viewer ([34f37b6](https://github.com/easyops-cn/next-bricks/commit/34f37b66eba8e753bdcfebe4480ffafea65defb4))
 
 ## [0.38.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.38.2...@next-bricks/advanced@0.38.3) (2024-08-05)
 
-
 ### Bug Fixes
 
-* deprecate event `page.size.change` of `eo-next-table` ([9f84b0b](https://github.com/easyops-cn/next-bricks/commit/9f84b0b143bbf9383667c464e6fe6b2cff518dc4))
-
-
-
-
+- deprecate event `page.size.change` of `eo-next-table` ([9f84b0b](https://github.com/easyops-cn/next-bricks/commit/9f84b0b143bbf9383667c464e6fe6b2cff518dc4))
 
 ## [0.38.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.38.1...@next-bricks/advanced@0.38.2) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/advanced
 
-
-
-
-
 ## [0.38.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.38.0...@next-bricks/advanced@0.38.1) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/advanced
 
-
-
-
-
 # [0.38.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.37.0...@next-bricks/advanced@0.38.0) (2024-07-29)
-
 
 ### Features
 
-* **workbench-layout:** Mark eo-workbench-layout as deprecated and synchronize changes to eo-workbench-layout-v2 ([ff6f0ff](https://github.com/easyops-cn/next-bricks/commit/ff6f0ffc5ba887834f59caf3f46c1c1b79609eef))
-
-
-
-
+- **workbench-layout:** Mark eo-workbench-layout as deprecated and synchronize changes to eo-workbench-layout-v2 ([ff6f0ff](https://github.com/easyops-cn/next-bricks/commit/ff6f0ffc5ba887834f59caf3f46c1c1b79609eef))
 
 # [0.37.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.36.2...@next-bricks/advanced@0.37.0) (2024-07-27)
 
-
 ### Features
 
-* **workbench-layout:** add change event ([a3ae2b6](https://github.com/easyops-cn/next-bricks/commit/a3ae2b68dfea17ba7804aa6e69772c9ba1effb94))
-
-
-
-
+- **workbench-layout:** add change event ([a3ae2b6](https://github.com/easyops-cn/next-bricks/commit/a3ae2b68dfea17ba7804aa6e69772c9ba1effb94))
 
 ## [0.36.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.36.1...@next-bricks/advanced@0.36.2) (2024-07-25)
 
-
 ### Bug Fixes
 
-* **workbench-layout:** 清空操作增加确认 ([e484026](https://github.com/easyops-cn/next-bricks/commit/e4840267ceb057e44a8ac1edfad59d4c0309c5dc))
-
-
-
-
+- **workbench-layout:** 清空操作增加确认 ([e484026](https://github.com/easyops-cn/next-bricks/commit/e4840267ceb057e44a8ac1edfad59d4c0309c5dc))
 
 ## [0.36.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.36.0...@next-bricks/advanced@0.36.1) (2024-07-23)
 
-
 ### Bug Fixes
 
-* **workbench-layout:** fix layouts data of action.click event detail ([0097272](https://github.com/easyops-cn/next-bricks/commit/00972720c5fb3993c3fc1ed116e0423943ceba4c))
-
-
-
-
+- **workbench-layout:** fix layouts data of action.click event detail ([0097272](https://github.com/easyops-cn/next-bricks/commit/00972720c5fb3993c3fc1ed116e0423943ceba4c))
 
 # [0.36.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.35.10...@next-bricks/advanced@0.36.0) (2024-07-22)
 
-
 ### Features
 
-* **workbench-layout:** add saveAsTemplate and loadFromTemplate actions and action.click event ([85c2475](https://github.com/easyops-cn/next-bricks/commit/85c2475716c5df9b0d85a7689057fb16014daede))
-* **workbench-layout:** add setLayouts method ([c84db64](https://github.com/easyops-cn/next-bricks/commit/c84db64517c5367e68a4590933d3695aff62ff95))
-
-
-
-
+- **workbench-layout:** add saveAsTemplate and loadFromTemplate actions and action.click event ([85c2475](https://github.com/easyops-cn/next-bricks/commit/85c2475716c5df9b0d85a7689057fb16014daede))
+- **workbench-layout:** add setLayouts method ([c84db64](https://github.com/easyops-cn/next-bricks/commit/c84db64517c5367e68a4590933d3695aff62ff95))
 
 ## [0.35.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.35.9...@next-bricks/advanced@0.35.10) (2024-07-21)
 
 **Note:** Version bump only for package @next-bricks/advanced
 
-
-
-
-
 ## [0.35.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.35.8...@next-bricks/advanced@0.35.9) (2024-07-19)
 
 **Note:** Version bump only for package @next-bricks/advanced
-
-
-
-
 
 ## [0.35.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.35.7...@next-bricks/advanced@0.35.8) (2024-07-19)
 
 **Note:** Version bump only for package @next-bricks/advanced
 
-
-
-
-
 ## [0.35.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.35.6...@next-bricks/advanced@0.35.7) (2024-07-15)
-
 
 ### Bug Fixes
 
-* fix firefox style bug ([758542a](https://github.com/easyops-cn/next-bricks/commit/758542afc664cb006467a9688bef3930e6b2d55a))
-
-
-
-
+- fix firefox style bug ([758542a](https://github.com/easyops-cn/next-bricks/commit/758542afc664cb006467a9688bef3930e6b2d55a))
 
 ## [0.35.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.35.5...@next-bricks/advanced@0.35.6) (2024-07-15)
 
 **Note:** Version bump only for package @next-bricks/advanced
 
-
-
-
-
 ## [0.35.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.35.4...@next-bricks/advanced@0.35.5) (2024-07-12)
-
 
 ### Bug Fixes
 
-* **eo-workbench-layout-v2:** 编辑时点击删除按钮没响应 ([1698c57](https://github.com/easyops-cn/next-bricks/commit/1698c57d4bd746cd5a888da28e8321a36c569a19))
-
-
-
-
+- **eo-workbench-layout-v2:** 编辑时点击删除按钮没响应 ([1698c57](https://github.com/easyops-cn/next-bricks/commit/1698c57d4bd746cd5a888da28e8321a36c569a19))
 
 ## [0.35.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.35.3...@next-bricks/advanced@0.35.4) (2024-07-12)
 

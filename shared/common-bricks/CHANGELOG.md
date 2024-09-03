@@ -3,60 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.49.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.48.0...@next-shared/common-bricks@0.49.0) (2024-08-15)
+## [0.49.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.49.0...@next-shared/common-bricks@0.49.1) (2024-09-03)
 
+**Note:** Version bump only for package @next-shared/common-bricks
+
+# [0.49.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.48.0...@next-shared/common-bricks@0.49.0) (2024-08-15)
 
 ### Features
 
-* new brick: eo-markdown-display ([12af87a](https://github.com/easyops-cn/next-bricks/commit/12af87ad7b6047eff8b10bbb1fac700977225239))
-
-
-
-
+- new brick: eo-markdown-display ([12af87a](https://github.com/easyops-cn/next-bricks/commit/12af87ad7b6047eff8b10bbb1fac700977225239))
 
 # [0.48.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.47.0...@next-shared/common-bricks@0.48.0) (2024-08-05)
 
-
 ### Features
 
-* new brick: eo-resizable-box ([9312abc](https://github.com/easyops-cn/next-bricks/commit/9312abc70bd8bacb101dbdd1f70c4f69dafaf7f0))
-
-
-
-
+- new brick: eo-resizable-box ([9312abc](https://github.com/easyops-cn/next-bricks/commit/9312abc70bd8bacb101dbdd1f70c4f69dafaf7f0))
 
 # [0.47.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.46.0...@next-shared/common-bricks@0.47.0) (2024-08-01)
 
-
 ### Features
 
-* new brick: eo-broadcast-channel ([6e44af1](https://github.com/easyops-cn/next-bricks/commit/6e44af112987097b9f1790bed98620d5ea2787c2))
-
-
-
-
+- new brick: eo-broadcast-channel ([6e44af1](https://github.com/easyops-cn/next-bricks/commit/6e44af112987097b9f1790bed98620d5ea2787c2))
 
 # [0.46.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.45.0...@next-shared/common-bricks@0.46.0) (2024-07-31)
 
-
 ### Features
 
-* new brick: eo-message-listener ([62a31b2](https://github.com/easyops-cn/next-bricks/commit/62a31b24f823dea285c2c78ede4694029bfe2e9c))
-
-
-
-
+- new brick: eo-message-listener ([62a31b2](https://github.com/easyops-cn/next-bricks/commit/62a31b24f823dea285c2c78ede4694029bfe2e9c))
 
 # [0.45.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.44.1...@next-shared/common-bricks@0.45.0) (2024-07-24)
 
-
 ### Features
 
-* new brick: eo-event-agent ([cc36bbc](https://github.com/easyops-cn/next-bricks/commit/cc36bbc9c5ffb9d4772eb0f0d4dd66a0b52accb4))
-
-
-
-
+- new brick: eo-event-agent ([cc36bbc](https://github.com/easyops-cn/next-bricks/commit/cc36bbc9c5ffb9d4772eb0f0d4dd66a0b52accb4))
 
 ## [0.44.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.44.0...@next-shared/common-bricks@0.44.1) (2024-07-12)
 

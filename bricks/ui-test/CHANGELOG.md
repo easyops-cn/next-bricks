@@ -3,77 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.0.45](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@1.0.44...@next-bricks/ui-test@1.0.45) (2024-09-03)
+## [1.0.46](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@1.0.45...@next-bricks/ui-test@1.0.46) (2024-09-03)
 
 **Note:** Version bump only for package @next-bricks/ui-test
 
+## [1.0.45](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@1.0.44...@next-bricks/ui-test@1.0.45) (2024-09-03)
 
-
-
+**Note:** Version bump only for package @next-bricks/ui-test
 
 ## [1.0.44](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@1.0.43...@next-bricks/ui-test@1.0.44) (2024-08-28)
 
 **Note:** Version bump only for package @next-bricks/ui-test
 
-
-
-
-
 ## [1.0.43](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@1.0.42...@next-bricks/ui-test@1.0.43) (2024-08-14)
 
 **Note:** Version bump only for package @next-bricks/ui-test
-
-
-
-
 
 ## [1.0.42](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@1.0.41...@next-bricks/ui-test@1.0.42) (2024-08-13)
 
 **Note:** Version bump only for package @next-bricks/ui-test
 
-
-
-
-
 ## [1.0.41](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@1.0.40...@next-bricks/ui-test@1.0.41) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/ui-test
-
-
-
-
 
 ## [1.0.40](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@1.0.39...@next-bricks/ui-test@1.0.40) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/ui-test
 
-
-
-
-
 ## [1.0.39](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@1.0.38...@next-bricks/ui-test@1.0.39) (2024-07-29)
 
 **Note:** Version bump only for package @next-bricks/ui-test
-
-
-
-
 
 ## [1.0.38](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@1.0.37...@next-bricks/ui-test@1.0.38) (2024-07-19)
 
 **Note:** Version bump only for package @next-bricks/ui-test
 
-
-
-
-
 ## [1.0.37](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@1.0.36...@next-bricks/ui-test@1.0.37) (2024-07-15)
 
 **Note:** Version bump only for package @next-bricks/ui-test
-
-
-
-
 
 ## [1.0.36](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ui-test@1.0.35...@next-bricks/ui-test@1.0.36) (2024-07-12)
 

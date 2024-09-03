@@ -3,117 +3,69 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.2.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.2.5...@next-bricks/illustrations@1.2.6) (2024-09-03)
+## [1.2.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.2.6...@next-bricks/illustrations@1.2.7) (2024-09-03)
 
 **Note:** Version bump only for package @next-bricks/illustrations
 
+## [1.2.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.2.5...@next-bricks/illustrations@1.2.6) (2024-09-03)
 
-
-
+**Note:** Version bump only for package @next-bricks/illustrations
 
 ## [1.2.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.2.4...@next-bricks/illustrations@1.2.5) (2024-08-28)
 
 **Note:** Version bump only for package @next-bricks/illustrations
 
-
-
-
-
 ## [1.2.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.2.3...@next-bricks/illustrations@1.2.4) (2024-08-14)
 
 **Note:** Version bump only for package @next-bricks/illustrations
-
-
-
-
 
 ## [1.2.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.2.2...@next-bricks/illustrations@1.2.3) (2024-08-13)
 
 **Note:** Version bump only for package @next-bricks/illustrations
 
-
-
-
-
 ## [1.2.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.2.1...@next-bricks/illustrations@1.2.2) (2024-08-13)
 
 **Note:** Version bump only for package @next-bricks/illustrations
 
-
-
-
-
 ## [1.2.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.2.0...@next-bricks/illustrations@1.2.1) (2024-08-12)
-
 
 ### Bug Fixes
 
-* **error-message:** new variant: not-found ([1bc9556](https://github.com/easyops-cn/next-bricks/commit/1bc9556b20796a456b6ae0ba76e34a5f2136d6a3))
-
-
-
-
+- **error-message:** new variant: not-found ([1bc9556](https://github.com/easyops-cn/next-bricks/commit/1bc9556b20796a456b6ae0ba76e34a5f2136d6a3))
 
 # [1.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.1.1...@next-bricks/illustrations@1.2.0) (2024-08-12)
 
-
 ### Features
 
-* new brick: illustrations.error-message ([470e91c](https://github.com/easyops-cn/next-bricks/commit/470e91c25015d331ae7a22dd8d3a05c3791f0e52))
-
-
-
-
+- new brick: illustrations.error-message ([470e91c](https://github.com/easyops-cn/next-bricks/commit/470e91c25015d331ae7a22dd8d3a05c3791f0e52))
 
 ## [1.1.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.1.0...@next-bricks/illustrations@1.1.1) (2024-08-05)
 
 **Note:** Version bump only for package @next-bricks/illustrations
 
-
-
-
-
 # [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.0.31...@next-bricks/illustrations@1.1.0) (2024-08-02)
-
 
 ### Bug Fixes
 
-* alternate animation ([e22e927](https://github.com/easyops-cn/next-bricks/commit/e22e927f782745a3692e7427c5b118bfa24a5835))
-* use sprite image ([0507cb8](https://github.com/easyops-cn/next-bricks/commit/0507cb83494c0612fff63a1906a1e353cdb1525c))
-
+- alternate animation ([e22e927](https://github.com/easyops-cn/next-bricks/commit/e22e927f782745a3692e7427c5b118bfa24a5835))
+- use sprite image ([0507cb8](https://github.com/easyops-cn/next-bricks/commit/0507cb83494c0612fff63a1906a1e353cdb1525c))
 
 ### Features
 
-* new brick: rocket-transition ([890d3e4](https://github.com/easyops-cn/next-bricks/commit/890d3e45ede83f37476e3da3955c052153edd849))
-* rename loading-transition ([b64fe29](https://github.com/easyops-cn/next-bricks/commit/b64fe29cc1ec68071202f9f217d5089d73baa017))
-
-
-
-
+- new brick: rocket-transition ([890d3e4](https://github.com/easyops-cn/next-bricks/commit/890d3e45ede83f37476e3da3955c052153edd849))
+- rename loading-transition ([b64fe29](https://github.com/easyops-cn/next-bricks/commit/b64fe29cc1ec68071202f9f217d5089d73baa017))
 
 ## [1.0.31](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.0.30...@next-bricks/illustrations@1.0.31) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/illustrations
 
-
-
-
-
 ## [1.0.30](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.0.29...@next-bricks/illustrations@1.0.30) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/illustrations
 
-
-
-
-
 ## [1.0.29](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.0.28...@next-bricks/illustrations@1.0.29) (2024-07-29)
 
 **Note:** Version bump only for package @next-bricks/illustrations
-
-
-
-
 
 ## [1.0.28](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.0.27...@next-bricks/illustrations@1.0.28) (2024-07-12)
 

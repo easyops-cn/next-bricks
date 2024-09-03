@@ -3,64 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.1.38](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/api-market@0.1.37...@next-bricks/api-market@0.1.38) (2024-09-03)
+## [0.1.39](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/api-market@0.1.38...@next-bricks/api-market@0.1.39) (2024-09-03)
 
 **Note:** Version bump only for package @next-bricks/api-market
 
+## [0.1.38](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/api-market@0.1.37...@next-bricks/api-market@0.1.38) (2024-09-03)
 
-
-
+**Note:** Version bump only for package @next-bricks/api-market
 
 ## [0.1.37](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/api-market@0.1.36...@next-bricks/api-market@0.1.37) (2024-08-28)
 
 **Note:** Version bump only for package @next-bricks/api-market
 
-
-
-
-
 ## [0.1.36](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/api-market@0.1.35...@next-bricks/api-market@0.1.36) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/api-market
-
-
-
-
 
 ## [0.1.35](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/api-market@0.1.34...@next-bricks/api-market@0.1.35) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/api-market
 
-
-
-
-
 ## [0.1.34](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/api-market@0.1.33...@next-bricks/api-market@0.1.34) (2024-07-29)
 
 **Note:** Version bump only for package @next-bricks/api-market
 
-
-
-
-
 ## [0.1.33](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/api-market@0.1.32...@next-bricks/api-market@0.1.33) (2024-07-19)
-
 
 ### Bug Fixes
 
-* 增加apis-directory-tree操作按钮是否显示字段 refs SHLSTYYWPT-122 ([ddd449f](https://github.com/easyops-cn/next-bricks/commit/ddd449fd63d68af43d0f8b03150ace9737581e30))
-
-
-
-
+- 增加apis-directory-tree操作按钮是否显示字段 refs SHLSTYYWPT-122 ([ddd449f](https://github.com/easyops-cn/next-bricks/commit/ddd449fd63d68af43d0f8b03150ace9737581e30))
 
 ## [0.1.32](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/api-market@0.1.31...@next-bricks/api-market@0.1.32) (2024-07-19)
 
 **Note:** Version bump only for package @next-bricks/api-market
-
-
-
-
 
 ## [0.1.31](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/api-market@0.1.30...@next-bricks/api-market@0.1.31) (2024-07-12)
 

@@ -3,287 +3,161 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.36.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.36.12...@next-bricks/visual-builder@1.36.13) (2024-09-03)
+## [1.36.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.36.13...@next-bricks/visual-builder@1.36.14) (2024-09-03)
 
 **Note:** Version bump only for package @next-bricks/visual-builder
 
+## [1.36.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.36.12...@next-bricks/visual-builder@1.36.13) (2024-09-03)
 
-
-
+**Note:** Version bump only for package @next-bricks/visual-builder
 
 ## [1.36.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.36.11...@next-bricks/visual-builder@1.36.12) (2024-08-28)
 
 **Note:** Version bump only for package @next-bricks/visual-builder
 
-
-
-
-
 ## [1.36.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.36.10...@next-bricks/visual-builder@1.36.11) (2024-08-23)
-
 
 ### Bug Fixes
 
-* **raw-data-preview:** use provided property values ([81c405e](https://github.com/easyops-cn/next-bricks/commit/81c405e0325778047ebf41fd8c3ced62a4efcc79))
-
-
-
-
+- **raw-data-preview:** use provided property values ([81c405e](https://github.com/easyops-cn/next-bricks/commit/81c405e0325778047ebf41fd8c3ced62a4efcc79))
 
 ## [1.36.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.36.9...@next-bricks/visual-builder@1.36.10) (2024-08-23)
 
-
 ### Bug Fixes
 
-* **raw-data-preview:** support style for numbers and date-times ([a86c60f](https://github.com/easyops-cn/next-bricks/commit/a86c60f9ef7a1ede966a67c1af9154d4b11f8e4e))
-
-
-
-
+- **raw-data-preview:** support style for numbers and date-times ([a86c60f](https://github.com/easyops-cn/next-bricks/commit/a86c60f9ef7a1ede966a67c1af9154d4b11f8e4e))
 
 ## [1.36.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.36.8...@next-bricks/visual-builder@1.36.9) (2024-08-22)
 
-
 ### Bug Fixes
 
-* **raw-data-preview:** add event: view.attr.prompt ([c259093](https://github.com/easyops-cn/next-bricks/commit/c2590936cb3c738d22355236789e379ac7a2c158))
-
-
-
-
+- **raw-data-preview:** add event: view.attr.prompt ([c259093](https://github.com/easyops-cn/next-bricks/commit/c2590936cb3c738d22355236789e379ac7a2c158))
 
 ## [1.36.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.36.7...@next-bricks/visual-builder@1.36.8) (2024-08-22)
 
-
 ### Bug Fixes
 
-* **raw-data-preview:** approve generations ([74ae645](https://github.com/easyops-cn/next-bricks/commit/74ae64580ddd64749cad978af4905bda0c9cc012))
-
-
-
-
+- **raw-data-preview:** approve generations ([74ae645](https://github.com/easyops-cn/next-bricks/commit/74ae64580ddd64749cad978af4905bda0c9cc012))
 
 ## [1.36.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.36.6...@next-bricks/visual-builder@1.36.7) (2024-08-21)
 
-
 ### Bug Fixes
 
-* fix comment duplicates ([157871a](https://github.com/easyops-cn/next-bricks/commit/157871ac39ebb8d9d92f3cc43f09f03cf6104655))
-
-
-
-
+- fix comment duplicates ([157871a](https://github.com/easyops-cn/next-bricks/commit/157871ac39ebb8d9d92f3cc43f09f03cf6104655))
 
 ## [1.36.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.36.5...@next-bricks/visual-builder@1.36.6) (2024-08-21)
 
-
 ### Bug Fixes
 
-* refine comment tips ([86aa0e2](https://github.com/easyops-cn/next-bricks/commit/86aa0e299398b384b5c389b2cd3894cdebfe0f00))
-
-
-
-
+- refine comment tips ([86aa0e2](https://github.com/easyops-cn/next-bricks/commit/86aa0e299398b384b5c389b2cd3894cdebfe0f00))
 
 ## [1.36.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.36.4...@next-bricks/visual-builder@1.36.5) (2024-08-21)
 
-
 ### Bug Fixes
 
-* refine raw data preview ([2444d27](https://github.com/easyops-cn/next-bricks/commit/2444d279b8be49f4b623505fa84021f38b78cb4e))
-* refine workbench action style in light theme ([4756c38](https://github.com/easyops-cn/next-bricks/commit/4756c3836140a2c828adb56b4ab0d069f1b2baca))
-
-
-
-
+- refine raw data preview ([2444d27](https://github.com/easyops-cn/next-bricks/commit/2444d279b8be49f4b623505fa84021f38b78cb4e))
+- refine workbench action style in light theme ([4756c38](https://github.com/easyops-cn/next-bricks/commit/4756c3836140a2c828adb56b4ab0d069f1b2baca))
 
 ## [1.36.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.36.3...@next-bricks/visual-builder@1.36.4) (2024-08-20)
 
-
 ### Bug Fixes
 
-* **raw-data-preview:** show original content ([9b17516](https://github.com/easyops-cn/next-bricks/commit/9b17516782c773aaa1752c86c1a8b0f11b85833a))
-
-
-
-
+- **raw-data-preview:** show original content ([9b17516](https://github.com/easyops-cn/next-bricks/commit/9b17516782c773aaa1752c86c1a8b0f11b85833a))
 
 ## [1.36.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.36.2...@next-bricks/visual-builder@1.36.3) (2024-08-15)
 
 **Note:** Version bump only for package @next-bricks/visual-builder
 
-
-
-
-
 ## [1.36.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.36.1...@next-bricks/visual-builder@1.36.2) (2024-08-14)
 
 **Note:** Version bump only for package @next-bricks/visual-builder
 
-
-
-
-
 ## [1.36.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.36.0...@next-bricks/visual-builder@1.36.1) (2024-08-14)
-
 
 ### Bug Fixes
 
-* fix property-editor emit value ([c2b2857](https://github.com/easyops-cn/next-bricks/commit/c2b285711879c7f169196139b1faf6bce4a42555))
-
-
-
-
+- fix property-editor emit value ([c2b2857](https://github.com/easyops-cn/next-bricks/commit/c2b285711879c7f169196139b1faf6bce4a42555))
 
 # [1.36.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.35.0...@next-bricks/visual-builder@1.36.0) (2024-08-13)
 
-
 ### Features
 
-* remove bricks: inject-preview-agent and collect-used-contract ([e29dc07](https://github.com/easyops-cn/next-bricks/commit/e29dc072ea57cee49f8a857eb8fb970631da0ae8))
-
-
-
-
+- remove bricks: inject-preview-agent and collect-used-contract ([e29dc07](https://github.com/easyops-cn/next-bricks/commit/e29dc072ea57cee49f8a857eb8fb970631da0ae8))
 
 # [1.35.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.34.0...@next-bricks/visual-builder@1.35.0) (2024-08-13)
 
-
 ### Features
 
-* move agent injector to a separate brick package ([891dc98](https://github.com/easyops-cn/next-bricks/commit/891dc983259a62c1595032dca7091f914bbee87a))
-
-
-
-
+- move agent injector to a separate brick package ([891dc98](https://github.com/easyops-cn/next-bricks/commit/891dc983259a62c1595032dca7091f914bbee87a))
 
 # [1.34.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.33.8...@next-bricks/visual-builder@1.34.0) (2024-07-31)
 
-
 ### Features
 
-* experimental: raw-data-preview ([099f34b](https://github.com/easyops-cn/next-bricks/commit/099f34b7e457a932dd9ed2220661323dbce26489))
-* new provider: batch-update-raw-data-generated-view ([6b12d6c](https://github.com/easyops-cn/next-bricks/commit/6b12d6c4d9a5e31fe19f67a7b64de6c7e0b91d0b))
-
-
-
-
+- experimental: raw-data-preview ([099f34b](https://github.com/easyops-cn/next-bricks/commit/099f34b7e457a932dd9ed2220661323dbce26489))
+- new provider: batch-update-raw-data-generated-view ([6b12d6c](https://github.com/easyops-cn/next-bricks/commit/6b12d6c4d9a5e31fe19f67a7b64de6c7e0b91d0b))
 
 ## [1.33.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.33.7...@next-bricks/visual-builder@1.33.8) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/visual-builder
 
-
-
-
-
 ## [1.33.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.33.6...@next-bricks/visual-builder@1.33.7) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/visual-builder
 
-
-
-
-
 ## [1.33.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.33.5...@next-bricks/visual-builder@1.33.6) (2024-07-29)
-
 
 ### Bug Fixes
 
-* fix property-editor update refresh ([31c78ad](https://github.com/easyops-cn/next-bricks/commit/31c78addd8bc44d57579f1b9d3dc088f81781217))
-
-
-
-
+- fix property-editor update refresh ([31c78ad](https://github.com/easyops-cn/next-bricks/commit/31c78addd8bc44d57579f1b9d3dc088f81781217))
 
 ## [1.33.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.33.4...@next-bricks/visual-builder@1.33.5) (2024-07-26)
 
-
 ### Bug Fixes
 
-* 恢复 form-builder 相关代码 ([8386743](https://github.com/easyops-cn/next-bricks/commit/83867436083d5246bfce6a9ce204018c55df782a))
-
-
-
-
+- 恢复 form-builder 相关代码 ([8386743](https://github.com/easyops-cn/next-bricks/commit/83867436083d5246bfce6a9ce204018c55df782a))
 
 ## [1.33.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.33.3...@next-bricks/visual-builder@1.33.4) (2024-07-25)
 
-
 ### Bug Fixes
 
-* property-editor bug ([843cf41](https://github.com/easyops-cn/next-bricks/commit/843cf4147768926cc3273453bb264d83db78eee2))
-
-
-
-
+- property-editor bug ([843cf41](https://github.com/easyops-cn/next-bricks/commit/843cf4147768926cc3273453bb264d83db78eee2))
 
 ## [1.33.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.33.2...@next-bricks/visual-builder@1.33.3) (2024-07-25)
 
-
 ### Bug Fixes
 
-* 优化属性编辑器 ([b9c3177](https://github.com/easyops-cn/next-bricks/commit/b9c31778bb7d343a839de5075605e684fc65456f))
-
-
-
-
+- 优化属性编辑器 ([b9c3177](https://github.com/easyops-cn/next-bricks/commit/b9c31778bb7d343a839de5075605e684fc65456f))
 
 ## [1.33.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.33.1...@next-bricks/visual-builder@1.33.2) (2024-07-19)
 
 **Note:** Version bump only for package @next-bricks/visual-builder
 
-
-
-
-
 ## [1.33.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.33.0...@next-bricks/visual-builder@1.33.1) (2024-07-19)
 
 **Note:** Version bump only for package @next-bricks/visual-builder
 
-
-
-
-
 # [1.33.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.32.5...@next-bricks/visual-builder@1.33.0) (2024-07-17)
-
 
 ### Features
 
-* advancedChangeEffect add form Values ([cecf16c](https://github.com/easyops-cn/next-bricks/commit/cecf16cf349cb8757fc59815b3c4f3d04282f368))
-* advancedChangeEffect add form Values ([f08b174](https://github.com/easyops-cn/next-bricks/commit/f08b174bf6dfd46655e3002138430cb0aea67081))
-* advancedChangeEffect add form Values ([06d52dc](https://github.com/easyops-cn/next-bricks/commit/06d52dc9444d44da908214a84112181934d4433d))
-
-
-
-
+- advancedChangeEffect add form Values ([cecf16c](https://github.com/easyops-cn/next-bricks/commit/cecf16cf349cb8757fc59815b3c4f3d04282f368))
+- advancedChangeEffect add form Values ([f08b174](https://github.com/easyops-cn/next-bricks/commit/f08b174bf6dfd46655e3002138430cb0aea67081))
+- advancedChangeEffect add form Values ([06d52dc](https://github.com/easyops-cn/next-bricks/commit/06d52dc9444d44da908214a84112181934d4433d))
 
 ## [1.32.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.32.4...@next-bricks/visual-builder@1.32.5) (2024-07-16)
 
 **Note:** Version bump only for package @next-bricks/visual-builder
 
-
-
-
-
 ## [1.32.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.32.3...@next-bricks/visual-builder@1.32.4) (2024-07-15)
-
 
 ### Bug Fixes
 
-* property-editor bug ([4ba9a91](https://github.com/easyops-cn/next-bricks/commit/4ba9a9137919a5663e4fac75d511557864f32a85))
-
-
-
-
+- property-editor bug ([4ba9a91](https://github.com/easyops-cn/next-bricks/commit/4ba9a9137919a5663e4fac75d511557864f32a85))
 
 ## [1.32.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.32.2...@next-bricks/visual-builder@1.32.3) (2024-07-15)
 
 **Note:** Version bump only for package @next-bricks/visual-builder
-
-
-
-
 
 ## [1.32.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.32.1...@next-bricks/visual-builder@1.32.2) (2024-07-12)
 

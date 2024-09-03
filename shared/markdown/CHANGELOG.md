@@ -3,24 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.2](https://github.com/easyops-cn/next-bricks/compare/@next-shared/markdown@0.2.1...@next-shared/markdown@0.2.2) (2024-09-03)
+
+**Note:** Version bump only for package @next-shared/markdown
+
 ## [0.2.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/markdown@0.2.0...@next-shared/markdown@0.2.1) (2024-08-28)
 
 **Note:** Version bump only for package @next-shared/markdown
 
-
-
-
-
 # [0.2.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/markdown@0.1.5...@next-shared/markdown@0.2.0) (2024-08-15)
-
 
 ### Features
 
-* new brick: eo-markdown-display ([12af87a](https://github.com/easyops-cn/next-bricks/commit/12af87ad7b6047eff8b10bbb1fac700977225239))
-
-
-
-
+- new brick: eo-markdown-display ([12af87a](https://github.com/easyops-cn/next-bricks/commit/12af87ad7b6047eff8b10bbb1fac700977225239))
 
 ## [0.1.5](https://github.com/easyops-cn/next-bricks/compare/@next-shared/markdown@0.1.4...@next-shared/markdown@0.1.5) (2024-07-12)
 

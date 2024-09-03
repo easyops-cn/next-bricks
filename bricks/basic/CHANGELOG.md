@@ -3,267 +3,152 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [1.44.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.44.0...@next-bricks/basic@1.44.1) (2024-09-03)
+## [1.44.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.44.1...@next-bricks/basic@1.44.2) (2024-09-03)
 
+**Note:** Version bump only for package @next-bricks/basic
+
+## [1.44.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.44.0...@next-bricks/basic@1.44.1) (2024-09-03)
 
 ### Bug Fixes
 
-* fix story types ([c2eab4d](https://github.com/easyops-cn/next-bricks/commit/c2eab4dd97a83502f68c25e82f5cbe818c3c180b))
-
-
-
-
+- fix story types ([c2eab4d](https://github.com/easyops-cn/next-bricks/commit/c2eab4dd97a83502f68c25e82f5cbe818c3c180b))
 
 # [1.44.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.43.0...@next-bricks/basic@1.44.0) (2024-09-03)
 
-
 ### Features
 
-* new brick: home-redirect ([54762bc](https://github.com/easyops-cn/next-bricks/commit/54762bc56f7a8a8f60a370183e30be672ed2ecf1))
-
-
-
-
+- new brick: home-redirect ([54762bc](https://github.com/easyops-cn/next-bricks/commit/54762bc56f7a8a8f60a370183e30be672ed2ecf1))
 
 # [1.43.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.42.3...@next-bricks/basic@1.43.0) (2024-09-02)
 
-
 ### Features
 
-* **eo-tag-list:** support event: tag.click ([287496a](https://github.com/easyops-cn/next-bricks/commit/287496af9349962b161df4fc873ab4e539770913))
-
-
-
-
+- **eo-tag-list:** support event: tag.click ([287496a](https://github.com/easyops-cn/next-bricks/commit/287496af9349962b161df4fc873ab4e539770913))
 
 ## [1.42.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.42.2...@next-bricks/basic@1.42.3) (2024-08-28)
 
-
 ### Bug Fixes
 
-* handle click event for eo-card-item with actions ([3538879](https://github.com/easyops-cn/next-bricks/commit/35388792e121afdcf40dc793ad6306351b2ae8e5))
-
-
-
-
+- handle click event for eo-card-item with actions ([3538879](https://github.com/easyops-cn/next-bricks/commit/35388792e121afdcf40dc793ad6306351b2ae8e5))
 
 ## [1.42.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.42.1...@next-bricks/basic@1.42.2) (2024-08-28)
 
 **Note:** Version bump only for package @next-bricks/basic
 
-
-
-
-
 ## [1.42.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.42.0...@next-bricks/basic@1.42.1) (2024-08-15)
-
 
 ### Bug Fixes
 
-* **show-notification:** emit success when notification closed by default ([a233742](https://github.com/easyops-cn/next-bricks/commit/a233742bd180df709df3f313d379a691ad87712d))
-
-
-
-
+- **show-notification:** emit success when notification closed by default ([a233742](https://github.com/easyops-cn/next-bricks/commit/a233742bd180df709df3f313d379a691ad87712d))
 
 # [1.42.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.41.2...@next-bricks/basic@1.42.0) (2024-08-14)
 
-
 ### Features
 
-* tooltip add icon ([5da53f4](https://github.com/easyops-cn/next-bricks/commit/5da53f476d3782bf76409091c3fafd1b0c51a88f))
-
-
-
-
+- tooltip add icon ([5da53f4](https://github.com/easyops-cn/next-bricks/commit/5da53f476d3782bf76409091c3fafd1b0c51a88f))
 
 ## [1.41.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.41.1...@next-bricks/basic@1.41.2) (2024-08-13)
 
 **Note:** Version bump only for package @next-bricks/basic
 
-
-
-
-
 ## [1.41.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.41.0...@next-bricks/basic@1.41.1) (2024-08-12)
-
 
 ### Bug Fixes
 
-* fix form-item labelBrick alignCenter ([b7ff399](https://github.com/easyops-cn/next-bricks/commit/b7ff3997c4baa838969414244042855c5150c363))
-
-
-
-
+- fix form-item labelBrick alignCenter ([b7ff399](https://github.com/easyops-cn/next-bricks/commit/b7ff3997c4baa838969414244042855c5150c363))
 
 # [1.41.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.40.0...@next-bricks/basic@1.41.0) (2024-08-07)
 
-
 ### Features
 
-* **show-notification:** support html message and confirm link options ([0e56c95](https://github.com/easyops-cn/next-bricks/commit/0e56c95985cd56bead25193c6e93c35326aa2821))
-
-
-
-
+- **show-notification:** support html message and confirm link options ([0e56c95](https://github.com/easyops-cn/next-bricks/commit/0e56c95985cd56bead25193c6e93c35326aa2821))
 
 # [1.40.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.39.0...@next-bricks/basic@1.40.0) (2024-08-02)
 
-
 ### Features
 
-* **text:** support for specifying textarea as edit control ([d848343](https://github.com/easyops-cn/next-bricks/commit/d848343a3b23f0b1d90e750d17948ec73cd4e33a))
-
-
-
-
+- **text:** support for specifying textarea as edit control ([d848343](https://github.com/easyops-cn/next-bricks/commit/d848343a3b23f0b1d90e750d17948ec73cd4e33a))
 
 # [1.39.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.38.0...@next-bricks/basic@1.39.0) (2024-08-01)
 
-
 ### Features
 
-* new brick: eo-broadcast-channel ([6e44af1](https://github.com/easyops-cn/next-bricks/commit/6e44af112987097b9f1790bed98620d5ea2787c2))
-
-
-
-
+- new brick: eo-broadcast-channel ([6e44af1](https://github.com/easyops-cn/next-bricks/commit/6e44af112987097b9f1790bed98620d5ea2787c2))
 
 # [1.38.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.37.4...@next-bricks/basic@1.38.0) (2024-07-31)
 
-
 ### Features
 
-* new brick: eo-message-listener ([62a31b2](https://github.com/easyops-cn/next-bricks/commit/62a31b24f823dea285c2c78ede4694029bfe2e9c))
-
-
-
-
+- new brick: eo-message-listener ([62a31b2](https://github.com/easyops-cn/next-bricks/commit/62a31b24f823dea285c2c78ede4694029bfe2e9c))
 
 ## [1.37.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.37.3...@next-bricks/basic@1.37.4) (2024-07-31)
 
 **Note:** Version bump only for package @next-bricks/basic
 
-
-
-
-
 ## [1.37.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.37.2...@next-bricks/basic@1.37.3) (2024-07-30)
-
 
 ### Bug Fixes
 
-* v3 alert schema ([dacce70](https://github.com/easyops-cn/next-bricks/commit/dacce70ce61ddee7564cae01d1ac5b66ed6eaba5))
-
-
-
-
+- v3 alert schema ([dacce70](https://github.com/easyops-cn/next-bricks/commit/dacce70ce61ddee7564cae01d1ac5b66ed6eaba5))
 
 ## [1.37.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.37.1...@next-bricks/basic@1.37.2) (2024-07-29)
 
-
 ### Bug Fixes
 
-* v3 desc schema ([be61c54](https://github.com/easyops-cn/next-bricks/commit/be61c5418f41f7124c98e32a8db43582c2e90f24))
-
-
-
-
+- v3 desc schema ([be61c54](https://github.com/easyops-cn/next-bricks/commit/be61c5418f41f7124c98e32a8db43582c2e90f24))
 
 ## [1.37.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.37.0...@next-bricks/basic@1.37.1) (2024-07-25)
 
-
 ### Bug Fixes
 
-* add v3 table schema ([478e5fc](https://github.com/easyops-cn/next-bricks/commit/478e5fcec47903e7098dad62ee37b0b640076302))
-* add v3 table schema ([ddfce63](https://github.com/easyops-cn/next-bricks/commit/ddfce63ef068769f4dfe8c20561bb8abb3828a25))
-
-
-
-
+- add v3 table schema ([478e5fc](https://github.com/easyops-cn/next-bricks/commit/478e5fcec47903e7098dad62ee37b0b640076302))
+- add v3 table schema ([ddfce63](https://github.com/easyops-cn/next-bricks/commit/ddfce63ef068769f4dfe8c20561bb8abb3828a25))
 
 # [1.37.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.36.1...@next-bricks/basic@1.37.0) (2024-07-24)
 
-
 ### Features
 
-* new brick: eo-event-agent ([cc36bbc](https://github.com/easyops-cn/next-bricks/commit/cc36bbc9c5ffb9d4772eb0f0d4dd66a0b52accb4))
-
-
-
-
+- new brick: eo-event-agent ([cc36bbc](https://github.com/easyops-cn/next-bricks/commit/cc36bbc9c5ffb9d4772eb0f0d4dd66a0b52accb4))
 
 ## [1.36.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.36.0...@next-bricks/basic@1.36.1) (2024-07-23)
 
-
 ### Bug Fixes
 
-* layout schema ([9d2ea8b](https://github.com/easyops-cn/next-bricks/commit/9d2ea8b9906a4e7da3acfc8bfdb6b79d70fc9e3a))
-* numberPiker要加上formitem ([514c145](https://github.com/easyops-cn/next-bricks/commit/514c14565b787987edc075a63cfe8da6534441e8))
-* v3 easy-view schema ([b99a3d0](https://github.com/easyops-cn/next-bricks/commit/b99a3d08e26eff1ef864ce5fa0a545b4b6bb10be))
-* v3 easy-view schema ([59cbd5d](https://github.com/easyops-cn/next-bricks/commit/59cbd5d4c4ccc45bb4d3c2c28617b98d0d8579c8))
-* v3 flex bug ([9a738ec](https://github.com/easyops-cn/next-bricks/commit/9a738ec154d1c4a18f1fe3c7bc85949f972347b6))
-
-
-
-
+- layout schema ([9d2ea8b](https://github.com/easyops-cn/next-bricks/commit/9d2ea8b9906a4e7da3acfc8bfdb6b79d70fc9e3a))
+- numberPiker要加上formitem ([514c145](https://github.com/easyops-cn/next-bricks/commit/514c14565b787987edc075a63cfe8da6534441e8))
+- v3 easy-view schema ([b99a3d0](https://github.com/easyops-cn/next-bricks/commit/b99a3d08e26eff1ef864ce5fa0a545b4b6bb10be))
+- v3 easy-view schema ([59cbd5d](https://github.com/easyops-cn/next-bricks/commit/59cbd5d4c4ccc45bb4d3c2c28617b98d0d8579c8))
+- v3 flex bug ([9a738ec](https://github.com/easyops-cn/next-bricks/commit/9a738ec154d1c4a18f1fe3c7bc85949f972347b6))
 
 # [1.36.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.35.0...@next-bricks/basic@1.36.0) (2024-07-22)
 
-
 ### Features
 
-* **dropdown-button:** add action.click event ([695a216](https://github.com/easyops-cn/next-bricks/commit/695a216343efd81240af078f4ae0ba56eae3edf3))
-
-
-
-
+- **dropdown-button:** add action.click event ([695a216](https://github.com/easyops-cn/next-bricks/commit/695a216343efd81240af078f4ae0ba56eae3edf3))
 
 # [1.35.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.34.6...@next-bricks/basic@1.35.0) (2024-07-19)
 
-
 ### Features
 
-* update basic.http-proxy-request ([e4e57ad](https://github.com/easyops-cn/next-bricks/commit/e4e57adb20e0511378680260bf9c561177329075))
-
-
-
-
+- update basic.http-proxy-request ([e4e57ad](https://github.com/easyops-cn/next-bricks/commit/e4e57adb20e0511378680260bf9c561177329075))
 
 ## [1.34.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.34.5...@next-bricks/basic@1.34.6) (2024-07-19)
 
-
 ### Bug Fixes
 
-* fix tag font size ([c2eb9cc](https://github.com/easyops-cn/next-bricks/commit/c2eb9cc36c4162028041e9819b4e45610c636890))
-
-
-
-
+- fix tag font size ([c2eb9cc](https://github.com/easyops-cn/next-bricks/commit/c2eb9cc36c4162028041e9819b4e45610c636890))
 
 ## [1.34.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.34.4...@next-bricks/basic@1.34.5) (2024-07-19)
 
 **Note:** Version bump only for package @next-bricks/basic
 
-
-
-
-
 ## [1.34.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.34.3...@next-bricks/basic@1.34.4) (2024-07-16)
 
 **Note:** Version bump only for package @next-bricks/basic
 
-
-
-
-
 ## [1.34.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.34.2...@next-bricks/basic@1.34.3) (2024-07-15)
 
 **Note:** Version bump only for package @next-bricks/basic
-
-
-
-
 
 ## [1.34.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.34.1...@next-bricks/basic@1.34.2) (2024-07-12)
 
