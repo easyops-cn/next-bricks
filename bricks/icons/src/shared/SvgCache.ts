@@ -14,6 +14,65 @@ interface ResolveIconOptions {
   replaceSource?(source: string): string;
 }
 
+export function constructSvgElement(
+  content: string,
+  retryable: false,
+  options?: ResolveIconOptions
+): SVGSVGElement | null;
+export function constructSvgElement(
+  content: string,
+  retryable: true,
+  options?: ResolveIconOptions
+): SVGResult;
+export function constructSvgElement(
+  content: string,
+  retryable: boolean,
+  options?: ResolveIconOptions
+): SVGResult | null {
+  const div = document.createElement("div");
+  div.innerHTML = content;
+
+  const svg = div.firstElementChild;
+  if (svg?.tagName?.toLowerCase() !== "svg")
+    return retryable ? CACHEABLE_ERROR : null;
+
+  if (!parser) parser = new DOMParser();
+  const doc = parser.parseFromString(svg.outerHTML, "text/html");
+
+  const svgEl = doc.body.querySelector("svg");
+  if (!svgEl) return retryable ? CACHEABLE_ERROR : null;
+
+  const titles = svgEl.querySelectorAll("title");
+  for (const title of titles) {
+    title.remove();
+  }
+
+  if (options?.currentColor) {
+    const colorProps = [
+      "color",
+      "fill",
+      "stroke",
+      "stop-color",
+      "flood-color",
+      "lighting-color",
+    ];
+    for (const prop of colorProps) {
+      const elements = svgEl.querySelectorAll(
+        `[${prop}]:not([${prop}="none"])`
+      );
+      for (const e of elements) {
+        if (!belongToMask(e, svgEl)) {
+          e.setAttribute(prop, "currentColor");
+        }
+      }
+    }
+  }
+
+  svgEl.setAttribute("width", "1em");
+  svgEl.setAttribute("height", "1em");
+  return document.adoptNode(svgEl);
+}
+
 /** Given a URL, this function returns the resulting SVG element or an appropriate error symbol. */
 async function resolveIcon(
   url: string,
@@ -29,47 +88,8 @@ async function resolveIcon(
   }
 
   try {
-    const div = document.createElement("div");
-    div.innerHTML = await fileData.text();
-
-    const svg = div.firstElementChild;
-    if (svg?.tagName?.toLowerCase() !== "svg") return CACHEABLE_ERROR;
-
-    if (!parser) parser = new DOMParser();
-    const doc = parser.parseFromString(svg.outerHTML, "text/html");
-
-    const svgEl = doc.body.querySelector("svg");
-    if (!svgEl) return CACHEABLE_ERROR;
-
-    const titles = svgEl.querySelectorAll("title");
-    for (const title of titles) {
-      title.remove();
-    }
-
-    if (options?.currentColor) {
-      const colorProps = [
-        "color",
-        "fill",
-        "stroke",
-        "stop-color",
-        "flood-color",
-        "lighting-color",
-      ];
-      for (const prop of colorProps) {
-        const elements = svgEl.querySelectorAll(
-          `[${prop}]:not([${prop}="none"])`
-        );
-        for (const e of elements) {
-          if (!belongToMask(e, svgEl)) {
-            e.setAttribute(prop, "currentColor");
-          }
-        }
-      }
-    }
-
-    svgEl.setAttribute("width", "1em");
-    svgEl.setAttribute("height", "1em");
-    return document.adoptNode(svgEl);
+    const content = await fileData.text();
+    return constructSvgElement(content, true, options);
   } catch {
     return CACHEABLE_ERROR;
   }
