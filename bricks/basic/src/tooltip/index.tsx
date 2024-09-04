@@ -1,6 +1,10 @@
 import React, { CSSProperties, useEffect, useRef, useState } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
+import type {
+  GeneralIcon,
+  GeneralIconProps,
+} from "@next-bricks/icons/general-icon";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import {
@@ -10,7 +14,6 @@ import {
   ARROW_SIZE,
   DISTANCE,
 } from "./sl-tooltip.js";
-import { GeneralIcon, GeneralIconProps } from "@next-bricks/icons/general-icon";
 
 const { defineElement, property, method, event } = createDecorators();
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");

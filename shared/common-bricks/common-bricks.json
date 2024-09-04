@@ -35,7 +35,8 @@
     "eo-formatter-number",
     "eo-event-agent",
     "eo-message-listener",
-    "eo-broadcast-channel"
+    "eo-broadcast-channel",
+    "eo-iframe"
   ],
   "icons": [
     "eo-antd-icon",

@@ -4,11 +4,11 @@ import { i18n, initializeI18n } from "@next-core/i18n";
 import { createRoot } from "react-dom/client";
 import { wrapBrick } from "@next-core/react-element";
 import type { AntdIcon, AntdIconProps } from "@next-bricks/icons/antd-icon";
+import { get } from "lodash";
+import "@next-core/theme";
 import { K, NS, locales } from "./i18n.js";
 import { SlDialogElement, WrappedSlDialog } from "./sl-dialog.js";
-import { Button, ButtonProps } from "../../button/index.js";
-import type { ReactNextElement } from "@next-core/react-element";
-import { get } from "lodash";
+import type { Button, ButtonProps } from "../../button/index.js";
 import styles from "./dialog.module.css";
 
 initializeI18n(NS, locales);
@@ -26,7 +26,7 @@ interface InputEventsMap {
   onValueChange: "change";
 }
 const WrappedInput = wrapBrick<
-  ReactNextElement,
+  HTMLElement,
   InputProps,
   InputEvents,
   InputEventsMap

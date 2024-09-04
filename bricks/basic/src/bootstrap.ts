@@ -47,3 +47,5 @@ import "./event-agent/index.js";
 import "./message-listener/index.js";
 import "./broadcast-channel/index.js";
 import "./home-redirect/index.js";
+import "./iframe/index.js";
+import "./data-providers/set-timeout.js";
