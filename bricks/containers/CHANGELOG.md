@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.8.3...@next-bricks/containers@1.9.0) (2024-09-04)
+
+
+### Features
+
+* **eo-page-view:** add aside slot ([b7f131b](https://github.com/easyops-cn/next-bricks/commit/b7f131b6657ad028e72acb33f570dff872296e1c))
+
+
+
+
+
 ## [1.8.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.8.2...@next-bricks/containers@1.8.3) (2024-09-03)
 
 **Note:** Version bump only for package @next-bricks/containers

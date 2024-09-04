@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.45.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.44.2...@next-bricks/basic@1.45.0) (2024-09-04)
+
+
+### Features
+
+* new brick: eo-iframe ([5c0f3c4](https://github.com/easyops-cn/next-bricks/commit/5c0f3c47fb467ae1a03c4da87e414f83af1a6731))
+* new provider: set-timeout ([fceccdc](https://github.com/easyops-cn/next-bricks/commit/fceccdc19c69b239a2c85140f1b15b56a01fe253))
+
+
+
+
+
 ## [1.44.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.44.1...@next-bricks/basic@1.44.2) (2024-09-03)
 
 **Note:** Version bump only for package @next-bricks/basic

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.50.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.49.1...@next-shared/common-bricks@0.50.0) (2024-09-04)
+
+
+### Features
+
+* new brick: eo-iframe ([5c0f3c4](https://github.com/easyops-cn/next-bricks/commit/5c0f3c47fb467ae1a03c4da87e414f83af1a6731))
+
+
+
+
+
 ## [0.49.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.49.0...@next-shared/common-bricks@0.49.1) (2024-09-03)
 
 **Note:** Version bump only for package @next-shared/common-bricks
