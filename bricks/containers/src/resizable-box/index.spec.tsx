@@ -20,6 +20,7 @@ window.requestAnimationFrame = jest.fn(
 describe("eo-resizable-box", () => {
   test("basic usage", async () => {
     const element = document.createElement("eo-resizable-box") as ResizableBox;
+    element.syncSizeWithHost = true;
 
     expect(element.shadowRoot).toBeFalsy();
 
@@ -31,6 +32,8 @@ describe("eo-resizable-box", () => {
     expect(
       (element.shadowRoot?.querySelector(".box") as HTMLElement).style.width
     ).toBe("200px");
+
+    expect(element.style.width).toBe("200px");
 
     act(() => {
       fireEvent.mouseDown(element.shadowRoot!.querySelector(".bar"), {
@@ -71,6 +74,7 @@ describe("eo-resizable-box", () => {
     element.defaultSize = 250;
     element.minSize = 170;
     element.minSpace = 150;
+    element.syncSizeWithHost = true;
 
     act(() => {
       document.body.appendChild(element);
@@ -100,6 +104,8 @@ describe("eo-resizable-box", () => {
     expect(
       (element.shadowRoot?.querySelector(".box") as HTMLElement).style.height
     ).toBe("275px");
+
+    expect(element.style.height).toBe("275px");
 
     act(() => {
       fireEvent.mouseUp(window);
