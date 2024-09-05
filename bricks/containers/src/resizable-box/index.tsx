@@ -19,6 +19,7 @@ export interface ResizableBoxProps {
   variant?: "dashboard" | "default";
   boxStyle?: React.CSSProperties;
   boxStyleWhenNotResizing?: React.CSSProperties;
+  syncSizeWithHost?: boolean;
 }
 
 export type ResizeDirection = "left" | "right" | "top" | "bottom";
@@ -91,6 +92,9 @@ class ResizableBox extends ReactNextElement implements ResizableBoxProps {
   @property({ attribute: false })
   accessor boxStyleWhenNotResizing: React.CSSProperties | undefined;
 
+  @property({ type: Boolean })
+  accessor syncSizeWithHost: boolean;
+
   render() {
     return (
       <ResizableBoxComponent
@@ -103,6 +107,8 @@ class ResizableBox extends ReactNextElement implements ResizableBoxProps {
         variant={this.variant}
         boxStyle={this.boxStyle}
         boxStyleWhenNotResizing={this.boxStyleWhenNotResizing}
+        syncSizeWithHost={this.syncSizeWithHost}
+        host={this}
       />
     );
   }
@@ -112,6 +118,10 @@ interface ResizerStatus {
   startSize: number;
   startX: number;
   startY: number;
+}
+
+interface ResizableBoxComponentProps extends ResizableBoxProps {
+  host: HTMLElement;
 }
 
 export function ResizableBoxComponent({
@@ -124,7 +134,9 @@ export function ResizableBoxComponent({
   variant,
   boxStyle,
   boxStyleWhenNotResizing,
-}: ResizableBoxProps) {
+  syncSizeWithHost,
+  host,
+}: ResizableBoxComponentProps) {
   const resizeDirection = _resizeDirection ?? "right";
   const defaultSize = _defaultSize ?? 200;
   const minSpace = _minSpace ?? 300;
@@ -220,6 +232,12 @@ export function ResizableBoxComponent({
       storage?.setItem(storageKey, size);
     }
   }, [resized, resizeStatus, storage, size, storageKey]);
+
+  useEffect(() => {
+    if (syncSizeWithHost) {
+      host.style[isVerticalDirection ? "height" : "width"] = `${size}px`;
+    }
+  }, [host.style, isVerticalDirection, size, syncSizeWithHost]);
 
   return (
     <>
