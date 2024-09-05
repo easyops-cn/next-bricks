@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.45.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.45.0...@next-bricks/basic@1.45.1) (2024-09-05)
+
+
+### Bug Fixes
+
+* **eo-iframe:** do not render iframe if no src ([ac1c3d0](https://github.com/easyops-cn/next-bricks/commit/ac1c3d03bd185c7f6e29913aa8124114f3c0265e))
+
+
+
+
+
 # [1.45.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.44.2...@next-bricks/basic@1.45.0) (2024-09-04)
 
 

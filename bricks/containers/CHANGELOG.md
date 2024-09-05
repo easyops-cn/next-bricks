@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.9.0...@next-bricks/containers@1.9.1) (2024-09-05)
+
+
+### Bug Fixes
+
+* **eo-resizable-box:** support sync host size ([1dadb02](https://github.com/easyops-cn/next-bricks/commit/1dadb02077b6a44768310040172827f68a7c133e))
+
+
+
+
+
 # [1.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.8.3...@next-bricks/containers@1.9.0) (2024-09-04)
 
 
