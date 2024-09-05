@@ -116,5 +116,5 @@ export function LegacyIframeComponent(
     };
   }, [onLoad]);
 
-  return <iframe src={src} style={iframeStyle} ref={iframeRef} />;
+  return src ? <iframe src={src} style={iframeStyle} ref={iframeRef} /> : null;
 }

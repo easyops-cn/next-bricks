@@ -40,4 +40,23 @@ describe("eo-iframe", () => {
       document.body.removeChild(element);
     });
   });
+
+  test("set src later", async () => {
+    const element = document.createElement("eo-iframe") as Iframe;
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.querySelectorAll("iframe").length).toBe(0);
+
+    await act(async () => {
+      element.src = "http://localhost/iframe";
+      await (global as any).flushPromises();
+    });
+    expect(element.shadowRoot?.querySelectorAll("iframe").length).toBe(1);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
 });
