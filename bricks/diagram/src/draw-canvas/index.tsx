@@ -73,6 +73,7 @@ import {
   DEFAULT_AREA_WIDTH,
   DEFAULT_AREA_HEIGHT,
   DEFAULT_DEGRADED_THRESHOLD,
+  DEFAULT_NODE_PADDING_FOR_SMART_LINES,
 } from "./constants";
 import { useZoom } from "../shared/canvas/useZoom";
 import { useActiveTarget } from "../shared/canvas/useActiveTarget";
@@ -829,7 +830,7 @@ function LegacyEoDrawCanvasComponent(
       manualConnectDeferredRef.current?.reject(null);
       setConnectLineState(null);
     },
-    [cells]
+    [allowEdgeToArea, cells]
   );
   const [smartConnectLineState, setSmartConnectLineState] =
     useState<SmartConnectLineState | null>(null);
@@ -1032,7 +1033,7 @@ function LegacyEoDrawCanvasComponent(
         source: NodeCell,
         target: NodeCell,
         exitPosition: NodePosition,
-        entryPosition: NodePosition
+        entryPosition: NodePosition | undefined
       ) {
         const newEdge: EdgeCell = {
           type: "edge",
@@ -1228,15 +1229,18 @@ function getConnectPoints(
   view: NodeView,
   border = 1
 ) {
-  const viewWithBorder: NodeView = {
-    x: view.x + border / 2,
-    y: view.y + border / 2,
-    width: view.width - border,
-    height: view.height - border,
+  const padding = DEFAULT_NODE_PADDING_FOR_SMART_LINES;
+  const halfPadding = padding / 2;
+
+  const viewWithBorderAndPadding: NodeView = {
+    x: view.x + border / 2 - halfPadding,
+    y: view.y + border / 2 - halfPadding,
+    width: view.width - border + padding,
+    height: view.height - border + padding,
   };
 
   return relativePoints.map((p) => ({
-    x: viewWithBorder.x + p.x * viewWithBorder.width,
-    y: viewWithBorder.y + p.y * viewWithBorder.height,
+    x: viewWithBorderAndPadding.x + p.x * viewWithBorderAndPadding.width,
+    y: viewWithBorderAndPadding.y + p.y * viewWithBorderAndPadding.height,
   }));
 }

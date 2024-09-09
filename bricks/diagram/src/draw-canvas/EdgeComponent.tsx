@@ -8,10 +8,11 @@ import type {
   EdgeView,
 } from "./interfaces";
 import { getDirectLinePoints } from "../diagram/lines/getDirectLinePoints";
-import type { NodeRect } from "../diagram/interfaces";
-import { findNode } from "./processors/findNode";
 import { isEdgeCell } from "./processors/asserts";
-import { DEFAULT_LINE_INTERACT_ANIMATE_DURATION } from "./constants";
+import {
+  DEFAULT_LINE_INTERACT_ANIMATE_DURATION,
+  DEFAULT_NODE_PADDING_FOR_LINES,
+} from "./constants";
 import { curveLine } from "../diagram/lines/curveLine";
 import { nodeViewToNodeRect } from "../shared/canvas/processors/nodeViewToNodeRect";
 import { getSmartLinePoints } from "../shared/canvas/processors/getSmartLinePoints";
@@ -54,14 +55,16 @@ export function EdgeComponent({
         isEdgeCell(cell) &&
         cell.source === edge.target &&
         cell.target === edge.source &&
-        !(edge.view?.exitPosition && edge.view.entryPosition)
+        !(edge.view?.exitPosition || edge.view?.entryPosition)
     );
     return hasOppositeEdge ? lineConf.parallelGap : 0;
   }, [cells, edge, lineConf.parallelGap]);
 
-  const padding = 5;
-
   const line = useMemo(() => {
+    const directLinePadding =
+      edge.view?.exitPosition || edge.view?.entryPosition
+        ? 0
+        : DEFAULT_NODE_PADDING_FOR_LINES;
     const points =
       sourceNode &&
       targetNode &&
@@ -76,9 +79,10 @@ export function EdgeComponent({
               >
             )
           : getDirectLinePoints(
-              nodeViewToNodeRect(sourceNode.view, padding),
-              nodeViewToNodeRect(targetNode.view, padding),
-              parallelGap
+              nodeViewToNodeRect(sourceNode.view, directLinePadding),
+              nodeViewToNodeRect(targetNode.view, directLinePadding),
+              parallelGap,
+              edge.view
             )
         : null;
     const fixedLineType = lineConf.type === "auto" ? "polyline" : lineConf.type;
