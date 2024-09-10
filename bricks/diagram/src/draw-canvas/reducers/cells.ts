@@ -33,16 +33,30 @@ export const cells: Reducer<Cell[], DrawCanvasAction> = (state, action) => {
         ...state.slice(index),
       ];
     }
-    case "add-edge":
-      // Add the edge to just next to the previous last edge or area decorator.
-      // If not found, append to the start.
-      return insertCellAfter(
-        state,
-        action.payload,
+    case "add-edge": {
+      const existedEdgeIndex = state.findIndex(
         (cell) =>
-          cell.type === "edge" ||
-          (cell.type === "decorator" && cell.decorator === "area")
+          cell.type === "edge" &&
+          cell.source === action.payload.source &&
+          cell.target === action.payload.target
       );
+      if (existedEdgeIndex === -1) {
+        // Add the edge to just next to the previous last edge or area decorator.
+        // If not found, append to the start.
+        return insertCellAfter(
+          state,
+          action.payload,
+          (cell) =>
+            cell.type === "edge" ||
+            (cell.type === "decorator" && cell.decorator === "area")
+        );
+      }
+      return [
+        ...state.slice(0, existedEdgeIndex),
+        action.payload,
+        ...state.slice(existedEdgeIndex + 1),
+      ];
+    }
     case "move-cells": {
       let matched = false;
       const newState = state.map((cell) => {
