@@ -47,7 +47,9 @@ describe("getConnectLinePoints", () => {
   test("connectLineTo is above source", () => {
     expect(getConnectLinePoints(state, [150, 100], null)).toEqual([
       { x: 180, y: 230 },
-      { x: 150, y: 230 },
+      { x: 200, y: 230 },
+      { x: 200, y: 150 },
+      { x: 150, y: 150 },
       { x: 150, y: 100 },
     ]);
   });
@@ -55,7 +57,9 @@ describe("getConnectLinePoints", () => {
   test("connectLineTo is below source", () => {
     expect(getConnectLinePoints(state, [150, 400], null)).toEqual([
       { x: 180, y: 230 },
-      { x: 150, y: 230 },
+      { x: 200, y: 230 },
+      { x: 200, y: 330 },
+      { x: 150, y: 330 },
       { x: 150, y: 400 },
     ]);
   });
