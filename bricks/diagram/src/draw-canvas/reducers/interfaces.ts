@@ -18,6 +18,7 @@ export type DrawCanvasAction =
   | DropDecoratorAction
   | AddNodeAction
   | AddEdgeAction
+  | ChangeEdgeViewAction
   | MoveCellsAction
   | ResizeCellAction
   | UpdateCellsAction
@@ -41,6 +42,11 @@ export interface AddNodeAction {
 export interface AddEdgeAction {
   type: "add-edge";
   payload: EdgeCell;
+}
+
+export interface ChangeEdgeViewAction {
+  type: "change-edge-view";
+  payload: EdgeViewChangePayload;
 }
 
 export interface MoveCellsAction {
@@ -93,3 +99,8 @@ export interface MoveNodePayload {
   x: number;
   y: number;
 }
+
+export type EdgeViewChangePayload = Pick<
+  EdgeCell,
+  "source" | "target" | "view"
+>;

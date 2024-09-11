@@ -1,6 +1,6 @@
 import { pull } from "lodash";
 import type { NodePosition } from "../../../diagram/interfaces";
-import { getConnectPointsOfRectangle } from "../shapes/Rectangle";
+import { getConnectPointsOfRectangleWithDirection } from "../shapes/Rectangle";
 import type { EdgeView, NodeView } from "../../../draw-canvas/interfaces";
 import { getPolyLinePoints } from "../../../diagram/lines/getPolyLinePoints";
 import { nodeViewToNodeRect } from "./nodeViewToNodeRect";
@@ -11,12 +11,14 @@ const DEFAULT_DIRECTIONS = ["right", "top", "left", "bottom"] as const;
 export function getSmartLinePoints(
   sourceView: NodeView,
   targetView: NodeView,
-  {
-    exitPosition,
-    entryPosition,
-  }: Required<Pick<EdgeView, "exitPosition" | "entryPosition">>
+  view: EdgeView
 ): NodePosition[] {
-  const connectPoints = getConnectPointsOfRectangle();
+  const connectPoints = getConnectPointsOfRectangleWithDirection();
+
+  const exitPosition =
+    view.exitPosition ?? getDefaultPosition(targetView, sourceView);
+  const entryPosition =
+    view.entryPosition ?? getDefaultPosition(sourceView, targetView);
 
   const originalSourceDirections =
     connectPoints.find((p) => p.x === exitPosition.x && p.y === exitPosition.y)
@@ -78,4 +80,17 @@ export function getSmartLinePoints(
     sourcePosition,
     targetPosition
   );
+}
+
+export function getDefaultPosition(
+  sourceView: NodeView,
+  targetView: NodeView
+): NodePosition {
+  if (targetView.y + targetView.height < sourceView.y) {
+    return { x: 0.5, y: 1 };
+  }
+  if (targetView.y > sourceView.y + sourceView.height) {
+    return { x: 0.5, y: 0 };
+  }
+  return targetView.x < sourceView.x ? { x: 1, y: 0.5 } : { x: 0, y: 0.5 };
 }

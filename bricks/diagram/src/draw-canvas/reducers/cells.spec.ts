@@ -57,6 +57,93 @@ describe("cells reducer", () => {
     ]);
   });
 
+  test("add edge which is existed", () => {
+    const newCells = cells(
+      [
+        { type: "edge", source: "1", target: "2" },
+        { type: "node", id: "2" } as any,
+      ],
+      {
+        type: "add-edge",
+        payload: {
+          type: "edge",
+          source: "1",
+          target: "2",
+          view: { exitPosition: { x: 0, y: 0.5 } },
+        },
+      }
+    );
+    expect(newCells).toEqual([
+      {
+        source: "1",
+        target: "2",
+        type: "edge",
+        view: { exitPosition: { x: 0, y: 0.5 } },
+      },
+      {
+        id: "2",
+        type: "node",
+      },
+    ]);
+  });
+
+  test("change edge view", () => {
+    const newCells = cells(
+      [
+        { type: "edge", source: "1", target: "2" },
+        { type: "node", id: "2" } as any,
+      ],
+      {
+        type: "change-edge-view",
+        payload: {
+          source: "1",
+          target: "2",
+          view: { exitPosition: { x: 0, y: 0.5 } },
+        },
+      }
+    );
+    expect(newCells).toEqual([
+      {
+        source: "1",
+        target: "2",
+        type: "edge",
+        view: { exitPosition: { x: 0, y: 0.5 } },
+      },
+      {
+        id: "2",
+        type: "node",
+      },
+    ]);
+  });
+
+  test("change edge view which is not existed", () => {
+    const newCells = cells(
+      [
+        { type: "edge", source: "1", target: "2" },
+        { type: "node", id: "2" } as any,
+      ],
+      {
+        type: "change-edge-view",
+        payload: {
+          source: "1",
+          target: "3",
+          view: { exitPosition: { x: 0, y: 0.5 } },
+        },
+      }
+    );
+    expect(newCells).toEqual([
+      {
+        source: "1",
+        target: "2",
+        type: "edge",
+      },
+      {
+        id: "2",
+        type: "node",
+      },
+    ]);
+  });
+
   test("add decorator area", () => {
     const newCells = cells([{ type: "edge", source: "1", target: "2" }], {
       type: "drop-decorator",

@@ -374,6 +374,11 @@
               args:
                 - |
                   <% `Added an nice edge: ${JSON.stringify(EVENT.detail)}` %>
+            edge.view.change:
+              action: message.info
+              args:
+                - |
+                  <% `Edge view changed: ${JSON.stringify(EVENT.detail)}` %>
             decorator.text.change:
               action: message.info
               args:

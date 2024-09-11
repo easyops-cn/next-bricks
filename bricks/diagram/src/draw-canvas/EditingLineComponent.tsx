@@ -5,36 +5,35 @@ import type { ComputedLineConnecterConf } from "./interfaces";
 import type { PositionTuple, TransformLiteral } from "../diagram/interfaces";
 import { curveLine } from "../diagram/lines/curveLine";
 import { useHoverStateContext } from "./HoverStateContext";
-import { getConnectLinePoints } from "../shared/canvas/processors/getConnectLinePoints";
+import { getEditingLinePoints } from "../shared/canvas/processors/getEditingLinePoints";
 
-export interface SmartConnectLineComponentProps {
+export interface EditingLineComponentProps {
   transform: TransformLiteral;
   options: ComputedLineConnecterConf;
 }
 
-export function SmartConnectLineComponent({
+export function EditingLineComponent({
   transform,
   options,
-}: SmartConnectLineComponentProps): JSX.Element {
+}: EditingLineComponentProps): JSX.Element {
   const [connectLineTo, setConnectLineTo] = useState<PositionTuple | null>(
     null
   );
-  const { hoverState, smartConnectLineState, setSmartConnectLineState } =
+  const { hoverState, lineEditorState, setLineEditorState } =
     useHoverStateContext();
 
   useEffect(() => {
-    if (!smartConnectLineState) {
+    if (!lineEditorState) {
       return;
     }
-    function onMouseMove(e: MouseEvent) {
+    const onMouseMove = (e: MouseEvent) => {
+      // const endPoint = lineEditorState.endPoints[lineEditorState.type === "entry" ? 1 : 0];
       // Set connect line to based on the mouse position and the transform
       setConnectLineTo([
-        (e.clientX - transform.x - smartConnectLineState!.offset[0]) /
-          transform.k,
-        (e.clientY - transform.y - smartConnectLineState!.offset[1]) /
-          transform.k,
+        (e.clientX - transform.x - lineEditorState.offset[0]) / transform.k,
+        (e.clientY - transform.y - lineEditorState.offset[1]) / transform.k,
       ]);
-    }
+    };
     function onMouseUp(e: MouseEvent) {
       e.preventDefault();
       reset();
@@ -43,18 +42,18 @@ export function SmartConnectLineComponent({
       document.removeEventListener("mousemove", onMouseMove);
       document.removeEventListener("mouseup", onMouseUp);
       setConnectLineTo(null);
-      setSmartConnectLineState(null);
+      setLineEditorState(null);
     }
     document.addEventListener("mousemove", onMouseMove);
     document.addEventListener("mouseup", onMouseUp);
 
     return reset;
-  }, [setSmartConnectLineState, smartConnectLineState, transform]);
+  }, [lineEditorState, transform, setLineEditorState]);
 
   const line = useMemo(() => {
     const fixedLineType = options.type === "auto" ? "polyline" : options.type;
-    const points = getConnectLinePoints(
-      smartConnectLineState,
+    const points = getEditingLinePoints(
+      lineEditorState,
       connectLineTo,
       hoverState
     );
@@ -64,19 +63,18 @@ export function SmartConnectLineComponent({
       0,
       1
     );
-  }, [connectLineTo, hoverState, smartConnectLineState, options]);
+  }, [connectLineTo, hoverState, lineEditorState, options]);
 
   return (
     <path
-      className={classNames("connect-line", {
-        connecting: !!(smartConnectLineState && connectLineTo),
+      className={classNames("editing-line", {
+        editing: !!(lineEditorState && connectLineTo),
       })}
       d={line}
       fill="none"
-      stroke={options.strokeColor}
-      strokeWidth={options.strokeWidth}
-      markerStart={options.showStartArrow ? options.$markerUrl : ""}
-      markerEnd={options.showEndArrow ? options.$markerUrl : ""}
+      stroke={options.editingStrokeColor}
+      markerStart={options.showStartArrow ? options.$editingMarkerUrl : ""}
+      markerEnd={options.showEndArrow ? options.$editingMarkerUrl : ""}
     />
   );
 }

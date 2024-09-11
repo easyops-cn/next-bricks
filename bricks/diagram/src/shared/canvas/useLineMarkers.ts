@@ -46,6 +46,7 @@ export function useLineMarkers({
     if (lineConnector) {
       lineConnectorConf = {
         ...getDefaultLineConf(),
+        editingStrokeColor: "var(--palette-blue-5)",
         ...omitBy(lineConnector === true ? {} : lineConnector, isUndefined),
       } as ComputedLineConnecterConf;
       const markerIndex = addMarker(
@@ -53,6 +54,11 @@ export function useLineMarkers({
         markers
       );
       lineConnectorConf.$markerUrl = `url(#${markerPrefix}${markerIndex})`;
+      const editingMarkerIndex = addMarker(
+        { strokeColor: lineConnectorConf.editingStrokeColor },
+        markers
+      );
+      lineConnectorConf.$editingMarkerUrl = `url(#${markerPrefix}${editingMarkerIndex})`;
     }
 
     const map = new WeakMap<EdgeCell, ComputedEdgeLineConf>();

@@ -67,7 +67,7 @@ describe("getConnectLinePoints", () => {
   test("connectLineTo is left of source", () => {
     expect(
       getConnectLinePoints(
-        { ...state, exitPosition: { x: 0, y: 0.5, d: ["right"] } },
+        { ...state, exitPosition: { x: 0, y: 0.5 } },
         [10, 220],
         null
       )

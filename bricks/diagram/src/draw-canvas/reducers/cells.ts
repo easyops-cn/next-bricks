@@ -1,6 +1,6 @@
 import type { Reducer } from "react";
 import type { DrawCanvasAction } from "./interfaces";
-import type { Cell, NodeCell } from "../interfaces";
+import type { Cell, EdgeCell, NodeCell } from "../interfaces";
 import { isNodeCell } from "../processors/asserts";
 import { SYMBOL_FOR_SIZE_INITIALIZED } from "../constants";
 
@@ -56,6 +56,27 @@ export const cells: Reducer<Cell[], DrawCanvasAction> = (state, action) => {
         action.payload,
         ...state.slice(existedEdgeIndex + 1),
       ];
+    }
+    case "change-edge-view": {
+      const existedEdgeIndex = state.findIndex(
+        (cell) =>
+          cell.type === "edge" &&
+          cell.source === action.payload.source &&
+          cell.target === action.payload.target
+      );
+      return existedEdgeIndex === -1
+        ? state
+        : [
+            ...state.slice(0, existedEdgeIndex),
+            {
+              ...(state[existedEdgeIndex] as EdgeCell),
+              view: {
+                ...(state[existedEdgeIndex] as EdgeCell).view,
+                ...action.payload.view,
+              },
+            },
+            ...state.slice(existedEdgeIndex + 1),
+          ];
     }
     case "move-cells": {
       let matched = false;
