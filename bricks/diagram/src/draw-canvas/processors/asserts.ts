@@ -37,6 +37,19 @@ export function isNodeOrAreaDecoratorCell(
     (cell.type === "decorator" && cell.decorator === "area")
   );
 }
+
+export function isEdgeSide(
+  cell: Cell,
+  allowEdgeToArea: boolean | undefined
+): cell is NodeCell | DecoratorCell {
+  return (
+    cell.type === "node" ||
+    (!!allowEdgeToArea &&
+      cell.type === "decorator" &&
+      cell.decorator === "area")
+  );
+}
+
 export function isNodeOrTextDecoratorCell(
   cell: Cell | MoveCellPayload
 ): cell is NodeCell | DecoratorCell {

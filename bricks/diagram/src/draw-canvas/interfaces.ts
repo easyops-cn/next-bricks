@@ -92,8 +92,7 @@ export interface NodeBrickConf {
   if?: string | boolean | null;
 }
 
-export interface EdgeView extends BaseEdgeLineConf {
-  // controlPoints?: NodePosition[];
+export interface EdgeView {
   exitPosition?: NodePosition;
   entryPosition?: NodePosition;
 }
@@ -131,9 +130,14 @@ export interface LineMarker {
 export type LineConnecterConf = Pick<
   BaseEdgeLineConf,
   "type" | "strokeWidth" | "strokeColor" | "showStartArrow" | "showEndArrow"
->;
+> & {
+  editingStrokeColor?: string;
+};
 
-export type ComputedLineConnecterConf = ComputedEdgeLineConf;
+export type ComputedLineConnecterConf = ComputedEdgeLineConf & {
+  editingStrokeColor: string;
+  $editingMarkerUrl: string;
+};
 
 export type ActiveTarget = ActiveTargetOfSingular | ActiveTargetOfMulti;
 
@@ -195,7 +199,7 @@ export interface SmartConnectLineState {
   source: NodeCell;
   from: PositionTuple;
   offset: PositionTuple;
-  exitPosition: NodeConnectPoint;
+  exitPosition: NodePosition;
 }
 
 export interface Deferred<T> {
@@ -206,6 +210,7 @@ export interface Deferred<T> {
 export interface ConnectNodesDetail {
   source: NodeCell | DecoratorCell;
   target: NodeCell | DecoratorCell;
+  view?: EdgeView;
 }
 
 export interface DecoratorTextChangeDetail {
@@ -299,4 +304,18 @@ export type ForceLink = SimulationLinkDatum<ForceNode>;
 
 export interface NodeConnectPoint extends NodePosition {
   d: Direction[];
+}
+
+export interface EditableLineInfo {
+  edge: EdgeCell;
+  source: NodeCell | DecoratorCell;
+  target: NodeCell | DecoratorCell;
+  endPoints: [start: NodePosition, end: NodePosition];
+  exitPosition?: NodePosition;
+  entryPosition?: NodePosition;
+}
+
+export interface LineEditorState extends EditableLineInfo {
+  type: "exit" | "entry";
+  offset: PositionTuple;
 }

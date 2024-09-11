@@ -17,6 +17,7 @@ import {
   isContainerDecoratorCell,
   isDecoratorCell,
   isEdgeCell,
+  isEdgeSide,
   isNoManualLayout,
   isNodeCell,
 } from "./processors/asserts";
@@ -46,6 +47,7 @@ export interface CellComponentProps {
   readOnly?: boolean;
   unrelatedCells: Cell[];
   dragNodeToContainerActive?: boolean;
+  allowEdgeToArea?: boolean;
   onCellsMoving?(info: MoveCellPayload[]): void;
   onCellsMoved?(info: MoveCellPayload[]): void;
   onCellResizing?(info: ResizeCellPayload): void;
@@ -74,6 +76,7 @@ export function CellComponent({
   readOnly,
   transform,
   unrelatedCells,
+  allowEdgeToArea,
   onCellsMoving,
   onCellsMoved,
   onCellResizing,
@@ -87,8 +90,14 @@ export function CellComponent({
   onCellMouseEnter,
   onCellMouseLeave,
 }: CellComponentProps): JSX.Element | null {
-  const { smartConnectLineState, setSmartConnectLineState, onConnect } =
-    useHoverStateContext();
+  const {
+    lineEditorState,
+    smartConnectLineState,
+    setSmartConnectLineState,
+    onConnect,
+    setLineEditorState,
+    onChangeEdgeEndpoints,
+  } = useHoverStateContext();
   const gRef = useRef<SVGGElement>(null);
   const unrelated = useMemo(
     () => unrelatedCells.some((item) => sameTarget(item, cell)),
@@ -155,15 +164,20 @@ export function CellComponent({
     transform.k,
   ]);
 
+  // istanbul ignore next: experimental
   useEffect(() => {
     const g = gRef.current;
-    if (!g || !isNodeCell(cell)) {
+    if (
+      !g ||
+      !isEdgeSide(cell, allowEdgeToArea) ||
+      !(smartConnectLineState || lineEditorState)
+    ) {
       return;
     }
     const onMouseUp = (e: MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
       if (smartConnectLineState) {
-        e.preventDefault();
-        e.stopPropagation();
         if (smartConnectLineState.source !== cell) {
           onConnect?.(
             smartConnectLineState.source,
@@ -173,13 +187,44 @@ export function CellComponent({
           );
         }
         setSmartConnectLineState(null);
+      } else if (lineEditorState) {
+        const isEntry = lineEditorState.type === "entry";
+        if (
+          (isEntry ? lineEditorState.target : lineEditorState.source) === cell
+        ) {
+          if (isEntry) {
+            onChangeEdgeEndpoints?.(
+              lineEditorState.source,
+              lineEditorState.target,
+              lineEditorState.exitPosition,
+              undefined
+            );
+          } else {
+            onChangeEdgeEndpoints?.(
+              lineEditorState.source,
+              lineEditorState.target,
+              undefined,
+              lineEditorState.entryPosition
+            );
+          }
+        }
+        setLineEditorState(null);
       }
     };
     g.addEventListener("mouseup", onMouseUp);
     return () => {
-      g?.removeEventListener("mouseup", onMouseUp);
+      g.removeEventListener("mouseup", onMouseUp);
     };
-  }, [cell, onConnect, setSmartConnectLineState, smartConnectLineState]);
+  }, [
+    allowEdgeToArea,
+    cell,
+    lineEditorState,
+    onChangeEdgeEndpoints,
+    onConnect,
+    setLineEditorState,
+    setSmartConnectLineState,
+    smartConnectLineState,
+  ]);
 
   const handleContextMenu = useCallback(
     (event: React.MouseEvent<SVGGElement>) => {
@@ -218,10 +263,13 @@ export function CellComponent({
   const handleMouseLeave = useCallback(() => {
     onCellMouseLeave?.(cell);
   }, [cell, onCellMouseLeave]);
+
+  const active = targetIsActive(cell, activeTarget);
+
   return (
     <g
       className={classNames("cell", {
-        active: targetIsActive(cell, activeTarget),
+        active,
         faded: unrelated,
         "read-only": readOnly,
         "container-active": dragNodeToContainerActive,
@@ -246,7 +294,12 @@ export function CellComponent({
           onResize={onNodeBrickResize}
         />
       ) : isEdgeCell(cell) ? (
-        <EdgeComponent edge={cell} cells={cells} lineConfMap={lineConfMap} />
+        <EdgeComponent
+          edge={cell}
+          cells={cells}
+          lineConfMap={lineConfMap}
+          active={active}
+        />
       ) : isDecoratorCell(cell) ? (
         <DecoratorComponent
           cell={cell}

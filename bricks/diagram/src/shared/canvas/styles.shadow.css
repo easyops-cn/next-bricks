@@ -120,6 +120,16 @@
   display: none;
 }
 
+.editing-line {
+  pointer-events: none;
+  stroke-dasharray: var(--dasharray);
+  stroke-width: 1;
+}
+
+.editing-line:not(.editing) {
+  display: none;
+}
+
 .line.dashed {
   stroke-dasharray: var(--dasharray);
 }

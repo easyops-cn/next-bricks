@@ -19,7 +19,7 @@ export function getConnectLinePoints(
   if (hoverState?.activePointIndex !== undefined) {
     return getSmartLinePoints(sourceView, hoverState.cell.view, {
       exitPosition: smartConnectLineState.exitPosition,
-      entryPosition: hoverState.relativePoints[hoverState.activePointIndex!],
+      entryPosition: hoverState.relativePoints[hoverState.activePointIndex],
     });
   }
 

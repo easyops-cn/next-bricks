@@ -11,7 +11,7 @@ import React, {
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import type { UseSingleBrickConf } from "@next-core/react-runtime";
-import { isObject, unwrapProvider } from "@next-core/utils/general";
+import { unwrapProvider } from "@next-core/utils/general";
 import "@next-core/theme";
 import { uniqueId } from "lodash";
 import classNames from "classnames";
@@ -46,17 +46,21 @@ import type {
   SmartConnectLineState,
   LineConnecterConf,
   Direction,
+  EditableLineInfo,
+  LineEditorState,
 } from "./interfaces";
 import { rootReducer } from "./reducers";
 import { MarkerComponent } from "../diagram/MarkerComponent";
 import {
   isContainerDecoratorCell,
   isEdgeCell,
+  isEdgeSide,
   isNodeCell,
   isNodeOrAreaDecoratorCell,
   isTextDecoratorCell,
 } from "./processors/asserts";
 import type {
+  EdgeViewChangePayload,
   LineTuple,
   MoveCellPayload,
   ResizeCellPayload,
@@ -90,6 +94,8 @@ import zoomBarStyleText from "../shared/canvas/ZoomBarComponent.shadow.css";
 import { SmartConnectLineComponent } from "./SmartConnectLineComponent";
 import { cellToTarget } from "./processors/cellToTarget";
 import { handleNodeContainedChange } from "./processors/handleNodeContainedChange";
+import { LineEditorComponent } from "./LineEditorComponent";
+import { EditingLineComponent } from "./EditingLineComponent";
 
 const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
   "basic.lock-body-scroll"
@@ -346,10 +352,17 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
    * 通过画布绘图的方式添加边（手动调用 `addEdge` 方法不会触发该事件）。
    */
   @event({ type: "edge.add" })
-  accessor #edgeAdd!: EventEmitter<EdgeCell>;
+  accessor #edgeAdd!: EventEmitter<ConnectNodesDetail>;
 
-  #handleEdgeAdd = (edge: EdgeCell) => {
+  #handleEdgeAdd = (edge: ConnectNodesDetail) => {
     this.#edgeAdd.emit(edge);
+  };
+
+  @event({ type: "edge.view.change" })
+  accessor #edgeViewChange!: EventEmitter<EdgeViewChangePayload>;
+
+  #handleEdgeViewChange = (detail: EdgeViewChangePayload) => {
+    this.#edgeViewChange.emit(detail);
   };
 
   @event({ type: "decorator.text.change" })
@@ -563,6 +576,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         onDecoratorTextChange={this.#handleDecoratorTextChange}
         onContainerContainerChange={this.#handleContainerContainerChange}
         onScaleChange={this.#handleScaleChange}
+        onEdgeViewChange={this.#handleEdgeViewChange}
       />
     );
   }
@@ -578,7 +592,8 @@ export interface EoDrawCanvasComponentProps extends EoDrawCanvasProps {
   onCellsMove(info: MoveCellPayload[]): void;
   onCellsDelete(cells: Cell[]): void;
   onCellContextMenu(detail: CellContextMenuDetail): void;
-  onEdgeAdd(detail: EdgeCell): void;
+  onEdgeAdd(detail: ConnectNodesDetail): void;
+  onEdgeViewChange(detail: EdgeViewChangePayload): void;
   onDecoratorTextChange(detail: DecoratorTextChangeDetail): void;
   onContainerContainerChange(detail: MoveCellPayload[]): void;
   onScaleChange(scale: number): void;
@@ -637,6 +652,7 @@ function LegacyEoDrawCanvasComponent(
     onDecoratorTextChange,
     onScaleChange,
     onContainerContainerChange,
+    onEdgeViewChange,
   }: EoDrawCanvasComponentProps,
   ref: React.Ref<DrawCanvasRef>
 ) {
@@ -775,10 +791,7 @@ function LegacyEoDrawCanvasComponent(
       },
       manuallyConnectNodes(sourceId) {
         const source = cells.find(
-          (cell) =>
-            ((allowEdgeToArea && isNodeOrAreaDecoratorCell(cell)) ||
-              isNodeCell(cell)) &&
-            cell.id === sourceId
+          (cell) => isEdgeSide(cell, allowEdgeToArea) && cell.id === sourceId
         ) as NodeCell | DecoratorCell | undefined;
         if (source) {
           const rect = rootRef.current!.getBoundingClientRect();
@@ -808,11 +821,7 @@ function LegacyEoDrawCanvasComponent(
       for (let i = cells.length - 1; i >= 0; i--) {
         const cell = cells[i];
         // Currently ignore connecting to self
-        if (
-          ((allowEdgeToArea && isNodeOrAreaDecoratorCell(cell)) ||
-            isNodeCell(cell)) &&
-          cell.id !== state.source.id
-        ) {
+        if (isEdgeSide(cell, allowEdgeToArea) && cell.id !== state.source.id) {
           if (
             cell.view.x < to[0] &&
             cell.view.x + cell.view.width > to[0] &&
@@ -994,7 +1003,7 @@ function LegacyEoDrawCanvasComponent(
 
   const handleCellMouseEnter = useCallback(
     (cell: Cell) => {
-      if (lineConnectorConf && isNodeCell(cell)) {
+      if (lineConnectorConf && isEdgeSide(cell, allowEdgeToArea)) {
         if (unsetHoverStateTimeoutRef.current !== null) {
           clearTimeout(unsetHoverStateTimeoutRef.current);
           unsetHoverStateTimeoutRef.current = null;
@@ -1007,7 +1016,7 @@ function LegacyEoDrawCanvasComponent(
         });
       }
     },
-    [lineConnectorConf]
+    [allowEdgeToArea, lineConnectorConf]
   );
 
   const handleCellMouseLeave = useCallback(
@@ -1021,38 +1030,96 @@ function LegacyEoDrawCanvasComponent(
     [lineConnectorConf]
   );
 
+  const [activeEditableLine, setActiveEditableLine] =
+    useState<EditableLineInfo | null>(null);
+  const [lineEditorState, setLineEditorState] =
+    useState<LineEditorState | null>(null);
+
+  // istanbul ignore next: experimental
   const hoverStateContextValue = useMemo(
     () => ({
       rootRef,
       smartConnectLineState,
       unsetHoverStateTimeoutRef,
       hoverState,
+      activeEditableLine,
+      lineEditorState,
+      setLineEditorState,
+      setActiveEditableLine,
       setHoverState,
       setSmartConnectLineState,
       onConnect(
-        source: NodeCell,
-        target: NodeCell,
+        source: NodeCell | DecoratorCell,
+        target: NodeCell | DecoratorCell,
         exitPosition: NodePosition,
         entryPosition: NodePosition | undefined
       ) {
-        const newEdge: EdgeCell = {
-          type: "edge",
+        const payload: EdgeViewChangePayload = {
           source: source.id,
           target: target.id,
           view: {
             exitPosition,
             entryPosition,
-            ...(isObject(lineConnector) ? lineConnector : null),
+          },
+        };
+        const existedEdge = cells.find(
+          (cell) =>
+            cell.type === "edge" &&
+            cell.source === source.id &&
+            cell.target === target.id
+        );
+        if (existedEdge) {
+          dispatch({
+            type: "change-edge-view",
+            payload,
+          });
+          onEdgeViewChange?.(payload);
+        } else {
+          const newEdge: EdgeCell = {
+            type: "edge",
+            ...payload,
+          };
+          dispatch({
+            type: "add-edge",
+            payload: newEdge,
+          });
+          onEdgeAdd({
+            source,
+            target,
+            view: newEdge.view,
+          });
+        }
+      },
+      onChangeEdgeEndpoints(
+        source: NodeCell | DecoratorCell,
+        target: NodeCell | DecoratorCell,
+        exitPosition: NodePosition | undefined,
+        entryPosition: NodePosition | undefined
+      ) {
+        const payload: EdgeViewChangePayload = {
+          source: source.id,
+          target: target.id,
+          view: {
+            exitPosition,
+            entryPosition,
           },
         };
         dispatch({
-          type: "add-edge",
-          payload: newEdge,
+          type: "change-edge-view",
+          payload,
         });
-        onEdgeAdd(newEdge);
+        onEdgeViewChange?.(payload);
       },
     }),
-    [smartConnectLineState, hoverState, lineConnector, onEdgeAdd]
+    [
+      smartConnectLineState,
+      hoverState,
+      activeEditableLine,
+      lineEditorState,
+      cells,
+      onEdgeViewChange,
+      onEdgeAdd,
+    ]
   );
 
   useEffect(() => {
@@ -1148,6 +1215,7 @@ function LegacyEoDrawCanvasComponent(
                 lineConfMap={lineConfMap}
                 activeTarget={activeTarget}
                 unrelatedCells={unrelatedCells}
+                allowEdgeToArea={allowEdgeToArea}
                 onCellsMoving={handleCellsMoving}
                 onCellsMoved={handleCellsMoved}
                 onCellResizing={handleCellResizing}
@@ -1181,27 +1249,37 @@ function LegacyEoDrawCanvasComponent(
             />
           )}
           {lineConnectorConf && (
-            <SmartConnectLineComponent
-              smartConnectLineState={smartConnectLineState}
-              transform={transform}
-              options={lineConnectorConf}
-            />
+            <>
+              <SmartConnectLineComponent
+                transform={transform}
+                options={lineConnectorConf}
+              />
+              <EditingLineComponent
+                transform={transform}
+                options={lineConnectorConf}
+              />
+            </>
           )}
-          {guideLines.map((line, index) => (
-            <path
-              key={index}
-              d={`M${line[0].join(" ")} L${line[1].join(" ")}`}
-              stroke="var(--palette-orange-5)"
-              fill="none"
-            />
-          ))}
+          <g>
+            {guideLines.map((line, index) => (
+              <path
+                key={index}
+                d={`M${line[0].join(" ")} L${line[1].join(" ")}`}
+                stroke="var(--palette-orange-5)"
+                fill="none"
+                strokeWidth={1 / transform.k}
+              />
+            ))}
+          </g>
+          <g>
+            {lineConnectorConf && <LineEditorComponent transform={transform} />}
+          </g>
         </g>
         {lineConnectorConf && (
           <LineConnectorComponent
             activeTarget={activeTarget}
             transform={transform}
             disabled={!!connectLineState}
-            smartConnectLineState={smartConnectLineState}
           />
         )}
       </svg>

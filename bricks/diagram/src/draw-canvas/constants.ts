@@ -19,3 +19,5 @@ export const DEFAULT_SNAP_OBJECT_DISTANCE = 5;
 export const DEFAULT_NODE_PADDING_FOR_LINES = 5;
 /** Padding left + padding right, as well as top + bottom */
 export const DEFAULT_NODE_PADDING_FOR_SMART_LINES = 0;
+
+export const POINT_HELPER_RADIUS = 5;

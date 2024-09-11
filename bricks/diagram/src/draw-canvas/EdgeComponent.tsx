@@ -1,6 +1,5 @@
-import React, { useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import classNames from "classnames";
-import { omitBy } from "lodash";
 import type { Cell, ComputedEdgeLineConf, EdgeCell } from "./interfaces";
 import { getDirectLinePoints } from "../diagram/lines/getDirectLinePoints";
 import { isEdgeCell } from "./processors/asserts";
@@ -12,18 +11,22 @@ import { curveLine } from "../diagram/lines/curveLine";
 import { nodeViewToNodeRect } from "../shared/canvas/processors/nodeViewToNodeRect";
 import { getSmartLinePoints } from "../shared/canvas/processors/getSmartLinePoints";
 import { findNodeOrAreaDecorator } from "./processors/findNodeOrAreaDecorator";
+import { useHoverStateContext } from "./HoverStateContext";
 
 export interface EdgeComponentProps {
   edge: EdgeCell;
   cells: Cell[];
   lineConfMap: WeakMap<EdgeCell, ComputedEdgeLineConf>;
+  active?: boolean;
 }
 
 export function EdgeComponent({
   edge,
   cells,
   lineConfMap,
+  active,
 }: EdgeComponentProps): JSX.Element | null {
+  const { setActiveEditableLine } = useHoverStateContext();
   const pathRef = useRef<SVGPathElement>(null);
   const sourceNode = useMemo(
     () => findNodeOrAreaDecorator(cells, edge.source),
@@ -33,16 +36,7 @@ export function EdgeComponent({
     () => findNodeOrAreaDecorator(cells, edge.target),
     [cells, edge.target]
   );
-  const lineConf = useMemo(
-    () => ({
-      ...lineConfMap.get(edge)!,
-      ...omitBy(
-        edge.view,
-        (value, key) => value === undefined || key === "$markerUrl"
-      ),
-    }),
-    [edge, lineConfMap]
-  );
+  const lineConf = useMemo(() => lineConfMap.get(edge)!, [edge, lineConfMap]);
 
   const parallelGap = useMemo(() => {
     const hasOppositeEdge = cells.some(
@@ -55,7 +49,7 @@ export function EdgeComponent({
     return hasOppositeEdge ? lineConf.parallelGap : 0;
   }, [cells, edge, lineConf.parallelGap]);
 
-  const line = useMemo(() => {
+  const linePoints = useMemo(() => {
     const directLinePadding =
       edge.view?.exitPosition || edge.view?.entryPosition
         ? 0
@@ -74,16 +68,41 @@ export function EdgeComponent({
               edge.view
             )
         : null;
+    return points;
+  }, [edge.view, parallelGap, sourceNode, targetNode]);
+
+  const line = useMemo(() => {
     const fixedLineType = lineConf.type === "auto" ? "polyline" : lineConf.type;
     return curveLine(
-      points,
+      linePoints,
       fixedLineType === "curve" ? lineConf.curveType : "curveLinear",
       0,
       1
     );
-  }, [edge.view, lineConf, parallelGap, sourceNode, targetNode]);
+  }, [lineConf, linePoints]);
 
-  if (!line) {
+  useEffect(() => {
+    setActiveEditableLine((prev) =>
+      active
+        ? linePoints && sourceNode && targetNode
+          ? {
+              edge,
+              source: sourceNode,
+              target: targetNode,
+              endPoints: [linePoints[0], linePoints[linePoints.length - 1]],
+              exitPosition: edge.view?.exitPosition,
+              entryPosition: edge.view?.entryPosition,
+            }
+          : null
+        : prev?.edge &&
+            prev.edge.source === edge.source &&
+            prev.edge.target === edge.target
+          ? null
+          : prev
+    );
+  }, [active, edge, linePoints, setActiveEditableLine, sourceNode, targetNode]);
+
+  if (!line || !linePoints) {
     // This happens when source or target is not found,
     // or when source or target has not been positioned yet.
     return null;

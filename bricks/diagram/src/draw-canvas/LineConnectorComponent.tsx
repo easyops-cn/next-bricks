@@ -1,7 +1,7 @@
 // istanbul ignore file: experimental
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { useHoverStateContext } from "./HoverStateContext";
-import type { ActiveTarget, ConnectLineState, NodeCell } from "./interfaces";
+import type { ActiveTarget, NodeCell } from "./interfaces";
 import { targetIsActive } from "./processors/targetIsActive";
 import type { NodePosition, TransformLiteral } from "../diagram/interfaces";
 import { DEFAULT_NODE_PADDING_FOR_SMART_LINES } from "./constants";
@@ -15,18 +15,21 @@ const HALF_HELPER_RADIUS = HELPER_RADIUS / 2;
 export interface LineConnectorComponentProps {
   activeTarget: ActiveTarget | null;
   transform: TransformLiteral;
-  smartConnectLineState: ConnectLineState | null;
   disabled?: boolean;
 }
 
 export function LineConnectorComponent({
   activeTarget,
   transform,
-  smartConnectLineState,
   disabled,
 }: LineConnectorComponentProps): JSX.Element | null {
-  const { unsetHoverStateTimeoutRef, hoverState, setHoverState } =
-    useHoverStateContext();
+  const {
+    unsetHoverStateTimeoutRef,
+    hoverState,
+    setHoverState,
+    smartConnectLineState,
+    lineEditorState,
+  } = useHoverStateContext();
 
   const unsetTimeout = useCallback(() => {
     if (unsetHoverStateTimeoutRef.current !== null) {
@@ -53,7 +56,13 @@ export function LineConnectorComponent({
   const available =
     !disabled &&
     hoverState &&
-    (!!smartConnectLineState || !targetIsActive(hoverState.cell, activeTarget));
+    (!!smartConnectLineState ||
+      (lineEditorState
+        ? lineEditorState.type === "entry"
+          ? hoverState.cell === lineEditorState.target
+          : hoverState.cell === lineEditorState.source
+        : !targetIsActive(hoverState.cell, activeTarget) &&
+          !hasActiveEdge(activeTarget)));
 
   const transformedPoints = useMemo(
     () =>
@@ -102,6 +111,7 @@ export function LineConnectorComponent({
               key={index}
               index={index}
               point={point}
+              unsetActivePointIndex={unsetActivePointIndex}
               unsetTimeout={unsetTimeout}
             />
           ))}
@@ -115,12 +125,14 @@ interface ConnectPointComponentProps {
   index: number;
   point: NodePosition;
   unsetTimeout: () => void;
+  unsetActivePointIndex: () => void;
 }
 
 function ConnectPointComponent({
   index,
   point,
   unsetTimeout,
+  unsetActivePointIndex,
 }: ConnectPointComponentProps): JSX.Element {
   const {
     rootRef,
@@ -129,22 +141,39 @@ function ConnectPointComponent({
     setHoverState,
     setSmartConnectLineState,
     onConnect,
+    lineEditorState,
+    setLineEditorState,
+    onChangeEdgeEndpoints,
   } = useHoverStateContext();
   const ref = useRef<SVGGElement>(null);
 
   useEffect(() => {
-    const handleMouseEnter = () => {
-      unsetTimeout();
-      setHoverState({ ...hoverState!, activePointIndex: index });
-    };
     const g = ref.current;
+    const handleMouseEnter = (e: MouseEvent) => {
+      // There is a chance that mouseenter will not be triggered when the element is shown aync.
+      // So we also listen to the mousemove event, but only once.
+      if (e.type === "mousemove") {
+        g?.removeEventListener(e.type, handleMouseEnter);
+      }
+      unsetTimeout();
+      setHoverState((prev) =>
+        prev && prev.activePointIndex !== index
+          ? { ...hoverState!, activePointIndex: index }
+          : prev
+      );
+    };
     g?.addEventListener("mouseenter", handleMouseEnter);
+    g?.addEventListener("mousemove", handleMouseEnter);
     return () => {
       g?.removeEventListener("mouseenter", handleMouseEnter);
+      g?.removeEventListener("mousemove", handleMouseEnter);
     };
   }, [hoverState, index, setHoverState, unsetTimeout]);
 
   useEffect(() => {
+    if (lineEditorState) {
+      return;
+    }
     const handleMouseDown = (e: MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
@@ -163,7 +192,7 @@ function ConnectPointComponent({
     return () => {
       g?.removeEventListener("mousedown", handleMouseDown);
     };
-  }, [hoverState, index, rootRef, setSmartConnectLineState]);
+  }, [hoverState, index, lineEditorState, rootRef, setSmartConnectLineState]);
 
   useEffect(() => {
     const handleMouseUp = (e: MouseEvent) => {
@@ -179,6 +208,25 @@ function ConnectPointComponent({
           );
         }
         setSmartConnectLineState(null);
+      } else if (lineEditorState) {
+        const position =
+          hoverState!.relativePoints[hoverState!.activePointIndex!];
+        if (lineEditorState.type === "entry") {
+          onChangeEdgeEndpoints?.(
+            lineEditorState.source,
+            lineEditorState.target,
+            lineEditorState.exitPosition,
+            position
+          );
+        } else {
+          onChangeEdgeEndpoints?.(
+            lineEditorState.source,
+            lineEditorState.target,
+            position,
+            lineEditorState.entryPosition
+          );
+        }
+        setLineEditorState(null);
       }
     };
     const g = ref.current;
@@ -186,10 +234,18 @@ function ConnectPointComponent({
     return () => {
       g?.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [smartConnectLineState, hoverState, onConnect, setSmartConnectLineState]);
+  }, [
+    smartConnectLineState,
+    hoverState,
+    onConnect,
+    setSmartConnectLineState,
+    lineEditorState,
+    onChangeEdgeEndpoints,
+    setLineEditorState,
+  ]);
 
   return (
-    <g ref={ref}>
+    <g ref={ref} onMouseLeave={unsetActivePointIndex}>
       <circle
         cx={point.x}
         cy={point.y}
@@ -205,5 +261,14 @@ function ConnectPointComponent({
         preserveAspectRatio="none"
       />
     </g>
+  );
+}
+
+function hasActiveEdge(activeTarget: ActiveTarget | null) {
+  return (
+    activeTarget &&
+    (activeTarget.type === "edge" ||
+      (activeTarget.type === "multi" &&
+        activeTarget.targets.some((target) => target.type === "edge")))
   );
 }

@@ -1,6 +1,6 @@
 import { pull } from "lodash";
 import type { NodePosition } from "../../../diagram/interfaces";
-import { getConnectPointsOfRectangle } from "../shapes/Rectangle";
+import { getConnectPointsOfRectangleWithDirection } from "../shapes/Rectangle";
 import type { EdgeView, NodeView } from "../../../draw-canvas/interfaces";
 import { getPolyLinePoints } from "../../../diagram/lines/getPolyLinePoints";
 import { nodeViewToNodeRect } from "./nodeViewToNodeRect";
@@ -13,7 +13,7 @@ export function getSmartLinePoints(
   targetView: NodeView,
   view: EdgeView
 ): NodePosition[] {
-  const connectPoints = getConnectPointsOfRectangle();
+  const connectPoints = getConnectPointsOfRectangleWithDirection();
 
   const exitPosition =
     view.exitPosition ?? getDefaultPosition(targetView, sourceView);
@@ -82,7 +82,7 @@ export function getSmartLinePoints(
   );
 }
 
-function getDefaultPosition(
+export function getDefaultPosition(
   sourceView: NodeView,
   targetView: NodeView
 ): NodePosition {
