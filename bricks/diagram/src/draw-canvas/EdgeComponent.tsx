@@ -1,12 +1,7 @@
 import React, { useMemo, useRef } from "react";
 import classNames from "classnames";
 import { omitBy } from "lodash";
-import type {
-  Cell,
-  ComputedEdgeLineConf,
-  EdgeCell,
-  EdgeView,
-} from "./interfaces";
+import type { Cell, ComputedEdgeLineConf, EdgeCell } from "./interfaces";
 import { getDirectLinePoints } from "../diagram/lines/getDirectLinePoints";
 import { isEdgeCell } from "./processors/asserts";
 import {
@@ -70,14 +65,8 @@ export function EdgeComponent({
       targetNode &&
       sourceNode.view.x != null &&
       targetNode.view.x != null
-        ? edge.view?.exitPosition && edge.view.entryPosition
-          ? getSmartLinePoints(
-              sourceNode.view,
-              targetNode.view,
-              edge.view as Required<
-                Pick<EdgeView, "exitPosition" | "entryPosition">
-              >
-            )
+        ? edge.view?.exitPosition || edge.view?.entryPosition
+          ? getSmartLinePoints(sourceNode.view, targetNode.view, edge.view)
           : getDirectLinePoints(
               nodeViewToNodeRect(sourceNode.view, directLinePadding),
               nodeViewToNodeRect(targetNode.view, directLinePadding),
