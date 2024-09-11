@@ -15,3 +15,7 @@ export const DEFAULT_LINE_INTERACT_ANIMATE_DURATION = 1;
 export const DEFAULT_DEGRADED_THRESHOLD = 500;
 export const DEFAULT_SNAP_GRID_SIZE = 10;
 export const DEFAULT_SNAP_OBJECT_DISTANCE = 5;
+/** Padding left + padding right, as well as top + bottom */
+export const DEFAULT_NODE_PADDING_FOR_LINES = 5;
+/** Padding left + padding right, as well as top + bottom */
+export const DEFAULT_NODE_PADDING_FOR_SMART_LINES = 0;

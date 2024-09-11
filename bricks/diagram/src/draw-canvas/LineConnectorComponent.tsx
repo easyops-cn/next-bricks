@@ -4,6 +4,7 @@ import { useHoverStateContext } from "./HoverStateContext";
 import type { ActiveTarget, ConnectLineState, NodeCell } from "./interfaces";
 import { targetIsActive } from "./processors/targetIsActive";
 import type { NodePosition, TransformLiteral } from "../diagram/interfaces";
+import { DEFAULT_NODE_PADDING_FOR_SMART_LINES } from "./constants";
 
 const HELPER_IMAGE =
   "data:image/svg+xml;base64,PCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj48c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHdpZHRoPSI1cHgiIGhlaWdodD0iNXB4IiB2ZXJzaW9uPSIxLjEiPjxwYXRoIGQ9Im0gMCAwIEwgNSA1IE0gMCA1IEwgNSAwIiBzdHJva2Utd2lkdGg9IjIiIHN0eWxlPSJzdHJva2Utb3BhY2l0eTowLjQiIHN0cm9rZT0iI2ZmZmZmZiIvPjxwYXRoIGQ9Im0gMCAwIEwgNSA1IE0gMCA1IEwgNSAwIiBzdHJva2U9IiMyOWI2ZjIiLz48L3N2Zz4=";
@@ -65,28 +66,27 @@ export function LineConnectorComponent({
     [available, hoverState?.points, transform]
   );
 
+  const padding = DEFAULT_NODE_PADDING_FOR_SMART_LINES;
+  const halfPadding = padding / 2;
+
   return (
     <g onMouseEnter={unsetActivePointIndex} onMouseLeave={unsetHoverState}>
       {available && (
         <>
-          <rect
-            x={hoverState.cell.view.x}
-            y={hoverState.cell.view.y}
-            width={hoverState.cell.view.width}
-            height={hoverState.cell.view.height}
-            fill="none"
-            stroke="transparent"
-            strokeWidth={HELPER_BG_RADIUS * 2}
-            pointerEvents="stroke"
-          />
-          <rect
-            x={hoverState.cell.view.x}
-            y={hoverState.cell.view.y}
-            width={hoverState.cell.view.width}
-            height={hoverState.cell.view.height}
-            fill="none"
-            stroke="transparent"
-          />
+          <g
+            transform={`translate(${transform.x} ${transform.y}) scale(${transform.k})`}
+          >
+            <rect
+              x={hoverState.cell.view.x - halfPadding}
+              y={hoverState.cell.view.y - halfPadding}
+              width={hoverState.cell.view.width + padding}
+              height={hoverState.cell.view.height + padding}
+              fill="none"
+              stroke="transparent"
+              strokeWidth={(HELPER_BG_RADIUS * 2) / transform.k}
+              pointerEvents="stroke"
+            />
+          </g>
           {hoverState?.activePointIndex !== undefined && (
             <circle
               cx={transformedPoints![hoverState.activePointIndex].x}
@@ -103,7 +103,6 @@ export function LineConnectorComponent({
               index={index}
               point={point}
               unsetTimeout={unsetTimeout}
-              unsetActivePointIndex={unsetActivePointIndex}
             />
           ))}
         </>
@@ -116,14 +115,12 @@ interface ConnectPointComponentProps {
   index: number;
   point: NodePosition;
   unsetTimeout: () => void;
-  unsetActivePointIndex: () => void;
 }
 
 function ConnectPointComponent({
   index,
   point,
   unsetTimeout,
-  unsetActivePointIndex,
 }: ConnectPointComponentProps): JSX.Element {
   const {
     rootRef,
@@ -190,14 +187,6 @@ function ConnectPointComponent({
       g?.removeEventListener("mouseup", handleMouseUp);
     };
   }, [smartConnectLineState, hoverState, onConnect, setSmartConnectLineState]);
-
-  useEffect(() => {
-    const g = ref.current;
-    g?.addEventListener("mouseleave", unsetActivePointIndex);
-    return () => {
-      g?.removeEventListener("mouseleave", unsetActivePointIndex);
-    };
-  }, [unsetActivePointIndex]);
 
   return (
     <g ref={ref}>

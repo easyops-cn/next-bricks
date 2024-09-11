@@ -78,6 +78,15 @@
                 } 
               }
             },
+            {
+              type: "edge",
+              source: "W",
+              target: "Z",
+              view: {
+                entryPosition: { x: 0, y: 0.5 },
+                exitPosition: {x: 0.5, y: 0}
+              }
+            }
           ].concat(
             ["X", "Y", "Z", "W"].map((id) => ({
               type: "node",

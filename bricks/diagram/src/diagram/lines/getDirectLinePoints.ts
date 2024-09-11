@@ -1,3 +1,4 @@
+import type { EdgeView } from "../../draw-canvas/interfaces";
 import type { NodePosition, NodeRect, PositionTuple } from "../interfaces";
 import { doTwoNodesOverlap } from "../processors/doTwoNodesOverlap";
 
@@ -6,11 +7,19 @@ type LineTuple = [start: PositionTuple, end: PositionTuple];
 export function getDirectLinePoints(
   source: NodeRect,
   target: NodeRect,
-  parallelGap?: number
+  parallelGap?: number,
+  edgeView?: EdgeView
 ): NodePosition[] | null {
+  const hasExitPosition = !!edgeView?.exitPosition;
+  const hasEntryPosition = !!edgeView?.entryPosition;
+
   // Ignore if two nodes are the same.
-  // Ignore if two nodes overlap.
-  if (source === target || doTwoNodesOverlap(source, target, 0, 0)) {
+  // Ignore if two nodes overlap and no entry nor exit position.
+  if (
+    source === target ||
+    (doTwoNodesOverlap(source, target, 0, 0) &&
+      !(hasExitPosition || hasEntryPosition))
+  ) {
     return null;
   }
 
@@ -29,22 +38,42 @@ export function getDirectLinePoints(
   }
 
   const line: LineTuple = [
-    [source.x + xDiff, source.y + yDiff],
-    [target.x + xDiff, target.y + yDiff],
+    hasExitPosition
+      ? [
+          source.x + (edgeView!.exitPosition!.x - 0.5) * source.width,
+          source.y + (edgeView!.exitPosition!.y - 0.5) * source.height,
+        ]
+      : [source.x + xDiff, source.y + yDiff],
+    hasEntryPosition
+      ? [
+          target.x + (edgeView!.entryPosition!.x - 0.5) * target.width,
+          target.y + (edgeView!.entryPosition!.y - 0.5) * target.height,
+        ]
+      : [target.x + xDiff, target.y + yDiff],
   ];
-  const sourceIntersections = getIntersections(source, line);
-  const targetIntersections = getIntersections(target, line);
 
-  // Todo: handle when more than one intersection
-  if (sourceIntersections.length > 0) {
-    p0 = sourceIntersections[0];
+  if (hasExitPosition) {
+    p0 = line[0];
   } else {
-    p0 = [source.x, source.y];
+    const sourceIntersections = getIntersections(source, line);
+    // Todo: handle when more than one intersection
+    if (sourceIntersections.length > 0) {
+      p0 = sourceIntersections[0];
+    } else {
+      p0 = [source.x, source.y];
+    }
   }
-  if (targetIntersections.length > 0) {
-    p1 = targetIntersections[0];
+
+  if (hasEntryPosition) {
+    p1 = line[1];
   } else {
-    p1 = [target.x, target.y];
+    const targetIntersections = getIntersections(target, line);
+    // Todo: handle when more than one intersection
+    if (targetIntersections.length > 0) {
+      p1 = targetIntersections[0];
+    } else {
+      p1 = [target.x, target.y];
+    }
   }
 
   return [

@@ -31,6 +31,7 @@ import { sameTarget } from "./processors/sameTarget";
 import { targetIsActive } from "./processors/targetIsActive";
 import { computeContainerRect } from "./processors/computeContainerRect";
 import { get } from "lodash";
+import { useHoverStateContext } from "./HoverStateContext";
 export interface CellComponentProps {
   layout: LayoutType;
   layoutOptions?: LayoutOptions;
@@ -86,6 +87,8 @@ export function CellComponent({
   onCellMouseEnter,
   onCellMouseLeave,
 }: CellComponentProps): JSX.Element | null {
+  const { smartConnectLineState, setSmartConnectLineState, onConnect } =
+    useHoverStateContext();
   const gRef = useRef<SVGGElement>(null);
   const unrelated = useMemo(
     () => unrelatedCells.some((item) => sameTarget(item, cell)),
@@ -151,6 +154,32 @@ export function CellComponent({
     readOnly,
     transform.k,
   ]);
+
+  useEffect(() => {
+    const g = gRef.current;
+    if (!g || !isNodeCell(cell)) {
+      return;
+    }
+    const onMouseUp = (e: MouseEvent) => {
+      if (smartConnectLineState) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (smartConnectLineState.source !== cell) {
+          onConnect?.(
+            smartConnectLineState.source,
+            cell,
+            smartConnectLineState.exitPosition,
+            undefined
+          );
+        }
+        setSmartConnectLineState(null);
+      }
+    };
+    g.addEventListener("mouseup", onMouseUp);
+    return () => {
+      g?.removeEventListener("mouseup", onMouseUp);
+    };
+  }, [cell, onConnect, setSmartConnectLineState, smartConnectLineState]);
 
   const handleContextMenu = useCallback(
     (event: React.MouseEvent<SVGGElement>) => {

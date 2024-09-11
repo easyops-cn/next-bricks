@@ -27,7 +27,7 @@ export const HoverStateContext = React.createContext<{
     source: NodeCell,
     target: NodeCell,
     exitPosition: NodePosition,
-    entryPosition: NodePosition
+    entryPosition: NodePosition | undefined
   ) => void;
 }>({
   rootRef: { current: null },

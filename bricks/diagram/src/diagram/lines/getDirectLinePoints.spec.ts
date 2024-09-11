@@ -71,4 +71,34 @@ describe("getDirectLinePoints", () => {
       },
     ]);
   });
+
+  test("with parallel gap", () => {
+    expect(getDirectLinePoints(nodeA, nodeC, 10)).toEqual([
+      {
+        x: 290,
+        y: expect.closeTo(125.58, 2),
+      },
+      {
+        x: 330,
+        y: expect.closeTo(134.67, 2),
+      },
+    ]);
+  });
+
+  test("with entry and exit positions", () => {
+    const edgeView = {
+      exitPosition: { x: 1, y: 0.5 },
+      entryPosition: { x: 0, y: 0.5 },
+    };
+    expect(getDirectLinePoints(nodeA, nodeC, 0, edgeView)).toEqual([
+      {
+        x: 290,
+        y: 100,
+      },
+      {
+        x: 330,
+        y: 150,
+      },
+    ]);
+  });
 });

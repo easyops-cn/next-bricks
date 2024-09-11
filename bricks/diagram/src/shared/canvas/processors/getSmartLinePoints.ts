@@ -4,6 +4,7 @@ import { getConnectPointsOfRectangle } from "../shapes/Rectangle";
 import type { EdgeView, NodeView } from "../../../draw-canvas/interfaces";
 import { getPolyLinePoints } from "../../../diagram/lines/getPolyLinePoints";
 import { nodeViewToNodeRect } from "./nodeViewToNodeRect";
+import { DEFAULT_NODE_PADDING_FOR_SMART_LINES } from "../../../draw-canvas/constants";
 
 const DEFAULT_DIRECTIONS = ["right", "top", "left", "bottom"] as const;
 
@@ -27,10 +28,19 @@ export function getSmartLinePoints(
   const sourceDirections = [...originalSourceDirections];
   const targetDirections = [...originalTargetDirections];
 
-  const sourceX = sourceView.x + exitPosition.x * sourceView.width;
-  const sourceY = sourceView.y + exitPosition.y * sourceView.height;
-  const targetX = targetView.x + entryPosition.x * targetView.width;
-  const targetY = targetView.y + entryPosition.y * targetView.height;
+  const padding = DEFAULT_NODE_PADDING_FOR_SMART_LINES;
+  const halfPadding = padding / 2;
+
+  const sourceX =
+    sourceView.x - halfPadding + exitPosition.x * (sourceView.width + padding);
+  const sourceY =
+    sourceView.y - halfPadding + exitPosition.y * (sourceView.height + padding);
+  const targetX =
+    targetView.x - halfPadding + entryPosition.x * (targetView.width + padding);
+  const targetY =
+    targetView.y -
+    halfPadding +
+    entryPosition.y * (targetView.height + padding);
 
   if (sourceX < targetX) {
     pull(sourceDirections, "left");
@@ -61,8 +71,8 @@ export function getSmartLinePoints(
       : entryPosition.x;
 
   return getPolyLinePoints(
-    nodeViewToNodeRect(sourceView, 0),
-    nodeViewToNodeRect(targetView, 0),
+    nodeViewToNodeRect(sourceView, padding),
+    nodeViewToNodeRect(targetView, padding),
     sourceDirection,
     targetDirection,
     sourcePosition,
