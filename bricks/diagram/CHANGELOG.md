@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.44.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.43.2...@next-bricks/diagram@0.44.0) (2024-09-11)
+
+
+### Bug Fixes
+
+* fix poly line control points ([8528b73](https://github.com/easyops-cn/next-bricks/commit/8528b731d2f8f22d677c236e2dbea4cf2d92a0d2))
+* refine when no entry position ([43a33ea](https://github.com/easyops-cn/next-bricks/commit/43a33ea184ed7183a55694b5d0b260a6830da743))
+* update existed edges instead add new one ([981d2c4](https://github.com/easyops-cn/next-bricks/commit/981d2c4619aaeda2341b74ca636baf6f754380d5))
+
+
+### Features
+
+* **draw-canvas:** support smart line with no entry point ([63dc3e2](https://github.com/easyops-cn/next-bricks/commit/63dc3e2ef66f3d5ab53aca6f00e5170816a857f8))
+* edit line entry and exit point ([98a36b8](https://github.com/easyops-cn/next-bricks/commit/98a36b8760623f5af5f9db95ba686c140d87bd9c))
+
+
+
+
+
 ## [0.43.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.43.1...@next-bricks/diagram@0.43.2) (2024-09-03)
 
 **Note:** Version bump only for package @next-bricks/diagram
