@@ -28,12 +28,13 @@ export function ConnectLineComponent({
 
   useEffect(() => {
     if (connectLineState) {
+      const getConnectTo = (e: MouseEvent): PositionTuple => [
+        (e.clientX - transform.x - connectLineState.offset[0]) / transform.k,
+        (e.clientY - transform.y - connectLineState.offset[1]) / transform.k,
+      ];
       const onMouseMove = (e: MouseEvent) => {
         // Set connect line to based on the mouse position and the transform
-        setConnectLineTo([
-          (e.clientX - transform.x - connectLineState.offset[0]) / transform.k,
-          (e.clientY - transform.y - connectLineState.offset[1]) / transform.k,
-        ]);
+        setConnectLineTo(getConnectTo(e));
       };
       const onMouseDown = (e: MouseEvent) => {
         e.stopPropagation();
@@ -42,10 +43,7 @@ export function ConnectLineComponent({
         e.stopPropagation();
         // eslint-disable-next-line @typescript-eslint/no-use-before-define
         reset();
-        onConnect(connectLineState, [
-          (e.clientX - transform.x - connectLineState.offset[0]) / transform.k,
-          (e.clientY - transform.y - connectLineState.offset[1]) / transform.k,
-        ]);
+        onConnect(connectLineState, getConnectTo(e));
       };
       const reset = () => {
         document.removeEventListener("mousemove", onMouseMove);

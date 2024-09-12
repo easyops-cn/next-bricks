@@ -89,9 +89,7 @@ export function EdgeComponent({
               edge,
               source: sourceNode,
               target: targetNode,
-              endPoints: [linePoints[0], linePoints[linePoints.length - 1]],
-              exitPosition: edge.view?.exitPosition,
-              entryPosition: edge.view?.entryPosition,
+              linePoints,
             }
           : null
         : prev?.edge &&

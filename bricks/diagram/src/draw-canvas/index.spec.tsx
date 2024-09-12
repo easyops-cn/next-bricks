@@ -511,7 +511,7 @@ describe("eo-draw-canvas", () => {
     });
 
     act(() => {
-      fireEvent.click(element.shadowRoot!.querySelector(".cells")!);
+      fireEvent.click(element.shadowRoot!.querySelector("svg")!);
     });
     expect(onActiveTargetChange).toHaveBeenCalledTimes(2);
     expect(onActiveTargetChange).toHaveBeenNthCalledWith(2, null);

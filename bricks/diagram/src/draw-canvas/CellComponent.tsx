@@ -96,7 +96,7 @@ export function CellComponent({
     setSmartConnectLineState,
     onConnect,
     setLineEditorState,
-    onChangeEdgeEndpoints,
+    onChangeEdgeView,
   } = useHoverStateContext();
   const gRef = useRef<SVGGElement>(null);
   const unrelated = useMemo(
@@ -170,7 +170,10 @@ export function CellComponent({
     if (
       !g ||
       !isEdgeSide(cell, allowEdgeToArea) ||
-      !(smartConnectLineState || lineEditorState)
+      !(
+        smartConnectLineState ||
+        (lineEditorState && lineEditorState.type !== "control")
+      )
     ) {
       return;
     }
@@ -188,24 +191,27 @@ export function CellComponent({
         }
         setSmartConnectLineState(null);
       } else if (lineEditorState) {
-        const isEntry = lineEditorState.type === "entry";
-        if (
-          (isEntry ? lineEditorState.target : lineEditorState.source) === cell
-        ) {
+        const {
+          type,
+          source,
+          target,
+          edge: { view },
+        } = lineEditorState;
+
+        const isEntry = type === "entry";
+        if ((isEntry ? target : source) === cell) {
           if (isEntry) {
-            onChangeEdgeEndpoints?.(
-              lineEditorState.source,
-              lineEditorState.target,
-              lineEditorState.exitPosition,
-              undefined
-            );
+            onChangeEdgeView?.(source, target, {
+              ...view,
+              entryPosition: null,
+              ...(!view?.exitPosition ? { vertices: null } : {}),
+            });
           } else {
-            onChangeEdgeEndpoints?.(
-              lineEditorState.source,
-              lineEditorState.target,
-              undefined,
-              lineEditorState.entryPosition
-            );
+            onChangeEdgeView?.(source, target, {
+              ...view,
+              exitPosition: null,
+              ...(!view?.entryPosition ? { vertices: null } : {}),
+            });
           }
         }
         setLineEditorState(null);
@@ -219,7 +225,7 @@ export function CellComponent({
     allowEdgeToArea,
     cell,
     lineEditorState,
-    onChangeEdgeEndpoints,
+    onChangeEdgeView,
     onConnect,
     setLineEditorState,
     setSmartConnectLineState,

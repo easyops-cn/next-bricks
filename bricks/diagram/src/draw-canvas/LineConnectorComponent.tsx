@@ -1,9 +1,9 @@
 // istanbul ignore file: experimental
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { useHoverStateContext } from "./HoverStateContext";
 import type { ActiveTarget, NodeCell } from "./interfaces";
 import { targetIsActive } from "./processors/targetIsActive";
-import type { NodePosition, TransformLiteral } from "../diagram/interfaces";
+import type { NodePosition } from "../diagram/interfaces";
 import { DEFAULT_NODE_PADDING_FOR_SMART_LINES } from "./constants";
 
 const HELPER_IMAGE =
@@ -14,13 +14,13 @@ const HALF_HELPER_RADIUS = HELPER_RADIUS / 2;
 
 export interface LineConnectorComponentProps {
   activeTarget: ActiveTarget | null;
-  transform: TransformLiteral;
+  scale: number;
   disabled?: boolean;
 }
 
 export function LineConnectorComponent({
   activeTarget,
-  transform,
+  scale,
   disabled,
 }: LineConnectorComponentProps): JSX.Element | null {
   const {
@@ -60,20 +60,10 @@ export function LineConnectorComponent({
       (lineEditorState
         ? lineEditorState.type === "entry"
           ? hoverState.cell === lineEditorState.target
-          : hoverState.cell === lineEditorState.source
+          : lineEditorState.type === "exit" &&
+            hoverState.cell === lineEditorState.source
         : !targetIsActive(hoverState.cell, activeTarget) &&
           !hasActiveEdge(activeTarget)));
-
-  const transformedPoints = useMemo(
-    () =>
-      available
-        ? hoverState.points.map((p) => ({
-            x: p.x * transform.k + transform.x,
-            y: p.y * transform.k + transform.y,
-          }))
-        : null,
-    [available, hoverState?.points, transform]
-  );
 
   const padding = DEFAULT_NODE_PADDING_FOR_SMART_LINES;
   const halfPadding = padding / 2;
@@ -82,35 +72,32 @@ export function LineConnectorComponent({
     <g onMouseEnter={unsetActivePointIndex} onMouseLeave={unsetHoverState}>
       {available && (
         <>
-          <g
-            transform={`translate(${transform.x} ${transform.y}) scale(${transform.k})`}
-          >
-            <rect
-              x={hoverState.cell.view.x - halfPadding}
-              y={hoverState.cell.view.y - halfPadding}
-              width={hoverState.cell.view.width + padding}
-              height={hoverState.cell.view.height + padding}
-              fill="none"
-              stroke="transparent"
-              strokeWidth={(HELPER_BG_RADIUS * 2) / transform.k}
-              pointerEvents="stroke"
-            />
-          </g>
-          {hoverState?.activePointIndex !== undefined && (
+          <rect
+            x={hoverState.cell.view.x - halfPadding}
+            y={hoverState.cell.view.y - halfPadding}
+            width={hoverState.cell.view.width + padding}
+            height={hoverState.cell.view.height + padding}
+            fill="none"
+            stroke="transparent"
+            strokeWidth={(HELPER_BG_RADIUS * 2) / scale}
+            pointerEvents="stroke"
+          />
+          {hoverState.activePointIndex !== undefined && (
             <circle
-              cx={transformedPoints![hoverState.activePointIndex].x}
-              cy={transformedPoints![hoverState.activePointIndex].y}
-              r={HELPER_BG_RADIUS}
+              cx={hoverState.points[hoverState.activePointIndex].x}
+              cy={hoverState.points[hoverState.activePointIndex].y}
+              r={HELPER_BG_RADIUS / scale}
               fill="lightgreen"
               fillOpacity={0.5}
               pointerEvents="none"
             />
           )}
-          {transformedPoints!.map((point, index) => (
+          {hoverState.points.map((point, index) => (
             <ConnectPointComponent
               key={index}
               index={index}
               point={point}
+              scale={scale}
               unsetActivePointIndex={unsetActivePointIndex}
               unsetTimeout={unsetTimeout}
             />
@@ -124,6 +111,7 @@ export function LineConnectorComponent({
 interface ConnectPointComponentProps {
   index: number;
   point: NodePosition;
+  scale: number;
   unsetTimeout: () => void;
   unsetActivePointIndex: () => void;
 }
@@ -131,6 +119,7 @@ interface ConnectPointComponentProps {
 function ConnectPointComponent({
   index,
   point,
+  scale,
   unsetTimeout,
   unsetActivePointIndex,
 }: ConnectPointComponentProps): JSX.Element {
@@ -143,7 +132,7 @@ function ConnectPointComponent({
     onConnect,
     lineEditorState,
     setLineEditorState,
-    onChangeEdgeEndpoints,
+    onChangeEdgeView,
   } = useHoverStateContext();
   const ref = useRef<SVGGElement>(null);
 
@@ -211,20 +200,22 @@ function ConnectPointComponent({
       } else if (lineEditorState) {
         const position =
           hoverState!.relativePoints[hoverState!.activePointIndex!];
-        if (lineEditorState.type === "entry") {
-          onChangeEdgeEndpoints?.(
-            lineEditorState.source,
-            lineEditorState.target,
-            lineEditorState.exitPosition,
-            position
-          );
+        const {
+          type,
+          source,
+          target,
+          edge: { view },
+        } = lineEditorState;
+        if (type === "entry") {
+          onChangeEdgeView?.(source, target, {
+            ...view,
+            entryPosition: position,
+          });
         } else {
-          onChangeEdgeEndpoints?.(
-            lineEditorState.source,
-            lineEditorState.target,
-            position,
-            lineEditorState.entryPosition
-          );
+          onChangeEdgeView?.(source, target, {
+            ...view,
+            exitPosition: position,
+          });
         }
         setLineEditorState(null);
       }
@@ -240,7 +231,7 @@ function ConnectPointComponent({
     onConnect,
     setSmartConnectLineState,
     lineEditorState,
-    onChangeEdgeEndpoints,
+    onChangeEdgeView,
     setLineEditorState,
   ]);
 
@@ -253,10 +244,10 @@ function ConnectPointComponent({
         fill="transparent"
       />
       <image
-        x={point.x - HALF_HELPER_RADIUS}
-        y={point.y - HALF_HELPER_RADIUS}
-        width={HELPER_RADIUS}
-        height={HELPER_RADIUS}
+        x={point.x - HALF_HELPER_RADIUS / scale}
+        y={point.y - HALF_HELPER_RADIUS / scale}
+        width={HELPER_RADIUS / scale}
+        height={HELPER_RADIUS / scale}
         xlinkHref={HELPER_IMAGE}
         preserveAspectRatio="none"
       />

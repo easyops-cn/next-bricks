@@ -2,6 +2,7 @@
 import React from "react";
 import type {
   DecoratorCell,
+  EdgeView,
   EditableLineInfo,
   LineEditorState,
   NodeCell,
@@ -40,11 +41,10 @@ export const HoverStateContext = React.createContext<{
     exitPosition: NodePosition,
     entryPosition: NodePosition | undefined
   ) => void;
-  onChangeEdgeEndpoints?: (
+  onChangeEdgeView?: (
     source: NodeCell | DecoratorCell,
     target: NodeCell | DecoratorCell,
-    exitPosition: NodePosition | undefined,
-    entryPosition: NodePosition | undefined
+    view: EdgeView
   ) => void;
 }>({
   rootRef: { current: null },

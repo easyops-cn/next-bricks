@@ -93,8 +93,9 @@ export interface NodeBrickConf {
 }
 
 export interface EdgeView {
-  exitPosition?: NodePosition;
-  entryPosition?: NodePosition;
+  exitPosition?: NodePosition | null;
+  entryPosition?: NodePosition | null;
+  vertices?: NodePosition[] | null;
 }
 
 export interface EdgeLineConf extends BaseEdgeLineConf {
@@ -310,12 +311,42 @@ export interface EditableLineInfo {
   edge: EdgeCell;
   source: NodeCell | DecoratorCell;
   target: NodeCell | DecoratorCell;
-  endPoints: [start: NodePosition, end: NodePosition];
-  exitPosition?: NodePosition;
-  entryPosition?: NodePosition;
+  linePoints: NodePosition[];
 }
 
-export interface LineEditorState extends EditableLineInfo {
+export type LineEditorState =
+  | LineEditorStateOfEndPoint
+  | LineEditorStateOfControl;
+
+export interface LineEditorStateOfEndPoint extends EditableLineInfo {
   type: "exit" | "entry";
   offset: PositionTuple;
+  from: PositionTuple;
+}
+
+export interface LineEditorStateOfControl extends EditableLineInfo {
+  type: "control";
+  offset: PositionTuple;
+  from: PositionTuple;
+  control: ControlPoint;
+}
+
+/**
+ * A control point for editing line is the middle point of a line segment.
+ *
+ * Direction means the control point changes on the what direction,
+ * ns means north-south, ew means east-west.
+ *
+ * ```
+ *      C1  ┌─────┐
+ *    ┌──⊙──┤  T  │
+ * C0 ⊙     └─────┘
+ * ┌──┴──┐
+ * │  S  │
+ * └─────┘
+ * ```
+ */
+export interface ControlPoint extends NodePosition {
+  direction: "ns" | "ew";
+  index: number;
 }
