@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.14.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.13.5...@next-bricks/nav@1.14.0) (2024-09-12)
+
+
+### Features
+
+* **nav:** 支持新开便签跳转页面 ([c6aaee9](https://github.com/easyops-cn/next-bricks/commit/c6aaee928f358b81f8c391bafdb4feec0663426e))
+
+
+
+
+
 ## [1.13.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.13.4...@next-bricks/nav@1.13.5) (2024-09-03)
 
 **Note:** Version bump only for package @next-bricks/nav
