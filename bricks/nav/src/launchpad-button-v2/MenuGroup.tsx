@@ -8,6 +8,7 @@ import type {
   MenuItemDataNormal,
   SidebarMenuItemData,
 } from "./interfaces";
+import { Target } from "@next-bricks/basic/link";
 
 export interface MenuGroupProps {
   name: string;
@@ -103,9 +104,10 @@ function MenuItem({ item }: MenuItemProps) {
 
 export interface SidebarMenuItemProps {
   item: SidebarMenuItemData;
+  target?: Target;
 }
 
-export function SidebarMenuItem({ item }: SidebarMenuItemProps) {
+export function SidebarMenuItem({ item, target }: SidebarMenuItemProps) {
   const { readonly, pushRecentVisit, toggleStar } = useLaunchpadContext();
 
   const handleClick = useCallback(() => {
@@ -125,6 +127,7 @@ export function SidebarMenuItem({ item }: SidebarMenuItemProps) {
         {...(item.type === "app"
           ? {
               url: item.url,
+              target,
             }
           : {
               href: item.url,

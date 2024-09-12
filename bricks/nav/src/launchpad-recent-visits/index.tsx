@@ -4,11 +4,11 @@ import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import { useLaunchpadInfo } from "../launchpad-button-v2/useLaunchpadInfo";
-import type { Link, LinkProps } from "@next-bricks/basic/link";
+import type { Link, LinkProps, Target } from "@next-bricks/basic/link";
 
 const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 
-const { defineElement } = createDecorators();
+const { defineElement, property } = createDecorators();
 
 /**
  * launchpad 最近访问
@@ -19,12 +19,22 @@ export
   styleTexts: [styleText],
 })
 class EoLaunchpadRecentVisits extends ReactNextElement {
+  @property({
+    attribute: false,
+  })
+  accessor target: Target | undefined;
+
   render() {
     return <EoLaunchpadRecentVisitsComponent />;
   }
 }
 
-export function EoLaunchpadRecentVisitsComponent() {
+interface EoLaunchpadRecentVisitsComponentProps {
+  target?: Target;
+}
+export function EoLaunchpadRecentVisitsComponent({
+  target,
+}: EoLaunchpadRecentVisitsComponentProps) {
   const { recentVisits, pushRecentVisit } = useLaunchpadInfo(true);
 
   return (
@@ -36,6 +46,7 @@ export function EoLaunchpadRecentVisitsComponent() {
             {...(item.type === "app"
               ? {
                   url: item.url,
+                  target,
                 }
               : {
                   href: item.url,
