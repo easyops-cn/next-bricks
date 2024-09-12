@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.9.1...@next-bricks/containers@1.9.2) (2024-09-12)
+
+
+### Bug Fixes
+
+* **eo-page-view:** no min-width for aside ([92a25a1](https://github.com/easyops-cn/next-bricks/commit/92a25a169edb77edd58f79e2ae3efb279b57bc00))
+
+
+
+
+
 ## [1.9.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.9.0...@next-bricks/containers@1.9.1) (2024-09-05)
 
 
