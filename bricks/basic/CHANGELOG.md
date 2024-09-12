@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.45.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.45.1...@next-bricks/basic@1.45.2) (2024-09-12)
+
+
+### Bug Fixes
+
+* show-dialog内容过多时，底部按钮看不见 ref CUSTOMIZE-835 ([0e28ba2](https://github.com/easyops-cn/next-bricks/commit/0e28ba290c5aac8ecbd9a97b496b9214a03e3ee2))
+
+
+
+
+
 ## [1.45.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.45.0...@next-bricks/basic@1.45.1) (2024-09-05)
 
 
