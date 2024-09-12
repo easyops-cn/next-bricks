@@ -10,6 +10,7 @@
   position: relative;
   top: 100px;
   border-radius: 6px;
+  max-height: calc(100% - 80px - var(--sl-spacing-2x-large));
 }
 
 .body {
