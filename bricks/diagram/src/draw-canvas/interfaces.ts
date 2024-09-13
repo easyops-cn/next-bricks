@@ -331,6 +331,8 @@ export interface LineEditorStateOfControl extends EditableLineInfo {
   control: ControlPoint;
 }
 
+export type BiDirection = "ns" | "ew";
+
 /**
  * A control point for editing line is the middle point of a line segment.
  *
@@ -347,6 +349,6 @@ export interface LineEditorStateOfControl extends EditableLineInfo {
  * ```
  */
 export interface ControlPoint extends NodePosition {
-  direction: "ns" | "ew";
+  direction: BiDirection;
   index: number;
 }

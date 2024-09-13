@@ -204,13 +204,13 @@ export function CellComponent({
             onChangeEdgeView?.(source, target, {
               ...view,
               entryPosition: null,
-              ...(!view?.exitPosition ? { vertices: null } : {}),
+              // ...(!view?.exitPosition ? { vertices: null } : {}),
             });
           } else {
             onChangeEdgeView?.(source, target, {
               ...view,
               exitPosition: null,
-              ...(!view?.entryPosition ? { vertices: null } : {}),
+              // ...(!view?.entryPosition ? { vertices: null } : {}),
             });
           }
         }
