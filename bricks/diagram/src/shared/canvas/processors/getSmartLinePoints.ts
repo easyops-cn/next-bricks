@@ -60,7 +60,7 @@ export function getSmartLinePoints(
             ? "ns"
             : "ew";
         ({ point: exitPoint, direction: exitDirection } =
-          fitEndpointAndDirection(sourceView, firstVertex, prefer));
+          fitEndpointAndDirection(sourceView, targetView, vertices, prefer));
       }
     }
 
@@ -69,7 +69,7 @@ export function getSmartLinePoints(
     } else {
       let possibleLastPreviousPoint: NodePosition | undefined;
       if (vertices.length > 1) {
-        // Decide entry point by the kast two vertices.
+        // Decide entry point by the last two vertices.
         possibleLastPreviousPoint = vertices[vertices.length - 2];
       } else if (originalExit) {
         // Decide entry point by the exit position.
@@ -82,7 +82,7 @@ export function getSmartLinePoints(
         entryPoint = getDefaultAbsolutePosition(
           lastVertex,
           targetView,
-          firstVertex.y === possibleLastPreviousPoint.y
+          lastVertex.y === possibleLastPreviousPoint.y
         );
       } else {
         // No other vertices nor the exit position, decide entry point by the
@@ -93,7 +93,12 @@ export function getSmartLinePoints(
             ? "ew"
             : "ns";
         ({ point: entryPoint, direction: entryDirection } =
-          fitEndpointAndDirection(targetView, firstVertex, prefer));
+          fitEndpointAndDirection(
+            targetView,
+            sourceView,
+            vertices.slice().reverse(),
+            prefer
+          ));
       }
     }
 
@@ -315,7 +320,8 @@ function getDefaultAbsolutePosition(
 
 function fitEndpointAndDirection(
   view: NodeView,
-  vertex: NodePosition,
+  oppositeView: NodeView,
+  vertices: NodePosition[],
   prefer: BiDirection
 ): { point: NodePosition; direction: BiDirection } {
   let point: NodePosition;
@@ -342,6 +348,7 @@ function fitEndpointAndDirection(
     nsDirection = "ew";
     ewDirection = "ns";
   }
+  const vertex = vertices[0];
 
   if (
     vertex[xAxis] >= view[xAxis] &&
@@ -353,10 +360,20 @@ function fitEndpointAndDirection(
         [yAxis]: view[yAxis] + view[ySize],
       } as unknown as NodePosition;
       direction = nsDirection;
-    } else {
+    } else if (vertex[yAxis] < view[yAxis]) {
       point = {
         [xAxis]: vertex[xAxis],
         [yAxis]: view[yAxis],
+      } as unknown as NodePosition;
+      direction = nsDirection;
+    } else {
+      const nextVertex = vertices[1] ?? oppositeView;
+      point = {
+        [xAxis]: vertex[xAxis],
+        [yAxis]:
+          nextVertex[yAxis] < vertex[yAxis]
+            ? vertex[yAxis]
+            : view[yAxis] + view[ySize],
       } as unknown as NodePosition;
       direction = nsDirection;
     }

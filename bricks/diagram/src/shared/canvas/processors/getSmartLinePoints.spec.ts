@@ -84,7 +84,6 @@ describe("getSmartLinePoints", () => {
           height: 60,
         },
         {
-          // exitPosition: { x: 1, y: 0.5 },
           entryPosition: { x: 0, y: 0.5 },
           vertices: [
             { x: 240, y: 230 },
@@ -116,12 +115,8 @@ describe("getSmartLinePoints", () => {
           height: 60,
         },
         {
-          // exitPosition: { x: 1, y: 0.5 },
           entryPosition: { x: 0, y: 0.5 },
-          vertices: [
-            // { x: 240, y: 230 },
-            { x: 240, y: 130 },
-          ],
+          vertices: [{ x: 240, y: 130 }],
         }
       )
     ).toEqual([
@@ -148,12 +143,7 @@ describe("getSmartLinePoints", () => {
           height: 60,
         },
         {
-          // exitPosition: { x: 1, y: 0.5 },
-          // entryPosition: { x: 0, y: 0.5 },
-          vertices: [
-            // { x: 240, y: 230 },
-            { x: 240, y: 130 },
-          ],
+          vertices: [{ x: 240, y: 130 }],
         }
       )
     ).toEqual([
@@ -180,12 +170,7 @@ describe("getSmartLinePoints", () => {
           height: 60,
         },
         {
-          // exitPosition: { x: 1, y: 0.5 },
-          // entryPosition: { x: 0, y: 0.5 },
-          vertices: [
-            // { x: 240, y: 230 },
-            { x: 400, y: 130 },
-          ],
+          vertices: [{ x: 400, y: 130 }],
         }
       )
     ).toEqual([
@@ -193,6 +178,32 @@ describe("getSmartLinePoints", () => {
       { x: 400, y: 236 },
       { x: 400, y: 130 },
       { x: 380, y: 130 },
+    ]);
+  });
+
+  test("source moved with single vertex and exit and entry position unset", () => {
+    expect(
+      getSmartLinePoints(
+        {
+          x: 95,
+          y: 206,
+          width: 80,
+          height: 60,
+        },
+        {
+          x: 300,
+          y: 100,
+          width: 80,
+          height: 60,
+        },
+        {
+          vertices: [{ x: 120, y: 230 }],
+        }
+      )
+    ).toEqual([
+      { x: 120, y: 230 },
+      { x: 340, y: 230 },
+      { x: 340, y: 160 },
     ]);
   });
 
@@ -213,7 +224,6 @@ describe("getSmartLinePoints", () => {
         },
         {
           exitPosition: { x: 1, y: 0.5 },
-          // entryPosition: { x: 0, y: 0.5 },
           vertices: [
             { x: 240, y: 230 },
             { x: 240, y: 130 },
@@ -225,7 +235,6 @@ describe("getSmartLinePoints", () => {
       { x: 240, y: 230 },
       { x: 240, y: 130 },
       { x: 305, y: 130 },
-      { x: 305, y: 126 },
     ]);
   });
 
@@ -246,11 +255,7 @@ describe("getSmartLinePoints", () => {
         },
         {
           exitPosition: { x: 1, y: 0.5 },
-          // entryPosition: { x: 0, y: 0.5 },
-          vertices: [
-            { x: 240, y: 230 },
-            // { x: 240, y: 130 },
-          ],
+          vertices: [{ x: 240, y: 230 }],
         }
       )
     ).toEqual([
@@ -277,12 +282,7 @@ describe("getSmartLinePoints", () => {
           height: 60,
         },
         {
-          // exitPosition: { x: 1, y: 0.5 },
-          // entryPosition: { x: 0, y: 0.5 },
-          vertices: [
-            { x: 240, y: 230 },
-            // { x: 240, y: 130 },
-          ],
+          vertices: [{ x: 240, y: 230 }],
         }
       )
     ).toEqual([
@@ -309,12 +309,7 @@ describe("getSmartLinePoints", () => {
           height: 60,
         },
         {
-          // exitPosition: { x: 1, y: 0.5 },
-          // entryPosition: { x: 0, y: 0.5 },
-          vertices: [
-            { x: 160, y: 120 },
-            // { x: 240, y: 130 },
-          ],
+          vertices: [{ x: 160, y: 120 }],
         }
       )
     ).toEqual([
