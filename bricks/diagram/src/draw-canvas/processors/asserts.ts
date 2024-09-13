@@ -5,6 +5,7 @@ import type {
   InitialCell,
   InitialNodeCell,
   LayoutType,
+  LineType,
   NodeCell,
 } from "../interfaces";
 import { MoveCellPayload } from "../reducers/interfaces";
@@ -70,4 +71,8 @@ export function isContainerDecoratorCell(
 
 export function isNoManualLayout(layout: LayoutType) {
   return !["manual", undefined].includes(layout!);
+}
+
+export function isStraightType(type: LineType | undefined) {
+  return !(type === "polyline" || type === "curve");
 }

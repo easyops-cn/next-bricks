@@ -1,12 +1,16 @@
 import type { NodePosition, PositionTuple } from "../../../diagram/interfaces";
 import type { HoverState } from "../../../draw-canvas/HoverStateContext";
-import type { SmartConnectLineState } from "../../../draw-canvas/interfaces";
+import type {
+  LineSettings,
+  SmartConnectLineState,
+} from "../../../draw-canvas/interfaces";
 import { getSmartLinePoints } from "./getSmartLinePoints";
 
 export function getConnectLinePoints(
   smartConnectLineState: SmartConnectLineState | null,
   connectLineTo: PositionTuple | null,
-  hoverState: HoverState | null
+  hoverState: HoverState | null,
+  lineSettings?: LineSettings
 ): NodePosition[] | null {
   if (
     !smartConnectLineState ||
@@ -18,6 +22,7 @@ export function getConnectLinePoints(
   const sourceView = smartConnectLineState.source.view;
   if (hoverState?.activePointIndex !== undefined) {
     return getSmartLinePoints(sourceView, hoverState.cell.view, {
+      ...lineSettings,
       exitPosition: smartConnectLineState.exitPosition,
       entryPosition: hoverState.relativePoints[hoverState.activePointIndex],
     });
@@ -29,6 +34,7 @@ export function getConnectLinePoints(
     sourceView,
     { x: x1, y: y1, width: 0, height: 0 },
     {
+      ...lineSettings,
       exitPosition: smartConnectLineState.exitPosition,
     }
   );

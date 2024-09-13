@@ -18,6 +18,7 @@ describe("getSmartLinePoints", () => {
           height: 60,
         },
         {
+          type: "polyline",
           exitPosition: { x: 1, y: 0.5 },
           entryPosition: { x: 0, y: 0.5 },
           vertices: [
@@ -51,6 +52,7 @@ describe("getSmartLinePoints", () => {
           height: 60,
         },
         {
+          type: "polyline",
           exitPosition: { x: 1, y: 0.5 },
           entryPosition: { x: 0, y: 0.5 },
           vertices: [
@@ -84,6 +86,7 @@ describe("getSmartLinePoints", () => {
           height: 60,
         },
         {
+          type: "polyline",
           entryPosition: { x: 0, y: 0.5 },
           vertices: [
             { x: 240, y: 230 },
@@ -115,6 +118,7 @@ describe("getSmartLinePoints", () => {
           height: 60,
         },
         {
+          type: "polyline",
           entryPosition: { x: 0, y: 0.5 },
           vertices: [{ x: 240, y: 130 }],
         }
@@ -143,6 +147,7 @@ describe("getSmartLinePoints", () => {
           height: 60,
         },
         {
+          type: "polyline",
           vertices: [{ x: 240, y: 130 }],
         }
       )
@@ -170,6 +175,7 @@ describe("getSmartLinePoints", () => {
           height: 60,
         },
         {
+          type: "polyline",
           vertices: [{ x: 400, y: 130 }],
         }
       )
@@ -197,6 +203,7 @@ describe("getSmartLinePoints", () => {
           height: 60,
         },
         {
+          type: "polyline",
           vertices: [{ x: 120, y: 230 }],
         }
       )
@@ -223,6 +230,7 @@ describe("getSmartLinePoints", () => {
           height: 60,
         },
         {
+          type: "polyline",
           exitPosition: { x: 1, y: 0.5 },
           vertices: [
             { x: 240, y: 230 },
@@ -254,6 +262,7 @@ describe("getSmartLinePoints", () => {
           height: 60,
         },
         {
+          type: "polyline",
           exitPosition: { x: 1, y: 0.5 },
           vertices: [{ x: 240, y: 230 }],
         }
@@ -282,6 +291,7 @@ describe("getSmartLinePoints", () => {
           height: 60,
         },
         {
+          type: "polyline",
           vertices: [{ x: 240, y: 230 }],
         }
       )
@@ -309,6 +319,7 @@ describe("getSmartLinePoints", () => {
           height: 60,
         },
         {
+          type: "polyline",
           vertices: [{ x: 160, y: 120 }],
         }
       )

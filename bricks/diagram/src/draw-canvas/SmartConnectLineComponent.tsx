@@ -1,7 +1,7 @@
 // istanbul ignore file: experimental
 import React, { useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
-import type { ComputedLineConnecterConf } from "./interfaces";
+import type { ComputedLineConnecterConf, LineSettings } from "./interfaces";
 import type { PositionTuple, TransformLiteral } from "../diagram/interfaces";
 import { curveLine } from "../diagram/lines/curveLine";
 import { useHoverStateContext } from "./HoverStateContext";
@@ -9,11 +9,13 @@ import { getConnectLinePoints } from "../shared/canvas/processors/getConnectLine
 
 export interface SmartConnectLineComponentProps {
   transform: TransformLiteral;
+  lineSettings?: LineSettings;
   options: ComputedLineConnecterConf;
 }
 
 export function SmartConnectLineComponent({
   transform,
+  lineSettings,
   options,
 }: SmartConnectLineComponentProps): JSX.Element {
   const [connectLineTo, setConnectLineTo] = useState<PositionTuple | null>(
@@ -52,19 +54,19 @@ export function SmartConnectLineComponent({
   }, [setSmartConnectLineState, smartConnectLineState, transform]);
 
   const line = useMemo(() => {
-    const fixedLineType = options.type === "auto" ? "polyline" : options.type;
     const points = getConnectLinePoints(
       smartConnectLineState,
       connectLineTo,
-      hoverState
+      hoverState,
+      lineSettings
     );
     return curveLine(
       points,
-      fixedLineType === "curve" ? options.curveType : "curveLinear",
+      options.type === "curve" ? options.curveType : "curveLinear",
       0,
       1
     );
-  }, [connectLineTo, hoverState, smartConnectLineState, options]);
+  }, [connectLineTo, hoverState, smartConnectLineState, options, lineSettings]);
 
   return (
     <path

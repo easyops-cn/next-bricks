@@ -23,6 +23,7 @@ describe("getEditingLinePoints", () => {
     },
     edge: {
       view: {
+        type: "polyline",
         exitPosition: { x: 0.5, y: 0.5 },
       },
     },
@@ -113,6 +114,7 @@ describe("getEditingLinePoints with control", () => {
     },
     edge: {
       view: {
+        type: "polyline",
         exitPosition: { x: 1, y: 0.5 },
         entryPosition: { x: 0, y: 0.5 },
         vertices: [

@@ -3,7 +3,6 @@ import type { SimulationLinkDatum, SimulationNodeDatum } from "d3-force";
 import type { ResizeCellPayload } from "./reducers/interfaces";
 import type {
   CurveType,
-  LineType,
   NodePosition,
   PartialRectTuple,
   PositionTuple,
@@ -92,7 +91,7 @@ export interface NodeBrickConf {
   if?: string | boolean | null;
 }
 
-export interface EdgeView {
+export interface EdgeView extends LineSettings {
   exitPosition?: NodePosition | null;
   entryPosition?: NodePosition | null;
   vertices?: NodePosition[] | null;
@@ -100,6 +99,13 @@ export interface EdgeView {
 
 export interface EdgeLineConf extends BaseEdgeLineConf {
   if?: string | boolean | null;
+}
+
+export type LineType = "straight" | "curve" | "polyline";
+
+export interface LineSettings {
+  type?: LineType;
+  curveType?: CurveType;
 }
 
 export interface LineAnimate {
@@ -130,7 +136,7 @@ export interface LineMarker {
 
 export type LineConnecterConf = Pick<
   BaseEdgeLineConf,
-  "type" | "strokeWidth" | "strokeColor" | "showStartArrow" | "showEndArrow"
+  "strokeWidth" | "strokeColor" | "showStartArrow" | "showEndArrow"
 > & {
   editingStrokeColor?: string;
 };
@@ -309,6 +315,7 @@ export interface NodeConnectPoint extends NodePosition {
 
 export interface EditableLineInfo {
   edge: EdgeCell;
+  parallelGap: number;
   source: NodeCell | DecoratorCell;
   target: NodeCell | DecoratorCell;
   linePoints: NodePosition[];

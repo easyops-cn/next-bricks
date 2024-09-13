@@ -8,22 +8,47 @@ import type {
 } from "../../../draw-canvas/interfaces";
 import { getPolyLinePoints } from "../../../diagram/lines/getPolyLinePoints";
 import { nodeViewToNodeRect } from "./nodeViewToNodeRect";
-import { DEFAULT_NODE_PADDING_FOR_SMART_LINES } from "../../../draw-canvas/constants";
+import {
+  DEFAULT_NODE_PADDING_FOR_LINES,
+  DEFAULT_NODE_PADDING_FOR_SMART_LINES,
+} from "../../../draw-canvas/constants";
+import { getDirectLinePoints } from "../../../diagram/lines/getDirectLinePoints";
+import { isStraightType } from "../../../draw-canvas/processors/asserts";
 
 const DEFAULT_DIRECTIONS = ["right", "top", "left", "bottom"] as const;
 
 export function getSmartLinePoints(
   sourceView: NodeView,
   targetView: NodeView,
-  edgeView: EdgeView
-): NodePosition[] {
-  const connectPoints = getConnectPointsOfRectangleWithDirection();
-
+  edgeView: EdgeView | undefined,
+  parallelGap?: number
+): NodePosition[] | null {
   const {
+    type,
     vertices,
     exitPosition: originalExit,
     entryPosition: originalEntry,
-  } = edgeView;
+  } = edgeView ?? {};
+
+  if (isStraightType(type)) {
+    return getDirectLinePoints(
+      nodeViewToNodeRect(
+        sourceView,
+        originalExit
+          ? DEFAULT_NODE_PADDING_FOR_SMART_LINES
+          : DEFAULT_NODE_PADDING_FOR_LINES
+      ),
+      nodeViewToNodeRect(
+        targetView,
+        originalEntry
+          ? DEFAULT_NODE_PADDING_FOR_SMART_LINES
+          : DEFAULT_NODE_PADDING_FOR_LINES
+      ),
+      parallelGap,
+      edgeView
+    );
+  }
+
   if (vertices?.length) {
     const firstVertex = vertices[0];
     const lastVertex = vertices[vertices.length - 1];
@@ -158,6 +183,7 @@ export function getSmartLinePoints(
     entryPosition
   );
 
+  const connectPoints = getConnectPointsOfRectangleWithDirection();
   const originalSourceDirections =
     connectPoints.find((p) => p.x === exitPosition.x && p.y === exitPosition.y)
       ?.d ?? DEFAULT_DIRECTIONS;

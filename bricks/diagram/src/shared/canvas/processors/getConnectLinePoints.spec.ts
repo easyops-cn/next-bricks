@@ -22,21 +22,26 @@ describe("getConnectLinePoints", () => {
 
   test("hoverState.activePointIndex is defined", () => {
     expect(
-      getConnectLinePoints(state, null, {
-        cell: {
-          view: {
-            x: 200,
-            y: 300,
-            width: 80,
-            height: 60,
+      getConnectLinePoints(
+        state,
+        null,
+        {
+          cell: {
+            view: {
+              x: 200,
+              y: 300,
+              width: 80,
+              height: 60,
+            },
           },
-        },
-        relativePoints: [
-          { x: 0.5, y: 0.5, d: ["right", "top", "left", "bottom"] },
-        ],
-        activePointIndex: 0,
-        points: [],
-      } as unknown as HoverState)
+          relativePoints: [
+            { x: 0.5, y: 0.5, d: ["right", "top", "left", "bottom"] },
+          ],
+          activePointIndex: 0,
+          points: [],
+        } as unknown as HoverState,
+        { type: "polyline" }
+      )
     ).toEqual([
       { x: 180, y: 230 },
       { x: 240, y: 230 },
@@ -45,7 +50,9 @@ describe("getConnectLinePoints", () => {
   });
 
   test("connectLineTo is above source", () => {
-    expect(getConnectLinePoints(state, [150, 100], null)).toEqual([
+    expect(
+      getConnectLinePoints(state, [150, 100], null, { type: "polyline" })
+    ).toEqual([
       { x: 180, y: 230 },
       { x: 200, y: 230 },
       { x: 200, y: 150 },
@@ -55,7 +62,9 @@ describe("getConnectLinePoints", () => {
   });
 
   test("connectLineTo is below source", () => {
-    expect(getConnectLinePoints(state, [150, 400], null)).toEqual([
+    expect(
+      getConnectLinePoints(state, [150, 400], null, { type: "polyline" })
+    ).toEqual([
       { x: 180, y: 230 },
       { x: 200, y: 230 },
       { x: 200, y: 330 },
@@ -69,7 +78,8 @@ describe("getConnectLinePoints", () => {
       getConnectLinePoints(
         { ...state, exitPosition: { x: 0, y: 0.5 } },
         [10, 220],
-        null
+        null,
+        { type: "polyline" }
       )
     ).toEqual([
       { x: 100, y: 230 },
@@ -80,7 +90,9 @@ describe("getConnectLinePoints", () => {
   });
 
   test("connectLineTo is right of source", () => {
-    expect(getConnectLinePoints(state, [300, 240], null)).toEqual([
+    expect(
+      getConnectLinePoints(state, [300, 240], null, { type: "polyline" })
+    ).toEqual([
       { x: 180, y: 230 },
       { x: 240, y: 230 },
       { x: 240, y: 240 },

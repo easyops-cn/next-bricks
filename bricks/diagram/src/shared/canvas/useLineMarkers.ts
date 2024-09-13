@@ -99,9 +99,9 @@ function addMarker(marker: LineMarker, markers: LineMarker[]): number {
   return markerIndex;
 }
 
-function getDefaultLineConf() {
+function getDefaultLineConf(): EdgeLineConf {
   return {
-    type: "auto",
+    type: "straight",
     dashed: false,
     strokeColor: DEFAULT_LINE_STROKE_COLOR,
     strokeWidth: DEFAULT_LINE_STROKE_WIDTH,
