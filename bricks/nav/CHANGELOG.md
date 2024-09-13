@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.14.0...@next-bricks/nav@1.14.1) (2024-09-13)
+
+
+### Bug Fixes
+
+* **nav:** 配置target新标签页跳转 ([90aa77a](https://github.com/easyops-cn/next-bricks/commit/90aa77a0cbd0aeb2594245a4096ce913c0876e9e))
+
+
+
+
+
 # [1.14.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.13.5...@next-bricks/nav@1.14.0) (2024-09-12)
 
 
