@@ -1,11 +1,18 @@
 // istanbul ignore file: experimental
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import classNames from "classnames";
 import type { ComputedLineConnecterConf } from "./interfaces";
-import type { PositionTuple, TransformLiteral } from "../diagram/interfaces";
+import type {
+  NodePosition,
+  PositionTuple,
+  TransformLiteral,
+} from "../diagram/interfaces";
 import { curveLine } from "../diagram/lines/curveLine";
 import { useHoverStateContext } from "./HoverStateContext";
-import { getEditingLinePoints } from "../shared/canvas/processors/getEditingLinePoints";
+import {
+  getEditingLinePoints,
+  getNewLineVertices,
+} from "../shared/canvas/processors/getEditingLinePoints";
 
 export interface EditingLineComponentProps {
   transform: TransformLiteral;
@@ -19,24 +26,84 @@ export function EditingLineComponent({
   const [connectLineTo, setConnectLineTo] = useState<PositionTuple | null>(
     null
   );
-  const { hoverState, lineEditorState, setLineEditorState } =
-    useHoverStateContext();
+  const {
+    activeEditableLine,
+    hoverState,
+    lineEditorState,
+    setLineEditorState,
+    onChangeEdgeView,
+  } = useHoverStateContext();
+  const movedRef = useRef(false);
 
   useEffect(() => {
     if (!lineEditorState) {
       return;
     }
+    movedRef.current = false;
+    const { type, offset, from } = lineEditorState;
+    // Set connect line to based on the mouse position and the transform
+    const getConnectTo = (e: MouseEvent): PositionTuple => {
+      const position: NodePosition = {
+        x: (e.clientX - transform.x - offset[0]) / transform.k,
+        y: (e.clientY - transform.y - offset[1]) / transform.k,
+      };
+      let diff = Infinity;
+      if (type === "control" && !e.altKey) {
+        // Snap to other points
+        const { linePoints, control } = lineEditorState;
+        const axis = control.direction === "ns" ? "y" : "x";
+        const original = control[axis];
+        const otherPoints = linePoints.filter(
+          (_, i) =>
+            i === 0 ||
+            i === linePoints.length - 1 ||
+            (i !== control.index && i !== control.index + 1)
+        );
+        const snapDistance = 5;
+        for (const point of otherPoints) {
+          const newDiff = Math.abs(point[axis] - position[axis]);
+          if (newDiff <= snapDistance && newDiff < diff) {
+            position[axis] = point[axis];
+            diff = newDiff;
+            if (!movedRef.current && original !== position[axis]) {
+              movedRef.current = true;
+            }
+          }
+        }
+      }
+      if (diff === Infinity && !movedRef.current) {
+        const movementX = (e.clientX - from[0]) / transform.k;
+        const movementY = (e.clientY - from[1]) / transform.k;
+        movedRef.current = movementX ** 2 + movementY ** 2 >= 9;
+      }
+      return [position.x, position.y];
+    };
     const onMouseMove = (e: MouseEvent) => {
-      // const endPoint = lineEditorState.endPoints[lineEditorState.type === "entry" ? 1 : 0];
-      // Set connect line to based on the mouse position and the transform
-      setConnectLineTo([
-        (e.clientX - transform.x - lineEditorState.offset[0]) / transform.k,
-        (e.clientY - transform.y - lineEditorState.offset[1]) / transform.k,
-      ]);
+      const newConnectTo = getConnectTo(e);
+      if (movedRef.current) {
+        setConnectLineTo(newConnectTo);
+      }
     };
     function onMouseUp(e: MouseEvent) {
       e.preventDefault();
       reset();
+      if (lineEditorState?.type === "control") {
+        const newConnectTo = getConnectTo(e);
+        if (movedRef.current) {
+          const {
+            source,
+            target,
+            edge: { view },
+          } = lineEditorState;
+          onChangeEdgeView?.(source, target, {
+            ...view,
+            vertices: getNewLineVertices(lineEditorState, newConnectTo),
+          });
+        }
+      }
+      setTimeout(() => {
+        movedRef.current = false;
+      }, 1);
     }
     function reset() {
       document.removeEventListener("mousemove", onMouseMove);
@@ -48,7 +115,23 @@ export function EditingLineComponent({
     document.addEventListener("mouseup", onMouseUp);
 
     return reset;
-  }, [lineEditorState, transform, setLineEditorState]);
+  }, [lineEditorState, transform, setLineEditorState, onChangeEdgeView]);
+
+  useEffect(() => {
+    if (!activeEditableLine) {
+      return;
+    }
+    const handleBodyClick = (e: MouseEvent) => {
+      if (movedRef.current) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+    };
+    document.body.addEventListener("click", handleBodyClick);
+    return () => {
+      document.body.removeEventListener("click", handleBodyClick);
+    };
+  }, [activeEditableLine]);
 
   const line = useMemo(() => {
     const fixedLineType = options.type === "auto" ? "polyline" : options.type;

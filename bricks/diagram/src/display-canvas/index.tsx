@@ -243,7 +243,6 @@ function EoDisplayCanvasComponent({
   );
 
   const rootRef = useRef<SVGSVGElement>(null);
-  const cellsRef = useRef<SVGGElement>(null);
 
   const { grabbing, transform, zoomer, scaleRange } = useZoom({
     rootRef,
@@ -299,7 +298,7 @@ function EoDisplayCanvasComponent({
   ]);
 
   const activeTarget = useActiveTarget({
-    cellsRef,
+    rootRef,
     activeTarget: _activeTarget,
     onActiveTargetChange,
   });
@@ -377,7 +376,7 @@ function EoDisplayCanvasComponent({
         <g
           transform={`translate(${transform.x} ${transform.y}) scale(${transform.k})`}
         >
-          <g className="cells" ref={cellsRef}>
+          <g className="cells">
             {cells.map((cell) => (
               <CellComponent
                 key={`${cell.type}:${isEdgeCell(cell) ? `${cell.source}~${cell.target}` : cell.id}`}

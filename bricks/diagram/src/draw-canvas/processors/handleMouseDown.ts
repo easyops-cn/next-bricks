@@ -57,8 +57,6 @@ export function handleMouseDown(
   if (action === "resize" || !targetIsActive(cell, activeTarget)) {
     onSwitchActiveTarget?.(cellToTarget(cell));
   }
-
-  const isAutoLayout = layout === "force" || layout === "dagre";
   if (isEdgeCell(cell)) {
     return;
   }
@@ -77,6 +75,7 @@ export function handleMouseDown(
       );
     }
   });
+  const isAutoLayout = layout === "force" || layout === "dagre";
   const movableActiveCells = activeCells.filter(
     (c) => (isNodeCell(c) && !isAutoLayout) || isDecoratorCell(c)
   ) as (NodeCell | DecoratorCell)[];

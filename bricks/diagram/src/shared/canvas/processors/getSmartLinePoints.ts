@@ -11,24 +11,14 @@ const DEFAULT_DIRECTIONS = ["right", "top", "left", "bottom"] as const;
 export function getSmartLinePoints(
   sourceView: NodeView,
   targetView: NodeView,
-  view: EdgeView
+  edgeView: EdgeView
 ): NodePosition[] {
   const connectPoints = getConnectPointsOfRectangleWithDirection();
 
   const exitPosition =
-    view.exitPosition ?? getDefaultPosition(targetView, sourceView);
+    edgeView.exitPosition ?? getDefaultPosition(targetView, sourceView);
   const entryPosition =
-    view.entryPosition ?? getDefaultPosition(sourceView, targetView);
-
-  const originalSourceDirections =
-    connectPoints.find((p) => p.x === exitPosition.x && p.y === exitPosition.y)
-      ?.d ?? DEFAULT_DIRECTIONS;
-  const originalTargetDirections =
-    connectPoints.find(
-      (p) => p.x === entryPosition.x && p.y === entryPosition.y
-    )?.d ?? DEFAULT_DIRECTIONS;
-  const sourceDirections = [...originalSourceDirections];
-  const targetDirections = [...originalTargetDirections];
+    edgeView.entryPosition ?? getDefaultPosition(sourceView, targetView);
 
   const padding = DEFAULT_NODE_PADDING_FOR_SMART_LINES;
   const halfPadding = padding / 2;
@@ -44,42 +34,91 @@ export function getSmartLinePoints(
     halfPadding +
     entryPosition.y * (targetView.height + padding);
 
-  if (sourceX < targetX) {
-    pull(sourceDirections, "left");
-    pull(targetDirections, "right");
+  if (edgeView.vertices?.length) {
+    const newLinePoints = [
+      { x: sourceX, y: sourceY },
+      ...edgeView.vertices,
+      { x: targetX, y: targetY },
+    ];
+
+    const firstVertex = newLinePoints[1];
+    const firstNextPoint = newLinePoints[2];
+    // If the first vertex is not on any axis of the source exit point,
+    // add a vertex to connect them.
+    if (firstVertex && firstVertex.x !== sourceX && firstVertex.y !== sourceY) {
+      newLinePoints.splice(
+        1,
+        0,
+        firstVertex.x === firstNextPoint.x
+          ? { x: sourceX, y: firstVertex.y }
+          : { x: firstVertex.x, y: sourceY }
+      );
+    }
+
+    const lastVertex = newLinePoints[newLinePoints.length - 2];
+    const lastPreviousPoint = newLinePoints[newLinePoints.length - 3];
+    // If the last vertex is not on any axis of the target entry point,
+    // add a vertex to connect them.
+    if (lastVertex && lastVertex.x !== targetX && lastVertex.y !== targetY) {
+      newLinePoints.splice(
+        newLinePoints.length - 1,
+        0,
+        lastVertex.x === lastPreviousPoint.x
+          ? { x: targetX, y: lastVertex.y }
+          : { x: lastVertex.x, y: targetY }
+      );
+    }
+
+    return newLinePoints;
   } else {
-    pull(sourceDirections, "right");
-    pull(targetDirections, "left");
+    const originalSourceDirections =
+      connectPoints.find(
+        (p) => p.x === exitPosition.x && p.y === exitPosition.y
+      )?.d ?? DEFAULT_DIRECTIONS;
+    const originalTargetDirections =
+      connectPoints.find(
+        (p) => p.x === entryPosition.x && p.y === entryPosition.y
+      )?.d ?? DEFAULT_DIRECTIONS;
+    const sourceDirections = [...originalSourceDirections];
+    const targetDirections = [...originalTargetDirections];
+
+    if (sourceX < targetX) {
+      pull(sourceDirections, "left");
+      pull(targetDirections, "right");
+    } else {
+      pull(sourceDirections, "right");
+      pull(targetDirections, "left");
+    }
+
+    if (sourceY < targetY) {
+      pull(sourceDirections, "top");
+      pull(targetDirections, "bottom");
+    } else {
+      pull(sourceDirections, "bottom");
+      pull(targetDirections, "top");
+    }
+
+    const sourceDirection = sourceDirections[0] ?? originalSourceDirections[0];
+    const targetDirection = targetDirections[0] ?? originalTargetDirections[0];
+
+    const sourcePosition =
+      sourceDirection === "left" || sourceDirection === "right"
+        ? exitPosition.y
+        : exitPosition.x;
+    const targetPosition =
+      targetDirection === "left" || targetDirection === "right"
+        ? entryPosition.y
+        : entryPosition.x;
+
+    return getPolyLinePoints(
+      nodeViewToNodeRect(sourceView, padding),
+      nodeViewToNodeRect(targetView, padding),
+      sourceDirection,
+      targetDirection,
+      sourcePosition,
+      targetPosition
+    );
   }
-
-  if (sourceY < targetY) {
-    pull(sourceDirections, "top");
-    pull(targetDirections, "bottom");
-  } else {
-    pull(sourceDirections, "bottom");
-    pull(targetDirections, "top");
-  }
-
-  const sourceDirection = sourceDirections[0] ?? originalSourceDirections[0];
-  const targetDirection = targetDirections[0] ?? originalTargetDirections[0];
-
-  const sourcePosition =
-    sourceDirection === "left" || sourceDirection === "right"
-      ? exitPosition.y
-      : exitPosition.x;
-  const targetPosition =
-    targetDirection === "left" || targetDirection === "right"
-      ? entryPosition.y
-      : entryPosition.x;
-
-  return getPolyLinePoints(
-    nodeViewToNodeRect(sourceView, padding),
-    nodeViewToNodeRect(targetView, padding),
-    sourceDirection,
-    targetDirection,
-    sourcePosition,
-    targetPosition
-  );
 }
 
 export function getDefaultPosition(
