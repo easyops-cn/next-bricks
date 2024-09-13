@@ -56,7 +56,9 @@ export function LineEditorComponent({
 
   const controlPoints = useMemo(() => {
     const edgeView = activeEditableLine?.edge.view;
-    return edgeView?.exitPosition || edgeView?.entryPosition
+    return edgeView?.exitPosition ||
+      edgeView?.entryPosition ||
+      edgeView?.vertices?.length
       ? getControlPoints(activeEditableLine!.linePoints)
       : [];
   }, [activeEditableLine]);

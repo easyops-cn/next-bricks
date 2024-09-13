@@ -4,7 +4,7 @@ import type {
   LineEditorState,
   LineEditorStateOfControl,
 } from "../../../draw-canvas/interfaces";
-import { getSmartLinePoints } from "./getSmartLinePoints";
+import { getSmartLinePoints, simplifyVertices } from "./getSmartLinePoints";
 
 export function getEditingLinePoints(
   lineEditorState: LineEditorState | null,
@@ -117,42 +117,5 @@ export function getNewLineVertices(
     );
   }
 
-  // Simplify the vertices, ignore all vertices that its previous and next points are on the same axis
-  // E.g, ignore two vertices of index 1 and index 3 for the following line.
-  //  0---1---2
-  //          |
-  //          3
-  //          |
-  //          4
-  const simplifiedVertices: NodePosition[] = [];
-  let prev = exitPoint;
-  let prevDirection: "ns" | "ew" | undefined;
-  let index = 0;
-  while (index < newVertices.length) {
-    const vertex = newVertices[index];
-    const isHorizontal = vertex.x !== prev.x;
-    const isVertical = vertex.y !== prev.y;
-    if (isHorizontal || isVertical) {
-      const direction = isHorizontal ? "ew" : "ns";
-      if (direction !== prevDirection) {
-        const next =
-          index === newVertices.length - 1
-            ? entryPoint
-            : newVertices[index + 1];
-        const isHorizontalNext = next.x !== vertex.x;
-        const isVerticalNext = next.y !== vertex.y;
-        if (isHorizontalNext || isVerticalNext) {
-          const nextDirection = isHorizontalNext ? "ew" : "ns";
-          if (direction !== nextDirection) {
-            prevDirection = direction;
-            simplifiedVertices.push(vertex);
-            prev = vertex;
-          }
-        }
-      }
-    }
-    index++;
-  }
-
-  return simplifiedVertices;
+  return simplifyVertices(exitPoint, newVertices, entryPoint);
 }

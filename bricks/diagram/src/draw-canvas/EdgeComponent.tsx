@@ -59,7 +59,9 @@ export function EdgeComponent({
       targetNode &&
       sourceNode.view.x != null &&
       targetNode.view.x != null
-        ? edge.view?.exitPosition || edge.view?.entryPosition
+        ? edge.view?.exitPosition ||
+          edge.view?.entryPosition ||
+          edge.view?.vertices?.length
           ? getSmartLinePoints(sourceNode.view, targetNode.view, edge.view)
           : getDirectLinePoints(
               nodeViewToNodeRect(sourceNode.view, directLinePadding),

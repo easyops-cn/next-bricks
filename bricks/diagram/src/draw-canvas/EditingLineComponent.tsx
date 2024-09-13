@@ -37,6 +37,14 @@ export function EditingLineComponent({
 
   useEffect(() => {
     if (!lineEditorState) {
+      setTimeout(() => {
+        movedRef.current = false;
+      }, 0);
+    }
+  }, [lineEditorState]);
+
+  useEffect(() => {
+    if (!lineEditorState) {
       return;
     }
     movedRef.current = false;
@@ -101,9 +109,6 @@ export function EditingLineComponent({
           });
         }
       }
-      setTimeout(() => {
-        movedRef.current = false;
-      }, 1);
     }
     function reset() {
       document.removeEventListener("mousemove", onMouseMove);
