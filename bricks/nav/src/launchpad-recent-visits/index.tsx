@@ -25,7 +25,7 @@ class EoLaunchpadRecentVisits extends ReactNextElement {
   accessor target: Target | undefined;
 
   render() {
-    return <EoLaunchpadRecentVisitsComponent />;
+    return <EoLaunchpadRecentVisitsComponent target={this.target} />;
   }
 }
 

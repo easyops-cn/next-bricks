@@ -31,7 +31,12 @@ class EoLaunchpadQuickAccess extends ReactNextElement {
   accessor target: Target | undefined;
 
   render() {
-    return <EoLaunchpadQuickAccessComponent readonly={this.readonly} />;
+    return (
+      <EoLaunchpadQuickAccessComponent
+        readonly={this.readonly}
+        target={this.target}
+      />
+    );
   }
 }
 
