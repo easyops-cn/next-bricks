@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.46.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.45.1...@next-bricks/diagram@0.46.0) (2024-09-14)
+
+
+### Bug Fixes
+
+* fix line controls with multiple vertices ([041b4f4](https://github.com/easyops-cn/next-bricks/commit/041b4f452809e919f809f88be6af2b22707754cd))
+
+
+### Features
+
+* support line settings ([ec0ce28](https://github.com/easyops-cn/next-bricks/commit/ec0ce28ea54bfb2dc7de9d8eac236636c9303f59))
+
+
+
+
+
 ## [0.45.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.45.0...@next-bricks/diagram@0.45.1) (2024-09-13)
 
 
