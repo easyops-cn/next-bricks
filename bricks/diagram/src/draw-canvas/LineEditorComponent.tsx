@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useRef } from "react";
 import type { NodePosition } from "../diagram/interfaces";
 import { useHoverStateContext } from "./HoverStateContext";
 import type { ControlPoint } from "./interfaces";
+import { isStraightType } from "./processors/asserts";
 
 const POINT_HELPER_IMAGE =
   "data:image/svg+xml;base64,PCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj48c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHdpZHRoPSIyMnB4IiBoZWlnaHQ9IjIycHgiIHZlcnNpb249IjEuMSI+PGNpcmNsZSBjeD0iMTEiIGN5PSIxMSIgcj0iNyIgc3Ryb2tlPSIjZmZmIiBmaWxsPSIjMjliNmYyIi8+PGNpcmNsZSBjeD0iMTEiIGN5PSIxMSIgcj0iMyIgc3Ryb2tlPSIjZmZmIiBmaWxsPSJ0cmFuc3BhcmVudCIvPjwvc3ZnPg==";
@@ -55,10 +56,8 @@ export function LineEditorComponent({
   }, [activeEditableLine, rootRef, setLineEditorState]);
 
   const controlPoints = useMemo(() => {
-    const edgeView = activeEditableLine?.edge.view;
-    return edgeView?.exitPosition ||
-      edgeView?.entryPosition ||
-      edgeView?.vertices?.length
+    return activeEditableLine &&
+      !isStraightType(activeEditableLine.edge.view?.type)
       ? getControlPoints(activeEditableLine!.linePoints)
       : [];
   }, [activeEditableLine]);

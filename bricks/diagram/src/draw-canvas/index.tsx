@@ -49,6 +49,7 @@ import type {
   EditableLineInfo,
   LineEditorState,
   EdgeView,
+  LineSettings,
 } from "./interfaces";
 import { rootReducer } from "./reducers";
 import { MarkerComponent } from "../diagram/MarkerComponent";
@@ -121,6 +122,7 @@ export interface EoDrawCanvasProps {
   dragBehavior?: DragBehavior;
   ctrlDragBehavior?: CtrlDragBehavior;
   scaleRange?: RangeTuple;
+  lineSettings?: LineSettings;
   lineConnector?: LineConnecterConf | boolean;
   allowEdgeToArea?: boolean;
 }
@@ -275,6 +277,9 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
 
   @property({ attribute: false })
   accessor scaleRange: RangeTuple | undefined;
+
+  @property({ attribute: false })
+  accessor lineSettings: LineSettings | undefined;
 
   @property({ attribute: false })
   accessor lineConnector: LineConnecterConf | boolean | undefined;
@@ -500,6 +505,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
       source,
       target,
       data,
+      view: this.lineSettings,
     };
     this.#canvasRef.current?.addEdge(newEdge);
     return newEdge;
@@ -566,6 +572,7 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         dragBehavior={this.dragBehavior}
         ctrlDragBehavior={this.ctrlDragBehavior}
         scaleRange={this.scaleRange}
+        lineSettings={this.lineSettings}
         lineConnector={this.lineConnector}
         allowEdgeToArea={this.allowEdgeToArea}
         onActiveTargetChange={this.#handleActiveTargetChange}
@@ -642,6 +649,7 @@ function LegacyEoDrawCanvasComponent(
     dragBehavior,
     ctrlDragBehavior,
     scaleRange: _scaleRange,
+    lineSettings,
     lineConnector,
     allowEdgeToArea,
     onActiveTargetChange,
@@ -1055,6 +1063,7 @@ function LegacyEoDrawCanvasComponent(
         source: source.id,
         target: target.id,
         view: {
+          ...lineSettings,
           exitPosition,
           entryPosition,
           vertices: null,
@@ -1088,7 +1097,7 @@ function LegacyEoDrawCanvasComponent(
         });
       }
     },
-    [cells, onEdgeAdd, onEdgeViewChange]
+    [cells, lineSettings, onEdgeAdd, onEdgeViewChange]
   );
 
   // istanbul ignore next
@@ -1267,6 +1276,7 @@ function LegacyEoDrawCanvasComponent(
             <g>
               <SmartConnectLineComponent
                 transform={transform}
+                lineSettings={lineSettings}
                 options={lineConnectorConf}
               />
               <EditingLineComponent

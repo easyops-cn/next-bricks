@@ -1,14 +1,9 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import classNames from "classnames";
 import type { Cell, ComputedEdgeLineConf, EdgeCell } from "./interfaces";
-import { getDirectLinePoints } from "../diagram/lines/getDirectLinePoints";
-import { isEdgeCell } from "./processors/asserts";
-import {
-  DEFAULT_LINE_INTERACT_ANIMATE_DURATION,
-  DEFAULT_NODE_PADDING_FOR_LINES,
-} from "./constants";
+import { isEdgeCell, isStraightType } from "./processors/asserts";
+import { DEFAULT_LINE_INTERACT_ANIMATE_DURATION } from "./constants";
 import { curveLine } from "../diagram/lines/curveLine";
-import { nodeViewToNodeRect } from "../shared/canvas/processors/nodeViewToNodeRect";
 import { getSmartLinePoints } from "../shared/canvas/processors/getSmartLinePoints";
 import { findNodeOrAreaDecorator } from "./processors/findNodeOrAreaDecorator";
 import { useHoverStateContext } from "./HoverStateContext";
@@ -39,42 +34,36 @@ export function EdgeComponent({
   const lineConf = useMemo(() => lineConfMap.get(edge)!, [edge, lineConfMap]);
 
   const parallelGap = useMemo(() => {
-    const hasOppositeEdge = cells.some(
-      (cell) =>
-        isEdgeCell(cell) &&
-        cell.source === edge.target &&
-        cell.target === edge.source &&
-        !(edge.view?.exitPosition || edge.view?.entryPosition)
-    );
+    const hasOppositeEdge =
+      isStraightType(edge.view?.type) &&
+      cells.some(
+        (cell) =>
+          isEdgeCell(cell) &&
+          cell.source === edge.target &&
+          cell.target === edge.source &&
+          isStraightType(cell.view?.type)
+      );
     return hasOppositeEdge ? lineConf.parallelGap : 0;
-  }, [cells, edge, lineConf.parallelGap]);
+  }, [cells, edge.source, edge.target, edge.view, lineConf.parallelGap]);
 
   const linePoints = useMemo(() => {
-    const directLinePadding =
-      edge.view?.exitPosition || edge.view?.entryPosition
-        ? 0
-        : DEFAULT_NODE_PADDING_FOR_LINES;
     const points =
       sourceNode &&
       targetNode &&
       sourceNode.view.x != null &&
       targetNode.view.x != null
-        ? edge.view?.exitPosition ||
-          edge.view?.entryPosition ||
-          edge.view?.vertices?.length
-          ? getSmartLinePoints(sourceNode.view, targetNode.view, edge.view)
-          : getDirectLinePoints(
-              nodeViewToNodeRect(sourceNode.view, directLinePadding),
-              nodeViewToNodeRect(targetNode.view, directLinePadding),
-              parallelGap,
-              edge.view
-            )
+        ? getSmartLinePoints(
+            sourceNode.view,
+            targetNode.view,
+            edge.view,
+            parallelGap
+          )
         : null;
     return points;
   }, [edge.view, parallelGap, sourceNode, targetNode]);
 
   const line = useMemo(() => {
-    const fixedLineType = lineConf.type === "auto" ? "polyline" : lineConf.type;
+    const fixedLineType = lineConf.type;
     return curveLine(
       linePoints,
       fixedLineType === "curve" ? lineConf.curveType : "curveLinear",
@@ -92,6 +81,9 @@ export function EdgeComponent({
               source: sourceNode,
               target: targetNode,
               linePoints,
+              lineType: lineConf.type,
+              lineCurveType: lineConf.curveType,
+              parallelGap,
             }
           : null
         : prev?.edge &&
@@ -100,7 +92,17 @@ export function EdgeComponent({
           ? null
           : prev
     );
-  }, [active, edge, linePoints, setActiveEditableLine, sourceNode, targetNode]);
+  }, [
+    active,
+    edge,
+    lineConf.curveType,
+    lineConf.type,
+    linePoints,
+    setActiveEditableLine,
+    sourceNode,
+    targetNode,
+    parallelGap,
+  ]);
 
   if (!line || !linePoints) {
     // This happens when source or target is not found,

@@ -104,7 +104,7 @@
           display: flex
           flexDirection: column
           gap: 1em
-          border-right: "1px solid #ccc"
+          border-right: "1px solid var(--palette-gray-6)"
           overflow: scroll
       children:
         - brick: eo-button
@@ -339,6 +339,8 @@
                 dashed: true
             cells: <% CTX.initialCells %>
             lineConnector: true
+            lineSettings:
+              type: polyline
           events:
             activeTarget.change:
               action: context.replace
@@ -387,6 +389,213 @@
               action: message.info
               args:
                 - <% JSON.stringify(EVENT.detail) %>
+            scale.change:
+              action: context.replace
+              args:
+                - scale
+                - <% EVENT.detail %>
+- brick: diagram.experimental-node
+  properties:
+    usage: dragging
+    textContent: |
+      <%= CTX.dragging?.type === "decorator" ? (CTX.dragging.decorator === "text" ? "Text" : null) : CTX.dragging?.data.name %>
+    decorator: |
+      <%= CTX.dragging?.type === "decorator" ? CTX.dragging.decorator : null %>
+    style: |
+      <%=
+        {
+          left: `${CTX.dragging?.position[0]}px`,
+          top: `${CTX.dragging?.position[1]}px`,
+          transform: `scale(${CTX.scale})`,
+          transformOrigin: "0 0",
+          padding: CTX.dragging?.decorator === "text" ? "0.5em" : "0"
+        }
+      %>
+    hidden: <%= !CTX.dragging %>
+- brick: eo-context-menu
+  properties:
+    actions: |
+      <%=
+        (["node"].includes(CTX.targetCell?.type )||CTX.targetCell?.decorator=="area") ? [
+          {
+            text: "添加边",
+            event: "add-edge",
+          }
+        ] : [
+          {
+            text: `Test ${CTX.targetCell?.type}`,
+            event: `test-${CTX.targetCell?.type}`,
+          }
+        ]
+      %>
+  events:
+    add-edge:
+      target: eo-draw-canvas
+      method: manuallyConnectNodes
+      args:
+        - <% CTX.targetCell.id %>
+      callback:
+        success:
+          - target: eo-draw-canvas
+            method: addEdge
+            args:
+              - source: <% EVENT.detail.source.id %>
+                target: <% EVENT.detail.target.id %>
+```
+
+### Line settings
+
+设置属性 `lineSettings` 来调整新的连线的样式，例如使用折线或直线。注意，该设置不影响已有的 edge 的连线样式。
+
+```yaml preview minHeight="600px"
+- brick: div
+  properties:
+    style:
+      display: flex
+      flexDirection: column
+      height: 600px
+      gap: 1em
+  context:
+    - name: initialCells
+      value: |
+        <%
+          [
+            {
+              type: "edge",
+              source: "X",
+              target: "Y",
+            },
+            {
+              type: "node",
+              id: "X",
+              data: {
+                name: "Node X",
+              },
+              view: {
+                x: 100,
+                y: 100,
+                width: 60,
+                height: 60,
+              }
+            },
+            {
+              type: "node",
+              id: "Y",
+              data: {
+                name: "Node Y",
+              },
+              view: {
+                x: 0,
+                y: 300,
+                width: 60,
+                height: 60,
+              }
+            },
+            {
+              type: "node",
+              id: "Z",
+              data: {
+                name: "Node Z",
+              },
+              view: {
+                x: 300,
+                y: 200,
+                width: 60,
+                height: 60,
+              }
+            },
+          ]
+        %>
+    - name: dragging
+    - name: activeTarget
+    - name: targetCell
+    - name: scale
+      value: 1
+    - name: lineType
+      value: polyline
+  children:
+    - brick: div
+      children:
+        - brick: eo-radio
+          properties:
+            type: button
+            value: polyline
+            options:
+              - polyline
+              - straight
+          events:
+            change:
+              action: context.replace
+              args:
+                - lineType
+                - <% EVENT.detail.value %>
+    - brick: div
+      properties:
+        style:
+          flex: 1
+          minHeight: 0
+      children:
+        - brick: eo-draw-canvas
+          properties:
+            style:
+              width: 100%
+              height: 100%
+            activeTarget: <%= CTX.activeTarget %>
+            fadeUnrelatedCells: true
+            dragBehavior: lasso
+            layoutOptions:
+              snap:
+                object: true
+            defaultNodeSize: [60, 60]
+            defaultNodeBricks:
+              - useBrick:
+                  brick: diagram.experimental-node
+                  properties:
+                    textContent: <% `Node ${DATA.node.id}` %>
+                    status: |
+                      <%=
+                        (CTX.activeTarget?.type === "multi"
+                          ? CTX.activeTarget.targets
+                          : CTX.activeTarget
+                          ? [CTX.activeTarget]
+                          : []
+                        ).some((target) => (
+                          target.type === "node" && target.id === DATA.node.id
+                        ))
+                          ? "highlighted"
+                          : "default"
+                      %>
+            cells: <% CTX.initialCells %>
+            lineConnector: true
+            lineSettings: |
+              <%= { type: CTX.lineType } %>
+          events:
+            activeTarget.change:
+              action: context.replace
+              args:
+                - activeTarget
+                - <% EVENT.detail %>
+            cell.contextmenu:
+              - target: eo-context-menu
+                method: open
+                args:
+                  - position:
+                      - <% EVENT.detail.clientX %>
+                      - <% EVENT.detail.clientY %>
+              - action: context.replace
+                args:
+                  - targetCell
+                  - <% EVENT.detail.cell %>
+            edge.add:
+              action: message.info
+              args:
+                - |
+                  <% `Added an nice edge: ${JSON.stringify(EVENT.detail)}` %>
+            edge.view.change:
+              action: message.info
+              args:
+                - |
+                  <% `Edge view changed: ${JSON.stringify(EVENT.detail)}` %>
             scale.change:
               action: context.replace
               args:

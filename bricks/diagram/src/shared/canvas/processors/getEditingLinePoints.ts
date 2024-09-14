@@ -1,3 +1,4 @@
+import { pick } from "lodash";
 import type { NodePosition, PositionTuple } from "../../../diagram/interfaces";
 import type { HoverState } from "../../../draw-canvas/HoverStateContext";
 import type {
@@ -30,10 +31,13 @@ export function getEditingLinePoints(
   } = lineEditorState;
   const { exitPosition, entryPosition, vertices } = view ?? {};
 
+  const lineSettings = pick(view, ["type", "curveType"]);
+
   if (type === "control") {
     const newVertices = getNewLineVertices(lineEditorState, connectLineTo!);
 
     return getSmartLinePoints(source.view, target.view, {
+      ...lineSettings,
       exitPosition,
       entryPosition,
       vertices: newVertices,
@@ -43,21 +47,19 @@ export function getEditingLinePoints(
   if (hoverState?.activePointIndex !== undefined) {
     const position = hoverState.relativePoints[hoverState.activePointIndex];
     // Assert `hoverState.cell` is `target`
-    return getSmartLinePoints(
-      source.view,
-      target.view,
-      type === "entry"
+    return getSmartLinePoints(source.view, target.view, {
+      ...lineSettings,
+      ...(type === "entry"
         ? {
             exitPosition,
             entryPosition: position,
-            vertices,
           }
         : {
             exitPosition: position,
             entryPosition,
-            vertices,
-          }
-    );
+          }),
+      vertices,
+    });
   }
 
   const [x1, y1] = connectLineTo!;
@@ -66,14 +68,14 @@ export function getEditingLinePoints(
     return getSmartLinePoints(
       source.view,
       { x: x1, y: y1, width: 0, height: 0 },
-      { exitPosition, vertices }
+      { ...lineSettings, exitPosition, vertices }
     );
   }
 
   return getSmartLinePoints(
     { x: x1, y: y1, width: 0, height: 0 },
     target.view,
-    { entryPosition, vertices }
+    { ...lineSettings, entryPosition, vertices }
   );
 }
 

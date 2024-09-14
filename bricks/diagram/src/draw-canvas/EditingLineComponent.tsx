@@ -139,7 +139,6 @@ export function EditingLineComponent({
   }, [activeEditableLine]);
 
   const line = useMemo(() => {
-    const fixedLineType = options.type === "auto" ? "polyline" : options.type;
     const points = getEditingLinePoints(
       lineEditorState,
       connectLineTo,
@@ -147,11 +146,13 @@ export function EditingLineComponent({
     );
     return curveLine(
       points,
-      fixedLineType === "curve" ? options.curveType : "curveLinear",
+      lineEditorState?.edge.view?.type === "curve"
+        ? lineEditorState.edge.view.curveType
+        : "curveLinear",
       0,
       1
     );
-  }, [connectLineTo, hoverState, lineEditorState, options]);
+  }, [connectLineTo, hoverState, lineEditorState]);
 
   return (
     <path

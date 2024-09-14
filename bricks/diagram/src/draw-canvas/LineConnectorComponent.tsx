@@ -168,7 +168,6 @@ function ConnectPointComponent({
       e.stopPropagation();
       const rect = rootRef.current!.getBoundingClientRect();
       const originalPoint = hoverState!.points[index];
-      // console.log("connect", originalPoint, rect);
       setSmartConnectLineState({
         source: hoverState!.cell as NodeCell,
         from: [originalPoint.x, originalPoint.y],
