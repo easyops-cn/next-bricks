@@ -17,6 +17,7 @@ eo-menu {
 
 eo-menu-item::part(menu-item) {
   padding: 5px 12px;
+  line-height: 22px;
   border-radius: var(--medius-border-radius);
   min-width: max-content;
 }
