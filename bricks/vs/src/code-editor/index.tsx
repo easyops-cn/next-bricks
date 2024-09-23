@@ -29,9 +29,6 @@ import {
 import { AdvancedCompleterMap, ExtraLib } from "./interfaces.js";
 import { brickNextYAMLProviderCompletionItems } from "./utils/brickNextYaml.js";
 import { Level } from "./utils/constants.js";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import { VSWorkers } from "./workers/index.mjs";
 import { setEditorId } from "./utils/editorId.js";
 import {
   getEmbeddedJavascriptUri,
@@ -51,6 +48,13 @@ import classNames from "classnames";
 import "./index.css";
 import { EmbeddedModelContext } from "./utils/embeddedModelState.js";
 import { PlaceholderContentWidget } from "./widget/Placeholder.js";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { getYamlLinterWorker } from "./workers/yamlLinter.mjs";
+import type {
+  LintDecoration,
+  LintMarker,
+} from "./workers/yamlLinter.worker.js";
 
 initializeReactI18n(NS, locales);
 
@@ -365,7 +369,7 @@ export function CodeEditorComponent({
   placeholder,
   validateState,
   onChange,
-  onUserInput,
+  // onUserInput,
   onTokenClick,
   customValidationInBrickNextYaml,
 }: CodeEditorProps & {
@@ -396,47 +400,6 @@ export function CodeEditorComponent({
   // `automaticLayout` should never change
   const automaticLayoutRef = useRef(automaticLayout);
   const systemTheme = useCurrentTheme();
-
-  useEffect(() => {
-    if (language !== "brick_next_yaml") return;
-    const workerInstance = VSWorkers.getInstance(workerId);
-    const id = workerInstance.addEventListener("message", (message: any) => {
-      const { token, data } = message.data;
-      const model = editorRef.current!.getModel();
-      if (!model) return;
-      switch (token) {
-        case "parse_yaml": {
-          const { value, tokens, markers } = data;
-
-          decorationsCollection.current?.set(
-            tokens.map((token: any) => ({
-              range: new monaco.Range(
-                token.startLineNumber,
-                token.startColumn,
-                token.endLineNumber,
-                token.endColumn
-              ),
-              options: {
-                inlineClassName: "highlight",
-              },
-            }))
-          );
-          monaco.editor.setModelMarkers(model, "brick_next_yaml", markers);
-          onUserInput(value);
-          break;
-        }
-        case "parse_yaml_error": {
-          monaco.editor.setModelMarkers(model, "brick_next_yaml", []);
-          decorationsCollection?.current?.set([]);
-          onUserInput(undefined);
-          break;
-        }
-      }
-    });
-    return () => {
-      workerInstance.removeEventListener(id);
-    };
-  }, []);
 
   useEffect(() => {
     const computedTheme =
@@ -489,37 +452,15 @@ export function CodeEditorComponent({
     }
   }, [completers, advancedCompleters, language]);
 
-  const parseYaml = useCallback(() => {
-    if (language !== "brick_next_yaml" || !editorRef.current) return;
-    const workerInstance = VSWorkers.getInstance(workerId);
-    const currentModel = editorRef.current.getModel();
-    workerInstance.postMessage({
-      token: "parse_yaml",
-      data: {
-        value: currentModel?.getValue(),
-        links,
-        markers,
-      },
-      options: tokenConfig,
-    });
-  }, [language, tokenConfig, links, markers, workerId]);
-
-  const debounceParse = useMemo(() => debounce(parseYaml, 300), [parseYaml]);
-
   useEffect(() => {
     const editor = editorRef.current;
     if (editor) {
       const currentModel = editor.getModel();
       if (currentModel?.getValue && value !== currentModel.getValue()) {
         currentModel.setValue(value as string);
-        debounceParse();
       }
     }
-  }, [value, debounceParse]);
-
-  useEffect(() => {
-    debounceParse();
-  }, []);
+  }, [value]);
 
   useLayoutEffect(() => {
     if (automaticLayoutRef.current !== "fit-content" || !containerRef.current) {
@@ -873,14 +814,19 @@ export function CodeEditorComponent({
 
       if (["brick_next_yaml"].includes(language)) {
         embeddedModelProcessor(currentModel, editorRef.current!.getPosition()!);
-        debounceParse();
+        // debounceParse();
       }
       onChange(currentModel.getValue());
     });
     return () => {
       listener.dispose();
     };
-  }, [debounceParse, onChange, workerId, language, embeddedModelProcessor]);
+  }, [
+    /* debounceParse, */ onChange,
+    workerId,
+    language,
+    embeddedModelProcessor,
+  ]);
 
   useEffect(() => {
     if (expanded) {
@@ -932,6 +878,77 @@ export function CodeEditorComponent({
   const handleExpandedClick = useCallback(() => {
     setExpanded(!expanded);
   }, [expanded]);
+
+  useEffect(() => {
+    const editor = editorRef.current;
+    if (editor && language === "brick_next_yaml") {
+      const yamlLinter = getYamlLinterWorker();
+      const handleChange = (): void => {
+        const value = editor.getValue();
+        yamlLinter.postMessage({
+          id: workerId,
+          source: value,
+          links,
+          markers,
+        });
+      };
+      const debounceChange = debounce(handleChange, 200);
+      const handleLintResponse = (
+        event: MessageEvent<{
+          id: string;
+          lintMarkers: LintMarker[];
+          lintDecorations: LintDecoration[];
+        }>
+      ): void => {
+        const { id, lintMarkers, lintDecorations } = event.data;
+        if (id !== workerId) {
+          return;
+        }
+        const model = editor.getModel();
+        if (!model) {
+          return;
+        }
+        monaco.editor.setModelMarkers(
+          model,
+          "brick_next_yaml_lint",
+          lintMarkers.map(({ start, end, message, severity, code }) => {
+            const startPos = model.getPositionAt(start);
+            const endPos = model.getPositionAt(end);
+            return {
+              startLineNumber: startPos.lineNumber,
+              startColumn: startPos.column,
+              endLineNumber: endPos.lineNumber,
+              endColumn: endPos.column,
+              severity: monaco.MarkerSeverity[severity],
+              message,
+              code: code as monaco.editor.IMarkerData["code"],
+            };
+          })
+        );
+        decorationsCollection.current?.set(
+          lintDecorations.map(({ start, end, options }) => ({
+            range: monaco.Range.fromPositions(
+              model.getPositionAt(start),
+              model.getPositionAt(end)
+            ),
+            options,
+          }))
+        );
+      };
+      yamlLinter.addEventListener("message", handleLintResponse);
+      const change = editor.onDidChangeModelContent(debounceChange);
+      debounceChange();
+      return () => {
+        change.dispose();
+        monaco.editor.setModelMarkers(
+          editor.getModel()!,
+          "brick_next_yaml_lint",
+          []
+        );
+        yamlLinter.removeEventListener("message", handleLintResponse);
+      };
+    }
+  }, [language, links, markers, theme, workerId]);
 
   return (
     <div

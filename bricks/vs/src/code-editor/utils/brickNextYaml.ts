@@ -80,7 +80,7 @@ const getPrefixWord = (
   };
 };
 
-export const isInEvaluateBody = (
+const isInEvaluateBody = (
   model: monaco.editor.ITextModel,
   position: monaco.Position
 ): boolean => {

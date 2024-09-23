@@ -50,7 +50,11 @@ export const brickNextKeywords = [
 ];
 
 export const Level = {
+  /**
+   * @deprecated Typo, use `hint` instead
+   */
   hit: 1,
+  hint: 1,
   info: 2,
   warn: 4,
   error: 8,

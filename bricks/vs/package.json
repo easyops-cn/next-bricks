@@ -35,6 +35,7 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
+    "@babel/types": "^7.22.5",
     "@next-core/cook": "^2.4.9",
     "@next-core/element": "^1.2.12",
     "@next-core/monaco-contributions": "^0.3.11",
@@ -45,7 +46,8 @@
     "@next-shared/form": "^0.7.3",
     "monaco-editor": "^0.50.0",
     "monaco-editor-webpack-plugin": "^7.1.0",
-    "react": "0.0.0-experimental-ee8509801-20230117"
+    "react": "0.0.0-experimental-ee8509801-20230117",
+    "yaml": "^2.5.1"
   },
   "devDependencies": {
     "@next-core/build-next-bricks": "^1.23.2",
