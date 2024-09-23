@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.13.11...@next-bricks/vs@1.13.12) (2024-09-23)
+
+
+### Bug Fixes
+
+* refactor brick next yaml linter ([6c41179](https://github.com/easyops-cn/next-bricks/commit/6c411795886b67e4ae0f64b35f63adb6c24e5fc9))
+* refine yaml linter ([5d19eb2](https://github.com/easyops-cn/next-bricks/commit/5d19eb27f4d6c8c46cedfd3ba0110e78524424d7))
+
+
+
+
+
 ## [1.13.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.13.10...@next-bricks/vs@1.13.11) (2024-09-03)
 
 **Note:** Version bump only for package @next-bricks/vs
