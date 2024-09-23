@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.14.2...@next-bricks/nav@1.14.3) (2024-09-23)
+
+
+### Bug Fixes
+
+* 售中工单_launchpad-show-open-platform 开关不生效_centos 9 x86 ([ba41c75](https://github.com/easyops-cn/next-bricks/commit/ba41c75e7ee12f80ecf2e71d6d9852abe7249a0f))
+* 售中工单_launchpad-show-open-platform 开关不生效_centos 9 x86 ([75bce8c](https://github.com/easyops-cn/next-bricks/commit/75bce8c142cbec1631b3e41fcbde38f030da5a87))
+
+
+
+
+
 ## [1.14.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.14.1...@next-bricks/nav@1.14.2) (2024-09-23)
 
 **Note:** Version bump only for package @next-bricks/nav
