@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.40.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.40.6...@next-bricks/advanced@0.40.7) (2024-09-23)
+
+
+### Bug Fixes
+
+* jump to the first match of pre-defined keywords automatically ([99afbf1](https://github.com/easyops-cn/next-bricks/commit/99afbf16d0c0830f132012f8b2457123937681fb))
+
+
+
+
+
 ## [0.40.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.40.5...@next-bricks/advanced@0.40.6) (2024-09-03)
 
 **Note:** Version bump only for package @next-bricks/advanced
