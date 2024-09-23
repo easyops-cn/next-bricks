@@ -1,5 +1,6 @@
 import React from "react";
-import { render, fireEvent, waitFor } from "@testing-library/react";
+import { act } from "react-dom/test-utils";
+import { render, fireEvent } from "@testing-library/react";
 import { MyDesktop } from "./MyDesktop.js";
 import { launchpadService } from "../LaunchpadService.js";
 
@@ -72,7 +73,7 @@ jest.mock("../LaunchpadService", () => {
 
 describe("MyDesktop", () => {
   it("should work with favorite tab", async () => {
-    (launchpadService.fetchFavoriteList as jest.Mock).mockReturnValueOnce([
+    (launchpadService.fetchFavoriteList as jest.Mock).mockResolvedValueOnce([
       {
         launchpadCollection: {
           instanceId: "5b8ee4e5c352c",
@@ -95,9 +96,11 @@ describe("MyDesktop", () => {
     const { container } = render(
       <MyDesktop desktopCount={2} arrowWidthPercent={9} />
     );
-    await waitFor(async () => {
-      fireEvent.click(container.querySelector(".modeIcon") as HTMLElement);
+    await act(async () => {
       await (global as any).flushPromises();
+    });
+    act(() => {
+      fireEvent.click(container.querySelector(".modeIcon") as HTMLElement);
     });
     expect(container.querySelectorAll(".cellWrapper").length).toBe(6);
     expect(
@@ -106,17 +109,17 @@ describe("MyDesktop", () => {
       `"<div class="cellItem small"><eo-link class="appLink small square" url="/search"><img class="appIcon" src="micro-apps/search/icons/large.png"></eo-link><span class="appName">搜索中心</span></div>"`
     );
 
-    await waitFor(async () => {
-      await (global as any).flushPromises();
-    });
-
     expect(
       container.querySelectorAll(".favoriteContainer .cellWrapper").length
     ).toBe(1);
 
-    await waitFor(() => {
+    act(() => {
       fireEvent.click(container.querySelector(".modeIcon") as HTMLElement);
     });
+    await act(async () => {
+      await (global as any).flushPromises();
+    });
+
     expect(container.querySelector(".header .title")?.textContent).toEqual(
       "系统地图"
     );
@@ -129,13 +132,15 @@ describe("MyDesktop", () => {
   });
 
   it("should show prompt if empty favoriteList", async () => {
-    (launchpadService.fetchFavoriteList as jest.Mock).mockReturnValueOnce([]);
+    (launchpadService.fetchFavoriteList as jest.Mock).mockResolvedValueOnce([]);
     const { container } = render(
       <MyDesktop desktopCount={2} arrowWidthPercent={9} />
     );
-    await waitFor(async () => {
-      fireEvent.click(container.querySelector(".modeIcon") as HTMLElement);
+    await act(async () => {
       await (global as any).flushPromises();
+    });
+    act(() => {
+      fireEvent.click(container.querySelector(".modeIcon") as HTMLElement);
     });
 
     expect(container.querySelector(".emptyTips")?.innerHTML).toEqual(
