@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
@@ -67,13 +67,20 @@ export function PdfViewerComponent({
   page,
   viewerStyle,
 }: PdfViewerComponentProps) {
-  const defaultLayoutPluginInstance = defaultLayoutPlugin({
-    toolbarPlugin: {
-      searchPlugin: {
-        keyword: search,
-      },
-    },
-  });
+  // https://react-pdf-viewer.dev/examples/jump-to-the-first-match-of-pre-defined-keywords-automatically/
+  const [isDocumentLoaded, setDocumentLoaded] = useState(false);
+
+  const defaultLayoutPluginInstance = defaultLayoutPlugin();
+
+  useEffect(() => {
+    if (isDocumentLoaded && search) {
+      defaultLayoutPluginInstance.toolbarPluginInstance.searchPluginInstance.highlight(
+        {
+          keyword: search,
+        }
+      );
+    }
+  }, [isDocumentLoaded, search]);
 
   return (
     // See: https://react-pdf-viewer.dev/examples/compile-and-set-the-worker-source-with-webpack/
@@ -85,6 +92,7 @@ export function PdfViewerComponent({
           fileUrl={url}
           initialPage={page}
           plugins={[defaultLayoutPluginInstance]}
+          onDocumentLoad={() => setDocumentLoaded(true)}
         />
       </div>
     </Worker>
