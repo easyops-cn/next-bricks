@@ -51,10 +51,7 @@ import { PlaceholderContentWidget } from "./widget/Placeholder.js";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import { getYamlLinterWorker } from "./workers/yamlLinter.mjs";
-import type {
-  LintDecoration,
-  LintMarker,
-} from "./workers/yamlLinter.worker.js";
+import type { LintResponse } from "./workers/lintYaml.js";
 
 initializeReactI18n(NS, locales);
 
@@ -879,6 +876,7 @@ export function CodeEditorComponent({
     setExpanded(!expanded);
   }, [expanded]);
 
+  // istanbul ignore next
   useEffect(() => {
     const editor = editorRef.current;
     if (editor && language === "brick_next_yaml") {
@@ -893,13 +891,7 @@ export function CodeEditorComponent({
         });
       };
       const debounceChange = debounce(handleChange, 200);
-      const handleLintResponse = (
-        event: MessageEvent<{
-          id: string;
-          lintMarkers: LintMarker[];
-          lintDecorations: LintDecoration[];
-        }>
-      ): void => {
+      const handleLintResponse = (event: MessageEvent<LintResponse>): void => {
         const { id, lintMarkers, lintDecorations } = event.data;
         if (id !== workerId) {
           return;
