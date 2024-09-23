@@ -45,6 +45,11 @@ export function Launchpad({ active }: { active?: boolean }) {
     []
   );
 
+  const showOpenPlatform = React.useMemo(
+    () => getRuntime()?.getFeatureFlags()["launchpad-show-open-platform"],
+    []
+  );
+
   const {
     loading,
     q,
@@ -174,12 +179,14 @@ export function Launchpad({ active }: { active?: boolean }) {
               </WrappedLink>
             </div>
           )}
-          <div className="jump-nav">
-            <WrappedLink type="plain" url={"/developers"}>
-              <div className="jump-nav-label">开放平台</div>
-              <WrappedIcon lib="antd" icon="right" theme="outlined" />
-            </WrappedLink>
-          </div>
+          {showOpenPlatform && (
+            <div className="jump-nav">
+              <WrappedLink type="plain" url={"/developers"}>
+                <div className="jump-nav-label">开放平台</div>
+                <WrappedIcon lib="antd" icon="right" theme="outlined" />
+              </WrappedLink>
+            </div>
+          )}
         </div>
         <div className={classNames("content", { loading })}>
           <Loading loading={loading} />

@@ -20,6 +20,7 @@ jest.spyOn(runtime, "getRuntime").mockReturnValue({
     "launchpad-show-platform-category": true,
     "launchpad-show-scenario-center": true,
     "launchpad-show-solution-center": true,
+    "launchpad-show-open-platform": true,
   }),
 } as any);
 
