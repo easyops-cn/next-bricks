@@ -806,14 +806,16 @@ export function CodeEditorComponent({
       return;
     }
     const currentModel = editorRef.current.getModel()!;
-    const listener = currentModel.onDidChangeContent(async () => {
+    const listener = currentModel.onDidChangeContent(async (e) => {
       setEditorId(workerId);
 
       if (["brick_next_yaml"].includes(language)) {
         embeddedModelProcessor(currentModel, editorRef.current!.getPosition()!);
         // debounceParse();
       }
-      onChange(currentModel.getValue());
+      if (!e.isFlush) {
+        onChange(currentModel.getValue());
+      }
     });
     return () => {
       listener.dispose();
