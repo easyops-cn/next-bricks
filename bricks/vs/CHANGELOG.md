@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.13.12...@next-bricks/vs@1.13.13) (2024-09-24)
+
+
+### Bug Fixes
+
+* do not emit change event when manual setting value ([2b6f920](https://github.com/easyops-cn/next-bricks/commit/2b6f9204df4b833d52338eaa0c4e89a3705c9fa1))
+
+
+
+
+
 ## [1.13.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.13.11...@next-bricks/vs@1.13.12) (2024-09-23)
 
 
