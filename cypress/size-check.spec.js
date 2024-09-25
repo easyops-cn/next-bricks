@@ -55,7 +55,9 @@ describe("brick size check", () => {
         lines.push(`  <react>: ${getSizeInKB(react)}`);
       }
       if (deps.size > 0) {
-        for (const [pkg, size] of deps.entries()) {
+        const entries = [...deps.entries()];
+        entries.sort(([a], [b]) => (a > b ? 1 : a < b ? -1 : 0));
+        for (const [pkg, size] of entries) {
           lines.push(`  ${pkg}: ${getSizeInKB(size)}`);
         }
       }
@@ -75,6 +77,7 @@ describe("brick size check", () => {
     cy.get("#main-mount-point > ul > li").then((elements) => {
       expect(elements.length).to.be.greaterThan(0);
       const pkgNames = elements.map((_i, el) => el.textContent).get();
+      pkgNames.sort((a, b) => (a > b ? 1 : a < b ? -1 : 0));
       for (const pkgName of pkgNames) {
         cy.visit(`${homepage}/packages/${pkgName}`, {
           onBeforeLoad(win) {
@@ -120,7 +123,9 @@ describe("brick size check", () => {
               lines.push(`    <react>: ${getSizeInKB(react)}`);
             }
             if (deps.size > 0) {
-              for (const [pkg, size] of deps.entries()) {
+              const entries = [...deps.entries()];
+              entries.sort(([a], [b]) => (a > b ? 1 : a < b ? -1 : 0));
+              for (const [pkg, size] of entries) {
                 lines.push(`    ${pkg}: ${getSizeInKB(size)}`);
               }
             }
@@ -141,6 +146,7 @@ describe("brick size check", () => {
     cy.get("#main-mount-point > ul > li").then((elements) => {
       expect(elements.length).to.be.greaterThan(0);
       const items = elements.map((_i, el) => el.textContent).get();
+      items.sort((a, b) => (a > b ? 1 : a < b ? -1 : 0));
       const printedPkgs = new Set();
       for (const item of items) {
         const [pkgName, brick] = item.split(":");
@@ -192,7 +198,9 @@ describe("brick size check", () => {
               lines.push(`    <react>: ${getSizeInKB(react)}`);
             }
             if (deps.size > 0) {
-              for (const [pkg, size] of deps.entries()) {
+              const entries = [...deps.entries()];
+              entries.sort(([a], [b]) => (a > b ? 1 : a < b ? -1 : 0));
+              for (const [pkg, size] of entries) {
                 lines.push(`    ${pkg}: ${getSizeInKB(size)}`);
               }
             }
