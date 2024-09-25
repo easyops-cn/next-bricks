@@ -64,6 +64,7 @@ export default {
                 const space = absoluteFrom.endsWith("dll.bundle.js") ? " " : "";
                 return content
                   .toString()
+                  .replace(/\bvar\s+dll\s*=/, "window.dll=")
                   .replace(
                     `.p${space}=${space}"__DLL_PUBLIC_PATH__"`,
                     `.p=(window.PUBLIC_ROOT||"")+(window.PUBLIC_ROOT_WITH_VERSION?${JSON.stringify(
@@ -87,6 +88,16 @@ export default {
         .map((from) => ({
           from,
           to: "dll/[name][ext]",
+          transform: /\.js$/.test(from)
+            ? (content, absoluteFrom) => {
+                if (/dll-of-[-\w]+\.[^.]+\.js$/.test(absoluteFrom)) {
+                  return content
+                    .toString()
+                    .replace(/\bvar\s+(DllOf\w+)\s*=/, "window.$1=");
+                }
+                return content;
+              }
+            : undefined,
         })),
     }),
     new webpack.DefinePlugin({
