@@ -171,3 +171,50 @@ jobs:
         publish_branch: gh-pages
         force_orphan: true
       if: github.event_name == 'push'
+
+  size_check:
+    name: Size check
+    needs: build_bricks
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/download-artifact@v4
+      with:
+        name: brick-artifacts
+        path: ci-bricks
+
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+
+    - name: Cache for yarn
+      uses: actions/cache@v4
+      with:
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: node-cache-${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+        restore-keys: |
+          node-cache-${{ runner.os }}-yarn-
+
+    - run: yarn install --frozen-lockfile
+      env:
+        CYPRESS_INSTALL_BINARY: ''
+
+    - run: cp size-check.config.mjs dev.config.mjs
+
+    - run: yarn size-check:ci
+      env:
+        CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      continue-on-error: true
+
+    - run: cat size-check.log.yml
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: size-check
+        path: size-check.log.yml

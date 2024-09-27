@@ -1,5 +1,8 @@
 /** @type {import("@next-core/brick-container").DevConfig} */
 export default {
+  brickFolders: [
+    "ci-bricks/bricks"
+  ],
   sizeCheckFilter(brick, pkgId) {
     return (
       // This brick is an alias of a deprecated brick.
