@@ -385,6 +385,7 @@ export class ChatService {
   async chat(msg: string | ChatBody): Promise<void> {
     this.#ctrl = new AbortController();
     let hadMatchMessage = false;
+    let hadUsefulMessage = false;
     this.#chatting = true;
     await fetchEventSource(
       `${getBasePath()}api/gateway/easyops.api.aiops_chat.manage.LLMChatProxy@1.0.0/api/aiops_chat/v1/chat/completions`,
@@ -423,9 +424,24 @@ export class ChatService {
           const { data } = msg;
           hadMatchMessage = true;
           if (data === "[DONE]") {
+            if (!hadUsefulMessage) {
+              this.enqueue({
+                topic: "add",
+                message: {
+                  created: moment().format("YYYY-MM-DD HH:mm:ss"),
+                  delta: {
+                    role: "assistant",
+                    content: "",
+                  },
+                  agentId: this.#agentId,
+                  robotId: this.#robotId,
+                },
+              });
+            }
             this.#ctrl!.abort();
             return;
           }
+          hadUsefulMessage = true;
           let result = {} as SSEMessageItem;
           try {
             result = JSON.parse(data);
@@ -538,7 +554,7 @@ export class ChatService {
 
   stop() {
     clearTimeout(this.#emitTimer);
-    this.#ctrl && this.#ctrl?.abort();
+    this.#ctrl?.abort();
     this.#chatting = false;
     this.#emitTimer = undefined;
     this.#isStartEmitEvent = false;
