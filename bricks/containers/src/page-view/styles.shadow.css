@@ -2,6 +2,7 @@
   --local-footer-height: 62px;
 
   display: flex;
+  flex-direction: column;
   height: 100%;
 }
 
@@ -9,23 +10,17 @@
   display: none;
 }
 
-.header-and-main {
-  height: 100%;
-  min-width: 0;
+.main-and-aside {
+  display: flex;
 }
 
+.main-and-aside,
 .aside {
   height: 100%;
 }
 
-.header-and-main {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
 .header,
-.main {
+.main-and-aside {
   min-height: 0;
 }
 
@@ -34,6 +29,7 @@
   display: flex;
 }
 
+.main,
 .sidebar,
 .sub-sidebar,
 .content {
