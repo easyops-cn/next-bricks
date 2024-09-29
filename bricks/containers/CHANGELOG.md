@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.9.2...@next-bricks/containers@1.9.3) (2024-09-29)
+
+
+### Bug Fixes
+
+* **eo-page-view:** move aside slot under top nav bar ([c82dac2](https://github.com/easyops-cn/next-bricks/commit/c82dac252ffd1e89274102659c720e98a994b458))
+
+
+
+
+
 ## [1.9.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.9.1...@next-bricks/containers@1.9.2) (2024-09-12)
 
 
