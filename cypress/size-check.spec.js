@@ -169,6 +169,7 @@ describe("brick size check", () => {
           let self = 0;
           let react = 0;
           const deps = new Map();
+          const byFiles = new Map();
           resources.map((resource) => {
             if (resource.name.startsWith(resourceUrlPrefix)) {
               total += resource.transferSize;
@@ -187,6 +188,11 @@ describe("brick size check", () => {
                   );
                 }
               }
+              // Remove the version part from the file path
+              const filePath = resource.name
+                .substring(resourceUrlPrefix.length)
+                .replace(/([^/]+\/)\d+\.\d+\.\d+\//, "$1");
+              byFiles.set(filePath, resource.transferSize);
             }
           });
 
@@ -205,6 +211,14 @@ describe("brick size check", () => {
               }
             }
           }
+          if (byFiles.size > 0) {
+            lines.push("  files:");
+            const entries = [...byFiles.entries()];
+            entries.sort(([a], [b]) => (a > b ? 1 : a < b ? -1 : 0));
+            for (const [file, size] of entries) {
+              lines.push(`    ${file}: ${getSizeInKB(size)}`);
+            }
+          }
           cy.exec(`echo "${lines.join("\n")}" >> size-check.log.yml`);
         });
       }
@@ -213,5 +227,5 @@ describe("brick size check", () => {
 });
 
 function getSizeInKB(size) {
-  return `${Math.ceil(size / 1024).toLocaleString()} KB`;
+  return `${(+(size / 1024).toFixed(2)).toLocaleString()} KB`;
 }

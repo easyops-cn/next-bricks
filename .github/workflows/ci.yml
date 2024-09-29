@@ -171,3 +171,74 @@ jobs:
         publish_branch: gh-pages
         force_orphan: true
       if: github.event_name == 'push'
+
+  size_check:
+    name: Size check
+    needs: build_bricks
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/download-artifact@v4
+      with:
+        name: brick-artifacts
+        path: ci-bricks
+
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+
+    - name: Cache for yarn
+      uses: actions/cache@v4
+      with:
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: node-cache-${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+        restore-keys: |
+          node-cache-${{ runner.os }}-yarn-
+
+    - run: yarn install --frozen-lockfile
+      env:
+        CYPRESS_INSTALL_BINARY: ''
+
+    - run: cp size-check.config.mjs dev.config.mjs
+
+    - run: yarn size-check:ci
+      env:
+        CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      continue-on-error: true
+
+    - name: Report size check result
+      run: |
+        curl -v -X POST -H 'Content-Type: text/plain' -H 'Size-Checker-Token: ${{ secrets.SIZE_CHECKER_TOKEN }}' --data-binary @size-check.log.yml https://size-checker.shenwei.xyz/api/upload/easyops-cn--next-bricks/${{ github.sha }}
+
+    - name: Generate size check comment
+      if: github.event_name == 'pull_request'
+      run: |
+        echo "📐🤏 Size check result (${{ github.event.pull_request.base.sha }}...${{ github.sha }}):" >> size-check-comment.md
+        echo "" >> size-check-comment.md
+        echo '```diff' >> size-check-comment.md
+        curl https://size-checker.shenwei.xyz/api/compare/easyops-cn--next-bricks/${{ github.event.pull_request.base.sha }}/${{ github.sha }} >> size-check-comment.md
+        echo '```' >> size-check-comment.md
+
+    - if: github.event_name == 'pull_request'
+      name: Find size check comment
+      uses: peter-evans/find-comment@v3
+      id: find-comment
+      with:
+        issue-number: ${{ github.event.pull_request.number }}
+        comment-author: 'github-actions[bot]'
+        body-includes: '📐🤏 Size check result'
+
+    - if: github.event_name == 'pull_request'
+      name: Create or update size check comment
+      uses: peter-evans/create-or-update-comment@v4
+      with:
+        comment-id: ${{ steps.find-comment.outputs.comment-id }}
+        issue-number: ${{ github.event.pull_request.number }}
+        edit-mode: replace
+        body-path: size-check-comment.md
