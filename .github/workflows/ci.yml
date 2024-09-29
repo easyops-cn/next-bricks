@@ -221,13 +221,7 @@ jobs:
       run: |
         echo "📐🤏 Size check result (${{ github.event.pull_request.base.sha }}...${{ github.sha }}):" >> size-check-comment.md
         echo "" >> size-check-comment.md
-        echo "<details>" >> size-check-comment.md
-        echo "" >> size-check-comment.md
-        echo '```diff' >> size-check-comment.md
-        curl https://size-checker.shenwei.xyz/api/compare/easyops-cn--next-bricks/${{ github.event.pull_request.base.sha }}/${{ github.sha }} >> size-check-comment.md
-        echo '```' >> size-check-comment.md
-        echo "" >> size-check-comment.md
-        echo "</details>" >> size-check-comment.md
+        curl https://size-checker.shenwei.xyz/api/compare/easyops-cn--next-bricks/${{ github.event.pull_request.base.sha }}/${{ github.sha }}.md >> size-check-comment.md
 
     - if: github.event_name == 'pull_request'
       name: Find size check comment
