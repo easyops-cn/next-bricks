@@ -107,10 +107,10 @@ export function EoPageViewComponent({
 
   return (
     <>
-      <div className="header-and-main">
-        <div className="header">
-          <slot name="header" />
-        </div>
+      <div className="header">
+        <slot name="header" />
+      </div>
+      <div className="main-and-aside">
         <div className="main">
           <div className="sidebar">
             <slot name="sidebar" />
@@ -130,9 +130,9 @@ export function EoPageViewComponent({
             </div>
           </div>
         </div>
-      </div>
-      <div className="aside">
-        <slot name="aside" />
+        <div className="aside">
+          <slot name="aside" />
+        </div>
       </div>
     </>
   );
