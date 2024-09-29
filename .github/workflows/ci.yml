@@ -212,9 +212,33 @@ jobs:
         CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
       continue-on-error: true
 
-    - run: cat size-check.log.yml
+    - name: Report size check result
+      run: |
+        curl -v -X POST -H 'Content-Type: text/plain' -H 'Size-Checker-Token: ${{ secrets.SIZE_CHECKER_TOKEN }}' --data-binary @size-check.log.yml https://size-checker.shenwei.xyz/api/upload/easyops-cn--next-bricks/${{ github.sha }}
 
-    - uses: actions/upload-artifact@v4
+    - name: Generate size check comment
+      if: github.event_name == 'pull_request'
+      run: |
+        echo "📐🤏 Size check result (${{ github.event.pull_request.base.sha }}...${{ github.sha }}):" >> size-check-comment.md
+        echo "" >> size-check-comment.md
+        echo '```diff' >> size-check-comment.md
+        curl https://size-checker.shenwei.xyz/api/compare/easyops-cn--next-bricks/${{ github.event.pull_request.base.sha }}/${{ github.sha }} >> size-check-comment.md
+        echo '```' >> size-check-comment.md
+
+    - if: github.event_name == 'pull_request'
+      name: Find size check comment
+      uses: peter-evans/find-comment@v3
+      id: find-comment
       with:
-        name: size-check
-        path: size-check.log.yml
+        issue-number: ${{ github.event.pull_request.number }}
+        comment-author: 'github-actions[bot]'
+        body-includes: '📐🤏 Size check result'
+
+    - if: github.event_name == 'pull_request'
+      name: Create or update size check comment
+      uses: peter-evans/create-or-update-comment@v4
+      with:
+        comment-id: ${{ steps.find-comment.outputs.comment-id }}
+        issue-number: ${{ github.event.pull_request.number }}
+        edit-mode: replace
+        body-path: size-check-comment.md

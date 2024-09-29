@@ -227,5 +227,5 @@ describe("brick size check", () => {
 });
 
 function getSizeInKB(size) {
-  return `${Math.ceil(size / 1024).toLocaleString()} KB`;
+  return `${(+(size / 1024).toFixed(2)).toLocaleString()} KB`;
 }
