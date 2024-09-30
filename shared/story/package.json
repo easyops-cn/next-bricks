@@ -20,6 +20,6 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@next-core/types": "^1.12.4"
+    "@next-core/types": "^1.13.0"
   }
 }
