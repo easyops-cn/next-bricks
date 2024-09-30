@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.29.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.29.6...@next-bricks/ai@1.29.7) (2024-09-30)
+
+
+### Bug Fixes
+
+* make a fixed max-width for chat-view ([d3e925a](https://github.com/easyops-cn/next-bricks/commit/d3e925ad576aa21348c7feb53b23591bcb413397))
+* resume enter default behavior when input expanded ([2cbbbd3](https://github.com/easyops-cn/next-bricks/commit/2cbbbd339a8033f78be6060fba4317699b8a18d4))
+
+
+
+
+
 ## [1.29.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.29.5...@next-bricks/ai@1.29.6) (2024-09-03)
 
 **Note:** Version bump only for package @next-bricks/ai
