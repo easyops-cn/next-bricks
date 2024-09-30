@@ -7,66 +7,6 @@
   display: none;
 }
 
-@media only screen and (min-width: 1920px) {
-  .chat-view-container {
-    .chat-view-content {
-      .chat-view {
-        .message-list {
-          width: 1556px;
-        }
-      }
-      .search-input-box {
-        width: 1556px;
-      }
-    }
-  }
-}
-
-@media only screen and (min-width: 1440px) and (max-width: 1920px) {
-  .chat-view-container {
-    .chat-view-content {
-      .chat-view {
-        .message-list {
-          width: 1156px;
-        }
-      }
-      .search-input-box {
-        width: 1156px;
-      }
-    }
-  }
-}
-
-@media only screen and (min-width: 804px) and (max-width: 1440px) {
-  .chat-view-container {
-    .chat-view-content {
-      .chat-view {
-        .message-list {
-          width: 804px;
-        }
-      }
-      .search-input-box {
-        width: 804px;
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 804px) {
-  .chat-view-container {
-    .chat-view-content {
-      .chat-view {
-        .message-list {
-          width: 100%;
-        }
-      }
-      .search-input-box {
-        width: 100%;
-      }
-    }
-  }
-}
-
 .chat-view-container {
   display: flex;
   flex-direction: row;
@@ -222,7 +162,8 @@
   padding: 12px;
   flex: 1;
   margin: 0 auto;
-  max-width: 100%;
+  max-width: 1556px;
+  width: 100%;
   box-sizing: border-box;
 
   .message-list-box {
@@ -380,7 +321,8 @@
   padding: 12px;
   position: relative;
   margin: 0 auto;
-  max-width: 100%;
+  max-width: 1556px;
+  width: 100%;
   box-sizing: border-box;
 
   .input-toobar {
