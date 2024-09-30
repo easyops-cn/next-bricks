@@ -325,7 +325,15 @@ export function LegacySearchInput(
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-      if (e.key === "Enter" && !e.shiftKey && !inputEndRef.current) {
+      // 默认情况下，按下 Enter 键会触发提交，按 Shift + Enter 换行；
+      // 当显示 mentions 或 snippets 时，按 Enter 键选中对应项；
+      // 当输入框展开放大时（且没有 mentions 或 snippets），恢复 Enter 键换行，需要按发送按钮进行提交。
+      if (
+        e.key === "Enter" &&
+        (!expand || isShowMentions || isShowSnippets) &&
+        !e.shiftKey &&
+        !inputEndRef.current
+      ) {
         e.preventDefault();
         if (isShowMentions) {
           handleAgentItemSelect(matchAgentList[matchMentionsIndex]);
@@ -369,6 +377,7 @@ export function LegacySearchInput(
       isShowSnippets,
       matchSnippetList,
       matchSnippetIndex,
+      expand,
     ]
   );
 
