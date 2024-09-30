@@ -1,7 +1,7 @@
 import { createProviderClass } from "@next-core/utils/general";
-import { LibIconProps } from "../general-icon/index.jsx";
-import { getEasyopsIcons, getFaIcons, getAntdIcons } from "./get-icons.js";
 import { uniqBy } from "lodash";
+import type { LibIconProps } from "../general-icon/index.jsx";
+import { getEasyopsIcons, getFaIcons, getAntdIcons } from "./get-icons.js";
 
 export interface IconInfo {
   title: string;
@@ -39,7 +39,9 @@ export async function getLibs(): Promise<LibInfo[]> {
     import("../fa-icon/generated/alias.json"),
   ]).then(([allIcons, { default: aliasMapByCategory }]) => {
     const iconAliasMapByPrefix: Record<string, Record<string, string[]>> = {};
-    Object.entries(aliasMapByCategory).forEach(([prefix, aliasesMap]) => {
+    Object.entries(
+      aliasMapByCategory as Record<string, Record<string, string>>
+    ).forEach(([prefix, aliasesMap]) => {
       iconAliasMapByPrefix[prefix] = {};
       Object.entries(aliasesMap).forEach(([alias, iconName]) => {
         iconAliasMapByPrefix[prefix][iconName]

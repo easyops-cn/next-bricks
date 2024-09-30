@@ -1,5 +1,8 @@
+// Merge bricks
 import { createProviderClass } from "@next-core/utils/general";
 import { getLibs, type IconInfo } from "./get-libs.js";
+import "./get-libs.js";
+import "./get-icons.js";
 
 export interface SearchParams {
   q?: string;
