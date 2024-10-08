@@ -5,6 +5,7 @@ import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
+import type { EoTooltip, ToolTipProps } from "@next-bricks/basic/tooltip";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import classNames from "classnames";
 import "./host-context.css";
@@ -14,6 +15,7 @@ const { defineElement, property } = createDecorators();
 
 const WrapLink = wrapBrick<Link, LinkProps>("eo-link");
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
+const WrappedTooltip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");
 
 export interface WorkbenchActionProps {
   icon?: GeneralIconProps;
@@ -21,6 +23,7 @@ export interface WorkbenchActionProps {
   target?: string;
   active?: boolean;
   href?: string;
+  tooltip?: string;
 }
 
 /**
@@ -47,6 +50,8 @@ class WorkbenchAction extends ReactNextElement {
 
   @property() accessor target: string | undefined;
 
+  @property() accessor tooltip: string | undefined;
+
   render(): React.ReactNode {
     return (
       <WorkbenchActionComponent
@@ -55,6 +60,7 @@ class WorkbenchAction extends ReactNextElement {
         active={this.active}
         href={this.href}
         target={this.target}
+        tooltip={this.tooltip}
       />
     );
   }
@@ -66,15 +72,18 @@ function WorkbenchActionComponent({
   active,
   href,
   target,
+  tooltip,
 }: WorkbenchActionProps) {
   return (
-    <WrapLink
-      className={classNames("action", { active })}
-      url={to}
-      href={href}
-      target={target as LinkProps["target"]}
-    >
-      <WrappedIcon {...icon} />
-    </WrapLink>
+    <WrappedTooltip content={tooltip} placement="right">
+      <WrapLink
+        className={classNames("action", { active })}
+        url={to}
+        href={href}
+        target={target as LinkProps["target"]}
+      >
+        <WrappedIcon {...icon} />
+      </WrapLink>
+    </WrappedTooltip>
   );
 }
