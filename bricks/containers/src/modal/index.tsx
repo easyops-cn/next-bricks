@@ -195,8 +195,10 @@ class Modal extends ReactNextElement implements ModalProps {
    */
   @method()
   open() {
-    this.visible = true;
-    this.#handleModelOpen();
+    if (this.visible !== true) {
+      this.visible = true;
+      this.#handleModelOpen();
+    }
   }
 
   /**
@@ -204,8 +206,10 @@ class Modal extends ReactNextElement implements ModalProps {
    */
   @method({ bound: true })
   close() {
-    this.visible = false;
-    this.#handleModelClose();
+    if (this.visible !== false) {
+      this.visible = false;
+      this.#handleModelClose();
+    }
   }
 
   disconnectedCallback(): void {
