@@ -116,6 +116,7 @@ export function WorkbenchActionListComponent({
                 to={url as string}
                 href={item.href}
                 target={item.target}
+                tooltip={item.text}
                 active={activeIndex === index}
                 onClick={() => handleLinkClick(item)}
               />

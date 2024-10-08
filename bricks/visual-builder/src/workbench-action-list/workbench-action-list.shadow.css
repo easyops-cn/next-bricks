@@ -1,7 +1,18 @@
+:host {
+  display: block;
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
 .workBenchActionList {
   display: flex;
   flex-direction: column;
   width: min-content;
-  height: 100%;
+  min-height: 100%;
   background-color: var(--vb-workbench-action-list-background);
 }
