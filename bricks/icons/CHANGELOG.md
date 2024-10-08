@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.2.15...@next-bricks/icons@1.2.16) (2024-10-08)
+
+
+### Bug Fixes
+
+* merge icon providers ([5a2e8a8](https://github.com/easyops-cn/next-bricks/commit/5a2e8a803af991ed6808a2c7ea7c5dd7a46035d7))
+
+
+
+
+
 ## [1.2.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.2.14...@next-bricks/icons@1.2.15) (2024-09-30)
 
 **Note:** Version bump only for package @next-bricks/icons

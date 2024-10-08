@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/form",
-  "version": "1.13.7",
+  "version": "1.13.8",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/form",
   "repository": {
     "type": "git",
@@ -45,9 +45,9 @@
     "@next-core/runtime": "^1.55.3",
     "@next-core/theme": "^1.5.4",
     "@next-core/types": "^1.13.0",
-    "@next-shared/form": "^0.7.3",
-    "@next-shared/hooks": "^0.0.12",
-    "@next-shared/story": "^0.0.2",
+    "@next-shared/form": "^0.7.4",
+    "@next-shared/hooks": "^0.0.13",
+    "@next-shared/story": "^0.0.3",
     "antd": "^5.19.3",
     "classnames": "^2.3.2",
     "dayjs": "^1.11.10",

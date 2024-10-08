@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.36.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.36.14...@next-bricks/visual-builder@1.36.15) (2024-10-08)
+
+
+### Bug Fixes
+
+* fix scroll of workbench-action-list ([bcdc40e](https://github.com/easyops-cn/next-bricks/commit/bcdc40e46918451c34b76fd1e7504bfbef63be08))
+* simplify workbench-action-list ([72dcaf3](https://github.com/easyops-cn/next-bricks/commit/72dcaf30ef7281084d927aba808243c03b7a377e))
+
+
+
+
+
 ## [1.36.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.36.13...@next-bricks/visual-builder@1.36.14) (2024-09-03)
 
 **Note:** Version bump only for package @next-bricks/visual-builder
