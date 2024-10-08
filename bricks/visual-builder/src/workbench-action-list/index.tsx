@@ -101,7 +101,7 @@ export function WorkbenchActionListComponent({
   };
 
   return (
-    <div className="workBenchActionList">
+    <>
       {menu?.menuItems
         ?.map((item, index) => {
           if (isSimpleMenuItem(item)) {
@@ -124,7 +124,7 @@ export function WorkbenchActionListComponent({
           }
         })
         .filter(Boolean)}
-    </div>
+    </>
   );
 }
 
