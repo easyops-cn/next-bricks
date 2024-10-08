@@ -141,8 +141,10 @@ class Drawer extends ReactNextElement implements DrawerProps {
   accessor #drawerOpenEvent!: EventEmitter<void>;
 
   #handleDrawerOpen = () => {
-    this.visible = true;
-    this.#drawerOpenEvent.emit();
+    if (this.visible !== true) {
+      this.visible = true;
+      this.#drawerOpenEvent.emit();
+    }
   };
 
   /**
@@ -152,8 +154,10 @@ class Drawer extends ReactNextElement implements DrawerProps {
   accessor #drawerCloseEvent!: EventEmitter<void>;
 
   #handleDrawerClose = () => {
-    this.visible = false;
-    this.#drawerCloseEvent.emit();
+    if (this.visible !== false) {
+      this.visible = false;
+      this.#drawerCloseEvent.emit();
+    }
   };
 
   /**
