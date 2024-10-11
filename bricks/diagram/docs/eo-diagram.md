@@ -443,7 +443,7 @@ children:
         target: _self
         method: callOnLineLabel
         args:
-          - <% EVENT.detail.id %>
+          - <% `${EVENT.detail.id}-center` %>
           - enableEditing
       nodes.connect:
         if: |-
