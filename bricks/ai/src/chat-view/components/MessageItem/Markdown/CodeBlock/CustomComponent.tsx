@@ -92,7 +92,7 @@ export default function CustomComponent({
   ]);
 
   return (
-    <div className="custom-component-wrapper">
+    <div className="custom-component-wrapper not-prose">
       {commandBrickConf?.showOriginData ? (
         <>
           <div className="params">
