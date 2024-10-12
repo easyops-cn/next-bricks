@@ -17,3 +17,9 @@ https://bricks.js.org/icons/
 - 默认都是「字体图标」，和字体一样，本身不提供颜色，而是跟随页面文本颜色的设定（原始 SVG 文件仅使用一种颜色）；
 - 需要固定原始颜色（通常会使用多种颜色）的图标，需要放置在特定的分类下（以 `colored-` 开头），这些图标保留图标原始颜色，不能由消费端指定其他颜色；
 - 可以让一个图标中的一部分内容带有透明度设置，变相实现类似「双色」的能力（一深一浅）。
+
+---
+
+不确定你的 SVG 图片转换为图标后是否符合预期？点击以下链接并导入 SVG 图片提前在线预览：
+
+https://bricks.js.org/playground/?mode=yaml&example=icons%2Feo-svg-icon%2Fsvgcontent&collapsed=1
