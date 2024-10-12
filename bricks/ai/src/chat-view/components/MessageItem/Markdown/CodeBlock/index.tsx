@@ -17,7 +17,7 @@ const copyIcon: GeneralIconProps = {
 
 export const CodeBlock = () => {
   const [language, setLanguage] = useState("");
-  const { contentRef, node, view } = useNodeViewContext();
+  const { contentRef, node } = useNodeViewContext();
   const { commandBricks } = useChatViewContext();
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -62,9 +62,6 @@ export const CodeBlock = () => {
     const text = node.firstChild?.textContent;
     const lang = language || node.attrs?.language;
     if (commandBricks && commandBricks[lang]) {
-      // 使 markdown 默认样式不生效, 防止样式穿透
-      view.dom.classList.contains("prose") &&
-        view.dom.classList.replace("prose", "not-prose");
       return <CustomComponent text={text} language={lang} />;
     }
     switch (lang) {
@@ -73,7 +70,7 @@ export const CodeBlock = () => {
       default:
         return defaultContent;
     }
-  }, [node, view, language, defaultContent, commandBricks]);
+  }, [node, language, defaultContent, commandBricks]);
 
   useEffect(() => {
     if (!language) {

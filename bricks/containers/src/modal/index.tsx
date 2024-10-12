@@ -113,6 +113,8 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 点击确定按钮时自动关闭弹窗
+   *
+   * @default true
    */
   @property({
     type: Boolean,
