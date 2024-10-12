@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.29.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.29.8...@next-bricks/ai@1.29.9) (2024-10-12)
+
+
+### Bug Fixes
+
+* do not open non-link marks ([5c363fa](https://github.com/easyops-cn/next-bricks/commit/5c363faa4e08562bd50771e7030744d7a4a6868e))
+* only add not-prose for custom command component ([31a2552](https://github.com/easyops-cn/next-bricks/commit/31a25523559acc57ed457644e9abeb8fe7a5fee7))
+
+
+
+
+
 ## [1.29.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.29.7...@next-bricks/ai@1.29.8) (2024-10-08)
 
 **Note:** Version bump only for package @next-bricks/ai
