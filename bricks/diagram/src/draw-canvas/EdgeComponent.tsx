@@ -123,7 +123,8 @@ export function EdgeComponent({
         ref={pathRef}
         className={classNames("line", {
           dashed: lineConf.dashed,
-          [`${lineConf.dashed ? "dashed" : "solid"}-animation`]:
+          dotted: lineConf.dotted,
+          [`${lineConf.dashed ? "dashed" : lineConf.dotted ? "dotted" : "solid"}-animation`]:
             lineConf.animate.useAnimate,
         })}
         style={

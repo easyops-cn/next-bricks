@@ -7,8 +7,10 @@
   position: relative;
   overflow: hidden;
   --animation-dasharray: 48;
-  --stroke-dashoffset: 96;
+  --stroke-dashedoffset: 96;
+  --stroke-dottedoffset: 24;
   --dasharray: 4;
+  --dotted: 1;
 }
 
 :host,
@@ -33,9 +35,15 @@
   outline: none;
 }
 
+@keyframes solidAnimation {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 @keyframes dashedAnimation {
   0% {
-    stroke-dashoffset: var(--stroke-dashoffset);
+    stroke-dashoffset: var(--stroke-dashedoffset);
   }
 
   to {
@@ -43,7 +51,11 @@
   }
 }
 
-@keyframes solidAnimation {
+@keyframes dottedAnimation {
+  0% {
+    stroke-dashoffset: var(--stroke-dottedoffset);
+  }
+
   to {
     stroke-dashoffset: 0;
   }
@@ -57,6 +69,10 @@
 
 .dashed-animation {
   animation: dashedAnimation var(--time) linear infinite;
+}
+
+.dotted-animation {
+  animation: dottedAnimation var(--time) linear infinite;
 }
 
 .decorator-area .area,
@@ -134,6 +150,10 @@
   stroke-dasharray: var(--dasharray);
 }
 
+.line.dotted {
+  stroke-dasharray: var(--dotted);
+}
+
 .cell.active .decorator-text .text-container {
   outline: 1px dashed var(--palette-blue-5);
 }
@@ -186,6 +206,7 @@
 
 .decorator-container {
   --defaultSize: 24px;
+
   .text-container {
     display: flex;
     align-items: center;
@@ -196,19 +217,23 @@
     background-color: rgba(119, 141, 195, 0.6);
     overflow: hidden;
   }
+
   .horizontal {
     height: max-content;
     width: 100%;
+
     .text {
       min-height: var(--defaultSize);
     }
   }
+
   .vertical {
     width: max-content;
     height: 100%;
     writing-mode: vertical-lr;
     text-orientation: upright;
     letter-spacing: 4px;
+
     .text {
       min-width: var(--defaultSize);
     }

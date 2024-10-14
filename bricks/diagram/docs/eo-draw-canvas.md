@@ -337,6 +337,8 @@
             defaultEdgeLines:
               - if: <% DATA.edge.data?.virtual %>
                 dashed: true
+              - if: <% !DATA.edge.data?.virtual %>
+                dotted: true
             cells: <% CTX.initialCells %>
             lineConnector: true
             lineSettings:
