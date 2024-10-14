@@ -97,6 +97,23 @@ describe("eo-icon", () => {
     expect(element.shadowRoot?.textContent).toMatchInlineSnapshot(`""`);
   });
 
+  test("easyops image icon", async () => {
+    const element = document.createElement("eo-icon") as GeneralIcon;
+    element.lib = "easyops";
+    element.category = "image";
+    element.icon = "any-png";
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.textContent).toMatchInlineSnapshot(
+      `"styles.shadow.css img-icon:{"imgSrc":"chunks/easyops-icons/image/any.png"}"`
+    );
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
   test("unknown icon with fallback", async () => {
     const element = document.createElement("eo-icon") as GeneralIcon;
     element.lib = "fa";

@@ -213,7 +213,16 @@ function GeneralIconComponent({
         }
       : props;
 
-  const isImage = imgSrc && typeof imgSrc === "string";
+  let isImage = imgSrc && typeof imgSrc === "string";
+  let mergedImgSrc = imgSrc;
+  if (!isImage && lib === "easyops" && category === "image" && icon) {
+    isImage = true;
+    // For an image icon of EasyOps, such as `ai-robot-png`, use `eo-robot.png` as the file name.
+    mergedImgSrc = `${
+      // istanbul ignore next
+      process.env.NODE_ENV === "test" ? "" : __webpack_public_path__
+    }chunks/easyops-icons/${category}/${icon.replace(/-([^-]+)$/, ".$1")}`;
+  }
 
   const handleIconFoundChange = useCallback((e: CustomEvent<boolean>) => {
     setIconNotFound(!e.detail);
@@ -223,15 +232,15 @@ function GeneralIconComponent({
     !iconNotFound && fallback ? handleIconFoundChange : undefined;
 
   if (isImage) {
-    return !keepSvgOriginalColor && imgSrc.endsWith(".svg") ? (
+    return !keepSvgOriginalColor && mergedImgSrc!.endsWith(".svg") ? (
       <WrappedSvgIcon
-        imgSrc={imgSrc}
+        imgSrc={mergedImgSrc}
         noPublicRoot={noPublicRoot}
         onIconFoundChange={onIconFoundChange}
       />
     ) : (
       <WrappedEoImgIcon
-        imgSrc={imgSrc}
+        imgSrc={mergedImgSrc}
         imgStyle={imgStyle}
         imgLoading={imgLoading}
         noPublicRoot={noPublicRoot}

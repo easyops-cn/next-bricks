@@ -53,15 +53,18 @@ const tasks = [];
               if (!allIcons[item.name]) {
                 allIcons[item.name] = [];
               }
-              return readdir(categoryDir).then((icons) =>
-                icons
-                  .filter((icon) => icon.endsWith(".svg"))
-                  .map((icon) => {
+              return readdir(categoryDir).then((icons) => {
+                for (const icon of icons) {
+                  const [_, iconName, ext] = icon.match(/^(.*?)(\.[^.]+)?$/);
+                  if ([".svg", ".png", ".gif"].includes(ext)) {
                     allIcons[item.name].push(
-                      icon.substring(0, icon.length - 4)
+                      ext === ".svg"
+                        ? iconName
+                        : `${iconName}${ext.replace(".", "-")}`
                     );
-                  })
-              );
+                  }
+                }
+              });
             } else if (item.name.endsWith(".svg")) {
               allIcons.default.push(
                 item.name.substring(0, item.name.length - 4)

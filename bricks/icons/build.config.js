@@ -28,7 +28,7 @@ export default {
         },
         {
           context: easyopsIconsDir,
-          from: "*/*.svg",
+          from: "*/*.{svg,png,gif}",
           to: "chunks/easyops-icons",
           // Terser skip this file for minimization
           info: { minimized: true },
