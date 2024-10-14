@@ -20,4 +20,14 @@
         lib: easyops
         category: model
         icon: app
+    - brick: eo-icon-icon
+      properties:
+        lib: easyops
+        category: image
+        icon: ai-robot-png
+    - brick: eo-easyops-icon
+      properties:
+        lib: easyops
+        category: image
+        icon: ai-robot-png
 ```
