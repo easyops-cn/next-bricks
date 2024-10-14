@@ -40,7 +40,12 @@ export function useLineMarkers({
   return useMemo(() => {
     // Always put the default stroke marker at the first position,
     // since the connecting line will use it.
-    const markers: LineMarker[] = [{ strokeColor: DEFAULT_LINE_STROKE_COLOR }];
+    const markers: LineMarker[] = [
+      {
+        strokeColor: DEFAULT_LINE_STROKE_COLOR,
+        markerType: "arrow",
+      },
+    ];
 
     let lineConnectorConf: ComputedLineConnecterConf | null = null;
     if (lineConnector) {
@@ -50,12 +55,18 @@ export function useLineMarkers({
         ...omitBy(lineConnector === true ? {} : lineConnector, isUndefined),
       } as ComputedLineConnecterConf;
       const markerIndex = addMarker(
-        { strokeColor: lineConnectorConf.strokeColor },
+        {
+          strokeColor: lineConnectorConf.strokeColor,
+          markerType: lineConnectorConf.markerType,
+        },
         markers
       );
       lineConnectorConf.$markerUrl = `url(#${markerPrefix}${markerIndex})`;
       const editingMarkerIndex = addMarker(
-        { strokeColor: lineConnectorConf.editingStrokeColor },
+        {
+          strokeColor: lineConnectorConf.editingStrokeColor,
+          markerType: lineConnectorConf.markerType,
+        },
         markers
       );
       lineConnectorConf.$editingMarkerUrl = `url(#${markerPrefix}${editingMarkerIndex})`;
@@ -80,7 +91,10 @@ export function useLineMarkers({
           lineConf.parallelGap = lineConf.interactStrokeWidth;
         }
         const markerIndex = addMarker(
-          { strokeColor: lineConf.strokeColor },
+          {
+            strokeColor: lineConf.strokeColor,
+            markerType: lineConf.markerType,
+          },
           markers
         );
         lineConf.$markerUrl = `url(#${markerPrefix}${markerIndex})`;
@@ -102,6 +116,7 @@ function addMarker(marker: LineMarker, markers: LineMarker[]): number {
 function getDefaultLineConf(): EdgeLineConf {
   return {
     type: "straight",
+    markerType: "arrow",
     dashed: false,
     strokeColor: DEFAULT_LINE_STROKE_COLOR,
     strokeWidth: DEFAULT_LINE_STROKE_WIDTH,

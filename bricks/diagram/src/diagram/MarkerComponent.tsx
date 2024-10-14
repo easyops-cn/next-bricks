@@ -24,11 +24,34 @@ export function MarkerComponent({
     case "0..N":
       Component = EntityRelationZeroOrManyMarker;
       break;
+    case "circle":
+      Component = CircleMarker;
+      break;
     default:
       Component = ArrowMarker;
   }
-
   return <Component id={id} strokeColor={strokeColor} />;
+}
+
+function CircleMarker({
+  id,
+  strokeColor,
+}: BaseMarkerComponentProps): JSX.Element {
+  const r = 3;
+  const d = r * 3;
+  return (
+    <marker
+      viewBox={`0 0 ${d} ${d}`}
+      refX={r}
+      refY={r}
+      id={id}
+      overflow="visible"
+      markerWidth={d}
+      markerHeight={d}
+    >
+      <circle stroke="none" fill={strokeColor} cx={r} cy={r} r={r} />
+    </marker>
+  );
 }
 
 function ArrowMarker({

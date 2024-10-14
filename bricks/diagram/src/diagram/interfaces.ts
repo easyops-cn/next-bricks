@@ -102,7 +102,7 @@ export type PositionTuple = [x: number, y: number];
 export type SizeTuple = [width: number, height: number];
 export type RangeTuple = [min: number, max: number];
 
-export type LineMarkerType = "arrow" | "0..1" | "0..N";
+export type LineMarkerType = "arrow" | "circle" | "0..1" | "0..N";
 export type LineMarkerPlacement = "start" | "end";
 
 export interface LineMarker {

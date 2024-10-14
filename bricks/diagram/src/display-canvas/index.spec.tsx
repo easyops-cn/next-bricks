@@ -497,16 +497,20 @@ describe("eo-display-canvas", () => {
         type: "edge",
         source: "b",
         target: "c",
+        data: {
+          dotted: true,
+        },
       },
       {
         type: "edge",
         source: "b",
         target: "a",
         data: {
-          virtual: true,
+          dashed: true,
           showStartArrow: true,
           showEndArrow: false,
           strokeColor: "blue",
+          markerType: "circle",
           strokeWidth: 5,
           parallelGap: 5,
           animate: {
@@ -543,8 +547,10 @@ describe("eo-display-canvas", () => {
       { if: "<% DATA.edge.source === 'a' %>", strokeColor: "red" },
       {
         if: true,
-        dashed: "<% DATA.edge?.data?.virtual %>",
+        dashed: "<% DATA.edge?.data?.dashed %>",
+        dotted: "<% DATA.edge?.data?.dotted %>",
         strokeColor: "<% DATA.edge?.data?.strokeColor %>",
+        markerType: "<% DATA.edge?.data?.markerType %>",
         showStartArrow: "<% DATA.edge?.data?.showStartArrow %>",
         showEndArrow: "<% DATA.edge?.data?.showEndArrow %>",
         strokeWidth: "<% DATA.edge?.data?.strokeWidth %>",
@@ -564,11 +570,14 @@ describe("eo-display-canvas", () => {
       [...element.shadowRoot!.querySelectorAll("marker path")].map(
         (markerPath) => (markerPath as SVGPathElement).getAttribute("stroke")
       )
-    ).toEqual(["gray", "red", "blue"]);
+    ).toEqual(["gray", "red"]);
+    expect(element.shadowRoot!.querySelectorAll("path.dotted").length).toBe(1);
+    expect(element.shadowRoot!.querySelectorAll("marker circle").length).toBe(
+      1
+    );
     expect(
       element.shadowRoot!.querySelectorAll(".dashed-animation").length
     ).toBe(1);
-
     act(() => {
       document.body.removeChild(element);
     });

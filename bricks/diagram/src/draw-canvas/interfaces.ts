@@ -3,6 +3,7 @@ import type { SimulationLinkDatum, SimulationNodeDatum } from "d3-force";
 import type { ResizeCellPayload } from "./reducers/interfaces";
 import type {
   CurveType,
+  LineMarkerType,
   NodePosition,
   PartialRectTuple,
   PositionTuple,
@@ -121,10 +122,12 @@ export interface BaseEdgeLineConf {
   type?: LineType;
   curveType?: CurveType;
   dashed?: boolean;
+  dotted?: boolean;
   strokeWidth?: number;
   strokeColor?: string;
   interactStrokeWidth?: number;
   parallelGap?: number;
+  markerType?: LineMarkerType;
   showStartArrow?: boolean;
   showEndArrow?: boolean;
   animate?: LineAnimate;
@@ -132,6 +135,7 @@ export interface BaseEdgeLineConf {
 
 export interface LineMarker {
   strokeColor: string;
+  markerType: LineMarkerType;
 }
 
 export type LineConnecterConf = Pick<

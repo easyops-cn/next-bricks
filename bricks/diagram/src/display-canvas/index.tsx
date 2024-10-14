@@ -368,7 +368,7 @@ function EoDisplayCanvasComponent({
             <MarkerComponent
               key={index}
               id={`${markerPrefix}${index}`}
-              type="arrow"
+              type={marker.markerType}
               strokeColor={marker.strokeColor}
             />
           ))}
