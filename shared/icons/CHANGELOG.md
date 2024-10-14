@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.10.3...@next-shared/icons@0.11.0) (2024-10-14)
+
+
+### Features
+
+* new image icons in easyops: ai-robot-png and ai-robot-gif ([8069b30](https://github.com/easyops-cn/next-bricks/commit/8069b30da4aee6b5ebbe81eeaf18619722df578c))
+* support raw image icons in easyops ([96d9ede](https://github.com/easyops-cn/next-bricks/commit/96d9edee266c04a53f8a47781a91718a25160ace))
+
+
+
+
+
 ## [0.10.3](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.10.2...@next-shared/icons@0.10.3) (2024-09-30)
 
 **Note:** Version bump only for package @next-shared/icons
