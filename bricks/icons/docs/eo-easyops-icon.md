@@ -20,14 +20,28 @@
         lib: easyops
         category: model
         icon: app
-    - brick: eo-icon-icon
+```
+
+## Examples
+
+### Raw image icons
+
+```yaml preview
+- brick: div
+  properties:
+    style:
+      display: flex
+      gap: 1em
+      fontSize: 32px
+  children:
+    - brick: eo-icon
       properties:
         lib: easyops
         category: image
         icon: ai-robot-png
-    - brick: eo-easyops-icon
+    - brick: eo-icon
       properties:
         lib: easyops
         category: image
-        icon: ai-robot-png
+        icon: ai-robot-gif
 ```
