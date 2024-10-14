@@ -1,6 +1,8 @@
 import { describe, test, expect } from "@jest/globals";
+import { act } from "react-dom/test-utils";
 import "./index.js";
 import type { EasyOpsIcon } from "./index.js";
+import "../img-icon/index.js";
 
 (global as any).fetch = jest.fn(() =>
   Promise.resolve({
@@ -142,6 +144,28 @@ describe("eo-easyops-icon", () => {
       ]
     `);
     document.body.removeChild(element);
+  });
+
+  test("image icon", () => {
+    const element = document.createElement("eo-easyops-icon") as EasyOpsIcon;
+    element.category = "image";
+    element.icon = "any-png";
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(element.shadowRoot?.childNodes).toMatchInlineSnapshot(`
+      NodeList [
+        <eo-img-icon
+          img-src="chunks/easyops-icons/image/any.png"
+        />,
+      ]
+    `);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
   });
 
   test("no icon", async () => {

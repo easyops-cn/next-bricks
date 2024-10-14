@@ -8,6 +8,7 @@ import { wrapLocalBrick } from "@next-core/react-element";
 import { getIcon } from "../shared/SvgCache.js";
 import type { IconEvents, IconEventsMapping } from "../shared/interfaces.js";
 import sharedStyleText from "../shared/icons.shadow.css";
+import type { EoImgIcon } from "../img-icon/index.jsx";
 
 const { defineElement, property, event } = createDecorators();
 
@@ -69,30 +70,39 @@ class EasyOpsIcon extends NextElement implements EasyOpsIconProps {
       ? `${
           // istanbul ignore next
           process.env.NODE_ENV === "test" ? "" : __webpack_public_path__
-        }chunks/easyops-icons/${category}/${icon}.svg`
+        }chunks/easyops-icons/${category}/${category === "image" ? icon.replace(/-([^-]+)$/, ".$1") : `${icon}.svg`}`
       : undefined;
-    const svg = await getIcon(url, {
-      currentColor: !category.startsWith("colored-"),
-    });
-    if (category !== (this.category ?? "default") || icon !== this.icon) {
-      // The icon has changed during `await getIcon(...)`
-      return;
-    }
-    // Currently React can't render mixed React Component and DOM nodes which are siblings,
-    // so we manually construct the DOM.
-    const nodes: Node[] = [];
-    // istanbul ignore next: browser only
-    if (!supportsAdoptingStyleSheets()) {
-      const style = document.createElement("style");
-      style.textContent = sharedStyleText;
-      nodes.push(style);
-    }
-    if (svg) {
-      nodes.push(svg);
-    }
-    this.shadowRoot.replaceChildren(...nodes);
+    let iconFound: boolean;
+    if (category === "image") {
+      const imgIcon = document.createElement("eo-img-icon") as EoImgIcon;
+      imgIcon.imgSrc = url;
+      this.shadowRoot.replaceChildren(imgIcon);
+      iconFound = true;
+    } else {
+      const svg = await getIcon(url, {
+        currentColor: !category.startsWith("colored-"),
+      });
+      if (category !== (this.category ?? "default") || icon !== this.icon) {
+        // The icon has changed during `await getIcon(...)`
+        return;
+      }
+      // Currently React can't render mixed React Component and DOM nodes which are siblings,
+      // so we manually construct the DOM.
+      const nodes: Node[] = [];
+      // istanbul ignore next: browser only
+      if (!supportsAdoptingStyleSheets()) {
+        const style = document.createElement("style");
+        style.textContent = sharedStyleText;
+        nodes.push(style);
+      }
+      if (svg) {
+        nodes.push(svg);
+      }
+      this.shadowRoot.replaceChildren(...nodes);
 
-    const iconFound = !!svg;
+      iconFound = !!svg;
+    }
+
     if (this.#iconFound !== iconFound) {
       this.#iconFoundEvent.emit((this.#iconFound = iconFound));
     }
