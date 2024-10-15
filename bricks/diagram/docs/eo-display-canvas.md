@@ -61,10 +61,10 @@
                 strokeColor:"pink",
                 animate:{
                   useAnimate: true,
-                  duration: 4 
-                } 
+                  duration: 4
+                }
               }
-            }, 
+            },
             {
               type: "edge",
               source: "X",
@@ -74,8 +74,8 @@
                 showStartArrow: true,
                 strokeColor:"blue",
                 animate:{
-                  useAnimate: true 
-                } 
+                  useAnimate: true
+                }
               }
             },
             {
@@ -108,7 +108,7 @@
                 height: 60,
               }
             }))
-          ).concat([ 
+          ).concat([
             {
               type: "decorator",
               id: "text-1",
@@ -120,7 +120,7 @@
                 height: 20,
                 text: "Hello!"
               },
-            },  
+            },
           ])
         %>
     - name: activeTarget
@@ -163,6 +163,12 @@
                 showStartArrow: <% DATA.edge?.data?.showStartArrow %>
                 strokeWidth: <% DATA.edge?.data?.strokeWidth %>
                 animate: <% DATA.edge?.data?.animate %>
+                showStartArrow: true
+                markers:
+                  - placement: end
+                    type: circle
+                  - placement: start
+                    type: arrow
             cells: <% CTX.initialCells %>
           events:
             activeTarget.change:

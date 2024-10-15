@@ -7,6 +7,8 @@ import { curveLine } from "../diagram/lines/curveLine";
 import { getSmartLinePoints } from "../shared/canvas/processors/getSmartLinePoints";
 import { findNodeOrAreaDecorator } from "./processors/findNodeOrAreaDecorator";
 import { useHoverStateContext } from "./HoverStateContext";
+import { getMarkers } from "../shared/canvas/useLineMarkers";
+import { LineMarkerConf } from "../diagram/interfaces";
 
 export interface EdgeComponentProps {
   edge: EdgeCell;
@@ -110,6 +112,17 @@ export function EdgeComponent({
     return null;
   }
 
+  let markerStart: string | undefined;
+  let markerEnd: string | undefined;
+  const lineMarkers: LineMarkerConf[] = getMarkers(lineConf);
+  for (const marker of lineMarkers) {
+    if (marker.placement === "start") {
+      markerStart = lineConf.$markerStartUrl;
+    } else {
+      markerEnd = lineConf.$markerEndUrl;
+    }
+  }
+
   return (
     <>
       <path
@@ -137,8 +150,8 @@ export function EdgeComponent({
         fill="none"
         stroke={lineConf.strokeColor}
         strokeWidth={lineConf.strokeWidth}
-        markerStart={lineConf.showStartArrow ? lineConf.$markerUrl : ""}
-        markerEnd={lineConf.showEndArrow ? lineConf.$markerUrl : ""}
+        markerStart={markerStart}
+        markerEnd={markerEnd}
       />
       <path className="line-active-bg" d={line} fill="none" />
     </>

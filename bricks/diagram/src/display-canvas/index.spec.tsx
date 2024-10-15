@@ -499,6 +499,8 @@ describe("eo-display-canvas", () => {
         target: "c",
         data: {
           dotted: true,
+          showStartArrow: true,
+          showEndArrow: false,
         },
       },
       {
@@ -507,10 +509,17 @@ describe("eo-display-canvas", () => {
         target: "a",
         data: {
           dashed: true,
-          showStartArrow: true,
-          showEndArrow: false,
           strokeColor: "blue",
-          markerType: "circle",
+          markers: [
+            {
+              type: null,
+              placement: "start",
+            },
+            {
+              type: "circle",
+              placement: "end",
+            },
+          ],
           strokeWidth: 5,
           parallelGap: 5,
           animate: {
@@ -550,7 +559,7 @@ describe("eo-display-canvas", () => {
         dashed: "<% DATA.edge?.data?.dashed %>",
         dotted: "<% DATA.edge?.data?.dotted %>",
         strokeColor: "<% DATA.edge?.data?.strokeColor %>",
-        markerType: "<% DATA.edge?.data?.markerType %>",
+        markers: "<% DATA.edge?.data?.markers %>",
         showStartArrow: "<% DATA.edge?.data?.showStartArrow %>",
         showEndArrow: "<% DATA.edge?.data?.showEndArrow %>",
         strokeWidth: "<% DATA.edge?.data?.strokeWidth %>",
@@ -570,7 +579,7 @@ describe("eo-display-canvas", () => {
       [...element.shadowRoot!.querySelectorAll("marker path")].map(
         (markerPath) => (markerPath as SVGPathElement).getAttribute("stroke")
       )
-    ).toEqual(["gray", "red"]);
+    ).toEqual(["gray", "red", "blue"]);
     expect(element.shadowRoot!.querySelectorAll("path.dotted").length).toBe(1);
     expect(element.shadowRoot!.querySelectorAll("marker circle").length).toBe(
       1

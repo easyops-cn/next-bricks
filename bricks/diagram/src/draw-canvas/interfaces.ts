@@ -3,6 +3,7 @@ import type { SimulationLinkDatum, SimulationNodeDatum } from "d3-force";
 import type { ResizeCellPayload } from "./reducers/interfaces";
 import type {
   CurveType,
+  LineMarkerConf,
   LineMarkerType,
   NodePosition,
   PartialRectTuple,
@@ -115,7 +116,8 @@ export interface LineAnimate {
 }
 
 export interface ComputedEdgeLineConf extends Required<BaseEdgeLineConf> {
-  $markerUrl: string;
+  $markerStartUrl: string;
+  $markerEndUrl: string;
 }
 
 export interface BaseEdgeLineConf {
@@ -127,8 +129,14 @@ export interface BaseEdgeLineConf {
   strokeColor?: string;
   interactStrokeWidth?: number;
   parallelGap?: number;
-  markerType?: LineMarkerType;
+  markers?: LineMarkerConf[];
+  /**
+   * 已废弃，使用markers代替，配置了对应的箭头测则显示
+   */
   showStartArrow?: boolean;
+  /**
+   * 已废弃
+   */
   showEndArrow?: boolean;
   animate?: LineAnimate;
 }
@@ -147,7 +155,8 @@ export type LineConnecterConf = Pick<
 
 export type ComputedLineConnecterConf = ComputedEdgeLineConf & {
   editingStrokeColor: string;
-  $editingMarkerUrl: string;
+  $editingStartMarkerUrl: string;
+  $editingEndMarkerUrl: string;
 };
 
 export type ActiveTarget = ActiveTargetOfSingular | ActiveTargetOfMulti;
