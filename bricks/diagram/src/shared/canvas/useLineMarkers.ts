@@ -19,6 +19,7 @@ import {
   DEFAULT_LINE_INTERACT_SHOW_END_ARROW,
   DEFAULT_LINE_INTERACT_ANIMATE_DURATION,
 } from "../../draw-canvas/constants";
+import { LineMarkerConf } from "../../diagram/interfaces";
 
 export interface UseLineMarkersOptions {
   cells: Cell[];
@@ -54,22 +55,32 @@ export function useLineMarkers({
         editingStrokeColor: "var(--palette-blue-5)",
         ...omitBy(lineConnector === true ? {} : lineConnector, isUndefined),
       } as ComputedLineConnecterConf;
-      const markerIndex = addMarker(
-        {
-          strokeColor: lineConnectorConf.strokeColor,
-          markerType: lineConnectorConf.markerType,
-        },
-        markers
-      );
-      lineConnectorConf.$markerUrl = `url(#${markerPrefix}${markerIndex})`;
-      const editingMarkerIndex = addMarker(
-        {
-          strokeColor: lineConnectorConf.editingStrokeColor,
-          markerType: lineConnectorConf.markerType,
-        },
-        markers
-      );
-      lineConnectorConf.$editingMarkerUrl = `url(#${markerPrefix}${editingMarkerIndex})`;
+      const lineMarkers: LineMarkerConf[] = getMarkers(lineConnectorConf);
+      for (const marker of lineMarkers) {
+        const { placement, type: _type } = marker;
+        const type = _type ?? "arrow";
+        const markerIndex = addMarker(
+          {
+            strokeColor: lineConnectorConf.strokeColor,
+            markerType: type,
+          },
+          markers
+        );
+        const editingMarkerIndex = addMarker(
+          {
+            strokeColor: lineConnectorConf.editingStrokeColor,
+            markerType: type,
+          },
+          markers
+        );
+        if (placement === "start") {
+          lineConnectorConf.$markerStartUrl = `url(#${markerPrefix}${markerIndex})`;
+          lineConnectorConf.$editingStartMarkerUrl = `url(#${markerPrefix}${editingMarkerIndex})`;
+        } else {
+          lineConnectorConf.$markerEndUrl = `url(#${markerPrefix}${markerIndex})`;
+          lineConnectorConf.$editingEndMarkerUrl = `url(#${markerPrefix}${editingMarkerIndex})`;
+        }
+      }
     }
 
     const map = new WeakMap<EdgeCell, ComputedEdgeLineConf>();
@@ -90,21 +101,51 @@ export function useLineMarkers({
         if (lineConf.parallelGap === undefined) {
           lineConf.parallelGap = lineConf.interactStrokeWidth;
         }
-        const markerIndex = addMarker(
-          {
-            strokeColor: lineConf.strokeColor,
-            markerType: lineConf.markerType,
-          },
-          markers
-        );
-        lineConf.$markerUrl = `url(#${markerPrefix}${markerIndex})`;
+
+        const lineMarkers: LineMarkerConf[] = getMarkers(lineConf);
+
+        for (const marker of lineMarkers) {
+          const { placement, type: _type } = marker;
+          const type = _type ?? "arrow";
+          const markerIndex = addMarker(
+            {
+              strokeColor: lineConf.strokeColor,
+              markerType: type,
+            },
+            markers
+          );
+          if (placement === "start") {
+            lineConf.$markerStartUrl = `url(#${markerPrefix}${markerIndex})`;
+          } else {
+            lineConf.$markerEndUrl = `url(#${markerPrefix}${markerIndex})`;
+          }
+        }
         map.set(cell, lineConf);
       }
     }
     return { lineConfMap: map, lineConnectorConf, markers };
   }, [cells, defaultEdgeLines, lineConnector, markerPrefix]);
 }
-
+export function getMarkers(lineConf: ComputedEdgeLineConf): LineMarkerConf[] {
+  let lineMarkers: LineMarkerConf[] = [];
+  if (lineConf.markers) {
+    lineMarkers = lineConf.markers;
+  } else {
+    if (lineConf.showStartArrow) {
+      lineMarkers.push({
+        type: "arrow",
+        placement: "start",
+      });
+    }
+    if (lineConf.showEndArrow) {
+      lineMarkers.push({
+        type: "arrow",
+        placement: "end",
+      });
+    }
+  }
+  return lineMarkers;
+}
 function addMarker(marker: LineMarker, markers: LineMarker[]): number {
   let markerIndex = findIndex(markers, marker);
   if (markerIndex === -1) {
@@ -116,7 +157,6 @@ function addMarker(marker: LineMarker, markers: LineMarker[]): number {
 function getDefaultLineConf(): EdgeLineConf {
   return {
     type: "straight",
-    markerType: "arrow",
     dashed: false,
     strokeColor: DEFAULT_LINE_STROKE_COLOR,
     strokeWidth: DEFAULT_LINE_STROKE_WIDTH,

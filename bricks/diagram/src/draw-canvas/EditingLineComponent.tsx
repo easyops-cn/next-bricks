@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import classNames from "classnames";
 import type { ComputedLineConnecterConf } from "./interfaces";
 import type {
+  LineMarkerConf,
   NodePosition,
   PositionTuple,
   TransformLiteral,
@@ -13,6 +14,7 @@ import {
   getEditingLinePoints,
   getNewLineVertices,
 } from "../shared/canvas/processors/getEditingLinePoints";
+import { getMarkers } from "../shared/canvas/useLineMarkers";
 
 export interface EditingLineComponentProps {
   transform: TransformLiteral;
@@ -153,6 +155,16 @@ export function EditingLineComponent({
       1
     );
   }, [connectLineTo, hoverState, lineEditorState]);
+  let markerStart: string | undefined;
+  let markerEnd: string | undefined;
+  const lineMarkers: LineMarkerConf[] = getMarkers(options);
+  for (const marker of lineMarkers) {
+    if (marker.placement === "start") {
+      markerStart = options.$editingStartMarkerUrl;
+    } else {
+      markerEnd = options.$editingEndMarkerUrl;
+    }
+  }
 
   return (
     <path
@@ -162,8 +174,8 @@ export function EditingLineComponent({
       d={line}
       fill="none"
       stroke={options.editingStrokeColor}
-      markerStart={options.showStartArrow ? options.$editingMarkerUrl : ""}
-      markerEnd={options.showEndArrow ? options.$editingMarkerUrl : ""}
+      markerStart={markerStart}
+      markerEnd={markerEnd}
     />
   );
 }

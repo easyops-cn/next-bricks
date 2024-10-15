@@ -2,10 +2,15 @@
 import React, { useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
 import type { ComputedLineConnecterConf, LineSettings } from "./interfaces";
-import type { PositionTuple, TransformLiteral } from "../diagram/interfaces";
+import type {
+  LineMarkerConf,
+  PositionTuple,
+  TransformLiteral,
+} from "../diagram/interfaces";
 import { curveLine } from "../diagram/lines/curveLine";
 import { useHoverStateContext } from "./HoverStateContext";
 import { getConnectLinePoints } from "../shared/canvas/processors/getConnectLinePoints";
+import { getMarkers } from "../shared/canvas/useLineMarkers";
 
 export interface SmartConnectLineComponentProps {
   transform: TransformLiteral;
@@ -68,6 +73,17 @@ export function SmartConnectLineComponent({
     );
   }, [connectLineTo, hoverState, smartConnectLineState, options, lineSettings]);
 
+  let markerStart: string | undefined;
+  let markerEnd: string | undefined;
+  const lineMarkers: LineMarkerConf[] = getMarkers(options);
+  for (const marker of lineMarkers) {
+    if (marker.placement === "start") {
+      markerStart = options.$markerStartUrl;
+    } else {
+      markerEnd = options.$markerEndUrl;
+    }
+  }
+
   return (
     <path
       className={classNames("connect-line", {
@@ -77,8 +93,8 @@ export function SmartConnectLineComponent({
       fill="none"
       stroke={options.strokeColor}
       strokeWidth={options.strokeWidth}
-      markerStart={options.showStartArrow ? options.$markerUrl : ""}
-      markerEnd={options.showEndArrow ? options.$markerUrl : ""}
+      markerStart={markerStart}
+      markerEnd={markerEnd}
     />
   );
 }

@@ -339,6 +339,12 @@
                 dashed: true
               - if: <% !DATA.edge.data?.virtual %>
                 dotted: true
+                showStartArrow: true
+                markers:
+                  - placement: end
+                    type: circle
+                  - placement: start
+                    type: arrow
             cells: <% CTX.initialCells %>
             lineConnector: true
             lineSettings:
