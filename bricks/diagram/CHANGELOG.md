@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.48.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.47.0...@next-bricks/diagram@0.48.0) (2024-10-15)
+
+
+### Features
+
+* defaultEdgeLines 调整为markers分别配置起始，终点箭头 ([28eb8a9](https://github.com/easyops-cn/next-bricks/commit/28eb8a938e3de9dd686d5a22cc494bcedd8c2f69))
+
+
+
+
+
 # [0.47.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.46.2...@next-bricks/diagram@0.47.0) (2024-10-14)
 
 
