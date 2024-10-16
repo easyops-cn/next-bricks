@@ -293,9 +293,14 @@ describe("eo-draw-canvas", () => {
   test("add edge", async () => {
     const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
     element.defaultNodeSize = [180, 120];
-    element.defaultEdgeLines = [
-      { if: "<% DATA.edge.data?.virtual %>", dashed: true },
-    ];
+    element.defaultEdgeLines = `<%
+      [
+        {
+          if: DATA.edge.data?.virtual,
+          dashed: true
+        }
+      ]
+    %>` as any;
     element.cells = [
       {
         // This edge will be ignored since source node is not found

@@ -1,5 +1,9 @@
 import { useMemo } from "react";
-import { __secret_internals, checkIfByTransform } from "@next-core/runtime";
+import {
+  __secret_internals,
+  checkIfByTransform,
+  checkIfOfComputed,
+} from "@next-core/runtime";
 import { findIndex, isUndefined, omitBy } from "lodash";
 import type {
   Cell,
@@ -87,12 +91,19 @@ export function useLineMarkers({
     for (const cell of cells) {
       if (isEdgeCell(cell)) {
         const computedLineConf =
-          __secret_internals.legacyDoTransform(
-            { edge: cell },
-            defaultEdgeLines?.find((item) =>
-              checkIfByTransform(item, { edge: cell })
-            )
-          ) ?? {};
+          (Array.isArray(defaultEdgeLines)
+            ? __secret_internals.legacyDoTransform(
+                { edge: cell },
+                defaultEdgeLines.find((item) =>
+                  checkIfByTransform(item, { edge: cell })
+                )
+              )
+            : (
+                __secret_internals.legacyDoTransform(
+                  { edge: cell },
+                  defaultEdgeLines
+                ) as EdgeLineConf[]
+              )?.find((item) => checkIfOfComputed(item))) ?? {};
         const lineConf = {
           ...getDefaultLineConf(),
           ...omitBy(computedLineConf, isUndefined),
