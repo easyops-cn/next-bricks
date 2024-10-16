@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
+import { instantiateModalStack, type ModalStack } from "@next-core/runtime";
 import classNames from "classnames";
 import type {
   GeneralIcon,
@@ -14,9 +15,9 @@ import type {
 } from "@next-bricks/icons/general-icon";
 import "@next-core/theme";
 import type { Button, ButtonProps } from "@next-bricks/basic/button";
-import styleText from "./modal.shadow.css";
 import { unwrapProvider } from "@next-core/utils/general";
 import type { lockBodyScroll as _lockBodyScroll } from "@next-bricks/basic/data-providers/lock-body-scroll/lock-body-scroll";
+import styleText from "./modal.shadow.css";
 
 const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
   "basic.lock-body-scroll"
@@ -52,6 +53,7 @@ export interface ModalProps {
   confirmDisabled?: boolean;
   closeWhenConfirm?: boolean;
   visible?: boolean;
+  stackable?: boolean;
 }
 
 export interface ModalEvents {
@@ -153,6 +155,16 @@ class Modal extends ReactNextElement implements ModalProps {
   @property({ type: Boolean }) accessor hideCancelButton: boolean | undefined;
 
   /**
+   * 是否可堆叠，开启后每次打开抽屉会将新的抽屉置于上层（zIndex ++）
+   *
+   * 注意：仅初始设置有效。
+   *
+   * @default true
+   */
+  @property({ type: Boolean })
+  accessor stackable: boolean | undefined;
+
+  /**
    * 打开弹窗事件
    */
   @event({ type: "open" }) accessor #modalOpen!: EventEmitter<void>;
@@ -217,12 +229,15 @@ class Modal extends ReactNextElement implements ModalProps {
   disconnectedCallback(): void {
     super.disconnectedCallback();
     lockBodyScroll(this, false);
+    this.#stack?.pull();
   }
 
   #closeModal = () => {
     this.visible = false;
     this.#handleModelClose();
   };
+
+  #stack = instantiateModalStack?.();
 
   render() {
     return (
@@ -241,6 +256,8 @@ class Modal extends ReactNextElement implements ModalProps {
         onModalConfirm={this.#handleModelConfirm}
         onModalCancel={this.#handleModelCancel}
         curElement={this}
+        stackable={this.stackable}
+        stack={this.#stack}
       />
     );
   }
@@ -249,6 +266,7 @@ class Modal extends ReactNextElement implements ModalProps {
 export { Modal };
 
 interface ModalComponentProps extends ModalProps {
+  stack?: ModalStack;
   onModalClose: () => void;
   onModalConfirm: (isClose: boolean) => void;
   onModalCancel: () => void;
@@ -269,6 +287,8 @@ function ModalComponent({
   onModalCancel,
   onModalClose,
   curElement,
+  stack,
+  stackable,
 }: ModalComponentProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState<boolean>(open);
@@ -357,15 +377,34 @@ function ModalComponent({
     ]
   );
 
-  useEffect(() => {
-    lockBodyScroll(curElement, open);
-    setIsOpen(open);
-  }, [open]);
+  const [zIndex, setZIndex] = useState<number>(undefined);
+  useEffect(
+    () => {
+      lockBodyScroll(curElement, open);
+      setIsOpen(open);
+
+      if (stack && stackable !== false) {
+        if (open) {
+          setZIndex(stack.push());
+        } else {
+          stack.pull();
+          setZIndex(undefined);
+        }
+      }
+    },
+    // Only re-run the effect if open changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [open]
+  );
 
   return isOpen ? (
     <div className="modal-root">
-      <div className="mask" />
-      <div className="modal-wrap" onClick={handleWrapperClick}>
+      <div className="mask" style={{ zIndex }} />
+      <div
+        className="modal-wrap"
+        style={{ zIndex }}
+        onClick={handleWrapperClick}
+      >
         <div
           className={classNames("modal", {
             fullscreen,

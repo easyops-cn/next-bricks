@@ -6,6 +6,7 @@ import { wrapBrick } from "@next-core/react-element";
 import type { AntdIcon, AntdIconProps } from "@next-bricks/icons/antd-icon";
 import { get } from "lodash";
 import "@next-core/theme";
+import { instantiateModalStack } from "@next-core/runtime";
 import { K, NS, locales } from "./i18n.js";
 import { SlDialogElement, WrappedSlDialog } from "./sl-dialog.js";
 import type { Button, ButtonProps } from "../../button/index.js";
@@ -100,14 +101,19 @@ export function showDialog(options: DialogOptions): Promise<void> {
     onCancel = reject;
   });
 
+  const stack = instantiateModalStack?.();
+  const zIndex = stack?.push();
+
   const onHide = () => {
     root.unmount();
     container.remove();
+    stack?.pull();
   };
 
   root.render(
     <DialogComponent
       {...options}
+      zIndex={zIndex}
       onOk={onOk}
       onCancel={onCancel}
       onHide={onHide}
@@ -123,10 +129,12 @@ export function DialogComponent({
   content,
   expect,
   contentStyle,
+  zIndex,
   onOk,
   onCancel,
   onHide,
 }: DialogOptions & {
+  zIndex?: number;
   onOk?(): void;
   onCancel?(): void;
   onHide?(): void;
@@ -184,6 +192,7 @@ export function DialogComponent({
       onSlHide={onHide}
       onSlRequestClose={onSlRequestClose}
       ref={ref}
+      style={{ "--sl-z-index-dialog": zIndex } as React.CSSProperties}
     >
       <div className={styles.body}>
         {icon && (

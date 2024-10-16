@@ -1,16 +1,23 @@
-import React, { useEffect, useMemo, useRef, CSSProperties } from "react";
+import React, {
+  useEffect,
+  useMemo,
+  useRef,
+  CSSProperties,
+  useState,
+} from "react";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
-import classNames from "classnames";
-import type { Placement } from "../interface.js";
-import "@next-core/theme";
-import styleText from "./drawer.shadow.css";
 import { unwrapProvider } from "@next-core/utils/general";
 import type { lockBodyScroll as _lockBodyScroll } from "@next-bricks/basic/data-providers/lock-body-scroll/lock-body-scroll";
+import { instantiateModalStack, type ModalStack } from "@next-core/runtime";
+import classNames from "classnames";
+import "@next-core/theme";
+import type { Placement } from "../interface.js";
+import styleText from "./drawer.shadow.css";
 
 const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
   "basic.lock-body-scroll"
@@ -37,6 +44,7 @@ interface DrawerProps {
   visible?: boolean;
   footerSlot?: boolean;
   scrollToTopWhenOpen?: boolean;
+  stackable?: boolean;
 }
 const { defineElement, property, event, method } = createDecorators();
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
@@ -124,6 +132,8 @@ class Drawer extends ReactNextElement implements DrawerProps {
 
   /**
    * 打开抽屉时内容区是否自动滚动到顶部
+   *
+   * 注意：仅初始设置有效。
    */
   @property({ attribute: false })
   accessor scrollToTopWhenOpen = true;
@@ -133,6 +143,16 @@ class Drawer extends ReactNextElement implements DrawerProps {
    */
   @property({ attribute: false })
   accessor maskStyle = {};
+
+  /**
+   * 是否可堆叠，开启后每次打开抽屉会将新的抽屉置于上层（zIndex ++）
+   *
+   * 注意：仅初始设置有效。
+   *
+   * @default true
+   */
+  @property({ type: Boolean })
+  accessor stackable: boolean | undefined;
 
   /**
    * 抽屉开启事件
@@ -179,7 +199,10 @@ class Drawer extends ReactNextElement implements DrawerProps {
   disconnectedCallback(): void {
     super.disconnectedCallback();
     lockBodyScroll(this, false);
+    this.#stack?.pull();
   }
+
+  #stack = instantiateModalStack?.();
 
   render() {
     return (
@@ -197,14 +220,17 @@ class Drawer extends ReactNextElement implements DrawerProps {
         onDrawerClose={this.#handleDrawerClose}
         scrollToTopWhenOpen={this.scrollToTopWhenOpen}
         curElement={this}
+        stackable={this.stackable}
+        stack={this.#stack}
       />
     );
   }
 }
 
 interface DrawerComponentProps extends DrawerProps {
-  onDrawerClose: () => void;
+  stack?: ModalStack;
   maskStyle?: CSSProperties;
+  onDrawerClose: () => void;
 }
 
 export function DrawerComponent({
@@ -221,6 +247,8 @@ export function DrawerComponent({
   onDrawerClose,
   scrollToTopWhenOpen,
   curElement,
+  stackable,
+  stack,
 }: DrawerComponentProps) {
   const contentRef = useRef<HTMLDivElement>();
   const header = useMemo(
@@ -252,15 +280,32 @@ export function DrawerComponent({
     ...maskStyle,
   } as CSSProperties;
 
-  useEffect(() => {
-    lockBodyScroll(curElement, open);
-    scrollToTopWhenOpen && open && contentRef.current?.scrollTo(0, 0);
-  }, [open]);
+  const [zIndex, setZIndex] = useState<number>(undefined);
+  useEffect(
+    () => {
+      lockBodyScroll(curElement, open);
+      scrollToTopWhenOpen && open && contentRef.current?.scrollTo(0, 0);
+
+      if (stack && stackable !== false) {
+        if (open) {
+          setZIndex(stack.push());
+        } else {
+          stack.pull();
+          setZIndex(undefined);
+        }
+      }
+    },
+    // Only re-run the effect if open changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [open]
+  );
+
   return (
     <div
       className={classNames("drawer", `drawer-${placement}`, {
         open: open,
       })}
+      style={{ zIndex }}
     >
       {mask && (
         <div
