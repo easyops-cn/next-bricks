@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.48.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.48.1...@next-bricks/diagram@0.48.2) (2024-10-16)
+
+
+### Bug Fixes
+
+* allow set defaultEdgeLines to an entire expression ([3a04086](https://github.com/easyops-cn/next-bricks/commit/3a0408699422a0a541e0326878eeb2b9e1faa5fd))
+
+
+
+
+
 ## [0.48.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.48.0...@next-bricks/diagram@0.48.1) (2024-10-16)
 
 **Note:** Version bump only for package @next-bricks/diagram
