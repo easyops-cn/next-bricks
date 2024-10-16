@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/shoelace@1.0.25...@next-bricks/shoelace@1.1.0) (2024-10-16)
+
+
+### Features
+
+* support modal stack ([252ef9c](https://github.com/easyops-cn/next-bricks/commit/252ef9cd16d56db3b602d25050f24f07dc468c0b))
+
+
+
+
+
 ## [1.0.25](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/shoelace@1.0.24...@next-bricks/shoelace@1.0.25) (2024-10-08)
 
 **Note:** Version bump only for package @next-bricks/shoelace
