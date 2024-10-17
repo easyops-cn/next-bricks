@@ -158,8 +158,6 @@ class Modal extends ReactNextElement implements ModalProps {
    * 是否可堆叠，开启后每次打开抽屉会将新的抽屉置于上层（zIndex ++）
    *
    * 注意：仅初始设置有效。
-   *
-   * @default true
    */
   @property({ type: Boolean })
   accessor stackable: boolean | undefined;
@@ -383,7 +381,7 @@ function ModalComponent({
       lockBodyScroll(curElement, open);
       setIsOpen(open);
 
-      if (stack && stackable !== false) {
+      if (stack && stackable) {
         if (open) {
           setZIndex(stack.push());
         } else {

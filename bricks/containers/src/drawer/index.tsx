@@ -148,8 +148,6 @@ class Drawer extends ReactNextElement implements DrawerProps {
    * 是否可堆叠，开启后每次打开抽屉会将新的抽屉置于上层（zIndex ++）
    *
    * 注意：仅初始设置有效。
-   *
-   * @default true
    */
   @property({ type: Boolean })
   accessor stackable: boolean | undefined;
@@ -286,7 +284,7 @@ export function DrawerComponent({
       lockBodyScroll(curElement, open);
       scrollToTopWhenOpen && open && contentRef.current?.scrollTo(0, 0);
 
-      if (stack && stackable !== false) {
+      if (stack && stackable) {
         if (open) {
           setZIndex(stack.push());
         } else {
