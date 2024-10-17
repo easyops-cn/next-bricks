@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.10.0...@next-bricks/containers@1.10.1) (2024-10-17)
+
+
+### Bug Fixes
+
+* set stackable defaults to false ([e17a0ba](https://github.com/easyops-cn/next-bricks/commit/e17a0baac7acd6853de37bf9a279093dec179deb))
+
+
+
+
+
 # [1.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.9.6...@next-bricks/containers@1.10.0) (2024-10-16)
 
 
