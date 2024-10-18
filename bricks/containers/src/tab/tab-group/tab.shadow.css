@@ -38,15 +38,13 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--eo-tabs-header-padding);
+  overflow-x: scroll;
+  overflow-y: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
-
-.tab-nav:before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  left: 0;
-  border-bottom: 1px solid var(--antd-tabs-title-border-color);
+.tab-nav ::-webkit-scrollbar {
+  display: none;
 }
 
 :host([type="panel"]) .tab-nav {
@@ -56,6 +54,15 @@
 
 .tab-item-wrapper {
   display: flex;
+  position: relative;
+}
+.tab-item-wrapper:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  border-bottom: 1px solid var(--antd-tabs-title-border-color);
 }
 
 :host([type="capsule"]) {
