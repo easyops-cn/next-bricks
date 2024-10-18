@@ -21,7 +21,15 @@ import {
 const NOT_AGENT_MATCH = "no_agent";
 
 export function MessageNode(props: MessageItem): React.ReactNode {
-  const { content, created, role, agentId, type: itemType, chatting } = props;
+  const {
+    content,
+    created,
+    role,
+    agentId,
+    type: itemType,
+    chatting,
+    toolCalls,
+  } = props;
   const isUser = useMemo(() => role === "user", [role]);
   const { quickAnswerConfig } = useChatViewContext();
 
@@ -88,6 +96,7 @@ export function MessageNode(props: MessageItem): React.ReactNode {
                   ? "AI助手"
                   : matchAgent.name}
               <Time time={created} />
+              <div>{toolCalls ? JSON.stringify(toolCalls) : ""}</div>
             </div>
             <div className="message-content">
               <div className="wrapper">
@@ -107,6 +116,7 @@ export function MessageNode(props: MessageItem): React.ReactNode {
     chatting,
     messageNode,
     props,
+    toolCalls,
   ]);
 
   return (

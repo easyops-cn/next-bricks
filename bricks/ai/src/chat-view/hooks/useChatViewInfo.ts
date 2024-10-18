@@ -13,6 +13,20 @@ export const NEW_SESSION_ID = "new_session_id";
 export const RELATED_QUESTIONS_TYPE = "RELATED_QUESTIONS";
 export const DEFAULT_TYPE = "TEXT";
 
+const GENERAL_TEXT_TYPES: readonly string[] = [
+  "TEXT",
+  "tool_call",
+  "tool_response",
+];
+
+export function isGeneralTextType(type: string | undefined) {
+  return GENERAL_TEXT_TYPES.includes(type ?? "TEXT");
+}
+
+function isGeneralSameType(a: string | undefined, b: string | undefined) {
+  return a === b || (isGeneralTextType(a) && isGeneralTextType(b));
+}
+
 export function useChatViewInfo({
   agentId,
   robotId,
@@ -43,8 +57,7 @@ export function useChatViewInfo({
   const [msgEnd, setMsgEnd] = useState<boolean>(false);
   const [msgList, setMsgList] = useState<MessageItem[]>([]);
   const [searchStr, setSearchStr] = useState<string>("");
-  const chatingText = useRef<string>("");
-  const chatingMessageItem = useRef<MessageItem>();
+  const chattingMessageItem = useRef<MessageItem>();
   const sessionSearchQuery = useRef<string | undefined>();
   const haveCreatedSession = useRef<boolean>(false);
 
@@ -368,12 +381,12 @@ export function useChatViewInfo({
 
   useEffect(() => {
     // chat listener
-    const listener = (msgItem?: SSEMessageItem) => {
-      if (!msgItem) return;
+    const listener = (_msgItem?: SSEMessageItem) => {
+      if (!_msgItem) return;
 
       const msgItemData = {
         type: DEFAULT_TYPE,
-        ...msgItem,
+        ..._msgItem,
       };
 
       if (activeSessionId === NEW_SESSION_ID && msgItemData.conversationId) {
@@ -390,80 +403,65 @@ export function useChatViewInfo({
         setActiveSessionId(msgItemData.conversationId);
       }
 
-      if (
-        !chatingMessageItem.current ||
-        (msgItemData.type === chatingMessageItem.current?.type &&
-          msgItemData.taskId === chatingMessageItem.current?.taskId)
-      ) {
-        // 当初次触发chat,或者chat过程中持续对同一type同一taskId的消息进行处理
-        chatingText.current = chatingText.current + msgItemData.delta.content;
-        chatingMessageItem.current = {
-          ...msgItemData,
-          role: "assistant",
-          content: {
-            type: "markdown",
-            text: chatingText.current,
-          },
-          chatting: true,
-          created: moment(msgItemData?.created).format("YYYY-MM-DD HH:mm:ss"),
-        };
-        setMsgList((list) => {
+      let generalSameType = false;
+      const isStart = !chattingMessageItem.current;
+      const isUpdate =
+        !isStart &&
+        (generalSameType =
+          isGeneralSameType(
+            msgItemData.type,
+            chattingMessageItem.current!.type
+          ) && msgItemData.taskId === chattingMessageItem.current!.taskId);
+
+      const thisMessage = (chattingMessageItem.current = {
+        ...msgItemData,
+        role: "assistant",
+        content: {
+          type: "markdown",
+          text: isGeneralTextType(msgItemData.type)
+            ? `${isUpdate ? chattingMessageItem.current!.content.text : ""}${msgItemData.delta.content}`
+            : (chattingMessageItem.current?.content.text ?? ""),
+        },
+        chatting: true,
+        toolCalls:
+          msgItemData.type === "tool_call"
+            ? [
+                ...(chattingMessageItem.current?.toolCalls ?? []),
+                ...msgItemData.delta.tool_calls!,
+              ]
+            : msgItemData.type === "tool_response"
+              ? chattingMessageItem.current?.toolCalls?.map((call) =>
+                  call.id === msgItemData.delta.tool_call_id
+                    ? {
+                        ...call,
+                        response: msgItemData.delta.content,
+                      }
+                    : call
+                )
+              : chattingMessageItem.current?.toolCalls,
+        created: moment(msgItemData?.created).format("YYYY-MM-DD HH:mm:ss"),
+      });
+
+      setMsgList((list) => {
+        if (isUpdate) {
           list.pop();
-          return list.concat(chatingMessageItem.current!);
-        });
-      } else if (
-        msgItemData.type === chatingMessageItem.current?.type &&
-        msgItemData.taskId !== chatingMessageItem.current?.taskId
-      ) {
-        // 对于同一type不同taskId的消息，需要分开消息框展示
-        chatingText.current = msgItemData.delta.content;
-        chatingMessageItem.current = {
-          ...msgItemData,
-          role: "assistant",
-          content: {
-            type: "markdown",
-            text: chatingText.current,
-          },
-          chatting: true,
-          created: moment(msgItemData?.created).format("YYYY-MM-DD HH:mm:ss"),
-        };
-        setMsgList((list) => {
-          return list
-            .map((item) => ({ ...item, chatting: false }))
-            .concat(chatingMessageItem.current! as any);
-        });
-      } else if (msgItemData.type !== chatingMessageItem.current?.type) {
-        // 当消息type发生变化，需要拆分
-        switch (msgItemData.type) {
-          case RELATED_QUESTIONS_TYPE:
-          default:
-            chatingText.current = msgItemData.delta.content;
-            chatingMessageItem.current = {
-              ...msgItemData,
-              role: "assistant",
-              content: {
-                type: "markdown",
-                text: chatingText.current,
-              },
-              chatting: true,
-              created: moment(msgItemData?.created).format(
-                "YYYY-MM-DD HH:mm:ss"
-              ),
-            };
-            setMsgList((list) => {
-              return list
-                .map((item) => ({ ...item, chatting: false }))
-                .filter((item) => item.type !== RELATED_QUESTIONS_TYPE)
-                .concat(chatingMessageItem.current! as any);
-            });
         }
-      }
+        if (isStart || isUpdate) {
+          return list.concat(thisMessage);
+        }
+        return (
+          generalSameType
+            ? list
+            : list.filter((item) => item.type !== RELATED_QUESTIONS_TYPE)
+        )
+          .map<MessageItem>((item) => ({ ...item, chatting: false }))
+          .concat(thisMessage);
+      });
     };
     const reset = () => {
-      chatingText.current = "";
       setChatting(false);
       setLoading(false);
-      chatingMessageItem.current = undefined;
+      chattingMessageItem.current = undefined;
     };
     const finishListener = () => {
       setMsgList((list) => {
@@ -478,13 +476,13 @@ export function useChatViewInfo({
       setMsgEnd(true);
     };
     const stopListener = () => {
-      if (chatingMessageItem.current) {
+      if (chattingMessageItem.current) {
         const stopMessageItem: MessageItem = {
-          ...chatingMessageItem.current,
+          ...chattingMessageItem.current,
           content: {
             type: "markdown",
             text:
-              chatingMessageItem.current.content.text +
+              chattingMessageItem.current.content.text +
               " \\\n  ` 对话被中断了 `",
           },
         };

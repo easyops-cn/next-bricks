@@ -3,7 +3,7 @@ import { AgentDetailItem } from "./components/QuickAnswerList/index.js";
 import { ChatBody, SessionItem } from "./ChatService.js";
 import { UseBrickConf } from "@next-core/types";
 
-export type Role = "guide" | "user" | "assistant";
+export type Role = "guide" | "user" | "assistant" | "tool";
 
 export type commandBrickConf = Record<
   string,
@@ -30,6 +30,19 @@ export interface MessageItem {
     isLike?: boolean;
   };
   type?: string;
+  toolCalls?: ToolCall[];
+}
+
+export interface ToolCall {
+  id: string;
+  type: "function";
+  function: ToolCallFunction;
+  response?: string;
+}
+
+export interface ToolCallFunction {
+  name: string;
+  arguments: string;
 }
 
 export interface QuickAnswerConfig {

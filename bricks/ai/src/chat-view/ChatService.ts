@@ -2,7 +2,9 @@ import { fetchEventSource } from "@microsoft/fetch-event-source";
 import { http } from "@next-core/http";
 import { getBasePath } from "@next-core/runtime";
 import moment from "moment";
-import _ from "lodash";
+import _, { pick } from "lodash";
+import type { ToolCall } from "./ChatViewContext";
+import { isGeneralTextType } from "./hooks/useChatViewInfo";
 
 export interface SSEMessageItem {
   conversationId?: string;
@@ -10,6 +12,8 @@ export interface SSEMessageItem {
   delta: {
     content: string;
     role: string;
+    tool_calls?: ToolCall[];
+    tool_call_id?: string;
   };
   taskId?: string;
   agentId?: string;
@@ -433,7 +437,7 @@ export class ChatService {
             if (!this.#conversationId) {
               this.setConversationId(result.conversationId);
             }
-            if (this.#useSpiltWord) {
+            if (this.#useSpiltWord && isGeneralTextType(result.type)) {
               const wordList = this.splitWord(result.delta.content);
 
               // 一段消息最多拆分为 50-100 段内容
@@ -458,7 +462,7 @@ export class ChatService {
                   message: {
                     ...result,
                     delta: {
-                      role: "assistant",
+                      role: result.delta.role ?? "assistant",
                       content: word,
                     },
                   },
@@ -470,8 +474,12 @@ export class ChatService {
                 message: {
                   ...result,
                   delta: {
-                    role: "assistant",
-                    content: result.delta.content,
+                    role: result.delta.role ?? "assistant",
+                    ...pick(result.delta, [
+                      "content",
+                      "tool_calls",
+                      "tool_call_id",
+                    ]),
                   },
                 },
               });

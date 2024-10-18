@@ -23,20 +23,57 @@ export interface ChatAgentProps {
 }
 
 export interface Message extends BaseMessage {
-  key: number;
+  key: string | number;
   partial?: boolean;
   failed?: boolean;
 }
 
+export type ChatRole = "user" | "assistant" | "tool";
+export type ChatType =
+  | "TEXT"
+  | "RELATED_QUESTIONS"
+  | "tool_call"
+  | "tool_response";
+
+const GENERAL_TEXT_TYPES: readonly ChatType[] = [
+  "TEXT",
+  "tool_call",
+  "tool_response",
+];
+
+export function isGeneralTextType(type: ChatType | undefined) {
+  return GENERAL_TEXT_TYPES.includes(type ?? "TEXT");
+}
+
+/**
+ * - role 为 `assistant` 且 `tool_calls` 非空，表示执行了工具调用；
+ * - role 为 `tool` 且 `tool_call_id` 非空，表示工具调用结果，和普通回答一样，可能在多个消息块中返回
+ */
 export interface BaseMessage {
-  role: "user" | "assistant";
+  role: ChatRole;
   content: string;
+  /** `task_id` 主要用于在界面上区分消息块 */
+  type?: ChatType;
+  task_id?: string;
+  tool_calls?: ToolCall[];
+  tool_call_id?: string;
+}
+
+export interface ToolCall {
+  id: string;
+  type: "function";
+  function: ToolCallFunction;
+}
+
+export interface ToolCallFunction {
+  name: string;
+  arguments: string;
 }
 
 export interface MessageChunk {
   delta: BaseMessage;
   conversationId?: string;
-  key: number;
+  key: string | number;
   partial?: boolean;
 }
 
@@ -221,6 +258,15 @@ export function LegacyChatAgentComponent(
         const last = prev[prev.length - 1];
         if (last && last.key === chunk.key) {
           last.content += chunk.delta.content;
+          if (
+            chunk.delta.role === "assistant" &&
+            Array.isArray(chunk.delta.tool_calls) &&
+            chunk.delta.tool_calls.length > 0
+          ) {
+            last.tool_calls = (last.tool_calls ?? []).concat(
+              chunk.delta.tool_calls
+            );
+          }
           return [...prev];
         }
         if (last?.partial) {
@@ -261,8 +307,7 @@ export function LegacyChatAgentComponent(
         }
       };
 
-      const userKey = getMessageChunkKey();
-      const assistantKey = getMessageChunkKey();
+      const assistantKey = `assistant:${getMessageChunkKey()}`;
       let currentConversationId =
         alwaysUseNewConversation || isLowLevel ? null : conversationId;
 
@@ -271,20 +316,11 @@ export function LegacyChatAgentComponent(
       try {
         if (Array.isArray(leadingMessages)) {
           for (const msg of leadingMessages) {
-            const isAssistant = msg.role === "assistant";
-            if (isAssistant || msg.role === "user") {
-              pushPartialMessage?.({
-                key: isAssistant ? assistantKey : userKey,
-                delta: {
-                  role: msg.role,
-                  content: msg.content,
-                },
-              });
-            }
+            pushPartialMessage?.(msg as any);
           }
         } else {
           pushPartialMessage?.({
-            key: userKey,
+            key: `user:${getMessageChunkKey()}`,
             delta: {
               content: leadingMessages,
               role: "user",
