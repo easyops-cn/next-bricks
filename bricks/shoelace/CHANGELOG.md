@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/shoelace@1.1.0...@next-bricks/shoelace@1.1.1) (2024-10-18)
+
+
+### Bug Fixes
+
+* downgrade shoelace to support older browsers ([643bee5](https://github.com/easyops-cn/next-bricks/commit/643bee5b5be95e519a482531a4aa838b13ddecf7))
+
+
+
+
+
 # [1.1.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/shoelace@1.0.25...@next-bricks/shoelace@1.1.0) (2024-10-16)
 
 
