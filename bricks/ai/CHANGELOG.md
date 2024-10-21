@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.30.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.29.10...@next-bricks/ai@1.30.0) (2024-10-21)
+
+
+### Bug Fixes
+
+* handle table overflow in markdown ([87fee2e](https://github.com/easyops-cn/next-bricks/commit/87fee2ea92b2a9258277a5d21b7b42c31a8dd0f2))
+
+
+### Features
+
+* support show tool calls ([b4e65ba](https://github.com/easyops-cn/next-bricks/commit/b4e65baccf41e62afdbfe2d2830d9ed7015c710e))
+
+
+
+
+
 ## [1.29.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.29.9...@next-bricks/ai@1.29.10) (2024-10-16)
 
 **Note:** Version bump only for package @next-bricks/ai
