@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.50.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.49.1...@next-bricks/diagram@0.50.0) (2024-10-21)
+
+
+### Features
+
+* **display-canvas:** support auto center when cells change ([5120f44](https://github.com/easyops-cn/next-bricks/commit/5120f445c4887ddad6af955f414ca28a29e70911))
+
+
+
+
+
 ## [0.49.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.49.0...@next-bricks/diagram@0.49.1) (2024-10-21)
 
 **Note:** Version bump only for package @next-bricks/diagram
