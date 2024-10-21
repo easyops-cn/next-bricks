@@ -3,7 +3,7 @@ import { AgentDetailItem } from "./components/QuickAnswerList/index.js";
 import { ChatBody, SessionItem } from "./ChatService.js";
 import { UseBrickConf } from "@next-core/types";
 
-export type Role = "guide" | "user" | "assistant";
+export type Role = "guide" | "user" | "assistant" | "tool";
 
 export type commandBrickConf = Record<
   string,
@@ -20,7 +20,7 @@ export interface MessageItem {
   role: Role;
   content: MessageItemContent;
   created?: number | string;
-  key?: number | string;
+  key: string;
   conversationId?: string;
   taskId?: string;
   agentId?: string;
@@ -30,6 +30,19 @@ export interface MessageItem {
     isLike?: boolean;
   };
   type?: string;
+  toolCalls?: ToolCall[];
+}
+
+export interface ToolCall {
+  id: string;
+  type: "function";
+  function: ToolCallFunction;
+  response?: string;
+}
+
+export interface ToolCallFunction {
+  name: string;
+  arguments: string;
 }
 
 export interface QuickAnswerConfig {
@@ -59,6 +72,8 @@ interface ChatViewContextProps {
   quickAnswerConfig?: QuickAnswerConfig;
   snippetList?: snippet[];
   commandBricks?: commandBrickConf;
+  showToolCalls?: boolean;
+  toolNames: Map<string, string | null>;
   setAgent: (id: string) => void;
   handleIsLike: (id: string, isLike: boolean) => Promise<boolean>;
   handleChat: (str: string | ChatBody) => void;

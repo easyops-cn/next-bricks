@@ -17,13 +17,22 @@ import {
   DEFAULT_TYPE,
   RELATED_QUESTIONS_TYPE,
 } from "../../hooks/useChatViewInfo.js";
+import { ToolCalls } from "./ToolCalls.js";
 
 const NOT_AGENT_MATCH = "no_agent";
 
 export function MessageNode(props: MessageItem): React.ReactNode {
-  const { content, created, role, agentId, type: itemType, chatting } = props;
+  const {
+    content,
+    created,
+    role,
+    agentId,
+    type: itemType,
+    chatting,
+    toolCalls,
+  } = props;
   const isUser = useMemo(() => role === "user", [role]);
-  const { quickAnswerConfig } = useChatViewContext();
+  const { quickAnswerConfig, showToolCalls } = useChatViewContext();
 
   const getContentNode = useCallback((content: MessageItemContent) => {
     const { type, text, examplePrompts } = content;
@@ -91,6 +100,9 @@ export function MessageNode(props: MessageItem): React.ReactNode {
             </div>
             <div className="message-content">
               <div className="wrapper">
+                {showToolCalls && toolCalls?.length ? (
+                  <ToolCalls toolCalls={toolCalls} />
+                ) : null}
                 <div className="content">{messageNode}</div>
                 <Toolbar {...props} />
               </div>
@@ -107,6 +119,8 @@ export function MessageNode(props: MessageItem): React.ReactNode {
     chatting,
     messageNode,
     props,
+    showToolCalls,
+    toolCalls,
   ]);
 
   return (

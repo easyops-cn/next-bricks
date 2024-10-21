@@ -61,20 +61,22 @@ export function MessageList({
 
   const msgListNode = useMemo(() => {
     return msgList.map((item, index) => {
-      if (item.chatting) {
-        return (
-          <>
-            {getMsgItemNode(item, index)}
-            {chatting &&
-            index === msgList.length - 1 &&
-            item.type !== RELATED_QUESTIONS_TYPE ? (
-              <StopBtn />
-            ) : null}
-          </>
-        );
-      } else {
-        return getMsgItemNode(item, index);
-      }
+      return (
+        <React.Fragment key={item.key}>
+          {item.chatting ? (
+            <>
+              {getMsgItemNode(item, index)}
+              {chatting &&
+              index === msgList.length - 1 &&
+              item.type !== RELATED_QUESTIONS_TYPE ? (
+                <StopBtn />
+              ) : null}
+            </>
+          ) : (
+            getMsgItemNode(item, index)
+          )}
+        </React.Fragment>
+      );
     });
   }, [msgList, chatting, getMsgItemNode]);
 

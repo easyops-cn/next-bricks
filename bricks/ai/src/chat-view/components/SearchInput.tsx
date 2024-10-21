@@ -518,7 +518,7 @@ export function LegacySearchInput(
       {mentions}
       {snippets}
       {props.inputToolbarBrick && (
-        <div className="input-toobar">
+        <div className="input-toolbar">
           <ReactUseMultipleBricks {...props.inputToolbarBrick} />
         </div>
       )}
