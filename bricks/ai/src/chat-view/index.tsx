@@ -38,6 +38,7 @@ export interface ChatViewProps {
   commandBricks?: commandBrickConf;
   answerLanguage?: string;
   inputToolbarBrick?: InputToolbarBrick;
+  showToolCalls?: boolean;
   onSessionIdChange: (sessionId: string | undefined) => void;
   onRobotIdChange: (robotId: string | undefined) => void;
   onQaFinish: (sessionId: string | undefined) => void;
@@ -61,6 +62,7 @@ export function LegacyChatViewComponent(
     commandBricks,
     answerLanguage,
     inputToolbarBrick,
+    showToolCalls,
     onSessionIdChange,
     onRobotIdChange,
     onQaFinish,
@@ -78,6 +80,7 @@ export function LegacyChatViewComponent(
     loading,
     chatting,
     searchStr,
+    toolNames,
     setAgent,
     handleIsLike,
     handleChat,
@@ -96,6 +99,7 @@ export function LegacyChatViewComponent(
     debug,
     answerLanguage,
     useSpiltWord,
+    showToolCalls,
   });
 
   useEffect(() => {
@@ -134,6 +138,8 @@ export function LegacyChatViewComponent(
         quickAnswerConfig,
         snippetList,
         commandBricks,
+        showToolCalls,
+        toolNames,
         setAgent,
         handleIsLike,
         handleChat,
@@ -299,6 +305,12 @@ class ChatView extends ReactNextElement {
   })
   accessor inputToolbarBrick: InputToolbarBrick | undefined;
 
+  /**
+   * 是否显示工具调用过程
+   */
+  @property({ type: Boolean })
+  accessor showToolCalls: boolean | undefined;
+
   #ref = React.createRef<SearchInputRef>();
 
   @event({ type: "sessionId.change" })
@@ -360,6 +372,7 @@ class ChatView extends ReactNextElement {
         commandBricks={this.commandBricks}
         answerLanguage={this.answerLanguage}
         inputToolbarBrick={this.inputToolbarBrick}
+        showToolCalls={this.showToolCalls}
         onSessionIdChange={this.#handleSessionIdChange}
         onRobotIdChange={this.#handleRobotIdChange}
         onQaFinish={this.#handleQaFinish}

@@ -311,6 +311,72 @@
       bottom: -28px;
     }
   }
+
+  .tool-calls {
+    width: fit-content;
+    max-width: 100%;
+    padding: 14px;
+    border-radius: 6px;
+    background: var(--message-box-bg);
+    margin-bottom: 8px;
+
+    pre {
+      margin-top: 1em;
+      padding: 0.5em;
+      border: 1px solid var(--palette-gray-5);
+      border-radius: 4px;
+      font-size: 12px;
+    }
+  }
+
+  .tool-calls-summary {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+  }
+
+  .tool-calls-summary-toggle {
+    color: var(--color-secondary-text);
+  }
+
+  .tool-calls-status,
+  .tool-call-function-name {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .tool-calls-status {
+    &.processing {
+      color: var(--color-secondary-text);
+    }
+
+    &.ok {
+      color: var(--color-success);
+    }
+
+    &.failed {
+      color: var(--color-error);
+    }
+  }
+
+  .tool-call {
+    margin-top: 1em;
+    padding-top: 1em;
+    border-top: 1px solid var(--palette-gray-5);
+  }
+
+  .tool-call-function-name {
+    font-weight: bold;
+    margin-bottom: 0.5em;
+  }
+
+  .tool-call-wait-response {
+    margin: 1em 0;
+  }
 }
 
 /* 搜索框 */
@@ -325,7 +391,7 @@
   width: 100%;
   box-sizing: border-box;
 
-  .input-toobar {
+  .input-toolbar {
     position: absolute;
     bottom: 71%;
     left: 12px;
