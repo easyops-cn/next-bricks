@@ -62,6 +62,7 @@ export interface EoDisplayCanvasProps {
   pannable?: boolean;
   scaleRange?: RangeTuple;
   hideZoomBar?: boolean;
+  autoCenterWhenCellsChange?: boolean;
 }
 
 /**
@@ -148,6 +149,12 @@ class EoDisplayCanvas extends ReactNextElement implements EoDisplayCanvasProps {
   @property({ type: Boolean })
   accessor hideZoomBar: boolean | undefined;
 
+  /**
+   * 每当 cells 改变时，重新自动居中
+   */
+  @property({ type: Boolean })
+  accessor autoCenterWhenCellsChange: boolean | undefined;
+
   @event({ type: "activeTarget.change" })
   accessor #activeTargetChangeEvent!: EventEmitter<ActiveTarget | null>;
 
@@ -194,6 +201,7 @@ class EoDisplayCanvas extends ReactNextElement implements EoDisplayCanvasProps {
         pannable={this.pannable}
         scaleRange={this.scaleRange}
         hideZoomBar={this.hideZoomBar}
+        autoCenterWhenCellsChange={this.autoCenterWhenCellsChange}
         onActiveTargetChange={this.#handleActiveTargetChange}
         onSwitchActiveTarget={this.#handleSwitchActiveTarget}
         onCellContextMenu={this.#handleCellContextMenu}
@@ -228,6 +236,7 @@ function EoDisplayCanvasComponent({
   pannable,
   scaleRange: _scaleRange,
   hideZoomBar,
+  autoCenterWhenCellsChange,
   onActiveTargetChange,
   onSwitchActiveTarget,
   onCellContextMenu,
@@ -272,6 +281,7 @@ function EoDisplayCanvasComponent({
     zoomer,
     scaleRange,
     layoutKey,
+    autoCenterWhenCellsChange,
     dispatch,
   });
 
