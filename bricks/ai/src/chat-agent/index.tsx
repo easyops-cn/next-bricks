@@ -11,6 +11,7 @@ import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import { getBasePath } from "@next-core/runtime";
 import { createSSEStream, type Options } from "@next-core/utils/general";
+import { pick } from "lodash";
 import styleText from "./styles.shadow.css";
 
 const { defineElement, property, event, method } = createDecorators();
@@ -22,22 +23,77 @@ export interface ChatAgentProps {
   alwaysUseNewConversation?: boolean;
 }
 
-export interface Message extends BaseMessage {
-  key: number;
+export interface Message extends Omit<BaseMessage, "tool_call_id"> {
+  key: string | number;
+  content: string;
   partial?: boolean;
   failed?: boolean;
+  tool_calls?: ProcessedToolCall[];
+  placeholder?: boolean;
 }
 
+export type ChatRole = "user" | "assistant" | "tool";
+export type ChatType =
+  | "TEXT"
+  | "RELATED_QUESTIONS"
+  | "tool_call"
+  | "tool_response";
+
+const GENERAL_TEXT_TYPES: readonly ChatType[] = [
+  "TEXT",
+  "tool_call",
+  "tool_response",
+];
+
+function isGeneralTextType(type: ChatType | undefined) {
+  return GENERAL_TEXT_TYPES.includes(type ?? "TEXT");
+}
+
+/**
+ * - role 为 `assistant` 且 `type` 为 `tool_call` 且 `tool_calls` 非空，表示执行了工具调用；
+ * - role 为 `tool` 且 `type` 为 `tool_call_response` 且 `tool_call_id` 非空，表示工具调用结果。
+ */
 export interface BaseMessage {
-  role: "user" | "assistant";
-  content: string;
+  role: ChatRole;
+  content?: string;
+  tool_calls?: ToolCall[];
+  tool_call_id?: string;
 }
 
-export interface MessageChunk {
+export interface ToolCall {
+  id: string;
+  type: "function";
+  function: ToolCallFunction;
+}
+
+export interface ToolCallFunction {
+  name: string;
+  arguments: string;
+}
+
+export interface ProcessedToolCall extends ToolCall {
+  function: ProcessedToolCallFunction;
+}
+
+export interface ProcessedToolCallFunction extends ToolCallFunction {
+  response?: string;
+}
+
+export interface PartialMessageChunk {
   delta: BaseMessage;
   conversationId?: string;
-  key: number;
+  key: string | number;
   partial?: boolean;
+  placeholder?: boolean;
+  type?: ChatType;
+}
+
+export interface RawMessageChunk {
+  delta: BaseMessage;
+  conversationId?: string;
+  type?: ChatType;
+  /** `taskId` 主要用于在界面上区分消息块 */
+  taskId?: string;
 }
 
 export interface LowLevelMessageChunk {
@@ -88,7 +144,7 @@ class ChatAgent extends ReactNextElement implements ChatAgentProps {
   sendRequest(
     leadingMessages: string | BaseMessage[],
     url: string,
-    options: Options<MessageChunk>
+    options: Options<RawMessageChunk>
   ) {
     return this.#ref.current?.sendRequest(leadingMessages, url, options);
   }
@@ -100,7 +156,7 @@ class ChatAgent extends ReactNextElement implements ChatAgentProps {
   lowLevelSendRequest(
     leadingMessages: string | BaseMessage[],
     url: string,
-    options: Options<MessageChunk>
+    options: Options<LowLevelMessageChunk>
   ) {
     return this.#ref.current?.lowLevelSendRequest(
       leadingMessages,
@@ -162,7 +218,7 @@ class ChatAgent extends ReactNextElement implements ChatAgentProps {
 }
 
 export interface ChatAgentComponentProps extends ChatAgentProps {
-  onMessageChunkPush?(msg: MessageChunk): void;
+  onMessageChunkPush?(msg: PartialMessageChunk): void;
   onMessagesUpdate?(messages: Message[]): void;
   onBusyChange?(busy: boolean): void;
   onConversationIdChange?(conversationId: string | null): void;
@@ -173,12 +229,12 @@ export interface ChatAgentRef {
   sendRequest(
     leadingMessages: string | BaseMessage[],
     url: string,
-    options: Options<MessageChunk>
+    options: Options<RawMessageChunk>
   ): Promise<string | null>;
   lowLevelSendRequest(
     leadingMessages: string | BaseMessage[],
     url: string,
-    options: Options<MessageChunk>
+    options: Options<LowLevelMessageChunk>
   ): Promise<string | null>;
   newConversation(): void;
 }
@@ -215,20 +271,52 @@ export function LegacyChatAgentComponent(
   const [fullMessages, setFullMessages] = useState<Message[]>([]);
 
   const pushPartialMessage = useCallback(
-    (chunk: MessageChunk) => {
+    (chunk: PartialMessageChunk) => {
       onMessageChunkPush?.(chunk);
       setFullMessages((prev) => {
         const last = prev[prev.length - 1];
-        if (last && last.key === chunk.key) {
-          last.content += chunk.delta.content;
+        const chunkType = chunk.type ?? "TEXT";
+        if (last && (last.key === chunk.key || last.placeholder)) {
+          if (last.placeholder) {
+            last.key = chunk.key;
+            delete last.placeholder;
+          }
+          switch (chunkType) {
+            case "TEXT":
+              last.content += chunk.delta.content;
+              break;
+            case "tool_call":
+              last.tool_calls = (last.tool_calls ?? []).concat(
+                chunk.delta.tool_calls ?? []
+              );
+              break;
+            case "tool_response":
+              last.tool_calls = last.tool_calls?.map((call) =>
+                call.id === chunk.delta.tool_call_id
+                  ? { ...call, response: chunk.delta.content }
+                  : call
+              );
+              break;
+          }
+
           return [...prev];
         }
         if (last?.partial) {
           last.partial = false;
         }
+        if (chunkType === "tool_response") {
+          throw new Error(
+            "Unexpected tool_response message: cannot be the first message chunk"
+          );
+        }
         return [
           ...prev,
-          { ...chunk.delta, key: chunk.key, partial: chunk.partial },
+          {
+            ...pick(chunk, ["key", "partial", "placeholder"]),
+            role: chunk.delta.role,
+            content: chunk.delta.content ?? "",
+            tool_calls: chunk.delta.tool_calls,
+          },
         ];
       });
     },
@@ -240,7 +328,7 @@ export function LegacyChatAgentComponent(
       isLowLevel: boolean,
       leadingMessages: string | BaseMessage[],
       url: string,
-      options: Options<MessageChunk | LowLevelMessageChunk>
+      options: Options<RawMessageChunk | LowLevelMessageChunk>
     ) => {
       // Use ref instead of state to handle sync sequential calls.
       if (busyRef.current) {
@@ -261,8 +349,7 @@ export function LegacyChatAgentComponent(
         }
       };
 
-      const userKey = getMessageChunkKey();
-      const assistantKey = getMessageChunkKey();
+      const assistantKey = `assistant:${getMessageChunkKey()}`;
       let currentConversationId =
         alwaysUseNewConversation || isLowLevel ? null : conversationId;
 
@@ -271,27 +358,21 @@ export function LegacyChatAgentComponent(
       try {
         if (Array.isArray(leadingMessages)) {
           for (const msg of leadingMessages) {
-            const isAssistant = msg.role === "assistant";
-            if (isAssistant || msg.role === "user") {
-              pushPartialMessage?.({
-                key: isAssistant ? assistantKey : userKey,
-                delta: {
-                  role: msg.role,
-                  content: msg.content,
-                },
-              });
-            }
+            pushPartialMessage?.({
+              delta: msg,
+              key: `${msg.role}:${getMessageChunkKey()}`,
+            });
           }
         } else {
           pushPartialMessage?.({
-            key: userKey,
+            key: `user:${getMessageChunkKey()}`,
             delta: {
               content: leadingMessages,
               role: "user",
             },
           });
         }
-        const request = createSSEStream<MessageChunk | LowLevelMessageChunk>(
+        const request = createSSEStream<RawMessageChunk | LowLevelMessageChunk>(
           new URL(url, `${location.origin}${getBasePath()}`).toString(),
           options
         );
@@ -312,6 +393,7 @@ export function LegacyChatAgentComponent(
             role: "assistant",
           },
           partial: true,
+          placeholder: true,
         });
 
         const stream = await request;
@@ -328,29 +410,24 @@ export function LegacyChatAgentComponent(
             const delta = (value as LowLevelMessageChunk).choices?.[0]?.delta;
             if (delta?.content) {
               pushPartialMessage({
-                delta: {
-                  role: delta.role,
-                  content: delta.content,
-                },
+                delta: delta as BaseMessage,
                 key: assistantKey,
                 partial: true,
               });
             }
           } else {
+            const raw = value as RawMessageChunk;
             pushPartialMessage?.({
-              delta: (value as MessageChunk).delta,
-              key: assistantKey,
+              delta: raw.delta,
+              key: `assistant:${isGeneralTextType(raw.type) ? "TEXT" : raw.type}:${raw.taskId ?? getMessageChunkKey()}`,
               partial: true,
             });
             if (
               !alwaysUseNewConversation &&
-              (value as MessageChunk).conversationId &&
+              raw.conversationId &&
               !currentConversationId
             ) {
-              setConversationId(
-                (currentConversationId = (value as MessageChunk)
-                  .conversationId!)
-              );
+              setConversationId((currentConversationId = raw.conversationId));
             }
           }
         }

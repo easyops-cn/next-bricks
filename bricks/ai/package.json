@@ -46,6 +46,7 @@
     "@next-core/theme": "^1.5.4",
     "@next-core/utils": "^1.7.27",
     "js-yaml": "^3.14.1",
+    "lodash": "^4.17.21",
     "react": "0.0.0-experimental-ee8509801-20230117"
   },
   "devDependencies": {
