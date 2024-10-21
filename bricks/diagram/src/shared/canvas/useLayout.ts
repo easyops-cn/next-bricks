@@ -35,6 +35,7 @@ export interface UseLayoutOptions {
   scaleRange: RangeTuple;
   layoutKey: number;
   allowEdgeToArea?: boolean;
+  autoCenterWhenCellsChange?: boolean;
   dispatch: (value: DrawCanvasAction) => void;
 }
 
@@ -48,6 +49,7 @@ export function useLayout({
   scaleRange,
   layoutKey,
   allowEdgeToArea,
+  autoCenterWhenCellsChange,
   dispatch,
 }: UseLayoutOptions) {
   const [layoutInitialized, setLayoutInitialized] = useState(
@@ -67,6 +69,7 @@ export function useLayout({
     zoomable,
     zoomer,
     scaleRange,
+    autoCenterWhenCellsChange,
   });
 
   const previousLayoutRef = useRef<Cell[] | null>(null);

@@ -17,6 +17,7 @@ export interface UseAutoCenterOptions {
   zoomable?: boolean;
   zoomer: ZoomBehavior<SVGSVGElement, unknown>;
   scaleRange: RangeTuple;
+  autoCenterWhenCellsChange?: boolean;
 }
 
 export type UseAutoCenterResult = [
@@ -31,8 +32,20 @@ export function useAutoCenter({
   zoomable,
   zoomer,
   scaleRange,
+  autoCenterWhenCellsChange,
 }: UseAutoCenterOptions): UseAutoCenterResult {
   const [centered, setCentered] = useState(false);
+
+  useEffect(() => {
+    // Reset auto centering when nodes and decorators are all removed,
+    // or when cells change and autoCenterWhenCellsChange is enabled.
+    if (
+      !cells.some((cell) => isNodeCell(cell) || isDecoratorCell(cell)) ||
+      autoCenterWhenCellsChange
+    ) {
+      setCentered(false);
+    }
+  }, [cells, autoCenterWhenCellsChange]);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -68,13 +81,6 @@ export function useAutoCenter({
     zoomable,
     zoomer,
   ]);
-
-  useEffect(() => {
-    // Reset auto centering when nodes and decorators are all removed.
-    if (!cells.some((cell) => isNodeCell(cell) || isDecoratorCell(cell))) {
-      setCentered(false);
-    }
-  }, [cells]);
 
   return [centered, setCentered];
 }

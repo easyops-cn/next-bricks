@@ -598,6 +598,7 @@ describe("eo-display-canvas", () => {
     ) as EoDisplayCanvas;
     element.defaultNodeBricks = [{ useBrick: { brick: "div" } }];
     element.layout = "force";
+    element.autoCenterWhenCellsChange = true;
     element.cells = [
       {
         type: "decorator",
