@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.49.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.48.2...@next-bricks/diagram@0.49.0) (2024-10-21)
+
+
+### Features
+
+* 支持隐藏放大缩小的控制栏 ([5e6df81](https://github.com/easyops-cn/next-bricks/commit/5e6df8111a2502f5dfac2a22bdb23934ea92d017))
+
+
+
+
+
 ## [0.48.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.48.1...@next-bricks/diagram@0.48.2) (2024-10-16)
 
 
