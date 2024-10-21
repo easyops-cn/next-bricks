@@ -61,6 +61,7 @@ export interface EoDisplayCanvasProps {
   scrollable?: boolean;
   pannable?: boolean;
   scaleRange?: RangeTuple;
+  hideZoomBar?: boolean;
 }
 
 /**
@@ -141,6 +142,12 @@ class EoDisplayCanvas extends ReactNextElement implements EoDisplayCanvasProps {
   @property({ attribute: false })
   accessor scaleRange: RangeTuple | undefined;
 
+  /**
+   * 隐藏右下角放大缩小的控制栏
+   */
+  @property({ type: Boolean })
+  accessor hideZoomBar: boolean | undefined;
+
   @event({ type: "activeTarget.change" })
   accessor #activeTargetChangeEvent!: EventEmitter<ActiveTarget | null>;
 
@@ -186,6 +193,7 @@ class EoDisplayCanvas extends ReactNextElement implements EoDisplayCanvasProps {
         scrollable={this.scrollable}
         pannable={this.pannable}
         scaleRange={this.scaleRange}
+        hideZoomBar={this.hideZoomBar}
         onActiveTargetChange={this.#handleActiveTargetChange}
         onSwitchActiveTarget={this.#handleSwitchActiveTarget}
         onCellContextMenu={this.#handleCellContextMenu}
@@ -219,6 +227,7 @@ function EoDisplayCanvasComponent({
   scrollable,
   pannable,
   scaleRange: _scaleRange,
+  hideZoomBar,
   onActiveTargetChange,
   onSwitchActiveTarget,
   onCellContextMenu,
@@ -410,13 +419,15 @@ function EoDisplayCanvasComponent({
           </g>
         </g>
       </svg>
-      <ZoomBarComponent
-        shadowRoot={shadowRoot}
-        scale={transform.k}
-        scaleRange={scaleRange}
-        onZoomChange={handleZoomSlide}
-        onReCenter={reCenter}
-      />
+      {!hideZoomBar && (
+        <ZoomBarComponent
+          shadowRoot={shadowRoot}
+          scale={transform.k}
+          scaleRange={scaleRange}
+          onZoomChange={handleZoomSlide}
+          onReCenter={reCenter}
+        />
+      )}
     </>
   );
 }
