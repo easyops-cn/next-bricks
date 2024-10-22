@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { MessageItem } from "../ChatViewContext.js";
+import { MessageItem, type ToolCall } from "../ChatViewContext.js";
 import moment from "moment";
 import {
   ChatBody,
@@ -157,6 +157,35 @@ export function useChatViewInfo({
       const computedList = (list: ChatItem[]) => {
         const newList: MessageItem[] = [];
         list.forEach((item) => {
+          let toolCalls: ToolCall[] | undefined;
+          if (showToolCalls && item.allToolCalls) {
+            try {
+              const allToolCalls = JSON.parse(item.allToolCalls);
+              toolCalls = [];
+              allToolCalls.forEach(
+                (call: { callId: string; call: string; result: string }) => {
+                  try {
+                    // In legacy backend API, `call` is an array of objects,
+                    // and is an object in the latest API. We support both.
+                    const originalCall = JSON.parse(call.call);
+                    toolCalls!.push({
+                      id: call.callId,
+                      ...(Array.isArray(originalCall)
+                        ? originalCall[0]
+                        : originalCall),
+                      response: call.result,
+                    });
+                  } catch (e) {
+                    // eslint-disable-next-line no-console
+                    console.error("parse allToolCalls.call error", e);
+                  }
+                }
+              );
+            } catch (e) {
+              // eslint-disable-next-line no-console
+              console.error("parse allToolCalls error", e);
+            }
+          }
           newList.unshift(
             {
               agentId: item.agentId,
@@ -185,6 +214,7 @@ export function useChatViewInfo({
               created: item.inputTime,
               tag: item.tag,
               type: DEFAULT_TYPE,
+              toolCalls,
             }
           );
         });
