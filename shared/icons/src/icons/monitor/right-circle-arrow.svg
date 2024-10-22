@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>圆点箭头</title>
+    <g id="架构视图-V4" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="手动绘制-线样式" transform="translate(-2062.000000, -281.000000)">
+            <g id="圆点箭头" transform="translate(2062.000000, 281.000000)">
+                <rect id="矩形" x="0" y="0" width="16" height="16"></rect>
+                <g id="编组-27" transform="translate(1.000000, 4.500000)" fill="#595959" fill-rule="nonzero">
+                    <path d="M10.5,0 C12.4329966,0 14,1.56700338 14,3.5 C14,5.43299662 12.4329966,7 10.5,7 C8.73570756,7 7.27631133,5.69458413 7.03500963,3.99695072 L0,3.99646315 L0,2.99646315 L7.0360115,2.99605164 C7.2803236,1.30182991 8.73813247,0 10.5,0 Z" id="形状结合"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

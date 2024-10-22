@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>实心箭头</title>
+    <g id="架构视图-V4" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="手动绘制-线样式" transform="translate(-2022.000000, -281.000000)">
+            <g id="实心箭头" transform="translate(2022.000000, 281.000000)">
+                <rect id="矩形" x="0" y="0" width="16" height="16"></rect>
+                <g id="编组-27" transform="translate(1.000000, 3.876628)" fill="#595959" fill-rule="nonzero">
+                    <path d="M8.87,0 L14.0003098,4.11983541 L8.87,8.06870413 L8.87,4.619 L0,4.61983541 L0,3.61983541 L8.87,3.619 L8.87,0 Z" id="形状结合"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

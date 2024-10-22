@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>折线</title>
+    <g id="架构视图-V4" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="手动绘制-线样式" transform="translate(-1820.000000, -245.000000)">
+            <g id="编组-28" transform="translate(1701.000000, 200.000000)">
+                <g id="胶囊切换/Primary/group/图标" transform="translate(112.000000, 38.000000)">
+                    <g id="2.导航/2.Tabs标签页/亮色/文本-选中" transform="translate(2.000000, 2.000000)">
+                        <g id="折线" transform="translate(5.000000, 5.000000)">
+                            <rect id="矩形" x="0" y="0" width="16" height="16"></rect>
+                            <circle id="椭圆形" stroke="#1A7AFF" cx="2.5" cy="3.5" r="1.5"></circle>
+                            <circle id="椭圆形备份-6" stroke="#1A7AFF" cx="13.5" cy="12.5" r="1.5"></circle>
+                            <path d="M4,3.5 L7,3.5 C7.55228475,3.5 8,3.94771525 8,4.5 L8,11.5 C8,12.0522847 8.44771525,12.5 9,12.5 L12,12.5 L12,12.5" id="路径-9" stroke="#1A7AFF"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
