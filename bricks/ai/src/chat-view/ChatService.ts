@@ -55,6 +55,7 @@ export interface ChatItem {
   tag: {
     isLike?: boolean;
   };
+  allToolCalls?: string;
 }
 
 export interface ChatBody {
