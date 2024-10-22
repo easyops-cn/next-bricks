@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.31.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.30.0...@next-bricks/ai@1.31.0) (2024-10-22)
+
+
+### Features
+
+* support show tool calls for history session ([8ddec51](https://github.com/easyops-cn/next-bricks/commit/8ddec51d171352c4e64d66c7ff26453bc98d2516))
+
+
+
+
+
 # [1.30.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/ai@1.29.10...@next-bricks/ai@1.30.0) (2024-10-21)
 
 
