@@ -450,3 +450,44 @@
         background: var(--palette-blue-6);
       }
 ```
+
+### Auto Paly
+
+```yaml preview
+- brick: eo-tab-list
+  events:
+    tab.select:
+      - action: console.log
+  properties:
+    autoPlay: true
+    tabs:
+      - text: Create
+        panel: Create
+      - text: Edit
+        panel: Edit
+      - text: "Delete"
+        panel: "Delete"
+      - text: "Query"
+        panel: "Query"
+  slots:
+    Create:
+      bricks:
+        - brick: div
+          properties:
+            textContent: Panel Create
+    Edit:
+      bricks:
+        - brick: div
+          properties:
+            textContent: Panel Edit
+    Delete:
+      bricks:
+        - brick: div
+          properties:
+            textContent: Panel Delete
+    Query:
+      bricks:
+        - brick: div
+          properties:
+            textContent: Panel Query
+```

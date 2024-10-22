@@ -9,6 +9,7 @@ import type { TabList } from "./index.jsx";
 jest.mock("@next-core/theme", () => ({}));
 
 describe("eo-tab-list", () => {
+  jest.useFakeTimers();
   test("basic usage", async () => {
     const onTabSelect = jest.fn();
     const element = document.createElement("eo-tab-list") as TabList;
@@ -50,5 +51,51 @@ describe("eo-tab-list", () => {
     });
 
     expect(document.body.contains(element)).toBeFalsy();
+  });
+
+  test("eo-tab-list autoPlay", async () => {
+    const onTabSelect = jest.fn();
+    const element = document.createElement("eo-tab-list") as TabList;
+
+    element.tabs = [
+      {
+        text: "新增",
+        panel: "新增",
+      },
+      {
+        text: "编辑",
+        panel: "编辑",
+      },
+      {
+        text: "删除",
+        panel: "删除",
+      },
+    ];
+
+    element.autoPlay = true;
+    element.autoSpeed = 4000;
+
+    element.addEventListener("tab.select", onTabSelect);
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    act(() => {
+      jest.advanceTimersByTime(4000);
+    });
+    expect(onTabSelect).toHaveBeenCalledWith(
+      expect.objectContaining({
+        detail: "编辑",
+      })
+    );
+    expect(element.activePanel).toBe("编辑");
+
+    const tabItems = element.shadowRoot!.querySelectorAll("eo-tab-item");
+    await act(async () => {
+      fireEvent.click(tabItems[2]);
+    });
+
+    expect(element.activePanel).toBe("删除");
   });
 });
