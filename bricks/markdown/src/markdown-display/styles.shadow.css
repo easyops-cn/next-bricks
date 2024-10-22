@@ -7,29 +7,4 @@
 }
 
 @import "~@next-shared/markdown/dist/esm/prism-tomorrow.css";
-
-pre {
-  white-space: pre-wrap;
-  background-color: var(--palette-gray-3);
-  border-radius: 6px;
-  padding: 1em;
-}
-
-:not(pre) > code {
-  color: var(--eo-markdown-display-code-color);
-  background: var(--eo-markdown-display-code-background);
-  margin: 0 2px;
-  padding: 1px 6px;
-  white-space: nowrap;
-  border-radius: 3px;
-}
-
-blockquote {
-  border-left: 6px solid var(--eo-markdown-display-blockquote-border-color);
-  padding: 0 1em;
-}
-
-:not(blockquote) > blockquote {
-  margin-left: 0;
-  margin-right: 0;
-}
+@import "~@next-shared/markdown/dist/esm/default.css";
