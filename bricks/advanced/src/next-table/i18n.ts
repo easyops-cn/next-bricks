@@ -5,7 +5,7 @@ export enum K {
 }
 
 const en: Locale = {
-  TOTAL: "Total <el>{{ total }}</el> Items",
+  TOTAL: "Total <el>{{ total }}</el> items",
   SELECT_INFO: "{{ count }} item selected",
   SELECT_INFO_plural: "{{ count }} items selected",
   CLEAR: "Clear",

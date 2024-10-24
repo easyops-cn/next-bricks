@@ -36,11 +36,27 @@ const WrappedDropdownActions = wrapBrick<
 });
 
 interface EoPaginationProps {
+  type?: "page" | "token";
   total: number;
   page: number;
   pageSize: number;
   pageSizeOptions?: number[];
   showSizeChanger?: boolean;
+  nextToken?: string;
+  previousToken?: string;
+}
+
+type ChangeDetail = ChangeDetailOfPage | ChangeDetailOfToken;
+
+interface ChangeDetailOfPage {
+  page: number;
+  pageSize: number;
+}
+
+interface ChangeDetailOfToken {
+  type: "token";
+  nextToken: string | undefined;
+  pageSize: number;
 }
 
 /**
@@ -53,6 +69,12 @@ export
   styleTexts: [styleText],
 })
 class EoPagination extends ReactNextElement {
+  /**
+   * @default "page"
+   */
+  @property()
+  accessor type: "page" | "token" | undefined;
+
   /**
    * 数据总数
    */
@@ -94,26 +116,40 @@ class EoPagination extends ReactNextElement {
   })
   accessor showSizeChanger: boolean | undefined;
 
+  @property()
+  accessor nextToken: string | undefined;
+
+  @property()
+  accessor previousToken: string | undefined;
+
   /**
    * 页码及每页条数改变事件
    */
   @event({ type: "change" })
-  accessor #changeEvent!: EventEmitter<{ page: number; pageSize: number }>;
-  #handleChange = (data: { page: number; pageSize: number }) => {
-    this.page = data.page;
-    this.pageSize = data.pageSize;
+  accessor #changeEvent!: EventEmitter<ChangeDetail>;
+  #handleChange = (data: ChangeDetail) => {
+    if ((data as ChangeDetailOfToken).type === "token") {
+      this.nextToken = undefined;
+      this.previousToken = undefined;
+    } else {
+      this.page = (data as ChangeDetailOfPage).page;
+      this.pageSize = (data as ChangeDetailOfPage).pageSize;
+    }
     this.#changeEvent.emit(data);
   };
 
   render() {
     return (
       <EoPaginationComponent
+        type={this.type}
         total={this.total}
         page={this.page}
         pageSize={this.pageSize}
         pageSizeOptions={this.pageSizeOptions}
         onChange={this.#handleChange}
         showSizeChanger={this.showSizeChanger}
+        nextToken={this.nextToken}
+        previousToken={this.previousToken}
       />
     );
   }
@@ -138,12 +174,21 @@ interface PageItemData {
 type PagerData = PageArrowData | PageJumpData | PageItemData;
 
 interface EoPaginationComponentProps extends EoPaginationProps {
-  onChange?: (data: { page: number; pageSize: number }) => void;
+  onChange?: (data: ChangeDetail) => void;
 }
 
-export function EoPaginationComponent(props: EoPaginationComponentProps) {
+export function EoPaginationComponent({
+  type = "page",
+  total,
+  page,
+  pageSize,
+  pageSizeOptions,
+  showSizeChanger = true,
+  nextToken,
+  previousToken,
+  onChange,
+}: EoPaginationComponentProps) {
   const { t } = useTranslation(NS);
-  const { onChange, showSizeChanger = true } = props;
 
   const [paginationData, setPaginationData] = useState<{
     page?: number;
@@ -152,18 +197,18 @@ export function EoPaginationComponent(props: EoPaginationComponentProps) {
   }>({});
 
   useEffect(() => {
-    const _total = formatValue(props.total, 0);
-    const _page = formatValue(props.page, 0);
-    const _pageSize = formatValue(props.pageSize, 0);
+    const _total = formatValue(total, 0);
+    const _page = formatValue(page, 0);
+    const _pageSize = formatValue(pageSize, 0);
     setPaginationData({ total: _total, page: _page, pageSize: _pageSize });
-  }, [props.page, props.pageSize, props.total]);
+  }, [page, pageSize, total]);
 
   const pageSizeActions = useMemo(() => {
     const options = [
-      ...new Set([paginationData.pageSize].concat(props.pageSizeOptions || [])),
+      ...new Set([paginationData.pageSize].concat(pageSizeOptions || [])),
     ].map((v) => ({ text: t(K.PAGE_SIZE, { count: v }), key: v }));
     return sortBy(options, (value) => value.key);
-  }, [paginationData.pageSize, props.pageSizeOptions, t]);
+  }, [paginationData.pageSize, pageSizeOptions, t]);
 
   const allPages = useMemo(
     () =>
@@ -173,6 +218,19 @@ export function EoPaginationComponent(props: EoPaginationComponentProps) {
 
   const pagerDataSource = useMemo(() => {
     const data: PagerData[] = [];
+
+    if (type === "token") {
+      const prevArrow = {
+        type: "prev-arrow",
+        disabled: !previousToken,
+      } as const;
+      const nextArrow = {
+        type: "next-arrow",
+        disabled: !nextToken,
+      } as const;
+      data.push(prevArrow, nextArrow);
+      return data;
+    }
 
     const prevArrow = {
       type: "prev-arrow",
@@ -216,41 +274,49 @@ export function EoPaginationComponent(props: EoPaginationComponentProps) {
     data.push(nextArrow);
 
     return data;
-  }, [allPages, paginationData.page]);
+  }, [allPages, paginationData.page, type, nextToken, previousToken]);
 
   const handlePageSizeChange = (value: number) => {
-    setPaginationData((pre) => ({ ...pre, page: 1, pageSize: value }));
-    onChange?.({ page: 1, pageSize: value });
+    if (type === "token") {
+      setPaginationData((pre) => ({ ...pre, pageSize: value }));
+      onChange?.({ type, nextToken: undefined, pageSize: value });
+    } else {
+      setPaginationData((pre) => ({ ...pre, page: 1, pageSize: value }));
+      onChange?.({ page: 1, pageSize: value });
+    }
+  };
+
+  const handleArrowClick = (isNext: boolean, disabled?: boolean) => {
+    if (disabled) {
+      return;
+    }
+    if (type === "token") {
+      onChange?.({
+        type,
+        nextToken: isNext ? nextToken : previousToken,
+        pageSize: paginationData.pageSize,
+      });
+    } else {
+      const newPage = paginationData.page + (isNext ? 1 : -1);
+      setPaginationData((pre) => ({
+        ...pre,
+        page: newPage,
+      }));
+      onChange?.({
+        page: newPage,
+        pageSize: paginationData.pageSize,
+      });
+    }
   };
 
   const handlePagerClick = (pagerData: PagerData) => {
     switch (pagerData.type) {
-      case "prev-arrow": {
-        if (!pagerData.disabled) {
-          setPaginationData((pre) => ({
-            ...pre,
-            page: paginationData.page - 1,
-          }));
-          onChange?.({
-            page: paginationData.page - 1,
-            pageSize: paginationData.pageSize,
-          });
-        }
+      case "prev-arrow":
+        handleArrowClick(false, pagerData.disabled);
         break;
-      }
-      case "next-arrow": {
-        if (!pagerData.disabled) {
-          setPaginationData((pre) => ({
-            ...pre,
-            page: paginationData.page + 1,
-          }));
-          onChange?.({
-            page: paginationData.page + 1,
-            pageSize: paginationData.pageSize,
-          });
-        }
+      case "next-arrow":
+        handleArrowClick(true, pagerData.disabled);
         break;
-      }
       case "prev-jump": {
         const _page =
           paginationData.page - pagerData.span < 1
@@ -277,18 +343,20 @@ export function EoPaginationComponent(props: EoPaginationComponentProps) {
   };
 
   return (
-    <div className="pagination-wrapper">
-      <div className="pagination-total">
-        <Trans
-          i18nKey={t(K.TOTAL)}
-          values={{ total: paginationData.total }}
-          components={{
-            total: <span className="pagination-total-number" />,
-          }}
-        />
-      </div>
+    <div className="wrapper">
+      {type !== "token" && (
+        <div className="total">
+          <Trans
+            i18nKey={t(K.TOTAL)}
+            values={{ total: paginationData.total }}
+            components={{
+              total: <span className="total-number" />,
+            }}
+          />
+        </div>
+      )}
       {showSizeChanger && (
-        <div className="pagination-size-changer">
+        <div className="size-changer">
           <WrappedDropdownActions
             actions={pageSizeActions}
             checkedKeys={[paginationData.pageSize]}
@@ -296,14 +364,14 @@ export function EoPaginationComponent(props: EoPaginationComponentProps) {
               handlePageSizeChange(event.detail.key as number)
             }
           >
-            <div className="pagination-size-selection">
+            <div className="size-selection">
               {t(K.PAGE_SIZE, { count: paginationData.pageSize })}
               <WrappedIcon lib="antd" theme="filled" icon="caret-down" />
             </div>
           </WrappedDropdownActions>
         </div>
       )}
-      <div className="pagination-page">
+      <div className="page">
         {pagerDataSource.map((pagerData) => {
           switch (pagerData.type) {
             case "prev-arrow":
@@ -346,11 +414,7 @@ function PageItem(props: PageItemData & { onClick?: () => void }) {
   const { active, page, onClick } = props;
   return (
     <div
-      className={classNames(
-        "pagination-page-item",
-        "pagination-page-item-number",
-        active ? "pagination-page-item-active" : null
-      )}
+      className={classNames("page-item", "number", active ? "active" : null)}
       title={String(page)}
       onClick={onClick}
     >
@@ -368,11 +432,7 @@ function PageArrow(props: PageArrowData & { onClick?: () => void }) {
 
   return (
     <div
-      className={classNames(
-        "pagination-page-item",
-        "pagination-page-item-arrow",
-        disabled ? "pagination-page-item-disabled" : null
-      )}
+      className={classNames("page-item", "arrow", disabled ? "disabled" : null)}
       title={title}
       onClick={onClick}
     >
@@ -392,20 +452,17 @@ function PageJump(props: PageJumpData & { onClick?: () => void }) {
 
   return (
     <div
-      className={classNames(
-        "pagination-page-item",
-        "pagination-page-item-jump"
-      )}
+      className={classNames("page-item", "jump")}
       title={title}
       onClick={onClick}
     >
       <WrappedIcon
-        className="pagination-page-item-jump-arrow"
+        className="jump-arrow"
         lib="antd"
         theme="outlined"
         icon={icon}
       />
-      <span className="pagination-page-item-jump-ellipsis">•••</span>
+      <span className="jump-ellipsis">•••</span>
     </div>
   );
 }
