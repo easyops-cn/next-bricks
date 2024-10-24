@@ -554,6 +554,9 @@ export function useChatViewInfo({
         return list.map((item) => ({
           ...item,
           chatting: false,
+          toolCalls: item.toolCalls?.map((call) =>
+            call.response === undefined ? { ...call, failed: true } : call
+          ),
         }));
       });
       reset();

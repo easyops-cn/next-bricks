@@ -25,6 +25,7 @@ interface ProcessedToolCall {
   processedResponse?: ProcessedValue;
   args: string;
   response?: string;
+  failed?: boolean;
 }
 
 interface ProcessedValue {
@@ -48,10 +49,11 @@ export function ToolCalls({ toolCalls }: ToolCallsProps) {
             ok: true,
             data,
           };
-        } catch (e) {
+        } catch {
+          // Fallback to the original arguments
           processedArguments = {
-            ok: false,
-            error: e,
+            ok: true,
+            data: func.arguments,
           };
         }
 
@@ -64,12 +66,17 @@ export function ToolCalls({ toolCalls }: ToolCallsProps) {
               ok: true,
               data,
             };
-          } catch (e) {
+          } catch {
+            // Fallback to the original response
             processedResponse = {
-              ok: false,
-              error: e,
+              ok: true,
+              data: response,
             };
           }
+        } else {
+          processedResponse = {
+            ok: false,
+          };
         }
 
         return {
@@ -121,7 +128,6 @@ export function ToolCalls({ toolCalls }: ToolCallsProps) {
               processedArguments={toolCall.processedArguments}
               processedResponse={toolCall.processedResponse}
               args={toolCall.args}
-              response={toolCall.response}
             />
           ))}
         </>
@@ -169,7 +175,6 @@ function ToolCallComponent({
   processedArguments,
   processedResponse,
   args,
-  response,
 }: ToolCallProps) {
   const { toolNames } = useChatViewContext();
 
@@ -203,7 +208,7 @@ function ToolCallComponent({
               <code>
                 {processedResponse.ok
                   ? dumpYaml(processedResponse.data)
-                  : response}
+                  : "Failed"}
               </code>
             </pre>
           </div>
