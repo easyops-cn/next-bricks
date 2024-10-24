@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.18...@next-bricks/presentational@1.11.0) (2024-10-24)
+
+
+### Features
+
+* support pagination by token ([1a17e43](https://github.com/easyops-cn/next-bricks/commit/1a17e434c2dcd6d129a0b1848069e7fcfc6f895e))
+
+
+
+
+
 ## [1.10.18](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.10.17...@next-bricks/presentational@1.10.18) (2024-10-16)
 
 **Note:** Version bump only for package @next-bricks/presentational
