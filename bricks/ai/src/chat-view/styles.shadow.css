@@ -377,6 +377,15 @@
   .tool-call-wait-response {
     margin: 1em 0;
   }
+
+  .tool-call-function-arguments.failed,
+  .tool-call-function-response.failed {
+    color: var(--color-error);
+
+    pre {
+      border-color: var(--color-error);
+    }
+  }
 }
 
 /* 搜索框 */

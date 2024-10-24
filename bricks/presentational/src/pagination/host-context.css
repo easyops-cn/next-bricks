@@ -1,8 +1,12 @@
 :root {
-  --pagination-size-selection-icon-color: #bfbfbf;
+  --eo-pagination-size-selection-icon-color: #bfbfbf;
+  --eo-pagination-hover-background: rgba(0, 0, 0, 0.06);
+  --eo-pagination-number-background: none;
 }
 
 html[data-theme="dark"],
 html[data-theme="dark-v2"] {
-  --pagination-size-selection-icon-color: rgba(255, 255, 255, 0.3);
+  --eo-pagination-size-selection-icon-color: rgba(255, 255, 255, 0.3);
+  --eo-pagination-hover-background: rgba(255, 255, 255, 0.12);
+  --eo-pagination-number-background: #141414;
 }

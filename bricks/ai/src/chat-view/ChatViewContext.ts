@@ -38,6 +38,7 @@ export interface ToolCall {
   type: "function";
   function: ToolCallFunction;
   response?: string;
+  failed?: boolean;
 }
 
 export interface ToolCallFunction {

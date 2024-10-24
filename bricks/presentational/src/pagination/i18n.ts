@@ -8,12 +8,12 @@ export enum K {
 }
 
 const en: Locale = {
-  TOTAL: "Total <total>{{ total }}</total> Items",
+  TOTAL: "Total <total>{{ total }}</total> items",
   PAGE_SIZE: "{{ count }} / page",
-  NEXT_PAGE_one: "Next Page",
-  NEXT_PAGE_other: "Next {{ count }} Pages",
-  PREVIOUS_PAGE_one: "Previous Page",
-  PREVIOUS_PAGE_other: "Previous {{ count }} Pages",
+  NEXT_PAGE_one: "Next page",
+  NEXT_PAGE_other: "Next {{ count }} pages",
+  PREVIOUS_PAGE_one: "Previous page",
+  PREVIOUS_PAGE_other: "Previous {{ count }} pages",
 };
 
 const zh: Locale = {
