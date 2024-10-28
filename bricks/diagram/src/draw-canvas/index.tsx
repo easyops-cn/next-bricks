@@ -125,6 +125,7 @@ export interface EoDrawCanvasProps {
   lineSettings?: LineSettings;
   lineConnector?: LineConnecterConf | boolean;
   allowEdgeToArea?: boolean;
+  doNotResetActiveTargetForSelector?: string;
 }
 
 export type DragBehavior = "none" | "lasso" | "grab";
@@ -283,6 +284,9 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
 
   @property({ attribute: false })
   accessor lineConnector: LineConnecterConf | boolean | undefined;
+
+  @property()
+  accessor doNotResetActiveTargetForSelector: string | undefined;
 
   @event({ type: "activeTarget.change" })
   accessor #activeTargetChangeEvent!: EventEmitter<ActiveTarget | null>;
@@ -575,6 +579,9 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         lineSettings={this.lineSettings}
         lineConnector={this.lineConnector}
         allowEdgeToArea={this.allowEdgeToArea}
+        doNotResetActiveTargetForSelector={
+          this.doNotResetActiveTargetForSelector
+        }
         onActiveTargetChange={this.#handleActiveTargetChange}
         onSwitchActiveTarget={this.#handleSwitchActiveTarget}
         onCellMove={this.#handleCellMove}
@@ -652,6 +659,7 @@ function LegacyEoDrawCanvasComponent(
     lineSettings,
     lineConnector,
     allowEdgeToArea,
+    doNotResetActiveTargetForSelector,
     onActiveTargetChange,
     onSwitchActiveTarget,
     onCellMove,
@@ -865,6 +873,7 @@ function LegacyEoDrawCanvasComponent(
   const activeTarget = useActiveTarget({
     rootRef,
     activeTarget: _activeTarget,
+    doNotResetActiveTargetForSelector,
     onActiveTargetChange,
   });
 

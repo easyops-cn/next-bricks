@@ -63,6 +63,7 @@ export interface EoDisplayCanvasProps {
   scaleRange?: RangeTuple;
   hideZoomBar?: boolean;
   autoCenterWhenCellsChange?: boolean;
+  doNotResetActiveTargetForSelector?: string;
 }
 
 /**
@@ -155,6 +156,9 @@ class EoDisplayCanvas extends ReactNextElement implements EoDisplayCanvasProps {
   @property({ type: Boolean })
   accessor autoCenterWhenCellsChange: boolean | undefined;
 
+  @property()
+  accessor doNotResetActiveTargetForSelector: string | undefined;
+
   @event({ type: "activeTarget.change" })
   accessor #activeTargetChangeEvent!: EventEmitter<ActiveTarget | null>;
 
@@ -201,6 +205,9 @@ class EoDisplayCanvas extends ReactNextElement implements EoDisplayCanvasProps {
         pannable={this.pannable}
         scaleRange={this.scaleRange}
         hideZoomBar={this.hideZoomBar}
+        doNotResetActiveTargetForSelector={
+          this.doNotResetActiveTargetForSelector
+        }
         autoCenterWhenCellsChange={this.autoCenterWhenCellsChange}
         onActiveTargetChange={this.#handleActiveTargetChange}
         onSwitchActiveTarget={this.#handleSwitchActiveTarget}
@@ -237,6 +244,7 @@ function EoDisplayCanvasComponent({
   scaleRange: _scaleRange,
   hideZoomBar,
   autoCenterWhenCellsChange,
+  doNotResetActiveTargetForSelector,
   onActiveTargetChange,
   onSwitchActiveTarget,
   onCellContextMenu,
@@ -319,6 +327,7 @@ function EoDisplayCanvasComponent({
   const activeTarget = useActiveTarget({
     rootRef,
     activeTarget: _activeTarget,
+    doNotResetActiveTargetForSelector,
     onActiveTargetChange,
   });
 

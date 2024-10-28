@@ -433,6 +433,7 @@ describe("eo-draw-canvas", () => {
     const element = document.createElement("eo-draw-canvas") as EoDrawCanvas;
     element.defaultNodeBricks = [{ useBrick: { brick: "div" } }];
     element.fadeUnrelatedCells = true;
+    element.doNotResetActiveTargetForSelector = "#omit-target";
     element.cells = [
       {
         type: "decorator",
@@ -515,6 +516,14 @@ describe("eo-draw-canvas", () => {
       view: { x: 20, y: 20, width: 20, height: 20 },
     });
 
+    const omitTarget = document.createElement("div");
+    omitTarget.id = "omit-target";
+    document.body.appendChild(omitTarget);
+    act(() => {
+      fireEvent.click(omitTarget);
+    });
+    expect(onActiveTargetChange).toHaveBeenCalledTimes(1);
+
     act(() => {
       fireEvent.click(element.shadowRoot!.querySelector("svg")!);
     });
@@ -523,6 +532,7 @@ describe("eo-draw-canvas", () => {
 
     act(() => {
       document.body.removeChild(element);
+      document.body.removeChild(omitTarget);
     });
   });
 
