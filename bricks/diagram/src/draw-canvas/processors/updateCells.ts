@@ -4,7 +4,11 @@ import type {
   SizeTuple,
   TransformLiteral,
 } from "../../diagram/interfaces";
-import { DEFAULT_NODE_GAP, SYMBOL_FOR_SIZE_INITIALIZED } from "../constants";
+import {
+  DEFAULT_NODE_GAP_H,
+  DEFAULT_NODE_GAP_V,
+  SYMBOL_FOR_SIZE_INITIALIZED,
+} from "../constants";
 import type {
   Cell,
   InitialCell,
@@ -135,22 +139,25 @@ export function updateCells({
         if (rightMostNode) {
           // Place unpositioned nodes on the right side of the rightmost positioned siblings.
           nextX =
-            rightMostNode.view.x + rightMostNode.view.width + DEFAULT_NODE_GAP;
+            rightMostNode.view.x +
+            rightMostNode.view.width +
+            DEFAULT_NODE_GAP_H;
           nextY = rightMostNode.view.y;
         } else {
           // If there are no positioned siblings, just place them below the parent.
           const totalWidth = updateCandidates.reduce(
-            (acc, node) => acc + node.view.width + DEFAULT_NODE_GAP,
-            -DEFAULT_NODE_GAP
+            (acc, node) => acc + node.view.width + DEFAULT_NODE_GAP_H,
+            -DEFAULT_NODE_GAP_H
           );
           nextX =
             parentNode.view.x - totalWidth / 2 + parentNode.view.width / 2;
-          nextY = parentNode.view.y + parentNode.view.height + DEFAULT_NODE_GAP;
+          nextY =
+            parentNode.view.y + parentNode.view.height + DEFAULT_NODE_GAP_V;
         }
         for (const node of updateCandidates) {
           node.view.x = nextX;
           node.view.y = nextY;
-          nextX += node.view.width + DEFAULT_NODE_GAP;
+          nextX += node.view.width + DEFAULT_NODE_GAP_H;
         }
       }
     }
@@ -158,18 +165,10 @@ export function updateCells({
 
   if (!handled) {
     // By default, place unpositioned nodes in a grid.
-    let maxWidth = defaultNodeSize[0];
-    let maxHeight = defaultNodeSize[1];
     const positionedNodes: NodeCell[] = [];
     let hasDecorators = false;
     for (const cell of newCells) {
       if (isNodeCell(cell)) {
-        if (cell.view.width > maxWidth) {
-          maxWidth = cell.view.width;
-        }
-        if (cell.view.height > maxHeight) {
-          maxHeight = cell.view.height;
-        }
         if (cell.view.x === undefined || cell.view.y === undefined) {
           updateCandidates.push(cell);
         } else {
@@ -192,12 +191,14 @@ export function updateCells({
 
       let getNodeView: (id: NodeId) => NodeView;
 
-      // If there is no positioned nodes, or only one while without decorators,
+      // If there is no positioned nodes, or only one while without decorators and unpositioned nodes exist,
       // then there is no relative positions, we can place the nodes with dagre layout.
       // Otherwise, use the force layout.
       if (
         positionedNodes.length === 0 ||
-        (positionedNodes.length === 1 && !hasDecorators)
+        (positionedNodes.length === 1 &&
+          !hasDecorators &&
+          updateCandidates.length > 0)
       ) {
         // The positioned node (if exists) will be updated.
         updateCandidates.push(...positionedNodes);

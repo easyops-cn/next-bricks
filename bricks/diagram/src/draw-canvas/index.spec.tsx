@@ -940,7 +940,7 @@ describe("eo-draw-canvas", () => {
               height: 20,
               width: 20,
               x: 20,
-              y: 86,
+              y: 100,
             },
           },
         ],

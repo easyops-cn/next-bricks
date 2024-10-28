@@ -387,7 +387,7 @@ describe("updateCells", () => {
           type: "node",
           view: {
             x: 20,
-            y: 216,
+            y: 230,
             height: 80,
             width: 120,
           },
@@ -399,7 +399,7 @@ describe("updateCells", () => {
           type: "node",
           view: {
             x: 20,
-            y: 216,
+            y: 230,
             height: 80,
             width: 120,
           },
@@ -777,26 +777,15 @@ describe("updateCells", () => {
           id: "1",
           type: "node",
           view: {
-            x: 60,
-            y: 40,
+            x: 100,
+            y: 30,
             width: 120,
             height: 80,
           },
         },
       ],
-      updated: [
-        {
-          id: "1",
-          type: "node",
-          view: {
-            x: 60,
-            y: 40,
-            width: 120,
-            height: 80,
-          },
-        },
-      ],
-      shouldReCenter: true,
+      updated: [],
+      shouldReCenter: false,
     });
   });
 });
