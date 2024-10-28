@@ -125,6 +125,7 @@ export interface EoDrawCanvasProps {
   lineSettings?: LineSettings;
   lineConnector?: LineConnecterConf | boolean;
   allowEdgeToArea?: boolean;
+  doNotResetActiveTargetOutsideCanvas?: boolean;
   doNotResetActiveTargetForSelector?: string;
 }
 
@@ -285,8 +286,17 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
   @property({ attribute: false })
   accessor lineConnector: LineConnecterConf | boolean | undefined;
 
+  /**
+   * 选择器，点击该选择器对应的元素时不重置 `activeTarget`。
+   */
   @property()
   accessor doNotResetActiveTargetForSelector: string | undefined;
+
+  /**
+   * 在画布外点击时不重置 `activeTarget`。
+   */
+  @property({ type: Boolean })
+  accessor doNotResetActiveTargetOutsideCanvas: boolean | undefined;
 
   @event({ type: "activeTarget.change" })
   accessor #activeTargetChangeEvent!: EventEmitter<ActiveTarget | null>;
@@ -582,6 +592,9 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
         doNotResetActiveTargetForSelector={
           this.doNotResetActiveTargetForSelector
         }
+        doNotResetActiveTargetOutsideCanvas={
+          this.doNotResetActiveTargetOutsideCanvas
+        }
         onActiveTargetChange={this.#handleActiveTargetChange}
         onSwitchActiveTarget={this.#handleSwitchActiveTarget}
         onCellMove={this.#handleCellMove}
@@ -660,6 +673,7 @@ function LegacyEoDrawCanvasComponent(
     lineConnector,
     allowEdgeToArea,
     doNotResetActiveTargetForSelector,
+    doNotResetActiveTargetOutsideCanvas,
     onActiveTargetChange,
     onSwitchActiveTarget,
     onCellMove,
@@ -874,6 +888,7 @@ function LegacyEoDrawCanvasComponent(
     rootRef,
     activeTarget: _activeTarget,
     doNotResetActiveTargetForSelector,
+    doNotResetActiveTargetOutsideCanvas,
     onActiveTargetChange,
   });
 

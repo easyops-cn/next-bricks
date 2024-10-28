@@ -7,10 +7,16 @@ export class PlaceholderContentWidget implements monaco.editor.IContentWidget {
 
   private readonly placeholder: string;
   private readonly editor: monaco.editor.ICodeEditor;
+  private readonly color: string;
 
-  constructor(placeholder: string, editor: monaco.editor.ICodeEditor) {
+  constructor(
+    placeholder: string,
+    editor: monaco.editor.ICodeEditor,
+    color: string
+  ) {
     this.placeholder = placeholder;
     this.editor = editor;
+    this.color = color;
     // register a listener for editor code changes
     this.editor.onDidChangeModelContent(() => this.onDidChangeModelContent());
     // ensure that on initial load the placeholder is shown
@@ -37,8 +43,7 @@ export class PlaceholderContentWidget implements monaco.editor.IContentWidget {
       this.domNode.textContent = this.placeholder;
       this.domNode.style.whiteSpace = "break-spaces";
       this.domNode.style.fontStyle = "italic";
-      this.domNode.style.color =
-        "rgba(var(--theme-gray-color-rgb-channel), 0.4)";
+      this.domNode.style.color = this.color;
       this.editor.applyFontInfo(this.domNode);
     }
 

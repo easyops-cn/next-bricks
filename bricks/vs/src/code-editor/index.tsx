@@ -398,13 +398,15 @@ export function CodeEditorComponent({
   const automaticLayoutRef = useRef(automaticLayout);
   const systemTheme = useCurrentTheme();
 
+  const computedTheme = useMemo(() => {
+    return theme === "auto"
+      ? systemTheme === "dark" || systemTheme === "dark-v2"
+        ? "vs-dark"
+        : "vs"
+      : theme;
+  }, [systemTheme, theme]);
+
   useEffect(() => {
-    const computedTheme =
-      theme === "auto"
-        ? systemTheme === "dark" || systemTheme === "dark-v2"
-          ? "vs-dark"
-          : "vs"
-        : theme;
     const lineHeightBackground = computedTheme.includes("dark")
       ? "#FFFFFF0F"
       : "#0000000A";
@@ -419,7 +421,7 @@ export function CodeEditorComponent({
     // Currently theme is configured globally.
     // See https://github.com/microsoft/monaco-editor/issues/338
     monaco.editor.setTheme("custom-theme");
-  }, [systemTheme, theme]);
+  }, [computedTheme]);
 
   useEffect(() => {
     if (editorRef.current) {
@@ -853,13 +855,16 @@ export function CodeEditorComponent({
     if (!editorRef.current && !placeholder) return;
     const placeholderWidget = new PlaceholderContentWidget(
       placeholder!,
-      editorRef.current!
+      editorRef.current!,
+      computedTheme === "vs-dark" || computedTheme === "hc-black"
+        ? "rgba(174,174,175,0.4)"
+        : "rgba(89,89,89,0.4)"
     );
 
     return () => {
       placeholderWidget.dispose();
     };
-  }, [placeholder]);
+  }, [placeholder, computedTheme]);
 
   const handleCopyIconClick = useCallback(() => {
     if (editorRef.current) {
