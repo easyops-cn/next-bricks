@@ -505,9 +505,11 @@ export function useChatViewInfo({
           type: "markdown",
           // 只有普通文本类型才更新聊天文本内容，其他如 `tool_response` 不更新。
           text:
-            msgItemData.type == null || msgItemData.type === "TEXT"
-              ? `${isUpdate ? chattingMessageItem.current!.content.text : ""}${msgItemData.delta.content}`
-              : (chattingMessageItem.current?.content.text ?? ""),
+            msgItemData.type === RELATED_QUESTIONS_TYPE
+              ? msgItemData.delta.content
+              : msgItemData.type == null || msgItemData.type === "TEXT"
+                ? `${isUpdate ? chattingMessageItem.current!.content.text : ""}${msgItemData.delta.content}`
+                : (chattingMessageItem.current?.content.text ?? ""),
         },
         chatting: true,
         toolCalls:
@@ -525,7 +527,9 @@ export function useChatViewInfo({
                       }
                     : call
                 )
-              : chattingMessageItem.current?.toolCalls,
+              : msgItemData.type === RELATED_QUESTIONS_TYPE
+                ? undefined
+                : chattingMessageItem.current?.toolCalls,
         created: moment(msgItemData?.created).format("YYYY-MM-DD HH:mm:ss"),
         key: chattingMessageItem.current?.key ?? uniqueId("msg-"),
       });
