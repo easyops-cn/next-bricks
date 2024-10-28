@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.50.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.50.0...@next-bricks/diagram@0.50.1) (2024-10-28)
+
+
+### Bug Fixes
+
+* do not update positioned nodes if there is no unpositioned nodes ([4a07329](https://github.com/easyops-cn/next-bricks/commit/4a07329053b7846f33cd3d32b8923affda5d1504))
+* support new prop: doNotResetActiveTargetForSelector ([57ca221](https://github.com/easyops-cn/next-bricks/commit/57ca2216d29862ea37d9b546a54833c3ea0a6bfb))
+
+
+
+
+
 # [0.50.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.49.1...@next-bricks/diagram@0.50.0) (2024-10-21)
 
 
