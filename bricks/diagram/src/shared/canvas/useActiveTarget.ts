@@ -5,6 +5,7 @@ import { sameTarget } from "../../draw-canvas/processors/sameTarget";
 export interface UseActiveTargetOptions {
   rootRef: React.RefObject<SVGGElement>;
   activeTarget?: ActiveTarget | null;
+  doNotResetActiveTargetForSelector?: string;
   onActiveTargetChange(target: ActiveTarget | null): void;
 }
 
@@ -13,6 +14,7 @@ export type UseActiveTargetResult = ActiveTarget | null;
 export function useActiveTarget({
   rootRef,
   activeTarget: _activeTarget,
+  doNotResetActiveTargetForSelector,
   onActiveTargetChange,
 }: UseActiveTargetOptions): UseActiveTargetResult {
   const newActiveTarget = _activeTarget ?? null;
@@ -44,7 +46,17 @@ export function useActiveTarget({
       const rootIndex = path.indexOf(rootRef.current!);
       // Reset active target to null when clicking outside of the cells container,
       // Or inside the cells container but not on any cell.
-      if (rootIndex <= 0) {
+      if (
+        rootIndex <= 0 &&
+        !(
+          doNotResetActiveTargetForSelector &&
+          path.some(
+            (el) =>
+              el instanceof Element &&
+              el.matches(doNotResetActiveTargetForSelector)
+          )
+        )
+      ) {
         setActiveTarget(null);
       }
     };
@@ -52,7 +64,7 @@ export function useActiveTarget({
     return () => {
       document.removeEventListener("click", resetActiveTarget);
     };
-  }, [activeTarget, rootRef]);
+  }, [activeTarget, doNotResetActiveTargetForSelector, rootRef]);
 
   return activeTarget;
 }
