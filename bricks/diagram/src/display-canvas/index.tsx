@@ -64,6 +64,7 @@ export interface EoDisplayCanvasProps {
   hideZoomBar?: boolean;
   autoCenterWhenCellsChange?: boolean;
   doNotResetActiveTargetForSelector?: string;
+  doNotResetActiveTargetOutsideCanvas?: boolean;
 }
 
 /**
@@ -156,8 +157,17 @@ class EoDisplayCanvas extends ReactNextElement implements EoDisplayCanvasProps {
   @property({ type: Boolean })
   accessor autoCenterWhenCellsChange: boolean | undefined;
 
+  /**
+   * 选择器，点击该选择器对应的元素时不重置 `activeTarget`。
+   */
   @property()
   accessor doNotResetActiveTargetForSelector: string | undefined;
+
+  /**
+   * 在画布外点击时不重置 `activeTarget`。
+   */
+  @property({ type: Boolean })
+  accessor doNotResetActiveTargetOutsideCanvas: boolean | undefined;
 
   @event({ type: "activeTarget.change" })
   accessor #activeTargetChangeEvent!: EventEmitter<ActiveTarget | null>;
@@ -208,6 +218,9 @@ class EoDisplayCanvas extends ReactNextElement implements EoDisplayCanvasProps {
         doNotResetActiveTargetForSelector={
           this.doNotResetActiveTargetForSelector
         }
+        doNotResetActiveTargetOutsideCanvas={
+          this.doNotResetActiveTargetOutsideCanvas
+        }
         autoCenterWhenCellsChange={this.autoCenterWhenCellsChange}
         onActiveTargetChange={this.#handleActiveTargetChange}
         onSwitchActiveTarget={this.#handleSwitchActiveTarget}
@@ -245,6 +258,7 @@ function EoDisplayCanvasComponent({
   hideZoomBar,
   autoCenterWhenCellsChange,
   doNotResetActiveTargetForSelector,
+  doNotResetActiveTargetOutsideCanvas,
   onActiveTargetChange,
   onSwitchActiveTarget,
   onCellContextMenu,
@@ -328,6 +342,7 @@ function EoDisplayCanvasComponent({
     rootRef,
     activeTarget: _activeTarget,
     doNotResetActiveTargetForSelector,
+    doNotResetActiveTargetOutsideCanvas,
     onActiveTargetChange,
   });
 

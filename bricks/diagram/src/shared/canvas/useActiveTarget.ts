@@ -6,6 +6,7 @@ export interface UseActiveTargetOptions {
   rootRef: React.RefObject<SVGGElement>;
   activeTarget?: ActiveTarget | null;
   doNotResetActiveTargetForSelector?: string;
+  doNotResetActiveTargetOutsideCanvas?: boolean;
   onActiveTargetChange(target: ActiveTarget | null): void;
 }
 
@@ -15,6 +16,7 @@ export function useActiveTarget({
   rootRef,
   activeTarget: _activeTarget,
   doNotResetActiveTargetForSelector,
+  doNotResetActiveTargetOutsideCanvas,
   onActiveTargetChange,
 }: UseActiveTargetOptions): UseActiveTargetResult {
   const newActiveTarget = _activeTarget ?? null;
@@ -47,15 +49,17 @@ export function useActiveTarget({
       // Reset active target to null when clicking outside of the cells container,
       // Or inside the cells container but not on any cell.
       if (
-        rootIndex <= 0 &&
-        !(
-          doNotResetActiveTargetForSelector &&
-          path.some(
-            (el) =>
-              el instanceof Element &&
-              el.matches(doNotResetActiveTargetForSelector)
-          )
-        )
+        doNotResetActiveTargetOutsideCanvas
+          ? rootIndex === 0
+          : rootIndex <= 0 &&
+            !(
+              doNotResetActiveTargetForSelector &&
+              path.some(
+                (el) =>
+                  el instanceof Element &&
+                  el.matches(doNotResetActiveTargetForSelector)
+              )
+            )
       ) {
         setActiveTarget(null);
       }
@@ -64,7 +68,12 @@ export function useActiveTarget({
     return () => {
       document.removeEventListener("click", resetActiveTarget);
     };
-  }, [activeTarget, doNotResetActiveTargetForSelector, rootRef]);
+  }, [
+    activeTarget,
+    doNotResetActiveTargetOutsideCanvas,
+    doNotResetActiveTargetForSelector,
+    rootRef,
+  ]);
 
   return activeTarget;
 }
