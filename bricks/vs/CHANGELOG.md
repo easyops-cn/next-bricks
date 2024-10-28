@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.13.15...@next-bricks/vs@1.13.16) (2024-10-28)
+
+
+### Bug Fixes
+
+* **vs:** set placeholder color based on vs theme ([41e7734](https://github.com/easyops-cn/next-bricks/commit/41e7734ae9f4771128d7e9e0b17bdac3f345b03a))
+
+
+
+
+
 ## [1.13.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.13.14...@next-bricks/vs@1.13.15) (2024-10-16)
 
 **Note:** Version bump only for package @next-bricks/vs

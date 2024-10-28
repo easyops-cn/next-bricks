@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.50.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.50.1...@next-bricks/diagram@0.50.2) (2024-10-28)
+
+
+### Bug Fixes
+
+* **canvas:** support new prop: doNotResetActiveTargetOutsideCanvas ([c014592](https://github.com/easyops-cn/next-bricks/commit/c014592993f77a7913c1e76c7e02f84403f9b6d1))
+
+
+
+
+
 ## [0.50.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.50.0...@next-bricks/diagram@0.50.1) (2024-10-28)
 
 
