@@ -52,6 +52,7 @@ import { PlaceholderContentWidget } from "./widget/Placeholder.js";
 // @ts-ignore
 import { getYamlLinterWorker } from "./workers/yamlLinter.mjs";
 import type { LintResponse } from "./workers/lintYaml.js";
+import { register as registerCel } from "./languages/cel.js";
 
 initializeReactI18n(NS, locales);
 
@@ -59,6 +60,7 @@ registerJavaScript(monaco);
 registerTypeScript(monaco);
 registerYaml(monaco, "brick_next_yaml");
 registerHtml(monaco);
+registerCel(monaco);
 
 const { defineElement, property, event } = createDecorators();
 
@@ -398,30 +400,29 @@ export function CodeEditorComponent({
   const automaticLayoutRef = useRef(automaticLayout);
   const systemTheme = useCurrentTheme();
 
-  const computedTheme = useMemo(() => {
-    return theme === "auto"
+  const computedTheme =
+    theme === "auto"
       ? systemTheme === "dark" || systemTheme === "dark-v2"
         ? "vs-dark"
         : "vs"
       : theme;
-  }, [systemTheme, theme]);
+  const isDarkTheme =
+    computedTheme === "vs-dark" || computedTheme === "hc-black";
 
   useEffect(() => {
-    const lineHeightBackground = computedTheme.includes("dark")
-      ? "#FFFFFF0F"
-      : "#0000000A";
+    const lineHighlightBackground = isDarkTheme ? "#FFFFFF0F" : "#0000000A";
     monaco.editor.defineTheme("custom-theme", {
       base: computedTheme as "vs-dark" | "vs",
       inherit: true,
       rules: [],
       colors: {
-        "editor.lineHighlightBackground": `${lineHeightBackground}`,
+        "editor.lineHighlightBackground": `${lineHighlightBackground}`,
       },
     });
     // Currently theme is configured globally.
     // See https://github.com/microsoft/monaco-editor/issues/338
     monaco.editor.setTheme("custom-theme");
-  }, [computedTheme]);
+  }, [computedTheme, isDarkTheme]);
 
   useEffect(() => {
     if (editorRef.current) {
@@ -856,15 +857,13 @@ export function CodeEditorComponent({
     const placeholderWidget = new PlaceholderContentWidget(
       placeholder!,
       editorRef.current!,
-      computedTheme === "vs-dark" || computedTheme === "hc-black"
-        ? "rgba(174,174,175,0.4)"
-        : "rgba(89,89,89,0.4)"
+      isDarkTheme ? "rgba(174,174,175,0.4)" : "rgba(89,89,89,0.4)"
     );
 
     return () => {
       placeholderWidget.dispose();
     };
-  }, [placeholder, computedTheme]);
+  }, [placeholder, isDarkTheme]);
 
   const handleCopyIconClick = useCallback(() => {
     if (editorRef.current) {
