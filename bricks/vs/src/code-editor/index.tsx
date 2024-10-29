@@ -53,6 +53,8 @@ import { PlaceholderContentWidget } from "./widget/Placeholder.js";
 import { getYamlLinterWorker } from "./workers/yamlLinter.mjs";
 import type { LintResponse } from "./workers/lintYaml.js";
 import { register as registerCel } from "./languages/cel.js";
+import { register as registerCelYaml } from "./languages/cel-yaml.js";
+import { register as registerCelStr } from "./languages/cel-str.js";
 
 initializeReactI18n(NS, locales);
 
@@ -61,6 +63,8 @@ registerTypeScript(monaco);
 registerYaml(monaco, "brick_next_yaml");
 registerHtml(monaco);
 registerCel(monaco);
+registerCelYaml(monaco);
+registerCelStr(monaco);
 
 const { defineElement, property, event } = createDecorators();
 
