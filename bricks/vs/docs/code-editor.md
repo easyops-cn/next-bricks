@@ -359,3 +359,56 @@ children:
               };
     - brick: eo-submit-buttons
 ```
+
+### CEL
+
+```yaml preview
+brick: eo-content-layout
+context:
+  - name: advancedCompleters
+    value:
+      - type: members
+        members:
+          step:
+            - firstStep
+            - lastStep
+children:
+  - brick: vs.code-editor
+    properties:
+      theme: auto
+      language: cel
+      automaticLayout: fit-content
+      advancedCompleters: <% CTX.advancedCompleters %>
+      value: |
+        // Pure CEL
+        has(abc)
+  - brick: vs.code-editor
+    properties:
+      theme: auto
+      language: cel_str
+      automaticLayout: fit-content
+      advancedCompleters: <% CTX.advancedCompleters %>
+      value: |
+        <%
+        `${"<"}%
+          // CEL with wrapper
+          has(abc)
+        %${">"}
+        `
+        %>
+  - brick: vs.code-editor
+    properties:
+      theme: auto
+      language: cel_yaml
+      automaticLayout: fit-content
+      advancedCompleters: <% CTX.advancedCompleters %>
+      value: |
+        <%
+        `# CEL in YAML
+        name: |
+          ${"<"}%
+            has(abc)
+          %${">"}
+        `
+        %>
+```

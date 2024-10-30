@@ -23,8 +23,30 @@
       "types": "./dist-types/*/index.d.ts"
     }
   },
+  "nx": {
+    "targets": {
+      "build": {
+        "outputs": [
+          "{projectRoot}/dist",
+          "{projectRoot}/.pkgbuild",
+          "{projectRoot}/deploy",
+          "{projectRoot}/src/generated-actions.js"
+        ]
+      },
+      "build:main": {
+        "outputs": [
+          "{projectRoot}/dist",
+          "{projectRoot}/.pkgbuild",
+          "{projectRoot}/deploy",
+          "{projectRoot}/src/generated-actions.js"
+        ]
+      }
+    }
+  },
   "scripts": {
+    "prestart": "node ./scripts/pre-build.js",
     "start": "cross-env NODE_ENV=development build-next-bricks --watch",
+    "prebuild:main": "node ./scripts/pre-build.js",
     "build": "npm run build:main && npm run build:types",
     "build:main": "cross-env NODE_ENV=production build-next-bricks",
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist-types --project tsconfig.json",

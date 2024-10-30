@@ -1,12 +1,11 @@
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api.js";
-import storyboardJsonSchema from "@next-core/types/storyboard.json";
 import { brickNextKeywords } from "./constants.js";
-import get from "lodash/get.js";
 import { getEditorId } from "./editorId.js";
 import { TokenConfig } from "../index.jsx";
 import { AdvancedCompleterMap } from "../interfaces.js";
 import { provideJsSuggestItems } from "../utils/jsSuggestInBrickYaml.js";
 import { EmbeddedModelContext } from "../utils/embeddedModelState.js";
+import builtinActions from "../../generated-actions.js";
 
 const findKeys = (
   model: monaco.editor.ITextModel,
@@ -49,7 +48,7 @@ const findKeys = (
 const getPrefixWord = (
   model: monaco.editor.ITextModel,
   position: monaco.Position,
-  tokenConfig: TokenConfig
+  tokenConfig: TokenConfig | undefined
 ): {
   word: string | undefined;
   token: string;
@@ -66,7 +65,7 @@ const getPrefixWord = (
     column: position.column - word?.word?.length - 1,
   });
   let matchWord = prefixWord?.word;
-  if (tokenConfig.showDSKey && prefixWord?.word === "DS") {
+  if (tokenConfig?.showDSKey && prefixWord?.word === "DS") {
     const prefix = model.getWordAtPosition({
       ...position,
       column: prefixWord.startColumn - 1,
@@ -154,7 +153,7 @@ export const brickNextYAMLProviderCompletionItems = (
   completers: monaco.languages.CompletionItem[] = [],
   advancedCompleters: AdvancedCompleterMap = {},
   id: string,
-  tokenConfig: TokenConfig
+  tokenConfig: TokenConfig | undefined
 ) => {
   return async (
     model: monaco.editor.ITextModel,
@@ -167,7 +166,7 @@ export const brickNextYAMLProviderCompletionItems = (
       return {
         suggestions: [],
       };
-    const DSToken = tokenConfig.showDSKey ? ["CTX.DS", "DS"] : [];
+    const DSToken = tokenConfig?.showDSKey ? ["CTX.DS", "DS"] : [];
     const word = model.getWordUntilPosition(position);
     const { word: prefixWord, token: prefixToken } = getPrefixWord(
       model,
@@ -197,7 +196,7 @@ export const brickNextYAMLProviderCompletionItems = (
         startColumn: position.column - 2,
         endColumn: position.column + 2,
       });
-      if (fullWord.trim() !== "<") {
+      if (!/^(['"]?)<\1$/.test(fullWord.trim())) {
         return {
           suggestions: [],
         };
@@ -206,7 +205,7 @@ export const brickNextYAMLProviderCompletionItems = (
         suggestions: [
           {
             label: "<% %>",
-            detail: "Evalute Body",
+            detail: "Expression body",
             kind: monaco.languages.CompletionItemKind.Value,
             insertText: "% ${0} %>",
             insertTextRules:
@@ -215,7 +214,7 @@ export const brickNextYAMLProviderCompletionItems = (
           },
           {
             label: "<%= %>",
-            detail: "Track Evalute Body",
+            detail: "Track expression body",
             kind: monaco.languages.CompletionItemKind.Value,
             insertText: "%= ${0} %>",
             insertTextRules:
@@ -247,20 +246,14 @@ export const brickNextYAMLProviderCompletionItems = (
         !["CTX", "STATE", "FN"].concat(DSToken).includes(prefixWord))
     ) {
       if (prefixWord === "action" && context.triggerCharacter === ":") {
-        const actions = get(
-          storyboardJsonSchema,
-          "definitions.BuiltinBrickEventHandler.properties.action.enum"
-        );
         return {
-          suggestions: ((actions as unknown as string[]) ?? [])?.map(
-            (item) => ({
-              label: ` ${item}`,
-              detail: "event action",
-              kind: monaco.languages.CompletionItemKind.Keyword,
-              insertText: ` ${item}`,
-              range,
-            })
-          ),
+          suggestions: builtinActions.map((item) => ({
+            label: ` ${item}`,
+            detail: "event action",
+            kind: monaco.languages.CompletionItemKind.Keyword,
+            insertText: ` ${item}`,
+            range,
+          })),
         };
       }
       const matchCompletion = advancedCompleters?.[prefixWord as string];

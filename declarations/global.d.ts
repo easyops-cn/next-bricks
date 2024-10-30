@@ -85,6 +85,11 @@ declare module "@babel/standalone" {
   export const availablePlugins: Record<string, unknown>;
 }
 
+declare module "*/generated-actions.js" {
+  const actions: Array<string>;
+  export default actions;
+}
+
 interface Window {
   /** For Google Analytics. */
   dataLayer?: IArguments[];

@@ -1,5 +1,3 @@
-import storyboardJsonSchema from "@next-core/types/storyboard.json";
-import { get } from "lodash";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api.js";
 import { builtInKeywordDeclare } from "./constants.js";
 
@@ -79,21 +77,18 @@ export async function provideJsSuggestItems(
 }
 
 export function getMicroAppDeclare() {
-  const appProperties = get(
-    storyboardJsonSchema,
-    "definitions.MicroApp.properties"
-  ) as unknown as Record<string, { type: string }>;
-
-  const fields = [];
-  for (const [k, v] of Object.entries(appProperties)) {
-    fields.push(`const ${k}: ${v.type ?? "any"}`);
-  }
-
+  // 不要主动提示不对用户公开的 APP 属性
   return `
-  declare namespace APP {
-    ${fields.join("\n")}
-  }
-  `;
+declare namespace APP {
+  const name: string;
+  const id: string;
+  const homepage: string;
+  const currentVersion: string;
+  const config: object;
+  const localeName: string;
+  const localeTitle: string;
+}
+`;
 }
 
 export function getBrickYamlBuiltInDeclare() {

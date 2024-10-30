@@ -26,7 +26,11 @@ import {
   EDITOR_LINE_HEIGHT,
   EDITOR_FONT_SIZE,
 } from "./constants.js";
-import { AdvancedCompleterMap, ExtraLib } from "./interfaces.js";
+import {
+  AdvancedCompleterMap,
+  ExtraLib,
+  type MixedCompleter,
+} from "./interfaces.js";
 import { brickNextYAMLProviderCompletionItems } from "./utils/brickNextYaml.js";
 import { Level } from "./utils/constants.js";
 import { setEditorId } from "./utils/editorId.js";
@@ -52,6 +56,14 @@ import { PlaceholderContentWidget } from "./widget/Placeholder.js";
 // @ts-ignore
 import { getYamlLinterWorker } from "./workers/yamlLinter.mjs";
 import type { LintResponse } from "./workers/lintYaml.js";
+import { register as registerCel } from "./languages/cel.js";
+import { register as registerCelYaml } from "./languages/cel-yaml.js";
+import { register as registerCelStr } from "./languages/cel-str.js";
+import {
+  provideEmbeddedCelCompletionItems,
+  celCommonCompletionProviderFactory,
+  celSpecificCompletionProviderFactory,
+} from "./utils/celCompletionProvider.js";
 
 initializeReactI18n(NS, locales);
 
@@ -59,6 +71,25 @@ registerJavaScript(monaco);
 registerTypeScript(monaco);
 registerYaml(monaco, "brick_next_yaml");
 registerHtml(monaco);
+registerCel(monaco);
+registerCelYaml(monaco);
+registerCelStr(monaco);
+
+const EMBEDDED_CEL = ["cel_yaml", "cel_str"];
+const CEL_FAMILY = ["cel", ...EMBEDDED_CEL];
+for (const lang of EMBEDDED_CEL) {
+  monaco.languages.registerCompletionItemProvider(lang, {
+    triggerCharacters: ["<"],
+    provideCompletionItems: provideEmbeddedCelCompletionItems,
+  });
+}
+
+for (const lang of CEL_FAMILY) {
+  monaco.languages.registerCompletionItemProvider(
+    lang,
+    celCommonCompletionProviderFactory(lang)
+  );
+}
 
 const { defineElement, property, event } = createDecorators();
 
@@ -87,7 +118,7 @@ export interface CodeEditorProps {
   height?: string | number;
   completers?: monaco.languages.CompletionItem[];
   tokenConfig?: TokenConfig;
-  advancedCompleters?: AdvancedCompleterMap;
+  advancedCompleters?: AdvancedCompleterMap | MixedCompleter[];
   extraLibs?: ExtraLib[];
   markers?: Marker[];
   links?: string[];
@@ -97,6 +128,7 @@ export interface CodeEditorProps {
   glyphMargin?: boolean;
   validateState?: string;
   customValidationInBrickNextYaml?: boolean;
+  fixedOverflowWidgets?: boolean;
 }
 
 export interface Marker {
@@ -111,7 +143,7 @@ export interface Marker {
 }
 
 export type TokenConfig = {
-  showDSKey: boolean;
+  showDSKey?: boolean;
 };
 
 /**
@@ -172,15 +204,27 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
   @property({ type: Number })
   accessor minLines: number | undefined;
 
+  /**
+   * 仅对 language 为 brick_next_yaml 有效，设置第一层属性名的自动补全。
+   */
   @property({
     attribute: false,
   })
   accessor completers: monaco.languages.CompletionItem[] | undefined;
 
+  /**
+   * 高级自动补全配置。
+   * - 设置为键值对时，仅对 language 为 brick_next_yaml 有效，设置任意的自动补全；
+   * - 设置为数组时，当前仅对 language 为 cel 有效。
+   * 未来将统一改为数组格式，废弃键值对格式的配置。
+   */
   @property({
     attribute: false,
   })
-  accessor advancedCompleters: AdvancedCompleterMap | undefined;
+  accessor advancedCompleters:
+    | AdvancedCompleterMap
+    | MixedCompleter[]
+    | undefined;
 
   @property({ attribute: false })
   accessor markers: Marker[] | undefined;
@@ -253,6 +297,9 @@ class CodeEditor extends FormItemElementBase implements CodeEditorProps {
     attribute: false,
   })
   accessor extraLibs: ExtraLib[] | undefined;
+
+  @property({ type: Boolean })
+  accessor fixedOverflowWidgets: boolean | undefined;
 
   @event({ type: "code.change" })
   accessor #codeChange!: EventEmitter<string>;
@@ -356,9 +403,7 @@ export function CodeEditorComponent({
   readOnly,
   links,
   extraLibs,
-  tokenConfig = {
-    showDSKey: false,
-  },
+  tokenConfig,
   showExpandButton,
   showCopyButton = true,
   lineNumbers = "on",
@@ -369,6 +414,7 @@ export function CodeEditorComponent({
   // onUserInput,
   onTokenClick,
   customValidationInBrickNextYaml,
+  fixedOverflowWidgets,
 }: CodeEditorProps & {
   onChange(value: string): void;
   onUserInput: (value: any) => void;
@@ -398,30 +444,29 @@ export function CodeEditorComponent({
   const automaticLayoutRef = useRef(automaticLayout);
   const systemTheme = useCurrentTheme();
 
-  const computedTheme = useMemo(() => {
-    return theme === "auto"
+  const computedTheme =
+    theme === "auto"
       ? systemTheme === "dark" || systemTheme === "dark-v2"
         ? "vs-dark"
         : "vs"
       : theme;
-  }, [systemTheme, theme]);
+  const isDarkTheme =
+    computedTheme === "vs-dark" || computedTheme === "hc-black";
 
   useEffect(() => {
-    const lineHeightBackground = computedTheme.includes("dark")
-      ? "#FFFFFF0F"
-      : "#0000000A";
+    const lineHighlightBackground = isDarkTheme ? "#FFFFFF0F" : "#0000000A";
     monaco.editor.defineTheme("custom-theme", {
       base: computedTheme as "vs-dark" | "vs",
       inherit: true,
       rules: [],
       colors: {
-        "editor.lineHighlightBackground": `${lineHeightBackground}`,
+        "editor.lineHighlightBackground": `${lineHighlightBackground}`,
       },
     });
     // Currently theme is configured globally.
     // See https://github.com/microsoft/monaco-editor/issues/338
     monaco.editor.setTheme("custom-theme");
-  }, [computedTheme]);
+  }, [computedTheme, isDarkTheme]);
 
   useEffect(() => {
     if (editorRef.current) {
@@ -434,7 +479,7 @@ export function CodeEditorComponent({
     if (language === "brick_next_yaml") {
       const provideCompletionItems = brickNextYAMLProviderCompletionItems(
         completers,
-        advancedCompleters,
+        Array.isArray(advancedCompleters) ? undefined : advancedCompleters,
         workerId,
         tokenConfig
       );
@@ -449,7 +494,27 @@ export function CodeEditorComponent({
         monacoProviderRef.dispose();
       };
     }
-  }, [completers, advancedCompleters, language]);
+  }, [completers, advancedCompleters, language, workerId, tokenConfig]);
+
+  useEffect(() => {
+    if (
+      Array.isArray(advancedCompleters) &&
+      advancedCompleters.length > 0 &&
+      CEL_FAMILY.includes(language)
+    ) {
+      const disposable = monaco.languages.registerCompletionItemProvider(
+        language,
+        celSpecificCompletionProviderFactory(
+          language,
+          workerId,
+          advancedCompleters
+        )
+      );
+      return () => {
+        disposable.dispose();
+      };
+    }
+  }, [language, advancedCompleters, workerId]);
 
   useEffect(() => {
     const editor = editorRef.current;
@@ -577,10 +642,10 @@ export function CodeEditorComponent({
       },
       overviewRulerBorder: false,
       mouseWheelScrollSensitivity: 0.5,
-      fixedOverflowWidgets: true,
+      fixedOverflowWidgets,
       lineNumbers: lineNumbers,
       lineNumbersMinChars: 3,
-      glyphMargin: glyphMargin,
+      glyphMargin,
       folding: lineNumbers !== "off",
       suggest: {
         insertMode: "insert",
@@ -856,15 +921,13 @@ export function CodeEditorComponent({
     const placeholderWidget = new PlaceholderContentWidget(
       placeholder!,
       editorRef.current!,
-      computedTheme === "vs-dark" || computedTheme === "hc-black"
-        ? "rgba(174,174,175,0.4)"
-        : "rgba(89,89,89,0.4)"
+      isDarkTheme ? "rgba(174,174,175,0.4)" : "rgba(89,89,89,0.4)"
     );
 
     return () => {
       placeholderWidget.dispose();
     };
-  }, [placeholder, computedTheme]);
+  }, [placeholder, isDarkTheme]);
 
   const handleCopyIconClick = useCallback(() => {
     if (editorRef.current) {
