@@ -1,12 +1,11 @@
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api.js";
-import storyboardJsonSchema from "@next-core/types/storyboard.json";
 import { brickNextKeywords } from "./constants.js";
-import get from "lodash/get.js";
 import { getEditorId } from "./editorId.js";
 import { TokenConfig } from "../index.jsx";
 import { AdvancedCompleterMap } from "../interfaces.js";
 import { provideJsSuggestItems } from "../utils/jsSuggestInBrickYaml.js";
 import { EmbeddedModelContext } from "../utils/embeddedModelState.js";
+import builtinActions from "../../generated-actions.js";
 
 const findKeys = (
   model: monaco.editor.ITextModel,
@@ -247,20 +246,14 @@ export const brickNextYAMLProviderCompletionItems = (
         !["CTX", "STATE", "FN"].concat(DSToken).includes(prefixWord))
     ) {
       if (prefixWord === "action" && context.triggerCharacter === ":") {
-        const actions = get(
-          storyboardJsonSchema,
-          "definitions.BuiltinBrickEventHandler.properties.action.enum"
-        );
         return {
-          suggestions: ((actions as unknown as string[]) ?? [])?.map(
-            (item) => ({
-              label: ` ${item}`,
-              detail: "event action",
-              kind: monaco.languages.CompletionItemKind.Keyword,
-              insertText: ` ${item}`,
-              range,
-            })
-          ),
+          suggestions: builtinActions.map((item) => ({
+            label: ` ${item}`,
+            detail: "event action",
+            kind: monaco.languages.CompletionItemKind.Keyword,
+            insertText: ` ${item}`,
+            range,
+          })),
         };
       }
       const matchCompletion = advancedCompleters?.[prefixWord as string];
