@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.11.2...@next-shared/icons@0.12.0) (2024-10-30)
+
+
+### Features
+
+*  add monitor icons ([cb0e649](https://github.com/easyops-cn/next-bricks/commit/cb0e6494c689913382b01397c7f7eef5975b2fdb))
+
+
+
+
+
 ## [0.11.2](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.11.1...@next-shared/icons@0.11.2) (2024-10-22)
 
 **Note:** Version bump only for package @next-shared/icons
