@@ -2,9 +2,6 @@
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api.js";
 
 export const conf: monaco.languages.LanguageConfiguration = {
-  // wordPattern:
-  //   /(-?\d*\.\d\w*)|([^\`\~\!\@\#\%\^\&\*\(\)\-\=\+\[\{\]\}\\\|\;\:\'\"\,\.\<\>\/\?\s]+)/g,
-
   comments: {
     lineComment: "//",
     blockComment: null,
@@ -22,10 +19,120 @@ export const conf: monaco.languages.LanguageConfiguration = {
     { open: "(", close: ")" },
     { open: '"', close: '"', notIn: ["string"] },
     { open: "'", close: "'", notIn: ["string", "comment"] },
-    // { open: "`", close: "`", notIn: ["string", "comment"] },
-    // { open: "/**", close: " */", notIn: ["string"] },
+  ],
+
+  onEnterRules: [
+    {
+      // e.g. <% | %>
+      beforeText: /^ $/,
+      afterText: /^ $/,
+      action: {
+        indentAction: monaco.languages.IndentAction.IndentOutdent,
+        appendText: "  ",
+      },
+    },
   ],
 };
+
+export const constants = [
+  // Built-in functions
+  "bytes",
+  "double",
+  "duration",
+  "dyn",
+  "int",
+  "bool",
+  "matches",
+  "size",
+  "string",
+  "timestamp",
+  "type",
+  "uint",
+  "round",
+  // Built-in extensions
+  "base64",
+  // Built-in macros
+  "has",
+  // EasyOps primitive_type_ext
+  "printf",
+  "isEmpty",
+  "repeatArray",
+  // EasyOps dyn_type_ext
+  "mergeList",
+  "fieldNotEmpty",
+  "hasOrDefault",
+  "trinocular",
+  "traceId",
+  "SHA1",
+  "random",
+  "random_string",
+  "now",
+  // Flow builder variables
+  "request",
+  "step",
+  "variable",
+  "config",
+  "$",
+] as readonly string[];
+
+export const instanceMembers = [
+  // Built-in methods
+  "contains",
+  "endsWith",
+  "matches",
+  "startsWith",
+  // Built-in datetime methods
+  "getDate",
+  "getDayOfMonth",
+  "getDayOfWeek",
+  "getDayOfYear",
+  "getFullYear",
+  "getHours",
+  "getMilliseconds",
+  "getMinutes",
+  "getMonth",
+  "getSeconds",
+  // Built-in extensions
+  "charAt",
+  "indexOf",
+  "lastIndexOf",
+  "lowerAscii",
+  "replace",
+  "split",
+  "join",
+  "substring",
+  "trim",
+  "upperAscii",
+  // Built-in macros
+  "all",
+  "exists",
+  "exists_one",
+  "map",
+  "filter",
+  // EasyOps primitive_type_ext
+  "decodeb64",
+  "truncate",
+  "parseJSON",
+  "parseYAML",
+  "parseURL",
+  "isBlank",
+  // EasyOps dyn_type_ext
+  "marshalJSON",
+  "marshalYAML",
+  "merge",
+  "repeat",
+  "match",
+  "canonical",
+  "convertMap",
+  "fuse",
+  "remove",
+  "setAttr",
+  "parseDate",
+  "format",
+  // Flow builder step variables,
+  "input",
+  "output",
+] as readonly string[];
 
 export const language: monaco.languages.IMonarchLanguage = {
   // Set defaultToken to invalid to see what you do not tokenize yet
@@ -60,102 +167,9 @@ export const language: monaco.languages.IMonarchLanguage = {
     "false",
   ],
 
-  constants: [
-    // Built-in functions
-    "bytes",
-    "double",
-    "duration",
-    "dyn",
-    "int",
-    "bool",
-    "matches",
-    "size",
-    "string",
-    "timestamp",
-    "type",
-    "uint",
-    "round",
-    // Built-in extensions
-    "base64",
-    // Built-in macros
-    "has",
-    // EasyOps primitive_type_ext
-    "printf",
-    "isEmpty",
-    "repeatArray",
-    // EasyOps dyn_type_ext
-    "mergeList",
-    "fieldNotEmpty",
-    "hasOrDefault",
-    "trinocular",
-    "traceId",
-    "SHA1",
-    "random",
-    "random_string",
-    "now",
-    // Flow builder variables
-    "request",
-    "step",
-    "variable",
-    "config",
-    "$",
-  ],
+  constants,
 
-  prototypes: [
-    // Built-in methods
-    "contains",
-    "endsWith",
-    "matches",
-    "startsWith",
-    // Built-in datetime methods
-    "getDate",
-    "getDayOfMonth",
-    "getDayOfWeek",
-    "getDayOfYear",
-    "getFullYear",
-    "getHours",
-    "getMilliseconds",
-    "getMinutes",
-    "getMonth",
-    "getSeconds",
-    // Built-in extensions
-    "charAt",
-    "indexOf",
-    "lastIndexOf",
-    "lowerAscii",
-    "replace",
-    "split",
-    "join",
-    "substring",
-    "trim",
-    "upperAscii",
-    // Built-in macros
-    "all",
-    "exists",
-    "exists_one",
-    "map",
-    "filter",
-    // EasyOps primitive_type_ext
-    "decodeb64",
-    "truncate",
-    "parseJSON",
-    "parseYAML",
-    "parseURL",
-    "isBlank",
-    // EasyOps dyn_type_ext
-    "marshalJSON",
-    "marshalYAML",
-    "merge",
-    "repeat",
-    "match",
-    "canonical",
-    "convertMap",
-    "fuse",
-    "remove",
-    "setAttr",
-    "parseDate",
-    "format",
-  ],
+  instanceMethods: instanceMembers,
 
   operators: [
     // Logical operators
@@ -206,7 +220,7 @@ export const language: monaco.languages.IMonarchLanguage = {
           "operator",
           {
             cases: {
-              "@prototypes": "keyword",
+              "@instanceMethods": "keyword",
               "@default": "identifier",
             },
           },

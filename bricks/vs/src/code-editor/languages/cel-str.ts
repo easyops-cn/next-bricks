@@ -1,8 +1,11 @@
-/* eslint-disable no-useless-escape */
 // https://github.com/microsoft/monaco-editor/blob/8270c45a385a180a53fd8ef8e3a189b1471100ed/src/basic-languages/yaml/yaml.ts
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api.js";
+import { conf as confOfCel } from "./cel";
 
-export const conf: monaco.languages.LanguageConfiguration = {};
+export const conf: monaco.languages.LanguageConfiguration = {
+  brackets: confOfCel.brackets,
+  autoClosingPairs: confOfCel.autoClosingPairs,
+};
 
 export const language: monaco.languages.IMonarchLanguage = {
   tokenPostfix: ".yaml.str",

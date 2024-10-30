@@ -1,5 +1,5 @@
 export const editor = {
-  create(container, options) {
+  create(_container, options) {
     return new Editor(options);
   },
   setModelLanguage: jest.fn(),
@@ -34,6 +34,11 @@ export const languages = {
       NodeJs: "NodeJs",
     },
   },
+  register: jest.fn(),
+  setLanguageConfiguration: jest.fn(),
+  setMonarchTokensProvider: jest.fn(),
+  registerCompletionItemProvider: jest.fn(),
+  IndentAction: {},
 };
 
 export const Uri = {
