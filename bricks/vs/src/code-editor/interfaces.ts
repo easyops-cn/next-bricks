@@ -47,5 +47,6 @@ export type MixedCompleter = MembersCompleter;
 
 export interface MembersCompleter {
   type: "members";
+  /** 键为对象名称，值为对象属性名列表 */
   members: Record<string, string[]>;
 }

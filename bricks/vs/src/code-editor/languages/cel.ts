@@ -1,4 +1,4 @@
-// https://github.com/microsoft/monaco-editor/blob/8270c45a385a180a53fd8ef8e3a189b1471100ed/src/basic-languages/yaml/yaml.ts
+// https://github.com/google/cel-spec/blob/master/doc/langdef.md#syntax
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api.js";
 
 export const conf: monaco.languages.LanguageConfiguration = {

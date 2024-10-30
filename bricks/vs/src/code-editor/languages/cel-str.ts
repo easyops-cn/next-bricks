@@ -11,7 +11,11 @@ export const language: monaco.languages.IMonarchLanguage = {
   tokenPostfix: ".yaml.str",
 
   tokenizer: {
-    root: [{ include: "@whitespace" }, { include: "@expression" }],
+    root: [
+      { include: "@whitespace" },
+      { include: "@expression" },
+      { include: "@strings" },
+    ],
 
     expression: [
       [
@@ -29,6 +33,8 @@ export const language: monaco.languages.IMonarchLanguage = {
     expressionEmbedded: [
       [/%>/, { token: "@rematch", next: "@pop", nextEmbedded: "@pop" }],
     ],
+
+    strings: [[/[^<]+|<(?!%)/, "string"]],
 
     whitespace: [[/[ \t\r\n]+/, "white"]],
   },

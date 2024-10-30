@@ -48,7 +48,7 @@ export const language: monaco.languages.IMonarchLanguage = {
     "FALSE",
     "null",
     "Null",
-    "Null",
+    "NULL",
     "~",
   ],
 
