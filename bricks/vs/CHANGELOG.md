@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.14.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.13.16...@next-bricks/vs@1.14.0) (2024-10-30)
+
+
+### Bug Fixes
+
+* do not load entire storyboard schema at runtime ([46ccc15](https://github.com/easyops-cn/next-bricks/commit/46ccc15dbeb563e8e8942f7a0a4f4075774ed087))
+* refine cel language ([cad82e7](https://github.com/easyops-cn/next-bricks/commit/cad82e7b5b14859b0bea00e8208be84def9f16e7))
+
+
+### Features
+
+* support CEL completions ([bf76dc2](https://github.com/easyops-cn/next-bricks/commit/bf76dc245753ea8b0ecacee8befa81a758a4392f))
+* support language cel ([e490380](https://github.com/easyops-cn/next-bricks/commit/e490380ead3ac2214d74f9d4cb6319d2830108a9))
+* support language cel_yaml and cel_srt ([a32248f](https://github.com/easyops-cn/next-bricks/commit/a32248fc25f110da4b8e36664f1339141bd0110c))
+
+
+
+
+
 ## [1.13.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/vs@1.13.15...@next-bricks/vs@1.13.16) (2024-10-28)
 
 
