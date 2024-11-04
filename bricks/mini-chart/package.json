@@ -39,6 +39,7 @@
     "@next-core/i18n": "^1.0.69",
     "@next-core/react-element": "^1.0.32",
     "@next-core/theme": "^1.5.4",
+    "d3-shape": "^3.2.0",
     "react": "0.0.0-experimental-ee8509801-20230117"
   },
   "devDependencies": {
