@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.51.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.50.0...@next-shared/common-bricks@0.51.0) (2024-11-04)
+
+
+### Features
+
+* new brick: eo-mini-chart ([db629fb](https://github.com/easyops-cn/next-bricks/commit/db629fbb336d625fcd4a4da47ff59db7d688401e))
+
+
+
+
+
 # [0.50.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.49.1...@next-shared/common-bricks@0.50.0) (2024-09-04)
 
 
