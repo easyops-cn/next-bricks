@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.41.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.41.1...@next-bricks/advanced@0.41.2) (2024-11-05)
+
+
+### Bug Fixes
+
+* **eo-next-table:** support loading state ([a354a83](https://github.com/easyops-cn/next-bricks/commit/a354a833618103b7b79173112dcdf13ff0be7e91))
+
+
+
+
+
 ## [0.41.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.41.0...@next-bricks/advanced@0.41.1) (2024-11-05)
 
 
