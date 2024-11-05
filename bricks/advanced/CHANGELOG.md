@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.41.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.41.0...@next-bricks/advanced@0.41.1) (2024-11-05)
+
+
+### Bug Fixes
+
+* add bg and padding for tables in a expanded row ([6e6d25c](https://github.com/easyops-cn/next-bricks/commit/6e6d25cf79d63c6b8c993420462f1295d114be78))
+
+
+
+
+
 # [0.41.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.40.9...@next-bricks/advanced@0.41.0) (2024-10-24)
 
 

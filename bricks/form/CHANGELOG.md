@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.9...@next-bricks/form@1.13.10) (2024-11-05)
+
+
+### Bug Fixes
+
+* rename event of "focus" to "select.focus" ([7493fc2](https://github.com/easyops-cn/next-bricks/commit/7493fc2814c0d3fd2b527e19070dc1c1d900a1fb))
+
+
+
+
+
 ## [1.13.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.8...@next-bricks/form@1.13.9) (2024-10-16)
 
 **Note:** Version bump only for package @next-bricks/form
