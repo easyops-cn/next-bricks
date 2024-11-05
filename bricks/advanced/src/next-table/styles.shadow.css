@@ -35,6 +35,11 @@
   padding-right: 12px;
 }
 
+.ant-table-wrapper {
+  background: var(--eo-table-wrapper-background);
+  padding: var(--eo-table-wrapper-padding);
+}
+
 .ant-table-wrapper .ant-table-thead .ant-table-cell {
   padding: var(--eo-table-head-cell-padding);
 }
@@ -79,4 +84,9 @@
 
 .ant-pagination .ant-pagination-item:not(.ant-pagination-item-active) a {
   color: var(--color-normal-text);
+}
+
+.ant-table-expanded-row eo-next-table {
+  --eo-table-wrapper-background: var(--antd-table-row-expand-nested-wrapper);
+  --eo-table-wrapper-padding: 20px 32px;
 }
