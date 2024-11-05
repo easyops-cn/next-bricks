@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.10...@next-bricks/form@1.13.11) (2024-11-05)
+
+
+### Bug Fixes
+
+* **eo-select:** search event respects debounceSearchDelay ([0525a9c](https://github.com/easyops-cn/next-bricks/commit/0525a9c8b890275a9e835335657af2aa9a60a690))
+
+
+
+
+
 ## [1.13.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.9...@next-bricks/form@1.13.10) (2024-11-05)
 
 
