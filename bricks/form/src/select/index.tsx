@@ -208,6 +208,10 @@ class Select extends FormItemElementBase {
   })
   accessor useBackend: UseBackendConf | undefined;
 
+  /**
+   * 设置时，同时对 useBackend 和 search 事件进行防抖。
+   * 未设置时，useBackend 有默认的 300ms 防抖。
+   */
   @property({
     type: Number,
   })
@@ -348,6 +352,12 @@ export function SelectComponent(props: SelectProps) {
     onValueChange,
     onSearch,
   } = props;
+
+  const debouncedOnSearch = useMemo(() => {
+    return debounceSearchDelay
+      ? debounce(onSearch!, debounceSearchDelay)
+      : onSearch;
+  }, [debounceSearchDelay, onSearch]);
 
   const multiple = useMemo(
     () => mode && ["multiple", "tags"].includes(mode),
@@ -568,11 +578,17 @@ export function SelectComponent(props: SelectProps) {
       } else {
         setInputValue(value);
         setIsDropHidden(false);
-        onSearch?.(value);
+        debouncedOnSearch!(value);
       }
       handleDebounceBackendSearch(value, "search");
     },
-    [handleChange, handleDebounceBackendSearch, mode, onSearch, tokenSeparators]
+    [
+      handleChange,
+      handleDebounceBackendSearch,
+      mode,
+      debouncedOnSearch,
+      tokenSeparators,
+    ]
   );
 
   const handleKeydown = useCallback(
