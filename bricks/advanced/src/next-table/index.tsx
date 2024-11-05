@@ -80,6 +80,14 @@ class EoNextTable extends ReactNextElement {
   accessor pagination: PaginationType;
 
   /**
+   * 显示加载中状态
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor loading: boolean | undefined;
+
+  /**
    * 是否支持多列排序，前端搜索时需设置 column.sortPriority 优先级
    */
   @property({
@@ -311,6 +319,7 @@ class EoNextTable extends ReactNextElement {
         dataSource={this.dataSource}
         frontSearch={this.frontSearch}
         pagination={this.pagination}
+        loading={this.loading}
         multiSort={this.multiSort}
         sort={this.sort}
         rowSelection={this.rowSelection}

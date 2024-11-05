@@ -76,6 +76,7 @@ export interface NextTableComponentProps {
   dataSource?: DataSource;
   frontSearch?: boolean;
   pagination?: PaginationType;
+  loading?: boolean;
   multiSort?: boolean;
   sort?: Sort | Sort[];
   rowSelection?: RowSelectionType;
@@ -124,6 +125,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
     dataSource,
     frontSearch,
     pagination,
+    loading,
     multiSort,
     rowSelection,
     hiddenColumns,
@@ -434,6 +436,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                   row: rowDraggable && !isTreeData ? DraggableRow : Row,
                 },
               }}
+              loading={loading}
               rowKey={rowKey}
               columns={processedColumns}
               dataSource={list}
