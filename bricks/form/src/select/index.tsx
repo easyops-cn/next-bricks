@@ -88,7 +88,7 @@ export interface SelectProps extends FormItemProps {
   onChange?: (value: any, options: GeneralComplexOption[]) => void;
   onValueChange?: (value: any) => void;
   optionsChange?: (options: any, name: string) => void;
-  onFocus?: () => void;
+  onSelectFocus?: () => void;
   onSearch?: (value: string) => void;
 }
 
@@ -238,8 +238,10 @@ class Select extends FormItemElementBase {
 
   /**
    * 下拉框focus事件
+   *
+   * 注：之前事件类型为 "focus"，这和原生事件冲突，可能导致多次触发，现改为 "select.focus"
    */
-  @event({ type: "focus" }) accessor #focusEvent!: EventEmitter<void>;
+  @event({ type: "select.focus" }) accessor #focusEvent!: EventEmitter<void>;
 
   /**
    * 选项列表变化事件
@@ -265,7 +267,7 @@ class Select extends FormItemElementBase {
     });
   };
 
-  private _handleOptionsChange = (
+  #handleOptionsChange = (
     options: {
       label: string;
       value: any;
@@ -284,7 +286,7 @@ class Select extends FormItemElementBase {
     });
   };
 
-  handleFocus = () => {
+  handleSelectFocus = () => {
     this.#focusEvent.emit();
   };
 
@@ -316,9 +318,9 @@ class Select extends FormItemElementBase {
         labelBrick={this.labelBrick}
         options={this.options}
         onChange={this.handleChange}
-        optionsChange={this._handleOptionsChange}
+        optionsChange={this.#handleOptionsChange}
         onSearch={this.handleSearch}
-        onFocus={this.handleFocus}
+        onSelectFocus={this.handleSelectFocus}
       />
     );
   }
@@ -342,7 +344,7 @@ export function SelectComponent(props: SelectProps) {
     validateState,
     optionsChange,
     onChange,
-    onFocus,
+    onSelectFocus,
     onValueChange,
     onSearch,
   } = props;
@@ -387,14 +389,14 @@ export function SelectComponent(props: SelectProps) {
     if (!value) {
       setIsDropHidden(false);
       setIsFocused(true);
-      onFocus?.();
+      onSelectFocus?.();
       inputRef.current && inputRef.current.focus();
     } else if (!disabled) {
       setIsDropHidden(!isDropHidden);
       setIsFocused(true);
       inputRef.current && inputRef.current.focus();
     }
-  }, [disabled, isDropHidden, value, onFocus]);
+  }, [disabled, isDropHidden, value, onSelectFocus]);
 
   const handleChange = useCallback(
     (option: GeneralComplexOption<any>): void => {
