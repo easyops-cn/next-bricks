@@ -25,6 +25,7 @@ export type ErrorMessageVariant =
   | "no-permission"
   | "license-expired"
   | "not-found"
+  | "search-empty"
   | "unknown-error";
 
 /**
@@ -73,6 +74,7 @@ export function ErrorMessageComponent({
       case "internet-disconnected":
       case "no-permission":
       case "license-expired":
+      case "search-empty":
         name = variant;
         break;
       case "not-found":
