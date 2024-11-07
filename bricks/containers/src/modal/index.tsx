@@ -51,6 +51,7 @@ export interface ModalProps {
   hideCancelButton?: boolean;
   fullscreen?: boolean;
   confirmDisabled?: boolean;
+  confirmDanger?: boolean;
   closeWhenConfirm?: boolean;
   visible?: boolean;
   stackable?: boolean;
@@ -148,6 +149,11 @@ class Modal extends ReactNextElement implements ModalProps {
    * 取消按钮文本
    */
   @property() accessor cancelText: string | undefined;
+
+  /**
+   * 确认按钮类型
+   */
+  @property({ type: Boolean }) accessor confirmDanger: boolean | undefined;
 
   /**
    * 是否隐藏取消按钮
@@ -249,6 +255,7 @@ class Modal extends ReactNextElement implements ModalProps {
         hideCancelButton={this.hideCancelButton}
         fullscreen={this.fullscreen}
         confirmDisabled={this.confirmDisabled}
+        confirmDanger={this.confirmDanger}
         closeWhenConfirm={this.closeWhenConfirm}
         onModalClose={this.#closeModal}
         onModalConfirm={this.#handleModelConfirm}
@@ -281,6 +288,7 @@ function ModalComponent({
   fullscreen,
   confirmDisabled,
   closeWhenConfirm = true,
+  confirmDanger,
   onModalConfirm,
   onModalCancel,
   onModalClose,
@@ -355,7 +363,7 @@ function ModalComponent({
             </WrappedButton>
           )}
           <WrappedButton
-            type="primary"
+            danger={confirmDanger}
             disabled={confirmDisabled}
             onClick={handleConfirmClick}
             data-testid="confirm-button"
@@ -370,6 +378,7 @@ function ModalComponent({
       cancelText,
       confirmText,
       confirmDisabled,
+      confirmDanger,
       handleCancelClick,
       handleConfirmClick,
     ]
