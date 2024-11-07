@@ -21,7 +21,6 @@ jest.mock("@next-core/runtime", () => ({
       return {};
     },
   })),
-  getCurrentMode: jest.fn(() => {}),
 }));
 
 describe("eo-main-view", () => {
@@ -320,7 +319,7 @@ describe("eo-main-view", () => {
     });
   });
 
-  test("dashboard mode customized log url", async () => {
+  test("dashboard mode customized logo url", async () => {
     document.documentElement.dataset.mode = "dashboard";
     (getRuntime as jest.Mock).mockReturnValueOnce({
       getBrandSettings() {

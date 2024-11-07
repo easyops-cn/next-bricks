@@ -50,7 +50,7 @@ const WrappedPopover = wrapBrick<
   PopoverEventsMapping
 >("eo-popover", {
   onVisibleChange: "visible.change",
-  beforeVisibleChange: "before.visible.change",
+  onBeforeVisibleChange: "before.visible.change",
 });
 
 const GAP_WIDTH = 8;
@@ -246,7 +246,7 @@ function ThreeLevelMenuCom({
       key={item.key}
       strategy="fixed"
       anchorDisplay={anchorDisplay}
-      beforeVisibleChange={handlePopupVisibleChange}
+      onBeforeVisibleChange={handlePopupVisibleChange}
     >
       <WrappedMenuItem
         className="sub-menu-item-label"
@@ -307,7 +307,7 @@ function SitMapMenCom({
       strategy="fixed"
       arrow={false}
       anchorDisplay={anchorDisplay}
-      beforeVisibleChange={handleVisibleChange}
+      onBeforeVisibleChange={handleVisibleChange}
     >
       <WrappedMenuItem
         className="sub-menu-item-label"
