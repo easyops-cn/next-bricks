@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import { createDecorators } from "@next-core/element";
+import { createDecorators, EventEmitter } from "@next-core/element";
 import { ReactNextElement, wrapLocalBrick } from "@next-core/react-element";
+import { getRuntime } from "@next-core/runtime";
+import classNames from "classnames";
 import "@next-core/theme";
 import {
   EoNarrowView,
@@ -8,10 +10,11 @@ import {
   NarrowViewSize,
 } from "../narrow-view/index.js";
 import { BannerProps, EoBanner } from "../banner/index.js";
+import Logo from "../images/logo.svg";
+import { DashboardExit } from "./DashboardExit.js";
 import styleText from "./styles.shadow.css";
-import classNames from "classnames";
 
-const { defineElement, property } = createDecorators();
+const { defineElement, property, event } = createDecorators();
 
 const WrappedNarrowView = wrapLocalBrick<EoNarrowView, NarrowViewProps>(
   EoNarrowView
@@ -28,6 +31,8 @@ export interface MainViewProps {
   bannerSunk?: boolean;
   showBanner?: boolean;
   showFooter?: boolean;
+  showDashboardLogo?: boolean;
+  showDashboardExit?: boolean;
 }
 
 export type MainViewGap = "small" | "medium";
@@ -116,6 +121,30 @@ class EoMainView extends ReactNextElement {
   @property({ type: Boolean })
   accessor showFooter: boolean | undefined;
 
+  /**
+   * 是否展示 logo（dashboard 模式）
+   * @default true
+   */
+  @property({ type: Boolean })
+  accessor showDashboardLogo: boolean | undefined;
+
+  /**
+   * 是否展示退出按钮（dashboard 模式）
+   * @default true
+   */
+  @property({ type: Boolean })
+  accessor showDashboardExit: boolean | undefined;
+
+  /**
+   * 退出 dashboard 模式
+   */
+  @event({ type: "dashboard.exit" })
+  accessor #dashboardExit!: EventEmitter<void>;
+
+  #handleDashboardExit = () => {
+    this.#dashboardExit.emit();
+  };
+
   render() {
     return (
       <EoMainViewComponent
@@ -126,9 +155,16 @@ class EoMainView extends ReactNextElement {
         bannerImage={this.bannerImage}
         showBanner={this.showBanner}
         showFooter={this.showFooter}
+        showDashboardLogo={this.showDashboardLogo}
+        showDashboardExit={this.showDashboardExit}
+        onDashboardExit={this.#handleDashboardExit}
       />
     );
   }
+}
+
+interface MainViewComponentProps extends MainViewProps {
+  onDashboardExit: () => void;
 }
 
 export function EoMainViewComponent({
@@ -139,11 +175,19 @@ export function EoMainViewComponent({
   bannerImage,
   showBanner = true,
   showFooter,
-}: MainViewProps) {
+  showDashboardLogo = true,
+  showDashboardExit = true,
+  onDashboardExit,
+}: MainViewComponentProps) {
   const narrow = _narrow ?? "full";
   const bannerConfig = bannerAlone ? { bannerTitle, bannerDescription } : null;
   const footerRef = useRef<HTMLDivElement>(null);
   const [footerPinned, setFooterPinned] = useState(false);
+
+  // Use `documentElement.dataset.mode` instead of `getCurrentMode()` to support
+  // legacy v2 runtime.
+  const dashboardMode = document.documentElement.dataset.mode === "dashboard";
+  const { dashboard_mode_logo_url } = getRuntime().getBrandSettings();
 
   useEffect(() => {
     const footer = footerRef.current;
@@ -177,13 +221,27 @@ export function EoMainViewComponent({
           <div className="breadcrumb">
             <slot name="breadcrumb" />
           </div>
-          <div className="titlebar">
+          <div className={classNames("titlebar", { dashboard: dashboardMode })}>
+            {dashboardMode && showDashboardLogo && (
+              <div className="dashboard-logo">
+                {dashboard_mode_logo_url ? (
+                  <img src={dashboard_mode_logo_url} style={{ height: 32 }} />
+                ) : (
+                  <Logo />
+                )}
+              </div>
+            )}
+            {dashboardMode && <div className="dashboard-title-before" />}
             <div className="page-title">
               <slot name="pageTitle" />
             </div>
+            {dashboardMode && <div className="dashboard-title-after" />}
             <div className="toolbar">
               <slot name="toolbar" />
             </div>
+            {dashboardMode && showDashboardExit && (
+              <DashboardExit onDashboardExit={onDashboardExit} />
+            )}
           </div>
           <div className="banner">
             <slot name="banner" />
