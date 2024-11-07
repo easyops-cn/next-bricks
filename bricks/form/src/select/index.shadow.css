@@ -9,6 +9,10 @@
   min-width: 100px;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 /* select-input */
 .select-selector {
   position: relative;
@@ -47,6 +51,11 @@
 
 .select-multiple .select-selection-overflow {
   padding-left: 4px;
+}
+
+.select-single .select-selection-overflow {
+  width: 100%;
+  padding: 0 10px;
 }
 
 .selected-item {
@@ -99,8 +108,16 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
     .text {
       margin-right: 4px;
+      flex: 1;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }
@@ -307,6 +324,10 @@
   display: flex;
   align-items: center;
   min-width: 0;
+}
+
+.select-single .input-item {
+  flex: 1;
 }
 
 .empty-tips {
