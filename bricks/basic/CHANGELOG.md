@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.47.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.46.0...@next-bricks/basic@1.47.0) (2024-11-07)
+
+
+### Features
+
+* **eo-main-view:** support dashboard mode ([63fe3e4](https://github.com/easyops-cn/next-bricks/commit/63fe3e41e88877dc10b83362e12857060ef72e13))
+
+
+
+
+
 # [1.46.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.45.4...@next-bricks/basic@1.46.0) (2024-10-16)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.2.9...@next-bricks/illustrations@1.2.10) (2024-11-07)
+
+
+### Bug Fixes
+
+* **error-message:** new variant: search-empty ([9d884dc](https://github.com/easyops-cn/next-bricks/commit/9d884dc17986ec5ed48f502750186c39ccb5a4be))
+
+
+
+
+
 ## [1.2.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.2.8...@next-bricks/illustrations@1.2.9) (2024-10-16)
 
 **Note:** Version bump only for package @next-bricks/illustrations

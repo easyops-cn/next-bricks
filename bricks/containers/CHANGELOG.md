@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.11.0...@next-bricks/containers@1.12.0) (2024-11-07)
+
+
+### Bug Fixes
+
+* **eo-modal:** new prop: confirmDanger ([a87aac2](https://github.com/easyops-cn/next-bricks/commit/a87aac221305b1c107bf1f90029f127bb4f60544))
+
+
+### Features
+
+* **eo-main-view:** support dashboard mode ([63fe3e4](https://github.com/easyops-cn/next-bricks/commit/63fe3e41e88877dc10b83362e12857060ef72e13))
+
+
+
+
+
 # [1.11.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.10.1...@next-bricks/containers@1.11.0) (2024-10-22)
 
 

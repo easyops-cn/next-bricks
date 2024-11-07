@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.11...@next-bricks/form@1.13.12) (2024-11-07)
+
+
+### Bug Fixes
+
+* **eo-search:** new prop: inputStyle ([639f80d](https://github.com/easyops-cn/next-bricks/commit/639f80d625594828e802f7ff0ea185cff11a9574))
+* **eo-select:** fix suffix position ([27e5d80](https://github.com/easyops-cn/next-bricks/commit/27e5d80117126824647741e0ea6280e5a6c3e7da))
+
+
+
+
+
 ## [1.13.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.10...@next-bricks/form@1.13.11) (2024-11-05)
 
 
