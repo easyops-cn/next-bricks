@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, type CSSProperties } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
@@ -32,6 +32,7 @@ export interface SearchProps {
   clearable?: boolean;
   trim?: boolean;
   debounceTime?: number;
+  inputStyle?: CSSProperties;
 }
 
 export interface SearchEvents {
@@ -100,6 +101,12 @@ class GeneralSearch extends ReactNextElement implements SearchProps {
   accessor debounceTime: number = 0;
 
   /**
+   * 输入框样式
+   */
+  @property({ attribute: false })
+  accessor inputStyle: CSSProperties | undefined;
+
+  /**
    * 输入的搜索字符，输入变化时触发
    */
   @event({ type: "change" })
@@ -130,6 +137,7 @@ class GeneralSearch extends ReactNextElement implements SearchProps {
         debounceTime={this.debounceTime}
         onChange={this.#handleChange}
         onSearch={this.#handleSearch}
+        inputStyle={this.inputStyle}
         onDebouncedChange={this.#handleDebouncedChange}
       />
     );
@@ -148,6 +156,7 @@ export function GeneralSearchComponent(props: SearchComponentProps) {
     autoFocus,
     clearable,
     debounceTime,
+    inputStyle,
     onDebouncedChange,
     onChange,
     onSearch,
@@ -185,6 +194,7 @@ export function GeneralSearchComponent(props: SearchComponentProps) {
       value={value}
       onChange={handleChange as any}
       onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+      inputStyle={inputStyle}
     >
       <WrappedIcon
         slot="suffix"

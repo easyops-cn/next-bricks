@@ -114,6 +114,67 @@ eo-banner {
   display: block;
 }
 
+.dashboard {
+  position: relative;
+  height: 76px;
+  margin-top: -4px;
+  padding-bottom: 8px;
+}
+
+.dashboard-logo {
+  position: absolute;
+  top: -5px;
+  left: 0;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.dashboard-exit {
+  position: absolute;
+  right: 0;
+  top: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 36px;
+  background: #192d49;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.dashboard-exit:hover {
+  color: var(--antd-link-color);
+}
+
+.dashboard .page-title {
+  background: url(../images/dashboard-title-decorator-center.svg) center bottom
+    no-repeat;
+  background-size: 100% 45px;
+  height: 100%;
+}
+
+.dashboard-title-before,
+.dashboard-title-after {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+}
+
+.dashboard-title-before {
+  background: url(../images/dashboard-title-decorator-left.svg) right bottom
+    no-repeat;
+}
+
+.dashboard-title-after {
+  background: url(../images/dashboard-title-decorator-right.svg) left bottom
+    no-repeat;
+}
+
+.dashboard slot[name="pageTitle"]::slotted(*) {
+  height: 100%;
+}
+
 /* https://github.com/w3c/csswg-drafts/issues/3559#issuecomment-1758459996 */
 @supports not (inset: 0) {
   :host,
