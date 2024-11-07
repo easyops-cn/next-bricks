@@ -8,7 +8,7 @@ import type {
   PopoverEvents,
   PopoverEventsMapping,
   PopoverProps,
-} from "../popover/index.jsx";
+} from "../popover/index.js";
 import type {
   Action,
   ActionsEvents,

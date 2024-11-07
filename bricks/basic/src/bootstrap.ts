@@ -49,3 +49,4 @@ import "./broadcast-channel/index.js";
 import "./home-redirect/index.js";
 import "./iframe/index.js";
 import "./data-providers/set-timeout.js";
+import "./dropdown-select/index.js";
