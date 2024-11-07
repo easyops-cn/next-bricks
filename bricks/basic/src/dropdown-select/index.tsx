@@ -23,6 +23,10 @@ import type {
 import type { Menu } from "../menu";
 import type { MenuComponentProps, MenuItem } from "../menu-item";
 import styleText from "./styles.shadow.css";
+import type {
+  LoadingContainer,
+  LoadingContainerProps,
+} from "../loading-container";
 
 const { defineElement, property, event, method } = createDecorators();
 
@@ -38,11 +42,16 @@ const WrappedPopover = wrapBrick<
 const WrappedMenu = wrapBrick<Menu, unknown>("eo-menu");
 const WrappedMenuItem = wrapBrick<MenuItem, MenuComponentProps>("eo-menu-item");
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
+const WrappedLoadingContainer = wrapBrick<
+  LoadingContainer,
+  LoadingContainerProps
+>("eo-loading-container");
 
 export interface DropdownSelectProps {
   defaultValue?: string | number;
   options?: DropdownSelectOption[];
   size?: "medium" | "large";
+  loading?: boolean;
 }
 
 export interface DropdownSelectOption {
@@ -83,6 +92,9 @@ class DropdownSelect extends ReactNextElement implements DropdownSelectProps {
   @property({ render: false })
   accessor size: "medium" | "large" | undefined;
 
+  @property({ type: Boolean })
+  accessor loading: boolean | undefined;
+
   @event({ type: "change" })
   accessor #changeEvent!: EventEmitter<DropdownSelectOption>;
 
@@ -103,6 +115,7 @@ class DropdownSelect extends ReactNextElement implements DropdownSelectProps {
         ref={this.#ref}
         defaultValue={this.defaultValue}
         options={this.options}
+        loading={this.loading}
         onChange={this.#handleChange}
       />
     );
@@ -114,7 +127,7 @@ export interface DropdownSelectComponentProps extends DropdownSelectProps {
 }
 
 export function LegacyDropdownSelectComponent(
-  { defaultValue, options, onChange }: DropdownSelectComponentProps,
+  { defaultValue, options, loading, onChange }: DropdownSelectComponentProps,
   ref: React.ForwardedRef<DropdownSelectRef>
 ) {
   const [open, setOpen] = useState(false);
@@ -170,26 +183,32 @@ export function LegacyDropdownSelectComponent(
       </span>
       <div className="dropdown">
         <slot name="prefix" />
-        <WrappedMenu>
-          {options?.map((opt) => (
-            <WrappedMenuItem
-              key={opt.value!}
-              disabled={opt.disabled}
-              className={value === opt.value ? "active" : undefined}
-              onClick={(e: React.MouseEvent) => {
-                e.preventDefault();
-                e.stopPropagation();
-                setOpen(false);
-                if (value !== opt.value) {
-                  setValue(opt.value);
-                  onChange(opt);
-                }
-              }}
-            >
-              {opt.label}
-            </WrappedMenuItem>
-          ))}
-        </WrappedMenu>
+        <WrappedLoadingContainer
+          loading={loading}
+          delay={500}
+          style={{ width: "100%" }}
+        >
+          <WrappedMenu>
+            {options?.map((opt) => (
+              <WrappedMenuItem
+                key={opt.value}
+                disabled={opt.disabled}
+                className={value === opt.value ? "active" : undefined}
+                onClick={(e: React.MouseEvent) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setOpen(false);
+                  if (value !== opt.value) {
+                    setValue(opt.value);
+                    onChange(opt);
+                  }
+                }}
+              >
+                {opt.label}
+              </WrappedMenuItem>
+            ))}
+          </WrappedMenu>
+        </WrappedLoadingContainer>
       </div>
     </WrappedPopover>
   );
