@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>左右布局</title>
+    <g id="架构视图-V4" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="变化与确认" transform="translate(-347.000000, -218.000000)">
+            <g id="编组-38" transform="translate(273.000000, 205.000000)">
+                <g id="左右布局" transform="translate(84.000000, 23.000000) rotate(-90.000000) translate(-84.000000, -23.000000) translate(74.000000, 13.000000)">
+                    <g id="编组-37">
+                        <rect id="矩形" x="0" y="0" width="20" height="20"></rect>
+                    </g>
+                    <polygon id="路径-14" fill="#9FAECF" points="9.32917961 4.1645898 10.6708204 4.8354102 5.17082039 15.8354102 3.82917961 15.1645898"></polygon>
+                    <polygon id="路径-14" fill="#9FAECF" points="10.6708204 4.1645898 16.1708204 15.1645898 14.8291796 15.8354102 9.32917961 4.8354102"></polygon>
+                    <rect id="矩形" fill="#57689C" x="6.5" y="1" width="7" height="7" rx="3.5"></rect>
+                    <rect id="矩形备份-4590" fill="#57689C" x="1" y="12" width="7" height="7" rx="3.5"></rect>
+                    <rect id="矩形备份-4591" fill="#57689C" x="12" y="12" width="7" height="7" rx="3.5"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
