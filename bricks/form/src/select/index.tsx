@@ -290,7 +290,7 @@ class Select extends FormItemElementBase {
     });
   };
 
-  handleSelectFocus = () => {
+  #handleSelectFocus = () => {
     this.#focusEvent.emit();
   };
 
@@ -324,7 +324,7 @@ class Select extends FormItemElementBase {
         onChange={this.handleChange}
         optionsChange={this.#handleOptionsChange}
         onSearch={this.handleSearch}
-        onSelectFocus={this.handleSelectFocus}
+        onSelectFocus={this.#handleSelectFocus}
       />
     );
   }
@@ -399,12 +399,13 @@ export function SelectComponent(props: SelectProps) {
     if (!value) {
       setIsDropHidden(false);
       setIsFocused(true);
-      onSelectFocus?.();
       inputRef.current && inputRef.current.focus();
+      onSelectFocus?.();
     } else if (!disabled) {
       setIsDropHidden(!isDropHidden);
       setIsFocused(true);
       inputRef.current && inputRef.current.focus();
+      onSelectFocus?.();
     }
   }, [disabled, isDropHidden, value, onSelectFocus]);
 
