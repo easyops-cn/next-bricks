@@ -7,6 +7,10 @@
   display: none;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .sub-menu-item {
   cursor: pointer;
   .sub-menu-item-title {
