@@ -9,6 +9,10 @@
   display: none;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 :host([size="small"]) {
   --eo-loading-size: 14px;
 }

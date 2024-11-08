@@ -9,6 +9,7 @@ import React, {
 } from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
+import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
 import "@next-core/theme";
 import type {
   GeneralIcon,
@@ -22,11 +23,14 @@ import type {
 } from "../popover";
 import type { Menu } from "../menu";
 import type { MenuComponentProps, MenuItem } from "../menu-item";
-import styleText from "./styles.shadow.css";
 import type {
   LoadingContainer,
   LoadingContainerProps,
 } from "../loading-container";
+import { K, NS, locales } from "./i18n.js";
+import styleText from "./styles.shadow.css";
+
+initializeReactI18n(NS, locales);
 
 const { defineElement, property, event, method } = createDecorators();
 
@@ -49,6 +53,8 @@ const WrappedLoadingContainer = wrapBrick<
 
 export interface DropdownSelectProps {
   defaultValue?: string | number;
+  labelMaxWidth?: string | number;
+  dropdownMaxWidth?: string | number;
   options?: DropdownSelectOption[];
   size?: "medium" | "large";
   loading?: boolean;
@@ -84,7 +90,7 @@ class DropdownSelect extends ReactNextElement implements DropdownSelectProps {
   accessor defaultValue: string | number | undefined;
 
   @property({ attribute: false })
-  accessor options: DropdownSelectOption[] = [];
+  accessor options: DropdownSelectOption[] | undefined;
 
   /**
    * @default "medium"
@@ -94,6 +100,18 @@ class DropdownSelect extends ReactNextElement implements DropdownSelectProps {
 
   @property({ type: Boolean })
   accessor loading: boolean | undefined;
+
+  /**
+   * @default "650px"
+   */
+  @property({ attribute: false })
+  accessor labelMaxWidth: string | number | undefined;
+
+  /**
+   * @default "500px"
+   */
+  @property({ attribute: false })
+  accessor dropdownMaxWidth: string | number | undefined;
 
   @event({ type: "change" })
   accessor #changeEvent!: EventEmitter<DropdownSelectOption>;
@@ -116,6 +134,8 @@ class DropdownSelect extends ReactNextElement implements DropdownSelectProps {
         defaultValue={this.defaultValue}
         options={this.options}
         loading={this.loading}
+        labelMaxWidth={this.labelMaxWidth}
+        dropdownMaxWidth={this.dropdownMaxWidth}
         onChange={this.#handleChange}
       />
     );
@@ -127,9 +147,17 @@ export interface DropdownSelectComponentProps extends DropdownSelectProps {
 }
 
 export function LegacyDropdownSelectComponent(
-  { defaultValue, options, loading, onChange }: DropdownSelectComponentProps,
+  {
+    defaultValue,
+    options,
+    loading,
+    labelMaxWidth,
+    dropdownMaxWidth,
+    onChange,
+  }: DropdownSelectComponentProps,
   ref: React.ForwardedRef<DropdownSelectRef>
 ) {
+  const { t } = useTranslation(NS);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(defaultValue);
   const [memoizedOptions, setMemoizedOptions] = useState<
@@ -141,7 +169,7 @@ export function LegacyDropdownSelectComponent(
       setMemoizedOptions((prev) => {
         return prev?.some((opt) => opt.value === option.value)
           ? prev
-          : prev?.concat(option);
+          : (prev ?? []).concat(option);
       });
     },
   }));
@@ -176,12 +204,12 @@ export function LegacyDropdownSelectComponent(
       onBeforeVisibleChange={handleBeforeVisibleChange}
     >
       <span slot="anchor" className="trigger">
-        <span className="label">
-          {activeOption ? activeOption?.label : "请选择"}
+        <span className="label" style={{ maxWidth: labelMaxWidth }}>
+          {activeOption ? activeOption?.label : t(K.PLEASE_SELECT)}
         </span>
         <WrappedIcon lib="antd" icon={open ? "caret-up" : "caret-down"} />
       </span>
-      <div className="dropdown">
+      <div className="dropdown" style={{ maxWidth: dropdownMaxWidth }}>
         <slot name="prefix" />
         <WrappedLoadingContainer
           loading={loading}

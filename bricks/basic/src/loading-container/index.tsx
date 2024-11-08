@@ -61,7 +61,9 @@ export function LoadingContainerComponent({
   loading,
   delay,
 }: LoadingContainerComponentProps) {
-  const [delayedLoading, setDelayedLoading] = useState<boolean>(false);
+  const [delayedLoading, setDelayedLoading] = useState<boolean>(
+    delay ? false : !!loading
+  );
 
   useEffect(() => {
     let timeout: number | undefined;
@@ -72,7 +74,7 @@ export function LoadingContainerComponent({
     if (loading) {
       timeout = setTimeout(() => {
         setDelayedLoading(true);
-      }, delay ?? 500) as unknown as number;
+      }, delay) as unknown as number;
     } else {
       setDelayedLoading(false);
     }
