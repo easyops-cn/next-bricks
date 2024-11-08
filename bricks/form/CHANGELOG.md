@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.12...@next-bricks/form@1.13.13) (2024-11-08)
+
+
+### Bug Fixes
+
+* **eo-select:** always emit select.focus when not disabled ([8929c6a](https://github.com/easyops-cn/next-bricks/commit/8929c6ac30cf80b9decc594bc011f6a05c9ec016))
+
+
+
+
+
 ## [1.13.12](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.11...@next-bricks/form@1.13.12) (2024-11-07)
 
 
