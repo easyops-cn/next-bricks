@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>力布局</title>
+    <g id="架构视图-V4" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="变化与确认" transform="translate(-286.000000, -218.000000)">
+            <g id="编组-38" transform="translate(273.000000, 205.000000)">
+                <g id="编组-37" transform="translate(13.000000, 13.000000)">
+                    <polygon id="路径-10" fill="#9FAECF" points="15.4696699 3.46966991 16.5303301 4.53033009 10.5303301 10.5303301 9.46966991 9.46966991"></polygon>
+                    <polygon id="路径-10" fill="#9FAECF" points="9.45399142 9.48582627 10.5460086 10.5141737 4.54600858 16.8856612 3.45399142 15.8573138"></polygon>
+                    <polygon id="路径-13" fill="#9FAECF" points="10.0303301 8.96966991 16.5303301 15.4696699 15.4696699 16.5303301 8.96966991 10.0303301"></polygon>
+                    <polygon id="路径-13" fill="#9FAECF" points="4.03033009 2.96966991 10.0303301 8.96966991 8.96966991 10.0303301 2.96966991 4.03033009"></polygon>
+                    <rect id="矩形" x="0" y="0" width="20" height="20"></rect>
+                    <circle id="椭圆形" fill="#57689C" cx="10" cy="10" r="3"></circle>
+                    <circle id="椭圆形备份-10" fill="#57689C" cx="16" cy="4" r="3"></circle>
+                    <circle id="椭圆形备份-12" fill="#57689C" cx="4" cy="4" r="3"></circle>
+                    <circle id="椭圆形备份-13" fill="#57689C" cx="4" cy="16" r="3"></circle>
+                    <circle id="椭圆形备份-11" fill="#57689C" cx="16" cy="16" r="3"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
