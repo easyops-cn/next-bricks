@@ -8,7 +8,7 @@ import type {
   PopoverEvents,
   PopoverEventsMapping,
   PopoverProps,
-} from "../popover/index.jsx";
+} from "../popover/index.js";
 import type {
   Action,
   ActionsEvents,
@@ -27,7 +27,7 @@ const WrappedPopover = wrapBrick<
   PopoverEventsMapping
 >("eo-popover", {
   onVisibleChange: "visible.change",
-  beforeVisibleChange: "before.visible.change",
+  onBeforeVisibleChange: "before.visible.change",
 });
 
 const WrappedActions = wrapBrick<
@@ -161,7 +161,7 @@ export function EoDropdownActionsComponent({
       active={visible}
       arrow={false}
       distance={4}
-      beforeVisibleChange={(e) => {
+      onBeforeVisibleChange={(e) => {
         setVisible(e.detail);
         onVisibleChange?.(e.detail);
       }}

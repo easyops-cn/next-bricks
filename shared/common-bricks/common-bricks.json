@@ -36,7 +36,9 @@
     "eo-event-agent",
     "eo-message-listener",
     "eo-broadcast-channel",
-    "eo-iframe"
+    "eo-iframe",
+    "eo-dropdown-select",
+    "eo-loading-container"
   ],
   "icons": [
     "eo-antd-icon",

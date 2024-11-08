@@ -6,6 +6,10 @@
   display: none;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .menu-group-title {
   line-height: 1.5;
   padding: 8px;

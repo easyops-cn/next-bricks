@@ -40,7 +40,7 @@ export interface PopoverEvents {
 }
 export interface PopoverEventsMapping {
   onVisibleChange: "visible.change";
-  beforeVisibleChange: "before.visible.change";
+  onBeforeVisibleChange: "before.visible.change";
 }
 
 /**
@@ -180,7 +180,7 @@ class Popover extends ReactNextElement implements PopoverProps {
         active={this.active}
         disabled={this.disabled}
         onVisibleChange={this.#handleVisibleChange}
-        beforeVisibleChange={this.#handleBeforeVisibleChange}
+        onBeforeVisibleChange={this.#handleBeforeVisibleChange}
         distance={this.distance}
         anchorDisplay={this.anchorDisplay}
         zIndex={this.zIndex}
@@ -191,7 +191,7 @@ class Popover extends ReactNextElement implements PopoverProps {
 
 interface PopoverComponentProps extends PopoverProps {
   onVisibleChange?: (visible: boolean) => void;
-  beforeVisibleChange?: (visible: boolean) => void;
+  onBeforeVisibleChange?: (visible: boolean) => void;
 }
 
 function PopoverComponent(props: PopoverComponentProps) {
@@ -203,7 +203,7 @@ function PopoverComponent(props: PopoverComponentProps) {
     arrowColor,
     shiftPadding = 24,
     onVisibleChange,
-    beforeVisibleChange,
+    onBeforeVisibleChange,
     distance = props.arrow ? POPUP_DISTANCE + ARROW_SIZE : POPUP_DISTANCE,
     anchorDisplay = "inline-block",
     zIndex,
@@ -229,7 +229,7 @@ function PopoverComponent(props: PopoverComponentProps) {
       const body = defaultRef.current;
 
       if (popover?.popup && body) {
-        triggerEvent && beforeVisibleChange?.(visible);
+        triggerEvent && onBeforeVisibleChange?.(visible);
 
         if (!runAnimation) {
           if (popupAnimation.current) {
@@ -293,7 +293,7 @@ function PopoverComponent(props: PopoverComponentProps) {
         }
       }
     },
-    [beforeVisibleChange, onVisibleChange]
+    [onBeforeVisibleChange, onVisibleChange]
   );
 
   useEffect(() => {

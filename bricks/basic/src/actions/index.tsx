@@ -32,7 +32,7 @@ const WrappedPopover = wrapBrick<
   PopoverEventsMapping
 >("eo-popover", {
   onVisibleChange: "visible.change",
-  beforeVisibleChange: "before.visible.change",
+  onBeforeVisibleChange: "before.visible.change",
 });
 
 interface SubMenuItemComProps {

@@ -1,0 +1,61 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+:host([size="large"]) .trigger {
+  font-size: var(--title-font-size-larger);
+}
+
+.label {
+  max-width: 650px;
+  margin-right: 0.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dropdown {
+  max-width: 500px;
+  padding: 10px;
+  border-radius: 4px;
+  background: var(--antd-dropdown-menu-bg);
+  box-shadow: var(--antd-box-shadow-base);
+}
+
+eo-menu {
+  border: 0;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+}
+
+eo-menu-item::part(menu-item) {
+  padding: 5px 12px;
+  line-height: 22px;
+  border-radius: var(--medius-border-radius);
+}
+
+eo-menu-item:not([disabled]):hover::part(menu-item) {
+  background-color: var(--left-sidebar-item-hover-bg);
+}
+
+.active::part(menu-item) {
+  font-weight: 600;
+  background-color: var(--app-bar-dropdown-menu-item-hover-bg);
+  color: var(--theme-blue-color);
+}

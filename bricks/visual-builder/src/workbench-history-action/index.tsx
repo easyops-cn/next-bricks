@@ -46,7 +46,7 @@ const WrappedPopover = wrapBrick<
   PopoverEventsMapping
 >("eo-popover", {
   onVisibleChange: "visible.change",
-  beforeVisibleChange: "before.visible.change",
+  onBeforeVisibleChange: "before.visible.change",
 });
 
 interface HistoryData
@@ -181,7 +181,7 @@ export function WorkbenchHistoryActionComponent(
       trigger="click"
       arrow={true}
       arrowColor="var(--color-fill-bg-container-4)"
-      beforeVisibleChange={handleBeforeVisibleChange}
+      onBeforeVisibleChange={handleBeforeVisibleChange}
     >
       <WrappedButton
         slot="anchor"

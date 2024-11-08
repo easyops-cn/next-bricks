@@ -38,7 +38,7 @@ const WrappedPopover = wrapBrick<
   PopoverEventsMapping
 >("eo-popover", {
   onVisibleChange: "visible.change",
-  beforeVisibleChange: "before.visible.change",
+  onBeforeVisibleChange: "before.visible.change",
 });
 const WrappedActions = wrapBrick<
   EoActions,
@@ -213,7 +213,7 @@ export function EoMiniActionsComponent(props: EoMiniActionsComponentProps) {
           strategy="fixed"
           arrow={false}
           active={dropdownVisible}
-          beforeVisibleChange={handlePopoverVisibleChange}
+          onBeforeVisibleChange={handlePopoverVisibleChange}
           ref={(el) => {
             el?.addEventListener(
               "click",
