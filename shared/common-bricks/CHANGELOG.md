@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.52.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.51.0...@next-shared/common-bricks@0.52.0) (2024-11-08)
+
+
+### Bug Fixes
+
+* rename onBeforeVisibleChange ([f80ba8f](https://github.com/easyops-cn/next-bricks/commit/f80ba8f9d3819935b7b26b77384c7e0513ae9aed))
+
+
+### Features
+
+* new brick: eo-loading-container ([8424404](https://github.com/easyops-cn/next-bricks/commit/842440402ce6354140a4a8e3da582b9283452830))
+
+
+
+
+
 # [0.51.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.50.0...@next-shared/common-bricks@0.51.0) (2024-11-04)
 
 

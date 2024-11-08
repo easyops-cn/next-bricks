@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.36.17](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.36.16...@next-bricks/visual-builder@1.36.17) (2024-11-08)
+
+
+### Bug Fixes
+
+* rename onBeforeVisibleChange ([f80ba8f](https://github.com/easyops-cn/next-bricks/commit/f80ba8f9d3819935b7b26b77384c7e0513ae9aed))
+
+
+
+
+
 ## [1.36.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/visual-builder@1.36.15...@next-bricks/visual-builder@1.36.16) (2024-10-16)
 
 **Note:** Version bump only for package @next-bricks/visual-builder

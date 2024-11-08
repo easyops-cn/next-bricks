@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.48.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.47.0...@next-bricks/basic@1.48.0) (2024-11-08)
+
+
+### Bug Fixes
+
+* refine dropdown-select ([f4c7f50](https://github.com/easyops-cn/next-bricks/commit/f4c7f50168d99cf575b7428358dd75b308361e98))
+* rename onBeforeVisibleChange ([f80ba8f](https://github.com/easyops-cn/next-bricks/commit/f80ba8f9d3819935b7b26b77384c7e0513ae9aed))
+* set box-sizing: border-box ([f014218](https://github.com/easyops-cn/next-bricks/commit/f014218d8d5932d80c600637e7772fad4e97f571))
+
+
+### Features
+
+* new brick: eo-dropdown-select ([0fd57b7](https://github.com/easyops-cn/next-bricks/commit/0fd57b7b0ac192079c8bd96a640d5bccd3a0f562))
+* new brick: eo-loading-container ([8424404](https://github.com/easyops-cn/next-bricks/commit/842440402ce6354140a4a8e3da582b9283452830))
+
+
+
+
+
 # [1.47.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.46.0...@next-bricks/basic@1.47.0) (2024-11-07)
 
 
