@@ -1,7 +1,7 @@
 import { describe, test, expect, jest } from "@jest/globals";
 import { act } from "react-dom/test-utils";
 import "./";
-import type { ErrorMessage } from "./index.js";
+import type { IllustrationMessage } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
@@ -16,11 +16,11 @@ customElements.define(
   }
 );
 
-describe("illustrations.error-message", () => {
+describe("eo-illustration-message", () => {
   test("basic usage", async () => {
     const element = document.createElement(
-      "illustrations.error-message"
-    ) as ErrorMessage;
+      "eo-illustration-message"
+    ) as IllustrationMessage;
     element.variant = "internet-disconnected";
     element.errorTitle = "Oops";
     element.description = "Yaks";
@@ -39,11 +39,12 @@ describe("illustrations.error-message", () => {
           class="image"
         >
           <img
+            alt="internet-disconnected"
             src="easyops2/internet-disconnected.svg"
           />
         </div>,
         <div
-          class="title"
+          class="heading"
         >
           Oops
         </div>,
@@ -52,9 +53,7 @@ describe("illustrations.error-message", () => {
         >
           Yaks
         </div>,
-        <div
-          class="extra"
-        >
+        <div>
           <slot />
         </div>,
       ]
@@ -68,11 +67,9 @@ describe("illustrations.error-message", () => {
 
   test("not found", async () => {
     const element = document.createElement(
-      "illustrations.error-message"
-    ) as ErrorMessage;
+      "eo-illustration-message"
+    ) as IllustrationMessage;
     element.variant = "not-found";
-
-    expect(element.shadowRoot).toBeFalsy();
 
     act(() => {
       document.body.appendChild(element);
@@ -86,12 +83,11 @@ describe("illustrations.error-message", () => {
           class="image"
         >
           <img
+            alt="not-found"
             src="exception/http-404.svg"
           />
         </div>,
-        <div
-          class="extra"
-        >
+        <div>
           <slot />
         </div>,
       ]
@@ -100,15 +96,12 @@ describe("illustrations.error-message", () => {
     act(() => {
       document.body.removeChild(element);
     });
-    expect(element.shadowRoot?.childNodes.length).toBe(0);
   });
 
   test("unknown error", async () => {
     const element = document.createElement(
-      "illustrations.error-message"
-    ) as ErrorMessage;
-
-    expect(element.shadowRoot).toBeFalsy();
+      "eo-illustration-message"
+    ) as IllustrationMessage;
 
     act(() => {
       document.body.appendChild(element);
@@ -125,9 +118,7 @@ describe("illustrations.error-message", () => {
             src="easyops2/unknown-error.svg"
           />
         </div>,
-        <div
-          class="extra"
-        >
+        <div>
           <slot />
         </div>,
       ]
@@ -136,6 +127,60 @@ describe("illustrations.error-message", () => {
     act(() => {
       document.body.removeChild(element);
     });
-    expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
+
+  test("status variants", async () => {
+    const element = document.createElement(
+      "eo-illustration-message"
+    ) as IllustrationMessage;
+    element.variant = "success";
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes).toMatchInlineSnapshot(`
+      NodeList [
+        <style>
+          styles.shadow.css
+        </style>,
+        <div
+          class="status success"
+        >
+          <eo-icon
+            icon="check-circle"
+            lib="antd"
+            theme="filled"
+          />
+        </div>,
+        <div>
+          <slot />
+        </div>,
+      ]
+    `);
+
+    await act(async () => {
+      element.variant = "error";
+    });
+    expect(
+      element.shadowRoot?.querySelector("eo-icon")?.getAttribute("icon")
+    ).toBe("close-circle");
+
+    await act(async () => {
+      element.variant = "warning";
+    });
+    expect(
+      element.shadowRoot?.querySelector("eo-icon")?.getAttribute("icon")
+    ).toBe("warning");
+
+    await act(async () => {
+      element.variant = "info";
+    });
+    expect(
+      element.shadowRoot?.querySelector("eo-icon")?.getAttribute("icon")
+    ).toBe("exclamation-circle");
+
+    act(() => {
+      document.body.removeChild(element);
+    });
   });
 });
