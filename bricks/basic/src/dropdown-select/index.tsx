@@ -76,7 +76,9 @@ const DropdownSelectComponent = forwardRef<
 >(LegacyDropdownSelectComponent);
 
 /**
- * 构件 `eo-dropdown-select`
+ * 下拉式选择构件，常用于标题
+ *
+ * @slot prefix - 下拉列表前置内容
  */
 export
 @defineElement("eo-dropdown-select", {

@@ -1,10 +1,10 @@
-构件 `eo-dropdown-select`
+下拉式选择构件，常用于标题。
 
 ## Examples
 
 ### Basic
 
-```yaml preview
+```yaml preview minHeight="200px"
 brick: eo-dropdown-select
 properties:
   size: large
@@ -14,21 +14,6 @@ properties:
       value: beijing
     - label: Shenzhen
       value: shenzhen
-children:
-  - brick: eo-search
-    slot: prefix
-    properties:
-      style:
-        marginBottom: 8px
-    events:
-      input.focus:
-        target: eo-dropdown-select
-        properties:
-          options:
-            - label: Beijing
-              value: beijing
-            - label: Shenzhen
-              value: shenzhen
-            - label: Guangzhou
-              value: guangzhou
+    - label: Guangzhou
+      value: guangzhou
 ```
