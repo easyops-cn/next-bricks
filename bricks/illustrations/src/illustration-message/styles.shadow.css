@@ -6,11 +6,16 @@
   padding: 48px 32px 72px;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 :host([hidden]) {
   display: none;
 }
 
-.image {
+.image,
+.success {
   margin-bottom: 24px;
 }
 
@@ -18,7 +23,7 @@
   max-width: 250px;
 }
 
-.title {
+.heading {
   font-size: 24px;
   line-height: 1.8;
   font-weight: var(--font-weight-500);
@@ -29,4 +34,24 @@
   font-size: 16px;
   line-height: 1.6;
   color: var(--color-secondary-text);
+}
+
+.status {
+  font-size: 72px;
+}
+
+.success {
+  color: var(--color-success);
+}
+
+.error {
+  color: var(--color-error);
+}
+
+.warning {
+  color: var(--color-warning);
+}
+
+.info {
+  color: var(--color-info);
 }

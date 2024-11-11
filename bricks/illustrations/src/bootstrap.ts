@@ -1,4 +1,4 @@
 import "./data-providers/get-illustration.js";
 import "./data-providers/get-illustrations-by-category.js";
 import "./loading-transition/index.js";
-import "./error-message/index.js";
+import "./illustration-message/index.js";

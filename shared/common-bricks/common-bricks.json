@@ -91,6 +91,7 @@
     "eo-time-range-picker",
     "eo-color-picker"
   ],
+  "illustrations": ["eo-illustration-message"],
   "presentational": [
     "eo-code-display",
     "eo-alert",
