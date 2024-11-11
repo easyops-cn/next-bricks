@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.53.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.52.0...@next-shared/common-bricks@0.53.0) (2024-11-11)
+
+
+### Features
+
+* rename illustrations.error-message to eo-illustration-message, and support status variants ([5a72981](https://github.com/easyops-cn/next-bricks/commit/5a729813c8658e7dbc1d3abeac1f2f5b47ca66d1))
+
+
+
+
+
 # [0.52.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.51.0...@next-shared/common-bricks@0.52.0) (2024-11-08)
 
 
