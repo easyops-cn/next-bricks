@@ -1,6 +1,6 @@
 {
   "$schema": "http://json.schemastore.org/renovate",
-  "extends": ["config:base"],
+  "extends": ["config:recommended"],
   "prHourlyLimit": 2,
   "rangeStrategy": "bump",
   "semanticCommits": "enabled",
@@ -8,64 +8,65 @@
   "ignorePresets": [":ignoreModulesAndTests"],
   "packageRules": [
     {
-      "excludePackagePatterns": [
-        "^@next-core/",
-        "^@next-dll/",
-        "^@typescript-eslint/",
-        "^eslint"
-      ],
-      "excludePackageNames": [
-        "@shoelace-style/shoelace",
-        "concurrently",
-        "cross-env",
-        "husky",
-        "lerna",
-        "lint-staged",
-        "prettier",
-        "typescript"
-      ],
       "matchManagers": ["npm"],
-      "enabled": false
+      "enabled": false,
+      "matchPackageNames": [
+        "!/^@next-core//",
+        "!/^@next-dll//",
+        "!/^@typescript-eslint//",
+        "!/^eslint/",
+        "!@shoelace-style/shoelace",
+        "!concurrently",
+        "!cross-env",
+        "!husky",
+        "!lerna",
+        "!lint-staged",
+        "!prettier",
+        "!typescript"
+      ]
     },
     {
-      "matchPackagePatterns": ["^@next-core/"],
-      "excludePackageNames": [
-        "@next-core/brick-dll-v3",
-        "@next-core/styles-v3",
-        "@next-core/illustrations"
-      ],
       "groupName": "next-core packages",
-      "assignees": ["weareoutman"]
+      "assignees": ["weareoutman"],
+      "matchPackageNames": [
+        "/^@next-core//",
+        "!@next-core/brick-dll-v3",
+        "!@next-core/styles-v3",
+        "!@next-core/illustrations"
+      ]
     },
     {
       "matchPackageNames": [
         "@next-core/brick-dll-v3",
         "@next-core/styles-v3",
-        "@next-core/illustrations"
+        "@next-core/illustrations",
+        "/^@next-dll//"
       ],
-      "matchPackagePatterns": ["^@next-dll/"],
       "enabled": true,
       "groupName": "legacy v2 packages",
       "assignees": ["weareoutman"]
     },
     {
-      "matchPackagePatterns": ["^@fortawesome/"],
       "enabled": true,
       "groupName": "font-awesome packages",
-      "assignees": ["weareoutman"]
+      "assignees": ["weareoutman"],
+      "matchPackageNames": ["/^@fortawesome//"]
     },
     {
-      "matchPackageNames": ["antd", "@easyops-cn/rc-trigger"],
-      "matchPackagePatterns": ["^@ant-design/"],
+      "matchPackageNames": [
+        "antd",
+        "@easyops-cn/rc-trigger",
+        "/^@ant-design//"
+      ],
       "enabled": true,
       "groupName": "ant-design packages",
       "assignees": ["weareoutman"]
     },
     {
-      "matchPackagePatterns": ["^d3-"],
       "enabled": true,
       "groupName": "d3 packages",
-      "assignees": ["weareoutman"]
+      "assignees": ["weareoutman"],
+      "matchPackageNames": ["/^d3-/"]
     },
     {
       "matchPackageNames": ["monaco-editor", "monaco-editor-webpack-plugin"],
