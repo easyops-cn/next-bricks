@@ -3,7 +3,7 @@ import { createDecorators, EventEmitter } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
 import { ColorPicker, theme, ConfigProvider } from "antd";
-import { ColorPickerProps, Color } from "antd/lib/color-picker";
+import type { ColorPickerProps, Color } from "antd/es/color-picker";
 import { StyleProvider, createCache } from "@ant-design/cssinjs";
 import { FormItemElementBase } from "@next-shared/form";
 import type { FormItem, FormItemProps } from "../form-item/index.js";

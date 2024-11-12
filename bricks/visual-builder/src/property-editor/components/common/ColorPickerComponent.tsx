@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { ColorPicker } from "antd";
-import { ColorPickerProps } from "antd/lib/color-picker";
+import type { ColorPickerProps } from "antd/es/color-picker";
 import {
   palettePresets,
   systemPresetColorsMap,
