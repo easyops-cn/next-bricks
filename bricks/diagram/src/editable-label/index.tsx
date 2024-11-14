@@ -18,6 +18,7 @@ const { defineElement, property, event, method } = createDecorators();
 export interface EditableLabelProps {
   label?: string;
   type?: LabelType;
+  readOnly?: boolean;
 }
 
 export type LabelType = "line" | "default";
@@ -41,6 +42,9 @@ class EditableLabel extends ReactNextElement implements EditableLabelProps {
 
   @property({ render: false })
   accessor type: LabelType | undefined;
+
+  @property({ type: Boolean })
+  accessor readOnly: boolean | undefined;
 
   @event({ type: "label.editing.change" })
   accessor #labelEditingChange!: EventEmitter<boolean>;
@@ -68,6 +72,7 @@ class EditableLabel extends ReactNextElement implements EditableLabelProps {
       <EditableLabelComponent
         ref={this.#editableLabelRef}
         label={this.label}
+        readOnly={this.readOnly}
         onLabelEditingChange={this.#handleLabelEditingChange}
         onLabelChange={this.#handleLabelChange}
       />
@@ -83,6 +88,7 @@ export interface EditableLabelComponentProps extends EditableLabelProps {
 export function LegacyEditableLabelComponent(
   {
     label: _label,
+    readOnly,
     onLabelChange,
     onLabelEditingChange,
   }: EditableLabelComponentProps,
@@ -97,7 +103,7 @@ export function LegacyEditableLabelComponent(
 
   useImperativeHandle(ref, () => ({
     enableEditing() {
-      setEditingLabel(true);
+      readOnly || setEditingLabel(true);
     },
   }));
 
@@ -105,11 +111,17 @@ export function LegacyEditableLabelComponent(
     setCurrentLabel(label);
   }, [label]);
 
-  const handleEditLabel = useCallback((e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setEditingLabel(true);
-  }, []);
+  const handleEditLabel = useCallback(
+    (e: React.MouseEvent) => {
+      if (readOnly) {
+        return;
+      }
+      e.preventDefault();
+      e.stopPropagation();
+      setEditingLabel(true);
+    },
+    [readOnly]
+  );
 
   useEffect(() => {
     if (editingLabel) {
@@ -136,6 +148,7 @@ export function LegacyEditableLabelComponent(
   );
 
   const handleInputKeydown = useCallback((event: React.KeyboardEvent) => {
+    event.stopPropagation();
     const key =
       event.key ||
       /* istanbul ignore next: compatibility */ event.keyCode ||
@@ -177,6 +190,7 @@ export function LegacyEditableLabelComponent(
         onChange={handleInputChange}
         onKeyDown={handleInputKeydown}
         onBlur={handleInputBlur}
+        onContextMenu={stopPropagation}
       />
       <div className="label-text" onDoubleClick={handleEditLabel}>
         {currentLabel}

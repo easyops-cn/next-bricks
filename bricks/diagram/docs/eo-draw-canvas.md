@@ -451,6 +451,156 @@
                 target: <% EVENT.detail.target.id %>
 ```
 
+### Line labels
+
+设置连线文字。
+
+```yaml preview minHeight="600px"
+- brick: div
+  properties:
+    style:
+      display: flex
+      flexDirection: column
+      height: 600px
+      gap: 1em
+  context:
+    - name: initialCells
+      value: |
+        <%
+          [
+            {
+              type: "edge",
+              source: "X",
+              target: "Y",
+              description: "X->Y"
+            },
+            {
+              type: "edge",
+              source: "X",
+              target: "Z"
+            },
+            {
+              type: "node",
+              id: "X",
+              data: {
+                name: "Node X",
+              },
+              view: {
+                x: 100,
+                y: 100,
+                width: 60,
+                height: 60,
+              }
+            },
+            {
+              type: "node",
+              id: "Y",
+              data: {
+                name: "Node Y",
+              },
+              view: {
+                x: 0,
+                y: 300,
+                width: 60,
+                height: 60,
+              }
+            },
+            {
+              type: "node",
+              id: "Z",
+              data: {
+                name: "Node Z",
+              },
+              view: {
+                x: 300,
+                y: 200,
+                width: 60,
+                height: 60,
+              }
+            },
+          ]
+        %>
+    - name: activeTarget
+    - name: scale
+      value: 1
+  children:
+    - brick: eo-draw-canvas
+      properties:
+        style:
+          width: 100%
+          height: 100%
+        activeTarget: <%= CTX.activeTarget %>
+        fadeUnrelatedCells: true
+        dragBehavior: lasso
+        layoutOptions:
+          snap:
+            object: true
+        defaultNodeSize: [60, 60]
+        defaultNodeBricks:
+          - useBrick:
+              brick: diagram.experimental-node
+              properties:
+                textContent: <% `Node ${DATA.node.id}` %>
+                status: |
+                  <%=
+                    (CTX.activeTarget?.type === "multi"
+                      ? CTX.activeTarget.targets
+                      : CTX.activeTarget
+                      ? [CTX.activeTarget]
+                      : []
+                    ).some((target) => (
+                      target.type === "node" && target.id === DATA.node.id
+                    ))
+                      ? "highlighted"
+                      : "default"
+                  %>
+        cells: <% CTX.initialCells %>
+        lineConnector: true
+        defaultEdgeLines:
+          - callLabelOnDoubleClick: enableEditing
+            label:
+              useBrick:
+                brick: diagram.editable-label
+                properties:
+                  label: <% DATA.edge.description %>
+                  type: line
+                  # Set `readOnly: true` for eo-display-canvas
+                  # readOnly: true
+                events:
+                  label.change:
+                    # Make sure only trigger update if label actually changed
+                    if: <% (DATA.edge.description || "") !== (EVENT.detail || "") %>
+                    action: context.replace
+                    args:
+                      - initialCells
+                      - |-
+                        <%
+                          CTX.initialCells.map((edge) =>
+                            edge.type === "edge" &&
+                            edge.source === DATA.edge.source &&
+                            edge.target === DATA.edge.target
+                              ? { ...edge, description: EVENT.detail }
+                              : edge
+                          )
+                        %>
+      events:
+        activeTarget.change:
+          action: context.replace
+          args:
+            - activeTarget
+            - <% EVENT.detail %>
+        cell.delete:
+          action: message.warn
+          args:
+            - |
+              <% `You wanna delete ${EVENT.detail.type} ${EVENT.detail.type === "edge" ? `(${EVENT.detail.source} => ${EVENT.detail.target})` : EVENT.detail.id}?` %>
+        scale.change:
+          action: context.replace
+          args:
+            - scale
+            - <% EVENT.detail %>
+```
+
 ### Line settings
 
 设置属性 `lineSettings` 来调整新的连线的样式，例如使用折线或直线。注意，该设置不影响已有的 edge 的连线样式。

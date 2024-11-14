@@ -297,7 +297,11 @@ describe("eo-draw-canvas", () => {
       [
         {
           if: DATA.edge.data?.virtual,
-          dashed: true
+          dashed: true,
+          text: {
+            content: DATA.edge.data?.description,
+          },
+          callLabelOnDoubleClick: "enableEditing",
         }
       ]
     %>` as any;
@@ -356,11 +360,17 @@ describe("eo-draw-canvas", () => {
       const result = await element.addEdge({
         source: "x",
         target: "y",
+        data: {
+          description: "test ege",
+        },
       });
       expect(result).toEqual({
         type: "edge",
         source: "x",
         target: "y",
+        data: {
+          description: "test ege",
+        },
       });
     });
 
@@ -378,9 +388,7 @@ describe("eo-draw-canvas", () => {
     // Edges are adding to just next to the previous last edge,
     // If no previous edge, add to the start.
     expect(getCellTagNames()).toEqual([
-      "path",
-      "path",
-      "path",
+      "g",
       "foreignobject",
       "foreignobject",
       "foreignobject",
@@ -412,17 +420,40 @@ describe("eo-draw-canvas", () => {
     ).toBe(true);
 
     expect(getCellTagNames()).toEqual([
-      "path",
-      "path",
-      "path",
-      "path",
-      "path",
-      "path",
+      "g",
+      "defs",
+      "g",
+      "foreignobject",
       "foreignobject",
       "foreignobject",
       "foreignobject",
       "foreignobject",
     ]);
+
+    const labels = element.shadowRoot!.querySelectorAll(".line-label");
+    expect(labels.length).toBe(1);
+    act(() => {
+      fireEvent.click(labels[0]);
+    });
+    const mockEnableEditing = jest.fn();
+    Object.defineProperty(labels[0], "firstElementChild", {
+      value: {
+        enableEditing: mockEnableEditing,
+      },
+    });
+    act(() => {
+      fireEvent.dblClick(
+        element.shadowRoot!.querySelectorAll(".line-group")[0]
+      );
+    });
+    expect(mockEnableEditing).not.toBeCalled();
+
+    act(() => {
+      fireEvent.dblClick(
+        element.shadowRoot!.querySelectorAll(".line-group")[1]
+      );
+    });
+    expect(mockEnableEditing).toHaveBeenCalledTimes(1);
 
     act(() => {
       document.body.removeChild(element);
