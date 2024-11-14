@@ -28,6 +28,36 @@ describe("customRequest", () => {
     expect((requestConfig?.body as FormData).get("a")).toBe("b");
   });
 
+  test("should work with form-data array", async () => {
+    const mockHttp = jest.spyOn(http, "request");
+    await customRequest(
+      "api/cmdb",
+      { method: "POST", body: { a: ["b", "c"] } as unknown as BodyInit },
+      { requestType: "form-data" }
+    );
+    expect(mockHttp.mock.calls[0][0]).toEqual(
+      "api/gateway/logic.gateway_serviceapi/cmdb"
+    );
+    const requestConfig = mockHttp.mock.calls[0][1];
+    expect(requestConfig?.body instanceof FormData).toBeTruthy();
+    expect((requestConfig?.body as FormData).get("a")).toBe("b");
+  });
+
+  test("should work with form-data object", async () => {
+    const mockHttp = jest.spyOn(http, "request");
+    await customRequest(
+      "api/cmdb",
+      { method: "POST", body: { a: { b: "c" } } as unknown as BodyInit },
+      { requestType: "form-data" }
+    );
+    expect(mockHttp.mock.calls[0][0]).toEqual(
+      "api/gateway/logic.gateway_serviceapi/cmdb"
+    );
+    const requestConfig = mockHttp.mock.calls[0][1];
+    expect(requestConfig?.body instanceof FormData).toBeTruthy();
+    expect((requestConfig?.body as FormData).get("a[b]")).toBe("c");
+  });
+
   test("should work with full url", async () => {
     const mockHttp = jest.spyOn(http, "request");
     await customRequest("https://devops.dev.com/api/cmdb", { method: "GET" });
