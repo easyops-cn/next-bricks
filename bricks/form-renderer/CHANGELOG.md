@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.2.10...@next-bricks/form-renderer@0.3.0) (2024-11-14)
+
+
+### Features
+
+* 支持form-data格式的请求 ([0f6838a](https://github.com/easyops-cn/next-bricks/commit/0f6838a8cc4b17b735711e10946c23837b3f1e24))
+
+
+
+
+
 ## [0.2.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form-renderer@0.2.9...@next-bricks/form-renderer@0.2.10) (2024-10-16)
 
 **Note:** Version bump only for package @next-bricks/form-renderer
