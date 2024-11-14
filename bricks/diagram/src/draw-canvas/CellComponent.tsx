@@ -305,6 +305,8 @@ export function CellComponent({
           cells={cells}
           lineConfMap={lineConfMap}
           active={active}
+          readOnly={readOnly}
+          onSwitchActiveTarget={onSwitchActiveTarget}
         />
       ) : isDecoratorCell(cell) ? (
         <DecoratorComponent

@@ -239,3 +239,28 @@
     }
   }
 }
+
+.line-label-container {
+  overflow: visible;
+  opacity: 0;
+}
+
+.line-label-container.ready {
+  opacity: 1;
+}
+
+.line-label {
+  position: absolute;
+  display: block;
+  transform: translate(-50%, -50%);
+  white-space: pre-line;
+  width: max-content;
+  text-align: center;
+}
+
+.line-label.text {
+  font-size: 11px;
+  color: var(--color-secondary-text);
+  font-weight: 400;
+  line-height: 1.63636364;
+}

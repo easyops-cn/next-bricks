@@ -109,4 +109,55 @@ describe("diagram.editable-label", () => {
     });
     expect(element.shadowRoot?.childNodes.length).toBe(0);
   });
+
+  test("readOnly", async () => {
+    const element = document.createElement(
+      "diagram.editable-label"
+    ) as EditableLabel;
+    element.type = "line";
+    element.label = "ReadOnly Relation";
+    element.readOnly = true;
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes).toMatchInlineSnapshot(`
+      NodeList [
+        <style>
+          styles.shadow.css
+        </style>,
+        <div
+          class="label"
+        >
+          <input
+            class="label-input"
+            value="ReadOnly Relation"
+          />
+          <div
+            class="label-text"
+          >
+            ReadOnly Relation
+          </div>
+        </div>,
+      ]
+    `);
+
+    // Dblclick will be ignored
+    act(() => {
+      fireEvent.dblClick(element.shadowRoot!.querySelector(".label-text")!);
+    });
+    expect(
+      element.shadowRoot?.querySelector(".label")?.classList.contains("editing")
+    ).toBe(false);
+
+    // `enableEditing()` will be ignored
+    element.enableEditing();
+    expect(
+      element.shadowRoot?.querySelector(".label")?.classList.contains("editing")
+    ).toBe(false);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
 });

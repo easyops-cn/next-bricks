@@ -3,11 +3,13 @@ import type { SimulationLinkDatum, SimulationNodeDatum } from "d3-force";
 import type { ResizeCellPayload } from "./reducers/interfaces";
 import type {
   CurveType,
+  LineLabelConf,
   LineMarkerConf,
   LineMarkerType,
   NodePosition,
   PartialRectTuple,
   PositionTuple,
+  TextOptions,
   TransformLiteral,
 } from "../diagram/interfaces";
 import type {
@@ -130,12 +132,15 @@ export interface BaseEdgeLineConf {
   interactStrokeWidth?: number;
   parallelGap?: number;
   markers?: LineMarkerConf[];
+  callLabelOnDoubleClick?: string;
+  text?: TextOptions;
+  label?: LineLabelConf;
   /**
-   * 已废弃，使用markers代替，配置了对应的箭头测则显示
+   * @deprecated 已废弃，使用markers代替，配置了对应的箭头侧则显示
    */
   showStartArrow?: boolean;
   /**
-   * 已废弃
+   * @deprecated 已废弃，使用markers代替，配置了对应的箭头侧则显示
    */
   showEndArrow?: boolean;
   animate?: LineAnimate;
