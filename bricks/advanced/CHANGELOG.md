@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.41.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.41.3...@next-bricks/advanced@0.41.4) (2024-11-18)
+
+
+### Bug Fixes
+
+* **eo-next-table:** fix pagination style compatibility in Chrome < 87 ([3c4a562](https://github.com/easyops-cn/next-bricks/commit/3c4a562a408e1af64e57f939f0e537dca1b4a01a))
+
+
+
+
+
 ## [0.41.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.41.2...@next-bricks/advanced@0.41.3) (2024-11-14)
 
 **Note:** Version bump only for package @next-bricks/advanced
