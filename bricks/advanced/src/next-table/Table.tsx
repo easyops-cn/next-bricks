@@ -20,7 +20,7 @@ import {
 import { Table, ConfigProvider, theme } from "antd";
 import { StyleProvider, createCache } from "@ant-design/cssinjs";
 import { useCurrentTheme } from "@next-core/react-runtime";
-import { RowSelectMethod } from "antd/es/table/interface.js";
+import { RowSelectMethod, type SortOrder } from "antd/es/table/interface.js";
 import type { TableProps } from "antd/es/table";
 import { i18n } from "@next-core/i18n";
 import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
@@ -231,10 +231,15 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
       ?.filter((col) => !hiddenColumnsSet.has(col.key!))
       .map((col) => {
         const curSort = sortMap[col.key!];
-        const comparator = (recordA: RecordType, recordB: RecordType) => {
+        const comparator = (
+          recordA: RecordType,
+          recordB: RecordType,
+          sortOrder?: SortOrder
+        ) => {
           return naturalComparator(
             getValueByDataIndex(recordA, col.dataIndex),
-            getValueByDataIndex(recordB, col.dataIndex)
+            getValueByDataIndex(recordB, col.dataIndex),
+            sortOrder
           );
         };
 

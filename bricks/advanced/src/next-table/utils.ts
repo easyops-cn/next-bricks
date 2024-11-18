@@ -1,4 +1,5 @@
 import { get, isNil, reduce } from "lodash";
+import type { SortOrder } from "antd/es/table/interface.js";
 import { Column, RecordType } from "./interface.js";
 
 export const DEFAULT_PAGE_SIZE = 20;
@@ -136,6 +137,19 @@ export function getAllKeys({
   return [...new Set(keys)] as (string | number)[];
 }
 
-export function naturalComparator(a: unknown, b: unknown) {
-  return String(a).localeCompare(String(b));
+export function naturalComparator(
+  a: unknown,
+  b: unknown,
+  sortOrder?: SortOrder
+) {
+  const aIsNil = a == null;
+  const bIsNil = b == null;
+
+  if (aIsNil || bIsNil) {
+    // Always put null/undefined at the end
+    const result = sortOrder === "descend" ? -1 : 1;
+    return aIsNil && bIsNil ? 0 : aIsNil ? result : -result;
+  }
+
+  return a == b ? 0 : a > b ? 1 : -1;
 }
