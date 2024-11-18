@@ -416,7 +416,12 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
       }}
       getPopupContainer={() => shadowRoot as unknown as HTMLElement}
     >
-      <StyleProvider container={shadowRoot as ShadowRoot} cache={styleCache}>
+      <StyleProvider
+        container={shadowRoot as ShadowRoot}
+        cache={styleCache}
+        // Set hashPriority to "high" to disable `:where()` usage for compatibility
+        hashPriority="high"
+      >
         <DndContext
           sensors={sensors}
           collisionDetection={closestCenter}
@@ -644,6 +649,7 @@ export const NextTableComponent = forwardRef(function LegacyNextTableComponent(
                   }
                 }
               }}
+              className="next-table"
             />
           </SortableContext>
         </DndContext>

@@ -90,3 +90,19 @@
   --eo-table-wrapper-background: var(--antd-table-row-expand-nested-wrapper);
   --eo-table-wrapper-padding: 20px 32px;
 }
+
+/* Antd uses inset-inline-start/end which is not supported in Chrome < 87 */
+/* We manually fix it using left/right */
+
+.next-table.ant-table-wrapper .ant-table-container::before {
+  left: 0;
+}
+
+.next-table.ant-table-wrapper .ant-table-container::after {
+  right: 0;
+}
+
+.ant-pagination-options .ant-select .ant-select-arrow {
+  left: auto;
+  right: 11px;
+}
