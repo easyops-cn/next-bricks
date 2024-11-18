@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.41.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.41.4...@next-bricks/advanced@0.41.5) (2024-11-18)
+
+
+### Bug Fixes
+
+* **eo-next-table:** fix sort when using front search ([c5a8fed](https://github.com/easyops-cn/next-bricks/commit/c5a8fed24e1cd4631eaf2cbc95b8ebc7472ff4b1))
+
+
+
+
+
 ## [0.41.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.41.3...@next-bricks/advanced@0.41.4) (2024-11-18)
 
 
