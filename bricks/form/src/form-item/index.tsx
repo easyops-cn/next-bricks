@@ -330,10 +330,12 @@ export function FormItemComponent(props: FormItemProps) {
             <label>
               {required && <span className="required">*</span>}
               {label}
+              {labelBrick?.useBrick ? (
+                <ReactUseMultipleBricks
+                  {...labelBrick}
+                ></ReactUseMultipleBricks>
+              ) : null}
             </label>
-            {labelBrick?.useBrick ? (
-              <ReactUseMultipleBricks {...labelBrick}></ReactUseMultipleBricks>
-            ) : null}
           </div>
         </div>
       )}
