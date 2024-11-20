@@ -17,3 +17,4 @@ import "./time-picker/index.js";
 import "./date-picker/index.js";
 import "./time-range-picker/index.js";
 import "./color-picker/index.js";
+import "./editors/index.js";
