@@ -1,0 +1,16 @@
+:root {
+  --shared-markdown-code-color: #b30056;
+  --shared-markdown-code-background: #ffe6ec;
+  --shared-markdown-table-border-color: #ccc;
+  --shared-markdown-tr-background: #fff;
+  --shared-markdown-tr-background-alt: #f8f8f8;
+}
+
+html[data-theme="dark"],
+html[data-theme="dark-v2"] {
+  --shared-markdown-code-color: #f3679a;
+  --shared-markdown-code-background: var(--color-fill-bg-base-1);
+  --shared-markdown-table-border-color: var(--color-border-divider-line);
+  --shared-markdown-tr-background: rgba(255, 255, 255, 0);
+  --shared-markdown-tr-background-alt: var(--color-fill-bg-base-1);
+}
