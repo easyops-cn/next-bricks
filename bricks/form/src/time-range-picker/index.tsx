@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useState, useRef } from "react";
+import React, {
+  useEffect,
+  useMemo,
+  useState,
+  useRef,
+  CSSProperties,
+} from "react";
 import { createDecorators, EventEmitter } from "@next-core/element";
 import { wrapBrick } from "@next-core/react-element";
 import { useCurrentTheme } from "@next-core/react-runtime";
@@ -63,6 +69,7 @@ export interface EoTimeRangePickerProps extends FormItemProps {
   format: string;
   rangeType?: RangeType;
   placeholder?: string | [string, string];
+  inputStyle?: CSSProperties;
   onChange?: (range: TimeRange) => void;
   emitChangeOnInit?: boolean;
   selectNearDays?: number;
@@ -114,6 +121,13 @@ class EoTimeRangePicker extends FormItemElementBase {
    */
   @property({ attribute: false })
   accessor placeholder: string | [string, string] | undefined;
+
+  /**
+   * 输入框样式
+   */
+  @property({ attribute: false }) accessor inputStyle:
+    | React.CSSProperties
+    | undefined;
 
   /**
    * 只有rangeType在`date` 和 `dateTime`下， 才支持只选择最近n天(当前时间向前n天)
@@ -220,6 +234,7 @@ class EoTimeRangePicker extends FormItemElementBase {
         required={this.required}
         format={format}
         placeholder={this.placeholder}
+        inputStyle={this.inputStyle}
         validator={
           (this.validator
             ? this.#builtInvalidator.concat(this.validator)
@@ -265,6 +280,7 @@ export function RealTimeRangePicker(
     onChange,
     formElement,
     placeholder,
+    inputStyle,
   } = props;
   const times = ["time", "hmTime"];
   const rangeType = props.rangeType ?? "time";
@@ -322,7 +338,7 @@ export function RealTimeRangePicker(
   }, [value]);
 
   const timeRange = (
-    <div className="timeRange">
+    <div className="timeRange" style={inputStyle}>
       <TimePicker
         {...{ id: uniqueId("start-time-") }}
         // Currently we don't support multiple pick mode
@@ -435,7 +451,7 @@ export function RealTimeRangePicker(
 
   const dateRange = (
     <DatePicker.RangePicker
-      style={{ width: 400 }}
+      style={inputStyle}
       showTime={(rangeType as RangeType) === "dateTime"}
       picker={(rangeType as RangeType) === "dateTime" ? "date" : rangeType}
       value={pickerValue}
@@ -494,6 +510,7 @@ export function EoTimeRangePickerComponent(props: EoTimeRangePickerProps) {
               presetRanges={props.presetRanges}
               formElement={props.formElement}
               placeholder={props.placeholder}
+              inputStyle={props.inputStyle}
             />
           </div>
         </StyleProvider>
