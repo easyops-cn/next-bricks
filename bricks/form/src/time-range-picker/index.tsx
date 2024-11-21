@@ -62,6 +62,7 @@ export interface EoTimeRangePickerProps extends FormItemProps {
   value?: TimeRange;
   format: string;
   rangeType?: RangeType;
+  placeholder?: string | [string, string];
   onChange?: (range: TimeRange) => void;
   emitChangeOnInit?: boolean;
   selectNearDays?: number;
@@ -107,6 +108,12 @@ class EoTimeRangePicker extends FormItemElementBase {
    */
   @property({ attribute: false })
   accessor rangeType: RangeType | undefined;
+
+  /**
+   * 输入框提示文字,单时间段时为string，范围时间段时为[string, string]
+   */
+  @property({ attribute: false })
+  accessor placeholder: string | [string, string] | undefined;
 
   /**
    * 只有rangeType在`date` 和 `dateTime`下， 才支持只选择最近n天(当前时间向前n天)
@@ -197,7 +204,6 @@ class EoTimeRangePicker extends FormItemElementBase {
         format = "";
         break;
     }
-
     return (
       <EoTimeRangePickerComponent
         curElement={this}
@@ -213,6 +219,7 @@ class EoTimeRangePicker extends FormItemElementBase {
         rangeType={this.rangeType}
         required={this.required}
         format={format}
+        placeholder={this.placeholder}
         validator={
           (this.validator
             ? this.#builtInvalidator.concat(this.validator)
@@ -257,6 +264,7 @@ export function RealTimeRangePicker(
     presetRanges,
     onChange,
     formElement,
+    placeholder,
   } = props;
   const times = ["time", "hmTime"];
   const rangeType = props.rangeType ?? "time";
@@ -322,6 +330,7 @@ export function RealTimeRangePicker(
         getPopupContainer={(trigger) => trigger}
         value={!isEmpty(value?.startTime) ? startTime : undefined}
         format={format}
+        placeholder={placeholder as string | undefined}
       />
       <span className="timeRangeSplit">~</span>
       <TimePicker
@@ -331,6 +340,7 @@ export function RealTimeRangePicker(
         getPopupContainer={(trigger) => trigger}
         value={!isEmpty(value?.endTime) ? endTime : undefined}
         format={format}
+        placeholder={placeholder as string | undefined}
       />
     </div>
   );
@@ -435,6 +445,7 @@ export function RealTimeRangePicker(
       onOpenChange={onOpenChange}
       onOk={rangeOk}
       disabledDate={disabledDate}
+      placeholder={placeholder as [string, string] | undefined}
       separator={"~"}
       getPopupContainer={(trigger) => trigger}
       suffixIcon={<WrappedIcon icon="calendar" lib="easyops" />}
@@ -453,7 +464,6 @@ export function EoTimeRangePickerComponent(props: EoTimeRangePickerProps) {
   const cahce = useMemo(() => {
     return createCache();
   }, []);
-
   return (
     <WrappedFormItem
       exportparts="message"
@@ -483,6 +493,7 @@ export function EoTimeRangePickerComponent(props: EoTimeRangePickerProps) {
               selectNearDays={props.selectNearDays}
               presetRanges={props.presetRanges}
               formElement={props.formElement}
+              placeholder={props.placeholder}
             />
           </div>
         </StyleProvider>

@@ -404,11 +404,13 @@ describe("eo-time-range-picker", () => {
     const element = document.createElement(
       "eo-time-range-picker"
     ) as EoTimeRangePicker;
+    const placeholder = ["建卡起始日期", "结束日期"] as any;
     element.value = {
       endTime: "2023-11-15",
       startTime: "2022-01-18",
     };
     element.emitChangeOnInit = true;
+    element.placeholder = placeholder;
     element.rangeType = "year" as any;
     expect(element.shadowRoot).toBeFalsy();
 
@@ -422,6 +424,12 @@ describe("eo-time-range-picker", () => {
     expect(inputList).toHaveLength(2);
     expect((inputList?.[0] as HTMLInputElement)?.value).toBe("2022");
     expect((inputList?.[1] as HTMLInputElement)?.value).toBe("2023");
+    expect((inputList?.[0] as HTMLInputElement)?.placeholder).toBe(
+      placeholder[0]
+    );
+    expect((inputList?.[1] as HTMLInputElement)?.placeholder).toBe(
+      placeholder[1]
+    );
     act(() => {
       document.body.removeChild(element);
     });
