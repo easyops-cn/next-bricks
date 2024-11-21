@@ -8,6 +8,7 @@
 .timeRange {
   display: flex;
   align-items: center;
+  width: fit-content;
 }
 .timeRange .timeRangeSplit {
   width: 32px !important;
@@ -32,12 +33,14 @@
   margin-right: 0;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
+  flex: 1;
 }
 
 .timeRange .ant-picker:last-child {
   margin-right: 0;
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
+  flex: 1;
 }
 
 .timeRange
