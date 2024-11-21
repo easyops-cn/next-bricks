@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.14.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.15...@next-bricks/form@1.14.0) (2024-11-21)
+
+
+### Features
+
+* **eo-time-range-picker:**  add placeholder props ([7962235](https://github.com/easyops-cn/next-bricks/commit/79622359d9ac53c4579d4a4e0ddabeac99a5f53e))
+
+
+
+
+
 ## [1.13.15](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.13.14...@next-bricks/form@1.13.15) (2024-11-18)
 
 **Note:** Version bump only for package @next-bricks/form
