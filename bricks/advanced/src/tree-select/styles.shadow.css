@@ -8,7 +8,7 @@
 
 .ant-tree-select {
   width: 100%;
-  min-height: 30px;
+  min-height: 28px;
   height: max-content;
 }
 
@@ -18,4 +18,10 @@
 
 .ant-select-sm {
   height: 20px;
+}
+.ant-select-multiple .ant-select-selector {
+  border-radius: var(--small-border-radius);
+}
+.ant-select-multiple .ant-select-selector:after {
+  line-height: 22px;
 }
