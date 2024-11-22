@@ -292,6 +292,7 @@ function TreeSelectElement(props: TreeSelectProps): React.ReactElement {
           onSelect={onSelect}
           onSearch={onSearch}
           onTreeExpand={onTreeExpand}
+          virtual={false}
         />
       </StyleProvider>
     </ConfigProvider>
