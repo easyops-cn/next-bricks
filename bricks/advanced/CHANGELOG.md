@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.41.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.41.6...@next-bricks/advanced@0.41.7) (2024-11-22)
+
+
+### Bug Fixes
+
+* 默认关闭虚拟滚动，虚拟滚动会导致数据显示不完整（被遮住） ([b43497e](https://github.com/easyops-cn/next-bricks/commit/b43497e63473dcb3dc0969317bca3ba7ca8c5bd1))
+
+
+
+
+
 ## [0.41.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/advanced@0.41.5...@next-bricks/advanced@0.41.6) (2024-11-20)
 
 **Note:** Version bump only for package @next-bricks/advanced
