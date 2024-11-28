@@ -20,8 +20,12 @@ export interface LineEditorComponentProps {
 export function LineEditorComponent({
   scale,
 }: LineEditorComponentProps): JSX.Element | null {
-  const { rootRef, activeEditableLine, setLineEditorState } =
-    useHoverStateContext();
+  const {
+    rootRef,
+    activeEditableLine,
+    activeEditableLineIsAvailable,
+    setLineEditorState,
+  } = useHoverStateContext();
   const exitRef = useRef<SVGImageElement>(null);
   const entryRef = useRef<SVGImageElement>(null);
   const controlPointsRef = useRef<(SVGImageElement | null)[]>([]);
@@ -107,7 +111,7 @@ export function LineEditorComponent({
     };
   }, []);
 
-  if (!activeEditableLine) {
+  if (!activeEditableLine || !activeEditableLineIsAvailable) {
     return null;
   }
   const {
