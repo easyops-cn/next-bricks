@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.51.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.51.1...@next-bricks/diagram@0.51.2) (2024-11-28)
+
+
+### Bug Fixes
+
+* remove line editor when the edge is removed ([b31da8e](https://github.com/easyops-cn/next-bricks/commit/b31da8e088938c43af750ba9794102114a24748d))
+
+
+
+
+
 ## [0.51.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.51.0...@next-bricks/diagram@0.51.1) (2024-11-18)
 
 **Note:** Version bump only for package @next-bricks/diagram
