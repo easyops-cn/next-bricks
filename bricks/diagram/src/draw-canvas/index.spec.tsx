@@ -465,6 +465,7 @@ describe("eo-draw-canvas", () => {
     element.defaultNodeBricks = [{ useBrick: { brick: "div" } }];
     element.fadeUnrelatedCells = true;
     element.doNotResetActiveTargetForSelector = "#omit-target";
+    element.lineConnector = true;
     element.cells = [
       {
         type: "decorator",
@@ -474,6 +475,11 @@ describe("eo-draw-canvas", () => {
           x: 10,
           y: 10,
         },
+      },
+      {
+        type: "edge",
+        source: "b",
+        target: "c",
       },
       {
         type: "node",
@@ -488,6 +494,14 @@ describe("eo-draw-canvas", () => {
         id: "b",
         view: {
           x: 20,
+          y: 320,
+        },
+      },
+      {
+        type: "node",
+        id: "c",
+        view: {
+          x: 220,
           y: 320,
         },
       },
@@ -531,7 +545,7 @@ describe("eo-draw-canvas", () => {
       [...element.shadowRoot!.querySelectorAll(".cells .cell")].map((cell) =>
         cell.classList.contains("faded")
       )
-    ).toEqual([true, false, true, true]);
+    ).toEqual([true, true, false, true, true, true]);
 
     // Set active target to the same node
     element.activeTarget = { type: "node", id: "a" };
@@ -547,19 +561,41 @@ describe("eo-draw-canvas", () => {
       view: { x: 20, y: 20, width: 20, height: 20 },
     });
 
+    // Click on an edge
+    act(() => {
+      fireEvent.mouseDown(
+        element.shadowRoot!.querySelector(".cells .line-group")!
+      );
+    });
+    expect(handleMouseDown).toBeCalled();
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+    expect(onActiveTargetChange).toHaveBeenCalledWith({
+      type: "edge",
+      source: "b",
+      target: "c",
+    });
+    expect(onActiveTargetChange).toHaveBeenCalledTimes(2);
+    expect(onActiveTargetChange).toHaveBeenNthCalledWith(2, {
+      type: "edge",
+      source: "b",
+      target: "c",
+    });
+    // Line connector images
+    expect(element.shadowRoot!.querySelectorAll("g > image")?.length).toBe(2);
+
     const omitTarget = document.createElement("div");
     omitTarget.id = "omit-target";
     document.body.appendChild(omitTarget);
     act(() => {
       fireEvent.click(omitTarget);
     });
-    expect(onActiveTargetChange).toHaveBeenCalledTimes(1);
+    expect(onActiveTargetChange).toHaveBeenCalledTimes(2);
 
     act(() => {
       fireEvent.click(element.shadowRoot!.querySelector("svg")!);
     });
-    expect(onActiveTargetChange).toHaveBeenCalledTimes(2);
-    expect(onActiveTargetChange).toHaveBeenNthCalledWith(2, null);
+    expect(onActiveTargetChange).toHaveBeenCalledTimes(3);
+    expect(onActiveTargetChange).toHaveBeenNthCalledWith(3, null);
 
     act(() => {
       document.body.removeChild(element);

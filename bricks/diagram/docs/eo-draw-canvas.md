@@ -433,10 +433,24 @@
           {
             text: `Test ${CTX.targetCell?.type}`,
             event: `test-${CTX.targetCell?.type}`,
+          },
+          {
+            text: "Remove",
+            event: "remove"
           }
         ]
       %>
   events:
+    remove:
+      target: eo-draw-canvas
+      method: updateCells
+      args:
+        - |
+          <%
+            CTX.initialCells.filter((cell) =>
+              !(cell.type === "edge" && CTX.targetCell.source === cell.source && CTX.targetCell.target === cell.target)
+            )
+          %>
     add-edge:
       target: eo-draw-canvas
       method: manuallyConnectNodes

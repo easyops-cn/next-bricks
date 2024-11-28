@@ -1145,6 +1145,18 @@ function LegacyEoDrawCanvasComponent(
     [onEdgeViewChange]
   );
 
+  const activeEditableLineIsAvailable = useMemo(() => {
+    return (
+      !!activeEditableLine &&
+      cells.some(
+        (cell) =>
+          cell.type === "edge" &&
+          cell.source === activeEditableLine.edge.source &&
+          cell.target === activeEditableLine.edge.target
+      )
+    );
+  }, [activeEditableLine, cells]);
+
   // istanbul ignore next: experimental
   const hoverStateContextValue = useMemo(
     () => ({
@@ -1153,6 +1165,7 @@ function LegacyEoDrawCanvasComponent(
       unsetHoverStateTimeoutRef,
       hoverState,
       activeEditableLine,
+      activeEditableLineIsAvailable,
       lineEditorState,
       setLineEditorState,
       setActiveEditableLine,
@@ -1163,6 +1176,7 @@ function LegacyEoDrawCanvasComponent(
     }),
     [
       activeEditableLine,
+      activeEditableLineIsAvailable,
       handleEdgeChangeView,
       handleSmartConnect,
       hoverState,

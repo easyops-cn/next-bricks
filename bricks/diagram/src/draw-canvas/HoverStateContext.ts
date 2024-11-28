@@ -24,6 +24,7 @@ export const HoverStateContext = React.createContext<{
   unsetHoverStateTimeoutRef: React.MutableRefObject<number | null>;
   hoverState: HoverState | null;
   activeEditableLine: EditableLineInfo | null;
+  activeEditableLineIsAvailable: boolean;
   lineEditorState: LineEditorState | null;
   setLineEditorState: React.Dispatch<
     React.SetStateAction<LineEditorState | null>
@@ -52,6 +53,7 @@ export const HoverStateContext = React.createContext<{
   unsetHoverStateTimeoutRef: { current: null },
   hoverState: null,
   activeEditableLine: null,
+  activeEditableLineIsAvailable: false,
   lineEditorState: null,
   setLineEditorState: () => {},
   setActiveEditableLine: () => {},
