@@ -4,8 +4,6 @@
 
 ### Basic
 
-请使用暗色主题查看：
-
 ```yaml preview minHeight="604px"
 brick: data-view.crystal-ball-indicator
 properties:
