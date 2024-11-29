@@ -22,8 +22,7 @@ const { defineElement, property } = createDecorators();
 
 export interface CrystalBallIndicatorProps {
   dataSource?: DataItem[];
-  centerLabel?: string;
-  centerValue?: string | number;
+  centerDataSource?: DataItem;
   cornerDataSource?: cornerDataItem[];
   maxScale?: number;
 }
@@ -43,7 +42,7 @@ interface DataItemWithPosition extends DataItem {
 }
 
 /**
- * 中间是水晶球动画的数据展示构件
+ * 有水晶球动画的数据展示构件。
  */
 export
 @defineElement("data-view.crystal-ball-indicator", {
@@ -53,18 +52,25 @@ class CrystalBallIndicator
   extends ReactNextElement
   implements CrystalBallIndicatorProps
 {
+  /** 指标数据列表（显示在环上） */
   @property({ attribute: false })
   accessor dataSource: DataItem[] | undefined;
 
+  /** 中心数据（显示在中心水晶球内） */
   @property()
-  accessor centerLabel: string | undefined;
+  accessor centerDataSource: DataItem | undefined;
 
-  @property({ attribute: false })
-  accessor centerValue: string | number | undefined;
-
+  /**
+   * 左上角指标数据列表
+   */
   @property({ attribute: false })
   accessor cornerDataSource: cornerDataItem[] | undefined;
 
+  /**
+   * 最大缩放比例
+   *
+   * @default 1
+   */
   @property({ type: Number })
   accessor maxScale: number | undefined;
 
@@ -73,8 +79,7 @@ class CrystalBallIndicator
       <CrystalBallIndicatorComponent
         root={this}
         dataSource={this.dataSource}
-        centerLabel={this.centerLabel}
-        centerValue={this.centerValue}
+        centerDataSource={this.centerDataSource}
         cornerDataSource={this.cornerDataSource}
         maxScale={this.maxScale}
       />
@@ -90,19 +95,19 @@ export interface CrystalBallIndicatorComponentProps
 export function CrystalBallIndicatorComponent({
   root,
   dataSource,
-  centerLabel,
-  centerValue,
+  centerDataSource,
   cornerDataSource,
   maxScale,
 }: CrystalBallIndicatorComponentProps) {
   const [scale, setScale] = useState<number | null>(null);
 
   useEffect(() => {
+    // 当容器宽高低于预设值时，图形会自动缩小
     const observer = new ResizeObserver((entries) => {
       for (const entry of entries) {
         if (entry.target === root) {
           const { width, height } = entry.contentRect;
-          // Width is larger than height, because there are horizontal labels
+          // 宽度大于高度，因为有水平方向排列的标签文字
           setScale(Math.min(maxScale ?? 1, width / 810, height / 604));
         }
       }
@@ -111,6 +116,12 @@ export function CrystalBallIndicatorComponent({
     return () => observer.disconnect();
   }, [maxScale, root]);
 
+  // 计算环上标签的位置
+  // 1. 将数据分为两组，分别在环的两侧
+  // 2. 索引（从 0 开始）为偶数的数据在右侧，索引为奇数的数据在左侧
+  // 3. 总数为偶数时，两侧数据对称，每组数据按照角度均匀分布
+  // 4. 总数为奇数时，右侧数据比左侧数据多一个，右侧数据按照角度均匀分布，
+  //    左侧第 N 个数据的角度为右侧第 N 个和第 N + 1 个数据的角度的中分角
   const labels = useMemo(() => {
     const clampedData = dataSource?.slice(0, 20) ?? [];
     if (clampedData.length === 0) {
@@ -186,8 +197,10 @@ export function CrystalBallIndicatorComponent({
           </div>
         ))}
         <div className="center">
-          <div className="center-label">{centerLabel}</div>
-          <div className="center-value">{formatValue(centerValue)}</div>
+          <div className="center-label">{centerDataSource?.label}</div>
+          <div className="center-value">
+            {formatValue(centerDataSource?.value)}
+          </div>
         </div>
       </div>
       <div className="corner">
