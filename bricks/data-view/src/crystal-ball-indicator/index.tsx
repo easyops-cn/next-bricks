@@ -57,7 +57,7 @@ class CrystalBallIndicator
   accessor dataSource: DataItem[] | undefined;
 
   /** 中心数据（显示在中心水晶球内） */
-  @property()
+  @property({ attribute: false })
   accessor centerDataSource: DataItem | undefined;
 
   /**
