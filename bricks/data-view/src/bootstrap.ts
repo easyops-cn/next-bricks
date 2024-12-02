@@ -39,3 +39,4 @@ import "./data-display-flipper-sixth/index.js";
 import "./indicator-card/index.js";
 import "./progress-bar-list/index.js";
 import "./china-map-chart/index.js";
+import "./crystal-ball-indicator/index.js";
