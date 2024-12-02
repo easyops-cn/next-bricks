@@ -4,7 +4,7 @@
 
 ### Basic
 
-```yaml preview minHeight="604px"
+```yaml preview minHeight="660px"
 brick: data-view.crystal-ball-indicator
 properties:
   centerDataSource:
@@ -28,9 +28,6 @@ properties:
     - label: 资产减少
       value: 21
       color: green
-  style:
-    height: 604px
-    maxHeight: 100vh
 # Currently this brick only works within dark theme
 lifeCycle:
   onPageLoad:
