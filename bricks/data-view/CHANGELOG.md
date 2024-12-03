@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.3.16...@next-bricks/data-view@1.4.0) (2024-12-03)
+
+
+### Bug Fixes
+
+* **crystal-ball-indicator:** set default height 100% ([888f35c](https://github.com/easyops-cn/next-bricks/commit/888f35cff27966daf0aada44daedeaf1d7f8f8f2))
+* fix centerDataValue not working ([4aab6aa](https://github.com/easyops-cn/next-bricks/commit/4aab6aaeea2c56baf7c01a89a2a9d8268994da7e))
+* reduce custom font file size, limit to ascii codes ([06ea32c](https://github.com/easyops-cn/next-bricks/commit/06ea32cf9a9f68db88fbfced37d0ef3511eeea38))
+
+
+### Features
+
+* new brick: data-view.crystal-ball-indicator ([3e94a73](https://github.com/easyops-cn/next-bricks/commit/3e94a73b7d08fac3177e87e38deedea633c9beaa))
+
+
+
+
+
 ## [1.3.16](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.3.15...@next-bricks/data-view@1.3.16) (2024-11-14)
 
 **Note:** Version bump only for package @next-bricks/data-view
