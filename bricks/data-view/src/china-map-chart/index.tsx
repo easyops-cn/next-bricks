@@ -2,20 +2,19 @@ import React, { useEffect, useRef, useState, CSSProperties } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
-import styleText from "./styles.shadow.css";
-
 import { Scene, PolygonLayer, LineLayer, Marker, ImageLayer } from "@antv/l7";
 import { Map } from "@antv/l7-maps";
 import { cloneDeep, isEmpty, isEqual, toNumber } from "lodash";
-import defaultPng from "./assets/default.png";
-import selectedPng from "./assets/selected.png";
+import defaultSvg from "./assets/default.svg?url";
+import selectedSvg from "./assets/selected.svg?url";
 import chinaPng from "./assets/china.png";
-import { CHINA } from "./map";
+import CHINA from "./map.json";
+import styleText from "./styles.shadow.css";
 
 const { defineElement, property, event } = createDecorators();
 
 /**
- * 构件 `data-view.china-map-chart`
+ * 中国地图图表构件，可以显示省级指标数据
  */
 export
 @defineElement("data-view.china-map-chart", {
@@ -33,6 +32,7 @@ class ChinaMapChart extends ReactNextElement {
    */
   @property({ attribute: false })
   accessor detailContentStyle: CSSProperties | undefined;
+
   /**
    * 当提示可见性开始变化时触发
    * @detail 当前是否可见
@@ -56,7 +56,9 @@ class ChinaMapChart extends ReactNextElement {
     );
   }
 }
+
 interface DataSource {
+  /** 省级行政区域名，例如：四川、北京 */
   city: string;
   detailDisplayLocation: "pageCenter" | "textBottom";
   text: string;
@@ -109,10 +111,10 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
     });
     scene.setMapStatus({ doubleClickZoom: false, zoomEnable: false });
     const defaultImg = new Image();
-    defaultImg.src = defaultPng;
+    defaultImg.src = defaultSvg;
 
     const selectedImg = new Image();
-    selectedImg.src = selectedPng;
+    selectedImg.src = selectedSvg;
 
     scene.addImage("default", defaultImg);
     scene.addImage("selected", selectedImg);
@@ -391,7 +393,7 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
         };
 
         const imgEl = document.createElement("img");
-        imgEl.src = defaultPng;
+        imgEl.src = defaultSvg;
         imgEl.className = "iconImg";
 
         const center = city.properties.center;

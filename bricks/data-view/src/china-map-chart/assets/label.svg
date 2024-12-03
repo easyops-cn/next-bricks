@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="119px" height="22px" viewBox="0 0 119 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>黄色组合</title>
+    <defs>
+        <linearGradient x1="100%" y1="50%" x2="1.60539883%" y2="50.4985354%" id="linearGradient-1">
+            <stop stop-color="#EDC400" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#EDC400" stop-opacity="0.3" offset="100%"></stop>
+        </linearGradient>
+        <radialGradient cx="1.33833016%" cy="50%" fx="1.33833016%" fy="50%" r="355.91033%" gradientTransform="translate(0.013383,0.500000),scale(0.186026,1.000000),rotate(3.345379),translate(-0.013383,-0.500000)" id="radialGradient-2">
+            <stop stop-color="#EDC400" offset="0%"></stop>
+            <stop stop-color="#EDC400" offset="10.0949321%"></stop>
+            <stop stop-color="#EDC400" offset="22.3924757%"></stop>
+            <stop stop-color="#EDC400" stop-opacity="0" offset="100%"></stop>
+        </radialGradient>
+    </defs>
+    <g id="综合大屏" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="综合大屏备份-4" transform="translate(-89.000000, -162.000000)" fill="url(#linearGradient-1)" stroke="url(#radialGradient-2)" stroke-width="2">
+            <path d="M206.263142,163 L206.263142,183 L90.3120828,183 L92.7294189,173.243322 C93.4846536,170.232754 95.21532,167.671924 97.5331408,165.863735 C99.8509616,164.055547 102.755937,163 105.859788,163 L206.263142,163 Z" id="黄色组合"></path>
+        </g>
+    </g>
+</svg>

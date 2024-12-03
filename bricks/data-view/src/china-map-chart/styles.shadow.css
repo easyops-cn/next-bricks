@@ -8,27 +8,14 @@
 .text {
   position: absolute;
   z-index: 6;
-  height: 24px;
-  background: linear-gradient(
-    262deg,
-    rgba(237, 196, 0, 0) 0%,
-    rgba(237, 196, 0, 0.3) 100%
-  );
-  border-radius: 15px 0px 0px 1px;
-  border: 2px solid;
-  border-image: radial-gradient(
-      circle,
-      rgba(237, 196, 0, 1),
-      rgba(237, 196, 0, 1),
-      rgba(237, 196, 0, 1),
-      rgba(237, 196, 0, 0)
-    )
-    2 2;
+  height: 22px;
+  line-height: 22px;
+  font-size: 12px;
+  background: url(./assets/label.svg) no-repeat center left;
   backdrop-filter: blur(2px);
   transform: translate(20px, -150%) !important;
-  border-right-style: none;
   color: rgba(255, 255, 255, 1);
-  padding-left: 8px;
+  text-indent: 10px;
 }
 
 .iconImg {
