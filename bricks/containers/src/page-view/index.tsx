@@ -66,6 +66,14 @@ class EoPageView extends ReactNextElement {
   @property({ type: Boolean })
   accessor fixedFooter: boolean | undefined;
 
+  /**
+   * 设置 reversedFooter: true 时，底栏子构件靠于右侧。
+   *
+   * 默认不设置时，底栏子构件靠于左侧。
+   */
+  @property({ type: Boolean, render: false })
+  accessor reversedFooter: boolean | undefined;
+
   render() {
     return (
       <EoPageViewComponent
