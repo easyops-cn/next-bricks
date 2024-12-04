@@ -23,7 +23,7 @@ const { defineElement, property } = createDecorators();
 export interface CrystalBallIndicatorProps {
   dataSource?: DataItem[];
   centerDataSource?: DataItem;
-  cornerDataSource?: cornerDataItem[];
+  cornerDataSource?: CornerDataItem[];
   maxScale?: number;
 }
 
@@ -32,7 +32,7 @@ export interface DataItem {
   value: string | number;
 }
 
-export interface cornerDataItem extends DataItem {
+export interface CornerDataItem extends DataItem {
   color?: string;
 }
 
@@ -64,7 +64,7 @@ class CrystalBallIndicator
    * 左上角指标数据列表
    */
   @property({ attribute: false })
-  accessor cornerDataSource: cornerDataItem[] | undefined;
+  accessor cornerDataSource: CornerDataItem[] | undefined;
 
   /**
    * 最大缩放比例
@@ -185,7 +185,7 @@ export function CrystalBallIndicatorComponent({
         {labels.map((item, index) => (
           <div
             key={index}
-            className={`ring-labels ${index % 2 === 0 ? "even" : "odd"}`}
+            className={`ring-label-container ${index % 2 === 0 ? "even" : "odd"}`}
             style={{
               left: item.x,
               top: item.y,
