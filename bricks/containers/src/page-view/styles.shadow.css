@@ -78,6 +78,7 @@
   align-items: center;
   gap: var(--toolbar-button-gap);
   height: var(--local-footer-height);
+  position: relative;
 }
 
 :host([show-footer]) .footer {
