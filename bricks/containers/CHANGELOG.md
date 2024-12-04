@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.13.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.12.2...@next-bricks/containers@1.13.0) (2024-12-04)
+
+
+### Features
+
+* **eo-page-view:** support reversedFooter ([b3f0ccc](https://github.com/easyops-cn/next-bricks/commit/b3f0ccce45f67c72f52f7e2e615a52b5c86f1c8f))
+
+
+
+
+
 ## [1.12.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.12.1...@next-bricks/containers@1.12.2) (2024-11-14)
 
 **Note:** Version bump only for package @next-bricks/containers
