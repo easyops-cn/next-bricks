@@ -4,7 +4,7 @@ import { createDecorators } from "@next-core/element";
 
 const { defineElement, property } = createDecorators();
 
-interface GearBackgroundProps {
+export interface GearBackgroundProps {
   color?: React.CSSProperties["color"];
 }
 

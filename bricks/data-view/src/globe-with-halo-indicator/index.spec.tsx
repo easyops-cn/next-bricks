@@ -1,7 +1,7 @@
 import { describe, test, expect, jest } from "@jest/globals";
 import { act } from "react-dom/test-utils";
 import "./";
-import type { GlobeEarthIndicator } from "./index.js";
+import type { GlobeWithHaloIndicator } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
@@ -35,11 +35,11 @@ jest.mock(
     }
 );
 
-describe("data-view.globe-earth-indicator", () => {
+describe("data-view.globe-with-halo-indicator", () => {
   test("even labels", async () => {
     const element = document.createElement(
-      "data-view.globe-earth-indicator"
-    ) as GlobeEarthIndicator;
+      "data-view.globe-with-halo-indicator"
+    ) as GlobeWithHaloIndicator;
     element.dataSource = [
       {
         label: "A",
@@ -98,8 +98,8 @@ describe("data-view.globe-earth-indicator", () => {
 
   test("odd labels", async () => {
     const element = document.createElement(
-      "data-view.globe-earth-indicator"
-    ) as GlobeEarthIndicator;
+      "data-view.globe-with-halo-indicator"
+    ) as GlobeWithHaloIndicator;
     element.dataSource = [
       {
         label: "A",
@@ -141,8 +141,8 @@ describe("data-view.globe-earth-indicator", () => {
 
   test("single label", async () => {
     const element = document.createElement(
-      "data-view.globe-earth-indicator"
-    ) as GlobeEarthIndicator;
+      "data-view.globe-with-halo-indicator"
+    ) as GlobeWithHaloIndicator;
     element.dataSource = [
       {
         label: "A",
@@ -172,8 +172,8 @@ describe("data-view.globe-earth-indicator", () => {
 
   test("no labels", async () => {
     const element = document.createElement(
-      "data-view.globe-earth-indicator"
-    ) as GlobeEarthIndicator;
+      "data-view.globe-with-halo-indicator"
+    ) as GlobeWithHaloIndicator;
 
     act(() => {
       document.body.appendChild(element);

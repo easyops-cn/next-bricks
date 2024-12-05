@@ -1,4 +1,4 @@
-中间是地球的数据展示构件。
+地球加轮盘的数据展示构件。
 
 ## Examples
 
@@ -10,7 +10,7 @@ properties:
   style:
     height: calc(100vh - 2em)
 children:
-  - brick: data-view.globe-earth-indicator
+  - brick: data-view.globe-with-gear-indicator
     properties:
       centerDataSource:
         label: 资产总数
