@@ -22,18 +22,33 @@
   box-sizing: border-box;
 }
 
-.circle-container {
+.circle-container,
+.base,
+.ring-labels {
   width: 604px;
   height: 604px;
+}
+
+.circle-container {
   padding: 16px;
   position: relative;
-  background: url(./assets/circle-bg.png) no-repeat;
-  background-position: center;
-  background-size: 572px;
-  transform-origin: center;
   transform: scale(var(--scale));
 
   --scale: 1;
+}
+
+.base,
+.ring-labels {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: 0;
+}
+
+.base {
+  background: url(./assets/circle-bg.png) no-repeat;
+  background-position: center;
+  background-size: 572px;
 }
 
 .ring-label-container {

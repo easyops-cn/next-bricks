@@ -52,7 +52,10 @@ class CrystalBallIndicator
   extends ReactNextElement
   implements CrystalBallIndicatorProps
 {
-  /** 指标数据列表（显示在环上） */
+  /** 指标数据列表（显示在环上）
+   *
+   * 注意：最多显示12项数据
+   */
   @property({ attribute: false })
   accessor dataSource: DataItem[] | undefined;
 
@@ -123,7 +126,7 @@ export function CrystalBallIndicatorComponent({
   // 4. 总数为奇数时，右侧数据比左侧数据多一个，右侧数据按照角度均匀分布，
   //    左侧第 N 个数据的角度为右侧第 N 个和第 N + 1 个数据的角度的中分角
   const labels = useMemo(() => {
-    const clampedData = dataSource?.slice(0, 20) ?? [];
+    const clampedData = dataSource?.slice(0, 12) ?? [];
     if (clampedData.length === 0) {
       return [];
     }
@@ -174,6 +177,7 @@ export function CrystalBallIndicatorComponent({
           }
         }
       >
+        <div className="base"></div>
         <div className="ring-container">
           <div className="ring"></div>
           <div className="video-container">
@@ -182,20 +186,22 @@ export function CrystalBallIndicatorComponent({
             </video>
           </div>
         </div>
-        {labels.map((item, index) => (
-          <div
-            key={index}
-            className={`ring-label-container ${index % 2 === 0 ? "even" : "odd"}`}
-            style={{
-              left: item.x,
-              top: item.y,
-            }}
-          >
-            <div className="ring-icon"></div>
-            <div className="ring-label">{item.label}</div>
-            <div className="ring-value">{formatValue(item.value)}</div>
-          </div>
-        ))}
+        <div className="ring-labels">
+          {labels.map((item, index) => (
+            <div
+              key={index}
+              className={`ring-label-container ${index % 2 === 0 ? "even" : "odd"}`}
+              style={{
+                left: item.x,
+                top: item.y,
+              }}
+            >
+              <div className="ring-icon"></div>
+              <div className="ring-label">{item.label}</div>
+              <div className="ring-value">{formatValue(item.value)}</div>
+            </div>
+          ))}
+        </div>
         <div className="center">
           <div className="center-label">{centerDataSource?.label}</div>
           <div className="center-value">

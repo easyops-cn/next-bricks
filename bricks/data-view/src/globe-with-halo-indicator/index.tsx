@@ -18,7 +18,7 @@ const WrappedTag = wrapBrick<Tag, TagProps>("eo-tag");
 
 const { defineElement, property } = createDecorators();
 
-export interface GlobeEarthIndicatorProps {
+export interface GlobeWithHaloIndicatorProps {
   dataSource?: DataItem[];
   centerDataSource?: DataItem;
   cornerDataSource?: CornerDataItem[];
@@ -43,15 +43,15 @@ interface DataItemWithPosition extends DataItem {
 }
 
 /**
- * 中间是地球的数据展示构件。
+ * 地球加光环的数据展示构件。
  */
 export
-@defineElement("data-view.globe-earth-indicator", {
+@defineElement("data-view.globe-with-halo-indicator", {
   styleTexts: [styleText],
 })
-class GlobeEarthIndicator
+class GlobeWithHaloIndicator
   extends ReactNextElement
-  implements GlobeEarthIndicatorProps
+  implements GlobeWithHaloIndicatorProps
 {
   /**
    * 指标数据列表（显示在环上）
@@ -81,7 +81,7 @@ class GlobeEarthIndicator
 
   render() {
     return (
-      <GlobeEarthIndicatorComponent
+      <GlobeWithHaloIndicatorComponent
         root={this}
         dataSource={this.dataSource}
         centerDataSource={this.centerDataSource}
@@ -92,18 +92,18 @@ class GlobeEarthIndicator
   }
 }
 
-export interface GlobeEarthIndicatorComponentProps
-  extends GlobeEarthIndicatorProps {
-  root: GlobeEarthIndicator;
+export interface GlobeWithHaloIndicatorComponentProps
+  extends GlobeWithHaloIndicatorProps {
+  root: GlobeWithHaloIndicator;
 }
 
-export function GlobeEarthIndicatorComponent({
+export function GlobeWithHaloIndicatorComponent({
   root,
   dataSource,
   centerDataSource,
   cornerDataSource,
   maxScale,
-}: GlobeEarthIndicatorComponentProps) {
+}: GlobeWithHaloIndicatorComponentProps) {
   const [scale, setScale] = useState<number | null>(null);
 
   useEffect(() => {

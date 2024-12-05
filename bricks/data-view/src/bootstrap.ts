@@ -40,4 +40,5 @@ import "./indicator-card/index.js";
 import "./progress-bar-list/index.js";
 import "./china-map-chart/index.js";
 import "./crystal-ball-indicator/index.js";
-import "./globe-earth-indicator/index.js";
+import "./globe-with-halo-indicator/index.js";
+import "./globe-with-gear-indicator/index.js";
