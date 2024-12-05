@@ -1,7 +1,7 @@
 import { describe, test, expect, jest } from "@jest/globals";
 import { act } from "react-dom/test-utils";
 import "./";
-import type { CrystalBallIndicator } from "./index.js";
+import type { GlobeEarthIndicator } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
@@ -35,11 +35,11 @@ jest.mock(
     }
 );
 
-describe("data-view.crystal-ball-indicator", () => {
+describe("data-view.globe-earth-indicator", () => {
   test("even labels", async () => {
     const element = document.createElement(
-      "data-view.crystal-ball-indicator"
-    ) as CrystalBallIndicator;
+      "data-view.globe-earth-indicator"
+    ) as GlobeEarthIndicator;
     element.dataSource = [
       {
         label: "A",
@@ -84,10 +84,10 @@ describe("data-view.crystal-ball-indicator", () => {
         parseFloat(label.style.top),
       ])
     ).toEqual([
-      [expect.closeTo(549.68, 2), expect.closeTo(159, 2)],
-      [expect.closeTo(54.32, 2), expect.closeTo(159, 2)],
-      [expect.closeTo(549.68, 2), expect.closeTo(445, 2)],
-      [expect.closeTo(54.32, 2), expect.closeTo(445, 2)],
+      [expect.closeTo(620.54, 2), expect.closeTo(-5.46, 2)],
+      [expect.closeTo(307.46, 2), expect.closeTo(-5.46, 2)],
+      [expect.closeTo(783.42, 2), expect.closeTo(194.33, 2)],
+      [expect.closeTo(144.58, 2), expect.closeTo(194.33, 2)],
     ]);
 
     act(() => {
@@ -98,8 +98,8 @@ describe("data-view.crystal-ball-indicator", () => {
 
   test("odd labels", async () => {
     const element = document.createElement(
-      "data-view.crystal-ball-indicator"
-    ) as CrystalBallIndicator;
+      "data-view.globe-earth-indicator"
+    ) as GlobeEarthIndicator;
     element.dataSource = [
       {
         label: "A",
@@ -129,10 +129,41 @@ describe("data-view.crystal-ball-indicator", () => {
         parseFloat(label.style.top),
       ])
     ).toEqual([
-      [expect.closeTo(549.68, 2), expect.closeTo(159, 2)],
-      [expect.closeTo(16, 2), expect.closeTo(302, 2)],
-      [expect.closeTo(549.68, 2), expect.closeTo(445, 2)],
+      [expect.closeTo(620.54, 2), expect.closeTo(-5.46, 2)],
+      [expect.closeTo(243.28, 2), expect.closeTo(93.27, 2)],
+      [expect.closeTo(783.42, 2), expect.closeTo(194.33, 2)],
     ]);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("single label", async () => {
+    const element = document.createElement(
+      "data-view.globe-earth-indicator"
+    ) as GlobeEarthIndicator;
+    element.dataSource = [
+      {
+        label: "A",
+        value: 1234,
+      },
+    ];
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(
+      [
+        ...element.shadowRoot!.querySelectorAll<HTMLElement>(
+          ".ring-label-container"
+        ),
+      ].map((label) => [
+        parseFloat(label.style.left),
+        parseFloat(label.style.top),
+      ])
+    ).toEqual([[expect.closeTo(729, 2), expect.closeTo(4.4, 2)]]);
 
     act(() => {
       document.body.removeChild(element);
@@ -141,8 +172,8 @@ describe("data-view.crystal-ball-indicator", () => {
 
   test("no labels", async () => {
     const element = document.createElement(
-      "data-view.crystal-ball-indicator"
-    ) as CrystalBallIndicator;
+      "data-view.globe-earth-indicator"
+    ) as GlobeEarthIndicator;
 
     act(() => {
       document.body.appendChild(element);
