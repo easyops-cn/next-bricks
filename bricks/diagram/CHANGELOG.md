@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.52.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.51.2...@next-bricks/diagram@0.52.0) (2024-12-06)
+
+
+### Features
+
+* **eo-draw-canvas:** support snap positions ([c4667c6](https://github.com/easyops-cn/next-bricks/commit/c4667c6529457f21feb5d76668df6538777b9cbc))
+
+
+
+
+
 ## [0.51.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.51.1...@next-bricks/diagram@0.51.2) (2024-11-28)
 
 

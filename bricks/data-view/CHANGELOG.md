@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.4.0...@next-bricks/data-view@1.5.0) (2024-12-06)
+
+
+### Bug Fixes
+
+* **china-map-chart:** refine style ([3197a3a](https://github.com/easyops-cn/next-bricks/commit/3197a3a69d33ed3a1a6730c60fae9d976781881e))
+
+
+### Features
+
+* new brick: globe-earth-indicator ([0db1054](https://github.com/easyops-cn/next-bricks/commit/0db105483e0caf7bdf7cb536667b0b99d27eef05))
+* new brick: globe-with-gear-indicator ([21923ea](https://github.com/easyops-cn/next-bricks/commit/21923ea8f6e384f547209c163ddfb2eb3a07362b))
+
+
+
+
+
 # [1.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.3.16...@next-bricks/data-view@1.4.0) (2024-12-03)
 
 
