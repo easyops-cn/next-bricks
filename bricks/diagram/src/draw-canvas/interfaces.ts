@@ -272,7 +272,22 @@ export interface SnapToGridOptions {
 export interface SnapToObjectOptions {
   /** @default 5 */
   distance?: number;
+  /**
+   * 默认为 "all"，在中心、上下左右共五个位置进行对齐。
+   * 设置为 "center" 表示只对中心进行对齐。
+   * 可以按顺序设置对齐位置，例如 "center top bottom" 表示只对中心和上下共三个位置进行对齐。
+   *
+   * @default "all"
+   */
+  positions?: string;
 }
+
+export type SnapToObjectPosition =
+  | "center"
+  | "top"
+  | "right"
+  | "bottom"
+  | "left";
 
 export interface LayoutOptionsDagre extends BaseLayoutOptions {
   rankdir?: "TB" | "BT" | "LR" | "RL";

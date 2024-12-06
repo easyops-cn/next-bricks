@@ -1,6 +1,7 @@
 import {
   DEFAULT_SNAP_GRID_SIZE,
   DEFAULT_SNAP_OBJECT_DISTANCE,
+  DEFAULT_SNAP_OBJECT_POSITIONS,
 } from "../constants";
 import type {
   SnapOptions,
@@ -36,7 +37,10 @@ export function normalizeSnapOptions(
       ? { size: snapToGrid.size ?? DEFAULT_SNAP_GRID_SIZE }
       : null,
     object: snapToObject
-      ? { distance: snapToObject.distance ?? DEFAULT_SNAP_OBJECT_DISTANCE }
+      ? {
+          distance: snapToObject.distance ?? DEFAULT_SNAP_OBJECT_DISTANCE,
+          positions: snapToObject.positions ?? DEFAULT_SNAP_OBJECT_POSITIONS,
+        }
       : null,
   };
 }
