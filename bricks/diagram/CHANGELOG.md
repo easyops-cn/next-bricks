@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.52.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.52.0...@next-bricks/diagram@0.52.1) (2024-12-06)
+
+
+### Bug Fixes
+
+* **eo-draw-canvas:** expose method reCenter ([bfac854](https://github.com/easyops-cn/next-bricks/commit/bfac854b26abe071eefae2565d9f0ff3a0412544))
+
+
+
+
+
 # [0.52.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.51.2...@next-bricks/diagram@0.52.0) (2024-12-06)
 
 
