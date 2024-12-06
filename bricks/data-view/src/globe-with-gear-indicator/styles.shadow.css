@@ -32,6 +32,7 @@
 .dots,
 .radar,
 .globe,
+.light,
 .ring-lines,
 .ring-labels {
   position: absolute;
@@ -69,6 +70,16 @@
   background: url(./assets/earth.png) no-repeat;
   background-position: center;
   background-size: 100%;
+}
+
+.light {
+  bottom: 98px;
+  width: 207px;
+  height: 208px;
+  background: url(./assets/light.png) no-repeat;
+  background-position: center;
+  background-size: 100%;
+  animation: flash-light 0.5s linear infinite alternate-reverse;
 }
 
 .center {
@@ -199,5 +210,14 @@
 
   to {
     transform: translate(-50%, 0) rotate(360deg);
+  }
+}
+
+@keyframes flash-light {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
