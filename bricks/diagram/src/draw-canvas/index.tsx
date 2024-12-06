@@ -545,6 +545,12 @@ class EoDrawCanvas extends ReactNextElement implements EoDrawCanvasProps {
     return { updated };
   }
 
+  // istanbul ignore next
+  @method()
+  async reCenter() {
+    this.#canvasRef.current?.reCenter();
+  }
+
   #waitForCanvasRef() {
     return new Promise<void>((resolve) => {
       const check = () => {
@@ -648,6 +654,7 @@ export interface DrawCanvasRef {
     updated: Cell[];
   };
   getTransform(): TransformLiteral;
+  reCenter(): void;
 }
 
 function LegacyEoDrawCanvasComponent(
@@ -747,6 +754,10 @@ function LegacyEoDrawCanvasComponent(
     dispatch,
   });
 
+  const reCenter = useCallback(() => {
+    setCentered(false);
+  }, [setCentered]);
+
   useImperativeHandle(
     ref,
     () => ({
@@ -843,8 +854,17 @@ function LegacyEoDrawCanvasComponent(
         }
         return Promise.reject(null);
       },
+      reCenter,
     }),
-    [cells, layout, scaleRange, setCentered, transform, allowEdgeToArea]
+    [
+      cells,
+      layout,
+      scaleRange,
+      setCentered,
+      transform,
+      allowEdgeToArea,
+      reCenter,
+    ]
   );
 
   const handleConnect = useCallback(
@@ -1021,9 +1041,6 @@ function LegacyEoDrawCanvasComponent(
     [zoomer]
   );
 
-  const reCenter = useCallback(() => {
-    setCentered(false);
-  }, [setCentered]);
   const { lineConfMap, lineConnectorConf, markers } = useLineMarkers({
     cells,
     defaultEdgeLines,
