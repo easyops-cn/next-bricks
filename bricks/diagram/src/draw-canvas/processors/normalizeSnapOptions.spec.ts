@@ -2,6 +2,7 @@ import { normalizeSnapOptions } from "./normalizeSnapOptions";
 import {
   DEFAULT_SNAP_GRID_SIZE,
   DEFAULT_SNAP_OBJECT_DISTANCE,
+  DEFAULT_SNAP_OBJECT_POSITIONS,
 } from "../constants";
 
 describe("normalizeSnapOptions", () => {
@@ -29,6 +30,7 @@ describe("normalizeSnapOptions", () => {
       },
       object: {
         distance: DEFAULT_SNAP_OBJECT_DISTANCE,
+        positions: DEFAULT_SNAP_OBJECT_POSITIONS,
       },
     });
   });
@@ -40,6 +42,7 @@ describe("normalizeSnapOptions", () => {
       },
       object: {
         distance: 20,
+        positions: "center",
       },
     };
     const result = normalizeSnapOptions(snapOptions);
@@ -49,6 +52,7 @@ describe("normalizeSnapOptions", () => {
       },
       object: {
         distance: 20,
+        positions: "center",
       },
     });
   });
@@ -75,6 +79,7 @@ describe("normalizeSnapOptions", () => {
       grid: null,
       object: {
         distance: DEFAULT_SNAP_OBJECT_DISTANCE,
+        positions: DEFAULT_SNAP_OBJECT_POSITIONS,
       },
     });
   });
@@ -93,6 +98,7 @@ describe("normalizeSnapOptions", () => {
       },
       object: {
         distance: 20,
+        positions: DEFAULT_SNAP_OBJECT_POSITIONS,
       },
     });
   });
@@ -111,6 +117,7 @@ describe("normalizeSnapOptions", () => {
       },
       object: {
         distance: DEFAULT_SNAP_OBJECT_DISTANCE,
+        positions: DEFAULT_SNAP_OBJECT_POSITIONS,
       },
     });
   });
