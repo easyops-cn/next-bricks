@@ -225,6 +225,7 @@ export function GlobeWithGearIndicatorComponent({
               </div>
             </div>
           )}
+          <div className="light"></div>
         </div>
         <svg
           className="ring-lines"
