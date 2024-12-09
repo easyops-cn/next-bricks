@@ -26,26 +26,28 @@ export interface UseZoomResult {
   zoomer: ZoomBehavior<SVGSVGElement, unknown>;
 }
 
+// istanbul ignore next
+const isMac = /mac/i.test(
+  (
+    navigator as Navigator & {
+      userAgentData?: {
+        platform: string;
+      };
+    }
+  ).userAgentData?.platform ??
+    navigator.platform ??
+    navigator.userAgent
+);
+
+// istanbul ignore next
 function wheelData(event: WheelEvent) {
-  // Keep factor for pinch event as 10 as d3-zoom default behavior,
-  // but set factor to 1 for normal wheel event even if ctrlKey is true.
-  // Because on Windows with normal mouse, deltaY is too big when ctrlKey is pressed,
+  // On Windows with normal mouse, deltaY is too big when scroll with ctrlKey pressed,
   // which cause the zooming too fast.
-
-  // However, there seems no standard way to distinguish the pinch event on Mac OS
-  // from normal wheel event. Here is a workaround.
-  // The pinch event is emitted as a wheel event with ctrlKey set to true, and deltaX is always -0,
-  // and deltaY is a float number. While normal wheel event has deltaY as integer.
-  const pinching =
-    event.ctrlKey &&
-    Object.is(event.deltaX, -0) &&
-    String(event.deltaY).includes(".");
-  // console.log(pinching, event.deltaX, event.deltaY);
-
+  // While on mac OS, we need to keep default behavior of d3-zoom.
   return (
     -event.deltaY *
     (event.deltaMode === 1 ? 0.05 : event.deltaMode ? 1 : 0.002) *
-    (pinching ? 10 : 1)
+    (event.ctrlKey && isMac ? 10 : 1)
   );
 }
 
