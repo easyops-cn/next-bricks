@@ -20,7 +20,7 @@ import "../fonts/PangMenZhengDaoBiaoTiTi.css";
 import styleText from "./styles.shadow.css";
 
 const BASE_WIDTH = 800;
-const BASE_HEIGHT = 590;
+const BASE_HEIGHT = 640;
 const CENTER_BUBBLE_RADIUS = 196;
 const OTHER_BUBBLE_MAX_RADIUS = 81;
 const OTHER_BUBBLE_MIN_RADIUS = 40;
@@ -151,7 +151,7 @@ export function BubblesIndicatorComponent({
   // 使用 d3 力学布局计算气泡位置，将普通数据排列在中心数据周围，并填充一些小的气泡
   const labels = useMemo(() => {
     const numberedDataSource: NumberedDataItem[] =
-      dataSource?.map((item) => ({
+      dataSource?.slice(0, 12)?.map((item) => ({
         ...item,
         positiveNumberValue: Math.abs(
           typeof item.value === "number" ? item.value : parseFloat(item.value)
@@ -184,14 +184,16 @@ export function BubblesIndicatorComponent({
             }
     );
 
+    // 补齐气泡数量，新增的随机气泡大小在指定范围内均匀分布，而不是使用随机数，以便对于同一份数据得到相同的布局结果。
+    const randomCount = TOTAL_BUBBLE_COUNT - nodes.length;
     const randomNodes = Array.from<unknown, ForceNode>(
-      { length: TOTAL_BUBBLE_COUNT - nodes.length },
-      (_v) => ({
+      { length: randomCount },
+      (_v, i) => ({
         isRandom: true,
         r:
-          Math.random() *
-            (RANDOM_BUBBLE_MAX_RADIUS - RANDOM_BUBBLE_MIN_RADIUS) +
-          RANDOM_BUBBLE_MIN_RADIUS,
+          RANDOM_BUBBLE_MIN_RADIUS +
+          (i * (RANDOM_BUBBLE_MAX_RADIUS - RANDOM_BUBBLE_MIN_RADIUS)) /
+            randomCount,
       })
     );
 
@@ -201,7 +203,7 @@ export function BubblesIndicatorComponent({
       .alphaTarget(0.3) // stay hot
       .velocityDecay(0.1) // low friction
       .force("x", forceX().strength(0.01))
-      .force("y", forceY().strength(0.0125))
+      .force("y", forceY().strength(0.02))
       .force("center", forceCenter(0, 0).strength(0.5))
       .force(
         "collide",
