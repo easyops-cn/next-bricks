@@ -60,7 +60,7 @@
     "refractor": "^4.8.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.23.4",
+    "@next-core/build-next-bricks": "^1.23.5",
     "@next-core/test-next": "^1.1.7"
   },
   "peerDependencies": {
