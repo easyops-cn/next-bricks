@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.6.0...@next-bricks/data-view@1.6.1) (2024-12-09)
+
+
+### Bug Fixes
+
+* refine style of hero indictors ([92f03b6](https://github.com/easyops-cn/next-bricks/commit/92f03b6a97f4628b306794036e40517f2cde835a))
+
+
+
+
+
 # [1.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.5.0...@next-bricks/data-view@1.6.0) (2024-12-09)
 
 
