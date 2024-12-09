@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.4](https://github.com/easyops-cn/next-bricks/compare/@next-shared/story@0.0.3...@next-shared/story@0.0.4) (2024-12-09)
+
+**Note:** Version bump only for package @next-shared/story
+
+
+
+
+
 ## [0.0.3](https://github.com/easyops-cn/next-bricks/compare/@next-shared/story@0.0.2...@next-shared/story@0.0.3) (2024-10-08)
 
 **Note:** Version bump only for package @next-shared/story
