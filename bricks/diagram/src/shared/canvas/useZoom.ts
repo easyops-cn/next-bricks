@@ -26,6 +26,29 @@ export interface UseZoomResult {
   zoomer: ZoomBehavior<SVGSVGElement, unknown>;
 }
 
+function wheelData(event: WheelEvent) {
+  // Keep factor for pinch event as 10 as d3-zoom default behavior,
+  // but set factor to 1 for normal wheel event even if ctrlKey is true.
+  // Because on Windows with normal mouse, deltaY is too big when ctrlKey is pressed,
+  // which cause the zooming too fast.
+
+  // However, there seems no standard way to distinguish the pinch event on Mac OS
+  // from normal wheel event. Here is a workaround.
+  // The pinch event is emitted as a wheel event with ctrlKey set to true, and deltaX is always -0,
+  // and deltaY is a float number. While normal wheel event has deltaY as integer.
+  const pinching =
+    event.ctrlKey &&
+    Object.is(event.deltaX, -0) &&
+    String(event.deltaY).includes(".");
+  // console.log(pinching, event.deltaX, event.deltaY);
+
+  return (
+    -event.deltaY *
+    (event.deltaMode === 1 ? 0.05 : event.deltaMode ? 1 : 0.002) *
+    (pinching ? 10 : 1)
+  );
+}
+
 export function useZoom({
   rootRef,
   zoomable,
@@ -50,7 +73,10 @@ export function useZoom({
     [_scaleRange]
   );
 
-  const zoomer = useMemo(() => zoom<SVGSVGElement, unknown>(), []);
+  const zoomer = useMemo(
+    () => zoom<SVGSVGElement, unknown>().wheelDelta(wheelData),
+    []
+  );
 
   // istanbul ignore next: d3-zoom currently hard to test
   useEffect(() => {
