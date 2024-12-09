@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.5.0...@next-bricks/data-view@1.6.0) (2024-12-09)
+
+
+### Bug Fixes
+
+* **globe-with-gear-indicator:** add flash light ([cd84710](https://github.com/easyops-cn/next-bricks/commit/cd84710f526191e454c57fdf61914f9920d95ccf))
+
+
+### Features
+
+* new brick: bubbles-indicator ([399ed9a](https://github.com/easyops-cn/next-bricks/commit/399ed9a19c97af322dbe02d0cea8ebf1e500f99b))
+
+
+
+
+
 # [1.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.4.0...@next-bricks/data-view@1.5.0) (2024-12-06)
 
 
