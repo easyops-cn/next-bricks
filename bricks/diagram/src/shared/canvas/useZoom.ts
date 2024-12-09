@@ -26,6 +26,31 @@ export interface UseZoomResult {
   zoomer: ZoomBehavior<SVGSVGElement, unknown>;
 }
 
+// istanbul ignore next
+const isMac = /mac/i.test(
+  (
+    navigator as Navigator & {
+      userAgentData?: {
+        platform: string;
+      };
+    }
+  ).userAgentData?.platform ??
+    navigator.platform ??
+    navigator.userAgent
+);
+
+// istanbul ignore next
+function wheelData(event: WheelEvent) {
+  // On Windows with normal mouse, deltaY is too big when scroll with ctrlKey pressed,
+  // which cause the zooming too fast.
+  // While on mac OS, we need to keep default behavior of d3-zoom.
+  return (
+    -event.deltaY *
+    (event.deltaMode === 1 ? 0.05 : event.deltaMode ? 1 : 0.002) *
+    (event.ctrlKey && isMac ? 10 : 1)
+  );
+}
+
 export function useZoom({
   rootRef,
   zoomable,
@@ -50,7 +75,10 @@ export function useZoom({
     [_scaleRange]
   );
 
-  const zoomer = useMemo(() => zoom<SVGSVGElement, unknown>(), []);
+  const zoomer = useMemo(
+    () => zoom<SVGSVGElement, unknown>().wheelDelta(wheelData),
+    []
+  );
 
   // istanbul ignore next: d3-zoom currently hard to test
   useEffect(() => {
