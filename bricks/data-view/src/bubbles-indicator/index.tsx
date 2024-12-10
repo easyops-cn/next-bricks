@@ -43,6 +43,10 @@ export interface BubblesIndicatorProps {
 export interface DataItem {
   label: string;
   value: string | number;
+  /**
+   * 用于计算气泡相对大小的数值。
+   */
+  numberValue?: number;
 }
 
 export interface CornerDataItem extends DataItem {
@@ -150,7 +154,10 @@ export function BubblesIndicatorComponent({
       dataSource?.slice(0, 12)?.map((item) => ({
         ...item,
         positiveNumberValue: Math.abs(
-          typeof item.value === "number" ? item.value : parseFloat(item.value)
+          item.numberValue ??
+            (typeof item.value === "number"
+              ? item.value
+              : parseFloat(item.value))
         ),
       })) ?? [];
     const positiveNumberValues = numberedDataSource.map(
