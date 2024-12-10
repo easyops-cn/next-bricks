@@ -11,11 +11,11 @@ export interface CornerDataItem {
   color?: string;
 }
 
-export interface CornerIndictorProps {
+export interface CornerIndicatorProps {
   cornerDataSource?: CornerDataItem[];
 }
 
-export function CornerIndictor({ cornerDataSource }: CornerIndictorProps) {
+export function CornerIndicator({ cornerDataSource }: CornerIndicatorProps) {
   return (
     <div className="corner">
       {cornerDataSource?.map((item, index) => (

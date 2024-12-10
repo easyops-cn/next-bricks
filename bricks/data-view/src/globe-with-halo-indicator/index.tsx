@@ -4,13 +4,13 @@ import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import ResizeObserver from "resize-observer-polyfill";
 import { formatValue } from "../shared/formatValue";
-import { CornerIndictor } from "../shared/CornerIndictor";
+import { CornerIndicator } from "../shared/CornerIndicator";
 import { RotatingArc } from "./RotatingArc";
 import { SatelliteRing } from "./SatelliteRing";
 import particlesWebm from "./assets/particles.webm";
 import "../fonts/ALiBaBaPuHuiTi.css";
 import styleText from "./styles.shadow.css";
-import cornerStyleText from "../shared/CornerIndictor.shadow.css";
+import cornerStyleText from "../shared/CornerIndicator.shadow.css";
 
 const { defineElement, property } = createDecorators();
 
@@ -280,6 +280,13 @@ export function GlobeWithHaloIndicatorComponent({
           <source src={particlesWebm} type="video/webm" />
         </video>
 
+        <div className="center">
+          <div className="center-label">{centerDataSource?.label}</div>
+          <div className="center-value">
+            {formatValue(centerDataSource?.value)}
+          </div>
+        </div>
+
         <div className="ring-labels">
           {labels.map((item, index) => (
             <div
@@ -296,15 +303,8 @@ export function GlobeWithHaloIndicatorComponent({
             </div>
           ))}
         </div>
-
-        <div className="center">
-          <div className="center-label">{centerDataSource?.label}</div>
-          <div className="center-value">
-            {formatValue(centerDataSource?.value)}
-          </div>
-        </div>
       </div>
-      <CornerIndictor cornerDataSource={cornerDataSource} />
+      <CornerIndicator cornerDataSource={cornerDataSource} />
     </>
   );
 }

@@ -67,6 +67,7 @@
 
 .satellite-ring {
   top: 14px;
+  pointer-events: none;
 }
 
 .center {

@@ -4,12 +4,12 @@ import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import ResizeObserver from "resize-observer-polyfill";
 import { formatValue } from "../shared/formatValue";
-import { CornerIndictor } from "../shared/CornerIndictor";
+import { CornerIndicator } from "../shared/CornerIndicator";
 import crystalBallVideo from "./assets/crystal-ball.mp4";
 import "../fonts/ALiBaBaPuHuiTi.css";
 import "../fonts/PangMenZhengDaoBiaoTiTi.css";
 import styleText from "./styles.shadow.css";
-import cornerStyleText from "../shared/CornerIndictor.shadow.css";
+import cornerStyleText from "../shared/CornerIndicator.shadow.css";
 
 const RING_SIZE = 572;
 const RING_OFFSET = 16;
@@ -182,6 +182,12 @@ export function CrystalBallIndicatorComponent({
             </video>
           </div>
         </div>
+        <div className="center">
+          <div className="center-label">{centerDataSource?.label}</div>
+          <div className="center-value">
+            {formatValue(centerDataSource?.value)}
+          </div>
+        </div>
         <div className="ring-labels">
           {labels.map((item, index) => (
             <div
@@ -198,14 +204,8 @@ export function CrystalBallIndicatorComponent({
             </div>
           ))}
         </div>
-        <div className="center">
-          <div className="center-label">{centerDataSource?.label}</div>
-          <div className="center-value">
-            {formatValue(centerDataSource?.value)}
-          </div>
-        </div>
       </div>
-      <CornerIndictor cornerDataSource={cornerDataSource} />
+      <CornerIndicator cornerDataSource={cornerDataSource} />
     </>
   );
 }

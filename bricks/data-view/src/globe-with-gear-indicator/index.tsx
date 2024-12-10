@@ -4,12 +4,12 @@ import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
 import ResizeObserver from "resize-observer-polyfill";
 import { formatValue } from "../shared/formatValue";
-import { CornerIndictor } from "../shared/CornerIndictor";
+import { CornerIndicator } from "../shared/CornerIndicator";
 import type { GearBackground, GearBackgroundProps } from "../gear-background";
 import "../fonts/ALiBaBaPuHuiTi.css";
 import "../fonts/HarmonyOSSans.css";
 import styleText from "./styles.shadow.css";
-import cornerStyleText from "../shared/CornerIndictor.shadow.css";
+import cornerStyleText from "../shared/CornerIndicator.shadow.css";
 
 const BASE_WIDTH = 930;
 const BASE_HEIGHT = 590;
@@ -266,7 +266,7 @@ export function GlobeWithGearIndicatorComponent({
           ))}
         </div>
       </div>
-      <CornerIndictor cornerDataSource={cornerDataSource} />
+      <CornerIndicator cornerDataSource={cornerDataSource} />
     </>
   );
 }
