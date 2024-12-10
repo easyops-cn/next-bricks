@@ -214,22 +214,6 @@ export function GlobeWithHaloIndicatorComponent({
       >
         <div className="base"></div>
         <svg className="ring" width={928} height={534} viewBox="0 0 928 534">
-          <defs>
-            <linearGradient
-              id="rotating-arc"
-              gradientTransform="rotate(48)"
-              x1="0"
-              y1="0"
-              x2="830px"
-              y2="183px"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop offset="0%" stopColor="rgba(132, 253, 253, 0)" />
-              <stop offset="25%" stopColor="rgba(132, 253, 253, 1)" />
-              <stop offset="50%" stopColor="rgba(132, 253, 253, 1)" />
-              <stop offset="75%" stopColor="rgba(248, 255, 255, 1)" />
-            </linearGradient>
-          </defs>
           <g transform="translate(51 304)">
             <ellipse
               cx="413"
@@ -266,7 +250,7 @@ export function GlobeWithHaloIndicatorComponent({
                 repeatCount="indefinite"
               />
             </ellipse>
-            <RotatingArc />
+            <RotatingArc cx={413} cy={89.5} rx={412.4} ry={88.9} />
             {labels.map((label, index) => (
               <path
                 key={index}

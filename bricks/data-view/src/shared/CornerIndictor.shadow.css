@@ -13,6 +13,7 @@
 .corner-label {
   font-weight: 500;
   line-height: 25px;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .corner-value {
