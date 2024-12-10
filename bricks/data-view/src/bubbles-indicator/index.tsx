@@ -11,13 +11,15 @@ import {
   type SimulationLinkDatum,
 } from "d3-force";
 import { createDecorators } from "@next-core/element";
-import { ReactNextElement, wrapBrick } from "@next-core/react-element";
+import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import ResizeObserver from "resize-observer-polyfill";
-import type { Tag, TagProps } from "@next-bricks/basic/tag";
+import { formatValue } from "../shared/formatValue";
+import { CornerIndictor } from "../shared/CornerIndictor";
 import "../fonts/ALiBaBaPuHuiTi.css";
 import "../fonts/PangMenZhengDaoBiaoTiTi.css";
 import styleText from "./styles.shadow.css";
+import cornerStyleText from "../shared/CornerIndictor.shadow.css";
 
 const BASE_WIDTH = 800;
 const BASE_HEIGHT = 640;
@@ -28,12 +30,6 @@ const BUBBLE_PADDING = 12;
 const RANDOM_BUBBLE_MIN_RADIUS = 10;
 const RANDOM_BUBBLE_MAX_RADIUS = 22;
 const TOTAL_BUBBLE_COUNT = 18;
-
-const numberFormatter = new Intl.NumberFormat("zh-CN", {
-  useGrouping: true,
-});
-
-const WrappedTag = wrapBrick<Tag, TagProps>("eo-tag");
 
 const { defineElement, property } = createDecorators();
 
@@ -74,7 +70,7 @@ interface NumberedDataItem extends DataItem {
  */
 export
 @defineElement("data-view.bubbles-indicator", {
-  styleTexts: [styleText],
+  styleTexts: [styleText, cornerStyleText],
 })
 class BubblesIndicator
   extends ReactNextElement
@@ -277,30 +273,9 @@ export function BubblesIndicatorComponent({
           ))}
         </div>
       </div>
-      <div className="corner">
-        {cornerDataSource?.map((item, index) => (
-          <div key={index} className="corner-item">
-            <div className="corner-label">{item.label}</div>
-            <WrappedTag
-              className="corner-value"
-              outline
-              color={item.color}
-              tagStyle={{
-                fontSize: 18,
-                padding: "2px 16px",
-              }}
-            >
-              {formatValue(item.value)}
-            </WrappedTag>
-          </div>
-        ))}
-      </div>
+      <CornerIndictor cornerDataSource={cornerDataSource} />
     </>
   );
-}
-
-function formatValue(value: string | number): string {
-  return typeof value === "number" ? numberFormatter.format(value) : value;
 }
 
 function manuallyTickToTheEnd(

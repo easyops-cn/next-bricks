@@ -3,11 +3,13 @@ import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
 import ResizeObserver from "resize-observer-polyfill";
-import type { Tag, TagProps } from "@next-bricks/basic/tag";
+import { formatValue } from "../shared/formatValue";
+import { CornerIndictor } from "../shared/CornerIndictor";
+import type { GearBackground, GearBackgroundProps } from "../gear-background";
 import "../fonts/ALiBaBaPuHuiTi.css";
 import "../fonts/HarmonyOSSans.css";
 import styleText from "./styles.shadow.css";
-import type { GearBackground, GearBackgroundProps } from "../gear-background";
+import cornerStyleText from "../shared/CornerIndictor.shadow.css";
 
 const BASE_WIDTH = 930;
 const BASE_HEIGHT = 590;
@@ -41,11 +43,6 @@ const RING_RADIUS = 229;
 const RING_CX = 465;
 const RING_CY = 317;
 
-const numberFormatter = new Intl.NumberFormat("zh-CN", {
-  useGrouping: true,
-});
-
-const WrappedTag = wrapBrick<Tag, TagProps>("eo-tag");
 const WrappedGearBackground = wrapBrick<GearBackground, GearBackgroundProps>(
   "data-view.gear-background"
 );
@@ -82,7 +79,7 @@ interface DataItemWithPosition extends DataItem {
  */
 export
 @defineElement("data-view.globe-with-gear-indicator", {
-  styleTexts: [styleText],
+  styleTexts: [styleText, cornerStyleText],
 })
 class GlobeWithGearIndicator
   extends ReactNextElement
@@ -269,30 +266,9 @@ export function GlobeWithGearIndicatorComponent({
           ))}
         </div>
       </div>
-      <div className="corner">
-        {cornerDataSource?.map((item, index) => (
-          <div key={index} className="corner-item">
-            <div className="corner-label">{item.label}</div>
-            <WrappedTag
-              className="corner-value"
-              outline
-              color={item.color}
-              tagStyle={{
-                fontSize: 18,
-                padding: "2px 16px",
-              }}
-            >
-              {formatValue(item.value)}
-            </WrappedTag>
-          </div>
-        ))}
-      </div>
+      <CornerIndictor cornerDataSource={cornerDataSource} />
     </>
   );
-}
-
-function formatValue(value: string | number): string {
-  return typeof value === "number" ? numberFormatter.format(value) : value;
 }
 
 function getLinePosition(angle: number, even: boolean) {

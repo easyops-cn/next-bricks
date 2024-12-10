@@ -1,20 +1,16 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { createDecorators } from "@next-core/element";
-import { ReactNextElement, wrapBrick } from "@next-core/react-element";
+import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import ResizeObserver from "resize-observer-polyfill";
-import type { Tag, TagProps } from "@next-bricks/basic/tag";
+import { formatValue } from "../shared/formatValue";
+import { CornerIndictor } from "../shared/CornerIndictor";
 import { RotatingArc } from "./RotatingArc";
 import { SatelliteRing } from "./SatelliteRing";
 import particlesWebm from "./assets/particles.webm";
 import "../fonts/ALiBaBaPuHuiTi.css";
 import styleText from "./styles.shadow.css";
-
-const numberFormatter = new Intl.NumberFormat("zh-CN", {
-  useGrouping: true,
-});
-
-const WrappedTag = wrapBrick<Tag, TagProps>("eo-tag");
+import cornerStyleText from "../shared/CornerIndictor.shadow.css";
 
 const { defineElement, property } = createDecorators();
 
@@ -47,7 +43,7 @@ interface DataItemWithPosition extends DataItem {
  */
 export
 @defineElement("data-view.globe-with-halo-indicator", {
-  styleTexts: [styleText],
+  styleTexts: [styleText, cornerStyleText],
 })
 class GlobeWithHaloIndicator
   extends ReactNextElement
@@ -324,33 +320,11 @@ export function GlobeWithHaloIndicatorComponent({
           </div>
         </div>
       </div>
-
-      <div className="corner">
-        {cornerDataSource?.map((item, index) => (
-          <div key={index} className="corner-item">
-            <div className="corner-label">{item.label}</div>
-            <WrappedTag
-              className="corner-value"
-              outline
-              color={item.color}
-              tagStyle={{
-                fontSize: 18,
-                padding: "2px 16px",
-              }}
-            >
-              {formatValue(item.value)}
-            </WrappedTag>
-          </div>
-        ))}
-      </div>
+      <CornerIndictor cornerDataSource={cornerDataSource} />
     </>
   );
 }
 
 function getSequenceSum(n: number) {
   return (n * (n + 1)) / 2;
-}
-
-function formatValue(value: string | number): string {
-  return typeof value === "number" ? numberFormatter.format(value) : value;
 }

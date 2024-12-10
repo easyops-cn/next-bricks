@@ -22,6 +22,7 @@
 
 .base,
 .globe,
+.satellite-ring,
 .ring,
 .ring-labels {
   position: absolute;
@@ -49,6 +50,7 @@
   bottom: 228px;
 }
 
+.satellite-ring,
 .ring {
   top: 0;
 }

@@ -1,0 +1,21 @@
+.corner {
+  position: absolute;
+  top: 13px;
+  left: 31px;
+  font-size: 18px;
+}
+
+.corner-item {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.corner-label {
+  font-weight: 500;
+  line-height: 25px;
+}
+
+.corner-value {
+  display: block;
+  margin-left: 19px;
+}
