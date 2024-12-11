@@ -1,4 +1,5 @@
 :host,
+.center,
 .globe-video-container,
 .orbit-label-container {
   display: flex;
@@ -15,6 +16,10 @@
   display: none;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .container {
   width: 852px;
   height: 570px;
@@ -26,6 +31,7 @@
 }
 
 .base,
+.center,
 .ring,
 .globe,
 .globe-video-container,
@@ -46,14 +52,18 @@
   background-size: 100%;
 }
 
-.globe {
+.globe,
+.center {
   width: 288px;
   height: 288px;
+  top: 41px;
+}
+
+.globe {
   background-image: url(./assets/globe.png);
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center;
-  top: 41px;
 }
 
 .globe-video-container {
@@ -71,9 +81,7 @@
 }
 
 .center {
-  position: absolute;
-  top: 120px;
-  width: 100%;
+  flex-direction: column;
   text-align: center;
   text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
 }
@@ -107,6 +115,7 @@
   position: absolute;
   width: 148px;
   height: 94px;
+  padding: 10px;
   background-image: url(./assets/label-bg.png);
   background-repeat: no-repeat;
   background-size: 100%;

@@ -1,12 +1,13 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
-import ResizeObserver from "resize-observer-polyfill";
 import { formatValue } from "../shared/formatValue";
 import { CornerIndicator } from "../shared/CornerIndicator";
 import { RotatingArc } from "./RotatingArc";
 import { SatelliteRing } from "./SatelliteRing";
+import { useContainerScale } from "../shared/useContainerScale";
+import { useCenterScale } from "../shared/useCenterScale";
 import particlesWebm from "./assets/particles.webm";
 import "../fonts/ALiBaBaPuHuiTi.css";
 import styleText from "./styles.shadow.css";
@@ -100,21 +101,8 @@ export function GlobeWithHaloIndicatorComponent({
   cornerDataSource,
   maxScale,
 }: GlobeWithHaloIndicatorComponentProps) {
-  const [scale, setScale] = useState<number | null>(null);
-
-  useEffect(() => {
-    // 当容器宽高低于预设值时，图形会自动缩小
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.target === root) {
-          const { width, height } = entry.contentRect;
-          setScale(Math.min(maxScale ?? 1, width / 878, height / 575));
-        }
-      }
-    });
-    observer.observe(root);
-    return () => observer.disconnect();
-  }, [maxScale, root]);
+  const scale = useContainerScale({ width: 900, height: 575, root, maxScale });
+  const [centerValueScale, centerValueRef] = useCenterScale(260);
 
   // 计算环上标签的位置
   // 1. 将数据分为两组，分别在环的两侧
@@ -280,13 +268,6 @@ export function GlobeWithHaloIndicatorComponent({
           <source src={particlesWebm} type="video/webm" />
         </video>
 
-        <div className="center">
-          <div className="center-label">{centerDataSource?.label}</div>
-          <div className="center-value">
-            {formatValue(centerDataSource?.value)}
-          </div>
-        </div>
-
         <div className="ring-labels">
           {labels.map((item, index) => (
             <div
@@ -302,6 +283,20 @@ export function GlobeWithHaloIndicatorComponent({
               <div className="ring-value">{formatValue(item.value)}</div>
             </div>
           ))}
+        </div>
+
+        <div className="center">
+          <div className="center-label">{centerDataSource?.label}</div>
+          <div
+            className="center-value"
+            ref={centerValueRef}
+            style={{
+              visibility: centerValueScale === null ? "hidden" : "visible",
+              transform: `scale(${centerValueScale ?? 1})`,
+            }}
+          >
+            {formatValue(centerDataSource?.value)}
+          </div>
         </div>
       </div>
       <CornerIndicator cornerDataSource={cornerDataSource} />

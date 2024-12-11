@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
-import ResizeObserver from "resize-observer-polyfill";
 import { formatValue } from "../shared/formatValue";
 import { CornerIndicator } from "../shared/CornerIndicator";
 import { RotatingArc } from "../globe-with-halo-indicator/RotatingArc";
 import { SatelliteRing } from "../globe-with-halo-indicator/SatelliteRing";
+import { useContainerScale } from "../shared/useContainerScale";
+import { useCenterScale } from "../shared/useCenterScale";
 import globeMp4 from "./assets/globe.mp4";
 import "../fonts/ALiBaBaPuHuiTi.css";
 import "../fonts/HarmonyOSSans.css";
@@ -99,21 +100,8 @@ export function GlobeWithOrbitIndicatorComponent({
   cornerDataSource,
   maxScale,
 }: GlobeWithOrbitIndicatorComponentProps) {
-  const [scale, setScale] = useState<number | null>(null);
-
-  useEffect(() => {
-    // 当容器宽高低于预设值时，图形会自动缩小
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.target === root) {
-          const { width, height } = entry.contentRect;
-          setScale(Math.min(maxScale ?? 1, width / 852, height / 570));
-        }
-      }
-    });
-    observer.observe(root);
-    return () => observer.disconnect();
-  }, [maxScale, root]);
+  const scale = useContainerScale({ width: 852, height: 570, root, maxScale });
+  const [centerValueScale, centerValueRef] = useCenterScale(230);
 
   const [labels, setLabels] = useState<DataItemWithPosition[] | null>(null);
 
@@ -231,7 +219,14 @@ export function GlobeWithOrbitIndicatorComponent({
 
         <div className="center">
           <div className="center-label">{centerDataSource?.label}</div>
-          <div className="center-value">
+          <div
+            className="center-value"
+            ref={centerValueRef}
+            style={{
+              visibility: centerValueScale === null ? "hidden" : "visible",
+              transform: `scale(${centerValueScale ?? 1})`,
+            }}
+          >
             {formatValue(centerDataSource?.value)}
           </div>
         </div>

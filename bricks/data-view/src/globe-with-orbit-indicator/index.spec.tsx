@@ -8,6 +8,7 @@ window.cancelAnimationFrame = jest.fn((frame) => clearTimeout(frame));
 jest.useFakeTimers();
 
 jest.mock("@next-core/theme", () => ({}));
+jest.mock("../globe-with-halo-indicator/RotatingArc");
 
 jest.mock(
   "resize-observer-polyfill",
@@ -95,7 +96,9 @@ describe("data-view.globe-with-orbit-indicator", () => {
       ).length
     ).toBe(4);
 
-    jest.advanceTimersByTime(16);
+    act(() => {
+      jest.advanceTimersByTime(16);
+    });
 
     act(() => {
       document.body.removeChild(element);

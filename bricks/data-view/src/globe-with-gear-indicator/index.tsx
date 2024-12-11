@@ -1,10 +1,11 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
-import ResizeObserver from "resize-observer-polyfill";
 import { formatValue } from "../shared/formatValue";
 import { CornerIndicator } from "../shared/CornerIndicator";
+import { useContainerScale } from "../shared/useContainerScale";
+import { useCenterScale } from "../shared/useCenterScale";
 import type { GearBackground, GearBackgroundProps } from "../gear-background";
 import "../fonts/ALiBaBaPuHuiTi.css";
 import "../fonts/HarmonyOSSans.css";
@@ -135,24 +136,13 @@ export function GlobeWithGearIndicatorComponent({
   cornerDataSource,
   maxScale,
 }: GlobeWithGearIndicatorComponentProps) {
-  const [scale, setScale] = useState<number | null>(null);
-
-  useEffect(() => {
-    // 当容器宽高低于预设值时，图形会自动缩小
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.target === root) {
-          const { width, height } = entry.contentRect;
-          // 宽度大于高度，因为有水平方向排列的标签文字
-          setScale(
-            Math.min(maxScale ?? 1, width / BASE_WIDTH, height / BASE_HEIGHT)
-          );
-        }
-      }
-    });
-    observer.observe(root);
-    return () => observer.disconnect();
-  }, [maxScale, root]);
+  const scale = useContainerScale({
+    width: BASE_WIDTH,
+    height: BASE_HEIGHT,
+    root,
+    maxScale,
+  });
+  const [centerValueScale, centerValueRef] = useCenterScale(360);
 
   // 计算环上标签的位置
   // 1. 将数据分为两组，分别在环的两侧
@@ -207,7 +197,14 @@ export function GlobeWithGearIndicatorComponent({
           <div className="radar"></div>
           <div className="globe"></div>
           {centerDataSource && (
-            <div className="center-border level-1">
+            <div
+              className="center-border level-1"
+              ref={centerValueRef}
+              style={{
+                visibility: centerValueScale === null ? "hidden" : "visible",
+                transform: `scale(${centerValueScale ?? 1})`,
+              }}
+            >
               <div className="center-border level-2">
                 <div className="center-border level-3">
                   <div className="center-border level-4">

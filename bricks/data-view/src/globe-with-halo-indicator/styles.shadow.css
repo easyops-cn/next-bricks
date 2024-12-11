@@ -1,13 +1,21 @@
-:host {
+:host,
+.center {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+:host {
   height: 100%;
   color: #fff;
 }
 
 :host([hidden]) {
   display: none;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 .container {
@@ -21,6 +29,7 @@
 }
 
 .base,
+.center,
 .globe,
 .satellite-ring,
 .ring,
@@ -40,14 +49,18 @@
   background-size: 100%;
 }
 
-.globe {
+.globe,
+.center {
   width: 272px;
   height: 272px;
+  bottom: 228px;
+}
+
+.globe {
   background-image: url(./assets/globe.png);
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size: 100%;
   background-position: center;
-  bottom: 228px;
 }
 
 .satellite-ring,
@@ -111,9 +124,7 @@
 }
 
 .center {
-  position: absolute;
-  top: 120px;
-  width: 100%;
+  flex-direction: column;
   text-align: center;
   text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
 }
