@@ -86,6 +86,7 @@
   background: url(./assets/light.png) no-repeat;
   background-size: 338px 478px;
   animation: moving-light 3s linear infinite;
+  pointer-events: none;
 }
 
 .bubbles {

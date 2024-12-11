@@ -1,22 +1,19 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { createDecorators } from "@next-core/element";
-import { ReactNextElement, wrapBrick } from "@next-core/react-element";
+import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
-import ResizeObserver from "resize-observer-polyfill";
-import type { Tag, TagProps } from "@next-bricks/basic/tag";
+import { formatValue } from "../shared/formatValue";
+import { CornerIndicator } from "../shared/CornerIndicator";
+import { useContainerScale } from "../shared/useContainerScale";
+import { useCenterScale } from "../shared/useCenterScale";
 import crystalBallVideo from "./assets/crystal-ball.mp4";
 import "../fonts/ALiBaBaPuHuiTi.css";
 import "../fonts/PangMenZhengDaoBiaoTiTi.css";
 import styleText from "./styles.shadow.css";
+import cornerStyleText from "../shared/CornerIndicator.shadow.css";
 
 const RING_SIZE = 572;
 const RING_OFFSET = 16;
-
-const numberFormatter = new Intl.NumberFormat("zh-CN", {
-  useGrouping: true,
-});
-
-const WrappedTag = wrapBrick<Tag, TagProps>("eo-tag");
 
 const { defineElement, property } = createDecorators();
 
@@ -46,7 +43,7 @@ interface DataItemWithPosition extends DataItem {
  */
 export
 @defineElement("data-view.crystal-ball-indicator", {
-  styleTexts: [styleText],
+  styleTexts: [styleText, cornerStyleText],
 })
 class CrystalBallIndicator
   extends ReactNextElement
@@ -102,22 +99,8 @@ export function CrystalBallIndicatorComponent({
   cornerDataSource,
   maxScale,
 }: CrystalBallIndicatorComponentProps) {
-  const [scale, setScale] = useState<number | null>(null);
-
-  useEffect(() => {
-    // 当容器宽高低于预设值时，图形会自动缩小
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.target === root) {
-          const { width, height } = entry.contentRect;
-          // 宽度大于高度，因为有水平方向排列的标签文字
-          setScale(Math.min(maxScale ?? 1, width / 810, height / 604));
-        }
-      }
-    });
-    observer.observe(root);
-    return () => observer.disconnect();
-  }, [maxScale, root]);
+  const scale = useContainerScale({ width: 810, height: 604, root, maxScale });
+  const [centerValueScale, centerValueRef] = useCenterScale(280);
 
   // 计算环上标签的位置
   // 1. 将数据分为两组，分别在环的两侧
@@ -204,33 +187,19 @@ export function CrystalBallIndicatorComponent({
         </div>
         <div className="center">
           <div className="center-label">{centerDataSource?.label}</div>
-          <div className="center-value">
+          <div
+            className="center-value"
+            ref={centerValueRef}
+            style={{
+              visibility: centerValueScale === null ? "hidden" : "visible",
+              transform: `scale(${centerValueScale ?? 1})`,
+            }}
+          >
             {formatValue(centerDataSource?.value)}
           </div>
         </div>
       </div>
-      <div className="corner">
-        {cornerDataSource?.map((item, index) => (
-          <div key={index} className="corner-item">
-            <div className="corner-label">{item.label}</div>
-            <WrappedTag
-              className="corner-value"
-              outline
-              color={item.color}
-              tagStyle={{
-                fontSize: 18,
-                padding: "2px 16px",
-              }}
-            >
-              {formatValue(item.value)}
-            </WrappedTag>
-          </div>
-        ))}
-      </div>
+      <CornerIndicator cornerDataSource={cornerDataSource} />
     </>
   );
-}
-
-function formatValue(value: string | number): string {
-  return typeof value === "number" ? numberFormatter.format(value) : value;
 }

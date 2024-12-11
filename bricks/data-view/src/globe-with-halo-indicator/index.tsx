@@ -1,20 +1,17 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { createDecorators } from "@next-core/element";
-import { ReactNextElement, wrapBrick } from "@next-core/react-element";
+import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
-import ResizeObserver from "resize-observer-polyfill";
-import type { Tag, TagProps } from "@next-bricks/basic/tag";
+import { formatValue } from "../shared/formatValue";
+import { CornerIndicator } from "../shared/CornerIndicator";
 import { RotatingArc } from "./RotatingArc";
 import { SatelliteRing } from "./SatelliteRing";
+import { useContainerScale } from "../shared/useContainerScale";
+import { useCenterScale } from "../shared/useCenterScale";
 import particlesWebm from "./assets/particles.webm";
 import "../fonts/ALiBaBaPuHuiTi.css";
 import styleText from "./styles.shadow.css";
-
-const numberFormatter = new Intl.NumberFormat("zh-CN", {
-  useGrouping: true,
-});
-
-const WrappedTag = wrapBrick<Tag, TagProps>("eo-tag");
+import cornerStyleText from "../shared/CornerIndicator.shadow.css";
 
 const { defineElement, property } = createDecorators();
 
@@ -47,7 +44,7 @@ interface DataItemWithPosition extends DataItem {
  */
 export
 @defineElement("data-view.globe-with-halo-indicator", {
-  styleTexts: [styleText],
+  styleTexts: [styleText, cornerStyleText],
 })
 class GlobeWithHaloIndicator
   extends ReactNextElement
@@ -104,21 +101,8 @@ export function GlobeWithHaloIndicatorComponent({
   cornerDataSource,
   maxScale,
 }: GlobeWithHaloIndicatorComponentProps) {
-  const [scale, setScale] = useState<number | null>(null);
-
-  useEffect(() => {
-    // 当容器宽高低于预设值时，图形会自动缩小
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.target === root) {
-          const { width, height } = entry.contentRect;
-          setScale(Math.min(maxScale ?? 1, width / 878, height / 575));
-        }
-      }
-    });
-    observer.observe(root);
-    return () => observer.disconnect();
-  }, [maxScale, root]);
+  const scale = useContainerScale({ width: 900, height: 575, root, maxScale });
+  const [centerValueScale, centerValueRef] = useCenterScale(260);
 
   // 计算环上标签的位置
   // 1. 将数据分为两组，分别在环的两侧
@@ -218,22 +202,6 @@ export function GlobeWithHaloIndicatorComponent({
       >
         <div className="base"></div>
         <svg className="ring" width={928} height={534} viewBox="0 0 928 534">
-          <defs>
-            <linearGradient
-              id="rotating-arc"
-              gradientTransform="rotate(48)"
-              x1="0"
-              y1="0"
-              x2="830px"
-              y2="183px"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop offset="0%" stopColor="rgba(132, 253, 253, 0)" />
-              <stop offset="25%" stopColor="rgba(132, 253, 253, 1)" />
-              <stop offset="50%" stopColor="rgba(132, 253, 253, 1)" />
-              <stop offset="75%" stopColor="rgba(248, 255, 255, 1)" />
-            </linearGradient>
-          </defs>
           <g transform="translate(51 304)">
             <ellipse
               cx="413"
@@ -270,7 +238,7 @@ export function GlobeWithHaloIndicatorComponent({
                 repeatCount="indefinite"
               />
             </ellipse>
-            <RotatingArc />
+            <RotatingArc cx={413} cy={89.5} rx={412.4} ry={88.9} />
             {labels.map((label, index) => (
               <path
                 key={index}
@@ -319,38 +287,23 @@ export function GlobeWithHaloIndicatorComponent({
 
         <div className="center">
           <div className="center-label">{centerDataSource?.label}</div>
-          <div className="center-value">
+          <div
+            className="center-value"
+            ref={centerValueRef}
+            style={{
+              visibility: centerValueScale === null ? "hidden" : "visible",
+              transform: `scale(${centerValueScale ?? 1})`,
+            }}
+          >
             {formatValue(centerDataSource?.value)}
           </div>
         </div>
       </div>
-
-      <div className="corner">
-        {cornerDataSource?.map((item, index) => (
-          <div key={index} className="corner-item">
-            <div className="corner-label">{item.label}</div>
-            <WrappedTag
-              className="corner-value"
-              outline
-              color={item.color}
-              tagStyle={{
-                fontSize: 18,
-                padding: "2px 16px",
-              }}
-            >
-              {formatValue(item.value)}
-            </WrappedTag>
-          </div>
-        ))}
-      </div>
+      <CornerIndicator cornerDataSource={cornerDataSource} />
     </>
   );
 }
 
 function getSequenceSum(n: number) {
   return (n * (n + 1)) / 2;
-}
-
-function formatValue(value: string | number): string {
-  return typeof value === "number" ? numberFormatter.format(value) : value;
 }

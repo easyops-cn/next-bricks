@@ -3,7 +3,7 @@ import { describe, test, expect } from "@jest/globals";
 import { act, render } from "@testing-library/react";
 import { RotatingArc } from "./RotatingArc";
 
-window.requestAnimationFrame = jest.fn((fn) => setTimeout(fn, 17));
+window.requestAnimationFrame = jest.fn((fn) => setTimeout(fn, 16));
 window.cancelAnimationFrame = jest.fn((frame) => clearTimeout(frame));
 
 jest.useFakeTimers();
@@ -12,14 +12,14 @@ describe("RotatingArc", () => {
   test("should work", () => {
     const getComponent = () => (
       <svg>
-        <RotatingArc />
+        <RotatingArc cx={413} cy={89.5} rx={412.4} ry={88.9} />
       </svg>
     );
     const { rerender, container } = render(getComponent());
     expect(container.querySelector("path").getAttribute("d")).toBe("M 0 0");
 
     act(() => {
-      jest.advanceTimersByTime(17);
+      jest.advanceTimersByTime(16);
     });
     rerender(getComponent());
     expect(
@@ -43,7 +43,7 @@ describe("RotatingArc", () => {
     ]);
 
     act(() => {
-      jest.advanceTimersByTime(17);
+      jest.advanceTimersByTime(16);
     });
     rerender(getComponent());
     expect(
