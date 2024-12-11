@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import {
   forceSimulation,
   forceCollide,
@@ -13,16 +13,17 @@ import {
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
-import ResizeObserver from "resize-observer-polyfill";
 import { formatValue } from "../shared/formatValue";
 import { CornerIndicator } from "../shared/CornerIndicator";
+import { useContainerScale } from "../shared/useContainerScale";
+import { useCenterScale } from "../shared/useCenterScale";
 import "../fonts/ALiBaBaPuHuiTi.css";
 import "../fonts/PangMenZhengDaoBiaoTiTi.css";
 import styleText from "./styles.shadow.css";
 import cornerStyleText from "../shared/CornerIndicator.shadow.css";
 
-const BASE_WIDTH = 800;
-const BASE_HEIGHT = 640;
+const BASE_WIDTH = 900;
+const BASE_HEIGHT = 700;
 const CENTER_BUBBLE_RADIUS = 196;
 const OTHER_BUBBLE_MAX_RADIUS = 81;
 const OTHER_BUBBLE_MIN_RADIUS = 40;
@@ -129,24 +130,13 @@ export function BubblesIndicatorComponent({
   cornerDataSource,
   maxScale,
 }: BubblesIndicatorComponentProps) {
-  const [scale, setScale] = useState<number | null>(null);
-
-  useEffect(() => {
-    // 当容器宽高低于预设值时，图形会自动缩小
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.target === root) {
-          const { width, height } = entry.contentRect;
-          // 宽度大于高度，因为有水平方向排列的标签文字
-          setScale(
-            Math.min(maxScale ?? 1, width / BASE_WIDTH, height / BASE_HEIGHT)
-          );
-        }
-      }
-    });
-    observer.observe(root);
-    return () => observer.disconnect();
-  }, [maxScale, root]);
+  const scale = useContainerScale({
+    width: BASE_WIDTH,
+    height: BASE_HEIGHT,
+    root,
+    maxScale,
+  });
+  const [centerValueScale, centerValueRef] = useCenterScale(280);
 
   // 使用 d3 力学布局计算气泡位置，将普通数据排列在中心数据周围，并填充一些小的气泡
   const labels = useMemo(() => {
@@ -252,7 +242,14 @@ export function BubblesIndicatorComponent({
         <div className="inner-ring"></div>
         <div className="center">
           <div className="center-label">{centerDataSource?.label}</div>
-          <div className="center-value">
+          <div
+            className="center-value"
+            ref={centerValueRef}
+            style={{
+              visibility: centerValueScale === null ? "hidden" : "visible",
+              transform: `scale(${centerValueScale ?? 1})`,
+            }}
+          >
             {formatValue(centerDataSource?.value)}
           </div>
         </div>
