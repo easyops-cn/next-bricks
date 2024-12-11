@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.52.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.52.2...@next-bricks/diagram@0.52.3) (2024-12-11)
+
+
+### Bug Fixes
+
+* handle zoom wheel factor by platform ([e0a6869](https://github.com/easyops-cn/next-bricks/commit/e0a6869557ca188f14d061f8496e852ec48d95ea))
+* refine zoom wheel event ([471229e](https://github.com/easyops-cn/next-bricks/commit/471229e5dcc8dea07783ed6522675577bdb29406))
+
+
+
+
+
 ## [0.52.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.52.1...@next-bricks/diagram@0.52.2) (2024-12-09)
 
 **Note:** Version bump only for package @next-bricks/diagram
