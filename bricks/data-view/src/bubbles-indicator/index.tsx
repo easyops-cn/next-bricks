@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import {
   forceSimulation,
   forceCollide,
@@ -11,16 +11,19 @@ import {
   type SimulationLinkDatum,
 } from "d3-force";
 import { createDecorators } from "@next-core/element";
-import { ReactNextElement, wrapBrick } from "@next-core/react-element";
+import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
-import ResizeObserver from "resize-observer-polyfill";
-import type { Tag, TagProps } from "@next-bricks/basic/tag";
+import { formatValue } from "../shared/formatValue";
+import { CornerIndicator } from "../shared/CornerIndicator";
+import { useContainerScale } from "../shared/useContainerScale";
+import { useCenterScale } from "../shared/useCenterScale";
 import "../fonts/ALiBaBaPuHuiTi.css";
 import "../fonts/PangMenZhengDaoBiaoTiTi.css";
 import styleText from "./styles.shadow.css";
+import cornerStyleText from "../shared/CornerIndicator.shadow.css";
 
-const BASE_WIDTH = 800;
-const BASE_HEIGHT = 640;
+const BASE_WIDTH = 900;
+const BASE_HEIGHT = 700;
 const CENTER_BUBBLE_RADIUS = 196;
 const OTHER_BUBBLE_MAX_RADIUS = 81;
 const OTHER_BUBBLE_MIN_RADIUS = 40;
@@ -28,12 +31,6 @@ const BUBBLE_PADDING = 12;
 const RANDOM_BUBBLE_MIN_RADIUS = 10;
 const RANDOM_BUBBLE_MAX_RADIUS = 22;
 const TOTAL_BUBBLE_COUNT = 18;
-
-const numberFormatter = new Intl.NumberFormat("zh-CN", {
-  useGrouping: true,
-});
-
-const WrappedTag = wrapBrick<Tag, TagProps>("eo-tag");
 
 const { defineElement, property } = createDecorators();
 
@@ -47,6 +44,10 @@ export interface BubblesIndicatorProps {
 export interface DataItem {
   label: string;
   value: string | number;
+  /**
+   * 用于计算气泡相对大小的数值。
+   */
+  numberValue?: number;
 }
 
 export interface CornerDataItem extends DataItem {
@@ -74,7 +75,7 @@ interface NumberedDataItem extends DataItem {
  */
 export
 @defineElement("data-view.bubbles-indicator", {
-  styleTexts: [styleText],
+  styleTexts: [styleText, cornerStyleText],
 })
 class BubblesIndicator
   extends ReactNextElement
@@ -129,24 +130,13 @@ export function BubblesIndicatorComponent({
   cornerDataSource,
   maxScale,
 }: BubblesIndicatorComponentProps) {
-  const [scale, setScale] = useState<number | null>(null);
-
-  useEffect(() => {
-    // 当容器宽高低于预设值时，图形会自动缩小
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.target === root) {
-          const { width, height } = entry.contentRect;
-          // 宽度大于高度，因为有水平方向排列的标签文字
-          setScale(
-            Math.min(maxScale ?? 1, width / BASE_WIDTH, height / BASE_HEIGHT)
-          );
-        }
-      }
-    });
-    observer.observe(root);
-    return () => observer.disconnect();
-  }, [maxScale, root]);
+  const scale = useContainerScale({
+    width: BASE_WIDTH,
+    height: BASE_HEIGHT,
+    root,
+    maxScale,
+  });
+  const [centerValueScale, centerValueRef] = useCenterScale(280);
 
   // 使用 d3 力学布局计算气泡位置，将普通数据排列在中心数据周围，并填充一些小的气泡
   const labels = useMemo(() => {
@@ -154,7 +144,10 @@ export function BubblesIndicatorComponent({
       dataSource?.slice(0, 12)?.map((item) => ({
         ...item,
         positiveNumberValue: Math.abs(
-          typeof item.value === "number" ? item.value : parseFloat(item.value)
+          item.numberValue ??
+            (typeof item.value === "number"
+              ? item.value
+              : parseFloat(item.value))
         ),
       })) ?? [];
     const positiveNumberValues = numberedDataSource.map(
@@ -249,7 +242,14 @@ export function BubblesIndicatorComponent({
         <div className="inner-ring"></div>
         <div className="center">
           <div className="center-label">{centerDataSource?.label}</div>
-          <div className="center-value">
+          <div
+            className="center-value"
+            ref={centerValueRef}
+            style={{
+              visibility: centerValueScale === null ? "hidden" : "visible",
+              transform: `scale(${centerValueScale ?? 1})`,
+            }}
+          >
             {formatValue(centerDataSource?.value)}
           </div>
         </div>
@@ -277,30 +277,9 @@ export function BubblesIndicatorComponent({
           ))}
         </div>
       </div>
-      <div className="corner">
-        {cornerDataSource?.map((item, index) => (
-          <div key={index} className="corner-item">
-            <div className="corner-label">{item.label}</div>
-            <WrappedTag
-              className="corner-value"
-              outline
-              color={item.color}
-              tagStyle={{
-                fontSize: 18,
-                padding: "2px 16px",
-              }}
-            >
-              {formatValue(item.value)}
-            </WrappedTag>
-          </div>
-        ))}
-      </div>
+      <CornerIndicator cornerDataSource={cornerDataSource} />
     </>
   );
-}
-
-function formatValue(value: string | number): string {
-  return typeof value === "number" ? numberFormatter.format(value) : value;
 }
 
 function manuallyTickToTheEnd(

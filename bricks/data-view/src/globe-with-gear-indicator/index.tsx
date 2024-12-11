@@ -1,13 +1,16 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
-import ResizeObserver from "resize-observer-polyfill";
-import type { Tag, TagProps } from "@next-bricks/basic/tag";
+import { formatValue } from "../shared/formatValue";
+import { CornerIndicator } from "../shared/CornerIndicator";
+import { useContainerScale } from "../shared/useContainerScale";
+import { useCenterScale } from "../shared/useCenterScale";
+import type { GearBackground, GearBackgroundProps } from "../gear-background";
 import "../fonts/ALiBaBaPuHuiTi.css";
 import "../fonts/HarmonyOSSans.css";
 import styleText from "./styles.shadow.css";
-import type { GearBackground, GearBackgroundProps } from "../gear-background";
+import cornerStyleText from "../shared/CornerIndicator.shadow.css";
 
 const BASE_WIDTH = 930;
 const BASE_HEIGHT = 590;
@@ -41,11 +44,6 @@ const RING_RADIUS = 229;
 const RING_CX = 465;
 const RING_CY = 317;
 
-const numberFormatter = new Intl.NumberFormat("zh-CN", {
-  useGrouping: true,
-});
-
-const WrappedTag = wrapBrick<Tag, TagProps>("eo-tag");
 const WrappedGearBackground = wrapBrick<GearBackground, GearBackgroundProps>(
   "data-view.gear-background"
 );
@@ -82,7 +80,7 @@ interface DataItemWithPosition extends DataItem {
  */
 export
 @defineElement("data-view.globe-with-gear-indicator", {
-  styleTexts: [styleText],
+  styleTexts: [styleText, cornerStyleText],
 })
 class GlobeWithGearIndicator
   extends ReactNextElement
@@ -138,24 +136,13 @@ export function GlobeWithGearIndicatorComponent({
   cornerDataSource,
   maxScale,
 }: GlobeWithGearIndicatorComponentProps) {
-  const [scale, setScale] = useState<number | null>(null);
-
-  useEffect(() => {
-    // 当容器宽高低于预设值时，图形会自动缩小
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        if (entry.target === root) {
-          const { width, height } = entry.contentRect;
-          // 宽度大于高度，因为有水平方向排列的标签文字
-          setScale(
-            Math.min(maxScale ?? 1, width / BASE_WIDTH, height / BASE_HEIGHT)
-          );
-        }
-      }
-    });
-    observer.observe(root);
-    return () => observer.disconnect();
-  }, [maxScale, root]);
+  const scale = useContainerScale({
+    width: BASE_WIDTH,
+    height: BASE_HEIGHT,
+    root,
+    maxScale,
+  });
+  const [centerValueScale, centerValueRef] = useCenterScale(360);
 
   // 计算环上标签的位置
   // 1. 将数据分为两组，分别在环的两侧
@@ -210,7 +197,14 @@ export function GlobeWithGearIndicatorComponent({
           <div className="radar"></div>
           <div className="globe"></div>
           {centerDataSource && (
-            <div className="center-border level-1">
+            <div
+              className="center-border level-1"
+              ref={centerValueRef}
+              style={{
+                visibility: centerValueScale === null ? "hidden" : "visible",
+                transform: `scale(${centerValueScale ?? 1})`,
+              }}
+            >
               <div className="center-border level-2">
                 <div className="center-border level-3">
                   <div className="center-border level-4">
@@ -269,30 +263,9 @@ export function GlobeWithGearIndicatorComponent({
           ))}
         </div>
       </div>
-      <div className="corner">
-        {cornerDataSource?.map((item, index) => (
-          <div key={index} className="corner-item">
-            <div className="corner-label">{item.label}</div>
-            <WrappedTag
-              className="corner-value"
-              outline
-              color={item.color}
-              tagStyle={{
-                fontSize: 18,
-                padding: "2px 16px",
-              }}
-            >
-              {formatValue(item.value)}
-            </WrappedTag>
-          </div>
-        ))}
-      </div>
+      <CornerIndicator cornerDataSource={cornerDataSource} />
     </>
   );
-}
-
-function formatValue(value: string | number): string {
-  return typeof value === "number" ? numberFormatter.format(value) : value;
 }
 
 function getLinePosition(angle: number, even: boolean) {

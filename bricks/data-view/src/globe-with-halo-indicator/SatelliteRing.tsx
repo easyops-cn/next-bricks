@@ -2,7 +2,12 @@ import React from "react";
 
 export function SatelliteRing() {
   return (
-    <svg className="ring" width="928px" height="534px" viewBox="0 0 928 534">
+    <svg
+      className="satellite-ring"
+      width="928px"
+      height="534px"
+      viewBox="0 0 928 534"
+    >
       <defs>
         <linearGradient
           x1="50%"

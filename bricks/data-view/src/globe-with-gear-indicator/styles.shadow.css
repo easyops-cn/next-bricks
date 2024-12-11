@@ -73,6 +73,7 @@
 }
 
 .light {
+  pointer-events: none;
   bottom: 98px;
   width: 207px;
   height: 208px;
@@ -163,6 +164,7 @@
 
 .ring-lines {
   top: 0;
+  pointer-events: none;
 }
 
 .ring-labels {
@@ -192,6 +194,7 @@
 }
 
 .ring-label {
+  color: rgba(255, 255, 255, 0.65);
   font-family: ALiBaBaPuHuiTi;
   font-size: 14px;
   line-height: 20px;
