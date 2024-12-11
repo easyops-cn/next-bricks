@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.6.2...@next-bricks/data-view@1.7.0) (2024-12-11)
+
+
+### Bug Fixes
+
+* **indicator:** adjust center scale to fit into the center globe ([e9b8164](https://github.com/easyops-cn/next-bricks/commit/e9b81646504ea294e58455f16b0885fb1eaf8481))
+* **indicator:** support format string numbers ([692fdbd](https://github.com/easyops-cn/next-bricks/commit/692fdbddba49e35e26b48bf59b225b1f56d83e33))
+* refine style of indicators ([29f850b](https://github.com/easyops-cn/next-bricks/commit/29f850bdfc9740213ded3b0ece17f363fe822a47))
+
+
+### Features
+
+* new brick: globe-with-orbit-indicator ([e183321](https://github.com/easyops-cn/next-bricks/commit/e1833215c2e447ff8731a146b60f70eb38459330))
+
+
+
+
+
 ## [1.6.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.6.1...@next-bricks/data-view@1.6.2) (2024-12-09)
 
 **Note:** Version bump only for package @next-bricks/data-view
