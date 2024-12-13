@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.7.0...@next-bricks/data-view@1.8.0) (2024-12-13)
+
+
+### Bug Fixes
+
+* **china-map-chart:** pan up 5° because we set pitch ([b820db9](https://github.com/easyops-cn/next-bricks/commit/b820db9452151d7414811d81228ea75748af297a))
+* **globe-with-halo-indicator:** replace base bg ([25dbbbc](https://github.com/easyops-cn/next-bricks/commit/25dbbbc13031eb406679bac8edd6c7878fbfc731))
+
+
+### Features
+
+* **china-map-chart:** support fillContainer ([8912aab](https://github.com/easyops-cn/next-bricks/commit/8912aab249ba48732844f11893316bdec65f3db1))
+
+
+
+
+
 # [1.7.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.6.2...@next-bricks/data-view@1.7.0) (2024-12-11)
 
 
