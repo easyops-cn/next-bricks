@@ -9,16 +9,22 @@ export function useContainerScale({
   height: baseHeight,
   root,
   maxScale,
+  disabled,
 }: {
   width: number;
   height: number;
   root: HTMLElement;
   /** 最大缩放比例，默认为 1 */
   maxScale?: number;
+  disabled?: boolean;
 }): number | null {
   const [scale, setScale] = useState<number | null>(null);
 
   useEffect(() => {
+    if (disabled) {
+      setScale(null);
+      return;
+    }
     // 当容器宽高低于预设值时，图形会自动缩小
     const observer = new ResizeObserver((entries) => {
       for (const entry of entries) {
@@ -32,7 +38,7 @@ export function useContainerScale({
     });
     observer.observe(root);
     return () => observer.disconnect();
-  }, [baseHeight, baseWidth, maxScale, root]);
+  }, [baseHeight, baseWidth, disabled, maxScale, root]);
 
   return scale;
 }
