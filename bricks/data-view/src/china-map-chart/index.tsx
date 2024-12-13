@@ -10,8 +10,12 @@ import selectedSvg from "./assets/selected.svg?url";
 import chinaPng from "./assets/china.png";
 import CHINA from "./map.json";
 import styleText from "./styles.shadow.css";
+import { useContainerScale } from "../shared/useContainerScale";
 
 const { defineElement, property, event } = createDecorators();
+
+const BASE_WIDTH = 820;
+const BASE_HEIGHT = 600;
 
 /**
  * 中国地图图表构件，可以显示省级指标数据
@@ -28,10 +32,18 @@ class ChinaMapChart extends ReactNextElement {
   accessor dataSource: DataSource[] | undefined;
 
   /**
-   * 数据源
+   * 描述内容样式
    */
   @property({ attribute: false })
   accessor detailContentStyle: CSSProperties | undefined;
+
+  /**
+   * 是否铺满容器
+   *
+   * 注意：该属性不同时兼容 detail 插槽
+   */
+  @property({ type: Boolean })
+  accessor fillContainer: boolean;
 
   /**
    * 当提示可见性开始变化时触发
@@ -49,9 +61,11 @@ class ChinaMapChart extends ReactNextElement {
   render() {
     return (
       <ChinaMapChartComponent
+        root={this}
         dataSource={this.dataSource}
         onDetailOpenChange={this.#handleOpenChange}
         detailContentStyle={this.detailContentStyle}
+        fillContainer={this.fillContainer}
       />
     );
   }
@@ -66,17 +80,21 @@ interface DataSource {
 }
 
 export interface ChinaMapChartProps {
+  root: HTMLElement;
   onDetailOpenChange: (open: boolean, data: Record<string, any>) => void;
   dataSource: DataSource[];
   detailContentStyle?: CSSProperties;
+  fillContainer?: boolean;
   // Define props here.
 }
 
 export function ChinaMapChartComponent(props: ChinaMapChartProps) {
   const {
+    root,
     onDetailOpenChange,
     dataSource = [],
     detailContentStyle = {},
+    fillContainer,
   } = props;
   const mapRef = useRef<HTMLDivElement>();
   const slotRef = useRef<HTMLSlotElement>();
@@ -86,6 +104,14 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
     left: string;
     top: string;
   }>();
+
+  const scale = useContainerScale({
+    width: BASE_WIDTH,
+    height: BASE_HEIGHT,
+    root,
+    maxScale: 10,
+    disabled: !fillContainer,
+  });
 
   const textClick = (e: MouseEvent, data: any) => {
     e.stopPropagation();
@@ -445,8 +471,29 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
     onDetailOpenChange(!isEmpty(showData), showData);
   }, [showData]);
   return (
-    <div>
-      <div id="map" ref={mapRef} className="map"></div>
+    <div
+      style={
+        fillContainer
+          ? {
+              height: "100%",
+              transform: `scale(${scale ?? 1})`,
+            }
+          : null
+      }
+    >
+      <div
+        id="map"
+        ref={mapRef}
+        className="map"
+        style={
+          fillContainer
+            ? {
+                width: BASE_WIDTH,
+                height: BASE_HEIGHT,
+              }
+            : null
+        }
+      ></div>
       {showData && (
         <div
           className="detailContent"

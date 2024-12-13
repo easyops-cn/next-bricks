@@ -2,9 +2,17 @@
   display: inline-block;
 }
 
+:host([fill-container]) {
+  display: block;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
 :host([hidden]) {
   display: none;
 }
+
 .text {
   position: absolute;
   z-index: 6;
@@ -29,13 +37,22 @@
   opacity: 0.8;
   z-index: 20;
 }
-.map {
+
+:host(:not([fill-container])) .map {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
 }
+
+:host([fill-container]) .map {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .leftText {
   margin-left: -20px;
   transform: translate(-100%, -150%) !important;

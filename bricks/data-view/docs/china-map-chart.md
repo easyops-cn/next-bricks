@@ -4,7 +4,7 @@
 
 ### Basic
 
-```yaml preview
+```yaml preview height="600px"
 brick: data-view.china-map-chart
 properties:
   dataSource:
@@ -24,9 +24,38 @@ lifeCycle:
       - dark-v2
 ```
 
+### Fill container
+
+```yaml preview height="600px"
+brick: div
+properties:
+  style:
+    height: calc(100vh - 4em)
+    position: relative
+children:
+  - brick: data-view.china-map-chart
+    properties:
+      fillContainer: true
+      dataSource:
+        - text: "西藏 12311"
+          city: 西藏
+        - text: "四川 89781169"
+          city: 四川
+        - text: "台湾 234181"
+          city: 台湾
+        - text: "江西 21348"
+          city: 江西
+    # Currently this brick only looks well within dark theme
+    lifeCycle:
+      onPageLoad:
+        action: theme.setTheme
+        args:
+          - dark-v2
+```
+
 ### With detail
 
-```yaml preview
+```yaml preview height="600px"
 brick: data-view.china-map-chart
 properties:
   detailContentStyle:
