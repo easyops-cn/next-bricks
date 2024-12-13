@@ -14,7 +14,7 @@ import { useContainerScale } from "../shared/useContainerScale";
 
 const { defineElement, property, event } = createDecorators();
 
-const BASE_WIDTH = 820;
+const BASE_WIDTH = 825;
 const BASE_HEIGHT = 600;
 
 /**
@@ -447,6 +447,15 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
         }).setLnglat({ lng: center[0], lat });
         scene.addMarker(marker);
         scene.addMarker(imgMarker);
+      });
+
+      setTimeout(() => {
+        // 进行适当平移，因为设置了倾角 pitch
+        const bounds = scene.getBounds();
+        scene.panTo([
+          (bounds[0][0] + bounds[1][0]) / 2 + 1.6,
+          (bounds[0][1] + bounds[1][1]) / 2 - 5,
+        ]);
       });
     });
 
