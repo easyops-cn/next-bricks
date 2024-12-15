@@ -17,9 +17,6 @@ import defaultSvg from "./assets/default.svg?url";
 import selectedSvg from "./assets/selected.svg?url";
 import chinaPng from "./assets/china.png";
 import texturePng from "./assets/texture.png";
-import CHINA from "./map.json";
-import Cities from "./cities.json";
-import AreaList from "./area-list.json";
 import styleText from "./styles.shadow.css";
 import { useContainerScale } from "../shared/useContainerScale";
 
@@ -72,6 +69,9 @@ export
   styleTexts: [styleText],
 })
 class ChinaMapChart extends ReactNextElement {
+  /**
+   * 省份名称，例如“广东”。如果设置，则只显示该省份的地图，否则显示全国地图
+   */
   @property()
   accessor province: string | undefined;
 
@@ -203,10 +203,18 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
       scene.addImage("texture", texturePng);
     }
 
-    scene.on("loaded", () => {
+    scene.on("loaded", async () => {
       let data: FeatureCollection;
+      let southSeaData: FeatureCollection;
       let matchedProvince: Area | undefined;
+      let AreaList: Area[] | undefined;
       if (province) {
+        const [CitiesImport, AreaListImport] = await Promise.all([
+          import("./cities.json"),
+          import("./area-list.json"),
+        ]);
+        const Cities = CitiesImport.default as unknown as FeatureCollection;
+        AreaList = AreaListImport.default as unknown as Area[];
         matchedProvince = AreaList.find(
           (a) => a.level === "province" && a.name.includes(province)
         );
@@ -222,6 +230,8 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
           ),
         };
       } else {
+        const ChinaImport = await import("./map.json");
+        const CHINA = ChinaImport.default as unknown as FeatureCollection;
         data = {
           type: "FeatureCollection",
           features: (CHINA as unknown as FeatureCollection).features.slice(
@@ -229,31 +239,20 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
             CHINA.features.length - 2
           ),
         };
+        southSeaData = {
+          ...CHINA,
+          features: CHINA.features.slice(
+            CHINA.features.length - 2,
+            CHINA.features.length
+          ),
+        };
       }
-      // const data = province ? {
-      //   type: "FeatureCollection",
-      //   features: (Cities as FeatureCollection).features.filter((f) =>
-      //     matchedProvinceName
-      //       ? f.properties.province === matchedProvinceName
-      //       : f.properties.province.includes(province)
-      //         ? (matchedProvinceName = f.properties.province, true)
-      //         : false
-      // ),
-      // } : {
-      //   ...CHINA,
-      //   features: (CHINA as unknown as FeatureCollection).features.slice(0, CHINA.features.length - 2),
-      // };
-      const southSeaData = {
-        ...CHINA,
-        features: CHINA.features.slice(
-          CHINA.features.length - 2,
-          CHINA.features.length
-        ),
-      };
+
       const seventhPolygonLayer = new PolygonLayer({
         autoFit: false,
       }).source(data);
 
+      let labelDivideLng: number | undefined;
       // 根据坐标范围设置 3D 图层升起的高度
       let raisingHeightBase: number;
       if (province) {
@@ -276,6 +275,8 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
         const lngRange = right - left;
         const latRange = bottom - top;
         raisingHeightBase = Math.max(2000 * lngRange, 3000 * latRange);
+        // 在经度范围的 3/4 处设置分界线，左边的文字向右排，右边的文字向左排
+        labelDivideLng = left + (lngRange * 3) / 4;
       } else {
         raisingHeightBase = 100000;
       }
@@ -509,6 +510,7 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
         el.textContent = i.text;
         let coord: Point;
 
+        // 计算标签的排列方向，全国地图保持原有逻辑，省份地图根据经度所在比例自动适应排列方向
         if (!province) {
           const city = data.features.find((f) =>
             f.properties.name.includes(i.city)
@@ -574,7 +576,18 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
             coord[1] -= 1;
           }
         } else {
-          coord = [matchedProvince.lng, matchedProvince.lat];
+          const area = AreaList.find(
+            (a) =>
+              a.parent === matchedProvince.adcode && a.name.includes(i.city)
+          );
+          if (!area) {
+            return;
+          }
+          coord = [area.lng, area.lat];
+          if (area.lng > labelDivideLng) {
+            classNameText = `${classNameText} leftText`;
+            i.isLeftOffset = true;
+          }
         }
 
         el.className = classNameText;
@@ -600,16 +613,16 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
 
       setTimeout(() => {
         const bounds = scene.getBounds();
-        // console.log(bounds);
-        // 进行适当平移，因为设置了倾角 pitch
-        // 广东省左边被遮住了，原因未知
+        // 进行适当平移和缩放，因为设置了倾角 pitch，地图默认没有铺满并居中
         scene.panTo([
-          (bounds[0][0] + bounds[1][0]) / 2 +
-            (province ? (matchedProvince.name === "广东省" ? -0.3 : 0) : 1.6),
-          (bounds[0][1] + bounds[1][1]) / 2 -
-            (bounds[1][1] - bounds[0][1]) / (province ? 5 : 9),
+          (bounds[0][0] + bounds[1][0]) / 2 + (province ? 0 : 1.6),
+          (bounds[0][1] + bounds[1][1]) / 2 - (bounds[1][1] - bounds[0][1]) / 9,
         ]);
+        if (province) {
+          scene.setZoom(scene.getZoom() * 0.97);
+        }
 
+        // 省份贴图
         if (province) {
           const provinceImgLayer = new ImageLayer({
             autoFit: false,

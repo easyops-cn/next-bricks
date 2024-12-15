@@ -53,6 +53,34 @@ children:
           - dark-v2
 ```
 
+### Province map
+
+```yaml preview height="600px"
+brick: div
+properties:
+  style:
+    height: calc(100vh - 4em)
+    position: relative
+children:
+  - brick: data-view.china-map-chart
+    properties:
+      fillContainer: true
+      province: 广东
+      dataSource:
+        - text: "广州 12311"
+          city: 广州
+        - text: "深圳 89781169"
+          city: 深圳
+        - text: "湛江 234181"
+          city: 湛江
+    # Currently this brick only looks well within dark theme
+    lifeCycle:
+      onPageLoad:
+        action: theme.setTheme
+        args:
+          - dark-v2
+```
+
 ### With detail
 
 ```yaml preview height="600px"
