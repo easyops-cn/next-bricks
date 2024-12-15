@@ -2,13 +2,24 @@ import React, { useEffect, useRef, useState, CSSProperties } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
-import { Scene, PolygonLayer, LineLayer, Marker, ImageLayer } from "@antv/l7";
+import {
+  Scene,
+  PolygonLayer,
+  LineLayer,
+  Marker,
+  ImageLayer,
+  type ILayer,
+  type Point,
+} from "@antv/l7";
 import { Map } from "@antv/l7-maps";
 import { cloneDeep, isEmpty, isEqual, toNumber } from "lodash";
 import defaultSvg from "./assets/default.svg?url";
 import selectedSvg from "./assets/selected.svg?url";
 import chinaPng from "./assets/china.png";
+import texturePng from "./assets/texture.png";
 import CHINA from "./map.json";
+import Cities from "./cities.json";
+import AreaList from "./area-list.json";
 import styleText from "./styles.shadow.css";
 import { useContainerScale } from "../shared/useContainerScale";
 
@@ -16,6 +27,42 @@ const { defineElement, property, event } = createDecorators();
 
 const BASE_WIDTH = 825;
 const BASE_HEIGHT = 600;
+
+interface FeatureCollection {
+  type: "FeatureCollection";
+  features: Feature[];
+}
+
+interface Feature {
+  type: "Feature";
+  id?: string;
+  properties: {
+    name: string;
+    center?: Point;
+    province_adcode: number;
+    province: string;
+  };
+  geometry: Polygon | MultiPolygon;
+}
+
+interface Polygon {
+  type: "Polygon";
+  coordinates: Point[][];
+}
+
+interface MultiPolygon {
+  type: "MultiPolygon";
+  coordinates: Point[][][];
+}
+
+interface Area {
+  name: string;
+  level: "country" | "province" | "city" | "district";
+  adcode: number;
+  lng: number;
+  lat: number;
+  parent: number;
+}
 
 /**
  * 中国地图图表构件，可以显示省级指标数据
@@ -25,6 +72,9 @@ export
   styleTexts: [styleText],
 })
 class ChinaMapChart extends ReactNextElement {
+  @property()
+  accessor province: string | undefined;
+
   /**
    * 数据源
    */
@@ -43,7 +93,7 @@ class ChinaMapChart extends ReactNextElement {
    * 注意：该属性不同时兼容 detail 插槽
    */
   @property({ type: Boolean })
-  accessor fillContainer: boolean;
+  accessor fillContainer: boolean | undefined;
 
   /**
    * 当提示可见性开始变化时触发
@@ -62,6 +112,7 @@ class ChinaMapChart extends ReactNextElement {
     return (
       <ChinaMapChartComponent
         root={this}
+        province={this.province}
         dataSource={this.dataSource}
         onDetailOpenChange={this.#handleOpenChange}
         detailContentStyle={this.detailContentStyle}
@@ -81,6 +132,7 @@ interface DataSource {
 
 export interface ChinaMapChartProps {
   root: HTMLElement;
+  province?: string;
   onDetailOpenChange: (open: boolean, data: Record<string, any>) => void;
   dataSource: DataSource[];
   detailContentStyle?: CSSProperties;
@@ -91,6 +143,7 @@ export interface ChinaMapChartProps {
 export function ChinaMapChartComponent(props: ChinaMapChartProps) {
   const {
     root,
+    province,
     onDetailOpenChange,
     dataSource = [],
     detailContentStyle = {},
@@ -130,7 +183,7 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
       id: mapRef.current,
       logoVisible: false,
       map: new Map({
-        center: [90.268, 40.3628],
+        // center: [90.268, 40.3628],
         pitch: 35,
         zoom: 1,
       }),
@@ -144,13 +197,52 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
 
     scene.addImage("default", defaultImg);
     scene.addImage("selected", selectedImg);
-    scene.addImage("chinaBg", chinaPng);
+    if (!province) {
+      scene.addImage("chinaBg", chinaPng);
+    } else {
+      scene.addImage("texture", texturePng);
+    }
 
     scene.on("loaded", () => {
-      const data = {
-        ...CHINA,
-        features: CHINA.features.slice(0, CHINA.features.length - 2),
-      };
+      let data: FeatureCollection;
+      let matchedProvince: Area | undefined;
+      if (province) {
+        matchedProvince = AreaList.find(
+          (a) => a.level === "province" && a.name.includes(province)
+        );
+
+        if (!matchedProvince) {
+          throw new Error(`没有找到省份："${province}"`);
+        }
+
+        data = {
+          type: "FeatureCollection",
+          features: (Cities as FeatureCollection).features.filter(
+            (f) => f.properties.province_adcode === matchedProvince.adcode
+          ),
+        };
+      } else {
+        data = {
+          type: "FeatureCollection",
+          features: (CHINA as unknown as FeatureCollection).features.slice(
+            0,
+            CHINA.features.length - 2
+          ),
+        };
+      }
+      // const data = province ? {
+      //   type: "FeatureCollection",
+      //   features: (Cities as FeatureCollection).features.filter((f) =>
+      //     matchedProvinceName
+      //       ? f.properties.province === matchedProvinceName
+      //       : f.properties.province.includes(province)
+      //         ? (matchedProvinceName = f.properties.province, true)
+      //         : false
+      // ),
+      // } : {
+      //   ...CHINA,
+      //   features: (CHINA as unknown as FeatureCollection).features.slice(0, CHINA.features.length - 2),
+      // };
       const southSeaData = {
         ...CHINA,
         features: CHINA.features.slice(
@@ -162,6 +254,32 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
         autoFit: false,
       }).source(data);
 
+      // 根据坐标范围设置 3D 图层升起的高度
+      let raisingHeightBase: number;
+      if (province) {
+        let top = Infinity;
+        let left = Infinity;
+        let bottom = -Infinity;
+        let right = -Infinity;
+        const points = data.features.flatMap(
+          (f) =>
+            f.geometry.coordinates.flat(
+              f.geometry.type === "MultiPolygon" ? 2 : 1
+            ) as Point[]
+        );
+        points.forEach(([lng, lat]) => {
+          top = Math.min(top, lat);
+          left = Math.min(left, lng);
+          bottom = Math.max(bottom, lat);
+          right = Math.max(right, lng);
+        });
+        const lngRange = right - left;
+        const latRange = bottom - top;
+        raisingHeightBase = Math.max(2000 * lngRange, 3000 * latRange);
+      } else {
+        raisingHeightBase = 100000;
+      }
+
       seventhPolygonLayer
         .shape("extrude")
         .color("rgba(84, 239, 241, 0.20)")
@@ -169,61 +287,76 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
           heightfixed: true,
           pickLight: true,
           opacity: 1,
-          raisingHeight: -1300000,
+          raisingHeight: -13 * raisingHeightBase,
         });
 
       const sixthPolygonLayer = new PolygonLayer({
         autoFit: false,
       }).source(data);
 
-      sixthPolygonLayer.shape("extrude").color("rgba(14, 11, 75, 0.58)").style({
-        heightfixed: true,
-        pickLight: true,
-        opacity: 1,
-        raisingHeight: -1100000,
-      });
+      sixthPolygonLayer
+        .shape("extrude")
+        .color("rgba(14, 11, 75, 0.58)")
+        .style({
+          heightfixed: true,
+          pickLight: true,
+          opacity: 1,
+          raisingHeight: -11 * raisingHeightBase,
+        });
 
       const fifthPolygonLayer = new PolygonLayer({
         autoFit: false,
       }).source(data);
 
-      fifthPolygonLayer.shape("extrude").color("rgba(190, 225, 226, 1)").style({
-        heightfixed: true,
-        pickLight: true,
-        opacity: 1,
-        raisingHeight: -900000,
-      });
+      fifthPolygonLayer
+        .shape("extrude")
+        .color("rgba(190, 225, 226, 1)")
+        .style({
+          heightfixed: true,
+          pickLight: true,
+          opacity: 1,
+          raisingHeight: -9 * raisingHeightBase,
+        });
       const fourthPolygonLayer = new PolygonLayer({
         autoFit: false,
       }).source(data);
 
-      fourthPolygonLayer.shape("extrude").color("rgba(18, 26, 45, 1)").style({
-        heightfixed: true,
-        pickLight: true,
-        opacity: 1,
-        raisingHeight: -700000,
-      });
+      fourthPolygonLayer
+        .shape("extrude")
+        .color("rgba(18, 26, 45, 1)")
+        .style({
+          heightfixed: true,
+          pickLight: true,
+          opacity: 1,
+          raisingHeight: -7 * raisingHeightBase,
+        });
 
       const thirdPolygonLayer = new PolygonLayer({
         autoFit: false,
       }).source(data);
 
-      thirdPolygonLayer.shape("extrude").color("#111D3C").style({
-        heightfixed: true,
-        pickLight: true,
-        opacity: 1,
-        raisingHeight: -500000,
-      });
+      thirdPolygonLayer
+        .shape("extrude")
+        .color("#111D3C")
+        .style({
+          heightfixed: true,
+          pickLight: true,
+          opacity: 1,
+          raisingHeight: -5 * raisingHeightBase,
+        });
       const secondPolygonLayer = new PolygonLayer({
         autoFit: false,
       }).source(data);
 
-      secondPolygonLayer.shape("extrude").color("#121A2D").style({
-        heightfixed: true,
-        pickLight: true,
-        opacity: 1,
-        raisingHeight: -300000,
-      });
+      secondPolygonLayer
+        .shape("extrude")
+        .color("#121A2D")
+        .style({
+          heightfixed: true,
+          pickLight: true,
+          opacity: 1,
+          raisingHeight: -3 * raisingHeightBase,
+        });
 
       const firstPolygonLayer = new PolygonLayer({
         autoFit: true,
@@ -234,19 +367,22 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
       //   color: "rgba(177, 254, 254, 1)",
       // });//编排上层缩放会影响到高亮功能，还不知道怎么解决，暂时不实现。
 
-      const chinaImgLayer = new ImageLayer({
-        autoFit: false,
-        zIndex: 1,
-      }).source(chinaPng, {
-        parser: {
-          type: "image",
-          extent: [73.33, 17.9, 134.85, 53.73],
-        },
-      });
+      let chinaImgLayer: ILayer | undefined;
+      if (!province) {
+        chinaImgLayer = new ImageLayer({
+          autoFit: false,
+          zIndex: 1,
+        }).source(chinaPng, {
+          parser: {
+            type: "image",
+            extent: [73.33, 17.9, 134.85, 53.73],
+          },
+        });
 
-      chinaImgLayer.shape("img").style({
-        opacity: 1,
-      });
+        chinaImgLayer.shape("img").style({
+          opacity: 1,
+        });
+      }
 
       const fourthLineLayer = new LineLayer()
         .source(data)
@@ -254,7 +390,7 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
         .color("rgba(43, 100, 255, 1)")
         .size(1)
         .style({
-          raisingHeight: -1600000,
+          raisingHeight: -16 * raisingHeightBase,
         });
 
       const thirdLineLayer = new LineLayer()
@@ -263,7 +399,7 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
         .color("rgba(84, 239, 241, 1)")
         .size(1)
         .style({
-          raisingHeight: -1200000,
+          raisingHeight: -12 * raisingHeightBase,
         });
 
       const secondLineLayer = new LineLayer()
@@ -272,7 +408,7 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
         .color("rgba(43, 100, 255, 1)")
         .size(1)
         .style({
-          raisingHeight: -600000,
+          raisingHeight: -6 * raisingHeightBase,
         });
 
       const firstLineLayer = new LineLayer({ zIndex: 2 })
@@ -321,7 +457,9 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
       scene.addLayer(fourthPolygonLayer);
       scene.addLayer(thirdPolygonLayer);
       scene.addLayer(secondPolygonLayer);
-      scene.addLayer(chinaImgLayer);
+      if (chinaImgLayer) {
+        scene.addLayer(chinaImgLayer);
+      }
       // scene.addLayer(hightLayer);
       // scene.addLayer(hightPolygonLayer);
       scene.addLayer(firstPolygonLayer);
@@ -343,74 +481,102 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
       //   });
       // });
 
-      const southSeaPolygonLayer = new PolygonLayer({
-        autoFit: false,
-      }).source(southSeaData);
+      if (!province) {
+        const southSeaPolygonLayer = new PolygonLayer({
+          autoFit: false,
+        }).source(southSeaData);
 
-      southSeaPolygonLayer.shape("fill").color("black");
+        southSeaPolygonLayer.shape("fill").color("black");
 
-      const southSeaLineLayer = new LineLayer({ zIndex: 2 })
-        .source(southSeaData)
-        .shape("line")
-        .color("rgba(30, 144, 255, 1)")
-        .size(0.5)
-        .style({
-          raisingHeight: 0,
-        })
-        .scale("density", {
-          type: "quantile",
-        });
-      scene.addLayer(southSeaPolygonLayer);
-      scene.addLayer(southSeaLineLayer);
+        const southSeaLineLayer = new LineLayer({ zIndex: 2 })
+          .source(southSeaData)
+          .shape("line")
+          .color("rgba(30, 144, 255, 1)")
+          .size(0.5)
+          .style({
+            raisingHeight: 0,
+          })
+          .scale("density", {
+            type: "quantile",
+          });
+        scene.addLayer(southSeaPolygonLayer);
+        scene.addLayer(southSeaLineLayer);
+      }
 
-      dataSource.map((i) => {
+      dataSource.forEach((i) => {
         const el = document.createElement("div");
         let classNameText = "text";
         el.textContent = i.text;
-        const city = data.features.find((f) =>
-          f.properties.name.includes(i.city)
-        );
-        //先手动调整位置，缓解重叠的问题
-        if (
-          [
-            "410000",
-            "820000",
-            "140000",
-            "110000",
-            "420000",
-            "430000",
-            "450000",
-            "500000",
-            "520000",
-            "530000",
-            "510000",
-            "610000",
-            "640000",
-            "150000",
-            "630000",
-            "540000",
-            "340000",
-          ].includes(city.id)
-        ) {
-          classNameText = `${classNameText} leftText`;
-          i.isLeftOffset = true;
+        let coord: Point;
+
+        if (!province) {
+          const city = data.features.find((f) =>
+            f.properties.name.includes(i.city)
+          );
+          if (!city) {
+            return;
+          }
+          coord = city.properties.center;
+          //先手动调整位置，缓解重叠的问题
+          if (
+            [
+              "410000",
+              "820000",
+              "140000",
+              "110000",
+              "420000",
+              "430000",
+              "450000",
+              "500000",
+              "520000",
+              "530000",
+              "510000",
+              "610000",
+              "640000",
+              "150000",
+              "630000",
+              "540000",
+              "340000",
+            ].includes(city.id)
+          ) {
+            classNameText = `${classNameText} leftText`;
+            i.isLeftOffset = true;
+          }
+          if (
+            [
+              "620000",
+              "640000",
+              "450000",
+              "440000",
+              "120000",
+              "340000",
+              "510000",
+              "150000",
+              "320000",
+            ].includes(city.id)
+          ) {
+            classNameText = `${classNameText} topText`;
+            i.isTopOffset = true;
+          }
+
+          if (
+            [
+              "530000",
+              "520000",
+              "430000",
+              "360000",
+              "330000",
+              "610000",
+              "370000",
+              "130000",
+            ].includes(city.id)
+          ) {
+            coord[1] -= 1;
+          }
+        } else {
+          coord = [matchedProvince.lng, matchedProvince.lat];
         }
-        if (
-          [
-            "620000",
-            "640000",
-            "450000",
-            "440000",
-            "120000",
-            "340000",
-            "510000",
-            "150000",
-            "320000",
-          ].includes(city.id)
-        ) {
-          classNameText = `${classNameText} topText`;
-          i.isTopOffset = true;
-        }
+
         el.className = classNameText;
 
         el.onclick = (e) => {
@@ -422,40 +588,45 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
         imgEl.src = defaultSvg;
         imgEl.className = "iconImg";
 
-        const center = city.properties.center;
-        let lat = center[1];
-        if (
-          [
-            "530000",
-            "520000",
-            "430000",
-            "360000",
-            "330000",
-            "610000",
-            "370000",
-            "130000",
-          ].includes(city.id)
-        ) {
-          lat -= 1;
-        }
-
         const marker = new Marker({
           element: el,
-        }).setLnglat({ lng: center[0], lat });
+        }).setLnglat({ lng: coord[0], lat: coord[1] });
         const imgMarker = new Marker({
           element: imgEl,
-        }).setLnglat({ lng: center[0], lat });
+        }).setLnglat({ lng: coord[0], lat: coord[1] });
         scene.addMarker(marker);
         scene.addMarker(imgMarker);
       });
 
       setTimeout(() => {
-        // 进行适当平移，因为设置了倾角 pitch
         const bounds = scene.getBounds();
+        // console.log(bounds);
+        // 进行适当平移，因为设置了倾角 pitch
+        // 广东省左边被遮住了，原因未知
         scene.panTo([
-          (bounds[0][0] + bounds[1][0]) / 2 + 1.6,
-          (bounds[0][1] + bounds[1][1]) / 2 - 5,
+          (bounds[0][0] + bounds[1][0]) / 2 +
+            (province ? (matchedProvince.name === "广东省" ? -0.3 : 0) : 1.6),
+          (bounds[0][1] + bounds[1][1]) / 2 -
+            (bounds[1][1] - bounds[0][1]) / (province ? 5 : 9),
         ]);
+
+        if (province) {
+          const provinceImgLayer = new ImageLayer({
+            autoFit: false,
+            zIndex: 1,
+            maskLayers: [firstPolygonLayer],
+          }).source(texturePng, {
+            parser: {
+              type: "image",
+              extent: [...bounds[0], ...bounds[1]],
+            },
+          });
+
+          provinceImgLayer.shape("img").style({
+            opacity: 1,
+          });
+          scene.addLayer(provinceImgLayer);
+        }
       });
     });
 
