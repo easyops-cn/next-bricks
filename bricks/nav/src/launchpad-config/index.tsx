@@ -13,7 +13,10 @@ import styleText from "./styles.shadow.css";
 const { defineElement, property, event } = createDecorators();
 
 /**
- * 构件 `nav.launchpad-config`
+ * 进行 Launchpad 配置。
+ *
+ * 也可用于菜单自定义显示产品功能清单。
+ *
  * @insider
  */
 export
@@ -27,6 +30,20 @@ class LaunchpadConfig extends ReactNextElement implements LaunchpadConfigProps {
   @property({ attribute: false })
   accessor actions: MenuAction[] | undefined;
 
+  /**
+   * @default "launchpad-config"
+   */
+  @property()
+  accessor variant: "launchpad-config" | "menu-config" | undefined;
+
+  /**
+   * 菜单项链接模板，例如可配置为 `/app/{{ id }}`。
+   *
+   * 注：仅用于 variant: "menu-config"。
+   */
+  @property()
+  accessor urlTemplate: string | undefined;
+
   @event({ type: "action.click" })
   accessor #actionClickEvent!: EventEmitter<MenuActionEventDetail>;
 
@@ -39,6 +56,8 @@ class LaunchpadConfig extends ReactNextElement implements LaunchpadConfigProps {
       <LaunchpadConfigComponent
         menuGroups={this.menuGroups}
         actions={this.actions}
+        variant={this.variant}
+        urlTemplate={this.urlTemplate}
         onActionClick={this.#onActionClick}
       />
     );
@@ -48,12 +67,16 @@ class LaunchpadConfig extends ReactNextElement implements LaunchpadConfigProps {
 export interface LaunchpadConfigProps {
   menuGroups?: ConfigMenuGroup[];
   actions?: MenuAction[];
+  variant?: "launchpad-config" | "menu-config";
+  urlTemplate?: string;
   onActionClick?: (detail: MenuActionEventDetail) => void;
 }
 
 export function LaunchpadConfigComponent({
   menuGroups,
   actions,
+  variant,
+  urlTemplate,
   onActionClick,
 }: LaunchpadConfigProps) {
   return (
@@ -63,6 +86,8 @@ export function LaunchpadConfigComponent({
           key={group.instanceId}
           data={group}
           actions={actions}
+          variant={variant}
+          urlTemplate={urlTemplate}
           onActionClick={onActionClick}
         />
       ))}

@@ -10,7 +10,7 @@ export function getAppLocaleName(
   }
   const i18nData = Object.fromEntries(
     Object.entries(locales)
-      .filter(([lang, resources]) => resources.name)
+      .filter(([_lang, resources]) => resources.name)
       .map(([lang, resources]) => [lang, resources.name])
   ) as I18nData;
   return i18nText(i18nData) ?? name;

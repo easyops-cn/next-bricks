@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from "react";
-import { pick } from "lodash";
+import { get, pick } from "lodash";
 import classNames from "classnames";
 import { checkIfByTransform } from "@next-core/runtime";
 import type { SimpleAction } from "@next-bricks/basic/actions";
@@ -20,10 +20,18 @@ import { getAppLocaleName } from "../shared/getLocaleName";
 export interface MenuGroupProps {
   data: ConfigMenuGroup;
   actions?: MenuAction[];
+  variant?: "launchpad-config" | "menu-config";
+  urlTemplate?: string;
   onActionClick?: (detail: MenuActionEventDetail) => void;
 }
 
-export function MenuGroup({ data, actions, onActionClick }: MenuGroupProps) {
+export function MenuGroup({
+  data,
+  actions,
+  variant,
+  urlTemplate,
+  onActionClick,
+}: MenuGroupProps) {
   const { name, items } = data;
   const [dropdownActive, setDropdownActive] = useState(false);
 
@@ -47,19 +55,21 @@ export function MenuGroup({ data, actions, onActionClick }: MenuGroupProps) {
     <li className={classNames("menu-group", { empty: items.length === 0 })}>
       <div className="menu-group-label-wrapper">
         <span className="menu-group-label">{name}</span>
-        <WrappedDropdownActions
-          actions={filteredActions}
-          onVisibleChange={(event) => {
-            setDropdownActive(event.detail);
-          }}
-          onActionClick={handleActionClick}
-        >
-          <WrappedIcon
-            lib="fa"
-            icon="gear"
-            className={classNames("menu-config", { active: dropdownActive })}
-          />
-        </WrappedDropdownActions>
+        {variant !== "menu-config" && (
+          <WrappedDropdownActions
+            actions={filteredActions}
+            onVisibleChange={(event) => {
+              setDropdownActive(event.detail);
+            }}
+            onActionClick={handleActionClick}
+          >
+            <WrappedIcon
+              lib="fa"
+              icon="gear"
+              className={classNames("menu-config", { active: dropdownActive })}
+            />
+          </WrappedDropdownActions>
+        )}
       </div>
       <ul className="menu">
         {items.map((item) =>
@@ -68,6 +78,8 @@ export function MenuGroup({ data, actions, onActionClick }: MenuGroupProps) {
               key={item.instanceId}
               data={item}
               actions={actions}
+              variant={variant}
+              urlTemplate={urlTemplate}
               onActionClick={onActionClick}
             />
           ) : (
@@ -75,6 +87,8 @@ export function MenuGroup({ data, actions, onActionClick }: MenuGroupProps) {
               key={`${item.type}-${item.id}`}
               data={item}
               actions={actions}
+              variant={variant}
+              urlTemplate={urlTemplate}
               onActionClick={onActionClick}
             />
           )
@@ -87,10 +101,18 @@ export function MenuGroup({ data, actions, onActionClick }: MenuGroupProps) {
 export interface MenuItemProps {
   data: ConfigMenuItemNormal;
   actions?: MenuAction[];
+  variant?: "launchpad-config" | "menu-config";
+  urlTemplate?: string;
   onActionClick?: (detail: MenuActionEventDetail) => void;
 }
 
-export function MenuItem({ data, actions, onActionClick }: MenuItemProps) {
+export function MenuItem({
+  data,
+  actions,
+  variant,
+  urlTemplate,
+  onActionClick,
+}: MenuItemProps) {
   const name = useMemo(
     () =>
       data.type === "app"
@@ -116,11 +138,20 @@ export function MenuItem({ data, actions, onActionClick }: MenuItemProps) {
     [data, onActionClick]
   );
 
+  const disabled = variant === "menu-config" && data.type !== "app";
+
   return (
-    <li className="menu-item">
-      <WrappedLink>
+    <li className={classNames("menu-item", { disabled })}>
+      <WrappedLink
+        tooltip={disabled ? "该菜单项为链接，不支持配置" : ""}
+        url={
+          disabled || variant !== "menu-config"
+            ? ""
+            : parseUrlTemplate(urlTemplate, data, "")
+        }
+      >
         <WrappedIcon
-          className={`menu-icon`}
+          className="menu-icon"
           lib="easyops"
           icon="micro-app-center"
           {...(data.menuIcon?.lib && data.menuIcon.icon
@@ -135,19 +166,21 @@ export function MenuItem({ data, actions, onActionClick }: MenuItemProps) {
         />
         <span className="menu-item-label">{name}</span>
       </WrappedLink>
-      <WrappedDropdownActions
-        actions={filteredActions}
-        onVisibleChange={(event) => {
-          setDropdownActive(event.detail);
-        }}
-        onActionClick={handleActionClick}
-      >
-        <WrappedIcon
-          lib="fa"
-          icon="gear"
-          className={classNames("menu-config", { active: dropdownActive })}
-        />
-      </WrappedDropdownActions>
+      {variant !== "menu-config" && (
+        <WrappedDropdownActions
+          actions={filteredActions}
+          onVisibleChange={(event) => {
+            setDropdownActive(event.detail);
+          }}
+          onActionClick={handleActionClick}
+        >
+          <WrappedIcon
+            lib="fa"
+            icon="gear"
+            className={classNames("menu-config", { active: dropdownActive })}
+          />
+        </WrappedDropdownActions>
+      )}
     </li>
   );
 }
@@ -155,10 +188,18 @@ export function MenuItem({ data, actions, onActionClick }: MenuItemProps) {
 export interface MenuItemFolderProps {
   data: ConfigMenuItemDir;
   actions?: MenuAction[];
+  variant?: "launchpad-config" | "menu-config";
+  urlTemplate?: string;
   onActionClick?: (detail: MenuActionEventDetail) => void;
 }
 
-function MenuItemFolder({ data, actions, onActionClick }: MenuItemFolderProps) {
+function MenuItemFolder({
+  data,
+  actions,
+  variant,
+  urlTemplate,
+  onActionClick,
+}: MenuItemFolderProps) {
   const { name, items } = data;
   const [dropdownActive, setDropdownActive] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -201,19 +242,21 @@ function MenuItemFolder({ data, actions, onActionClick }: MenuItemFolderProps) {
             className="menu-item-toggle"
           />
         </WrappedLink>
-        <WrappedDropdownActions
-          actions={filteredActions}
-          onVisibleChange={(event) => {
-            setDropdownActive(event.detail);
-          }}
-          onActionClick={handleActionClick}
-        >
-          <WrappedIcon
-            lib="fa"
-            icon="gear"
-            className={classNames("menu-config", { active: dropdownActive })}
-          />
-        </WrappedDropdownActions>
+        {variant !== "menu-config" && (
+          <WrappedDropdownActions
+            actions={filteredActions}
+            onVisibleChange={(event) => {
+              setDropdownActive(event.detail);
+            }}
+            onActionClick={handleActionClick}
+          >
+            <WrappedIcon
+              lib="fa"
+              icon="gear"
+              className={classNames("menu-config", { active: dropdownActive })}
+            />
+          </WrappedDropdownActions>
+        )}
       </div>
       <ul className={classNames("sub-menu", { expanded })}>
         {items.map((item) => (
@@ -221,10 +264,24 @@ function MenuItemFolder({ data, actions, onActionClick }: MenuItemFolderProps) {
             key={item.instanceId}
             data={item}
             actions={actions}
+            variant={variant}
+            urlTemplate={urlTemplate}
             onActionClick={onActionClick}
           />
         ))}
       </ul>
     </li>
+  );
+}
+
+function parseUrlTemplate(
+  urlTemplate: string | undefined,
+  data: unknown,
+  fallback?: string
+) {
+  return (
+    urlTemplate?.replace(/{{(.*?)}}/g, (_match, key) =>
+      get(data, key.trim())
+    ) ?? fallback
   );
 }
