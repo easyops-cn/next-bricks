@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.8.0...@next-bricks/data-view@1.9.0) (2024-12-16)
+
+
+### Bug Fixes
+
+* use dynamic import for map data ([6821fe7](https://github.com/easyops-cn/next-bricks/commit/6821fe7bcc22680acbc8cb84f27c793242f9a0ad))
+
+
+### Features
+
+* **china-map-chart:** support province level map ([9bc75d9](https://github.com/easyops-cn/next-bricks/commit/9bc75d93dc29b81432c1e7fd3a40eb39cfa484b1))
+
+
+
+
+
 # [1.8.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.7.0...@next-bricks/data-view@1.8.0) (2024-12-13)
 
 
