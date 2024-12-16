@@ -281,7 +281,7 @@ function parseUrlTemplate(
 ) {
   return (
     urlTemplate?.replace(/{{(.*?)}}/g, (_match, key) =>
-      get(data, key.trim())
+      encodeURIComponent(String(get(data, key.trim())))
     ) ?? fallback
   );
 }
