@@ -74,6 +74,11 @@ ul {
   color: var(--local-menu-icon-color);
 }
 
+.menu-item.disabled > eo-link::part(link),
+.menu-item.disabled .menu-icon {
+  color: var(--color-disabled-text);
+}
+
 .menu-folder-label-wrapper > eo-link,
 .menu-item > eo-link {
   max-width: 100%;
@@ -112,15 +117,15 @@ ul {
 
 .menu-config.active,
 .menu-group-label-wrapper:hover .menu-config,
-.menu-item:not(.folder):hover .menu-config,
+.menu-item:not(.folder):not(.disabled):hover .menu-config,
 .menu-folder-label-wrapper:hover .menu-config {
   visibility: visible;
   width: 24px;
 }
 
 .menu-config:hover,
-.menu-item > eo-link:hover::part(link),
-.menu-item > eo-link:hover .menu-icon,
+.menu-item:not(.disabled) > eo-link:hover::part(link),
+.menu-item:not(.disabled) > eo-link:hover .menu-icon,
 .menu-folder-label-wrapper > eo-link:hover::part(link),
 .menu-folder-label-wrapper > eo-link:hover .menu-icon,
 .menu-folder-label-wrapper > eo-link:hover .menu-item-toggle {

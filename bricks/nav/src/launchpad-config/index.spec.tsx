@@ -1,6 +1,6 @@
 import { describe, test, expect, jest } from "@jest/globals";
 import { act } from "react-dom/test-utils";
-import { fireEvent, getByText } from "@testing-library/react";
+import { fireEvent } from "@testing-library/react";
 import "./";
 import type { LaunchpadConfig } from "./index.js";
 
@@ -28,7 +28,7 @@ customElements.define(
 customElements.define(
   "eo-link",
   class extends WithShadowElement {
-    //
+    url: any;
   }
 );
 
@@ -88,5 +88,60 @@ describe("nav.launchpad-config", () => {
       document.body.removeChild(element);
     });
     expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
+
+  test("menu config", async () => {
+    const element = document.createElement(
+      "nav.launchpad-config"
+    ) as LaunchpadConfig;
+    element.menuGroups = [
+      {
+        instanceId: "g-1",
+        name: "My Group",
+        items: [
+          {
+            instanceId: "i-2",
+            id: "my-app",
+            type: "app",
+            name: "My App",
+          },
+          {
+            instanceId: "i-3",
+            id: "my-custom",
+            type: "custom",
+            name: "My Custom",
+          },
+        ],
+      },
+    ] as any;
+    element.variant = "menu-config";
+    element.urlTemplate = "/test/{{ id }}";
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(
+      element.shadowRoot?.querySelectorAll("eo-dropdown-actions").length
+    ).toBe(0);
+    expect(
+      element.shadowRoot
+        ?.querySelectorAll(".menu-item")[0]
+        .classList.contains("disabled")
+    ).toBe(false);
+    expect(
+      element.shadowRoot
+        ?.querySelectorAll(".menu-item")[1]
+        .classList.contains("disabled")
+    ).toBe(true);
+    expect(
+      element.shadowRoot?.querySelectorAll(".menu-item eo-link")[0]
+    ).toHaveProperty("url", "/test/my-app");
+    expect(
+      element.shadowRoot?.querySelectorAll(".menu-item eo-link")[1]
+    ).toHaveProperty("url", "");
+
+    act(() => {
+      document.body.removeChild(element);
+    });
   });
 });
