@@ -1,0 +1,12 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+canvas {
+  transform: scale(0.5) rotateX(35deg);
+  transform-origin: top left;
+}
