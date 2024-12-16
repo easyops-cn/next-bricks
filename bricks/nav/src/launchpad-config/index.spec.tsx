@@ -109,7 +109,7 @@ describe("nav.launchpad-config", () => {
             instanceId: "i-3",
             id: "my-custom",
             type: "custom",
-            name: "My Cusotm",
+            name: "My Custom",
           },
         ],
       },
