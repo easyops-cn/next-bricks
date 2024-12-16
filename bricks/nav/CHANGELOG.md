@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.15.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.14.9...@next-bricks/nav@1.15.0) (2024-12-16)
+
+
+### Bug Fixes
+
+* call encodeURIComponent for urlTemplate replacement ([5f20bbb](https://github.com/easyops-cn/next-bricks/commit/5f20bbb7202e442bf56e8b1e15c921c82a9e8d2b))
+
+
+### Features
+
+* **launchpad-config:** support variant: menu-config ([cddcfa7](https://github.com/easyops-cn/next-bricks/commit/cddcfa75dd8c0772be9eb708bba249a5e754e7e7))
+
+
+
+
+
 ## [1.14.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.14.8...@next-bricks/nav@1.14.9) (2024-12-09)
 
 **Note:** Version bump only for package @next-bricks/nav
