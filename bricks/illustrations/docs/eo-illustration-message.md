@@ -29,6 +29,17 @@ properties:
   heading: 工具执行成功！
 ```
 
+### Customize image
+
+```yaml preview
+brick: eo-illustration-message
+properties:
+  description: 请先创建应用
+  customizeImage:
+    category: default
+    name: create-content
+```
+
 ### Children
 
 ```yaml preview
