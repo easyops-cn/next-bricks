@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.9.12...@next-shared/general@0.10.0) (2024-12-17)
+
+
+### Features
+
+* support smartDisplayForEvaluableString ([b335056](https://github.com/easyops-cn/next-bricks/commit/b335056dfa4812c838a869f8f5ddcd00deb6e472))
+
+
+
+
+
 ## [0.9.12](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.9.11...@next-shared/general@0.9.12) (2024-12-09)
 
 **Note:** Version bump only for package @next-shared/general

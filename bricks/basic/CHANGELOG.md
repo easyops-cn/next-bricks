@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.49.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.48.3...@next-bricks/basic@1.49.0) (2024-12-17)
+
+
+### Features
+
+* new processor basic.smartDisplayForEvaluableString ([e0d06d3](https://github.com/easyops-cn/next-bricks/commit/e0d06d35ecd499af043b0916a57cbea8d046eadd))
+
+
+
+
+
 ## [1.48.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.48.2...@next-bricks/basic@1.48.3) (2024-12-09)
 
 **Note:** Version bump only for package @next-bricks/basic
