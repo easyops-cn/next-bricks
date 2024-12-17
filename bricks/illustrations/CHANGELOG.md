@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.3.2...@next-bricks/illustrations@1.4.0) (2024-12-17)
+
+
+### Features
+
+* **eo-illustration-message:** support customizeImage ([7166ee7](https://github.com/easyops-cn/next-bricks/commit/7166ee768f765e0f7de5c7d2e745a2eda1519c15))
+
+
+
+
+
 ## [1.3.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.3.1...@next-bricks/illustrations@1.3.2) (2024-12-09)
 
 **Note:** Version bump only for package @next-bricks/illustrations

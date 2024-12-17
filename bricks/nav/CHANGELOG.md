@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.16.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.15.0...@next-bricks/nav@1.16.0) (2024-12-17)
+
+
+### Features
+
+* **eo-directory-tree:** support internalNodeSelectable ([d056a4d](https://github.com/easyops-cn/next-bricks/commit/d056a4d8834b37db9720a730fd020da8e988d642))
+
+
+
+
+
 # [1.15.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.14.9...@next-bricks/nav@1.15.0) (2024-12-16)
 
 
