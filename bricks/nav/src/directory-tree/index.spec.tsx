@@ -73,13 +73,13 @@ describe("eo-directory-tree", () => {
     act(() => {
       document.body.appendChild(element);
     });
-    expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
 
     expect(element.shadowRoot?.querySelector(".tree")).toMatchInlineSnapshot(`
 <div
   class="tree"
 >
   <eo-directory-tree-leaf
+    class=""
     depth="0"
   >
     <span
@@ -89,6 +89,7 @@ describe("eo-directory-tree", () => {
     </span>
   </eo-directory-tree-leaf>
   <eo-directory-tree-internal-node
+    class=""
     depth="0"
   >
     <span
@@ -99,6 +100,7 @@ describe("eo-directory-tree", () => {
     </span>
   </eo-directory-tree-internal-node>
   <eo-directory-tree-leaf
+    class=""
     depth="0"
   >
     <span
@@ -108,6 +110,7 @@ describe("eo-directory-tree", () => {
     </span>
   </eo-directory-tree-leaf>
   <eo-directory-tree-leaf
+    class=""
     depth="0"
   >
     <span
@@ -117,6 +120,7 @@ describe("eo-directory-tree", () => {
     </span>
   </eo-directory-tree-leaf>
   <eo-directory-tree-leaf
+    class=""
     depth="0"
   >
     <span
@@ -144,6 +148,7 @@ describe("eo-directory-tree", () => {
       })
     );
 
+    // Expand a node
     await act(async () => {
       fireEvent(
         element.shadowRoot?.querySelectorAll(
@@ -160,6 +165,23 @@ describe("eo-directory-tree", () => {
       })
     );
 
+    // Collapse a node
+    await act(async () => {
+      fireEvent(
+        element.shadowRoot?.querySelectorAll(
+          "eo-directory-tree-internal-node"
+        )[0] as HTMLElement,
+        new CustomEvent("expand", { detail: false })
+      );
+    });
+    expect(onExpand).toBeCalledWith(
+      expect.objectContaining({
+        detail: expect.objectContaining({
+          keys: [],
+        }),
+      })
+    );
+
     await act(async () => {
       fireEvent(
         element.shadowRoot?.querySelector(".directory-search") as HTMLElement,
@@ -171,6 +193,7 @@ describe("eo-directory-tree", () => {
   class="tree"
 >
   <eo-directory-tree-internal-node
+    class=""
     depth="0"
     expanded=""
   >
@@ -182,6 +205,7 @@ describe("eo-directory-tree", () => {
     </span>
   </eo-directory-tree-internal-node>
   <eo-directory-tree-leaf
+    class=""
     depth="1"
   >
     <span
@@ -191,6 +215,7 @@ describe("eo-directory-tree", () => {
     </span>
   </eo-directory-tree-leaf>
   <eo-directory-tree-internal-node
+    class=""
     depth="1"
   >
     <span
@@ -201,6 +226,7 @@ describe("eo-directory-tree", () => {
     </span>
   </eo-directory-tree-internal-node>
   <eo-directory-tree-leaf
+    class=""
     depth="1"
   >
     <span
@@ -221,6 +247,7 @@ describe("eo-directory-tree", () => {
   class="tree"
 >
   <eo-directory-tree-internal-node
+    class=""
     depth="0"
     expanded=""
   >
@@ -232,6 +259,7 @@ describe("eo-directory-tree", () => {
     </span>
   </eo-directory-tree-internal-node>
   <eo-directory-tree-leaf
+    class=""
     depth="1"
   >
     <span
@@ -241,6 +269,7 @@ describe("eo-directory-tree", () => {
     </span>
   </eo-directory-tree-leaf>
   <eo-directory-tree-internal-node
+    class=""
     depth="1"
     expanded=""
   >
@@ -252,6 +281,7 @@ describe("eo-directory-tree", () => {
     </span>
   </eo-directory-tree-internal-node>
   <eo-directory-tree-leaf
+    class=""
     depth="2"
     selected=""
   >
@@ -262,6 +292,7 @@ describe("eo-directory-tree", () => {
     </span>
   </eo-directory-tree-leaf>
   <eo-directory-tree-leaf
+    class=""
     depth="2"
   >
     <span
@@ -271,6 +302,7 @@ describe("eo-directory-tree", () => {
     </span>
   </eo-directory-tree-leaf>
   <eo-directory-tree-leaf
+    class=""
     depth="2"
   >
     <span
@@ -280,6 +312,7 @@ describe("eo-directory-tree", () => {
     </span>
   </eo-directory-tree-leaf>
   <eo-directory-tree-leaf
+    class=""
     depth="1"
   >
     <span
@@ -295,5 +328,116 @@ describe("eo-directory-tree", () => {
       document.body.removeChild(element);
     });
     expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
+
+  test("internalNodeSelectable", async () => {
+    const element = document.createElement(
+      "eo-directory-tree"
+    ) as EoDirectoryTree;
+    element.data = [
+      {
+        key: "0",
+        title: "第一层级 - 0",
+      },
+      {
+        key: "1",
+        title: "第一层级 - 1",
+        children: [
+          {
+            key: "1-0",
+            title: "第二层级 - 0",
+          },
+        ],
+      },
+      {
+        key: "2",
+        title: "第一层级 - 2",
+      },
+    ];
+    element.suffixBrick = {
+      when: "hover",
+      useBrick: {
+        brick: "hr",
+      },
+    };
+    element.internalNodeSelectable = true;
+    const onSelect = jest.fn();
+    element.addEventListener("select", onSelect);
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(element.shadowRoot?.querySelector(".tree")).toMatchInlineSnapshot(`
+<div
+  class="tree"
+>
+  <eo-directory-tree-leaf
+    class="show-suffix-when-hover"
+    depth="0"
+  >
+    <span
+      title="第一层级 - 0"
+    >
+      第一层级 - 0
+    </span>
+    <div
+      class="suffix"
+      slot="suffix"
+    />
+  </eo-directory-tree-leaf>
+  <eo-directory-tree-internal-node
+    class="show-suffix-when-hover"
+    depth="0"
+    selectable=""
+  >
+    <span
+      slot="label"
+      title="第一层级 - 1"
+    >
+      第一层级 - 1
+    </span>
+    <div
+      class="suffix"
+      slot="suffix"
+    />
+  </eo-directory-tree-internal-node>
+  <eo-directory-tree-leaf
+    class="show-suffix-when-hover"
+    depth="0"
+  >
+    <span
+      title="第一层级 - 2"
+    >
+      第一层级 - 2
+    </span>
+    <div
+      class="suffix"
+      slot="suffix"
+    />
+  </eo-directory-tree-leaf>
+</div>
+`);
+
+    // Select an internal node
+    await act(async () => {
+      fireEvent(
+        element.shadowRoot?.querySelectorAll(
+          "eo-directory-tree-internal-node"
+        )[0] as HTMLElement,
+        new CustomEvent("select")
+      );
+    });
+    expect(onSelect).toBeCalledWith(
+      expect.objectContaining({
+        detail: expect.objectContaining({
+          keys: ["1"],
+        }),
+      })
+    );
+
+    act(() => {
+      document.body.removeChild(element);
+    });
   });
 });

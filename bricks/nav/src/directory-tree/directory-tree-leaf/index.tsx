@@ -1,15 +1,23 @@
 import React, { useEffect, useRef } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
-import { ReactNextElement } from "@next-core/react-element";
+import { ReactNextElement, wrapBrick } from "@next-core/react-element";
+import type {
+  GeneralIcon,
+  GeneralIconProps,
+} from "@next-bricks/icons/general-icon";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import { IndentSize } from "../constants";
 
 const { defineElement, property, event } = createDecorators();
 
+const WrappedEoIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
+
 export interface EoDirectoryTreeLeafProps {
   depth: number;
   selected?: boolean;
+  icon?: GeneralIconProps;
+  faded?: boolean;
 }
 
 export interface EoDirectoryTreeLeafEvents {
@@ -44,6 +52,12 @@ class EoDirectoryTreeLeaf extends ReactNextElement {
   })
   accessor selected: boolean | undefined;
 
+  @property({ attribute: false })
+  accessor icon: GeneralIconProps | undefined;
+
+  @property({ type: Boolean, render: false })
+  accessor faded: boolean | undefined;
+
   /**
    * 选择事件
    */
@@ -58,6 +72,7 @@ class EoDirectoryTreeLeaf extends ReactNextElement {
     return (
       <EoDirectoryTreeLeafComponent
         depth={this.depth}
+        icon={this.icon}
         onSelect={this.#handleSelect}
       />
     );
@@ -69,11 +84,11 @@ export interface EoDirectoryTreeLeafComponentProps
   onSelect: () => void;
 }
 
-export function EoDirectoryTreeLeafComponent(
-  props: EoDirectoryTreeLeafComponentProps
-) {
-  const { depth, onSelect } = props;
-
+export function EoDirectoryTreeLeafComponent({
+  depth,
+  icon,
+  onSelect,
+}: EoDirectoryTreeLeafComponentProps) {
   const treeItemRef = useRef<HTMLDivElement>(null);
   const suffixRef = useRef<HTMLDivElement>(null);
 
@@ -113,6 +128,7 @@ export function EoDirectoryTreeLeafComponent(
       />
       <div className="tree-item-content">
         <div className="tree-item-expand-button"></div>
+        {icon && <WrappedEoIcon {...icon} className="tree-item-icon" />}
         <div className="tree-item-label">
           <slot />
         </div>

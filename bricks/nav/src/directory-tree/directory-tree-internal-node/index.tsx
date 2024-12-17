@@ -1,6 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
-import { ReactNextElement } from "@next-core/react-element";
+import { ReactNextElement, wrapBrick } from "@next-core/react-element";
+import type {
+  GeneralIcon,
+  GeneralIconProps,
+} from "@next-bricks/icons/general-icon";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import Arrow from "./arrow.svg";
@@ -8,11 +12,15 @@ import { IndentSize } from "../constants";
 
 const { defineElement, property, event } = createDecorators();
 
+const WrappedEoIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
+
 export interface EoDirectoryTreeInternalNodeProps {
   depth: number;
   expanded?: boolean;
   selectable?: boolean;
   selected?: boolean;
+  icon?: GeneralIconProps;
+  faded?: boolean;
 }
 
 export interface EoDirectoryTreeInternalNodeEvents {
@@ -65,6 +73,12 @@ class EoDirectoryTreeInternalNode extends ReactNextElement {
   })
   accessor selected: boolean | undefined;
 
+  @property({ attribute: false })
+  accessor icon: GeneralIconProps | undefined;
+
+  @property({ type: Boolean, render: false })
+  accessor faded: boolean | undefined;
+
   /**
    * 展开事件
    * @detail 展开状态
@@ -90,6 +104,7 @@ class EoDirectoryTreeInternalNode extends ReactNextElement {
         depth={this.depth}
         selectable={this.selectable}
         expanded={this.expanded}
+        icon={this.icon}
         onExpand={this.#handleExpand}
         onSelect={this.#handleSelect}
       />
@@ -103,11 +118,13 @@ export interface EoDirectoryTreeInternalNodeComponentProps
   onSelect: () => void;
 }
 
-export function EoDirectoryTreeInternalNodeComponent(
-  props: EoDirectoryTreeInternalNodeComponentProps
-) {
-  const { depth, selectable, onExpand, onSelect } = props;
-
+export function EoDirectoryTreeInternalNodeComponent({
+  depth,
+  selectable,
+  icon,
+  onExpand,
+  onSelect,
+}: EoDirectoryTreeInternalNodeComponentProps) {
   const treeItemRef = useRef<HTMLDivElement>(null);
   const expandBottomRef = useRef<HTMLDivElement>(null);
   const suffixRef = useRef<HTMLDivElement>(null);
@@ -171,6 +188,7 @@ export function EoDirectoryTreeInternalNodeComponent(
           <div className="tree-item-expand-button" ref={expandBottomRef}>
             <Arrow className="tree-item-expand-arrow" />
           </div>
+          {icon && <WrappedEoIcon {...icon} className="tree-item-icon" />}
           <div className="tree-item-label">
             <slot name="label" />
           </div>

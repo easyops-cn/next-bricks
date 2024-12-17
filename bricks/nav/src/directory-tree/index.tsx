@@ -18,6 +18,7 @@ import {
 } from "./utils";
 import { DirectoryTreeContext } from "./DirectoryTreeContext";
 import { UseBrickConf } from "@next-core/types";
+import type { GeneralIconProps } from "@next-bricks/icons/general-icon";
 
 const { defineElement, property, method, event } = createDecorators();
 
@@ -37,6 +38,8 @@ const WrappedSearch = wrapBrick<
 export interface TreeItem {
   key: string;
   title: string;
+  icon?: GeneralIconProps;
+  faded?: boolean;
   children?: TreeItem[];
   [key: string]: any;
 }
@@ -67,12 +70,21 @@ export interface NodeData {
 export interface EoDirectoryTreeProps {
   data: TreeItem[];
   directoryTitle?: string;
+  internalNodeSelectable?: boolean;
   searchable?: boolean;
   placeholder?: string;
   selectedKeys?: string[];
   expandedKeys?: string[];
   searchFields?: (string | string[])[];
   suffixBrick?: { useBrick: UseBrickConf };
+}
+
+export interface SuffixBrickConf {
+  /**
+   * @default "always"
+   */
+  when?: "always" | "hover";
+  useBrick: UseBrickConf;
 }
 
 /**
@@ -96,6 +108,12 @@ class EoDirectoryTree extends ReactNextElement {
    */
   @property()
   accessor directoryTitle: string | undefined;
+
+  /**
+   * 设置中间节点是否可选，默认只有叶子节点可选
+   */
+  @property({ type: Boolean })
+  accessor internalNodeSelectable: boolean | undefined;
 
   /**
    * 可搜索
@@ -125,7 +143,7 @@ class EoDirectoryTree extends ReactNextElement {
   @property({
     attribute: false,
   })
-  accessor suffixBrick: { useBrick: UseBrickConf } | undefined;
+  accessor suffixBrick: SuffixBrickConf | undefined;
 
   /**
    * 选中的 keys
@@ -198,6 +216,7 @@ class EoDirectoryTree extends ReactNextElement {
         element={this}
         data={this.data}
         directoryTitle={this.directoryTitle}
+        internalNodeSelectable={this.internalNodeSelectable}
         placeholder={this.placeholder}
         searchable={this.searchable}
         searchFields={this.searchFields}
@@ -222,6 +241,7 @@ export function EoDirectoryTreeComponent(props: EoDirectoryTreeComponentProps) {
     element,
     data,
     directoryTitle,
+    internalNodeSelectable,
     searchable,
     searchFields,
     placeholder,
@@ -262,6 +282,7 @@ export function EoDirectoryTreeComponent(props: EoDirectoryTreeComponentProps) {
       value={{
         expandedKeysSet,
         selectedKeysSet,
+        internalNodeSelectable,
         onSelect,
         onExpand,
         suffixBrick,
