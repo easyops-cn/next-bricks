@@ -51,3 +51,4 @@ import "./iframe/index.js";
 import "./data-providers/set-timeout.js";
 import "./dropdown-select/index.js";
 import "./loading-container/index.js";
+import "./custom-processors/smartDisplayForEvaluableString.js";
