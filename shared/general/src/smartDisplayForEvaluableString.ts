@@ -18,7 +18,7 @@ const I18N = "I18N";
  *
  * @returns
  *
- * Returns the nonStringFallback if the input is not a string and nonStringFallback presents.
+ * Returns the nonStringFallback if the input is not a string and nonStringFallback is present.
  *
  * Or returns the raw input when nonStringFallback no presents.
  *
