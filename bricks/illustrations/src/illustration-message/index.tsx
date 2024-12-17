@@ -23,6 +23,7 @@ export interface IllustrationMessageProps {
   heading?: string;
   description?: string;
   variant?: MessageVariant;
+  customizeImage?: CustomizeImage;
 }
 
 export type MessageVariant = ErrorVariant | StatusVariant;
@@ -45,6 +46,11 @@ interface MessageOfImage {
 interface MessageOfStatus {
   type: "status";
   icon: string;
+}
+
+export interface CustomizeImage {
+  category: string;
+  name: string;
 }
 
 /**
@@ -77,12 +83,16 @@ class IllustrationMessage
   @property()
   accessor variant: MessageVariant | undefined;
 
+  @property({ attribute: false })
+  accessor customizeImage: CustomizeImage | undefined;
+
   render() {
     return (
       <IllustrationMessageComponent
         heading={this.heading || this.errorTitle}
         description={this.description}
         variant={this.variant}
+        customizeImage={this.customizeImage}
       />
     );
   }
@@ -97,10 +107,17 @@ export function IllustrationMessageComponent({
   heading,
   description,
   variant,
+  customizeImage,
 }: IllustrationMessageComponentProps) {
   const theme = useCurrentTheme();
 
   const message = useMemo<MessageOfImage | MessageOfStatus>(() => {
+    if (customizeImage) {
+      return {
+        type: "image",
+        image: getIllustration({ theme, ...customizeImage }),
+      };
+    }
     let category = "easyops2";
     let name: string;
     let messageType = "error";
@@ -147,7 +164,7 @@ export function IllustrationMessageComponent({
       type: "image",
       image: getIllustration({ category, name: name!, theme }),
     };
-  }, [variant, theme]);
+  }, [customizeImage, variant, theme]);
 
   return (
     <>

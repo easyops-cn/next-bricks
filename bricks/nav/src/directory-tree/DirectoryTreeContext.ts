@@ -1,13 +1,13 @@
-import { UseBrickConf } from "@next-core/types";
 import React from "react";
-import { NodeData } from ".";
+import type { NodeData, SuffixBrickConf } from ".";
 
 export interface ContextOfDirectoryTree {
   expandedKeysSet: Set<string>;
   selectedKeysSet: Set<string>;
+  internalNodeSelectable?: boolean;
   onExpand: (data: { keys: string[]; node: NodeData }) => void;
   onSelect: (data: { keys: string[]; node: NodeData }) => void;
-  suffixBrick?: { useBrick: UseBrickConf };
+  suffixBrick?: SuffixBrickConf;
 }
 
 export const DirectoryTreeContext = React.createContext<ContextOfDirectoryTree>(

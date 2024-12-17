@@ -6,6 +6,14 @@ import type { EoDirectoryTreeInternalNode } from "./index.jsx";
 
 jest.mock("@next-core/theme", () => ({}));
 
+customElements.define(
+  "eo-icon",
+  class extends HTMLElement {
+    lib: any;
+    icon: any;
+  }
+);
+
 describe("eo-directory-tree-internal-node", () => {
   test("basic usage", async () => {
     const onExpand = jest.fn();
@@ -96,5 +104,29 @@ describe("eo-directory-tree-internal-node", () => {
       document.body.removeChild(element);
     });
     expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
+
+  test("with icon", async () => {
+    const element = document.createElement(
+      "eo-directory-tree-internal-node"
+    ) as EoDirectoryTreeInternalNode;
+    element.textContent = "Label A";
+    element.icon = {
+      lib: "antd",
+      icon: "plus",
+    };
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(element.shadowRoot?.querySelector("eo-icon")).toHaveProperty(
+      "icon",
+      "plus"
+    );
+
+    act(() => {
+      document.body.removeChild(element);
+    });
   });
 });

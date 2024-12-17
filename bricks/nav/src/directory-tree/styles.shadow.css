@@ -35,3 +35,7 @@
     margin-bottom: 8px;
   }
 }
+
+.show-suffix-when-hover:not(:hover) .suffix {
+  display: none;
+}

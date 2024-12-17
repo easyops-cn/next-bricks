@@ -183,4 +183,39 @@ describe("eo-illustration-message", () => {
       document.body.removeChild(element);
     });
   });
+
+  test("customize image", async () => {
+    const element = document.createElement(
+      "eo-illustration-message"
+    ) as IllustrationMessage;
+    element.customizeImage = {
+      category: "my-category",
+      name: "my-image",
+    };
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot?.childNodes).toMatchInlineSnapshot(`
+      NodeList [
+        <style>
+          styles.shadow.css
+        </style>,
+        <div
+          class="image"
+        >
+          <img
+            src="my-category/my-image.svg"
+          />
+        </div>,
+        <div>
+          <slot />
+        </div>,
+      ]
+    `);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
 });

@@ -6,6 +6,14 @@ import type { EoDirectoryTreeLeaf } from "./index.jsx";
 
 jest.mock("@next-core/theme", () => ({}));
 
+customElements.define(
+  "eo-icon",
+  class extends HTMLElement {
+    lib: any;
+    icon: any;
+  }
+);
+
 describe("eo-directory-tree-leaf", () => {
   test("basic usage", async () => {
     const onSelect = jest.fn();
@@ -36,5 +44,29 @@ describe("eo-directory-tree-leaf", () => {
       document.body.removeChild(element);
     });
     expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
+
+  test("with icon", async () => {
+    const element = document.createElement(
+      "eo-directory-tree-leaf"
+    ) as EoDirectoryTreeLeaf;
+    element.textContent = "Label A";
+    element.icon = {
+      lib: "antd",
+      icon: "plus",
+    };
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(element.shadowRoot?.querySelector("eo-icon")).toHaveProperty(
+      "icon",
+      "plus"
+    );
+
+    act(() => {
+      document.body.removeChild(element);
+    });
   });
 });

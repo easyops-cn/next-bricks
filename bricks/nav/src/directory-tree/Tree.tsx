@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { wrapBrick } from "@next-core/react-element";
 import { ReactUseMultipleBricks } from "@next-core/react-runtime";
+import classNames from "classnames";
 import {
   EoDirectoryTreeLeaf,
   EoDirectoryTreeLeafEvents,
@@ -52,14 +53,19 @@ function TreeLeaf(props: TreeLeafProps) {
     <WrappedTreeLeaf
       depth={depth}
       selected={selectedKeysSet.has(data.key)}
+      icon={data.icon}
+      faded={data.faded}
       onSelect={() => {
         const keys = [data.key];
         onSelect({ keys, node: nodeData });
       }}
+      className={classNames({
+        "show-suffix-when-hover": suffixBrick?.when === "hover",
+      })}
     >
       <span title={data.title}>{data.title}</span>
       {suffixBrick?.useBrick && (
-        <div slot="suffix">
+        <div className="suffix" slot="suffix">
           <ReactUseMultipleBricks
             useBrick={suffixBrick.useBrick}
             data={nodeData}
@@ -77,7 +83,14 @@ interface TreeInternalNodeProps {
 function TreeInternalNode(props: TreeInternalNodeProps) {
   const { treeData } = props;
   const { data, index, depth } = treeData;
-  const { expandedKeysSet, onExpand, suffixBrick } = useDirectoryTreeContext();
+  const {
+    expandedKeysSet,
+    onExpand,
+    selectedKeysSet,
+    onSelect,
+    internalNodeSelectable,
+    suffixBrick,
+  } = useDirectoryTreeContext();
 
   const nodeData = useMemo(
     () => ({ data, index, depth }),
@@ -87,7 +100,11 @@ function TreeInternalNode(props: TreeInternalNodeProps) {
   return (
     <WrappedTreeInternalNode
       depth={depth}
+      selectable={internalNodeSelectable}
+      icon={data.icon}
+      faded={data.faded}
       expanded={expandedKeysSet.has(data.key)}
+      selected={selectedKeysSet.has(data.key)}
       onExpand={(e) => {
         if (e.detail) {
           expandedKeysSet.add(data.key);
@@ -97,12 +114,19 @@ function TreeInternalNode(props: TreeInternalNodeProps) {
         const keys = [...expandedKeysSet];
         onExpand({ keys, node: nodeData });
       }}
+      onSelect={() => {
+        const keys = [data.key];
+        onSelect({ keys, node: nodeData });
+      }}
+      className={classNames({
+        "show-suffix-when-hover": suffixBrick?.when === "hover",
+      })}
     >
       <span slot="label" title={data.title}>
         {data.title}
       </span>
       {suffixBrick?.useBrick && (
-        <div slot="suffix">
+        <div className="suffix" slot="suffix">
           <ReactUseMultipleBricks
             useBrick={suffixBrick.useBrick}
             data={nodeData}
