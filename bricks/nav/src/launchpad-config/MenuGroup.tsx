@@ -22,6 +22,7 @@ export interface MenuGroupProps {
   actions?: MenuAction[];
   variant?: "launchpad-config" | "menu-config";
   urlTemplate?: string;
+  customUrlTemplate?: string;
   onActionClick?: (detail: MenuActionEventDetail) => void;
 }
 
@@ -30,6 +31,7 @@ export function MenuGroup({
   actions,
   variant,
   urlTemplate,
+  customUrlTemplate,
   onActionClick,
 }: MenuGroupProps) {
   const { name, items } = data;
@@ -80,6 +82,7 @@ export function MenuGroup({
               actions={actions}
               variant={variant}
               urlTemplate={urlTemplate}
+              customUrlTemplate={customUrlTemplate}
               onActionClick={onActionClick}
             />
           ) : (
@@ -89,6 +92,7 @@ export function MenuGroup({
               actions={actions}
               variant={variant}
               urlTemplate={urlTemplate}
+              customUrlTemplate={customUrlTemplate}
               onActionClick={onActionClick}
             />
           )
@@ -103,6 +107,7 @@ export interface MenuItemProps {
   actions?: MenuAction[];
   variant?: "launchpad-config" | "menu-config";
   urlTemplate?: string;
+  customUrlTemplate?: string;
   onActionClick?: (detail: MenuActionEventDetail) => void;
 }
 
@@ -111,6 +116,7 @@ export function MenuItem({
   actions,
   variant,
   urlTemplate,
+  customUrlTemplate,
   onActionClick,
 }: MenuItemProps) {
   const name = useMemo(
@@ -138,17 +144,34 @@ export function MenuItem({
     [data, onActionClick]
   );
 
-  const disabled = variant === "menu-config" && data.type !== "app";
+  let disabled = false;
+  let linkUrl = "";
+
+  if (variant === "menu-config") {
+    if (data.type === "app") {
+      linkUrl = parseUrlTemplate(urlTemplate, data, "")!;
+    } else {
+      // 禁用外链菜单项
+      const urlObject = new URL(data.url, location.origin);
+      disabled = urlObject.origin !== location.origin;
+      linkUrl = disabled
+        ? ""
+        : parseUrlTemplate(
+            customUrlTemplate,
+            {
+              ...data,
+              __pathname: urlObject.pathname,
+            },
+            ""
+          )!;
+    }
+  }
 
   return (
     <li className={classNames("menu-item", { disabled })}>
       <WrappedLink
-        tooltip={disabled ? "该菜单项为链接，不支持配置" : ""}
-        url={
-          disabled || variant !== "menu-config"
-            ? ""
-            : parseUrlTemplate(urlTemplate, data, "")
-        }
+        tooltip={disabled ? "该菜单项为外链，不支持配置" : ""}
+        url={linkUrl}
       >
         <WrappedIcon
           className="menu-icon"
@@ -190,6 +213,7 @@ export interface MenuItemFolderProps {
   actions?: MenuAction[];
   variant?: "launchpad-config" | "menu-config";
   urlTemplate?: string;
+  customUrlTemplate?: string;
   onActionClick?: (detail: MenuActionEventDetail) => void;
 }
 
@@ -198,6 +222,7 @@ function MenuItemFolder({
   actions,
   variant,
   urlTemplate,
+  customUrlTemplate,
   onActionClick,
 }: MenuItemFolderProps) {
   const { name, items } = data;
@@ -266,6 +291,7 @@ function MenuItemFolder({
             actions={actions}
             variant={variant}
             urlTemplate={urlTemplate}
+            customUrlTemplate={customUrlTemplate}
             onActionClick={onActionClick}
           />
         ))}

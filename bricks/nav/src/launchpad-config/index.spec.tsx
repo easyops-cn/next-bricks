@@ -110,12 +110,21 @@ describe("nav.launchpad-config", () => {
             id: "my-custom",
             type: "custom",
             name: "My Custom",
+            url: "http://localhost/next/my-custom",
+          },
+          {
+            instanceId: "i-4",
+            id: "my-custom-2",
+            type: "custom",
+            name: "My External Custom",
+            url: "http://example.com/next/external-custom",
           },
         ],
       },
     ] as any;
     element.variant = "menu-config";
     element.urlTemplate = "/test/{{ id }}";
+    element.customUrlTemplate = "/custom?url={{ __pathname }}";
     act(() => {
       document.body.appendChild(element);
     });
@@ -132,12 +141,20 @@ describe("nav.launchpad-config", () => {
       element.shadowRoot
         ?.querySelectorAll(".menu-item")[1]
         .classList.contains("disabled")
+    ).toBe(false);
+    expect(
+      element.shadowRoot
+        ?.querySelectorAll(".menu-item")[2]
+        .classList.contains("disabled")
     ).toBe(true);
     expect(
       element.shadowRoot?.querySelectorAll(".menu-item eo-link")[0]
     ).toHaveProperty("url", "/test/my-app");
     expect(
       element.shadowRoot?.querySelectorAll(".menu-item eo-link")[1]
+    ).toHaveProperty("url", "/custom?url=%2Fnext%2Fmy-custom");
+    expect(
+      element.shadowRoot?.querySelectorAll(".menu-item eo-link")[2]
     ).toHaveProperty("url", "");
 
     act(() => {

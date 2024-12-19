@@ -37,12 +37,22 @@ class LaunchpadConfig extends ReactNextElement implements LaunchpadConfigProps {
   accessor variant: "launchpad-config" | "menu-config" | undefined;
 
   /**
-   * 菜单项链接模板，例如可配置为 `/app/{{ id }}`。
+   * 菜单项 APP 类型的链接模板，例如可配置为 `/app/{{ id }}`。
    *
    * 注：仅用于 variant: "menu-config"。
    */
   @property()
   accessor urlTemplate: string | undefined;
+
+  /**
+   * 菜单项自定义类型的链接模板，例如可配置为 `/custom?url={{ __pathname }}`。
+   *
+   * 注：仅用于 variant: "menu-config"。
+   *    外链菜单链接会设置为禁用。
+   *    `__pathname` 是运行时变量，表示 url 解析后的 pathname。
+   */
+  @property()
+  accessor customUrlTemplate: string | undefined;
 
   @event({ type: "action.click" })
   accessor #actionClickEvent!: EventEmitter<MenuActionEventDetail>;
@@ -58,6 +68,7 @@ class LaunchpadConfig extends ReactNextElement implements LaunchpadConfigProps {
         actions={this.actions}
         variant={this.variant}
         urlTemplate={this.urlTemplate}
+        customUrlTemplate={this.customUrlTemplate}
         onActionClick={this.#onActionClick}
       />
     );
@@ -69,6 +80,7 @@ export interface LaunchpadConfigProps {
   actions?: MenuAction[];
   variant?: "launchpad-config" | "menu-config";
   urlTemplate?: string;
+  customUrlTemplate?: string;
   onActionClick?: (detail: MenuActionEventDetail) => void;
 }
 
@@ -77,6 +89,7 @@ export function LaunchpadConfigComponent({
   actions,
   variant,
   urlTemplate,
+  customUrlTemplate,
   onActionClick,
 }: LaunchpadConfigProps) {
   return (
@@ -88,6 +101,7 @@ export function LaunchpadConfigComponent({
           actions={actions}
           variant={variant}
           urlTemplate={urlTemplate}
+          customUrlTemplate={customUrlTemplate}
           onActionClick={onActionClick}
         />
       ))}
