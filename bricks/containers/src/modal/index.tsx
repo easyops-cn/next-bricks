@@ -363,6 +363,7 @@ function ModalComponent({
             </WrappedButton>
           )}
           <WrappedButton
+            type="primary"
             danger={confirmDanger}
             disabled={confirmDisabled}
             onClick={handleConfirmClick}
