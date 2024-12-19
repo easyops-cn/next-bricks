@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.17.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.16.1...@next-bricks/nav@1.17.0) (2024-12-19)
+
+
+### Bug Fixes
+
+* **menu-config:** only disable external custom link ([aa75a99](https://github.com/easyops-cn/next-bricks/commit/aa75a998bb3bd5bba3a097d015feaebeed6897c4))
+
+
+### Features
+
+* new provider: get-menu-config-tree ([c88211a](https://github.com/easyops-cn/next-bricks/commit/c88211a58e0e5ba58868a2462e3a2c8cc9d951fa))
+
+
+
+
+
 ## [1.16.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.16.0...@next-bricks/nav@1.16.1) (2024-12-17)
 
 **Note:** Version bump only for package @next-bricks/nav
