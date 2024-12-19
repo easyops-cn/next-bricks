@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.13.1...@next-bricks/containers@1.13.2) (2024-12-19)
+
+
+### Bug Fixes
+
+* re-add type="primary" for modal confirm button ([4d4240a](https://github.com/easyops-cn/next-bricks/commit/4d4240a81bc25f8b1aef3bc1921aecb3641c2ae7))
+
+
+
+
+
 ## [1.13.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.13.0...@next-bricks/containers@1.13.1) (2024-12-09)
 
 **Note:** Version bump only for package @next-bricks/containers
