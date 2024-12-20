@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.container {
+  position: relative;
+}
+
+canvas {
+  position: absolute;
+}

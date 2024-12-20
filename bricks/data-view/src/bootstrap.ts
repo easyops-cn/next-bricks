@@ -44,3 +44,4 @@ import "./globe-with-halo-indicator/index.js";
 import "./globe-with-gear-indicator/index.js";
 import "./bubbles-indicator/index.js";
 import "./globe-with-orbit-indicator/index.js";
+import "./china-map/index.js";

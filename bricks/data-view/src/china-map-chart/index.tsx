@@ -453,10 +453,10 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
       //   }); //自定义选择高亮
 
       scene.addLayer(seventhPolygonLayer);
-      scene.addLayer(sixthPolygonLayer);
-      scene.addLayer(fifthPolygonLayer);
-      scene.addLayer(fourthPolygonLayer);
-      scene.addLayer(thirdPolygonLayer);
+      // scene.addLayer(sixthPolygonLayer);
+      // scene.addLayer(fifthPolygonLayer);
+      // // scene.addLayer(fourthPolygonLayer);
+      // scene.addLayer(thirdPolygonLayer);
       scene.addLayer(secondPolygonLayer);
       if (chinaImgLayer) {
         scene.addLayer(chinaImgLayer);
