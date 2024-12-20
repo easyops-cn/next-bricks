@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.49.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.49.0...@next-bricks/basic@1.49.1) (2024-12-20)
+
+
+### Bug Fixes
+
+* add native events in doc comment ([641dc4f](https://github.com/easyops-cn/next-bricks/commit/641dc4f797d5269b883f1ce0d8023ef187b6ff4b))
+
+
+
+
+
 # [1.49.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.48.3...@next-bricks/basic@1.49.0) (2024-12-17)
 
 
