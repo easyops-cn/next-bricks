@@ -22,6 +22,8 @@ export type LoadingSize = "small" | "medium" | "large";
 
 /**
  * 构件 `eo-loading-container`
+ *
+ * @slot - 内容
  */
 export
 @defineElement("eo-loading-container", {

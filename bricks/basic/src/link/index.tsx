@@ -53,6 +53,8 @@ const { defineElement, property } = createDecorators();
  *
  * @part link - 锚元素
  *
+ * @event click - 点击
+ *
  * @slot - 链接内容
  *
  * @category text
