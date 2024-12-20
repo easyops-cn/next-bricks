@@ -1,20 +1,18 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import "@next-core/theme";
 import {
   geoPath,
   geoMercator,
-  type GeoPermissibleObjects,
   type ExtendedFeatureCollection,
-  geoOrthographic,
 } from "d3-geo";
 import texturePng from "../china-map-chart/assets/texture.png";
 import { rewind } from "./rewind.mjs";
 // import ChinaGeoJson from "../china-map-chart/map.json";
 // import ChinaGeoJson from "./china-provinces-geo.json";
 // import ChinaGeoJson from "./china-simplified.json";
-import ChinaGeoJson from "./china-simplified.json";
+import ChinaGeoJson from "./china-simplified-alt.json";
 import styleText from "./styles.shadow.css";
 
 const ChinaRewindGeoJson = rewind(ChinaGeoJson, true);
@@ -47,27 +45,41 @@ export interface ChinaMapComponentProps extends ChinaMapProps {
 
 const pixelRatio = window.devicePixelRatio ?? 1;
 
-const bgColors = [
-  "rgba(84, 239, 241, 0.20)",
-  // "rgb(37, 62, 64)",
-  "rgba(190, 225, 226, 1)",
-  "#000",
-  "rgba(43, 100, 255, 1)",
-  // "#000",
+const layers = [
+  {
+    fill: "rgba(84, 239, 241, 0.2)",
+    shadowColor: "rgba(84, 239, 241, 0.2)",
+    shadowBlur: 2,
+    shadowOffsetY: 1,
+    offset: 14,
+  },
+  {
+    fill: "#bee1e2",
+    shadowColor: "rgba(93,250,255,0.2)",
+    shadowBlur: 4,
+    shadowOffsetY: 10,
+    offset: 11.5,
+  },
+  {
+    fill: "#000",
+    offset: 9.75,
+  },
+  {
+    lineWidth: 1,
+    strokeStyle: "#2B64FF",
+    offset: 7.5,
+  },
+  {
+    lineWidth: 1.5,
+    strokeStyle: "#2B64FF",
+    offset: 5,
+  },
 ];
-const bgOffsets = [
-  // 17.5,
-  15,
-  12.5,
-  10,
-  7,
-  // 5.5,
-].map((v) => v * pixelRatio);
 
-export function ChinaMapComponent(props: ChinaMapComponentProps) {
+export function ChinaMapComponent(/* props: ChinaMapComponentProps */) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const bgRef = useRef<HTMLCanvasElement[]>([]);
+  const layersRef = useRef<HTMLCanvasElement[]>([]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -76,11 +88,9 @@ export function ChinaMapComponent(props: ChinaMapComponentProps) {
     }
 
     const context = canvas.getContext("2d");
-    // context.fillStyle = "#000";
-    // context.fillRect(0, 0, BASE_WIDTH, BASE_HEIGHT);
 
     context.strokeStyle = "#fff";
-    context.lineWidth = 2 * pixelRatio;
+    context.lineWidth = 2.5 * pixelRatio;
     context.lineJoin = "round";
     // context.fillStyle = "#008";
     const geo: ExtendedFeatureCollection = {
@@ -101,53 +111,18 @@ export function ChinaMapComponent(props: ChinaMapComponentProps) {
       ),
       context
     );
-    // const Sphere = { type: "Sphere" } as const;
-    // const one = Sphere;
 
-    // const projection = geoOrthographic().fitExtent(
-    //   [[20, 20], [BASE_WIDTH - 20, BASE_HEIGHT - 20]],
-    //   // one,
-    //   Sphere
-    // ).rotate([-104.1954, -35.8617])//.scale(2000);
+    const image = new Image();
+    image.onload = () => {
+      layers.forEach((layer, i) => {
+        const ctx = layersRef.current[i]!.getContext("2d")!;
 
-    // const path = geoPath(projection, context);
-
-    // for (let i = 0; i < 2; i++) {
-    //   context.save();
-    //   context.strokeStyle = [
-    //     "rgba(43, 100, 255, 1)",
-    //     "rgba(84, 239, 241, 1)",
-    //     "rgba(43, 100, 255, 1)",
-    //   ][i];
-    //   // context.lineWidth = 4;
-    //   context.translate(0, 20 * (i + 1));
-    //   context.beginPath();
-    //   path(one);
-    //   context.closePath();
-    //   context.stroke();
-    //   context.resetTransform();
-    //   context.restore();
-    // }
-
-    {
-      for (let i = 0; i < bgColors.length; i++) {
-        const ctx = bgRef.current[i]!.getContext("2d")!;
-        ctx.fillStyle = bgColors[i];
-
-        if (i === 0) {
-          ctx.shadowColor = bgColors[i];
-          ctx.shadowBlur = 2 * pixelRatio;
-          ctx.shadowOffsetY = 1 * pixelRatio;
-        }
-        if (i === 1) {
-          // ctx.shadowColor = "rgba(84, 239, 241, 0.20)";
-          ctx.shadowColor = "rgba(93,250,255,0.2)";
-          ctx.shadowBlur = 10 * pixelRatio;
-          ctx.shadowOffsetY = 5 * pixelRatio;
+        if (layer.shadowColor) {
+          ctx.shadowColor = layer.shadowColor;
+          ctx.shadowBlur = (layer.shadowBlur ?? 0) * pixelRatio;
+          ctx.shadowOffsetY = (layer.shadowOffsetY ?? 0) * pixelRatio;
         }
 
-        // ctx.strokeStyle = "none";
-        // ctx.translate(0, bgOffsets[i]);
         ctx.beginPath();
         const p = geoPath(
           geoMercator().fitExtent(
@@ -161,34 +136,28 @@ export function ChinaMapComponent(props: ChinaMapComponentProps) {
         );
         p(one);
         ctx.closePath();
-        ctx.fill();
-      }
-    }
 
-    const image = new Image();
-    image.onload = () => {
+        if (layer.fill) {
+          ctx.fillStyle = layer.fill;
+          ctx.fill();
+        }
+
+        if (layer.lineWidth) {
+          ctx.strokeStyle = layer.strokeStyle;
+          ctx.lineWidth = layer.lineWidth * pixelRatio;
+          ctx.stroke();
+        }
+      });
+
       context.save();
       const pattern = context.createPattern(image, "repeat");
       context.fillStyle = pattern;
-
-      context.shadowColor = "#000";
-      context.shadowOffsetY = 11 * pixelRatio;
 
       context.beginPath();
       path(one);
       context.closePath();
       context.fill();
-      // context.clip();
-      // context.drawImage(image, 0, 0/* , 2572, 1706 */);
       context.restore();
-
-      // context.save();
-      // context.strokeStyle = "#3DC6FF";
-      // context.beginPath();
-      // path(Sphere);
-      // context.closePath();
-      // context.stroke();
-      // context.restore();
 
       context.save();
       context.strokeStyle = "#3DC6FF";
@@ -221,13 +190,13 @@ export function ChinaMapComponent(props: ChinaMapComponentProps) {
       className="container"
       style={{ width: BASE_WIDTH, height: BASE_HEIGHT }}
     >
-      {bgOffsets.map((offset, i) =>
+      {layers.map((layer, i) =>
         <canvas
           key={i}
-          ref={(el) => {bgRef.current[i] = el!}}
+          ref={(el) => {layersRef.current[i] = el!}}
           width={BASE_WIDTH * pixelRatio}
           height={BASE_HEIGHT * pixelRatio}
-          style={{ width: BASE_WIDTH, height: BASE_HEIGHT, transform: `translate(0,${offset}px)` }}
+          style={{ width: BASE_WIDTH, height: BASE_HEIGHT, transform: `translate(0,${layer.offset * pixelRatio}px)` }}
         />
       )}
       <canvas
