@@ -1,15 +1,30 @@
 :host {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: #fff;
+  height: 100%;
 }
 
 :host([hidden]) {
   display: none;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .container {
   position: relative;
+  transform: scale(var(--scale));
+
+  --scale: 1;
 }
 
 canvas {
   position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: 0;
 }

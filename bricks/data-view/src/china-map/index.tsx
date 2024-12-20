@@ -8,12 +8,14 @@ import {
   type ExtendedFeatureCollection,
 } from "d3-geo";
 import texturePng from "../china-map-chart/assets/texture.png";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 import { rewind } from "./rewind.mjs";
 // import ChinaGeoJson from "../china-map-chart/map.json";
 // import ChinaGeoJson from "./china-provinces-geo.json";
-// import ChinaGeoJson from "./china-simplified.json";
-import ChinaGeoJson from "./china-simplified-alt.json";
+import ChinaGeoJson from "./china-simplified.json";
 import styleText from "./styles.shadow.css";
+import { useContainerScale } from "../shared/useContainerScale";
 
 const ChinaRewindGeoJson = rewind(ChinaGeoJson, true);
 
@@ -23,7 +25,7 @@ const BASE_WIDTH = 960;
 const BASE_HEIGHT = 750;
 
 export interface ChinaMapProps {
-  // Define props here.
+  maxScale?: number;
 }
 
 /**
@@ -34,13 +36,21 @@ export
   styleTexts: [styleText],
 })
 class ChinaMap extends ReactNextElement implements ChinaMapProps {
+  /**
+   * 最大缩放比例
+   *
+   * @default 1
+   */
+  @property({ type: Number })
+  accessor maxScale: number | undefined;
+
   render() {
-    return <ChinaMapComponent />;
+    return <ChinaMapComponent root={this} maxScale={this.maxScale} />;
   }
 }
 
 export interface ChinaMapComponentProps extends ChinaMapProps {
-  // Define react event handlers here.
+  root: ChinaMap;
 }
 
 const pixelRatio = window.devicePixelRatio ?? 1;
@@ -76,7 +86,9 @@ const layers = [
   },
 ];
 
-export function ChinaMapComponent(/* props: ChinaMapComponentProps */) {
+export function ChinaMapComponent({ root, maxScale }: ChinaMapComponentProps) {
+  const scale = useContainerScale({ width: BASE_WIDTH, height: BASE_HEIGHT, root, maxScale });
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const layersRef = useRef<HTMLCanvasElement[]>([]);
@@ -188,7 +200,14 @@ export function ChinaMapComponent(/* props: ChinaMapComponentProps */) {
   return (
     <div
       className="container"
-      style={{ width: BASE_WIDTH, height: BASE_HEIGHT }}
+      style={{
+        width: BASE_WIDTH,
+        height: BASE_HEIGHT,
+        visibility: scale === null ? "hidden" : "visible",
+        "--scale": scale,
+      } as React.CSSProperties & {
+                  "--scale": number;
+                }}
     >
       {layers.map((layer, i) =>
         <canvas
@@ -196,7 +215,7 @@ export function ChinaMapComponent(/* props: ChinaMapComponentProps */) {
           ref={(el) => {layersRef.current[i] = el!}}
           width={BASE_WIDTH * pixelRatio}
           height={BASE_HEIGHT * pixelRatio}
-          style={{ width: BASE_WIDTH, height: BASE_HEIGHT, transform: `translate(0,${layer.offset * pixelRatio}px)` }}
+          style={{ width: BASE_WIDTH, height: BASE_HEIGHT, top: layer.offset * pixelRatio }}
         />
       )}
       <canvas
