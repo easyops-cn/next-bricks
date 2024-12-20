@@ -11,9 +11,10 @@ import {
 } from "d3-geo";
 import texturePng from "../china-map-chart/assets/texture.png";
 import { rewind } from "./rewind.mjs";
-import ChinaGeoJson from "../china-map-chart/map.json";
-// import ChinaGeoJson from "../china-map/china-provinces-geo.json";
-// import ChinaGeoJson from "../china-map/china-geo.json";
+// import ChinaGeoJson from "../china-map-chart/map.json";
+// import ChinaGeoJson from "./china-provinces-geo.json";
+// import ChinaGeoJson from "./china-simplified.json";
+import ChinaGeoJson from "./china-simplified.json";
 import styleText from "./styles.shadow.css";
 
 const ChinaRewindGeoJson = rewind(ChinaGeoJson, true);
@@ -47,20 +48,21 @@ export interface ChinaMapComponentProps extends ChinaMapProps {
 const pixelRatio = window.devicePixelRatio ?? 1;
 
 const bgColors = [
-  // "rgba(84, 239, 241, 0.20)",
-  "rgb(37, 62, 64)",
+  "rgba(84, 239, 241, 0.20)",
+  // "rgb(37, 62, 64)",
   "rgba(190, 225, 226, 1)",
   "#000",
   "rgba(43, 100, 255, 1)",
-  "#000",
+  // "#000",
 ];
 const bgOffsets = [
-  35,
-  25,
-  20,
-  14,
-  11,
-];
+  // 17.5,
+  15,
+  12.5,
+  10,
+  7,
+  // 5.5,
+].map((v) => v * pixelRatio);
 
 export function ChinaMapComponent(props: ChinaMapComponentProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -78,7 +80,7 @@ export function ChinaMapComponent(props: ChinaMapComponentProps) {
     // context.fillRect(0, 0, BASE_WIDTH, BASE_HEIGHT);
 
     context.strokeStyle = "#fff";
-    context.lineWidth = 4;
+    context.lineWidth = 2 * pixelRatio;
     context.lineJoin = "round";
     // context.fillStyle = "#008";
     const geo: ExtendedFeatureCollection = {
@@ -92,8 +94,8 @@ export function ChinaMapComponent(props: ChinaMapComponentProps) {
     const path = geoPath(
       geoMercator().fitExtent(
         [
-          [20, 20],
-          [BASE_WIDTH * pixelRatio - 20, BASE_HEIGHT * pixelRatio - 20],
+          [10 * pixelRatio, 10 * pixelRatio],
+          [BASE_WIDTH * pixelRatio - 10, BASE_HEIGHT * pixelRatio - 10 * pixelRatio],
         ],
         one
       ),
@@ -131,14 +133,27 @@ export function ChinaMapComponent(props: ChinaMapComponentProps) {
       for (let i = 0; i < bgColors.length; i++) {
         const ctx = bgRef.current[i]!.getContext("2d")!;
         ctx.fillStyle = bgColors[i];
+
+        if (i === 0) {
+          ctx.shadowColor = bgColors[i];
+          ctx.shadowBlur = 2 * pixelRatio;
+          ctx.shadowOffsetY = 1 * pixelRatio;
+        }
+        if (i === 1) {
+          // ctx.shadowColor = "rgba(84, 239, 241, 0.20)";
+          ctx.shadowColor = "rgba(93,250,255,0.2)";
+          ctx.shadowBlur = 10 * pixelRatio;
+          ctx.shadowOffsetY = 5 * pixelRatio;
+        }
+
         // ctx.strokeStyle = "none";
         // ctx.translate(0, bgOffsets[i]);
         ctx.beginPath();
         const p = geoPath(
           geoMercator().fitExtent(
             [
-              [20, 20],
-              [BASE_WIDTH * pixelRatio - 20, BASE_HEIGHT * pixelRatio - 20],
+              [10 * pixelRatio, 10 * pixelRatio],
+              [BASE_WIDTH * pixelRatio - 10 * pixelRatio, BASE_HEIGHT * pixelRatio - 10 * pixelRatio],
             ],
             one
           ),
@@ -155,6 +170,10 @@ export function ChinaMapComponent(props: ChinaMapComponentProps) {
       context.save();
       const pattern = context.createPattern(image, "repeat");
       context.fillStyle = pattern;
+
+      context.shadowColor = "#000";
+      context.shadowOffsetY = 11 * pixelRatio;
+
       context.beginPath();
       path(one);
       context.closePath();
@@ -185,7 +204,6 @@ export function ChinaMapComponent(props: ChinaMapComponentProps) {
           ChinaRewindGeoJson as ExtendedFeatureCollection
         ).features.slice(-2),
       };
-      console.log(SouthSea);
 
       context.save();
       context.strokeStyle = "rgb(30, 144, 255)";
