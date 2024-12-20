@@ -237,4 +237,15 @@ accessor active: boolean | undefined = false;
 
 对于事件 `detail` 字段的 TS 类型，将自动从源代码中识别，例如，如果事件对应的类型为 `EventEmitter<boolean>`，则其 `detail` 的 TS 类型为 `boolean`。
 
+对于关键特性直接使用原生事件的构件，应主动在注释中声明，以便在文档中显示，例如按钮构件的点击事件：
+
+```ts
+/**
+ * 按钮
+ *
+ * @event click - 点击
+ */
+@defineElement("eo-button")
+```
+
 对于方法，其参数类型和返回类型也都将自动从源代码中识别。

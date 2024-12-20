@@ -90,6 +90,8 @@ const { defineElement, property, event } = createDecorators();
  * 通用文本构件
  * @author astrid
  *
+ * @slot - 文本内容
+ *
  * @category text
  */
 @defineElement("eo-text", {
