@@ -69,7 +69,6 @@ function MenuItem({ item }: MenuItemProps) {
             }
           : {
               href: item.url,
-              target: "_blank",
             })}
       >
         <WrappedIcon
@@ -127,12 +126,15 @@ export function SidebarMenuItem({ item, target }: SidebarMenuItemProps) {
         {...(item.type === "app"
           ? {
               url: item.url,
-              target,
             }
           : {
               href: item.url,
-              target: "_blank",
             })}
+        {...(target
+          ? {
+              target,
+            }
+          : null)}
       >
         <WrappedIcon
           className={`sidebar-menu-icon`}
