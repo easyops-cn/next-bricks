@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.9.2...@next-bricks/data-view@1.10.0) (2024-12-24)
+
+
+### Bug Fixes
+
+* **china-map:** handle loading and error state ([4eae43a](https://github.com/easyops-cn/next-bricks/commit/4eae43aa1b5cf9fe2aa134feff20bdee61a78c12))
+* **china-map:** use a single canvas ([45b6aec](https://github.com/easyops-cn/next-bricks/commit/45b6aecd17cfc02d801a83641db4f984bbf8ecd7))
+
+
+### Features
+
+* new brick: china-map ([255d8ef](https://github.com/easyops-cn/next-bricks/commit/255d8ef83e7c4fae785161e44c66aa9df89760c7))
+
+
+
+
+
 ## [1.9.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/data-view@1.9.1...@next-bricks/data-view@1.9.2) (2024-12-20)
 
 **Note:** Version bump only for package @next-bricks/data-view
