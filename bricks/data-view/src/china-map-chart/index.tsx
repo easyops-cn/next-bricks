@@ -63,6 +63,8 @@ interface Area {
 
 /**
  * 中国地图图表构件，可以显示省级指标数据
+ *
+ * @deprecated 已废弃，请使用 `data-view.china-map`
  */
 export
 @defineElement("data-view.china-map-chart", {

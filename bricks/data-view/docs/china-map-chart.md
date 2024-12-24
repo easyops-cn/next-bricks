@@ -1,5 +1,7 @@
 中国地图图表构件，可以显示省级指标数据
 
+已废弃，请使用 [`data-view.china-map`](./china-map)。
+
 ## Examples
 
 ### Basic
