@@ -164,6 +164,60 @@ describe("DialogComponent", () => {
     unmount();
   });
 
+  test("type confirm with danger", () => {
+    const onCancel = jest.fn();
+    const { asFragment, container, unmount } = render(
+      <DialogComponent
+        type="confirm"
+        content="Are you sure?"
+        danger
+        onCancel={onCancel}
+      />
+    );
+    expect(asFragment()).toMatchInlineSnapshot(`
+<DocumentFragment>
+  <sl-dialog
+    class="dialog"
+  >
+    <div
+      class="body"
+    >
+      <div
+        class="icon warning"
+      >
+        <eo-antd-icon />
+      </div>
+      <div
+        class="content"
+      >
+        <div>
+          Are you sure?
+        </div>
+      </div>
+    </div>
+    <eo-button
+      slot="footer"
+    >
+      Cancel
+    </eo-button>
+    <eo-button
+      danger=""
+      slot="footer"
+    >
+      Ok
+    </eo-button>
+  </sl-dialog>
+</DocumentFragment>
+`);
+    expect(container.querySelector("eo-antd-icon")).toHaveProperty(
+      "icon",
+      "exclamation-circle"
+    );
+    fireEvent.click(container.querySelector("eo-button") as any);
+    expect(onCancel).toBeCalled();
+    unmount();
+  });
+
   test("type delete", () => {
     const onCancel = jest.fn();
     const onOk = jest.fn();

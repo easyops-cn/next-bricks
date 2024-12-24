@@ -128,7 +128,10 @@ export interface CustomColumn extends ColumnProps<Record<string, any>> {
 }
 
 /**
- * 通用表格构件
+ * 简易表格构件。
+ *
+ * ⚠️ 通常情况下，应使用 `eo-next-table` 替代。
+ *
  * @author sailor
  * @category table
  *
