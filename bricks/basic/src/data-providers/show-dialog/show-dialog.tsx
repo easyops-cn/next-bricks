@@ -41,6 +41,7 @@ export interface DialogOptions {
   title?: string;
   content: string;
   expect?: string;
+  danger?: boolean;
   contentStyle?: React.CSSProperties;
 }
 
@@ -128,6 +129,7 @@ export function DialogComponent({
   title,
   content,
   expect,
+  danger,
   contentStyle,
   zIndex,
   onOk,
@@ -220,7 +222,7 @@ export function DialogComponent({
       <WrappedButton
         slot="footer"
         type="primary"
-        danger={type === "delete"}
+        danger={danger ?? type === "delete"}
         disabled={confirmDisabled}
         onClick={onOkClick}
       >
