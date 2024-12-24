@@ -1,0 +1,67 @@
+:host,
+.message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:host {
+  position: relative;
+  color: #fff;
+  height: 100%;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  position: relative;
+  transform: scale(var(--scale));
+
+  --scale: 1;
+}
+
+canvas,
+.message,
+.labels {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: 0;
+}
+
+.loading {
+  font-size: 48px;
+}
+
+.error {
+  color: var(--color-error);
+}
+
+.label {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  transform: translate(-14px, -28px);
+}
+
+.text {
+  height: 22px;
+  line-height: 22px;
+  font-size: 12px;
+  background: url(../china-map-chart/assets/label.svg) no-repeat center left;
+  backdrop-filter: blur(2px);
+  text-indent: 10px;
+  transform: translate(0, -18px);
+  white-space: nowrap;
+  color: #fffcef;
+}
+
+.left > .text {
+  transform: translate(calc(-100% - 32px), -18px);
+}
