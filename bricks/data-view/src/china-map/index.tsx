@@ -1,15 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import { groupBy } from "lodash";
 import { createDecorators } from "@next-core/element";
-import { ReactNextElement } from "@next-core/react-element";
+import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
 import { geoPath, geoMercator, type ExtendedFeatureCollection } from "d3-geo";
+import type {
+  GeneralIcon,
+  GeneralIconProps,
+} from "@next-bricks/icons/general-icon";
 import { useContainerScale } from "../shared/useContainerScale";
 import texturePng from "../china-map-chart/assets/texture.png";
 import markerSvg from "../china-map-chart/assets/default.svg?url";
 import styleText from "./styles.shadow.css";
 
 const { defineElement, property } = createDecorators();
+
+const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 const BASE_WIDTH = 960;
 const BASE_HEIGHT = 750;
@@ -133,8 +139,14 @@ export function ChinaMapComponent({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [labels, setLabels] = useState<Label[]>([]);
 
+  // true: loaded
+  // false: loading
+  // string: error
+  const [state, setState] = useState<boolean | string>(false);
+
   useEffect(() => {
     const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
     let ignore = false;
 
     (async () => {
@@ -143,69 +155,85 @@ export function ChinaMapComponent({
       let matchedProvince: Area | undefined;
       let AreaList: Area[] | undefined;
 
-      const [image] = await Promise.all([
-        new Promise<HTMLImageElement>((resolve, reject) => {
-          const img = new Image();
-          // istanbul ignore next: can't mock image
-          img.onload = () => {
-            resolve(img);
-          };
-          // istanbul ignore next: can't mock image
-          img.onerror = (reason) => {
-            reject(reason);
-          };
-          img.src = texturePng;
-          // istanbul ignore next: can't mock image
-          if (process.env.NODE_ENV === "test") {
-            resolve(null);
-          }
-        }),
-        (async () => {
-          if (province) {
-            const [CitiesImport, AreaListImport] = await Promise.all([
-              import("./cities.json"),
-              import("../china-map-chart/area-list.json"),
-            ]);
-
-            const Cities =
-              CitiesImport.default as unknown as ExtendedFeatureCollection;
-            AreaList = AreaListImport.default as unknown as Area[];
-            matchedProvince = AreaList.find(
-              (a) => a.level === "province" && a.name.includes(province)
-            );
-            if (!matchedProvince) {
-              throw new Error(`没有找到省份："${province}"`);
+      let image: HTMLImageElement;
+      try {
+        [image] = await Promise.all([
+          new Promise<HTMLImageElement>((resolve, reject) => {
+            const img = new Image();
+            // istanbul ignore next: can't mock image
+            img.onload = () => {
+              resolve(img);
+            };
+            // istanbul ignore next: can't mock image
+            img.onerror = (reason) => {
+              reject(reason);
+            };
+            img.src = texturePng;
+            // istanbul ignore next: can't mock image
+            if (process.env.NODE_ENV === "test") {
+              resolve(null);
             }
-            geo = {
-              type: "FeatureCollection",
-              features: Cities.features.filter(
-                (f) => f.properties.province_adcode === matchedProvince.adcode
-              ),
-            };
-          } else {
-            const ChinaImport = await import("./provinces.json");
-            const ChinaGeoJson =
-              ChinaImport.default as unknown as ExtendedFeatureCollection;
-            const geoGroup = groupBy(ChinaGeoJson.features, (f) =>
-              f.properties.name ? "main-land" : "south-sea"
-            );
-            geo = {
-              type: "FeatureCollection",
-              features: geoGroup["main-land"],
-            };
-            SouthSea = {
-              type: "FeatureCollection",
-              features: geoGroup["south-sea"],
-            };
-          }
-        })(),
-      ]);
+          }),
+          (async () => {
+            if (province) {
+              const [CitiesImport, AreaListImport] = await Promise.all([
+                import("./cities.json"),
+                import("../china-map-chart/area-list.json"),
+              ]);
+
+              const Cities =
+                CitiesImport.default as unknown as ExtendedFeatureCollection;
+              AreaList = AreaListImport.default as unknown as Area[];
+              matchedProvince = AreaList.find(
+                (a) => a.level === "province" && a.name.includes(province)
+              );
+              if (!matchedProvince) {
+                throw new Error(`没有找到省份："${province}"`);
+              }
+              geo = {
+                type: "FeatureCollection",
+                features: Cities.features.filter(
+                  (f) => f.properties.province_adcode === matchedProvince.adcode
+                ),
+              };
+            } else {
+              const ChinaImport = await import("./provinces.json");
+              const ChinaGeoJson =
+                ChinaImport.default as unknown as ExtendedFeatureCollection;
+              const geoGroup = groupBy(ChinaGeoJson.features, (f) =>
+                f.properties.name ? "main-land" : "south-sea"
+              );
+              geo = {
+                type: "FeatureCollection",
+                features: geoGroup["main-land"],
+              };
+              SouthSea = {
+                type: "FeatureCollection",
+                features: geoGroup["south-sea"],
+              };
+            }
+          })(),
+        ]);
+      } catch (e) {
+        if (!ignore) {
+          setState(String(e));
+          context.clearRect(
+            0,
+            0,
+            BASE_WIDTH * pixelRatio,
+            BASE_HEIGHT * pixelRatio
+          );
+          setLabels([]);
+        }
+        return;
+      }
 
       if (ignore) {
         return;
       }
 
-      const context = canvas.getContext("2d");
+      setState(true);
+
       context.clearRect(
         0,
         0,
@@ -351,6 +379,22 @@ export function ChinaMapComponent({
         }
       }
     >
+      {state !== true && (
+        <div
+          className="message"
+          style={{ width: BASE_WIDTH, height: BASE_HEIGHT }}
+        >
+          {state === false && (
+            <WrappedIcon
+              lib="antd"
+              icon="loading"
+              spinning
+              className="loading"
+            />
+          )}
+          {typeof state === "string" && <div className="error">{state}</div>}
+        </div>
+      )}
       <canvas
         ref={canvasRef}
         width={BASE_WIDTH * pixelRatio}

@@ -15,13 +15,13 @@ children:
     properties:
       dataSource:
         - text: "西藏 12311"
-          city: 西藏
+          province: 西藏
         - text: "四川 89781169"
-          city: 四川
+          province: 四川
         - text: "台湾 234181"
-          city: 台湾
+          province: 台湾
         - text: "江西 21348"
-          city: 江西
+          province: 江西
     # Currently this brick only looks well within dark theme
     lifeCycle:
       onPageLoad:

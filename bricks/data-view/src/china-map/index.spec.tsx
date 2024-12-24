@@ -57,6 +57,8 @@ describe("data-view.china-map", () => {
       await (global as any).flushPromises();
     });
 
+    expect(element.shadowRoot.querySelector(".message")).toBe(null);
+
     const labels = element.shadowRoot.querySelectorAll(
       ".label"
     ) as NodeListOf<HTMLElement>;
@@ -103,6 +105,27 @@ describe("data-view.china-map", () => {
     expect(labels.length).toBe(2);
     expect(labels[0].classList.contains("right")).toBe(true);
     expect(labels[1].classList.contains("left")).toBe(true);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("province not found", async () => {
+    const element = document.createElement("data-view.china-map") as ChinaMap;
+    element.province = "加利福利亚";
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    await act(async () => {
+      await (global as any).flushPromises();
+    });
+
+    expect(element.shadowRoot.querySelector(".error").textContent).toBe(
+      'Error: 没有找到省份："加利福利亚"'
+    );
 
     act(() => {
       document.body.removeChild(element);
