@@ -20,28 +20,28 @@ const layers = [
     shadowColor: "rgba(84, 239, 241, 0.2)",
     shadowBlur: 2,
     shadowOffsetY: 1,
-    offset: 14,
+    offset: 28,
   },
   {
     fill: "#bee1e2",
     shadowColor: "rgba(93,250,255,0.2)",
     shadowBlur: 4,
     shadowOffsetY: 10,
-    offset: 11.5,
+    offset: 23,
   },
   {
     fill: "#000",
-    offset: 9.75,
+    offset: 19.5,
   },
   {
     lineWidth: 1,
     strokeStyle: "#2B64FF",
-    offset: 7.5,
+    offset: 15,
   },
   {
     lineWidth: 1.5,
     strokeStyle: "#2B64FF",
-    offset: 5,
+    offset: 10,
   },
 ];
 
@@ -131,7 +131,6 @@ export function ChinaMapComponent({
   });
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const layersRef = useRef<HTMLCanvasElement[]>([]);
   const [labels, setLabels] = useState<Label[]>([]);
 
   useEffect(() => {
@@ -219,18 +218,17 @@ export function ChinaMapComponent({
       const projection = geoMercator().fitExtent(
         [
           [10 * pixelRatio, 10 * pixelRatio],
-          [
-            BASE_WIDTH * pixelRatio - 10,
-            BASE_HEIGHT * pixelRatio - 10 * pixelRatio,
-          ],
+          [(BASE_WIDTH - 10) * pixelRatio, (BASE_HEIGHT - 25) * pixelRatio],
         ],
         geo
       );
       const path = geoPath(projection, context);
 
       // 3D 效果层
-      layers.forEach((layer, i) => {
-        const ctx = layersRef.current[i]!.getContext("2d")!;
+      layers.forEach((layer) => {
+        const ctx = context;
+        context.save();
+        context.translate(0, layer.offset * pixelRatio);
 
         if (layer.shadowColor) {
           ctx.shadowColor = layer.shadowColor;
@@ -253,6 +251,7 @@ export function ChinaMapComponent({
           ctx.lineWidth = layer.lineWidth * pixelRatio;
           ctx.stroke();
         }
+        context.restore();
       });
 
       // 纹理填充
@@ -345,21 +344,6 @@ export function ChinaMapComponent({
         }
       }
     >
-      {layers.map((layer, i) => (
-        <canvas
-          key={i}
-          ref={(el) => {
-            layersRef.current[i] = el!;
-          }}
-          width={BASE_WIDTH * pixelRatio}
-          height={BASE_HEIGHT * pixelRatio}
-          style={{
-            width: BASE_WIDTH,
-            height: BASE_HEIGHT,
-            top: layer.offset * pixelRatio,
-          }}
-        />
-      ))}
       <canvas
         ref={canvasRef}
         width={BASE_WIDTH * pixelRatio}
