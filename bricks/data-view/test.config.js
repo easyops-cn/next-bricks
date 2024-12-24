@@ -7,5 +7,5 @@ export default {
     "^d3-hierarchy$":
       "<rootDir>/../../node_modules/d3-hierarchy/dist/d3-hierarchy.min.js",
   },
-  transformModulePatterns: ["three/examples/jsm/", "d3-[^/]+/"],
+  transformModulePatterns: ["three/examples/jsm/", "d3-[^/]+/", "internmap"],
 };
