@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.17.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.17.1...@next-bricks/nav@1.17.2) (2024-12-24)
+
+
+### Bug Fixes
+
+* **launchpad:** open custom items in current tab ([97e61b8](https://github.com/easyops-cn/next-bricks/commit/97e61b8af626b3e8be0446e89564cc1cefd4749b))
+
+
+
+
+
 ## [1.17.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.17.0...@next-bricks/nav@1.17.1) (2024-12-20)
 
 **Note:** Version bump only for package @next-bricks/nav
