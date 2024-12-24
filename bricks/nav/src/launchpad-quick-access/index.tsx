@@ -25,9 +25,7 @@ class EoLaunchpadQuickAccess extends ReactNextElement {
   })
   accessor readonly: boolean | undefined;
 
-  @property({
-    attribute: false,
-  })
+  @property()
   accessor target: Target | undefined;
 
   render() {
