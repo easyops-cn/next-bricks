@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.49.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.49.1...@next-bricks/basic@1.49.2) (2024-12-24)
+
+
+### Bug Fixes
+
+* **show-dialog:** support set danger ([836ddce](https://github.com/easyops-cn/next-bricks/commit/836ddce1de2dfb0c0e43db20482ecb310c96e3cd))
+
+
+
+
+
 ## [1.49.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.49.0...@next-bricks/basic@1.49.1) (2024-12-20)
 
 
