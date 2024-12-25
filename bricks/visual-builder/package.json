@@ -41,15 +41,15 @@
     "@formily/react": "^2.3.1",
     "@formily/reactive": "^2.3.1",
     "@next-api-sdk/next-builder-sdk": "^1.2.2",
-    "@next-core/element": "^1.2.13",
-    "@next-core/http": "^1.2.8",
-    "@next-core/react-element": "^1.0.32",
-    "@next-core/react-runtime": "^1.7.4",
-    "@next-core/runtime": "^1.58.2",
+    "@next-core/element": "^1.2.14",
+    "@next-core/http": "^1.2.9",
+    "@next-core/react-element": "^1.0.33",
+    "@next-core/react-runtime": "^1.7.5",
+    "@next-core/runtime": "^1.58.3",
     "@next-core/storyboard": "^0.6.17",
     "@next-core/theme": "^1.5.4",
     "@next-core/types": "^1.14.0",
-    "@next-core/utils": "^1.7.28",
+    "@next-core/utils": "^1.7.29",
     "@next-shared/general": "^0.10.1",
     "@next-shared/markdown": "^0.2.3",
     "classnames": "^2.3.2",
@@ -60,7 +60,7 @@
     "react": "0.0.0-experimental-ee8509801-20230117"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.23.6",
+    "@next-core/build-next-bricks": "^1.23.7",
     "@next-core/test-next": "^1.1.7"
   },
   "peerDependencies": {
