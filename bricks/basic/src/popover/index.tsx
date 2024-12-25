@@ -419,4 +419,5 @@ function PopoverComponent(props: PopoverComponentProps) {
   );
 }
 
-export { Popover, Placement };
+export { Popover };
+export type { Placement };
