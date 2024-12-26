@@ -204,27 +204,11 @@
 
 /* dropdown */
 .select-dropdown {
-  margin: 0;
-  padding: 0;
-  margin-top: 5px;
-  color: var(--antd-text-color);
-  font-variant: tabular-nums;
   line-height: 1.5715;
-  list-style: none;
-  font-feature-settings: "tnum";
-  position: absolute;
-  top: 100%;
-  left: 0px;
-  width: 100%;
-  z-index: 1050;
-  box-sizing: border-box;
   padding: 2px;
   overflow: hidden;
-  font-size: 14px;
-  font-variant: initial;
   background-color: var(--color-fill-bg-container-4);
   border-radius: var(--medius-border-radius);
-  outline: none;
   box-shadow: var(--feedback-container-shadow);
 }
 
