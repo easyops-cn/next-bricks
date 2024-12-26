@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.15.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.14.4...@next-bricks/form@1.15.0) (2024-12-26)
+
+
+### Features
+
+* **select:** add dropdownHoist property ([778dafd](https://github.com/easyops-cn/next-bricks/commit/778dafd6fa5b7e2f37a3bf738463231f8460adfb))
+
+
+
+
+
 ## [1.14.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.14.3...@next-bricks/form@1.14.4) (2024-12-25)
 
 **Note:** Version bump only for package @next-bricks/form
