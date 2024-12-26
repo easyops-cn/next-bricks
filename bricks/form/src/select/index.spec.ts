@@ -1,7 +1,9 @@
 import { describe, test, expect } from "@jest/globals";
+import { act, fireEvent, getByTestId } from "@testing-library/react";
+import "@testing-library/jest-dom/jest-globals";
+
 import "./";
-import { Select } from "./index.js";
-import { act, fireEvent } from "@testing-library/react";
+import { Select, SlPopupElement } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
@@ -44,9 +46,11 @@ describe("eo-select", () => {
     expect(element.shadowRoot?.childNodes.length).toBe(2);
 
     expect(
-      (element.shadowRoot?.querySelector(".select-dropdown") as HTMLElement)
-        .style.display
-    ).toBe("none");
+      getByTestId(
+        element.shadowRoot as unknown as HTMLElement,
+        "select-dropdown-popup"
+      ) as SlPopupElement
+    ).not.toHaveAttribute("active");
 
     act(() => {
       (
@@ -55,9 +59,11 @@ describe("eo-select", () => {
     });
 
     expect(
-      (element.shadowRoot?.querySelector(".select-dropdown") as HTMLElement)
-        .style.display
-    ).toBe("");
+      getByTestId(
+        element.shadowRoot as unknown as HTMLElement,
+        "select-dropdown-popup"
+      ) as SlPopupElement
+    ).toHaveAttribute("active");
     expect(element.shadowRoot?.querySelectorAll(".select-item").length).toBe(2);
 
     expect(mockChangeEvent).toBeCalledTimes(0);
@@ -77,9 +83,11 @@ describe("eo-select", () => {
     );
     expect(element.value).toBe("a");
     expect(
-      (element.shadowRoot?.querySelector(".select-dropdown") as HTMLElement)
-        .style.display
-    ).toBe("none");
+      getByTestId(
+        element.shadowRoot as unknown as HTMLElement,
+        "select-dropdown-popup"
+      ) as SlPopupElement
+    ).not.toHaveAttribute("active");
 
     expect(
       (
@@ -369,5 +377,33 @@ describe("eo-select", () => {
       document.body.removeChild(element);
     });
     expect(element.shadowRoot?.childNodes.length).toBe(0);
+  });
+
+  test("popup strategy should be fixed when dropdownHoist is true", async () => {
+    const element = document.createElement("eo-select") as Select;
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+    expect(element.shadowRoot).toBeTruthy();
+    expect(element.shadowRoot?.childNodes.length).toBe(2);
+
+    expect(
+      getByTestId(
+        element.shadowRoot as unknown as HTMLElement,
+        "select-dropdown-popup"
+      ) as SlPopupElement
+    ).toHaveAttribute("strategy", "absolute");
+
+    await act(async () => {
+      element.dropdownHoist = true;
+    });
+
+    expect(
+      getByTestId(
+        element.shadowRoot as unknown as HTMLElement,
+        "select-dropdown-popup"
+      ) as SlPopupElement
+    ).toHaveAttribute("strategy", "fixed");
   });
 });

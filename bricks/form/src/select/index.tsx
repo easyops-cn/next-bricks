@@ -37,6 +37,36 @@ interface UseBackendConf {
   transform?: (data: any) => void;
 }
 
+export type Placement =
+  | "top"
+  | "top-start"
+  | "top-end"
+  | "bottom"
+  | "bottom-start"
+  | "bottom-end"
+  | "right"
+  | "right-start"
+  | "right-end"
+  | "left"
+  | "left-start"
+  | "left-end";
+
+export type Sync = "width" | "height" | "both";
+
+export interface SlPopupProps {
+  active?: boolean;
+  placement?: Placement;
+  strategy?: "absolute" | "fixed";
+  distance?: number;
+  sync?: Sync;
+}
+
+export interface SlPopupElement extends HTMLElement, SlPopupProps {}
+
+export const WrappedSlPopup = wrapBrick<SlPopupElement, SlPopupProps>(
+  "sl-popup"
+);
+
 const WrappedFormItem = wrapBrick<FormItem, FormItemProps>("eo-form-item");
 
 const WrappedTag = wrapBrick<Tag, TagProps, TagEvents, TagMapEvents>("eo-tag", {
@@ -84,6 +114,7 @@ export interface SelectProps extends FormItemProps {
   clearable?: boolean;
   disabled?: boolean;
   inputStyle?: React.CSSProperties;
+  dropdownHoist?: boolean;
   validateState?: string;
   onChange?: (value: any, options: GeneralComplexOption[]) => void;
   onValueChange?: (value: any) => void;
@@ -226,6 +257,12 @@ class Select extends FormItemElementBase {
   accessor inputStyle: React.CSSProperties | undefined;
 
   /**
+   * 下拉框是否使用固定定位防止内容被裁切
+   */
+  @property({ type: Boolean })
+  accessor dropdownHoist: boolean | undefined;
+
+  /**
    * 下拉选择事件
    */
   @event({ type: "change" }) accessor #changeEvent!: EventEmitter<{
@@ -316,6 +353,7 @@ class Select extends FormItemElementBase {
         clearable={this.clearable}
         trigger="handleChange"
         inputStyle={this.inputStyle}
+        dropdownHoist={this.dropdownHoist}
         validateState={this.validateState}
         notRender={this.notRender}
         helpBrick={this.helpBrick}
@@ -344,6 +382,7 @@ export function SelectComponent(props: SelectProps) {
     debounceSearchDelay,
     clearable = true,
     inputStyle,
+    dropdownHoist,
     placeholder,
     validateState,
     optionsChange,
@@ -879,65 +918,70 @@ export function SelectComponent(props: SelectProps) {
         style={inputStyle}
         ref={selectRef}
       >
-        <div
-          className={classNames("select-selector", {
-            "selector-focused": isFocused,
-            "is-error": validateState === "error",
-          })}
-          onClick={handleSelectorClick}
+        <WrappedSlPopup
+          active={!isDropHidden}
+          placement="bottom"
+          strategy={dropdownHoist ? "fixed" : "absolute"}
+          distance={5}
+          sync="width"
+          data-testid="select-dropdown-popup"
         >
-          <div className="select-selection-overflow">
-            {multiple && renderSelector}
-            <div className="input-item">
-              <div className="select-selection-search">
-                <span
-                  style={{ position: "absolute", opacity: "0" }}
-                  ref={inputSpanRef}
-                >
-                  {inputValue}
-                </span>
-                <input
-                  style={{ width: inputWidth }}
-                  type="text"
-                  value={inputValue}
-                  ref={inputRef}
-                  className="select-selection-search-input"
-                  onChange={handleInputChange}
-                />
+          <div
+            className={classNames("select-selector", {
+              "selector-focused": isFocused,
+              "is-error": validateState === "error",
+            })}
+            slot="anchor"
+            onClick={handleSelectorClick}
+          >
+            <div className="select-selection-overflow">
+              {multiple && renderSelector}
+              <div className="input-item">
+                <div className="select-selection-search">
+                  <span
+                    style={{ position: "absolute", opacity: "0" }}
+                    ref={inputSpanRef}
+                  >
+                    {inputValue}
+                  </span>
+                  <input
+                    style={{ width: inputWidth }}
+                    type="text"
+                    value={inputValue}
+                    ref={inputRef}
+                    className="select-selection-search-input"
+                    onChange={handleInputChange}
+                  />
+                </div>
+                {!multiple ? !inputValue && renderSelector : null}
               </div>
-              {!multiple ? !inputValue && renderSelector : null}
             </div>
+            <span className="select-arrow">
+              {!isEmptyValue && clearable ? (
+                <WrappedIcon
+                  className="close-btn"
+                  lib="antd"
+                  icon="close-circle"
+                  theme="filled"
+                  onClick={(e) => handleClear(e)}
+                />
+              ) : (
+                <span
+                  className={classNames(
+                    "anticon",
+                    "anticon-down ",
+                    "ant-select-suffix",
+                    {
+                      focus: isFocused,
+                    }
+                  )}
+                >
+                  <WrappedIcon icon="down" lib="antd" theme="outlined" />
+                </span>
+              )}
+            </span>
           </div>
-          <span className="select-arrow">
-            {!isEmptyValue && clearable ? (
-              <WrappedIcon
-                className="close-btn"
-                lib="antd"
-                icon="close-circle"
-                theme="filled"
-                onClick={(e) => handleClear(e)}
-              />
-            ) : (
-              <span
-                className={classNames(
-                  "anticon",
-                  "anticon-down ",
-                  "ant-select-suffix",
-                  {
-                    focus: isFocused,
-                  }
-                )}
-              >
-                <WrappedIcon icon="down" lib="antd" theme="outlined" />
-              </span>
-            )}
-          </span>
-        </div>
-        <div
-          style={{ ...(isDropHidden ? { display: "none" } : {}) }}
-          className="select-dropdown"
-        >
-          <div className="dropdown-list">
+          <div className="select-dropdown dropdown-list">
             {requestStatus === "loading" ? (
               <div className="dropdown-list-loading-container">
                 <WrappedIcon
@@ -953,7 +997,7 @@ export function SelectComponent(props: SelectProps) {
               <div className="dropdown-inner">{Options}</div>
             )}
           </div>
-        </div>
+        </WrappedSlPopup>
       </div>
     </WrappedFormItem>
   );
