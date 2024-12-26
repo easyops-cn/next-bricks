@@ -163,10 +163,19 @@ export function matchMenuItem(
       }
 
       for (const path of paths) {
-        match = !matchPath(pathname, {
-          path,
-          exact,
-        });
+        let parsedPathWithSearch: Location | undefined;
+        if (path.includes("?")) {
+          parsedPathWithSearch = parsePath(path);
+        }
+
+        match = !(
+          matchPath(pathname, {
+            path: parsedPathWithSearch ? parsedPathWithSearch.pathname : path,
+            exact,
+          }) &&
+          (!parsedPathWithSearch ||
+            getMatchOfSearch(search, parsedPathWithSearch.search))
+        );
 
         if (!match) {
           break;

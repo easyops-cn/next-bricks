@@ -24,6 +24,7 @@ describe("initMenuItemAndMatchCurrentPathKeys", () => {
           {
             type: "subMenu",
             title: "emptySubMenu",
+            items: undefined!,
           },
           {
             type: "subMenu",
@@ -163,5 +164,23 @@ describe("matchMenuItem", () => {
     expect(matchMenuItem(item, pathname, "?appId=")).toBe(true);
     expect(matchMenuItem(item, pathname, "?appId=other")).toBe(false);
     expect(matchMenuItem(item, pathname, "?k=1")).toBe(true);
+  });
+
+  it("matchMenuItem with activeExcludes with query", () => {
+    const item = {
+      text: "Test",
+      to: "/test?tab=a",
+      exact: true,
+      activeMatchSearch: true,
+      activeIncludes: ["/test?tab=b"],
+      activeExcludes: ["/test?system=x"],
+    };
+    const pathname = "/test";
+    expect(matchMenuItem(item, pathname, "")).toBe(false);
+    expect(matchMenuItem(item, pathname, "?tab=a")).toBe(true);
+    expect(matchMenuItem(item, pathname, "?tab=b")).toBe(true);
+    expect(matchMenuItem(item, pathname, "?tab=c")).toBe(false);
+    expect(matchMenuItem(item, pathname, "?tab=a&system=x")).toBe(false);
+    expect(matchMenuItem(item, pathname, "?tab=a&system=y")).toBe(true);
   });
 });
