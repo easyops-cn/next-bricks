@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/basic",
-  "version": "1.49.3",
+  "version": "1.49.4",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/basic",
   "repository": {
     "type": "git",
@@ -48,7 +48,7 @@
     "@next-core/runtime": "^1.58.3",
     "@next-core/theme": "^1.5.4",
     "@next-core/types": "^1.14.0",
-    "@next-shared/general": "^0.10.2",
+    "@next-shared/general": "^0.10.3",
     "@next-shared/story": "^0.0.4",
     "broadcast-channel": "^7.0.0",
     "classnames": "^2.3.2",

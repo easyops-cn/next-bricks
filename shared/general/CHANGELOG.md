@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.10.3](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.10.2...@next-shared/general@0.10.3) (2024-12-26)
+
+
+### Bug Fixes
+
+* **menu:** support query in active excludes ([d9a1d1d](https://github.com/easyops-cn/next-bricks/commit/d9a1d1de2529687d27c91df6013cc2572bcbe4e8))
+
+
+
+
+
 ## [0.10.2](https://github.com/easyops-cn/next-bricks/compare/@next-shared/general@0.10.1...@next-shared/general@0.10.2) (2024-12-25)
 
 **Note:** Version bump only for package @next-shared/general
