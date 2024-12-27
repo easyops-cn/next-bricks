@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.18.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.17.4...@next-bricks/nav@1.18.0) (2024-12-27)
+
+
+### Features
+
+* evaluate menu title expressions ([596a06e](https://github.com/easyops-cn/next-bricks/commit/596a06e4d8725d7b2862ed0aa49cfcde81bac029))
+
+
+
+
+
 ## [1.17.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.17.3...@next-bricks/nav@1.17.4) (2024-12-26)
 
 **Note:** Version bump only for package @next-bricks/nav
