@@ -12,11 +12,12 @@ import {
   beforeVisitGlobalMember,
   type MemberUsageInExpressions,
 } from "@next-core/utils/storyboard";
+import type { MenuRawData } from "../get-menu-config-tree";
 
 const allowedAppProps = new Set(["name", "id", "homepage", "localeName"]);
 
 /**
- * 对菜单标题进行表达式解析，支持 I8N 和 APP。
+ * 对菜单标题进行表达式解析，支持 I18N 和 APP。
  */
 export function smartDisplayForMenuTitle(
   title: unknown,
@@ -105,4 +106,29 @@ export function smartDisplayForMenuTitle(
     }
   }
   return title;
+}
+
+export function initializeMenuI18n(menuList: MenuRawData[]) {
+  const menuWithI18n = new WeakMap<MenuRawData, string>();
+  const menuI18nBundles: [lang: string, ns: string][] = [];
+
+  for (const menu of menuList) {
+    const menuI18nNamespace = `customize-menu/${menu.menuId}~${menu.app[0].appId}+${
+      menu.instanceId
+    }`;
+    // Support any language in `menu.i18n`.
+    Object.entries(menu.i18n ?? {}).forEach(([lang, resources]) => {
+      i18n.addResourceBundle(lang, menuI18nNamespace, resources);
+    });
+    menuWithI18n.set(menu, menuI18nNamespace);
+  }
+
+  return {
+    menuWithI18n,
+    dispose: () => {
+      for (const [lang, ns] of menuI18nBundles) {
+        i18n.removeResourceBundle(lang, ns);
+      }
+    },
+  };
 }
