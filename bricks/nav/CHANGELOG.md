@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.18.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.18.1...@next-bricks/nav@1.18.2) (2024-12-27)
+
+
+### Bug Fixes
+
+* evaluate simple placeholders as menu title ([022c1e1](https://github.com/easyops-cn/next-bricks/commit/022c1e1257e700a75b3d2a6642fd6057e56bd241))
+
+
+
+
+
 ## [1.18.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.18.0...@next-bricks/nav@1.18.1) (2024-12-27)
 
 
