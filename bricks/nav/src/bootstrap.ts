@@ -21,3 +21,4 @@ import "./directory-tree/directory-tree-internal-node/index.js";
 import "./nav-logo/index.js";
 import "./poll-announce/index.js";
 import "./data-providers/get-menu-config-tree.js";
+import "./data-providers/get-menu-config-options.js";

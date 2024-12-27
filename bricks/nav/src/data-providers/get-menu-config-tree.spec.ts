@@ -1,5 +1,8 @@
 import { describe, test, expect } from "@jest/globals";
+import { initializeI18n } from "@next-core/i18n";
 import { getMenuConfigTree, type MenuRawData } from "./get-menu-config-tree.js";
+
+initializeI18n();
 
 describe("getMenuConfigTree", () => {
   test("should work", async () => {
@@ -8,10 +11,15 @@ describe("getMenuConfigTree", () => {
         menuId: "menu-a",
         title: "<% 'Menu A' %>",
         type: "main",
+        app: [{ appId: "app-a" }],
+        instanceId: "i-a",
         items: [
           {
             text: "Menu A - Item 1",
             sort: 10,
+            icon: {
+              imgSrc: '<% IMG.get("...") %>',
+            },
           },
           {
             text: "Menu A - Item 2",
@@ -42,6 +50,8 @@ describe("getMenuConfigTree", () => {
         menuId: "menu-a",
         title: "Inject Menu A",
         type: "inject",
+        app: [{ appId: "app-a" }],
+        instanceId: "i-a",
         items: [
           {
             text: "<% `Menu A - ${I18N('ITEM_0')}` %>",
@@ -55,12 +65,19 @@ describe("getMenuConfigTree", () => {
             sort: 25,
           },
         ],
+        i18n: {
+          en: {
+            ITEM_0: "Item 0",
+          },
+        },
       },
       {
         menuId: "menu-a",
         title: "Inject Menu A",
         injectMenuGroupId: "group-x",
         type: "inject",
+        app: [{ appId: "app-a" }],
+        instanceId: "i-a",
         items: [
           {
             text: "Group X - ii",
@@ -74,6 +91,8 @@ describe("getMenuConfigTree", () => {
         title: "Inject Menu A",
         injectMenuGroupId: "group-x",
         type: "inject",
+        app: [{ appId: "app-a" }],
+        instanceId: "i-a",
         items: [
           {
             text: "Group X - iii",
@@ -85,6 +104,8 @@ describe("getMenuConfigTree", () => {
         menuId: "menu-a",
         title: "Inject Menu A",
         type: "inject",
+        app: [{ appId: "app-a" }],
+        instanceId: "i-a",
         dynamicItems: true,
         itemsResolve: {},
       },
@@ -92,9 +113,14 @@ describe("getMenuConfigTree", () => {
         menuId: "menu-a",
         title: "Inject Menu A",
         type: "inject",
+        app: [{ appId: "app-a" }],
+        instanceId: "i-a",
       },
     ];
-    expect(await getMenuConfigTree(menuList)).toEqual([
+    // Use JSON to remove the symbol properties.
+    expect(
+      JSON.parse(JSON.stringify(await getMenuConfigTree(menuList)))
+    ).toEqual([
       {
         __keys: [
           "0",
@@ -123,7 +149,7 @@ describe("getMenuConfigTree", () => {
               lib: "fa",
             },
             key: "0-0",
-            title: "ITEM_0",
+            title: "Menu A - Item 0",
           },
           {
             children: undefined,
@@ -131,6 +157,9 @@ describe("getMenuConfigTree", () => {
               children: [],
               sort: 10,
               text: "Menu A - Item 1",
+              icon: {
+                imgSrc: '<% IMG.get("...") %>',
+              },
             },
             faded: undefined,
             icon: {
@@ -305,7 +334,7 @@ describe("getMenuConfigTree", () => {
           lib: "fa",
         },
         key: "0",
-        title: "<% 'Menu A' %>",
+        title: "Menu A",
       },
     ]);
   });
