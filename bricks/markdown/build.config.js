@@ -3,7 +3,8 @@
 export default {
   moduleRules: [
     {
-      // This file contains unicode character class escapes which are not supported until Firefox 78
+      // These modules contain unicode character class escapes,
+      // which are not supported until Firefox 78.
       test: /[\\/]node_modules[\\/](?:estree-util-is-identifier-name|micromark-util-character|micromark-util-sanitize-uri|@sindresorhus[\\/]transliterate)[\\/]/,
       loader: "babel-loader",
       options: {
