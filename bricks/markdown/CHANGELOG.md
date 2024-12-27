@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.12.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.12.10...@next-bricks/markdown@1.12.11) (2024-12-27)
+
+
+### Bug Fixes
+
+* transform modules that use new syntax ([2ab86c7](https://github.com/easyops-cn/next-bricks/commit/2ab86c7e41ea2891e821c08b92bed080dbbf5bcb))
+
+
+
+
+
 ## [1.12.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/markdown@1.12.9...@next-bricks/markdown@1.12.10) (2024-12-25)
 
 **Note:** Version bump only for package @next-bricks/markdown
