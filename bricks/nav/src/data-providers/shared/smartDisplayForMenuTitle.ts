@@ -104,6 +104,12 @@ export function smartDisplayForMenuTitle(
         }
       }
     }
+  } else if (overrideApp) {
+    // 处理简单的占位符替换： ${APP.name} 和 ${APP.localeName}
+    return title.replace(
+      /\$\{\s*APP\s*\.\s*(?:name|localeName)\s*\}/g,
+      () => overrideApp.name
+    );
   }
   return title;
 }

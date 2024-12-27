@@ -61,6 +61,16 @@ describe("getMenuConfigOptions", () => {
         app: [{ appId: "app-a" }],
         instanceId: "i-a",
       },
+      {
+        menuId: "menu-g",
+        title: "${APP.localeName}",
+        type: "main",
+        app: [{ appId: "app-a" }],
+        instanceId: "i-a",
+        overrideApp: {
+          name: "App A",
+        } as MicroApp,
+      },
     ];
     expect(await getMenuConfigOptions(menuList)).toEqual([
       {
@@ -86,6 +96,10 @@ describe("getMenuConfigOptions", () => {
       {
         label: "<% `${CTX.name} - ${I18n('')}` %> (menu-f)",
         value: "menu-f",
+      },
+      {
+        label: "App A (menu-g)",
+        value: "menu-g",
       },
     ]);
   });
