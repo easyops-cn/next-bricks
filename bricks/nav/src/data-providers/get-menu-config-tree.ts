@@ -1,8 +1,10 @@
 import type { MetaI18n, MicroApp } from "@next-core/types";
-import { i18n } from "@next-core/i18n";
 import { createProviderClass } from "@next-core/utils/general";
 import { sortBy } from "lodash";
-import { smartDisplayForMenuTitle } from "./shared/smartDisplayForMenuTitle";
+import {
+  initializeMenuI18n,
+  smartDisplayForMenuTitle,
+} from "./shared/smartDisplayForMenuTitle";
 
 const symbolMenuI18nNamespace = Symbol("menuI18nNamespace");
 const symbolOverrideApp = Symbol("overrideApp");
@@ -73,7 +75,7 @@ const DEFAULT_ICON = {
 /**
  * 构造用于菜单自定义的树形结构数据。
  *
- * 将对菜单标题进行表达式解析，支持 I8N 和 APP。
+ * 将对菜单标题进行表达式解析，支持 I18N 和 APP。
  */
 export async function getMenuConfigTree(
   menuList: MenuRawData[]
@@ -111,18 +113,7 @@ export async function getMenuConfigTree(
 
   const validMenuList: MenuRawData[] = [];
   const injectWithMenus = new Map<string, MenuRawData[]>();
-  const menuWithI18n = new WeakMap<MenuRawData, string>();
-
-  for (const menu of menuList) {
-    const menuI18nNamespace = `customize-menu/${menu.menuId}~${menu.app[0].appId}+${
-      menu.instanceId
-    }`;
-    // Support any language in `menu.i18n`.
-    Object.entries(menu.i18n ?? {}).forEach(([lang, resources]) => {
-      i18n.addResourceBundle(lang, menuI18nNamespace, resources);
-    });
-    menuWithI18n.set(menu, menuI18nNamespace);
-  }
+  const { menuWithI18n, dispose } = initializeMenuI18n(menuList);
 
   for (const menu of menuList) {
     if (!(menu.dynamicItems && menu.itemsResolve) && menu.items?.length) {
@@ -164,6 +155,8 @@ export async function getMenuConfigTree(
       children: getChildren(firstLevelItems, "0"),
     },
   ];
+
+  dispose();
 
   return tree;
 }
