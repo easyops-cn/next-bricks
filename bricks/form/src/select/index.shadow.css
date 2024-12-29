@@ -203,6 +203,10 @@
 }
 
 /* dropdown */
+.select-dropdown-popup::part(popup) {
+  z-index: 1050;
+}
+
 .select-dropdown {
   line-height: 1.5715;
   padding: 2px;
