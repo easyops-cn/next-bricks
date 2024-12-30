@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.15.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.15.0...@next-bricks/form@1.15.1) (2024-12-30)
+
+
+### Bug Fixes
+
+* **select:** fix dropdown z-index ([3f03c9a](https://github.com/easyops-cn/next-bricks/commit/3f03c9a40f176b599d49bdfa096f869e4b1b2448))
+
+
+
+
+
 # [1.15.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/form@1.14.4...@next-bricks/form@1.15.0) (2024-12-26)
 
 
