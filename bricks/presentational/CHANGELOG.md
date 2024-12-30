@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.11.6...@next-bricks/presentational@1.12.0) (2024-12-30)
+
+
+### Features
+
+* **eo-carousel-text:** use speed instead of duration ([8f8843f](https://github.com/easyops-cn/next-bricks/commit/8f8843fd576a53b73fc5aa19d6f66f3d00c434c9))
+
+
+
+
+
 ## [1.11.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/presentational@1.11.5...@next-bricks/presentational@1.11.6) (2024-12-26)
 
 **Note:** Version bump only for package @next-bricks/presentational
