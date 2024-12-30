@@ -6,29 +6,34 @@
   display: none;
 }
 
-.scrollContainer {
+.container {
   overflow: hidden;
+  width: 100%;
+
+  --transform-start: translateX(0%);
+  --transform-end: translateX(0%);
+  --transform-duration: 0s;
 }
 
-.scrollText {
+.container:not(.ready) {
+  visibility: hidden;
+}
+
+.scroll {
+  width: max-content;
   white-space: nowrap;
   overflow: hidden;
-  animation: scroll 3000ms linear infinite;
+  animation: scroll var(--transform-duration) linear infinite;
+  color: var(--text-color-default);
+  font-size: var(--normal-font-size);
 }
 
 @keyframes scroll {
   0% {
-    transform: translateX(100%);
-    /* 文字出发的位置 */
-  }
-
-  50% {
-    transform: translateX(0);
-    /* 文字正常的位置 */
+    transform: var(--transform-start);
   }
 
   100% {
-    transform: translateX(-100%);
-    /* 文字终点的位置 */
+    transform: var(--transform-end);
   }
 }
