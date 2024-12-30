@@ -924,6 +924,7 @@ export function SelectComponent(props: SelectProps) {
           strategy={dropdownHoist ? "fixed" : "absolute"}
           distance={5}
           sync="width"
+          className="select-dropdown-popup"
           data-testid="select-dropdown-popup"
         >
           <div
