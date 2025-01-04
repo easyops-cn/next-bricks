@@ -82,6 +82,18 @@ export function EditingLineComponent({
             (i !== control.index && i !== control.index + 1)
         );
         const snapDistance = 5;
+
+        // Snap to control points of other lines
+        for (const cell of cells) {
+          if (cell.type !== "edge" || cell === activeEditableEdge) {
+            continue;
+          }
+          const editableLine = editableLineMap.get(cell);
+          if (editableLine) {
+            otherPoints.push(...editableLine.points.slice(1, -1));
+          }
+        }
+
         for (const point of otherPoints) {
           const newDiff = Math.abs(point[axis] - position[axis]);
           if (newDiff <= snapDistance && newDiff < diff) {

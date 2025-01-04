@@ -46,10 +46,9 @@ export function EdgeComponent({
   const { points: linePoints } = editableLineMap.get(edge) ?? {};
 
   const line = useMemo(() => {
-    const fixedLineType = lineConf.type;
     return curveLine(
       linePoints,
-      fixedLineType === "curve" ? lineConf.curveType : "curveLinear",
+      lineConf.type === "curve" ? lineConf.curveType : "curveLinear",
       0,
       1
     );
