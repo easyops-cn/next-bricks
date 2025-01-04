@@ -2,7 +2,7 @@
 import React, { useEffect, useMemo, useRef } from "react";
 import type { NodePosition } from "../diagram/interfaces";
 import { useHoverStateContext } from "./HoverStateContext";
-import type { ControlPoint } from "./interfaces";
+import type { ControlPoint, EdgeCell, EditableLine } from "./interfaces";
 import { isStraightType } from "./processors/asserts";
 
 const POINT_HELPER_IMAGE =
@@ -15,17 +15,15 @@ const POINT_HELPER_BG_SIZE = 22;
 
 export interface LineEditorComponentProps {
   scale: number;
+  editableLineMap: WeakMap<EdgeCell, EditableLine>;
 }
 
 export function LineEditorComponent({
   scale,
+  editableLineMap,
 }: LineEditorComponentProps): JSX.Element | null {
-  const {
-    rootRef,
-    activeEditableLine,
-    activeEditableLineIsAvailable,
-    setLineEditorState,
-  } = useHoverStateContext();
+  const { rootRef, activeEditableEdge, setLineEditorState } =
+    useHoverStateContext();
   const exitRef = useRef<SVGImageElement>(null);
   const entryRef = useRef<SVGImageElement>(null);
   const controlPointsRef = useRef<(SVGImageElement | null)[]>([]);
@@ -33,7 +31,7 @@ export function LineEditorComponent({
   useEffect(() => {
     const exit = exitRef.current;
     const entry = entryRef.current;
-    if (!exit || !entry || !activeEditableLine) {
+    if (!exit || !entry || !activeEditableEdge) {
       return;
     }
     const handleMouseDownFactory = (type: "exit" | "entry") => {
@@ -42,7 +40,6 @@ export function LineEditorComponent({
         e.preventDefault();
         const rect = rootRef.current!.getBoundingClientRect();
         setLineEditorState({
-          ...activeEditableLine,
           offset: [rect.left, rect.top],
           from: [e.clientX, e.clientY],
           type,
@@ -57,17 +54,16 @@ export function LineEditorComponent({
       exit.removeEventListener("mousedown", handleStartMouseDown);
       entry.removeEventListener("mousedown", handleEndMouseDown);
     };
-  }, [activeEditableLine, rootRef, setLineEditorState]);
+  }, [activeEditableEdge, rootRef, setLineEditorState]);
 
   const controlPoints = useMemo(() => {
-    return activeEditableLine &&
-      !isStraightType(activeEditableLine.edge.view?.type)
-      ? getControlPoints(activeEditableLine!.linePoints)
+    return activeEditableEdge && !isStraightType(activeEditableEdge.view?.type)
+      ? getControlPoints(editableLineMap.get(activeEditableEdge)!.points!)
       : [];
-  }, [activeEditableLine]);
+  }, [activeEditableEdge, editableLineMap]);
 
   useEffect(() => {
-    if (!activeEditableLine) {
+    if (!activeEditableEdge) {
       return;
     }
     const controlElements = controlPointsRef.current;
@@ -77,7 +73,6 @@ export function LineEditorComponent({
         e.preventDefault();
         const rect = rootRef.current!.getBoundingClientRect();
         setLineEditorState({
-          ...activeEditableLine!,
           offset: [rect.left, rect.top],
           from: [e.clientX, e.clientY],
           type: "control",
@@ -96,7 +91,7 @@ export function LineEditorComponent({
         el?.removeEventListener("mousedown", handlers[i]);
       });
     };
-  }, [activeEditableLine, controlPoints, rootRef, setLineEditorState]);
+  }, [activeEditableEdge, controlPoints, rootRef, setLineEditorState]);
 
   const gRef = useRef<SVGGElement>(null);
   useEffect(() => {
@@ -111,13 +106,11 @@ export function LineEditorComponent({
     };
   }, []);
 
-  if (!activeEditableLine || !activeEditableLineIsAvailable) {
+  if (!activeEditableEdge) {
     return null;
   }
-  const {
-    linePoints,
-    edge: { view },
-  } = activeEditableLine;
+  const { view } = activeEditableEdge;
+  const linePoints = editableLineMap.get(activeEditableEdge)!.points!;
   const { exitPosition, entryPosition } = view ?? {};
 
   const commonProps: React.SVGAttributes<SVGImageElement> = {

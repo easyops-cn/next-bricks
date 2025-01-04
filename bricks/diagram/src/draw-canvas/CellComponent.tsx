@@ -12,6 +12,7 @@ import type {
   LayoutType,
   NodeBrickConf,
   NodeCell,
+  EditableLine,
 } from "./interfaces";
 import {
   isContainerDecoratorCell,
@@ -43,6 +44,7 @@ export interface CellComponentProps {
   defaultNodeBricks?: NodeBrickConf[];
   transform: TransformLiteral;
   lineConfMap: WeakMap<EdgeCell, ComputedEdgeLineConf>;
+  editableLineMap: WeakMap<EdgeCell, EditableLine>;
   activeTarget: ActiveTarget | null | undefined;
   readOnly?: boolean;
   unrelatedCells: Cell[];
@@ -71,6 +73,7 @@ export function CellComponent({
   degradedNodeLabel,
   defaultNodeBricks,
   lineConfMap,
+  editableLineMap,
   activeTarget,
   dragNodeToContainerActive,
   readOnly,
@@ -91,6 +94,7 @@ export function CellComponent({
   onCellMouseLeave,
 }: CellComponentProps): JSX.Element | null {
   const {
+    activeEditableEdge,
     lineEditorState,
     smartConnectLineState,
     setSmartConnectLineState,
@@ -190,24 +194,21 @@ export function CellComponent({
           );
         }
         setSmartConnectLineState(null);
-      } else if (lineEditorState) {
-        const {
-          type,
-          source,
-          target,
-          edge: { view },
-        } = lineEditorState;
+      } else if (activeEditableEdge && lineEditorState) {
+        const { type } = lineEditorState;
+        const { source, target } = editableLineMap.get(activeEditableEdge)!;
+        const { view } = activeEditableEdge;
 
         const isEntry = type === "entry";
         if ((isEntry ? target : source) === cell) {
           if (isEntry) {
-            onChangeEdgeView?.(source, target, {
+            onChangeEdgeView?.(source!, target!, {
               ...view,
               entryPosition: null,
               // ...(!view?.exitPosition ? { vertices: null } : {}),
             });
           } else {
-            onChangeEdgeView?.(source, target, {
+            onChangeEdgeView?.(source!, target!, {
               ...view,
               exitPosition: null,
               // ...(!view?.entryPosition ? { vertices: null } : {}),
@@ -222,6 +223,8 @@ export function CellComponent({
       g.removeEventListener("mouseup", onMouseUp);
     };
   }, [
+    activeEditableEdge,
+    editableLineMap,
     allowEdgeToArea,
     cell,
     lineEditorState,
@@ -302,9 +305,8 @@ export function CellComponent({
       ) : isEdgeCell(cell) ? (
         <EdgeComponent
           edge={cell}
-          cells={cells}
           lineConfMap={lineConfMap}
-          active={active}
+          editableLineMap={editableLineMap}
           readOnly={readOnly}
           onSwitchActiveTarget={onSwitchActiveTarget}
         />

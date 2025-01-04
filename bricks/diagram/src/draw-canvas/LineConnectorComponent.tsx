@@ -1,7 +1,13 @@
 // istanbul ignore file: experimental
 import React, { useCallback, useEffect, useRef } from "react";
 import { useHoverStateContext } from "./HoverStateContext";
-import type { ActiveTarget, NodeCell } from "./interfaces";
+import type {
+  ActiveTarget,
+  Cell,
+  EdgeCell,
+  EditableLine,
+  NodeCell,
+} from "./interfaces";
 import { targetIsActive } from "./processors/targetIsActive";
 import type { NodePosition } from "../diagram/interfaces";
 import { DEFAULT_NODE_PADDING_FOR_SMART_LINES } from "./constants";
@@ -14,12 +20,14 @@ const HALF_HELPER_RADIUS = HELPER_RADIUS / 2;
 
 export interface LineConnectorComponentProps {
   activeTarget: ActiveTarget | null;
+  editableLineMap: WeakMap<EdgeCell, EditableLine>;
   scale: number;
   disabled?: boolean;
 }
 
 export function LineConnectorComponent({
   activeTarget,
+  editableLineMap,
   scale,
   disabled,
 }: LineConnectorComponentProps): JSX.Element | null {
@@ -28,6 +36,7 @@ export function LineConnectorComponent({
     hoverState,
     setHoverState,
     smartConnectLineState,
+    activeEditableEdge,
     lineEditorState,
   } = useHoverStateContext();
 
@@ -53,15 +62,19 @@ export function LineConnectorComponent({
     }) as unknown as number;
   }, [setHoverState, unsetHoverStateTimeoutRef]);
 
+  let source: Cell | undefined;
+  let target: Cell | undefined;
+
   const available =
     !disabled &&
     hoverState &&
     (!!smartConnectLineState ||
-      (lineEditorState
+      (activeEditableEdge &&
+      lineEditorState &&
+      (({ source, target } = editableLineMap.get(activeEditableEdge)!), true)
         ? lineEditorState.type === "entry"
-          ? hoverState.cell === lineEditorState.target
-          : lineEditorState.type === "exit" &&
-            hoverState.cell === lineEditorState.source
+          ? hoverState.cell === target
+          : lineEditorState.type === "exit" && hoverState.cell === source
         : !targetIsActive(hoverState.cell, activeTarget) &&
           !hasActiveEdge(activeTarget)));
 
@@ -95,6 +108,7 @@ export function LineConnectorComponent({
           {hoverState.points.map((point, index) => (
             <ConnectPointComponent
               key={index}
+              editableLineMap={editableLineMap}
               index={index}
               point={point}
               scale={scale}
@@ -109,6 +123,7 @@ export function LineConnectorComponent({
 }
 
 interface ConnectPointComponentProps {
+  editableLineMap: WeakMap<EdgeCell, EditableLine>;
   index: number;
   point: NodePosition;
   scale: number;
@@ -117,6 +132,7 @@ interface ConnectPointComponentProps {
 }
 
 function ConnectPointComponent({
+  editableLineMap,
   index,
   point,
   scale,
@@ -130,6 +146,7 @@ function ConnectPointComponent({
     setHoverState,
     setSmartConnectLineState,
     onConnect,
+    activeEditableEdge,
     lineEditorState,
     setLineEditorState,
     onChangeEdgeView,
@@ -196,15 +213,12 @@ function ConnectPointComponent({
           );
         }
         setSmartConnectLineState(null);
-      } else if (lineEditorState) {
+      } else if (activeEditableEdge && lineEditorState) {
         const position =
           hoverState!.relativePoints[hoverState!.activePointIndex!];
-        const {
-          type,
-          source,
-          target,
-          edge: { view },
-        } = lineEditorState;
+        const { type } = lineEditorState;
+        const { source, target } = editableLineMap.get(activeEditableEdge!)!;
+        const { view } = activeEditableEdge!;
         if (type === "entry") {
           onChangeEdgeView?.(source, target, {
             ...view,
@@ -229,7 +243,9 @@ function ConnectPointComponent({
     hoverState,
     onConnect,
     setSmartConnectLineState,
+    activeEditableEdge,
     lineEditorState,
+    editableLineMap,
     onChangeEdgeView,
     setLineEditorState,
   ]);

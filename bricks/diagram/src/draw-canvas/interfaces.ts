@@ -346,25 +346,17 @@ export interface NodeConnectPoint extends NodePosition {
   d: Direction[];
 }
 
-export interface EditableLineInfo {
-  edge: EdgeCell;
-  parallelGap: number;
-  source: NodeCell | DecoratorCell;
-  target: NodeCell | DecoratorCell;
-  linePoints: NodePosition[];
-}
-
 export type LineEditorState =
   | LineEditorStateOfEndPoint
   | LineEditorStateOfControl;
 
-export interface LineEditorStateOfEndPoint extends EditableLineInfo {
+export interface LineEditorStateOfEndPoint {
   type: "exit" | "entry";
   offset: PositionTuple;
   from: PositionTuple;
 }
 
-export interface LineEditorStateOfControl extends EditableLineInfo {
+export interface LineEditorStateOfControl {
   type: "control";
   offset: PositionTuple;
   from: PositionTuple;
@@ -391,4 +383,12 @@ export type BiDirection = "ns" | "ew";
 export interface ControlPoint extends NodePosition {
   direction: BiDirection;
   index: number;
+}
+
+export interface EditableLine {
+  edge: EdgeCell;
+  points: NodePosition[];
+  source: NodeBrickCell | DecoratorCell;
+  target: NodeBrickCell | DecoratorCell;
+  parallelGap: number;
 }
