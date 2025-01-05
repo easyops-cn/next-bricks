@@ -67,11 +67,11 @@ export function SmartConnectLineComponent({
     );
     return curveLine(
       points,
-      options.type === "curve" ? options.curveType : "curveLinear",
+      lineSettings?.type === "curve" ? lineSettings.curveType : "curveLinear",
       0,
       1
     );
-  }, [connectLineTo, hoverState, smartConnectLineState, options, lineSettings]);
+  }, [connectLineTo, hoverState, smartConnectLineState, lineSettings]);
 
   let markerStart: string | undefined;
   let markerEnd: string | undefined;
