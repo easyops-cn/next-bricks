@@ -67,15 +67,25 @@ export function EdgeComponent({
 
   const updateLabelPosition = useCallback(() => {
     const path = pathRef.current;
+    const { label, text } = lineConf;
     // istanbul ignore next
-    if (path && (lineConf.label || lineConf.text)) {
+    if (path && (label || text)) {
       if (process.env.NODE_ENV === "test") {
         setLabelPosition([30, 40]);
         setLineRect({ x: 10, y: 20, width: 300, height: 400 });
         return;
       }
+      const placement = (label ? label.placement : text.placement) ?? "center";
+      const offset = (label ? label.offset : text.offset) ?? 0;
       const pathLength = path.getTotalLength();
-      const pathPoint = path.getPointAtLength(pathLength / 2);
+      const halfPathLength = pathLength / 2;
+      const pathPoint = path.getPointAtLength(
+        placement === "start"
+          ? Math.min(offset, halfPathLength)
+          : placement === "end"
+            ? Math.max(pathLength - offset, halfPathLength)
+            : halfPathLength
+      );
       setLabelPosition([pathPoint.x, pathPoint.y]);
       const rect = path.getBBox();
       setLineRect({

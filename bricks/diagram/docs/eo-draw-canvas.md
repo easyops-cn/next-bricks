@@ -486,7 +486,9 @@
               type: "edge",
               source: "X",
               target: "Y",
-              description: "X->Y"
+              description: "X->Y",
+              placement: "end",
+              offset: 10
             },
             {
               type: "edge",
@@ -573,6 +575,8 @@
         defaultEdgeLines:
           - callLabelOnDoubleClick: enableEditing
             label:
+              placement: <% DATA.edge.placement %>
+              offset: <% DATA.edge.offset %>
               useBrick:
                 brick: diagram.editable-label
                 properties:
