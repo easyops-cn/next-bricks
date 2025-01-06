@@ -162,12 +162,18 @@ export interface LineLabelConf {
   if?: string | boolean | null;
   useBrick: UseSingleBrickConf;
   placement?: LineLabelPlacement;
+  /**
+   * 当 placement 设置为 start 或 end 时，默认情况下，文本中心点与连线起点或终点重合。
+   * 设置 offset 表示文本中心点距离起点或终点在连线上的偏移量。
+   */
+  offset?: number;
 }
 
 export interface TextOptions {
   content: string;
   style?: CSSProperties;
   placement?: LineLabelPlacement;
+  offset?: number;
 }
 
 export type LineLabelPlacement = "center" | "start" | "end";

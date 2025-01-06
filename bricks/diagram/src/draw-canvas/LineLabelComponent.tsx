@@ -7,11 +7,12 @@ import type {
   PositionTuple,
   TextOptions,
 } from "../diagram/interfaces";
-import type { EdgeCell } from "./interfaces";
+import type { EdgeCell, PositionAndAngle } from "./interfaces";
 
 export interface LineLabelComponentProps {
   edge: EdgeCell;
-  position?: PositionTuple | null;
+  position?: PositionAndAngle | null;
+  offset?: PositionTuple | null;
   label?: LineLabelConf;
   text?: TextOptions;
   onRendered?: (element: HTMLElement | null) => void;
@@ -21,6 +22,7 @@ export interface LineLabelComponentProps {
 export function LineLabelComponent({
   edge,
   position,
+  offset,
   label,
   text,
   onRendered,
@@ -29,11 +31,12 @@ export function LineLabelComponent({
   if (!label && !text) {
     return null;
   }
+  const ready = !!(position && offset);
   return (
     <foreignObject
-      className={classNames("line-label-container", { ready: !!position })}
-      x={position?.[0]}
-      y={position?.[1]}
+      className={classNames("line-label-container", { ready })}
+      x={ready ? position[0] + offset[0] : 0}
+      y={ready ? position[1] + offset[1] : 0}
       onClick={onClick}
     >
       {label ? (

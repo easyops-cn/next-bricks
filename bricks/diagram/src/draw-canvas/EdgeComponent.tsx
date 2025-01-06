@@ -11,20 +11,22 @@ import ResizeObserver from "resize-observer-polyfill";
 import type {
   ActiveTarget,
   ComputedEdgeLineConf,
+  Direction,
   EdgeCell,
   EditableLine,
+  PositionAndAngle,
 } from "./interfaces";
 import { DEFAULT_LINE_INTERACT_ANIMATE_DURATION } from "./constants";
 import { curveLine } from "../diagram/lines/curveLine";
 import { getMarkers } from "../shared/canvas/useLineMarkers";
 import type {
   LineMarkerConf,
-  PositionTuple,
-  SimpleRect,
+  NodePosition,
   SizeTuple,
 } from "../diagram/interfaces";
 import { LineLabelComponent } from "./LineLabelComponent";
 import { cellToTarget } from "./processors/cellToTarget";
+import { getLabelMaskAndOffset } from "./processors/getLabelMaskAndOffset";
 
 export interface EdgeComponentProps {
   edge: EdgeCell;
@@ -56,7 +58,7 @@ export function EdgeComponent({
 
   const lineMaskPrefix = useMemo(() => uniqueId("line-mask-"), []);
 
-  const [labelPosition, setLabelPosition] = useState<PositionTuple | null>(
+  const [labelPosition, setLabelPosition] = useState<PositionAndAngle | null>(
     null
   );
   const [labelSize, setLabelSize] = useState<SizeTuple | null>(null);
@@ -67,16 +69,50 @@ export function EdgeComponent({
 
   const updateLabelPosition = useCallback(() => {
     const path = pathRef.current;
+    const { label, text } = lineConf;
     // istanbul ignore next
-    if (path && (lineConf.label || lineConf.text)) {
+    if (path && linePoints && (label || text)) {
       if (process.env.NODE_ENV === "test") {
-        setLabelPosition([30, 40]);
+        setLabelPosition([30, 40, "center", 0, 0]);
         setLineRect({ x: 10, y: 20, width: 300, height: 400 });
         return;
       }
+      const placement = (label ? label.placement : text.placement) ?? "center";
       const pathLength = path.getTotalLength();
-      const pathPoint = path.getPointAtLength(pathLength / 2);
-      setLabelPosition([pathPoint.x, pathPoint.y]);
+      const halfPathLength = pathLength / 2;
+      const pathPoint = path.getPointAtLength(
+        placement === "start"
+          ? Math.min(0, halfPathLength)
+          : placement === "end"
+            ? Math.max(pathLength - 0, halfPathLength)
+            : halfPathLength
+      );
+
+      let direction: Direction | "center" = "center";
+      let angle = 0;
+      if (placement === "start" || placement === "end") {
+        let p0: NodePosition;
+        let p1: NodePosition;
+        if (placement === "start") {
+          p0 = linePoints[0];
+          p1 = linePoints[1];
+        } else {
+          p0 = linePoints[linePoints.length - 1];
+          p1 = linePoints[linePoints.length - 2];
+        }
+        angle = Math.atan2(p1.y - p0.y, p1.x - p0.x);
+        direction =
+          Math.abs(p0.x - p1.x) > Math.abs(p0.y - p1.y)
+            ? p0.x > p1.x
+              ? "left"
+              : "right"
+            : p0.y > p1.y
+              ? "top"
+              : "bottom";
+      }
+
+      const offset = (label ? label.offset : text.offset) ?? 0;
+      setLabelPosition([pathPoint.x, pathPoint.y, direction, angle, offset]);
       const rect = path.getBBox();
       setLineRect({
         x: rect.x - 1000,
@@ -85,7 +121,7 @@ export function EdgeComponent({
         height: rect.height + 2000,
       });
     }
-  }, [lineConf]);
+  }, [lineConf, linePoints]);
 
   const pathRefCallback = useCallback(
     (element: SVGPathElement | null) => {
@@ -165,18 +201,10 @@ export function EdgeComponent({
     [labelElement, lineConf, readOnly]
   );
 
-  const mask = useMemo<SimpleRect | null>(() => {
-    if (!labelPosition || !labelSize) {
-      return null;
-    }
-    const padding = 3;
-    return {
-      left: labelPosition[0] - labelSize[0] / 2 - padding,
-      top: labelPosition[1] - labelSize[1] / 2 - padding,
-      width: labelSize[0] + padding * 2,
-      height: labelSize[1] + padding * 2,
-    };
-  }, [labelPosition, labelSize]);
+  const [mask, labelOffset] = useMemo(
+    () => getLabelMaskAndOffset(labelPosition, labelSize),
+    [labelPosition, labelSize]
+  );
 
   if (!line || !linePoints) {
     // This happens when source or target is not found,
@@ -263,6 +291,7 @@ export function EdgeComponent({
       <LineLabelComponent
         edge={edge}
         position={labelPosition}
+        offset={labelOffset}
         label={lineConf.label}
         text={lineConf.text}
         onClick={onLabelClick}

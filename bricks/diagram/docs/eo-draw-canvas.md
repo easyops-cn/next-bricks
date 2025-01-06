@@ -486,7 +486,11 @@
               type: "edge",
               source: "X",
               target: "Y",
-              description: "X->Y"
+              description: "X->Y",
+              placement: "end",
+              view: {
+                type: "polyline"
+              }
             },
             {
               type: "edge",
@@ -573,6 +577,8 @@
         defaultEdgeLines:
           - callLabelOnDoubleClick: enableEditing
             label:
+              placement: <% DATA.edge.placement %>
+              offset: 10
               useBrick:
                 brick: diagram.editable-label
                 properties:
@@ -694,6 +700,7 @@
             value: polyline
             options:
               - polyline
+              - curve
               - straight
           events:
             change:
