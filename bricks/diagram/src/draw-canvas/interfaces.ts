@@ -392,3 +392,11 @@ export interface EditableLine {
   target: NodeBrickCell | DecoratorCell;
   parallelGap: number;
 }
+
+export type PositionAndAngle = [
+  x: number,
+  y: number,
+  direction: Direction | "center",
+  angle: number,
+  offset: number,
+];

@@ -488,7 +488,9 @@
               target: "Y",
               description: "X->Y",
               placement: "end",
-              offset: 10
+              view: {
+                type: "polyline"
+              }
             },
             {
               type: "edge",
@@ -576,7 +578,7 @@
           - callLabelOnDoubleClick: enableEditing
             label:
               placement: <% DATA.edge.placement %>
-              offset: <% DATA.edge.offset %>
+              offset: 10
               useBrick:
                 brick: diagram.editable-label
                 properties:
@@ -698,6 +700,7 @@
             value: polyline
             options:
               - polyline
+              - curve
               - straight
           events:
             change:

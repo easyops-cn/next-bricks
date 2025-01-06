@@ -46,7 +46,7 @@ export function getRenderedLineLabels(
 
       return list.map<RenderedLineLabel>((item) => {
         const placement = item.placement ?? "center";
-        const offset = item.offset ?? 0;
+        const offset = 0;
         // istanbul ignore next
         const point =
           process.env.NODE_ENV === "test"
