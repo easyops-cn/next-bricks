@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.53.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.52.5...@next-bricks/diagram@0.53.0) (2025-01-06)
+
+
+### Bug Fixes
+
+* auto align labels ([35b684e](https://github.com/easyops-cn/next-bricks/commit/35b684e3948229bba92df3afd3565c680a7f2b60))
+* compute editable line map outside ([3db4ae0](https://github.com/easyops-cn/next-bricks/commit/3db4ae0d8a6ad1c022fcbc2d22fcf636686f66cb))
+* **draw-canvas:** support label placement and offset ([f22b2e5](https://github.com/easyops-cn/next-bricks/commit/f22b2e5f3ce47f2f851f3758972686c9934140b9))
+* use curve options from lineSettings instead of lineConnector ([f2c008b](https://github.com/easyops-cn/next-bricks/commit/f2c008bf0a9420d10a9cf7ac72c26f45d9a23b7c))
+
+
+### Features
+
+* make control points snap to control points of other lines ([87d755c](https://github.com/easyops-cn/next-bricks/commit/87d755c5a8a53542625756ed2e1d25ab0a470cff))
+
+
+
+
+
 ## [0.52.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.52.4...@next-bricks/diagram@0.52.5) (2024-12-25)
 
 **Note:** Version bump only for package @next-bricks/diagram
