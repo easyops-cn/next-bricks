@@ -2,17 +2,22 @@ import { pick } from "lodash";
 import type { NodePosition, PositionTuple } from "../../../diagram/interfaces";
 import type { HoverState } from "../../../draw-canvas/HoverStateContext";
 import type {
+  EdgeCell,
   LineEditorState,
   LineEditorStateOfControl,
+  EditableLine,
 } from "../../../draw-canvas/interfaces";
 import { getSmartLinePoints, simplifyVertices } from "./getSmartLinePoints";
 
 export function getEditingLinePoints(
+  activeEditableEdge: EdgeCell | null,
   lineEditorState: LineEditorState | null,
+  editableLineMap: WeakMap<EdgeCell, EditableLine>,
   connectLineTo: PositionTuple | null,
   hoverState: HoverState | null
 ): NodePosition[] | null {
   if (
+    !activeEditableEdge ||
     !lineEditorState ||
     !(
       connectLineTo ||
@@ -23,18 +28,20 @@ export function getEditingLinePoints(
     return null;
   }
 
-  const {
-    type,
-    source,
-    target,
-    edge: { view },
-  } = lineEditorState;
+  const { type } = lineEditorState;
+  const { source, target } = editableLineMap.get(activeEditableEdge)!;
+  const { view } = activeEditableEdge;
   const { exitPosition, entryPosition, vertices } = view ?? {};
 
   const lineSettings = pick(view, ["type", "curveType"]);
 
   if (type === "control") {
-    const newVertices = getNewLineVertices(lineEditorState, connectLineTo!);
+    const newVertices = getNewLineVertices(
+      activeEditableEdge,
+      lineEditorState,
+      editableLineMap,
+      connectLineTo!
+    );
 
     return getSmartLinePoints(source.view, target.view, {
       ...lineSettings,
@@ -80,10 +87,13 @@ export function getEditingLinePoints(
 }
 
 export function getNewLineVertices(
+  activeEditableEdge: EdgeCell,
   lineEditorState: LineEditorStateOfControl,
+  editableLineMap: WeakMap<EdgeCell, EditableLine>,
   connectLineTo: PositionTuple
 ) {
-  const { control, linePoints } = lineEditorState;
+  const { control } = lineEditorState;
+  const { points: linePoints } = editableLineMap.get(activeEditableEdge)!;
   const newVertices: NodePosition[] = [];
   const [x1, y1] = connectLineTo!;
   const exitPoint = linePoints[0];

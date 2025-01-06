@@ -43,6 +43,7 @@ import { useLineMarkers } from "../shared/canvas/useLineMarkers";
 import { updateCells } from "../draw-canvas/processors/updateCells";
 import styleText from "../shared/canvas/styles.shadow.css";
 import zoomBarStyleText from "../shared/canvas/ZoomBarComponent.shadow.css";
+import { useEditableLineMap } from "../shared/canvas/useEditableLineMap";
 
 const { defineElement, property, event } = createDecorators();
 
@@ -394,6 +395,7 @@ function EoDisplayCanvasComponent({
     defaultEdgeLines,
     markerPrefix,
   });
+  const editableLineMap = useEditableLineMap({ cells, lineConfMap });
 
   const ready = useReady({ cells, layout, centered });
 
@@ -430,6 +432,7 @@ function EoDisplayCanvasComponent({
                 degradedNodeLabel={degradedNodeLabel}
                 defaultNodeBricks={defaultNodeBricks}
                 lineConfMap={lineConfMap}
+                editableLineMap={editableLineMap}
                 transform={transform}
                 activeTarget={activeTarget}
                 readOnly

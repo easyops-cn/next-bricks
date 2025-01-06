@@ -2,8 +2,8 @@
 import React from "react";
 import type {
   DecoratorCell,
+  EdgeCell,
   EdgeView,
-  EditableLineInfo,
   LineEditorState,
   NodeCell,
   SmartConnectLineState,
@@ -23,14 +23,10 @@ export const HoverStateContext = React.createContext<{
   smartConnectLineState: SmartConnectLineState | null;
   unsetHoverStateTimeoutRef: React.MutableRefObject<number | null>;
   hoverState: HoverState | null;
-  activeEditableLine: EditableLineInfo | null;
-  activeEditableLineIsAvailable: boolean;
+  activeEditableEdge: EdgeCell | null;
   lineEditorState: LineEditorState | null;
   setLineEditorState: React.Dispatch<
     React.SetStateAction<LineEditorState | null>
-  >;
-  setActiveEditableLine: React.Dispatch<
-    React.SetStateAction<EditableLineInfo | null>
   >;
   setHoverState: React.Dispatch<React.SetStateAction<HoverState | null>>;
   setSmartConnectLineState: React.Dispatch<
@@ -52,11 +48,9 @@ export const HoverStateContext = React.createContext<{
   smartConnectLineState: null,
   unsetHoverStateTimeoutRef: { current: null },
   hoverState: null,
-  activeEditableLine: null,
-  activeEditableLineIsAvailable: false,
+  activeEditableEdge: null,
   lineEditorState: null,
   setLineEditorState: () => {},
-  setActiveEditableLine: () => {},
   setHoverState: () => {},
   setSmartConnectLineState: () => {},
 });

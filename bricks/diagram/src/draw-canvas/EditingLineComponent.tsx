@@ -1,7 +1,12 @@
 // istanbul ignore file: experimental
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import classNames from "classnames";
-import type { ComputedLineConnecterConf } from "./interfaces";
+import type {
+  Cell,
+  ComputedLineConnecterConf,
+  EdgeCell,
+  EditableLine,
+} from "./interfaces";
 import type {
   LineMarkerConf,
   NodePosition,
@@ -17,11 +22,15 @@ import {
 import { getMarkers } from "../shared/canvas/useLineMarkers";
 
 export interface EditingLineComponentProps {
+  cells: Cell[];
+  editableLineMap: WeakMap<EdgeCell, EditableLine>;
   transform: TransformLiteral;
   options: ComputedLineConnecterConf;
 }
 
 export function EditingLineComponent({
+  cells,
+  editableLineMap,
   transform,
   options,
 }: EditingLineComponentProps): JSX.Element {
@@ -29,7 +38,7 @@ export function EditingLineComponent({
     null
   );
   const {
-    activeEditableLine,
+    activeEditableEdge,
     hoverState,
     lineEditorState,
     setLineEditorState,
@@ -46,7 +55,7 @@ export function EditingLineComponent({
   }, [lineEditorState]);
 
   useEffect(() => {
-    if (!lineEditorState) {
+    if (!activeEditableEdge || !lineEditorState) {
       return;
     }
     movedRef.current = false;
@@ -59,8 +68,11 @@ export function EditingLineComponent({
       };
       let diff = Infinity;
       if (type === "control" && !e.altKey) {
+        // console.log(cells.filter(isEdgeCell));
+
         // Snap to other points
-        const { linePoints, control } = lineEditorState;
+        const { control } = lineEditorState;
+        const linePoints = editableLineMap.get(activeEditableEdge)!.points;
         const axis = control.direction === "ns" ? "y" : "x";
         const original = control[axis];
         const otherPoints = linePoints.filter(
@@ -70,6 +82,18 @@ export function EditingLineComponent({
             (i !== control.index && i !== control.index + 1)
         );
         const snapDistance = 5;
+
+        // Snap to control points of other lines
+        for (const cell of cells) {
+          if (cell.type !== "edge" || cell === activeEditableEdge) {
+            continue;
+          }
+          const editableLine = editableLineMap.get(cell);
+          if (editableLine) {
+            otherPoints.push(...editableLine.points.slice(1, -1));
+          }
+        }
+
         for (const point of otherPoints) {
           const newDiff = Math.abs(point[axis] - position[axis]);
           if (newDiff <= snapDistance && newDiff < diff) {
@@ -100,14 +124,16 @@ export function EditingLineComponent({
       if (lineEditorState?.type === "control") {
         const newConnectTo = getConnectTo(e);
         if (movedRef.current) {
-          const {
-            source,
-            target,
-            edge: { view },
-          } = lineEditorState;
+          const { source, target } = editableLineMap.get(activeEditableEdge!)!;
+          const { view } = activeEditableEdge!;
           onChangeEdgeView?.(source, target, {
             ...view,
-            vertices: getNewLineVertices(lineEditorState, newConnectTo),
+            vertices: getNewLineVertices(
+              activeEditableEdge!,
+              lineEditorState,
+              editableLineMap,
+              newConnectTo
+            ),
           });
         }
       }
@@ -122,10 +148,18 @@ export function EditingLineComponent({
     document.addEventListener("mouseup", onMouseUp);
 
     return reset;
-  }, [lineEditorState, transform, setLineEditorState, onChangeEdgeView]);
+  }, [
+    activeEditableEdge,
+    editableLineMap,
+    lineEditorState,
+    transform,
+    setLineEditorState,
+    onChangeEdgeView,
+    cells,
+  ]);
 
   useEffect(() => {
-    if (!activeEditableLine) {
+    if (!activeEditableEdge) {
       return;
     }
     const handleBodyClick = (e: MouseEvent) => {
@@ -138,23 +172,31 @@ export function EditingLineComponent({
     return () => {
       document.body.removeEventListener("click", handleBodyClick);
     };
-  }, [activeEditableLine]);
+  }, [activeEditableEdge]);
 
   const line = useMemo(() => {
     const points = getEditingLinePoints(
+      activeEditableEdge,
       lineEditorState,
+      editableLineMap,
       connectLineTo,
       hoverState
     );
     return curveLine(
       points,
-      lineEditorState?.edge.view?.type === "curve"
-        ? lineEditorState.edge.view.curveType
+      activeEditableEdge?.view?.type === "curve"
+        ? activeEditableEdge.view.curveType
         : "curveLinear",
       0,
       1
     );
-  }, [connectLineTo, hoverState, lineEditorState]);
+  }, [
+    connectLineTo,
+    hoverState,
+    activeEditableEdge,
+    lineEditorState,
+    editableLineMap,
+  ]);
   let markerStart: string | undefined;
   let markerEnd: string | undefined;
   const lineMarkers: LineMarkerConf[] = getMarkers(options);

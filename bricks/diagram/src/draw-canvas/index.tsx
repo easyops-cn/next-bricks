@@ -46,7 +46,6 @@ import type {
   SmartConnectLineState,
   LineConnecterConf,
   Direction,
-  EditableLineInfo,
   LineEditorState,
   EdgeView,
   LineSettings,
@@ -98,6 +97,8 @@ import { cellToTarget } from "./processors/cellToTarget";
 import { handleNodeContainedChange } from "./processors/handleNodeContainedChange";
 import { LineEditorComponent } from "./LineEditorComponent";
 import { EditingLineComponent } from "./EditingLineComponent";
+import { useEditableLineMap } from "../shared/canvas/useEditableLineMap";
+import { targetIsActive } from "./processors/targetIsActive";
 
 const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
   "basic.lock-body-scroll"
@@ -1047,14 +1048,25 @@ function LegacyEoDrawCanvasComponent(
     lineConnector,
     markerPrefix,
   });
+  const editableLineMap = useEditableLineMap({ cells, lineConfMap });
+  const activeEditableEdge = useMemo(() => {
+    let edge: EdgeCell | undefined;
+    if (activeTarget?.type === "edge") {
+      edge = cells.find((cell) =>
+        targetIsActive(cell, activeTarget)
+      ) as EdgeCell;
+    }
+    if (edge && editableLineMap.has(edge)) {
+      return edge;
+    }
+    return null;
+  }, [activeTarget, cells, editableLineMap]);
 
   const ready = useReady({ cells, layout, centered });
 
   const [hoverState, setHoverState] = useState<HoverState | null>(null);
   const unsetHoverStateTimeoutRef = useRef<number | null>(null);
 
-  const [activeEditableLine, setActiveEditableLine] =
-    useState<EditableLineInfo | null>(null);
   const [lineEditorState, setLineEditorState] =
     useState<LineEditorState | null>(null);
 
@@ -1162,18 +1174,6 @@ function LegacyEoDrawCanvasComponent(
     [onEdgeViewChange]
   );
 
-  const activeEditableLineIsAvailable = useMemo(() => {
-    return (
-      !!activeEditableLine &&
-      cells.some(
-        (cell) =>
-          cell.type === "edge" &&
-          cell.source === activeEditableLine.edge.source &&
-          cell.target === activeEditableLine.edge.target
-      )
-    );
-  }, [activeEditableLine, cells]);
-
   // istanbul ignore next: experimental
   const hoverStateContextValue = useMemo(
     () => ({
@@ -1181,19 +1181,16 @@ function LegacyEoDrawCanvasComponent(
       smartConnectLineState,
       unsetHoverStateTimeoutRef,
       hoverState,
-      activeEditableLine,
-      activeEditableLineIsAvailable,
+      activeEditableEdge,
       lineEditorState,
       setLineEditorState,
-      setActiveEditableLine,
       setHoverState,
       setSmartConnectLineState,
       onConnect: handleSmartConnect,
       onChangeEdgeView: handleEdgeChangeView,
     }),
     [
-      activeEditableLine,
-      activeEditableLineIsAvailable,
+      activeEditableEdge,
       handleEdgeChangeView,
       handleSmartConnect,
       hoverState,
@@ -1290,6 +1287,7 @@ function LegacyEoDrawCanvasComponent(
                 defaultNodeBricks={defaultNodeBricks}
                 transform={transform}
                 lineConfMap={lineConfMap}
+                editableLineMap={editableLineMap}
                 activeTarget={activeTarget}
                 unrelatedCells={unrelatedCells}
                 allowEdgeToArea={allowEdgeToArea}
@@ -1335,6 +1333,8 @@ function LegacyEoDrawCanvasComponent(
                 options={lineConnectorConf}
               />
               <EditingLineComponent
+                cells={cells}
+                editableLineMap={editableLineMap}
                 transform={transform}
                 options={lineConnectorConf}
               />
@@ -1352,11 +1352,17 @@ function LegacyEoDrawCanvasComponent(
             ))}
           </g>
           <g>
-            {lineConnectorConf && <LineEditorComponent scale={transform.k} />}
+            {lineConnectorConf && (
+              <LineEditorComponent
+                editableLineMap={editableLineMap}
+                scale={transform.k}
+              />
+            )}
           </g>
           {lineConnectorConf && (
             <LineConnectorComponent
               activeTarget={activeTarget}
+              editableLineMap={editableLineMap}
               scale={transform.k}
               disabled={!!connectLineState}
             />
