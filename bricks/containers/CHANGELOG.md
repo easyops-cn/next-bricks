@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.14.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.13.5...@next-bricks/containers@1.14.0) (2025-01-07)
+
+
+### Features
+
+* **eo-tab-list:** support fillContainer ([c19ba38](https://github.com/easyops-cn/next-bricks/commit/c19ba38668db884c747cb3c52d2fe1b1878cc566))
+
+
+
+
+
 ## [1.13.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.13.4...@next-bricks/containers@1.13.5) (2025-01-06)
 
 **Note:** Version bump only for package @next-bricks/containers
