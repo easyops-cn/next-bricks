@@ -22,9 +22,9 @@ import { getMarkers } from "../shared/canvas/useLineMarkers";
 import type {
   LineMarkerConf,
   NodePosition,
+  PositionTuple,
   SizeTuple,
 } from "../diagram/interfaces";
-import { LineLabelComponent } from "./LineLabelComponent";
 import { cellToTarget } from "./processors/cellToTarget";
 import { getLabelMaskAndOffset } from "./processors/getLabelMaskAndOffset";
 
@@ -33,14 +33,21 @@ export interface EdgeComponentProps {
   lineConfMap: WeakMap<EdgeCell, ComputedEdgeLineConf>;
   editableLineMap: WeakMap<EdgeCell, EditableLine>;
   readOnly?: boolean;
+  setLineLabelMap: React.Dispatch<React.SetStateAction<LineLabelMap>>;
   onSwitchActiveTarget?(activeTarget: ActiveTarget | null): void;
 }
+
+export type LineLabelMap = Map<EdgeCell, {
+  position: PositionAndAngle;
+  offset: PositionTuple;
+}>;
 
 export function EdgeComponent({
   edge,
   lineConfMap,
   editableLineMap,
   readOnly,
+  setLineLabelMap,
   onSwitchActiveTarget,
 }: EdgeComponentProps): JSX.Element | null {
   const pathRef = useRef<SVGPathElement | null>(null);
@@ -206,6 +213,27 @@ export function EdgeComponent({
     [labelPosition, labelSize]
   );
 
+  useEffect(() => {
+    if (labelPosition && labelOffset) {
+      setLineLabelMap((prev) => {
+        const next = new Map(prev);
+        next.set(edge, { position: labelPosition, offset: labelOffset });
+        return next;
+      });
+    }
+
+    return () => {
+      setLineLabelMap((prev) => {
+        if (prev.has(edge)) {
+          const next = new Map(prev);
+          next.delete(edge);
+          return next;
+        }
+        return prev;
+      })
+    };
+  }, [edge, labelOffset, labelPosition, setLineLabelMap]);
+
   if (!line || !linePoints) {
     // This happens when source or target is not found,
     // or when source or target has not been positioned yet.
@@ -288,7 +316,7 @@ export function EdgeComponent({
         />
         <path className="line-active-bg" d={line} fill="none" mask={maskUrl} />
       </g>
-      <LineLabelComponent
+      {/* <LineLabelComponent
         edge={edge}
         position={labelPosition}
         offset={labelOffset}
@@ -296,7 +324,7 @@ export function EdgeComponent({
         text={lineConf.text}
         onClick={onLabelClick}
         onRendered={handleLabelRendered}
-      />
+      /> */}
     </>
   );
 }
