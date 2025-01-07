@@ -1,9 +1,18 @@
 :host {
+  display: block;
   --eo-tab-item-gap: 24px;
+}
+
+:host([hidden]) {
+  display: none;
 }
 
 :host([type="panel"]) {
   --eo-tab-item-gap: 0px;
+}
+
+:host([fill-container]) {
+  height: 100%;
 }
 
 .tabs-wrapper {

@@ -14,6 +14,7 @@ export interface TabGroupProps {
   callback?: (element: HTMLDivElement) => void;
   outline?: TabsOutline;
   contentStyle?: React.CSSProperties;
+  fillContainer?: boolean;
 }
 
 // Tabs 对轮廓暂只支持阴影或无轮廓，不支持边框或填充色。
@@ -41,7 +42,7 @@ export interface TabGroupEventsMapping {
   styleTexts: [styleText],
   alias: ["containers.tab-group"],
 })
-class TabGroup extends ReactNextElement {
+class TabGroup extends ReactNextElement implements TabGroupProps {
   /**
    * 样式类型
    * @default "default"
@@ -82,6 +83,9 @@ class TabGroup extends ReactNextElement {
    */
   @property()
   accessor outline: TabsOutline | undefined;
+
+  @property({ type: Boolean, render: false })
+  accessor fillContainer: boolean | undefined;
 
   render() {
     return (
