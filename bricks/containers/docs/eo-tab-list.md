@@ -451,7 +451,7 @@
       }
 ```
 
-### Auto Paly
+### Auto Play
 
 ```yaml preview
 - brick: eo-tab-list
@@ -490,4 +490,39 @@
         - brick: div
           properties:
             textContent: Panel Query
+```
+
+### Fill Container
+
+```yaml preview minHeight="300px"
+brick: div
+properties:
+  style:
+    height: calc(100vh - 4em)
+children:
+  - brick: eo-tab-list
+    properties:
+      tabs:
+        - text: Create
+          panel: create
+        - text: Edit
+          panel: edit
+      fillContainer: true
+    slots:
+      create:
+        bricks:
+          - brick: div
+            properties:
+              textContent: Panel Create
+              style:
+                height: 100%
+                border: 1px solid gray
+      edit:
+        bricks:
+          - brick: div
+            properties:
+              textContent: Panel Edit
+              style:
+                height: 100%
+                border: 1px solid gray
 ```

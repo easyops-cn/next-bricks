@@ -1,9 +1,14 @@
 :host {
+  display: block;
   --eo-tabs-border-radius: var(--eo-tabs-default-border-radius);
   --eo-tabs-header-padding: var(--eo-tabs-default-header-padding);
   --eo-tabs-content-padding: var(--eo-tabs-default-content-padding);
   --eo-tabs-background: var(--eo-tabs-default-background);
   --eo-tabs-shadow: var(--eo-tabs-default-shadow);
+}
+
+:host([hidden]) {
+  display: none;
 }
 
 :host([outline="shadow"]:not([type="panel"])) {
@@ -29,6 +34,25 @@
   border-radius: var(--eo-tabs-border-radius);
   background: var(--eo-tabs-background);
   box-shadow: var(--eo-tabs-shadow);
+}
+
+:host([fill-container]) {
+  height: 100%;
+
+  .tab-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .tab-nav {
+    min-height: 0;
+  }
+
+  .content {
+    flex: 1;
+    min-height: 0;
+  }
 }
 
 .tab-nav {

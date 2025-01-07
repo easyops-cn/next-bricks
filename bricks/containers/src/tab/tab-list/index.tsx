@@ -27,9 +27,12 @@ const WrappedTabItem = wrapBrick<TabItem, TabItemProps>("eo-tab-item");
 
 interface TabListProps {
   type?: TabType;
-  tabs?: TabItemProps[];
+  tabs?: (TabItemProps | string)[];
   activePanel?: string;
   outline?: TabsOutline;
+  autoPlay?: boolean;
+  autoSpeed?: number;
+  fillContainer?: boolean;
   contentStyle?: React.CSSProperties;
 }
 
@@ -52,7 +55,7 @@ export interface TabListEventsMapping {
   alias: ["containers.tab-list"],
   styleTexts: [styleText],
 })
-class TabList extends ReactNextElement {
+class TabList extends ReactNextElement implements TabListProps {
   /**
    * 样式类型
    * @default "default"
@@ -66,7 +69,7 @@ class TabList extends ReactNextElement {
   @property({
     attribute: false,
   })
-  accessor tabs: Array<TabItemProps | string> | undefined;
+  accessor tabs: (TabItemProps | string)[] | undefined;
 
   /**
    * 激活状态 tab 的 panel
@@ -108,20 +111,8 @@ class TabList extends ReactNextElement {
   })
   accessor autoSpeed: number = 3000;
 
-  #computedTabs = (tabs: Array<TabItemProps | string>): TabItemProps[] => {
-    if (tabs?.length) {
-      return tabs.map((tab) => {
-        if (typeof tab === "string" || typeof tab === "number") {
-          return {
-            text: tab,
-            panel: tab,
-          };
-        }
-        return tab;
-      });
-    }
-    return [];
-  };
+  @property({ type: Boolean })
+  accessor fillContainer: boolean | undefined;
 
   /**
    * 选择 tab 时触发
@@ -139,12 +130,13 @@ class TabList extends ReactNextElement {
     return (
       <TabListElement
         type={this.type}
-        tabs={this.#computedTabs(this.tabs)}
+        tabs={this.tabs}
         activePanel={this.activePanel}
         outline={this.outline}
         contentStyle={this.contentStyle}
         autoPlay={this.autoPlay}
         autoSpeed={this.autoSpeed}
+        fillContainer={this.fillContainer}
         onTabSelect={this.#handleTabSelect}
       />
     );
@@ -153,8 +145,6 @@ class TabList extends ReactNextElement {
 
 interface TabListElementProps extends TabListProps {
   onTabSelect?: (panel: string) => void;
-  autoPlay?: boolean;
-  autoSpeed?: number;
 }
 
 interface TabNode extends TabItemProps {
@@ -178,15 +168,31 @@ function getTabPlayQueue(tabs: TabItemProps[]) {
 
 function TabListElement({
   type,
-  tabs,
+  tabs: _tabs,
   activePanel,
   outline,
   contentStyle,
   onTabSelect,
   autoPlay,
   autoSpeed,
+  fillContainer,
 }: TabListElementProps): React.ReactElement {
   const timerRef = useRef<number>();
+
+  const tabs = useMemo(() => {
+    if (_tabs?.length) {
+      return _tabs.map((tab) => {
+        if (typeof tab === "string" || typeof tab === "number") {
+          return {
+            text: tab,
+            panel: tab,
+          };
+        }
+        return tab;
+      });
+    }
+    return [];
+  }, []);
 
   const tabItemMap = useMemo(() => getTabPlayQueue(tabs), [tabs]);
 
@@ -230,6 +236,7 @@ function TabListElement({
       outline={outline}
       contentStyle={contentStyle}
       onTabSelect={handleSelect}
+      fillContainer={fillContainer}
     >
       <div className="tabs-wrapper" slot="nav">
         {tabs.map((tab) => (
