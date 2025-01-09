@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.14.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.13.1...@next-shared/icons@0.14.0) (2025-01-09)
+
+
+### Features
+
+* refine icon ([26c5e0a](https://github.com/easyops-cn/next-bricks/commit/26c5e0a3785039af6bec976ade061934d05f67bf))
+
+
+
+
+
 ## [0.13.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.13.0...@next-shared/icons@0.13.1) (2024-11-28)
 
 **Note:** Version bump only for package @next-shared/icons
