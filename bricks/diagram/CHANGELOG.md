@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.54.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.54.0...@next-bricks/diagram@0.54.1) (2025-01-09)
+
+
+### Bug Fixes
+
+* make sure animateMotion always has dur ([b4fb43f](https://github.com/easyops-cn/next-bricks/commit/b4fb43f8890b30e1afe1f76224197219e281968d))
+
+
+
+
+
 # [0.54.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.53.0...@next-bricks/diagram@0.54.0) (2025-01-09)
 
 
