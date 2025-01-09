@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.54.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.53.0...@next-bricks/diagram@0.54.0) (2025-01-09)
+
+
+### Features
+
+* support edge line overrides ([00a31c7](https://github.com/easyops-cn/next-bricks/commit/00a31c7c0c3b07085d365620863944a7c022efbb))
+
+
+
+
+
 # [0.53.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/diagram@0.52.5...@next-bricks/diagram@0.53.0) (2025-01-06)
 
 
