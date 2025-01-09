@@ -1279,6 +1279,11 @@
                 virtual: true,
               }
             },
+            {
+              type: "edge",
+              source: "Z",
+              target: "W",
+            },
           ].concat(
             ["X", "Y", "Z", "W"].map((id) => ({
               type: "node",
@@ -1292,20 +1297,7 @@
                 height: 60,
               }
             }))
-          ).concat([
-            {
-              type: "decorator",
-              id: "text-1",
-              decorator: "text",
-              view: {
-                x: 100,
-                y: 120,
-                width: 100,
-                height: 20,
-                text: "Hello!"
-              },
-            },
-          ])
+          )
         %>
     - name: dragging
     - name: activeTarget
@@ -1536,8 +1528,12 @@
                           : "default"
                       %>
             defaultEdgeLines:
-              - if: <% DATA.edge.data?.virtual %>
-                dashed: true
+              - dashed: <% !!DATA.edge.data?.virtual %>
+                strokeColor: var(--palette-blue-6)
+                overrides:
+                  active:
+                    strokeWidth: <% 2 * (DATA.edge?.data?.strokeWidth ?? 1) %>
+                    strokeColor: cyan
             cells: <% CTX.initialCells %>
           events:
             activeTarget.change:

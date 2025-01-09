@@ -13,10 +13,14 @@ import type {
   ComputedEdgeLineConf,
   Direction,
   EdgeCell,
+  EdgeLineMotion,
   EditableLine,
   PositionAndAngle,
 } from "./interfaces";
-import { DEFAULT_LINE_INTERACT_ANIMATE_DURATION } from "./constants";
+import {
+  DEFAULT_LINE_INTERACT_ANIMATE_DURATION,
+  DEFAULT_MOTION_SPEED,
+} from "./constants";
 import { curveLine } from "../diagram/lines/curveLine";
 import { getMarkers } from "../shared/canvas/useLineMarkers";
 import type {
@@ -33,6 +37,8 @@ export interface EdgeComponentProps {
   lineConfMap: WeakMap<EdgeCell, ComputedEdgeLineConf>;
   editableLineMap: WeakMap<EdgeCell, EditableLine>;
   readOnly?: boolean;
+  active?: boolean;
+  activeRelated?: boolean;
   onSwitchActiveTarget?(activeTarget: ActiveTarget | null): void;
 }
 
@@ -41,6 +47,8 @@ export function EdgeComponent({
   lineConfMap,
   editableLineMap,
   readOnly,
+  active,
+  activeRelated,
   onSwitchActiveTarget,
 }: EdgeComponentProps): JSX.Element | null {
   const pathRef = useRef<SVGPathElement | null>(null);
@@ -123,15 +131,14 @@ export function EdgeComponent({
     }
   }, [lineConf, linePoints]);
 
+  const [pathLength, setPathLength] = useState<number | null>(null);
+
   const pathRefCallback = useCallback(
     (element: SVGPathElement | null) => {
       pathRef.current = element;
-      // istanbul ignore next
-      if (element?.getTotalLength) {
-        element.style.setProperty(
-          "--solid-length",
-          `${element.getTotalLength()}`
-        );
+      if (element) {
+        // Jest does not support `SVGPathElement::getTotalLength`
+        setPathLength(element.getTotalLength?.() ?? 100);
       }
       updateLabelPosition();
     },
@@ -214,14 +221,67 @@ export function EdgeComponent({
 
   let markerStart: string | undefined;
   let markerEnd: string | undefined;
+  let strokeColor: string | undefined;
+  let strokeWidth: number | undefined;
+  let motion: EdgeLineMotion | undefined;
   const lineMarkers: LineMarkerConf[] = getMarkers(lineConf);
-  for (const marker of lineMarkers) {
-    if (marker.placement === "start") {
-      markerStart = lineConf.$markerStartUrl;
-    } else {
-      markerEnd = lineConf.$markerEndUrl;
+  if (active) {
+    const overrides = lineConf.overrides?.active;
+    strokeColor = overrides?.strokeColor ?? lineConf.strokeColor;
+    strokeWidth = overrides?.strokeWidth ?? lineConf.strokeWidth;
+    motion = overrides?.motion;
+    for (const marker of lineMarkers) {
+      if (marker.placement === "start") {
+        markerStart =
+          lineConf.$activeMarkerStartUrl ?? lineConf.$markerStartUrl;
+      } else {
+        markerEnd = lineConf.$activeMarkerEndUrl ?? lineConf.$markerEndUrl;
+      }
+    }
+  } else if (activeRelated) {
+    const overrides = lineConf.overrides?.activeRelated;
+    strokeColor = overrides?.strokeColor ?? lineConf.strokeColor;
+    strokeWidth = overrides?.strokeWidth ?? lineConf.strokeWidth;
+    motion = overrides?.motion;
+    for (const marker of lineMarkers) {
+      if (marker.placement === "start") {
+        markerStart =
+          lineConf.$activeRelatedMarkerStartUrl ?? lineConf.$markerStartUrl;
+      } else {
+        markerEnd =
+          lineConf.$activeRelatedMarkerEndUrl ?? lineConf.$markerEndUrl;
+      }
+    }
+  } else {
+    strokeColor = lineConf.strokeColor;
+    strokeWidth = lineConf.strokeWidth;
+    for (const marker of lineMarkers) {
+      if (marker.placement === "start") {
+        markerStart = lineConf.$markerStartUrl;
+      } else {
+        markerEnd = lineConf.$markerEndUrl;
+      }
     }
   }
+
+  let motionPath: string | undefined;
+  if (motion?.shape === "dot") {
+    const radius = motion.size == null ? strokeWidth * 2 : motion.size / 2;
+    motionPath = `M 0 ${-radius} A ${radius} ${radius} 0 1 1 0 ${radius} A ${radius} ${radius} 0 1 1 0 ${-radius} z`;
+  } else if (motion?.shape === "triangle") {
+    const radius = motion.size == null ? strokeWidth * 2 : motion.size / 2;
+    const offset = radius / Math.sqrt(3);
+    motionPath = `M${-offset} ${radius} v${-radius * 2} L${offset * 2} 0 Z`;
+  }
+  let motionDuration: string | undefined;
+  if (motionPath && pathLength) {
+    motionDuration = `${pathLength / DEFAULT_MOTION_SPEED}s`;
+  }
+
+  const hasMotion = [
+    lineConf.overrides?.active?.motion?.shape,
+    lineConf.overrides?.activeRelated?.motion?.shape,
+  ].some((item) => item === "dot" || item === "triangle");
 
   const maskUrl = mask ? `url(#${lineMaskPrefix})` : undefined;
 
@@ -277,16 +337,38 @@ export function EdgeComponent({
           style={
             {
               "--time": `${lineConf.animate.duration ?? DEFAULT_LINE_INTERACT_ANIMATE_DURATION}s`,
+              "--solid-length": pathLength,
             } as React.CSSProperties
           }
           d={line}
           fill="none"
-          stroke={lineConf.strokeColor}
-          strokeWidth={lineConf.strokeWidth}
+          stroke={strokeColor}
+          strokeWidth={strokeWidth}
           markerStart={markerStart}
           markerEnd={markerEnd}
         />
-        <path className="line-active-bg" d={line} fill="none" mask={maskUrl} />
+        {!lineConf.overrides?.active && (
+          <path
+            className="line-active-bg"
+            d={line}
+            fill="none"
+            mask={maskUrl}
+          />
+        )}
+        {hasMotion && (
+          <path
+            className={classNames("motion", { visible: !!motionPath })}
+            d={motionPath}
+            fill={strokeColor}
+          >
+            <animateMotion
+              dur={motionDuration}
+              repeatCount={"indefinite"}
+              rotate={"auto"}
+              path={line}
+            />
+          </path>
+        )}
       </g>
       <LineLabelComponent
         edge={edge}

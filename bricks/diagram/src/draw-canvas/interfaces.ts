@@ -117,9 +117,15 @@ export interface LineAnimate {
   duration: number;
 }
 
-export interface ComputedEdgeLineConf extends Required<BaseEdgeLineConf> {
+export interface ComputedEdgeLineConf
+  extends Required<Omit<BaseEdgeLineConf, "overrides">> {
   $markerStartUrl: string;
   $markerEndUrl: string;
+  $activeMarkerStartUrl?: string;
+  $activeMarkerEndUrl?: string;
+  $activeRelatedMarkerStartUrl?: string;
+  $activeRelatedMarkerEndUrl?: string;
+  overrides?: EdgeLineConfOverrides;
 }
 
 export interface BaseEdgeLineConf {
@@ -144,7 +150,29 @@ export interface BaseEdgeLineConf {
    */
   showEndArrow?: boolean;
   animate?: LineAnimate;
+  overrides?: EdgeLineConfOverrides;
 }
+
+export interface EdgeLineConfOverrides {
+  active?: EdgeLineConfOverridable;
+  activeRelated?: EdgeLineConfOverridable;
+}
+
+export interface EdgeLineConfOverridable {
+  strokeWidth?: number;
+  strokeColor?: string;
+  motion?: EdgeLineMotion;
+}
+
+export interface EdgeLineMotion {
+  shape?: EdgeLineMotionShape;
+  /** 移动速度，单位 px/s，默认为 50 */
+  speed?: number;
+  /** 尺寸，默认为当前 strokeWidth * 4 */
+  size?: number;
+}
+
+export type EdgeLineMotionShape = "dot" | "triangle" | "none";
 
 export interface LineMarker {
   strokeColor: string;

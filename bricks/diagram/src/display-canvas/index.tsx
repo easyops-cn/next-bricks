@@ -436,18 +436,19 @@ function EoDisplayCanvasComponent({
                 transform={transform}
                 activeTarget={activeTarget}
                 readOnly
+                hoverCell={hoverCell}
                 unrelatedCells={unrelatedCells}
                 onSwitchActiveTarget={onSwitchActiveTarget}
                 onCellContextMenu={onCellContextMenu}
                 onCellClick={onCellClick}
                 onNodeBrickResize={handleNodeBrickResize}
                 onCellMouseEnter={
-                  fadeUnrelatedCells && isNodeCell(cell)
+                  fadeUnrelatedCells && (isNodeCell(cell) || isEdgeCell(cell))
                     ? handleCellMouseEnter
                     : undefined
                 }
                 onCellMouseLeave={
-                  fadeUnrelatedCells && isNodeCell(cell)
+                  fadeUnrelatedCells && (isNodeCell(cell) || isEdgeCell(cell))
                     ? handleCellMouseLeave
                     : undefined
                 }

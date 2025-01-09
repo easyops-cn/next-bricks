@@ -47,6 +47,7 @@ export interface CellComponentProps {
   editableLineMap: WeakMap<EdgeCell, EditableLine>;
   activeTarget: ActiveTarget | null | undefined;
   readOnly?: boolean;
+  hoverCell?: Cell | null | undefined;
   unrelatedCells: Cell[];
   dragNodeToContainerActive?: boolean;
   allowEdgeToArea?: boolean;
@@ -78,6 +79,7 @@ export function CellComponent({
   dragNodeToContainerActive,
   readOnly,
   transform,
+  hoverCell,
   unrelatedCells,
   allowEdgeToArea,
   onCellsMoving,
@@ -305,6 +307,10 @@ export function CellComponent({
       ) : isEdgeCell(cell) ? (
         <EdgeComponent
           edge={cell}
+          active={
+            readOnly ? hoverCell === cell : sameTarget(activeTarget, cell)
+          }
+          activeRelated={!!(readOnly ? hoverCell : activeTarget) && !unrelated}
           lineConfMap={lineConfMap}
           editableLineMap={editableLineMap}
           readOnly={readOnly}
