@@ -267,15 +267,15 @@ export function EdgeComponent({
   let motionPath: string | undefined;
   if (motion?.shape === "dot") {
     const radius = motion.size == null ? strokeWidth * 2 : motion.size / 2;
-    motionPath = `M 0 ${-radius} A ${radius} ${radius} 0 1 1 0 ${radius} A ${radius} ${radius} 0 1 1 0 ${-radius} z`;
+    motionPath = `M 0,${-radius} A ${radius},${radius} 0,1,1 0,${radius} A ${radius},${radius} 0,1,1 0,${-radius} z`;
   } else if (motion?.shape === "triangle") {
     const radius = motion.size == null ? strokeWidth * 2 : motion.size / 2;
     const offset = radius / Math.sqrt(3);
-    motionPath = `M${-offset} ${radius} v${-radius * 2} L${offset * 2} 0 Z`;
+    motionPath = `M ${-offset},${radius} v ${-radius * 2} L ${offset * 2},0 z`;
   }
   let motionDuration: string | undefined;
-  if (motionPath && pathLength) {
-    motionDuration = `${pathLength / DEFAULT_MOTION_SPEED}s`;
+  if (pathLength) {
+    motionDuration = `${pathLength / (motion?.speed ?? DEFAULT_MOTION_SPEED)}s`;
   }
 
   const hasMotion = [
@@ -355,20 +355,24 @@ export function EdgeComponent({
             mask={maskUrl}
           />
         )}
-        {hasMotion && (
-          <path
-            className={classNames("motion", { visible: !!motionPath })}
-            d={motionPath}
-            fill={strokeColor}
-          >
-            <animateMotion
-              dur={motionDuration}
-              repeatCount={"indefinite"}
-              rotate={"auto"}
-              path={line}
-            />
-          </path>
-        )}
+        {
+          // No dur in old browsers will cause animation not working.
+          // So always set a dur.
+          hasMotion && motionDuration && (
+            <path
+              className={classNames("motion", { visible: !!motionPath })}
+              d={motionPath}
+              fill={strokeColor}
+            >
+              <animateMotion
+                dur={motionDuration}
+                repeatCount={"indefinite"}
+                rotate={"auto"}
+                path={line}
+              />
+            </path>
+          )
+        }
       </g>
       <LineLabelComponent
         edge={edge}
