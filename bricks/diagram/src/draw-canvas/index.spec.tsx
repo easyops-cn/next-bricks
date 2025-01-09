@@ -482,6 +482,11 @@ describe("eo-draw-canvas", () => {
         target: "c",
       },
       {
+        type: "edge",
+        source: "b",
+        target: "d",
+      },
+      {
         type: "node",
         id: "a",
         view: {
@@ -506,6 +511,14 @@ describe("eo-draw-canvas", () => {
         },
       },
       {
+        type: "node",
+        id: "d",
+        view: {
+          x: 220,
+          y: 20,
+        },
+      },
+      {
         type: "decorator",
         decorator: "text",
         id: "text-1",
@@ -515,6 +528,21 @@ describe("eo-draw-canvas", () => {
         },
       },
     ] as NodeBrickCell[];
+    element.defaultEdgeLines = [
+      {
+        type: "curve",
+        markers: [{ placement: "start" }, { placement: "end" }],
+        overrides: {
+          activeRelated: {
+            motion: {
+              shape:
+                '<% DATA.edge.target === "d" ? "dot" : "triangle" %>' as any,
+              speed: 40,
+            },
+          },
+        },
+      },
+    ];
 
     const onActiveTargetChange = jest.fn();
     element.addEventListener("activeTarget.change", (e) =>
@@ -545,7 +573,12 @@ describe("eo-draw-canvas", () => {
       [...element.shadowRoot!.querySelectorAll(".cells .cell")].map((cell) =>
         cell.classList.contains("faded")
       )
-    ).toEqual([true, true, false, true, true, true]);
+    ).toEqual([true, true, true, false, true, true, true, true]);
+    expect(
+      [...element.shadowRoot!.querySelectorAll(".motion")].map((cell) =>
+        cell.classList.contains("visible")
+      )
+    ).toEqual([false, false]);
 
     // Set active target to the same node
     element.activeTarget = { type: "node", id: "a" };
@@ -583,19 +616,44 @@ describe("eo-draw-canvas", () => {
     // Line connector images
     expect(element.shadowRoot!.querySelectorAll("g > image")?.length).toBe(2);
 
+    // Click on node b
+    act(() => {
+      fireEvent.mouseDown(
+        element.shadowRoot!.querySelectorAll(".cells div")[1]
+      );
+    });
+    expect(handleMouseDown).toBeCalled();
+
+    await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
+    expect(onActiveTargetChange).toHaveBeenCalledTimes(3);
+    expect(onActiveTargetChange).toHaveBeenNthCalledWith(3, {
+      type: "node",
+      id: "b",
+    });
+    expect(
+      [...element.shadowRoot!.querySelectorAll(".cells .cell")].map((cell) =>
+        cell.classList.contains("faded")
+      )
+    ).toEqual([true, false, false, true, false, false, false, true]);
+    expect(
+      [...element.shadowRoot!.querySelectorAll(".motion")].map((cell) =>
+        cell.classList.contains("visible")
+      )
+    ).toEqual([true, true]);
+
     const omitTarget = document.createElement("div");
     omitTarget.id = "omit-target";
     document.body.appendChild(omitTarget);
     act(() => {
       fireEvent.click(omitTarget);
     });
-    expect(onActiveTargetChange).toHaveBeenCalledTimes(2);
+    expect(onActiveTargetChange).toHaveBeenCalledTimes(3);
 
     act(() => {
       fireEvent.click(element.shadowRoot!.querySelector("svg")!);
     });
-    expect(onActiveTargetChange).toHaveBeenCalledTimes(3);
-    expect(onActiveTargetChange).toHaveBeenNthCalledWith(3, null);
+    expect(onActiveTargetChange).toHaveBeenCalledTimes(4);
+    expect(onActiveTargetChange).toHaveBeenNthCalledWith(4, null);
 
     act(() => {
       document.body.removeChild(element);

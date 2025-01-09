@@ -565,6 +565,14 @@ describe("eo-display-canvas", () => {
         strokeWidth: "<% DATA.edge?.data?.strokeWidth %>",
         parallelGap: "<% DATA.edge?.data?.parallelGap %>",
         animate: "<% DATA.edge?.data?.animate %>",
+        overrides: {
+          active: {
+            strokeColor: "cyan",
+          },
+          activeRelated: {
+            strokeColor: "orange",
+          },
+        },
       } as any as EdgeLineConf,
     ];
 
@@ -579,10 +587,10 @@ describe("eo-display-canvas", () => {
       [...element.shadowRoot!.querySelectorAll("marker path")].map(
         (markerPath) => (markerPath as SVGPathElement).getAttribute("stroke")
       )
-    ).toEqual(["gray", "red", "blue"]);
+    ).toEqual(["gray", "red", "cyan", "orange", "blue"]);
     expect(element.shadowRoot!.querySelectorAll("path.dotted").length).toBe(1);
     expect(element.shadowRoot!.querySelectorAll("marker circle").length).toBe(
-      1
+      3
     );
     expect(
       element.shadowRoot!.querySelectorAll(".dashed-animation").length

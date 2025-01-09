@@ -187,11 +187,6 @@
                 args:
                   - targetCell
                   - <% EVENT.detail.cell %>
-            scale.change:
-              action: context.replace
-              args:
-                - scale
-                - <% EVENT.detail %>
 - brick: eo-context-menu
   properties:
     actions: |
@@ -325,11 +320,6 @@
                 args:
                   - targetCell
                   - <% EVENT.detail.cell %>
-            scale.change:
-              action: context.replace
-              args:
-                - scale
-                - <% EVENT.detail %>
 - brick: eo-context-menu
   properties:
     actions: |
@@ -372,6 +362,9 @@
               type: "edge",
               source: "X",
               target: "Y",
+              view: {
+                type: "polyline"
+              }
             },
             {
               type: "edge",
@@ -380,6 +373,11 @@
               data: {
                 virtual: true,
               }
+            },
+            {
+              type: "edge",
+              source: "Z",
+              target: "W",
             },
           ].concat(
             ["X", "Y", "Z", "W"].map((id) => ({
@@ -393,20 +391,7 @@
                 height: 60,
               }
             }))
-          ).concat([
-            {
-              type: "decorator",
-              id: "text-1",
-              decorator: "text",
-              view: {
-                x: 100,
-                y: 120,
-                width: 100,
-                height: 20,
-                text: "Hello!"
-              },
-            },
-          ])
+          )
         %>
     - name: activeTarget
     - name: targetCell
@@ -425,6 +410,9 @@
             activeTarget: <%= CTX.activeTarget %>
             fadeUnrelatedCells: true
             layout: dagre
+            layoutOptions:
+              ranksep: 80
+              nodesep: 80
             # Initial nodes only
             defaultNodeSize: [60, 60]
             defaultNodeBricks:
@@ -443,8 +431,16 @@
                           : "default"
                       %>
             defaultEdgeLines:
-              - if: <% DATA.edge.data?.virtual %>
-                dashed: true
+              - dashed: <% !!DATA.edge.data?.virtual %>
+                strokeColor: var(--palette-blue-6)
+                overrides:
+                  active:
+                    strokeWidth: <% 2 * (DATA.edge?.data?.strokeWidth ?? 1) %>
+                    strokeColor: cyan
+                  activeRelated:
+                    strokeWidth: <% 2 * (DATA.edge?.data?.strokeWidth ?? 1) %>
+                    motion:
+                      shape: '<% DATA.edge.data?.virtual ? "dot" : "triangle" %>'
             cells: <% CTX.initialCells %>
           events:
             activeTarget.change:
@@ -463,11 +459,6 @@
                 args:
                   - targetCell
                   - <% EVENT.detail.cell %>
-            scale.change:
-              action: context.replace
-              args:
-                - scale
-                - <% EVENT.detail %>
 - brick: eo-context-menu
   properties:
     actions: |
@@ -565,11 +556,6 @@
                 args:
                   - targetCell
                   - <% EVENT.detail.cell %>
-            scale.change:
-              action: context.replace
-              args:
-                - scale
-                - <% EVENT.detail %>
 - brick: eo-context-menu
   properties:
     actions: |

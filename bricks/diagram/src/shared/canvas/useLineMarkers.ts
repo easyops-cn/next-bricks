@@ -130,6 +130,42 @@ export function useLineMarkers({
           } else {
             lineConf.$markerEndUrl = `url(#${markerPrefix}${markerIndex})`;
           }
+
+          const activeStrokeColor = lineConf.overrides?.active?.strokeColor;
+          if (activeStrokeColor && activeStrokeColor !== lineConf.strokeColor) {
+            const activeMarkerIndex = addMarker(
+              {
+                strokeColor: activeStrokeColor,
+                markerType: type,
+              },
+              markers
+            );
+            if (placement === "start") {
+              lineConf.$activeMarkerStartUrl = `url(#${markerPrefix}${activeMarkerIndex})`;
+            } else {
+              lineConf.$activeMarkerEndUrl = `url(#${markerPrefix}${activeMarkerIndex})`;
+            }
+          }
+
+          const activeRelatedStrokeColor =
+            lineConf.overrides?.activeRelated?.strokeColor;
+          if (
+            activeRelatedStrokeColor &&
+            activeRelatedStrokeColor !== lineConf.strokeColor
+          ) {
+            const activeRelatedMarkerIndex = addMarker(
+              {
+                strokeColor: activeRelatedStrokeColor,
+                markerType: type,
+              },
+              markers
+            );
+            if (placement === "start") {
+              lineConf.$activeRelatedMarkerStartUrl = `url(#${markerPrefix}${activeRelatedMarkerIndex})`;
+            } else {
+              lineConf.$activeRelatedMarkerEndUrl = `url(#${markerPrefix}${activeRelatedMarkerIndex})`;
+            }
+          }
         }
         map.set(cell, lineConf);
       }
