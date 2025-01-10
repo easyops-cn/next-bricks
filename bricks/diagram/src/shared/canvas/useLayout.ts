@@ -28,7 +28,7 @@ import { normalizeAlignOrigin } from "../../draw-canvas/processors/normalizeAlig
 export interface UseLayoutOptions {
   layout: LayoutType;
   layoutOptions?: LayoutOptions;
-  rootRef: React.RefObject<SVGSVGElement>;
+  rootRef: React.RefObject<SVGSVGElement | null>;
   cells: Cell[];
   zoomable?: boolean;
   zoomer: ZoomBehavior<SVGSVGElement, unknown>;

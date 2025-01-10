@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef } from "react";
+import React, { useCallback, useMemo, useRef, type JSX } from "react";
 import { ConfigProvider, Slider, theme } from "antd";
 import { StyleProvider, createCache } from "@ant-design/cssinjs";
 import { useCurrentTheme } from "@next-core/react-runtime";

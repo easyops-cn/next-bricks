@@ -5,7 +5,7 @@ import { DesktopCustom } from "../DesktopCustom/DesktopCustom.js";
 import { launchpadService } from "../LaunchpadService.js";
 import { DesktopApp } from "../DesktopApp/DesktopApp.js";
 import type { DesktopItem, DesktopItemCustom } from "../interfaces.js";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import { MicroApp } from "@next-core/types";
 
 jest.mock("../LaunchpadService", () => {

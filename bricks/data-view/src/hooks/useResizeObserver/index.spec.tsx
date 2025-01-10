@@ -6,7 +6,7 @@ import {
   type ResizeObserveProps,
 } from "./index.js";
 import { type ResizeCallback } from "./resizeObserverUtil.js";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 
 let resizeCallback: ResizeCallback;
 

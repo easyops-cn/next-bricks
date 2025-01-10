@@ -1,5 +1,5 @@
 import { describe, test, expect, jest } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import { fireEvent } from "@testing-library/react";
 import "./";
 import type { EditableLabel } from "./index.js";

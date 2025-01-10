@@ -1,6 +1,6 @@
 import { describe, test, expect, jest } from "@jest/globals";
 import React from "react";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import "./index.js";
 import { render } from "@testing-library/react";
 import {LoadingPanel , LoadingPanelComponent} from "./index.js";

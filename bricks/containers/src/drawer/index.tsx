@@ -248,7 +248,7 @@ export function DrawerComponent({
   stackable,
   stack,
 }: DrawerComponentProps) {
-  const contentRef = useRef<HTMLDivElement>();
+  const contentRef = useRef<HTMLDivElement>(undefined);
   const header = useMemo(
     () => (
       <div className="drawer-header">

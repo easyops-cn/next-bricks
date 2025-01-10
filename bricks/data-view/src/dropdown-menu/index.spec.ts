@@ -1,6 +1,6 @@
 import { describe, test, expect } from "@jest/globals";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import "./index.jsx";
 import { DropdownMenu } from "./index.jsx";
 

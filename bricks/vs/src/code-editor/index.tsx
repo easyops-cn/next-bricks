@@ -433,8 +433,8 @@ export function CodeEditorComponent({
 
   const containerRef = useRef<HTMLDivElement>(null);
   const decorationsCollection =
-    useRef<monaco.editor.IEditorDecorationsCollection>();
-  const editorRef = useRef<monaco.editor.IStandaloneCodeEditor>();
+    useRef<monaco.editor.IEditorDecorationsCollection>(undefined);
+  const editorRef = useRef<monaco.editor.IStandaloneCodeEditor>(undefined);
   const size = useRef<monaco.editor.IDimension>({
     width: 300,
     height: getContentHeightByCode(value, minLines, maxLines),

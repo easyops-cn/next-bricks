@@ -1,7 +1,7 @@
 import React from "react";
 import { describe, test, expect, jest } from "@jest/globals";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import "./index.jsx";
 import { ModernStyleTreemap } from "./index.jsx";
 

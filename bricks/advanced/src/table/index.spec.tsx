@@ -1,6 +1,6 @@
 import React from "react";
 import { describe, test, expect } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import "./index.jsx";
 import { TableComponent } from "./index.jsx";
 

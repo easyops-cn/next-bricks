@@ -84,8 +84,8 @@ export function CabinetThumbnailComponent(
   props: CabinetThumbnailProps
 ): React.ReactElement {
   const { clusters, columns, appName } = props;
-  const containerRef = useRef<HTMLDivElement>();
-  const layoutRef = useRef<HTMLDivElement>();
+  const containerRef = useRef<HTMLDivElement>(undefined);
+  const layoutRef = useRef<HTMLDivElement>(undefined);
   const [scale, setScale] = useState<number>();
   const preScale = usePrevious(scale);
 

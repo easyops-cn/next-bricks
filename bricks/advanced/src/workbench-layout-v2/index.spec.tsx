@@ -1,7 +1,7 @@
 import React from "react";
 import { getByTestId, fireEvent } from "@testing-library/dom";
 import { describe, test, expect, jest } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import * as utilsGeneral from "@next-core/utils/general";
 import { Layout, ResponsiveProps, WidthProvider } from "react-grid-layout";
 import { last } from "lodash";

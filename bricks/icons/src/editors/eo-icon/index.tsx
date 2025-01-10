@@ -4,10 +4,10 @@ import type { EditorComponentProps } from "@next-shared/property-editor";
 import { eoIconSchema } from "./eoIcon.schema";
 import { pick } from "lodash";
 
+import type { JSX } from "react";
+
 function EoIconComponentFactory(React: typeof _React) {
-  return function EoIconComponent(
-    props: EditorComponentProps
-  ): React.ReactElement {
+  return function EoIconComponent(props: EditorComponentProps): JSX.Element {
     const {
       SchemaFieldComponent,
       formilySchemaFormatter,

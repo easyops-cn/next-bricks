@@ -64,7 +64,7 @@ export const tableTooltip = tooltipFactory("TABLE");
 export const TableTooltip: FC = () => {
   const ref = useRef<HTMLDivElement>(null);
   const { view } = usePluginViewContext();
-  const tooltipProvider = useRef<TooltipProvider>();
+  const tooltipProvider = useRef<TooltipProvider>(undefined);
   const [loading, getEditor] = useInstance();
 
   const isRow =

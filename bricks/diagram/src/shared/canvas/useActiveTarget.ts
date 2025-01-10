@@ -3,7 +3,7 @@ import type { ActiveTarget } from "../../draw-canvas/interfaces";
 import { sameTarget } from "../../draw-canvas/processors/sameTarget";
 
 export interface UseActiveTargetOptions {
-  rootRef: React.RefObject<SVGGElement>;
+  rootRef: React.RefObject<SVGGElement | null>;
   activeTarget?: ActiveTarget | null;
   doNotResetActiveTargetForSelector?: string;
   doNotResetActiveTargetOutsideCanvas?: boolean;

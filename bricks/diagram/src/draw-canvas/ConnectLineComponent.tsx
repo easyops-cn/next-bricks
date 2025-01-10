@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, type JSX } from "react";
 import classNames from "classnames";
 import type { ConnectLineState } from "./interfaces";
 import type { PositionTuple, TransformLiteral } from "../diagram/interfaces";

@@ -9,7 +9,7 @@ import {
 import type { ActiveTarget } from "../../draw-canvas/interfaces";
 
 export interface UseZoomOptions {
-  rootRef: React.RefObject<SVGSVGElement>;
+  rootRef: React.RefObject<SVGSVGElement | null>;
   zoomable?: boolean;
   scrollable?: boolean;
   pannable?: boolean;

@@ -51,10 +51,10 @@ export function getLegacyUseProvider(LegacyReact: typeof React) {
     const suspenseStatus = LegacyReact.useRef<"pending" | "error" | "success">(
       "pending"
     );
-    const suspender = LegacyReact.useRef<Promise<TData>>();
+    const suspender = LegacyReact.useRef<Promise<TData>>(undefined);
     const mounted = LegacyReact.useRef(false);
-    const error = LegacyReact.useRef<UseProviderError>();
-    const response = LegacyReact.useRef<Res<TData>>();
+    const error = LegacyReact.useRef<UseProviderError>(undefined);
+    const response = LegacyReact.useRef<Res<TData>>(undefined);
     const data = LegacyReact.useRef<TData | undefined>(defaults.data);
     const forceUpdate = LegacyReact.useReducer(() => ({}), [])[1];
 

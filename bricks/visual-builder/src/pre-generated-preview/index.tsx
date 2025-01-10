@@ -94,7 +94,7 @@ export function PreGeneratedPreviewComponent({
   uiVersion,
   app,
 }: PreGeneratedPreviewComponentProps) {
-  const iframeRef = useRef<HTMLIFrameElement>();
+  const iframeRef = useRef<HTMLIFrameElement>(undefined);
   const [ready, setReady] = useState(false);
   const [injected, setInjected] = useState(false);
 

@@ -14,7 +14,7 @@ export default function ChartComponent({
   };
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const chartRef = useRef<Chart>();
+  const chartRef = useRef<Chart>(undefined);
 
   const dataSource = useMemo(() => {
     return data?.list ?? [];

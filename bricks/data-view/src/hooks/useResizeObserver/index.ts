@@ -25,7 +25,7 @@ export function useResizeObserver<T extends Element = Element>(
     onResize,
   } = props || {};
 
-  const localRef = useRef<T>();
+  const localRef = useRef<T>(undefined);
   const ref = targetRef ?? localRef;
   const [size, setSize] = useState<ElementSize>({ clientWidth: 0, clientHeight: 0 });
 

@@ -1,5 +1,5 @@
 import { describe, test, expect, jest } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import "./";
 import type { ChatAgent } from "./index.js";
 import { createSSEStream } from "@next-core/utils/general";

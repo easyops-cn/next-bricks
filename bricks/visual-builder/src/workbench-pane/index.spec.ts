@@ -1,6 +1,6 @@
 import { describe, test, expect } from "@jest/globals";
 import { fireEvent } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import "./index.js";
 import { WorkbenchPane } from "./index.js";
 

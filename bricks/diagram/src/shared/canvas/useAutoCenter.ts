@@ -11,7 +11,7 @@ import {
 import { transformToCenter } from "../../draw-canvas/processors/transformToCenter";
 
 export interface UseAutoCenterOptions {
-  rootRef: React.RefObject<SVGSVGElement>;
+  rootRef: React.RefObject<SVGSVGElement | null>;
   cells: Cell[];
   layoutInitialized: boolean;
   zoomable?: boolean;

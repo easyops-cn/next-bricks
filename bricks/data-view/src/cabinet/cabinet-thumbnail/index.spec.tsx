@@ -6,7 +6,7 @@ import {
   afterEach,
   jest,
 } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import "./index.jsx";
 import { CabinetThumbnail, CabinetThumbnailComponent } from "./index.jsx";
 import { render } from "@testing-library/react";

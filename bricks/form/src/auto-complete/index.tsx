@@ -188,7 +188,7 @@ export function EoAutoCompleteComponent(props: AutoCompleteProps) {
   const [filteredOptions, setFilteredOptions] = useState<any[]>([]);
   const [active, setActive] = useState(false);
   const [value, setValue] = useState<string>("");
-  const inputRef = useRef<any>();
+  const inputRef = useRef<any>(undefined);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const originalOptions: OptionType[] = useMemo(() => {

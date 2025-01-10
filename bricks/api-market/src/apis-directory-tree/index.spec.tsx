@@ -1,6 +1,6 @@
 import { describe, test, expect, jest } from "@jest/globals";
 import { fireEvent } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import "./";
 import type { ApisDirectoryTree } from "./index.js";
 
@@ -114,7 +114,7 @@ describe("api-market.apis-directory-tree", () => {
       title="第一层级 - 1"
     >
       第一层级 - 1
-       
+
       <span>
         (
         3
@@ -215,7 +215,7 @@ describe("api-market.apis-directory-tree", () => {
       title="第一层级 - 1"
     >
       第一层级 - 1
-       
+
       <span>
         (
         3
@@ -250,7 +250,7 @@ describe("api-market.apis-directory-tree", () => {
       title="第二层级 - 1"
     >
       第二层级 - 1
-       
+
       <span>
         (
         3
@@ -301,7 +301,7 @@ describe("api-market.apis-directory-tree", () => {
       title="第一层级 - 1"
     >
       第一层级 - 1
-       
+
       <span>
         (
         3
@@ -337,7 +337,7 @@ describe("api-market.apis-directory-tree", () => {
       title="第二层级 - 1"
     >
       第二层级 - 1
-       
+
       <span>
         (
         3
@@ -442,7 +442,7 @@ describe("api-market.apis-directory-tree", () => {
       title="第一层级 - 1"
     >
       第一层级 - 1
-       
+
       <span>
         (
         3
@@ -478,7 +478,7 @@ describe("api-market.apis-directory-tree", () => {
       title="第二层级 - 1"
     >
       第二层级 - 1
-       
+
       <span>
         (
         3
@@ -582,7 +582,7 @@ describe("api-market.apis-directory-tree", () => {
       title="第一层级 - 1"
     >
       第一层级 - 1
-       
+
       <span>
         (
         3

@@ -1,5 +1,5 @@
 // istanbul ignore file: experimental
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, type JSX } from "react";
 import classNames from "classnames";
 import type { ComputedLineConnecterConf, LineSettings } from "./interfaces";
 import type {

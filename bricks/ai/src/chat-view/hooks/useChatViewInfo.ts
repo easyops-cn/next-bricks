@@ -61,8 +61,8 @@ export function useChatViewInfo({
   const [msgEnd, setMsgEnd] = useState<boolean>(false);
   const [msgList, setMsgList] = useState<MessageItem[]>([]);
   const [searchStr, setSearchStr] = useState<string>("");
-  const chattingMessageItem = useRef<MessageItem>();
-  const sessionSearchQuery = useRef<string | undefined>();
+  const chattingMessageItem = useRef<MessageItem>(undefined);
+  const sessionSearchQuery = useRef<string | undefined>(undefined);
   const haveCreatedSession = useRef<boolean>(false);
   const [toolNames, setToolNames] = useState<Map<string, string | null>>(
     new Map()
@@ -112,10 +112,10 @@ export function useChatViewInfo({
 
   const defaultNewSessionItem = useMemo(
     () =>
-      ({
+      (({
         conversationId: NEW_SESSION_ID,
-        title: "新建会话",
-      }) as SessionItem,
+        title: "新建会话"
+      }) as SessionItem),
     []
   );
 

@@ -1,6 +1,6 @@
 import { fireEvent, render } from "@testing-library/react";
 import { describe, test, expect, jest } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import "./index.jsx";
 import { AppWall } from "./index.jsx";
 import { dataSource, relations } from "./mockData.js";

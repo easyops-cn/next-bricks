@@ -1,5 +1,5 @@
 import { describe, test, expect, jest } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import "./index.jsx";
 import { TabItem, TabsDrawer, TabsDrawerComponent } from "./index.jsx";
 import { render, fireEvent } from "@testing-library/react";

@@ -98,7 +98,7 @@ export function ChatPreviewComponent({
   inspecting,
   onActiveTargetChange,
 }: ChatPreviewComponentProps) {
-  const iframeRef = useRef<HTMLIFrameElement>();
+  const iframeRef = useRef<HTMLIFrameElement>(undefined);
   const [ready, setReady] = useState(false);
   const [initialized, setInitialized] = useState(false);
   const [scroll, setScroll] = useState({ x: 0, y: 0 });

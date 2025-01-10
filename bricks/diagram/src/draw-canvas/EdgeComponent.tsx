@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState, type JSX } from "react";
 import classNames from "classnames";
 import { uniqueId } from "lodash";
 import ResizeObserver from "resize-observer-polyfill";

@@ -1,7 +1,7 @@
 import { useContractList } from "./useContractList";
 import { ContractCenterApi_searchContract } from "@next-api-sdk/next-builder-sdk";
 import { renderHook } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 
 jest.mock("@next-api-sdk/next-builder-sdk");
 

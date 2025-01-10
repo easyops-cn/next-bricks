@@ -1,6 +1,6 @@
 import { fireEvent } from "@testing-library/react";
 import { describe, test, expect } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import "./cabinet-app-layer/index.jsx";
 import "./cabinet-button/index.jsx";
 import "./cabinet-container/index.jsx";

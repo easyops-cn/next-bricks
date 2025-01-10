@@ -1,7 +1,7 @@
 import React from "react";
 import { describe, test, expect } from "@jest/globals";
 import { render, prettyDOM, fireEvent } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import { createHistory, getHistory } from "@next-core/runtime";
 import { initMenuItemAndMatchCurrentPathKeys } from "@next-shared/general/menu";
 import "./index.jsx";

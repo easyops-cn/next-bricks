@@ -1,7 +1,7 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import { MoreOption } from "./MoreOption";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 
 describe("MoreOption", () => {
   it("should work", async () => {

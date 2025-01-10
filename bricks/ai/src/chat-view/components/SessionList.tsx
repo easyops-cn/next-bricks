@@ -72,7 +72,7 @@ export function SessionList(): React.ReactNode {
   const searchQueryRef = useRef<string>("");
   const editModalRef = useRef<Modal>(null);
   const editFormRef = useRef<Form>(null);
-  const editRawDataRef = useRef<Partial<SessionItemProps>>();
+  const editRawDataRef = useRef<Partial<SessionItemProps>>(undefined);
   const editConversationIdRef = useRef<string>("");
 
   const getFitLimit = () => {

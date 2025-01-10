@@ -96,7 +96,7 @@ function WorkbenchPaneComponent({
     }
   }, [activatedOnce, internalActive, onFirstActivated]);
 
-  const scrollBodyRef = useRef<HTMLDivElement>();
+  const scrollBodyRef = useRef<HTMLDivElement>(undefined);
 
   const [scrolled, setScrolled] = useState(false);
 

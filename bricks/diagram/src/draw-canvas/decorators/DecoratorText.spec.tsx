@@ -1,5 +1,5 @@
 import React from "react";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import { describe, test, expect } from "@jest/globals";
 import { render, fireEvent } from "@testing-library/react";
 import { DecoratorText } from "./DecoratorText";

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, type JSX } from "react";
 import classNames from "classnames";
 import type {
   ActiveTarget,

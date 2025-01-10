@@ -23,7 +23,7 @@ export interface UserViewHook {
 
 export function useUserView(query: UserViewQuery | undefined): UserViewHook {
   const [userViewReady, setUserViewReady] = useState(!query);
-  const userViewIdRef = useRef<string>();
+  const userViewIdRef = useRef<string>(undefined);
   const [userViewNodesMap, setUserViewNodesMap] =
     useState<UserViewNodesMap | null>(null);
   const queue = useMemo(() => createAsyncQueue(), []);

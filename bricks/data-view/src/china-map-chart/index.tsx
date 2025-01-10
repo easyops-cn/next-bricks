@@ -151,10 +151,10 @@ export function ChinaMapChartComponent(props: ChinaMapChartProps) {
     detailContentStyle = {},
     fillContainer,
   } = props;
-  const mapRef = useRef<HTMLDivElement>();
-  const slotRef = useRef<HTMLSlotElement>();
+  const mapRef = useRef<HTMLDivElement>(undefined);
+  const slotRef = useRef<HTMLSlotElement>(undefined);
   const [showData, setShowData] = useState<DataSource>();
-  const showDataRef = useRef<DataSource>();
+  const showDataRef = useRef<DataSource>(undefined);
   const [textPosition, setTextPosition] = useState<{
     left: string;
     top: string;

@@ -196,7 +196,7 @@ export function RawDataPreviewComponent({
   onApprove,
   onViewAttrPrompt,
 }: RawDataPreviewComponentProps) {
-  const iframeRef = useRef<HTMLIFrameElement>();
+  const iframeRef = useRef<HTMLIFrameElement>(undefined);
   const [ready, setReady] = useState(false);
   const [injected, setInjected] = useState(false);
   const propertyToggleStateRef = useRef<string[]>([]);

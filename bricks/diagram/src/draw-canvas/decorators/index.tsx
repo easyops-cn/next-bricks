@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type JSX } from "react";
 import type { BasicDecoratorProps } from "../interfaces";
 import { DecoratorArea } from "./DecoratorArea";
 import { DecoratorText } from "./DecoratorText";

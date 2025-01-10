@@ -2,7 +2,7 @@ import { describe, test, expect } from "@jest/globals";
 import React from "react";
 import "./index.jsx";
 import {ParticleAnimationComponent, ParticleAnimation,ColorType} from "./index.js";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import {render} from "@testing-library/react";
 
 describe("data-view.particle-animation",()=>{

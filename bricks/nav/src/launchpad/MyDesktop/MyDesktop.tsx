@@ -26,7 +26,7 @@ enum ModeType {
 
 let remberMode = ModeType.Sitemap;
 
-export function MyDesktop(props: MyDesktopProps, ref: any): React.ReactElement {
+export function MyDesktop(props: MyDesktopProps): React.ReactElement {
   const [recentlyVisitedList] = useState(launchpadService.getAllVisitors());
   const [favoriteList, setFavoriteList] = useState<
     LaunchpadApi_ListCollectionResponseItem[]

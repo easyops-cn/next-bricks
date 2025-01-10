@@ -113,7 +113,7 @@ export function CabinetContainerComponent(
 ): React.ReactElement {
   const { type, data, status, customTitle, handleClick, handleDbClick } = props;
   const isDbClick = useRef<boolean>(false);
-  const timerRef = useRef<number>();
+  const timerRef = useRef<number>(undefined);
 
   const [containerRef, { clientWidth, clientHeight }] =
     useResizeObserver<HTMLDivElement>();

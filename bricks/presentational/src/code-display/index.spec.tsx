@@ -1,5 +1,5 @@
 import { describe, test, expect, jest } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import { fireEvent } from "@testing-library/react";
 import ResizeObserver from "resize-observer-polyfill";
 import fileSaver from "file-saver";

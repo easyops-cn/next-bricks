@@ -1,5 +1,5 @@
 // istanbul ignore file: experimental
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef, type JSX } from "react";
 import type { NodePosition } from "../diagram/interfaces";
 import { useHoverStateContext } from "./HoverStateContext";
 import type { ControlPoint, EdgeCell, EditableLine } from "./interfaces";

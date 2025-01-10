@@ -1,5 +1,5 @@
 import { describe, test, expect, jest } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import "./";
 import type { EoContractSelect } from "./index.js";
 import { ContractCenterApi_searchContract } from "@next-api-sdk/next-builder-sdk";

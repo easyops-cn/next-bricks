@@ -101,7 +101,7 @@ function DropdownMenuElement(props: DropdownMenuProps): React.ReactElement {
 
   const [isDropHidden, setIsDropHidden] = React.useState(true);
 
-  const inputRef = useRef<HTMLInputElement>();
+  const inputRef = useRef<HTMLInputElement>(undefined);
   const [inputValue, setInputValue] = React.useState("");
   const [isInputFocused, setIsInputFocused] = React.useState(false);
 

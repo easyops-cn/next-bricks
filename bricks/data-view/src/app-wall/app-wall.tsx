@@ -126,11 +126,11 @@ export function AppWallElement(props: AppWallProps): ReactElement {
   const [curClickCardItemAppData, setCurClickCardItemAppData] =
     useState<AppData>(null);
 
-  const containerRef = useRef<HTMLDivElement>();
-  const appwallRef = useRef<HTMLDivElement>();
-  const closeBtnRef = useRef<HTMLDivElement>();
-  const maskRef = useRef<HTMLDivElement>();
-  const systemCardRef = useRef<SystemCard>();
+  const containerRef = useRef<HTMLDivElement>(undefined);
+  const appwallRef = useRef<HTMLDivElement>(undefined);
+  const closeBtnRef = useRef<HTMLDivElement>(undefined);
+  const maskRef = useRef<HTMLDivElement>(undefined);
+  const systemCardRef = useRef<SystemCard>(undefined);
   const popoverRef = useRef<
     HTMLElement &
       Ele & {
@@ -138,13 +138,13 @@ export function AppWallElement(props: AppWallProps): ReactElement {
         setPosition: (pos: { x: number; y: number }) => void;
         setVisible: (visible: boolean) => void;
       }
-  >();
+  >(undefined);
 
-  const rendererRef = useRef<CSS3DRenderer>();
-  const sceneRef = useRef<Scene>();
-  const cameraRef = useRef<PerspectiveCamera>();
-  const controlsRef = useRef<TrackballControls>();
-  const graph3DViewRef = useRef<CSS3DObject>(); // 梯形模型
+  const rendererRef = useRef<CSS3DRenderer>(undefined);
+  const sceneRef = useRef<Scene>(undefined);
+  const cameraRef = useRef<PerspectiveCamera>(undefined);
+  const controlsRef = useRef<TrackballControls>(undefined);
+  const graph3DViewRef = useRef<CSS3DObject>(undefined); // 梯形模型
   const targetsRef = useRef<Targets>({
     table: [],
     curve: [],

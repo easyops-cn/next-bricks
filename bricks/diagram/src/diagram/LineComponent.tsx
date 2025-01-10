@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type JSX } from "react";
 import classNames from "classnames";
 import type { LineTarget, RenderedLine, LineMaskRects } from "./interfaces";
 
@@ -60,7 +60,7 @@ export function LineComponent({
   }
 
   return (
-    <g
+    (<g
       className={classNames("line", {
         interactable: line.interactable,
         active,
@@ -94,7 +94,9 @@ export function LineComponent({
         />
       )}
       <path
-        ref={(element) => linePaths.set(line.$id, element)}
+        ref={element => {
+          linePaths.set(line.$id, element);
+        }}
         stroke={strokeColor}
         strokeWidth={strokeWidth}
         d={d}
@@ -113,6 +115,6 @@ export function LineComponent({
         markerEnd={`url(#${activeLineMarkerPrefix}end)`}
         mask={mask}
       />
-    </g>
+    </g>)
   );
 }

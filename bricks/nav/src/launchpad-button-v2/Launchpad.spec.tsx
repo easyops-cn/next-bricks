@@ -1,6 +1,6 @@
 import React from "react";
 import { describe, test, expect, jest } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import { render, fireEvent } from "@testing-library/react";
 import { initializeI18n } from "@next-core/i18n";
 import { LaunchpadApi_getLaunchpadInfo } from "@next-api-sdk/micro-app-standalone-sdk";

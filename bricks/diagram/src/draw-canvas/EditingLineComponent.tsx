@@ -1,5 +1,5 @@
 // istanbul ignore file: experimental
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState, type JSX } from "react";
 import classNames from "classnames";
 import type {
   Cell,

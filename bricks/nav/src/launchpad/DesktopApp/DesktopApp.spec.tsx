@@ -2,7 +2,7 @@ import React from "react";
 import { render, fireEvent, createEvent } from "@testing-library/react";
 import { MicroApp } from "@next-core/types";
 import { DesktopApp } from "./DesktopApp.js";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 
 jest.mock("@next-core/runtime", () => ({
   getRuntime: () => ({

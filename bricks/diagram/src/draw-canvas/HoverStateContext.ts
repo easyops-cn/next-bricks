@@ -19,9 +19,9 @@ export interface HoverState {
 }
 
 export const HoverStateContext = React.createContext<{
-  rootRef: React.RefObject<SVGSVGElement>;
+  rootRef: React.RefObject<SVGSVGElement | null>;
   smartConnectLineState: SmartConnectLineState | null;
-  unsetHoverStateTimeoutRef: React.MutableRefObject<number | null>;
+  unsetHoverStateTimeoutRef: React.RefObject<number | null>;
   hoverState: HoverState | null;
   activeEditableEdge: EdgeCell | null;
   lineEditorState: LineEditorState | null;

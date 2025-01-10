@@ -302,7 +302,7 @@ export function DesktopSlider(props: DesktopSliderProps): React.ReactElement {
     responsibleRef.current = false;
   };
 
-  const resetDeltaTimeoutRef = React.useRef<any>();
+  const resetDeltaTimeoutRef = React.useRef<any>(undefined);
 
   const handleWheel = (e: React.WheelEvent): void => {
     deltaXRef.current += e.deltaX;

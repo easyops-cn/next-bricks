@@ -1,5 +1,5 @@
 import { describe, test, expect, jest } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import dayjs from "dayjs";
 import isoWeek from "dayjs/plugin/isoWeek.js";
 import advancedFormat from "dayjs/plugin/advancedFormat.js";

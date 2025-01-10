@@ -1,5 +1,5 @@
 import { describe, test, expect } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import "./index.jsx";
 import type { TabItem } from "./index.jsx";
 import type { GeneralIconProps } from "@next-bricks/icons/general-icon";

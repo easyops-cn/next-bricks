@@ -1,5 +1,5 @@
 import { describe, test, expect, jest } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import { useCurrentApp, useNavConfig } from "@next-core/react-runtime";
 import "./";
 import { EoFrameBreadcrumb } from "./index.js";

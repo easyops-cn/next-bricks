@@ -6,6 +6,7 @@ import { __secret_internals, handleHttpError } from "@next-core/runtime";
 import { getLegacyReact, getLegacyReactDOM } from "../dll.js";
 
 export interface ReactUseBrickProps {
+  key?: string | number;
   useBrick: UseSingleBrickConf;
   data?: unknown;
   refCallback?: (element: HTMLElement | null) => void;
@@ -25,7 +26,7 @@ export function ReactUseBrick({
   const [renderResult, setRenderResult] =
     LegacyReact.useState<__secret_internals.RenderUseBrickResult | null>(null);
   const mountResult =
-    LegacyReact.useRef<__secret_internals.MountUseBrickResult>();
+    LegacyReact.useRef<__secret_internals.MountUseBrickResult>(undefined);
   const [renderKey, setRenderKey] = LegacyReact.useState<number>();
   const IdCounterRef = LegacyReact.useRef(0);
   const initialRenderId = LegacyReact.useMemo(

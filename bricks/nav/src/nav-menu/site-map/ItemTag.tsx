@@ -171,8 +171,8 @@ export function QuickVisitItem(props: QuickVisitTagProps): React.ReactElement {
   const { t } = useTranslation(NS);
   const { onAllowDrag } = useContext(DragContext);
   const { data, onFavorite, groupId } = props;
-  const suffixRef = useRef<any>();
-  const iconRef = useRef<any>();
+  const suffixRef = useRef<any>(undefined);
+  const iconRef = useRef<any>(undefined);
 
   const handleRemove = useCallback(() => {
     collectService.removeItemFromFavorite(groupId, data);
@@ -244,7 +244,7 @@ export function StarIcon({
   active,
 }: StarIconProps): React.ReactElement {
   const { t } = useTranslation(NS);
-  const iconRef = useRef<any>();
+  const iconRef = useRef<any>(undefined);
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();

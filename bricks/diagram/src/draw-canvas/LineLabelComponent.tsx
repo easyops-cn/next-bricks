@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, type JSX } from "react";
 import { checkIfOfComputed } from "@next-core/runtime";
 import { ReactUseBrick } from "@next-core/react-runtime";
 import classNames from "classnames";

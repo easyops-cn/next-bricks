@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@next-core/element": "^1.2.15",
-    "@next-core/react-element": "^1.0.34",
+    "@next-core/react-element": "^2.0.0-alpha.0",
     "lodash": "^4.17.21"
   },
   "devDependencies": {

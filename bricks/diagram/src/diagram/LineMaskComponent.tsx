@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type JSX } from "react";
 import type { RenderedLineLabel, SimpleRect } from "./interfaces";
 
 export interface LineMaskComponentProps {

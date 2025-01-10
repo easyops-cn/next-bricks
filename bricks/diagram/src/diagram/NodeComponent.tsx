@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState, type JSX } from "react";
 import { ReactUseBrick } from "@next-core/react-runtime";
 import type {
   DiagramNode,

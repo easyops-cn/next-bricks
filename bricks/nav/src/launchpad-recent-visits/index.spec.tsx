@@ -1,5 +1,5 @@
 import { describe, test, expect, jest, beforeEach } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import "./";
 import type { EoLaunchpadRecentVisits } from "./index.js";
 import { initializeI18n } from "@next-core/i18n";

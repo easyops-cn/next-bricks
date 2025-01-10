@@ -1,5 +1,5 @@
 import React from "react";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import { render, fireEvent } from "@testing-library/react";
 import { MyDesktop } from "./MyDesktop.js";
 import { launchpadService } from "../LaunchpadService.js";

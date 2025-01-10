@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { describe, test, expect } from "@jest/globals";
 import useTransform from "./useTransform.js";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 
 describe("useTransform", () => {
   it("should work", async (): Promise<void> => {

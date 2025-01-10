@@ -1,5 +1,5 @@
 import { describe, test, expect } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import "./";
 import { LightsComponentTitle } from "./index.js";
 describe("data-view.lights-component-title", () => {
@@ -9,7 +9,7 @@ describe("data-view.lights-component-title", () => {
     ) as LightsComponentTitle;
     expect(element.shadowRoot).toBeFalsy();
     element.componentTitle = "组件标题";
-    
+
     act(() => {
       document.body.appendChild(element);
     });
@@ -28,7 +28,7 @@ describe("data-view.lights-component-title", () => {
     ) as LightsComponentTitle;
     expect(element.shadowRoot).toBeFalsy();
     element.componentTitle = "组件标题2";
-    element.theme = "dark";   
+    element.theme = "dark";
     act(() => {
       document.body.appendChild(element);
     });

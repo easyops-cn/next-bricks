@@ -1,5 +1,5 @@
 import { describe, test, expect } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import "./index.js";
 import { GearBackground } from "./index.js";
 describe("data-view.gear-background", () => {

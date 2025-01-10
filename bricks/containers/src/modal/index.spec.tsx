@@ -1,6 +1,6 @@
 import { describe, test, expect } from "@jest/globals";
 import { getByTestId, fireEvent } from "@testing-library/dom";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import "./";
 import { Modal } from "./index.js";
 

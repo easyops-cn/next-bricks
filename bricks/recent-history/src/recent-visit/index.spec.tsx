@@ -6,7 +6,7 @@ import {
   beforeEach,
   afterEach,
 } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import "./index.jsx";
 import { RecentVisit } from "./index.jsx";
 import { clearHistory, pushHistory } from "../data-providers/visit-history.js";

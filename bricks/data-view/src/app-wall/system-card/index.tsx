@@ -123,7 +123,7 @@ export function SystemCardComponent(
     handleClick,
     containerStyle,
   } = props;
-  const descriptionRef = useRef<HTMLDivElement>();
+  const descriptionRef = useRef<HTMLDivElement>(undefined);
 
   useEffect(() => {
     descriptionRef.current?.scrollTo?.(0, 0);

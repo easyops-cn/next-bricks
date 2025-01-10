@@ -1,5 +1,5 @@
 import { describe, test, expect } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import "./";
 import { TabsPageTitle } from "./index.js";
 import { fireEvent } from "@testing-library/react";

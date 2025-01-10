@@ -1,5 +1,5 @@
 // istanbul ignore file: experimental
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, type JSX } from "react";
 import { useHoverStateContext } from "./HoverStateContext";
 import type {
   ActiveTarget,

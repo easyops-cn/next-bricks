@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState, type JSX } from "react";
 import type { BasicDecoratorProps } from "../interfaces";
 import classNames from "classnames";
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type JSX } from "react";
 import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 import { unified } from "unified";
 import remarkParse from "remark-parse";
@@ -24,12 +24,12 @@ export function MarkdownComponent({ content }: MarkdownComponentProps) {
       .use([rehypePrism])
       .use(rehypeReact, production as RehypeReactOptions)
       .process(content)
-      .then((vFile) => {
+      .then((vFile: any) => {
         if (!ignore) {
           setReactContent(vFile.result);
         }
       })
-      .catch((error) => {
+      .catch((error: any) => {
         if (!ignore) {
           // eslint-disable-next-line no-console
           console.error("Convert markdown failed:", error);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type JSX } from "react";
 import type { LineMarkerType } from "./interfaces";
 
 export interface MarkerComponentProps extends BaseMarkerComponentProps {
