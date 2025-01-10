@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.7.7](https://github.com/easyops-cn/next-bricks/compare/@next-shared/form@0.7.6...@next-shared/form@0.7.7) (2025-01-10)
+
+**Note:** Version bump only for package @next-shared/form
+
+
+
+
+
 ## [0.7.6](https://github.com/easyops-cn/next-bricks/compare/@next-shared/form@0.7.5...@next-shared/form@0.7.6) (2024-12-25)
 
 **Note:** Version bump only for package @next-shared/form

@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/mini-chart@0.1.3...@next-bricks/mini-chart@0.1.4) (2025-01-10)
+
+**Note:** Version bump only for package @next-bricks/mini-chart
+
+
+
+
+
 ## [0.1.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/mini-chart@0.1.2...@next-bricks/mini-chart@0.1.3) (2024-12-25)
 
 **Note:** Version bump only for package @next-bricks/mini-chart

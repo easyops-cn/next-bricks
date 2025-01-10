@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.14.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.14.0...@next-shared/icons@0.14.1) (2025-01-10)
+
+**Note:** Version bump only for package @next-shared/icons
+
+
+
+
+
 # [0.14.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.13.1...@next-shared/icons@0.14.0) (2025-01-09)
 
 

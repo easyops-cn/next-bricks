@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/visual-builder",
-  "version": "1.36.24",
+  "version": "1.36.25",
   "homepage": "https://github.com/easyops-cn/next-bricks/tree/master/bricks/visual-builder",
   "repository": {
     "type": "git",
@@ -50,8 +50,8 @@
     "@next-core/theme": "^1.5.4",
     "@next-core/types": "^1.14.0",
     "@next-core/utils": "^1.7.30",
-    "@next-shared/general": "^0.10.4",
-    "@next-shared/markdown": "^0.2.4",
+    "@next-shared/general": "^0.10.5",
+    "@next-shared/markdown": "^0.2.5",
     "classnames": "^2.3.2",
     "html2canvas": "^1.4.1",
     "lodash": "^4.17.21",
