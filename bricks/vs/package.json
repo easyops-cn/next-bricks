@@ -66,7 +66,7 @@
     "@next-core/theme": "^1.5.4",
     "@next-core/utils": "^1.7.30",
     "@next-shared/form": "^0.7.7",
-    "monaco-editor": "^0.50.0",
+    "monaco-editor": "^0.52.2",
     "monaco-editor-webpack-plugin": "^7.1.0",
     "react": "0.0.0-experimental-ee8509801-20230117",
     "yaml": "^2.5.1"
