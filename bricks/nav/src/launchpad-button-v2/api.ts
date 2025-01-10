@@ -6,6 +6,8 @@ import {
   LaunchpadApi_listCollectionV2,
 } from "@next-api-sdk/user-service-sdk";
 import { InstanceApi_postSearchV3 } from "@next-api-sdk/cmdb-sdk";
+import { sortBy } from "lodash";
+import { auth } from "@next-core/easyops-runtime";
 import type {
   FavMenuItem,
   MenuGroupData,
@@ -19,7 +21,6 @@ import type {
 } from "./interfaces";
 import { FAVORITES_LIMIT } from "./constants";
 import { getAppLocaleName } from "../shared/getLocaleName";
-import { sortBy } from "lodash";
 
 export async function fetchLaunchpadInfo() {
   const launchpadInfo = await LaunchpadApi_getLaunchpadInfo(
@@ -34,7 +35,9 @@ export async function fetchLaunchpadInfo() {
   for (const storyboard of launchpadInfo.storyboards as Storyboard[]) {
     const app = storyboard.app as unknown as MicroAppWithInstanceId;
     app.localeName = getAppLocaleName(app.locales, app.name);
-    microAppsById.set(app.id, app);
+    if (!auth.isBlockedPath?.(app.homepage)) {
+      microAppsById.set(app.id, app);
+    }
   }
 
   const menuGroups: MenuGroupData[] = [];
@@ -57,8 +60,10 @@ export async function fetchLaunchpadInfo() {
           break;
         }
         case "custom":
-          items.push(item);
-          customLinksById.set(item.id, item);
+          if (!auth.isBlockedHref?.(item.url)) {
+            items.push(item);
+            customLinksById.set(item.id, item);
+          }
           break;
         case "dir": {
           const subItems: MenuItemDataNormal[] = [];
@@ -73,7 +78,10 @@ export async function fetchLaunchpadInfo() {
                   menuIcon: app.menuIcon,
                 } as MenuItemDataApp);
               }
-            } else if (subItem.type === "custom") {
+            } else if (
+              subItem.type === "custom" &&
+              !auth.isBlockedHref?.(subItem.url)
+            ) {
               subItems.push(subItem as MenuItemDataCustom);
               customLinksById.set(subItem.id, subItem);
             }
@@ -111,6 +119,7 @@ async function fetchRawFavorites() {
 export async function fetchFavorites() {
   const list = await fetchRawFavorites();
   const stored: FavMenuItem[] = [];
+  // 不屏蔽收藏夹中的任何项，否则无法取消收藏
   for (const fav of list) {
     if (fav.type === "microApp") {
       const app = fav.relatedApp as Omit<MicroAppWithInstanceId, "id"> & {
@@ -220,20 +229,28 @@ export async function fetchPlatformCategories(): Promise<
   ).list;
 
   const _categories = categories?.map((category) => {
-    const apps = category.platformApps.map((app: Record<string, any>) => {
-      return {
-        type: "app",
-        name: getAppLocaleName(app.locales, app.name),
-        id: app.appId,
-        url: app.homepage,
-        menuIcon: app.menuIcon,
-        description: app.description,
-        instanceId: app.instanceId,
-        order: app["@"]?.order,
-      };
-    }) as MenuItemDataApp[];
-    const customItems = category.platformItems.map(
-      (item: Record<string, any>) => {
+    const apps = category.platformApps
+      .map((app: Record<string, any>) => {
+        if (auth.isBlockedPath?.(app.homepage)) {
+          return null;
+        }
+        return {
+          type: "app",
+          name: getAppLocaleName(app.locales, app.name),
+          id: app.appId,
+          url: app.homepage,
+          menuIcon: app.menuIcon,
+          description: app.description,
+          instanceId: app.instanceId,
+          order: app["@"]?.order,
+        };
+      })
+      .filter(Boolean) as MenuItemDataApp[];
+    const customItems = category.platformItems
+      .map((item: Record<string, any>) => {
+        if (auth.isBlockedHref?.(item.url)) {
+          return null;
+        }
         return {
           type: "custom",
           name: item.name,
@@ -244,8 +261,8 @@ export async function fetchPlatformCategories(): Promise<
           instanceId: item.instanceId,
           order: item["@"]?.order,
         };
-      }
-    ) as MenuItemDataCustom[];
+      })
+      .filter(Boolean) as MenuItemDataCustom[];
 
     const items = sortBy([...apps, ...customItems], "order");
     return {

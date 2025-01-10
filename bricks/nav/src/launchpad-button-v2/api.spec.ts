@@ -12,6 +12,16 @@ import {
 jest.mock("@next-api-sdk/micro-app-standalone-sdk");
 jest.mock("@next-api-sdk/user-service-sdk");
 jest.mock("@next-api-sdk/cmdb-sdk");
+jest.mock("@next-core/easyops-runtime", () => ({
+  auth: {
+    isBlockedPath(path: string) {
+      return path?.includes("blocked");
+    },
+    isBlockedHref(href: string) {
+      return href?.includes("blocked");
+    },
+  },
+}));
 
 const getLaunchpadInfo = LaunchpadApi_getLaunchpadInfo as jest.Mock;
 const createCollectionV2 = LaunchpadApi_createCollectionV2 as jest.Mock;
@@ -52,7 +62,23 @@ describe("fetchLaunchpadInfo", () => {
                   id: "dir-cmdb-custom",
                   name: "Dir Custom",
                 },
+                {
+                  type: "custom",
+                  id: "blocked-item",
+                  name: "Blocked Item",
+                  url: "/blocked",
+                },
               ],
+            },
+            {
+              type: "app",
+              id: "blocked-app",
+            },
+            {
+              type: "custom",
+              id: "blocked-item",
+              name: "Blocked Item",
+              url: "/blocked",
             },
           ],
         },
@@ -96,6 +122,13 @@ describe("fetchLaunchpadInfo", () => {
           app: {
             id: "oops",
             name: "Oops",
+          },
+        },
+        {
+          app: {
+            id: "blocked-app",
+            name: "Blocked App",
+            homepage: "/blocked",
           },
         },
       ],
@@ -274,6 +307,21 @@ describe("platformCategory", () => {
               },
               name: "容器部署",
             },
+            {
+              "@": {
+                order: 2,
+              },
+              _object_id: "_INSTALLED_MICRO_APP",
+              appId: "blocked-app",
+              homepage: "/blocked-app",
+              locales: {},
+              menuIcon: {
+                category: "app",
+                icon: "container",
+                lib: "easyops",
+              },
+              name: "Blocked App",
+            },
           ],
           platformItems: [
             {
@@ -307,6 +355,15 @@ describe("platformCategory", () => {
               id: "sit",
               name: "sit",
               url: "https://sit.easyops.local/next/visual-builder",
+            },
+            {
+              "@": {
+                order: 9,
+              },
+              _object_id: "DESKTOP_CUSTOM_ITEM@EASYOPS",
+              id: "blocked",
+              name: "blocked",
+              url: "https://sit.easyops.local/next/blocked-url",
             },
           ],
           type: "platform",
