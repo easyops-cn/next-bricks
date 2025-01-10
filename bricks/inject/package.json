@@ -35,16 +35,16 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-core/http": "^1.2.9",
-    "@next-core/runtime": "^1.58.4",
+    "@next-core/http": "^1.2.10",
+    "@next-core/runtime": "^1.59.0",
     "@next-core/storyboard": "^0.6.17",
     "@next-core/types": "^1.14.0",
-    "@next-core/utils": "^1.7.29",
+    "@next-core/utils": "^1.7.30",
     "html2canvas": "^1.4.1",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.23.7",
+    "@next-core/build-next-bricks": "^1.23.8",
     "@next-core/test-next": "^1.1.7"
   }
 }

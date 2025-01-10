@@ -33,14 +33,14 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-core/element": "^1.2.14",
-    "@next-core/i18n": "^1.0.71",
-    "@next-core/react-element": "^1.0.33",
+    "@next-core/element": "^1.2.15",
+    "@next-core/i18n": "^1.0.72",
+    "@next-core/react-element": "^1.0.34",
     "@next-core/theme": "^1.5.4",
     "react": "0.0.0-experimental-ee8509801-20230117"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.23.7",
+    "@next-core/build-next-bricks": "^1.23.8",
     "@next-core/test-next": "^1.1.7"
   }
 }
