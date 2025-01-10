@@ -37,12 +37,12 @@
   "dependencies": {
     "@antv/l7": "2.22.0",
     "@antv/l7-maps": "2.22.0",
-    "@next-core/element": "^1.2.14",
-    "@next-core/i18n": "^1.0.71",
-    "@next-core/react-element": "^1.0.33",
-    "@next-core/react-runtime": "^1.7.6",
+    "@next-core/element": "^1.2.15",
+    "@next-core/i18n": "^1.0.72",
+    "@next-core/react-element": "^1.0.34",
+    "@next-core/react-runtime": "^1.7.7",
     "@next-core/types": "^1.14.0",
-    "@next-core/utils": "^1.7.29",
+    "@next-core/utils": "^1.7.30",
     "@next-shared/general": "^0.10.4",
     "@tweenjs/tween.js": "^19.0.0",
     "classnames": "^2.3.2",
@@ -54,7 +54,7 @@
     "three": "^0.150.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.23.7",
+    "@next-core/build-next-bricks": "^1.23.8",
     "@next-core/test-next": "^1.1.7"
   },
   "peerDependencies": {
