@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.14.1...@next-bricks/containers@1.14.2) (2025-01-10)
+
+
+### Bug Fixes
+
+* render tabs eagerly ([ae5c9f7](https://github.com/easyops-cn/next-bricks/commit/ae5c9f72b234508e0d568326ce71516c71053b1b))
+
+
+
+
+
 ## [1.14.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/containers@1.14.0...@next-bricks/containers@1.14.1) (2025-01-10)
 
 **Note:** Version bump only for package @next-bricks/containers
