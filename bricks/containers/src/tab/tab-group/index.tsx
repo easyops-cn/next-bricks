@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import styleText from "./tab.shadow.css";
@@ -135,27 +135,27 @@ function TabGroupElement({
     });
   };
 
-  const initSetTab = () => {
-    const navSlot = navSlotRef.current;
-    const navSlotChildren = navSlot.assignedElements()[0]
-      ?.childNodes as unknown as TabItem[];
-    navSlotChildren?.length > 0 &&
-      setTabs(() => {
-        const tabs: string[] = [];
-        navSlotChildren.forEach((item) => tabs.push(item.panel));
-        return tabs;
-      });
-  };
+  useLayoutEffect(() => {
+    const handleSetActive = (e: MouseEvent) => {
+      const panel = (e.target as TabItem).panel;
+      if (panel) {
+        setActiveItem(panel);
+        onTabSelect?.(panel);
+      }
+    };
 
-  const handleSetActive = useCallback((e: MouseEvent) => {
-    const panel = (e.target as TabItem).panel;
-    if (panel) {
-      setActiveItem(panel);
-      onTabSelect?.(panel);
-    }
-  }, []);
+    const initSetTab = () => {
+      const navSlot = navSlotRef.current;
+      const navSlotChildren = navSlot.assignedElements()[0]
+        ?.childNodes as unknown as TabItem[];
+      navSlotChildren?.length > 0 &&
+        setTabs(() => {
+          const tabs: string[] = [];
+          navSlotChildren.forEach((item) => tabs.push(item.panel));
+          return tabs;
+        });
+    };
 
-  useEffect(() => {
     const navSlot = navSlotRef.current;
     initSetTab();
 
@@ -165,7 +165,7 @@ function TabGroupElement({
       navSlot.removeEventListener("click", handleSetActive);
       navSlot.removeEventListener("slotchange", initSetTab);
     };
-  }, [activePanel, handleSetActive]);
+  }, [onTabSelect]);
 
   useEffect(() => {
     if (tabs.length) {
