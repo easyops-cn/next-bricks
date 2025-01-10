@@ -92,11 +92,11 @@ export function useLineMarkers({
       if (isEdgeCell(cell)) {
         const computedLineConf =
           (Array.isArray(defaultEdgeLines)
-            ? __secret_internals.legacyDoTransform(
-                { edge: cell },
+            ? transformLineConf(
                 defaultEdgeLines.find((item) =>
                   checkIfByTransform(item, { edge: cell })
-                )
+                ),
+                cell
               )
             : (
                 __secret_internals.legacyDoTransform(
@@ -173,6 +173,38 @@ export function useLineMarkers({
     return { lineConfMap: map, lineConnectorConf, markers };
   }, [cells, defaultEdgeLines, lineConnector, markerPrefix]);
 }
+
+function transformLineConf(
+  lineConf: EdgeLineConf | undefined,
+  edge: EdgeCell
+): EdgeLineConf {
+  // Do not transform useBrick
+  if (lineConf?.label?.useBrick) {
+    const {
+      label: { useBrick, ...restLabel },
+      ...restConf
+    } = lineConf;
+    const computedRestConf = __secret_internals.legacyDoTransform(
+      { edge },
+      {
+        ...restConf,
+        label: restLabel,
+      }
+    ) as EdgeLineConf;
+    return {
+      ...computedRestConf,
+      label: {
+        ...computedRestConf.label,
+        useBrick,
+      },
+    } as EdgeLineConf;
+  }
+  return __secret_internals.legacyDoTransform(
+    { edge },
+    lineConf
+  ) as EdgeLineConf;
+}
+
 export function getMarkers(lineConf: ComputedEdgeLineConf): LineMarkerConf[] {
   let lineMarkers: LineMarkerConf[] = [];
   if (lineConf.markers) {

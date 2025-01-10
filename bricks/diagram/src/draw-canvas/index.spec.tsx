@@ -541,6 +541,11 @@ describe("eo-draw-canvas", () => {
             },
           },
         },
+        label: {
+          useBrick: {
+            brick: "p",
+          },
+        },
       },
     ];
 
@@ -560,7 +565,9 @@ describe("eo-draw-canvas", () => {
     await act(() => new Promise((resolve) => setTimeout(resolve, 1)));
 
     act(() => {
-      fireEvent.mouseDown(element.shadowRoot!.querySelector(".cells div")!);
+      fireEvent.mouseDown(
+        element.shadowRoot!.querySelector(".cells div:not(.label)")!
+      );
     });
     expect(handleMouseDown).toBeCalled();
 
@@ -619,7 +626,7 @@ describe("eo-draw-canvas", () => {
     // Click on node b
     act(() => {
       fireEvent.mouseDown(
-        element.shadowRoot!.querySelectorAll(".cells div")[1]
+        element.shadowRoot!.querySelectorAll(".cells div:not(.label)")[1]
       );
     });
     expect(handleMouseDown).toBeCalled();
