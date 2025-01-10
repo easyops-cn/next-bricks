@@ -120,6 +120,24 @@ describe("visual-builder.page-arch-node", () => {
     });
     expect(onLabelChange).toBeCalledTimes(0);
 
+    // Composition blocks enter behavior
+    act(() => {
+      fireEvent.compositionStart(
+        element.shadowRoot?.querySelector(".label-input")
+      );
+    });
+    act(() => {
+      fireEvent.keyDown(element.shadowRoot?.querySelector(".label-input"), {
+        key: "Enter",
+      });
+    });
+    expect(onLabelChange).toBeCalledTimes(0);
+    act(() => {
+      fireEvent.compositionEnd(
+        element.shadowRoot?.querySelector(".label-input")
+      );
+    });
+
     act(() => {
       fireEvent.keyDown(element.shadowRoot?.querySelector(".label-input"), {
         key: "Enter",

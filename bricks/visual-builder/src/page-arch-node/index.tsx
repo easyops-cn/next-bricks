@@ -198,6 +198,7 @@ export function PageArchNodeComponent({
   const editingLabelInitialized = useRef(false);
   const [shouldEmitLabelChange, setShouldEmitLabelChange] = useState(false);
   const labelInputRef = useRef<HTMLInputElement>(null);
+  const compositionRef = useRef(false);
 
   useEffect(() => {
     setCurrentLabel(label);
@@ -247,7 +248,7 @@ export function PageArchNodeComponent({
       event.key ||
       /* istanbul ignore next: compatibility */ event.keyCode ||
       /* istanbul ignore next: compatibility */ event.which;
-    if (key === "Enter" || key === 13) {
+    if (!compositionRef.current && (key === "Enter" || key === 13)) {
       labelInputRef.current?.blur();
     }
   }, []);
@@ -309,6 +310,12 @@ export function PageArchNodeComponent({
           ref={labelInputRef}
           onChange={handleInputChange}
           onKeyDown={handleInputKeydown}
+          onCompositionStart={() => {
+            compositionRef.current = true;
+          }}
+          onCompositionEnd={() => {
+            compositionRef.current = false;
+          }}
           onBlur={handleInputBlur}
           onDoubleClick={stopPropagation}
           onContextMenu={stopPropagation}
