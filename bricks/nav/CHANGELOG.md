@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.19.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.18.4...@next-bricks/nav@1.19.0) (2025-01-10)
+
+
+### Features
+
+* support block links in launchpad by license blacklist ([110229a](https://github.com/easyops-cn/next-bricks/commit/110229aaea65784b2bc6da9500a689f262705ceb))
+
+
+
+
+
 ## [1.18.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/nav@1.18.3...@next-bricks/nav@1.18.4) (2025-01-10)
 
 **Note:** Version bump only for package @next-bricks/nav
