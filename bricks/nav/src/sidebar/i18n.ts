@@ -1,3 +1,5 @@
+import { i18n } from "@next-core/i18n";
+
 export enum K {
   CLICK_TO_FIX_NAVIGATION = "CLICK_TO_FIX_NAVIGATION",
   UNPIN_NAVIGATION = "UNPIN_NAVIGATION",
@@ -19,5 +21,7 @@ const zh: Locale = {
 export const NS = "bricks/nav/eo-sidebar";
 
 export const locales = { en, zh };
+
+export const t = i18n.getFixedT(null, NS);
 
 type Locale = { [key in K]: string };

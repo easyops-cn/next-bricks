@@ -13,16 +13,18 @@ import { Link, LinkProps } from "@next-bricks/basic/link";
 import { EoTooltip, ToolTipProps } from "@next-bricks/basic/tooltip";
 import classNames from "classnames";
 import { SidebarMenuSimpleItem } from "@next-shared/general/types";
-import { K, NS, locales } from "../i18n.js";
+import { K, NS, locales, t } from "../i18n.js";
 import { collectService } from "./CollectService.js";
-import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
+import { initializeI18n } from "@next-core/i18n";
 import { DRAG_DIRECTION, DragContext } from "./constants.js";
 
 import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
-initializeReactI18n(NS, locales);
+
+initializeI18n(NS, locales);
+
 const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 const WrappedTooltip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");
@@ -168,7 +170,6 @@ interface QuickVisitTagProps extends CellItemProps {
 }
 
 export function QuickVisitItem(props: QuickVisitTagProps): React.ReactElement {
-  const { t } = useTranslation(NS);
   const { onAllowDrag } = useContext(DragContext);
   const { data, onFavorite, groupId } = props;
   const suffixRef = useRef<any>(undefined);
@@ -243,7 +244,6 @@ export function StarIcon({
   data,
   active,
 }: StarIconProps): React.ReactElement {
-  const { t } = useTranslation(NS);
   const iconRef = useRef<any>(undefined);
 
   const handleClick = (e: React.MouseEvent) => {

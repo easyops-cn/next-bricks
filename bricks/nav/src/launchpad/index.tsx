@@ -2,12 +2,12 @@ import React from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import { LaunchpadButton as LaunchpadButtonComponent } from "./LaunchpadButton/LaunchpadButton.js";
-import { initializeReactI18n } from "@next-core/i18n/react";
+import { initializeI18n } from "@next-core/i18n";
 import "@next-core/theme";
 import { NS, locales } from "./i18n.js";
 import styleText from "./LaunchpadButton/LaunchpadButton.shadow.css";
 
-initializeReactI18n(NS, locales);
+initializeI18n(NS, locales);
 
 const { defineElement } = createDecorators();
 

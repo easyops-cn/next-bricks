@@ -1,3 +1,5 @@
+import { i18n } from "@next-core/i18n";
+
 export enum K {
   SEARCH_BY_MENU_NAME = "SEARCH_BY_MENU_NAME",
   SEARCH_HISTORY = "SEARCH_HISTORY",
@@ -44,5 +46,7 @@ const zh: Locale = {
 export const NS = "bricks/nav/nav-menu";
 
 export const locales = { en, zh };
+
+export const t = i18n.getFixedT(null, NS);
 
 type Locale = { [key in K]: string };

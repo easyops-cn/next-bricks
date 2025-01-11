@@ -10,9 +10,8 @@ import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
-import { K, NS } from "../i18n.js";
+import { K, t } from "../i18n.js";
 import { DragContext } from "./constants.js";
-import { useTranslation } from "@next-core/i18n/react";
 import { collectService } from "./CollectService.js";
 import { flatMenuItems } from "./processor.js";
 import { DRAG_DIRECTION } from "./constants.js";
@@ -69,7 +68,6 @@ export function isValidDragAction(
 }
 
 export function SiteMapItem(props: SiteMapItemProps) {
-  const { t } = useTranslation(NS);
   const { menuGroup, selectedKey, visible } = props;
   const groupId = menuGroup.groupId as string;
 

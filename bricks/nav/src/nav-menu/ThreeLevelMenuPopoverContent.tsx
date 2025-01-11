@@ -4,7 +4,6 @@ import { renderLinkCom } from "./utils.js";
 import { uniq } from "lodash";
 import type {
   SidebarMenuGroup,
-  SidebarMenuItem,
   SidebarMenuSimpleItem,
 } from "@next-shared/general/types";
 import { wrapBrick } from "@next-core/react-element";
@@ -15,10 +14,10 @@ import type {
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
 import { JsonStorage } from "@next-shared/general/JsonStorage";
-import { K, NS, locales } from "./i18n.js";
-import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
+import { K, NS, locales, t } from "./i18n.js";
+import { initializeI18n } from "@next-core/i18n";
 
-initializeReactI18n(NS, locales);
+initializeI18n(NS, locales);
 const WrappedPopover = wrapBrick<Popover, PopoverProps>("eo-popover");
 interface SearchProps {
   value?: string;
@@ -59,7 +58,6 @@ const maxVisitorLength = 6;
 export function ThreeLevelMenuPopoverContent(
   props: ThreeLevelMenuPopoverContentProps
 ): React.ReactElement {
-  const { t } = useTranslation(NS);
   const { menuItem, selectedKey } = props;
   const items = menuItem.items as SidebarMenuGroup[];
   const [searchResult, setSearchResult] = useState<SidebarMenuSimpleItem[]>([]);

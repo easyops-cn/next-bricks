@@ -5,10 +5,8 @@ import { unwrapProvider } from "@next-core/utils/general";
 import "@next-core/theme";
 import { getHistory, getRuntime } from "@next-core/runtime";
 import type { lockBodyScroll as _lockBodyScroll } from "@next-bricks/basic/data-providers/lock-body-scroll/lock-body-scroll";
-// import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
 import hotkeys from "hotkeys-js";
 import classNames from "classnames";
-// import { K, NS, locales } from "./i18n.js";
 import LaunchpadSvg from "../images/launchpad.svg";
 import styleText from "./styles.shadow.css";
 import platformCategoryStyleText from "./PlatformCategory.shadow.css";
@@ -20,8 +18,6 @@ import {
 } from "./useLaunchpadInfo";
 import launchpadStyleText from "./Launchpad.shadow.css";
 import "./host-context.css";
-
-// initializeReactI18n(NS, locales);
 
 const { defineElement } = createDecorators();
 

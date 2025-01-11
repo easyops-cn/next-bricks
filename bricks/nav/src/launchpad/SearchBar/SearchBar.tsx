@@ -2,14 +2,13 @@ import React from "react";
 import classNames from "classnames";
 import styles from "./SearchBar.module.css";
 import { WrappedGeneralIcon } from "../common/wrapBrick.js";
-import { K, NS } from "../i18n.js";
-import { useTranslation } from "@next-core/i18n/react";
+import { K, t } from "../i18n.js";
+
 export interface SearchBarProps {
   onChange: (value: string) => void;
 }
 
 export function SearchBar(props: SearchBarProps): React.ReactElement {
-  const { t } = useTranslation(NS);
   const [focus, setFocus] = React.useState(false);
 
   const searchInputRef = React.useCallback((element: HTMLInputElement) => {
@@ -18,7 +17,7 @@ export function SearchBar(props: SearchBarProps): React.ReactElement {
       Promise.resolve().then(() => {
         try {
           element.focus();
-        } catch (e) {
+        } catch {
           // Do nothing.
         }
       });

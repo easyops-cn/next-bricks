@@ -1,3 +1,5 @@
+import { i18n } from "@next-core/i18n";
+
 export enum K {
   SEARCH_BY_NAME_KEYWORD = "SEARCH_BY_NAME_KEYWORD",
 }
@@ -13,5 +15,7 @@ const zh: Locale = {
 export const NS = "bricks/basic/launchpad";
 
 export const locales = { en, zh };
+
+export const t = i18n.getFixedT(null, NS);
 
 type Locale = { [key in K]: string };

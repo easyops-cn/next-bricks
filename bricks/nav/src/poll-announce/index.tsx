@@ -6,7 +6,7 @@ import { httpErrorToString } from "@next-core/runtime";
 import { unwrapProvider } from "@next-core/utils/general";
 import "@next-core/theme";
 import { i18n } from "@next-core/i18n";
-import { initializeReactI18n } from "@next-core/i18n/react";
+import { initializeI18n } from "@next-core/i18n";
 import type { showNotification as _showNotification } from "@next-bricks/basic/data-providers/show-notification/show-notification";
 import {
   AnnounceApi_ignoreAnnounce,
@@ -17,7 +17,7 @@ import { K, NS, locales } from "./i18n.js";
 import styleText from "./styles.shadow.css";
 import styles from "./notification.module.css";
 
-initializeReactI18n(NS, locales);
+initializeI18n(NS, locales);
 
 const { defineElement, property, event } = createDecorators();
 
