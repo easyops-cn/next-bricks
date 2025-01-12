@@ -1,8 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`eo-nav-menu basic usage 1`] = `
-"<style>SiteMapItem.shadow.css
-ItemTag.shadow.css
-GroupItem.shadow.css
-nav-menu.shadow.css</style><div class="nav-menu-wrapper"><eo-menu-item data-index="0" class="" title=""><eo-link type="plain" style="width: 100%;"><span class="menu-item-label" style="color: red;">菜单一</span></eo-link></eo-menu-item><eo-popover data-index="1" class="popover" trigger="hover" placement="bottom-start" distance="0" anchordisplay="block" strategy="fixed"><eo-menu-item class="sub-menu-item-label 22" slot="anchor" title=""><span class="menu-item-label" style="color: red;">菜单二</span></eo-menu-item><div class="sub-menu-wrapper"><eo-menu-item class="" title=""><eo-link type="plain" style="width: 100%;"><span class="menu-item-label">菜单二-1</span></eo-link></eo-menu-item><div class="group-label">分组</div><div class="group-wrapper"><eo-menu-item class="" title="" active=""><eo-link type="plain" url="/oops" style="width: 100%;"><span class="menu-item-label">分组1</span></eo-link></eo-menu-item><eo-menu-item class="" title=""><eo-link type="plain" style="width: 100%;"><span class="menu-item-label">分组2</span></eo-link></eo-menu-item></div></div></eo-popover><eo-popover data-index="2" class="popover" trigger="hover" placement="bottom-start" distance="0" strategy="fixed"><eo-menu-item class="sub-menu-item-label" slot="anchor" title=""><span class="menu-item-label" style="color: red;">菜单三</span></eo-menu-item><div class="sub-menu-sit-map-wrapper"></div></eo-popover></div>"
-`;

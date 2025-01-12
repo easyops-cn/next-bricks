@@ -1,9 +1,0 @@
-.useChildrenSelectWrapper {
-  display: flex;
-  gap: 12px;
-  .plusIcon {
-    cursor: pointer;
-    font-size: 22px;
-    color: var(--color-brand);
-  }
-}

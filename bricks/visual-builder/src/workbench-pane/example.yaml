@@ -1,7 +1,0 @@
-brick: visual-builder.workbench-pane
-properties:
-  titleLabel: custom title
-events:
-  active.change:
-    - action: console.log
-
