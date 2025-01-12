@@ -43,7 +43,7 @@ function EoNextTableComponentFactory(React: typeof _React) {
     } = props;
 
     const isInitRef = React.useRef<boolean>(false);
-    const dataListRef = React.useRef<any>();
+    const dataListRef = React.useRef<any>(undefined);
 
     React.useEffect(() => {
       const {

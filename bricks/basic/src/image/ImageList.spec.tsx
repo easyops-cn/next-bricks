@@ -1,8 +1,8 @@
 import React, { Ref, createRef } from "react";
 import { describe, test, expect } from "@jest/globals";
-import { screen, render, fireEvent } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import { ImageList, ImageListRef } from "./ImageList.jsx";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 
 describe("ImageList", () => {
   test("should work", () => {
@@ -35,7 +35,7 @@ describe("ImageList", () => {
       },
     ];
 
-    const { container, rerender, unmount } = render(
+    const { container } = render(
       <ImageList
         ref={ref}
         imgList={imgList}

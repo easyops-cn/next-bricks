@@ -1,5 +1,5 @@
 import { jest, describe, afterEach, test, expect } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import { renderHook } from "@testing-library/react";
 import { UserAdminApi_searchAllUsersInfo } from "@next-api-sdk/user-service-sdk";
 import { useUserInfoByNameOrInstanceId } from "./useUserInfoByNameOrInstanceId.js";

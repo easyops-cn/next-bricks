@@ -1,5 +1,5 @@
 import { describe, test, expect } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import "./";
 import { Link } from "./index.js";
 import { GeneralIconProps } from "@next-bricks/icons/general-icon";

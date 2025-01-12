@@ -1,7 +1,7 @@
-// import { act } from "react-dom/test-utils";
+// import { act } from "react";
 import { showWaterMark } from "./show-watermark.js";
 import "jest-canvas-mock";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 
 describe("showWaterMark", () => {
   test("general", async () => {
