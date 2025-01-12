@@ -40,7 +40,6 @@
         "inputs": [
           "prod",
           "global",
-          "{workspaceRoot}/shared/common-bricks/common-bricks.json",
           "{workspaceRoot}/shared/icons/src/**/*"
         ]
       }

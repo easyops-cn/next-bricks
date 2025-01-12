@@ -34,12 +34,7 @@
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": [
-        "prod",
-        "^prod",
-        "global",
-        "{workspaceRoot}/shared/common-bricks/common-bricks.json"
-      ],
+      "inputs": ["prod", "^prod", "global"],
       "outputs": [
         "{projectRoot}/dist",
         "{projectRoot}/dist-types",
@@ -48,12 +43,7 @@
       ]
     },
     "build:main": {
-      "inputs": [
-        "prod",
-        "^prod",
-        "global",
-        "{workspaceRoot}/shared/common-bricks/common-bricks.json"
-      ],
+      "inputs": ["prod", "^prod", "global"],
       "outputs": [
         "{projectRoot}/dist",
         "{projectRoot}/.pkgbuild",

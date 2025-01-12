@@ -54,7 +54,8 @@
     "classnames": "^2.3.2",
     "dompurify": "^3.1.6",
     "lodash": "^4.17.21",
-    "react": "0.0.0-experimental-ee8509801-20230117"
+    "react": "0.0.0-experimental-ee8509801-20230117",
+    "react-i18next": "^12.3.1"
   },
   "devDependencies": {
     "@next-core/build-next-bricks": "^1.23.9",

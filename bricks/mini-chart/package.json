@@ -40,7 +40,8 @@
     "@next-core/react-element": "^1.0.35",
     "@next-core/theme": "^1.5.4",
     "d3-shape": "^3.2.0",
-    "react": "0.0.0-experimental-ee8509801-20230117"
+    "react": "0.0.0-experimental-ee8509801-20230117",
+    "react-i18next": "^12.3.1"
   },
   "devDependencies": {
     "@next-core/build-next-bricks": "^1.23.9",
