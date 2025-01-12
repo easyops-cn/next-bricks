@@ -319,7 +319,7 @@ export function ChinaMapComponent({
 
       // 标签
       setLabels(
-        dataSource?.flatMap((label) => {
+        dataSource?.flatMap<Label>((label) => {
           let lng: number;
           let lat: number;
           if (matchedProvince) {
