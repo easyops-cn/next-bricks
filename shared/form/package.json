@@ -35,13 +35,13 @@
     "test:ci": "cross-env NODE_ENV='test' CI=true test-next"
   },
   "dependencies": {
-    "@next-core/element": "^1.2.15",
-    "@next-core/react-element": "^2.0.0-beta.0",
+    "@next-core/element": "^1.2.16-beta.0",
+    "@next-core/react-element": "^2.0.0-beta.1",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@next-core/build-next-libs": "^1.0.22",
-    "@next-core/test-next": "^1.1.7",
+    "@next-core/test-next": "^1.1.8-beta.0",
     "concurrently": "^9.1.0"
   }
 }

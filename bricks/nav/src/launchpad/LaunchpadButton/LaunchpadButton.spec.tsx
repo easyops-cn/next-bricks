@@ -1,9 +1,9 @@
-import React from "react";
-import { render, fireEvent, waitFor } from "@testing-library/react";
+import React, { act } from "react";
+import { render, fireEvent, screen } from "@testing-library/react";
 import { getRuntime, getHistory } from "@next-core/runtime";
 import { LaunchpadButton } from "./LaunchpadButton.js";
-import { initializeReactI18n } from "@next-core/i18n/react";
-initializeReactI18n();
+import { initializeI18n } from "@next-core/i18n";
+initializeI18n();
 
 jest.mock("@next-core/runtime");
 
@@ -58,14 +58,14 @@ jest.mock("../LaunchpadService.js", () => {
 
 describe("LaunchpadButton", () => {
   it("should work", async () => {
-    const { container } = render(<LaunchpadButton />);
+    render(<LaunchpadButton />);
     expect(document.body.innerHTML).toEqual(
       '<div><a role="button" class="launchpadLink"><svg>launchpad.svg</svg></a></div><div></div>'
     );
 
     expect(document.querySelector(".launchpadContainer")).toBeFalsy();
-    await waitFor(() => {
-      fireEvent.click(container.querySelector("a") as HTMLElement);
+    await act(async () => {
+      fireEvent.click((await screen.findByRole("button")) as HTMLElement);
     });
     expect(document.querySelector(".launchpadContainer")).toBeTruthy();
   });

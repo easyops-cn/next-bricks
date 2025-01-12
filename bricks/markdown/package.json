@@ -61,7 +61,7 @@
   },
   "devDependencies": {
     "@next-core/build-next-bricks": "^1.23.8",
-    "@next-core/test-next": "^1.1.7"
+    "@next-core/test-next": "^1.1.8-beta.0"
   },
   "peerDependencies": {
     "@next-bricks/form": "*",

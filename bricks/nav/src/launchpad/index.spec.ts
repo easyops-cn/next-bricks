@@ -1,12 +1,7 @@
-import React from "react";
 import "./";
 import { act } from "@testing-library/react";
 import { LaunchpadButton } from "./index.js";
 jest.mock("@next-core/theme", () => ({}));
-
-jest.mock("@next-core/i18n/react", () => ({
-  initializeReactI18n: jest.fn(),
-}));
 
 import { getRuntime, getHistory } from "@next-core/runtime";
 
