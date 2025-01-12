@@ -1,7 +1,0 @@
-{
-  "compilerOptions": {
-    "moduleResolution": "Node16",
-    "module": "Node16"
-  },
-  "include": ["./src", "./declarations.d.ts"]
-}

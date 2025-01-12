@@ -1,8 +1,0 @@
-:root {
-  --vb-workbench-action-list-background: #f8f8f8;
-}
-
-html[data-theme="dark"],
-html[data-theme="dark-v2"] {
-  --vb-workbench-action-list-background: #323237;
-}

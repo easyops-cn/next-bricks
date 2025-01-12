@@ -1,6 +1,0 @@
-brick: visual-builder.workbench-action
-properties:
-  to: "/homepage"
-  icon:
-    lib: antd
-    icon: search
