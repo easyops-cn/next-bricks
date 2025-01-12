@@ -104,7 +104,7 @@ jobs:
           !bricks/ui-test
           !bricks/vb-experiment
           !bricks/form-renderer
-        retention-days: 1
+        retention-days: 90
 
   build_docs:
     name: Build docs
