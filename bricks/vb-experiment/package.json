@@ -36,13 +36,13 @@
     "@babel/standalone": "^7.22.9",
     "@babel/types": "^7.22.5",
     "@next-core/types": "^1.14.0",
-    "@next-core/utils": "^1.7.30",
+    "@next-core/utils": "^1.7.31",
     "file-saver": "^2.0.5",
     "jszip": "^3.10.1",
     "prettier": "^3.3.3",
     "process": "^0.11.10"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.23.8"
+    "@next-core/build-next-bricks": "^1.23.9"
   }
 }
