@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.53.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.53.0...@next-shared/common-bricks@0.53.1) (2025-01-12)
+
+
+### Bug Fixes
+
+* add missing deprecated-bricks.json [skip ci] ([e49850a](https://github.com/easyops-cn/next-bricks/commit/e49850a6f289fd0d6919d0a218938d8e89cb8d54))
+
+
+
+
+
 # [0.53.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.52.0...@next-shared/common-bricks@0.53.0) (2024-11-11)
 
 
