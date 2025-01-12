@@ -11,7 +11,8 @@
   "sideEffects": false,
   "type": "module",
   "files": [
-    "common-bricks.json"
+    "common-bricks.json",
+    "deprecated-bricks.json"
   ],
   "exports": {
     ".": "./common-bricks.json",

@@ -198,5 +198,6 @@
     "eo-directory-tree-internal-node"
   ],
   "diagram": ["eo-diagram", "eo-draw-canvas", "eo-display-canvas"],
-  "mini-chart": ["eo-mini-line-chart"]
+  "mini-chart": ["eo-mini-line-chart"],
+  "e2e": ["eo-list-by-use-brick"]
 }
