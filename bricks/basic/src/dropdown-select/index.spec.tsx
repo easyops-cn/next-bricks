@@ -1,5 +1,5 @@
 import { describe, test, expect, jest } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import { fireEvent } from "@testing-library/dom";
 import "./";
 import type { DropdownSelect } from "./index.js";
@@ -133,45 +133,45 @@ describe("eo-dropdown-select", () => {
       document.body.appendChild(element);
     });
     expect(element.shadowRoot?.childNodes).toMatchInlineSnapshot(`
-      NodeList [
-        <style>
-          styles.shadow.css
-        </style>,
-        <eo-popover
-          distance="5"
-          placement="bottom-start"
-          trigger="click"
-        >
-          <span
-            class="trigger"
-            slot="anchor"
-          >
-            <span
-              class="label"
-            >
-              PLEASE_SELECT
-            </span>
-            <eo-icon
-              icon="caret-down"
-              lib="antd"
-            />
-          </span>
-          <div
-            class="dropdown"
-          >
-            <slot
-              name="prefix"
-            />
-            <eo-loading-container
-              delay="500"
-              style="width: 100%;"
-            >
-              <eo-menu />
-            </eo-loading-container>
-          </div>
-        </eo-popover>,
-      ]
-    `);
+NodeList [
+  <style>
+    styles.shadow.css
+  </style>,
+  <eo-popover
+    distance="5"
+    placement="bottom-start"
+    trigger="click"
+  >
+    <span
+      class="trigger"
+      slot="anchor"
+    >
+      <span
+        class="label"
+      >
+        Please select
+      </span>
+      <eo-icon
+        icon="caret-down"
+        lib="antd"
+      />
+    </span>
+    <div
+      class="dropdown"
+    >
+      <slot
+        name="prefix"
+      />
+      <eo-loading-container
+        delay="500"
+        style="width: 100%;"
+      >
+        <eo-menu />
+      </eo-loading-container>
+    </div>
+  </eo-popover>,
+]
+`);
 
     act(() => {
       element.setDefaultOption({

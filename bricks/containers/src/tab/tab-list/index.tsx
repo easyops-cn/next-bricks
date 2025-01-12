@@ -177,7 +177,7 @@ function TabListElement({
   autoSpeed,
   fillContainer,
 }: TabListElementProps): React.ReactElement {
-  const timerRef = useRef<number>();
+  const timerRef = useRef<number>(undefined);
 
   const tabs = useMemo(() => {
     if (_tabs?.length) {

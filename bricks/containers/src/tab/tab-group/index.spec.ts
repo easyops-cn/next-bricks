@@ -1,6 +1,6 @@
 import { describe, test, expect } from "@jest/globals";
 import { fireEvent } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import "./index.jsx";
 import "../tab-item/index.jsx";
 import type { TabGroup } from "./index.jsx";

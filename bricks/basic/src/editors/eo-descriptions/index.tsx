@@ -15,7 +15,7 @@ function EoButtonComponentFactory(React: typeof _React) {
       form,
       effects,
     } = props;
-    const dataListRef = React.useRef<any>();
+    const dataListRef = React.useRef<any>(undefined);
 
     React.useEffect(() => {
       const { onSubmit } = effects;

@@ -181,16 +181,16 @@ export function EoPopupComponent({
   resizable,
   closePopup,
 }: EoPopupProps) {
-  const popupRef = useRef<HTMLDivElement>();
-  const headerRef = useRef<HTMLDivElement>();
-  const contentRef = useRef<HTMLDivElement>();
+  const popupRef = useRef<HTMLDivElement>(undefined);
+  const headerRef = useRef<HTMLDivElement>(undefined);
+  const contentRef = useRef<HTMLDivElement>(undefined);
   const [size, setSize] = useState<[number | string, number | string]>([
     popupWidth ?? 500,
     popupHeight,
   ]);
   const [position, setPosition] = useState<[number, number]>();
   const preSizeRef = useRef<[number | string, number | string]>(size);
-  const prePositionRef = useRef<[number, number]>();
+  const prePositionRef = useRef<[number, number]>(undefined);
 
   const storage = useMemo(
     () =>

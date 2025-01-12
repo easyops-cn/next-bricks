@@ -3,7 +3,7 @@ import { describe, test, expect } from "@jest/globals";
 import { screen, render, fireEvent } from "@testing-library/react";
 import { Preview } from "./Preview.jsx";
 import { ImageListContext } from "./ImageListContext.js";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 
 const { Provider } = ImageListContext;
 
