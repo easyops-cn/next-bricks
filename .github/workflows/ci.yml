@@ -142,7 +142,7 @@ jobs:
         workflow_conclusion: ""
 
     - name: Merge bricks
-      run: cp -r ci-advanced-bricks/bricks/* ci-bricks/bricks/
+      run: cp -r ci-advanced-bricks/* ci-bricks/bricks/
 
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path
@@ -220,7 +220,7 @@ jobs:
         workflow_conclusion: ""
 
     - name: Merge bricks
-      run: cp -r ci-advanced-bricks/bricks/* ci-bricks/bricks/
+      run: cp -r ci-advanced-bricks/* ci-bricks/bricks/
 
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path
