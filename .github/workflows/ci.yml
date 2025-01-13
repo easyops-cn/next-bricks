@@ -206,22 +206,6 @@ jobs:
         name: brick-artifacts
         path: ci-bricks
 
-    - name: Download artifact from next-advanced-bricks
-      id: download-artifact-from-next-advanced-bricks
-      uses: dawidd6/action-download-artifact@v7
-      with:
-        name: brick-artifacts
-        path: ci-advanced-bricks
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        repo: easyops-cn/next-advanced-bricks
-        branch: master
-        event: push
-        workflow: ci.yml
-        workflow_conclusion: ""
-
-    - name: Merge bricks
-      run: cp -r ci-advanced-bricks/* ci-bricks/bricks/
-
     - name: Get yarn cache directory path
       id: yarn-cache-dir-path
       run: echo "::set-output name=dir::$(yarn cache dir)"
