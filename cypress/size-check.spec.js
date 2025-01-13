@@ -3,7 +3,6 @@
 
 const homepage = "http://localhost:8081/-size-check-";
 const resourceUrlPrefix = "http://localhost:8081/sa-static/-/bricks/";
-const reactChunkRegExp = /\/chunks\/(?:(?:40)?41|3?144)\.[0-9a-f]+\.js$/;
 
 describe("brick size check", () => {
   it("all together", () => {
@@ -20,31 +19,36 @@ describe("brick size check", () => {
     });
     cy.get("@console.error").should("not.be.called");
 
-    cy.window().then((win) => {
+    cy.window().then(async (win) => {
       const { performance } = win;
       const resources = performance.getEntriesByType("resource");
       let others = 0;
       let total = 0;
       let react = 0;
       const deps = new Map();
-      resources.map((resource) => {
-        if (resource.name.startsWith(resourceUrlPrefix)) {
-          total += resource.transferSize;
-          if (reactChunkRegExp.test(resource.name)) {
-            react += resource.transferSize;
+      await Promise.all(
+        resources.map(async (resource) => {
+          if (
+            resource.name.startsWith(resourceUrlPrefix) &&
+            !resource.name.endsWith(".LICENSE.txt")
+          ) {
+            total += resource.transferSize;
+            if (await isReactChunk(resource.name)) {
+              react += resource.transferSize;
+            } else {
+              const resourcePkg = resource.name
+                .substring(resourceUrlPrefix.length)
+                .split("/", 1)[0];
+              deps.set(
+                resourcePkg,
+                (deps.get(resourcePkg) ?? 0) + resource.transferSize
+              );
+            }
           } else {
-            const resourcePkg = resource.name
-              .substring(resourceUrlPrefix.length)
-              .split("/", 1)[0];
-            deps.set(
-              resourcePkg,
-              (deps.get(resourcePkg) ?? 0) + resource.transferSize
-            );
+            others += resource.transferSize;
           }
-        } else {
-          others += resource.transferSize;
-        }
-      });
+        })
+      );
       const lines = [];
       lines.push(
         `Core: ${getSizeInKB(others)}`,
@@ -87,33 +91,38 @@ describe("brick size check", () => {
         cy.contains("This is size-check!");
         cy.get("@console.error").should("not.be.called");
 
-        cy.window().then((win) => {
+        cy.window().then(async (win) => {
           const { performance } = win;
           const resources = performance.getEntriesByType("resource");
           let total = 0;
           let self = 0;
           let react = 0;
           const deps = new Map();
-          resources.map((resource) => {
-            if (resource.name.startsWith(resourceUrlPrefix)) {
-              total += resource.transferSize;
-              if (reactChunkRegExp.test(resource.name)) {
-                react += resource.transferSize;
-              } else {
-                const resourcePkg = resource.name
-                  .substring(resourceUrlPrefix.length)
-                  .split("/", 1)[0];
-                if (resourcePkg === pkgName) {
-                  self += resource.transferSize;
+          await Promise.all(
+            resources.map(async (resource) => {
+              if (
+                resource.name.startsWith(resourceUrlPrefix) &&
+                !resource.name.endsWith(".LICENSE.txt")
+              ) {
+                total += resource.transferSize;
+                if (await isReactChunk(resource.name)) {
+                  react += resource.transferSize;
                 } else {
-                  deps.set(
-                    resourcePkg,
-                    (deps.get(resourcePkg) ?? 0) + resource.transferSize
-                  );
+                  const resourcePkg = resource.name
+                    .substring(resourceUrlPrefix.length)
+                    .split("/", 1)[0];
+                  if (resourcePkg === pkgName) {
+                    self += resource.transferSize;
+                  } else {
+                    deps.set(
+                      resourcePkg,
+                      (deps.get(resourcePkg) ?? 0) + resource.transferSize
+                    );
+                  }
                 }
               }
-            }
-          });
+            })
+          );
 
           const lines = [];
           lines.push(`${pkgName}:`, `  total: ${getSizeInKB(total)}`);
@@ -162,7 +171,7 @@ describe("brick size check", () => {
         cy.contains("This is size-check!");
         cy.get("@console.error").should("not.be.called");
 
-        cy.window().then((win) => {
+        cy.window().then(async (win) => {
           const { performance } = win;
           const resources = performance.getEntriesByType("resource");
           let total = 0;
@@ -170,31 +179,37 @@ describe("brick size check", () => {
           let react = 0;
           const deps = new Map();
           const byFiles = new Map();
-          resources.map((resource) => {
-            if (resource.name.startsWith(resourceUrlPrefix)) {
-              total += resource.transferSize;
-              if (reactChunkRegExp.test(resource.name)) {
-                react += resource.transferSize;
-              } else {
-                const resourcePkg = resource.name
-                  .substring(resourceUrlPrefix.length)
-                  .split("/", 1)[0];
-                if (resourcePkg === pkgName) {
-                  self += resource.transferSize;
+
+          await Promise.all(
+            resources.map(async (resource) => {
+              if (
+                resource.name.startsWith(resourceUrlPrefix) &&
+                !resource.name.endsWith(".LICENSE.txt")
+              ) {
+                total += resource.transferSize;
+                if (await isReactChunk(resource.name)) {
+                  react += resource.transferSize;
                 } else {
-                  deps.set(
-                    resourcePkg,
-                    (deps.get(resourcePkg) ?? 0) + resource.transferSize
-                  );
+                  const resourcePkg = resource.name
+                    .substring(resourceUrlPrefix.length)
+                    .split("/", 1)[0];
+                  if (resourcePkg === pkgName) {
+                    self += resource.transferSize;
+                  } else {
+                    deps.set(
+                      resourcePkg,
+                      (deps.get(resourcePkg) ?? 0) + resource.transferSize
+                    );
+                  }
                 }
+                // Remove the version part from the file path
+                const filePath = resource.name
+                  .substring(resourceUrlPrefix.length)
+                  .replace(/([^/]+\/)\d+\.\d+\.\d+\//, "$1");
+                byFiles.set(filePath, resource.transferSize);
               }
-              // Remove the version part from the file path
-              const filePath = resource.name
-                .substring(resourceUrlPrefix.length)
-                .replace(/([^/]+\/)\d+\.\d+\.\d+\//, "$1");
-              byFiles.set(filePath, resource.transferSize);
-            }
-          });
+            })
+          );
 
           const lines = [];
           lines.push(`${brick}:`, `  total: ${getSizeInKB(total)}`);
@@ -228,4 +243,20 @@ describe("brick size check", () => {
 
 function getSizeInKB(size) {
   return `${(+(size / 1024).toFixed(2)).toLocaleString()} KB`;
+}
+
+async function isReactChunk(resourceName) {
+  const response = await fetch(`${resourceName}.LICENSE.txt`);
+  if (response.ok) {
+    const license = await response.text();
+    if (
+      license.includes("@license React") &&
+      /(?:react(?:-dom(?:-client)?)?|scheduler)\.production(?:\.min)?\.js/.test(
+        license
+      )
+    ) {
+      return true;
+    }
+  }
+  return false;
 }
