@@ -2014,6 +2014,11 @@
   dependencies:
     "@next-core/http" "^1.0.0"
 
+"@next-bricks/containers@^1.14.2":
+  version "1.14.2"
+  resolved "https://registry.yarnpkg.com/@next-bricks/containers/-/containers-1.14.2.tgz#43c1a132590e6a2767bfb8bc8de07a402de1b24a"
+  integrity sha512-zmKVFGHyb57pwFFPe4pD2Q2oLgDEcAvtK0w0KXMzhj3vBuO1RqvWc2VtII0dn9UNBpcEY9I54jbGlo8C3J8WNw==
+
 "@next-bricks/form@^1.15.3":
   version "1.15.3"
   resolved "https://registry.yarnpkg.com/@next-bricks/form/-/form-1.15.3.tgz#e872cb5c8804573620f76d3108307d47b79d2e2a"
