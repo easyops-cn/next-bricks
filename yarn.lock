@@ -2036,10 +2036,10 @@
     "@babel/preset-typescript" "^7.26.0"
     "@babel/runtime" "^7.26.0"
 
-"@next-core/brick-container@^3.20.1":
-  version "3.20.1"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.20.1.tgz#f16138052826cc2a5867f612d8d7d63865259387"
-  integrity sha512-aMZJUKHpgGQMKLFg0vH+e1bL+HNSoQfjSH1AMTBkgslz09HyRc32QMKW2DtqQWgtg9qQFRNzCHiYneRNRe7qnw==
+"@next-core/brick-container@^3.20.2":
+  version "3.20.2"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.20.2.tgz#ef137833c2e948a9617cd29ff1dd6f38de94c854"
+  integrity sha512-AoUov3gUBUka0ewOW9eLPwlADGDNJpjDq/kj2KFNdDJvnISC7gNoqeDT6VydACySJC0B2lN2ocPJGg6pHptO0g==
   dependencies:
     "@next-core/serve-helpers" "^1.2.4"
     body-parser "^1.20.3"
@@ -2060,10 +2060,10 @@
   resolved "https://registry.yarnpkg.com/@next-core/brick-manifest/-/brick-manifest-0.7.1.tgz#3c11e7108b2bd147a4e9876fe95e2eb0d723e2dd"
   integrity sha512-g+4m/Ran4ZBIUpIMhqx/fH91F2lYmci18tlI9TCRte2AFnmA/jsTFULdbPQtd/OMIhodrGnjkhN0WshbqeTzew==
 
-"@next-core/brick-playground@^1.15.49":
-  version "1.15.49"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.15.49.tgz#afde2a42d219e4312cf629e61df46e85e309e6b5"
-  integrity sha512-YaOt2xsJuBEGUyzz52STBBu0FAbkw2oKBKxlw3F/V4yb2XmraWv6vW9vJzg29hXJ/AIrfgBk7nBGAf88FwqNjw==
+"@next-core/brick-playground@^1.15.50":
+  version "1.15.50"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.15.50.tgz#3afc1c9a79e7b66b9c876bc98aca2b171d9f3742"
+  integrity sha512-HF+4OjBSjLqO32XWbOG5kDQphQgn3RAbQbgdRDPtFVvIdOVe/r3Kgp9YhsgCL5FSGW7ZISFhojZRPoqjoSWupw==
   dependencies:
     "@next-core/doc-helpers" "^0.2.16"
     "@next-core/serve-helpers" "^1.2.4"
@@ -2076,10 +2076,10 @@
   resolved "https://registry.yarnpkg.com/@next-core/browserslist-config-next/-/browserslist-config-next-1.1.2.tgz#bbf32adeae9d3ded190b821e269d3853bd73019f"
   integrity sha512-KFBCCsPCxo7Bv+m23ZgpFL40qRsDnIgfYDhluXP6k7gvN2bZRTvsOn5S6dqCEpHiX9BT5p/+/JcgJ4tPTAjfxg==
 
-"@next-core/build-next-bricks@^1.23.9":
-  version "1.23.9"
-  resolved "https://registry.yarnpkg.com/@next-core/build-next-bricks/-/build-next-bricks-1.23.9.tgz#c747594f30d72435181fdc8e8c6f7fc12a75fb29"
-  integrity sha512-5NuD2+hTdko+dF+efYOmIwYiZoA0ABdRNGj+kqOwyrpNDZS1OU3346LR8O3WvqvDwISlmKvymJKSdcd5vs7skw==
+"@next-core/build-next-bricks@^1.23.10":
+  version "1.23.10"
+  resolved "https://registry.yarnpkg.com/@next-core/build-next-bricks/-/build-next-bricks-1.23.10.tgz#bc10897cb2b908aff82a657c54eb0740e9469daf"
+  integrity sha512-E5KkQURGTqBgiGTMKricU8BueO2gnqHZ3TjpzylqfoVI4zOVqGOQ3Ymxr0b1IrBPTq5Nc+C3lDR46hl2d/ghTQ==
   dependencies:
     "@babel/parser" "^7.26.5"
     "@babel/traverse" "^7.26.5"
@@ -2194,10 +2194,10 @@
     lodash "^4.17.21"
     moment "^2.30.1"
 
-"@next-core/preview@^0.7.48":
-  version "0.7.48"
-  resolved "https://registry.yarnpkg.com/@next-core/preview/-/preview-0.7.48.tgz#8fe5a96f4cd1e8771c74e52dc26b8ff490a08de6"
-  integrity sha512-mABH7uQAcbfsWSiFg61fpb/oH4xNEdOv8EyfwwlJ3byO55KdADKUCcjPY2kpt6tuTDRBA4rH9LvKcQDIuwKRGA==
+"@next-core/preview@^0.7.49":
+  version "0.7.49"
+  resolved "https://registry.yarnpkg.com/@next-core/preview/-/preview-0.7.49.tgz#c8ac7555a1a828376bf5002406ce4e50cba9fbf0"
+  integrity sha512-tCq3og3/zDFDUyCAYv1pFpSCGAzaK0GE4dpzswsc+NnfZJl1wduS25pQ/eiHQdwoD3EHDxo0eOvlqlTfHP7eZw==
 
 "@next-core/react-element@^1.0.35":
   version "1.0.35"
@@ -2299,10 +2299,10 @@
     file-saver "^2.0.5"
     lodash "^4.17.21"
 
-"@next-core/yo@^1.5.90":
-  version "1.5.90"
-  resolved "https://registry.yarnpkg.com/@next-core/yo/-/yo-1.5.90.tgz#5756254a386b143dc03e9fb0655b35dd3ec4f31b"
-  integrity sha512-KVEcle1XriXBlE9RmK0EgYl77F846NQFTvoZNf9YCfIokBGlk2L3cXD6joMRKfPoUNsxi5iGq2g3IISw8KZe6A==
+"@next-core/yo@^1.5.91":
+  version "1.5.91"
+  resolved "https://registry.yarnpkg.com/@next-core/yo/-/yo-1.5.91.tgz#b22b19883553e7218e4db324a5c320b16606838b"
+  integrity sha512-mKIYRDIcihqHDPz03CRdVO4rjm6YkEth4I+fCmfwIdTo+xTiEaH3TEGkqcagcxL8ubd3LXgVFsV4u2vVpCibxg==
   dependencies:
     minimist "^1.2.8"
     plop "^4.0.1"
