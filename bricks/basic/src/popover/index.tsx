@@ -418,5 +418,5 @@ function PopoverComponent(props: PopoverComponentProps) {
     </WrappedSlPopup>
   );
 }
-
-export { Popover, Placement };
+export { Popover };
+export type { Placement };

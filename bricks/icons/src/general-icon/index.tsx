@@ -1,4 +1,4 @@
-import React, { CSSProperties, useCallback, useState } from "react";
+import React, { CSSProperties, useCallback, useState, type JSX } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import { pick } from "lodash";

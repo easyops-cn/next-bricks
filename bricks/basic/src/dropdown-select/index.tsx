@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
-import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
+import { initializeI18n } from "@next-core/i18n";
 import "@next-core/theme";
 import type {
   GeneralIcon,
@@ -27,10 +27,10 @@ import type {
   LoadingContainer,
   LoadingContainerProps,
 } from "../loading-container";
-import { K, NS, locales } from "./i18n.js";
+import { K, NS, locales, t } from "./i18n.js";
 import styleText from "./styles.shadow.css";
 
-initializeReactI18n(NS, locales);
+initializeI18n(NS, locales);
 
 const { defineElement, property, event, method } = createDecorators();
 
@@ -159,7 +159,6 @@ export function LegacyDropdownSelectComponent(
   }: DropdownSelectComponentProps,
   ref: React.ForwardedRef<DropdownSelectRef>
 ) {
-  const { t } = useTranslation(NS);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(defaultValue);
   const [memoizedOptions, setMemoizedOptions] = useState<

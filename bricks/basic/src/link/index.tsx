@@ -24,8 +24,8 @@ import {
   getExtendedLocationDescriptor,
 } from "./getExtendedLocationDescriptor.js";
 
-export { ExtendedLocationDescriptor } from "./getExtendedLocationDescriptor.js";
-export { Target } from "../interface.js";
+export type { ExtendedLocationDescriptor } from "./getExtendedLocationDescriptor.js";
+export type { Target } from "../interface.js";
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 const WrappedTooltip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");

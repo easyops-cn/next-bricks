@@ -1,5 +1,5 @@
 import { describe, test, expect, jest } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import "./";
 import * as runtime from "@next-core/runtime";
 import { EoImgIcon } from "./index.js";
