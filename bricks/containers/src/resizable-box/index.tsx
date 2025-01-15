@@ -237,7 +237,7 @@ export function ResizableBoxComponent({
     if (syncSizeWithHost) {
       host.style[isVerticalDirection ? "height" : "width"] = `${size}px`;
     }
-  }, [host.style, isVerticalDirection, size, syncSizeWithHost]);
+  }, [host, isVerticalDirection, size, syncSizeWithHost]);
 
   return (
     <>
