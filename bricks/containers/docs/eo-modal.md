@@ -1,7 +1,7 @@
 通用模态框容器构件。
 
 ```html preview minHeight="320px"
-<eo-modal modal-title="Modal Title" visible="true">Content</eo-card>
+<eo-modal modal-title="Modal Title" visible="true">Content</eo-modal>
 ```
 
 ## Examples

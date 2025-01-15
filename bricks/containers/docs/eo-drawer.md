@@ -1,7 +1,7 @@
 通用抽屉容器构件。
 
 ```html preview minHeight="320px"
-<eo-drawer custom-title="Drawer Title" visible="true">Content</eo-card>
+<eo-drawer custom-title="Drawer Title" visible="true">Content</eo-drawer>
 ```
 
 ## Examples

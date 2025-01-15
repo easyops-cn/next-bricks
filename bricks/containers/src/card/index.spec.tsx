@@ -23,7 +23,7 @@ describe("eo-card", () => {
     const footerElement = document.createElement("div");
     footerElement.textContent = "footer";
     footerElement.slot = "footer";
-
+    element.appendChild(footerElement);
     expect(element.shadowRoot).toBeFalsy();
     act(() => {
       document.body.appendChild(element);

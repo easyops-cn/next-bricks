@@ -5,13 +5,13 @@ import styleText from "./category.shadow.css";
 
 const { defineElement, property } = createDecorators();
 
-export interface categoryProps {
+export interface CategoryProps {
   title: string;
   key: string;
 }
 
 export interface CategoryContainerProps {
-  categories: categoryProps[];
+  categories: CategoryProps[];
   headerStyle?: React.CSSProperties;
   contentStyle?: React.CSSProperties;
   containerStyle?: React.CSSProperties;
@@ -36,7 +36,7 @@ class Category extends ReactNextElement implements CategoryContainerProps {
   @property({
     attribute: false,
   })
-  accessor categories: categoryProps[];
+  accessor categories: CategoryProps[];
 
   /**
    * 内容样式
@@ -112,7 +112,7 @@ function CategoryElement(props: CategoryContainerProps): React.ReactElement {
   return (
     <div className="category-container-wrapper" style={containerStyle}>
       {categories?.map(
-        (categoryItem: categoryProps, index: number): React.ReactElement => {
+        (categoryItem: CategoryProps, index: number): React.ReactElement => {
           return (
             <div className="category-item" key={categoryItem.key}>
               <div className="category-item-header" style={headerStyle}>

@@ -4,7 +4,7 @@ import type { EditorComponentProps } from "@next-shared/property-editor";
 import { eoCardSchema } from "./eoCard.schema";
 
 function EoCardComponentFactory(React: typeof _React) {
-  return function EoButtonComponent(
+  return function EoCardComponent(
     props: EditorComponentProps
   ): React.ReactElement {
     const { SchemaFieldComponent, formilySchemaFormatter, scope } = props;

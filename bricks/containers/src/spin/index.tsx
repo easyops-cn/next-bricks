@@ -56,7 +56,7 @@ class EoSpin extends ReactNextElement implements EoSpinProps {
 }
 
 export function EoSpinComponent(props: EoSpinProps) {
-  const { size, tip, spinning } = props;
+  const { tip, spinning } = props;
 
   return (
     <div className="spin-wrapper">

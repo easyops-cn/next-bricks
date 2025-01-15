@@ -15,7 +15,7 @@ describe("eo-flex-layout", () => {
     expect(element.shadowRoot).toBeTruthy();
     expect(element.shadowRoot?.childNodes.length).toBe(2);
 
-    expect(element.style.flexDirection === "row");
+    expect(element.style.flexDirection).toBe("row");
 
     act(() => {
       document.body.removeChild(element);
