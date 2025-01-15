@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement } from "@next-core/react-element";
 import styleText from "./micro-view.shadow.css";
@@ -16,7 +16,7 @@ const WrappedPageTitle = wrapBrick<EoPageTitle, PageTitleProps>(
 interface MicroViewProps {
   pageTitle?: string;
   hasToolbar?: boolean;
-  callback: (element: HTMLDivElement) => void;
+  callback: () => () => void;
 }
 
 /**
@@ -45,9 +45,14 @@ class MicroView extends ReactNextElement {
 
   #renderCallback = () => {
     const slotToolbar = this.#getSlotBySelector("slot[name='toolbar']");
-    slotToolbar?.addEventListener("slotchange", () => {
+    const onSlotChange = () => {
       this.hasToolbar = slotToolbar.assignedNodes().length > 0;
-    });
+    };
+    slotToolbar?.addEventListener("slotchange", onSlotChange);
+
+    return () => {
+      slotToolbar?.removeEventListener("slotchange", onSlotChange);
+    };
   };
 
   #getSlotBySelector(selector: string): HTMLSlotElement {
@@ -68,8 +73,13 @@ function MicroViewElement({
   pageTitle,
   callback,
 }: MicroViewProps): React.ReactElement {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    return callback();
+  }, [callback]);
+
   return (
-    <div className="micro-view-wrapper" ref={callback}>
+    <div className="micro-view-wrapper" ref={ref}>
       <div className="header">
         {pageTitle && (
           <div className="page-title">
