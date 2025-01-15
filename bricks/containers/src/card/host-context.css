@@ -15,9 +15,9 @@ html[data-ui="v8-2"] {
   eo-card[hide-split] {
     --eo-card-body-padding: 4px 0;
   }
-  eo-card[outline="border"]eo-card[hide-split],
-  eo-card[outline="shadow"]eo-card[hide-split],
-  eo-card[outline="background"]eo-card[hide-split] {
+  eo-card[outline="border"][hide-split],
+  eo-card[outline="shadow"][hide-split],
+  eo-card[outline="background"][hide-split] {
     --eo-card-body-padding: 4px var(--card-body-padding-vertical)
       var(--card-body-padding-vertical);
   }
