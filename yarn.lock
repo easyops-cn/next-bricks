@@ -2014,11 +2014,6 @@
   dependencies:
     "@next-core/http" "^1.0.0"
 
-"@next-bricks/containers@^1.14.2":
-  version "1.14.2"
-  resolved "https://registry.yarnpkg.com/@next-bricks/containers/-/containers-1.14.2.tgz#43c1a132590e6a2767bfb8bc8de07a402de1b24a"
-  integrity sha512-zmKVFGHyb57pwFFPe4pD2Q2oLgDEcAvtK0w0KXMzhj3vBuO1RqvWc2VtII0dn9UNBpcEY9I54jbGlo8C3J8WNw==
-
 "@next-bricks/form@^1.15.3":
   version "1.15.3"
   resolved "https://registry.yarnpkg.com/@next-bricks/form/-/form-1.15.3.tgz#e872cb5c8804573620f76d3108307d47b79d2e2a"
@@ -4794,6 +4789,11 @@ clone@^1.0.2:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/clone/-/clone-1.0.4.tgz#da309cc263df15994c688ca902179ca3c7cd7c7e"
   integrity sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==
+
+clsx@^1.1.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/clsx/-/clsx-1.2.1.tgz#0ddc4a20a549b59c93a4116bb26f5294ca17dc12"
+  integrity sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==
 
 cmd-shim@6.0.3, cmd-shim@^6.0.0:
   version "6.0.3"
@@ -11416,6 +11416,11 @@ raw-body@2.5.2:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
+re-resizable@6.10.3:
+  version "6.10.3"
+  resolved "https://registry.yarnpkg.com/re-resizable/-/re-resizable-6.10.3.tgz#72c42532ede0cbcaf93308bcbfed782abbf97e79"
+  integrity sha512-zvWb7X3RJMA4cuSrqoxgs3KR+D+pEXnGrD2FAD6BMYAULnZsSF4b7AOVyG6pC3VVNVOtlagGDCDmZSwWLjjBBw==
+
 react-dom@0.0.0-experimental-ee8509801-20230117:
   version "0.0.0-experimental-ee8509801-20230117"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-0.0.0-experimental-ee8509801-20230117.tgz#3007027b010ab154d1e98795ee359cae5f711161"
@@ -11423,6 +11428,14 @@ react-dom@0.0.0-experimental-ee8509801-20230117:
   dependencies:
     loose-envify "^1.1.0"
     scheduler "0.0.0-experimental-ee8509801-20230117"
+
+react-draggable@4.4.6:
+  version "4.4.6"
+  resolved "https://registry.yarnpkg.com/react-draggable/-/react-draggable-4.4.6.tgz#63343ee945770881ca1256a5b6fa5c9f5983fe1e"
+  integrity sha512-LtY5Xw1zTPqHkVmtM3X8MUOxNDOUhv/khTgBgrUvwaS064bwVvxT+q5El0uUFNx5IEPKXuRejr7UqLwBIg5pdw==
+  dependencies:
+    clsx "^1.1.1"
+    prop-types "^15.8.1"
 
 react-i18next@^12.3.1:
   version "12.3.1"
@@ -11446,6 +11459,15 @@ react-is@^18.0.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
+
+react-rnd@^10.4.1:
+  version "10.4.14"
+  resolved "https://registry.yarnpkg.com/react-rnd/-/react-rnd-10.4.14.tgz#c0ce3051cce7da46ccb80be617d818f0dae1e5ec"
+  integrity sha512-NLGc3IymymumPfHy3DXiHNIMOiTlj6xBNb2boHqrtwCgYDasNarpg8tdUY36JlJbrs0E4BvjYBkfEGqUPBsukg==
+  dependencies:
+    re-resizable "6.10.3"
+    react-draggable "4.4.6"
+    tslib "2.6.2"
 
 react@0.0.0-experimental-ee8509801-20230117:
   version "0.0.0-experimental-ee8509801-20230117"
@@ -12816,7 +12838,7 @@ tsconfig-paths@^4.1.2:
     minimist "^1.2.6"
     strip-bom "^3.0.0"
 
-tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.0, tslib@^2.4.0:
+tslib@2.6.2, tslib@^2.0.3, tslib@^2.1.0, tslib@^2.3.0, tslib@^2.4.0:
   version "2.6.2"
   resolved "https://registry.npmjs.org/tslib/-/tslib-2.6.2.tgz#703ac29425e7b37cd6fd456e92404d46d1f3e4ae"
   integrity sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==
