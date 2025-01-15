@@ -40,7 +40,7 @@ class MicroView extends ReactNextElement {
    * 是否有 toolbar 插槽
    * @internal
    */
-  @property()
+  @property({ type: Boolean })
   accessor hasToolbar: boolean | undefined;
 
   #renderCallback = () => {
