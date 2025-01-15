@@ -16,7 +16,7 @@ const WrappedPageTitle = wrapBrick<EoPageTitle, PageTitleProps>(
 interface MicroViewProps {
   pageTitle?: string;
   hasToolbar?: boolean;
-  callback: () => () => void;
+  callback: () => (() => void) | undefined;
 }
 
 /**
@@ -45,17 +45,21 @@ class MicroView extends ReactNextElement {
 
   #renderCallback = () => {
     const slotToolbar = this.#getSlotBySelector("slot[name='toolbar']");
+    if (!slotToolbar) {
+      return;
+    }
+
     const onSlotChange = () => {
       this.hasToolbar = slotToolbar.assignedNodes().length > 0;
     };
-    slotToolbar?.addEventListener("slotchange", onSlotChange);
+    slotToolbar.addEventListener("slotchange", onSlotChange);
 
     return () => {
-      slotToolbar?.removeEventListener("slotchange", onSlotChange);
+      slotToolbar.removeEventListener("slotchange", onSlotChange);
     };
   };
 
-  #getSlotBySelector(selector: string): HTMLSlotElement {
+  #getSlotBySelector(selector: string): HTMLSlotElement | undefined {
     return this.shadowRoot?.querySelector(selector) as HTMLSlotElement;
   }
 

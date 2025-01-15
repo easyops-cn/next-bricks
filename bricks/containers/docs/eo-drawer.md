@@ -199,12 +199,12 @@
     textContent: Mask Not Allow Close
   events:
     click:
-      - target: "#drawer-mast-not-allow-close"
+      - target: "#drawer-mask-not-allow-close"
         method: open
 - brick: eo-drawer
   properties:
     customTitle: 抽屉标题
-    id: "drawer-mast-not-allow-close"
+    id: "drawer-mask-not-allow-close"
     maskClosable: false
   children:
     - brick: div
