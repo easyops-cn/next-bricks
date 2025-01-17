@@ -14,16 +14,32 @@ interface ResolveIconOptions {
   replaceSource?(source: string): string;
 }
 
+const REGEX_MICRO_APPS_WITH_VERSION = /\/micro-apps\/v([23])\//;
+
 /** Given a URL, this function returns the resulting SVG element or an appropriate error symbol. */
 async function resolveIcon(
   url: string,
-  options?: ResolveIconOptions
+  options?: ResolveIconOptions,
+  isFix?: boolean
 ): Promise<SVGResult> {
   let fileData: Response;
   try {
     fileData = await fetch(url, { mode: "cors" });
-    if (!fileData.ok)
+    if (!fileData.ok) {
+      // Fix accessing images of v2 micro-apps in v3 container, and vice versa.
+      if (
+        !isFix &&
+        fileData.status === 404 &&
+        REGEX_MICRO_APPS_WITH_VERSION.test(url)
+      ) {
+        const fixedUrl = url.replace(
+          REGEX_MICRO_APPS_WITH_VERSION,
+          (_, v) => `/micro-apps/v${v === "2" ? "3" : "2"}/`
+        );
+        return resolveIcon(fixedUrl, options, true);
+      }
       return fileData.status === 410 ? CACHEABLE_ERROR : RETRYABLE_ERROR;
+    }
   } catch {
     return RETRYABLE_ERROR;
   }

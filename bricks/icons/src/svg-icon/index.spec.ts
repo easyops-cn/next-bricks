@@ -2,12 +2,22 @@ import { describe, test, expect } from "@jest/globals";
 import "./index.js";
 import type { SvgIcon } from "./index.js";
 
-(global as any).fetch = jest.fn(() =>
-  Promise.resolve({
-    ok: true,
-    text: () =>
-      Promise.resolve(
-        `<?xml version="1.0" encoding="UTF-8"?>
+(global as any).fetch = jest.fn((url) =>
+  url?.includes("/micro-apps/v3/")
+    ? Promise.resolve({
+        ok: false,
+        status: 404,
+      })
+    : url?.includes("/fail/")
+      ? Promise.resolve({
+          ok: false,
+          status: 410,
+        })
+      : Promise.resolve({
+          ok: true,
+          text: () =>
+            Promise.resolve(
+              `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="15px" height="17px" viewBox="0 0 15 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g transform="translate(-1804.000000, -58.000000)" stroke="#595959">
@@ -18,8 +28,8 @@ import type { SvgIcon } from "./index.js";
         </g>
     </g>
 </svg>`.replace(/>\s+</g, "><")
-      ),
-  })
+            ),
+        })
 );
 
 describe("eo-svg-icon", () => {
@@ -104,5 +114,34 @@ describe("eo-svg-icon", () => {
     element.imgSrc = "account.svg";
     (element as any)._render();
     expect(fetch).not.toBeCalled();
+  });
+
+  test("fix url", async () => {
+    const element = document.createElement("eo-svg-icon") as SvgIcon;
+    element.imgSrc = "/sa-static/micro-apps/v3/app/test.svg";
+
+    document.body.appendChild(element);
+    await (global as any).flushPromises();
+
+    expect(element.shadowRoot?.querySelector("svg")).toBeTruthy();
+
+    document.body.removeChild(element);
+  });
+
+  test("fail url", async () => {
+    const element = document.createElement("eo-svg-icon") as SvgIcon;
+    element.imgSrc = "/fail/test.svg";
+
+    const onIconFound = jest.fn();
+    element.addEventListener("icon.found", (e) => {
+      onIconFound((e as CustomEvent).detail);
+    });
+
+    document.body.appendChild(element);
+    await (global as any).flushPromises();
+    expect(element.shadowRoot?.childNodes.length).toBe(1);
+    expect(onIconFound).toHaveBeenCalledWith(false);
+
+    document.body.removeChild(element);
   });
 });
