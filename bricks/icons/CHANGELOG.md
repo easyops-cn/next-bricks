@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.18](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.3.17...@next-bricks/icons@1.3.18) (2025-01-20)
+
+
+### Bug Fixes
+
+* fix accessing images of v2 micro-apps in v3 container, and vice versa ([9a188ac](https://github.com/easyops-cn/next-bricks/commit/9a188aced09e853e7a98c9de6a6d200c06de95b9))
+
+
+
+
+
 ## [1.3.17](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.3.16...@next-bricks/icons@1.3.17) (2025-01-13)
 
 **Note:** Version bump only for package @next-bricks/icons

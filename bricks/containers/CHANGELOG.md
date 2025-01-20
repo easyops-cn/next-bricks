@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.5](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.14.2...@next-bricks/containers@1.14.5) (2025-01-20)
+
+
+### Bug Fixes
+
+* `hasToolbar` should be boolean ([3415a6a](https://github.com/easyops-cn/next-advanced-bricks/commit/3415a6a8b4a61cc402209390c0d33f42fb665087))
+* fix css error ([f2d8d66](https://github.com/easyops-cn/next-advanced-bricks/commit/f2d8d664bde64f07ec8af33905c3eab37c6f4537))
+* fix typos and other minor errors ([057f973](https://github.com/easyops-cn/next-advanced-bricks/commit/057f973597bf6ab5336ff5b69633db951a421602))
+* fix useEffect deps ([b08c66e](https://github.com/easyops-cn/next-advanced-bricks/commit/b08c66eefce318beac8502834957e657d91067e1))
+* handle slot toolbar not found ([c6a86ca](https://github.com/easyops-cn/next-advanced-bricks/commit/c6a86caae73f71a0ff3891641dcb54dc077476fc))
+* move advanced bricks to next-advanced-bricks ([a775ebb](https://github.com/easyops-cn/next-advanced-bricks/commit/a775ebbd11b1454532b99dd18b0ebd8a7d290fdd))
+* remove even listener when unmount ([f6c20b8](https://github.com/easyops-cn/next-advanced-bricks/commit/f6c20b830615cff5a579cee473af5a0b7bd02353))
+
+
+
+
+
 ## [1.14.4](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.14.3...@next-bricks/containers@1.14.4) (2025-01-15)
 
 **Note:** Version bump only for package @next-bricks/containers

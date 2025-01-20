@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.49.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.49.7...@next-bricks/basic@1.49.8) (2025-01-20)
+
+
+### Bug Fixes
+
+* fix accessing images of v2 micro-apps in v3 container, and vice versa ([9a188ac](https://github.com/easyops-cn/next-bricks/commit/9a188aced09e853e7a98c9de6a6d200c06de95b9))
+* fix build warnings ([cc5357e](https://github.com/easyops-cn/next-bricks/commit/cc5357e85fb011c5d5cfa50b0557cd86e1945a64))
+
+
+
+
+
 ## [1.49.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.49.6...@next-bricks/basic@1.49.7) (2025-01-13)
 
 **Note:** Version bump only for package @next-bricks/basic
