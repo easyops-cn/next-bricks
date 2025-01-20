@@ -1,5 +1,5 @@
 import { describe, test, expect, jest } from "@jest/globals";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import { fireEvent, createEvent } from "@testing-library/dom";
 import "./";
 import type { EoActions } from "./index.js";

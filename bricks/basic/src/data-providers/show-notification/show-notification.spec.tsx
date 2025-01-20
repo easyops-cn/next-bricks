@@ -1,6 +1,6 @@
 import { describe, test, expect } from "@jest/globals";
 import { showNotification } from "./show-notification.jsx";
-import { act } from "react-dom/test-utils";
+import { act } from "react";
 import { fireEvent } from "@testing-library/react";
 
 customElements.define("sl-alert", class extends HTMLElement {});

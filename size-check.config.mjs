@@ -1,7 +1,8 @@
 /** @type {import("@next-core/brick-container").DevConfig} */
 export default {
   brickFolders: [
-    "ci-bricks/bricks"
+    "node_modules/@next-bricks",
+    "ci-bricks/bricks",
   ],
   sizeCheckFilter(brick, pkgId) {
     return (

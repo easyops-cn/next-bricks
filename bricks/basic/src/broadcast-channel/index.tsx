@@ -75,8 +75,8 @@ export function LegacyBroadcastChannelComponent(
   { channel, onMessage }: BroadcastChannelComponentProps,
   ref: Ref<Pick<BroadcastChannel, "postMessage">>
 ) {
-  const channelRef = useRef<BroadcastChannel>();
-  const polyfillRef = useRef<typeof BroadcastChannel>();
+  const channelRef = useRef<BroadcastChannel>(undefined);
+  const polyfillRef = useRef<typeof BroadcastChannel>(undefined);
 
   useImperativeHandle(ref, () => ({
     postMessage(message: unknown) {
