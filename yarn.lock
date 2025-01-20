@@ -2031,10 +2031,10 @@
     "@babel/preset-typescript" "^7.26.0"
     "@babel/runtime" "^7.26.0"
 
-"@next-core/brick-container@^3.20.2":
-  version "3.20.2"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.20.2.tgz#ef137833c2e948a9617cd29ff1dd6f38de94c854"
-  integrity sha512-AoUov3gUBUka0ewOW9eLPwlADGDNJpjDq/kj2KFNdDJvnISC7gNoqeDT6VydACySJC0B2lN2ocPJGg6pHptO0g==
+"@next-core/brick-container@^3.20.4":
+  version "3.20.4"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-container/-/brick-container-3.20.4.tgz#f5b826606611031640db7176c451e6de116a293f"
+  integrity sha512-jl42R0kVveo+xYNbzHwcI9iXFsBuXKkleLfiMijOqrljZitBew0pTHWu0Rqw+KVZheJMoq+R3YjpFpJQENrrbQ==
   dependencies:
     "@next-core/serve-helpers" "^1.2.4"
     body-parser "^1.20.3"
@@ -2055,10 +2055,10 @@
   resolved "https://registry.yarnpkg.com/@next-core/brick-manifest/-/brick-manifest-0.7.1.tgz#3c11e7108b2bd147a4e9876fe95e2eb0d723e2dd"
   integrity sha512-g+4m/Ran4ZBIUpIMhqx/fH91F2lYmci18tlI9TCRte2AFnmA/jsTFULdbPQtd/OMIhodrGnjkhN0WshbqeTzew==
 
-"@next-core/brick-playground@^1.15.50":
-  version "1.15.50"
-  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.15.50.tgz#3afc1c9a79e7b66b9c876bc98aca2b171d9f3742"
-  integrity sha512-HF+4OjBSjLqO32XWbOG5kDQphQgn3RAbQbgdRDPtFVvIdOVe/r3Kgp9YhsgCL5FSGW7ZISFhojZRPoqjoSWupw==
+"@next-core/brick-playground@^1.15.51":
+  version "1.15.51"
+  resolved "https://registry.yarnpkg.com/@next-core/brick-playground/-/brick-playground-1.15.51.tgz#fe016a89ee1e8b731f2ad933b5d9a6dc80c162d1"
+  integrity sha512-9idYeKIN5dH8x2qcBG0xOXXkcf6o0zIrHfSTaNvx+qZYoQOu+dMEi/+2B4GsH9furXJ38mFNN3aQ5EcqnCsmNg==
   dependencies:
     "@next-core/doc-helpers" "^0.2.16"
     "@next-core/serve-helpers" "^1.2.4"
@@ -2189,10 +2189,10 @@
     lodash "^4.17.21"
     moment "^2.30.1"
 
-"@next-core/preview@^0.7.49":
-  version "0.7.49"
-  resolved "https://registry.yarnpkg.com/@next-core/preview/-/preview-0.7.49.tgz#c8ac7555a1a828376bf5002406ce4e50cba9fbf0"
-  integrity sha512-tCq3og3/zDFDUyCAYv1pFpSCGAzaK0GE4dpzswsc+NnfZJl1wduS25pQ/eiHQdwoD3EHDxo0eOvlqlTfHP7eZw==
+"@next-core/preview@^0.7.50":
+  version "0.7.50"
+  resolved "https://registry.yarnpkg.com/@next-core/preview/-/preview-0.7.50.tgz#d1a0a7de253494dd925b0158bda8e59a148d67d5"
+  integrity sha512-pUGORhQnrkOGb/ygK+dvpb39srMpJZUXhc94pzCPpgj5low3la0CDZMf7XRf39gun9KRsBQlkkq1bLiVSfuKiw==
 
 "@next-core/react-element@^1.0.35":
   version "1.0.35"
@@ -2203,21 +2203,21 @@
     react "0.0.0-experimental-ee8509801-20230117"
     react-dom "0.0.0-experimental-ee8509801-20230117"
 
-"@next-core/react-runtime@^1.7.8":
-  version "1.7.8"
-  resolved "https://registry.yarnpkg.com/@next-core/react-runtime/-/react-runtime-1.7.8.tgz#bcdd77c4d61d6d94ed8c049118ffaff3f372219f"
-  integrity sha512-8YOfSRensMNH2aGaN9DTy3tPeyCj6P7Jh+AhMi75dL3DaNPRtAljp2Lao0Hn6aSUM6VDJlEr7PGPmCydAJomdg==
+"@next-core/react-runtime@^1.7.9":
+  version "1.7.9"
+  resolved "https://registry.yarnpkg.com/@next-core/react-runtime/-/react-runtime-1.7.9.tgz#ba6abb69926d3742dea28610ee5e2b3ecf8eb477"
+  integrity sha512-PAMZodjEoMlBKQc7fy9o2Knv8TwWCtkR0R9GRgi6NVldnpY9r6PFbzYHZonxFn1QF8fsBFzR0TYGOPYSFlm8hA==
   dependencies:
     "@next-core/react-element" "^1.0.35"
-    "@next-core/runtime" "^1.59.1"
+    "@next-core/runtime" "^1.59.2"
     "@next-core/types" "^1.14.0"
     react "0.0.0-experimental-ee8509801-20230117"
     react-dom "0.0.0-experimental-ee8509801-20230117"
 
-"@next-core/runtime@^1.59.1":
-  version "1.59.1"
-  resolved "https://registry.yarnpkg.com/@next-core/runtime/-/runtime-1.59.1.tgz#eaff4cdc79f6e2976888b2ab6aad1457013ad125"
-  integrity sha512-NNhTe16WAYHcT9OmAbTwEuCey0WccaA7wNqdkeZAEvjaNEEJHMKz6taByM45V4FgNzPGNokiCY3DqQOYJIjwSQ==
+"@next-core/runtime@^1.59.2":
+  version "1.59.2"
+  resolved "https://registry.yarnpkg.com/@next-core/runtime/-/runtime-1.59.2.tgz#8cb2ac629bcd3e7dab8e9d329e747dda8d2b7624"
+  integrity sha512-Z2PtwrPuU1VuNymZ3k6Xe4FnqSM3I8lwJbjVieCKdWNG9/hsw5oesrxWygjcnIipCKaRuKKJDNs7ZIkQaDZugA==
   dependencies:
     "@next-core/color-theme" "^0.4.8"
     "@next-core/cook" "^2.5.6"

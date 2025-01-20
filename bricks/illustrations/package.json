@@ -60,7 +60,7 @@
     "@next-core/element": "^1.2.16",
     "@next-core/illustrations": "^0.11.34",
     "@next-core/react-element": "^1.0.35",
-    "@next-core/react-runtime": "^1.7.8",
+    "@next-core/react-runtime": "^1.7.9",
     "@next-core/types": "^1.14.0",
     "@next-core/utils": "^1.7.31",
     "lodash": "^4.17.21",
