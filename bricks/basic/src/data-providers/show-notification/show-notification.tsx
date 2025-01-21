@@ -18,6 +18,7 @@ import {
   hideKeyframeAnimationOptions,
 } from "./constants";
 import styles from "./notification.module.css";
+import { pick } from "lodash";
 
 initializeI18n(NS, locales);
 
@@ -37,6 +38,12 @@ export interface NotificationOptions {
   message?: string | null;
   /** HTML 格式的通知内容，该内容会被 dom-purify sanitize */
   htmlMessage?: string;
+  inlineLink?: {
+    text: string;
+    url?: string;
+    href?: string;
+    target?: Target;
+  };
   /** 允许手动关闭消息提示 */
   closable?: boolean;
   /** 自定义图标 */
@@ -150,6 +157,7 @@ function NotificationComponent({
   cancelText,
   showConfirm = false,
   showCancel = false,
+  inlineLink,
   onOk,
   onCancel,
   onHide,
@@ -240,7 +248,17 @@ function NotificationComponent({
           dangerouslySetInnerHTML={{ __html: sanitize(htmlMessage) }}
         />
       ) : message ? (
-        <div className={styles.message}>{message}</div>
+        <div className={styles.message}>
+          {message}
+          {inlineLink && (
+            <WrappedLink
+              {...pick(inlineLink, "url", "href", "target")}
+              style={{ marginLeft: "0.5em" }}
+            >
+              {inlineLink.text}
+            </WrappedLink>
+          )}
+        </div>
       ) : null}
       {(showConfirm || showCancel) && (
         <div className={styles.operateWrapper}>
