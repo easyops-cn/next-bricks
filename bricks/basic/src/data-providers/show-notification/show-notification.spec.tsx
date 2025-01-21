@@ -198,4 +198,20 @@ describe("showNotification", () => {
 
     await expect(promise).resolves.toEqual(undefined);
   });
+
+  test("inline link", async () => {
+    act(() => {
+      showNotification({
+        message: "Normal",
+        placement: "topRight",
+        inlineLink: { text: "查看详情", href: "https://example.com" },
+      });
+    });
+
+    expect(document.querySelectorAll("eo-link").length).toBe(1);
+    expect(document.querySelector("eo-link")?.innerHTML).toBe("查看详情");
+    expect(document.querySelector("eo-link")?.getAttribute("href")).toBe(
+      "https://example.com"
+    );
+  });
 });
