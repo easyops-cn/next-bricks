@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.50.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.49.8...@next-bricks/basic@1.50.0) (2025-01-21)
+
+
+### Features
+
+* **show-notification:** support inlineLink ([0eda238](https://github.com/easyops-cn/next-bricks/commit/0eda2389699b543818c29b9799be1fa3adf21c3a))
+
+
+
+
+
 ## [1.49.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.49.7...@next-bricks/basic@1.49.8) (2025-01-20)
 
 
