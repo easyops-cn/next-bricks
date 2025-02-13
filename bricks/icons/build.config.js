@@ -15,7 +15,7 @@ export default {
     new CopyPlugin({
       patterns: [
         {
-          from: "src/fa-icon/generated/icons",
+          from: "src/fa-icon/generated",
           to: "chunks/fa-icons",
           // Terser skip this file for minimization
           info: { minimized: true },
@@ -37,6 +37,12 @@ export default {
           context: easyopsIconsDir,
           from: "*.svg",
           to: "chunks/easyops-icons/default",
+          // Terser skip this file for minimization
+          info: { minimized: true },
+        },
+        {
+          from: "src/easyops-icon/generated",
+          to: "chunks/easyops-icons",
           // Terser skip this file for minimization
           info: { minimized: true },
         },

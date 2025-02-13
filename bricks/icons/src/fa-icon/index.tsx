@@ -8,16 +8,38 @@ import {
   DefineLinearGradientProps,
   GradientDirection,
 } from "../shared/DefineLinearGradient.js";
+import AliasJson from "./generated/alias.json";
+import {
+  RangeRequest,
+  supportsMultipartRangeRequest,
+} from "../shared/RangeRequest.js";
 import linearGradientStyleText from "../shared/DefineLinearGradient.shadow.css";
 import type { IconEvents, IconEventsMapping } from "../shared/interfaces.js";
 import sharedStyleText from "../shared/icons.shadow.css";
 
 const iconCache = new Map<string, Promise<IconDefinition | null>>();
+const faRangeRequest = new RangeRequest("fa");
 
 async function resolveIconDefinition(
-  url: string
+  id: string
 ): Promise<IconDefinition | null> {
+  // istanbul ignore next: experimental
+  if (supportsMultipartRangeRequest) {
+    try {
+      const content = await faRangeRequest.fetch(id);
+      return JSON.parse(content);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.warn("Failed to fetch icon by range:", id, error);
+      // Fallback to traditional fetch.
+    }
+  }
+
   try {
+    const url = `${
+      // istanbul ignore next
+      process.env.NODE_ENV === "test" ? "" : __webpack_public_path__
+    }chunks/fa-icons/${id}.json`;
     return await (await fetch(url, { mode: "cors" })).json();
   } catch {
     return null;
@@ -29,20 +51,16 @@ async function getIconDefinition(
   icon: string | undefined
 ): Promise<IconDefinition | null> {
   if (icon) {
-    const alias = (await import("./generated/alias.json")).default;
     const actualIcon =
-      hasOwnProperty(alias, prefix) &&
-      hasOwnProperty((alias as Alias)[prefix], icon)
-        ? (alias as Alias)[prefix][icon]
+      hasOwnProperty(AliasJson, prefix) &&
+      hasOwnProperty((AliasJson as Alias)[prefix], icon)
+        ? (AliasJson as Alias)[prefix][icon]
         : icon;
-    const url = `${
-      // istanbul ignore next
-      process.env.NODE_ENV === "test" ? "" : __webpack_public_path__
-    }chunks/fa-icons/${prefix}/${actualIcon}.json`;
-    let iconResolver = iconCache.get(url);
+    const id = `${prefix}/${actualIcon}`;
+    let iconResolver = iconCache.get(id);
     if (!iconResolver) {
-      iconResolver = resolveIconDefinition(url);
-      iconCache.set(url, iconResolver);
+      iconResolver = resolveIconDefinition(id);
+      iconCache.set(id, iconResolver);
     }
     return await iconResolver;
   } else {

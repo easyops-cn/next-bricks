@@ -1,8 +1,5 @@
-// Merge bricks
 import { createProviderClass } from "@next-core/utils/general";
 import { getLibs, type IconInfo } from "./get-libs.js";
-import "./get-libs.js";
-import "./get-icons.js";
 
 export interface SearchParams {
   q?: string;
@@ -28,18 +25,21 @@ export async function searchIcons(
     !lib || v.lib === lib ? v.icons : []
   );
 
-  const filteredList = iconInfoList
-    .filter((iconInfo) =>
-      iconInfo.$searchTextPool.some((searchText) =>
-        searchText.toLowerCase().includes(lq)
-      )
+  const filteredList = iconInfoList.filter((iconInfo) =>
+    iconInfo.$searchTextPool.some((searchText) =>
+      searchText.toLowerCase().includes(lq)
     )
-    .slice((page - 1) * pageSize, page * pageSize);
+  );
+
+  const chunkedList = filteredList.slice(
+    (page - 1) * pageSize,
+    page * pageSize
+  );
 
   return {
     page,
     pageSize,
-    list: filteredList,
+    list: chunkedList,
     total: filteredList.length,
   };
 }

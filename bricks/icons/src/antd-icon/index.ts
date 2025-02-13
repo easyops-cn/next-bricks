@@ -87,7 +87,11 @@ class AntdIcon extends NextElement implements AntdIconProps {
           process.env.NODE_ENV === "test" ? "" : __webpack_public_path__
         }chunks/antd-icons/${theme}/${icon}.svg`
       : undefined;
-    const svg = await getIcon(url, { currentColor: theme !== "twotone" });
+    const svg = await getIcon(url, {
+      currentColor: theme !== "twotone",
+      lib: "antd",
+      id: `${theme}/${icon}`,
+    });
     if (theme !== fixTheme(this.theme) || icon !== this.icon) {
       // The icon has changed
       return;

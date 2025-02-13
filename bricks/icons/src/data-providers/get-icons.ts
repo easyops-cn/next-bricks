@@ -1,15 +1,18 @@
 import { createProviderClass } from "@next-core/utils/general";
+import antdIcons from "../antd-icon/generated/icons.json";
+import easyopsIcons from "../easyops-icon/generated/icons.json";
+import faIcons from "../fa-icon/generated/icons.json";
 
 export async function getEasyopsIcons(): Promise<Record<string, string[]>> {
-  return (await import("../easyops-icon/generated/icons.json")).default;
+  return easyopsIcons;
 }
 
 export async function getFaIcons(): Promise<Record<string, string[]>> {
-  return (await import("../fa-icon/generated/icons.json")).default;
+  return faIcons;
 }
 
 export async function getAntdIcons(): Promise<Record<string, string[]>> {
-  return (await import("../antd-icon/generated/icons.json")).default;
+  return antdIcons;
 }
 
 customElements.define(
