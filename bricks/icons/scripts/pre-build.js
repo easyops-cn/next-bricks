@@ -123,7 +123,7 @@ const tasks = [];
           JSON.stringify(ranges)
         ),
         writeFile(
-          path.resolve(newEasyOpsIconsPath, "all.svg"),
+          path.resolve(newEasyOpsIconsPath, `all.${ranges._hash}.svg`),
           allSvg.join("\n")
         ),
       ]);
@@ -215,7 +215,10 @@ const tasks = [];
           path.resolve(generatedDir, "ranges.json"),
           JSON.stringify(ranges)
         ),
-        writeFile(path.resolve(generatedDir, "all.json"), allJson.join("\n")),
+        writeFile(
+          path.resolve(generatedDir, `all.${ranges._hash}.json`),
+          allJson.join("\n")
+        ),
       ]);
     })()
   );
@@ -293,7 +296,10 @@ const tasks = [];
           path.resolve(generatedDir, "ranges.json"),
           JSON.stringify(ranges)
         ),
-        writeFile(path.resolve(generatedDir, "all.svg"), allSvg.join("\n")),
+        writeFile(
+          path.resolve(generatedDir, `all.${ranges._hash}.svg`),
+          allSvg.join("\n")
+        ),
       ]);
     })()
   );
