@@ -5,6 +5,7 @@ import {
   wrapBrick,
   wrapLocalBrick,
 } from "@next-core/react-element";
+import { ReactUseMultipleBricks } from "@next-core/react-runtime";
 import type { ButtonType, ComponentSize, Shape, Target } from "../interface.js";
 import type {
   GeneralIcon,
@@ -23,6 +24,15 @@ import {
 
 export const WrappedLink = wrapLocalBrick<Link, LinkProps>("eo-link");
 const WrappedTooltip = wrapLocalBrick<EoTooltip, ToolTipProps>("eo-tooltip");
+
+// DO NOT delete these lines below:
+// To make Module Federation work as expected.
+// istanbul ignore next
+// eslint-disable-next-line no-constant-condition
+if (false) {
+  // eslint-disable-next-line no-console
+  console.log(ReactUseMultipleBricks);
+}
 
 export interface ButtonProps {
   type?: ButtonType;
