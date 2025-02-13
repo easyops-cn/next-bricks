@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useRef } from "react";
 import { createProviderClass } from "@next-core/utils/general";
-import { wrapBrick } from "@next-core/react-element";
+import { wrapBrick, wrapLocalBrick } from "@next-core/react-element";
 import type {
   GeneralIcon,
   GeneralIconProps,
@@ -23,7 +23,7 @@ import { pick } from "lodash";
 initializeI18n(NS, locales);
 
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
-const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
+const WrappedLink = wrapLocalBrick<Link, LinkProps>("eo-link");
 
 export interface NotificationOptions {
   /** 通知类型 */

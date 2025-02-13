@@ -4,7 +4,7 @@ import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import classNames from "classnames";
 import { isObject } from "lodash";
 
-import { Link, LinkProps } from "../link";
+import type { Link, LinkProps } from "../link";
 
 import styleText from "./text.shadow.css";
 

@@ -15,7 +15,7 @@ import {
   isSubMenu,
 } from "@next-shared/general/menu";
 import { Menu as MenuComponent, SidebarMenu } from "../menu/index.js";
-import { Link, LinkProps } from "../link/index.js";
+import type { Link, LinkProps } from "../link/index.js";
 import {
   EoMenuItemSubMenu,
   EoMenuSubMenuProps,

@@ -23,8 +23,8 @@ import type {
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import classNames from "classnames";
-
 import type { EoTooltip, ToolTipProps } from "../tooltip/index.jsx";
+
 const WrappedTooltip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");
 
 const { defineElement, property, event } = createDecorators();

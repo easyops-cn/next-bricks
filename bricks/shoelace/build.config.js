@@ -36,4 +36,27 @@ export default {
       },
     },
   ],
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/](?:@shoelace-style[\\/]shoelace|@floating-ui|@lit(?:-labs)?|lit(?:-element|-html)?|css-loader|style-loader)[\\/]/,
+          priority: -5,
+          reuseExistingChunk: true,
+          name: "vendors",
+        },
+        react: {
+          test: /[\\/]node_modules[\\/](?:@next-core[\\/](?:react-(?:element|runtime))|(?:react(?:-dom)?|scheduler))[\\/]/,
+          priority: -10,
+          reuseExistingChunk: true,
+          name: "react",
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
+        },
+      },
+    },
+  },
 };
