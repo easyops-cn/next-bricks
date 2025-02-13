@@ -7,26 +7,22 @@ import antdRanges from "../antd-icon/generated/ranges.json";
 import faRanges from "../fa-icon/generated/ranges.json";
 import easyopsRanges from "../easyops-icon/generated/ranges.json";
 
-const ANTD_ICONS_URL = `${
-  // istanbul ignore next
-  process.env.NODE_ENV === "test" ? "" : __webpack_public_path__
-}chunks/antd-icons/all.svg`;
-
-const FA_ICONS_URL = `${
-  // istanbul ignore next
-  process.env.NODE_ENV === "test" ? "" : __webpack_public_path__
-}chunks/fa-icons/all.json`;
-
-const EASYOPS_ICONS_URL = `${
-  // istanbul ignore next
-  process.env.NODE_ENV === "test" ? "" : __webpack_public_path__
-}chunks/easyops-icons/all.svg`;
+const publicPath =
+  process.env.NODE_ENV === "test" ? "" : __webpack_public_path__;
 
 const SETTINGS_MAP = {
-  antd: { url: ANTD_ICONS_URL, icons: antdIcons, ranges: antdRanges },
-  fa: { url: FA_ICONS_URL, icons: faIcons, ranges: faRanges },
+  antd: {
+    url: `${publicPath}chunks/antd-icons/all.${antdRanges._hash}.svg`,
+    icons: antdIcons,
+    ranges: antdRanges,
+  },
+  fa: {
+    url: `${publicPath}chunks/fa-icons/all.${faRanges._hash}.json`,
+    icons: faIcons,
+    ranges: faRanges,
+  },
   easyops: {
-    url: EASYOPS_ICONS_URL,
+    url: `${publicPath}chunks/easyops-icons/all.${easyopsRanges._hash}.svg`,
     icons: easyopsIcons,
     ranges: easyopsRanges,
   },
