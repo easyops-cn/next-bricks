@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/shoelace@1.1.8...@next-bricks/shoelace@1.1.9) (2025-02-14)
+
+
+### Bug Fixes
+
+* merge base bricks ([2e5f314](https://github.com/easyops-cn/next-bricks/commit/2e5f314228a7fe494237dffb44a625271925f02e))
+
+
+
+
+
 ## [1.1.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/shoelace@1.1.7...@next-bricks/shoelace@1.1.8) (2025-01-20)
 
 **Note:** Version bump only for package @next-bricks/shoelace

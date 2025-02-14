@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.50.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.50.0...@next-bricks/basic@1.50.1) (2025-02-14)
+
+
+### Bug Fixes
+
+* **basic:** make up use of ReactUseMultipleBricks ([3853f3d](https://github.com/easyops-cn/next-bricks/commit/3853f3de4f4c2a4b649b728d8a6fbcd4e462cde1))
+* merge base bricks ([2e5f314](https://github.com/easyops-cn/next-bricks/commit/2e5f314228a7fe494237dffb44a625271925f02e))
+
+
+
+
+
 # [1.50.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.49.8...@next-bricks/basic@1.50.0) (2025-01-21)
 
 

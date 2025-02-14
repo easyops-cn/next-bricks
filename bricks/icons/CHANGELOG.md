@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.20](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.3.19...@next-bricks/icons@1.3.20) (2025-02-14)
+
+
+### Bug Fixes
+
+* add hash for merged icon filenames ([52e6a17](https://github.com/easyops-cn/next-bricks/commit/52e6a17889c7f80fc7f21bbde036fe18d994a997))
+* try multipart range request for icons ([a72d474](https://github.com/easyops-cn/next-bricks/commit/a72d474d9c38ea0b5fcf59ee971fccba2697e137))
+
+
+
+
+
 ## [1.3.19](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.3.18...@next-bricks/icons@1.3.19) (2025-02-10)
 
 **Note:** Version bump only for package @next-bricks/icons
