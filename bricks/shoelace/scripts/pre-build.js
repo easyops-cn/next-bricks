@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /** @type {(string|string[])[]} */
 const elements = [
-  "alert",
+  ["alert", "dialog", "tooltip"],
   "avatar",
   "badge",
   ["breadcrumb", "breadcrumb-item"],
@@ -18,7 +18,7 @@ const elements = [
   "checkbox",
   "color-picker",
   "details",
-  "dialog",
+  // "dialog",
   "divider",
   "drawer",
   "dropdown",
@@ -45,7 +45,7 @@ const elements = [
   ["tab-group", "tab", "tab-panel"],
   "tag",
   "textarea",
-  "tooltip",
+  // "tooltip",
   ["tree", "tree-item"],
   "animated-image",
   "animation",

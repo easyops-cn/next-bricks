@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useRef, useState } from "react";
 import { createProviderClass } from "@next-core/utils/general";
 import { i18n, initializeI18n } from "@next-core/i18n";
 import { createRoot } from "react-dom/client";
-import { wrapBrick } from "@next-core/react-element";
+import { wrapBrick, wrapLocalBrick } from "@next-core/react-element";
 import type { AntdIcon, AntdIconProps } from "@next-bricks/icons/antd-icon";
 import { get } from "lodash";
 import "@next-core/theme";
@@ -14,7 +14,7 @@ import styles from "./dialog.module.css";
 
 initializeI18n(NS, locales);
 
-const WrappedButton = wrapBrick<Button, ButtonProps>("eo-button");
+const WrappedButton = wrapLocalBrick<Button, ButtonProps>("eo-button");
 const WrappedAntdIcon = wrapBrick<AntdIcon, AntdIconProps>("eo-antd-icon");
 
 interface InputProps {

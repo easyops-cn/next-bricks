@@ -1,72 +1,77 @@
 import { describe, test, expect } from "@jest/globals";
 import { searchIcons } from "./search-icons.js";
 
-jest.mock("../easyops-icon/generated/icons.json", () => ({
-  default: ["search"],
-}));
-jest.mock("../antd-icon/generated/icons.json", () => ({
-  filled: ["alert"],
-}));
-jest.mock("../fa-icon/generated/icons.json", () => ({
-  fas: ["ad"],
-}));
-jest.mock("../fa-icon/generated/alias.json", () => ({
-  fas: {
-    "ad-alias": "ad",
-    "ad-alias2": "ad",
-    "search-alias": "search",
-  },
-}));
-
 describe("searchIcons", () => {
   test("should work", async () => {
-    expect(await searchIcons()).toEqual({
-      list: [
-        {
-          $searchTextPool: ["search", "default"],
-          icon: { category: "default", icon: "search", lib: "easyops" },
-          title: "search",
-        },
-        {
-          $searchTextPool: ["alert", "filled"],
-          icon: { icon: "alert", lib: "antd", theme: "filled" },
-          title: "alert",
-        },
-        {
-          $searchTextPool: ["ad", "fas", "ad-alias", "ad-alias2"],
-          icon: { icon: "ad", lib: "fa", prefix: "fas" },
-          title: "ad",
-        },
-      ],
+    const result1 = await searchIcons();
+    expect(result1).toMatchObject({
+      list: expect.arrayContaining([
+        expect.objectContaining({
+          title: "account",
+          icon: {
+            lib: "easyops",
+            category: "default",
+            icon: "account",
+          },
+        }),
+      ]),
       page: 1,
       pageSize: 20,
-      total: 3,
+      total: expect.any(Number),
     });
+    expect(result1.total).toBeGreaterThan(4000);
 
-    expect(await searchIcons({ q: "  ad  " })).toEqual({
-      list: [
-        {
-          $searchTextPool: ["ad", "fas", "ad-alias", "ad-alias2"],
-          icon: { icon: "ad", lib: "fa", prefix: "fas" },
-          title: "ad",
-        },
-      ],
-      page: 1,
-      pageSize: 20,
-      total: 1,
-    });
+    expect(await searchIcons({ q: "  trash-a  " })).toMatchInlineSnapshot(`
+      {
+        "list": [
+          {
+            "$searchTextPool": [
+              "trash-can",
+              "far",
+              "trash-alt",
+            ],
+            "icon": {
+              "icon": "trash-can",
+              "lib": "fa",
+              "prefix": "far",
+            },
+            "title": "trash-can",
+          },
+          {
+            "$searchTextPool": [
+              "trash-arrow-up",
+              "fas",
+              "trash-restore",
+            ],
+            "icon": {
+              "icon": "trash-arrow-up",
+              "lib": "fa",
+              "prefix": "fas",
+            },
+            "title": "trash-arrow-up",
+          },
+        ],
+        "page": 1,
+        "pageSize": 20,
+        "total": 2,
+      }
+    `);
 
-    expect(await searchIcons({ lib: "antd" })).toEqual({
-      list: [
-        {
-          $searchTextPool: ["alert", "filled"],
-          icon: { icon: "alert", lib: "antd", theme: "filled" },
+    const { total: total3, ...result3 } = await searchIcons({ lib: "antd" });
+    expect(result3).toEqual({
+      list: expect.arrayContaining([
+        expect.objectContaining({
           title: "alert",
-        },
-      ],
+          icon: {
+            lib: "antd",
+            theme: "outlined",
+            icon: "alert",
+          },
+        }),
+      ]),
       page: 1,
       pageSize: 20,
-      total: 1,
     });
+    expect(total3).toBeGreaterThan(800);
   });
 });

@@ -20,7 +20,7 @@ function ensureIcon(category, icon) {
     if (isImageCategory !== isNonSvg) {
       throw new Error(
         isImageCategory
-          ? `Icons in category of image should be in PNG format: ${icon}`
+          ? `Icons in category of image should be in PNG or GIF format: ${icon}`
           : `Icons in category other than image should be in SVG format: ${icon} in category ${category}`
       );
     }

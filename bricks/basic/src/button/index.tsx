@@ -1,6 +1,11 @@
 import React, { useMemo, Ref } from "react";
 import { createDecorators } from "@next-core/element";
-import { ReactNextElement, wrapBrick } from "@next-core/react-element";
+import {
+  ReactNextElement,
+  wrapBrick,
+  wrapLocalBrick,
+} from "@next-core/react-element";
+import { ReactUseMultipleBricks } from "@next-core/react-runtime";
 import type { ButtonType, ComponentSize, Shape, Target } from "../interface.js";
 import type {
   GeneralIcon,
@@ -17,8 +22,17 @@ import {
   ALLOWED_SHAPES,
 } from "../constants.js";
 
-export const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
-const WrappedTooltip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");
+export const WrappedLink = wrapLocalBrick<Link, LinkProps>("eo-link");
+const WrappedTooltip = wrapLocalBrick<EoTooltip, ToolTipProps>("eo-tooltip");
+
+// DO NOT delete these lines below:
+// To make Module Federation work as expected.
+// istanbul ignore next
+// eslint-disable-next-line no-constant-condition
+if (false) {
+  // eslint-disable-next-line no-console
+  console.log(ReactUseMultipleBricks);
+}
 
 export interface ButtonProps {
   type?: ButtonType;
