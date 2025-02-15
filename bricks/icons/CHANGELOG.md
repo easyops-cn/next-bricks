@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.22](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.3.21...@next-bricks/icons@1.3.22) (2025-02-15)
+
+
+### Bug Fixes
+
+* detect multipart range request support ([39e67db](https://github.com/easyops-cn/next-bricks/commit/39e67dbe4b236428f726159abfe23ceeed24fd2c))
+
+
+
+
+
 ## [1.3.21](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.3.20...@next-bricks/icons@1.3.21) (2025-02-15)
 
 
