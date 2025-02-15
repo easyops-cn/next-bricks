@@ -6,6 +6,7 @@ import faIcons from "../fa-icon/generated/icons.json";
 import antdRanges from "../antd-icon/generated/ranges.json";
 import faRanges from "../fa-icon/generated/ranges.json";
 import easyopsRanges from "../easyops-icon/generated/ranges.json";
+import { getRuntime } from "@next-core/runtime";
 
 const publicPath =
   process.env.NODE_ENV === "test" ? "" : __webpack_public_path__;
@@ -28,7 +29,9 @@ const SETTINGS_MAP = {
   },
 } as unknown as Record<string, Settings>;
 
-export let supportsMultipartRangeRequest = process.env.NODE_ENV !== "test";
+export let supportsMultipartRangeRequest =
+  process.env.NODE_ENV !== "test" &&
+  getRuntime?.()?.getFeatureFlags()["icons-multipart-range-request"];
 
 type Lib = "antd" | "fa" | "easyops";
 
