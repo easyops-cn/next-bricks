@@ -24,15 +24,15 @@ async function resolveIconDefinition(
   id: string
 ): Promise<IconDefinition | null> {
   // istanbul ignore next: experimental
-  if (supportsMultipartRangeRequest) {
-    try {
+  try {
+    if (await supportsMultipartRangeRequest()) {
       const content = await faRangeRequest.fetch(id);
       return JSON.parse(content);
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.warn("Failed to fetch icon by range:", id, error);
-      // Fallback to traditional fetch.
     }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.warn("Failed to fetch icon by range:", id, error);
+    // Fallback to traditional fetch.
   }
 
   try {

@@ -1,12 +1,12 @@
 // istanbul ignore file: experimental
 import { has } from "lodash";
+import { getRuntime } from "@next-core/runtime";
 import antdIcons from "../antd-icon/generated/icons.json";
 import easyopsIcons from "../easyops-icon/generated/icons.json";
 import faIcons from "../fa-icon/generated/icons.json";
 import antdRanges from "../antd-icon/generated/ranges.json";
 import faRanges from "../fa-icon/generated/ranges.json";
 import easyopsRanges from "../easyops-icon/generated/ranges.json";
-import { getRuntime } from "@next-core/runtime";
 
 const publicPath =
   process.env.NODE_ENV === "test" ? "" : __webpack_public_path__;
@@ -29,9 +29,68 @@ const SETTINGS_MAP = {
   },
 } as unknown as Record<string, Settings>;
 
-export let supportsMultipartRangeRequest =
+const TEST_URL = `${publicPath}manifest.json`;
+
+let supports =
   process.env.NODE_ENV !== "test" &&
   getRuntime?.()?.getFeatureFlags()["icons-multipart-range-request"];
+
+const supportsPromise = new Promise<boolean>((resolve) => {
+  if (!supports) {
+    resolve(false);
+    return;
+  }
+
+  const waitSeconds = 3;
+  const timeout = setTimeout(() => {
+    // eslint-disable-next-line no-console
+    console.warn(
+      `Multipart range request test timed out after ${waitSeconds} seconds`
+    );
+    resolve(false);
+  }, waitSeconds * 1000);
+
+  (async () => {
+    const res = await fetch(TEST_URL, {
+      headers: {
+        Range: `bytes=0-1, 3-4`,
+      },
+    });
+
+    if (!res.ok || res.status !== 206) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        `Multipart range request test failed with status: ${res.status} ${res.statusText}`
+      );
+      resolve(false);
+      clearTimeout(timeout);
+      return;
+    }
+
+    const contentType = res.headers.get("Content-Type");
+    if (
+      !contentType?.match(/\bmultipart\/byteranges;\s*\S*?boundary=([^\s;]+)/)
+    ) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        `Multipart range request test failed with unexpected Content-Type: "${contentType}"`
+      );
+      resolve(false);
+      clearTimeout(timeout);
+      return;
+    }
+
+    resolve(true);
+    clearTimeout(timeout);
+  })();
+});
+
+export async function supportsMultipartRangeRequest() {
+  if (!supports) {
+    return false;
+  }
+  return await supportsPromise;
+}
 
 type Lib = "antd" | "fa" | "easyops";
 
@@ -378,7 +437,6 @@ async function request(
     headers: {
       Range: `bytes=${bytes.join(", ")}`,
     },
-    cache: "force-cache",
   });
 
   if (!response.ok) {
@@ -394,7 +452,7 @@ async function request(
     console.error(
       `Unexpected response status: ${response.status} ${response.statusText}`
     );
-    supportsMultipartRangeRequest = false;
+    supports = false;
     return;
   }
 
@@ -406,7 +464,7 @@ async function request(
   if (!matches) {
     // eslint-disable-next-line no-console
     console.error(`Unexpected Content-Type: "${contentType}"`);
-    supportsMultipartRangeRequest = false;
+    supports = false;
     return;
   }
 

@@ -31,14 +31,14 @@ async function resolveIcon(
   let content: string | undefined;
 
   // istanbul ignore next: experimental
-  if (options?.id && supportsMultipartRangeRequest) {
-    try {
+  try {
+    if (options?.id && (await supportsMultipartRangeRequest())) {
       const rangeRequest =
         options.lib === "easyops" ? easyopsRangeRequest : antdRangeRequest;
       content = await rangeRequest.fetch(options.id);
-    } catch {
-      // Fallback to traditional fetch.
     }
+  } catch {
+    // Fallback to traditional fetch.
   }
 
   if (!content) {
