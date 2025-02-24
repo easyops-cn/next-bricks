@@ -11,11 +11,6 @@ a {
   cursor: pointer;
 }
 
-.plain {
-  cursor: inherit !important;
-  color: inherit !important;
-}
-
 .link {
   display: inline-flex;
   align-items: center;
@@ -23,12 +18,17 @@ a {
   color: var(--antd-btn-link-color);
 }
 
-.link:not(.disabled, .danger):hover {
+.link:not(.disabled, .danger, .plain):hover {
   color: var(--antd-btn-link-hover-color);
 }
 
-.link:not(.disabled, .danger):active {
+.link:not(.disabled, .danger, .plain):active {
   color: var(--antd-btn-link-active-color);
+}
+
+.plain {
+  cursor: inherit;
+  color: inherit;
 }
 
 .disabled {
