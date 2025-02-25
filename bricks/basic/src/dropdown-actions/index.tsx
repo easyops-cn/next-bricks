@@ -44,6 +44,7 @@ const WrappedActions = wrapBrick<
 export interface DropdownActionsProps
   extends Pick<ActionsProps, "actions" | "checkedKeys"> {
   disabled?: boolean;
+  strategy?: "absolute" | "fixed";
 }
 
 export interface DropdownActionsEvents {
@@ -94,6 +95,13 @@ class EoDropdownActions
   accessor disabled: boolean | undefined;
 
   /**
+   * 弹出层如何定位
+   * @default "absolute"
+   */
+  @property()
+  accessor strategy: "absolute" | "fixed" | undefined;
+
+  /**
    * 点击按钮时触发
    * @detail 该按钮配置
    */
@@ -123,6 +131,7 @@ class EoDropdownActions
       <EoDropdownActionsComponent
         actions={this.actions}
         disabled={this.disabled}
+        strategy={this.strategy}
         onActionClick={this.#handleClick}
         onVisibleChange={this.#handleVisibleChange}
         checkedKeys={this.checkedKeys}
@@ -140,6 +149,7 @@ export function EoDropdownActionsComponent({
   actions,
   checkedKeys,
   disabled,
+  strategy,
   onActionClick,
   onVisibleChange,
 }: DropdownActionsComponentProps) {
@@ -165,6 +175,7 @@ export function EoDropdownActionsComponent({
         setVisible(e.detail);
         onVisibleChange?.(e.detail);
       }}
+      strategy={strategy}
     >
       <slot slot="anchor" />
       <WrappedActions
