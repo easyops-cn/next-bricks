@@ -33,7 +33,7 @@ export interface DropdownButtonEventsMap
   extends Pick<DropdownActionsEventsMapping, "onActionClick"> {}
 
 export interface DropdownButtonProps
-  extends Pick<DropdownActionsProps, "actions" | "disabled">,
+  extends Pick<DropdownActionsProps, "actions" | "disabled" | "strategy">,
     Pick<ButtonProps, "size" | "shape" | "type" | "icon"> {
   btnText?: string;
 }
@@ -109,6 +109,13 @@ class DropdownButton extends ReactNextElement {
   accessor shape: Shape | undefined;
 
   /**
+   * 弹出层如何定位
+   * @default "absolute"
+   */
+  @property()
+  accessor strategy: "absolute" | "fixed" | undefined;
+
+  /**
    * 操作点击事件
    * @detail SimpleAction
    */
@@ -132,6 +139,7 @@ class DropdownButton extends ReactNextElement {
         shape={this.shape}
         type={this.type}
         disabled={this.disabled}
+        strategy={this.strategy}
         onActionClick={this.#handleActionClick}
       />
     );
@@ -146,12 +154,14 @@ function DropdownButtonComponent({
   shape,
   type,
   disabled,
+  strategy,
   onActionClick,
 }: DropdownButtonComponentProps) {
   return (
     <WrappedDropdownActions
       actions={actions}
       disabled={disabled}
+      strategy={strategy}
       onActionClick={(e) => onActionClick?.(e.detail)}
     >
       <WrappedButton
