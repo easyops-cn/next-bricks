@@ -1,0 +1,105 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.box {
+  display: block;
+  border: 1px solid var(--card-item-border-color);
+  border-radius: var(--larger-border-radius);
+  background: var(--card-item-bg);
+}
+
+.box::part(link) {
+  display: flex;
+  flex-direction: column;
+}
+
+.clickable::part(link) {
+  cursor: pointer;
+}
+
+.clickable:hover {
+  border-color: transparent;
+  box-shadow: var(--card-item-hover-shadow);
+  background: var(--card-item-hover-bg);
+}
+
+.body {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  flex: 1;
+  min-height: 0;
+}
+
+.content {
+  padding: 0 16px 16px;
+}
+
+.body.hidden + .content {
+  padding-top: 16px;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  gap: 3px;
+}
+
+:host([fill-container]) {
+  height: 100%;
+
+  .box,
+  .box::part(link) {
+    height: 100%;
+  }
+}
+
+.title {
+  font-size: var(--normal-font-size);
+  font-weight: var(--font-weight-500);
+  color: var(--text-color-title);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.description {
+  font-size: var(--sub-title-font-size-small);
+  color: var(--text-color-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.footer {
+  padding: 0 16px 16px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* https://github.com/w3c/csswg-drafts/issues/3559#issuecomment-1758459996 */
+@supports not (inset: 0) {
+  .avatar:not(.hidden) + .detail {
+    margin-left: 12px;
+  }
+
+  .title:not(.hidden) + .description {
+    margin-top: 3px;
+  }
+}
