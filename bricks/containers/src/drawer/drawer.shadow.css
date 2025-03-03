@@ -116,7 +116,7 @@
 .drawer.open .drawer-wrapper-right,
 .drawer.open .drawer-wrapper-bottom,
 .drawer.open .drawer-wrapper-top {
-  transform: translate(0, 0);
+  transform: none;
 }
 
 .drawer-content {
