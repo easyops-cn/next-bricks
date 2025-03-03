@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.6](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.14.5...@next-bricks/containers@1.14.6) (2025-03-03)
+
+
+### Bug Fixes
+
+* use `transform: none` instead of `transform: (0, 0)` ([852d316](https://github.com/easyops-cn/next-advanced-bricks/commit/852d3161749807bb646adda711f3aa801695ae0a))
+
+
+
+
+
 ## [1.14.5](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.14.2...@next-bricks/containers@1.14.5) (2025-01-20)
 
 
