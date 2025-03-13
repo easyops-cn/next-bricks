@@ -15,7 +15,7 @@ const consoleError = jest.spyOn(console, "error");
 
 describe("basic.home-redirect", () => {
   beforeEach(() => {
-    window.location = location;
+    (window as any).location = location;
   });
 
   test("redirect to specific url", async () => {
@@ -25,7 +25,7 @@ describe("basic.home-redirect", () => {
     element.redirectUrl = "/test";
 
     delete (window as any).location;
-    window.location = {
+    (window as any).location = {
       origin: location.origin,
       replace: jest.fn(),
       reload: jest.fn(),
@@ -59,7 +59,7 @@ describe("basic.home-redirect", () => {
     });
 
     delete (window as any).location;
-    window.location = {
+    (window as any).location = {
       replace: jest.fn(),
     } as unknown as Location;
 
@@ -84,7 +84,7 @@ describe("basic.home-redirect", () => {
     });
 
     delete (window as any).location;
-    window.location = {
+    (window as any).location = {
       replace: jest.fn(),
     } as unknown as Location;
 
@@ -113,7 +113,7 @@ describe("basic.home-redirect", () => {
     mockSearchMicroAppStandalone.mockRejectedValueOnce(error);
 
     delete (window as any).location;
-    window.location = {
+    (window as any).location = {
       replace: jest.fn(),
     } as unknown as Location;
 
@@ -139,7 +139,7 @@ describe("basic.home-redirect", () => {
     ) as HomeRedirect;
 
     delete (window as any).location;
-    window.location = {
+    (window as any).location = {
       replace: jest.fn(),
     } as unknown as Location;
 
