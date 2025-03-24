@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.7](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.14.6...@next-bricks/containers@1.14.7) (2025-03-24)
+
+
+### Bug Fixes
+
+* CMDB_INSTANCE-2633 应用系统管理的实例预览详情抽屉的自适应方案优化 ref CMDB_INSTANCE-2633 ([fdc7e8e](https://github.com/easyops-cn/next-advanced-bricks/commit/fdc7e8e2d8c540d53d4c3e73c9d7124a7fcd8e79))
+
+
+
+
+
 ## [1.14.6](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.14.5...@next-bricks/containers@1.14.6) (2025-03-03)
 
 
