@@ -35,7 +35,7 @@ export interface DrawerMapEvents {
 interface DrawerProps {
   curElement?: HTMLElement;
   customTitle?: string;
-  width?: number;
+  width?: number | string;
   height?: number;
   closable?: boolean;
   placement?: Placement;
@@ -71,10 +71,8 @@ class Drawer extends ReactNextElement implements DrawerProps {
   /**
    * 宽度(placement为left，right时生效)
    */
-  @property({
-    type: Number,
-  })
-  accessor width: number | undefined;
+  @property({ attribute: false })
+  accessor width: number | string | undefined;
 
   /**
    * 高度(placement为top，bottom时生效)
