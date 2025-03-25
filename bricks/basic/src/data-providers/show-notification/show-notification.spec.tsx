@@ -3,6 +3,16 @@ import { showNotification } from "./show-notification.jsx";
 import { act } from "react-dom/test-utils";
 import { fireEvent } from "@testing-library/react";
 
+const mockSpeechNotifications = {
+  play: jest.fn(),
+};
+
+jest.mock("./SpeechNotifications.js", () => ({
+  SpeechNotifications: jest
+    .fn()
+    .mockImplementation(() => mockSpeechNotifications),
+}));
+
 customElements.define("sl-alert", class extends HTMLElement {});
 
 type Animate = {
@@ -213,5 +223,17 @@ describe("showNotification", () => {
     expect(document.querySelector("eo-link")?.getAttribute("href")).toBe(
       "https://example.com"
     );
+  });
+
+  test("voiceContent", async () => {
+    act(() => {
+      showNotification({
+        type: "success",
+        message: "Done!",
+        voiceContent: "测试文本",
+      });
+    });
+    await (global as any).flushPromises();
+    expect(mockSpeechNotifications.play).toHaveBeenCalledWith("测试文本");
   });
 });
