@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.8](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.14.7...@next-bricks/containers@1.14.8) (2025-03-25)
+
+
+### Bug Fixes
+
+* fix tabs update not working ([45cd713](https://github.com/easyops-cn/next-advanced-bricks/commit/45cd713ad63664cfdd96d2ab8144872d4858ecc8))
+
+
+
+
+
 ## [1.14.7](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.14.6...@next-bricks/containers@1.14.7) (2025-03-24)
 
 
