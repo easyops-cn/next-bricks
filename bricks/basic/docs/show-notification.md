@@ -52,6 +52,27 @@ children:
             type: warn
 ```
 
+### voice play
+
+```yaml preview minHeight="500px"
+brick: div
+properties:
+  style:
+    display: grid
+    gap: 1em
+children:
+  - brick: eo-button
+    properties:
+      textContent: 有声告警通知
+    events:
+      click:
+        useProvider: basic.show-notification
+        args:
+          - message: 告警信息!
+            type: error
+            voiceContent: 有告警发生
+```
+
 ### Placement
 
 ```yaml preview minHeight="500px"
