@@ -192,7 +192,7 @@ function TabListElement({
       });
     }
     return [];
-  }, []);
+  }, [_tabs]);
 
   const tabItemMap = useMemo(() => getTabPlayQueue(tabs), [tabs]);
 
