@@ -13,6 +13,10 @@ import { WrappedSlAlert, SlAlertElement } from "./sl-alert.js";
 import type { Link, LinkProps, Target } from "../../link/index.js";
 import { K, NS, locales } from "../show-dialog/i18n";
 import {
+  SpeechNotifications,
+  SpeechNotificationsOptions,
+} from "./SpeechNotifications.js";
+import {
   activeKeyframeAnimationOptions,
   animations,
   hideKeyframeAnimationOptions,
@@ -60,6 +64,10 @@ export interface NotificationOptions {
   showConfirm?: boolean;
   /** 展示取消按钮 */
   showCancel?: boolean;
+  /** 语音播报的内容 */
+  voiceContent?: string;
+  /** 语音播报配置 */
+  voiceOptions?: SpeechNotificationsOptions;
 }
 
 export interface LinkOptions {
@@ -138,6 +146,11 @@ export async function showNotification(
       animations[placement].active,
       activeKeyframeAnimationOptions
     );
+
+  if (options.voiceContent) {
+    const speaker = new SpeechNotifications(options.voiceOptions);
+    speaker.play(options.voiceContent);
+  }
 
   return promise;
 }
