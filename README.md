@@ -8,4 +8,6 @@ Bricks for Brick Next V3.
 
 ## Contributing
 
+see docs
+
 [Contributing guide](CONTRIBUTING.md)
