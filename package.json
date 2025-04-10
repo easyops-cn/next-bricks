@@ -79,7 +79,7 @@
     "eslint": "^9.22.0",
     "husky": "^9.1.6",
     "jest-canvas-mock": "^2.5.2",
-    "lerna": "^8.1.7",
+    "lerna": "^8.2.2",
     "lint-staged": "^15.2.10",
     "prettier": "^3.5.3",
     "typescript": "^5.8.2"
