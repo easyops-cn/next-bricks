@@ -9,13 +9,14 @@ import React, {
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
-import styleText from "./styles.shadow.css";
 import type {
   GeneralIcon,
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
 import classNames from "classnames";
+import { isNil, omitBy } from "lodash";
 import { WrappedSlResizeObserver } from "./sl-resize-observer.js";
+import styleText from "./styles.shadow.css";
 
 const { defineElement, property } = createDecorators();
 
@@ -35,6 +36,8 @@ export interface AvatarProps {
   name?: string;
   bordered?: boolean;
   showName?: boolean;
+  color?: string;
+  bgColor?: string;
 }
 
 /**
@@ -78,6 +81,12 @@ class EoAvatar extends ReactNextElement implements AvatarProps {
   })
   accessor icon: GeneralIconProps | undefined;
 
+  /** 图标颜色 */
+  @property() accessor color: string | undefined;
+
+  /** 图标背景色 */
+  @property() accessor bgColor: string | undefined;
+
   /**
    * 用户名
    */
@@ -110,14 +119,25 @@ class EoAvatar extends ReactNextElement implements AvatarProps {
         name={this.name}
         bordered={this.bordered}
         showName={this.showName}
+        color={this.color}
+        bgColor={this.bgColor}
       />
     );
   }
 }
 
-export function EoAvatarComponent(props: AvatarProps) {
-  const { shape, size, src, alt, icon, name, bordered } = props;
-
+export function EoAvatarComponent({
+  shape,
+  size,
+  src,
+  alt,
+  icon,
+  name,
+  bordered,
+  showName: propShowName,
+  color,
+  bgColor,
+}: AvatarProps) {
   const avatarNodeRef = useRef<HTMLSpanElement>(null);
   const textNodeRef = useRef<HTMLSpanElement>(null);
 
@@ -233,10 +253,15 @@ export function EoAvatarComponent(props: AvatarProps) {
         ref={avatarNodeRef}
         part={`avatar avatar-${type}`}
         title={name}
+        style={
+          type === "icon"
+            ? omitBy({ color, backgroundColor: bgColor }, isNil)
+            : undefined
+        }
       >
         {avatarNode}
       </span>
-      {props.showName && <span className="name">{name}</span>}
+      {propShowName && <span className="name">{name}</span>}
     </>
   );
 }
