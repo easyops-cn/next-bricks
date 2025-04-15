@@ -2246,10 +2246,10 @@
     i18next "^22.5.1"
     i18next-browser-languagedetector "^7.2.2"
 
-"@next-core/illustrations@^0.11.34":
-  version "0.11.34"
-  resolved "https://registry.yarnpkg.com/@next-core/illustrations/-/illustrations-0.11.34.tgz#5b97a5ddc9c064538e8a90321ac29164efd462a2"
-  integrity sha512-ism85NF1tkMgYT0+lILoldjFRFKRZLr5RaqZzehPkAsYlG6iVlr89DThhKXUK8XzXBqg8UhnDOOqy1Vl9X78kg==
+"@next-core/illustrations@^0.11.36":
+  version "0.11.36"
+  resolved "https://registry.yarnpkg.com/@next-core/illustrations/-/illustrations-0.11.36.tgz#a82f82a8d451a31e0a2a78dbb1d4560d45aebf88"
+  integrity sha512-YSzRaoJG1agJ0Ve73tpgo8DFhJXEAB777O3le19MdajUDobQnsmi7pdbo3CDGwTkSlm3h+fE1QvbSoedPRQ2dg==
 
 "@next-core/inject@^1.0.52":
   version "1.0.52"
