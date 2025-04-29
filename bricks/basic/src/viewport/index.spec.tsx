@@ -6,6 +6,13 @@ import type { Viewport } from "./index.js";
 jest.mock("@next-core/theme", () => ({}));
 
 describe("eo-viewport", () => {
+  beforeEach(() => {
+    const metaTags = document.querySelectorAll('meta[name="viewport"]');
+    for (const metaTag of metaTags) {
+      metaTag.remove();
+    }
+  });
+
   test("basic usage", async () => {
     const element = document.createElement("eo-viewport") as Viewport;
 
@@ -46,5 +53,35 @@ describe("eo-viewport", () => {
       document.body.removeChild(element);
     });
     expect(document.querySelector('meta[name="viewport"]')).toBeNull();
+  });
+
+  test("ignore if the meta already exists", () => {
+    const element = document.createElement("eo-viewport") as Viewport;
+    const metaTag = document.createElement("meta");
+    metaTag.name = "viewport";
+    metaTag.content = "width=2000px, initial-scale=3";
+    document.head.appendChild(metaTag);
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    const metaTags = document.querySelectorAll('meta[name="viewport"]');
+    expect(metaTags.length).toBe(1);
+    expect(metaTags[0]).toBe(metaTag);
+    expect(metaTag.getAttribute("content")).toBe(
+      "width=2000px, initial-scale=3"
+    );
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+
+    const metaTagsAfter = document.querySelectorAll('meta[name="viewport"]');
+    expect(metaTagsAfter.length).toBe(1);
+    expect(metaTagsAfter[0]).toBe(metaTag);
+    expect(metaTag.getAttribute("content")).toBe(
+      "width=2000px, initial-scale=3"
+    );
   });
 });

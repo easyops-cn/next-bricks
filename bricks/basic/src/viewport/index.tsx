@@ -46,6 +46,14 @@ export function ViewportComponent({
   const initialScale = _initialScale ?? 1;
 
   useEffect(() => {
+    const existedMeta = document.querySelector(
+      'meta[name="viewport"]'
+    ) as HTMLMetaElement;
+    if (existedMeta) {
+      // Ignore if the meta tag already exists
+      return;
+    }
+
     const meta = document.createElement("meta");
     meta.name = "viewport";
     meta.content = `width=${width}, initial-scale=${initialScale}`;
