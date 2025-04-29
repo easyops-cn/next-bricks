@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.54.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.53.1...@next-shared/common-bricks@0.54.0) (2025-04-29)
+
+
+### Features
+
+* new brick: eo-viewport ([4a64d5c](https://github.com/easyops-cn/next-bricks/commit/4a64d5c9a323a2202af286c806c992e396c545fc))
+
+
+
+
+
 ## [0.53.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.53.0...@next-shared/common-bricks@0.53.1) (2025-01-12)
 
 

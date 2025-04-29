@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.52.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.51.0...@next-bricks/basic@1.52.0) (2025-04-29)
+
+
+### Bug Fixes
+
+* **eo-viewport:**  ignore if the meta tag already exists ([df29ec3](https://github.com/easyops-cn/next-bricks/commit/df29ec32723918f088e288ffde4a868416c4570e))
+
+
+### Features
+
+* new brick: eo-viewport ([4a64d5c](https://github.com/easyops-cn/next-bricks/commit/4a64d5c9a323a2202af286c806c992e396c545fc))
+
+
+
+
+
 # [1.51.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.50.3...@next-bricks/basic@1.51.0) (2025-03-26)
 
 
