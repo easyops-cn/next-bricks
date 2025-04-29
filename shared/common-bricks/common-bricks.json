@@ -38,7 +38,8 @@
     "eo-broadcast-channel",
     "eo-iframe",
     "eo-dropdown-select",
-    "eo-loading-container"
+    "eo-loading-container",
+    "eo-viewport"
   ],
   "icons": [
     "eo-antd-icon",
