@@ -24,7 +24,7 @@ describe("eo-viewport", () => {
 
     const metaTag = document.querySelector('meta[name="viewport"]');
     expect(metaTag?.getAttribute("content")).toBe(
-      "width=device-width, initial-scale=1"
+      "width=device-width, initial-scale=1, minimum-scale=0.1, maximum-scale=10, user-scalable=1"
     );
 
     act(() => {
@@ -37,6 +37,9 @@ describe("eo-viewport", () => {
     const element = document.createElement("eo-viewport") as Viewport;
     element.width = "1000px";
     element.initialScale = 2;
+    element.minimumScale = 1;
+    element.maximumScale = 2;
+    element.userScalable = "no";
 
     expect(element.shadowRoot).toBeFalsy();
 
@@ -46,7 +49,7 @@ describe("eo-viewport", () => {
 
     const metaTag = document.querySelector('meta[name="viewport"]');
     expect(metaTag?.getAttribute("content")).toBe(
-      "width=1000px, initial-scale=2"
+      "width=1000px, initial-scale=2, minimum-scale=1, maximum-scale=2, user-scalable=no"
     );
 
     act(() => {
