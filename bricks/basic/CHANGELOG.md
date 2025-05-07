@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.52.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.52.0...@next-bricks/basic@1.52.1) (2025-05-07)
+
+
+### Bug Fixes
+
+* support other parameters for viewport ([812f141](https://github.com/easyops-cn/next-bricks/commit/812f141477c94334330ef490044714e9a6c888d0))
+
+
+
+
+
 # [1.52.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.51.0...@next-bricks/basic@1.52.0) (2025-04-29)
 
 
