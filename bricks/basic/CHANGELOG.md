@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.53.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.52.1...@next-bricks/basic@1.53.0) (2025-05-08)
+
+
+### Bug Fixes
+
+* **button:** add part button ([4296dda](https://github.com/easyops-cn/next-bricks/commit/4296dda11edf318e72dc2babca72e53438d32f4b))
+* **popover:** use mousedown instead of click to release popover ([8801198](https://github.com/easyops-cn/next-bricks/commit/88011985451aec5ead3e8da726c6d0ca417651ad))
+* refine import order to fix dev errors ([8a86afc](https://github.com/easyops-cn/next-bricks/commit/8a86afc901c6ffb614b2fe5623676c4762455e53))
+
+
+### Features
+
+* **mini-actions:** add event visible.change ([da15aa6](https://github.com/easyops-cn/next-bricks/commit/da15aa6b6736fb86bb8712e93fe306cb11e0c9f4))
+
+
+
+
+
 ## [1.52.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.52.0...@next-bricks/basic@1.52.1) (2025-05-07)
 
 
