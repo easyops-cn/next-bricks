@@ -64,10 +64,12 @@ export interface EoMiniActionsProps {
 
 export interface EoMiniActionsEvents {
   "action.click": CustomEvent<SimpleActionType>;
+  "visible.change": CustomEvent<boolean>;
 }
 
 export interface EoMiniActionsEventsMapping {
   onActionClick: "action.click";
+  onVisibleChange: "visible.change";
 }
 
 /**
@@ -101,11 +103,23 @@ class EoMiniActions extends ReactNextElement implements EoMiniActionsProps {
     }
   };
 
+  /**
+   * 当下拉菜单可见性变化之后触发
+   * @detail 当前是否可见
+   */
+  @event({ type: "visible.change" })
+  accessor #visibleChangeEvent!: EventEmitter<boolean>;
+
+  #handleVisibleChange = (visible: boolean): void => {
+    this.#visibleChangeEvent.emit(visible);
+  };
+
   render() {
     return (
       <EoMiniActionsComponent
         actions={this.actions}
         onActionClick={this.#handleActionClick}
+        onVisibleChange={this.#handleVisibleChange}
       />
     );
   }
@@ -113,6 +127,7 @@ class EoMiniActions extends ReactNextElement implements EoMiniActionsProps {
 
 interface EoMiniActionsComponentProps extends EoMiniActionsProps {
   onActionClick: (action: SimpleActionType) => void;
+  onVisibleChange: (visible: boolean) => void;
 }
 
 const stopPropagationListener = (e: Event) => {
@@ -125,7 +140,7 @@ const preventDefaultAndStopPropagationListener = (e: Event) => {
 };
 
 export function EoMiniActionsComponent(props: EoMiniActionsComponentProps) {
-  const { actions, onActionClick } = props;
+  const { actions, onActionClick, onVisibleChange } = props;
 
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
@@ -147,6 +162,7 @@ export function EoMiniActionsComponent(props: EoMiniActionsComponentProps) {
 
   const handlePopoverVisibleChange = (event: CustomEvent<boolean>) => {
     setDropdownVisible(event.detail);
+    onVisibleChange(event.detail);
   };
 
   const handleActionClick = (action: SimpleActionType) => {

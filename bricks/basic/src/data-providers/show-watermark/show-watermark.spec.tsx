@@ -13,9 +13,9 @@ describe("showWaterMark", () => {
       });
     });
 
-    expect(document.body.innerHTML).toBe(
-      "<div style=\"z-index: 9; position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; background-repeat: repeat; background-image: url('data:image/png;base64,00'); background-size: 645px;\"></div>"
-    );
+    const expected =
+      "<div style=\"z-index: 9; position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; background-repeat: repeat; background-image: url('data:image/png;base64,00'); background-size: 645px;\"></div>";
+    expect(document.body.innerHTML).toBe(expected);
 
     const element = document.body.querySelector("div");
 
@@ -43,8 +43,6 @@ describe("showWaterMark", () => {
       await (global as any).flushPromises();
     });
 
-    expect(document.body.innerHTML).toBe(
-      "<div style=\"z-index: 9; position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; background-repeat: repeat; background-image: url('data:image/png;base64,00'); background-size: 645px;\"></div>"
-    );
+    expect(document.body.innerHTML).toBe(expected);
   });
 });

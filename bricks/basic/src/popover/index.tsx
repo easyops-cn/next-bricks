@@ -345,23 +345,23 @@ function PopoverComponent(props: PopoverComponentProps) {
 
     if (trigger === "click") {
       triggerSlot?.addEventListener("click", handleTriggerClick);
-      document.addEventListener("click", handleAutoDropdownClose);
+      document.addEventListener("mousedown", handleAutoDropdownClose);
 
       return () => {
         triggerSlot?.removeEventListener("click", handleTriggerClick);
-        document.removeEventListener("click", handleAutoDropdownClose);
+        document.removeEventListener("mousedown", handleAutoDropdownClose);
       };
     } else if (trigger === "hover") {
       document.addEventListener("mousemove", handleMouseMove);
       defaultSlot?.addEventListener("click", handleNotTrigger);
       triggerSlot?.addEventListener("click", handleNotTrigger);
-      document?.addEventListener("click", handlePopoverClose);
+      document?.addEventListener("mousedown", handlePopoverClose);
 
       return () => {
         document.removeEventListener("mousemove", handleMouseMove);
         defaultSlot?.removeEventListener("click", handleNotTrigger);
         triggerSlot?.removeEventListener("click", handleNotTrigger);
-        document?.removeEventListener("click", handlePopoverClose);
+        document?.removeEventListener("mousedown", handlePopoverClose);
       };
     }
   }, [

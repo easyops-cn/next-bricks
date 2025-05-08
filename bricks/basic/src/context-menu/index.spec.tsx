@@ -196,5 +196,9 @@ describe("eo-context-menu", () => {
       text: "item",
       dragConf: { key: "text", data: {} },
     });
+
+    act(() => {
+      document.body.removeChild(element);
+    });
   });
 });

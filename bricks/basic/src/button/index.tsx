@@ -56,6 +56,7 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 /**
  * 通用按钮构件
  * @author sailor
+ * @part button - 按钮元素
  * @slot - 按钮内容
  * @event click - 点击
  * @category interact-basic
@@ -193,6 +194,7 @@ export function ButtonComponent({
           ALLOWED_BUTTON_TYPES.includes(type) ? type : "default",
           { danger }
         )}
+        part="button"
         style={buttonStyle}
         disabled={disabled}
       >
