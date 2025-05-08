@@ -135,7 +135,7 @@ describe("eo-popover", () => {
 `);
 
     await act(async () => {
-      document.body?.click();
+      fireEvent.mouseDown(document.body);
     });
     jest.runAllTimers();
 
@@ -413,7 +413,7 @@ describe("eo-popover", () => {
       element.querySelector("button")?.click();
     });
     await act(async () => {
-      document.body?.click();
+      fireEvent.mouseDown(document.body);
     });
     await act(async () => {
       element.querySelector("button")?.click();
