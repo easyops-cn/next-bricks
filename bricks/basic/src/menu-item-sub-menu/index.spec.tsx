@@ -33,9 +33,11 @@ describe("eo-menu-item-sub-menu", () => {
 
     expect(element.shadowRoot?.querySelector(".collapsed")).toBeTruthy();
 
-    (
-      element.shadowRoot?.querySelector(".sub-menu-item-title") as HTMLElement
-    ).click();
+    act(() => {
+      (
+        element.shadowRoot?.querySelector(".sub-menu-item-title") as HTMLElement
+      ).click();
+    });
 
     expect(element.innerHTML).toEqual("<span>菜单项一</span>");
 

@@ -155,6 +155,11 @@ export function showWaterMark({
   };
 
   const renderWatermark = () => {
+    // istanbul ignore next
+    if (process.env.NODE_ENV === "test" && typeof document === "undefined") {
+      return;
+    }
+
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
 

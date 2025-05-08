@@ -3,15 +3,10 @@ import { fireEvent, createEvent } from "@testing-library/dom";
 import { act } from "react-dom/test-utils";
 import "./index.jsx";
 import { ActionType, EoMiniActions } from "./index.jsx";
+import "../actions/index.jsx";
+import "../popover/index.jsx";
 
 jest.mock("@next-core/theme", () => ({}));
-
-customElements.define(
-  "eo-actions",
-  class extends HTMLElement {
-    actions: unknown[] | undefined;
-  }
-);
 
 describe("eo-mini-actions", () => {
   test("basic usage", async () => {
@@ -35,6 +30,12 @@ describe("eo-mini-actions", () => {
         isDropdown: false,
         event: "edit",
         tooltip: "edit",
+      },
+      {
+        text: "Go",
+        isDropdown: false,
+        event: "go",
+        url: "/go",
       },
       {
         icon: {
@@ -72,7 +73,7 @@ describe("eo-mini-actions", () => {
     });
     expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
     expect(element.shadowRoot?.querySelectorAll(".button-item")).toHaveLength(
-      3
+      4
     );
     expect(
       element.shadowRoot?.querySelectorAll(".button-dropdown-item")
