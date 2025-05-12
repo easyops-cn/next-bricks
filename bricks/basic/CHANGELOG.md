@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.53.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.53.0...@next-bricks/basic@1.53.1) (2025-05-12)
+
+
+### Bug Fixes
+
+* **popover:** leave default anchorDisplay as undefined ([3481115](https://github.com/easyops-cn/next-bricks/commit/348111541bed529958782fcf15c3c43ec6f6c593))
+
+
+
+
+
 # [1.53.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.52.1...@next-bricks/basic@1.53.0) (2025-05-08)
 
 
