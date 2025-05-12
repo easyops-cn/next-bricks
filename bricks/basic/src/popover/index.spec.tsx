@@ -94,7 +94,7 @@ describe("eo-popover", () => {
   <slot
     name="anchor"
     slot="anchor"
-    style="padding: 6px; margin: -6px; display: inline-block;"
+    style="padding: 6px; margin: -6px;"
   />
   <slot
     hidden=""
@@ -128,7 +128,7 @@ describe("eo-popover", () => {
   <slot
     name="anchor"
     slot="anchor"
-    style="padding: 6px; margin: -6px; display: inline-block;"
+    style="padding: 6px; margin: -6px;"
   />
   <slot />
 </sl-popup>
@@ -160,7 +160,7 @@ describe("eo-popover", () => {
   <slot
     name="anchor"
     slot="anchor"
-    style="padding: 6px; margin: -6px; display: inline-block;"
+    style="padding: 6px; margin: -6px;"
   />
   <slot
     hidden=""
@@ -219,7 +219,7 @@ describe("eo-popover", () => {
   <slot
     name="anchor"
     slot="anchor"
-    style="padding: 6px; margin: -6px; display: inline-block;"
+    style="padding: 6px; margin: -6px;"
   />
   <slot
     hidden=""
@@ -249,7 +249,7 @@ describe("eo-popover", () => {
   <slot
     name="anchor"
     slot="anchor"
-    style="padding: 6px; margin: -6px; display: inline-block;"
+    style="padding: 6px; margin: -6px;"
   />
   <slot
     hidden=""
@@ -284,7 +284,7 @@ describe("eo-popover", () => {
   <slot
     name="anchor"
     slot="anchor"
-    style="padding: 6px; margin: -6px; display: inline-block;"
+    style="padding: 6px; margin: -6px;"
   />
   <slot />
 </sl-popup>
@@ -317,7 +317,7 @@ describe("eo-popover", () => {
   <slot
     name="anchor"
     slot="anchor"
-    style="padding: 6px; margin: -6px; display: inline-block;"
+    style="padding: 6px; margin: -6px;"
   />
   <slot
     hidden=""

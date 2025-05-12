@@ -133,7 +133,6 @@ class Popover extends ReactNextElement implements PopoverProps {
 
   /**
    * 触发器的显示类型
-   * @default "inline-block"
    */
   @property()
   accessor anchorDisplay: CSSProperties["display"];
@@ -205,7 +204,7 @@ function PopoverComponent(props: PopoverComponentProps) {
     onVisibleChange,
     onBeforeVisibleChange,
     distance = props.arrow ? POPUP_DISTANCE + ARROW_SIZE : POPUP_DISTANCE,
-    anchorDisplay = "inline-block",
+    anchorDisplay,
     zIndex,
   } = props;
   const firstRendered = useRef(true);
