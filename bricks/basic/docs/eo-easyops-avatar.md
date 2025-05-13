@@ -1,4 +1,4 @@
-easyops 头像
+EasyOps 头像
 
 ## Examples
 
