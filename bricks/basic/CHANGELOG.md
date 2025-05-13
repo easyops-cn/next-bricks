@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.53.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.53.1...@next-bricks/basic@1.53.2) (2025-05-13)
+
+
+### Bug Fixes
+
+* **eo-easyops-avatar:** export parts from eo-avatar ([9fe3de2](https://github.com/easyops-cn/next-bricks/commit/9fe3de2af3f3477acf6f19189acaa163acdd6eca))
+
+
+
+
+
 ## [1.53.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.53.0...@next-bricks/basic@1.53.1) (2025-05-12)
 
 
