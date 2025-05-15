@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.10](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.14.9...@next-bricks/containers@1.14.10) (2025-05-15)
+
+
+### Bug Fixes
+
+* **drawer:** make elements interactable behind a drawer without mask ([b0139f0](https://github.com/easyops-cn/next-advanced-bricks/commit/b0139f085bcc37809d74920f6dbac3265d26799b))
+
+
+
+
+
 ## [1.14.9](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.14.8...@next-bricks/containers@1.14.9) (2025-05-15)
 
 
