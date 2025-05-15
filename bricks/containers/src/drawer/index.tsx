@@ -28,11 +28,11 @@ export interface DrawerEvents {
 }
 
 export interface DrawerMapEvents {
-  onClose: "drawer.close";
-  onOpen: "drawer.open";
+  onClose: "close";
+  onOpen: "open";
 }
 
-interface DrawerProps {
+export interface DrawerProps {
   curElement?: HTMLElement;
   customTitle?: string;
   width?: number | string;
@@ -45,7 +45,9 @@ interface DrawerProps {
   footerSlot?: boolean;
   scrollToTopWhenOpen?: boolean;
   stackable?: boolean;
+  maskStyle?: CSSProperties;
 }
+
 const { defineElement, property, event, method } = createDecorators();
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
@@ -225,7 +227,6 @@ class Drawer extends ReactNextElement implements DrawerProps {
 
 interface DrawerComponentProps extends DrawerProps {
   stack?: ModalStack;
-  maskStyle?: CSSProperties;
   onDrawerClose: () => void;
 }
 
