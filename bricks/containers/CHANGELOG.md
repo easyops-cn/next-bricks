@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.9](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.14.8...@next-bricks/containers@1.14.9) (2025-05-15)
+
+
+### Bug Fixes
+
+* **drawer:** fix and export types ([7ec52e1](https://github.com/easyops-cn/next-advanced-bricks/commit/7ec52e12071224b7b99c00fa5da47bf3a5bd37f9))
+
+
+
+
+
 ## [1.14.8](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.14.7...@next-bricks/containers@1.14.8) (2025-03-25)
 
 
