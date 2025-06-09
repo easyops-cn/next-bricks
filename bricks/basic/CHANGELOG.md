@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.53.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.53.2...@next-bricks/basic@1.53.3) (2025-06-09)
+
+
+### Bug Fixes
+
+* refine i18n, support future upgrade to react 19 ([95d163a](https://github.com/easyops-cn/next-bricks/commit/95d163a35410f1702875021a7ea598c6c67312e2))
+
+
+
+
+
 ## [1.53.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.53.1...@next-bricks/basic@1.53.2) (2025-05-13)
 
 
