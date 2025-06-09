@@ -30,10 +30,6 @@ import type {
 } from "@next-bricks/icons/general-icon";
 import classNames from "classnames";
 
-// --- NOTE: uncomment these lines below to enable i18n for your brick ---
-// import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
-// import { K, NS, locales } from "./i18n.js";
-// initializeReactI18n(NS, locales);
 const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 const WrappedMenu = wrapBrick<MenuComponent, any>("eo-menu");
@@ -79,8 +75,6 @@ class EoSidebarSubMenu extends ReactNextElement {
 }
 
 export function EoSidebarSubMenuComponent(props: SidebarSubMenuProps) {
-  // const { t } = useTranslation(NS);
-  // const hello = t(K.HELLO);
   const { menu } = props;
 
   const history = getHistory();

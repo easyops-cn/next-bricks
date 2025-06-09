@@ -28,15 +28,15 @@ import {
   sideBarCollapsedWidth,
   sideBarWidth,
 } from "./utils.js";
-import { useTranslation, initializeReactI18n } from "@next-core/i18n/react";
-import { K, NS, locales } from "./i18n.js";
+import { initializeI18n } from "@next-core/i18n";
+import { K, NS, locales, t } from "./i18n.js";
 import classNames from "classnames";
 import { initMenuItemAndMatchCurrentPathKeys } from "@next-shared/general/menu";
 import { UnregisterCallback } from "history";
 import { getHistory, getRuntime } from "@next-core/runtime";
 import { useCurrentApp } from "@next-core/react-runtime";
 
-initializeReactI18n(NS, locales);
+initializeI18n(NS, locales);
 
 const { defineElement, property, event } = createDecorators();
 
@@ -138,8 +138,6 @@ interface EoSidebarComponentProps extends EoSidebarProps {
 }
 
 export function EoSidebarComponent(props: EoSidebarComponentProps) {
-  const { t } = useTranslation(NS);
-
   const {
     hiddenFixedIcon,
     position,

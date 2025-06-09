@@ -149,7 +149,7 @@ describe("eo-dropdown-select", () => {
             <span
               class="label"
             >
-              PLEASE_SELECT
+              Please select
             </span>
             <eo-icon
               icon="caret-down"
