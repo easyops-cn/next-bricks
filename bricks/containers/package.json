@@ -49,7 +49,7 @@
   },
   "devDependencies": {
     "@next-core/build-next-bricks": "^1.23.13",
-    "@next-core/test-next": "^1.1.9"
+    "@next-core/test-next": "^2.0.0"
   },
   "peerDependencies": {
     "@next-bricks/basic": "*",

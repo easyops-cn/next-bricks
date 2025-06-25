@@ -52,7 +52,7 @@
     "@next-core/browserslist-config-next": "^1.1.2",
     "@next-core/eslint-config-next": "^3.0.1",
     "@next-core/preview": "^0.7.59",
-    "@next-core/test-next": "^1.1.9",
+    "@next-core/test-next": "^2.0.0",
     "@next-core/yo": "^1.5.98",
     "@types/d3-force": "^3.0.9",
     "@types/d3-geo": "^3.1.0",
