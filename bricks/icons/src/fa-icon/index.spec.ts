@@ -175,8 +175,8 @@ describe("FaIcon", () => {
         </style>,
       ]
     `);
-    expect(consoleError).toBeCalledTimes(1);
-    expect(consoleError).toBeCalledWith(
+    expect(consoleError).toHaveBeenCalledTimes(1);
+    expect(consoleError).toHaveBeenCalledWith(
       "FontAwesome Icon not found:",
       "fas",
       "oops"

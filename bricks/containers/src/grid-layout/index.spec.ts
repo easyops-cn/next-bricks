@@ -85,7 +85,7 @@ describe("eo-grid-layout", () => {
     });
     await (global as any).flushPromises();
 
-    expect(mediaEventTarget.addEventListener).toBeCalledTimes(1);
+    expect(mediaEventTarget.addEventListener).toHaveBeenCalledTimes(1);
     expect(element.style.gridColumn).toBe("");
     expect(element.style.gridRow).toBe("span 7");
 
@@ -93,7 +93,7 @@ describe("eo-grid-layout", () => {
       document.body.removeChild(element);
     });
     await (global as any).flushPromises();
-    expect(mediaEventTarget.removeEventListener).toBeCalledTimes(1);
+    expect(mediaEventTarget.removeEventListener).toHaveBeenCalledTimes(1);
     expect(document.body.contains(element)).toBeFalsy();
   });
 });

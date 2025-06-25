@@ -47,8 +47,8 @@ describe("eo-tag", () => {
       ).click();
     });
 
-    expect(mockCheckFn).toBeCalled();
-    expect(mockCloseFn).toBeCalled();
+    expect(mockCheckFn).toHaveBeenCalled();
+    expect(mockCloseFn).toHaveBeenCalled();
     expect(
       (element.shadowRoot?.querySelector(".tag") as HTMLElement).className
     ).toBe("tag large color-yellow checkable closable");

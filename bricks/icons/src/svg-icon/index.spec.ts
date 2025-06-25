@@ -113,7 +113,7 @@ describe("eo-svg-icon", () => {
     const element = document.createElement("eo-svg-icon") as SvgIcon;
     element.imgSrc = "account.svg";
     (element as any)._render();
-    expect(fetch).not.toBeCalled();
+    expect(fetch).not.toHaveBeenCalled();
   });
 
   test("fix url", async () => {

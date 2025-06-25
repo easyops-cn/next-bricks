@@ -34,7 +34,7 @@ describe("eo-tab-list", () => {
     await act(async () => {
       fireEvent.click(item2);
     });
-    expect(onTabSelect).lastCalledWith(
+    expect(onTabSelect).toHaveBeenLastCalledWith(
       expect.objectContaining({
         detail: "b",
       })

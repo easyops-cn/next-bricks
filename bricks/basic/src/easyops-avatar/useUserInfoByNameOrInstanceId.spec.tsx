@@ -81,7 +81,7 @@ describe("useUserInfoByNameOrInstanceId", () => {
       loading: false,
     });
     unmount();
-    expect(consoleError).not.toBeCalled();
+    expect(consoleError).not.toHaveBeenCalled();
   });
 
   test("should work concurrently", async () => {
@@ -122,7 +122,7 @@ describe("useUserInfoByNameOrInstanceId", () => {
     });
     unmount1();
     unmount2();
-    expect(consoleError).not.toBeCalled();
+    expect(consoleError).not.toHaveBeenCalled();
   });
 
   test("should handle unsubscribed", async () => {
@@ -158,7 +158,7 @@ describe("useUserInfoByNameOrInstanceId", () => {
     });
     expect(result.current).toEqual({ loading: false, user: null });
     unmount();
-    expect(consoleError).not.toBeCalled();
+    expect(consoleError).not.toHaveBeenCalled();
   });
 
   test("should work when error occurred", async () => {
@@ -174,7 +174,7 @@ describe("useUserInfoByNameOrInstanceId", () => {
     await act(async () => {
       await (global as any).flushPromises();
     });
-    expect(consoleError).toBeCalledWith(
+    expect(consoleError).toHaveBeenCalledWith(
       "Load user info failed:",
       new Error("oops")
     );

@@ -45,14 +45,14 @@ describe("eo-tooltip", () => {
     act(() => {
       slTooltipElement.show();
     });
-    expect(onOpenChange).lastCalledWith(
+    expect(onOpenChange).toHaveBeenLastCalledWith(
       expect.objectContaining({
         detail: true,
       })
     );
-    expect(onAfterOpenChange).not.toBeCalled();
+    expect(onAfterOpenChange).not.toHaveBeenCalled();
     jest.runAllTimers();
-    expect(onAfterOpenChange).lastCalledWith(
+    expect(onAfterOpenChange).toHaveBeenLastCalledWith(
       expect.objectContaining({
         detail: true,
       })
@@ -61,18 +61,18 @@ describe("eo-tooltip", () => {
     act(() => {
       slTooltipElement.hide();
     });
-    expect(onOpenChange).lastCalledWith(
+    expect(onOpenChange).toHaveBeenLastCalledWith(
       expect.objectContaining({
         detail: false,
       })
     );
-    expect(onAfterOpenChange).not.toBeCalledWith(
+    expect(onAfterOpenChange).not.toHaveBeenCalledWith(
       expect.objectContaining({
         detail: false,
       })
     );
     jest.runAllTimers();
-    expect(onAfterOpenChange).lastCalledWith(
+    expect(onAfterOpenChange).toHaveBeenLastCalledWith(
       expect.objectContaining({
         detail: false,
       })

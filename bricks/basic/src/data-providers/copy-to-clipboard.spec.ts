@@ -21,7 +21,7 @@ describe("copyToClipboard", () => {
   test("Clipboard API", async () => {
     writeText.mockResolvedValue(null);
     await copyToClipboard("something");
-    expect(writeText).toBeCalledWith("something");
+    expect(writeText).toHaveBeenCalledWith("something");
   });
 
   test("execCommand", async () => {
@@ -30,6 +30,6 @@ describe("copyToClipboard", () => {
     navigator.clipboard = undefined;
 
     await copyToClipboard("something");
-    expect(execCommand).toBeCalledWith("copy");
+    expect(execCommand).toHaveBeenCalledWith("copy");
   });
 });

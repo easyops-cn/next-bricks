@@ -94,16 +94,16 @@ describe("eo-broadcast-channel", () => {
     });
 
     elementA.postMessage("message from A");
-    expect(onMessageB).toBeCalledWith("message from A");
+    expect(onMessageB).toHaveBeenCalledWith("message from A");
 
     elementB.postMessage("message from B");
-    expect(onMessageA).toBeCalledWith("message from B");
+    expect(onMessageA).toHaveBeenCalledWith("message from B");
 
     elementC.postMessage("message from B");
-    expect(onMessageA).toBeCalledTimes(1);
-    expect(onMessageB).toBeCalledTimes(1);
-    expect(onMessageC).not.toBeCalled();
-    expect(onMessageD).not.toBeCalled();
+    expect(onMessageA).toHaveBeenCalledTimes(1);
+    expect(onMessageB).toHaveBeenCalledTimes(1);
+    expect(onMessageC).not.toHaveBeenCalled();
+    expect(onMessageD).not.toHaveBeenCalled();
 
     act(() => {
       document.body.removeChild(elementA);

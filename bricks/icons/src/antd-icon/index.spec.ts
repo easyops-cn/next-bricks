@@ -238,6 +238,6 @@ describe("eo-antd-icon", () => {
     const element = document.createElement("eo-antd-icon") as AntdIcon;
     element.icon = "branches";
     (element as any)._render();
-    expect(fetch).not.toBeCalled();
+    expect(fetch).not.toHaveBeenCalled();
   });
 });

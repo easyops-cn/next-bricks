@@ -188,6 +188,6 @@ describe("eo-easyops-icon", () => {
     const element = document.createElement("eo-easyops-icon") as EasyOpsIcon;
     element.icon = "account";
     (element as any)._render();
-    expect(fetch).not.toBeCalled();
+    expect(fetch).not.toHaveBeenCalled();
   });
 });

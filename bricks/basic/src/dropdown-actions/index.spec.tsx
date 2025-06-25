@@ -87,7 +87,7 @@ describe("eo-dropdown-actions", () => {
         new CustomEvent("action.click", { detail: element.actions![1] })
       );
     });
-    expect(onActionClick).toBeCalledWith(
+    expect(onActionClick).toHaveBeenCalledWith(
       expect.objectContaining({
         text: "a",
         event: "a.click",

@@ -100,7 +100,7 @@ describe("eo-actions", () => {
       fireEvent(target, clickEventOfMenuItem0);
     });
     expect(clickEventOfMenuItem0?.defaultPrevented).toBeFalsy();
-    expect(onActionClick).lastCalledWith(
+    expect(onActionClick).toHaveBeenLastCalledWith(
       expect.objectContaining({
         detail: {
           text: "a",
@@ -123,7 +123,7 @@ describe("eo-actions", () => {
         element.shadowRoot?.querySelectorAll("eo-menu-item")[5] as HTMLElement
       );
     });
-    expect(onActionClick).toBeCalled();
+    expect(onActionClick).toHaveBeenCalled();
 
     expect(
       element.shadowRoot?.querySelectorAll("eo-link")[1].getAttribute("url")
@@ -183,14 +183,14 @@ describe("eo-actions", () => {
         element.shadowRoot?.querySelectorAll("eo-menu-item")[0] as HTMLElement
       );
     });
-    expect(onItemDragStart).toBeCalled();
+    expect(onItemDragStart).toHaveBeenCalled();
 
     act(() => {
       fireEvent.dragEnd(
         element.shadowRoot?.querySelectorAll("eo-menu-item")[0] as HTMLElement
       );
     });
-    expect(onItemDragEnd).toBeCalled();
+    expect(onItemDragEnd).toHaveBeenCalled();
 
     act(() => {
       document.body.removeChild(element);

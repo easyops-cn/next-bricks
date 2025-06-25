@@ -50,7 +50,7 @@ describe("eo-modal", () => {
     });
 
     expect(element.shadowRoot?.childNodes.length).toBe(2);
-    expect(mockOpenEvent).toBeCalledTimes(1);
+    expect(mockOpenEvent).toHaveBeenCalledTimes(1);
     expect(element.visible).toBeTruthy();
     expect(element.shadowRoot?.querySelector(".modal-root")).toBeTruthy();
     expect(
@@ -63,7 +63,7 @@ describe("eo-modal", () => {
     });
 
     expect(element.visible).toBeFalsy();
-    expect(mockCloseEvnet).toBeCalledTimes(1);
+    expect(mockCloseEvnet).toHaveBeenCalledTimes(1);
     expect(element.shadowRoot?.querySelector(".modal-root")).toBeFalsy();
 
     // confirm
@@ -83,8 +83,8 @@ describe("eo-modal", () => {
     });
 
     expect(element.visible).toBeFalsy();
-    expect(mockConfirmEvent).toBeCalledTimes(1);
-    expect(mockCloseEvnet).toBeCalledTimes(2);
+    expect(mockConfirmEvent).toHaveBeenCalledTimes(1);
+    expect(mockCloseEvnet).toHaveBeenCalledTimes(2);
 
     // cancel
     await act(async () => {
@@ -101,8 +101,8 @@ describe("eo-modal", () => {
     });
 
     expect(element.visible).toBeFalsy();
-    expect(mockCancelEvent).toBeCalled();
-    expect(mockCloseEvnet).toBeCalledTimes(3);
+    expect(mockCancelEvent).toHaveBeenCalled();
+    expect(mockCloseEvnet).toHaveBeenCalledTimes(3);
 
     // click mask and modal close
     await act(async () => {
@@ -114,7 +114,7 @@ describe("eo-modal", () => {
     });
 
     expect(element.visible).toBeFalsy();
-    expect(mockCloseEvnet).toBeCalledTimes(4);
+    expect(mockCloseEvnet).toHaveBeenCalledTimes(4);
 
     act(() => {
       document.body.removeChild(element);
@@ -136,7 +136,7 @@ describe("eo-modal", () => {
       document.body.appendChild(element);
     });
 
-    expect(mockCloseEvnet).toBeCalledTimes(0);
+    expect(mockCloseEvnet).toHaveBeenCalledTimes(0);
     expect(element.visible).toBeFalsy();
 
     await act(async () => {
@@ -152,8 +152,8 @@ describe("eo-modal", () => {
       );
     });
 
-    expect(mockConfirmEvent).toBeCalledTimes(1);
-    expect(mockCloseEvnet).toBeCalledTimes(0);
+    expect(mockConfirmEvent).toHaveBeenCalledTimes(1);
+    expect(mockCloseEvnet).toHaveBeenCalledTimes(0);
     expect(element.visible).toBeTruthy();
 
     act(() => {

@@ -7,6 +7,6 @@ jest.mock("@next-core/runtime");
 describe("setThemeByApps", () => {
   test("should work", () => {
     setThemeByApps({ "my-app": "dark-v2" });
-    expect(batchSetAppsLocalTheme).toBeCalledWith({ "my-app": "dark-v2" });
+    expect(batchSetAppsLocalTheme).toHaveBeenCalledWith({ "my-app": "dark-v2" });
   });
 });

@@ -39,7 +39,7 @@ describe("eo-tab-list", () => {
     await act(async () => {
       fireEvent.click(element.shadowRoot.querySelectorAll("eo-tab-item")[0]);
     });
-    expect(onTabSelect).lastCalledWith(
+    expect(onTabSelect).toHaveBeenLastCalledWith(
       expect.objectContaining({
         detail: "新增",
       })
@@ -97,5 +97,9 @@ describe("eo-tab-list", () => {
     });
 
     expect(element.activePanel).toBe("删除");
+
+    act(() => {
+      document.body.removeChild(element);
+    });
   });
 });

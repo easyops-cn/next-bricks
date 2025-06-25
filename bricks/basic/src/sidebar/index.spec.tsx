@@ -287,7 +287,7 @@ NodeList [
       );
     });
     expect(element.shadowRoot?.querySelector(".state-expanded")).toBeTruthy();
-    expect(onExpandedStateChange).lastCalledWith(
+    expect(onExpandedStateChange).toHaveBeenLastCalledWith(
       expect.objectContaining({
         detail: "expanded",
       })
@@ -299,7 +299,7 @@ NodeList [
       );
     });
     expect(element.shadowRoot?.querySelector(".state-collapsed")).toBeTruthy();
-    expect(onExpandedStateChange).lastCalledWith(
+    expect(onExpandedStateChange).toHaveBeenLastCalledWith(
       expect.objectContaining({
         detail: "collapsed",
       })
@@ -339,7 +339,7 @@ NodeList [
       );
     });
     expect(element.shadowRoot?.querySelector(".state-hovered")).toBeTruthy();
-    expect(onExpandedStateChange).lastCalledWith(
+    expect(onExpandedStateChange).toHaveBeenLastCalledWith(
       expect.objectContaining({
         detail: "hovered",
       })
@@ -358,7 +358,7 @@ NodeList [
       );
     });
     expect(element.shadowRoot?.querySelector(".state-collapsed")).toBeTruthy();
-    expect(onExpandedStateChange).lastCalledWith(
+    expect(onExpandedStateChange).toHaveBeenLastCalledWith(
       expect.objectContaining({
         detail: "collapsed",
       })
@@ -399,7 +399,7 @@ NodeList [
       );
     });
     expect(element.shadowRoot?.querySelector(".state-hovered")).toBeTruthy();
-    expect(onExpandedStateChange).lastCalledWith(
+    expect(onExpandedStateChange).toHaveBeenLastCalledWith(
       expect.objectContaining({
         detail: "hovered",
       })
@@ -418,7 +418,7 @@ NodeList [
       );
     });
     expect(element.shadowRoot?.querySelector(".state-collapsed")).toBeTruthy();
-    expect(onExpandedStateChange).lastCalledWith(
+    expect(onExpandedStateChange).toHaveBeenLastCalledWith(
       expect.objectContaining({
         detail: "collapsed",
       })
@@ -458,7 +458,7 @@ NodeList [
       fireEvent.mouseMove(document.documentElement, { clientX: 500 });
       jest.runAllTimers();
     });
-    expect(onActualWidthChange).lastCalledWith(
+    expect(onActualWidthChange).toHaveBeenLastCalledWith(
       expect.objectContaining({
         detail: 500,
       })
@@ -468,7 +468,7 @@ NodeList [
       fireEvent.mouseMove(document.documentElement, { clientX: 0 });
       jest.runAllTimers();
     });
-    expect(onActualWidthChange).lastCalledWith(
+    expect(onActualWidthChange).toHaveBeenLastCalledWith(
       expect.objectContaining({
         detail: 220,
       })

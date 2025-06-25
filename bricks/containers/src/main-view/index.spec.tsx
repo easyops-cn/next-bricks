@@ -230,7 +230,7 @@ describe("eo-main-view", () => {
     `);
 
     fireEvent.click(element.shadowRoot!.querySelector(".dashboard-exit"));
-    expect(onDashboardExit).toBeCalledTimes(1);
+    expect(onDashboardExit).toHaveBeenCalledTimes(1);
 
     act(() => {
       document.body.removeChild(element);

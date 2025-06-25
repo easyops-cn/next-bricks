@@ -1,8 +1,8 @@
 import React from "react";
 import { describe, test, expect } from "@jest/globals";
-import { screen, render, fireEvent } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import { ImageComponent } from "./ImageComponent.jsx";
-import { ImageListContext } from "./ImageListContext.js";
+import { ImageListContext, type PreviewImage } from "./ImageListContext.js";
 
 const { Provider } = ImageListContext;
 
@@ -10,7 +10,7 @@ describe("ImageComponent", () => {
   test("should work", () => {
     const onClick = jest.fn();
     const unRegister = jest.fn();
-    const registerImage = jest.fn(() => unRegister);
+    const registerImage = jest.fn((_uuid: number, _previewImage: PreviewImage) => unRegister);
 
     const { container, rerender, unmount } = render(
       <Provider
@@ -36,7 +36,7 @@ describe("ImageComponent", () => {
     );
 
     expect(container.querySelector(".image-mask")).toBeTruthy();
-    expect(registerImage).lastCalledWith(expect.any(Number), {
+    expect(registerImage).toHaveBeenLastCalledWith(expect.any(Number), {
       alt: "alt",
       index: 0,
       preview: true,
@@ -45,7 +45,7 @@ describe("ImageComponent", () => {
     });
 
     fireEvent.click(container.querySelector(".image-wrapper") as Element);
-    expect(onClick).lastCalledWith(expect.any(Number), true);
+    expect(onClick).toHaveBeenLastCalledWith(expect.any(Number), true);
 
     rerender(
       <Provider
@@ -71,7 +71,7 @@ describe("ImageComponent", () => {
     );
 
     expect(container.querySelector(".image-mask")).toBeFalsy();
-    expect(registerImage).lastCalledWith(expect.any(Number), {
+    expect(registerImage).toHaveBeenLastCalledWith(expect.any(Number), {
       alt: "alt",
       index: 0,
       preview: false,
@@ -80,7 +80,7 @@ describe("ImageComponent", () => {
     });
 
     fireEvent.click(container.querySelector(".image-wrapper") as Element);
-    expect(onClick).lastCalledWith(expect.any(Number), false);
+    expect(onClick).toHaveBeenLastCalledWith(expect.any(Number), false);
 
     expect(container.querySelectorAll("img").length).toBe(1);
 
@@ -110,8 +110,8 @@ describe("ImageComponent", () => {
 
     expect(container.querySelectorAll("img").length).toBe(0);
 
-    expect(unRegister).not.toBeCalled();
+    expect(unRegister).not.toHaveBeenCalled();
     unmount();
-    expect(unRegister).toBeCalled();
+    expect(unRegister).toHaveBeenCalled();
   });
 });
