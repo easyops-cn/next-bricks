@@ -57,17 +57,17 @@
     "postpublish": "mv package.json.bak package.json"
   },
   "dependencies": {
-    "@next-core/element": "^1.2.17",
+    "@next-core/element": "^1.2.18",
     "@next-core/illustrations": "^0.11.34",
-    "@next-core/react-element": "^1.0.36",
-    "@next-core/react-runtime": "^1.7.10",
-    "@next-core/types": "^1.14.0",
-    "@next-core/utils": "^1.7.32",
+    "@next-core/react-element": "^1.0.37",
+    "@next-core/react-runtime": "^1.7.17",
+    "@next-core/types": "^1.15.0",
+    "@next-core/utils": "^1.7.36",
     "lodash": "^4.17.21",
     "react": "0.0.0-experimental-ee8509801-20230117"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.23.11",
+    "@next-core/build-next-bricks": "^1.23.13",
     "@next-core/test-next": "^1.1.9"
   },
   "peerDependencies": {
