@@ -40,7 +40,7 @@ describe("eo-drawer", () => {
     });
 
     expect(element.shadowRoot?.childNodes.length).toBe(2);
-    expect(mockOpenEvent).toBeCalledTimes(1);
+    expect(mockOpenEvent).toHaveBeenCalledTimes(1);
     expect(element.visible).toBeTruthy();
     // close
     await act(async () => {
@@ -48,7 +48,7 @@ describe("eo-drawer", () => {
     });
 
     expect(element.visible).toBeFalsy();
-    expect(mockCloseEvnet).toBeCalledTimes(1);
+    expect(mockCloseEvnet).toHaveBeenCalledTimes(1);
 
     act(() => {
       document.body.removeChild(element);

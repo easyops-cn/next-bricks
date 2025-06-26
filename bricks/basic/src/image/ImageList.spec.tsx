@@ -46,18 +46,18 @@ describe("ImageList", () => {
     expect(container.querySelectorAll(".image")).toHaveLength(3);
     fireEvent.click(container.querySelector(".image-wrapper") as Element);
 
-    expect(onVisibleChange).lastCalledWith(true);
+    expect(onVisibleChange).toHaveBeenLastCalledWith(true);
     expect(
       container.querySelector(".preview-operations-progress")?.textContent
     ).toBe("1 / 2");
 
     fireEvent.click(container.querySelector(".preview-image-wrap") as Element);
-    expect(onVisibleChange).lastCalledWith(false);
+    expect(onVisibleChange).toHaveBeenLastCalledWith(false);
 
     act(() => {
       ref.current?.openPreview(2);
     });
-    expect(onVisibleChange).lastCalledWith(true);
+    expect(onVisibleChange).toHaveBeenLastCalledWith(true);
     expect(
       container.querySelector(".preview-operations-progress")?.textContent
     ).toBe("2 / 2");
@@ -65,6 +65,6 @@ describe("ImageList", () => {
     act(() => {
       ref.current?.closePreview();
     });
-    expect(onVisibleChange).lastCalledWith(false);
+    expect(onVisibleChange).toHaveBeenLastCalledWith(false);
   });
 });

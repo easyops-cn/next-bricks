@@ -32,10 +32,10 @@ describe("eo-menu", () => {
     const mockClickEvent = jest.fn();
     element.addEventListener("click", mockClickEvent);
 
-    expect(mockClickEvent).toBeCalledTimes(0);
+    expect(mockClickEvent).toHaveBeenCalledTimes(0);
     (element.shadowRoot?.querySelector(".menu-item") as HTMLElement)?.click();
 
-    expect(mockClickEvent).toBeCalledTimes(1);
+    expect(mockClickEvent).toHaveBeenCalledTimes(1);
 
     act(() => {
       document.body.removeChild(element);
@@ -58,10 +58,10 @@ describe("eo-menu", () => {
     const mockClickEvent = jest.fn();
     element.addEventListener("click", mockClickEvent);
 
-    expect(mockClickEvent).toBeCalledTimes(0);
+    expect(mockClickEvent).toHaveBeenCalledTimes(0);
     (element.shadowRoot?.querySelector(".menu-item") as HTMLElement)?.click();
 
-    expect(mockClickEvent).toBeCalledTimes(0);
+    expect(mockClickEvent).toHaveBeenCalledTimes(0);
 
     act(() => {
       document.body.removeChild(element);

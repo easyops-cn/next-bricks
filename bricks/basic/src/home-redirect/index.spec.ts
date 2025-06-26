@@ -35,7 +35,7 @@ describe("basic.home-redirect", () => {
     document.body.appendChild(element);
 
     await (global as any).flushPromises();
-    expect(window.location.replace).toBeCalledWith("test");
+    expect(window.location.replace).toHaveBeenCalledWith("test");
 
     document.body.removeChild(element);
   });
@@ -66,7 +66,7 @@ describe("basic.home-redirect", () => {
     document.body.appendChild(element);
 
     await (global as any).flushPromises();
-    expect(window.location.replace).toBeCalledWith("search");
+    expect(window.location.replace).toHaveBeenCalledWith("search");
 
     document.body.removeChild(element);
   });
@@ -91,15 +91,15 @@ describe("basic.home-redirect", () => {
     document.body.appendChild(element);
 
     await (global as any).flushPromises();
-    expect(window.location.replace).not.toBeCalled();
-    expect(consoleError).toBeCalledWith(
+    expect(window.location.replace).not.toHaveBeenCalled();
+    expect(consoleError).toHaveBeenCalledWith(
       "Redirect target not found, appId:",
       "unknown"
     );
 
     document.body.removeChild(element);
 
-    expect(consoleError).toBeCalledTimes(1);
+    expect(consoleError).toHaveBeenCalledTimes(1);
   });
 
   test("api failed", async () => {
@@ -120,8 +120,8 @@ describe("basic.home-redirect", () => {
     document.body.appendChild(element);
 
     await (global as any).flushPromises();
-    expect(window.location.replace).not.toBeCalled();
-    expect(consoleError).toBeCalledWith(
+    expect(window.location.replace).not.toHaveBeenCalled();
+    expect(consoleError).toHaveBeenCalledWith(
       "Search micro app '%s' for redirect failed:",
       "unknown",
       error
@@ -129,7 +129,7 @@ describe("basic.home-redirect", () => {
 
     document.body.removeChild(element);
 
-    expect(consoleError).toBeCalledTimes(1);
+    expect(consoleError).toHaveBeenCalledTimes(1);
   });
 
   test("no appId nor redirectUrl", async () => {
@@ -146,10 +146,10 @@ describe("basic.home-redirect", () => {
     document.body.appendChild(element);
 
     await (global as any).flushPromises();
-    expect(window.location.replace).not.toBeCalled();
+    expect(window.location.replace).not.toHaveBeenCalled();
 
     document.body.removeChild(element);
 
-    expect(consoleError).not.toBeCalled();
+    expect(consoleError).not.toHaveBeenCalled();
   });
 });

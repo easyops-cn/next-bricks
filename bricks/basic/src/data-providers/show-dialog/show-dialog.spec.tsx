@@ -108,7 +108,7 @@ describe("DialogComponent", () => {
     const event = new Event("sl-request-close");
     const preventDefault = jest.spyOn(event, "preventDefault");
     fireEvent(container.querySelector("sl-dialog") as any, event);
-    expect(preventDefault).toBeCalled();
+    expect(preventDefault).toHaveBeenCalled();
     unmount();
   });
 
@@ -160,7 +160,7 @@ describe("DialogComponent", () => {
       "exclamation-circle"
     );
     fireEvent.click(container.querySelector("eo-button") as any);
-    expect(onCancel).toBeCalled();
+    expect(onCancel).toHaveBeenCalled();
     unmount();
   });
 
@@ -214,7 +214,7 @@ describe("DialogComponent", () => {
       "exclamation-circle"
     );
     fireEvent.click(container.querySelector("eo-button") as any);
-    expect(onCancel).toBeCalled();
+    expect(onCancel).toHaveBeenCalled();
     unmount();
   });
 
@@ -275,10 +275,10 @@ describe("DialogComponent", () => {
       "exclamation-circle"
     );
     fireEvent.click(container.querySelectorAll("eo-button")[0]);
-    expect(onCancel).toBeCalled();
+    expect(onCancel).toHaveBeenCalled();
 
     fireEvent.click(container.querySelectorAll("eo-button")[1]);
-    expect(onOk).not.toBeCalled();
+    expect(onOk).not.toHaveBeenCalled();
 
     act(() => {
       fireEvent(
@@ -289,7 +289,7 @@ describe("DialogComponent", () => {
     act(() => {
       fireEvent.click(container.querySelectorAll("eo-button")[1]);
     });
-    expect(onOk).toBeCalled();
+    expect(onOk).toHaveBeenCalled();
 
     unmount();
   });

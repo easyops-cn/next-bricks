@@ -30,7 +30,7 @@ describe("eo-message-listener", () => {
         origin: location.origin,
       });
     });
-    expect(onMessage).toBeCalledWith({
+    expect(onMessage).toHaveBeenCalledWith({
       data: "hello",
       origin: location.origin,
     });
@@ -42,7 +42,7 @@ describe("eo-message-listener", () => {
       });
     });
     // not called because of sameOrigin
-    expect(onMessage).toBeCalledTimes(1);
+    expect(onMessage).toHaveBeenCalledTimes(1);
 
     act(() => {
       (spyOnAddEventListener.mock.calls[0][1] as any)({
@@ -50,7 +50,7 @@ describe("eo-message-listener", () => {
         origin: location.origin,
       });
     });
-    expect(onMessage).toBeCalledWith({
+    expect(onMessage).toHaveBeenCalledWith({
       data: "world",
       origin: location.origin,
     });
@@ -59,7 +59,7 @@ describe("eo-message-listener", () => {
       document.body.removeChild(element);
     });
 
-    expect(spyOnRemoveEventListener).toBeCalledWith(
+    expect(spyOnRemoveEventListener).toHaveBeenCalledWith(
       ...spyOnAddEventListener.mock.calls[0]
     );
   });
@@ -84,7 +84,7 @@ describe("eo-message-listener", () => {
         origin: "http://example.com",
       });
     });
-    expect(onMessage).toBeCalledWith({
+    expect(onMessage).toHaveBeenCalledWith({
       data: "hello",
       origin: "http://example.com",
     });

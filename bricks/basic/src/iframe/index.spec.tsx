@@ -23,7 +23,7 @@ describe("eo-iframe", () => {
       "iframe"
     ) as HTMLIFrameElement;
     fireEvent.load(iframe);
-    expect(onLoad).toBeCalledTimes(1);
+    expect(onLoad).toHaveBeenCalledTimes(1);
 
     const mockPostMessage = jest.fn();
     Object.defineProperty(iframe, "contentWindow", {
@@ -34,7 +34,7 @@ describe("eo-iframe", () => {
       },
     });
     element.postMessage("hello", location.origin);
-    expect(mockPostMessage).toBeCalledWith("hello", location.origin);
+    expect(mockPostMessage).toHaveBeenCalledWith("hello", location.origin);
 
     act(() => {
       document.body.removeChild(element);

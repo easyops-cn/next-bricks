@@ -62,17 +62,17 @@ describe("Preview", () => {
     );
 
     fireEvent.click(container.querySelector(".preview-switch-left") as Element);
-    expect(setCurrentUUid).lastCalledWith(10);
+    expect(setCurrentUUid).toHaveBeenLastCalledWith(10);
     fireEvent.click(
       container.querySelector(".preview-switch-right") as Element
     );
-    expect(setCurrentUUid).lastCalledWith(11);
+    expect(setCurrentUUid).toHaveBeenLastCalledWith(11);
     fireEvent.click(
       container.querySelector(".preview-switch-right") as Element
     );
-    expect(setCurrentUUid).lastCalledWith(11);
+    expect(setCurrentUUid).toHaveBeenLastCalledWith(11);
     fireEvent.click(container.querySelector(".preview-switch-left") as Element);
-    expect(setCurrentUUid).lastCalledWith(10);
+    expect(setCurrentUUid).toHaveBeenLastCalledWith(10);
 
     fireEvent.click(screen.getByTestId("preview-operations-button-zoom-in"));
     act(() => {
@@ -111,9 +111,9 @@ describe("Preview", () => {
     );
 
     fireEvent.click(screen.getByTestId("preview-operations-button-close"));
-    expect(onClose).toBeCalledTimes(1);
+    expect(onClose).toHaveBeenCalledTimes(1);
 
     fireEvent.click(container.querySelector(".preview-image-wrap") as Element);
-    expect(onClose).toBeCalledTimes(2);
+    expect(onClose).toHaveBeenCalledTimes(2);
   });
 });

@@ -21,7 +21,7 @@ describe("eo-image", () => {
     act(() => {
       element.open();
     });
-    expect(onVisibleChange).lastCalledWith(
+    expect(onVisibleChange).toHaveBeenLastCalledWith(
       expect.objectContaining({
         type: "visibleChange",
         detail: true,
@@ -31,7 +31,7 @@ describe("eo-image", () => {
     act(() => {
       element.close();
     });
-    expect(onVisibleChange).lastCalledWith(
+    expect(onVisibleChange).toHaveBeenLastCalledWith(
       expect.objectContaining({
         type: "visibleChange",
         detail: false,

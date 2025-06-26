@@ -115,33 +115,33 @@ describe("eo-button", () => {
       "http://localhost/for-complex#and-more?even-more="
     );
 
-    expect(mockElement1ClickEvent).toBeCalledTimes(0);
-    expect(mockElement2ClickEvent).toBeCalledTimes(0);
-    expect(mockHistoryPush).toBeCalledTimes(0);
+    expect(mockElement1ClickEvent).toHaveBeenCalledTimes(0);
+    expect(mockElement2ClickEvent).toHaveBeenCalledTimes(0);
+    expect(mockHistoryPush).toHaveBeenCalledTimes(0);
 
     act(() => {
       element1.shadowRoot?.querySelector("a")?.click();
       element4.shadowRoot?.querySelector("a")?.click();
     });
 
-    expect(mockHistoryPush).toBeCalledTimes(1);
-    expect(mockElement1ClickEvent).toBeCalledTimes(1);
-    expect(mockElement2ClickEvent).toBeCalledTimes(0);
+    expect(mockHistoryPush).toHaveBeenCalledTimes(1);
+    expect(mockElement1ClickEvent).toHaveBeenCalledTimes(1);
+    expect(mockElement2ClickEvent).toHaveBeenCalledTimes(0);
 
-    expect(mockHistoryReplace).toBeCalledTimes(0);
+    expect(mockHistoryReplace).toHaveBeenCalledTimes(0);
 
     act(() => {
       element3.shadowRoot?.querySelector("a")?.click();
     });
 
-    expect(mockHistoryReplace).toBeCalledTimes(1);
+    expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
 
     act(() => {
       // empty link click should not emit event
       element5.shadowRoot?.querySelector("a")?.click();
     });
 
-    expect(mockHistoryReplace).toBeCalledTimes(1);
+    expect(mockHistoryReplace).toHaveBeenCalledTimes(1);
 
     act(() => {
       document.body.removeChild(element1);

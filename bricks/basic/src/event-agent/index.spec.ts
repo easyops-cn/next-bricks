@@ -19,7 +19,7 @@ describe("eo-event-agent", () => {
     });
 
     element.trigger({ type: "foo" });
-    expect(onTrigger).toBeCalledWith({ type: "foo" });
+    expect(onTrigger).toHaveBeenCalledWith({ type: "foo" });
 
     act(() => {
       document.body.removeChild(element);

@@ -90,22 +90,22 @@ describe("eo-text", () => {
     // expect((editControl as HTMLElement & { value?: string }).value).toBe("a");
 
     // edit control change
-    expect(onChange).not.toBeCalled();
+    expect(onChange).not.toHaveBeenCalled();
 
     act(() => {
       fireEvent(editControl, new CustomEvent("change", { detail: "b" }));
     });
 
-    expect(onChange).toBeCalledWith(expect.objectContaining({ detail: "b" }));
+    expect(onChange).toHaveBeenCalledWith(expect.objectContaining({ detail: "b" }));
 
     // edit control blur
-    expect(onUpdate).not.toBeCalled();
+    expect(onUpdate).not.toHaveBeenCalled();
 
     act(() => {
       fireEvent.blur(editControl);
     });
 
-    expect(onUpdate).toBeCalledWith(expect.objectContaining({ detail: "b" }));
+    expect(onUpdate).toHaveBeenCalledWith(expect.objectContaining({ detail: "b" }));
 
     act(() => {
       document.body.removeChild(element);

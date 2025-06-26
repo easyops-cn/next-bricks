@@ -67,12 +67,12 @@ describe("makeThrottledAggregation", () => {
     const promises: Promise<any>[] = [];
     promises.push(getUserInfoByNameOrInstanceId("a"));
     jest.advanceTimersByTime(60);
-    expect(request).toBeCalledTimes(0);
+    expect(request).toHaveBeenCalledTimes(0);
     promises.push(getUserInfoByNameOrInstanceId("2"));
-    expect(request).toBeCalledTimes(0);
+    expect(request).toHaveBeenCalledTimes(0);
 
     jest.advanceTimersByTime(40);
-    expect(request).toBeCalledTimes(1);
+    expect(request).toHaveBeenCalledTimes(1);
     expect(request).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
@@ -102,10 +102,10 @@ describe("makeThrottledAggregation", () => {
     jest.advanceTimersByTime(50);
     promises.push(getUserInfoByNameOrInstanceId("c"));
     jest.advanceTimersByTime(50);
-    expect(request).toBeCalledTimes(1);
+    expect(request).toHaveBeenCalledTimes(1);
 
     jest.advanceTimersByTime(50);
-    expect(request).toBeCalledTimes(2);
+    expect(request).toHaveBeenCalledTimes(2);
     expect(request).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({

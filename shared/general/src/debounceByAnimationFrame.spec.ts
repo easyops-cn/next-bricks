@@ -13,11 +13,11 @@ describe("debounceByAnimationFrame", () => {
 
     debounced("hello", "world");
     jest.advanceTimersByTime(10);
-    expect(fn).not.toBeCalled();
+    expect(fn).not.toHaveBeenCalled();
 
     debounced("hello", "new world");
     jest.advanceTimersByTime(5);
-    expect(fn).not.toBeCalled();
+    expect(fn).not.toHaveBeenCalled();
 
     jest.advanceTimersByTime(50);
     expect(fn).toHaveBeenNthCalledWith(1, "hello", "new world");

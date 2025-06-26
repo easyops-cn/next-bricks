@@ -37,7 +37,7 @@ describe("eo-tag-list", () => {
     act(() => {
       fireEvent.click(element.shadowRoot!.querySelectorAll("eo-tag")[1]);
     });
-    expect(onTagClick).toBeCalledWith({
+    expect(onTagClick).toHaveBeenCalledWith({
       text: "Item 2",
       closable: false,
     });

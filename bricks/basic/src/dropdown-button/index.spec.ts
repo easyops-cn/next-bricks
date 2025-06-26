@@ -55,7 +55,7 @@ describe("eo-dropdown-button", () => {
         ) as EoDropdownActions
       ).triggerActionClick("a.click");
     });
-    expect(mockAClick).toBeCalledTimes(1);
+    expect(mockAClick).toHaveBeenCalledTimes(1);
 
     act(() => {
       document.body.removeChild(element);

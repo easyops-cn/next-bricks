@@ -30,7 +30,8 @@
     "size-check": "npx start-server-and-test serve:size-check http-get://localhost:8081/ cypress:run:no-record",
     "size-check:ci": "npx start-server-and-test serve:size-check http-get://localhost:8081/ cypress:run",
     "lint-staged": "lint-staged",
-    "yo": "yo"
+    "yo": "yo",
+    "postinstall": "patch-package"
   },
   "browserslist": {
     "development": [
@@ -52,7 +53,7 @@
     "@next-core/browserslist-config-next": "^1.1.2",
     "@next-core/eslint-config-next": "^3.0.1",
     "@next-core/preview": "^0.7.59",
-    "@next-core/test-next": "^1.1.9",
+    "@next-core/test-next": "^2.0.0",
     "@next-core/yo": "^1.5.98",
     "@types/d3-force": "^3.0.9",
     "@types/d3-geo": "^3.1.0",
@@ -81,6 +82,8 @@
     "jest-canvas-mock": "^2.5.2",
     "lerna": "^8.1.7",
     "lint-staged": "^15.2.10",
+    "patch-package": "^8.0.0",
+    "postinstall-postinstall": "^2.1.0",
     "prettier": "^3.5.3",
     "typescript": "^5.8.2"
   },

@@ -42,13 +42,13 @@ describe("eo-context-menu", () => {
     act(() => {
       document.body.appendChild(element);
     });
-    expect(lockBodyScroll).toBeCalledTimes(1);
+    expect(lockBodyScroll).toHaveBeenCalledTimes(1);
     expect(lockBodyScroll).toHaveBeenNthCalledWith(1, element, false);
 
     element.open({ position: [10, 20] });
     await act(() => (global as any).flushPromises());
     expect(element.active).toBe(true);
-    expect(lockBodyScroll).toBeCalledTimes(2);
+    expect(lockBodyScroll).toHaveBeenCalledTimes(2);
     expect(lockBodyScroll).toHaveBeenNthCalledWith(2, element, true);
 
     expect(
@@ -66,21 +66,21 @@ describe("eo-context-menu", () => {
         new CustomEvent("action.click", { detail: { event: "a.click" } })
       );
     });
-    expect(onActionClick).toBeCalledWith({
+    expect(onActionClick).toHaveBeenCalledWith({
       event: "a.click",
     });
 
     // Closed after action click
     await act(() => (global as any).flushPromises());
     expect(element.active).toBe(false);
-    expect(lockBodyScroll).toBeCalledTimes(3);
+    expect(lockBodyScroll).toHaveBeenCalledTimes(3);
     expect(lockBodyScroll).toHaveBeenNthCalledWith(3, element, false);
 
     // Re-open again
     element.open({ position: [20, 30] });
     await act(() => (global as any).flushPromises());
     expect(element.active).toBe(true);
-    expect(lockBodyScroll).toBeCalledTimes(4);
+    expect(lockBodyScroll).toHaveBeenCalledTimes(4);
     expect(lockBodyScroll).toHaveBeenNthCalledWith(4, element, true);
 
     expect(
@@ -98,7 +98,7 @@ describe("eo-context-menu", () => {
     });
     await act(() => (global as any).flushPromises());
     expect(element.active).toBe(false);
-    expect(lockBodyScroll).toBeCalledTimes(5);
+    expect(lockBodyScroll).toHaveBeenCalledTimes(5);
     expect(lockBodyScroll).toHaveBeenNthCalledWith(5, element, false);
 
     act(() => {
@@ -179,7 +179,7 @@ describe("eo-context-menu", () => {
         })
       );
     });
-    expect(onItemDragStart).toBeCalledWith({
+    expect(onItemDragStart).toHaveBeenCalledWith({
       text: "item",
       dragConf: { key: "text", data: {} },
     });
@@ -192,7 +192,7 @@ describe("eo-context-menu", () => {
         })
       );
     });
-    expect(onItemDragEnd).toBeCalledWith({
+    expect(onItemDragEnd).toHaveBeenCalledWith({
       text: "item",
       dragConf: { key: "text", data: {} },
     });

@@ -232,7 +232,7 @@ describe("eo-popover", () => {
     });
     jest.runAllTimers();
 
-    expect(mockListener).not.toBeCalled();
+    expect(mockListener).not.toHaveBeenCalled();
     expect(element.shadowRoot?.querySelector("sl-popup"))
       .toMatchInlineSnapshot(`
 <sl-popup
