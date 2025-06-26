@@ -81,7 +81,7 @@
     "husky": "^9.1.6",
     "jest-canvas-mock": "^2.5.2",
     "lerna": "^8.1.7",
-    "lint-staged": "^15.2.10",
+    "lint-staged": "^15.5.2",
     "patch-package": "^8.0.0",
     "postinstall-postinstall": "^2.1.0",
     "prettier": "^3.5.3",
