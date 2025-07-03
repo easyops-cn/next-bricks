@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.17.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.16.2...@next-shared/icons@0.17.0) (2025-07-03)
+
+
+### Features
+
+* add icon: back-to-center ([f1f3e60](https://github.com/easyops-cn/next-bricks/commit/f1f3e6025810ee7f52dafab864005d40e52cc6ed))
+
+
+
+
+
 ## [0.16.2](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.16.1...@next-shared/icons@0.16.2) (2025-06-12)
 
 **Note:** Version bump only for package @next-shared/icons
