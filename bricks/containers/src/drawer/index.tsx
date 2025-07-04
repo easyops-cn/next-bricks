@@ -13,6 +13,7 @@ import type {
 } from "@next-bricks/icons/general-icon";
 import { unwrapProvider } from "@next-core/utils/general";
 import type { lockBodyScroll as _lockBodyScroll } from "@next-bricks/basic/data-providers/lock-body-scroll/lock-body-scroll";
+import type { requireModalStack as _requireModalStack } from "@next-bricks/basic/data-providers/require-modal-stack";
 import { instantiateModalStack, type ModalStack } from "@next-core/runtime";
 import classNames from "classnames";
 import "@next-core/theme";
@@ -22,6 +23,10 @@ import styleText from "./drawer.shadow.css";
 const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
   "basic.lock-body-scroll"
 );
+const requireModalStack = unwrapProvider<typeof _requireModalStack>(
+  "basic.require-modal-stack"
+);
+
 export interface DrawerEvents {
   close?: Event;
   open?: Event;
@@ -46,6 +51,7 @@ export interface DrawerProps {
   scrollToTopWhenOpen?: boolean;
   stackable?: boolean;
   maskStyle?: CSSProperties;
+  keyboard?: boolean;
 }
 
 const { defineElement, property, event, method } = createDecorators();
@@ -144,10 +150,16 @@ class Drawer extends ReactNextElement implements DrawerProps {
   @property({ attribute: false })
   accessor maskStyle = {};
 
+  /** 是否支持键盘 esc 关闭 */
+  @property({ type: Boolean })
+  accessor keyboard: boolean | undefined;
+
   /**
    * 是否可堆叠，开启后每次打开抽屉会将新的抽屉置于上层（zIndex ++）
    *
    * 注意：仅初始设置有效。
+   *
+   * @deprecated
    */
   @property({ type: Boolean })
   accessor stackable: boolean | undefined;
@@ -218,6 +230,7 @@ class Drawer extends ReactNextElement implements DrawerProps {
         onDrawerClose={this.#handleDrawerClose}
         scrollToTopWhenOpen={this.scrollToTopWhenOpen}
         curElement={this}
+        keyboard={this.keyboard}
         stackable={this.stackable}
         stack={this.#stack}
       />
@@ -246,7 +259,16 @@ export function DrawerComponent({
   curElement,
   stackable,
   stack,
+  keyboard,
 }: DrawerComponentProps) {
+  const modalStack = useMemo(() => requireModalStack(), []);
+
+  useEffect(() => {
+    return () => {
+      modalStack.pull();
+    };
+  }, [modalStack]);
+
   const contentRef = useRef<HTMLDivElement>();
   const header = useMemo(
     () => (
@@ -282,6 +304,11 @@ export function DrawerComponent({
     () => {
       lockBodyScroll(curElement, open);
       scrollToTopWhenOpen && open && contentRef.current?.scrollTo(0, 0);
+      if (open) {
+        modalStack.push();
+      } else {
+        modalStack.pull();
+      }
 
       if (stack && stackable) {
         if (open) {
@@ -296,6 +323,25 @@ export function DrawerComponent({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [open]
   );
+
+  useEffect(() => {
+    if (!open || !keyboard) {
+      return;
+    }
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const key =
+        event.key ||
+        /* istanbul ignore next: compatibility */ event.keyCode ||
+        /* istanbul ignore next: compatibility */ event.which;
+      if (modalStack.isTop() && (key === "Escape" || key === 27)) {
+        onDrawerClose();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [keyboard, onDrawerClose, open, modalStack]);
 
   return (
     <div

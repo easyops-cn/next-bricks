@@ -6,6 +6,7 @@ import { Drawer } from "./index.jsx";
 jest.mock("@next-core/theme", () => ({}));
 const spyOnScrollTo = jest.fn();
 window.HTMLElement.prototype.scrollTo = spyOnScrollTo;
+
 const lockBodyScroll = jest.fn();
 customElements.define(
   "basic.lock-body-scroll",
@@ -13,6 +14,19 @@ customElements.define(
     resolve = lockBodyScroll;
   }
 );
+
+const requireModalStack = jest.fn(() => ({
+  push: jest.fn(),
+  pull: jest.fn(),
+  isTop: jest.fn(() => true),
+}));
+customElements.define(
+  "basic.require-modal-stack",
+  class extends HTMLElement {
+    resolve = requireModalStack;
+  }
+);
+
 // todo: update unit test
 describe("eo-drawer", () => {
   test("basic usage", async () => {
@@ -55,5 +69,37 @@ describe("eo-drawer", () => {
     });
 
     expect(document.body.contains(element)).toBeFalsy();
+  });
+
+  test("close by esc key", async () => {
+    const element = document.createElement("eo-drawer") as Drawer;
+
+    element.visible = true;
+    element.keyboard = true;
+    const mockCloseEvent = jest.fn();
+    element.addEventListener("close", mockCloseEvent);
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    await act(async () => {
+      const event = new KeyboardEvent("keydown", { key: "Enter" });
+      document.dispatchEvent(event);
+    });
+    expect(element.visible).toBeTruthy();
+    expect(mockCloseEvent).toHaveBeenCalledTimes(0);
+
+    await act(async () => {
+      const event = new KeyboardEvent("keydown", { key: "Escape" });
+      document.dispatchEvent(event);
+    });
+
+    expect(element.visible).toBeFalsy();
+    expect(mockCloseEvent).toHaveBeenCalledTimes(1);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
   });
 });

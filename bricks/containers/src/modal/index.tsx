@@ -17,29 +17,16 @@ import "@next-core/theme";
 import type { Button, ButtonProps } from "@next-bricks/basic/button";
 import { unwrapProvider } from "@next-core/utils/general";
 import type { lockBodyScroll as _lockBodyScroll } from "@next-bricks/basic/data-providers/lock-body-scroll/lock-body-scroll";
+import type { requireModalStack as _requireModalStack } from "@next-bricks/basic/data-providers/require-modal-stack";
 import styleText from "./modal.shadow.css";
 
 const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
   "basic.lock-body-scroll"
 );
-/**
- * Wrap usage:
- *
- * ```ts
- * import type { Modal, ModalProps, ModalEvents, ModalMapEvents } from "@next-bricks/basic/modal";
- *
- * const WrappedModal = wrapBrick<Modal, ModalProps, ModalEvents, ModalMapEvents>("eo-modal", {
- *   onClose: "close",
- *   onConfirm: "confirm",
- *   onCancel: "cancel",
- * });
- *
- * <WrappedModal
- *  modalTitle="..."
- *  onClose={() => { ... }}
- * />
- * ```
- */
+
+const requireModalStack = unwrapProvider<typeof _requireModalStack>(
+  "basic.require-modal-stack"
+);
 
 export interface ModalProps {
   curElement?: HTMLElement;
@@ -55,6 +42,7 @@ export interface ModalProps {
   closeWhenConfirm?: boolean;
   visible?: boolean;
   stackable?: boolean;
+  keyboard?: boolean;
 }
 
 export interface ModalEvents {
@@ -160,10 +148,16 @@ class Modal extends ReactNextElement implements ModalProps {
    */
   @property({ type: Boolean }) accessor hideCancelButton: boolean | undefined;
 
+  /** 是否支持键盘 esc 关闭 */
+  @property({ type: Boolean })
+  accessor keyboard: boolean | undefined;
+
   /**
    * 是否可堆叠，开启后每次打开抽屉会将新的抽屉置于上层（zIndex ++）
    *
    * 注意：仅初始设置有效。
+   *
+   * @deprecated
    */
   @property({ type: Boolean })
   accessor stackable: boolean | undefined;
@@ -261,6 +255,7 @@ class Modal extends ReactNextElement implements ModalProps {
         onModalConfirm={this.#handleModelConfirm}
         onModalCancel={this.#handleModelCancel}
         curElement={this}
+        keyboard={this.keyboard}
         stackable={this.stackable}
         stack={this.#stack}
       />
@@ -295,7 +290,16 @@ function ModalComponent({
   curElement,
   stack,
   stackable,
+  keyboard,
 }: ModalComponentProps) {
+  const modalStack = useMemo(() => requireModalStack(), []);
+
+  useEffect(() => {
+    return () => {
+      modalStack.pull();
+    };
+  }, [modalStack]);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState<boolean>(open);
 
@@ -390,6 +394,11 @@ function ModalComponent({
     () => {
       lockBodyScroll(curElement, open);
       setIsOpen(open);
+      if (open) {
+        modalStack.push();
+      } else {
+        modalStack.pull();
+      }
 
       if (stack && stackable) {
         if (open) {
@@ -404,6 +413,25 @@ function ModalComponent({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [open]
   );
+
+  useEffect(() => {
+    if (!open || !keyboard) {
+      return;
+    }
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const key =
+        event.key ||
+        /* istanbul ignore next: compatibility */ event.keyCode ||
+        /* istanbul ignore next: compatibility */ event.which;
+      if (modalStack.isTop() && (key === "Escape" || key === 27)) {
+        onModalClose();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [keyboard, onModalClose, open, modalStack]);
 
   return isOpen ? (
     <div className="modal-root">
