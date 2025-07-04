@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <title>图标-回中</title>
     <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="节点展示-Dashboard+表格备份-3" transform="translate(-28, -1034)">
+        <g id="节点展示-Dashboard+表格备份-3" transform="translate(-30, -1036)">
             <g id="编组-4" transform="translate(-229, 0)">
                 <g id="返回按钮" transform="translate(249, 1028)">
                     <g id="图标-回中" transform="translate(8, 6)">
-                        <rect id="矩形" x="0" y="0" width="20" height="20"></rect>
+                        <rect id="矩形" x="2" y="2" width="16" height="16"></rect>
                         <g id="编组" transform="translate(3, 3)" stroke="#212121" stroke-width="1.4">
                             <path d="M4,8.1779028e-13 L0.8,8.1779028e-13 C0.358172,8.1779028e-13 -9.17044218e-14,0.358172 -9.17044218e-14,0.8 L-9.17044218e-14,4" id="路径" stroke-linecap="round" stroke-linejoin="round"></path>
                             <path d="M4,14 L0.8,14 C0.358172,14 -9.17044218e-14,13.64184 -9.17044218e-14,13.2 L-9.17044218e-14,10" id="路径" stroke-linecap="round" stroke-linejoin="round"></path>
