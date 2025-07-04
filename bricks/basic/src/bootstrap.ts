@@ -50,3 +50,4 @@ import "./dropdown-select/index.js";
 import "./loading-container/index.js";
 import "./custom-processors/smartDisplayForEvaluableString.js";
 import "./viewport/index.js";
+import "./data-providers/require-modal-stack.js";
