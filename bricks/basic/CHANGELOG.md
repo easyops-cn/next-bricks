@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.54.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.53.4...@next-bricks/basic@1.54.0) (2025-07-04)
+
+
+### Features
+
+* new provider: require-modal-stack ([2d8741f](https://github.com/easyops-cn/next-bricks/commit/2d8741fa1dc21019fab5d19f1f50054c5e803116))
+
+
+
+
+
 ## [1.53.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.53.3...@next-bricks/basic@1.53.4) (2025-07-03)
 
 **Note:** Version bump only for package @next-bricks/basic

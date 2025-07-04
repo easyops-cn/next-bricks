@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.15.0](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.14.11...@next-bricks/containers@1.15.0) (2025-07-04)
+
+
+### Bug Fixes
+
+* handle modal stack when apply keyboard close ([051d29f](https://github.com/easyops-cn/next-advanced-bricks/commit/051d29f2aaee8a6c796509d2282f072d1db743cd))
+
+
+### Features
+
+* modal and drawer supports close by keyboard esc ([679b288](https://github.com/easyops-cn/next-advanced-bricks/commit/679b288f2acba806363b176c42dc3275fea0dc29))
+
+
+
+
+
 ## [1.14.11](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.14.10...@next-bricks/containers@1.14.11) (2025-07-03)
 
 **Note:** Version bump only for package @next-bricks/containers
