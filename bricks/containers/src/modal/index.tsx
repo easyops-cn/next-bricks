@@ -17,29 +17,16 @@ import "@next-core/theme";
 import type { Button, ButtonProps } from "@next-bricks/basic/button";
 import { unwrapProvider } from "@next-core/utils/general";
 import type { lockBodyScroll as _lockBodyScroll } from "@next-bricks/basic/data-providers/lock-body-scroll/lock-body-scroll";
+import type { requireModalStack as _requireModalStack } from "@next-bricks/basic/data-providers/require-modal-stack";
 import styleText from "./modal.shadow.css";
 
 const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
   "basic.lock-body-scroll"
 );
-/**
- * Wrap usage:
- *
- * ```ts
- * import type { Modal, ModalProps, ModalEvents, ModalMapEvents } from "@next-bricks/basic/modal";
- *
- * const WrappedModal = wrapBrick<Modal, ModalProps, ModalEvents, ModalMapEvents>("eo-modal", {
- *   onClose: "close",
- *   onConfirm: "confirm",
- *   onCancel: "cancel",
- * });
- *
- * <WrappedModal
- *  modalTitle="..."
- *  onClose={() => { ... }}
- * />
- * ```
- */
+
+const requireModalStack = unwrapProvider<typeof _requireModalStack>(
+  "basic.require-modal-stack"
+);
 
 export interface ModalProps {
   curElement?: HTMLElement;
@@ -305,6 +292,14 @@ function ModalComponent({
   stackable,
   keyboard,
 }: ModalComponentProps) {
+  const modalStack = useMemo(() => requireModalStack(), []);
+
+  useEffect(() => {
+    return () => {
+      modalStack.pull();
+    };
+  }, [modalStack]);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState<boolean>(open);
 
@@ -399,6 +394,11 @@ function ModalComponent({
     () => {
       lockBodyScroll(curElement, open);
       setIsOpen(open);
+      if (open) {
+        modalStack.push();
+      } else {
+        modalStack.pull();
+      }
 
       if (stack && stackable) {
         if (open) {
@@ -423,7 +423,7 @@ function ModalComponent({
         event.key ||
         /* istanbul ignore next: compatibility */ event.keyCode ||
         /* istanbul ignore next: compatibility */ event.which;
-      if (key === "Escape" || key === 27) {
+      if (modalStack.isTop() && (key === "Escape" || key === 27)) {
         onModalClose();
       }
     };
@@ -431,7 +431,7 @@ function ModalComponent({
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [keyboard, onModalClose, open]);
+  }, [keyboard, onModalClose, open, modalStack]);
 
   return isOpen ? (
     <div className="modal-root">

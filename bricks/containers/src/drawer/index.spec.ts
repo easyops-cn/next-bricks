@@ -6,6 +6,7 @@ import { Drawer } from "./index.jsx";
 jest.mock("@next-core/theme", () => ({}));
 const spyOnScrollTo = jest.fn();
 window.HTMLElement.prototype.scrollTo = spyOnScrollTo;
+
 const lockBodyScroll = jest.fn();
 customElements.define(
   "basic.lock-body-scroll",
@@ -13,6 +14,19 @@ customElements.define(
     resolve = lockBodyScroll;
   }
 );
+
+const requireModalStack = jest.fn(() => ({
+  push: jest.fn(),
+  pull: jest.fn(),
+  isTop: jest.fn(() => true),
+}));
+customElements.define(
+  "basic.require-modal-stack",
+  class extends HTMLElement {
+    resolve = requireModalStack;
+  }
+);
+
 // todo: update unit test
 describe("eo-drawer", () => {
   test("basic usage", async () => {

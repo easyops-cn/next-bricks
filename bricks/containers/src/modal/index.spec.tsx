@@ -5,11 +5,24 @@ import "./";
 import { Modal } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
+
 const lockBodyScroll = jest.fn();
 customElements.define(
   "basic.lock-body-scroll",
   class extends HTMLElement {
     resolve = lockBodyScroll;
+  }
+);
+
+const requireModalStack = jest.fn(() => ({
+  push: jest.fn(),
+  pull: jest.fn(),
+  isTop: jest.fn(() => true),
+}));
+customElements.define(
+  "basic.require-modal-stack",
+  class extends HTMLElement {
+    resolve = requireModalStack;
   }
 );
 

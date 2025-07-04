@@ -13,6 +13,7 @@ import type {
 } from "@next-bricks/icons/general-icon";
 import { unwrapProvider } from "@next-core/utils/general";
 import type { lockBodyScroll as _lockBodyScroll } from "@next-bricks/basic/data-providers/lock-body-scroll/lock-body-scroll";
+import type { requireModalStack as _requireModalStack } from "@next-bricks/basic/data-providers/require-modal-stack";
 import { instantiateModalStack, type ModalStack } from "@next-core/runtime";
 import classNames from "classnames";
 import "@next-core/theme";
@@ -22,6 +23,10 @@ import styleText from "./drawer.shadow.css";
 const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
   "basic.lock-body-scroll"
 );
+const requireModalStack = unwrapProvider<typeof _requireModalStack>(
+  "basic.require-modal-stack"
+);
+
 export interface DrawerEvents {
   close?: Event;
   open?: Event;
@@ -256,6 +261,14 @@ export function DrawerComponent({
   stack,
   keyboard,
 }: DrawerComponentProps) {
+  const modalStack = useMemo(() => requireModalStack(), []);
+
+  useEffect(() => {
+    return () => {
+      modalStack.pull();
+    };
+  }, [modalStack]);
+
   const contentRef = useRef<HTMLDivElement>();
   const header = useMemo(
     () => (
@@ -291,6 +304,11 @@ export function DrawerComponent({
     () => {
       lockBodyScroll(curElement, open);
       scrollToTopWhenOpen && open && contentRef.current?.scrollTo(0, 0);
+      if (open) {
+        modalStack.push();
+      } else {
+        modalStack.pull();
+      }
 
       if (stack && stackable) {
         if (open) {
@@ -315,7 +333,7 @@ export function DrawerComponent({
         event.key ||
         /* istanbul ignore next: compatibility */ event.keyCode ||
         /* istanbul ignore next: compatibility */ event.which;
-      if (key === "Escape" || key === 27) {
+      if (modalStack.isTop() && (key === "Escape" || key === 27)) {
         onDrawerClose();
       }
     };
@@ -323,7 +341,7 @@ export function DrawerComponent({
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [keyboard, onDrawerClose, open]);
+  }, [keyboard, onDrawerClose, open, modalStack]);
 
   return (
     <div

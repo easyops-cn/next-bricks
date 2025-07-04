@@ -279,3 +279,35 @@
           - target: "#drawer"
             method: "close"
 ```
+
+### Nested
+
+```yaml preview minHeight="320px"
+- brick: eo-button
+  properties:
+    textContent: Open drawer
+  events:
+    click:
+      - target: "#drawer-1"
+        method: open
+- brick: eo-drawer
+  properties:
+    customTitle: Drawer Title
+    id: "drawer-1"
+    keyboard: true
+  children:
+    - brick: eo-button
+      properties:
+        textContent: Open nested drawer
+      events:
+        click:
+          - target: "#drawer-2"
+            method: "open"
+- brick: eo-drawer
+  properties:
+    customTitle: Nested Drawer Title
+    id: "drawer-2"
+    keyboard: true
+    width: 400
+    textContent: This a a nested drawer.
+```
