@@ -46,6 +46,7 @@ export interface DrawerProps {
   scrollToTopWhenOpen?: boolean;
   stackable?: boolean;
   maskStyle?: CSSProperties;
+  keyboard?: boolean;
 }
 
 const { defineElement, property, event, method } = createDecorators();
@@ -144,10 +145,16 @@ class Drawer extends ReactNextElement implements DrawerProps {
   @property({ attribute: false })
   accessor maskStyle = {};
 
+  /** 是否支持键盘 esc 关闭 */
+  @property({ type: Boolean })
+  accessor keyboard: boolean | undefined;
+
   /**
    * 是否可堆叠，开启后每次打开抽屉会将新的抽屉置于上层（zIndex ++）
    *
    * 注意：仅初始设置有效。
+   *
+   * @deprecated
    */
   @property({ type: Boolean })
   accessor stackable: boolean | undefined;
@@ -218,6 +225,7 @@ class Drawer extends ReactNextElement implements DrawerProps {
         onDrawerClose={this.#handleDrawerClose}
         scrollToTopWhenOpen={this.scrollToTopWhenOpen}
         curElement={this}
+        keyboard={this.keyboard}
         stackable={this.stackable}
         stack={this.#stack}
       />
@@ -246,6 +254,7 @@ export function DrawerComponent({
   curElement,
   stackable,
   stack,
+  keyboard,
 }: DrawerComponentProps) {
   const contentRef = useRef<HTMLDivElement>();
   const header = useMemo(
@@ -296,6 +305,25 @@ export function DrawerComponent({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [open]
   );
+
+  useEffect(() => {
+    if (!open || !keyboard) {
+      return;
+    }
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const key =
+        event.key ||
+        /* istanbul ignore next: compatibility */ event.keyCode ||
+        /* istanbul ignore next: compatibility */ event.which;
+      if (key === "Escape" || key === 27) {
+        onDrawerClose();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [keyboard, onDrawerClose, open]);
 
   return (
     <div

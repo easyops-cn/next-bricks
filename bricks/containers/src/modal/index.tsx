@@ -55,6 +55,7 @@ export interface ModalProps {
   closeWhenConfirm?: boolean;
   visible?: boolean;
   stackable?: boolean;
+  keyboard?: boolean;
 }
 
 export interface ModalEvents {
@@ -160,10 +161,16 @@ class Modal extends ReactNextElement implements ModalProps {
    */
   @property({ type: Boolean }) accessor hideCancelButton: boolean | undefined;
 
+  /** 是否支持键盘 esc 关闭 */
+  @property({ type: Boolean })
+  accessor keyboard: boolean | undefined;
+
   /**
    * 是否可堆叠，开启后每次打开抽屉会将新的抽屉置于上层（zIndex ++）
    *
    * 注意：仅初始设置有效。
+   *
+   * @deprecated
    */
   @property({ type: Boolean })
   accessor stackable: boolean | undefined;
@@ -261,6 +268,7 @@ class Modal extends ReactNextElement implements ModalProps {
         onModalConfirm={this.#handleModelConfirm}
         onModalCancel={this.#handleModelCancel}
         curElement={this}
+        keyboard={this.keyboard}
         stackable={this.stackable}
         stack={this.#stack}
       />
@@ -295,6 +303,7 @@ function ModalComponent({
   curElement,
   stack,
   stackable,
+  keyboard,
 }: ModalComponentProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState<boolean>(open);
@@ -404,6 +413,25 @@ function ModalComponent({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [open]
   );
+
+  useEffect(() => {
+    if (!open || !keyboard) {
+      return;
+    }
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const key =
+        event.key ||
+        /* istanbul ignore next: compatibility */ event.keyCode ||
+        /* istanbul ignore next: compatibility */ event.which;
+      if (key === "Escape" || key === 27) {
+        onModalClose();
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [keyboard, onModalClose, open]);
 
   return isOpen ? (
     <div className="modal-root">

@@ -136,6 +136,7 @@
     modalTitle: 模态框标题
     id: "modal"
     placement: left
+    keyboard: true
   events:
     open:
       - action: message.success

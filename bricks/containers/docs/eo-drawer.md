@@ -260,6 +260,7 @@
     customTitle: 抽屉标题
     id: "drawer"
     placement: left
+    keyboard: true
   events:
     open:
       - action: message.success

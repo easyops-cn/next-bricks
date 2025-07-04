@@ -24,11 +24,11 @@ describe("eo-modal", () => {
     element.width = 180;
 
     const mockOpenEvent = jest.fn();
-    const mockCloseEvnet = jest.fn();
+    const mockCloseEvent = jest.fn();
     const mockConfirmEvent = jest.fn();
     const mockCancelEvent = jest.fn();
     element.addEventListener("open", mockOpenEvent);
-    element.addEventListener("close", mockCloseEvnet);
+    element.addEventListener("close", mockCloseEvent);
     element.addEventListener("confirm", mockConfirmEvent);
     element.addEventListener("cancel", mockCancelEvent);
 
@@ -63,7 +63,7 @@ describe("eo-modal", () => {
     });
 
     expect(element.visible).toBeFalsy();
-    expect(mockCloseEvnet).toHaveBeenCalledTimes(1);
+    expect(mockCloseEvent).toHaveBeenCalledTimes(1);
     expect(element.shadowRoot?.querySelector(".modal-root")).toBeFalsy();
 
     // confirm
@@ -84,7 +84,7 @@ describe("eo-modal", () => {
 
     expect(element.visible).toBeFalsy();
     expect(mockConfirmEvent).toHaveBeenCalledTimes(1);
-    expect(mockCloseEvnet).toHaveBeenCalledTimes(2);
+    expect(mockCloseEvent).toHaveBeenCalledTimes(2);
 
     // cancel
     await act(async () => {
@@ -102,7 +102,7 @@ describe("eo-modal", () => {
 
     expect(element.visible).toBeFalsy();
     expect(mockCancelEvent).toHaveBeenCalled();
-    expect(mockCloseEvnet).toHaveBeenCalledTimes(3);
+    expect(mockCloseEvent).toHaveBeenCalledTimes(3);
 
     // click mask and modal close
     await act(async () => {
@@ -114,7 +114,7 @@ describe("eo-modal", () => {
     });
 
     expect(element.visible).toBeFalsy();
-    expect(mockCloseEvnet).toHaveBeenCalledTimes(4);
+    expect(mockCloseEvent).toHaveBeenCalledTimes(4);
 
     act(() => {
       document.body.removeChild(element);
@@ -127,16 +127,16 @@ describe("eo-modal", () => {
     element.modalTitle = "Modal Title";
     element.closeWhenConfirm = false;
 
-    const mockCloseEvnet = jest.fn();
+    const mockCloseEvent = jest.fn();
     const mockConfirmEvent = jest.fn();
-    element.addEventListener("close", mockCloseEvnet);
+    element.addEventListener("close", mockCloseEvent);
     element.addEventListener("confirm", mockConfirmEvent);
 
     act(() => {
       document.body.appendChild(element);
     });
 
-    expect(mockCloseEvnet).toHaveBeenCalledTimes(0);
+    expect(mockCloseEvent).toHaveBeenCalledTimes(0);
     expect(element.visible).toBeFalsy();
 
     await act(async () => {
@@ -153,8 +153,46 @@ describe("eo-modal", () => {
     });
 
     expect(mockConfirmEvent).toHaveBeenCalledTimes(1);
-    expect(mockCloseEvnet).toHaveBeenCalledTimes(0);
+    expect(mockCloseEvent).toHaveBeenCalledTimes(0);
     expect(element.visible).toBeTruthy();
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("close by esc key", async () => {
+    const element = document.createElement("eo-modal") as Modal;
+    element.modalTitle = "Modal Title";
+    element.keyboard = true;
+
+    const mockCloseEvent = jest.fn();
+    element.addEventListener("close", mockCloseEvent);
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    await act(async () => {
+      element.open();
+    });
+
+    expect(mockCloseEvent).toHaveBeenCalledTimes(0);
+    expect(element.visible).toBeTruthy();
+
+    await act(async () => {
+      fireEvent.keyDown(document, { key: "Enter" });
+    });
+
+    expect(mockCloseEvent).toHaveBeenCalledTimes(0);
+    expect(element.visible).toBeTruthy();
+
+    await act(async () => {
+      fireEvent.keyDown(document, { key: "Escape" });
+    });
+
+    expect(mockCloseEvent).toHaveBeenCalledTimes(1);
+    expect(element.visible).toBeFalsy();
 
     act(() => {
       document.body.removeChild(element);
