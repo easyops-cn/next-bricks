@@ -40,11 +40,11 @@ export type TriggerEvent = "click" | "hover";
 /** ============= Popover Type End ============== */
 
 /* ====== Type checks ====== */
-type Equal<X, Y> =
+export type Equal<X, Y> =
   (<T>() => T extends X ? 1 : 2) extends <T>() => T extends Y ? 1 : 2
     ? true
     : false;
-type Expect<T extends true> = T;
+export type Expect<T extends true> = T;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 type cases = [
