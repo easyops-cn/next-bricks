@@ -11,9 +11,9 @@
 }
 
 .container {
-  background: rgba(255, 255, 255, 0.75);
-  border-radius: 10px;
-  backdrop-filter: blur(100px);
+  background: var(--elevo-component-background);
+  backdrop-filter: var(--elevo-component-backdrop-filter);
+  border-radius: var(--elevo-border-radius);
   list-style: none;
   padding: 0;
   margin: 0;
@@ -112,13 +112,13 @@
   }
 
   .link:hover .title {
-    color: #2540ff;
+    color: var(--elevo-color-brand);
   }
 }
 
 .default {
   .item:not(:last-child) {
-    border-bottom: 1px solid rgba(222, 222, 223, 0.6);
+    border-bottom: 1px solid var(--elevo-divider-color);
   }
 
   .link {

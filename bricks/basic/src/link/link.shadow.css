@@ -72,3 +72,9 @@ eo-icon {
   margin-left: 6px;
   color: var(--color-disabled-text);
 }
+
+:host([theme-variant="elevo"]) {
+  --antd-btn-link-color: var(--elevo-color-brand);
+  --antd-btn-link-hover-color: var(--elevo-color-brand-hover);
+  --antd-btn-link-active-color: var(--elevo-color-brand-active);
+}

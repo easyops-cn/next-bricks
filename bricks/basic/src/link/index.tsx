@@ -43,6 +43,7 @@ export interface LinkProps {
   danger?: boolean;
   tooltip?: string;
   linkStyle?: React.CSSProperties;
+  themeVariant?: "default" | "elevo";
 }
 
 const { defineElement, property } = createDecorators();
@@ -143,6 +144,10 @@ class Link extends ReactNextElement implements LinkProps {
   @property({ attribute: false }) accessor linkStyle:
     | React.CSSProperties
     | undefined;
+
+  /** 主题变体 */
+  @property({ render: false })
+  accessor themeVariant: "default" | "elevo" | undefined;
 
   render() {
     return (

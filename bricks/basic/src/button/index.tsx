@@ -47,6 +47,7 @@ export interface ButtonProps {
   tooltip?: string;
   buttonStyle?: React.CSSProperties;
   callback?: Ref<HTMLButtonElement>;
+  themeVariant?: "default" | "elevo";
 }
 
 const { defineElement, property } = createDecorators();
@@ -138,6 +139,10 @@ class Button extends ReactNextElement implements ButtonProps {
   })
   accessor hasSlot: boolean | undefined;
 
+  /** 主题变体 */
+  @property()
+  accessor themeVariant: "default" | "elevo" | undefined;
+
   #getSlotBySelector(selector: string): HTMLSlotElement {
     return this.shadowRoot?.querySelector(selector) as HTMLSlotElement;
   }
@@ -164,6 +169,7 @@ class Button extends ReactNextElement implements ButtonProps {
         target={this.target}
         tooltip={this.tooltip}
         buttonStyle={this.buttonStyle}
+        themeVariant={this.themeVariant}
         callback={this.#renderCallback}
       />
     );
@@ -182,6 +188,7 @@ export function ButtonComponent({
   target,
   tooltip,
   buttonStyle,
+  themeVariant,
   callback,
 }: ButtonProps) {
   const buttonNode = useMemo(() => {
@@ -241,6 +248,7 @@ export function ButtonComponent({
       target={target as Target}
       url={url}
       disabled={disabled}
+      themeVariant={themeVariant}
     >
       {buttonNode}
     </WrappedLink>
