@@ -1,0 +1,170 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 10px;
+  backdrop-filter: blur(100px);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.navigation {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(86px, 1fr));
+  padding: 18px;
+  gap: 25px 18px;
+
+  .item {
+    width: 86px;
+    justify-self: center;
+  }
+
+  .link {
+    display: block;
+  }
+
+  .link::part(link) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .icon {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+    border-radius: 10px;
+    background:
+      radial-gradient(
+        41% 43% at 67% 85%,
+        rgba(48, 129, 243, 0.3) 0%,
+        rgba(48, 129, 243, 0) 100%
+      ),
+      #e9f1f7;
+    border: 2px solid #c8ddee;
+    color: #3081f3;
+  }
+
+  .icon.orange {
+    background:
+      radial-gradient(
+        41% 43% at 67% 85%,
+        rgba(228, 85, 31, 0.3) 0%,
+        rgba(228, 85, 31, 0) 100%
+      ),
+      #f6f1ed;
+    border: 2px solid #efd7d0;
+    color: #e4551f;
+  }
+
+  .icon.yellow {
+    background:
+      radial-gradient(
+        41% 43% at 67% 85%,
+        rgba(232, 151, 22, 0.3) 0%,
+        rgba(232, 151, 22, 0) 100%
+      ),
+      #faf5ed;
+    border: 2px solid #f2e1c6;
+    color: #e89716;
+  }
+
+  .icon.purple {
+    background:
+      radial-gradient(
+        41% 43% at 67% 85%,
+        rgba(146, 111, 247, 0.3) 0%,
+        rgba(146, 111, 247, 0) 100%
+      ),
+      #eceaf4;
+    border: 2px solid #dfd7f1;
+    color: #926ff7;
+  }
+
+  .title {
+    color: #2f3741;
+    margin-top: 10px;
+    max-width: 100%;
+    line-height: 20px;
+  }
+
+  .link:hover .title {
+    color: #2540ff;
+  }
+}
+
+.default {
+  .item:not(:last-child) {
+    border-bottom: 1px solid rgba(222, 222, 223, 0.6);
+  }
+
+  .link {
+    display: block;
+  }
+
+  .link:hover {
+    background: rgba(189, 191, 212, 0.15);
+  }
+
+  .link::part(link) {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 13px;
+  }
+
+  .title {
+    color: #262626;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .icon {
+    color: #fff;
+    font-size: 12px;
+    margin-right: 12px;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    background: linear-gradient(138deg, #ac7cff 0%, #336ef4 100%), #336ef4;
+  }
+
+  .icon.orange {
+    background: linear-gradient(138deg, #fac60b 0%, #f7811c 100%), #f7811c;
+  }
+
+  .icon.purple {
+    background: linear-gradient(138deg, #ac7cff 0%, #c285ef 100%), #c285ef;
+  }
+
+  .icon.green {
+    background: linear-gradient(138deg, #94e65e 0%, #08bf33 100%), #08bf33;
+  }
+
+  .icon.cyan {
+    background: linear-gradient(138deg, #45caff 0%, #1ba5dc 100%), #1ba5dc;
+  }
+}

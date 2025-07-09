@@ -33,11 +33,13 @@ export interface GeneralIconPropsOfFa
   lib: "fa";
 }
 
-export interface ImgIconProps extends EoImgIconProps, GeneralIconBaseProps {}
+export interface ImgIconProps extends EoImgIconProps, GeneralIconBaseProps {
+  keepSvgOriginalColor?: boolean;
+}
 
 export interface GeneralIconBaseProps {
   spinning?: boolean;
-  keepSvgOriginalColor?: boolean;
+  fallback?: GeneralIconProps;
 }
 
 export type LibIconProps =
@@ -47,17 +49,12 @@ export type LibIconProps =
 
 export type GeneralIconProps = LibIconProps | ImgIconProps;
 
-export interface FallbackIcon {
+export interface IconProps extends DefineLinearGradientProps, ImgIconProps {
   lib?: "antd" | "easyops" | "fa";
   icon?: string;
   theme?: string;
   category?: string;
   prefix?: string;
-  keepSvgOriginalColor?: boolean;
-  imgSrc?: string;
-  imgStyle?: CSSProperties;
-  imgLoading?: "lazy" | "eager";
-  noPublicRoot?: boolean;
 }
 
 const LIBS = new Set(["antd", "easyops", "fa"]);
@@ -72,10 +69,7 @@ export
   styleTexts: [styleText],
   alias: ["icons.general-icon"],
 })
-class GeneralIcon
-  extends ReactNextElement
-  implements DefineLinearGradientProps
-{
+class GeneralIcon extends ReactNextElement implements IconProps {
   /** 图标库 */
   @property() accessor lib: "antd" | "easyops" | "fa" | undefined;
 
@@ -105,7 +99,7 @@ class GeneralIcon
    * 设置当图标未找到时的回退图标
    */
   @property({ attribute: false })
-  accessor fallback: FallbackIcon | undefined;
+  accessor fallback: GeneralIconProps | undefined;
 
   /** 渐变色起始颜色（不适用于 EasyOps 图标） */
   @property() accessor startColor: string | undefined;
@@ -166,30 +160,13 @@ class GeneralIcon
   }
 }
 
-interface GeneralIconComponentProps {
-  lib?: "antd" | "easyops" | "fa";
-  icon?: string;
-  theme?: string;
-  category?: string;
-  prefix?: string;
-  fallback?: FallbackIcon;
-  startColor?: string;
-  endColor?: string;
-  gradientDirection?: GradientDirection;
-  keepSvgOriginalColor?: boolean;
-  imgSrc?: string;
-  imgStyle?: CSSProperties;
-  imgLoading?: "lazy" | "eager";
-  noPublicRoot?: boolean;
-}
-
 function GeneralIconComponent({
   startColor,
   endColor,
   fallback,
   gradientDirection,
   ...props
-}: GeneralIconComponentProps): JSX.Element | null {
+}: IconProps): JSX.Element | null {
   const [iconNotFound, setIconNotFound] = useState(
     !(props.imgSrc && typeof props.imgSrc === "string") && !LIBS.has(props.lib!)
   );
@@ -250,9 +227,9 @@ function GeneralIconComponent({
 
   const commonProps = {
     icon,
-    startColor: startColor,
-    endColor: endColor,
-    gradientDirection: gradientDirection,
+    startColor,
+    endColor,
+    gradientDirection,
     onIconFoundChange,
   };
 

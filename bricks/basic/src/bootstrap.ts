@@ -51,3 +51,4 @@ import "./loading-container/index.js";
 import "./custom-processors/smartDisplayForEvaluableString.js";
 import "./viewport/index.js";
 import "./data-providers/require-modal-stack.js";
+import "./list/index.js";

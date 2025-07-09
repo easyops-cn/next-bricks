@@ -39,7 +39,8 @@
     "eo-iframe",
     "eo-dropdown-select",
     "eo-loading-container",
-    "eo-viewport"
+    "eo-viewport",
+    "eo-list"
   ],
   "icons": [
     "eo-antd-icon",
