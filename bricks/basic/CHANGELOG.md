@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.55.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.54.0...@next-bricks/basic@1.55.0) (2025-07-09)
+
+
+### Features
+
+* new brick: eo-list ([3ac6bf9](https://github.com/easyops-cn/next-bricks/commit/3ac6bf935672b32f655d030faba1bd69c2895e86))
+
+
+
+
+
 # [1.54.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.53.4...@next-bricks/basic@1.54.0) (2025-07-04)
 
 
