@@ -32,6 +32,7 @@ customElements.define(
   "eo-button",
   class HTMLGeneralButtonElement extends HTMLElement {
     type: string | undefined;
+    themeVariant: string | undefined;
   }
 );
 
@@ -40,6 +41,13 @@ customElements.define(
   class HTMLAntdIconElement extends HTMLElement {
     icon: string | undefined;
     theme: string | undefined;
+  }
+);
+
+customElements.define(
+  "eo-input",
+  class HTMLAntdIconElement extends HTMLElement {
+    themeVariant: string | undefined;
   }
 );
 

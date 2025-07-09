@@ -6,11 +6,12 @@ import { wrapBrick, wrapLocalBrick } from "@next-core/react-element";
 import type { AntdIcon, AntdIconProps } from "@next-bricks/icons/antd-icon";
 import { get } from "lodash";
 import "@next-core/theme";
-import { instantiateModalStack } from "@next-core/runtime";
+import { getThemeVariant, instantiateModalStack } from "@next-core/runtime";
 import { K, NS, locales } from "./i18n.js";
 import { SlDialogElement, WrappedSlDialog } from "./sl-dialog.js";
 import type { Button, ButtonProps } from "../../button/index.js";
 import styles from "./dialog.module.css";
+import classNames from "classnames";
 
 initializeI18n(NS, locales);
 
@@ -28,7 +29,9 @@ interface InputEventsMap {
 }
 const WrappedInput = wrapBrick<
   HTMLElement,
-  InputProps,
+  InputProps & {
+    themeVariant?: "default" | "elevo";
+  },
   InputEvents,
   InputEventsMap
 >("eo-input", {
@@ -43,6 +46,7 @@ export interface DialogOptions {
   expect?: string;
   danger?: boolean;
   contentStyle?: React.CSSProperties;
+  themeVariant?: "default" | "elevo";
 }
 
 const parseTemplate = (template: string, context: Record<string, any>) => {
@@ -132,6 +136,7 @@ export function DialogComponent({
   danger,
   contentStyle,
   zIndex,
+  themeVariant: _themeVariant,
   onOk,
   onCancel,
   onHide,
@@ -141,6 +146,7 @@ export function DialogComponent({
   onCancel?(): void;
   onHide?(): void;
 }) {
+  const themeVariant = _themeVariant ?? getThemeVariant?.();
   const ref = useRef<SlDialogElement | null>(null);
   const [confirmDisabled, setConfirmDisabled] = useState(!!expect);
   const icon = useMemo(() => {
@@ -190,7 +196,9 @@ export function DialogComponent({
       label={title ?? "Dialog"}
       open
       noHeader
-      className={styles.dialog}
+      className={classNames(styles.dialog, {
+        [styles.elevo]: themeVariant === "elevo",
+      })}
       onSlHide={onHide}
       onSlRequestClose={onSlRequestClose}
       ref={ref}
@@ -208,6 +216,7 @@ export function DialogComponent({
           {expect && (
             <WrappedInput
               auto-focus={true}
+              themeVariant={themeVariant}
               className={styles.expectInput}
               onValueChange={(e) => setConfirmDisabled(e.detail !== expect)}
             />
@@ -215,13 +224,20 @@ export function DialogComponent({
         </div>
       </div>
       {(type === "confirm" || type === "delete") && (
-        <WrappedButton slot="footer" type="text" onClick={onCancelClick}>
+        <WrappedButton
+          slot="footer"
+          type="text"
+          themeVariant={themeVariant}
+          onClick={onCancelClick}
+        >
           {i18n.t(`${NS}:${K.CANCEL}`)}
         </WrappedButton>
       )}
       <WrappedButton
         slot="footer"
         type="primary"
+        themeVariant={themeVariant}
+        shape={themeVariant === "elevo" ? "round" : undefined}
         danger={danger ?? type === "delete"}
         disabled={confirmDisabled}
         onClick={onOkClick}

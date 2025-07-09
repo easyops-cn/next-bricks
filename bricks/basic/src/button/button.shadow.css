@@ -30,7 +30,7 @@ button:active {
 }
 
 .round {
-  border-radius: 32px;
+  border-radius: 9999px;
 }
 
 .circle {
@@ -92,7 +92,7 @@ button:active {
 
 .default:hover {
   color: var(--antd-btn-default-hover-color);
-  border-color: var(--antd-btn-default-hover-border-border);
+  border-color: var(--antd-btn-default-hover-border-color);
 }
 
 .default:active {
@@ -133,7 +133,7 @@ button:active {
 
 .dashed:hover {
   color: var(--antd-btn-default-hover-color);
-  border-color: var(--antd-btn-default-hover-border-border);
+  border-color: var(--antd-btn-default-hover-border-color);
 }
 
 .dashed:active {
@@ -321,18 +321,6 @@ button:active {
   height: 40px;
 }
 
-.xs.round {
-  border-radius: 22px;
-}
-
-.small.round {
-  border-radius: 26px;
-}
-
-.large.round {
-  border-radius: 40px;
-}
-
 :host([has-slot]) button > eo-icon {
   margin-right: 8px;
 }
@@ -355,4 +343,24 @@ button {
 
 :host([has-slot]):host([size="xs"]) button {
   padding: 4px 12px;
+}
+
+:host([theme-variant="elevo"]) {
+  --antd-btn-primary-bg: var(--elevo-color-brand);
+  --antd-btn-default-border: var(--elevo-border-color);
+  --antd-btn-primary-hover-bg: var(--elevo-color-brand-hover);
+  --antd-btn-primary-active-bg: var(--elevo-color-brand-active);
+  --antd-btn-default-hover-color: var(--elevo-color-brand-hover);
+  --antd-btn-default-hover-border-color: var(--elevo-color-brand-hover);
+  --antd-btn-default-active-color: var(--elevo-color-brand);
+  --antd-btn-default-active-border-color: var(--elevo-color-brand);
+  --antd-btn-link-color: var(--elevo-color-brand);
+  --antd-btn-link-hover-color: var(--elevo-color-brand-hover);
+  --antd-btn-link-active-color: var(--elevo-color-brand-active);
+  --antd-btn-text-hover-color: var(--elevo-color-brand-hover);
+  --antd-btn-text-active-color: var(--elevo-color-brand-active);
+
+  button:not(.round) {
+    border-radius: var(--elevo-border-radius);
+  }
 }
