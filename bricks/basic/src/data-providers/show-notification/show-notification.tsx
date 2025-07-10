@@ -9,6 +9,9 @@ import classnames from "classnames";
 import { sanitize } from "dompurify";
 import { i18n, initializeI18n } from "@next-core/i18n";
 import { createRoot } from "react-dom/client";
+import { pick } from "lodash";
+import type { SiteVariant } from "@next-core/types";
+import { getThemeVariant } from "@next-core/runtime";
 import { WrappedSlAlert, SlAlertElement } from "./sl-alert.js";
 import type { Link, LinkProps, Target } from "../../link/index.js";
 import { K, NS, locales } from "../show-dialog/i18n";
@@ -22,7 +25,6 @@ import {
   hideKeyframeAnimationOptions,
 } from "./constants";
 import styles from "./notification.module.css";
-import { pick } from "lodash";
 
 initializeI18n(NS, locales);
 
@@ -32,7 +34,10 @@ const WrappedLink = wrapLocalBrick<Link, LinkProps>("eo-link");
 export interface NotificationOptions {
   /** 通知类型 */
   type?: "success" | "error" | "warn" | "info";
-  /** 默认三秒后自动关闭 */
+  /**
+   * 持续时间（毫秒）
+   * @default 3000
+   */
   duration?: number;
   /** 弹出位置，默认居中 */
   placement?: "center" | "topRight";
@@ -68,6 +73,7 @@ export interface NotificationOptions {
   voiceContent?: string;
   /** 语音播报配置 */
   voiceOptions?: SpeechNotificationsOptions;
+  themeVariant?: SiteVariant;
 }
 
 export interface LinkOptions {
@@ -160,17 +166,18 @@ function NotificationComponent({
   message,
   htmlMessage,
   title,
-  placement = "center",
+  placement,
   closable,
   icon,
   duration = 3000,
-  styleType = "circleAngle",
+  styleType,
   confirmText,
   confirmLink,
   cancelText,
   showConfirm = false,
   showCancel = false,
   inlineLink,
+  themeVariant: _themeVariant,
   onOk,
   onCancel,
   onHide,
@@ -179,6 +186,7 @@ function NotificationComponent({
   onCancel?(): void;
   onHide?(): void;
 }): React.ReactNode {
+  const themeVariant = _themeVariant ?? getThemeVariant?.();
   const ref = useRef<SlAlertElement | null>(null);
 
   const alertProps = useMemo(() => {
@@ -247,8 +255,17 @@ function NotificationComponent({
       ref={ref}
       className={classnames(
         styles.notification,
-        styles[placement],
-        styles[styleType]
+        placement === "topRight" ? styles.topRight : styles.center,
+        {
+          [styles.rectAngle]: styleType === "rectAngle",
+          [styles.elevo]: themeVariant === "elevo",
+          [styles.rounded]:
+            themeVariant === "elevo" &&
+            !title &&
+            !showConfirm &&
+            !showCancel &&
+            placement !== "topRight",
+        }
       )}
       {...alertProps}
       onSlHide={handleSlHide}

@@ -73,7 +73,7 @@
 }
 
 .notification::part(close-button) {
-  padding: 12px 24px 0 0;
+  /* padding: 12px 24px 0 0; */
   align-items: flex-start;
   font-size: 14px;
 }
@@ -90,6 +90,15 @@
 .rectAngle::part(base) {
   border-radius: 0px;
 }
+
+.elevo::part(base) {
+  border-radius: 12px;
+}
+
+.rounded::part(base) {
+  border-radius: 30px;
+}
+
 .title {
   font-size: var(--title-font-size);
   color: var(--color-header-text);

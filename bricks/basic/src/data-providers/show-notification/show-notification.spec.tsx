@@ -236,4 +236,37 @@ describe("showNotification", () => {
     await (global as any).flushPromises();
     expect(mockSpeechNotifications.play).toHaveBeenCalledWith("测试文本");
   });
+
+  test("elevo", async () => {
+    act(() => {
+      showNotification({
+        message: "Done!",
+        themeVariant: "elevo",
+      });
+    });
+
+    expect(
+      document.querySelector("sl-alert")?.classList.contains("elevo")
+    ).toBe(true);
+    expect(
+      document.querySelector("sl-alert")?.classList.contains("rounded")
+    ).toBe(true);
+  });
+
+  test("elevo at top right", async () => {
+    act(() => {
+      showNotification({
+        placement: "topRight",
+        message: "Done!",
+        themeVariant: "elevo",
+      });
+    });
+
+    expect(
+      document.querySelector("sl-alert")?.classList.contains("elevo")
+    ).toBe(true);
+    expect(
+      document.querySelector("sl-alert")?.classList.contains("rounded")
+    ).toBe(false);
+  });
 });
