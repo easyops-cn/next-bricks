@@ -107,7 +107,7 @@ function DefaultItem({ title, icon, url, href, variant }: ItemProps) {
   const color = useMemo(() => {
     const palette =
       variant === "navigation"
-        ? ["blue", "orange", "yellow", "purple"]
+        ? new Array(17).fill(0).map((_, i) => `color-${i + 1}`)
         : ["blue", "orange", "purple", "green", "cyan"];
     // Get color index by accumulate the character code of all letters of the title
     const colorIndex =
