@@ -53,6 +53,7 @@
   }
 
   .icon {
+    --icon-color-rgb: 51, 110, 244;
     width: 32px;
     height: 32px;
     font-size: 16px;
@@ -60,48 +61,61 @@
     background:
       radial-gradient(
         41% 43% at 67% 85%,
-        rgba(48, 129, 243, 0.3) 0%,
-        rgba(48, 129, 243, 0) 100%
+        rgba(var(--icon-color-rgb), 0.25) 0%,
+        rgba(var(--icon-color-rgb), 0) 100%
       ),
-      #e9f1f7;
-    border: 2px solid #c8ddee;
-    color: #3081f3;
+      rgba(var(--icon-color-rgb), 0.04);
+    border: 2px solid rgba(var(--icon-color-rgb), 0.15);
+    color: rgb(var(--icon-color-rgb));
   }
 
-  .icon.orange {
-    background:
-      radial-gradient(
-        41% 43% at 67% 85%,
-        rgba(228, 85, 31, 0.3) 0%,
-        rgba(228, 85, 31, 0) 100%
-      ),
-      #f6f1ed;
-    border: 2px solid #efd7d0;
-    color: #e4551f;
+  .color-2 {
+    --icon-color-rgb: 69, 202, 255;
   }
-
-  .icon.yellow {
-    background:
-      radial-gradient(
-        41% 43% at 67% 85%,
-        rgba(232, 151, 22, 0.3) 0%,
-        rgba(232, 151, 22, 0) 100%
-      ),
-      #faf5ed;
-    border: 2px solid #f2e1c6;
-    color: #e89716;
+  .color-3 {
+    --icon-color-rgb: 65, 205, 207;
   }
-
-  .icon.purple {
-    background:
-      radial-gradient(
-        41% 43% at 67% 85%,
-        rgba(146, 111, 247, 0.3) 0%,
-        rgba(146, 111, 247, 0) 100%
-      ),
-      #eceaf4;
-    border: 2px solid #dfd7f1;
-    color: #926ff7;
+  .color-4 {
+    --icon-color-rgb: 129, 70, 243;
+  }
+  .color-5 {
+    --icon-color-rgb: 248, 160, 117;
+  }
+  .color-6 {
+    --icon-color-rgb: 148, 230, 94;
+  }
+  .color-7 {
+    --icon-color-rgb: 87, 104, 156;
+  }
+  .color-8 {
+    --icon-color-rgb: 194, 133, 239;
+  }
+  .color-9 {
+    --icon-color-rgb: 250, 198, 11;
+  }
+  .color-10 {
+    --icon-color-rgb: 228, 85, 31;
+  }
+  .color-11 {
+    --icon-color-rgb: 137, 132, 255;
+  }
+  .color-12 {
+    --icon-color-rgb: 37, 64, 255;
+  }
+  .color-13 {
+    --icon-color-rgb: 8, 191, 51;
+  }
+  .color-14 {
+    --icon-color-rgb: 247, 129, 28;
+  }
+  .color-15 {
+    --icon-color-rgb: 172, 124, 255;
+  }
+  .color-16 {
+    --icon-color-rgb: 27, 165, 220;
+  }
+  .color-17 {
+    --icon-color-rgb: 232, 151, 22;
   }
 
   .title {
