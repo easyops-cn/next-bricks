@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.57.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.57.0...@next-bricks/basic@1.57.1) (2025-07-10)
+
+
+### Bug Fixes
+
+* refine list palette ([5fb63c4](https://github.com/easyops-cn/next-bricks/commit/5fb63c4f29a04bd3728e019cc257032ebf14a7f1))
+
+
+
+
+
 # [1.57.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.56.0...@next-bricks/basic@1.57.0) (2025-07-10)
 
 
