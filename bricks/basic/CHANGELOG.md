@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.57.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.56.0...@next-bricks/basic@1.57.0) (2025-07-10)
+
+
+### Features
+
+* **show-notification:** support theme variant ([3967a5e](https://github.com/easyops-cn/next-bricks/commit/3967a5ea4c1fbb2c288855b81694a2d2f8495826))
+
+
+
+
+
 # [1.56.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.55.0...@next-bricks/basic@1.56.0) (2025-07-09)
 
 
