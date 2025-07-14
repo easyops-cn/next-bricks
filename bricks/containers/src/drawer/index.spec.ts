@@ -1,5 +1,6 @@
 import { describe, test, expect } from "@jest/globals";
 import { act } from "react-dom/test-utils";
+import { fireEvent } from "@testing-library/dom";
 import "./index.jsx";
 import { Drawer } from "./index.jsx";
 
@@ -84,15 +85,15 @@ describe("eo-drawer", () => {
     });
 
     await act(async () => {
-      const event = new KeyboardEvent("keydown", { key: "Enter" });
-      document.dispatchEvent(event);
+      fireEvent.keyDown(document, { key: "Enter" });
     });
     expect(element.visible).toBeTruthy();
     expect(mockCloseEvent).toHaveBeenCalledTimes(0);
 
     await act(async () => {
-      const event = new KeyboardEvent("keydown", { key: "Escape" });
-      document.dispatchEvent(event);
+      fireEvent.keyDown(element.shadowRoot!.querySelector(".drawer-content"), {
+        key: "Escape",
+      });
     });
 
     expect(element.visible).toBeFalsy();

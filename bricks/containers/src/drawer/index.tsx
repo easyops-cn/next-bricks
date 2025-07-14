@@ -13,7 +13,6 @@ import type {
 } from "@next-bricks/icons/general-icon";
 import { unwrapProvider } from "@next-core/utils/general";
 import type { lockBodyScroll as _lockBodyScroll } from "@next-bricks/basic/data-providers/lock-body-scroll/lock-body-scroll";
-import type { requireModalStack as _requireModalStack } from "@next-bricks/basic/data-providers/require-modal-stack";
 import { instantiateModalStack, type ModalStack } from "@next-core/runtime";
 import classNames from "classnames";
 import "@next-core/theme";
@@ -22,9 +21,6 @@ import styleText from "./drawer.shadow.css";
 
 const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
   "basic.lock-body-scroll"
-);
-const requireModalStack = unwrapProvider<typeof _requireModalStack>(
-  "basic.require-modal-stack"
 );
 
 export interface DrawerEvents {
@@ -261,14 +257,7 @@ export function DrawerComponent({
   stack,
   keyboard,
 }: DrawerComponentProps) {
-  const modalStack = useMemo(() => requireModalStack(), []);
-
-  useEffect(() => {
-    return () => {
-      modalStack.pull();
-    };
-  }, [modalStack]);
-
+  const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>();
   const header = useMemo(
     () => (
@@ -299,16 +288,13 @@ export function DrawerComponent({
     ...maskStyle,
   } as CSSProperties;
 
+  const previousActiveElement = useRef<Element | null>(null);
+
   const [zIndex, setZIndex] = useState<number>(undefined);
   useEffect(
     () => {
       lockBodyScroll(curElement, open);
       scrollToTopWhenOpen && open && contentRef.current?.scrollTo(0, 0);
-      if (open) {
-        modalStack.push();
-      } else {
-        modalStack.pull();
-      }
 
       if (stack && stackable) {
         if (open) {
@@ -318,6 +304,20 @@ export function DrawerComponent({
           setZIndex(undefined);
         }
       }
+
+      if (open) {
+        let activeElement = document.activeElement;
+        while (activeElement?.shadowRoot?.activeElement) {
+          activeElement = activeElement.shadowRoot.activeElement;
+        }
+        previousActiveElement.current = activeElement;
+      } else {
+        // Restore focus to the previously focused element when the drawer is closed
+        if (previousActiveElement.current) {
+          (previousActiveElement.current as HTMLElement).focus?.();
+          previousActiveElement.current = null;
+        }
+      }
     },
     // Only re-run the effect if open changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -325,28 +325,34 @@ export function DrawerComponent({
   );
 
   useEffect(() => {
-    if (!open || !keyboard) {
+    const container = containerRef.current;
+    if (!container || !keyboard || !open) {
       return;
     }
     const handleKeyDown = (event: KeyboardEvent) => {
-      const key =
-        event.key ||
-        /* istanbul ignore next: compatibility */ event.keyCode ||
-        /* istanbul ignore next: compatibility */ event.which;
-      if (modalStack.isTop() && (key === "Escape" || key === 27)) {
+      if (event.key === "Escape") {
+        event.stopPropagation();
         onDrawerClose();
       }
     };
-    document.addEventListener("keydown", handleKeyDown);
+    container.addEventListener("keydown", handleKeyDown);
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
+      container.removeEventListener("keydown", handleKeyDown);
     };
-  }, [keyboard, onDrawerClose, open, modalStack]);
+  }, [keyboard, onDrawerClose, open]);
+
+  useEffect(() => {
+    if (open) {
+      setTimeout(() => {
+        containerRef.current?.focus();
+      }, 0);
+    }
+  }, [open]);
 
   return (
     <div
       className={classNames("drawer", `drawer-${placement}`, {
-        open: open,
+        open,
       })}
       style={{ zIndex }}
     >
@@ -364,7 +370,7 @@ export function DrawerComponent({
           height: ["top", "bottom"].includes(placement) ? height : "",
         }}
       >
-        <div className="drawer-content">
+        <div className="drawer-content" tabIndex={-1} ref={containerRef}>
           {header}
           <div className="drawer-body" ref={contentRef}>
             <slot></slot>

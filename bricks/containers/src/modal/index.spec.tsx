@@ -201,7 +201,9 @@ describe("eo-modal", () => {
     expect(element.visible).toBeTruthy();
 
     await act(async () => {
-      fireEvent.keyDown(document, { key: "Escape" });
+      fireEvent.keyDown(element.shadowRoot!.querySelector(".modal-container"), {
+        key: "Escape",
+      });
     });
 
     expect(mockCloseEvent).toHaveBeenCalledTimes(1);
