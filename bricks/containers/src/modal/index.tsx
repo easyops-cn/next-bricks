@@ -38,6 +38,7 @@ export interface ModalProps {
   visible?: boolean;
   stackable?: boolean;
   keyboard?: boolean;
+  themeVariant?: "default" | "elevo";
 }
 
 export interface ModalEvents {
@@ -147,6 +148,10 @@ class Modal extends ReactNextElement implements ModalProps {
   @property({ type: Boolean })
   accessor keyboard: boolean | undefined;
 
+  /** 主题变体 */
+  @property()
+  accessor themeVariant: "default" | "elevo" | undefined;
+
   /**
    * 是否可堆叠，开启后每次打开抽屉会将新的抽屉置于上层（zIndex ++）
    *
@@ -251,6 +256,7 @@ class Modal extends ReactNextElement implements ModalProps {
         onModalCancel={this.#handleModelCancel}
         curElement={this}
         keyboard={this.keyboard}
+        themeVariant={this.themeVariant}
         stackable={this.stackable}
         stack={this.#stack}
       />
@@ -286,6 +292,7 @@ function ModalComponent({
   stack,
   stackable,
   keyboard,
+  themeVariant,
 }: ModalComponentProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -347,6 +354,7 @@ function ModalComponent({
             <WrappedButton
               type="text"
               onClick={handleCancelClick}
+              themeVariant={themeVariant}
               data-testid="cancel-button"
             >
               {cancelText}
@@ -356,6 +364,7 @@ function ModalComponent({
             type="primary"
             danger={confirmDanger}
             disabled={confirmDisabled}
+            themeVariant={themeVariant}
             onClick={handleConfirmClick}
             data-testid="confirm-button"
           >
@@ -370,6 +379,7 @@ function ModalComponent({
       confirmText,
       confirmDisabled,
       confirmDanger,
+      themeVariant,
       handleCancelClick,
       handleConfirmClick,
     ]
