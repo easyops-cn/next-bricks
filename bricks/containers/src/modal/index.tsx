@@ -17,15 +17,10 @@ import "@next-core/theme";
 import type { Button, ButtonProps } from "@next-bricks/basic/button";
 import { unwrapProvider } from "@next-core/utils/general";
 import type { lockBodyScroll as _lockBodyScroll } from "@next-bricks/basic/data-providers/lock-body-scroll/lock-body-scroll";
-import type { requireModalStack as _requireModalStack } from "@next-bricks/basic/data-providers/require-modal-stack";
 import styleText from "./modal.shadow.css";
 
 const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
   "basic.lock-body-scroll"
-);
-
-const requireModalStack = unwrapProvider<typeof _requireModalStack>(
-  "basic.require-modal-stack"
 );
 
 export interface ModalProps {
@@ -292,16 +287,7 @@ function ModalComponent({
   stackable,
   keyboard,
 }: ModalComponentProps) {
-  const modalStack = useMemo(() => requireModalStack(), []);
-
-  useEffect(() => {
-    return () => {
-      modalStack.pull();
-    };
-  }, [modalStack]);
-
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isOpen, setIsOpen] = useState<boolean>(open);
 
   const handleWrapperClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>): void => {
@@ -389,16 +375,12 @@ function ModalComponent({
     ]
   );
 
+  const previousActiveElement = useRef<Element | null>(null);
+
   const [zIndex, setZIndex] = useState<number>(undefined);
   useEffect(
     () => {
       lockBodyScroll(curElement, open);
-      setIsOpen(open);
-      if (open) {
-        modalStack.push();
-      } else {
-        modalStack.pull();
-      }
 
       if (stack && stackable) {
         if (open) {
@@ -408,6 +390,25 @@ function ModalComponent({
           setZIndex(undefined);
         }
       }
+
+      if (open) {
+        let activeElement = document.activeElement;
+        while (activeElement) {
+          const activeInShadow = activeElement.shadowRoot?.activeElement;
+          if (activeInShadow) {
+            activeElement = activeInShadow;
+          } else {
+            break;
+          }
+        }
+        previousActiveElement.current = activeElement;
+      } else {
+        // Restore focus to the previously focused element when the drawer is closed
+        if (previousActiveElement.current) {
+          (previousActiveElement.current as HTMLElement).focus?.();
+          previousActiveElement.current = null;
+        }
+      }
     },
     // Only re-run the effect if open changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -415,25 +416,31 @@ function ModalComponent({
   );
 
   useEffect(() => {
-    if (!open || !keyboard) {
+    const container = containerRef.current;
+    if (!container || !keyboard || !open) {
       return;
     }
     const handleKeyDown = (event: KeyboardEvent) => {
-      const key =
-        event.key ||
-        /* istanbul ignore next: compatibility */ event.keyCode ||
-        /* istanbul ignore next: compatibility */ event.which;
-      if (modalStack.isTop() && (key === "Escape" || key === 27)) {
+      if (event.key === "Escape") {
+        event.stopPropagation();
         onModalClose();
       }
     };
-    document.addEventListener("keydown", handleKeyDown);
+    container.addEventListener("keydown", handleKeyDown);
     return () => {
-      document.removeEventListener("keydown", handleKeyDown);
+      container.removeEventListener("keydown", handleKeyDown);
     };
-  }, [keyboard, onModalClose, open, modalStack]);
+  }, [keyboard, onModalClose, open]);
 
-  return isOpen ? (
+  useEffect(() => {
+    if (open) {
+      setTimeout(() => {
+        containerRef.current?.focus();
+      }, 0);
+    }
+  }, [open]);
+
+  return open ? (
     <div className="modal-root">
       <div className="mask" style={{ zIndex }} />
       <div
@@ -447,7 +454,7 @@ function ModalComponent({
           })}
           style={{ width: width }}
         >
-          <div className="modal-container" ref={containerRef}>
+          <div className="modal-container" tabIndex={-1} ref={containerRef}>
             {header}
             {body}
             {footer}
