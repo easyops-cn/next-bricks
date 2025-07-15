@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.18.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.17.1...@next-shared/icons@0.18.0) (2025-07-15)
+
+
+### Features
+
+* add easyops icon: fullscreen ([7511562](https://github.com/easyops-cn/next-bricks/commit/7511562a0131527fa34dc699f4f4f701c0bfe1be))
+
+
+
+
+
 ## [0.17.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.17.0...@next-shared/icons@0.17.1) (2025-07-04)
 
 
