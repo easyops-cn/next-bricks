@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>图标-放大</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="交互说明-表格+dashbaord" transform="translate(-836, -291)" stroke="#595959">
+            <g id="card-样式-表格备份" transform="translate(59, 282)">
+                <g id="图标-放大" transform="translate(778, 10)">
+                    <polyline id="路径" points="8 0 12 0 12 4"></polyline>
+                    <polyline id="路径" points="4 0 0 0 0 4"></polyline>
+                    <polyline id="路径" points="8 12 12 12 12 8"></polyline>
+                    <polyline id="路径" points="4 12 0 12 0 8"></polyline>
+                    <line x1="12" y1="-2.42383891e-12" x2="8" y2="4" id="路径"></line>
+                    <line x1="4" y1="8" x2="7.72715225e-14" y2="12" id="路径"></line>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
