@@ -12,6 +12,7 @@
 
 .tag {
   display: inline-block;
+  vertical-align: middle;
   box-sizing: border-box;
   color: var(--antd-text-color);
   list-style: none;
