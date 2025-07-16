@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.57.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.57.2...@next-bricks/basic@1.57.3) (2025-07-16)
+
+
+### Bug Fixes
+
+* add test id ([b8320b4](https://github.com/easyops-cn/next-bricks/commit/b8320b4bfbc8ebd3cbd8222991d19010b3957781))
+
+
+
+
+
 ## [1.57.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.57.1...@next-bricks/basic@1.57.2) (2025-07-16)
 
 
