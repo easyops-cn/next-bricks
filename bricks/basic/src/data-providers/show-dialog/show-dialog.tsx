@@ -218,6 +218,7 @@ export function DialogComponent({
               auto-focus={true}
               themeVariant={themeVariant}
               className={styles.expectInput}
+              data-testid="dialog-expect-input"
               onValueChange={(e) => setConfirmDisabled(e.detail !== expect)}
             />
           )}
@@ -229,6 +230,7 @@ export function DialogComponent({
           type="text"
           themeVariant={themeVariant}
           onClick={onCancelClick}
+          data-testid="dialog-cancel-button"
         >
           {i18n.t(`${NS}:${K.CANCEL}`)}
         </WrappedButton>
@@ -241,6 +243,7 @@ export function DialogComponent({
         danger={danger ?? type === "delete"}
         disabled={confirmDisabled}
         onClick={onOkClick}
+        data-testid="dialog-confirm-button"
       >
         {i18n.t(`${NS}:${type === "delete" ? K.DELETE : K.OK}`)}
       </WrappedButton>
