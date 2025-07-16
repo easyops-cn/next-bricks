@@ -98,6 +98,7 @@ describe("DialogComponent", () => {
       </div>
     </div>
     <eo-button
+      data-testid="dialog-confirm-button"
       slot="footer"
     >
       Ok
@@ -151,11 +152,13 @@ describe("DialogComponent", () => {
       </div>
     </div>
     <eo-button
+      data-testid="dialog-cancel-button"
       slot="footer"
     >
       Cancel
     </eo-button>
     <eo-button
+      data-testid="dialog-confirm-button"
       slot="footer"
     >
       Ok
@@ -204,12 +207,14 @@ describe("DialogComponent", () => {
       </div>
     </div>
     <eo-button
+      data-testid="dialog-cancel-button"
       slot="footer"
     >
       Cancel
     </eo-button>
     <eo-button
       danger=""
+      data-testid="dialog-confirm-button"
       slot="footer"
     >
       Ok
@@ -260,16 +265,19 @@ describe("DialogComponent", () => {
         <eo-input
           auto-focus=""
           class="expectInput"
+          data-testid="dialog-expect-input"
         />
       </div>
     </div>
     <eo-button
+      data-testid="dialog-cancel-button"
       slot="footer"
     >
       Cancel
     </eo-button>
     <eo-button
       danger=""
+      data-testid="dialog-confirm-button"
       disabled=""
       slot="footer"
     >
@@ -333,6 +341,7 @@ describe("DialogComponent", () => {
       </div>
     </div>
     <eo-button
+      data-testid="dialog-confirm-button"
       slot="footer"
     >
       Ok
@@ -419,16 +428,19 @@ describe("DialogComponent", () => {
         <eo-input
           auto-focus=""
           class="expectInput"
+          data-testid="dialog-expect-input"
         />
       </div>
     </div>
     <eo-button
+      data-testid="dialog-cancel-button"
       slot="footer"
     >
       Cancel
     </eo-button>
     <eo-button
       danger=""
+      data-testid="dialog-confirm-button"
       disabled=""
       slot="footer"
     >
@@ -483,16 +495,19 @@ describe("DialogComponent", () => {
         <eo-input
           auto-focus=""
           class="expectInput"
+          data-testid="dialog-expect-input"
         />
       </div>
     </div>
     <eo-button
+      data-testid="dialog-cancel-button"
       slot="footer"
     >
       Cancel
     </eo-button>
     <eo-button
       danger=""
+      data-testid="dialog-confirm-button"
       disabled=""
       slot="footer"
     >
@@ -531,16 +546,19 @@ describe("DialogComponent", () => {
         <eo-input
           auto-focus=""
           class="expectInput"
+          data-testid="dialog-expect-input"
         />
       </div>
     </div>
     <eo-button
+      data-testid="dialog-cancel-button"
       slot="footer"
     >
       Cancel
     </eo-button>
     <eo-button
       danger=""
+      data-testid="dialog-confirm-button"
       disabled=""
       slot="footer"
     >
