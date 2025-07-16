@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.57.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.57.1...@next-bricks/basic@1.57.2) (2025-07-16)
+
+
+### Bug Fixes
+
+* **tag:** fix alignment when tag content is empty ([1b8340d](https://github.com/easyops-cn/next-bricks/commit/1b8340d8e3ef020325296ec77a63089158407990))
+
+
+
+
+
 ## [1.57.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.57.0...@next-bricks/basic@1.57.1) (2025-07-10)
 
 
