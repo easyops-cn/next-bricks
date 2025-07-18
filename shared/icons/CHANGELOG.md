@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.19.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.18.0...@next-shared/icons@0.19.0) (2025-07-18)
+
+
+### Features
+
+* new icons: sidebar, new-chat ([0efbe5f](https://github.com/easyops-cn/next-bricks/commit/0efbe5fa5c7e9224ae6570884bf3fb49b4cda27d))
+
+
+
+
+
 # [0.18.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.17.1...@next-shared/icons@0.18.0) (2025-07-15)
 
 
