@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.19.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.19.0...@next-shared/icons@0.19.1) (2025-07-22)
+
+
+### Bug Fixes
+
+* 补充图标 ref AOPS-920 ([757a931](https://github.com/easyops-cn/next-bricks/commit/757a931f13a483b23f77899b627639ebc4ffbe65))
+
+
+
+
+
 # [0.19.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.18.0...@next-shared/icons@0.19.0) (2025-07-18)
 
 
