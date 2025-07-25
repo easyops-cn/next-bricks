@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.57.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.57.3...@next-bricks/basic@1.57.4) (2025-07-25)
+
+
+### Bug Fixes
+
+* stop mousedown propagation inside popover ([b84543d](https://github.com/easyops-cn/next-bricks/commit/b84543d4f0a48a013daedbfacb09f1f040c7864c))
+
+
+
+
+
 ## [1.57.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.57.2...@next-bricks/basic@1.57.3) (2025-07-16)
 
 
