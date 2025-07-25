@@ -352,14 +352,14 @@ function PopoverComponent(props: PopoverComponentProps) {
       };
     } else if (trigger === "hover") {
       document.addEventListener("mousemove", handleMouseMove);
-      defaultSlot?.addEventListener("click", handleNotTrigger);
-      triggerSlot?.addEventListener("click", handleNotTrigger);
+      defaultSlot?.addEventListener("mousedown", handleNotTrigger);
+      triggerSlot?.addEventListener("mousedown", handleNotTrigger);
       document?.addEventListener("mousedown", handlePopoverClose);
 
       return () => {
         document.removeEventListener("mousemove", handleMouseMove);
-        defaultSlot?.removeEventListener("click", handleNotTrigger);
-        triggerSlot?.removeEventListener("click", handleNotTrigger);
+        defaultSlot?.removeEventListener("mousedown", handleNotTrigger);
+        triggerSlot?.removeEventListener("mousedown", handleNotTrigger);
         document?.removeEventListener("mousedown", handlePopoverClose);
       };
     }
