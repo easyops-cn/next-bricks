@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="15px" height="15px" viewBox="0 0 15 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>图标-分享</title>
+    <g id="对话页-基础对话式" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="对话模式-无分屏" transform="translate(-1849, -27)" stroke="#262626">
+            <g id="顶部导航" transform="translate(0, 8)">
+                <g id="编组" transform="translate(1844, 15)" stroke-width="1.2">
+                    <g id="图形" transform="translate(4, 4)">
+                        <path d="M8.66666667,1.33333333 L14.6666667,7.33333333 L8.66666667,13 L8.66666667,9.33333333 C4,9.33333333 2,14.3333333 2,14.3333333 C2,8.66666667 3.66666667,5 8.66666667,5 L8.66666667,1.33333333 Z" id="图标-分享"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
