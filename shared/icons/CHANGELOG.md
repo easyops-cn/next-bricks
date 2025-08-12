@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.20.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.19.1...@next-shared/icons@0.20.0) (2025-08-12)
+
+
+### Features
+
+* add some icons ([dd4d99c](https://github.com/easyops-cn/next-bricks/commit/dd4d99ccfc6e2706f10b44e3695a72120505d5bf))
+
+
+
+
+
 ## [0.19.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.19.0...@next-shared/icons@0.19.1) (2025-07-22)
 
 
