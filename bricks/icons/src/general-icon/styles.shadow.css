@@ -6,7 +6,7 @@
   box-sizing: content-box !important;
 }
 
-:host[hidden] {
+:host([hidden]) {
   display: none;
 }
 
