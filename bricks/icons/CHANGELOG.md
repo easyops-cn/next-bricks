@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.42](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.3.41...@next-bricks/icons@1.3.42) (2025-08-15)
+
+
+### Bug Fixes
+
+* fix hidden not working for some bricks (eo-icon/eo-flex-layout/eo-grid-layout) ([e0a8b4a](https://github.com/easyops-cn/next-bricks/commit/e0a8b4a24604fe22b861404ee6b448e20da463b6))
+
+
+
+
+
 ## [1.3.41](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.3.40...@next-bricks/icons@1.3.41) (2025-08-13)
 
 **Note:** Version bump only for package @next-bricks/icons

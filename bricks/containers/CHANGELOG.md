@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.15.4](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.15.3...@next-bricks/containers@1.15.4) (2025-08-15)
+
+
+### Bug Fixes
+
+* fix hidden not working for some bricks (eo-icon/eo-flex-layout/eo-grid-layout) ([e0a8b4a](https://github.com/easyops-cn/next-advanced-bricks/commit/e0a8b4a24604fe22b861404ee6b448e20da463b6))
+
+
+
+
+
 ## [1.15.3](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.15.2...@next-bricks/containers@1.15.3) (2025-07-14)
 
 
