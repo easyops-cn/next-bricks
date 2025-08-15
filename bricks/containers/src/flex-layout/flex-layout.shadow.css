@@ -2,6 +2,6 @@
   display: flex;
 }
 
-:host[hidden] {
+:host([hidden]) {
   display: none;
 }

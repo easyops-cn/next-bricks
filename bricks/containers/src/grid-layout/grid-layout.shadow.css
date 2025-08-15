@@ -2,7 +2,7 @@
   display: grid;
 }
 
-:host[hidden] {
+:host([hidden]) {
   display: none;
 }
 
