@@ -29,6 +29,14 @@ describe("getLibs", () => {
             }),
           ]),
         }),
+        expect.objectContaining({
+          lib: "lucide",
+          icons: expect.arrayContaining([
+            expect.objectContaining({
+              title: "activity",
+            }),
+          ]),
+        }),
       ])
     );
   });

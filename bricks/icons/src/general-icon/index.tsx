@@ -5,6 +5,10 @@ import { pick } from "lodash";
 import { AntdIconProps, WrappedAntdIcon } from "../antd-icon/index.js";
 import { EasyOpsIconProps, WrappedEasyOpsIcon } from "../easyops-icon/index.js";
 import { FaIconProps, WrappedFaIcon } from "../fa-icon/index.js";
+import {
+  WrappedLucideIcon,
+  type LucideIconProps,
+} from "../lucide-icon/index.js";
 import { EoImgIconProps, WrappedEoImgIcon } from "../img-icon/index.js";
 import { WrappedSvgIcon } from "../svg-icon/index.js";
 import type {
@@ -33,6 +37,12 @@ export interface GeneralIconPropsOfFa
   lib: "fa";
 }
 
+export interface GeneralIconPropsOfLucide
+  extends LucideIconProps,
+    GeneralIconBaseProps {
+  lib: "lucide";
+}
+
 export interface ImgIconProps extends EoImgIconProps, GeneralIconBaseProps {
   keepSvgOriginalColor?: boolean;
 }
@@ -45,19 +55,20 @@ export interface GeneralIconBaseProps {
 export type LibIconProps =
   | GeneralIconPropsOfAntd
   | GeneralIconPropsOfEasyOps
-  | GeneralIconPropsOfFa;
+  | GeneralIconPropsOfFa
+  | GeneralIconPropsOfLucide;
 
 export type GeneralIconProps = LibIconProps | ImgIconProps;
 
 export interface IconProps extends DefineLinearGradientProps, ImgIconProps {
-  lib?: "antd" | "easyops" | "fa";
+  lib?: "antd" | "easyops" | "fa" | "lucide";
   icon?: string;
   theme?: string;
   category?: string;
   prefix?: string;
 }
 
-const LIBS = new Set(["antd", "easyops", "fa"]);
+const LIBS = new Set(["antd", "easyops", "fa", "lucide"]);
 
 /**
  * 通用图标构件
@@ -71,7 +82,7 @@ export
 })
 class GeneralIcon extends ReactNextElement implements IconProps {
   /** 图标库 */
-  @property() accessor lib: "antd" | "easyops" | "fa" | undefined;
+  @property() accessor lib: "antd" | "easyops" | "fa" | "lucide" | undefined;
 
   /**
    * Ant Design 图标主题
@@ -246,5 +257,7 @@ function GeneralIconComponent({
     />
   ) : lib === "fa" ? (
     <WrappedFaIcon prefix={prefix} {...commonProps} />
+  ) : lib === "lucide" ? (
+    <WrappedLucideIcon {...commonProps} />
   ) : null;
 }

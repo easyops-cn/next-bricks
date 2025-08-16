@@ -305,6 +305,85 @@ const tasks = [];
   );
 }
 
+{
+  // --- Lucide Icons start ---
+  const lucideIconsPath = path.resolve(
+    require.resolve("lucide-static/package.json"),
+    "../icons"
+  );
+  const generatedDir = path.resolve(__dirname, "../src/lucide-icon/generated");
+  if (existsSync(generatedDir)) {
+    rmSync(generatedDir, { recursive: true, force: true });
+  }
+  mkdirSync(generatedDir);
+
+  const defaultCategory = "default";
+  const allIcons = {
+    [defaultCategory]: [],
+  };
+
+  const ranges = {};
+  const allSvg = [];
+  const iconsWithPath = [];
+  let cursor = -2;
+
+  tasks.push(
+    (async () => {
+      const icons = await readdir(lucideIconsPath);
+      for (const icon of icons) {
+        const [_m, iconName, ext] = icon.match(/^(.*?)(\.[^.]+)?$/);
+        if (ext === ".svg") {
+          allIcons[defaultCategory].push(iconName);
+          iconsWithPath.push([
+            defaultCategory,
+            path.join(lucideIconsPath, icon),
+          ]);
+        }
+      }
+
+      const hashes = [];
+
+      // Have to be sequential
+      for (const [category, iconPath] of iconsWithPath) {
+        const svg = await readFile(iconPath);
+        allSvg.push(svg);
+
+        let groupRanges = ranges[category];
+        if (!_.has(ranges, category)) {
+          groupRanges = ranges[category] = [];
+        }
+        cursor += svg.length + 1;
+        groupRanges.push(cursor);
+
+        const sha1 = createHash("sha1");
+        sha1.update(svg);
+        hashes.push(sha1.digest("hex").substring(0, 8));
+      }
+
+      // Let final hash to be irrelevant to the order of icons
+      hashes.sort();
+      const sha1 = createHash("sha1");
+      sha1.update(hashes.join(""));
+      ranges._hash = sha1.digest("hex").substring(0, 8);
+
+      await Promise.all([
+        writeFile(
+          path.resolve(generatedDir, "icons.json"),
+          JSON.stringify(allIcons)
+        ),
+        writeFile(
+          path.resolve(generatedDir, "ranges.json"),
+          JSON.stringify(ranges)
+        ),
+        writeFile(
+          path.resolve(generatedDir, `all.${ranges._hash}.svg`),
+          allSvg.join("\n")
+        ),
+      ]);
+    })()
+  );
+}
+
 Promise.all(tasks).then(
   () => {
     console.log("Generate icon files done!");
