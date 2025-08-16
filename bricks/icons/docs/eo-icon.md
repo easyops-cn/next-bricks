@@ -20,6 +20,10 @@ Your favorite icons, including [Ant Design Icons](https://ant.design/components/
       properties:
         lib: easyops
         icon: honeycomb
+    - brick: eo-icon
+      properties:
+        lib: lucide
+        icon: activity
 ```
 
 ## Examples
@@ -78,6 +82,32 @@ Your favorite icons, including [Ant Design Icons](https://ant.design/components/
         lib: fa
         prefix: fab
         icon: github
+```
+
+### Lucide
+
+[View all Lucide icons.](https://lucide.dev/icons/)
+
+```yaml preview
+- brick: div
+  properties:
+    style:
+      display: flex
+      gap: 1em
+      fontSize: 32px
+  children:
+    - brick: eo-icon
+      properties:
+        lib: lucide
+        icon: activity
+    - brick: eo-icon
+      properties:
+        lib: lucide
+        icon: languages
+    - brick: eo-icon
+      properties:
+        lib: lucide
+        icon: ambulance
 ```
 
 ### EasyOps
@@ -142,7 +172,7 @@ children:
   properties:
     style:
       display: grid
-      gridTemplateColumns: repeat(3, 1fr)
+      gridTemplateColumns: repeat(4, 1fr)
       justifyItems: center
       fontSize: 32px
       gap: 0.5em
@@ -162,6 +192,10 @@ children:
         lib: easyops
         category: default
         icon: account
+    - brick: eo-icon
+      properties:
+        lib: lucide
+        icon: ambulance
     - brick: eo-icon
       properties:
         lib: antd
@@ -185,6 +219,12 @@ children:
           color: gray
     - brick: eo-icon
       properties:
+        lib: lucide
+        icon: ambulance
+        style:
+          color: red
+    - brick: eo-icon
+      properties:
         lib: antd
         theme: outlined
         icon: branches
@@ -205,6 +245,13 @@ children:
         icon: bell
         startColor: pink
         endColor: purple
+    - brick: eo-icon
+      properties:
+        lib: lucide
+        icon: ambulance
+        gradientDirection: left-to-right
+        startColor: pink
+        endColor: red
 ```
 
 ### Spinning
@@ -234,6 +281,11 @@ children:
         lib: easyops
         category: third-menu
         icon: placeholder-third-menu
+    - brick: eo-icon
+      properties:
+        spinning: true
+        lib: lucide
+        icon: loader-circle
 ```
 
 ### Fallback
@@ -269,6 +321,13 @@ children:
           icon: question
     - brick: eo-icon
       properties:
+        lib: lucide
+        icon: oops
+        fallback:
+          lib: fa
+          icon: question
+    - brick: eo-icon
+      properties:
         lib: antd
         icon: oops
         fallback:
@@ -283,4 +342,37 @@ children:
         imgSrc: "https://cdn.jsdelivr.net/npm/lucide-static@0.16.29/icons/x-chart.svg"
         fallback:
           imgSrc: "https://cdn.jsdelivr.net/npm/lucide-static@0.16.29/icons/y-chart.svg"
+```
+
+### Lucide stroke width
+
+Lucide icons support setting `strokeWidth` which defaults to `2` (and restrict to range `[0.5, 3]`).
+
+```yaml preview
+- brick: div
+  properties:
+    style:
+      display: grid
+      gridTemplateColumns: repeat(6, 1fr)
+      width: fit-content
+      gap: 0.25em 1em
+      fontSize: 36px
+  children:
+    - brick: :forEach
+      dataSource: [0.5, 1, 1.5, 2, 2.5, 3]
+      children:
+        - brick: eo-icon
+          properties:
+            lib: lucide
+            icon: ambulance
+            strokeWidth: <% ITEM %>
+    - brick: :forEach
+      dataSource: [0.5, 1, 1.5, 2, 2.5, 3]
+      children:
+        - brick: span
+          properties:
+            textContent: <% ITEM %>
+            style:
+              fontSize: 16px
+              justifySelf: center
 ```

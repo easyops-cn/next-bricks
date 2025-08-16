@@ -4,9 +4,11 @@ import { getRuntime } from "@next-core/runtime";
 import antdIcons from "../antd-icon/generated/icons.json";
 import easyopsIcons from "../easyops-icon/generated/icons.json";
 import faIcons from "../fa-icon/generated/icons.json";
+import lucideIcons from "../lucide-icon/generated/icons.json";
 import antdRanges from "../antd-icon/generated/ranges.json";
 import faRanges from "../fa-icon/generated/ranges.json";
 import easyopsRanges from "../easyops-icon/generated/ranges.json";
+import lucideRanges from "../lucide-icon/generated/ranges.json";
 
 const publicPath =
   process.env.NODE_ENV === "test" ? "" : __webpack_public_path__;
@@ -26,6 +28,11 @@ const SETTINGS_MAP = {
     url: `${publicPath}chunks/easyops-icons/all.${easyopsRanges._hash}.svg`,
     icons: easyopsIcons,
     ranges: easyopsRanges,
+  },
+  lucide: {
+    url: `${publicPath}chunks/lucide-icons/all.${lucideRanges._hash}.svg`,
+    icons: lucideIcons,
+    ranges: lucideRanges,
   },
 } as unknown as Record<string, Settings>;
 
@@ -92,7 +99,7 @@ export async function supportsMultipartRangeRequest() {
   return await supportsPromise;
 }
 
-type Lib = "antd" | "fa" | "easyops";
+type Lib = "antd" | "fa" | "easyops" | "lucide";
 
 interface Settings {
   url: string;
@@ -134,7 +141,7 @@ const dbPromise = new Promise<IDBDatabase | null>((resolve) => {
       const db = (event.target as IDBOpenDBRequest).result;
       // These transactions maybe the same.
       const transactions = new Set<IDBTransaction>();
-      for (const lib of ["antd", "fa", "easyops"]) {
+      for (const lib of ["antd", "fa", "easyops", "lucide"]) {
         if (!db.objectStoreNames.contains(lib)) {
           transactions.add(db.createObjectStore(lib).transaction);
         }
@@ -170,7 +177,7 @@ const dbPromise = new Promise<IDBDatabase | null>((resolve) => {
       return;
     }
     Promise.all(
-      ["antd", "fa", "easyops"].map(
+      ["antd", "fa", "easyops", "lucide"].map(
         async (lib) =>
           new Promise<void>((libResolve, libReject) => {
             new Promise<string | null>((hashResolve) => {

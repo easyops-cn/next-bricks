@@ -13,7 +13,7 @@ const iconCache = new Map<string, Promise<SVGResult>>();
 
 interface ResolveIconOptions {
   currentColor?: boolean;
-  lib?: "easyops" | "antd";
+  lib?: "easyops" | "antd" | "lucide";
   id?: string;
 }
 
@@ -21,6 +21,7 @@ const REGEX_MICRO_APPS_WITH_VERSION = /\/micro-apps\/v([23])\//;
 
 const antdRangeRequest = new RangeRequest("antd");
 const easyopsRangeRequest = new RangeRequest("easyops");
+const lucideRangeRequest = new RangeRequest("lucide");
 
 /** Given a URL, this function returns the resulting SVG element or an appropriate error symbol. */
 async function resolveIcon(
@@ -34,7 +35,11 @@ async function resolveIcon(
   try {
     if (options?.id && (await supportsMultipartRangeRequest())) {
       const rangeRequest =
-        options.lib === "easyops" ? easyopsRangeRequest : antdRangeRequest;
+        options.lib === "easyops"
+          ? easyopsRangeRequest
+          : options.lib === "lucide"
+            ? lucideRangeRequest
+            : antdRangeRequest;
       content = await rangeRequest.fetch(options.id);
     }
   } catch {
