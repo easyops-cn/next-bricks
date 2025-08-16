@@ -18,6 +18,7 @@ const { defineElement, property, event } = createDecorators();
 
 export interface LucideIconProps extends DefineLinearGradientProps {
   icon?: string;
+  strokeWidth?: number;
 }
 
 const styleText = [lucideStyleText, sharedStyleText].join("\n");
@@ -27,6 +28,12 @@ export
 class LucideIcon extends NextElement implements LucideIconProps {
   /** 图标名 */
   @property() accessor icon: string | undefined;
+
+  /**
+   * 描线粗线，限制在区间 `[0.5, 3]`
+   * @default 2
+   */
+  @property({ type: Number }) accessor strokeWidth: number | undefined;
 
   /** 渐变色起始颜色 */
   @property() accessor startColor: string | undefined;
@@ -110,6 +117,14 @@ class LucideIcon extends NextElement implements LucideIconProps {
           this.endColor
         )}"></stop></linearGradient>`;
         svg.insertBefore(defs, svg.firstChild);
+      }
+
+      const strokeWidth = this.strokeWidth ?? 2;
+      if (strokeWidth !== 2) {
+        svg.setAttribute(
+          "stroke-width",
+          String(Math.max(0.5, Math.min(3, strokeWidth)))
+        );
       }
     }
 

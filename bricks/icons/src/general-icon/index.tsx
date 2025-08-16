@@ -66,6 +66,7 @@ export interface IconProps extends DefineLinearGradientProps, ImgIconProps {
   theme?: string;
   category?: string;
   prefix?: string;
+  strokeWidth?: number;
 }
 
 const LIBS = new Set(["antd", "easyops", "fa", "lucide"]);
@@ -105,6 +106,12 @@ class GeneralIcon extends ReactNextElement implements IconProps {
    * @default "fas"
    */
   @property() accessor prefix!: string;
+
+  /**
+   * Lucide 图标描线粗线，限制在区间 `[0.5, 3]`
+   * @default 2
+   */
+  @property({ type: Number }) accessor strokeWidth: number | undefined;
 
   /**
    * 设置当图标未找到时的回退图标
@@ -157,6 +164,7 @@ class GeneralIcon extends ReactNextElement implements IconProps {
         theme={this.theme}
         category={this.category}
         prefix={this.prefix}
+        strokeWidth={this.strokeWidth}
         fallback={this.fallback}
         startColor={this.startColor}
         endColor={this.endColor}
@@ -188,6 +196,7 @@ function GeneralIconComponent({
     theme,
     category,
     prefix,
+    strokeWidth,
     keepSvgOriginalColor,
     imgSrc,
     imgStyle,
@@ -258,6 +267,6 @@ function GeneralIconComponent({
   ) : lib === "fa" ? (
     <WrappedFaIcon prefix={prefix} {...commonProps} />
   ) : lib === "lucide" ? (
-    <WrappedLucideIcon {...commonProps} />
+    <WrappedLucideIcon strokeWidth={strokeWidth} {...commonProps} />
   ) : null;
 }

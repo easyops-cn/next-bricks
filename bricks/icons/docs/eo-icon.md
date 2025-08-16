@@ -343,3 +343,36 @@ children:
         fallback:
           imgSrc: "https://cdn.jsdelivr.net/npm/lucide-static@0.16.29/icons/y-chart.svg"
 ```
+
+### Lucide stroke width
+
+Lucide icons support setting `strokeWidth` which defaults to `2` (and restrict to range `[0.5, 3]`).
+
+```yaml preview
+- brick: div
+  properties:
+    style:
+      display: grid
+      gridTemplateColumns: repeat(6, 1fr)
+      width: fit-content
+      gap: 0.25em 1em
+      fontSize: 36px
+  children:
+    - brick: :forEach
+      dataSource: [0.5, 1, 1.5, 2, 2.5, 3]
+      children:
+        - brick: eo-icon
+          properties:
+            lib: lucide
+            icon: ambulance
+            strokeWidth: <% ITEM %>
+    - brick: :forEach
+      dataSource: [0.5, 1, 1.5, 2, 2.5, 3]
+      children:
+        - brick: span
+          properties:
+            textContent: <% ITEM %>
+            style:
+              fontSize: 16px
+              justifySelf: center
+```
