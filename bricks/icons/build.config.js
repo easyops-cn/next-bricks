@@ -8,6 +8,10 @@ const easyopsIconsDir = path.resolve(
   require.resolve("@next-shared/icons/package.json"),
   "../src/icons"
 );
+const lucideIconsDir = path.resolve(
+  require.resolve("lucide-static/package.json"),
+  "../icons"
+);
 
 /** @type {import("@next-core/build-next-bricks").BuildNextBricksConfig} */
 export default {
@@ -43,6 +47,19 @@ export default {
         {
           from: "src/easyops-icon/generated",
           to: "chunks/easyops-icons",
+          // Terser skip this file for minimization
+          info: { minimized: true },
+        },
+        {
+          context: lucideIconsDir,
+          from: "*.svg",
+          to: "chunks/lucide-icons",
+          // Terser skip this file for minimization
+          info: { minimized: true },
+        },
+        {
+          from: "src/lucide-icon/generated",
+          to: "chunks/lucide-icons",
           // Terser skip this file for minimization
           info: { minimized: true },
         },

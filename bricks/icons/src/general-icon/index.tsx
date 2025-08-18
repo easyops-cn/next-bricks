@@ -5,6 +5,10 @@ import { pick } from "lodash";
 import { AntdIconProps, WrappedAntdIcon } from "../antd-icon/index.js";
 import { EasyOpsIconProps, WrappedEasyOpsIcon } from "../easyops-icon/index.js";
 import { FaIconProps, WrappedFaIcon } from "../fa-icon/index.js";
+import {
+  WrappedLucideIcon,
+  type LucideIconProps,
+} from "../lucide-icon/index.js";
 import { EoImgIconProps, WrappedEoImgIcon } from "../img-icon/index.js";
 import { WrappedSvgIcon } from "../svg-icon/index.js";
 import type {
@@ -33,6 +37,12 @@ export interface GeneralIconPropsOfFa
   lib: "fa";
 }
 
+export interface GeneralIconPropsOfLucide
+  extends LucideIconProps,
+    GeneralIconBaseProps {
+  lib: "lucide";
+}
+
 export interface ImgIconProps extends EoImgIconProps, GeneralIconBaseProps {
   keepSvgOriginalColor?: boolean;
 }
@@ -45,19 +55,21 @@ export interface GeneralIconBaseProps {
 export type LibIconProps =
   | GeneralIconPropsOfAntd
   | GeneralIconPropsOfEasyOps
-  | GeneralIconPropsOfFa;
+  | GeneralIconPropsOfFa
+  | GeneralIconPropsOfLucide;
 
 export type GeneralIconProps = LibIconProps | ImgIconProps;
 
 export interface IconProps extends DefineLinearGradientProps, ImgIconProps {
-  lib?: "antd" | "easyops" | "fa";
+  lib?: "antd" | "easyops" | "fa" | "lucide";
   icon?: string;
   theme?: string;
   category?: string;
   prefix?: string;
+  strokeWidth?: number;
 }
 
-const LIBS = new Set(["antd", "easyops", "fa"]);
+const LIBS = new Set(["antd", "easyops", "fa", "lucide"]);
 
 /**
  * 通用图标构件
@@ -71,7 +83,7 @@ export
 })
 class GeneralIcon extends ReactNextElement implements IconProps {
   /** 图标库 */
-  @property() accessor lib: "antd" | "easyops" | "fa" | undefined;
+  @property() accessor lib: "antd" | "easyops" | "fa" | "lucide" | undefined;
 
   /**
    * Ant Design 图标主题
@@ -94,6 +106,12 @@ class GeneralIcon extends ReactNextElement implements IconProps {
    * @default "fas"
    */
   @property() accessor prefix!: string;
+
+  /**
+   * Lucide 图标描线粗线，限制在区间 `[0.5, 3]`
+   * @default 2
+   */
+  @property({ type: Number }) accessor strokeWidth: number | undefined;
 
   /**
    * 设置当图标未找到时的回退图标
@@ -146,6 +164,7 @@ class GeneralIcon extends ReactNextElement implements IconProps {
         theme={this.theme}
         category={this.category}
         prefix={this.prefix}
+        strokeWidth={this.strokeWidth}
         fallback={this.fallback}
         startColor={this.startColor}
         endColor={this.endColor}
@@ -177,6 +196,7 @@ function GeneralIconComponent({
     theme,
     category,
     prefix,
+    strokeWidth,
     keepSvgOriginalColor,
     imgSrc,
     imgStyle,
@@ -246,5 +266,7 @@ function GeneralIconComponent({
     />
   ) : lib === "fa" ? (
     <WrappedFaIcon prefix={prefix} {...commonProps} />
+  ) : lib === "lucide" ? (
+    <WrappedLucideIcon strokeWidth={strokeWidth} {...commonProps} />
   ) : null;
 }

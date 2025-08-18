@@ -1,8 +1,14 @@
 import { createProviderClass } from "@next-core/utils/general";
 import { has, uniqBy } from "lodash";
+import TagsJson from "lucide-static/tags.json";
 import AliasJson from "../fa-icon/generated/alias.json";
 import type { LibIconProps } from "../general-icon/index.jsx";
-import { getEasyopsIcons, getFaIcons, getAntdIcons } from "./get-icons.js";
+import {
+  getEasyopsIcons,
+  getFaIcons,
+  getAntdIcons,
+  getLucideIcons,
+} from "./get-icons.js";
 
 export interface IconInfo {
   title: string;
@@ -92,7 +98,27 @@ export async function getLibs(): Promise<LibInfo[]> {
     return { title: "ant design", lib: "antd", icons: iconInfoList };
   });
 
-  return Promise.all([easyopsIconLib, antdIconLib, faIconLib]);
+  const lucideIconLib = getLucideIcons().then((allIcons) => {
+    const iconInfoList: IconInfo[] = [];
+    Object.entries(allIcons).forEach(([, icons]) => {
+      icons.forEach((iconName) => {
+        const tags = has(TagsJson, iconName)
+          ? (TagsJson as Record<string, string[]>)[iconName]
+          : [];
+        iconInfoList.push({
+          title: iconName,
+          icon: {
+            lib: "lucide",
+            icon: iconName,
+          },
+          $searchTextPool: [iconName, ...tags],
+        });
+      });
+    });
+    return { title: "lucide", lib: "lucide", icons: iconInfoList };
+  });
+
+  return Promise.all([easyopsIconLib, antdIconLib, faIconLib, lucideIconLib]);
 }
 
 customElements.define("icons.get-libs", createProviderClass(getLibs));

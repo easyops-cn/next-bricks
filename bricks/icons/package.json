@@ -25,7 +25,8 @@
           "{projectRoot}/deploy",
           "{projectRoot}/src/antd-icon/generated",
           "{projectRoot}/src/easyops-icon/generated",
-          "{projectRoot}/src/fa-icon/generated"
+          "{projectRoot}/src/fa-icon/generated",
+          "{projectRoot}/src/lucide-icon/generated"
         ]
       },
       "build:types": {
@@ -33,7 +34,8 @@
           "{projectRoot}/dist-types",
           "{projectRoot}/src/antd-icon/generated",
           "{projectRoot}/src/easyops-icon/generated",
-          "{projectRoot}/src/fa-icon/generated"
+          "{projectRoot}/src/fa-icon/generated",
+          "{projectRoot}/src/lucide-icon/generated"
         ]
       },
       "build:main": {
@@ -80,6 +82,7 @@
     "@next-core/runtime": "^1.65.0",
     "@next-core/utils": "^1.8.2",
     "lodash": "^4.17.21",
+    "lucide-static": "0.539.0",
     "react": "0.0.0-experimental-ee8509801-20230117"
   },
   "devDependencies": {
