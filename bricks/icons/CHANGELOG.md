@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.3.42...@next-bricks/icons@1.4.0) (2025-08-18)
+
+
+### Features
+
+* lucide icons support setting strokeWidth ([947b1ab](https://github.com/easyops-cn/next-bricks/commit/947b1ab8159243ff769c822e8bd5fc91b629ae70))
+* new icons lib: lucide ([aff8d0c](https://github.com/easyops-cn/next-bricks/commit/aff8d0c69908759bc21e2f75fe646e42adf95727))
+
+
+
+
+
 ## [1.3.42](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.3.41...@next-bricks/icons@1.3.42) (2025-08-15)
 
 

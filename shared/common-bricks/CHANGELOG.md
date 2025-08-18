@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.56.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.55.0...@next-shared/common-bricks@0.56.0) (2025-08-18)
+
+
+### Features
+
+* new icons lib: lucide ([aff8d0c](https://github.com/easyops-cn/next-bricks/commit/aff8d0c69908759bc21e2f75fe646e42adf95727))
+
+
+
+
+
 # [0.55.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.54.0...@next-shared/common-bricks@0.55.0) (2025-07-09)
 
 
