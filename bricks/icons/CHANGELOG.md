@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.4.0...@next-bricks/icons@1.4.1) (2025-08-19)
+
+
+### Bug Fixes
+
+* Lucide icons don't support range request yet ([37e6e7c](https://github.com/easyops-cn/next-bricks/commit/37e6e7cfedfe414ce5f4a6490bcc7626f70319c0))
+
+
+
+
+
 # [1.4.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.3.42...@next-bricks/icons@1.4.0) (2025-08-18)
 
 
