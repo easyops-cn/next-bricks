@@ -18,6 +18,10 @@ import type { Button, ButtonProps } from "@next-bricks/basic/button";
 import { unwrapProvider } from "@next-core/utils/general";
 import type { lockBodyScroll as _lockBodyScroll } from "@next-bricks/basic/data-providers/lock-body-scroll/lock-body-scroll";
 import styleText from "./modal.shadow.css";
+import { initializeI18n } from "@next-core/i18n";
+import { NS, locales, K, t } from "./i18n.js";
+
+initializeI18n(NS, locales);
 
 const lockBodyScroll = unwrapProvider<typeof _lockBodyScroll>(
   "basic.lock-body-scroll"
@@ -277,8 +281,8 @@ function ModalComponent({
   modalTitle,
   width,
   maskClosable,
-  confirmText = "确定",
-  cancelText = "取消",
+  confirmText = t(K.CONFIRM),
+  cancelText = t(K.CANCEL),
   hideCancelButton,
   visible: open = false,
   fullscreen,
