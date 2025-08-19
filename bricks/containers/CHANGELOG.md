@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.15.5](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.15.4...@next-bricks/containers@1.15.5) (2025-08-19)
+
+
+### Bug Fixes
+
+* eo-modal i18n ([dda5a54](https://github.com/easyops-cn/next-advanced-bricks/commit/dda5a54948d834e9f27a2277678fb4f7e57d2292))
+
+
+
+
+
 ## [1.15.4](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.15.3...@next-bricks/containers@1.15.4) (2025-08-15)
 
 
