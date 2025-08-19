@@ -21,7 +21,6 @@ const REGEX_MICRO_APPS_WITH_VERSION = /\/micro-apps\/v([23])\//;
 
 const antdRangeRequest = new RangeRequest("antd");
 const easyopsRangeRequest = new RangeRequest("easyops");
-const lucideRangeRequest = new RangeRequest("lucide");
 
 /** Given a URL, this function returns the resulting SVG element or an appropriate error symbol. */
 async function resolveIcon(
@@ -33,13 +32,13 @@ async function resolveIcon(
 
   // istanbul ignore next: experimental
   try {
-    if (options?.id && (await supportsMultipartRangeRequest())) {
+    if (
+      options?.id &&
+      options?.lib !== "lucide" &&
+      (await supportsMultipartRangeRequest())
+    ) {
       const rangeRequest =
-        options.lib === "easyops"
-          ? easyopsRangeRequest
-          : options.lib === "lucide"
-            ? lucideRangeRequest
-            : antdRangeRequest;
+        options.lib === "easyops" ? easyopsRangeRequest : antdRangeRequest;
       content = await rangeRequest.fetch(options.id);
     }
   } catch {
