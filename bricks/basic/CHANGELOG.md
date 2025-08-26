@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.57.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.57.4...@next-bricks/basic@1.57.5) (2025-08-26)
+
+
+### Bug Fixes
+
+* i18n fix ([55f54c5](https://github.com/easyops-cn/next-bricks/commit/55f54c539cf09587a1a434fa9d61137b5dcc874c))
+
+
+
+
+
 ## [1.57.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.57.3...@next-bricks/basic@1.57.4) (2025-07-25)
 
 
