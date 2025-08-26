@@ -6,7 +6,7 @@ export enum K {
 }
 
 const en: Locale = {
-  OK: "Ok",
+  OK: "OK",
   CANCEL: "Cancel",
   DELETE: "Delete",
 };

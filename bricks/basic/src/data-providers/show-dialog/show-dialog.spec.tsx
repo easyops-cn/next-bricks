@@ -101,7 +101,7 @@ describe("DialogComponent", () => {
       data-testid="dialog-confirm-button"
       slot="footer"
     >
-      Ok
+      OK
     </eo-button>
   </sl-dialog>
 </DocumentFragment>
@@ -161,7 +161,7 @@ describe("DialogComponent", () => {
       data-testid="dialog-confirm-button"
       slot="footer"
     >
-      Ok
+      OK
     </eo-button>
   </sl-dialog>
 </DocumentFragment>
@@ -217,7 +217,7 @@ describe("DialogComponent", () => {
       data-testid="dialog-confirm-button"
       slot="footer"
     >
-      Ok
+      OK
     </eo-button>
   </sl-dialog>
 </DocumentFragment>
@@ -344,7 +344,7 @@ describe("DialogComponent", () => {
       data-testid="dialog-confirm-button"
       slot="footer"
     >
-      Ok
+      OK
     </eo-button>
   </sl-dialog>
 </DocumentFragment>
