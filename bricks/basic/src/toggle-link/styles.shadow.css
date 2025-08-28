@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.chevron {
+  transition: transform 0.2s ease-in-out;
+}
+
+:host([open]) .chevron {
+  transform: rotate(180deg);
+}

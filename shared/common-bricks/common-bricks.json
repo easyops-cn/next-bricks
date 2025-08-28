@@ -40,7 +40,8 @@
     "eo-dropdown-select",
     "eo-loading-container",
     "eo-viewport",
-    "eo-list"
+    "eo-list",
+    "eo-toggle-link"
   ],
   "icons": [
     "eo-antd-icon",
