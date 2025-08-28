@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.58.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.57.5...@next-bricks/basic@1.58.0) (2025-08-28)
+
+
+### Features
+
+* new brick: eo-toggle-link ([e6ea80f](https://github.com/easyops-cn/next-bricks/commit/e6ea80f0c7f8ac2623d73d6a7cd073e4e9a9caac))
+
+
+
+
+
 ## [1.57.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.57.4...@next-bricks/basic@1.57.5) (2025-08-26)
 
 
