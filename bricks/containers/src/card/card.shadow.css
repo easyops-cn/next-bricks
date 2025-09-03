@@ -22,6 +22,12 @@
   --eo-card-header-border-bottom: none;
 }
 
+:host([theme-variant="elevo"]) {
+  --card-default-border-radius: 8px;
+  --card-head-padding-horizontal-base: 16px;
+  --card-body-padding-horizontal-base: 16px;
+}
+
 .card {
   box-sizing: border-box;
   margin: 0;
