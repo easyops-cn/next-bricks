@@ -29,6 +29,7 @@ export interface CardProps {
   compact?: boolean;
   outline?: CardOutline;
   hideSplit?: boolean;
+  themeVariant?: "elevo" | "default";
 }
 
 export type CardOutline =
@@ -140,6 +141,10 @@ class Card extends ReactNextElement implements CardProps {
     type: Boolean,
   })
   accessor hideSplit: boolean | undefined;
+
+  /** 主题变体 */
+  @property()
+  accessor themeVariant: "default" | "elevo" | undefined;
 
   render() {
     return (
