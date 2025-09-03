@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.15.6](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.15.5...@next-bricks/containers@1.15.6) (2025-09-03)
+
+
+### Bug Fixes
+
+* **card:** theme variant ([e292434](https://github.com/easyops-cn/next-advanced-bricks/commit/e2924342812b6779d0e37fe16b72c40fcbea66dc))
+
+
+
+
+
 ## [1.15.5](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.15.4...@next-bricks/containers@1.15.5) (2025-08-19)
 
 
