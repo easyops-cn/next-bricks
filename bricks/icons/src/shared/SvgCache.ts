@@ -1,5 +1,3 @@
-import { RangeRequest, supportsMultipartRangeRequest } from "./RangeRequest";
-
 // https://github.com/shoelace-style/shoelace/blob/e0fd6b210ea203100f90872181843ff59eb1267d/src/components/icon/icon.ts
 const CACHEABLE_ERROR = Symbol();
 const RETRYABLE_ERROR = Symbol();
@@ -13,14 +11,11 @@ const iconCache = new Map<string, Promise<SVGResult>>();
 
 interface ResolveIconOptions {
   currentColor?: boolean;
-  lib?: "easyops" | "antd" | "lucide";
-  id?: string;
+  // lib?: "easyops" | "antd" | "lucide";
+  // id?: string;
 }
 
 const REGEX_MICRO_APPS_WITH_VERSION = /\/micro-apps\/v([23])\//;
-
-const antdRangeRequest = new RangeRequest("antd");
-const easyopsRangeRequest = new RangeRequest("easyops");
 
 /** Given a URL, this function returns the resulting SVG element or an appropriate error symbol. */
 async function resolveIcon(
@@ -28,60 +23,39 @@ async function resolveIcon(
   options?: ResolveIconOptions,
   isFix?: boolean
 ): Promise<SVGResult> {
-  let content: string | undefined;
-
-  // istanbul ignore next: experimental
+  let fileData: Response;
   try {
-    if (
-      options?.id &&
-      options?.lib !== "lucide" &&
-      (await supportsMultipartRangeRequest())
-    ) {
-      const rangeRequest =
-        options.lib === "easyops" ? easyopsRangeRequest : antdRangeRequest;
-      content = await rangeRequest.fetch(options.id);
+    fileData = await fetch(url, { mode: "cors" });
+    if (!fileData.ok) {
+      // Fix accessing images of v2 micro-apps in v3 container, and vice versa.
+      if (
+        !isFix &&
+        fileData.status === 404 &&
+        REGEX_MICRO_APPS_WITH_VERSION.test(url)
+      ) {
+        const fixedUrl = url.replace(
+          REGEX_MICRO_APPS_WITH_VERSION,
+          (_, v) => `/micro-apps/v${v === "2" ? "3" : "2"}/`
+        );
+        return resolveIcon(fixedUrl, options, true);
+      }
+      return fileData.status === 410 ? CACHEABLE_ERROR : RETRYABLE_ERROR;
     }
   } catch {
-    // Fallback to traditional fetch.
+    return RETRYABLE_ERROR;
   }
 
-  if (!content) {
-    let fileData: Response;
-    try {
-      fileData = await fetch(url, { mode: "cors" });
-      if (!fileData.ok) {
-        // Fix accessing images of v2 micro-apps in v3 container, and vice versa.
-        if (
-          !isFix &&
-          fileData.status === 404 &&
-          REGEX_MICRO_APPS_WITH_VERSION.test(url)
-        ) {
-          const fixedUrl = url.replace(
-            REGEX_MICRO_APPS_WITH_VERSION,
-            (_, v) => `/micro-apps/v${v === "2" ? "3" : "2"}/`
-          );
-          return resolveIcon(fixedUrl, options, true);
-        }
-        return fileData.status === 410 ? CACHEABLE_ERROR : RETRYABLE_ERROR;
-      }
-    } catch {
-      return RETRYABLE_ERROR;
-    }
-
-    try {
-      content = await fileData.text();
-    } catch {
-      return CACHEABLE_ERROR;
-    }
+  let content: string | undefined;
+  try {
+    content = await fileData.text();
+  } catch {
+    return CACHEABLE_ERROR;
   }
 
   return constructSvgElement(content, options);
 }
 
-export function constructSvgElement(
-  content: string,
-  options?: ResolveIconOptions
-) {
+function constructSvgElement(content: string, options?: ResolveIconOptions) {
   try {
     const div = document.createElement("div");
     div.innerHTML = content;

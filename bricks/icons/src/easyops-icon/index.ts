@@ -81,8 +81,6 @@ class EasyOpsIcon extends NextElement implements EasyOpsIconProps {
     } else {
       const svg = await getIcon(url, {
         currentColor: !category.startsWith("colored-"),
-        lib: "easyops",
-        id: `${category}/${icon}`,
       });
       if (category !== (this.category ?? "default") || icon !== this.icon) {
         // The icon has changed during `await getIcon(...)`

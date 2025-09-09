@@ -5,9 +5,8 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { existsSync, mkdirSync, rmSync } from "node:fs";
-import { readdir, readFile, writeFile } from "node:fs/promises";
+import { readdir, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
-import { createHash } from "node:crypto";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
@@ -42,11 +41,6 @@ const tasks = [];
     default: [],
   };
 
-  const ranges = {};
-  const allSvg = [];
-  const iconsWithPath = [];
-  let cursor = -2;
-
   tasks.push(
     (async () => {
       const list = await readdir(legacyEasyOpsIconsPath, {
@@ -71,62 +65,19 @@ const tasks = [];
                 }
               } else if (ext === ".svg") {
                 allIcons[item.name].push(iconName);
-                iconsWithPath.push([
-                  item.name,
-                  path.join(legacyEasyOpsIconsPath, item.name, icon),
-                ]);
               }
             }
           } else if (item.name.endsWith(".svg")) {
             const iconName = item.name.substring(0, item.name.length - 4);
             allIcons.default.push(iconName);
-            iconsWithPath.push([
-              "default",
-              path.join(legacyEasyOpsIconsPath, item.name),
-            ]);
           }
         })
       );
 
-      const hashes = [];
-
-      // Have to be sequential
-      for (const [category, iconPath] of iconsWithPath) {
-        const svg = await readFile(iconPath);
-        allSvg.push(svg);
-
-        let groupRanges = ranges[category];
-        if (!_.has(ranges, category)) {
-          groupRanges = ranges[category] = [];
-        }
-        cursor += svg.length + 1;
-        groupRanges.push(cursor);
-
-        const sha1 = createHash("sha1");
-        sha1.update(svg);
-        hashes.push(sha1.digest("hex").substring(0, 8));
-      }
-
-      // Let final hash to be irrelevant to the order of icons
-      hashes.sort();
-      const sha1 = createHash("sha1");
-      sha1.update(hashes.join(""));
-      ranges._hash = sha1.digest("hex").substring(0, 8);
-
-      await Promise.all([
-        writeFile(
-          path.resolve(newEasyOpsIconsPath, "icons.json"),
-          JSON.stringify(allIcons)
-        ),
-        writeFile(
-          path.resolve(newEasyOpsIconsPath, "ranges.json"),
-          JSON.stringify(ranges)
-        ),
-        writeFile(
-          path.resolve(newEasyOpsIconsPath, `all.${ranges._hash}.svg`),
-          allSvg.join("\n")
-        ),
-      ]);
+      await writeFile(
+        path.resolve(newEasyOpsIconsPath, "icons.json"),
+        JSON.stringify(allIcons)
+      );
     })()
   );
 }
@@ -152,14 +103,8 @@ const tasks = [];
     allIcons[category] = [];
   }
 
-  const ranges = {};
-  const allJson = [];
-  let cursor = -2;
-
   tasks.push(
     (async () => {
-      const hashes = [];
-
       await Promise.all(
         Object.entries(iconCategories).map(async ([category, pack]) => {
           const aliasMap = (aliasMapByCategory[category] = {});
@@ -174,20 +119,6 @@ const tasks = [];
                 aliasMap[alias] = item.iconName;
               }
               const content = JSON.stringify(item);
-
-              let groupRanges = ranges[category];
-              if (!_.has(ranges, category)) {
-                groupRanges = ranges[category] = [];
-              }
-              cursor += content.length + 1;
-              groupRanges.push(cursor);
-
-              allJson.push(content);
-
-              const sha1 = createHash("sha1");
-              sha1.update(content);
-              hashes.push(sha1.digest("hex").substring(0, 8));
-
               return writeFile(
                 path.resolve(generatedDir, `${category}/${item.iconName}.json`),
                 content
@@ -197,11 +128,6 @@ const tasks = [];
         })
       );
 
-      hashes.sort();
-      const sha1 = createHash("sha1");
-      sha1.update(hashes.join(""));
-      ranges._hash = sha1.digest("hex").substring(0, 8);
-
       await Promise.all([
         writeFile(
           path.resolve(generatedDir, "alias.json"),
@@ -210,14 +136,6 @@ const tasks = [];
         writeFile(
           path.resolve(generatedDir, "icons.json"),
           JSON.stringify(allIcons)
-        ),
-        writeFile(
-          path.resolve(generatedDir, "ranges.json"),
-          JSON.stringify(ranges)
-        ),
-        writeFile(
-          path.resolve(generatedDir, `all.${ranges._hash}.json`),
-          allJson.join("\n")
         ),
       ]);
     })()
@@ -240,14 +158,8 @@ const tasks = [];
     allIcons[theme] = [];
   }
 
-  const ranges = {};
-  const allSvg = [];
-  let cursor = -2;
-
   tasks.push(
     (async () => {
-      const hashes = [];
-
       await Promise.all(
         Object.values(antdIcons).map((icon) => {
           if (!themes.includes(icon.theme)) {
@@ -262,19 +174,6 @@ const tasks = [];
             },
           });
 
-          let groupRanges = ranges[icon.theme];
-          if (!_.has(ranges, icon.theme)) {
-            groupRanges = ranges[icon.theme] = [];
-          }
-          cursor += svg.length + 1;
-          groupRanges.push(cursor);
-
-          allSvg.push(svg);
-
-          const sha1 = createHash("sha1");
-          sha1.update(svg);
-          hashes.push(sha1.digest("hex").substring(0, 8));
-
           return writeFile(
             path.resolve(generatedDir, icon.theme, `${icon.name}.svg`),
             svg
@@ -282,25 +181,10 @@ const tasks = [];
         })
       );
 
-      hashes.sort();
-      const sha1 = createHash("sha1");
-      sha1.update(hashes.join(""));
-      ranges._hash = sha1.digest("hex").substring(0, 8);
-
-      await Promise.all([
-        writeFile(
-          path.resolve(generatedDir, "icons.json"),
-          JSON.stringify(allIcons)
-        ),
-        writeFile(
-          path.resolve(generatedDir, "ranges.json"),
-          JSON.stringify(ranges)
-        ),
-        writeFile(
-          path.resolve(generatedDir, `all.${ranges._hash}.svg`),
-          allSvg.join("\n")
-        ),
-      ]);
+      await writeFile(
+        path.resolve(generatedDir, "icons.json"),
+        JSON.stringify(allIcons)
+      );
     })()
   );
 }
@@ -322,10 +206,7 @@ const tasks = [];
     [defaultCategory]: [],
   };
 
-  const ranges = {};
-  const allSvg = [];
   const iconsWithPath = [];
-  let cursor = -2;
 
   tasks.push(
     (async () => {
@@ -341,45 +222,10 @@ const tasks = [];
         }
       }
 
-      const hashes = [];
-
-      // Have to be sequential
-      for (const [category, iconPath] of iconsWithPath) {
-        const svg = await readFile(iconPath);
-        allSvg.push(svg);
-
-        let groupRanges = ranges[category];
-        if (!_.has(ranges, category)) {
-          groupRanges = ranges[category] = [];
-        }
-        cursor += svg.length + 1;
-        groupRanges.push(cursor);
-
-        const sha1 = createHash("sha1");
-        sha1.update(svg);
-        hashes.push(sha1.digest("hex").substring(0, 8));
-      }
-
-      // Let final hash to be irrelevant to the order of icons
-      hashes.sort();
-      const sha1 = createHash("sha1");
-      sha1.update(hashes.join(""));
-      ranges._hash = sha1.digest("hex").substring(0, 8);
-
-      await Promise.all([
-        writeFile(
-          path.resolve(generatedDir, "icons.json"),
-          JSON.stringify(allIcons)
-        ),
-        writeFile(
-          path.resolve(generatedDir, "ranges.json"),
-          JSON.stringify(ranges)
-        ),
-        writeFile(
-          path.resolve(generatedDir, `all.${ranges._hash}.svg`),
-          allSvg.join("\n")
-        ),
-      ]);
+      await writeFile(
+        path.resolve(generatedDir, "icons.json"),
+        JSON.stringify(allIcons)
+      );
     })()
   );
 }
