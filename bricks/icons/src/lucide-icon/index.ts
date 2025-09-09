@@ -83,10 +83,7 @@ class LucideIcon extends NextElement implements LucideIconProps {
           process.env.NODE_ENV === "test" ? "" : __webpack_public_path__
         }chunks/lucide-icons/${icon}.svg`
       : undefined;
-    const svg = await getIcon(url, {
-      lib: "lucide",
-      id: `default/${icon}`,
-    });
+    const svg = await getIcon(url);
     if (icon !== this.icon) {
       // The icon has changed
       return;

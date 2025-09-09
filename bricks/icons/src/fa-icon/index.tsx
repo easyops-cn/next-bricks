@@ -9,32 +9,15 @@ import {
   GradientDirection,
 } from "../shared/DefineLinearGradient.js";
 import AliasJson from "./generated/alias.json";
-import {
-  RangeRequest,
-  supportsMultipartRangeRequest,
-} from "../shared/RangeRequest.js";
 import linearGradientStyleText from "../shared/DefineLinearGradient.shadow.css";
 import type { IconEvents, IconEventsMapping } from "../shared/interfaces.js";
 import sharedStyleText from "../shared/icons.shadow.css";
 
 const iconCache = new Map<string, Promise<IconDefinition | null>>();
-const faRangeRequest = new RangeRequest("fa");
 
 async function resolveIconDefinition(
   id: string
 ): Promise<IconDefinition | null> {
-  // istanbul ignore next: experimental
-  try {
-    if (await supportsMultipartRangeRequest()) {
-      const content = await faRangeRequest.fetch(id);
-      return JSON.parse(content);
-    }
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.warn("Failed to fetch icon by range:", id, error);
-    // Fallback to traditional fetch.
-  }
-
   try {
     const url = `${
       // istanbul ignore next

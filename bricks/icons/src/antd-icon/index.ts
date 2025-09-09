@@ -89,8 +89,6 @@ class AntdIcon extends NextElement implements AntdIconProps {
       : undefined;
     const svg = await getIcon(url, {
       currentColor: theme !== "twotone",
-      lib: "antd",
-      id: `${theme}/${icon}`,
     });
     if (theme !== fixTheme(this.theme) || icon !== this.icon) {
       // The icon has changed
