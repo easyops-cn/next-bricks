@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.4.1...@next-bricks/icons@1.5.0) (2025-09-09)
+
+
+### Features
+
+* **icon:** remove supports for range request ([8e4c604](https://github.com/easyops-cn/next-bricks/commit/8e4c604f475a4a3edf59bb7039389dcf24e54553))
+
+
+
+
+
 ## [1.4.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.4.0...@next-bricks/icons@1.4.1) (2025-08-19)
 
 
