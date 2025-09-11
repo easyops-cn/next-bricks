@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>已完成</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="交互明细" transform="translate(-1676, -493)" fill="#08BF33">
+            <g id="Navigation/Dropdown/Light/Option备份" transform="translate(1664, 413)">
+                <g id="导航/Menu导航菜单/亮色/侧边导航-产品名称备份-11" transform="translate(4, 72)" fill-rule="nonzero">
+                    <path d="M16,8 C11.5799964,8 8,11.5799963 8,16 C8,20.4160009 11.5799963,24 16,24 C20.4160009,24 24,20.4160009 24,16 C24,11.5799964 20.4160009,8 16,8 Z M14.4000129,19.9999908 L10.4000129,16 L11.5320186,14.8679943 L14.4000129,17.7359978 L20.4680183,11.6680017 L21.600024,12.8000074 L14.4000129,19.9999908 Z" id="已完成"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
