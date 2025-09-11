@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.58.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.58.0...@next-bricks/basic@1.58.1) (2025-09-11)
+
+
+### Bug Fixes
+
+* refine button style ([16a18c5](https://github.com/easyops-cn/next-bricks/commit/16a18c54c81130ca29bf2c5d9a0ceccd037c40b2))
+
+
+
+
+
 # [1.58.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.57.5...@next-bricks/basic@1.58.0) (2025-08-28)
 
 
