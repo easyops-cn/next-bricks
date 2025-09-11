@@ -268,6 +268,19 @@ button:active {
   border-color: var(--antd-border-color-base) !important;
 }
 
+/* neutral [不带任何品牌色，单纯浅色背景] */
+
+.neutral {
+  color: var(--antd-btn-default-color);
+  background: var(--antd-btn-default-bg);
+  border: 1px solid var(--antd-btn-default-border);
+}
+
+.neutral:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--antd-btn-default-border);
+}
+
 .icon {
   background: var(--palette-gray-3);
   border: 1px solid transparent;
