@@ -23,7 +23,8 @@ export type ButtonType =
   | "ghost"
   | "link"
   | "text"
-  | "icon";
+  | "icon"
+  | "neutral";
 
 export type ComponentSize = "large" | "medium" | "small" | "xs";
 
