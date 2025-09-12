@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>未开始</title>
+    <defs>
+        <path d="M16,24 C20.418278,24 24,20.418278 24,16 C24,11.581722 20.418278,8 16,8 C11.581722,8 8,11.581722 8,16 C8,20.418278 11.581722,24 16,24 Z" id="path-1"></path>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="16" height="16" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-dasharray="4">
+        <g id="交互明细" transform="translate(-1676, -425)" stroke="#CCD1DB">
+            <g id="Navigation/Dropdown/Light/Option备份" transform="translate(1664, 413)">
+                <g id="导航/Menu导航菜单/亮色/侧边导航-产品名称备份-11" transform="translate(4, 4)" stroke-width="4">
+                    <use id="未开始" mask="url(#mask-2)" xlink:href="#path-1"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
