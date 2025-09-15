@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.22.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.21.2...@next-shared/icons@0.22.0) (2025-09-15)
+
+
+### Features
+
+* new icons: clock, lightbulb ([28f99ef](https://github.com/easyops-cn/next-bricks/commit/28f99ef54caa65b79ef39562f5869d9695c54d99))
+
+
+
+
+
 ## [0.21.2](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.21.1...@next-shared/icons@0.21.2) (2025-09-12)
 
 
