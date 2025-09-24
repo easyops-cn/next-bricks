@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>图标-回放</title>
+    <g id="图标-回放" stroke="none" fill="none" fill-rule="evenodd" stroke-linejoin="round" stroke-width="1">
+        <g id="编组" transform="translate(2, 2)" stroke="#333333">
+            <polygon id="路径" fill="#333333" fill-rule="nonzero" points="5 6 5 4 6.66666667 5 8.33333333 6 6.66666667 7 5 8"></polygon>
+            <path d="M1.75736667,10.2426333 C2.84313333,11.3284333 4.34313333,12 6,12 C9.3137,12 12,9.3137 12,6 C12,2.6863 9.3137,0 6,0 C4.34313333,0 2.84313333,0.671573333 1.75736667,1.75736667 C1.2047,2.31003333 0,3.66666667 0,3.66666667" id="路径" stroke-linecap="round"></path>
+            <polyline id="路径" stroke-linecap="round" points="0 1 0 3.66666667 2.66666667 3.66666667"></polyline>
+        </g>
+    </g>
+</svg>
