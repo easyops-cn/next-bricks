@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.23.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.22.2...@next-shared/icons@0.23.0) (2025-09-24)
+
+
+### Features
+
+* new icon: replay ([84db438](https://github.com/easyops-cn/next-bricks/commit/84db43874886c7264129b5a0ce614a1006a8d1da))
+
+
+
+
+
 ## [0.22.2](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.22.1...@next-shared/icons@0.22.2) (2025-09-19)
 
 
