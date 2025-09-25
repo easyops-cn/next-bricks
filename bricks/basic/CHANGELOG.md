@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.58.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.58.1...@next-bricks/basic@1.58.2) (2025-09-25)
+
+
+### Bug Fixes
+
+* **avatar:** set name vertical-align: middle ([8ff50f6](https://github.com/easyops-cn/next-bricks/commit/8ff50f6076a22a2e268d0b3502ea3f1178b42e67))
+
+
+
+
+
 ## [1.58.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.58.0...@next-bricks/basic@1.58.1) (2025-09-11)
 
 
