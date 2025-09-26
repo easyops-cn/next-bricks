@@ -108,7 +108,8 @@
     "eo-statistics-card",
     "eo-loading-step",
     "eo-current-time",
-    "eo-carousel-text"
+    "eo-carousel-text",
+    "eo-code-block"
   ],
   "advanced": [
     "eo-cascader",
