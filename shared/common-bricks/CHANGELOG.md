@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.57.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.57.0...@next-shared/common-bricks@0.57.1) (2025-09-26)
+
+
+### Bug Fixes
+
+* eo-code-block ([53b29da](https://github.com/easyops-cn/next-bricks/commit/53b29dad8d66bad82edb57f9fd6fda7b416d024e))
+
+
+
+
+
 # [0.57.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.56.0...@next-shared/common-bricks@0.57.0) (2025-08-28)
 
 
