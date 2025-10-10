@@ -1,15 +1,21 @@
 :host {
   display: block;
   width: fit-content;
+
+  --eo-actions-border-radius: var(--medius-border-radius);
 }
 
 :host([hidden]) {
   display: none;
 }
 
+:host([theme-variant="elevo"]) {
+  --eo-actions-border-radius: 6px;
+}
+
 eo-menu {
   padding: 2px;
-  border-radius: 4px;
+  border-radius: var(--eo-actions-border-radius);
   background: var(--antd-dropdown-menu-bg);
   box-shadow: var(--antd-box-shadow-base);
   border: none;
@@ -18,7 +24,7 @@ eo-menu {
 eo-menu-item::part(menu-item) {
   padding: 5px 12px;
   line-height: 22px;
-  border-radius: var(--medius-border-radius);
+  border-radius: var(--eo-actions-border-radius);
   min-width: max-content;
 }
 

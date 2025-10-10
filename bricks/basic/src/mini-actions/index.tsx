@@ -60,6 +60,7 @@ export type ActionType = SimpleActionType & Divider;
 
 export interface EoMiniActionsProps {
   actions?: ActionType[];
+  themeVariant?: "default" | "elevo";
 }
 
 export interface EoMiniActionsEvents {
@@ -88,6 +89,10 @@ class EoMiniActions extends ReactNextElement implements EoMiniActionsProps {
     attribute: false,
   })
   accessor actions: ActionType[] | undefined;
+
+  /** 主题变体 */
+  @property()
+  accessor themeVariant: "default" | "elevo" | undefined;
 
   /**
    * 点击按钮时触发
@@ -118,6 +123,7 @@ class EoMiniActions extends ReactNextElement implements EoMiniActionsProps {
     return (
       <EoMiniActionsComponent
         actions={this.actions}
+        themeVariant={this.themeVariant}
         onActionClick={this.#handleActionClick}
         onVisibleChange={this.#handleVisibleChange}
       />
@@ -140,7 +146,7 @@ const preventDefaultAndStopPropagationListener = (e: Event) => {
 };
 
 export function EoMiniActionsComponent(props: EoMiniActionsComponentProps) {
-  const { actions, onActionClick, onVisibleChange } = props;
+  const { actions, themeVariant, onActionClick, onVisibleChange } = props;
 
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
@@ -260,6 +266,7 @@ export function EoMiniActionsComponent(props: EoMiniActionsComponentProps) {
           <WrappedActions
             style={{ minWidth: "max-content" }}
             actions={dropdownActions}
+            themeVariant={themeVariant}
             onActionClick={(e) => {
               handleActionClick(e.detail);
             }}

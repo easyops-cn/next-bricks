@@ -107,3 +107,7 @@
   margin-left: 4px;
   vertical-align: middle;
 }
+
+:host([gap-size="large"]) .name {
+  margin-left: 8px;
+}
