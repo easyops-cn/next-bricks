@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.15.7](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.15.6...@next-bricks/containers@1.15.7) (2025-10-10)
+
+
+### Bug Fixes
+
+* support themeVariant: elevo ([34e609f](https://github.com/easyops-cn/next-advanced-bricks/commit/34e609fb28fdd3c6a767293a9af37360bf74ccf4))
+
+
+
+
+
 ## [1.15.6](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.15.5...@next-bricks/containers@1.15.6) (2025-09-03)
 
 
