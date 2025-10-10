@@ -37,7 +37,7 @@ describe("eo-easyops-avatar", () => {
     });
     expect(element.shadowRoot?.childNodes.length).toBeGreaterThan(1);
     expect(element.shadowRoot?.innerHTML).toMatchInlineSnapshot(
-      `"<style>styles.shadow.css</style><eo-avatar src="/test.jpg" name="easyops" size="medium" bordered="" part="eo-avatar" exportparts="avatar, avatar-img, avatar-icon, avatar-text"></eo-avatar>"`
+      `"<style>styles.shadow.css</style><eo-avatar src="/test.jpg" name="easyops" size="medium" bordered="" part="eo-avatar" exportparts="avatar, avatar-img, avatar-icon, avatar-text, name"></eo-avatar>"`
     );
 
     act(() => {

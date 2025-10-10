@@ -25,9 +25,11 @@ const TEXT_NODE_PADDING = 4;
 const TEXT_NODE_MIN_FONT_SIZE = 10;
 
 export type AvatarSize = "large" | "medium" | "small" | "xs";
+export type AvatarGapSize = "medium" | "large";
 
 export interface AvatarProps {
   size?: AvatarSize;
+  gapSize?: AvatarGapSize;
   shape?: "circle" | "round-square";
   src?: string;
   alt?: string;
@@ -43,6 +45,7 @@ export interface AvatarProps {
  * @part avatar-img - 显示为图片时的头像容器
  * @part avatar-icon - 显示为图标时的头像容器
  * @part avatar-text - 显示为文本时的头像容器
+ * @part name - 用户名
  * @category display-component
  */
 export
@@ -54,6 +57,13 @@ class EoAvatar extends ReactNextElement implements AvatarProps {
    * 尺寸
    */
   @property() accessor size: AvatarSize = "medium";
+
+  /**
+   * 头像和名称间距大小
+   *
+   * @default "medium"
+   */
+  @property({ render: false }) accessor gapSize: "medium" | "large" | undefined;
 
   /**
    * 形状
@@ -236,7 +246,11 @@ export function EoAvatarComponent(props: AvatarProps) {
       >
         {avatarNode}
       </span>
-      {props.showName && <span className="name">{name}</span>}
+      {props.showName && (
+        <span className="name" part="name">
+          {name}
+        </span>
+      )}
     </>
   );
 }

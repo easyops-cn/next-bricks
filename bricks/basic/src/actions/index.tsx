@@ -15,7 +15,7 @@ import type {
 import { Target } from "../interface";
 import type { EoTooltip, ToolTipProps } from "../tooltip";
 import type { Link, LinkProps } from "../link";
-import type { Menu } from "../menu";
+import type { Menu, MenuProps } from "../menu";
 import type { MenuComponentProps, MenuItem } from "../menu-item";
 import styleText from "./styles.shadow.css";
 
@@ -23,7 +23,7 @@ const { defineElement, property, event } = createDecorators();
 
 const WrappedTooltip = wrapBrick<EoTooltip, ToolTipProps>("eo-tooltip");
 const WrappedLink = wrapBrick<Link, LinkProps>("eo-link");
-const WrappedMenu = wrapBrick<Menu, unknown>("eo-menu");
+const WrappedMenu = wrapBrick<Menu, MenuProps>("eo-menu");
 const WrappedMenuItem = wrapBrick<MenuItem, MenuComponentProps>("eo-menu-item");
 const WrappedPopover = wrapBrick<
   Popover,
@@ -155,6 +155,7 @@ export interface ActionsProps {
   actions?: Action[];
   itemDraggable?: boolean;
   checkedKeys?: (string | number)[];
+  themeVariant?: "default" | "elevo";
 }
 
 export interface ActionsEvents {
@@ -200,6 +201,10 @@ class EoActions extends ReactNextElement implements ActionsProps {
    */
   @property({ type: Boolean })
   accessor itemDraggable: boolean | undefined;
+
+  /** 主题变体 */
+  @property({ render: false })
+  accessor themeVariant: "default" | "elevo" | undefined;
 
   /**
    * 点击按钮时触发

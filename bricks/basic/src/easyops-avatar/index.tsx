@@ -2,7 +2,12 @@ import React from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
-import type { EoAvatar, AvatarProps, AvatarSize } from "../avatar/index.js";
+import type {
+  EoAvatar,
+  AvatarProps,
+  AvatarSize,
+  AvatarGapSize,
+} from "../avatar/index.js";
 import { useUserInfoByNameOrInstanceId } from "./useUserInfoByNameOrInstanceId.js";
 import styleText from "./styles.shadow.css";
 
@@ -13,6 +18,7 @@ const WrappedAvatar = wrapBrick<EoAvatar, AvatarProps>("eo-avatar");
 export interface EoEasyopsAvatarProps {
   nameOrInstanceId?: string;
   size?: AvatarSize;
+  gapSize?: AvatarGapSize;
   bordered?: boolean;
   showName?: boolean;
 }
@@ -25,6 +31,7 @@ export interface EoEasyopsAvatarProps {
  * @part avatar-img - 显示为图片时的头像容器
  * @part avatar-icon - 显示为图标时的头像容器
  * @part avatar-text - 显示为文本时的头像容器
+ * @part name - 用户名
  * @category display-component
  */
 export
@@ -41,6 +48,13 @@ class EoEasyopsAvatar extends ReactNextElement implements EoEasyopsAvatarProps {
    * 尺寸
    */
   @property() accessor size: AvatarSize = "medium";
+
+  /**
+   * 头像和名称间距大小
+   *
+   * @default "medium"
+   */
+  @property() accessor gapSize: AvatarGapSize | undefined;
 
   /**
    * 是否有边框
@@ -71,7 +85,7 @@ class EoEasyopsAvatar extends ReactNextElement implements EoEasyopsAvatarProps {
 }
 
 export function EoEasyopsAvatarComponent(props: EoEasyopsAvatarProps) {
-  const { nameOrInstanceId, size, bordered, showName } = props;
+  const { nameOrInstanceId, size, gapSize, bordered, showName } = props;
 
   const { user } = useUserInfoByNameOrInstanceId(nameOrInstanceId);
 
@@ -80,10 +94,11 @@ export function EoEasyopsAvatarComponent(props: EoEasyopsAvatarProps) {
       src={user?.user_icon}
       name={user?.name}
       size={size}
+      gapSize={gapSize}
       bordered={bordered}
       showName={showName}
       part="eo-avatar"
-      exportparts="avatar, avatar-img, avatar-icon, avatar-text"
+      exportparts="avatar, avatar-img, avatar-icon, avatar-text, name"
     />
   );
 }

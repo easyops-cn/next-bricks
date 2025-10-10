@@ -16,6 +16,11 @@ export interface SidebarMenu {
   defaultCollapsedBreakpoint?: number;
   menuItems: SidebarMenuItem[];
 }
+
+export interface MenuProps {
+  mode?: "vertical" | "horizontal";
+}
+
 /**
  * 菜单构件
  * @author sailor
@@ -23,11 +28,12 @@ export interface SidebarMenu {
  * @slot - 菜单内容
  * @insider
  */
+export
 @defineElement("eo-menu", {
   styleTexts: [styleText],
   alias: ["basic.general-menu"],
 })
-class Menu extends ReactNextElement {
+class Menu extends ReactNextElement implements MenuProps {
   /**
    *  菜单布局方式 支持垂直、水平两种
    */
@@ -38,4 +44,3 @@ class Menu extends ReactNextElement {
     return <slot />;
   }
 }
-export { Menu };

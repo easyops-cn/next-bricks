@@ -109,10 +109,20 @@
 
   .modal-header {
     border-bottom: 0;
+    padding: 16px 20px;
+  }
+
+  .modal-body {
+    padding: 16px 20px;
   }
 
   .modal-footer {
     border-radius: 0 0 12px 12px;
     background: none;
+    padding: 16px 20px 20px;
+  }
+
+  .close-btn {
+    margin-top: 4px;
   }
 }
