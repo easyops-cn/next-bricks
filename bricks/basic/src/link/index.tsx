@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
+import { useCurrentApp } from "@next-core/react-runtime";
 import type { EoTooltip, ToolTipProps } from "../tooltip";
 import type {
   GeneralIcon,
@@ -35,6 +36,7 @@ export interface LinkProps {
   disabled?: boolean;
   url?: ExtendedLocationDescriptor;
   href?: string;
+  inApp?: boolean;
   icon?: GeneralIconProps;
   target?: Target;
   showExternalIcon?: boolean;
@@ -89,6 +91,11 @@ class Link extends ReactNextElement implements LinkProps {
     attribute: false,
   })
   accessor url: ExtendedLocationDescriptor | undefined;
+
+  /**
+   * 标识 `url` 是否为微应用内链接（即使用 APP.homepage 作为前缀）
+   */
+  @property({ type: Boolean }) accessor inApp: boolean | undefined;
 
   /**
    * 链接跳转目标
@@ -156,6 +163,7 @@ class Link extends ReactNextElement implements LinkProps {
         disabled={this.disabled}
         url={this.url}
         href={this.href}
+        inApp={this.inApp}
         target={this.target}
         showExternalIcon={this.showExternalIcon}
         icon={this.icon}
@@ -178,6 +186,7 @@ export function LinkComponent({
   disabled,
   url,
   href,
+  inApp,
   target,
   showExternalIcon,
   icon,
@@ -190,6 +199,8 @@ export function LinkComponent({
   const history = getHistory();
   const linkRef = useRef<HTMLAnchorElement>(null);
   const [currentLocation, setCurrentLocation] = useState(history.location);
+  const app = useCurrentApp();
+  const prefixWithHomepage = inApp ? app?.homepage : undefined;
 
   const computedHref = useMemo(() => {
     if (disabled) return;
@@ -197,12 +208,19 @@ export function LinkComponent({
     if (!url) return "";
     const loc =
       typeof url === "string"
-        ? createLocation(url, null, undefined, currentLocation)
+        ? createLocation(
+            prefixWithHomepage
+              ? `${prefixWithHomepage}${url === "/" ? "" : url}`
+              : url,
+            null,
+            undefined,
+            currentLocation
+          )
         : getExtendedLocationDescriptor(url, currentLocation);
     return loc
       ? history.createHref(loc as LocationDescriptorObject<NextHistoryState>)
       : "";
-  }, [disabled, href, url, currentLocation, history]);
+  }, [disabled, href, url, currentLocation, history, prefixWithHomepage]);
 
   const handleClick = useCallback(
     (e: MouseEvent) => {
@@ -225,15 +243,33 @@ export function LinkComponent({
         if (!url) return;
 
         const method = replace ? history.replace : history.push;
-
         method(
           typeof url === "string"
-            ? url
-            : getExtendedLocationDescriptor(url, currentLocation)
+            ? prefixWithHomepage
+              ? `${prefixWithHomepage}${url === "/" ? "" : url}`
+              : url
+            : getExtendedLocationDescriptor(
+                prefixWithHomepage
+                  ? {
+                      ...url,
+                      pathname: `${prefixWithHomepage}${url.pathname === "/" ? "" : url.pathname}`,
+                    }
+                  : url,
+                currentLocation
+              )
         );
       }
     },
-    [currentLocation, disabled, history, href, replace, target, url]
+    [
+      currentLocation,
+      disabled,
+      history,
+      href,
+      replace,
+      target,
+      url,
+      prefixWithHomepage,
+    ]
   );
 
   useEffect(() => {

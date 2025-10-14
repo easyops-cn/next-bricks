@@ -23,6 +23,11 @@ jest.mock("@next-core/runtime", () => ({
     listen: jest.fn(),
   }),
 }));
+jest.mock("@next-core/react-runtime", () => ({
+  useCurrentApp: () => ({
+    homepage: "/demo",
+  }),
+}));
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -159,5 +164,57 @@ describe("eo-button", () => {
     expect(element5.shadowRoot?.childNodes.length).toBe(0);
     expect(element6.shadowRoot?.childNodes.length).toBe(0);
     expect(element7.shadowRoot?.childNodes.length).toBe(0);
+  });
+
+  test("inApp link", async () => {
+    const element = document.createElement("eo-link") as Link;
+    element.url = "/next-page";
+    element.inApp = true;
+    element.textContent = "inApp link";
+    const onClick = jest.fn();
+    element.addEventListener("click", onClick);
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(element.shadowRoot?.querySelector("a")?.href).toBe(
+      "http://localhost/demo/next-page"
+    );
+
+    act(() => {
+      element.shadowRoot?.querySelector("a")?.click();
+    });
+    expect(mockHistoryPush).toHaveBeenCalledWith("/demo/next-page");
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("inApp link to home", async () => {
+    const element = document.createElement("eo-link") as Link;
+    element.url = "/";
+    element.inApp = true;
+    element.textContent = "inApp link";
+    const onClick = jest.fn();
+    element.addEventListener("click", onClick);
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(element.shadowRoot?.querySelector("a")?.href).toBe(
+      "http://localhost/demo"
+    );
+
+    act(() => {
+      element.shadowRoot?.querySelector("a")?.click();
+    });
+    expect(mockHistoryPush).toHaveBeenCalledWith("/demo");
+
+    act(() => {
+      document.body.removeChild(element);
+    });
   });
 });
