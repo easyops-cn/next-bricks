@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.58.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.58.3...@next-bricks/basic@1.58.4) (2025-10-14)
+
+
+### Bug Fixes
+
+* **link:** support inApp url ([d8955b3](https://github.com/easyops-cn/next-bricks/commit/d8955b3b9a553184ae363f9860442f3cfa598d7d))
+
+
+
+
+
 ## [1.58.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.58.2...@next-bricks/basic@1.58.3) (2025-10-10)
 
 
