@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.59.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.59.0...@next-bricks/basic@1.59.1) (2025-10-15)
+
+
+### Bug Fixes
+
+* check action key is not nil ([40988ac](https://github.com/easyops-cn/next-bricks/commit/40988acd5341576d4e277601ef37c9202e4ad1ce))
+* new button type: flat ([9f36b18](https://github.com/easyops-cn/next-bricks/commit/9f36b186a961902818fb29d44f7949a0b509c12f))
+
+
+
+
+
 # [1.59.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.58.4...@next-bricks/basic@1.59.0) (2025-10-15)
 
 
