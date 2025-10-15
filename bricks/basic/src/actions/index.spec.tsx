@@ -196,4 +196,100 @@ describe("eo-actions", () => {
       document.body.removeChild(element);
     });
   });
+
+  test("activeKeys", async () => {
+    const element = document.createElement("eo-actions") as EoActions;
+    element.actions = [
+      {
+        text: "a",
+        key: "a",
+        items: [
+          {
+            text: "a-1",
+            key: "a-1",
+          },
+          {
+            text: "a-2",
+            key: "a-2",
+          },
+        ],
+      },
+      {
+        text: "b",
+        key: "b",
+        items: [
+          {
+            text: "b-1",
+            key: "b-1",
+          },
+          {
+            text: "b-2",
+            key: "b-2",
+          },
+        ],
+      },
+    ];
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    const popovers = element.shadowRoot?.querySelectorAll(".popover");
+    const firstSubMenuItem = popovers?.[0]?.querySelector(
+      "eo-menu-item"
+    ) as HTMLElement;
+    const firstSubMenuItemChild =
+      firstSubMenuItem?.nextElementSibling?.querySelector(
+        "eo-menu-item"
+      ) as HTMLElement;
+    const secondSubMenuItem = popovers?.[1]?.querySelector(
+      "eo-menu-item"
+    ) as HTMLElement;
+
+    expect(firstSubMenuItem.classList.contains("menu-item-active")).toBe(false);
+    expect(firstSubMenuItemChild.classList.contains("menu-item-active")).toBe(
+      false
+    );
+    expect(secondSubMenuItem.classList.contains("menu-item-active")).toBe(
+      false
+    );
+
+    element.activeKeys = ["a"];
+    await act(async () => {
+      await (global as any).flushPromises();
+    });
+    expect(firstSubMenuItem.classList.contains("menu-item-active")).toBe(true);
+    expect(firstSubMenuItemChild.classList.contains("menu-item-active")).toBe(
+      false
+    );
+    expect(secondSubMenuItem.classList.contains("menu-item-active")).toBe(
+      false
+    );
+
+    element.activeKeys = ["a", "a-1"];
+    await act(async () => {
+      await (global as any).flushPromises();
+    });
+    expect(firstSubMenuItem.classList.contains("menu-item-active")).toBe(true);
+    expect(firstSubMenuItemChild.classList.contains("menu-item-active")).toBe(
+      true
+    );
+    expect(secondSubMenuItem.classList.contains("menu-item-active")).toBe(
+      false
+    );
+
+    element.activeKeys = ["b"];
+    await act(async () => {
+      await (global as any).flushPromises();
+    });
+    expect(firstSubMenuItem.classList.contains("menu-item-active")).toBe(false);
+    expect(firstSubMenuItemChild.classList.contains("menu-item-active")).toBe(
+      false
+    );
+    expect(secondSubMenuItem.classList.contains("menu-item-active")).toBe(true);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
 });
