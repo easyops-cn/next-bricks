@@ -7,6 +7,7 @@ export const ALLOWED_BUTTON_TYPES = [
   "text",
   "icon",
   "neutral",
+  "flat",
 ] as const;
 
 export const ALLOWED_COMPONENT_SIZES = [
