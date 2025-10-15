@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { EventEmitter, createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
@@ -39,6 +39,7 @@ interface SubMenuItemComProps {
   index: number;
   action: SubMenuAction;
   checkedKeys: (string | number)[] | undefined;
+  activeKeys: (string | number)[] | undefined;
   onSubMenuClick: (action: SimpleAction) => void;
 }
 
@@ -46,8 +47,35 @@ function SubMenuItemCom({
   index,
   action,
   checkedKeys,
+  activeKeys,
   onSubMenuClick,
 }: SubMenuItemComProps) {
+  const popoverRef = useRef<Popover>(null);
+  const [checked, opened] = useMemo(() => {
+    let keyIndex = -1;
+    if (activeKeys && action.key) {
+      for (let i = 0; i < activeKeys.length; i++) {
+        if (activeKeys[i] === action.key) {
+          keyIndex = i;
+          break;
+        }
+      }
+    }
+    if (keyIndex === -1) {
+      return [false, false];
+    }
+    if (keyIndex === activeKeys!.length - 1) {
+      return [true, false];
+    }
+    return [true, true];
+  }, [action.key, activeKeys]);
+
+  useEffect(() => {
+    if (popoverRef.current) {
+      popoverRef.current.active = opened;
+    }
+  }, [opened]);
+
   return (
     <WrappedPopover
       data-index={index}
@@ -58,11 +86,13 @@ function SubMenuItemCom({
       distance={4}
       anchorDisplay="block"
       strategy="fixed"
+      ref={popoverRef}
     >
       <WrappedMenuItem
         slot="anchor"
         className={classnames("sub-menu-item-label", {
           "menu-item-danger": action.danger,
+          "menu-item-active": checked,
         })}
         icon={action.icon}
         disabled={action.disabled}
@@ -70,8 +100,22 @@ function SubMenuItemCom({
         {action.text}
       </WrappedMenuItem>
       <div className="sub-menu-wrapper">
-        {action?.items.map((innerItem: SimpleAction, innerIndex: number) => {
-          const menuItem = (
+        {action?.items.map((innerItem, innerIndex: number, list) => {
+          if (isDivider(innerItem)) {
+            if (innerIndex === 0 || innerIndex === list.length - 1) {
+              return null;
+            }
+            return <div key={innerIndex} className="menu-item-divider" />;
+          }
+          const menuItem = (innerItem as SubMenuAction)?.items?.length ? (
+            <SubMenuItemCom
+              index={innerIndex}
+              action={innerItem as SubMenuAction}
+              checkedKeys={checkedKeys}
+              activeKeys={activeKeys}
+              onSubMenuClick={onSubMenuClick}
+            />
+          ) : (
             <React.Fragment>
               <WrappedMenuItem
                 className={classnames({
@@ -79,6 +123,9 @@ function SubMenuItemCom({
                   "menu-item-selected":
                     !isNil(innerItem.key) &&
                     checkedKeys?.includes(innerItem.key),
+                  "menu-item-active":
+                    !isNil(innerItem.key) &&
+                    activeKeys?.includes(innerItem.key),
                 })}
                 icon={innerItem.icon}
                 disabled={innerItem.disabled}
@@ -141,7 +188,7 @@ export interface SimpleAction {
 }
 
 export interface SubMenuAction extends SimpleAction {
-  items: SimpleAction[];
+  items: Action[];
   placement?: Placement;
 }
 
@@ -155,6 +202,7 @@ export interface ActionsProps {
   actions?: Action[];
   itemDraggable?: boolean;
   checkedKeys?: (string | number)[];
+  activeKeys?: (string | number)[];
   themeVariant?: "default" | "elevo";
 }
 
@@ -189,12 +237,20 @@ class EoActions extends ReactNextElement implements ActionsProps {
   accessor actions: Action[] | undefined;
 
   /**
-   * actions选中项配置
+   * actions 选中项配置
    */
   @property({
     attribute: false,
   })
   accessor checkedKeys: (string | number)[] = [];
+
+  /**
+   * actions 激活项配置，用于菜单项的选择和展开，因按菜单层级顺序依次列出当前激活的菜单项
+   */
+  @property({
+    attribute: false,
+  })
+  accessor activeKeys: (string | number)[] = [];
 
   /**
    * action中的菜单项是否可拖拽
@@ -253,6 +309,7 @@ class EoActions extends ReactNextElement implements ActionsProps {
         onItemDragStart={this.#handleItemDragStart}
         onItemDragEnd={this.#handleItemDragEnd}
         checkedKeys={this.checkedKeys}
+        activeKeys={this.activeKeys}
       />
     );
   }
@@ -268,6 +325,7 @@ export interface ActionsComponentProps extends ActionsProps {
 export function EoActionsComponent({
   actions,
   checkedKeys,
+  activeKeys,
   onActionClick,
   itemDraggable,
   onItemDragStart,
@@ -293,16 +351,19 @@ export function EoActionsComponent({
                   index={index}
                   action={action as SubMenuAction}
                   checkedKeys={checkedKeys}
+                  activeKeys={activeKeys}
                   onSubMenuClick={(action: SimpleAction) => {
                     onActionClick?.(action);
                   }}
-                ></SubMenuItemCom>
+                />
               ) : (
                 <WrappedMenuItem
                   className={classnames({
                     "menu-item-danger": action.danger,
                     "menu-item-selected":
                       !isNil(action.key) && checkedKeys?.includes(action.key),
+                    "menu-item-active":
+                      !isNil(action.key) && activeKeys?.includes(action.key),
                   })}
                   draggable={itemDraggable}
                   icon={action.icon}

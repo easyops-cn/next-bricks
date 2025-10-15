@@ -59,6 +59,8 @@ eo-link {
 .menu-item-danger:not([disabled])::part(menu-item) {
   color: var(--theme-red-color);
 }
+
+.menu-item-active::part(menu-item),
 .menu-item-selected::part(menu-item) {
   font-weight: 600;
   background-color: var(--app-bar-dropdown-menu-item-hover-bg);
