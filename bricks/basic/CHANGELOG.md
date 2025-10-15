@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.59.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.58.4...@next-bricks/basic@1.59.0) (2025-10-15)
+
+
+### Features
+
+* **actions:** support activeKeys ([6e322f0](https://github.com/easyops-cn/next-bricks/commit/6e322f073a416e1887538c045f3198a462b1b958))
+
+
+
+
+
 ## [1.58.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.58.3...@next-bricks/basic@1.58.4) (2025-10-14)
 
 
