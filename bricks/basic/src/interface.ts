@@ -24,7 +24,8 @@ export type ButtonType =
   | "link"
   | "text"
   | "icon"
-  | "neutral";
+  | "neutral"
+  | "flat";
 
 export type ComponentSize = "large" | "medium" | "small" | "xs";
 

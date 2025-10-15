@@ -281,6 +281,19 @@ button:active {
   border: 1px solid var(--antd-btn-default-border);
 }
 
+/* flat [不带任何品牌色，单纯浅色背景，不带边框] */
+
+.flat {
+  color: var(--antd-btn-default-color);
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid transparent;
+}
+
+.flat:hover {
+  background-color: rgba(0, 0, 0, 0.06);
+  border: 1px solid transparent;
+}
+
 .icon {
   background: var(--palette-gray-3);
   border: 1px solid transparent;
