@@ -53,7 +53,7 @@ function SubMenuItemCom({
   const popoverRef = useRef<Popover>(null);
   const [checked, opened] = useMemo(() => {
     let keyIndex = -1;
-    if (activeKeys && action.key) {
+    if (activeKeys && action.key != null) {
       for (let i = 0; i < activeKeys.length; i++) {
         if (activeKeys[i] === action.key) {
           keyIndex = i;
@@ -245,7 +245,7 @@ class EoActions extends ReactNextElement implements ActionsProps {
   accessor checkedKeys: (string | number)[] = [];
 
   /**
-   * actions 激活项配置，用于菜单项的选择和展开，因按菜单层级顺序依次列出当前激活的菜单项
+   * actions 激活项配置，用于菜单项的选择和展开，需按菜单层级顺序依次列出当前激活的菜单项
    */
   @property({
     attribute: false,
