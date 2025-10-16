@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.60.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.59.1...@next-bricks/basic@1.60.0) (2025-10-16)
+
+
+### Features
+
+* new brick eo-batch-agent ([ea00671](https://github.com/easyops-cn/next-bricks/commit/ea00671d2e9b6938de627977b9b539377fb8806d))
+
+
+
+
+
 ## [1.59.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.59.0...@next-bricks/basic@1.59.1) (2025-10-15)
 
 
