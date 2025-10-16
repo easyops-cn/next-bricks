@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.60.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.60.0...@next-bricks/basic@1.60.1) (2025-10-16)
+
+
+### Bug Fixes
+
+* **dropdown-actions:** new prop: placement ([fbf79e8](https://github.com/easyops-cn/next-bricks/commit/fbf79e8bd3690063b9b702605e2f56b8ffaf7bb9))
+
+
+
+
+
 # [1.60.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.59.1...@next-bricks/basic@1.60.0) (2025-10-16)
 
 
