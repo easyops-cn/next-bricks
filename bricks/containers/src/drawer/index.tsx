@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useMemo,
-  useRef,
-  CSSProperties,
-  useState,
-} from "react";
+import React, { useEffect, useRef, CSSProperties, useState } from "react";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import { createDecorators, type EventEmitter } from "@next-core/element";
 import type {
@@ -36,6 +30,7 @@ export interface DrawerMapEvents {
 export interface DrawerProps {
   curElement?: HTMLElement;
   customTitle?: string;
+  subTitle?: string;
   width?: number | string;
   height?: number;
   closable?: boolean;
@@ -48,6 +43,7 @@ export interface DrawerProps {
   stackable?: boolean;
   maskStyle?: CSSProperties;
   keyboard?: boolean;
+  themeVariant?: "default" | "elevo";
 }
 
 const { defineElement, property, event, method } = createDecorators();
@@ -57,8 +53,8 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
  * 通用抽屉构件
  * @author sailor
  * @slot - 抽屉内容插槽
- * @slot headerLeft - 头部左上角
- * @slot extra - 头部右上角
+ * @slot headerLeft - 头部左上角（标题右侧）
+ * @slot extra - 头部右上角（关闭按钮左侧）
  * @slot footer - 抽屉底部插槽
  * @category container-display
  */
@@ -71,6 +67,11 @@ class Drawer extends ReactNextElement implements DrawerProps {
    * 标题
    */
   @property() accessor customTitle: string | undefined;
+
+  /**
+   * 副标题
+   */
+  @property() accessor subTitle: string | undefined;
 
   /**
    * 宽度(placement为left，right时生效)
@@ -150,6 +151,10 @@ class Drawer extends ReactNextElement implements DrawerProps {
   @property({ type: Boolean })
   accessor keyboard: boolean | undefined;
 
+  /** 主题变体 */
+  @property({ render: false })
+  accessor themeVariant: "default" | "elevo" | undefined;
+
   /**
    * 是否可堆叠，开启后每次打开抽屉会将新的抽屉置于上层（zIndex ++）
    *
@@ -214,6 +219,7 @@ class Drawer extends ReactNextElement implements DrawerProps {
     return (
       <DrawerComponent
         customTitle={this.customTitle}
+        subTitle={this.subTitle}
         width={this.width}
         height={this.height}
         closable={this.closable}
@@ -227,6 +233,7 @@ class Drawer extends ReactNextElement implements DrawerProps {
         scrollToTopWhenOpen={this.scrollToTopWhenOpen}
         curElement={this}
         keyboard={this.keyboard}
+        themeVariant={this.themeVariant}
         stackable={this.stackable}
         stack={this.#stack}
       />
@@ -241,6 +248,7 @@ interface DrawerComponentProps extends DrawerProps {
 
 export function DrawerComponent({
   customTitle,
+  subTitle,
   width = 500,
   height = 378,
   closable = true,
@@ -259,29 +267,6 @@ export function DrawerComponent({
 }: DrawerComponentProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>();
-  const header = useMemo(
-    () => (
-      <div className="drawer-header">
-        <div className="drawer-header-left">
-          <span className="drawer-title">{customTitle}</span>
-          <slot name="headerLeft"></slot>
-        </div>
-        <div className="drawer-header-right">
-          <slot name="extra"></slot>
-          {closable && (
-            <WrappedIcon
-              className="close-btn"
-              lib="antd"
-              theme="outlined"
-              icon="close"
-              onClick={onDrawerClose}
-            />
-          )}
-        </div>
-      </div>
-    ),
-    [closable, customTitle, onDrawerClose]
-  );
 
   const mergeMaskStyle = {
     backgroundColor: "var(--antd-modal-mask-bg)",
@@ -371,7 +356,27 @@ export function DrawerComponent({
         }}
       >
         <div className="drawer-content" tabIndex={-1} ref={containerRef}>
-          {header}
+          <div className="drawer-header">
+            <div className="drawer-header-left">
+              {subTitle ? <div className="sub-title">{subTitle}</div> : null}
+              <div className="title-wrapper">
+                <span className="drawer-title">{customTitle}</span>
+                <slot name="headerLeft"></slot>
+              </div>
+            </div>
+            <div className="drawer-header-right">
+              <slot name="extra"></slot>
+              {closable && (
+                <WrappedIcon
+                  className="close-btn"
+                  lib="antd"
+                  theme="outlined"
+                  icon="close"
+                  onClick={onDrawerClose}
+                />
+              )}
+            </div>
+          </div>
           <div className="drawer-body" ref={contentRef}>
             <slot></slot>
           </div>
