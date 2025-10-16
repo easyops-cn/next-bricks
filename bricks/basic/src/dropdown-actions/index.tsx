@@ -4,6 +4,7 @@ import { ReactNextElement, wrapBrick } from "@next-core/react-element";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
 import type {
+  Placement,
   Popover,
   PopoverEvents,
   PopoverEventsMapping,
@@ -45,6 +46,7 @@ export interface DropdownActionsProps
   extends Pick<ActionsProps, "actions" | "checkedKeys" | "themeVariant"> {
   disabled?: boolean;
   strategy?: "absolute" | "fixed";
+  placement?: Placement;
 }
 
 export interface DropdownActionsEvents {
@@ -101,6 +103,14 @@ class EoDropdownActions
   @property()
   accessor strategy: "absolute" | "fixed" | undefined;
 
+  /**
+   * 弹出层放置位置
+   *
+   * @default "bottom-start"
+   */
+  @property()
+  accessor placement: Placement | undefined;
+
   /** 主题变体 */
   @property()
   accessor themeVariant: "default" | "elevo" | undefined;
@@ -136,6 +146,7 @@ class EoDropdownActions
         actions={this.actions}
         disabled={this.disabled}
         strategy={this.strategy}
+        placement={this.placement}
         themeVariant={this.themeVariant}
         onActionClick={this.#handleClick}
         onVisibleChange={this.#handleVisibleChange}
@@ -155,6 +166,7 @@ export function EoDropdownActionsComponent({
   checkedKeys,
   disabled,
   strategy,
+  placement,
   themeVariant,
   onActionClick,
   onVisibleChange,
@@ -171,7 +183,7 @@ export function EoDropdownActionsComponent({
 
   return (
     <WrappedPopover
-      placement="bottom-start"
+      placement={placement ?? "bottom-start"}
       trigger="click"
       disabled={disabled}
       active={visible}
