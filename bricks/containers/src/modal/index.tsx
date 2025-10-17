@@ -69,6 +69,7 @@ const { defineElement, property, event, method } = createDecorators();
  * 模态框
  * @author sailor
  * @slot - 内容插槽
+ * @slot footer - 底部左侧插槽
  * @category container-display
  */
 @defineElement("eo-modal", {
