@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.60.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.60.1...@next-bricks/basic@1.60.2) (2025-10-17)
+
+
+### Bug Fixes
+
+* **popover:** theme variant elevo ([408e397](https://github.com/easyops-cn/next-bricks/commit/408e397ed36e31b7e96aaab4440f301f61b00800))
+
+
+
+
+
 ## [1.60.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.60.0...@next-bricks/basic@1.60.1) (2025-10-16)
 
 
