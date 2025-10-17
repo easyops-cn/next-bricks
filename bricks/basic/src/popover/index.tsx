@@ -32,6 +32,7 @@ export interface PopoverProps extends SlPopupProps {
   arrowColor?: string;
   anchorDisplay?: CSSProperties["display"];
   zIndex?: number;
+  themeVariant?: "default" | "elevo";
 }
 
 export interface PopoverEvents {
@@ -142,6 +143,10 @@ class Popover extends ReactNextElement implements PopoverProps {
    */
   @property({ type: Number })
   accessor zIndex: number | undefined;
+
+  /** 主题变体 */
+  @property({ render: false })
+  accessor themeVariant: "default" | "elevo" | undefined;
 
   /**
    * 当弹出层可见性变化之后触发

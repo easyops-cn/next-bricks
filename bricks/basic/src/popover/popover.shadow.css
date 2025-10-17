@@ -1,6 +1,11 @@
 :host {
   --eo-popover-arrow-color: var(--color-fill-bg-container-4);
   --eo-popover-z-index: 1030;
+  --eo-popover-border-radius: var(--medius-border-radius);
+}
+
+:host([theme-variant="elevo"]) {
+  --eo-popover-border-radius: 6px;
 }
 
 sl-popup::part(popup) {
@@ -26,7 +31,7 @@ sl-popup[data-current-placement^="right"]::part(popup) {
 sl-popup::part(popup) {
   background: var(--color-fill-bg-container-4);
   box-shadow: var(--base-shadow);
-  border-radius: var(--medius-border-radius);
+  border-radius: var(--eo-popover-border-radius);
 }
 
 sl-popup::part(arrow) {
