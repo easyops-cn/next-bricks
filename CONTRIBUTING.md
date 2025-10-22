@@ -249,3 +249,37 @@ accessor active: boolean | undefined = false;
 ```
 
 对于方法，其参数类型和返回类型也都将自动从源代码中识别。
+
+## 测试
+
+框架提供的测试命令是封装的 [Jest](https://jestjs.io/)，可以使用大部分 Jest 支持的参数。
+
+```bash
+# 测试指定包
+yarn test bricks/basic
+
+# 测试指定文件，并 watch
+yarn test bricks/basic/src/button/index.spec.ts --watch
+```
+
+### VS Code
+
+对于 VS Code 用户，可以使用更便捷和集成化的测试能力，按如下初始化准备：
+
+1. 安装 [vscode-jest](https://marketplace.visualstudio.com/items?itemName=Orta.vscode-jest) 插件
+2. 运行 `yarn yo` 并选择 `Setup VSCode testing settings`
+
+常见使用方式：
+
+1. 在 Testing View 中运行指定的包/目录/文件的测试（可选 debug / with coverage / update snapshot 等模式）
+2. 可以一键运行指定的测试用例/用例组
+3. 可视化的测试覆盖率统计和标注
+4. Copilot Agent 可使用该测试工具、并获取覆盖率等信息等帮助其验完善生成的代码和测试用例
+
+![Testing view](assets/testing-view.png)
+
+![Test buttons](assets/test-buttons.png)
+
+![Test coverage stats](assets/test-coverage-stats.png)
+
+![Test coverage marks](assets/test-coverage-marks.png)

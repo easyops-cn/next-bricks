@@ -77,4 +77,13 @@ eo-icon {
   --antd-btn-link-color: var(--elevo-color-brand);
   --antd-btn-link-hover-color: var(--elevo-color-brand-hover);
   --antd-btn-link-active-color: var(--elevo-color-brand-active);
+
+  .text {
+    color: #595959;
+  }
+
+  .underline {
+    text-decoration: none;
+    box-shadow: 0 1px 0 0 currentColor;
+  }
 }
