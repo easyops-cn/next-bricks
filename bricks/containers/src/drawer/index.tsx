@@ -32,7 +32,7 @@ export interface DrawerProps {
   customTitle?: string;
   subTitle?: string;
   width?: number | string;
-  height?: number;
+  height?: number | string;
   closable?: boolean;
   placement?: Placement;
   mask?: boolean;
@@ -82,10 +82,8 @@ class Drawer extends ReactNextElement implements DrawerProps {
   /**
    * 高度(placement为top，bottom时生效)
    */
-  @property({
-    type: Number,
-  })
-  accessor height: number | undefined;
+  @property({ attribute: false })
+  accessor height: number | string | undefined;
 
   /**
    * 是否显示右上角的关闭按钮

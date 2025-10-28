@@ -274,7 +274,7 @@ yarn test bricks/basic/src/button/index.spec.ts --watch
 1. 在 Testing View 中运行指定的包/目录/文件的测试（可选 debug / with coverage / update snapshot 等模式）
 2. 可以一键运行指定的测试用例/用例组
 3. 可视化的测试覆盖率统计和标注
-4. Copilot Agent 可使用该测试工具、并获取覆盖率等信息等帮助其验完善生成的代码和测试用例
+4. Copilot Agent 可使用该测试工具、并获取覆盖率等信息等帮助其验证和完善生成的代码和测试用例
 
 ![Testing view](assets/testing-view.png)
 
