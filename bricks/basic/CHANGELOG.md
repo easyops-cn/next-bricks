@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.61.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.60.3...@next-bricks/basic@1.61.0) (2025-10-30)
+
+
+### Features
+
+* **eo-actions:** support action groups and footer tips ([62d779f](https://github.com/easyops-cn/next-bricks/commit/62d779f955a8eae4778c63d0681ea89183632ff9))
+
+
+
+
+
 ## [1.60.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.60.2...@next-bricks/basic@1.60.3) (2025-10-22)
 
 
