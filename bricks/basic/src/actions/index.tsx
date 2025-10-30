@@ -107,6 +107,13 @@ function SubMenuItemCom({
             }
             return <div key={innerIndex} className="menu-item-divider" />;
           }
+          if (isActionGroup(innerItem)) {
+            return (
+              <div key={innerIndex} className="group-label">
+                {innerItem.text}
+              </div>
+            );
+          }
           const menuItem = (innerItem as SubMenuAction)?.items?.length ? (
             <SubMenuItemCom
               index={innerIndex}
@@ -196,7 +203,14 @@ export interface Divider {
   type: "divider";
   hidden?: boolean;
 }
-export type Action = SimpleAction | Divider | SubMenuAction;
+
+export interface ActionGroup {
+  type: "group";
+  text: string;
+  hidden?: boolean;
+}
+
+export type Action = SimpleAction | Divider | SubMenuAction | ActionGroup;
 
 export interface ActionsProps {
   actions?: Action[];
@@ -204,6 +218,7 @@ export interface ActionsProps {
   checkedKeys?: (string | number)[];
   activeKeys?: (string | number)[];
   themeVariant?: "default" | "elevo";
+  footerTips?: string;
 }
 
 export interface ActionsEvents {
@@ -262,6 +277,10 @@ class EoActions extends ReactNextElement implements ActionsProps {
   @property({ render: false })
   accessor themeVariant: "default" | "elevo" | undefined;
 
+  /** 底部提示文字 */
+  @property()
+  accessor footerTips: string | undefined;
+
   /**
    * 点击按钮时触发
    * @detail 该按钮配置
@@ -310,6 +329,7 @@ class EoActions extends ReactNextElement implements ActionsProps {
         onItemDragEnd={this.#handleItemDragEnd}
         checkedKeys={this.checkedKeys}
         activeKeys={this.activeKeys}
+        footerTips={this.footerTips}
       />
     );
   }
@@ -326,8 +346,9 @@ export function EoActionsComponent({
   actions,
   checkedKeys,
   activeKeys,
-  onActionClick,
   itemDraggable,
+  footerTips,
+  onActionClick,
   onItemDragStart,
   onItemDragEnd,
 }: ActionsComponentProps) {
@@ -335,16 +356,27 @@ export function EoActionsComponent({
     return actions?.filter((action) => !action.hidden);
   }, [actions]);
 
+  const grouped = useMemo(
+    () => filteredActions?.some(isActionGroup),
+    [filteredActions]
+  );
+
   return (
     <>
       {filteredActions?.length ? (
-        <WrappedMenu>
+        <WrappedMenu className={classnames({ grouped })}>
           {filteredActions.map((action: Action, index) => {
             if (isDivider(action)) {
               if (index === 0 || index === filteredActions.length - 1) {
                 return null;
               }
               return <div key={index} className="menu-item-divider" />;
+            } else if (isActionGroup(action)) {
+              return (
+                <div key={index} className="group-label">
+                  {action.text}
+                </div>
+              );
             } else {
               const menuItem = (action as SubMenuAction)?.items?.length ? (
                 <SubMenuItemCom
@@ -418,6 +450,7 @@ export function EoActionsComponent({
               );
             }
           })}
+          {footerTips && <div className="footer">{footerTips}</div>}
         </WrappedMenu>
       ) : null}
     </>
@@ -426,4 +459,8 @@ export function EoActionsComponent({
 
 function isDivider(action: Action): action is Divider {
   return "type" in action && action.type === "divider";
+}
+
+function isActionGroup(action: Action): action is ActionGroup {
+  return "type" in action && action.type === "group";
 }
