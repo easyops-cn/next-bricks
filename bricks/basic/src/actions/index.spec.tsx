@@ -292,4 +292,110 @@ describe("eo-actions", () => {
       document.body.removeChild(element);
     });
   });
+
+  test("group", async () => {
+    const element = document.createElement("eo-actions") as EoActions;
+    element.actions = [
+      {
+        type: "group",
+        text: "Group 1",
+      },
+      {
+        text: "Action 1",
+        key: "action1",
+      },
+      {
+        text: "Action 2",
+        key: "action2",
+      },
+      {
+        type: "divider",
+      },
+      {
+        type: "group",
+        text: "Group 2",
+      },
+      {
+        text: "Action 3",
+        key: "action3",
+      },
+      {
+        text: "Sub Menu",
+        key: "submenu",
+        items: [
+          {
+            type: "group",
+            text: "Sub Group 1",
+          },
+          {
+            text: "Sub Action 1",
+            key: "sub-action1",
+          },
+          {
+            text: "Sub Action 2",
+            key: "sub-action2",
+          },
+          {
+            type: "group",
+            text: "Sub Group 2",
+          },
+          {
+            text: "Sub Action 3",
+            key: "sub-action3",
+          },
+        ],
+      },
+    ];
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    const menu = element.shadowRoot?.querySelector("eo-menu");
+    expect(menu?.classList.contains("grouped")).toBe(true);
+
+    const groupLabels = element.shadowRoot?.querySelectorAll(".group-label");
+    expect(groupLabels).toHaveLength(4);
+    expect(groupLabels?.[0].textContent).toBe("Group 1");
+    expect(groupLabels?.[1].textContent).toBe("Group 2");
+    expect(groupLabels?.[2].textContent).toBe("Sub Group 1");
+    expect(groupLabels?.[3].textContent).toBe("Sub Group 2");
+
+    const menuItems = element.shadowRoot?.querySelectorAll("eo-menu-item");
+    expect(menuItems).toHaveLength(7);
+
+    const dividers = element.shadowRoot?.querySelectorAll(".menu-item-divider");
+    expect(dividers).toHaveLength(1);
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("footerTips", async () => {
+    const element = document.createElement("eo-actions") as EoActions;
+    element.actions = [
+      {
+        text: "Action 1",
+        key: "action1",
+      },
+      {
+        text: "Action 2",
+        key: "action2",
+      },
+    ];
+    element.footerTips = "This is a footer tip";
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    const footer = element.shadowRoot?.querySelector(".footer");
+    expect(footer).toBeTruthy();
+    expect(footer?.textContent).toBe("This is a footer tip");
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
 });

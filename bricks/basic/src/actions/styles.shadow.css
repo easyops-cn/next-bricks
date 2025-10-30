@@ -28,6 +28,10 @@ eo-menu-item::part(menu-item) {
   min-width: max-content;
 }
 
+.grouped eo-menu-item::part(menu-item) {
+  padding-left: 24px;
+}
+
 eo-menu-item:not([disabled]):hover::part(menu-item) {
   background-color: var(--left-sidebar-item-hover-bg);
 }
@@ -87,4 +91,20 @@ eo-menu-item::part(menu-icon) {
   content: "✓";
   display: inline-block;
   padding: 0 5px;
+}
+
+.group-label {
+  color: var(--antd-text-color-secondary);
+  font-size: 12px;
+  padding: 5px 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  padding: 7px 12px;
 }
