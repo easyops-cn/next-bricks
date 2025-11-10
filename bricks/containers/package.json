@@ -1,6 +1,6 @@
 {
   "name": "@next-bricks/containers",
-  "version": "1.16.0",
+  "version": "1.16.1",
   "homepage": "https://github.com/easyops-cn/next-advanced-bricks/tree/master/bricks/containers",
   "repository": {
     "type": "git",
@@ -43,8 +43,8 @@
     "@next-core/runtime": "^1.71.4",
     "@next-core/types": "^1.18.1",
     "@next-core/utils": "^1.8.8",
-    "@next-shared/general": "^0.10.11",
-    "@next-shared/story": "^0.0.6",
+    "@next-shared/general": "^0.10.12",
+    "@next-shared/story": "^0.0.7",
     "classnames": "^2.3.2",
     "react": "0.0.0-experimental-ee8509801-20230117",
     "react-rnd": "^10.4.1"
