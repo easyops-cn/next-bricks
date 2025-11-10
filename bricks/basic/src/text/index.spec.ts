@@ -3,10 +3,10 @@ import { act } from "react-dom/test-utils";
 import { queryByTestId, getByTestId, fireEvent } from "@testing-library/dom";
 
 import "./index.js";
-import { Text } from "./index.js";
+import { EoText } from "./index.js";
 describe("eo-text", () => {
   test("basic usage", async () => {
-    const element = document.createElement("eo-text") as Text;
+    const element = document.createElement("eo-text") as EoText;
     const div = document.createElement("div");
     div.textContent = "Hello world";
     element.color = "blue";
@@ -28,7 +28,7 @@ describe("eo-text", () => {
   });
 
   test("editable", async () => {
-    const element = document.createElement("eo-text") as Text;
+    const element = document.createElement("eo-text") as EoText;
     const onChange = jest.fn();
     const onUpdate = jest.fn();
 
@@ -96,7 +96,9 @@ describe("eo-text", () => {
       fireEvent(editControl, new CustomEvent("change", { detail: "b" }));
     });
 
-    expect(onChange).toHaveBeenCalledWith(expect.objectContaining({ detail: "b" }));
+    expect(onChange).toHaveBeenCalledWith(
+      expect.objectContaining({ detail: "b" })
+    );
 
     // edit control blur
     expect(onUpdate).not.toHaveBeenCalled();
@@ -105,7 +107,9 @@ describe("eo-text", () => {
       fireEvent.blur(editControl);
     });
 
-    expect(onUpdate).toHaveBeenCalledWith(expect.objectContaining({ detail: "b" }));
+    expect(onUpdate).toHaveBeenCalledWith(
+      expect.objectContaining({ detail: "b" })
+    );
 
     act(() => {
       document.body.removeChild(element);

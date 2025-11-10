@@ -1,7 +1,7 @@
 import { describe, test, expect } from "@jest/globals";
 import { act } from "react-dom/test-utils";
 import "./index.jsx";
-import { Image } from "./index.jsx";
+import { EoImage } from "./index.jsx";
 
 jest.mock("@next-core/theme", () => ({}));
 
@@ -9,7 +9,7 @@ jest.mock("@next-core/theme", () => ({}));
 describe("eo-image", () => {
   test("basic usage", () => {
     const onVisibleChange = jest.fn();
-    const element = document.createElement("eo-image") as Image;
+    const element = document.createElement("eo-image") as EoImage;
     element.addEventListener("visibleChange", onVisibleChange);
 
     expect(element.shadowRoot).toBeFalsy();

@@ -98,7 +98,7 @@ const { defineElement, property, event } = createDecorators();
   styleTexts: [styleText],
   alias: ["basic.general-text"],
 })
-class Text extends ReactNextElement implements TextProps {
+class EoText extends ReactNextElement implements TextProps {
   /**
    * 文本类型
    * @default "default"
@@ -317,4 +317,4 @@ export function TextComponent(props: TextComponentProps): React.ReactElement {
     </TextElementName>
   );
 }
-export { Text };
+export { EoText };
