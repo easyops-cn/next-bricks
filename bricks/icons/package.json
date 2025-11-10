@@ -47,6 +47,7 @@
       }
     }
   },
+  "types": "dist-types/jsx.d.ts",
   "exports": {
     "./package.json": "./package.json",
     "./dist/bricks.json": "./dist/bricks.json",
@@ -54,10 +55,10 @@
     "./data-providers/*": {
       "types": "./dist-types/data-providers/*.d.ts"
     },
+    ".": "./dist-types/jsx.d.ts",
     "./*": {
       "types": "./dist-types/*/index.d.ts"
-    },
-    "./jsx.d.ts": "./dist-types/jsx.d.ts"
+    }
   },
   "scripts": {
     "prestart": "node ./scripts/pre-build.js",
@@ -66,7 +67,7 @@
     "prebuild:types": "node ./scripts/pre-build.js",
     "build": "npm run build:main && npm run build:types",
     "build:main": "cross-env NODE_ENV=production build-next-bricks",
-    "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist-types --project tsconfig.json && cp src/jsx.d.ts dist-types/jsx.d.ts",
+    "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist-types --project tsconfig.json && copy-jsx-d-ts",
     "build:manifest": "cross-env NODE_ENV=production build-next-bricks --manifest-only",
     "test": "cross-env NODE_ENV='test' test-next",
     "test:ci": "cross-env NODE_ENV='test' CI=true test-next",
@@ -80,15 +81,15 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@next-core/element": "^1.2.19",
     "@next-core/react-element": "^1.0.38",
-    "@next-core/runtime": "^1.70.0",
-    "@next-core/utils": "^1.8.6",
+    "@next-core/runtime": "^1.71.4",
+    "@next-core/utils": "^1.8.8",
     "lodash": "^4.17.21",
     "lucide-static": "0.539.0",
     "react": "0.0.0-experimental-ee8509801-20230117"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
-    "@next-core/build-next-bricks": "^1.24.0",
+    "@next-core/build-next-bricks": "^1.25.0",
     "@next-core/test-next": "^2.0.1",
     "@next-shared/icons": "^0.23.1",
     "copy-webpack-plugin": "^11.0.0"
