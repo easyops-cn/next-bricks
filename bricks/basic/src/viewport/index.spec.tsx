@@ -1,7 +1,7 @@
 import { describe, test, expect, jest } from "@jest/globals";
 import { act } from "react-dom/test-utils";
 import "./";
-import type { Viewport } from "./index.js";
+import type { EoViewport } from "./index.js";
 
 jest.mock("@next-core/theme", () => ({}));
 
@@ -14,7 +14,7 @@ describe("eo-viewport", () => {
   });
 
   test("basic usage", async () => {
-    const element = document.createElement("eo-viewport") as Viewport;
+    const element = document.createElement("eo-viewport") as EoViewport;
 
     expect(element.shadowRoot).toBeFalsy();
 
@@ -34,7 +34,7 @@ describe("eo-viewport", () => {
   });
 
   test("props", () => {
-    const element = document.createElement("eo-viewport") as Viewport;
+    const element = document.createElement("eo-viewport") as EoViewport;
     element.width = "1000px";
     element.initialScale = 2;
     element.minimumScale = 1;
@@ -59,7 +59,7 @@ describe("eo-viewport", () => {
   });
 
   test("ignore if the meta already exists", () => {
-    const element = document.createElement("eo-viewport") as Viewport;
+    const element = document.createElement("eo-viewport") as EoViewport;
     const metaTag = document.createElement("meta");
     metaTag.name = "viewport";
     metaTag.content = "width=2000px, initial-scale=3";

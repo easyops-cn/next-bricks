@@ -6,10 +6,13 @@ import type {
   onFormInitialValuesChange,
   onFormValidateSuccess,
 } from "@formily/core";
-import type { createSchemaField, ISchema } from "@formily/react";
+import type { ISchema } from "@formily/react";
+import type { FunctionComponent } from "react";
 
 export interface EditorComponentProps<
-  T = ReturnType<typeof createSchemaField>,
+  // TS reports `TS2590: Expression produces a union type that is too complex to represent.`
+  // if using `T = ReturnType<typeof createSchemaField>`
+  T = FunctionComponent<any>,
 > {
   advancedMode?: boolean;
   SchemaFieldComponent: T;

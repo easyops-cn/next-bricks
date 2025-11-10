@@ -21,7 +21,7 @@ export
 @defineElement("eo-viewport", {
   styleTexts: [styleText],
 })
-class Viewport extends ReactNextElement implements ViewportProps {
+class EoViewport extends ReactNextElement implements ViewportProps {
   /**
    * @default "device-width"
    */

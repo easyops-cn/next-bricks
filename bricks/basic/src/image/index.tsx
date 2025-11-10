@@ -29,7 +29,7 @@ interface ImageProps {
   styleTexts: [imageComponentStyleText, previewStyleText],
   alias: ["basic.general-image"],
 })
-class Image extends ReactNextElement implements ImageListProps {
+class EoImage extends ReactNextElement implements ImageListProps {
   private _ImageListRef = createRef<ImageListRef>();
 
   /**
@@ -95,4 +95,4 @@ class Image extends ReactNextElement implements ImageListProps {
   }
 }
 
-export { Image, ImageProps };
+export { EoImage, ImageProps };
