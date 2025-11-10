@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.5.8...@next-bricks/icons@1.6.0) (2025-11-10)
+
+
+### Features
+
+* add JSX.IntrinsicElements definitions for bricks ([01f3bf9](https://github.com/easyops-cn/next-bricks/commit/01f3bf902a76b081db96688dee8ed33937b8a6f0))
+
+
+
+
+
 ## [1.5.8](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.5.7...@next-bricks/icons@1.5.8) (2025-10-15)
 
 **Note:** Version bump only for package @next-bricks/icons

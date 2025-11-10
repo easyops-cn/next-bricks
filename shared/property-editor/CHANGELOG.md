@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.4](https://github.com/easyops-cn/next-bricks/compare/@next-shared/property-editor@0.1.3...@next-shared/property-editor@0.1.4) (2025-11-10)
+
+
+### Bug Fixes
+
+* workaround ts errors ([49df3ff](https://github.com/easyops-cn/next-bricks/commit/49df3ff9aead3ab2644bb85291c82526172ac1a0))
+
+
+
+
+
 ## [0.1.3](https://github.com/easyops-cn/next-bricks/compare/@next-shared/property-editor@0.1.2...@next-shared/property-editor@0.1.3) (2024-09-03)
 
 **Note:** Version bump only for package @next-shared/property-editor

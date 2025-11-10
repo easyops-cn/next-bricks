@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.16.0](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.15.11...@next-bricks/containers@1.16.0) (2025-11-10)
+
+
+### Features
+
+* add JSX.IntrinsicElements definitions for bricks ([01f3bf9](https://github.com/easyops-cn/next-advanced-bricks/commit/01f3bf902a76b081db96688dee8ed33937b8a6f0))
+
+
+
+
+
 ## [1.15.11](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.15.10...@next-bricks/containers@1.15.11) (2025-10-30)
 
 

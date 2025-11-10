@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.62.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.61.0...@next-bricks/basic@1.62.0) (2025-11-10)
+
+
+### Bug Fixes
+
+* rename brick class name to avoid conflicts with native DOM API ([545143f](https://github.com/easyops-cn/next-bricks/commit/545143f70ea67e274ea002ac17dbd657106e706c))
+
+
+### Features
+
+* add JSX.IntrinsicElements definitions for bricks ([01f3bf9](https://github.com/easyops-cn/next-bricks/commit/01f3bf902a76b081db96688dee8ed33937b8a6f0))
+
+
+
+
+
 # [1.61.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.60.3...@next-bricks/basic@1.61.0) (2025-10-30)
 
 
