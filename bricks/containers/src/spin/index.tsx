@@ -6,7 +6,7 @@ import styleText from "./styles.shadow.css";
 
 const { defineElement, property } = createDecorators();
 
-interface EoSpinProps {
+export interface EoSpinProps {
   size: "small" | "default" | "large";
   tip?: string;
   spinning?: boolean;

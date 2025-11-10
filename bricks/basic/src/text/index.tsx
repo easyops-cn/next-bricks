@@ -68,7 +68,7 @@ export interface EditableConfig {
   autoSize?: AutoSize;
 }
 
-const typeElementNameMap: Record<string, keyof JSX.IntrinsicElements> = {
+const typeElementNameMap: Record<string, "code" | "kbd" | "span"> = {
   code: "code",
   keyboard: "kbd",
 };
@@ -219,7 +219,7 @@ export function TextComponent(props: TextComponentProps): React.ReactElement {
     onChange,
     onUpdate,
   } = props;
-  const TextElementName: keyof JSX.IntrinsicElements =
+  const TextElementName: "code" | "kbd" | "span" =
     typeElementNameMap[type as string] || "span";
   const [value, _setValue] = useState<string>("");
   const [editing, setEditing] = useState(false);

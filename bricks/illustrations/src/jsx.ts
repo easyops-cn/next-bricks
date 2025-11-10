@@ -5,6 +5,7 @@ import type {
 } from "./illustration-message";
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
       "eo-illustration-message": DetailedHTMLProps<
