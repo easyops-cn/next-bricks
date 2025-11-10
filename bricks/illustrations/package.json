@@ -64,14 +64,14 @@
     "@next-core/element": "^1.2.19",
     "@next-core/illustrations": "^0.11.34",
     "@next-core/react-element": "^1.0.38",
-    "@next-core/react-runtime": "^1.7.38",
-    "@next-core/types": "^1.17.0",
-    "@next-core/utils": "^1.8.6",
+    "@next-core/react-runtime": "^1.7.43",
+    "@next-core/types": "^1.18.1",
+    "@next-core/utils": "^1.8.8",
     "lodash": "^4.17.21",
     "react": "0.0.0-experimental-ee8509801-20230117"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.24.0",
+    "@next-core/build-next-bricks": "^1.25.0",
     "@next-core/test-next": "^2.0.1"
   },
   "peerDependencies": {

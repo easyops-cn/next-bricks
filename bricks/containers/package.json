@@ -37,11 +37,11 @@
   },
   "dependencies": {
     "@next-core/element": "^1.2.19",
-    "@next-core/i18n": "^1.0.85",
+    "@next-core/i18n": "^1.0.87",
     "@next-core/react-element": "^1.0.38",
-    "@next-core/runtime": "^1.70.0",
-    "@next-core/types": "^1.17.0",
-    "@next-core/utils": "^1.8.6",
+    "@next-core/runtime": "^1.71.4",
+    "@next-core/types": "^1.18.1",
+    "@next-core/utils": "^1.8.8",
     "@next-shared/general": "^0.10.11",
     "@next-shared/story": "^0.0.6",
     "classnames": "^2.3.2",
@@ -49,7 +49,7 @@
     "react-rnd": "^10.4.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.24.0",
+    "@next-core/build-next-bricks": "^1.25.0",
     "@next-core/test-next": "^2.0.1"
   },
   "peerDependencies": {
