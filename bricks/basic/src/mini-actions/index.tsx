@@ -19,6 +19,7 @@ import type {
   ActionsEventsMapping,
   ActionsProps,
   EoActions,
+  Action,
 } from "../actions";
 import "@next-core/theme";
 import styleText from "./styles.shadow.css";
@@ -56,7 +57,7 @@ export interface SimpleActionType extends Omit<SimpleAction, "text"> {
   isDropdown?: boolean;
 }
 
-export type ActionType = SimpleActionType & Divider;
+export type ActionType = SimpleActionType | Divider;
 
 export interface EoMiniActionsProps {
   actions?: ActionType[];
@@ -152,13 +153,13 @@ export function EoMiniActionsComponent(props: EoMiniActionsComponentProps) {
 
   const [outSideActions, dropdownActions] = useMemo(() => {
     const _outSideActions: SimpleActionType[] = [];
-    const _dropdownActions: ActionType[] = [];
+    const _dropdownActions: Action[] = [];
 
     actions?.forEach((action) => {
       if (action.hidden) return;
-      if (action.isDropdown) {
-        _dropdownActions.push(action);
-      } else if (action.type !== "divider") {
+      if ((action as SimpleActionType).isDropdown) {
+        _dropdownActions.push(action as Action);
+      } else if ((action as Divider).type !== "divider") {
         _outSideActions.push(action);
       }
     });
