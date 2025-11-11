@@ -4,32 +4,30 @@ import { ReactNextElement } from "@next-core/react-element";
 import imageComponentStyleText from "./imageComponent.shadow.css";
 import previewStyleText from "./preview.shadow.css";
 import "@next-core/theme";
-import {
-  ImageConfig,
-  ImageList,
-  ImageListProps,
-  ImageListRef,
-} from "./ImageList.js";
+import { ImageList, type ImageConfig, type ImageListRef } from "./ImageList.js";
 
 const { defineElement, property, method, event } = createDecorators();
 
-interface ImageProps {
+export interface ImageProps {
   imgList?: ImageConfig[];
   width?: string;
   height?: string;
   onlyPreview?: boolean;
 }
 
+export type { ImageConfig };
+
 /**
  * 通用图片构件
  * @author nlicro
  * @category display-component
  */
+export
 @defineElement("eo-image", {
   styleTexts: [imageComponentStyleText, previewStyleText],
   alias: ["basic.general-image"],
 })
-class EoImage extends ReactNextElement implements ImageListProps {
+class EoImage extends ReactNextElement implements ImageProps {
   private _ImageListRef = createRef<ImageListRef>();
 
   /**
@@ -94,5 +92,3 @@ class EoImage extends ReactNextElement implements ImageListProps {
     );
   }
 }
-
-export { EoImage, ImageProps };

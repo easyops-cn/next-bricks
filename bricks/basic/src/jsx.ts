@@ -23,7 +23,7 @@ import type { Popover, PopoverProps } from "./popover";
 import type { EoContextMenu, EoContextMenuProps } from "./context-menu";
 import type { TagList, TagListProps } from "./tag-list";
 import type { EoPageTitle, PageTitleProps } from "./page-title";
-import type { EoImage, ImageListProps } from "./image";
+import type { EoImage, ImageProps } from "./image";
 import type { EoEasyopsAvatar, EoEasyopsAvatarProps } from "./easyops-avatar";
 import type { EoMiniActions, EoMiniActionsProps } from "./mini-actions";
 import type {
@@ -77,6 +77,7 @@ import type {
 } from "./sidebar/sidebar-menu-item";
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
       "eo-actions": DetailedHTMLProps<HTMLAttributes<EoActions>, EoActions> &
@@ -166,7 +167,7 @@ declare global {
           onLoad?: (event: CustomEvent<void>) => void;
         };
       "eo-image": DetailedHTMLProps<HTMLAttributes<EoImage>, EoImage> &
-        ImageListProps;
+        ImageProps;
       "eo-link": DetailedHTMLProps<HTMLAttributes<Link>, Link> & LinkProps;
       "eo-list": DetailedHTMLProps<HTMLAttributes<List>, List> & ListProps;
       "eo-loading-container": DetailedHTMLProps<

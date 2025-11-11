@@ -25,7 +25,7 @@ const WrappedTabGroup = wrapBrick<
 
 const WrappedTabItem = wrapBrick<TabItem, TabItemProps>("eo-tab-item");
 
-interface TabListProps {
+export interface TabListProps {
   type?: TabType;
   tabs?: (TabItemProps | string)[];
   activePanel?: string;
@@ -51,6 +51,7 @@ export interface TabListEventsMapping {
  * @slot [panel] - Tab 页插槽
  * @category container-display
  */
+export
 @defineElement("eo-tab-list", {
   alias: ["containers.tab-list"],
   styleTexts: [styleText],
@@ -257,5 +258,3 @@ function TabListElement({
     </WrappedTabGroup>
   );
 }
-
-export { TabList };

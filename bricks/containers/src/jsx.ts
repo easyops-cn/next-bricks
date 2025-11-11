@@ -21,6 +21,7 @@ import type { TabItem, TabItemProps } from "./tab/tab-item";
 import type { TabList, TabListProps } from "./tab/tab-list";
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
       "eo-banner": DetailedHTMLProps<HTMLAttributes<EoBanner>, EoBanner> &
