@@ -118,7 +118,7 @@ function FaIconComponent({
   gradientDirection,
   onIconFoundChange,
 }: FaIconComponentProps) {
-  const prefix = _prefix ?? "fas";
+  const prefix = _prefix || "fas";
   const [iconDefinition, setIconDefinition] = useState<IconDefinition | null>(
     null
   );

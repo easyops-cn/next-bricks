@@ -41,7 +41,8 @@
     "eo-loading-container",
     "eo-viewport",
     "eo-list",
-    "eo-toggle-link"
+    "eo-toggle-link",
+    "eo-batch-agent"
   ],
   "icons": [
     "eo-antd-icon",

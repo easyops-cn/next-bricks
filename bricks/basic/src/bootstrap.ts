@@ -53,3 +53,4 @@ import "./viewport/index.js";
 import "./data-providers/require-modal-stack.js";
 import "./list/index.js";
 import "./toggle-link/index.js";
+import "./batch-agent/index.js";
