@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.58.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.57.1...@next-shared/common-bricks@0.58.0) (2025-11-18)
+
+
+### Features
+
+* add eo-batch-agent ([3f0c0ff](https://github.com/easyops-cn/next-bricks/commit/3f0c0ff5f0fbf763071153297eb7091bc408088e))
+
+
+
+
+
 ## [0.57.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.57.0...@next-shared/common-bricks@0.57.1) (2025-09-26)
 
 

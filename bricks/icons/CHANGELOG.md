@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.6.2...@next-bricks/icons@1.6.3) (2025-11-18)
+
+
+### Bug Fixes
+
+* handle when prefix/category/theme is an empty string ([5fe5c19](https://github.com/easyops-cn/next-bricks/commit/5fe5c194217439bc1a8377841ced872fa8baf2f4))
+
+
+
+
+
 ## [1.6.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.6.1...@next-bricks/icons@1.6.2) (2025-11-18)
 
 
