@@ -74,7 +74,7 @@ const typeElementNameMap: Record<string, "code" | "kbd" | "span"> = {
 };
 
 export interface TextProps {
-  type: TextType;
+  type?: TextType;
   editable?: boolean | EditableConfig | undefined;
   color?: CSSProperties["color"];
   fontSize?: CSSProperties["fontSize"];

@@ -21,11 +21,15 @@ import type { Menu, MenuProps } from "./menu";
 import type { List, ListProps } from "./list";
 import type { Popover, PopoverProps } from "./popover";
 import type { EoContextMenu, EoContextMenuProps } from "./context-menu";
-import type { TagList, TagListProps } from "./tag-list";
+import type { TagList, TagListProps, TagListItem } from "./tag-list";
 import type { EoPageTitle, PageTitleProps } from "./page-title";
 import type { EoImage, ImageProps } from "./image";
 import type { EoEasyopsAvatar, EoEasyopsAvatarProps } from "./easyops-avatar";
-import type { EoMiniActions, EoMiniActionsProps } from "./mini-actions";
+import type {
+  EoMiniActions,
+  EoMiniActionsProps,
+  SimpleActionType,
+} from "./mini-actions";
 import type {
   DropdownSelect,
   DropdownSelectProps,
@@ -62,6 +66,7 @@ import type { EoAppBarWrapper, AppBarWrapperProps } from "./app-bar-wrapper";
 import type { EoTooltip, ToolTipProps } from "./tooltip";
 import type { EoCounterBadge, BadgeProps } from "./counter-badge";
 import type { EoSidebar, EoSidebarProps } from "./sidebar";
+import type { ExpandedState } from "./sidebar/utils";
 import type { EoSidebarMenu, EoSidebarMenuProps } from "./sidebar/sidebar-menu";
 import type {
   EoSidebarMenuGroup,
@@ -75,6 +80,8 @@ import type {
   EoSidebarMenuItem,
   EoSidebarMenuItemProps,
 } from "./sidebar/sidebar-menu-item";
+import type { EoBatchAgent } from "./batch-agent";
+import type { EoEventAgent } from "./event-agent";
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -98,6 +105,12 @@ declare global {
         EoAvatarGroup
       > &
         EoAvatarGroupProps;
+      "eo-batch-agent": DetailedHTMLProps<
+        HTMLAttributes<EoBatchAgent>,
+        EoBatchAgent
+      > & {
+        onTrigger?: (event: CustomEvent<{ type: string }>) => void;
+      };
       "eo-breadcrumb": DetailedHTMLProps<
         HTMLAttributes<EoBreadcrumb>,
         EoBreadcrumb
@@ -134,12 +147,18 @@ declare global {
         HTMLAttributes<EoDropdownActions>,
         EoDropdownActions
       > &
-        DropdownActionsProps;
+        DropdownActionsProps & {
+          onActionClick?: (event: CustomEvent<SimpleAction>) => void;
+          onVisibleChange?: (event: CustomEvent<boolean>) => void;
+        };
       "eo-dropdown-button": DetailedHTMLProps<
         HTMLAttributes<DropdownButton>,
         DropdownButton
       > &
-        DropdownButtonProps;
+        DropdownButtonProps & {
+          onActionClick?: (event: CustomEvent<SimpleAction>) => void;
+          onVisibleChange?: (event: CustomEvent<boolean>) => void;
+        };
       "eo-dropdown-select": DetailedHTMLProps<
         HTMLAttributes<DropdownSelect>,
         DropdownSelect
@@ -152,6 +171,12 @@ declare global {
         EoEasyopsAvatar
       > &
         EoEasyopsAvatarProps;
+      "eo-event-agent": DetailedHTMLProps<
+        HTMLAttributes<EoEventAgent>,
+        EoEventAgent
+      > & {
+        onTrigger?: (event: CustomEvent<unknown>) => void;
+      };
       "eo-formatter-number": DetailedHTMLProps<
         HTMLAttributes<EoFormatterNumber>,
         EoFormatterNumber
@@ -167,7 +192,9 @@ declare global {
           onLoad?: (event: CustomEvent<void>) => void;
         };
       "eo-image": DetailedHTMLProps<HTMLAttributes<EoImage>, EoImage> &
-        ImageProps;
+        ImageProps & {
+          onVisibleChange?: (event: CustomEvent<boolean>) => void;
+        };
       "eo-link": DetailedHTMLProps<HTMLAttributes<Link>, Link> & LinkProps;
       "eo-list": DetailedHTMLProps<HTMLAttributes<List>, List> & ListProps;
       "eo-loading-container": DetailedHTMLProps<
@@ -199,7 +226,8 @@ declare global {
         EoMiniActions
       > &
         EoMiniActionsProps & {
-          onActionClick?: (event: CustomEvent<SimpleAction>) => void;
+          onActionClick?: (event: CustomEvent<SimpleActionType>) => void;
+          onVisibleChange?: (event: CustomEvent<boolean>) => void;
         };
       "eo-page-title": DetailedHTMLProps<
         HTMLAttributes<EoPageTitle>,
@@ -212,7 +240,10 @@ declare global {
           onBeforeVisibleChange?: (event: CustomEvent<boolean>) => void;
         };
       "eo-sidebar": DetailedHTMLProps<HTMLAttributes<EoSidebar>, EoSidebar> &
-        EoSidebarProps;
+        EoSidebarProps & {
+          onActualWidthChange?: (event: CustomEvent<number>) => void;
+          onExpandedStateChange?: (event: CustomEvent<ExpandedState>) => void;
+        };
       "eo-sidebar-menu": DetailedHTMLProps<
         HTMLAttributes<EoSidebarMenu>,
         EoSidebarMenu
@@ -243,15 +274,40 @@ declare global {
           onClose?: (event: CustomEvent<TagProps>) => void;
         };
       "eo-tag-list": DetailedHTMLProps<HTMLAttributes<TagList>, TagList> &
-        TagListProps;
-      "eo-text": DetailedHTMLProps<HTMLAttributes<EoText>, EoText> & TextProps;
+        TagListProps & {
+          onCheck?: (
+            event: CustomEvent<{
+              item: TagListItem | string | undefined;
+              list: TagListItem[];
+            }>
+          ) => void;
+          onClose?: (
+            event: CustomEvent<{
+              item: TagListItem | string | undefined;
+              list: TagListItem[];
+            }>
+          ) => void;
+          onTagClick?: (
+            event: CustomEvent<TagListItem | string | undefined>
+          ) => void;
+        };
+      "eo-text": DetailedHTMLProps<HTMLAttributes<EoText>, EoText> &
+        TextProps & {
+          onChange?: (event: CustomEvent<string>) => void;
+          onUpdate?: (event: CustomEvent<string>) => void;
+        };
       "eo-toggle-link": DetailedHTMLProps<
         HTMLAttributes<ToggleLink>,
         ToggleLink
       > &
-        ToggleLinkProps;
+        ToggleLinkProps & {
+          onToggle?: (event: CustomEvent<boolean>) => void;
+        };
       "eo-tooltip": DetailedHTMLProps<HTMLAttributes<EoTooltip>, EoTooltip> &
-        ToolTipProps;
+        ToolTipProps & {
+          onOpenChange?: (event: CustomEvent<boolean>) => void;
+          onAfterOpenChange?: (event: CustomEvent<boolean>) => void;
+        };
       "eo-viewport": DetailedHTMLProps<HTMLAttributes<EoViewport>, EoViewport> &
         ViewportProps;
     }
