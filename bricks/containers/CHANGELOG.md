@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.16.2](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.16.1...@next-bricks/containers@1.16.2) (2025-11-18)
+
+
+### Bug Fixes
+
+* **jsx:** refine event types ([e1f48c6](https://github.com/easyops-cn/next-advanced-bricks/commit/e1f48c6a3943406f273c4cb65efd9caae64275ae))
+* use jsx.ts instead of jsx.d.ts for source fil ([5818f34](https://github.com/easyops-cn/next-advanced-bricks/commit/5818f347892e65845cb24f0c6dffbf2329d66b0f))
+
+
+
+
+
 ## [1.16.1](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.16.0...@next-bricks/containers@1.16.1) (2025-11-10)
 
 

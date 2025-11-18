@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.5.1...@next-bricks/illustrations@1.5.2) (2025-11-18)
+
+
+### Bug Fixes
+
+* use jsx.ts instead of jsx.d.ts for source fil ([5818f34](https://github.com/easyops-cn/next-bricks/commit/5818f347892e65845cb24f0c6dffbf2329d66b0f))
+
+
+
+
+
 ## [1.5.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/illustrations@1.5.0...@next-bricks/illustrations@1.5.1) (2025-11-10)
 
 
