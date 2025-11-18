@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.63.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.63.0...@next-bricks/basic@1.63.1) (2025-11-18)
+
+
+### Bug Fixes
+
+* refine jsx types ([778fcd5](https://github.com/easyops-cn/next-bricks/commit/778fcd53f4fb95c03a287287bc15927a794ae0ae))
+
+
+
+
+
 # [1.63.0](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.62.3...@next-bricks/basic@1.63.0) (2025-11-18)
 
 
