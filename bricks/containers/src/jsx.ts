@@ -16,8 +16,6 @@ import type { EoPopup, EoPopupProps } from "./popup";
 import type { ResizableBox, ResizableBoxProps } from "./resizable-box";
 import type { SearchBar, SearchBarProps } from "./search-bar";
 import type { EoSpin, EoSpinProps } from "./spin";
-import type { TabGroup, TabGroupProps } from "./tab/tab-group";
-import type { TabItem, TabItemProps } from "./tab/tab-item";
 import type { TabList, TabListProps } from "./tab/tab-list";
 
 declare global {
@@ -55,7 +53,9 @@ declare global {
         HTMLAttributes<EoMainView>,
         EoMainView
       > &
-        MainViewProps;
+        MainViewProps & {
+          onDashboardExit?: (event: CustomEvent<void>) => void;
+        };
       "eo-micro-view": DetailedHTMLProps<HTMLAttributes<MicroView>, MicroView>;
       "eo-modal": DetailedHTMLProps<HTMLAttributes<Modal>, Modal> &
         ModalProps & {
@@ -80,25 +80,11 @@ declare global {
         HTMLAttributes<ResizableBox>,
         ResizableBox
       > &
-        ResizableBoxProps & {
-          onResizeStart?: (event: CustomEvent<void>) => void;
-          onResize?: (
-            event: CustomEvent<{ width: number; height: number }>
-          ) => void;
-          onResizeStop?: (
-            event: CustomEvent<{ width: number; height: number }>
-          ) => void;
-        };
+        ResizableBoxProps;
       "eo-search-bar": DetailedHTMLProps<HTMLAttributes<SearchBar>, SearchBar> &
         SearchBarProps;
       "eo-spin": DetailedHTMLProps<HTMLAttributes<EoSpin>, EoSpin> &
         EoSpinProps;
-      "eo-tab-group": DetailedHTMLProps<HTMLAttributes<TabGroup>, TabGroup> &
-        TabGroupProps & {
-          onTabSelect?: (event: CustomEvent<string>) => void;
-        };
-      "eo-tab-item": DetailedHTMLProps<HTMLAttributes<TabItem>, TabItem> &
-        TabItemProps;
       "eo-tab-list": DetailedHTMLProps<HTMLAttributes<TabList>, TabList> &
         TabListProps & {
           onTabSelect?: (event: CustomEvent<string>) => void;
