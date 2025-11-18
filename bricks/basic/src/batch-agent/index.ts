@@ -18,7 +18,7 @@ const { defineElement, event, method } = createDecorators();
  *
  * 方法参数
  * - eo-event-agent trigger() 方法的参数会作为 EVENT.detail 传递给 trigger 事件。
- * - eo-batch-agent trigger() 方法的参数必须是字符串，表示事件类型，trigger 事件详情 为 { type: string } 形式。
+ * - eo-batch-agent trigger() 方法的参数必须是字符串，表示事件类型，trigger 事件详情 为 `{ type: string }` 形式。
  *   因此，如果希望在事件回调时消费其他信息，需通过 context/state 进行传递。
  */
 export

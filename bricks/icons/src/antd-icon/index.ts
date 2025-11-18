@@ -147,5 +147,5 @@ export const WrappedAntdIcon = wrapLocalBrick<
 
 function fixTheme(theme?: string) {
   // The icon theme for v2 is twoTone
-  return (theme === "twoTone" ? "twotone" : theme) ?? "outlined";
+  return (theme === "twoTone" ? "twotone" : theme) || "outlined";
 }

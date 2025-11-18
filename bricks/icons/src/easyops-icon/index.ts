@@ -65,7 +65,7 @@ class EasyOpsIcon extends NextElement implements EasyOpsIconProps {
       return;
     }
     const { category: _category, icon } = this;
-    const category = _category ?? "default";
+    const category = _category || "default";
     const url = icon
       ? `${
           // istanbul ignore next
