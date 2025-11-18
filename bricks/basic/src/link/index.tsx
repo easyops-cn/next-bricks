@@ -4,6 +4,7 @@ import React, {
   useMemo,
   useRef,
   useState,
+  type HTMLAttributes,
 } from "react";
 import { createDecorators } from "@next-core/element";
 import { ReactNextElement, wrapBrick } from "@next-core/react-element";
@@ -37,7 +38,7 @@ export interface LinkProps {
   url?: ExtendedLocationDescriptor;
   href?: string;
   inApp?: boolean;
-  icon?: GeneralIconProps;
+  icon?: GeneralIconProps & HTMLAttributes<GeneralIcon>;
   target?: Target;
   showExternalIcon?: boolean;
   underline?: boolean;
@@ -129,7 +130,7 @@ class Link extends ReactNextElement implements LinkProps {
   @property({
     attribute: false,
   })
-  accessor icon: GeneralIconProps | undefined;
+  accessor icon: (GeneralIconProps & HTMLAttributes<GeneralIcon>) | undefined;
 
   /**
    * 是否开启危险状态

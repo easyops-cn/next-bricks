@@ -1,4 +1,4 @@
-import React, { useMemo, Ref } from "react";
+import React, { useMemo, Ref, type HTMLAttributes } from "react";
 import { createDecorators } from "@next-core/element";
 import {
   ReactNextElement,
@@ -37,7 +37,7 @@ if (false) {
 export interface ButtonProps {
   type?: ButtonType;
   size?: ComponentSize;
-  icon?: GeneralIconProps;
+  icon?: GeneralIconProps & HTMLAttributes<GeneralIcon>;
   shape?: Shape;
   danger?: boolean;
   disabled?: boolean;
@@ -89,7 +89,7 @@ class Button extends ReactNextElement implements ButtonProps {
   @property({
     attribute: false,
   })
-  accessor icon: GeneralIconProps | undefined;
+  accessor icon: (GeneralIconProps & HTMLAttributes<GeneralIcon>) | undefined;
 
   /**
    * 按钮形状，支持圆形、椭圆形，不设置为默认方形
