@@ -70,6 +70,7 @@ const { defineElement, property, event, method } = createDecorators();
  * @author sailor
  * @slot - 内容插槽
  * @slot footer - 底部左侧插槽
+ * @slot sidebar - 弹窗左侧插槽
  * @category container-display
  */
 @defineElement("eo-modal", {
@@ -300,6 +301,8 @@ function ModalComponent({
   themeVariant,
 }: ModalComponentProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const sidebarSlotRef = useRef<HTMLSlotElement>(null);
+  const [hasSidebarContent, setHasSidebarContent] = useState(false);
 
   const handleWrapperClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>): void => {
@@ -389,6 +392,40 @@ function ModalComponent({
       handleConfirmClick,
     ]
   );
+  const sidebar = useMemo(
+    () => (
+      <div className="modal-sidebar">
+        <slot name="sidebar" ref={sidebarSlotRef}></slot>
+      </div>
+    ),
+    []
+  );
+
+  // 检测 sidebar 插槽是否有内容
+  useEffect(() => {
+    const checkSidebarContent = () => {
+      if (sidebarSlotRef.current) {
+        const hasContent = sidebarSlotRef.current.assignedElements().length > 0;
+        setHasSidebarContent(hasContent);
+      }
+    };
+
+    const sidebarSlot = sidebarSlotRef.current;
+    if (sidebarSlot) {
+      sidebarSlot.addEventListener("slotchange", checkSidebarContent);
+    }
+
+    // 当弹窗打开时，延迟检查以确保 DOM 已渲染
+    if (open) {
+      setTimeout(checkSidebarContent, 0);
+    }
+
+    return () => {
+      if (sidebarSlot) {
+        sidebarSlot.removeEventListener("slotchange", checkSidebarContent);
+      }
+    };
+  }, [open]);
 
   const previousActiveElement = useRef<Element | null>(null);
 
@@ -466,13 +503,17 @@ function ModalComponent({
         <div
           className={classNames("modal", {
             fullscreen,
+            "has-sidebar": hasSidebarContent,
           })}
           style={{ width: width }}
         >
           <div className="modal-container" tabIndex={-1} ref={containerRef}>
-            {header}
-            {body}
-            {footer}
+            {sidebar}
+            <div className="modal-main-content">
+              {header}
+              {body}
+              {footer}
+            </div>
           </div>
         </div>
       </div>

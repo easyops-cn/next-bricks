@@ -213,4 +213,142 @@ describe("eo-modal", () => {
       document.body.removeChild(element);
     });
   });
+
+  test("modal without sidebar content", async () => {
+    const element = document.createElement("eo-modal") as Modal;
+    element.modalTitle = "Modal Title";
+
+    const bodyElement = document.createElement("div");
+    bodyElement.textContent = "This is main content";
+
+    act(() => {
+      element.appendChild(bodyElement);
+      document.body.appendChild(element);
+    });
+
+    await act(async () => {
+      element.open();
+    });
+
+    expect(element.visible).toBeTruthy();
+
+    // 没有 sidebar 内容时，不应该有 has-sidebar 类
+    const modalElement = element.shadowRoot?.querySelector(".modal");
+    expect(modalElement?.classList.contains("has-sidebar")).toBeFalsy();
+
+    // sidebar 应该存在但被隐藏
+    const sidebarElement = element.shadowRoot?.querySelector(".modal-sidebar");
+    expect(sidebarElement).toBeTruthy();
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("modal with sidebar content", async () => {
+    const element = document.createElement("eo-modal") as Modal;
+    element.modalTitle = "Modal Title with Sidebar";
+
+    const bodyElement = document.createElement("div");
+    bodyElement.textContent = "This is main content";
+
+    const sidebarElement = document.createElement("div");
+    sidebarElement.slot = "sidebar";
+    sidebarElement.textContent = "This is sidebar content";
+
+    act(() => {
+      element.appendChild(bodyElement);
+      element.appendChild(sidebarElement);
+      document.body.appendChild(element);
+    });
+
+    await act(async () => {
+      element.open();
+    });
+
+    // 等待 slotchange 事件触发和状态更新
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 10));
+    });
+
+    expect(element.visible).toBeTruthy();
+
+    // 有 sidebar 内容时，应该有 has-sidebar 类
+    const modalElement = element.shadowRoot?.querySelector(".modal");
+    expect(modalElement?.classList.contains("has-sidebar")).toBeTruthy();
+
+    // 检查 sidebar 插槽是否正确渲染内容
+    const sidebarSlot = element.shadowRoot?.querySelector(
+      'slot[name="sidebar"]'
+    ) as HTMLSlotElement;
+    expect(sidebarSlot).toBeTruthy();
+    expect(sidebarSlot?.assignedElements().length).toBeGreaterThan(0);
+
+    // 验证 modal-main-content 存在
+    const mainContent = element.shadowRoot?.querySelector(
+      ".modal-main-content"
+    );
+    expect(mainContent).toBeTruthy();
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("sidebar content dynamically added", async () => {
+    const element = document.createElement("eo-modal") as Modal;
+    element.modalTitle = "Modal Title";
+
+    const bodyElement = document.createElement("div");
+    bodyElement.textContent = "This is main content";
+
+    act(() => {
+      element.appendChild(bodyElement);
+      document.body.appendChild(element);
+    });
+
+    await act(async () => {
+      element.open();
+    });
+
+    // 初始没有 has-sidebar 类
+    let modalElement = element.shadowRoot?.querySelector(".modal");
+    expect(modalElement?.classList.contains("has-sidebar")).toBeFalsy();
+
+    // 动态添加 sidebar 内容
+    const sidebarElement = document.createElement("div");
+    sidebarElement.slot = "sidebar";
+    sidebarElement.textContent = "Dynamically added sidebar";
+
+    await act(async () => {
+      element.appendChild(sidebarElement);
+    });
+
+    // 等待 slotchange 事件触发
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 10));
+    });
+
+    // 现在应该有 has-sidebar 类
+    modalElement = element.shadowRoot?.querySelector(".modal");
+    expect(modalElement?.classList.contains("has-sidebar")).toBeTruthy();
+
+    // 移除 sidebar 内容
+    await act(async () => {
+      element.removeChild(sidebarElement);
+    });
+
+    // 等待 slotchange 事件触发
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 10));
+    });
+
+    // 应该移除 has-sidebar 类
+    modalElement = element.shadowRoot?.querySelector(".modal");
+    expect(modalElement?.classList.contains("has-sidebar")).toBeFalsy();
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
 });
