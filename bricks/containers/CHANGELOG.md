@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.18.0](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.17.1...@next-bricks/containers@1.18.0) (2025-11-20)
+
+
+### Features
+
+* modal supports height, noFooter, fullscreen, ... ([0b30106](https://github.com/easyops-cn/next-advanced-bricks/commit/0b301067e5e773be9d466d95f5c70d038b359fea))
+
+
+
+
+
 ## [1.17.1](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.17.0...@next-bricks/containers@1.17.1) (2025-11-20)
 
 **Note:** Version bump only for package @next-bricks/containers

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.6.3...@next-bricks/icons@1.6.4) (2025-11-20)
+
+
+### Bug Fixes
+
+* lucide icon supports setting fill: true ([c7c33d0](https://github.com/easyops-cn/next-bricks/commit/c7c33d07ad7d50c4e600423bbb04a353e8074e58))
+
+
+
+
+
 ## [1.6.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.6.2...@next-bricks/icons@1.6.3) (2025-11-18)
 
 

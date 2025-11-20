@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.63.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.63.1...@next-bricks/basic@1.63.2) (2025-11-20)
+
+
+### Bug Fixes
+
+* new button type: ai ([f4082aa](https://github.com/easyops-cn/next-bricks/commit/f4082aacdca3108f2dfc658ca1060d205335fe04))
+
+
+
+
+
 ## [1.63.1](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.63.0...@next-bricks/basic@1.63.1) (2025-11-18)
 
 
