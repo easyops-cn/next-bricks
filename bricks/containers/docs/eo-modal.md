@@ -151,3 +151,45 @@
       properties:
         textContent: Content
 ```
+
+### sidebar slot
+
+```yaml preview minHeight="320px"
+- brick: eo-button
+  properties:
+    textContent: open
+  events:
+    click:
+      - target: "#modal"
+        method: open
+- brick: eo-modal
+  portal: true
+  properties:
+    modalTitle: 模态框标题
+    id: "modal"
+    placement: left
+    keyboard: true
+    width: 700px
+  events:
+    open:
+      - action: message.success
+        args:
+          - modal Open
+    close:
+      - action: message.success
+        args:
+          - modal Close
+  slots:
+    "":
+      bricks:
+        - brick: div
+          properties:
+            textContent: Content
+      type: bricks
+    sidebar:
+      bricks:
+        - brick: div
+          properties:
+            textContent: Sidebar
+      type: bricks
+```
