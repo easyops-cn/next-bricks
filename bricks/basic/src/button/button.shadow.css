@@ -294,6 +294,12 @@ button:active {
   border: 1px solid transparent;
 }
 
+.ai {
+  color: #fff;
+  background: linear-gradient(90deg, #4f72ff 0%, rgba(163, 26, 255, 0.6) 100%);
+  border: 1px solid transparent;
+}
+
 .icon {
   background: var(--palette-gray-3);
   border: 1px solid transparent;

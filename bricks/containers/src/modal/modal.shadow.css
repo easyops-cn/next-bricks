@@ -35,14 +35,6 @@
   padding-bottom: 24px;
 }
 
-.modal.fullscreen {
-  top: 0;
-  margin: 20px;
-  width: auto;
-  max-width: none;
-  padding-bottom: 0;
-}
-
 .modal-container {
   background-color: var(--antd-component-background);
   border: 1px solid var(--palette-gray-5);
@@ -82,6 +74,18 @@
   border-bottom: 1px solid var(--palette-gray-4);
 }
 
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.divider {
+  height: 16px;
+  border-left: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.fullscreen-btn,
 .close-btn {
   cursor: pointer;
 }
@@ -98,13 +102,10 @@
   padding: 24px;
 }
 
-.modal-body.fullscreen {
-  height: calc(100vh - 198px);
-  overflow: auto;
-}
-
-.modal.has-sidebar .modal-body {
+.modal.has-sidebar .modal-body,
+.modal.has-height .modal-body {
   flex: 1;
+  min-height: 0;
   overflow: auto;
 }
 
@@ -121,6 +122,21 @@
 
 .modal-footer-buttons {
   margin-left: auto;
+}
+
+.has-height {
+  max-height: calc(100vh - 124px);
+
+  .modal-container,
+  .modal-sidebar,
+  .modal-main-content {
+    height: 100%;
+  }
+}
+
+.fullscreen {
+  top: 24px;
+  max-height: calc(100vh - 48px);
 }
 
 :host([theme-variant="elevo"]) {
@@ -148,7 +164,11 @@
     padding: 16px 20px 20px;
   }
 
-  .close-btn {
+  .header-right {
     margin-top: 4px;
   }
+}
+
+:host([theme-variant="elevo"][header-bordered]) .modal-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
