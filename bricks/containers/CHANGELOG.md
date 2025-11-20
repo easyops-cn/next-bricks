@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.17.0](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.16.2...@next-bricks/containers@1.17.0) (2025-11-20)
+
+
+### Features
+
+* eo-modal 支持 sidebar插槽 ([392411a](https://github.com/easyops-cn/next-advanced-bricks/commit/392411a572e227af445dcbc6aaf093b3ba1ee829))
+
+
+
+
+
 ## [1.16.2](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.16.1...@next-bricks/containers@1.16.2) (2025-11-18)
 
 
