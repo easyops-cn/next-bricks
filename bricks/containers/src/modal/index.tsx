@@ -31,11 +31,16 @@ export interface ModalProps {
   curElement?: HTMLElement;
   modalTitle?: string;
   width?: string | number;
+  height?: string | number;
   maskClosable?: boolean;
   confirmText?: string;
   cancelText?: string;
   hideCancelButton?: boolean;
   fullscreen?: boolean;
+  fullscreenButton?: boolean;
+  noFooter?: boolean;
+  background?: string;
+  headerBordered?: boolean;
   confirmDisabled?: boolean;
   confirmDanger?: boolean;
   closeWhenConfirm?: boolean;
@@ -85,8 +90,15 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 宽度
+   *
+   * @default "520px"
    */
-  @property() accessor width: string | number | undefined;
+  @property({ attribute: false }) accessor width: string | number | undefined;
+
+  /**
+   * 高度
+   */
+  @property({ attribute: false }) accessor height: string | number | undefined;
 
   /**
    * 点击遮罩层是否关闭模态框
@@ -103,6 +115,30 @@ class Modal extends ReactNextElement implements ModalProps {
     type: Boolean,
   })
   accessor fullscreen: boolean | undefined;
+
+  /**
+   * 是否显示全屏按钮
+   */
+  @property({ type: Boolean })
+  accessor fullscreenButton: boolean | undefined;
+
+  /**
+   * 是否隐藏底部
+   */
+  @property({ type: Boolean })
+  accessor noFooter: boolean | undefined;
+
+  /**
+   * 是否显示头部底边线（themeVariant: elevo 时默认不显示头部底边线）
+   */
+  @property({ type: Boolean, render: false })
+  accessor headerBordered: boolean | undefined;
+
+  /**
+   * 背景
+   */
+  @property()
+  accessor background: string | undefined;
 
   /**
    * 点击确定按钮时自动关闭弹窗
@@ -248,12 +284,16 @@ class Modal extends ReactNextElement implements ModalProps {
       <ModalComponent
         modalTitle={this.modalTitle}
         width={this.width}
+        height={this.height}
         maskClosable={this.maskClosable}
         visible={this.visible}
         confirmText={this.confirmText}
         cancelText={this.cancelText}
         hideCancelButton={this.hideCancelButton}
         fullscreen={this.fullscreen}
+        fullscreenButton={this.fullscreenButton}
+        noFooter={this.noFooter}
+        background={this.background}
         confirmDisabled={this.confirmDisabled}
         confirmDanger={this.confirmDanger}
         closeWhenConfirm={this.closeWhenConfirm}
@@ -282,12 +322,16 @@ interface ModalComponentProps extends ModalProps {
 function ModalComponent({
   modalTitle,
   width,
+  height,
   maskClosable,
   confirmText = t(K.CONFIRM),
   cancelText = t(K.CANCEL),
   hideCancelButton,
   visible: open = false,
-  fullscreen,
+  fullscreen: propFullscreen,
+  fullscreenButton,
+  noFooter,
+  background,
   confirmDisabled,
   closeWhenConfirm = true,
   confirmDanger,
@@ -303,6 +347,11 @@ function ModalComponent({
   const containerRef = useRef<HTMLDivElement>(null);
   const sidebarSlotRef = useRef<HTMLSlotElement>(null);
   const [hasSidebarContent, setHasSidebarContent] = useState(false);
+  const [fullscreen, setFullscreen] = useState(!!propFullscreen);
+
+  useEffect(() => {
+    setFullscreen(!!propFullscreen);
+  }, [propFullscreen]);
 
   const handleWrapperClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>): void => {
@@ -327,17 +376,33 @@ function ModalComponent({
     () => (
       <div className="modal-header">
         <span className="modal-title">{modalTitle}</span>
-        <WrappedIcon
-          className="close-btn"
-          lib="antd"
-          theme="outlined"
-          icon="close"
-          onClick={onModalClose}
-          data-testid="close-button"
-        />
+        <div className="header-right">
+          {fullscreenButton && (
+            <>
+              <WrappedIcon
+                className="fullscreen-btn"
+                lib="lucide"
+                icon={fullscreen ? "minimize-2" : "maximize-2"}
+                onClick={() => {
+                  setFullscreen((prev) => !prev);
+                }}
+                data-testid="fullscreen-button"
+              />
+              <div className="divider" />
+            </>
+          )}
+          <WrappedIcon
+            className="close-btn"
+            lib="antd"
+            theme="outlined"
+            icon="close"
+            onClick={onModalClose}
+            data-testid="close-button"
+          />
+        </div>
       </div>
     ),
-    [modalTitle, onModalClose]
+    [fullscreen, fullscreenButton, modalTitle, onModalClose]
   );
 
   const body = useMemo(
@@ -354,34 +419,36 @@ function ModalComponent({
   );
 
   const footer = useMemo(
-    () => (
-      <div className="modal-footer">
-        <slot name="footer"></slot>
-        <div className="modal-footer-buttons">
-          {!hideCancelButton && (
+    () =>
+      noFooter ? null : (
+        <div className="modal-footer">
+          <slot name="footer"></slot>
+          <div className="modal-footer-buttons">
+            {!hideCancelButton && (
+              <WrappedButton
+                type="text"
+                onClick={handleCancelClick}
+                themeVariant={themeVariant}
+                data-testid="cancel-button"
+              >
+                {cancelText}
+              </WrappedButton>
+            )}
             <WrappedButton
-              type="text"
-              onClick={handleCancelClick}
+              type="primary"
+              danger={confirmDanger}
+              disabled={confirmDisabled}
               themeVariant={themeVariant}
-              data-testid="cancel-button"
+              onClick={handleConfirmClick}
+              data-testid="confirm-button"
             >
-              {cancelText}
+              {confirmText}
             </WrappedButton>
-          )}
-          <WrappedButton
-            type="primary"
-            danger={confirmDanger}
-            disabled={confirmDisabled}
-            themeVariant={themeVariant}
-            onClick={handleConfirmClick}
-            data-testid="confirm-button"
-          >
-            {confirmText}
-          </WrappedButton>
+          </div>
         </div>
-      </div>
-    ),
+      ),
     [
+      noFooter,
       hideCancelButton,
       cancelText,
       confirmText,
@@ -504,10 +571,18 @@ function ModalComponent({
           className={classNames("modal", {
             fullscreen,
             "has-sidebar": hasSidebarContent,
+            "has-height": !!height || fullscreen,
           })}
-          style={{ width: width }}
+          style={
+            fullscreen ? { width: "100%", height: "100%" } : { width, height }
+          }
         >
-          <div className="modal-container" tabIndex={-1} ref={containerRef}>
+          <div
+            className="modal-container"
+            tabIndex={-1}
+            ref={containerRef}
+            style={{ background }}
+          >
             {sidebar}
             <div className="modal-main-content">
               {header}

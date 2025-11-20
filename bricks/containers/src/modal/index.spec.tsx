@@ -68,7 +68,7 @@ describe("eo-modal", () => {
     expect(element.shadowRoot?.querySelector(".modal-root")).toBeTruthy();
     expect(
       (element.shadowRoot?.querySelector(".modal") as HTMLElement).className
-    ).toBe("modal fullscreen");
+    ).toBe("modal fullscreen has-height");
 
     // close
     await act(async () => {
@@ -346,6 +346,62 @@ describe("eo-modal", () => {
     // 应该移除 has-sidebar 类
     modalElement = element.shadowRoot?.querySelector(".modal");
     expect(modalElement?.classList.contains("has-sidebar")).toBeFalsy();
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("noFooter hides footer", async () => {
+    const element = document.createElement("eo-modal") as Modal;
+    element.modalTitle = "Modal Title";
+    element.noFooter = true;
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    await act(async () => {
+      element.open();
+    });
+
+    // Footer should not exist
+    const footer = element.shadowRoot?.querySelector(".modal-footer");
+    expect(footer).toBeNull();
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("fullscreenButton shows fullscreen icon and triggers fullscreen", async () => {
+    const element = document.createElement("eo-modal") as Modal;
+    element.modalTitle = "Modal Title";
+    element.fullscreenButton = true;
+    element.fullscreen = false;
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    await act(async () => {
+      element.open();
+    });
+
+    // Fullscreen button should exist
+    const fullscreenBtn = element.shadowRoot?.querySelector(
+      ".fullscreen-btn"
+    ) as HTMLElement;
+    expect(fullscreenBtn).toBeTruthy();
+
+    // Click fullscreen button
+    await act(async () => {
+      fullscreenBtn.click();
+    });
+
+    // After click, modal should be fullscreen
+    const modal = element.shadowRoot?.querySelector(".modal");
+    expect(modal?.classList.contains("fullscreen")).toBeTruthy();
 
     act(() => {
       document.body.removeChild(element);
