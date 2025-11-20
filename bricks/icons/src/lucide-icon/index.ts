@@ -18,6 +18,7 @@ const { defineElement, property, event } = createDecorators();
 
 export interface LucideIconProps extends DefineLinearGradientProps {
   icon?: string;
+  fill?: boolean;
   strokeWidth?: number;
 }
 
@@ -34,6 +35,9 @@ class LucideIcon extends NextElement implements LucideIconProps {
    * @default 2
    */
   @property({ type: Number }) accessor strokeWidth: number | undefined;
+
+  /** 是否填充（注意：仅部分图片有效） */
+  @property({ type: Boolean }) accessor fill: boolean | undefined;
 
   /** 渐变色起始颜色 */
   @property() accessor startColor: string | undefined;
@@ -121,6 +125,15 @@ class LucideIcon extends NextElement implements LucideIconProps {
         svg.setAttribute(
           "stroke-width",
           String(Math.max(0.5, Math.min(3, strokeWidth)))
+        );
+      }
+
+      if (this.fill) {
+        svg.setAttribute(
+          "fill",
+          this.startColor && this.endColor
+            ? "url(#linear-gradient)"
+            : "currentColor"
         );
       }
     }
