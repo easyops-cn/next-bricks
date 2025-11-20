@@ -24,6 +24,7 @@ export type ButtonType =
   | "link"
   | "text"
   | "icon"
+  | "ai"
   | "neutral"
   | "flat";
 
