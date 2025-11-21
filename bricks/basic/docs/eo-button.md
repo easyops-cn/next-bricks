@@ -38,6 +38,20 @@
   properties:
     type: link
     textContent: Link
+- brick: eo-button
+  properties:
+    type: ai
+    textContent: ai
+- brick: eo-button
+  properties:
+    type: ai-alt
+    size: large
+    icon:
+      lib: lucide
+      icon: sparkles
+      fill: true
+      strokeWidth: 1.5
+    textContent: ai-alt
 ```
 
 ### Sizes

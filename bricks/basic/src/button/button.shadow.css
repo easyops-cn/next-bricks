@@ -297,7 +297,25 @@ button:active {
 .ai {
   color: #fff;
   background: linear-gradient(90deg, #4f72ff 0%, rgba(163, 26, 255, 0.6) 100%);
-  border: 1px solid transparent;
+  border: 0;
+}
+
+.ai-alt {
+  color: #3e5fff;
+  background: linear-gradient(
+    90deg,
+    rgba(79, 114, 255, 0.15) 0%,
+    rgba(163, 26, 255, 0.09) 100%
+  );
+  border: 0;
+
+  .gradient-text {
+    background: linear-gradient(90deg, #3a61ff 0%, #a31aff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+  }
 }
 
 .icon {
@@ -351,6 +369,11 @@ button:active {
 .large {
   font-size: 18px;
   height: 40px;
+}
+
+.ai-alt.large {
+  font-size: 16px;
+  font-weight: 500;
 }
 
 :host([has-slot]) button > eo-icon {

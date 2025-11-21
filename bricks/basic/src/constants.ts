@@ -9,6 +9,7 @@ export const ALLOWED_BUTTON_TYPES = [
   "neutral",
   "flat",
   "ai",
+  "ai-alt",
 ] as const;
 
 export const ALLOWED_COMPONENT_SIZES = [
