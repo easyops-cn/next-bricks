@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.18.1](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.18.0...@next-bricks/containers@1.18.1) (2025-11-21)
+
+
+### Bug Fixes
+
+* new button type: ai-alt ([6e44b56](https://github.com/easyops-cn/next-advanced-bricks/commit/6e44b564a49abb0ef47edf067cbdf924cbb607fd))
+
+
+
+
+
 # [1.18.0](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.17.1...@next-bricks/containers@1.18.0) (2025-11-20)
 
 

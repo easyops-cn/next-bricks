@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.63.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.63.2...@next-bricks/basic@1.63.3) (2025-11-21)
+
+
+### Bug Fixes
+
+* new button type: ai-alt ([6e44b56](https://github.com/easyops-cn/next-bricks/commit/6e44b564a49abb0ef47edf067cbdf924cbb607fd))
+
+
+
+
+
 ## [1.63.2](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.63.1...@next-bricks/basic@1.63.2) (2025-11-20)
 
 
