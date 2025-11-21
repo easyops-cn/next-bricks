@@ -14,11 +14,11 @@ import type {
   GeneralIconProps,
 } from "@next-bricks/icons/general-icon";
 import "@next-core/theme";
+import { initializeI18n } from "@next-core/i18n";
 import type { Button, ButtonProps } from "@next-bricks/basic/button";
 import { unwrapProvider } from "@next-core/utils/general";
 import type { lockBodyScroll as _lockBodyScroll } from "@next-bricks/basic/data-providers/lock-body-scroll/lock-body-scroll";
 import styleText from "./modal.shadow.css";
-import { initializeI18n } from "@next-core/i18n";
 import { NS, locales, K, t } from "./i18n.js";
 
 initializeI18n(NS, locales);

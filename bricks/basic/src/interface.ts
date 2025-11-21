@@ -25,6 +25,7 @@ export type ButtonType =
   | "text"
   | "icon"
   | "ai"
+  | "ai-alt"
   | "neutral"
   | "flat";
 
