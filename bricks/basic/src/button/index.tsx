@@ -205,18 +205,13 @@ export function ButtonComponent({
         style={buttonStyle}
         disabled={disabled}
       >
+        {icon && <WrappedIcon {...icon} />}
         {type === "ai-alt" ? (
-          <>
-            {icon && <WrappedIcon {...icon} />}
-            <span className="gradient-text">
-              <slot />
-            </span>
-          </>
-        ) : (
-          <>
-            {icon && <WrappedIcon {...icon} />}
+          <span className="gradient-text">
             <slot />
-          </>
+          </span>
+        ) : (
+          <slot />
         )}
       </button>
     );
