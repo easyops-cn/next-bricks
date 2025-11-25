@@ -32,6 +32,8 @@ export interface ModalProps {
   modalTitle?: string;
   width?: string | number;
   height?: string | number;
+  minWidth?: string | number;
+  minHeight?: string | number;
   maskClosable?: boolean;
   confirmText?: string;
   cancelText?: string;
@@ -99,6 +101,24 @@ class Modal extends ReactNextElement implements ModalProps {
    * 高度
    */
   @property({ attribute: false }) accessor height: string | number | undefined;
+
+  /**
+   * 最小宽度
+   *
+   * @default "520px"
+   */
+  @property({ attribute: false }) accessor minWidth:
+    | string
+    | number
+    | undefined;
+
+  /**
+   * 最小高度
+   */
+  @property({ attribute: false }) accessor minHeight:
+    | string
+    | number
+    | undefined;
 
   /**
    * 点击遮罩层是否关闭模态框
@@ -285,6 +305,8 @@ class Modal extends ReactNextElement implements ModalProps {
         modalTitle={this.modalTitle}
         width={this.width}
         height={this.height}
+        minWidth={this.minWidth}
+        minHeight={this.minHeight}
         maskClosable={this.maskClosable}
         visible={this.visible}
         confirmText={this.confirmText}
@@ -323,6 +345,8 @@ function ModalComponent({
   modalTitle,
   width,
   height,
+  minWidth,
+  minHeight,
   maskClosable,
   confirmText = t(K.CONFIRM),
   cancelText = t(K.CANCEL),
@@ -571,10 +595,12 @@ function ModalComponent({
           className={classNames("modal", {
             fullscreen,
             "has-sidebar": hasSidebarContent,
-            "has-height": !!height || fullscreen,
+            "has-height": !!height || !!minHeight || fullscreen,
           })}
           style={
-            fullscreen ? { width: "100%", height: "100%" } : { width, height }
+            fullscreen
+              ? { width: "100%", height: "100%" }
+              : { width, height, minWidth, minHeight }
           }
         >
           <div
