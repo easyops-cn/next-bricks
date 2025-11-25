@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.23.2](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.23.1...@next-shared/icons@0.23.2) (2025-11-25)
+
+
+### Bug Fixes
+
+* update elevo icons ([18872cd](https://github.com/easyops-cn/next-bricks/commit/18872cd26f3852f6e9e60fbe79f04eca1568653b))
+
+
+
+
+
 ## [0.23.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.23.0...@next-shared/icons@0.23.1) (2025-09-28)
 
 
