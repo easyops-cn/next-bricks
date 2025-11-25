@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>帮助</title>
+    <g id="帮助" stroke="none" fill="none" fill-rule="evenodd" stroke-width="1">
+        <g id="编组" transform="translate(1.8, 1.8)">
+            <rect id="矩形" stroke="#333333" x="0.5" y="0.5" width="13.4" height="13.4" rx="2"></rect>
+            <path d="M7.2,8.934375 L7.2,7.434375 C8.4426375,7.434375 9.45,6.4270125 9.45,5.184375 C9.45,3.9417375 8.4426375,2.934375 7.2,2.934375 C5.9573625,2.934375 4.95,3.9417375 4.95,5.184375" id="路径" stroke="#333333" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M7.2,12.309375 C7.7177625,12.309375 8.1375,11.8896375 8.1375,11.371875 C8.1375,10.8541125 7.7177625,10.434375 7.2,10.434375 C6.6822375,10.434375 6.2625,10.8541125 6.2625,11.371875 C6.2625,11.8896375 6.6822375,12.309375 7.2,12.309375 Z" id="路径" fill="#333333"></path>
+        </g>
+    </g>
+</svg>

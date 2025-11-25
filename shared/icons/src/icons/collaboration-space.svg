@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>协作空间</title>
+    <g id="协作空间" stroke="none" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" stroke-width="1">
+        <g id="编组" transform="translate(1.875, 3)" stroke="#333333">
+            <polyline id="路径" points="7.125 1.875 10.875 4.125 10.875 7.9553625 3.375 3.75 3.375 7.875 10.875 12.375 14.25 10.1651625 14.25 2.2098375 10.5 0 8.91014597 0.883252238"></polyline>
+            <polyline id="路径" points="5.41878929 11.2624738 3.75 12.375 0 10.125 0.00025875 2.25 3.75 0 7.125 1.875"></polyline>
+        </g>
+    </g>
+</svg>
