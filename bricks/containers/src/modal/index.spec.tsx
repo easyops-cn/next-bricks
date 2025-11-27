@@ -68,7 +68,7 @@ describe("eo-modal", () => {
     expect(element.shadowRoot?.querySelector(".modal-root")).toBeTruthy();
     expect(
       (element.shadowRoot?.querySelector(".modal") as HTMLElement).className
-    ).toBe("modal fullscreen has-height");
+    ).toBe("modal has-height");
 
     // close
     await act(async () => {
@@ -400,8 +400,8 @@ describe("eo-modal", () => {
     });
 
     // After click, modal should be fullscreen
-    const modal = element.shadowRoot?.querySelector(".modal");
-    expect(modal?.classList.contains("fullscreen")).toBeTruthy();
+    const modalWrap = element.shadowRoot?.querySelector(".modal-wrap");
+    expect(modalWrap?.classList.contains("fullscreen")).toBeTruthy();
 
     act(() => {
       document.body.removeChild(element);

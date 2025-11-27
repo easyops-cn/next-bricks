@@ -34,6 +34,7 @@ export interface ModalProps {
   height?: string | number;
   minWidth?: string | number;
   minHeight?: string | number;
+  centered?: boolean;
   maskClosable?: boolean;
   confirmText?: string;
   cancelText?: string;
@@ -119,6 +120,16 @@ class Modal extends ReactNextElement implements ModalProps {
     | string
     | number
     | undefined;
+
+  /**
+   * 是否垂直居中显示。
+   *
+   * 当设置 `themeVariant` 为 `elevo` 时，默认为 `true`。
+   */
+  @property({
+    type: Boolean,
+  })
+  accessor centered: boolean | undefined;
 
   /**
    * 点击遮罩层是否关闭模态框
@@ -307,6 +318,7 @@ class Modal extends ReactNextElement implements ModalProps {
         height={this.height}
         minWidth={this.minWidth}
         minHeight={this.minHeight}
+        centered={this.centered}
         maskClosable={this.maskClosable}
         visible={this.visible}
         confirmText={this.confirmText}
@@ -347,6 +359,7 @@ function ModalComponent({
   height,
   minWidth,
   minHeight,
+  centered: propCentered,
   maskClosable,
   confirmText = t(K.CONFIRM),
   cancelText = t(K.CANCEL),
@@ -372,6 +385,7 @@ function ModalComponent({
   const sidebarSlotRef = useRef<HTMLSlotElement>(null);
   const [hasSidebarContent, setHasSidebarContent] = useState(false);
   const [fullscreen, setFullscreen] = useState(!!propFullscreen);
+  const centered = propCentered ?? themeVariant === "elevo";
 
   useEffect(() => {
     setFullscreen(!!propFullscreen);
@@ -587,13 +601,12 @@ function ModalComponent({
     <div className="modal-root">
       <div className="mask" style={{ zIndex }} />
       <div
-        className="modal-wrap"
+        className={classNames("modal-wrap", { centered, fullscreen })}
         style={{ zIndex }}
         onClick={handleWrapperClick}
       >
         <div
           className={classNames("modal", {
-            fullscreen,
             "has-sidebar": hasSidebarContent,
             "has-height": !!height || !!minHeight || fullscreen,
           })}
