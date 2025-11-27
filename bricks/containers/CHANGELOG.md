@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.18.3](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.18.2...@next-bricks/containers@1.18.3) (2025-11-27)
+
+
+### Bug Fixes
+
+* **modal:** support centered modal ([483f166](https://github.com/easyops-cn/next-advanced-bricks/commit/483f16695a4a5db372674e790eeb926d0ff7644c))
+
+
+
+
+
 ## [1.18.2](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.18.1...@next-bricks/containers@1.18.2) (2025-11-25)
 
 
