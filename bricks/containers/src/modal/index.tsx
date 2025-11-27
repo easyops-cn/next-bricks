@@ -445,15 +445,11 @@ function ModalComponent({
 
   const body = useMemo(
     () => (
-      <div
-        className={classNames("modal-body", {
-          fullscreen,
-        })}
-      >
-        <slot></slot>
+      <div className="modal-body">
+        <slot />
       </div>
     ),
-    [fullscreen]
+    []
   );
 
   const footer = useMemo(
