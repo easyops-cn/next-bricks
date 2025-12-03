@@ -267,6 +267,9 @@ describe("DialogComponent", () => {
           class="expectInput"
           data-testid="dialog-expect-input"
         />
+        <div
+          class="expectSuffix"
+        />
       </div>
     </div>
     <eo-button
@@ -430,6 +433,9 @@ describe("DialogComponent", () => {
           class="expectInput"
           data-testid="dialog-expect-input"
         />
+        <div
+          class="expectSuffix"
+        />
       </div>
     </div>
     <eo-button
@@ -497,6 +503,9 @@ describe("DialogComponent", () => {
           class="expectInput"
           data-testid="dialog-expect-input"
         />
+        <div
+          class="expectSuffix"
+        />
       </div>
     </div>
     <eo-button
@@ -547,6 +556,9 @@ describe("DialogComponent", () => {
           auto-focus=""
           class="expectInput"
           data-testid="dialog-expect-input"
+        />
+        <div
+          class="expectSuffix"
         />
       </div>
     </div>

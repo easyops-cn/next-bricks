@@ -89,3 +89,7 @@ sl-dialog > eo-button[slot="footer"]:not(:first-of-type) {
     background: none;
   }
 }
+
+.expectSuffix {
+  color: var(--palette-gray-7);
+}
