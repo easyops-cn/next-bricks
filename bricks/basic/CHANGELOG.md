@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.63.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.63.3...@next-bricks/basic@1.63.4) (2025-12-03)
+
+
+### Bug Fixes
+
+* close show-dialog增加expectSuffixContent参数 Closes CMDB_INSTANCE-3474 ([bd8802a](https://github.com/easyops-cn/next-bricks/commit/bd8802a5afb23c95044ac33d95f77b7b91c061b3))
+
+
+
+
+
 ## [1.63.3](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.63.2...@next-bricks/basic@1.63.3) (2025-11-21)
 
 
