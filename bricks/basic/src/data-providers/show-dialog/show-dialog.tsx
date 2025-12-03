@@ -47,6 +47,7 @@ export interface DialogOptions {
   danger?: boolean;
   contentStyle?: React.CSSProperties;
   themeVariant?: "default" | "elevo";
+  expectSuffixContent?: string;
 }
 
 const parseTemplate = (template: string, context: Record<string, any>) => {
@@ -137,6 +138,7 @@ export function DialogComponent({
   contentStyle,
   zIndex,
   themeVariant: _themeVariant,
+  expectSuffixContent,
   onOk,
   onCancel,
   onHide,
@@ -214,13 +216,16 @@ export function DialogComponent({
           {title && <div className={styles.contentTitle}>{title}</div>}
           <div style={contentStyle}>{parseTemplate(content, { expect })}</div>
           {expect && (
-            <WrappedInput
-              auto-focus={true}
-              themeVariant={themeVariant}
-              className={styles.expectInput}
-              data-testid="dialog-expect-input"
-              onValueChange={(e) => setConfirmDisabled(e.detail !== expect)}
-            />
+            <>
+              <WrappedInput
+                auto-focus={true}
+                themeVariant={themeVariant}
+                className={styles.expectInput}
+                data-testid="dialog-expect-input"
+                onValueChange={(e) => setConfirmDisabled(e.detail !== expect)}
+              />
+              <div className={styles.expectSuffix}>{expectSuffixContent}</div>
+            </>
           )}
         </div>
       </div>
