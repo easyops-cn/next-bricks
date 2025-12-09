@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.25.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.24.0...@next-shared/icons@0.25.0) (2025-12-09)
+
+
+### Features
+
+* **icons:** add check-list icon for itsc-form Closes WORK-73 ([235ec0f](https://github.com/easyops-cn/next-bricks/commit/235ec0f59e650c8e427c1d6a7f1f923b84f223e7))
+
+
+
+
+
 # [0.24.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.23.2...@next-shared/icons@0.24.0) (2025-12-08)
 
 
