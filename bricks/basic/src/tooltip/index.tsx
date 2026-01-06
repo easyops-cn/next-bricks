@@ -73,7 +73,7 @@ class EoTooltip extends ReactNextElement implements ToolTipProps {
    * 是否禁用
    */
   @property({ type: Boolean })
-  accessor disabled: boolean | undefined;
+  accessor disabled: boolean | undefined = false;
 
   /**
    * 是否显示
