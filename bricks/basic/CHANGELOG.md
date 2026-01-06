@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.63.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.63.4...@next-bricks/basic@1.63.5) (2026-01-06)
+
+
+### Bug Fixes
+
+* eo-tooltip问题修复 Closes MONITOR-10337 ([9a84df0](https://github.com/easyops-cn/next-bricks/commit/9a84df087022fb02f058c3baf63c1a06cd2e2bd5))
+
+
+
+
+
 ## [1.63.4](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.63.3...@next-bricks/basic@1.63.4) (2025-12-03)
 
 
