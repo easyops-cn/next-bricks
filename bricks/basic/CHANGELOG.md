@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.63.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.63.5...@next-bricks/basic@1.63.6) (2026-01-14)
+
+
+### Bug Fixes
+
+* 支持 tooltip 设置默认最大值 ([091535a](https://github.com/easyops-cn/next-bricks/commit/091535a456b827776a5bdb3bebe8a9394d530e55))
+
+
+
+
+
 ## [1.63.5](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.63.4...@next-bricks/basic@1.63.5) (2026-01-06)
 
 
