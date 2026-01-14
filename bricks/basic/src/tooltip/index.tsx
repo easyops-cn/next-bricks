@@ -94,10 +94,10 @@ class EoTooltip extends ReactNextElement implements ToolTipProps {
   accessor hoist: boolean | undefined;
 
   /**
-   * 最大长度
+   * 最大长度, 默认 250px
    */
   @property()
-  accessor maxWidth: string | undefined;
+  accessor maxWidth: string | undefined = "250px";
 
   /**
    * 显示提示
