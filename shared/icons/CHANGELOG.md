@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.26.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.25.1...@next-shared/icons@0.26.0) (2026-01-19)
+
+
+### Features
+
+* **icons:** 新增 volcano-cloud 图标 ([c2b3bb9](https://github.com/easyops-cn/next-bricks/commit/c2b3bb943bb4f7516b346a645097a9c8186aa28f))
+
+
+
+
+
 ## [0.25.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/icons@0.25.0...@next-shared/icons@0.25.1) (2025-12-11)
 
 **Note:** Version bump only for package @next-shared/icons
