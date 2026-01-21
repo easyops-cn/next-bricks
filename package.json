@@ -84,7 +84,7 @@
     "lint-staged": "^15.2.10",
     "patch-package": "^8.0.0",
     "postinstall-postinstall": "^2.1.0",
-    "prettier": "^3.5.3",
+    "prettier": "^3.8.1",
     "typescript": "^5.8.2"
   },
   "workspaces": [
