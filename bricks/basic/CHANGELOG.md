@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.63.7](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.63.6...@next-bricks/basic@1.63.7) (2026-01-28)
+
+
+### Bug Fixes
+
+* Supplement the brick's EventsMap and EventsMapping interfaces ([d034b31](https://github.com/easyops-cn/next-bricks/commit/d034b311fb0a463250a51d09350b57c6681ce9c5))
+
+
+
+
+
 ## [1.63.6](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.63.5...@next-bricks/basic@1.63.6) (2026-01-14)
 
 
