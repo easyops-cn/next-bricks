@@ -162,6 +162,13 @@ jobs:
     - name: Build (docs)
       run: yarn build
 
+    - uses: actions/upload-artifact@v4
+      with:
+        name: brick-docs-artifacts
+        path: |
+          docs/bricks
+        retention-days: 90
+
     - name: Deploy to Netlify (pull request)
       id: netlify-deploy
       uses: nwtgck/actions-netlify@v3.0
