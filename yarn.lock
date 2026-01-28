@@ -2397,10 +2397,10 @@
     i18next "^22.5.1"
     i18next-browser-languagedetector "^7.2.2"
 
-"@next-core/illustrations@^0.11.34":
-  version "0.11.34"
-  resolved "https://registry.yarnpkg.com/@next-core/illustrations/-/illustrations-0.11.34.tgz#5b97a5ddc9c064538e8a90321ac29164efd462a2"
-  integrity sha512-ism85NF1tkMgYT0+lILoldjFRFKRZLr5RaqZzehPkAsYlG6iVlr89DThhKXUK8XzXBqg8UhnDOOqy1Vl9X78kg==
+"@next-core/illustrations@^0.11.38":
+  version "0.11.38"
+  resolved "https://registry.yarnpkg.com/@next-core/illustrations/-/illustrations-0.11.38.tgz#93693c43c69dd00f340ab76b587638862b7aa084"
+  integrity sha512-5vSRgJuGJccddsLDXAmRo1qaECpVd8yLY/pS04lyMlRgRgjGBZIgKPY0OHuSsqL+iF6pkjIq3xKwe+Sz2v87og==
 
 "@next-core/inject@^1.0.62":
   version "1.0.62"
