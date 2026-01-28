@@ -59,13 +59,13 @@
   },
   "dependencies": {
     "@babel/types": "^7.22.5",
-    "@next-core/cook": "^2.5.12",
-    "@next-core/runtime": "^1.71.4",
-    "@next-core/utils": "^1.8.8",
+    "@next-core/cook": "^2.5.14",
+    "@next-core/runtime": "^1.72.7",
+    "@next-core/utils": "^1.8.11",
     "history": "^4.7.11"
   },
   "devDependencies": {
-    "@next-core/build-next-libs": "^1.0.25",
+    "@next-core/build-next-libs": "^1.2.0",
     "@next-core/test-next": "^2.0.1",
     "concurrently": "^9.1.0"
   }
