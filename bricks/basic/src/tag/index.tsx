@@ -64,8 +64,8 @@ export interface TagProps {
 }
 
 export interface TagEvents {
-  check?: Event;
-  close?: Event;
+  check: CustomEvent<TagProps>;
+  close: CustomEvent<TagProps>;
 }
 
 export interface TagMapEvents {

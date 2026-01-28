@@ -43,6 +43,24 @@ export interface TagListProps
   multiple?: boolean;
 }
 
+export interface TagListEvents {
+  check: CustomEvent<{
+    item: TagListItem | string | undefined;
+    list: TagListItem[];
+  }>;
+  close: CustomEvent<{
+    item: TagListItem | string | undefined;
+    list: TagListItem[];
+  }>;
+  "tag.click": CustomEvent<TagListItem | string | undefined>;
+}
+
+export interface TagListEventsMapping {
+  onCheck: "check";
+  onClose: "close";
+  onTagClick: "tag.click";
+}
+
 /**
  * 标签列表构件
  * @author sailor

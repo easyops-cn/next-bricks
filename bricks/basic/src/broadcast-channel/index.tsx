@@ -21,6 +21,14 @@ export interface BroadcastChannelProps {
   channel: string;
 }
 
+export interface BroadcastChannelEvents {
+  message: CustomEvent<unknown>;
+}
+
+export interface BroadcastChannelEventsMapping {
+  onMessage: "message";
+}
+
 /**
  * 构件 `eo-broadcast-channel`
  */

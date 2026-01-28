@@ -18,6 +18,14 @@ export interface IframeProps {
   iframeStyle?: CSSProperties;
 }
 
+export interface IframeEvents {
+  load: CustomEvent<void>;
+}
+
+export interface IframeEventsMapping {
+  onLoad: "load";
+}
+
 type PostMessageParameters =
   | [message: unknown, targetOrigin: string, transfer?: Transferable[]]
   | [message: unknown, options?: WindowPostMessageOptions];

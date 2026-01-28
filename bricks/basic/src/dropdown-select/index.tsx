@@ -66,6 +66,14 @@ export interface DropdownSelectOption {
   disabled?: boolean;
 }
 
+export interface DropdownSelectEvents {
+  change: CustomEvent<DropdownSelectOption>;
+}
+
+export interface DropdownSelectEventsMapping {
+  onChange: "change";
+}
+
 interface DropdownSelectRef {
   setDefaultOption(option: DropdownSelectOption): void;
 }

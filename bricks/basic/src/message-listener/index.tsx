@@ -15,6 +15,14 @@ export interface MessageDetail {
   origin: string;
 }
 
+export interface EoMessageListenerEvents {
+  message: CustomEvent<MessageDetail>;
+}
+
+export interface EoMessageListenerEventsMapping {
+  onMessage: "message";
+}
+
 /**
  * 用于监听 window.postMessage 事件的构件
  */

@@ -15,6 +15,14 @@ export interface ImageProps {
   onlyPreview?: boolean;
 }
 
+export interface ImageEvents {
+  visibleChange: CustomEvent<boolean>;
+}
+
+export interface ImageEventsMapping {
+  onVisibleChange: "visibleChange";
+}
+
 export type { ImageConfig };
 
 /**
