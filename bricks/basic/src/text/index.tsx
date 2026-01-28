@@ -84,6 +84,16 @@ export interface TextProps {
   display?: CSSProperties["display"];
   customStyle?: CSSProperties | undefined;
 }
+
+export interface TextEvents {
+  change: CustomEvent<string>;
+  update: CustomEvent<string>;
+}
+
+export interface TextEventsMapping {
+  onChange: "change";
+  onUpdate: "update";
+}
 const { defineElement, property, event } = createDecorators();
 
 /**

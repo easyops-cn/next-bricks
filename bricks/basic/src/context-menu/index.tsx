@@ -39,6 +39,18 @@ export interface EoContextMenuProps {
   position?: Position;
 }
 
+export interface EoContextMenuEvents {
+  "action.click": CustomEvent<SimpleAction>;
+  "item.drag.start": CustomEvent<SimpleAction>;
+  "item.drag.end": CustomEvent<SimpleAction>;
+}
+
+export interface EoContextMenuEventsMapping {
+  onActionClick: "action.click";
+  onItemDragStart: "item.drag.start";
+  onItemDragEnd: "item.drag.end";
+}
+
 export type Position = [x: number, y: number];
 
 export interface OpenInfo {

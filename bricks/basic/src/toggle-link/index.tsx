@@ -19,6 +19,14 @@ export interface ToggleLinkProps {
   themeVariant?: "default" | "elevo";
 }
 
+export interface ToggleLinkEvents {
+  toggle: CustomEvent<boolean>;
+}
+
+export interface ToggleLinkEventsMapping {
+  onToggle: "toggle";
+}
+
 /**
  * 展开/折叠链接。
  *
