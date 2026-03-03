@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.58.1](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.58.0...@next-shared/common-bricks@0.58.1) (2026-03-03)
+
+
+### Bug Fixes
+
+* add eo-cmdb-instance-select Closes CI-1142 ([3b9ecb7](https://github.com/easyops-cn/next-bricks/commit/3b9ecb7873da2407d411fd62cab0802dc4762d1c))
+
+
+
+
+
 # [0.58.0](https://github.com/easyops-cn/next-bricks/compare/@next-shared/common-bricks@0.57.1...@next-shared/common-bricks@0.58.0) (2025-11-18)
 
 
