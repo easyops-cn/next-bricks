@@ -182,7 +182,7 @@
     "sl-tag"
   ],
   "form-renderer": ["eo-form-renderer"],
-  "form-platform": ["eo-user-or-user-group-select"],
+  "form-platform": ["eo-user-or-user-group-select", "eo-cmdb-instance-select"],
   "nav": [
     "eo-nav-menu",
     "eo-launchpad-button",
