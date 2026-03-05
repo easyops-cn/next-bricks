@@ -21,7 +21,9 @@ export interface LoadingContainerProps {
 export type LoadingSize = "small" | "medium" | "large";
 
 /**
- * 构件 `eo-loading-container`
+ * 加载状态容器，在 loading 时显示遮罩和旋转图标，支持延迟显示以防止闪烁
+ * @author developer
+ * @category display-component
  *
  * @slot - 内容
  */
@@ -33,6 +35,9 @@ class LoadingContainer
   extends ReactNextElement
   implements LoadingContainerProps
 {
+  /**
+   * 是否显示加载状态
+   */
   @property({ type: Boolean })
   accessor loading: boolean | undefined;
 
@@ -43,6 +48,7 @@ class LoadingContainer
   accessor delay: number | undefined;
 
   /**
+   * 加载图标的尺寸
    * @default "medium"
    */
   @property({ render: false })
@@ -55,9 +61,8 @@ class LoadingContainer
   }
 }
 
-export interface LoadingContainerComponentProps extends LoadingContainerProps {
-  // Define react event handlers here.
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface LoadingContainerComponentProps extends LoadingContainerProps {}
 
 export function LoadingContainerComponent({
   loading,

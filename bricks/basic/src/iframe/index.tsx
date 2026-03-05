@@ -39,7 +39,8 @@ const IframeComponent = forwardRef<IframeRef, IframeComponentProps>(
 );
 
 /**
- * 构件 `eo-iframe`
+ * 内嵌网页构件，通过 iframe 将外部页面嵌入当前页面
+ * @category display-component
  */
 export
 @defineElement("eo-iframe", {
@@ -47,11 +48,14 @@ export
 })
 class Iframe extends ReactNextElement implements IframeProps {
   /**
+   * iframe 的源地址
    * @required
    */
   @property() accessor src: string | undefined;
 
   /**
+   * iframe 的自定义样式，默认样式为宽高 100%、无边距
+   *
    * Default style:
    *
    * ```css
@@ -68,6 +72,10 @@ class Iframe extends ReactNextElement implements IframeProps {
   @property({ attribute: false })
   accessor iframeStyle: CSSProperties | undefined;
 
+  /**
+   * @detail -
+   * @description iframe 加载完成时触发
+   */
   @event({ type: "load" })
   accessor #loadEvent!: EventEmitter<void>;
 
@@ -77,8 +85,12 @@ class Iframe extends ReactNextElement implements IframeProps {
 
   #iframeRef = createRef<IframeRef>();
 
+  /**
+   * 向 iframe 发送 postMessage
+   * @param args 传递给 iframe contentWindow.postMessage 的参数，支持 (message, targetOrigin, transfer?) 和 (message, options?) 两种签名
+   */
   @method()
-  postMessage(...args: PostMessageParameters) {
+  postMessage(...args: PostMessageParameters): void {
     this.#iframeRef.current?.postMessage(...args);
   }
 

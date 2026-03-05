@@ -49,9 +49,15 @@ export
   styleTexts: [styleText],
 })
 class EoBanner extends ReactNextElement {
+  /**
+   * 横幅标题，显示在横幅顶部区域
+   */
   @property()
   accessor bannerTitle: string | undefined;
 
+  /**
+   * 横幅描述信息，显示在标题下方
+   */
   @property()
   accessor bannerDescription: string | undefined;
 

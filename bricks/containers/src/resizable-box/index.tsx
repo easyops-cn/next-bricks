@@ -31,6 +31,12 @@ export type ResizeDirection = "left" | "right" | "top" | "bottom";
  *
  * - 移除属性 `resizable`，改为使用 `disabled` 控制是否可调整尺寸；
  * - 放在 `containers-NB` 包，而不是 `basic-bricks-NB`。
+ *
+ * @author developer
+ *
+ * @slot - 内容区
+ *
+ * @category container-layout
  */
 export
 @defineElement("eo-resizable-box", {
@@ -81,17 +87,27 @@ class ResizableBox extends ReactNextElement implements ResizableBoxProps {
   accessor disabled: boolean | undefined;
 
   /**
+   * 拖拽条样式变体
    * @default "default"
    */
   @property()
   accessor variant: "dashboard" | "default" | undefined;
 
+  /**
+   * 盒子容器自定义样式
+   */
   @property({ attribute: false })
   accessor boxStyle: React.CSSProperties | undefined;
 
+  /**
+   * 非拖拽状态时盒子容器自定义样式
+   */
   @property({ attribute: false })
   accessor boxStyleWhenNotResizing: React.CSSProperties | undefined;
 
+  /**
+   * 是否将尺寸同步到宿主元素，设置后宿主元素的宽度或高度会随拖拽同步更新
+   */
   @property({ type: Boolean })
   accessor syncSizeWithHost: boolean;
 

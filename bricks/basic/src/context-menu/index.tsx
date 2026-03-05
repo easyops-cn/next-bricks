@@ -61,7 +61,8 @@ export interface OpenInfo {
 }
 
 /**
- * 构件 `eo-context-menu`
+ * 右键菜单构件，在指定坐标位置展示操作菜单
+ * @category interact-basic
  */
 export
 @defineElement("eo-context-menu", {
@@ -84,6 +85,9 @@ class EoContextMenu extends ReactNextElement {
   })
   accessor active: boolean | undefined;
 
+  /**
+   * 菜单显示的位置坐标 [x, y]，通常由 open 方法设置
+   */
   @property({ attribute: false })
   accessor position: Position | undefined;
 
@@ -117,14 +121,21 @@ class EoContextMenu extends ReactNextElement {
   @event({ type: "item.drag.end" })
   accessor #itemDragEndEvent!: EventEmitter<SimpleAction>;
 
+  /**
+   * 在指定位置打开右键菜单
+   * @param info 打开信息，包含菜单显示的坐标位置
+   */
   @method()
-  open({ position }: OpenInfo) {
+  open({ position }: OpenInfo): void {
     this.active = true;
     this.position = position;
   }
 
+  /**
+   * 关闭右键菜单
+   */
   @method()
-  close() {
+  close(): void {
     this.active = false;
     this.position = undefined;
   }

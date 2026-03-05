@@ -22,8 +22,9 @@ export interface BreadcrumbItemProps {
 /**
  * 面包屑单项
  *
+ * @category navigation
  * @slot prefix - 前缀
- * @slot prefix - 后缀
+ * @slot suffix - 后缀
  * @slot separator - 分隔符
  */
 export

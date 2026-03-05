@@ -119,7 +119,7 @@ class Drawer extends ReactNextElement implements DrawerProps {
   accessor visible: boolean | undefined;
 
   /**
-   * 是否存在底层插槽
+   * 是否存在底部插槽，启用后显示 footer 插槽区域
    */
   @property({
     type: Boolean,
@@ -127,7 +127,7 @@ class Drawer extends ReactNextElement implements DrawerProps {
   accessor footerSlot: boolean | undefined;
 
   /**
-   * 抽屉方向
+   * 抽屉弹出方向，可选 "left" | "right" | "top" | "bottom"
    */
   @property() accessor placement: Placement | undefined;
 
@@ -149,7 +149,7 @@ class Drawer extends ReactNextElement implements DrawerProps {
   @property({ type: Boolean })
   accessor keyboard: boolean | undefined;
 
-  /** 主题变体 */
+  /** 主题变体，可选 "default" | "elevo"，通过 CSS 属性选择器控制样式 */
   @property({ render: false })
   accessor themeVariant: "default" | "elevo" | undefined;
 
@@ -164,7 +164,8 @@ class Drawer extends ReactNextElement implements DrawerProps {
   accessor stackable: boolean | undefined;
 
   /**
-   * 抽屉开启事件
+   * @detail 无
+   * @description 抽屉开启事件
    */
   @event({ type: "open" })
   accessor #drawerOpenEvent!: EventEmitter<void>;
@@ -177,7 +178,8 @@ class Drawer extends ReactNextElement implements DrawerProps {
   };
 
   /**
-   * 抽屉关闭事件
+   * @detail 无
+   * @description 抽屉关闭事件
    */
   @event({ type: "close" })
   accessor #drawerCloseEvent!: EventEmitter<void>;
@@ -193,7 +195,7 @@ class Drawer extends ReactNextElement implements DrawerProps {
    * 抽屉开启方法
    */
   @method()
-  open() {
+  open(): void {
     this.#handleDrawerOpen();
   }
 
@@ -201,7 +203,7 @@ class Drawer extends ReactNextElement implements DrawerProps {
    * 抽屉关闭方法
    */
   @method()
-  close() {
+  close(): void {
     this.#handleDrawerClose();
   }
 

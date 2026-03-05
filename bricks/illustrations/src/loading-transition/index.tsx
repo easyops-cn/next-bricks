@@ -6,7 +6,9 @@ import styleText from "./styles.shadow.css";
 const { defineElement } = createDecorators();
 
 /**
- * 构件 `illustrations.loading-transition`
+ * 加载过渡动画构件
+ *
+ * @category display-component
  */
 export
 @defineElement("illustrations.loading-transition", {

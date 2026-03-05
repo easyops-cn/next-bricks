@@ -41,3 +41,64 @@ slots:
                         key: 2
                         color: green
 ```
+
+### Size
+
+```yaml preview
+- brick: eo-flex-layout
+  properties:
+    gap: 20px
+    flexDirection: column
+  children:
+    - brick: eo-spin
+      properties:
+        spinning: true
+        size: small
+        tip: small
+      children:
+        - brick: div
+          properties:
+            style:
+              height: 60px
+              background: var(--color-fill-bg-base-1)
+    - brick: eo-spin
+      properties:
+        spinning: true
+        size: default
+        tip: default
+      children:
+        - brick: div
+          properties:
+            style:
+              height: 60px
+              background: var(--color-fill-bg-base-1)
+    - brick: eo-spin
+      properties:
+        spinning: true
+        size: large
+        tip: large
+      children:
+        - brick: div
+          properties:
+            style:
+              height: 60px
+              background: var(--color-fill-bg-base-1)
+```
+
+### Not Spinning
+
+```yaml preview
+brick: eo-spin
+properties:
+  spinning: false
+  tip: 加载中...
+slots:
+  "":
+    type: bricks
+    bricks:
+      - brick: div
+        properties:
+          textContent: 内容已加载完成
+          style:
+            padding: 16px
+```

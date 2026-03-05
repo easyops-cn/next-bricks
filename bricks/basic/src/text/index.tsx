@@ -173,12 +173,14 @@ class EoText extends ReactNextElement implements TextProps {
 
   /**
    * 值改变事件
+   * @detail 当前输入框中的文本值
    */
   @event({ type: "change" })
   accessor #changeEvent!: EventEmitter<string>;
 
   /**
    * 值更新事件
+   * @detail 编辑完成后提交的文本值（仅在值发生变化时触发）
    */
   @event({ type: "update" })
   accessor #updateEvent!: EventEmitter<string>;

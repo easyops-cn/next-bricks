@@ -158,7 +158,7 @@ class Tag extends ReactNextElement implements TagProps {
   accessor tagStyle: React.CSSProperties | undefined;
 
   /**
-   * @detail
+   * @detail TagProps — { size: 标签大小, icon: 图标, color: 颜色, outline: 是否有边线, closable: 是否可关闭, disabled: 是否禁用, checkable: 是否可选择, checked: 当前选中状态, ellipsisWidth: 超出隐藏宽度, tagStyle: 自定义样式 }
    * @description 选择事件
    */
   @event({ type: "check" })
@@ -169,7 +169,7 @@ class Tag extends ReactNextElement implements TagProps {
   };
 
   /**
-   * @detail
+   * @detail TagProps — { size: 标签大小, icon: 图标, color: 颜色, outline: 是否有边线, closable: 是否可关闭, disabled: 是否禁用, checkable: 是否可选择, checked: 当前选中状态, ellipsisWidth: 超出隐藏宽度, tagStyle: 自定义样式 }
    * @description 关闭事件
    */
   @event({ type: "close" })

@@ -1,8 +1,39 @@
-构件 `eo-actions`
+---
+tagName: eo-actions
+displayName: WrappedEoActions
+description: 操作列表构件，支持普通菜单项、子菜单、分组、分隔线，并提供拖拽功能
+category: interact-basic
+source: "@next-bricks/basic"
+---
+
+# eo-actions
+
+> 操作列表构件，支持普通菜单项、子菜单、分组、分隔线，并提供拖拽功能
+
+## Props
+
+| 属性          | 类型                   | 必填 | 默认值 | 说明                                                                                 |
+| ------------- | ---------------------- | ---- | ------ | ------------------------------------------------------------------------------------ |
+| actions       | `Action[]`             | 否   | -      | 操作列表配置                                                                         |
+| checkedKeys   | `(string \| number)[]` | 否   | `[]`   | actions 选中项配置                                                                   |
+| activeKeys    | `(string \| number)[]` | 否   | `[]`   | actions 激活项配置，用于菜单项的选择和展开，需按菜单层级顺序依次列出当前激活的菜单项 |
+| itemDraggable | `boolean`              | 否   | -      | action 中的菜单项是否可拖拽                                                          |
+| themeVariant  | `"default" \| "elevo"` | 否   | -      | 主题变体，控制操作列表的视觉风格，"elevo" 为新风格，"default" 为默认风格             |
+| footerTips    | `string`               | 否   | -      | 底部提示文字                                                                         |
+
+## Events
+
+| 事件            | detail                            | 说明                 |
+| --------------- | --------------------------------- | -------------------- |
+| action.click    | `SimpleAction` — 该按钮配置       | 点击按钮时触发       |
+| item.drag.start | `SimpleAction` — 该菜单项动作配置 | 开始拖拽菜单项时触发 |
+| item.drag.end   | `SimpleAction` — 该菜单项动作配置 | 完成拖拽菜单项时触发 |
 
 ## Examples
 
 ### Basic
+
+展示基本操作菜单，包含图标、tooltip、危险操作和子菜单。
 
 ```yaml preview
 brick: eo-actions
@@ -62,7 +93,78 @@ events:
       - click delete button
 ```
 
+### 选中与激活状态
+
+使用 checkedKeys 和 activeKeys 设置菜单项的选中与激活状态。
+
+```yaml preview
+brick: eo-actions
+properties:
+  checkedKeys:
+    - "edit"
+  activeKeys:
+    - "edit"
+  actions:
+    - text: Query
+      key: "query"
+      icon:
+        lib: antd
+        icon: search
+        theme: outlined
+    - text: Edit
+      key: "edit"
+      icon:
+        lib: easyops
+        category: default
+        icon: edit
+    - text: Delete
+      key: "delete"
+      danger: true
+      icon:
+        lib: easyops
+        category: default
+        icon: delete
+events:
+  action.click:
+    action: message.success
+    args:
+      - "<% EVENT.detail.text %>"
+```
+
+### 分组菜单
+
+使用 type: group 对菜单项进行分组展示，使用 footerTips 展示底部提示。
+
+```yaml preview
+brick: eo-actions
+properties:
+  footerTips: "共 4 个操作"
+  actions:
+    - type: group
+      text: 基础操作
+    - text: 查看
+      icon:
+        lib: antd
+        icon: eye
+        theme: outlined
+    - text: 编辑
+      icon:
+        lib: antd
+        icon: edit
+        theme: outlined
+    - type: group
+      text: 危险操作
+    - text: 删除
+      danger: true
+      icon:
+        lib: antd
+        icon: delete
+        theme: outlined
+```
+
 ### item draggable
+
+设置 itemDraggable 启用菜单项拖拽，配合 dragConf 传递拖拽数据，通过 item.drag.start 和 item.drag.end 事件监听拖拽行为。
 
 ```yaml preview
 brick: eo-actions
@@ -87,4 +189,13 @@ properties:
         data:
           category: file
           title: 文件
+events:
+  item.drag.start:
+    action: message.info
+    args:
+      - "<% '开始拖拽: ' + EVENT.detail.text %>"
+  item.drag.end:
+    action: message.info
+    args:
+      - "<% '结束拖拽: ' + EVENT.detail.text %>"
 ```

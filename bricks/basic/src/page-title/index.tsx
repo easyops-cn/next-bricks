@@ -22,7 +22,7 @@ export
 })
 class EoPageTitle extends ReactNextElement {
   /**
-   * 页面标题
+   * 页面标题，设置后会同时更新浏览器页面标题。当页面处于 dashboard 模式时，标题以更大的字号（38px）显示。
    */
   @property()
   accessor pageTitle: string | undefined;

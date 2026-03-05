@@ -60,6 +60,11 @@ export interface FaIconProps extends DefineLinearGradientProps {
   spin?: boolean;
 }
 
+/**
+ * Font Awesome 图标构件
+ *
+ * @category display-component
+ */
 export
 @defineElement("eo-fa-icon", {
   styleTexts: [linearGradientStyleText, sharedStyleText],
@@ -85,6 +90,10 @@ class FaIcon extends ReactNextElement implements FaIconProps {
   /** 渐变色方向 */
   @property() accessor gradientDirection: GradientDirection | undefined;
 
+  /**
+   * 图标查找完成时触发
+   * @detail 图标是否找到
+   */
   @event({ type: "icon.found" })
   accessor #iconFoundEvent!: EventEmitter<boolean>;
 

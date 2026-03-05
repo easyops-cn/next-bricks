@@ -9,6 +9,7 @@ const { defineElement, property } = createDecorators();
  * flex 布局容器
  * @author sailor
  * @category container-layout
+ * @slot - flex 容器内的子元素
  */
 @defineElement("eo-flex-layout", {
   styleTexts: [styleText],

@@ -26,11 +26,12 @@ const WrappedDropdownActions = wrapBrick<
   onVisibleChange: "visible.change",
 });
 
-export interface DropdownButtonEvents
-  extends Pick<DropdownActionsEvents, "action.click"> {}
+export type DropdownButtonEvents = Pick<DropdownActionsEvents, "action.click">;
 
-export interface DropdownButtonEventsMap
-  extends Pick<DropdownActionsEventsMapping, "onActionClick"> {}
+export type DropdownButtonEventsMapping = Pick<
+  DropdownActionsEventsMapping,
+  "onActionClick"
+>;
 
 export interface DropdownButtonProps
   extends Pick<DropdownActionsProps, "actions" | "disabled" | "strategy">,
@@ -117,7 +118,7 @@ class DropdownButton extends ReactNextElement {
 
   /**
    * 操作点击事件
-   * @detail SimpleAction
+   * @detail { key: 操作项的 key, text: 操作项文本, event: 自定义事件名, icon: 图标配置, disabled: 是否禁用, hidden: 是否隐藏, tooltip: 提示文字, url: 链接地址, href: 外部链接, target: 链接目标, danger: 是否为危险操作, dragConf: 拖拽配置 }
    */
   @event({
     type: "action.click",

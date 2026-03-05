@@ -24,7 +24,7 @@ export interface EoMessageListenerEventsMapping {
 }
 
 /**
- * 用于监听 window.postMessage 事件的构件
+ * 用于监听 window.postMessage 事件的构件，可选择仅接收同源消息
  */
 export
 @defineElement("eo-message-listener", {
@@ -42,6 +42,10 @@ class EoMessageListener
   @property({ type: Boolean })
   accessor sameOrigin: undefined | boolean;
 
+  /**
+   * @detail { data: 消息数据内容, origin: 消息来源的域名 }
+   * @description 接收到 postMessage 消息时触发
+   */
   @event({ type: "message" })
   accessor #messageEvent!: EventEmitter<MessageDetail>;
 

@@ -154,6 +154,7 @@ class TagList extends ReactNextElement implements TagListProps {
 
   /**
    * 选择标签事件
+   * @detail { item: 被选中/取消选中的标签项, list: 当前所有选中的标签列表 }
    */
   @event({ type: "check" })
   accessor #checkEvent!: EventEmitter<{
@@ -170,6 +171,7 @@ class TagList extends ReactNextElement implements TagListProps {
 
   /**
    * 关闭标签事件
+   * @detail { item: 被关闭的标签项, list: 关闭后剩余的标签列表 }
    */
   @event({ type: "close" })
   accessor #closeEvent!: EventEmitter<{
@@ -186,6 +188,7 @@ class TagList extends ReactNextElement implements TagListProps {
 
   /**
    * 点击标签事件
+   * @detail 被点击的标签项
    */
   @event({ type: "tag.click" })
   accessor #tagClickEvent!: EventEmitter<TagListItem | string | undefined>;

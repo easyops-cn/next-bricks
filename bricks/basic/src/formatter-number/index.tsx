@@ -39,6 +39,7 @@ export type NumberOriginalUnit =
 
 /**
  * 数字格式化，支持普通数字、货币、百分比、二进制字节等数字的格式化显示。
+ * @category display-component
  */
 export
 @defineElement("eo-formatter-number", {
@@ -48,6 +49,9 @@ class EoFormatterNumber
   extends ReactNextElement
   implements EoFormatterNumberProps
 {
+  /**
+   * 要格式化的数字值
+   */
   @property({ type: Number })
   accessor value: number | undefined;
 
@@ -65,6 +69,9 @@ class EoFormatterNumber
   @property()
   accessor currency: string | undefined;
 
+  /**
+   * 单位名称，当 type 为 "unit" 时使用
+   */
   @property()
   accessor unit: string | undefined;
 
@@ -131,7 +138,7 @@ export function EoFormatterNumberComponent({
 
     const formatter = new Intl.NumberFormat("zh-CN", {
       style: type ?? "decimal",
-      currency: type === "currency" ? currency ?? "CNY" : undefined,
+      currency: type === "currency" ? (currency ?? "CNY") : undefined,
       unit,
       minimumFractionDigits: decimals ?? 0,
       maximumFractionDigits: decimals ?? 20,

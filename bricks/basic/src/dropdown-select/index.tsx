@@ -86,6 +86,7 @@ const DropdownSelectComponent = forwardRef<
 /**
  * 下拉式选择构件，常用于标题
  *
+ * @category interact-basic
  * @slot prefix - 下拉列表前置内容
  */
 export
@@ -99,30 +100,43 @@ class DropdownSelect extends ReactNextElement implements DropdownSelectProps {
   @property({ attribute: false })
   accessor defaultValue: string | number | undefined;
 
+  /**
+   * 可选项列表
+   */
   @property({ attribute: false })
   accessor options: DropdownSelectOption[] | undefined;
 
   /**
+   * 选择器尺寸
    * @default "medium"
    */
   @property({ render: false })
   accessor size: "medium" | "large" | undefined;
 
+  /**
+   * 是否显示加载状态
+   */
   @property({ type: Boolean })
   accessor loading: boolean | undefined;
 
   /**
+   * 当前选中标签的最大宽度
    * @default "650px"
    */
   @property({ attribute: false })
   accessor labelMaxWidth: string | number | undefined;
 
   /**
+   * 下拉面板的最大宽度
    * @default "500px"
    */
   @property({ attribute: false })
   accessor dropdownMaxWidth: string | number | undefined;
 
+  /**
+   * 选项变化时触发
+   * @detail { label: 选中的标签文本, value: 选中的值, disabled: 是否禁用 }
+   */
   @event({ type: "change" })
   accessor #changeEvent!: EventEmitter<DropdownSelectOption>;
 
@@ -132,8 +146,12 @@ class DropdownSelect extends ReactNextElement implements DropdownSelectProps {
 
   #ref = createRef<DropdownSelectRef>();
 
+  /**
+   * 设置默认选中项，若 options 中不存在该选项则追加到列表中
+   * @param option - 要设置为默认值的选项
+   */
   @method()
-  setDefaultOption(option: DropdownSelectOption) {
+  setDefaultOption(option: DropdownSelectOption): void {
     this.#ref.current?.setDefaultOption(option);
   }
 

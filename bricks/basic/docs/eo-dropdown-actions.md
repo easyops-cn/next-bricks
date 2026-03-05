@@ -1,8 +1,38 @@
-下拉菜单
+---
+tagName: eo-dropdown-actions
+displayName: WrappedEoDropdownActions
+description: 下拉菜单
+category: interact-basic
+source: "@next-bricks/basic"
+---
+
+# eo-dropdown-actions
+
+> 下拉菜单
+
+## Props
+
+| 属性         | 类型                    | 必填 | 默认值           | 说明              |
+| ------------ | ----------------------- | ---- | ---------------- | ----------------- |
+| actions      | `Action[]`              | 否   | -                | 操作列表配置      |
+| checkedKeys  | `(string \| number)[]`  | 是   | `[]`             | actions选中项配置 |
+| disabled     | `boolean`               | 否   | -                | 是否禁用          |
+| strategy     | `"absolute" \| "fixed"` | 否   | `"absolute"`     | 弹出层如何定位    |
+| placement    | `Placement`             | 否   | `"bottom-start"` | 弹出层放置位置    |
+| themeVariant | `"default" \| "elevo"`  | 否   | -                | 主题变体          |
+
+## Events
+
+| 事件           | detail                      | 说明                       |
+| -------------- | --------------------------- | -------------------------- |
+| action.click   | `SimpleAction` — 该按钮配置 | 点击按钮时触发             |
+| visible.change | `boolean` — 当前是否可见    | 当弹出层可见性变化之后触发 |
 
 ## Examples
 
 ### Basic
+
+展示包含图标、分隔符、危险项和子菜单的下拉操作菜单，使用 `anchor` 插槽放置触发按钮。
 
 ```yaml preview minHeight="240px"
 - brick: eo-dropdown-actions
@@ -64,4 +94,91 @@
     - brick: eo-button
       properties:
         textContent: button
+```
+
+### Checked Keys
+
+通过 `checkedKeys` 配置已选中的菜单项。
+
+```yaml preview minHeight="200px"
+- brick: eo-dropdown-actions
+  properties:
+    checkedKeys:
+      - edit
+    actions:
+      - text: Edit
+        key: edit
+        icon:
+          lib: antd
+          icon: edit
+      - text: Delete
+        key: delete
+        icon:
+          lib: antd
+          icon: delete
+        danger: true
+  events:
+    action.click:
+      action: message.success
+      args:
+        - <% EVENT.detail.text %>
+  children:
+    - brick: eo-button
+      properties:
+        textContent: Actions
+```
+
+### Disabled
+
+禁用下拉菜单，使用户无法打开操作列表。
+
+```yaml preview
+- brick: eo-dropdown-actions
+  properties:
+    disabled: true
+    actions:
+      - text: Edit
+        icon:
+          lib: antd
+          icon: edit
+      - text: Delete
+        icon:
+          lib: antd
+          icon: delete
+        danger: true
+  children:
+    - brick: eo-button
+      properties:
+        disabled: true
+        textContent: Disabled
+```
+
+### Visible Change
+
+监听 `visible.change` 事件，在弹出层显示/隐藏时响应。
+
+```yaml preview minHeight="200px"
+- brick: eo-dropdown-actions
+  properties:
+    placement: bottom-start
+    strategy: fixed
+    themeVariant: default
+    actions:
+      - text: Option 1
+        icon:
+          lib: antd
+          icon: check
+      - text: Option 2
+        icon:
+          lib: antd
+          icon: star
+  events:
+    visible.change:
+      action: message.info
+      args:
+        - '<% EVENT.detail ? "菜单已打开" : "菜单已关闭" %>'
+  children:
+    - brick: eo-button
+      properties:
+        textContent: Open Menu
 ```

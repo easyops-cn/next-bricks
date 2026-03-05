@@ -1,12 +1,59 @@
-通用卡片容器构件。
+---
+tagName: eo-card
+displayName: WrappedEoCard
+description: 通用卡片构件
+category: card-info
+source: "@next-bricks/containers"
+---
 
-```html preview
-<eo-card card-title="卡片标题">Content</eo-card>
-```
+# eo-card
+
+> 通用卡片构件
+
+## Props
+
+| 属性             | 类型                   | 必填 | 默认值      | 说明                                                                                             |
+| ---------------- | ---------------------- | ---- | ----------- | ------------------------------------------------------------------------------------------------ |
+| cardTitle        | `string`               | -    | -           | 标题                                                                                             |
+| headerIcon       | `GeneralIconProps`     | -    | -           | 头部图标                                                                                         |
+| fillVertical     | `boolean`              | -    | -           | 自动撑满父容器。注意不可以同时使用 `fillVertical` 和 `verticalCenter`                            |
+| verticalCenter   | `boolean`              | -    | -           | 垂直居中。注意不可以同时使用 `fillVertical` 和 `verticalCenter`                                  |
+| hasExtraSlot     | `boolean`              | -    | -           | 是否右上角有操作区 slot                                                                          |
+| operationButtons | `OperationButton[]`    | -    | `[]`        | 右上角的操作按钮列表                                                                             |
+| headerStyle      | `React.CSSProperties`  | -    | -           | 头部样式                                                                                         |
+| bodyStyle        | `React.CSSProperties`  | -    | -           | 内容区域样式                                                                                     |
+| background       | `boolean \| string`    | -    | -           | 背景设置。传 `false` 可去除背景，传字符串可自定义背景色（如 CSS 颜色值），默认使用标准背景填充色 |
+| outline          | `CardOutline`          | -    | `"default"` | 卡片轮廓。默认情况下，使用默认背景填充色，8.2 下默认则为无描边且无填充。                         |
+| hideSplit        | `boolean`              | -    | -           | 是否隐藏分割线                                                                                   |
+| themeVariant     | `"default" \| "elevo"` | -    | -           | 主题变体，可选 `"default"` 或 `"elevo"`                                                          |
+
+## Slots
+
+| 名称        | 说明             |
+| ----------- | ---------------- |
+| _(默认)_    | 卡片内容         |
+| extra       | 头部右侧拓展元素 |
+| titleSuffix | 标题后缀的插槽   |
 
 ## Examples
 
+### Basic
+
+展示带标题的基本卡片用法。
+
+```yaml preview
+brick: eo-card
+properties:
+  cardTitle: 卡片标题
+children:
+  - brick: div
+    properties:
+      textContent: Content
+```
+
 ### Fill Vertical
+
+展示卡片自动撑满父容器高度的效果。
 
 ```yaml preview
 brick: div
@@ -31,6 +78,8 @@ children:
 
 ### Vertical Center
 
+展示卡片内容垂直居中的效果。
+
 ```yaml preview
 - brick: eo-card
   properties:
@@ -47,6 +96,8 @@ children:
 ```
 
 ### Hide Split
+
+展示隐藏标题和内容之间分割线的效果。
 
 ```yaml preview
 - brick: eo-card
@@ -72,6 +123,8 @@ children:
 
 ### Extra Slot
 
+展示在卡片头部右侧使用 extra 插槽放置额外操作元素。
+
 ```yaml preview
 - brick: eo-card
   properties:
@@ -86,6 +139,8 @@ children:
 ```
 
 ### titleSuffix Slot
+
+展示在卡片标题后缀插槽中放置提示图标。
 
 ```yaml preview
 - brick: eo-card
@@ -114,6 +169,8 @@ children:
 
 ### Header Icon
 
+展示卡片标题前带有图标的效果。
+
 ```yaml preview
 - brick: eo-card
   properties:
@@ -130,6 +187,8 @@ children:
 ```
 
 ### Header Style
+
+展示自定义卡片头部样式。
 
 ```yaml preview
 - brick: eo-card
@@ -148,6 +207,8 @@ children:
 ```
 
 ### Background
+
+展示卡片去除背景和自定义背景色的效果。
 
 ```yaml preview
 - brick: eo-card
@@ -177,6 +238,8 @@ children:
 ```
 
 ### Outline
+
+展示不同卡片轮廓样式（border、shadow、background、none）的效果。
 
 ```yaml preview gap
 - brick: div
@@ -208,4 +271,52 @@ children:
         outline: background
         background: var(--color-fill-bg-base-4)
         textContent: "outline: background"
+```
+
+### Operation Buttons
+
+展示在卡片头部右上角配置操作按钮列表。
+
+```yaml preview
+- brick: eo-card
+  properties:
+    cardTitle: 卡片标题
+    operationButtons:
+      - id: btn-edit
+        eventName: edit
+        text: 编辑
+        configProps:
+          type: text
+      - id: btn-delete
+        eventName: delete
+        text: 删除
+        configProps:
+          type: text
+          danger: true
+  slots:
+    "":
+      bricks:
+        - brick: div
+          properties:
+            textContent: Content
+```
+
+### Body Style and Theme Variant
+
+展示自定义内容区域样式以及使用 elevo 主题变体。
+
+```yaml preview
+- brick: eo-card
+  properties:
+    cardTitle: 卡片标题
+    bodyStyle:
+      padding: 24px
+      background: var(--palette-blue-1)
+    themeVariant: elevo
+  slots:
+    "":
+      bricks:
+        - brick: div
+          properties:
+            textContent: Content with custom body style and elevo theme
 ```

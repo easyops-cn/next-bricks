@@ -31,7 +31,14 @@ export enum OpenDirection {
 }
 
 /**
- * 构件 `eo-popup`
+ * 可拖拽浮层弹窗容器。
+ *
+ * @author developer
+ *
+ * @slot - 内容区
+ * @slot toolbar - 头部工具栏插槽
+ *
+ * @category container-display
  */
 export
 @defineElement("eo-popup", {

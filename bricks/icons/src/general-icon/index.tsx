@@ -83,7 +83,7 @@ export
   alias: ["icons.general-icon"],
 })
 class GeneralIcon extends ReactNextElement implements IconProps {
-  /** 图标库 */
+  /** 图标库，支持 antd、easyops、fa（FontAwesome）、lucide 四种图标库 */
   @property() accessor lib: "antd" | "easyops" | "fa" | "lucide" | undefined;
 
   /**
@@ -149,6 +149,7 @@ class GeneralIcon extends ReactNextElement implements IconProps {
   /** 加载方式 */
   @property() accessor imgLoading: "lazy" | "eager" | undefined;
 
+  /** 是否不自动拼接公共路径前缀（仅在使用 imgSrc 时生效） */
   @property({
     type: Boolean,
   })

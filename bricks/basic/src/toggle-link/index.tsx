@@ -30,15 +30,21 @@ export interface ToggleLinkEventsMapping {
 /**
  * 展开/折叠链接。
  *
+ * @author -
  * @slot - 内容
  * @part link - 链接
  * @part icon - 图标
+ *
+ * @category interaction
  */
 export
 @defineElement("eo-toggle-link", {
   styleTexts: [styleText],
 })
 class ToggleLink extends ReactNextElement implements ToggleLinkProps {
+  /**
+   * 是否展开
+   */
   @property({ type: Boolean, render: false })
   accessor open: boolean | undefined;
 
@@ -46,6 +52,10 @@ class ToggleLink extends ReactNextElement implements ToggleLinkProps {
   @property()
   accessor themeVariant: "default" | "elevo" | undefined;
 
+  /**
+   * 切换展开/折叠时触发
+   * @detail 当前是否展开
+   */
   @event({ type: "toggle" })
   accessor #toggle!: EventEmitter<boolean>;
 

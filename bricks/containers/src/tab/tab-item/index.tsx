@@ -47,17 +47,14 @@ class TabItem extends ReactNextElement {
   accessor type: TabType = "default";
 
   /**
-   * @default
+   * 面板名称，对应 tab-group 中的 slot 名称，用于关联内容面板
    * @required
-   * @description 面板名称
    */
   @property()
   accessor panel: string;
 
   /**
-   * @default
-   * @required
-   * @description 图标
+   * 图标配置，显示在标签文字左侧
    */
   @property({
     attribute: false,
@@ -65,9 +62,7 @@ class TabItem extends ReactNextElement {
   accessor icon: GeneralIconProps;
 
   /**
-   * @default
-   * @required
-   * @description 是否禁用
+   * 是否禁用，禁用后点击无响应且样式置灰
    */
   @property({
     type: Boolean,
@@ -75,9 +70,7 @@ class TabItem extends ReactNextElement {
   accessor disabled: boolean;
 
   /**
-   * @default
-   * @required
-   * @description 是否激活状态
+   * 是否为激活状态，通常由 tab-group 自动管理
    */
   @property({
     type: Boolean,
@@ -85,9 +78,7 @@ class TabItem extends ReactNextElement {
   accessor active: boolean;
 
   /**
-   * @default
-   * @required
-   * @description 徽标数的配置
+   * 徽标数配置，显示在标签文字右侧或右上角（panel 类型时）
    */
   @property({
     attribute: false,
@@ -95,7 +86,7 @@ class TabItem extends ReactNextElement {
   accessor badgeConf: BadgeProps;
 
   /**
-   * 面板颜色
+   * 面板颜色，同时控制默认状态和激活状态的文字及图标颜色
    */
   @property()
   accessor panelColor: string | undefined;
