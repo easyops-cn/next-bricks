@@ -12,7 +12,7 @@ export interface PageTitleProps {
 const { defineElement, property } = createDecorators();
 
 /**
- * 页面标题
+ * 页面标题构件，设置后同时更新浏览器标签页标题，在 dashboard 模式下以更大字号（38px）显示
  *
  * @category text
  */

@@ -74,7 +74,7 @@ export interface TagMapEvents {
 }
 
 /**
- * 标签构件
+ * 标签构件，支持多种预设颜色和自定义颜色，可配置为可选择、可关闭模式，支持图标、边线样式及文本溢出省略
  * @author sailor
  *
  * @category display-component
@@ -85,7 +85,7 @@ export interface TagMapEvents {
 })
 class Tag extends ReactNextElement implements TagProps {
   /**
-   * 按钮大小
+   * 标签大小
    * @default "medium"
    */
   @property() accessor size: ComponentSize | undefined;
@@ -158,8 +158,8 @@ class Tag extends ReactNextElement implements TagProps {
   accessor tagStyle: React.CSSProperties | undefined;
 
   /**
-   * @detail TagProps — { size: 标签大小, icon: 图标, color: 颜色, outline: 是否有边线, closable: 是否可关闭, disabled: 是否禁用, checkable: 是否可选择, checked: 当前选中状态, ellipsisWidth: 超出隐藏宽度, tagStyle: 自定义样式 }
-   * @description 选择事件
+   * @detail { size: 标签大小, icon: 图标, color: 颜色, outline: 是否有边线, closable: 是否可关闭, disabled: 是否禁用, checkable: 是否可选择, checked: 当前选中状态, ellipsisWidth: 超出隐藏宽度, tagStyle: 自定义样式 }
+   * @description 点击可选择标签时触发，返回当前标签的完整属性（含更新后的 checked 状态）
    */
   @event({ type: "check" })
   accessor #checkEvent!: EventEmitter<TagProps>;
@@ -169,8 +169,8 @@ class Tag extends ReactNextElement implements TagProps {
   };
 
   /**
-   * @detail TagProps — { size: 标签大小, icon: 图标, color: 颜色, outline: 是否有边线, closable: 是否可关闭, disabled: 是否禁用, checkable: 是否可选择, checked: 当前选中状态, ellipsisWidth: 超出隐藏宽度, tagStyle: 自定义样式 }
-   * @description 关闭事件
+   * @detail { size: 标签大小, icon: 图标, color: 颜色, outline: 是否有边线, closable: 是否可关闭, disabled: 是否禁用, checkable: 是否可选择, checked: 当前选中状态, ellipsisWidth: 超出隐藏宽度, tagStyle: 自定义样式 }
+   * @description 点击关闭按钮时触发，同时隐藏该标签
    */
   @event({ type: "close" })
   accessor #closeEvent!: EventEmitter<TagProps>;

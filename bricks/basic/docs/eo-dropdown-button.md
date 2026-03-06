@@ -1,14 +1,14 @@
 ---
 tagName: eo-dropdown-button
 displayName: WrappedEoDropdownButton
-description: 下拉按钮
+description: 下拉按钮构件，将按钮和下拉操作列表组合，点击按钮弹出操作菜单，支持自定义按钮文本、图标、大小和形状
 category: interact-basic
 source: "@next-bricks/basic"
 ---
 
 # eo-dropdown-button
 
-> 下拉按钮
+> 下拉按钮构件，将按钮和下拉操作列表组合，点击按钮弹出操作菜单，支持自定义按钮文本、图标、大小和形状
 
 ## Props
 

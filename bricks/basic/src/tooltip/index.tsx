@@ -38,7 +38,7 @@ export interface TooltipEventsMapping {
 }
 
 /**
- * 提示
+ * 文字提示构件，鼠标悬停或点击时显示提示气泡，支持多种弹出方向、图标模式、自定义内容插槽及手动控制显隐
  *
  * @slot - 提示的目标元素
  * @slot content - 放置在提示中的元素
@@ -103,7 +103,7 @@ class EoTooltip extends ReactNextElement implements ToolTipProps {
    * 显示提示
    */
   @method()
-  show() {
+  show(): void {
     this.open = true;
   }
 
@@ -111,7 +111,7 @@ class EoTooltip extends ReactNextElement implements ToolTipProps {
    * 隐藏提示
    */
   @method()
-  hide() {
+  hide(): void {
     this.open = false;
   }
 

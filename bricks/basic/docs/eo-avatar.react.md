@@ -1,14 +1,14 @@
 ---
 tagName: eo-avatar
 displayName: WrappedEoAvatar
-description: 头像构件，支持图片、图标、文字三种展示方式，可配置尺寸、形状和边框
+description: 头像构件，支持图片、图标、文本三种展示模式，图片加载失败时自动降级为图标或文本；文本模式会根据容器宽度自动缩放字号
 category: display-component
 source: "@next-bricks/basic"
 ---
 
 # WrappedEoAvatar
 
-> 头像构件，支持图片、图标、文字三种展示方式，可配置尺寸、形状和边框
+> 头像构件，支持图片、图标、文本三种展示模式，图片加载失败时自动降级为图标或文本；文本模式会根据容器宽度自动缩放字号
 
 ## 导入
 
@@ -18,17 +18,17 @@ import { WrappedEoAvatar } from "@easyops/wrapped-components";
 
 ## Props
 
-| 属性     | 类型                                     | 必填 | 默认值     | 说明                     |
-| -------- | ---------------------------------------- | ---- | ---------- | ------------------------ |
-| size     | `"large" \| "medium" \| "small" \| "xs"` | 否   | `"medium"` | 尺寸                     |
-| gapSize  | `"medium" \| "large"`                    | 否   | `"medium"` | 头像和名称间距大小       |
-| shape    | `"circle" \| "round-square"`             | 否   | `"circle"` | 形状                     |
-| src      | `string`                                 | 否   | -          | 图片地址                 |
-| alt      | `string`                                 | 否   | -          | 图像无法显示时的替代文本 |
-| icon     | `GeneralIconProps`                       | 否   | -          | 图标                     |
-| name     | `string`                                 | 否   | -          | 用户名                   |
-| bordered | `boolean`                                | 否   | -          | 是否有边框               |
-| showName | `boolean`                                | 否   | -          | 是否展示名称             |
+| 属性     | 类型                               | 必填 | 默认值     | 说明                     |
+| -------- | ---------------------------------- | ---- | ---------- | ------------------------ |
+| size     | `AvatarSize`                       | 否   | `"medium"` | 尺寸                     |
+| gapSize  | `"medium" \| "large" \| undefined` | 否   | -          | 头像和名称间距大小       |
+| shape    | `"circle" \| "round-square"`       | 否   | `"circle"` | 形状                     |
+| src      | `string \| undefined`              | 否   | -          | 图片地址                 |
+| alt      | `string \| undefined`              | 否   | -          | 图像无法显示时的替代文本 |
+| icon     | `GeneralIconProps \| undefined`    | 否   | -          | 图标                     |
+| name     | `string \| undefined`              | 否   | -          | 用户名                   |
+| bordered | `boolean \| undefined`             | 否   | -          | 是否有边框               |
+| showName | `boolean \| undefined`             | 否   | -          | 是否展示名称             |
 
 ## CSS Parts
 

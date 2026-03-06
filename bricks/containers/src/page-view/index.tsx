@@ -23,7 +23,7 @@ export interface PageViewProps {
 }
 
 /**
- * 页面视图
+ * 页面视图布局构件，提供顶栏、侧边栏、子侧边栏、主内容区和底栏的多分区布局，支持窄布局居中模式和底栏 sticky/固定定位
  *
  * @author steve
  *

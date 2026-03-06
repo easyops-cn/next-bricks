@@ -1,14 +1,14 @@
 ---
 tagName: eo-modal
 displayName: WrappedEoModal
-description: 模态框
+description: 模态框构件，以遮罩层弹窗形式展示内容，支持全屏、居中、自定义宽高、侧边栏、键盘 ESC 关闭及确认/取消按钮交互
 category: container-display
 source: "@next-bricks/containers"
 ---
 
 # WrappedEoModal
 
-> 模态框
+> 模态框构件，以遮罩层弹窗形式展示内容，支持全屏、居中、自定义宽高、侧边栏、键盘 ESC 关闭及确认/取消按钮交互
 
 ## 导入
 
@@ -45,19 +45,19 @@ import { WrappedEoModal } from "@easyops/wrapped-components";
 
 ## Events
 
-| 事件      | detail | 说明               |
-| --------- | ------ | ------------------ |
-| onOpen    | `void` | 打开弹窗时触发     |
-| onClose   | `void` | 关闭弹窗时触发     |
-| onConfirm | `void` | 点击确认按钮时触发 |
-| onCancel  | `void` | 点击取消按钮时触发 |
+| 事件      | detail | 说明         |
+| --------- | ------ | ------------ |
+| onOpen    | `void` | 打开弹窗事件 |
+| onClose   | `void` | 关闭弹窗事件 |
+| onConfirm | `void` | 确认按钮事件 |
+| onCancel  | `void` | 取消按钮事件 |
 
 ## Methods
 
-| 方法  | 参数 | 返回值 | 说明       |
-| ----- | ---- | ------ | ---------- |
-| open  | -    | `void` | 打开模态框 |
-| close | -    | `void` | 关闭模态框 |
+| 方法  | 参数 | 返回值 | 说明           |
+| ----- | ---- | ------ | -------------- |
+| open  | -    | `void` | 打开模态框方法 |
+| close | -    | `void` | 关闭模态框方法 |
 
 ## Slots
 
@@ -71,7 +71,7 @@ import { WrappedEoModal } from "@easyops/wrapped-components";
 
 ### Basic
 
-通过 `open` 方法打开模态框，展示基本用法。
+通过 `visible` 属性直接展示模态框的基本用法。
 
 ```tsx
 <WrappedEoModal modalTitle="Modal Title" visible={true}>
@@ -81,7 +81,7 @@ import { WrappedEoModal } from "@easyops/wrapped-components";
 
 ### Width & Height
 
-通过 `width` 和 `height` 属性控制模态框尺寸。
+通过 `width`、`height`、`minWidth` 和 `minHeight` 属性控制模态框尺寸。
 
 ```tsx
 import { useRef } from "react";
@@ -95,10 +95,31 @@ const modalRef = useRef<any>();
   <WrappedEoModal
     ref={modalRef}
     modalTitle="模态框标题"
-    width="300px"
-    height="200px"
+    width="600px"
+    height="300px"
+    minWidth="400px"
+    minHeight="200px"
   >
     <div>Content</div>
+  </WrappedEoModal>
+</>;
+```
+
+### Centered
+
+通过 `centered` 属性使模态框垂直居中显示。
+
+```tsx
+import { useRef } from "react";
+
+const modalRef = useRef<any>();
+
+<>
+  <WrappedEoButton onClick={() => modalRef.current?.open()}>
+    Open Centered Modal
+  </WrappedEoButton>
+  <WrappedEoModal ref={modalRef} modalTitle="居中模态框" centered={true}>
+    <div>模态框内容</div>
   </WrappedEoModal>
 </>;
 ```
@@ -133,20 +154,31 @@ const noCloseRef = useRef<any>();
 </>;
 ```
 
-### Fullscreen
+### Fullscreen & Fullscreen Button
 
-通过 `fullscreen` 属性开启全屏模式。
+通过 `fullscreen` 属性开启全屏模式，`fullscreenButton` 显示全屏切换按钮。
 
 ```tsx
 import { useRef } from "react";
 
-const modalRef = useRef<any>();
+const fullscreenRef = useRef<any>();
+const fullscreenBtnRef = useRef<any>();
 
 <>
-  <WrappedEoButton onClick={() => modalRef.current?.open()}>
-    open
+  <WrappedEoButton onClick={() => fullscreenRef.current?.open()}>
+    Open Fullscreen Modal
   </WrappedEoButton>
-  <WrappedEoModal ref={modalRef} modalTitle="模态框标题" fullscreen={true}>
+  <WrappedEoModal ref={fullscreenRef} modalTitle="全屏模态框" fullscreen={true}>
+    <div>模态框内容</div>
+  </WrappedEoModal>
+  <WrappedEoButton onClick={() => fullscreenBtnRef.current?.open()}>
+    Open With Fullscreen Button
+  </WrappedEoButton>
+  <WrappedEoModal
+    ref={fullscreenBtnRef}
+    modalTitle="可切换全屏"
+    fullscreenButton={true}
+  >
     <div>模态框内容</div>
   </WrappedEoModal>
 </>;
@@ -177,9 +209,87 @@ const modalRef = useRef<any>();
 </WrappedEoModal>
 ```
 
-### Open Event & Close Event
+### Confirm Danger & Disabled
 
-监听 `onOpen` 和 `onClose` 事件，结合 `keyboard` 属性支持 Esc 键关闭。
+通过 `confirmDanger` 设置危险样式确认按钮，`confirmDisabled` 禁用确认按钮。
+
+```tsx
+import { useRef } from "react";
+
+const dangerRef = useRef<any>();
+const disabledRef = useRef<any>();
+
+<>
+  <WrappedEoButton onClick={() => dangerRef.current?.open()}>
+    Open Danger Modal
+  </WrappedEoButton>
+  <WrappedEoModal
+    ref={dangerRef}
+    modalTitle="删除确认"
+    confirmDanger={true}
+    confirmText="删除"
+  >
+    <div>确认删除此项？</div>
+  </WrappedEoModal>
+  <WrappedEoButton onClick={() => disabledRef.current?.open()}>
+    Open Disabled Confirm Modal
+  </WrappedEoButton>
+  <WrappedEoModal
+    ref={disabledRef}
+    modalTitle="确认按钮禁用"
+    confirmDisabled={true}
+  >
+    <div>确认按钮不可点击。</div>
+  </WrappedEoModal>
+</>;
+```
+
+### No Footer
+
+通过 `noFooter` 隐藏底部区域，适用于纯展示场景。
+
+```tsx
+import { useRef } from "react";
+
+const modalRef = useRef<any>();
+
+<>
+  <WrappedEoButton onClick={() => modalRef.current?.open()}>
+    Open
+  </WrappedEoButton>
+  <WrappedEoModal ref={modalRef} modalTitle="无底部模态框" noFooter={true}>
+    <div>仅展示内容，无底部按钮。</div>
+  </WrappedEoModal>
+</>;
+```
+
+### Background & Header Bordered
+
+通过 `background` 设置模态框背景色，`headerBordered` 显示头部底边线。
+
+```tsx
+import { useRef } from "react";
+
+const modalRef = useRef<any>();
+
+<>
+  <WrappedEoButton onClick={() => modalRef.current?.open()}>
+    Open Styled Modal
+  </WrappedEoButton>
+  <WrappedEoModal
+    ref={modalRef}
+    modalTitle="自定义背景"
+    background="#f5f5f5"
+    headerBordered={true}
+  >
+    <div>带自定义背景和头部底边线的模态框。</div>
+  </WrappedEoModal>
+</>;
+```
+
+### Events
+
+监听 `onOpen`、`onClose`、`onConfirm` 和 `onCancel` 事件，结合 `keyboard` 属性支持 Esc 键关闭，`closeWhenConfirm` 控制确认后是否自动关闭。
 
 ```tsx
 import { useRef } from "react";
@@ -194,8 +304,11 @@ const modalRef = useRef<any>();
     ref={modalRef}
     modalTitle="模态框标题"
     keyboard={true}
+    closeWhenConfirm={false}
     onOpen={() => console.log("modal Open")}
     onClose={() => console.log("modal Close")}
+    onConfirm={() => console.log("modal Confirm")}
+    onCancel={() => console.log("modal Cancel")}
   >
     <div>Content</div>
   </WrappedEoModal>
@@ -229,33 +342,9 @@ const modalRef = useRef<any>();
 </>;
 ```
 
-### Confirm Danger & Disabled
+### Footer Slot
 
-通过 `confirmDanger` 设置危险样式确认按钮，`confirmDisabled` 禁用确认按钮。
-
-```tsx
-import { useRef } from "react";
-
-const modalRef = useRef<any>();
-
-<>
-  <WrappedEoButton onClick={() => modalRef.current?.open()}>
-    Open Danger Modal
-  </WrappedEoButton>
-  <WrappedEoModal
-    ref={modalRef}
-    modalTitle="删除确认"
-    confirmDanger={true}
-    confirmText="删除"
-  >
-    <div>确认删除此项？</div>
-  </WrappedEoModal>
-</>;
-```
-
-### No Footer
-
-通过 `noFooter` 隐藏底部区域，适用于纯展示场景。
+使用 `footer` 插槽在模态框底部左侧放置自定义内容。
 
 ```tsx
 import { useRef } from "react";
@@ -266,8 +355,32 @@ const modalRef = useRef<any>();
   <WrappedEoButton onClick={() => modalRef.current?.open()}>
     Open
   </WrappedEoButton>
-  <WrappedEoModal ref={modalRef} modalTitle="无底部模态框" noFooter={true}>
-    <div>仅展示内容，无底部按钮。</div>
+  <WrappedEoModal ref={modalRef} modalTitle="带底部插槽的模态框">
+    <div>模态框内容</div>
+    <span slot="footer">底部左侧自定义内容</span>
+  </WrappedEoModal>
+</>;
+```
+
+### Theme Variant
+
+通过 `themeVariant` 属性切换主题变体，`elevo` 主题下默认居中且无头部底边线。
+
+```tsx
+import { useRef } from "react";
+
+const modalRef = useRef<any>();
+
+<>
+  <WrappedEoButton onClick={() => modalRef.current?.open()}>
+    Open Elevo Theme Modal
+  </WrappedEoButton>
+  <WrappedEoModal
+    ref={modalRef}
+    modalTitle="Elevo 主题模态框"
+    themeVariant="elevo"
+  >
+    <div>使用 elevo 主题变体的模态框。</div>
   </WrappedEoModal>
 </>;
 ```

@@ -1,8 +1,46 @@
-通用 Tab 容器。
+---
+tagName: eo-tab-list
+displayName: WrappedEoTabList
+description: Tab 列表
+category: container-display
+source: "@next-bricks/containers"
+---
+
+# eo-tab-list
+
+> Tab 列表
+
+## Props
+
+| 属性          | 类型                                      | 必填 | 默认值      | 说明                                                                                        |
+| ------------- | ----------------------------------------- | ---- | ----------- | ------------------------------------------------------------------------------------------- |
+| type          | `TabType \| undefined`                    | -    | `"default"` | 样式类型                                                                                    |
+| tabs          | `(TabItemProps \| string)[] \| undefined` | -    | -           | 标签页列表                                                                                  |
+| activePanel   | `string \| undefined`                     | -    | -           | 激活状态 tab 的 panel                                                                       |
+| contentStyle  | `React.CSSProperties \| undefined`        | -    | -           | 内容样式                                                                                    |
+| outline       | `TabsOutline \| undefined`                | -    | `"default"` | 轮廓。默认情况下，使用阴影，8.2 下默认则为无轮廓。该属性对 panel 类型无效（其始终无轮廓）。 |
+| autoPlay      | `boolean \| undefined`                    | -    | `false`     | 是否开启标签内容自动轮播                                                                    |
+| autoSpeed     | `number`                                  | -    | `3000`      | 轮播的时间间隔，单位 ms                                                                     |
+| fillContainer | `boolean \| undefined`                    | -    | -           | 是否撑满容器                                                                                |
+
+## Events
+
+| 事件       | detail           | 说明            |
+| ---------- | ---------------- | --------------- |
+| tab.select | `string` — panel | 选择 tab 时触发 |
+
+## Slots
+
+| 名称    | 说明       |
+| ------- | ---------- |
+| extra   | 头部插槽   |
+| [panel] | Tab 页插槽 |
 
 ## Examples
 
 ### Tabs
+
+基本标签页列表用法，支持字符串简写和对象格式定义标签项。
 
 ```yaml preview
 - brick: eo-tab-list
@@ -49,6 +87,8 @@
 ```
 
 ### Type & Disabled
+
+展示不同样式类型（default、panel、capsule、text）以及禁用标签项的效果。
 
 ```yaml preview
 - brick: eo-flex-layout
@@ -178,6 +218,8 @@
 
 ### With Badge
 
+展示标签项带数字徽标的效果，支持自定义徽标颜色。
+
 ```yaml preview
 - brick: eo-flex-layout
   properties:
@@ -264,6 +306,8 @@
 
 ### ActivePanel & Extra
 
+通过 activePanel 设置默认激活的标签页，并使用 extra 插槽在标签头部添加额外内容。
+
 ```yaml preview
 - brick: eo-tab-list
   properties:
@@ -328,6 +372,8 @@
 
 ### No Outline
 
+设置 outline 为 none 去除标签内容区域的轮廓。
+
 ```yaml preview
 - brick: eo-tab-list
   properties:
@@ -355,6 +401,8 @@
 ```
 
 ### Panel Color
+
+展示标签项自定义面板颜色的效果。
 
 ```yaml preview
 - brick: eo-tab-list
@@ -388,6 +436,8 @@
 ```
 
 ### Content Style
+
+通过 contentStyle 自定义标签内容区域的样式，例如设置固定高度和滚动。
 
 ```yaml preview
 - brick: eo-tab-list
@@ -453,6 +503,8 @@
 
 ### Auto Play
 
+开启 autoPlay 自动轮播标签内容，可通过 autoSpeed 调整轮播间隔。
+
 ```yaml preview
 - brick: eo-tab-list
   events:
@@ -460,6 +512,7 @@
       - action: console.log
   properties:
     autoPlay: true
+    autoSpeed: 2000
     tabs:
       - text: Create
         panel: Create
@@ -493,6 +546,8 @@
 ```
 
 ### Fill Container
+
+设置 fillContainer 使标签组件撑满父容器高度。
 
 ```yaml preview minHeight="300px"
 brick: div

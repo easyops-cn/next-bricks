@@ -112,6 +112,9 @@ class TabList extends ReactNextElement implements TabListProps {
   })
   accessor autoSpeed: number = 3000;
 
+  /**
+   * 是否撑满容器
+   */
   @property({ type: Boolean })
   accessor fillContainer: boolean | undefined;
 

@@ -1,14 +1,14 @@
 ---
 tagName: eo-tooltip
 displayName: WrappedEoTooltip
-description: 提示
+description: 文字提示构件，鼠标悬停或点击时显示提示气泡，支持多种弹出方向、图标模式、自定义内容插槽及手动控制显隐
 category: feedback-and-tooltip
 source: "@next-bricks/basic"
 ---
 
 # WrappedEoTooltip
 
-> 提示
+> 文字提示构件，鼠标悬停或点击时显示提示气泡，支持多种弹出方向、图标模式、自定义内容插槽及手动控制显隐
 
 ## 导入
 
@@ -18,16 +18,16 @@ import { WrappedEoTooltip } from "@easyops/wrapped-components";
 
 ## Props
 
-| 属性      | 类型               | 必填 | 默认值    | 说明                                                                                                                                                        |
-| --------- | ------------------ | ---- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| icon      | `GeneralIconProps` | -    | -         | 图标                                                                                                                                                        |
-| content   | `string`           | -    | -         | 内容                                                                                                                                                        |
-| placement | `Placement`        | -    | -         | 弹出位置，支持 `top`、`top-start`、`top-end`、`bottom`、`bottom-start`、`bottom-end`、`left`、`left-start`、`left-end`、`right`、`right-start`、`right-end` |
-| disabled  | `boolean`          | -    | `false`   | 是否禁用                                                                                                                                                    |
-| open      | `boolean`          | -    | -         | 是否显示                                                                                                                                                    |
-| trigger   | `string`           | -    | -         | 激活方式，包括 `click` \| `hover` \| `focus` \| `manual`，可以多选用空格分隔                                                                                |
-| hoist     | `boolean`          | -    | -         | 是否使用固定定位防止内容被裁切                                                                                                                              |
-| maxWidth  | `string`           | -    | `"250px"` | 最大长度                                                                                                                                                    |
+| 属性      | 类型               | 必填 | 默认值    | 说明                                                                         |
+| --------- | ------------------ | ---- | --------- | ---------------------------------------------------------------------------- |
+| icon      | `GeneralIconProps` | -    | -         | 图标                                                                         |
+| content   | `string`           | -    | -         | 内容                                                                         |
+| placement | `Placement`        | -    | -         | 弹出位置                                                                     |
+| disabled  | `boolean`          | -    | `false`   | 是否禁用                                                                     |
+| open      | `boolean`          | -    | -         | 是否显示                                                                     |
+| trigger   | `string`           | -    | -         | 激活方式，包括 `click` \| `hover` \| `focus` \| `manual`，可以多选用空格分隔 |
+| hoist     | `boolean`          | -    | -         | 是否使用固定定位防止内容被裁切                                               |
+| maxWidth  | `string`           | -    | `"250px"` | 最大长度                                                                     |
 
 ## Events
 
@@ -153,6 +153,47 @@ const placements = [
 </div>;
 ```
 
+### Disabled
+
+设置 `disabled` 属性禁用提示，鼠标悬停时不再弹出。
+
+```tsx
+<div style={{ margin: 50, display: "flex", gap: 100 }}>
+  <WrappedEoTooltip content="This is a tooltip" trigger="hover" disabled>
+    <WrappedEoButton type="primary">disabled tooltip</WrappedEoButton>
+  </WrappedEoTooltip>
+  <WrappedEoTooltip
+    content="This is a tooltip"
+    trigger="hover"
+    disabled={false}
+  >
+    <WrappedEoButton type="primary">enabled tooltip</WrappedEoButton>
+  </WrappedEoTooltip>
+</div>
+```
+
+### MaxWidth
+
+通过 `maxWidth` 属性控制提示气泡的最大宽度，默认 250px。
+
+```tsx
+<div style={{ margin: 50, display: "flex", gap: 100 }}>
+  <WrappedEoTooltip
+    content="这是一段非常长的提示文本，用于展示默认宽度下的换行效果，当内容超出最大宽度时会自动换行显示。"
+    trigger="hover"
+  >
+    <WrappedEoButton type="primary">默认宽度</WrappedEoButton>
+  </WrappedEoTooltip>
+  <WrappedEoTooltip
+    content="这是一段非常长的提示文本，用于展示自定义宽度下的换行效果，当内容超出最大宽度时会自动换行显示。"
+    trigger="hover"
+    maxWidth="400px"
+  >
+    <WrappedEoButton type="primary">maxWidth 400px</WrappedEoButton>
+  </WrappedEoTooltip>
+</div>
+```
+
 ### Hoist
 
 `hoist={true}` 使用固定定位，避免提示内容被父元素的 `overflow: hidden` 裁切。
@@ -198,7 +239,7 @@ const placements = [
 
 ### Methods
 
-调用 `show()` 方法以编程方式显示提示，调用 `hide()` 方法隐藏提示；`onOpenChange` 触发 `open.change`，`onAfterOpenChange` 触发 `after.open.change`。
+调用 `show()` 方法以编程方式显示提示，调用 `hide()` 方法隐藏提示。
 
 ```tsx
 const tooltipRef = useRef<any>();

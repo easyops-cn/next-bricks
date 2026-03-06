@@ -1,14 +1,14 @@
 ---
 tagName: eo-avatar-group
 displayName: WrappedEoAvatarGroup
-description: 头像组构件，将多个头像排列展示，自动为子头像添加边框并统一控制尺寸
+description: 头像组容器，将多个 eo-avatar 或 eo-easyops-avatar 以重叠堆叠的方式展示，并统一控制子头像的尺寸和边框
 category: display-component
 source: "@next-bricks/basic"
 ---
 
 # WrappedEoAvatarGroup
 
-> 头像组构件，将多个头像排列展示，自动为子头像添加边框并统一控制尺寸
+> 头像组容器，将多个 eo-avatar 或 eo-easyops-avatar 以重叠堆叠的方式展示，并统一控制子头像的尺寸和边框
 
 ## 导入
 
@@ -18,21 +18,21 @@ import { WrappedEoAvatarGroup } from "@easyops/wrapped-components";
 
 ## Props
 
-| 属性 | 类型                                     | 必填 | 默认值 | 说明                       |
-| ---- | ---------------------------------------- | ---- | ------ | -------------------------- |
-| size | `"large" \| "medium" \| "small" \| "xs"` | 否   | -      | 统一设置组内所有头像的尺寸 |
+| 属性 | 类型                                     | 必填 | 默认值 | 说明 |
+| ---- | ---------------------------------------- | ---- | ------ | ---- |
+| size | `"large" \| "medium" \| "small" \| "xs"` | 否   | -      | 尺寸 |
 
 ## Slots
 
-| 名称     | 说明                                                          |
-| -------- | ------------------------------------------------------------- |
-| （默认） | 头像列表，放置 WrappedEoAvatar 或 WrappedEoEasyopsAvatar 构件 |
+| 名称     | 说明                                                  |
+| -------- | ----------------------------------------------------- |
+| （默认） | 放置 WrappedEoAvatar 或 WrappedEoEasyopsAvatar 子元素 |
 
 ## Examples
 
 ### Basic
 
-头像组将多个不同类型的头像排列展示，并自动为每个头像添加边框。
+头像组将多个不同类型的头像以重叠堆叠方式排列展示，并自动为每个头像添加边框。
 
 ```tsx
 import {
@@ -52,5 +52,22 @@ import {
   />
   <WrappedEoEasyopsAvatar nameOrInstanceId="easyops" />
   <WrappedEoAvatar name="Lucy" />
+</WrappedEoAvatarGroup>;
+```
+
+### Size
+
+通过 size 属性统一设置组内所有头像的尺寸，支持 large、medium、small 和 xs 四种尺寸。
+
+```tsx
+import {
+  WrappedEoAvatar,
+  WrappedEoAvatarGroup,
+} from "@easyops/wrapped-components";
+
+<WrappedEoAvatarGroup size="large">
+  <WrappedEoAvatar name="Alice" />
+  <WrappedEoAvatar name="Bob" />
+  <WrappedEoAvatar name="Carol" />
 </WrappedEoAvatarGroup>;
 ```

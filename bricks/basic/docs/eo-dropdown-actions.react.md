@@ -1,14 +1,14 @@
 ---
 tagName: eo-dropdown-actions
 displayName: WrappedEoDropdownActions
-description: 下拉菜单
+description: 下拉菜单构件，点击触发元素弹出操作列表，支持选中状态、弹出层定位策略配置和自定义触发内容
 category: interact-basic
 source: "@next-bricks/basic"
 ---
 
 # WrappedEoDropdownActions
 
-> 下拉菜单
+> 下拉菜单构件，点击触发元素弹出操作列表，支持选中状态、弹出层定位策略配置和自定义触发内容
 
 ## 导入
 
@@ -21,7 +21,7 @@ import { WrappedEoDropdownActions } from "@easyops/wrapped-components";
 | 属性         | 类型                    | 必填 | 默认值           | 说明              |
 | ------------ | ----------------------- | ---- | ---------------- | ----------------- |
 | actions      | `Action[]`              | 否   | -                | 操作列表配置      |
-| checkedKeys  | `(string \| number)[]`  | 是   | `[]`             | actions选中项配置 |
+| checkedKeys  | `(string \| number)[]`  | 否   | `[]`             | actions选中项配置 |
 | disabled     | `boolean`               | 否   | -                | 是否禁用          |
 | strategy     | `"absolute" \| "fixed"` | 否   | `"absolute"`     | 弹出层如何定位    |
 | placement    | `Placement`             | 否   | `"bottom-start"` | 弹出层放置位置    |
@@ -34,11 +34,17 @@ import { WrappedEoDropdownActions } from "@easyops/wrapped-components";
 | onActionClick   | `SimpleAction` — 该按钮配置 | 点击按钮时触发             |
 | onVisibleChange | `boolean` — 当前是否可见    | 当弹出层可见性变化之后触发 |
 
+## Slots
+
+| 名称        | 说明               |
+| ----------- | ------------------ |
+| _(default)_ | 触发弹出的锚点元素 |
+
 ## Examples
 
 ### Basic
 
-展示包含图标、分隔符、危险项和子菜单的下拉操作菜单，使用 `anchor` 插槽放置触发按钮。
+展示包含图标、分隔符、危险项和子菜单的下拉操作菜单，使用默认插槽放置触发按钮。
 
 ```tsx
 <WrappedEoDropdownActions
@@ -85,7 +91,7 @@ import { WrappedEoDropdownActions } from "@easyops/wrapped-components";
     if (action.event === "delete") console.log("click delete button");
   }}
 >
-  <WrappedEoButton slot="anchor">button</WrappedEoButton>
+  <WrappedEoButton>button</WrappedEoButton>
 </WrappedEoDropdownActions>
 ```
 
@@ -107,7 +113,7 @@ import { WrappedEoDropdownActions } from "@easyops/wrapped-components";
   ]}
   onActionClick={(e) => console.log(e.detail.text)}
 >
-  <WrappedEoButton slot="anchor">Actions</WrappedEoButton>
+  <WrappedEoButton>Actions</WrappedEoButton>
 </WrappedEoDropdownActions>
 ```
 
@@ -123,15 +129,13 @@ import { WrappedEoDropdownActions } from "@easyops/wrapped-components";
     { text: "Delete", icon: { lib: "antd", icon: "delete" }, danger: true },
   ]}
 >
-  <WrappedEoButton disabled slot="anchor">
-    Disabled
-  </WrappedEoButton>
+  <WrappedEoButton disabled>Disabled</WrappedEoButton>
 </WrappedEoDropdownActions>
 ```
 
 ### Visible Change
 
-监听 `onVisibleChange` 事件，在弹出层显示/隐藏时响应。
+监听 `onVisibleChange` 事件，并通过 `placement`、`strategy`、`themeVariant` 配置弹出层的定位和主题。
 
 ```tsx
 <WrappedEoDropdownActions
@@ -144,6 +148,6 @@ import { WrappedEoDropdownActions } from "@easyops/wrapped-components";
   ]}
   onVisibleChange={(e) => console.log(e.detail ? "菜单已打开" : "菜单已关闭")}
 >
-  <WrappedEoButton slot="anchor">Open Menu</WrappedEoButton>
+  <WrappedEoButton>Open Menu</WrappedEoButton>
 </WrappedEoDropdownActions>
 ```
