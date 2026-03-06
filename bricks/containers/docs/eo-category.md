@@ -1,4 +1,40 @@
-通用分类容器构件。
+---
+tagName: eo-category
+displayName: WrappedEoCategory
+description: 通用分类容器
+category: container-display
+source: "@next-bricks/containers"
+---
+
+# eo-category
+
+> 通用分类容器
+
+## Props
+
+| 属性           | 类型                  | 必填 | 默认值 | 说明             |
+| -------------- | --------------------- | ---- | ------ | ---------------- |
+| categories     | `CategoryProps[]`     | yes  | -      | 分类信息         |
+| contentStyle   | `React.CSSProperties` | -    | -      | 内容样式         |
+| headerStyle    | `React.CSSProperties` | -    | -      | 头部样式         |
+| containerStyle | `React.CSSProperties` | -    | -      | 容器样式         |
+| split          | `boolean`             | -    | -      | 是否展示分割线   |
+| headerMask     | `boolean`             | -    | `true` | 是否显示头部线条 |
+| showIndex      | `boolean`             | -    | -      | 是否显示序号     |
+
+## Slots
+
+| 名称                      | 说明                                             |
+| ------------------------- | ------------------------------------------------ |
+| {categoryKey}             | 每个分类项的内容插槽，名称为对应 category 的 key |
+| {categoryKey}.titleSuffix | 每个分类项标题后缀插槽                           |
+| headerToolbar             | 头部右侧工具栏插槽                               |
+
+## Examples
+
+### Basic
+
+基本用法，展示带标题和内容的分类容器。
 
 ```yaml preview
 - brick: eo-category
@@ -21,9 +57,9 @@
             textContent: Item 2 Content
 ```
 
-## Examples
-
 ### Content Style
+
+通过 contentStyle 自定义分类内容区域的样式。
 
 ```yaml preview
 - brick: eo-category
@@ -49,6 +85,8 @@
 ```
 
 ### Header Style
+
+通过 headerStyle 自定义分类头部区域的样式。
 
 ```yaml preview
 - brick: eo-category
@@ -77,6 +115,8 @@
 
 ### Container Style
 
+通过 containerStyle 自定义整个容器的样式。
+
 ```yaml preview
 - brick: eo-category
   properties:
@@ -103,6 +143,8 @@
 ```
 
 ### Show Index
+
+展示序号模式，同时启用分割线并隐藏头部标记线。
 
 ```yaml preview
 - brick: eo-category

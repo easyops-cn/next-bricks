@@ -89,20 +89,32 @@ class EoMainView extends ReactNextElement {
   @property({ type: Boolean })
   accessor bannerAlone: boolean | undefined;
 
+  /**
+   * Banner 标题，仅在 bannerAlone 模式下生效
+   */
   @property()
   accessor bannerTitle: string | undefined;
 
+  /**
+   * Banner 描述文字，仅在 bannerAlone 模式下生效
+   */
   @property()
   accessor bannerDescription: string | undefined;
 
+  /**
+   * Banner 背景图片，使用 CSS background-image 语法（如 url(...)）
+   */
   @property()
   accessor bannerImage: string | undefined;
 
+  /**
+   * Banner 是否下沉显示
+   */
   @property({ type: Boolean })
   accessor bannerSunk: boolean | undefined;
 
   /**
-   * 是否展示 banner（包括页面标题，面包屑，工作栏）
+   * 是否展示 banner（包括面包屑、页面标题、工具栏）
    * @default true
    */
   @property({ type: Boolean })
@@ -136,7 +148,7 @@ class EoMainView extends ReactNextElement {
   accessor showDashboardExit: boolean | undefined;
 
   /**
-   * 退出 dashboard 模式
+   * 点击退出按钮退出 dashboard 模式时触发
    */
   @event({ type: "dashboard.exit" })
   accessor #dashboardExit!: EventEmitter<void>;

@@ -13,6 +13,11 @@ export interface EoImgIconProps {
   noPublicRoot?: boolean;
 }
 
+/**
+ * 图片图标构件
+ *
+ * @category display-component
+ */
 export
 @defineElement("eo-img-icon", {
   styleTexts: [styleText],
@@ -30,6 +35,7 @@ class EoImgIcon extends ReactNextElement implements EoImgIconProps {
   /** 加载方式 */
   @property() accessor imgLoading: "lazy" | "eager" | undefined;
 
+  /** 图片路径是否不添加公共根路径前缀 */
   @property({
     type: Boolean,
   })

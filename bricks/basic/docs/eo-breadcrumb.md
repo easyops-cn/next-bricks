@@ -1,8 +1,27 @@
-面包屑容器
+---
+tagName: eo-breadcrumb
+displayName: WrappedEoBreadcrumb
+description: 面包屑容器构件，通过插槽放置面包屑单项，支持自定义分隔符
+category: navigation
+source: "@next-bricks/basic"
+---
+
+# eo-breadcrumb
+
+> 面包屑容器构件，通过插槽放置面包屑单项，支持自定义分隔符
+
+## Slots
+
+| 名称      | 说明                                     |
+| --------- | ---------------------------------------- |
+| （默认）  | 面包屑项，可使用 eo-breadcrumb-item 构件 |
+| separator | 分隔符，默认为 /                         |
 
 ## Examples
 
 ### Basic
+
+基本面包屑导航，包含图标前缀和自定义分隔符。
 
 ```yaml preview
 brick: eo-breadcrumb
@@ -36,6 +55,8 @@ children:
 ```
 
 ### Slot
+
+使用 separator 插槽自定义统一分隔符。
 
 ```yaml preview
 brick: eo-breadcrumb

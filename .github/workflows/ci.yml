@@ -107,87 +107,87 @@ jobs:
           !bricks/*/dist/stories-assets/**
         retention-days: 90
 
-  build_docs:
-    name: Build docs
-    needs: build_bricks
-    runs-on: ubuntu-latest
+  # build_docs:
+  #   name: Build docs
+  #   needs: build_bricks
+  #   runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [20.x]
+  #   strategy:
+  #     matrix:
+  #       node-version: [20.x]
 
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        repository: easyops-cn/brick-docs
-        ref: refs/heads/master
-        token: ${{ secrets.GH_TOKEN_EVE }}
+  #   steps:
+  #   - uses: actions/checkout@v4
+  #     with:
+  #       repository: easyops-cn/brick-docs
+  #       ref: refs/heads/master
+  #       token: ${{ secrets.GH_TOKEN_EVE }}
 
-    - uses: actions/download-artifact@v4
-      with:
-        name: brick-artifacts
-        path: ci-bricks
+  #   - uses: actions/download-artifact@v4
+  #     with:
+  #       name: brick-artifacts
+  #       path: ci-bricks
 
-    - name: Download artifact from next-advanced-bricks
-      id: download-artifact-from-next-advanced-bricks
-      uses: dawidd6/action-download-artifact@v7
-      with:
-        name: brick-artifacts
-        path: ci-advanced-bricks
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        repo: easyops-cn/next-advanced-bricks
-        branch: master
-        event: push
-        workflow: ci.yml
-        workflow_conclusion: ""
+  #   - name: Download artifact from next-advanced-bricks
+  #     id: download-artifact-from-next-advanced-bricks
+  #     uses: dawidd6/action-download-artifact@v7
+  #     with:
+  #       name: brick-artifacts
+  #       path: ci-advanced-bricks
+  #       github_token: ${{ secrets.GITHUB_TOKEN }}
+  #       repo: easyops-cn/next-advanced-bricks
+  #       branch: master
+  #       event: push
+  #       workflow: ci.yml
+  #       workflow_conclusion: ""
 
-    - name: Merge bricks
-      run: cp -r ci-advanced-bricks/* ci-bricks/bricks/
+  #   - name: Merge bricks
+  #     run: cp -r ci-advanced-bricks/* ci-bricks/bricks/
 
-    - name: Get yarn cache directory path
-      id: yarn-cache-dir-path
-      run: echo "::set-output name=dir::$(yarn cache dir)"
+  #   - name: Get yarn cache directory path
+  #     id: yarn-cache-dir-path
+  #     run: echo "::set-output name=dir::$(yarn cache dir)"
 
-    - name: Cache for yarn
-      uses: actions/cache@v4
-      with:
-        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: docs-node-cache-${{ runner.os }}-yarn-v3-${{ hashFiles('yarn.lock') }}
-        restore-keys: |
-          docs-node-cache-${{ runner.os }}-yarn-v3-
+  #   - name: Cache for yarn
+  #     uses: actions/cache@v4
+  #     with:
+  #       path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+  #       key: docs-node-cache-${{ runner.os }}-yarn-v3-${{ hashFiles('yarn.lock') }}
+  #       restore-keys: |
+  #         docs-node-cache-${{ runner.os }}-yarn-v3-
 
-    - name: Install dependencies (docs)
-      run: yarn install --frozen-lockfile
+  #   - name: Install dependencies (docs)
+  #     run: yarn install --frozen-lockfile
 
-    - name: Build (docs)
-      run: yarn build
+  #   - name: Build (docs)
+  #     run: yarn build
 
-    - name: Deploy to Netlify (pull request)
-      id: netlify-deploy
-      uses: nwtgck/actions-netlify@v3.0
-      with:
-        publish-dir: './build'
-        production-branch: master
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        deploy-message: "${{ github.event.pull_request.title }}"
-        alias: docs-preview-${{ github.event.number }}
-        netlify-config-path: ./ci-bricks/netlify.toml
-      env:
-        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-      timeout-minutes: 2
-      if: github.event_name == 'pull_request'
+  #   - name: Deploy to Netlify (pull request)
+  #     id: netlify-deploy
+  #     uses: nwtgck/actions-netlify@v3.0
+  #     with:
+  #       publish-dir: './build'
+  #       production-branch: master
+  #       github-token: ${{ secrets.GITHUB_TOKEN }}
+  #       deploy-message: "${{ github.event.pull_request.title }}"
+  #       alias: docs-preview-${{ github.event.number }}
+  #       netlify-config-path: ./ci-bricks/netlify.toml
+  #     env:
+  #       NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+  #       NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+  #     timeout-minutes: 2
+  #     if: github.event_name == 'pull_request'
 
-    - name: Deploy to gh-pages (push to master)
-      uses: peaceiris/actions-gh-pages@v4
-      with:
-        personal_token: ${{ secrets.GH_TOKEN_EVE }}
-        external_repository: easyops-cn/bricks
-        cname: bricks.js.org
-        publish_dir: ./build
-        publish_branch: gh-pages
-        force_orphan: true
-      if: github.event_name == 'push'
+  #   - name: Deploy to gh-pages (push to master)
+  #     uses: peaceiris/actions-gh-pages@v4
+  #     with:
+  #       personal_token: ${{ secrets.GH_TOKEN_EVE }}
+  #       external_repository: easyops-cn/bricks
+  #       cname: bricks.js.org
+  #       publish_dir: ./build
+  #       publish_branch: gh-pages
+  #       force_orphan: true
+  #     if: github.event_name == 'push'
 
   size_check:
     name: Size check

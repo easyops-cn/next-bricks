@@ -1,8 +1,58 @@
-通用弹出层构件
+---
+tagName: eo-popover
+displayName: WrappedEoPopover
+description: 通用弹出层构件
+category: container-display
+source: "@next-bricks/basic"
+---
+
+# eo-popover
+
+> 通用弹出层构件
+
+## Props
+
+| 属性          | 类型                                 | 必填 | 默认值       | 说明                             |
+| ------------- | ------------------------------------ | ---- | ------------ | -------------------------------- |
+| placement     | `Placement \| undefined`             | 否   | -            | 弹出层放置位置                   |
+| trigger       | `TriggerEvent \| undefined`          | 否   | `"click"`    | 弹出触发方式                     |
+| active        | `boolean \| undefined`               | 否   | `false`      | 弹出层是否已激活                 |
+| arrow         | `boolean \| undefined`               | 否   | `true`       | 弹出层是否显示箭头               |
+| shiftPadding  | `number \| undefined`                | 否   | -            | 发生移位行为之前超出的填充量     |
+| arrowColor    | `string \| undefined`                | 否   | -            | 箭头颜色                         |
+| strategy      | `"absolute" \| "fixed" \| undefined` | 否   | `"absolute"` | 弹出层如何定位                   |
+| sync          | `Sync \| undefined`                  | 否   | -            | 将弹出层的宽高与 anchor 元素同步 |
+| disabled      | `boolean \| undefined`               | 否   | -            | 是否禁用                         |
+| distance      | `number \| undefined`                | 否   | -            | 弹出窗口与其锚点之间的距离       |
+| anchorDisplay | `CSSProperties["display"]`           | 否   | -            | 触发器的显示类型                 |
+| zIndex        | `number \| undefined`                | 否   | -            | 弹出层的 Z 轴顺序                |
+| themeVariant  | `"default" \| "elevo" \| undefined`  | 否   | -            | 主题变体                         |
+
+## Events
+
+| 事件                  | detail                   | 说明                       |
+| --------------------- | ------------------------ | -------------------------- |
+| visible.change        | `boolean` — 当前是否可见 | 当弹出层可见性变化之后触发 |
+| before.visible.change | `boolean` — 当前是否可见 | 当弹出层可见性变化时触发   |
+
+## Slots
+
+| 名称      | 说明             |
+| --------- | ---------------- |
+| (default) | 弹出层内容       |
+| anchor    | 触发弹出层的元素 |
+
+## CSS Parts
+
+| 名称  | 说明                                                                           |
+| ----- | ------------------------------------------------------------------------------ |
+| popup | The popup's container. Useful for setting a background color, box shadow, etc. |
 
 ## Examples
 
 ### Triggers
+
+展示 click 和 hover 两种触发方式。
 
 ```html preview
 <div class="example">
@@ -32,6 +82,8 @@
 ```
 
 ### Placements
+
+展示弹出层在不同方位的放置效果。
 
 ```yaml preview
 - brick: div
@@ -209,7 +261,7 @@
          grid-area: ls;
          justify-self: end;
        }
-       
+
        [placement="left-end"] {
          grid-area: le;
          justify-self: end;
@@ -262,6 +314,8 @@
 
 ### Custom Style
 
+通过 arrowColor 自定义箭头颜色，并使用 CSS Part 自定义弹出层容器样式。
+
 ```html preview
 <div class="example">
   <eo-popover trigger="click" placement="bottom">
@@ -300,6 +354,8 @@
 
 ### Disabled
 
+禁用状态下弹出层不会响应触发操作。
+
 ```html preview
 <div class="example">
   <eo-popover placement="bottom" disabled>
@@ -320,4 +376,37 @@
     justify-content: center;
   }
 </style>
+```
+
+### Events
+
+监听弹出层可见性变化事件。
+
+```yaml preview minHeight="160px"
+brick: eo-popover
+properties:
+  placement: bottom
+  strategy: fixed
+  zIndex: 100
+children:
+  - brick: eo-button
+    slot: anchor
+    properties:
+      textContent: Click me
+  - brick: div
+    properties:
+      style:
+        padding: 12px
+      textContent: I'm popover content
+events:
+  visible.change:
+    - action: console.log
+      args:
+        - visible changed
+        - <% EVENT.detail %>
+  before.visible.change:
+    - action: console.log
+      args:
+        - before visible changed
+        - <% EVENT.detail %>
 ```

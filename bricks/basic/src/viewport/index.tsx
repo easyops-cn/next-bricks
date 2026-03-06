@@ -16,6 +16,8 @@ export interface ViewportProps {
 
 /**
  * 设置 `<meta name="viewport" />` 以适配移动端。
+ *
+ * @category layout
  */
 export
 @defineElement("eo-viewport", {
@@ -23,30 +25,35 @@ export
 })
 class EoViewport extends ReactNextElement implements ViewportProps {
   /**
+   * 视口宽度
    * @default "device-width"
    */
   @property()
   accessor width: string | undefined;
 
   /**
+   * 初始缩放比例
    * @default 1
    */
   @property({ type: Number })
   accessor initialScale: number | undefined;
 
   /**
+   * 最小缩放比例
    * @default 0.1
    */
   @property({ type: Number })
   accessor minimumScale: number | undefined;
 
   /**
+   * 最大缩放比例
    * @default 10
    */
   @property({ type: Number })
   accessor maximumScale: number | undefined;
 
   /**
+   * 是否允许用户缩放
    * @default "1"
    */
   @property()

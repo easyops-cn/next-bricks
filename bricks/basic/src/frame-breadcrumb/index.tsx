@@ -40,6 +40,7 @@ export interface EoFrameBreadcrumbProps {
 /**
  * 面包屑 已迁移至 `nav` 构件包，后续在在 `basic` 构件包中将不再更新。
  * @deprecated
+ * @category layout-component
  */
 export
 @defineElement("eo-frame-breadcrumb", {

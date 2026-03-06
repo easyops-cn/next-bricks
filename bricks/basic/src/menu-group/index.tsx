@@ -7,8 +7,12 @@ import styleText from "./styles.shadow.css";
 const { defineElement } = createDecorators();
 
 /**
- * 构件 `eo-menu-group`
+ * 菜单分组构件，用于对菜单项进行分组展示，提供标题插槽和内容插槽
  *
+ * @part menu-group - 外层容器
+ * @part menu-group-title - 分组标题容器
+ * @slot title - 分组标题内容
+ * @slot - 分组内容，通常为菜单项
  * @insider
  */
 export

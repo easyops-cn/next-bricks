@@ -63,9 +63,10 @@ class EoImage extends ReactNextElement implements ImageProps {
 
   /**
    * 打开预览框
+   * @param index 要预览的图片索引，不传则预览第一张
    */
   @method()
-  open(index?: number) {
+  open(index?: number): void {
     this._ImageListRef.current?.openPreview(index);
   }
 
@@ -73,13 +74,13 @@ class EoImage extends ReactNextElement implements ImageProps {
    * 关闭预览框
    */
   @method()
-  close() {
+  close(): void {
     this._ImageListRef.current?.closePreview();
   }
 
   /**
-   * 预览改变事件
-   * @detail boolean
+   * 预览框显示或隐藏时触发
+   * @detail 预览框是否可见
    */
   @event({ type: "visibleChange" })
   accessor #visibleChange!: EventEmitter<boolean>;

@@ -51,7 +51,7 @@ class TabGroup extends ReactNextElement implements TabGroupProps {
   accessor type: TabType | undefined;
 
   /**
-   * 是否展示背景
+   * 当前激活的面板名称，对应 tab-item 的 panel 属性
    */
   @property()
   accessor activePanel: string | undefined;
@@ -64,7 +64,7 @@ class TabGroup extends ReactNextElement implements TabGroupProps {
 
   /**
    * 选择 tab 时触发
-   * @detail panel
+   * @detail 当前选中的面板名称
    */
   @event({ type: "tab.select" })
   accessor #tabSelectEvent!: EventEmitter<string>;
@@ -84,6 +84,9 @@ class TabGroup extends ReactNextElement implements TabGroupProps {
   @property()
   accessor outline: TabsOutline | undefined;
 
+  /**
+   * 是否填满容器高度，启用后 tab 组件高度为 100%，内容区域自动撑满剩余空间
+   */
   @property({ type: Boolean, render: false })
   accessor fillContainer: boolean | undefined;
 
@@ -184,7 +187,9 @@ function TabGroupElement({
         </div>
       </div>
       <div className="content" ref={contentRef} style={contentStyle}>
-        {tabs?.map((tab) => <slot key={tab} name={tab} />)}
+        {tabs?.map((tab) => (
+          <slot key={tab} name={tab} />
+        ))}
       </div>
     </div>
   );

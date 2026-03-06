@@ -1,8 +1,32 @@
-头像组
+---
+tagName: eo-avatar-group
+displayName: WrappedEoAvatarGroup
+description: 头像组构件，将多个头像排列展示，自动为子头像添加边框并统一控制尺寸
+category: display-component
+source: "@next-bricks/basic"
+---
+
+# eo-avatar-group
+
+> 头像组构件，将多个头像排列展示，自动为子头像添加边框并统一控制尺寸
+
+## Props
+
+| 属性 | 类型                                     | 必填 | 默认值 | 说明                       |
+| ---- | ---------------------------------------- | ---- | ------ | -------------------------- |
+| size | `"large" \| "medium" \| "small" \| "xs"` | 否   | -      | 统一设置组内所有头像的尺寸 |
+
+## Slots
+
+| 名称     | 说明                                               |
+| -------- | -------------------------------------------------- |
+| （默认） | 头像列表，放置 eo-avatar 或 eo-easyops-avatar 构件 |
 
 ## Examples
 
 ### Basic
+
+头像组将多个不同类型的头像排列展示，并自动为每个头像添加边框。
 
 ```yaml preview
 brick: eo-avatar-group

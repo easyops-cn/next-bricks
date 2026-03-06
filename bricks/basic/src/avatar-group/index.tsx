@@ -13,6 +13,8 @@ export interface EoAvatarGroupProps {
 
 /**
  * 头像组
+ *
+ * @category display-component
  */
 export
 @defineElement("eo-avatar-group", {

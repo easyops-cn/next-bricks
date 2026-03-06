@@ -119,7 +119,7 @@ class Card extends ReactNextElement implements CardProps {
   accessor bodyStyle: React.CSSProperties | undefined;
 
   /**
-   * 背景
+   * 背景设置。传 `false` 可去除背景，传字符串可自定义背景色（如 CSS 颜色值），默认使用标准背景填充色
    */
   @property({
     attribute: false,
@@ -142,7 +142,9 @@ class Card extends ReactNextElement implements CardProps {
   })
   accessor hideSplit: boolean | undefined;
 
-  /** 主题变体 */
+  /**
+   * 主题变体，可选 `"default"` 或 `"elevo"`
+   */
   @property()
   accessor themeVariant: "default" | "elevo" | undefined;
 

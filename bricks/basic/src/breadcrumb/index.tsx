@@ -10,7 +10,8 @@ const { defineElement } = createDecorators();
 /**
  * 面包屑容器
  *
- * @slot 面包屑项，可使用 eo-breadcrumb-item 构件
+ * @category navigation
+ * @slot - 面包屑项，可使用 eo-breadcrumb-item 构件
  * @slot separator - 分隔符，默认为 /
  */
 export

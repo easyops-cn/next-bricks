@@ -23,8 +23,14 @@ export interface EoMenuSubMenuProps {
 }
 
 /**
- * 构件 `eo-menu-item-sub-menu`
+ * 菜单子菜单构件，点击标题可折叠或展开子菜单内容
  *
+ * @part sub-menu-item - 外层容器
+ * @part sub-menu-item-title - 子菜单标题容器
+ * @part menu-item-icon - 标题图标
+ * @part sub-menu-item-arrow - 折叠箭头指示器
+ * @slot title - 子菜单标题内容
+ * @slot - 子菜单内容，通常为菜单项
  * @insider
  */
 export
@@ -33,7 +39,7 @@ export
 })
 class EoMenuItemSubMenu extends ReactNextElement {
   /**
-   * 图标
+   * 标题区域的图标
    */
   @property({
     attribute: false,
@@ -41,7 +47,7 @@ class EoMenuItemSubMenu extends ReactNextElement {
   accessor icon: GeneralIconProps | undefined;
 
   /**
-   * title样式
+   * 标题区域的自定义样式
    */
   @property({
     attribute: false,
@@ -49,7 +55,7 @@ class EoMenuItemSubMenu extends ReactNextElement {
   accessor titleStyle: React.CSSProperties | undefined;
 
   /**
-   * body样式
+   * 内容区域的自定义样式
    */
   @property({
     attribute: false,
@@ -57,7 +63,7 @@ class EoMenuItemSubMenu extends ReactNextElement {
   accessor bodyStyle: React.CSSProperties | undefined;
 
   /**
-   * 是否为折叠状态
+   * 是否为折叠状态，折叠时隐藏子菜单内容，默认为折叠状态
    */
   @property({
     type: Boolean,

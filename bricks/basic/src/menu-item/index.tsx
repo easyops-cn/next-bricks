@@ -19,10 +19,12 @@ export interface MenuComponentProps {
 }
 
 /**
- * 菜单构件
+ * 菜单项构件，支持图标、选中和禁用状态
  * @author sailor
  *
  * @part menu-item - 外层容器
+ * @part menu-item-icon - 菜单项图标
+ * @slot - 菜单项内容
  *
  * @insider
  */

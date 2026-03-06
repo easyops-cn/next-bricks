@@ -30,7 +30,8 @@ export interface BroadcastChannelEventsMapping {
 }
 
 /**
- * 构件 `eo-broadcast-channel`
+ * 广播频道构件，基于 BroadcastChannel API 实现跨标签页通信
+ * @category other
  */
 export
 @defineElement("eo-broadcast-channel", {
@@ -48,7 +49,10 @@ class EoBroadcastChannel
   @property()
   accessor channel!: string;
 
-  /** 广播频道消息事件 */
+  /**
+   * 收到广播频道消息时触发
+   * @detail 接收到的消息内容
+   */
   @event({ type: "message" })
   accessor #messageEvent!: EventEmitter<unknown>;
 
@@ -56,9 +60,12 @@ class EoBroadcastChannel
     this.#messageEvent.emit(data);
   };
 
-  /** 发送一条消息 */
+  /**
+   * 向广播频道发送一条消息
+   * @param data 要发送的消息内容
+   */
   @method()
-  postMessage(data: unknown) {
+  postMessage(data: unknown): void {
     this.#messagePort.current?.postMessage(data);
   }
 

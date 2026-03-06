@@ -53,19 +53,30 @@ export interface ListItem {
 }
 
 /**
- * 通用列表构件
+ * 通用列表构件，支持默认、导航和排名三种展示变体
+ * @author developer
+ * @category display-component
  */
 export
 @defineElement("eo-list", {
   styleTexts: [styleText],
 })
 class List extends ReactNextElement implements ListProps {
+  /**
+   * 列表变体，支持 "default"、"navigation"、"ranking" 三种样式
+   */
   @property()
   accessor variant: ListVariant | undefined;
 
+  /**
+   * 列表数据源
+   */
   @property({ attribute: false })
   accessor dataSource: Record<string, unknown>[] | undefined;
 
+  /**
+   * 字段映射，用于将数据源中的字段映射到列表项的对应属性
+   */
   @property({ attribute: false })
   accessor fields: ListFields | undefined;
 

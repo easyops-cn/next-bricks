@@ -50,6 +50,7 @@ const mediaQueryMap: Record<MediaSize, string> = {
  * 多行多列的响应式网格布局
  * @author abert
  * @category container-layout
+ * @slot - 网格布局内的子元素，每个直接子元素占一个网格单元
  */
 @defineElement("eo-grid-layout", {
   styleTexts: [styleText],
@@ -57,8 +58,7 @@ const mediaQueryMap: Record<MediaSize, string> = {
 })
 class GridLayout extends ReactNextElement implements GridProps {
   #sizeMatch: Partial<Record<MediaSize, boolean>> = {};
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  #mediaMatchListeners: Function[] = [];
+  #mediaMatchListeners: ((...args: unknown[]) => void)[] = [];
   /**
    * 网格布局列数（各列等宽）
    */
@@ -207,8 +207,7 @@ class GridLayout extends ReactNextElement implements GridProps {
   }
 
   _clearMediaMatchListeners(): void {
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    let fn: Function | undefined;
+    let fn: ((...args: unknown[]) => void) | undefined;
     while ((fn = this.#mediaMatchListeners.pop())) {
       fn();
     }

@@ -190,7 +190,7 @@ class Modal extends ReactNextElement implements ModalProps {
   accessor confirmDisabled: boolean | undefined;
 
   /**
-   * 点击遮罩层是否关闭模态框
+   * 是否显示模态框
    */
   @property({
     type: Boolean,
@@ -237,6 +237,7 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 打开弹窗事件
+   * @detail -
    */
   @event({ type: "open" }) accessor #modalOpen!: EventEmitter<void>;
   #handleModelOpen() {
@@ -245,6 +246,7 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 关闭弹窗事件
+   * @detail -
    */
   @event({ type: "close" })
   accessor #modalClose!: EventEmitter<void>;
@@ -254,6 +256,7 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 确认按钮事件
+   * @detail -
    */
   @event({ type: "confirm" })
   accessor #modalConfirm!: EventEmitter<void>;
@@ -267,6 +270,7 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 取消按钮事件
+   * @detail -
    */
   @event({ type: "cancel" })
   accessor #modalCancel!: EventEmitter<void>;
@@ -279,7 +283,7 @@ class Modal extends ReactNextElement implements ModalProps {
    * 打开模态框方法
    */
   @method()
-  open() {
+  open(): void {
     if (this.visible !== true) {
       this.visible = true;
       this.#handleModelOpen();
@@ -290,7 +294,7 @@ class Modal extends ReactNextElement implements ModalProps {
    * 关闭模态框方法
    */
   @method({ bound: true })
-  close() {
+  close(): void {
     if (this.visible !== false) {
       this.visible = false;
       this.#handleModelClose();

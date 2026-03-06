@@ -119,7 +119,7 @@ class Button extends ReactNextElement implements ButtonProps {
   /** 链接类型 */
   @property() accessor target: string | undefined;
 
-  /** tooltip */
+  /** 鼠标悬停时显示的提示文字 */
   @property() accessor tooltip: string | undefined;
 
   /**

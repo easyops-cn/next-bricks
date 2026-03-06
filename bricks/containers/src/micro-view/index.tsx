@@ -24,6 +24,8 @@ interface MicroViewProps {
  * @author sailorshe
  * @category container-layout
  * @deprecated
+ * @slot - 主内容区
+ * @slot toolbar - 工具栏插槽，有内容时自动显示工具栏区域
  */
 @defineElement("eo-micro-view", {
   styleTexts: [styleText],

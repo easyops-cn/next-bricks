@@ -1,4 +1,42 @@
-Your favorite icons, including [Ant Design Icons](https://ant.design/components/icon-cn), [Font Awesome](https://fontawesome.com/), and EasyOps Icons.
+---
+tagName: eo-icon
+displayName: WrappedEoIcon
+description: 通用图标构件
+category: display-component
+source: "@next-bricks/icons"
+---
+
+# eo-icon
+
+> 通用图标构件
+
+## Props
+
+| 属性                 | 类型                                      | 必填 | 默认值       | 说明                                                                                                    |
+| -------------------- | ----------------------------------------- | ---- | ------------ | ------------------------------------------------------------------------------------------------------- |
+| lib                  | `"antd" \| "easyops" \| "fa" \| "lucide"` | -    | -            | 图标库，支持 antd、easyops、fa（FontAwesome）、lucide 四种图标库                                        |
+| theme                | `string`                                  | -    | `"outlined"` | Ant Design 图标主题                                                                                     |
+| icon                 | `string`                                  | -    | -            | 图标名                                                                                                  |
+| category             | `string`                                  | -    | `"default"`  | EasyOps 图标分类                                                                                        |
+| prefix               | `string`                                  | ✅   | `"fas"`      | FontAwesome 图标前缀                                                                                    |
+| strokeWidth          | `number`                                  | -    | `2`          | Lucide 图标描线粗线，限制在区间 `[0.5, 3]`                                                              |
+| fill                 | `boolean`                                 | -    | -            | Lucide 图标是否填充（注意：仅部分图片有效）                                                             |
+| fallback             | `GeneralIconProps`                        | -    | -            | 设置当图标未找到时的回退图标                                                                            |
+| startColor           | `string`                                  | -    | -            | 渐变色起始颜色（不适用于 EasyOps 图标）                                                                 |
+| endColor             | `string`                                  | -    | -            | 渐变色终止颜色（不适用于 EasyOps 图标）                                                                 |
+| gradientDirection    | `GradientDirection`                       | -    | -            | 渐变色方向（不适用于 EasyOps 图标）                                                                     |
+| spinning             | `boolean`                                 | -    | -            | 是否自动旋转                                                                                            |
+| imgSrc               | `string`                                  | -    | -            | 图片地址                                                                                                |
+| imgStyle             | `CSSProperties`                           | -    | -            | 图片样式                                                                                                |
+| imgLoading           | `"lazy" \| "eager"`                       | -    | -            | 加载方式                                                                                                |
+| noPublicRoot         | `boolean`                                 | -    | -            | 是否不自动拼接公共路径前缀（仅在使用 imgSrc 时生效）                                                    |
+| keepSvgOriginalColor | `boolean`                                 | -    | -            | 如果是 svg 图片，默认将转换该图标颜色为自动跟随文本色，设置 `keepSvgOriginalColor: true` 可保留原始颜色 |
+
+## Examples
+
+### Basic
+
+展示四种图标库的基本用法。
 
 ```yaml preview
 - brick: div
@@ -26,11 +64,9 @@ Your favorite icons, including [Ant Design Icons](https://ant.design/components/
         icon: activity
 ```
 
-## Examples
-
 ### Ant Design
 
-[View all Ant Design icons.](https://4x.ant.design/components/icon-cn/)
+展示 Ant Design 图标的不同主题（outlined、filled、twotone）。
 
 ```yaml preview
 - brick: div
@@ -58,7 +94,7 @@ Your favorite icons, including [Ant Design Icons](https://ant.design/components/
 
 ### Font Awesome
 
-[View all Font Awesome free icons.](https://fontawesome.com/search?m=free&o=r)
+展示 FontAwesome 图标的不同前缀（fas、far、fab）。
 
 ```yaml preview
 - brick: div
@@ -86,7 +122,7 @@ Your favorite icons, including [Ant Design Icons](https://ant.design/components/
 
 ### Lucide
 
-[View all Lucide icons.](https://lucide.dev/icons/)
+展示 Lucide 图标库的基本用法。
 
 ```yaml preview
 - brick: div
@@ -111,6 +147,8 @@ Your favorite icons, including [Ant Design Icons](https://ant.design/components/
 ```
 
 ### EasyOps
+
+展示 EasyOps 图标库的不同分类。
 
 ```yaml preview
 - brick: div
@@ -137,6 +175,8 @@ Your favorite icons, including [Ant Design Icons](https://ant.design/components/
 ```
 
 ### Image
+
+使用 imgSrc 展示图片图标，包括 SVG 跟随文本色与保留原始颜色。
 
 ```yaml preview
 brick: div
@@ -166,6 +206,8 @@ children:
 ```
 
 ### Colors
+
+通过 CSS color 或渐变色属性（startColor、endColor、gradientDirection）自定义图标颜色。
 
 ```yaml preview
 - brick: div
@@ -256,6 +298,8 @@ children:
 
 ### Spinning
 
+展示图标自动旋转效果。
+
 ```yaml preview
 - brick: div
   properties:
@@ -289,6 +333,8 @@ children:
 ```
 
 ### Fallback
+
+当图标未找到时使用 fallback 指定回退图标。
 
 ```yaml preview
 - brick: div
@@ -344,9 +390,9 @@ children:
           imgSrc: "https://cdn.jsdelivr.net/npm/lucide-static@0.16.29/icons/y-chart.svg"
 ```
 
-### Lucide stroke width
+### Lucide Stroke Width
 
-Lucide icons support setting `strokeWidth` which defaults to `2` (and restrict to range `[0.5, 3]`).
+Lucide 图标支持设置 strokeWidth，默认为 2，限制在 [0.5, 3] 区间。
 
 ```yaml preview
 - brick: div
@@ -375,4 +421,57 @@ Lucide icons support setting `strokeWidth` which defaults to `2` (and restrict t
             style:
               fontSize: 16px
               justifySelf: center
+```
+
+### Lucide Fill
+
+Lucide 图标的 fill 填充模式。
+
+```yaml preview
+- brick: div
+  properties:
+    style:
+      display: flex
+      gap: 1em
+      fontSize: 32px
+  children:
+    - brick: eo-icon
+      properties:
+        lib: lucide
+        icon: heart
+    - brick: eo-icon
+      properties:
+        lib: lucide
+        icon: heart
+        fill: true
+```
+
+### Image Style and Loading
+
+通过 imgStyle 和 imgLoading 控制图片图标的样式和加载方式。
+
+```yaml preview
+- brick: div
+  properties:
+    style:
+      display: flex
+      gap: 1em
+      alignItems: center
+  children:
+    - brick: eo-icon
+      properties:
+        imgSrc: https://img.icons8.com/cotton/64/like--v1.png
+        imgStyle:
+          width: 48px
+          height: 48px
+          borderRadius: 8px
+        imgLoading: lazy
+    - brick: eo-icon
+      properties:
+        imgSrc: https://img.icons8.com/color/48/happy--v1.png
+        imgStyle:
+          width: 32px
+          height: 32px
+        imgLoading: eager
+        noPublicRoot: true
 ```

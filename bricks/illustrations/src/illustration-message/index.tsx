@@ -55,6 +55,8 @@ export interface CustomizeImage {
 
 /**
  * 插画消息构件
+ *
+ * @category display-component
  */
 export
 @defineElement("eo-illustration-message", {
@@ -65,6 +67,7 @@ class IllustrationMessage
   extends ReactNextElement
   implements IllustrationMessageProps
 {
+  /** 标题文字 */
   @property()
   accessor heading: string | undefined;
 
@@ -74,15 +77,18 @@ class IllustrationMessage
   @property()
   accessor errorTitle: string | undefined;
 
+  /** 描述文字 */
   @property()
   accessor description: string | undefined;
 
   /**
+   * 消息类型变体，影响展示的插画或状态图标
    * @default "unknown-error"
    */
   @property()
   accessor variant: MessageVariant | undefined;
 
+  /** 自定义插画图片，指定分类和名称 */
   @property({ attribute: false })
   accessor customizeImage: CustomizeImage | undefined;
 
@@ -98,10 +104,9 @@ class IllustrationMessage
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface IllustrationMessageComponentProps
-  extends IllustrationMessageProps {
-  // Define event handlers here.
-}
+  extends IllustrationMessageProps {}
 
 export function IllustrationMessageComponent({
   heading,

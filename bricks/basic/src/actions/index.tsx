@@ -273,7 +273,7 @@ class EoActions extends ReactNextElement implements ActionsProps {
   @property({ type: Boolean })
   accessor itemDraggable: boolean | undefined;
 
-  /** 主题变体 */
+  /** 主题变体，控制操作列表的视觉风格，"elevo" 为新风格，"default" 为默认风格 */
   @property({ render: false })
   accessor themeVariant: "default" | "elevo" | undefined;
 
