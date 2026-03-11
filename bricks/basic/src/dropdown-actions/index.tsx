@@ -60,8 +60,9 @@ export interface DropdownActionsEventsMapping {
 }
 
 /**
- * 下拉菜单
+ * 下拉菜单构件，点击触发元素弹出操作列表，支持选中状态、弹出层定位策略配置和自定义触发内容
  *
+ * @slot - 触发弹出的锚点元素
  * @category interact-basic
  */
 export

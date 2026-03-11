@@ -1,14 +1,14 @@
 ---
 tagName: eo-modal
 displayName: WrappedEoModal
-description: 模态框
+description: 模态框构件，以遮罩层弹窗形式展示内容，支持全屏、居中、自定义宽高、侧边栏、键盘 ESC 关闭及确认/取消按钮交互
 category: container-display
 source: "@next-bricks/containers"
 ---
 
 # eo-modal
 
-> 模态框
+> 模态框构件，以遮罩层弹窗形式展示内容，支持全屏、居中、自定义宽高、侧边栏、键盘 ESC 关闭及确认/取消按钮交互
 
 ## Props
 
@@ -39,19 +39,19 @@ source: "@next-bricks/containers"
 
 ## Events
 
-| 事件    | detail | 说明               |
-| ------- | ------ | ------------------ |
-| open    | `void` | 打开弹窗时触发     |
-| close   | `void` | 关闭弹窗时触发     |
-| confirm | `void` | 点击确认按钮时触发 |
-| cancel  | `void` | 点击取消按钮时触发 |
+| 事件    | detail | 说明         |
+| ------- | ------ | ------------ |
+| open    | `void` | 打开弹窗事件 |
+| close   | `void` | 关闭弹窗事件 |
+| confirm | `void` | 确认按钮事件 |
+| cancel  | `void` | 取消按钮事件 |
 
 ## Methods
 
-| 方法  | 参数 | 返回值 | 说明       |
-| ----- | ---- | ------ | ---------- |
-| open  | -    | `void` | 打开模态框 |
-| close | -    | `void` | 关闭模态框 |
+| 方法  | 参数 | 返回值 | 说明           |
+| ----- | ---- | ------ | -------------- |
+| open  | -    | `void` | 打开模态框方法 |
+| close | -    | `void` | 关闭模态框方法 |
 
 ## Slots
 
@@ -65,7 +65,7 @@ source: "@next-bricks/containers"
 
 ### Basic
 
-通过 `open` 方法打开模态框，展示基本用法。
+通过 `visible` 属性直接展示模态框的基本用法。
 
 ```html preview minHeight="320px"
 <eo-modal modal-title="Modal Title" visible="true">Content</eo-modal>
@@ -73,7 +73,7 @@ source: "@next-bricks/containers"
 
 ### Width & Height
 
-通过 `width` 和 `height` 属性控制模态框尺寸。
+通过 `width`、`height`、`minWidth` 和 `minHeight` 属性控制模态框尺寸。
 
 ```yaml preview minHeight="320px"
 - brick: eo-button
@@ -88,12 +88,38 @@ source: "@next-bricks/containers"
   properties:
     id: "modal"
     modalTitle: 模态框标题
-    width: 300px
-    height: 200px
+    width: 600px
+    height: 300px
+    minWidth: 400px
+    minHeight: 200px
   children:
     - brick: div
       properties:
         textContent: Content
+```
+
+### Centered
+
+通过 `centered` 属性使模态框垂直居中显示。
+
+```yaml preview minHeight="320px"
+- brick: eo-button
+  properties:
+    textContent: Open Centered Modal
+  events:
+    click:
+      - target: "#modal-centered"
+        method: open
+- brick: eo-modal
+  portal: true
+  properties:
+    id: "modal-centered"
+    modalTitle: 居中模态框
+    centered: true
+  children:
+    - brick: div
+      properties:
+        textContent: 模态框内容
 ```
 
 ### MaskClosable
@@ -140,24 +166,43 @@ source: "@next-bricks/containers"
             textContent: 模态框内容
 ```
 
-### Fullscreen
+### Fullscreen & Fullscreen Button
 
-通过 `fullscreen` 属性开启全屏模式。
+通过 `fullscreen` 属性开启全屏模式，`fullscreenButton` 显示全屏切换按钮。
 
 ```yaml preview minHeight="320px"
 - brick: eo-button
   properties:
-    textContent: open
+    textContent: Open Fullscreen Modal
   events:
     click:
-      - target: "#modal"
+      - target: "#modal-fullscreen"
         method: open
 - brick: eo-modal
   portal: true
   properties:
-    modalTitle: 模态框标题
-    id: "modal"
+    modalTitle: 全屏模态框
+    id: "modal-fullscreen"
     fullscreen: true
+  slots:
+    "":
+      bricks:
+        - brick: div
+          properties:
+            textContent: 模态框内容
+- brick: eo-button
+  properties:
+    textContent: Open With Fullscreen Button
+  events:
+    click:
+      - target: "#modal-fullscreen-btn"
+        method: open
+- brick: eo-modal
+  portal: true
+  properties:
+    modalTitle: 可切换全屏
+    id: "modal-fullscreen-btn"
+    fullscreenButton: true
   slots:
     "":
       bricks:
@@ -191,9 +236,100 @@ source: "@next-bricks/containers"
 </eo-modal>
 ```
 
-### Open Event & Close Event
+### Confirm Danger & Disabled
 
-监听 `open` 和 `close` 事件，结合 `keyboard` 属性支持 Esc 键关闭。
+通过 `confirmDanger` 设置危险样式确认按钮，`confirmDisabled` 禁用确认按钮。
+
+```yaml preview minHeight="320px"
+- brick: eo-button
+  properties:
+    textContent: Open Danger Modal
+  events:
+    click:
+      - target: "#modal-danger"
+        method: open
+- brick: eo-modal
+  portal: true
+  properties:
+    id: "modal-danger"
+    modalTitle: 删除确认
+    confirmDanger: true
+    confirmText: 删除
+  children:
+    - brick: div
+      properties:
+        textContent: 确认删除此项？
+- brick: eo-button
+  properties:
+    textContent: Open Disabled Confirm Modal
+  events:
+    click:
+      - target: "#modal-disabled"
+        method: open
+- brick: eo-modal
+  portal: true
+  properties:
+    id: "modal-disabled"
+    modalTitle: 确认按钮禁用
+    confirmDisabled: true
+  children:
+    - brick: div
+      properties:
+        textContent: 确认按钮不可点击。
+```
+
+### No Footer
+
+通过 `noFooter` 隐藏底部区域，适用于纯展示场景。
+
+```yaml preview minHeight="320px"
+- brick: eo-button
+  properties:
+    textContent: Open
+  events:
+    click:
+      - target: "#modal-no-footer"
+        method: open
+- brick: eo-modal
+  portal: true
+  properties:
+    id: "modal-no-footer"
+    modalTitle: 无底部模态框
+    noFooter: true
+  children:
+    - brick: div
+      properties:
+        textContent: 仅展示内容，无底部按钮。
+```
+
+### Background & Header Bordered
+
+通过 `background` 设置模态框背景色，`headerBordered` 显示头部底边线。
+
+```yaml preview minHeight="320px"
+- brick: eo-button
+  properties:
+    textContent: Open Styled Modal
+  events:
+    click:
+      - target: "#modal-styled"
+        method: open
+- brick: eo-modal
+  portal: true
+  properties:
+    id: "modal-styled"
+    modalTitle: 自定义背景
+    background: "#f5f5f5"
+    headerBordered: true
+  children:
+    - brick: div
+      properties:
+        textContent: 带自定义背景和头部底边线的模态框。
+```
+
+### Events
+
+监听 `open`、`close`、`confirm` 和 `cancel` 事件，结合 `keyboard` 属性支持 Esc 键关闭，`closeWhenConfirm` 控制确认后是否自动关闭。
 
 ```yaml preview minHeight="320px"
 - brick: eo-button
@@ -201,14 +337,15 @@ source: "@next-bricks/containers"
     textContent: open
   events:
     click:
-      - target: "#modal"
+      - target: "#modal-events"
         method: open
 - brick: eo-modal
   portal: true
   properties:
     modalTitle: 模态框标题
-    id: "modal"
+    id: "modal-events"
     keyboard: true
+    closeWhenConfirm: false
   events:
     open:
       - action: message.success
@@ -218,6 +355,14 @@ source: "@next-bricks/containers"
       - action: message.success
         args:
           - modal Close
+    confirm:
+      - action: message.success
+        args:
+          - modal Confirm
+    cancel:
+      - action: message.success
+        args:
+          - modal Cancel
   children:
     - brick: div
       properties:
@@ -234,13 +379,13 @@ source: "@next-bricks/containers"
     textContent: open
   events:
     click:
-      - target: "#modal"
+      - target: "#modal-sidebar"
         method: open
 - brick: eo-modal
   portal: true
   properties:
     modalTitle: 模态框标题
-    id: "modal"
+    id: "modal-sidebar"
     keyboard: true
     width: 700px
   events:
@@ -267,34 +412,9 @@ source: "@next-bricks/containers"
       type: bricks
 ```
 
-### Confirm Danger & Disabled
+### Footer Slot
 
-通过 `confirmDanger` 设置危险样式确认按钮，`confirmDisabled` 禁用确认按钮。
-
-```yaml preview minHeight="320px"
-- brick: eo-button
-  properties:
-    textContent: Open Danger Modal
-  events:
-    click:
-      - target: "#modal-danger"
-        method: open
-- brick: eo-modal
-  portal: true
-  properties:
-    id: "modal-danger"
-    modalTitle: 删除确认
-    confirmDanger: true
-    confirmText: 删除
-  children:
-    - brick: div
-      properties:
-        textContent: 确认删除此项？
-```
-
-### No Footer
-
-通过 `noFooter` 隐藏底部区域，适用于纯展示场景。
+使用 `footer` 插槽在模态框底部左侧放置自定义内容。
 
 ```yaml preview minHeight="320px"
 - brick: eo-button
@@ -302,16 +422,48 @@ source: "@next-bricks/containers"
     textContent: Open
   events:
     click:
-      - target: "#modal-no-footer"
+      - target: "#modal-footer-slot"
         method: open
 - brick: eo-modal
   portal: true
   properties:
-    id: "modal-no-footer"
-    modalTitle: 无底部模态框
-    noFooter: true
+    id: "modal-footer-slot"
+    modalTitle: 带底部插槽的模态框
+  slots:
+    "":
+      bricks:
+        - brick: div
+          properties:
+            textContent: 模态框内容
+      type: bricks
+    footer:
+      bricks:
+        - brick: span
+          properties:
+            textContent: 底部左侧自定义内容
+      type: bricks
+```
+
+### Theme Variant
+
+通过 `themeVariant` 属性切换主题变体，`elevo` 主题下默认居中且无头部底边线。
+
+```yaml preview minHeight="320px"
+- brick: eo-button
+  properties:
+    textContent: Open Elevo Theme Modal
+  events:
+    click:
+      - target: "#modal-elevo"
+        method: open
+- brick: eo-modal
+  portal: true
+  properties:
+    id: "modal-elevo"
+    modalTitle: Elevo 主题模态框
+    themeVariant: elevo
   children:
     - brick: div
       properties:
-        textContent: 仅展示内容，无底部按钮。
+        textContent: 使用 elevo 主题变体的模态框。
 ```

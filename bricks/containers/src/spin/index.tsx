@@ -13,7 +13,7 @@ export interface EoSpinProps {
 }
 
 /**
- * 加载中
+ * 加载中指示器构件，在容器内容上方覆盖旋转动画和可选描述文案，支持三种尺寸
  *
  * @author nlicro
  * @slot - 容器内容

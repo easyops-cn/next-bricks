@@ -1,14 +1,14 @@
 ---
 tagName: eo-tag
 displayName: WrappedEoTag
-description: 标签构件
+description: 标签构件，支持多种预设颜色和自定义颜色，可配置为可选择、可关闭模式，支持图标、边线样式及文本溢出省略
 category: display-component
 source: "@next-bricks/basic"
 ---
 
 # WrappedEoTag
 
-> 标签构件
+> 标签构件，支持多种预设颜色和自定义颜色，可配置为可选择、可关闭模式，支持图标、边线样式及文本溢出省略
 
 ## 导入
 
@@ -18,25 +18,25 @@ import { WrappedEoTag } from "@easyops/wrapped-components";
 
 ## Props
 
-| 属性          | 类型                                     | 必填 | 默认值     | 说明                 |
-| ------------- | ---------------------------------------- | ---- | ---------- | -------------------- |
-| size          | `"large" \| "medium" \| "small" \| "xs"` | 否   | `"medium"` | 按钮大小             |
-| icon          | `GeneralIconProps`                       | 否   | -          | 图标                 |
-| color         | `TagColor \| string`                     | 否   | -          | 颜色                 |
-| outline       | `boolean`                                | 否   | -          | 是否有边线           |
-| disabled      | `boolean`                                | 否   | -          | 是否禁用             |
-| closable      | `boolean`                                | 否   | -          | 是否允许关闭         |
-| ellipsisWidth | `string`                                 | 否   | -          | 超过宽度文本隐藏宽度 |
-| checkable     | `boolean`                                | 否   | -          | 是否允许选择         |
-| checked       | `boolean`                                | 否   | -          | 是否选择             |
-| tagStyle      | `React.CSSProperties`                    | 否   | -          | 标签自定义样式       |
+| 属性          | 类型                  | 必填 | 默认值 | 说明                 |
+| ------------- | --------------------- | ---- | ------ | -------------------- |
+| size          | `ComponentSize`       | 否   | -      | 标签大小             |
+| icon          | `GeneralIconProps`    | 否   | -      | 图标                 |
+| color         | `TagColor \| string`  | 否   | -      | 颜色                 |
+| outline       | `boolean`             | 否   | -      | 是否有边线           |
+| disabled      | `boolean`             | 否   | -      | 是否禁用             |
+| closable      | `boolean`             | 否   | -      | 是否允许关闭         |
+| ellipsisWidth | `string`              | 否   | -      | 超过宽度文本隐藏宽度 |
+| checkable     | `boolean`             | 否   | -      | 是否允许选择         |
+| checked       | `boolean`             | 否   | -      | 是否选择             |
+| tagStyle      | `React.CSSProperties` | 否   | -      | 标签自定义样式       |
 
 ## Events
 
-| 事件    | detail                                                                                                                                                                                                                   | 说明     |
-| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
-| onCheck | `TagProps` — { size: 标签大小, icon: 图标, color: 颜色, outline: 是否有边线, closable: 是否可关闭, disabled: 是否禁用, checkable: 是否可选择, checked: 当前选中状态, ellipsisWidth: 超出隐藏宽度, tagStyle: 自定义样式 } | 选择事件 |
-| onClose | `TagProps` — { size: 标签大小, icon: 图标, color: 颜色, outline: 是否有边线, closable: 是否可关闭, disabled: 是否禁用, checkable: 是否可选择, checked: 当前选中状态, ellipsisWidth: 超出隐藏宽度, tagStyle: 自定义样式 } | 关闭事件 |
+| 事件    | detail                                                                                                                                                                                                                   | 说明                                                                    |
+| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
+| onCheck | `TagProps` — { size: 标签大小, icon: 图标, color: 颜色, outline: 是否有边线, closable: 是否可关闭, disabled: 是否禁用, checkable: 是否可选择, checked: 当前选中状态, ellipsisWidth: 超出隐藏宽度, tagStyle: 自定义样式 } | 点击可选择标签时触发，返回当前标签的完整属性（含更新后的 checked 状态） |
+| onClose | `TagProps` — { size: 标签大小, icon: 图标, color: 颜色, outline: 是否有边线, closable: 是否可关闭, disabled: 是否禁用, checkable: 是否可选择, checked: 当前选中状态, ellipsisWidth: 超出隐藏宽度, tagStyle: 自定义样式 } | 点击关闭按钮时触发，同时隐藏该标签                                      |
 
 ## Examples
 
@@ -100,6 +100,7 @@ import { WrappedEoTag } from "@easyops/wrapped-components";
 <WrappedEoTag size="large">Large Item</WrappedEoTag>
 <WrappedEoTag size="medium">Medium Item</WrappedEoTag>
 <WrappedEoTag size="small">Small Item</WrappedEoTag>
+<WrappedEoTag size="xs">XS Item</WrappedEoTag>
 ```
 
 ### Color
@@ -148,6 +149,16 @@ import { WrappedEoTag } from "@easyops/wrapped-components";
 <WrappedEoTag color="purple-inverse">紫色</WrappedEoTag>
 <WrappedEoTag color="teal-inverse">青绿色</WrappedEoTag>
 <WrappedEoTag color="pink-inverse">粉色</WrappedEoTag>
+```
+
+### Custom Color
+
+通过 `color` 属性设置自定义颜色值（非预设颜色），标签将使用该颜色作为背景色。
+
+```tsx
+<WrappedEoTag color="#f50">#f50</WrappedEoTag>
+<WrappedEoTag color="#2db7f5">#2db7f5</WrappedEoTag>
+<WrappedEoTag color="#87d068">#87d068</WrappedEoTag>
 ```
 
 ### Icon

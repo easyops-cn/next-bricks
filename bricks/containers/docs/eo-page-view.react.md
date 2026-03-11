@@ -1,14 +1,14 @@
 ---
 tagName: eo-page-view
 displayName: WrappedEoPageView
-description: 页面视图
+description: 页面视图布局构件，提供顶栏、侧边栏、子侧边栏、主内容区和底栏的多分区布局，支持窄布局居中模式和底栏 sticky/固定定位
 category: container-layout
 source: "@next-bricks/containers"
 ---
 
 # WrappedEoPageView
 
-> 页面视图
+> 页面视图布局构件，提供顶栏、侧边栏、子侧边栏、主内容区和底栏的多分区布局，支持窄布局居中模式和底栏 sticky/固定定位
 
 ## 导入
 
@@ -18,12 +18,12 @@ import { WrappedEoPageView } from "@easyops/wrapped-components";
 
 ## Props
 
-| 属性           | 类型                                       | 必填 | 默认值   | 说明                                                                                                   |
-| -------------- | ------------------------------------------ | ---- | -------- | ------------------------------------------------------------------------------------------------------ |
-| narrow         | `"small" \| "medium" \| "large" \| "full"` | 否   | `"full"` | 设置窄布局模式（居中）。`"full"` 为全尺寸，`"small"` / `"medium"` / `"large"` 为不同尺寸的居中窄布局。 |
-| showFooter     | `boolean`                                  | 否   | -        | 是否显示底栏（通常放置按钮）                                                                           |
-| fixedFooter    | `boolean`                                  | 否   | -        | 底栏始终固定在底部。未设置时 footer 默认为 sticky，屏幕高度足够时底栏跟随内容区上移。                  |
-| reversedFooter | `boolean`                                  | 否   | -        | 设置为 `true` 时，底栏子构件靠于右侧；默认不设置时靠于左侧。                                           |
+| 属性           | 类型                          | 必填 | 默认值 | 说明                                                                                                                                         |
+| -------------- | ----------------------------- | ---- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| narrow         | `NarrowViewSize \| undefined` | 否   | -      | 设置窄布局模式（居中）。`"full"` 为全尺寸（非窄布局居中），`"small"` 为小尺寸窄布局，`"medium"` 为中等尺寸窄布局，`"large"` 为大尺寸窄布局。 |
+| showFooter     | `boolean \| undefined`        | 否   | -      | 是否显示底栏（通常放置按钮）                                                                                                                 |
+| fixedFooter    | `boolean \| undefined`        | 否   | -      | 底栏始终固定在底部。未设置时 footer 默认为 sticky，即：屏幕高度足够时，底栏跟随内容区上移而不是始终固定。                                    |
+| reversedFooter | `boolean \| undefined`        | 否   | -      | 设置为 `true` 时，底栏子构件靠于右侧；默认不设置时靠于左侧。                                                                                 |
 
 ## Slots
 

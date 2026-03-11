@@ -12,8 +12,9 @@ export interface EoAvatarGroupProps {
 }
 
 /**
- * 头像组
+ * 头像组容器，将多个 eo-avatar 或 eo-easyops-avatar 以重叠堆叠的方式展示，并统一控制子头像的尺寸和边框
  *
+ * @slot - 放置 eo-avatar 或 eo-easyops-avatar 子元素
  * @category display-component
  */
 export

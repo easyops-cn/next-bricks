@@ -234,7 +234,7 @@ export interface ActionsEventsMapping {
 }
 
 /**
- * 构件 `eo-actions`
+ * 操作列表构件，用于展示一组可点击的操作菜单项，支持多级子菜单、分组、分隔线、选中/激活状态高亮、拖拽及链接跳转
  *
  * @category interact-basic
  */

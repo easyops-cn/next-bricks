@@ -74,7 +74,7 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 const { defineElement, property, event, method } = createDecorators();
 
 /**
- * 模态框
+ * 模态框构件，以遮罩层弹窗形式展示内容，支持全屏、居中、自定义宽高、侧边栏、键盘 ESC 关闭及确认/取消按钮交互
  * @author sailor
  * @slot - 内容插槽
  * @slot footer - 底部左侧插槽
@@ -237,7 +237,6 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 打开弹窗事件
-   * @detail -
    */
   @event({ type: "open" }) accessor #modalOpen!: EventEmitter<void>;
   #handleModelOpen() {
@@ -246,7 +245,6 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 关闭弹窗事件
-   * @detail -
    */
   @event({ type: "close" })
   accessor #modalClose!: EventEmitter<void>;
@@ -256,7 +254,6 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 确认按钮事件
-   * @detail -
    */
   @event({ type: "confirm" })
   accessor #modalConfirm!: EventEmitter<void>;
@@ -270,7 +267,6 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 取消按钮事件
-   * @detail -
    */
   @event({ type: "cancel" })
   accessor #modalCancel!: EventEmitter<void>;

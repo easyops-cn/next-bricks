@@ -1,25 +1,25 @@
 ---
 tagName: eo-actions
 displayName: WrappedEoActions
-description: 操作列表构件，支持普通菜单项、子菜单、分组、分隔线，并提供拖拽功能
+description: 操作列表构件，用于展示一组可点击的操作菜单项，支持多级子菜单、分组、分隔线、选中/激活状态高亮、拖拽及链接跳转
 category: interact-basic
 source: "@next-bricks/basic"
 ---
 
 # eo-actions
 
-> 操作列表构件，支持普通菜单项、子菜单、分组、分隔线，并提供拖拽功能
+> 操作列表构件，用于展示一组可点击的操作菜单项，支持多级子菜单、分组、分隔线、选中/激活状态高亮、拖拽及链接跳转
 
 ## Props
 
-| 属性          | 类型                   | 必填 | 默认值 | 说明                                                                                 |
-| ------------- | ---------------------- | ---- | ------ | ------------------------------------------------------------------------------------ |
-| actions       | `Action[]`             | 否   | -      | 操作列表配置                                                                         |
-| checkedKeys   | `(string \| number)[]` | 否   | `[]`   | actions 选中项配置                                                                   |
-| activeKeys    | `(string \| number)[]` | 否   | `[]`   | actions 激活项配置，用于菜单项的选择和展开，需按菜单层级顺序依次列出当前激活的菜单项 |
-| itemDraggable | `boolean`              | 否   | -      | action 中的菜单项是否可拖拽                                                          |
-| themeVariant  | `"default" \| "elevo"` | 否   | -      | 主题变体，控制操作列表的视觉风格，"elevo" 为新风格，"default" 为默认风格             |
-| footerTips    | `string`               | 否   | -      | 底部提示文字                                                                         |
+| 属性          | 类型                                | 必填 | 默认值 | 说明                                                                                 |
+| ------------- | ----------------------------------- | ---- | ------ | ------------------------------------------------------------------------------------ |
+| actions       | `Action[] \| undefined`             | 否   | -      | 操作列表配置                                                                         |
+| checkedKeys   | `(string \| number)[]`              | 否   | `[]`   | actions 选中项配置                                                                   |
+| activeKeys    | `(string \| number)[]`              | 否   | `[]`   | actions 激活项配置，用于菜单项的选择和展开，需按菜单层级顺序依次列出当前激活的菜单项 |
+| itemDraggable | `boolean \| undefined`              | 否   | -      | action中的菜单项是否可拖拽                                                           |
+| themeVariant  | `"default" \| "elevo" \| undefined` | 否   | -      | 主题变体，控制操作列表的视觉风格，"elevo" 为新风格，"default" 为默认风格             |
+| footerTips    | `string \| undefined`               | 否   | -      | 底部提示文字                                                                         |
 
 ## Events
 
@@ -198,4 +198,32 @@ events:
     action: message.info
     args:
       - "<% '结束拖拽: ' + EVENT.detail.text %>"
+```
+
+### 主题变体
+
+使用 themeVariant 切换操作列表的视觉风格。
+
+```yaml preview
+brick: eo-actions
+properties:
+  themeVariant: "elevo"
+  actions:
+    - text: 查看
+      icon:
+        lib: antd
+        icon: eye
+        theme: outlined
+    - text: 编辑
+      icon:
+        lib: antd
+        icon: edit
+        theme: outlined
+    - type: divider
+    - text: 删除
+      danger: true
+      icon:
+        lib: antd
+        icon: delete
+        theme: outlined
 ```

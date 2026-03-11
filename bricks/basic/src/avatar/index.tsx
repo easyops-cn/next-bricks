@@ -40,7 +40,7 @@ export interface AvatarProps {
 }
 
 /**
- * 头像
+ * 头像构件，支持图片、图标、文本三种展示模式，图片加载失败时自动降级为图标或文本；文本模式会根据容器宽度自动缩放字号
  * @part avatar - 头像容器
  * @part avatar-img - 显示为图片时的头像容器
  * @part avatar-icon - 显示为图标时的头像容器
