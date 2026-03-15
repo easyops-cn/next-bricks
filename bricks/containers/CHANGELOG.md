@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.18.6](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.18.5...@next-bricks/containers@1.18.6) (2026-03-15)
+
+
+### Bug Fixes
+
+* **containers:** export EasyViewProps interface ([308119c](https://github.com/easyops-cn/next-advanced-bricks/commit/308119cff53adb20f7a448b36ded843c099ac991))
+
+
+
+
+
 ## [1.18.5](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.18.4...@next-bricks/containers@1.18.5) (2026-03-11)
 
 **Note:** Version bump only for package @next-bricks/containers
