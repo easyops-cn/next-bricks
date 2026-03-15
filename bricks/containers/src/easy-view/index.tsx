@@ -65,7 +65,7 @@ class EasyViewElement extends ReactNextElement {
   }
 }
 
-interface EasyViewProps {
+export interface EasyViewProps {
   gridAreas?: Record<string, (string | number)[]>;
   gridTemplateAreas?: string[][];
   gridTemplateColumns?: string | string[];
