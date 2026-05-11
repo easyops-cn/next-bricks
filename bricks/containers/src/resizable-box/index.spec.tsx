@@ -116,6 +116,109 @@ describe("eo-resizable-box", () => {
     });
   });
 
+  test("defaultSize with CSS string value", async () => {
+    const mockGetBoundingClientRect = jest.fn(() => ({
+      width: 800,
+      height: 600,
+      top: 0,
+      left: 0,
+      bottom: 600,
+      right: 800,
+      x: 0,
+      y: 0,
+      toJSON: () => ({}),
+    }));
+    jest
+      .spyOn(HTMLElement.prototype, "getBoundingClientRect")
+      .mockImplementation(mockGetBoundingClientRect as any);
+
+    const element = document.createElement("eo-resizable-box") as ResizableBox;
+    (element as any).defaultSize = "100vw";
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(
+      (element.shadowRoot?.querySelector(".box") as HTMLElement).style.width
+    ).toBe("800px");
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+
+    (HTMLElement.prototype.getBoundingClientRect as any).mockRestore();
+  });
+
+  test("defaultSize with CSS string value in vertical direction", async () => {
+    const mockGetBoundingClientRect = jest.fn(() => ({
+      width: 800,
+      height: 500,
+      top: 0,
+      left: 0,
+      bottom: 500,
+      right: 800,
+      x: 0,
+      y: 0,
+      toJSON: () => ({}),
+    }));
+    jest
+      .spyOn(HTMLElement.prototype, "getBoundingClientRect")
+      .mockImplementation(mockGetBoundingClientRect as any);
+
+    const element = document.createElement("eo-resizable-box") as ResizableBox;
+    (element as any).defaultSize = "50vh";
+    element.resizeDirection = "top";
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(
+      (element.shadowRoot?.querySelector(".box") as HTMLElement).style.height
+    ).toBe("500px");
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+
+    (HTMLElement.prototype.getBoundingClientRect as any).mockRestore();
+  });
+
+  test("defaultSize with invalid CSS string falls back to default", async () => {
+    const element = document.createElement("eo-resizable-box") as ResizableBox;
+    (element as any).defaultSize = "invalid";
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(
+      (element.shadowRoot?.querySelector(".box") as HTMLElement).style.width
+    ).toBe("200px");
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
+  test("defaultSize with numeric string", async () => {
+    const element = document.createElement("eo-resizable-box") as ResizableBox;
+    (element as any).defaultSize = "300";
+
+    act(() => {
+      document.body.appendChild(element);
+    });
+
+    expect(
+      (element.shadowRoot?.querySelector(".box") as HTMLElement).style.width
+    ).toBe("300px");
+
+    act(() => {
+      document.body.removeChild(element);
+    });
+  });
+
   test("disabled", async () => {
     const element = document.createElement("eo-resizable-box") as ResizableBox;
     element.disabled = true;
