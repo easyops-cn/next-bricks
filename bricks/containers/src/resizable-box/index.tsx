@@ -12,7 +12,7 @@ const { defineElement, property } = createDecorators();
 export interface ResizableBoxProps {
   resizeDirection?: ResizeDirection;
   storageKey?: string;
-  defaultSize?: number;
+  defaultSize?: number | string;
   minSize?: number;
   minSpace?: number;
   disabled?: boolean;
@@ -57,11 +57,11 @@ class ResizableBox extends ReactNextElement implements ResizableBoxProps {
   accessor storageKey: string | undefined;
 
   /**
-   * 默认尺寸（px）
+   * 默认尺寸，支持数字（px）或 CSS 字符串（如 "100vw"、"50%"）
    * @default 200
    */
-  @property({ type: Number })
-  accessor defaultSize: number | undefined;
+  @property()
+  accessor defaultSize: number | string | undefined;
 
   /**
    * 最小尺寸（px）
@@ -136,6 +136,25 @@ interface ResizerStatus {
   startY: number;
 }
 
+function resolveSize(
+  value: number | string | undefined,
+  direction: "horizontal" | "vertical"
+): number | undefined {
+  if (value == null) return undefined;
+  if (typeof value === "number") return value;
+  const num = Number(value);
+  if (!Number.isNaN(num)) return num;
+  const el = document.createElement("div");
+  el.style.position = "absolute";
+  el.style.visibility = "hidden";
+  el.style[direction === "horizontal" ? "width" : "height"] = value;
+  document.body.appendChild(el);
+  const px =
+    el.getBoundingClientRect()[direction === "horizontal" ? "width" : "height"];
+  document.body.removeChild(el);
+  return px || undefined;
+}
+
 interface ResizableBoxComponentProps extends ResizableBoxProps {
   host: HTMLElement;
 }
@@ -154,7 +173,18 @@ export function ResizableBoxComponent({
   host,
 }: ResizableBoxComponentProps) {
   const resizeDirection = _resizeDirection ?? "right";
-  const defaultSize = _defaultSize ?? 200;
+  const isVerticalDirection = useMemo(
+    () => ["top", "bottom"].includes(resizeDirection),
+    [resizeDirection]
+  );
+  const defaultSize = useMemo(
+    () =>
+      resolveSize(
+        _defaultSize,
+        isVerticalDirection ? "vertical" : "horizontal"
+      ) ?? 200,
+    [_defaultSize, isVerticalDirection]
+  );
   const minSpace = _minSpace ?? 300;
   const refinedMinSize = minSize ?? defaultSize;
 
@@ -174,11 +204,6 @@ export function ResizableBoxComponent({
   const [size, setSize] = useState<number>(initSize);
   const [resized, setResized] = useState(false);
   const [resizeStatus, setResizerStatus] = useState<ResizerStatus | null>(null);
-
-  const isVerticalDirection = useMemo(
-    () => ["top", "bottom"].includes(resizeDirection),
-    [resizeDirection]
-  );
 
   const handleResizerMouseDown = useCallback(
     (event: React.MouseEvent) => {
