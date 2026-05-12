@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.19.0](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.18.6...@next-bricks/containers@1.19.0) (2026-05-12)
+
+
+### Features
+
+* **containers:** defaultSize 支持 CSS 字符串值 ([77a15bd](https://github.com/easyops-cn/next-advanced-bricks/commit/77a15bd22d12a9df0de08d1eb7dd627a2dded118))
+
+
+
+
+
 ## [1.18.6](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.18.5...@next-bricks/containers@1.18.6) (2026-03-15)
 
 
