@@ -50,7 +50,7 @@
     "@shoelace-style/shoelace": "~2.20.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.25.0",
+    "@next-core/build-next-bricks": "^1.26.2",
     "copy-webpack-plugin": "^11.0.0"
   }
 }
