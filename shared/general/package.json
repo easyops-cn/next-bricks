@@ -67,6 +67,6 @@
   "devDependencies": {
     "@next-core/build-next-libs": "^1.0.25",
     "@next-core/test-next": "^2.0.1",
-    "concurrently": "^9.1.0"
+    "concurrently": "^9.2.1"
   }
 }
