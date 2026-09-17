@@ -235,6 +235,7 @@ export interface ActionsEventsMapping {
 
 /**
  * 操作列表构件，用于展示一组可点击的操作菜单项，支持多级子菜单、分组、分隔线、选中/激活状态高亮、拖拽及链接跳转
+ * @en An action list brick used to display a set of clickable action menu items; supports multi-level submenus, groups, dividers, highlighted selected/active states, dragging, and link navigation
  *
  * @category interact-basic
  */
@@ -245,6 +246,7 @@ export
 class EoActions extends ReactNextElement implements ActionsProps {
   /**
    * 操作列表配置
+   * @en Action list configuration
    */
   @property({
     attribute: false,
@@ -253,6 +255,7 @@ class EoActions extends ReactNextElement implements ActionsProps {
 
   /**
    * actions 选中项配置
+   * @en Configuration of the selected items in actions
    */
   @property({
     attribute: false,
@@ -261,6 +264,7 @@ class EoActions extends ReactNextElement implements ActionsProps {
 
   /**
    * actions 激活项配置，用于菜单项的选择和展开，需按菜单层级顺序依次列出当前激活的菜单项
+   * @en Configuration of the active items in actions, used for selecting and expanding menu items; the currently active menu items must be listed in menu hierarchy order
    */
   @property({
     attribute: false,
@@ -269,37 +273,50 @@ class EoActions extends ReactNextElement implements ActionsProps {
 
   /**
    * action中的菜单项是否可拖拽
+   * @en Whether the menu items in actions are draggable
    */
   @property({ type: Boolean })
   accessor itemDraggable: boolean | undefined;
 
-  /** 主题变体，控制操作列表的视觉风格，"elevo" 为新风格，"default" 为默认风格 */
+  /**
+   * 主题变体，控制操作列表的视觉风格，"elevo" 为新风格，"default" 为默认风格
+   * @en Theme variant, controls the visual style of the action list; "elevo" is the new style and "default" is the default style
+   */
   @property({ render: false })
   accessor themeVariant: "default" | "elevo" | undefined;
 
-  /** 底部提示文字 */
+  /**
+   * 底部提示文字
+   * @en Footer tip text
+   */
   @property()
   accessor footerTips: string | undefined;
 
   /**
    * 点击按钮时触发
+   * @en Triggered when the button is clicked
    * @detail 该按钮配置
+   * @detailEn The button configuration
    */
   @event({ type: "action.click" })
   accessor #actionClickEvent!: EventEmitter<SimpleAction>;
 
   /**
    * 开始拖拽菜单项时触发
+   * @en Triggered when dragging a menu item starts
    *
    * @detail 该菜单项动作配置
+   * @detailEn The menu item action configuration
    */
   @event({ type: "item.drag.start" })
   accessor #itemDragStartEvent!: EventEmitter<SimpleAction>;
 
   /**
    * 完成拖拽菜单项时触发
+   * @en Triggered when dragging a menu item ends
    *
    * @detail 该菜单项动作配置
+   * @detailEn The menu item action configuration
    */
   @event({ type: "item.drag.end" })
   accessor #itemDragEndEvent!: EventEmitter<SimpleAction>;

@@ -63,6 +63,7 @@ export interface TagListEventsMapping {
 
 /**
  * 标签列表构件
+ * @en Tag list brick
  * @author sailor
  *
  * @category display-component
@@ -74,6 +75,7 @@ export interface TagListEventsMapping {
 class TagList extends ReactNextElement implements TagListProps {
   /**
    * 标签列表
+   * @en Tag list
    */
   @property({
     attribute: false,
@@ -82,17 +84,22 @@ class TagList extends ReactNextElement implements TagListProps {
 
   /**
    * 按钮大小
+   * @en Button size
    * @default "medium"
    */
   @property() accessor size: ComponentSize | undefined;
 
   /**
    * 颜色
+   * @en Color
    */
   @property()
   accessor color: TagColor | string | undefined;
 
-  /** 是否有边线 */
+  /**
+   * 是否有边线
+   * @en Whether it has an outline
+   */
   @property({
     type: Boolean,
   })
@@ -100,6 +107,7 @@ class TagList extends ReactNextElement implements TagListProps {
 
   /**
    * 显示圆点
+   * @en Show the circle dot
    */
   @property({
     type: Boolean,
@@ -108,6 +116,7 @@ class TagList extends ReactNextElement implements TagListProps {
 
   /**
    * 是否禁用
+   * @en Whether it is disabled
    */
   @property({
     type: Boolean,
@@ -116,6 +125,7 @@ class TagList extends ReactNextElement implements TagListProps {
 
   /**
    * 是否允许关闭
+   * @en Whether it can be closed
    */
   @property({
     type: Boolean,
@@ -124,6 +134,7 @@ class TagList extends ReactNextElement implements TagListProps {
 
   /**
    * 是否允许选择
+   * @en Whether it can be checked
    */
   @property({
     type: Boolean,
@@ -132,6 +143,7 @@ class TagList extends ReactNextElement implements TagListProps {
 
   /**
    * 是否允许多选
+   * @en Whether multiple selection is allowed
    */
   @property({
     type: Boolean,
@@ -140,6 +152,7 @@ class TagList extends ReactNextElement implements TagListProps {
 
   /**
    * 标签自定义样式
+   * @en Custom tag style
    */
   @property({
     attribute: false,
@@ -154,7 +167,9 @@ class TagList extends ReactNextElement implements TagListProps {
 
   /**
    * 选择标签事件
+   * @en Tag check event
    * @detail { item: 被选中/取消选中的标签项, list: 当前所有选中的标签列表 }
+   * @detailEn { item: The checked/unchecked tag item, list: The list of all currently checked tags }
    */
   @event({ type: "check" })
   accessor #checkEvent!: EventEmitter<{
@@ -171,7 +186,9 @@ class TagList extends ReactNextElement implements TagListProps {
 
   /**
    * 关闭标签事件
+   * @en Tag close event
    * @detail { item: 被关闭的标签项, list: 关闭后剩余的标签列表 }
+   * @detailEn { item: The closed tag item, list: The list of remaining tags after closing }
    */
   @event({ type: "close" })
   accessor #closeEvent!: EventEmitter<{
@@ -188,7 +205,9 @@ class TagList extends ReactNextElement implements TagListProps {
 
   /**
    * 点击标签事件
+   * @en Tag click event
    * @detail 被点击的标签项
+   * @detailEn The clicked tag item
    */
   @event({ type: "tag.click" })
   accessor #tagClickEvent!: EventEmitter<TagListItem | string | undefined>;

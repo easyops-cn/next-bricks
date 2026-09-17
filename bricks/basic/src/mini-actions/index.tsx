@@ -76,6 +76,7 @@ export interface EoMiniActionsEventsMapping {
 
 /**
  * 小尺寸按钮组
+ * @en Small-size button group
  * @category interact-basic
  */
 export
@@ -85,19 +86,25 @@ export
 class EoMiniActions extends ReactNextElement implements EoMiniActionsProps {
   /**
    * 操作列表配置
+   * @en Action list configuration
    */
   @property({
     attribute: false,
   })
   accessor actions: ActionType[] | undefined;
 
-  /** 主题变体 */
+  /**
+   * 主题变体
+   * @en Theme variant
+   */
   @property()
   accessor themeVariant: "default" | "elevo" | undefined;
 
   /**
    * 点击按钮时触发
+   * @en Triggered when a button is clicked
    * @detail 该按钮配置
+   * @detailEn The button configuration
    */
   @event({ type: "action.click" })
   accessor #actionClickEvent!: EventEmitter<SimpleActionType>;
@@ -111,7 +118,9 @@ class EoMiniActions extends ReactNextElement implements EoMiniActionsProps {
 
   /**
    * 当下拉菜单可见性变化之后触发
+   * @en Triggered after the visibility of the dropdown menu changes
    * @detail 当前是否可见
+   * @detailEn Whether it is currently visible
    */
   @event({ type: "visible.change" })
   accessor #visibleChangeEvent!: EventEmitter<boolean>;

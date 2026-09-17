@@ -35,6 +35,7 @@ export interface TabGroupEventsMapping {
 
 /**
  * Tab 容器组
+ * @en Tab container group
  * @author sailorshe
  * @insider
  */
@@ -45,6 +46,7 @@ export interface TabGroupEventsMapping {
 class TabGroup extends ReactNextElement implements TabGroupProps {
   /**
    * 样式类型
+   * @en Style type
    * @default "default"
    */
   @property()
@@ -52,19 +54,23 @@ class TabGroup extends ReactNextElement implements TabGroupProps {
 
   /**
    * 当前激活的面板名称，对应 tab-item 的 panel 属性
+   * @en Name of the currently active panel, corresponding to the panel property of tab-item
    */
   @property()
   accessor activePanel: string | undefined;
 
   /**
    * 内容样式
+   * @en Content style
    * */
   @property({ attribute: false })
   accessor contentStyle: React.CSSProperties | undefined;
 
   /**
    * 选择 tab 时触发
+   * @en Triggered when a tab is selected
    * @detail 当前选中的面板名称
+   * @detailEn The name of the currently selected panel
    */
   @event({ type: "tab.select" })
   accessor #tabSelectEvent!: EventEmitter<string>;
@@ -78,6 +84,7 @@ class TabGroup extends ReactNextElement implements TabGroupProps {
    * 轮廓。默认情况下，使用阴影，8.2 下默认则为无轮廓。
    *
    * 该属性对 panel 类型无效（其始终无轮廓）。
+   * @en Outline. By default, a shadow is used; the default is no outline under 8.2. This property has no effect on the panel type (which is always without an outline).
    *
    * @default "default"
    */
@@ -86,6 +93,7 @@ class TabGroup extends ReactNextElement implements TabGroupProps {
 
   /**
    * 是否填满容器高度，启用后 tab 组件高度为 100%，内容区域自动撑满剩余空间
+   * @en Whether to fill the container height; when enabled, the tab component height is 100% and the content area automatically fills the remaining space
    */
   @property({ type: Boolean, render: false })
   accessor fillContainer: boolean | undefined;

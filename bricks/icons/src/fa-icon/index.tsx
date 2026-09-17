@@ -93,6 +93,7 @@ class FaIcon extends ReactNextElement implements FaIconProps {
   /**
    * 图标查找完成时触发
    * @detail 图标是否找到
+   * @detailEn Whether the icon is found
    */
   @event({ type: "icon.found" })
   accessor #iconFoundEvent!: EventEmitter<boolean>;

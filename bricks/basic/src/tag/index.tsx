@@ -75,6 +75,7 @@ export interface TagMapEvents {
 
 /**
  * 标签构件，支持多种预设颜色和自定义颜色，可配置为可选择、可关闭模式，支持图标、边线样式及文本溢出省略
+ * @en A tag brick that supports multiple preset and custom colors, can be configured as checkable or closable, and supports icons, border styles, and text overflow ellipsis
  * @author sailor
  *
  * @category display-component
@@ -86,12 +87,14 @@ export interface TagMapEvents {
 class Tag extends ReactNextElement implements TagProps {
   /**
    * 标签大小
+   * @en Tag size
    * @default "medium"
    */
   @property() accessor size: ComponentSize | undefined;
 
   /**
    * 图标
+   * @en Icon
    */
   @property({
     attribute: false,
@@ -100,11 +103,15 @@ class Tag extends ReactNextElement implements TagProps {
 
   /**
    * 颜色
+   * @en Color
    */
   @property()
   accessor color: TagColor | string | undefined;
 
-  /** 是否有边线 */
+  /**
+   * 是否有边线
+   * @en Whether there is a border
+   */
   @property({
     type: Boolean,
     render: false,
@@ -113,6 +120,7 @@ class Tag extends ReactNextElement implements TagProps {
 
   /**
    * 是否禁用
+   * @en Whether it is disabled
    */
   @property({
     type: Boolean,
@@ -121,6 +129,7 @@ class Tag extends ReactNextElement implements TagProps {
 
   /**
    * 是否允许关闭
+   * @en Whether it can be closed
    */
   @property({
     type: Boolean,
@@ -129,12 +138,14 @@ class Tag extends ReactNextElement implements TagProps {
 
   /**
    * 超过宽度文本隐藏宽度
+   * @en Width at which overflowing text is hidden
    */
   @property()
   accessor ellipsisWidth: string | undefined;
 
   /**
    * 是否允许选择
+   * @en Whether it can be checked
    */
   @property({
     type: Boolean,
@@ -143,6 +154,7 @@ class Tag extends ReactNextElement implements TagProps {
 
   /**
    * 是否选择
+   * @en Whether it is checked
    */
   @property({
     type: Boolean,
@@ -151,6 +163,7 @@ class Tag extends ReactNextElement implements TagProps {
 
   /**
    * 标签自定义样式
+   * @en Custom tag style
    */
   @property({
     attribute: false,
@@ -159,7 +172,9 @@ class Tag extends ReactNextElement implements TagProps {
 
   /**
    * @detail { size: 标签大小, icon: 图标, color: 颜色, outline: 是否有边线, closable: 是否可关闭, disabled: 是否禁用, checkable: 是否可选择, checked: 当前选中状态, ellipsisWidth: 超出隐藏宽度, tagStyle: 自定义样式 }
+   * @detailEn { size: Tag size, icon: Icon, color: Color, outline: Whether it has an outline, closable: Whether it can be closed, disabled: Whether it is disabled, checkable: Whether it can be checked, checked: The current checked state, ellipsisWidth: The width beyond which it is hidden, tagStyle: Custom style }
    * @description 点击可选择标签时触发，返回当前标签的完整属性（含更新后的 checked 状态）
+   * @en Triggered when a checkable tag is clicked; returns the complete properties of the current tag (including the updated checked state)
    */
   @event({ type: "check" })
   accessor #checkEvent!: EventEmitter<TagProps>;
@@ -170,7 +185,9 @@ class Tag extends ReactNextElement implements TagProps {
 
   /**
    * @detail { size: 标签大小, icon: 图标, color: 颜色, outline: 是否有边线, closable: 是否可关闭, disabled: 是否禁用, checkable: 是否可选择, checked: 当前选中状态, ellipsisWidth: 超出隐藏宽度, tagStyle: 自定义样式 }
+   * @detailEn { size: Tag size, icon: Icon, color: Color, outline: Whether it has an outline, closable: Whether it can be closed, disabled: Whether it is disabled, checkable: Whether it can be checked, checked: The current checked state, ellipsisWidth: The width beyond which it is hidden, tagStyle: Custom style }
    * @description 点击关闭按钮时触发，同时隐藏该标签
+   * @en Triggered when the close button is clicked; the tag is hidden at the same time
    */
   @event({ type: "close" })
   accessor #closeEvent!: EventEmitter<TagProps>;

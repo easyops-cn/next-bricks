@@ -32,9 +32,17 @@ export type ResizeDirection = "left" | "right" | "top" | "bottom";
  * - 移除属性 `resizable`，改为使用 `disabled` 控制是否可调整尺寸；
  * - 放在 `containers-NB` 包，而不是 `basic-bricks-NB`。
  *
+ * @en A container that can be resized horizontally or vertically.
+ *
+ * Note the differences from the v2 brick `basic-bricks.resizable-box`:
+ *
+ * - The `resizable` property is removed; use `disabled` to control whether the size can be adjusted;
+ * - It is placed in the `containers-NB` package instead of `basic-bricks-NB`.
+ *
  * @author developer
  *
  * @slot - 内容区
+ * @slotEn - The content area
  *
  * @category container-layout
  */
@@ -45,6 +53,7 @@ export
 class ResizableBox extends ReactNextElement implements ResizableBoxProps {
   /**
    * 调整方向
+   * @en Resize direction
    * @default "right"
    */
   @property()
@@ -52,12 +61,14 @@ class ResizableBox extends ReactNextElement implements ResizableBoxProps {
 
   /**
    * 用于存放当前尺寸的 (local) storage key
+   * @en The (local) storage key used to store the current size
    */
   @property()
   accessor storageKey: string | undefined;
 
   /**
    * 默认尺寸，支持数字（px）或 CSS 字符串（如 "100vw"、"50%"）
+   * @en Default size; supports a number (px) or a CSS string (such as "100vw" or "50%")
    * @default 200
    */
   @property()
@@ -65,6 +76,7 @@ class ResizableBox extends ReactNextElement implements ResizableBoxProps {
 
   /**
    * 最小尺寸（px）
+   * @en Minimum size (px)
    * @default defaultSize
    */
   @property({ type: Number })
@@ -75,6 +87,10 @@ class ResizableBox extends ReactNextElement implements ResizableBoxProps {
    *
    * 即：控制尺寸不超过 `documentElement.clientWidth - minSpace`（水平方向时）。
    *
+   * @en The minimum space reserved for other parts.
+   *
+   * That is: the size is kept no greater than `documentElement.clientWidth - minSpace` (in the horizontal direction).
+   *
    * @default 300
    */
   @property({ type: Number })
@@ -82,12 +98,14 @@ class ResizableBox extends ReactNextElement implements ResizableBoxProps {
 
   /**
    * 禁用 resize
+   * @en Disable resize
    */
   @property({ type: Boolean })
   accessor disabled: boolean | undefined;
 
   /**
    * 拖拽条样式变体
+   * @en Resize handle style variant
    * @default "default"
    */
   @property()
@@ -95,18 +113,21 @@ class ResizableBox extends ReactNextElement implements ResizableBoxProps {
 
   /**
    * 盒子容器自定义样式
+   * @en Custom style of the box container
    */
   @property({ attribute: false })
   accessor boxStyle: React.CSSProperties | undefined;
 
   /**
    * 非拖拽状态时盒子容器自定义样式
+   * @en Custom style of the box container when it is not being resized
    */
   @property({ attribute: false })
   accessor boxStyleWhenNotResizing: React.CSSProperties | undefined;
 
   /**
    * 是否将尺寸同步到宿主元素，设置后宿主元素的宽度或高度会随拖拽同步更新
+   * @en Whether to sync the size with the host element; when set, the width or height of the host element is updated along with dragging
    */
   @property({ type: Boolean })
   accessor syncSizeWithHost: boolean;

@@ -32,11 +32,14 @@ export enum OpenDirection {
 
 /**
  * 可拖拽浮层弹窗容器。
+ * @en A draggable floating popup container.
  *
  * @author developer
  *
  * @slot - 内容区
+ * @slotEn - The content area
  * @slot toolbar - 头部工具栏插槽
+ * @slotEn toolbar - The header toolbar slot
  *
  * @category container-display
  */
@@ -47,12 +50,14 @@ export
 class EoPopup extends ReactNextElement {
   /**
    * 浮层Id, 如果有设置浮层id, 会开启位置记录功能
+   * @en Popup Id. If a popup id is set, the position recording feature is enabled
    */
   @property()
   accessor popupId: string | undefined;
 
   /**
    * 弹窗宽度
+   * @en Popup width
    * @default 500
    */
   @property()
@@ -60,18 +65,21 @@ class EoPopup extends ReactNextElement {
 
   /**
    * 弹窗高度
+   * @en Popup height
    */
   @property()
   accessor popupHeight: React.CSSProperties["height"] | undefined;
 
   /**
    * 弹窗标题
+   * @en Popup title
    */
   @property()
   accessor popupTitle: string | undefined;
 
   /**
    * 弹窗打开位置
+   * @en Popup open position
    * @default center
    */
   @property()
@@ -79,6 +87,7 @@ class EoPopup extends ReactNextElement {
 
   /**
    * 是否显示模态框
+   * @en Whether to show the modal
    */
   @property({
     type: Boolean,
@@ -87,6 +96,7 @@ class EoPopup extends ReactNextElement {
 
   /**
    * 用于设置 popup head的样式
+   * @en Used to set the style of the popup header
    */
   @property({
     attribute: false,
@@ -95,6 +105,7 @@ class EoPopup extends ReactNextElement {
 
   /**
    * 用于设置 popup wrapper的样式
+   * @en Used to set the style of the popup wrapper
    */
   @property({
     attribute: false,
@@ -103,6 +114,7 @@ class EoPopup extends ReactNextElement {
 
   /**
    * 内容没有边距
+   * @en The content has no padding
    */
   @property({
     type: Boolean,
@@ -112,6 +124,7 @@ class EoPopup extends ReactNextElement {
 
   /**
    * 是否可调整尺寸
+   * @en Whether it is resizable
    */
   @property({
     type: Boolean,
@@ -120,6 +133,7 @@ class EoPopup extends ReactNextElement {
 
   /**
    * 显示弹窗
+   * @en Show the popup
    */
   @method()
   open(): void {
@@ -128,6 +142,7 @@ class EoPopup extends ReactNextElement {
 
   /**
    * 关闭弹窗
+   * @en Close the popup
    */
   @method()
   close(): void {

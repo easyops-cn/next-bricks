@@ -22,10 +22,12 @@ export type LoadingSize = "small" | "medium" | "large";
 
 /**
  * 加载状态容器，在 loading 时显示遮罩和旋转图标，支持延迟显示以防止闪烁
+ * @en A loading container that shows a mask and a spinning icon while loading, with delayed display to avoid flicker
  * @author developer
  * @category display-component
  *
  * @slot - 内容
+ * @slotEn - The content
  */
 export
 @defineElement("eo-loading-container", {
@@ -37,18 +39,21 @@ class LoadingContainer
 {
   /**
    * 是否显示加载状态
+   * @en Whether to show the loading state
    */
   @property({ type: Boolean })
   accessor loading: boolean | undefined;
 
   /**
    * 延迟显示加载效果的时间（防止闪烁）
+   * @en Time to delay before showing the loading effect (to avoid flicker)
    */
   @property({ type: Number })
   accessor delay: number | undefined;
 
   /**
    * 加载图标的尺寸
+   * @en Size of the loading icon
    * @default "medium"
    */
   @property({ render: false })

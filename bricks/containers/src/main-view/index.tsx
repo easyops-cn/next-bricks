@@ -39,15 +39,22 @@ export type MainViewGap = "small" | "medium";
 
 /**
  * 主内容视图
+ * @en Main content view
  *
  * @author steve
  *
  * @slot - 内容区
+ * @slotEn - The content area
  * @slot breadcrumb - 面包屑
+ * @slotEn breadcrumb - Breadcrumb
  * @slot pageTitle - 页面标题
+ * @slotEn pageTitle - Page title
  * @slot toolbar - 工具栏
+ * @slotEn toolbar - Toolbar
  * @slot banner - Banner 内容
+ * @slotEn banner - Banner content
  * @slot footer - 底栏（通常放置按钮），已废弃，请使用 eo-page-view 的 footer
+ * @slotEn footer - The footer (usually holds buttons). Deprecated, please use the footer of eo-page-view
  * @category container-layout
  */
 export
@@ -58,6 +65,8 @@ class EoMainView extends ReactNextElement {
   /**
    * 标题栏和内容区之间的间隔。
    * 如果内容区已包含一些视觉上的留白，可以设置 `contentGap: small`。
+   * @en The gap between the title bar and the content area.
+   * If the content area already includes some visual whitespace, you can set `contentGap: small`.
    *
    * @default "medium"
    */
@@ -71,6 +80,12 @@ class EoMainView extends ReactNextElement {
    * - "small": 小尺寸窄布局
    * - "medium": 中等尺寸窄布局
    * - "large": 大尺寸窄布局
+   * @en Set the narrow layout mode (centered).
+   *
+   * - "full": Full size (not centered by narrow layout)
+   * - "small": Small-size narrow layout
+   * - "medium": Medium-size narrow layout
+   * - "large": Large-size narrow layout
    *
    * @default "full"
    */
@@ -79,42 +94,49 @@ class EoMainView extends ReactNextElement {
 
   /**
    * 设置是否铺满容器。
+   * @en Whether to fill the container.
    */
   @property({ type: Boolean })
   accessor fillContainer: boolean | undefined;
 
   /**
    * 设置仅使用 banner 时，面包屑、标题和工具栏将不会显示。
+   * @en When only the banner is used, the breadcrumb, title and toolbar will not be displayed.
    */
   @property({ type: Boolean })
   accessor bannerAlone: boolean | undefined;
 
   /**
    * Banner 标题，仅在 bannerAlone 模式下生效
+   * @en Banner title, only effective in bannerAlone mode
    */
   @property()
   accessor bannerTitle: string | undefined;
 
   /**
    * Banner 描述文字，仅在 bannerAlone 模式下生效
+   * @en Banner description text, only effective in bannerAlone mode
    */
   @property()
   accessor bannerDescription: string | undefined;
 
   /**
    * Banner 背景图片，使用 CSS background-image 语法（如 url(...)）
+   * @en Banner background image, using the CSS background-image syntax (e.g. url(...))
    */
   @property()
   accessor bannerImage: string | undefined;
 
   /**
    * Banner 是否下沉显示
+   * @en Whether the banner is sunk
    */
   @property({ type: Boolean })
   accessor bannerSunk: boolean | undefined;
 
   /**
    * 是否展示 banner（包括面包屑、页面标题、工具栏）
+   * @en Whether to show the banner (including breadcrumb, page title and toolbar)
    * @default true
    */
   @property({ type: Boolean })
@@ -122,12 +144,14 @@ class EoMainView extends ReactNextElement {
 
   /**
    * 是否没有边距
+   * @en Whether there is no padding
    */
   @property({ type: Boolean, render: false })
   accessor noPadding: boolean | undefined;
 
   /**
    * 是否显示底栏（通常放置按钮）
+   * @en Whether to show the footer (usually holds buttons)
    * @deprecated 已废弃，请使用 eo-page-view 的 footer
    */
   @property({ type: Boolean })
@@ -135,6 +159,7 @@ class EoMainView extends ReactNextElement {
 
   /**
    * 是否展示 logo（dashboard 模式）
+   * @en Whether to show the logo (dashboard mode)
    * @default true
    */
   @property({ type: Boolean })
@@ -142,6 +167,7 @@ class EoMainView extends ReactNextElement {
 
   /**
    * 是否展示退出按钮（dashboard 模式）
+   * @en Whether to show the exit button (dashboard mode)
    * @default true
    */
   @property({ type: Boolean })
@@ -149,6 +175,7 @@ class EoMainView extends ReactNextElement {
 
   /**
    * 点击退出按钮退出 dashboard 模式时触发
+   * @en Triggered when the exit button is clicked to exit dashboard mode
    */
   @event({ type: "dashboard.exit" })
   accessor #dashboardExit!: EventEmitter<void>;

@@ -39,6 +39,7 @@ export interface EoFrameBreadcrumbProps {
 
 /**
  * 面包屑 已迁移至 `nav` 构件包，后续在在 `basic` 构件包中将不再更新。
+ * @en Breadcrumb. Migrated to the `nav` brick package; it will no longer be updated in the `basic` brick package.
  * @deprecated
  * @category layout-component
  */
@@ -52,6 +53,7 @@ class EoFrameBreadcrumb
 {
   /**
    * 面包屑配置
+   * @en Breadcrumb configuration
    */
   @property({
     attribute: false,
@@ -60,12 +62,14 @@ class EoFrameBreadcrumb
 
   /**
    * 是否隐藏当前应用名称
+   * @en Whether to hide the current app name
    */
   @property({ type: Boolean })
   accessor noCurrentApp: boolean | undefined;
 
   /**
    * 菜单配置
+   * @en Menu configuration
    */
   @property({
     attribute: false,

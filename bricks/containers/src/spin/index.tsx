@@ -14,9 +14,11 @@ export interface EoSpinProps {
 
 /**
  * 加载中指示器构件，在容器内容上方覆盖旋转动画和可选描述文案，支持三种尺寸
+ * @en A loading indicator brick that overlays a spinning animation and optional tip text on top of the container content, with three sizes
  *
  * @author nlicro
  * @slot - 容器内容
+ * @slotEn - The container content
  * @category container-display
  */
 export
@@ -26,18 +28,21 @@ export
 class EoSpin extends ReactNextElement implements EoSpinProps {
   /**
    * 加载指示符大小
+   * @en Size of the loading indicator
    */
   @property()
   accessor size: "small" | "default" | "large" = "default";
 
   /**
    * 自定义描述文案
+   * @en Custom tip text
    */
   @property()
   accessor tip: string | undefined;
 
   /**
    * 是否为加载中状态
+   * @en Whether it is in the loading state
    */
   @property({
     type: Boolean,

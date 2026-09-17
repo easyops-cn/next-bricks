@@ -16,9 +16,12 @@ export interface AppBarWrapperProps {
 
 /**
  * 应用顶部容器 已迁移至 `nav` 构件包，后续在在 `basic` 构件包中将不再更新。
+ * @en The application top bar container. It has been migrated to the `nav` brick package and will no longer be updated in the `basic` brick package.
  * @deprecated
  * @slot left - 左侧内容区
+ * @slotEn left - The left content area
  * @slot right - 右侧内容区
+ * @slotEn right - The right content area
  */
 export
 @defineElement("eo-app-bar-wrapper", {
@@ -28,6 +31,7 @@ export
 class EoAppBarWrapper extends ReactNextElement implements AppBarWrapperProps {
   /**
    * 是否固定定位。
+   * @en Whether to use fixed positioning.
    *
    * @default true
    * @deprecated 使用 `position` 属性代替
@@ -41,6 +45,7 @@ class EoAppBarWrapper extends ReactNextElement implements AppBarWrapperProps {
    * 设置定位方式：静态定位或固定定位。
    *
    * 设置时优先级高于 `isFixed`。
+   * @en Set the positioning mode: static or fixed. It takes precedence over `isFixed` when set.
    *
    * @default "fixed"
    */
@@ -49,6 +54,7 @@ class EoAppBarWrapper extends ReactNextElement implements AppBarWrapperProps {
 
   /**
    * 居中显示
+   * @en Display centered
    * @default false
    */
   @property({
@@ -56,7 +62,10 @@ class EoAppBarWrapper extends ReactNextElement implements AppBarWrapperProps {
   })
   accessor displayCenter: boolean | undefined;
 
-  /** 自定义样式 */
+  /**
+   * 自定义样式
+   * @en Custom style
+   */
   @property({
     attribute: false,
   })

@@ -46,9 +46,12 @@ export interface TabListEventsMapping {
 
 /**
  * Tab 列表
+ * @en Tab list
  * @author sailorshe
  * @slot extra - 头部插槽
+ * @slotEn extra - Header slot
  * @slot [panel] - Tab 页插槽
+ * @slotEn [panel] - Tab page slot
  * @category container-display
  */
 export
@@ -59,6 +62,7 @@ export
 class TabList extends ReactNextElement implements TabListProps {
   /**
    * 样式类型
+   * @en Style type
    * @default "default"
    */
   @property()
@@ -66,6 +70,7 @@ class TabList extends ReactNextElement implements TabListProps {
 
   /**
    * 标签页列表
+   * @en Tab list
    */
   @property({
     attribute: false,
@@ -74,12 +79,14 @@ class TabList extends ReactNextElement implements TabListProps {
 
   /**
    * 激活状态 tab 的 panel
+   * @en The panel of the active tab
    */
   @property()
   accessor activePanel: string | undefined;
 
   /**
    * 内容样式
+   * @en Content style
    * */
   @property({ attribute: false })
   accessor contentStyle: React.CSSProperties | undefined;
@@ -88,6 +95,7 @@ class TabList extends ReactNextElement implements TabListProps {
    * 轮廓。默认情况下，使用阴影，8.2 下默认则为无轮廓。
    *
    * 该属性对 panel 类型无效（其始终无轮廓）。
+   * @en Outline. By default, a shadow is used, and there is no outline by default under 8.2. This property has no effect on the panel type, which is always without an outline.
    *
    * @default "default"
    */
@@ -96,6 +104,7 @@ class TabList extends ReactNextElement implements TabListProps {
 
   /**
    * 是否开启标签内容自动轮播
+   * @en Whether to enable automatic carousel of tab content
    * @default false
    * */
   @property({
@@ -105,6 +114,7 @@ class TabList extends ReactNextElement implements TabListProps {
 
   /**
    * 轮播的时间间隔，单位 ms
+   * @en Carousel interval, in ms
    * @default 3000
    * */
   @property({
@@ -114,12 +124,14 @@ class TabList extends ReactNextElement implements TabListProps {
 
   /**
    * 是否撑满容器
+   * @en Whether to fill the container
    */
   @property({ type: Boolean })
   accessor fillContainer: boolean | undefined;
 
   /**
    * 选择 tab 时触发
+   * @en Triggered when a tab is selected
    * @detail panel
    */
   @event({ type: "tab.select" })

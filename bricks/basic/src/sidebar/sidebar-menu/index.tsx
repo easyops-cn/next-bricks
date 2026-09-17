@@ -13,6 +13,7 @@ export interface EoSidebarMenuProps {
 
 /**
  * 侧栏菜单 已迁移至 `nav` 构件包，后续在在 `basic` 构件包中将不再更新。
+ * @en The sidebar menu. It has been migrated to the `nav` brick package and will no longer be updated in the `basic` brick package.
  * @deprecated
  *
  * @category navigation
@@ -24,6 +25,7 @@ export
 class EoSidebarMenu extends ReactNextElement implements EoSidebarMenuProps {
   /**
    * 菜单整体是否收起状态
+   * @en Whether the whole menu is collapsed
    */
   @property({ type: Boolean })
   accessor menuCollapsed: boolean | undefined;

@@ -98,9 +98,11 @@ const { defineElement, property, event } = createDecorators();
 
 /**
  * 通用文本构件
+ * @en A general-purpose text brick
  * @author astrid
  *
  * @slot - 文本内容
+ * @slotEn - The text content
  *
  * @category text
  */
@@ -111,6 +113,7 @@ const { defineElement, property, event } = createDecorators();
 class EoText extends ReactNextElement implements TextProps {
   /**
    * 文本类型
+   * @en Text type
    * @default "default"
    */
   @property()
@@ -118,12 +121,14 @@ class EoText extends ReactNextElement implements TextProps {
 
   /**
    * 是否可编辑
+   * @en Whether it is editable
    */
   @property({ attribute: false })
   accessor editable: boolean | EditableConfig | undefined;
 
   /**
    * 字体大小
+   * @en Font size
    * @default "14px"
    */
   @property()
@@ -131,6 +136,7 @@ class EoText extends ReactNextElement implements TextProps {
 
   /**
    * 字体粗细
+   * @en Font weight
    * @default "normal"
    */
   @property()
@@ -138,6 +144,7 @@ class EoText extends ReactNextElement implements TextProps {
 
   /**
    * 字体颜色
+   * @en Font color
    * @default "black"
    */
   @property()
@@ -145,6 +152,7 @@ class EoText extends ReactNextElement implements TextProps {
 
   /**
    * 字体行高
+   * @en Line height
    * @default "14px"
    */
   @property()
@@ -152,6 +160,7 @@ class EoText extends ReactNextElement implements TextProps {
 
   /**
    * 字体对齐方式
+   * @en Text alignment
    * @default "left"
    */
   @property()
@@ -159,6 +168,7 @@ class EoText extends ReactNextElement implements TextProps {
 
   /**
    * 显示类型
+   * @en Display type
    * @default "inline"
    */
   @property()
@@ -166,6 +176,7 @@ class EoText extends ReactNextElement implements TextProps {
 
   /**
    * 自定义样式
+   * @en Custom style
    */
   @property({ attribute: false }) accessor customStyle:
     | CSSProperties
@@ -173,14 +184,18 @@ class EoText extends ReactNextElement implements TextProps {
 
   /**
    * 值改变事件
+   * @en Value change event
    * @detail 当前输入框中的文本值
+   * @detailEn The text value in the current input box
    */
   @event({ type: "change" })
   accessor #changeEvent!: EventEmitter<string>;
 
   /**
    * 值更新事件
+   * @en Value update event
    * @detail 编辑完成后提交的文本值（仅在值发生变化时触发）
+   * @detailEn The text value submitted after editing is completed (only triggered when the value changes)
    */
   @event({ type: "update" })
   accessor #updateEvent!: EventEmitter<string>;

@@ -22,6 +22,7 @@ export interface CategoryContainerProps {
 
 /**
  * 通用分类容器
+ * @en A general-purpose category container
  * @author sailorshe
  * @category container-display
  */
@@ -32,6 +33,7 @@ export interface CategoryContainerProps {
 class Category extends ReactNextElement implements CategoryContainerProps {
   /**
    * 分类信息
+   * @en Category information
    */
   @property({
     attribute: false,
@@ -40,6 +42,7 @@ class Category extends ReactNextElement implements CategoryContainerProps {
 
   /**
    * 内容样式
+   * @en Content style
    */
   @property({
     attribute: false,
@@ -48,6 +51,7 @@ class Category extends ReactNextElement implements CategoryContainerProps {
 
   /**
    * 头部样式
+   * @en Header style
    */
   @property({
     attribute: false,
@@ -56,6 +60,7 @@ class Category extends ReactNextElement implements CategoryContainerProps {
 
   /**
    * 容器样式
+   * @en Container style
    */
   @property({
     attribute: false,
@@ -64,6 +69,7 @@ class Category extends ReactNextElement implements CategoryContainerProps {
 
   /**
    * 是否展示分割线
+   * @en Whether to show the split line
    */
   @property({
     type: Boolean,
@@ -72,6 +78,7 @@ class Category extends ReactNextElement implements CategoryContainerProps {
 
   /**
    * 是否显示头部线条
+   * @en Whether to show the header line
    */
   @property({
     type: Boolean,
@@ -80,6 +87,7 @@ class Category extends ReactNextElement implements CategoryContainerProps {
 
   /**
    * 是否显示序号
+   * @en Whether to show the index
    */
   @property({
     type: Boolean,

@@ -50,6 +50,7 @@ const defaultIcon: GeneralIconProps = {
 
 /**
  * 下拉按钮构件，将按钮和下拉操作列表组合，点击按钮弹出操作菜单，支持自定义按钮文本、图标、大小和形状
+ * @en A dropdown button brick that combines a button with a dropdown action list; clicking the button pops up the action menu, and the button text, icon, size, and shape can be customized
  * @author sailor
  * @category interact-basic
  */
@@ -60,11 +61,13 @@ const defaultIcon: GeneralIconProps = {
 class DropdownButton extends ReactNextElement {
   /**
    * 按钮类型
+   * @en Button type
    */
   @property() accessor type: ButtonType | undefined;
 
   /**
    * 下拉按钮菜单
+   * @en Dropdown button menu
    */
   @property({
     attribute: false,
@@ -73,6 +76,7 @@ class DropdownButton extends ReactNextElement {
 
   /**
    * 按钮默认文字
+   * @en Default button text
    * @default "管理"
    */
   @property()
@@ -80,6 +84,7 @@ class DropdownButton extends ReactNextElement {
 
   /**
    * 按钮默认图标
+   * @en Default button icon
    * @default { lib: "antd", icon: "setting", theme: "filled" }
    */
   @property({
@@ -89,6 +94,7 @@ class DropdownButton extends ReactNextElement {
 
   /**
    * 按钮大小
+   * @en Button size
    * @default "medium"
    */
   @property()
@@ -96,6 +102,7 @@ class DropdownButton extends ReactNextElement {
 
   /**
    * 是否禁用
+   * @en Whether it is disabled
    */
   @property({
     type: Boolean,
@@ -104,6 +111,7 @@ class DropdownButton extends ReactNextElement {
 
   /**
    * 按钮形状
+   * @en Button shape
    * @group ui
    */
   @property()
@@ -111,6 +119,7 @@ class DropdownButton extends ReactNextElement {
 
   /**
    * 弹出层如何定位
+   * @en How the popup is positioned
    * @default "absolute"
    */
   @property()
@@ -118,7 +127,9 @@ class DropdownButton extends ReactNextElement {
 
   /**
    * 操作点击事件
+   * @en Action click event
    * @detail { key: 操作项的 key, text: 操作项文本, event: 自定义事件名, icon: 图标配置, disabled: 是否禁用, hidden: 是否隐藏, tooltip: 提示文字, url: 链接地址, href: 外部链接, target: 链接目标, danger: 是否为危险操作, dragConf: 拖拽配置 }
+   * @detailEn { key: The key of the action item, text: The action item text, event: The custom event name, icon: The icon configuration, disabled: Whether it is disabled, hidden: Whether it is hidden, tooltip: The tooltip text, url: The link address, href: The external link, target: The link target, danger: Whether it is a dangerous action, dragConf: The drag configuration }
    */
   @event({
     type: "action.click",

@@ -25,6 +25,7 @@ export interface EoMessageListenerEventsMapping {
 
 /**
  * 用于监听 window.postMessage 事件的构件，可选择仅接收同源消息
+ * @en A brick used to listen for window.postMessage events; it can be configured to only receive same-origin messages
  */
 export
 @defineElement("eo-message-listener", {
@@ -36,6 +37,7 @@ class EoMessageListener
 {
   /**
    * 是否仅接收同源消息
+   * @en Whether to only receive same-origin messages
    *
    * @default true
    */
@@ -44,7 +46,9 @@ class EoMessageListener
 
   /**
    * @detail { data: 消息数据内容, origin: 消息来源的域名 }
+   * @detailEn { data: The message data content, origin: The domain of the message source }
    * @description 接收到 postMessage 消息时触发
+   * @en Triggered when a postMessage message is received
    */
   @event({ type: "message" })
   accessor #messageEvent!: EventEmitter<MessageDetail>;
