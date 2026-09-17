@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.19.1](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.19.0...@next-bricks/containers@1.19.1) (2026-09-17)
+
+
+### Bug Fixes
+
+* **eo-bricks:** 为 eo-* 构件补充英文文档与双语 JSDoc 标签 ([2f20998](https://github.com/easyops-cn/next-advanced-bricks/commit/2f20998f0e8f35ac759f2267cce5c9de47428483))
+
+
+
+
+
 # [1.19.0](https://github.com/easyops-cn/next-advanced-bricks/compare/@next-bricks/containers@1.18.6...@next-bricks/containers@1.19.0) (2026-05-12)
 
 
