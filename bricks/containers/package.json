@@ -50,7 +50,7 @@
     "react-rnd": "^10.4.1"
   },
   "devDependencies": {
-    "@next-core/build-next-bricks": "^1.25.0",
+    "@next-core/build-next-bricks": "^1.26.3",
     "@next-core/test-next": "^2.0.1"
   },
   "peerDependencies": {
