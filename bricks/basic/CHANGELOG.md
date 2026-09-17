@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.63.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.63.9...@next-bricks/basic@1.63.10) (2026-09-17)
+
+
+### Bug Fixes
+
+* **deps:** 升级 build-next-bricks 使 eo-* 构件的英文文档进入产物 ([a2fb3ed](https://github.com/easyops-cn/next-bricks/commit/a2fb3eda41234cfcb83df49da5f69393d49449af))
+
+
+
+
+
 ## [1.63.9](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.63.8...@next-bricks/basic@1.63.9) (2026-09-17)
 
 

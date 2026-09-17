@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.14](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.6.13...@next-bricks/icons@1.6.14) (2026-09-17)
+
+
+### Bug Fixes
+
+* **deps:** 升级 build-next-bricks 使 eo-* 构件的英文文档进入产物 ([a2fb3ed](https://github.com/easyops-cn/next-bricks/commit/a2fb3eda41234cfcb83df49da5f69393d49449af))
+
+
+
+
+
 ## [1.6.13](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/icons@1.6.12...@next-bricks/icons@1.6.13) (2026-09-17)
 
 
