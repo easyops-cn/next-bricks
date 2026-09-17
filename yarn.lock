@@ -2285,10 +2285,10 @@
   resolved "https://registry.yarnpkg.com/@next-core/browserslist-config-next/-/browserslist-config-next-1.1.2.tgz#bbf32adeae9d3ded190b821e269d3853bd73019f"
   integrity sha512-KFBCCsPCxo7Bv+m23ZgpFL40qRsDnIgfYDhluXP6k7gvN2bZRTvsOn5S6dqCEpHiX9BT5p/+/JcgJ4tPTAjfxg==
 
-"@next-core/build-next-bricks@^1.25.0":
-  version "1.25.0"
-  resolved "https://registry.yarnpkg.com/@next-core/build-next-bricks/-/build-next-bricks-1.25.0.tgz#8bedea9bac02364883644d2b66cb8aafaf575e53"
-  integrity sha512-oZfIPI24eyeqfoiYJaHdcnKZggTOz/lyGDJ3gBQo9ZwwB5+Rd9rydOAaANWOg3Y8apLpfaYfs009WnHuickITg==
+"@next-core/build-next-bricks@^1.26.3":
+  version "1.26.3"
+  resolved "https://registry.yarnpkg.com/@next-core/build-next-bricks/-/build-next-bricks-1.26.3.tgz#0c8f0d4b58f430e76d13d0422c317c3b3bfe264e"
+  integrity sha512-nRdGKX9Fnn3VhPglOPWAMPkYRKjVGX3+/YaVyBeFqcSrRnn0rKYgTgimewKOHoadNQ2q/VNkgYnmUJLHftlNiw==
   dependencies:
     "@babel/parser" "^7.27.5"
     "@babel/traverse" "^7.27.4"
