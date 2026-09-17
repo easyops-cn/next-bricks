@@ -16,6 +16,7 @@ export interface ViewportProps {
 
 /**
  * 设置 `<meta name="viewport" />` 以适配移动端。
+ * @en Set `<meta name="viewport" />` to adapt to mobile devices.
  *
  * @category layout
  */
@@ -26,6 +27,7 @@ export
 class EoViewport extends ReactNextElement implements ViewportProps {
   /**
    * 视口宽度
+   * @en Viewport width
    * @default "device-width"
    */
   @property()
@@ -33,6 +35,7 @@ class EoViewport extends ReactNextElement implements ViewportProps {
 
   /**
    * 初始缩放比例
+   * @en Initial scale ratio
    * @default 1
    */
   @property({ type: Number })
@@ -40,6 +43,7 @@ class EoViewport extends ReactNextElement implements ViewportProps {
 
   /**
    * 最小缩放比例
+   * @en Minimum scale ratio
    * @default 0.1
    */
   @property({ type: Number })
@@ -47,6 +51,7 @@ class EoViewport extends ReactNextElement implements ViewportProps {
 
   /**
    * 最大缩放比例
+   * @en Maximum scale ratio
    * @default 10
    */
   @property({ type: Number })
@@ -54,6 +59,7 @@ class EoViewport extends ReactNextElement implements ViewportProps {
 
   /**
    * 是否允许用户缩放
+   * @en Whether to allow the user to zoom
    * @default "1"
    */
   @property()

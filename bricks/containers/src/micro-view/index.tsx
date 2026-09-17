@@ -21,11 +21,14 @@ interface MicroViewProps {
 
 /**
  * 基础页面布局
+ * @en Basic page layout
  * @author sailorshe
  * @category container-layout
  * @deprecated
  * @slot - 主内容区
+ * @slotEn - The main content area
  * @slot toolbar - 工具栏插槽，有内容时自动显示工具栏区域
+ * @slotEn toolbar - The toolbar slot; the toolbar area is displayed automatically when it has content
  */
 @defineElement("eo-micro-view", {
   styleTexts: [styleText],
@@ -34,6 +37,7 @@ interface MicroViewProps {
 class MicroView extends ReactNextElement {
   /**
    * 页面标题
+   * @en Page title
    */
   @property()
   accessor pageTitle: string | undefined;

@@ -13,8 +13,10 @@ export interface EoAvatarGroupProps {
 
 /**
  * 头像组容器，将多个 eo-avatar 或 eo-easyops-avatar 以重叠堆叠的方式展示，并统一控制子头像的尺寸和边框
+ * @en An avatar group container that displays multiple eo-avatar or eo-easyops-avatar elements in an overlapping stack, and uniformly controls the size and border of the child avatars
  *
  * @slot - 放置 eo-avatar 或 eo-easyops-avatar 子元素
+ * @slotEn - Place eo-avatar or eo-easyops-avatar child elements
  * @category display-component
  */
 export
@@ -24,6 +26,7 @@ export
 class EoAvatarGroup extends ReactNextElement implements EoAvatarGroupProps {
   /**
    * 尺寸
+   * @en Size
    */
   @property() accessor size: AvatarSize | undefined;
 

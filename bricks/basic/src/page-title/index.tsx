@@ -13,6 +13,7 @@ const { defineElement, property } = createDecorators();
 
 /**
  * 页面标题构件，设置后同时更新浏览器标签页标题，在 dashboard 模式下以更大字号（38px）显示
+ * @en A page title brick; when set, it also updates the browser tab title, and in dashboard mode the title is displayed with a larger font size (38px)
  *
  * @category text
  */
@@ -23,6 +24,7 @@ export
 class EoPageTitle extends ReactNextElement {
   /**
    * 页面标题，设置后会同时更新浏览器页面标题。当页面处于 dashboard 模式时，标题以更大的字号（38px）显示。
+   * @en Page title; once set, the browser page title is updated at the same time. When the page is in dashboard mode, the title is displayed with a larger font size (38px).
    */
   @property()
   accessor pageTitle: string | undefined;

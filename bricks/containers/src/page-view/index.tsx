@@ -24,14 +24,20 @@ export interface PageViewProps {
 
 /**
  * 页面视图布局构件，提供顶栏、侧边栏、子侧边栏、主内容区和底栏的多分区布局，支持窄布局居中模式和底栏 sticky/固定定位
+ * @en Page view layout brick, which provides a multi-region layout of header, sidebar, sub-sidebar, main content area and footer, and supports the narrow centered mode and sticky/fixed footer positioning
  *
  * @author steve
  *
  * @slot - 内容区
+ * @slotEn - The content area
  * @slot header - 顶栏
+ * @slotEn header - The header
  * @slot sidebar - 侧边栏
+ * @slotEn sidebar - The sidebar
  * @slot subSidebar - 子侧边栏
+ * @slotEn subSidebar - The sub-sidebar
  * @slot footer - 底栏（通常放置按钮）
+ * @slotEn footer - The footer (usually holds buttons)
  *
  * @category container-layout
  */
@@ -47,6 +53,12 @@ class EoPageView extends ReactNextElement {
    * - "small": 小尺寸窄布局
    * - "medium": 中等尺寸窄布局
    * - "large": 大尺寸窄布局
+   * @en Set the narrow layout mode (centered).
+   *
+   * - "full": Full size (not centered by narrow layout)
+   * - "small": Small-size narrow layout
+   * - "medium": Medium-size narrow layout
+   * - "large": Large-size narrow layout
    *
    * @default "full"
    */
@@ -55,6 +67,7 @@ class EoPageView extends ReactNextElement {
 
   /**
    * 是否显示底栏（通常放置按钮）
+   * @en Whether to show the footer (usually holds buttons)
    */
   @property({ type: Boolean })
   accessor showFooter: boolean | undefined;
@@ -62,6 +75,8 @@ class EoPageView extends ReactNextElement {
   /**
    * 底栏始终固定在底部。
    * 未设置时 footer 默认为 sticky，即：屏幕高度足够时，底栏跟随内容区上移而不是始终固定。
+   * @en The footer is always fixed at the bottom.
+   * When not set, the footer is sticky by default, i.e. when the screen is tall enough, the footer moves up along with the content area instead of being always fixed.
    */
   @property({ type: Boolean })
   accessor fixedFooter: boolean | undefined;
@@ -70,6 +85,9 @@ class EoPageView extends ReactNextElement {
    * 设置 reversedFooter: true 时，底栏子构件靠于右侧。
    *
    * 默认不设置时，底栏子构件靠于左侧。
+   * @en When reversedFooter: true is set, the footer child bricks are aligned to the right.
+   *
+   * When not set by default, the footer child bricks are aligned to the left.
    */
   @property({ type: Boolean, render: false })
   accessor reversedFooter: boolean | undefined;

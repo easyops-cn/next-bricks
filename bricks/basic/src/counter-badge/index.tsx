@@ -25,8 +25,10 @@ const { defineElement, property } = createDecorators();
 
 /**
  * 通用徽标构件
+ * @en A general-purpose badge brick
  * @author zhendonghuang
  * @slot - 内容区
+ * @slotEn - The content area
  * @category display-component
  */
 export
@@ -36,6 +38,7 @@ export
 class EoCounterBadge extends ReactNextElement {
   /**
    * 在内容中使用Icon
+   * @en Use Icon in the content
    */
   @property({
     attribute: false,
@@ -44,18 +47,21 @@ class EoCounterBadge extends ReactNextElement {
 
   /**
    * 徽标的背景颜色。
+   * @en The background color of the badge.
    */
   @property()
   accessor color: string | undefined;
 
   /**
    * 微标的字体颜色
+   * @en The font color of the badge
    */
   @property()
   accessor fontColor: string | undefined;
 
   /**
    * 展示的数字，大于 overflowCount 时显示为 ${overflowCount}+，为 0 时隐藏
+   * @en The number to display; shown as ${overflowCount}+ when greater than overflowCount, and hidden when it is 0
    */
   @property({
     type: Number,
@@ -64,6 +70,7 @@ class EoCounterBadge extends ReactNextElement {
 
   /**
    * 展示封顶的数字值
+   * @en The capped value of the displayed number
    * @default true
    */
   @property({
@@ -73,6 +80,7 @@ class EoCounterBadge extends ReactNextElement {
 
   /**
    * 不展示数字，只有一个小圆点.
+   * @en Do not display the number, only a small dot.
    */
   @property({
     type: Boolean,
@@ -81,6 +89,7 @@ class EoCounterBadge extends ReactNextElement {
 
   /**
    * 设置状态点的位置偏移，格式为 [x, y]
+   * @en Set the position offset of the status dot; the format is [x, y]
    */
   @property({
     attribute: false,
@@ -89,6 +98,7 @@ class EoCounterBadge extends ReactNextElement {
 
   /**
    * 当数值为 0 时，是否展示徽标
+   * @en Whether to display the badge when the value is 0
    */
   @property({
     type: Boolean,

@@ -75,10 +75,14 @@ const { defineElement, property, event, method } = createDecorators();
 
 /**
  * 模态框构件，以遮罩层弹窗形式展示内容，支持全屏、居中、自定义宽高、侧边栏、键盘 ESC 关闭及确认/取消按钮交互
+ * @en A modal brick that displays content as an overlay popup, supporting fullscreen, centering, custom width and height, a sidebar, closing with the keyboard ESC key, and confirm/cancel button interactions
  * @author sailor
  * @slot - 内容插槽
+ * @slotEn - The content slot
  * @slot footer - 底部左侧插槽
+ * @slotEn footer - The bottom-left slot
  * @slot sidebar - 弹窗左侧插槽
+ * @slotEn sidebar - The left-side slot of the modal
  * @category container-display
  */
 @defineElement("eo-modal", {
@@ -88,11 +92,13 @@ const { defineElement, property, event, method } = createDecorators();
 class Modal extends ReactNextElement implements ModalProps {
   /**
    * 标题
+   * @en Title
    */
   @property() accessor modalTitle: string | undefined;
 
   /**
    * 宽度
+   * @en Width
    *
    * @default "520px"
    */
@@ -100,11 +106,13 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 高度
+   * @en Height
    */
   @property({ attribute: false }) accessor height: string | number | undefined;
 
   /**
    * 最小宽度
+   * @en Minimum width
    *
    * @default "520px"
    */
@@ -115,6 +123,7 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 最小高度
+   * @en Minimum height
    */
   @property({ attribute: false }) accessor minHeight:
     | string
@@ -125,6 +134,9 @@ class Modal extends ReactNextElement implements ModalProps {
    * 是否垂直居中显示。
    *
    * 当设置 `themeVariant` 为 `elevo` 时，默认为 `true`。
+   * @en Whether to display vertically centered.
+   *
+   * When `themeVariant` is set to `elevo`, it defaults to `true`.
    */
   @property({
     type: Boolean,
@@ -133,6 +145,7 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 点击遮罩层是否关闭模态框
+   * @en Whether clicking the mask closes the modal
    */
   @property({
     type: Boolean,
@@ -141,6 +154,7 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 全屏模式
+   * @en Fullscreen mode
    */
   @property({
     type: Boolean,
@@ -149,30 +163,35 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 是否显示全屏按钮
+   * @en Whether to show the fullscreen button
    */
   @property({ type: Boolean })
   accessor fullscreenButton: boolean | undefined;
 
   /**
    * 是否隐藏底部
+   * @en Whether to hide the footer
    */
   @property({ type: Boolean })
   accessor noFooter: boolean | undefined;
 
   /**
    * 是否显示头部底边线（themeVariant: elevo 时默认不显示头部底边线）
+   * @en Whether to show the header bottom border (when `themeVariant` is `elevo`, the header bottom border is hidden by default)
    */
   @property({ type: Boolean, render: false })
   accessor headerBordered: boolean | undefined;
 
   /**
    * 背景
+   * @en Background
    */
   @property()
   accessor background: string | undefined;
 
   /**
    * 点击确定按钮时自动关闭弹窗
+   * @en Whether to close the modal automatically when the confirm button is clicked
    *
    * @default true
    */
@@ -183,6 +202,7 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 确认按钮是否禁用
+   * @en Whether the confirm button is disabled
    */
   @property({
     type: Boolean,
@@ -191,6 +211,7 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 是否显示模态框
+   * @en Whether to show the modal
    */
   @property({
     type: Boolean,
@@ -199,29 +220,39 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 确认按钮文本
+   * @en Confirm button text
    */
   @property() accessor confirmText: string | undefined;
 
   /**
    * 取消按钮文本
+   * @en Cancel button text
    */
   @property() accessor cancelText: string | undefined;
 
   /**
    * 确认按钮类型
+   * @en Confirm button type
    */
   @property({ type: Boolean }) accessor confirmDanger: boolean | undefined;
 
   /**
    * 是否隐藏取消按钮
+   * @en Whether to hide the cancel button
    */
   @property({ type: Boolean }) accessor hideCancelButton: boolean | undefined;
 
-  /** 是否支持键盘 esc 关闭 */
+  /**
+   * 是否支持键盘 esc 关闭
+   * @en Whether the modal can be closed with the keyboard ESC key
+   */
   @property({ type: Boolean })
   accessor keyboard: boolean | undefined;
 
-  /** 主题变体 */
+  /**
+   * 主题变体
+   * @en Theme variant
+   */
   @property()
   accessor themeVariant: "default" | "elevo" | undefined;
 
@@ -229,6 +260,9 @@ class Modal extends ReactNextElement implements ModalProps {
    * 是否可堆叠，开启后每次打开抽屉会将新的抽屉置于上层（zIndex ++）
    *
    * 注意：仅初始设置有效。
+   * @en Whether it can be stacked; when enabled, each time a drawer is opened, the new drawer is placed on top (zIndex ++)
+   *
+   * Note: only the initial setting takes effect.
    *
    * @deprecated
    */
@@ -237,6 +271,7 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 打开弹窗事件
+   * @en Modal open event
    */
   @event({ type: "open" }) accessor #modalOpen!: EventEmitter<void>;
   #handleModelOpen() {
@@ -245,6 +280,7 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 关闭弹窗事件
+   * @en Modal close event
    */
   @event({ type: "close" })
   accessor #modalClose!: EventEmitter<void>;
@@ -254,6 +290,7 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 确认按钮事件
+   * @en Confirm button event
    */
   @event({ type: "confirm" })
   accessor #modalConfirm!: EventEmitter<void>;
@@ -267,6 +304,7 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 取消按钮事件
+   * @en Cancel button event
    */
   @event({ type: "cancel" })
   accessor #modalCancel!: EventEmitter<void>;
@@ -277,6 +315,7 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 打开模态框方法
+   * @en Open the modal
    */
   @method()
   open(): void {
@@ -288,6 +327,7 @@ class Modal extends ReactNextElement implements ModalProps {
 
   /**
    * 关闭模态框方法
+   * @en Close the modal
    */
   @method({ bound: true })
   close(): void {

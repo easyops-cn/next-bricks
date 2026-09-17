@@ -21,11 +21,15 @@ export interface BreadcrumbItemProps {
 
 /**
  * 面包屑单项
+ * @en A breadcrumb item
  *
  * @category navigation
  * @slot prefix - 前缀
+ * @slotEn prefix - Prefix
  * @slot suffix - 后缀
+ * @slotEn suffix - Suffix
  * @slot separator - 分隔符
+ * @slotEn separator - Separator
  */
 export
 @defineElement("eo-breadcrumb-item", {
@@ -44,11 +48,13 @@ class EoBreadcrumbItem extends ReactNextElement implements BreadcrumbItemProps {
 
   /**
    * 外链的链接地址
+   * @en External link address
    */
   @property() accessor href: string | undefined;
 
   /**
    * 链接地址
+   * @en Link address
    */
   @property({
     attribute: false,
@@ -57,6 +63,7 @@ class EoBreadcrumbItem extends ReactNextElement implements BreadcrumbItemProps {
 
   /**
    * 链接跳转目标
+   * @en Link target
    */
   @property() accessor target: Target | undefined;
 

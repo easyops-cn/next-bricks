@@ -20,6 +20,18 @@ const { defineElement, event, method } = createDecorators();
  * - eo-event-agent trigger() 方法的参数会作为 EVENT.detail 传递给 trigger 事件。
  * - eo-batch-agent trigger() 方法的参数必须是字符串，表示事件类型，trigger 事件详情 为 `{ type: string }` 形式。
  *   因此，如果希望在事件回调时消费其他信息，需通过 context/state 进行传递。
+ * @en Batch event agent.
+ *
+ * Differences from eo-event-agent:
+ *
+ * Trigger conditions:
+ * - eo-event-agent dispatches the event immediately every time it is triggered.
+ * - eo-batch-agent triggers an event of the same type only once after the current macro task ends, no matter how many times it is triggered.
+ *
+ * Method parameters
+ * - The parameters of eo-event-agent's trigger() method are passed to the trigger event as EVENT.detail.
+ * - The parameters of eo-batch-agent's trigger() method must be a string, indicating the event type; the trigger event detail is in the form of `{ type: string }`.
+ *   Therefore, if you want to consume other information in the event callback, you need to pass it through context/state.
  */
 export
 @defineElement("eo-batch-agent", {
@@ -30,12 +42,14 @@ class EoBatchAgent extends NextElement {
 
   /**
    * 事件被触发。
+   * @en The event is triggered.
    */
   @event({ type: "trigger" })
   accessor #triggerEvent!: EventEmitter<{ type: string }>;
 
   /**
    * 触发事件。
+   * @en Trigger an event.
    */
   @method()
   trigger(type: string): void {

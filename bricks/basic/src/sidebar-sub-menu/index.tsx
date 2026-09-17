@@ -53,6 +53,7 @@ const { defineElement, property } = createDecorators();
 
 /**
  * 构件 `eo-sidebar-sub-menu` 已迁移至 `nav` 构件包，后续在在 `basic` 构件包中将不再更新。
+ * @en The `eo-sidebar-sub-menu` brick. It has been migrated to the `nav` brick package and will no longer be updated in the `basic` brick package.
  * @deprecated
  * @category navigation
  */
@@ -63,6 +64,7 @@ export
 class EoSidebarSubMenu extends ReactNextElement {
   /**
    * 菜单项
+   * @en Menu item
    */
   @property({
     attribute: false,

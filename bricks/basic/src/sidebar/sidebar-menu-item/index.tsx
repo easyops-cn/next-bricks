@@ -25,6 +25,7 @@ export interface EoSidebarMenuItemProps {
 
 /**
  * 侧栏菜单项 已迁移至 `nav` 构件包，后续在在 `basic` 构件包中将不再更新。
+ * @en Sidebar menu item. It has been migrated to the `nav` bricks package and will no longer be updated in the `basic` bricks package.
  * @deprecated
  * @category navigation
  */
@@ -38,36 +39,42 @@ class EoSidebarMenuItem
 {
   /**
    * 菜单项对应的系统内地址
+   * @en Internal address of the system corresponding to the menu item
    */
   @property({ attribute: false })
   accessor url: LinkProps["url"] | undefined;
 
   /**
    * 菜单项对应的外部链接地址
+   * @en External link address corresponding to the menu item
    */
   @property()
   accessor href: LinkProps["href"] | undefined;
 
   /**
    * 菜单项链接打开的目标
+   * @en Target for opening the menu item link
    */
   @property()
   accessor target: LinkProps["target"] | undefined;
 
   /**
    * 菜单项的图标
+   * @en Icon of the menu item
    */
   @property({ attribute: false })
   accessor icon: GeneralIconProps | undefined;
 
   /**
    * 是否选中
+   * @en Whether it is selected
    */
   @property({ type: Boolean })
   accessor selected: boolean | undefined;
 
   /**
    * 菜单整体是否收起状态
+   * @en Whether the whole menu is collapsed
    */
   @property({ type: Boolean })
   accessor menuCollapsed: boolean | undefined;

@@ -7,6 +7,7 @@ const { defineElement, property } = createDecorators();
 
 /**
  * 基于网格的简易布局容器
+ * @en A simple grid-based layout container
  * @author steve
  * @category container-layout
  */
@@ -17,36 +18,42 @@ const { defineElement, property } = createDecorators();
 class EasyViewElement extends ReactNextElement {
   /**
    * 以键值对形式定义多个 [grid-area](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-area)
+   * @en Define multiple [grid-area](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-area) in key-value pairs
    */
   @property({ attribute: false })
   accessor gridAreas: Record<string, (string | number)[]>;
 
   /**
    * 定义 [grid-template-areas](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas)
+   * @en Define [grid-template-areas](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-areas)
    */
   @property({ attribute: false })
   accessor gridTemplateAreas: string[][];
 
   /**
    * 定义 [grid-template-columns](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-columns)
+   * @en Define [grid-template-columns](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-columns)
    */
   @property({ attribute: false })
   accessor gridTemplateColumns: string | string[];
 
   /**
    * 定义 [grid-template-rows](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-rows)
+   * @en Define [grid-template-rows](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-rows)
    */
   @property({ attribute: false })
   accessor gridTemplateRows: string | string[];
 
   /**
    * 定义网格容器的样式
+   * @en Define the style of the grid container
    */
   @property({ attribute: false })
   accessor containerStyle: React.CSSProperties;
 
   /**
    * 定义网格内各区域的样式
+   * @en Define the style of each area in the grid
    */
   @property({ attribute: false })
   accessor styleByAreas: Record<string, React.CSSProperties>;

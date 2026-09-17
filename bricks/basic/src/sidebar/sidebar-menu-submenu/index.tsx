@@ -23,8 +23,10 @@ export interface EoSidebarMenuSubmenuProps {
 
 /**
  * 侧栏菜单子菜单 已迁移至 `nav` 构件包，后续在在 `basic` 构件包中将不再更新。
+ * @en The sidebar menu submenu. It has been migrated to the `nav` brick package and will no longer be updated in the `basic` brick package.
  * @deprecated
  * @slot title - 子菜单标题
+ * @slotEn title - The submenu title
  * @category navigation
  */
 export
@@ -37,24 +39,28 @@ class EoSidebarMenuSubmenu
 {
   /**
    * 菜单的图标
+   * @en The menu icon
    */
   @property({ attribute: false })
   accessor icon: GeneralIconProps | undefined;
 
   /**
    * 是否选中
+   * @en Whether it is selected
    * */
   @property({ type: Boolean })
   accessor selected: boolean | undefined;
 
   /**
    * 是否折叠
+   * @en Whether it is collapsed
    */
   @property({ type: Boolean })
   accessor collapsed: boolean | undefined;
 
   /**
    * 菜单整体是否收起状态
+   * @en Whether the whole menu is collapsed
    */
   @property({ type: Boolean })
   accessor menuCollapsed: boolean | undefined;

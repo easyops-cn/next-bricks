@@ -27,6 +27,7 @@ export type { ImageConfig };
 
 /**
  * 通用图片构件
+ * @en A general-purpose image brick
  * @author nlicro
  * @category display-component
  */
@@ -40,21 +41,25 @@ class EoImage extends ReactNextElement implements ImageProps {
 
   /**
    * 图片列表
+   * @en Image list
    */
   @property({ attribute: false }) accessor imgList: ImageConfig[] | undefined;
 
   /**
    * 图片宽度
+   * @en Image width
    */
   @property() accessor width: string | undefined;
 
   /**
    * 图片高度
+   * @en Image height
    */
   @property() accessor height: string | undefined;
 
   /**
    * 纯预览模式
+   * @en Preview-only mode
    */
   @property({
     type: Boolean,
@@ -63,7 +68,9 @@ class EoImage extends ReactNextElement implements ImageProps {
 
   /**
    * 打开预览框
+   * @en Open the preview modal
    * @param index 要预览的图片索引，不传则预览第一张
+   * @paramEn index Index of the image to preview; the first image is previewed when omitted
    */
   @method()
   open(index?: number): void {
@@ -72,6 +79,7 @@ class EoImage extends ReactNextElement implements ImageProps {
 
   /**
    * 关闭预览框
+   * @en Close the preview modal
    */
   @method()
   close(): void {
@@ -80,7 +88,9 @@ class EoImage extends ReactNextElement implements ImageProps {
 
   /**
    * 预览框显示或隐藏时触发
+   * @en Triggered when the preview modal is shown or hidden
    * @detail 预览框是否可见
+   * @detailEn Whether the preview modal is visible
    */
   @event({ type: "visibleChange" })
   accessor #visibleChange!: EventEmitter<boolean>;

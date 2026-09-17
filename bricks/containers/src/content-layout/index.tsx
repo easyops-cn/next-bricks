@@ -8,10 +8,12 @@ const { defineElement } = createDecorators();
 
 /**
  * 内容区流式布局（上下），为子元素之间提供默认的间距。
+ * @en A flow layout for the content area (vertical), providing default spacing between child elements.
  *
  * @author steve
  *
  * @slot - 内容区
+ * @slotEn - The content area
  *
  * @category container-layout
  *

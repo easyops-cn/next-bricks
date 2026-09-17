@@ -9,10 +9,13 @@ const { defineElement } = createDecorators();
 
 /**
  * 面包屑容器
+ * @en Breadcrumb container
  *
  * @category navigation
  * @slot - 面包屑项，可使用 eo-breadcrumb-item 构件
+ * @slotEn - The breadcrumb items; eo-breadcrumb-item bricks can be used
  * @slot separator - 分隔符，默认为 /
+ * @slotEn separator - The separator, defaulting to /
  */
 export
 @defineElement("eo-breadcrumb", {

@@ -56,12 +56,14 @@ export type Position = [x: number, y: number];
 export interface OpenInfo {
   /**
    * 通常设为 `[EVENT.clientX, EVENT.clientY]`
+   * @en Usually set to `[EVENT.clientX, EVENT.clientY]`
    */
   position: Position;
 }
 
 /**
  * 右键菜单构件，在指定坐标位置展示操作菜单
+ * @en A context menu brick that displays an action menu at the specified coordinates
  * @category interact-basic
  */
 export
@@ -71,6 +73,7 @@ export
 class EoContextMenu extends ReactNextElement {
   /**
    * 动作列表
+   * @en Action list
    */
   @property({
     attribute: false,
@@ -79,6 +82,7 @@ class EoContextMenu extends ReactNextElement {
 
   /**
    * 是否激活
+   * @en Whether it is active
    */
   @property({
     type: Boolean,
@@ -87,43 +91,53 @@ class EoContextMenu extends ReactNextElement {
 
   /**
    * 菜单显示的位置坐标 [x, y]，通常由 open 方法设置
+   * @en Position coordinates [x, y] where the menu is displayed, usually set by the open method
    */
   @property({ attribute: false })
   accessor position: Position | undefined;
 
   /**
    * action中的菜单项是否可拖拽
+   * @en Whether the menu items in actions are draggable
    */
   @property({ type: Boolean })
   accessor itemDraggable: boolean | undefined;
 
   /**
    * 点击菜单项动作时触发
+   * @en Triggered when a menu item action is clicked
    *
    * @detail 该菜单项动作配置
+   * @detailEn The menu item action configuration
    */
   @event({ type: "action.click" })
   accessor #actionClickEvent!: EventEmitter<SimpleAction>;
 
   /**
    * 开始拖拽菜单项时触发
+   * @en Triggered when dragging a menu item starts
    *
    * @detail 该菜单项动作配置
+   * @detailEn The menu item action configuration
    */
   @event({ type: "item.drag.start" })
   accessor #itemDragStartEvent!: EventEmitter<SimpleAction>;
 
   /**
    * 完成拖拽菜单项时触发
+   * @en Triggered when dragging a menu item ends
    *
    * @detail 该菜单项动作配置
+   * @detailEn The menu item action configuration
    */
   @event({ type: "item.drag.end" })
   accessor #itemDragEndEvent!: EventEmitter<SimpleAction>;
 
   /**
    * 在指定位置打开右键菜单
+   * @en Open the context menu at the specified position
    * @param info 打开信息，包含菜单显示的坐标位置
+   * @paramEn info The open info, including the coordinates where the menu is displayed
    */
   @method()
   open({ position }: OpenInfo): void {
@@ -133,6 +147,7 @@ class EoContextMenu extends ReactNextElement {
 
   /**
    * 关闭右键菜单
+   * @en Close the context menu
    */
   @method()
   close(): void {

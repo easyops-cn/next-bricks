@@ -41,11 +41,17 @@ export interface AvatarProps {
 
 /**
  * 头像构件，支持图片、图标、文本三种展示模式，图片加载失败时自动降级为图标或文本；文本模式会根据容器宽度自动缩放字号
+ * @en An avatar brick that supports three display modes: image, icon, and text; when the image fails to load it automatically falls back to an icon or text, and in text mode the font size is automatically scaled according to the container width
  * @part avatar - 头像容器
+ * @partEn avatar - The avatar container
  * @part avatar-img - 显示为图片时的头像容器
+ * @partEn avatar-img - The avatar container when displayed as an image
  * @part avatar-icon - 显示为图标时的头像容器
+ * @partEn avatar-icon - The avatar container when displayed as an icon
  * @part avatar-text - 显示为文本时的头像容器
+ * @partEn avatar-text - The avatar container when displayed as text
  * @part name - 用户名
+ * @partEn name - The user name
  * @category display-component
  */
 export
@@ -55,11 +61,13 @@ export
 class EoAvatar extends ReactNextElement implements AvatarProps {
   /**
    * 尺寸
+   * @en Size
    */
   @property() accessor size: AvatarSize = "medium";
 
   /**
    * 头像和名称间距大小
+   * @en Spacing between the avatar and the name
    *
    * @default "medium"
    */
@@ -67,21 +75,25 @@ class EoAvatar extends ReactNextElement implements AvatarProps {
 
   /**
    * 形状
+   * @en Shape
    */
   @property() accessor shape: "circle" | "round-square" = "circle";
 
   /**
    * 图片地址
+   * @en Image address
    */
   @property() accessor src: string | undefined;
 
   /**
    * 图像无法显示时的替代文本
+   * @en Alternative text when the image cannot be displayed
    */
   @property() accessor alt: string | undefined;
 
   /**
    * 图标
+   * @en Icon
    */
   @property({
     attribute: false,
@@ -90,11 +102,13 @@ class EoAvatar extends ReactNextElement implements AvatarProps {
 
   /**
    * 用户名
+   * @en User name
    */
   @property() accessor name: string | undefined;
 
   /**
    * 是否有边框
+   * @en Whether there is a border
    */
   @property({
     type: Boolean,
@@ -103,6 +117,7 @@ class EoAvatar extends ReactNextElement implements AvatarProps {
 
   /**
    * 是否展示名称
+   * @en Whether to show the name
    */
   @property({
     type: Boolean,

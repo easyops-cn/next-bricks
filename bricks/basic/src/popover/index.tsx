@@ -46,10 +46,13 @@ export interface PopoverEventsMapping {
 
 /**
  * 通用弹出层构件
+ * @en A general-purpose popover brick
  * @author sailor
  *
  * @slot - 弹出层内容
+ * @slotEn - The popover content
  * @slot anchor - 触发弹出层的元素
+ * @slotEn anchor - The element that triggers the popover
  *
  * @part popup - The popup’s container. Useful for setting a background color, box shadow, etc.
  *
@@ -62,12 +65,14 @@ export interface PopoverEventsMapping {
 class Popover extends ReactNextElement implements PopoverProps {
   /**
    * 弹出层放置位置
+   * @en Placement of the popover
    */
   @property()
   accessor placement: Placement | undefined;
 
   /**
    * 弹出触发方式
+   * @en Trigger mode of the popup
    * @default "click"
    */
   @property()
@@ -75,6 +80,7 @@ class Popover extends ReactNextElement implements PopoverProps {
 
   /**
    * 弹出层是否已激活
+   * @en Whether the popover is active
    * @default false
    */
   @property({
@@ -84,6 +90,7 @@ class Popover extends ReactNextElement implements PopoverProps {
 
   /**
    * 弹出层是否显示箭头
+   * @en Whether to show the arrow on the popover
    * @default true
    */
   @property({
@@ -93,6 +100,7 @@ class Popover extends ReactNextElement implements PopoverProps {
 
   /**
    * 发生移位行为之前超出的填充量
+   * @en The amount of overflowing padding before the shift behavior occurs
    */
   @property({
     type: Number,
@@ -101,12 +109,14 @@ class Popover extends ReactNextElement implements PopoverProps {
 
   /**
    * 箭头颜色
+   * @en Arrow color
    */
   @property()
   accessor arrowColor: string | undefined;
 
   /**
    * 弹出层如何定位
+   * @en How the popover is positioned
    * @default "absolute"
    */
   @property()
@@ -114,12 +124,14 @@ class Popover extends ReactNextElement implements PopoverProps {
 
   /**
    * 将弹出层的宽高与 anchor 元素同步
+   * @en Synchronize the width and height of the popover with the anchor element
    */
   @property()
   accessor sync: Sync | undefined;
 
   /**
    * 是否禁用
+   * @en Whether it is disabled
    */
   @property({
     type: Boolean,
@@ -128,29 +140,37 @@ class Popover extends ReactNextElement implements PopoverProps {
 
   /**
    * 弹出窗口与其锚点之间的距离
+   * @en The distance between the popup and its anchor
    */
   @property()
   accessor distance: number | undefined;
 
   /**
    * 触发器的显示类型
+   * @en The display type of the trigger
    */
   @property()
   accessor anchorDisplay: CSSProperties["display"];
 
   /**
    * 弹出层的 Z 轴顺序
+   * @en The Z-axis order of the popover
    */
   @property({ type: Number })
   accessor zIndex: number | undefined;
 
-  /** 主题变体 */
+  /**
+   * 主题变体
+   * @en Theme variant
+   */
   @property({ render: false })
   accessor themeVariant: "default" | "elevo" | undefined;
 
   /**
    * 当弹出层可见性变化之后触发
+   * @en Triggered after the visibility of the popover changes
    * @detail 当前是否可见
+   * @detailEn Whether it is currently visible
    */
   @event({ type: "visible.change" })
   accessor #visibleChangeEvent!: EventEmitter<boolean>;
@@ -161,7 +181,9 @@ class Popover extends ReactNextElement implements PopoverProps {
 
   /**
    * 当弹出层可见性变化时触发
+   * @en Triggered when the visibility of the popover changes
    * @detail 当前是否可见
+   * @detailEn Whether it is currently visible
    */
   @event({ type: "before.visible.change" })
   accessor #beforeVisibleChangeEvent!: EventEmitter<boolean>;

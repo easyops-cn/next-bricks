@@ -24,13 +24,20 @@ export interface EoMenuSubMenuProps {
 
 /**
  * 菜单子菜单构件，点击标题可折叠或展开子菜单内容
+ * @en Menu sub-menu brick; clicking the title collapses or expands the sub-menu content
  *
  * @part sub-menu-item - 外层容器
+ * @partEn sub-menu-item - The outer container
  * @part sub-menu-item-title - 子菜单标题容器
+ * @partEn sub-menu-item-title - The sub-menu title container
  * @part menu-item-icon - 标题图标
+ * @partEn menu-item-icon - The title icon
  * @part sub-menu-item-arrow - 折叠箭头指示器
+ * @partEn sub-menu-item-arrow - The collapse arrow indicator
  * @slot title - 子菜单标题内容
+ * @slotEn title - The sub-menu title content
  * @slot - 子菜单内容，通常为菜单项
+ * @slotEn - The sub-menu content, usually menu items
  * @insider
  */
 export
@@ -40,6 +47,7 @@ export
 class EoMenuItemSubMenu extends ReactNextElement {
   /**
    * 标题区域的图标
+   * @en Icon of the title area
    */
   @property({
     attribute: false,
@@ -48,6 +56,7 @@ class EoMenuItemSubMenu extends ReactNextElement {
 
   /**
    * 标题区域的自定义样式
+   * @en Custom style of the title area
    */
   @property({
     attribute: false,
@@ -56,6 +65,7 @@ class EoMenuItemSubMenu extends ReactNextElement {
 
   /**
    * 内容区域的自定义样式
+   * @en Custom style of the content area
    */
   @property({
     attribute: false,
@@ -64,6 +74,7 @@ class EoMenuItemSubMenu extends ReactNextElement {
 
   /**
    * 是否为折叠状态，折叠时隐藏子菜单内容，默认为折叠状态
+   * @en Whether it is collapsed; the sub-menu content is hidden when collapsed, and it is collapsed by default
    */
   @property({
     type: Boolean,

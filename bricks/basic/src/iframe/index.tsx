@@ -40,6 +40,7 @@ const IframeComponent = forwardRef<IframeRef, IframeComponentProps>(
 
 /**
  * 内嵌网页构件，通过 iframe 将外部页面嵌入当前页面
+ * @en A brick that embeds an external page into the current page via an iframe
  * @category display-component
  */
 export
@@ -49,6 +50,7 @@ export
 class Iframe extends ReactNextElement implements IframeProps {
   /**
    * iframe 的源地址
+   * @en The source address of the iframe
    * @required
    */
   @property() accessor src: string | undefined;
@@ -68,6 +70,7 @@ class Iframe extends ReactNextElement implements IframeProps {
    *   vertical-align: top;
    * }
    * ```
+   * @en Custom style of the iframe; the default style is 100% width and height with no margin
    */
   @property({ attribute: false })
   accessor iframeStyle: CSSProperties | undefined;
@@ -75,6 +78,7 @@ class Iframe extends ReactNextElement implements IframeProps {
   /**
    * @detail -
    * @description iframe 加载完成时触发
+   * @en Triggered when the iframe has finished loading
    */
   @event({ type: "load" })
   accessor #loadEvent!: EventEmitter<void>;
@@ -87,7 +91,9 @@ class Iframe extends ReactNextElement implements IframeProps {
 
   /**
    * 向 iframe 发送 postMessage
+   * @en Send a postMessage to the iframe
    * @param args 传递给 iframe contentWindow.postMessage 的参数，支持 (message, targetOrigin, transfer?) 和 (message, options?) 两种签名
+   * @paramEn args Arguments passed to iframe contentWindow.postMessage; both the (message, targetOrigin, transfer?) and (message, options?) signatures are supported
    */
   @method()
   postMessage(...args: PostMessageParameters): void {

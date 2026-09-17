@@ -11,16 +11,23 @@ export interface HomeRedirectProps {
 
 /**
  * 构件 `basic.home-redirect`
+ * @en The `basic.home-redirect` brick
  */
 export
 @defineElement("basic.home-redirect", {
   styleTexts: [styleText],
 })
 class HomeRedirect extends NextElement implements HomeRedirectProps {
-  /** 指定的应用 Id */
+  /**
+   * 指定的应用 Id
+   * @en The specified app ID
+   */
   @property() accessor appId: string | undefined;
 
-  /**  指定的跳转 url */
+  /**
+   * 指定的跳转 url
+   * @en The specified redirect URL
+   */
   @property() accessor redirectUrl: string | undefined;
 
   protected async _render() {

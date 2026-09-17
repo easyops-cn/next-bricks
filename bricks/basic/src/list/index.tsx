@@ -54,6 +54,7 @@ export interface ListItem {
 
 /**
  * 通用列表构件，支持默认、导航和排名三种展示变体
+ * @en A general-purpose list brick that supports three display variants: default, navigation and ranking
  * @author developer
  * @category display-component
  */
@@ -64,18 +65,21 @@ export
 class List extends ReactNextElement implements ListProps {
   /**
    * 列表变体，支持 "default"、"navigation"、"ranking" 三种样式
+   * @en List variant; the "default", "navigation" and "ranking" styles are supported
    */
   @property()
   accessor variant: ListVariant | undefined;
 
   /**
    * 列表数据源
+   * @en List data source
    */
   @property({ attribute: false })
   accessor dataSource: Record<string, unknown>[] | undefined;
 
   /**
    * 字段映射，用于将数据源中的字段映射到列表项的对应属性
+   * @en Field mapping, used to map fields in the data source to the corresponding properties of list items
    */
   @property({ attribute: false })
   accessor fields: ListFields | undefined;

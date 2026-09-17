@@ -31,6 +31,7 @@ export interface BroadcastChannelEventsMapping {
 
 /**
  * 广播频道构件，基于 BroadcastChannel API 实现跨标签页通信
+ * @en A broadcast channel brick that uses the BroadcastChannel API for cross-tab communication
  * @category other
  */
 export
@@ -43,6 +44,7 @@ class EoBroadcastChannel
 {
   /**
    * 广播频道名称，详见 [BroadcastChannel](https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API)。
+   * @en Broadcast channel name, see [BroadcastChannel](https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API).
    *
    * @required
    */
@@ -51,7 +53,9 @@ class EoBroadcastChannel
 
   /**
    * 收到广播频道消息时触发
+   * @en Triggered when a broadcast channel message is received
    * @detail 接收到的消息内容
+   * @detailEn The received message content
    */
   @event({ type: "message" })
   accessor #messageEvent!: EventEmitter<unknown>;
@@ -62,7 +66,9 @@ class EoBroadcastChannel
 
   /**
    * 向广播频道发送一条消息
+   * @en Send a message to the broadcast channel
    * @param data 要发送的消息内容
+   * @paramEn data The message content to send
    */
   @method()
   postMessage(data: unknown): void {

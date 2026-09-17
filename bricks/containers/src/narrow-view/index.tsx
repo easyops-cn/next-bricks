@@ -14,10 +14,12 @@ export type NarrowViewSize = "small" | "medium" | "large" | "full";
 
 /**
  * 窄布局视图（居中）
+ * @en Narrow layout view (centered)
  *
  * @author steve
  *
  * @slot - 内容区
+ * @slotEn - The content area
  *
  * @category container-layout
  */

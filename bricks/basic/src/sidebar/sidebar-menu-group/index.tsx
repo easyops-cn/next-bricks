@@ -17,7 +17,9 @@ export interface EoSidebarMenuGroupProps {
 
 /**
  * 侧栏菜单分组 已迁移至 `nav` 构件包，后续在在 `basic` 构件包中将不再更新。
+ * @en The sidebar menu group. It has been migrated to the `nav` brick package and will no longer be updated in the `basic` brick package.
  * @slot title - 分组标题
+ * @slotEn title - The group title
  * @category navigation
  * @deprecated
  */
@@ -31,24 +33,28 @@ class EoSidebarMenuGroup
 {
   /**
    * 是否允许折叠
+   * @en Whether collapsing is allowed
    */
   @property({ type: Boolean })
   accessor collapsable: boolean = true;
 
   /**
    * 是否折叠
+   * @en Whether it is collapsed
    */
   @property({ type: Boolean })
   accessor collapsed: boolean | undefined;
 
   /**
    * 是否选中
+   * @en Whether it is selected
    * */
   @property({ type: Boolean })
   accessor selected: boolean | undefined;
 
   /**
    * 菜单整体是否收起状态
+   * @en Whether the whole menu is collapsed
    */
   @property({ type: Boolean })
   accessor menuCollapsed: boolean | undefined;

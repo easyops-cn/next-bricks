@@ -20,11 +20,15 @@ export interface MenuComponentProps {
 
 /**
  * 菜单项构件，支持图标、选中和禁用状态
+ * @en A menu item brick that supports icon, active and disabled states
  * @author sailor
  *
  * @part menu-item - 外层容器
+ * @partEn menu-item - The outer container
  * @part menu-item-icon - 菜单项图标
+ * @partEn menu-item-icon - The menu item icon
  * @slot - 菜单项内容
+ * @slotEn - The menu item content
  *
  * @insider
  */
@@ -35,6 +39,7 @@ export interface MenuComponentProps {
 class MenuItem extends ReactNextElement {
   /**
    * 图标
+   * @en Icon
    */
   @property({
     attribute: false,
@@ -43,6 +48,7 @@ class MenuItem extends ReactNextElement {
 
   /**
    * 是否选中
+   * @en Whether it is selected
    */
   @property({
     type: Boolean,
@@ -51,6 +57,7 @@ class MenuItem extends ReactNextElement {
 
   /**
    * 是否禁用
+   * @en Whether it is disabled
    */
   @property({
     type: Boolean,

@@ -51,11 +51,16 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 /**
  * 通用抽屉构件
+ * @en A general-purpose drawer brick
  * @author sailor
  * @slot - 抽屉内容插槽
+ * @slotEn - The drawer content slot
  * @slot headerLeft - 头部左上角（标题右侧）
+ * @slotEn headerLeft - The top-left of the header (to the right of the title)
  * @slot extra - 头部右上角（关闭按钮左侧）
+ * @slotEn extra - The top-right of the header (to the left of the close button)
  * @slot footer - 抽屉底部插槽
+ * @slotEn footer - The drawer footer slot
  * @category container-display
  */
 @defineElement("eo-drawer", {
@@ -65,28 +70,33 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 class Drawer extends ReactNextElement implements DrawerProps {
   /**
    * 标题
+   * @en Title
    */
   @property() accessor customTitle: string | undefined;
 
   /**
    * 副标题
+   * @en Subtitle
    */
   @property() accessor subTitle: string | undefined;
 
   /**
    * 宽度(placement为left，right时生效)
+   * @en Width (takes effect when `placement` is left or right)
    */
   @property({ attribute: false })
   accessor width: number | string | undefined;
 
   /**
    * 高度(placement为top，bottom时生效)
+   * @en Height (takes effect when `placement` is top or bottom)
    */
   @property({ attribute: false })
   accessor height: number | string | undefined;
 
   /**
    * 是否显示右上角的关闭按钮
+   * @en Whether to show the close button in the top-right corner
    */
   @property({
     type: Boolean,
@@ -95,6 +105,7 @@ class Drawer extends ReactNextElement implements DrawerProps {
 
   /**
    * 是否展示遮罩层
+   * @en Whether to show the mask
    * @default true
    */
   @property({
@@ -104,6 +115,7 @@ class Drawer extends ReactNextElement implements DrawerProps {
 
   /**
    * 点击遮罩层是否关闭抽屉
+   * @en Whether clicking the mask closes the drawer
    */
   @property({
     type: Boolean,
@@ -112,6 +124,7 @@ class Drawer extends ReactNextElement implements DrawerProps {
 
   /**
    * 抽屉是否显示
+   * @en Whether the drawer is displayed
    */
   @property({
     type: Boolean,
@@ -120,6 +133,7 @@ class Drawer extends ReactNextElement implements DrawerProps {
 
   /**
    * 是否存在底部插槽，启用后显示 footer 插槽区域
+   * @en Whether a footer slot exists; when enabled, the footer slot area is displayed
    */
   @property({
     type: Boolean,
@@ -128,6 +142,7 @@ class Drawer extends ReactNextElement implements DrawerProps {
 
   /**
    * 抽屉弹出方向，可选 "left" | "right" | "top" | "bottom"
+   * @en Direction from which the drawer pops up; can be "left" | "right" | "top" | "bottom"
    */
   @property() accessor placement: Placement | undefined;
 
@@ -135,21 +150,31 @@ class Drawer extends ReactNextElement implements DrawerProps {
    * 打开抽屉时内容区是否自动滚动到顶部
    *
    * 注意：仅初始设置有效。
+   * @en Whether the content area automatically scrolls to the top when the drawer is opened
+   *
+   * Note: only the initial setting takes effect.
    */
   @property({ attribute: false })
   accessor scrollToTopWhenOpen = true;
 
   /**
    * 自定义遮罩层的样式
+   * @en Custom mask style
    */
   @property({ attribute: false })
   accessor maskStyle = {};
 
-  /** 是否支持键盘 esc 关闭 */
+  /**
+   * 是否支持键盘 esc 关闭
+   * @en Whether the drawer can be closed with the keyboard ESC key
+   */
   @property({ type: Boolean })
   accessor keyboard: boolean | undefined;
 
-  /** 主题变体，可选 "default" | "elevo"，通过 CSS 属性选择器控制样式 */
+  /**
+   * 主题变体，可选 "default" | "elevo"，通过 CSS 属性选择器控制样式
+   * @en Theme variant; can be "default" | "elevo". The style is controlled via CSS attribute selectors.
+   */
   @property({ render: false })
   accessor themeVariant: "default" | "elevo" | undefined;
 
@@ -157,6 +182,9 @@ class Drawer extends ReactNextElement implements DrawerProps {
    * 是否可堆叠，开启后每次打开抽屉会将新的抽屉置于上层（zIndex ++）
    *
    * 注意：仅初始设置有效。
+   * @en Whether it can be stacked; when enabled, each time a drawer is opened, the new drawer is placed on top (zIndex ++)
+   *
+   * Note: only the initial setting takes effect.
    *
    * @deprecated
    */
@@ -165,7 +193,9 @@ class Drawer extends ReactNextElement implements DrawerProps {
 
   /**
    * @detail 无
+   * @detailEn None
    * @description 抽屉开启事件
+   * @en The drawer is opened
    */
   @event({ type: "open" })
   accessor #drawerOpenEvent!: EventEmitter<void>;
@@ -179,7 +209,9 @@ class Drawer extends ReactNextElement implements DrawerProps {
 
   /**
    * @detail 无
+   * @detailEn None
    * @description 抽屉关闭事件
+   * @en The drawer is closed
    */
   @event({ type: "close" })
   accessor #drawerCloseEvent!: EventEmitter<void>;
@@ -193,6 +225,7 @@ class Drawer extends ReactNextElement implements DrawerProps {
 
   /**
    * 抽屉开启方法
+   * @en Open the drawer
    */
   @method()
   open(): void {
@@ -201,6 +234,7 @@ class Drawer extends ReactNextElement implements DrawerProps {
 
   /**
    * 抽屉关闭方法
+   * @en Close the drawer
    */
   @method()
   close(): void {

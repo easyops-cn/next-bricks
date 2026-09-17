@@ -62,6 +62,7 @@ export interface EoSidebarEventsMapping {
 
 /**
  * 侧边栏 已迁移至 `nav` 构件包，后续在在 `basic` 构件包中将不再更新。
+ * @en Sidebar. It has been migrated to the `nav` bricks package and will no longer be updated in the `basic` bricks package.
  * @deprecated
  *
  * @category navigation
@@ -73,24 +74,28 @@ export
 class EoSidebar extends ReactNextElement implements EoSidebarProps {
   /**
    * 菜单数据
+   * @en Menu data
    */
   @property({ attribute: false })
   accessor menu!: SidebarMenuType;
 
   /**
    * 是否隐藏固定按钮
+   * @en Whether to hide the pin button
    */
   @property({ type: Boolean })
   accessor hiddenFixedIcon: boolean | undefined;
 
   /**
    * 侧栏状态
+   * @en Sidebar state
    */
   @property()
   accessor expandedState: ExpandedState | undefined;
 
   /**
    * 设置定位方式：静态定位或固定定位。
+   * @en Set the positioning mode: static or fixed.
    *
    * @default "fixed"
    */
@@ -99,7 +104,9 @@ class EoSidebar extends ReactNextElement implements EoSidebarProps {
 
   /**
    * 宽度变化时触发
+   * @en Triggered when the width changes
    * @detail 当前宽度
+   * @detailEn The current width
    */
   @event({ type: "actual.width.change" })
   accessor #actualWidthChangeEvent!: EventEmitter<number>;
@@ -109,7 +116,9 @@ class EoSidebar extends ReactNextElement implements EoSidebarProps {
 
   /**
    * 侧栏状态变化时触发
+   * @en Triggered when the sidebar state changes
    * @detail 侧栏状态
+   * @detailEn The sidebar state
    */
   @event({ type: "expanded.state.change" })
   accessor #expandedStateChangeEvent!: EventEmitter<ExpandedState>;

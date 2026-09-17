@@ -29,11 +29,15 @@ export interface ToggleLinkEventsMapping {
 
 /**
  * 展开/折叠链接。
+ * @en A link to expand/collapse.
  *
  * @author -
  * @slot - 内容
+ * @slotEn - The content
  * @part link - 链接
+ * @partEn link - Link
  * @part icon - 图标
+ * @partEn icon - Icon
  *
  * @category interaction
  */
@@ -44,17 +48,23 @@ export
 class ToggleLink extends ReactNextElement implements ToggleLinkProps {
   /**
    * 是否展开
+   * @en Whether it is expanded
    */
   @property({ type: Boolean, render: false })
   accessor open: boolean | undefined;
 
-  /** 主题变体 */
+  /**
+   * 主题变体
+   * @en Theme variant
+   */
   @property()
   accessor themeVariant: "default" | "elevo" | undefined;
 
   /**
    * 切换展开/折叠时触发
+   * @en Triggered when expanding/collapsing
    * @detail 当前是否展开
+   * @detailEn Whether it is currently expanded
    */
   @event({ type: "toggle" })
   accessor #toggle!: EventEmitter<boolean>;

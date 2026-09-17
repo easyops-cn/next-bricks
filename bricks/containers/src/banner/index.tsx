@@ -35,10 +35,12 @@ export interface BannerProps {
 
 /**
  * 构件 `eo-banner`
+ * @en The `eo-banner` brick
  *
  * @author steve
  *
  * @slot - 内容区
+ * @slotEn - The content area
  *
  * @category container-layout
  *
@@ -51,12 +53,14 @@ export
 class EoBanner extends ReactNextElement {
   /**
    * 横幅标题，显示在横幅顶部区域
+   * @en Banner title, displayed in the top area of the banner
    */
   @property()
   accessor bannerTitle: string | undefined;
 
   /**
    * 横幅描述信息，显示在标题下方
+   * @en Banner description, displayed below the title
    */
   @property()
   accessor bannerDescription: string | undefined;
@@ -68,6 +72,12 @@ class EoBanner extends ReactNextElement {
    * - "small": 小尺寸窄布局
    * - "medium": 中等尺寸窄布局
    * - "large": 大尺寸窄布局
+   * @en Set the narrow layout mode (centered).
+   *
+   * - "full": Full size (not centered by narrow layout)
+   * - "small": Small-size narrow layout
+   * - "medium": Medium-size narrow layout
+   * - "large": Large-size narrow layout
    *
    * @default "full"
    */

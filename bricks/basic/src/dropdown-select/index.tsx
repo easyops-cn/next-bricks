@@ -85,9 +85,11 @@ const DropdownSelectComponent = forwardRef<
 
 /**
  * 下拉式选择构件，常用于标题
+ * @en A dropdown select brick, commonly used for titles.
  *
  * @category interact-basic
  * @slot prefix - 下拉列表前置内容
+ * @slotEn prefix - The content before the dropdown list
  */
 export
 @defineElement("eo-dropdown-select", {
@@ -96,18 +98,21 @@ export
 class DropdownSelect extends ReactNextElement implements DropdownSelectProps {
   /**
    * 默认值，仅初始设置有效
+   * @en Default value; only effective when set initially
    */
   @property({ attribute: false })
   accessor defaultValue: string | number | undefined;
 
   /**
    * 可选项列表
+   * @en List of options
    */
   @property({ attribute: false })
   accessor options: DropdownSelectOption[] | undefined;
 
   /**
    * 选择器尺寸
+   * @en Selector size
    * @default "medium"
    */
   @property({ render: false })
@@ -115,12 +120,14 @@ class DropdownSelect extends ReactNextElement implements DropdownSelectProps {
 
   /**
    * 是否显示加载状态
+   * @en Whether to show the loading state
    */
   @property({ type: Boolean })
   accessor loading: boolean | undefined;
 
   /**
    * 当前选中标签的最大宽度
+   * @en Maximum width of the currently selected label
    * @default "650px"
    */
   @property({ attribute: false })
@@ -128,6 +135,7 @@ class DropdownSelect extends ReactNextElement implements DropdownSelectProps {
 
   /**
    * 下拉面板的最大宽度
+   * @en Maximum width of the dropdown panel
    * @default "500px"
    */
   @property({ attribute: false })
@@ -135,7 +143,9 @@ class DropdownSelect extends ReactNextElement implements DropdownSelectProps {
 
   /**
    * 选项变化时触发
+   * @en Triggered when the option changes
    * @detail { label: 选中的标签文本, value: 选中的值, disabled: 是否禁用 }
+   * @detailEn { label: The selected label text, value: The selected value, disabled: Whether it is disabled }
    */
   @event({ type: "change" })
   accessor #changeEvent!: EventEmitter<DropdownSelectOption>;
@@ -148,7 +158,9 @@ class DropdownSelect extends ReactNextElement implements DropdownSelectProps {
 
   /**
    * 设置默认选中项，若 options 中不存在该选项则追加到列表中
+   * @en Set the default selected option; if the option does not exist in options, it is appended to the list
    * @param option - 要设置为默认值的选项
+   * @paramEn option - The option to set as the default value
    */
   @method()
   setDefaultOption(option: DropdownSelectOption): void {

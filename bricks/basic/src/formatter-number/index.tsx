@@ -39,6 +39,7 @@ export type NumberOriginalUnit =
 
 /**
  * 数字格式化，支持普通数字、货币、百分比、二进制字节等数字的格式化显示。
+ * @en Number formatting, supporting the formatted display of plain numbers, currencies, percentages, binary bytes, and other numbers.
  * @category display-component
  */
 export
@@ -51,18 +52,21 @@ class EoFormatterNumber
 {
   /**
    * 要格式化的数字值
+   * @en The number value to format
    */
   @property({ type: Number })
   accessor value: number | undefined;
 
   /**
    * 格式化类型
+   * @en Format type
    */
   @property()
   accessor type: NumberType | undefined;
 
   /**
    * 货币名
+   * @en Currency name
    *
    * @default "CNY"
    */
@@ -71,24 +75,28 @@ class EoFormatterNumber
 
   /**
    * 单位名称，当 type 为 "unit" 时使用
+   * @en Unit name; used when type is "unit"
    */
   @property()
   accessor unit: string | undefined;
 
   /**
    * 原始单位，用于单位转换
+   * @en Original unit, used for unit conversion
    */
   @property()
   accessor originalUnit: NumberOriginalUnit | undefined;
 
   /**
    * 保留的小数位数
+   * @en Number of decimal places to keep
    */
   @property({ type: Number })
   accessor decimals: number | undefined;
 
   /**
    * 是否启用千分位分隔符
+   * @en Whether to enable the thousands separator
    *
    * @default true
    */
@@ -97,6 +105,7 @@ class EoFormatterNumber
 
   /**
    * 当 value 为空或不是数字时的回退显示内容
+   * @en Fallback display content when value is empty or not a number
    */
   @property()
   accessor fallback: string | undefined;

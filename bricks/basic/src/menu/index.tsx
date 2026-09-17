@@ -23,9 +23,11 @@ export interface MenuProps {
 
 /**
  * 菜单构件，支持垂直和水平两种布局方式
+ * @en A menu brick that supports both vertical and horizontal layouts
  * @author sailor
  *
  * @slot - 菜单内容
+ * @slotEn - The menu content
  * @insider
  */
 export
@@ -36,6 +38,7 @@ export
 class Menu extends ReactNextElement implements MenuProps {
   /**
    * 菜单布局方式，支持垂直（vertical）和水平（horizontal）两种模式
+   * @en Menu layout, supporting both vertical and horizontal modes
    */
   @property()
   accessor mode: "vertical" | "horizontal" = "vertical";

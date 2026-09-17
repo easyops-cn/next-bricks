@@ -47,10 +47,14 @@ const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 /**
  * 通用卡片构件
+ * @en A general-purpose card brick
  * @author julielai
  * @slot - 卡片内容
+ * @slotEn - The card content
  * @slot extra - 头部右侧拓展元素
+ * @slotEn extra - Extra elements on the right side of the header
  * @slot titleSuffix - 标题后缀的插槽
+ * @slotEn titleSuffix - The slot for the title suffix
  * @category card-info
  */
 @defineElement("eo-card", {
@@ -60,11 +64,13 @@ const WrappedGeneralIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 class Card extends ReactNextElement implements CardProps {
   /**
    * 标题
+   * @en Title
    */
   @property() accessor cardTitle: string | undefined;
 
   /**
    * 头部图标
+   * @en Header icon
    */
   @property({
     attribute: false,
@@ -73,6 +79,7 @@ class Card extends ReactNextElement implements CardProps {
 
   /**
    * 自动撑满父容器。注意不可以同时使用 `fillVertical` 和 `verticalCenter`
+   * @en Automatically fill the parent container. Note that `fillVertical` and `verticalCenter` cannot be used at the same time.
    */
   @property({
     type: Boolean,
@@ -82,6 +89,7 @@ class Card extends ReactNextElement implements CardProps {
 
   /**
    * 垂直居中。注意不可以同时使用 `fillVertical` 和 `verticalCenter`
+   * @en Vertically centered. Note that `fillVertical` and `verticalCenter` cannot be used at the same time.
    */
   @property({
     type: Boolean,
@@ -90,6 +98,7 @@ class Card extends ReactNextElement implements CardProps {
 
   /**
    * 是否右上角有操作区 slot
+   * @en Whether there is an action area slot in the upper right corner
    */
   @property({
     type: Boolean,
@@ -98,12 +107,14 @@ class Card extends ReactNextElement implements CardProps {
 
   /**
    * 右上角的操作按钮列表
+   * @en List of action buttons in the upper right corner
    */
   @property({ attribute: false })
   accessor operationButtons: OperationButton[] = [];
 
   /**
    * 头部样式
+   * @en Header style
    */
   @property({
     attribute: false,
@@ -112,6 +123,7 @@ class Card extends ReactNextElement implements CardProps {
 
   /**
    * 内容区域样式
+   * @en Content area style
    */
   @property({
     attribute: false,
@@ -120,6 +132,7 @@ class Card extends ReactNextElement implements CardProps {
 
   /**
    * 背景设置。传 `false` 可去除背景，传字符串可自定义背景色（如 CSS 颜色值），默认使用标准背景填充色
+   * @en Background configuration. Pass `false` to remove the background, or pass a string to customize the background color (such as a CSS color value). The standard background fill color is used by default.
    */
   @property({
     attribute: false,
@@ -128,6 +141,7 @@ class Card extends ReactNextElement implements CardProps {
 
   /**
    * 卡片轮廓。默认情况下，使用默认背景填充色，8.2 下默认则为无描边且无填充。
+   * @en Card outline. By default, the standard background fill color is used; in 8.2 it is borderless and unfilled by default.
    *
    * @default "default"
    */
@@ -136,6 +150,7 @@ class Card extends ReactNextElement implements CardProps {
 
   /**
    * 是否隐藏分割线
+   * @en Whether to hide the divider
    */
   @property({
     type: Boolean,
@@ -144,6 +159,7 @@ class Card extends ReactNextElement implements CardProps {
 
   /**
    * 主题变体，可选 `"default"` 或 `"elevo"`
+   * @en Theme variant, either `"default"` or `"elevo"`
    */
   @property()
   accessor themeVariant: "default" | "elevo" | undefined;

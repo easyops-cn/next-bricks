@@ -61,8 +61,10 @@ export interface DropdownActionsEventsMapping {
 
 /**
  * 下拉菜单构件，点击触发元素弹出操作列表，支持选中状态、弹出层定位策略配置和自定义触发内容
+ * @en A dropdown menu brick that pops up an action list when the trigger element is clicked, supporting checked state, popup positioning strategy configuration, and custom trigger content.
  *
  * @slot - 触发弹出的锚点元素
+ * @slotEn - The anchor element that triggers the popup
  * @category interact-basic
  */
 export
@@ -75,6 +77,7 @@ class EoDropdownActions
 {
   /**
    * 操作列表配置
+   * @en Action list configuration
    */
   @property({
     attribute: false,
@@ -83,6 +86,7 @@ class EoDropdownActions
 
   /**
    * actions选中项配置
+   * @en Configuration of the checked items in actions
    */
   @property({
     attribute: false,
@@ -91,6 +95,7 @@ class EoDropdownActions
 
   /**
    * 是否禁用
+   * @en Whether it is disabled
    */
   @property({
     type: Boolean,
@@ -99,6 +104,7 @@ class EoDropdownActions
 
   /**
    * 弹出层如何定位
+   * @en How the popup layer is positioned
    * @default "absolute"
    */
   @property()
@@ -106,26 +112,34 @@ class EoDropdownActions
 
   /**
    * 弹出层放置位置
+   * @en Placement position of the popup layer
    *
    * @default "bottom-start"
    */
   @property()
   accessor placement: Placement | undefined;
 
-  /** 主题变体 */
+  /**
+   * 主题变体
+   * @en Theme variant
+   */
   @property()
   accessor themeVariant: "default" | "elevo" | undefined;
 
   /**
    * 点击按钮时触发
+   * @en Triggered when the button is clicked
    * @detail 该按钮配置
+   * @detailEn The button configuration
    */
   @event({ type: "action.click" })
   accessor #actionClickEvent!: EventEmitter<SimpleAction>;
 
   /**
    * 当弹出层可见性变化之后触发
+   * @en Triggered after the visibility of the popup layer changes
    * @detail 当前是否可见
+   * @detailEn Whether it is currently visible
    */
   @event({ type: "visible.change" })
   accessor #visibleChangeEvent!: EventEmitter<boolean>;

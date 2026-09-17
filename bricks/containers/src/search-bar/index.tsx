@@ -15,9 +15,12 @@ const { defineElement, property } = createDecorators();
 
 /**
  * 常用来包裹内容上方的搜索类构件
+ * @en Commonly used to wrap search-type bricks above the content
  * @author ice
  * @slot start - 左侧搜索栏
+ * @slotEn start - The left search bar
  * @slot end - 右侧操作栏
+ * @slotEn end - The right action bar
  * @category container-display
  */
 export
@@ -28,6 +31,7 @@ export
 class SearchBar extends ReactNextElement {
   /**
    * bottom 偏移，`search-bar`常适配于`brick-table`，故默认加这个偏移，符合设计规范
+   * @en Bottom offset. `search-bar` is often used with `brick-table`, so this offset is added by default to follow the design specification
    */
   @property({
     attribute: false,
@@ -36,12 +40,14 @@ class SearchBar extends ReactNextElement {
 
   /**
    * 当在搜索框插槽`start`和`end`内元素居多时，元素溢出，设置为`true`时，内容区域可以换行
+   * @en When there are many elements in the `start` and `end` search bar slots and they overflow, set to `true` to allow the content area to wrap
    */
   @property({ type: Boolean })
   accessor wrap: boolean;
 
   /**
    * 搜索栏中对齐的方式
+   * @en Alignment within the search bar
    */
   @property({ attribute: false })
   accessor align: Align = "center";

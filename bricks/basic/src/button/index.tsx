@@ -56,10 +56,14 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 
 /**
  * 通用按钮构件
+ * @en A general-purpose button brick
  * @author sailor
  * @part button - 按钮元素
+ * @partEn button - The button element
  * @slot - 按钮内容
+ * @slotEn - The button content
  * @event click - 点击
+ * @eventEn click - Click
  * @category interact-basic
  */
 @defineElement("eo-button", {
@@ -67,17 +71,22 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
   alias: ["basic.general-button"],
 })
 class Button extends ReactNextElement implements ButtonProps {
-  /** 按钮类型 */
+  /**
+   * 按钮类型
+   * @en Button type
+   */
   @property() accessor type: ButtonType | undefined;
 
   /**
    * 按钮大小
+   * @en Button size
    * @default "medium"
    */
   @property() accessor size: ComponentSize | undefined;
 
   /**
    * 是否开启危险状态
+   * @en Whether to enable the danger state
    * @default false
    */
   @property({
@@ -85,7 +94,10 @@ class Button extends ReactNextElement implements ButtonProps {
   })
   accessor danger: boolean | undefined;
 
-  /** 图标 */
+  /**
+   * 图标
+   * @en Icon
+   */
   @property({
     attribute: false,
   })
@@ -93,6 +105,7 @@ class Button extends ReactNextElement implements ButtonProps {
 
   /**
    * 按钮形状，支持圆形、椭圆形，不设置为默认方形
+   * @en Button shape; circle and ellipse are supported. The default is square when not set.
    * @group ui
    */
   @property()
@@ -100,6 +113,7 @@ class Button extends ReactNextElement implements ButtonProps {
 
   /**
    * 是否禁用
+   * @en Whether it is disabled
    * @default false
    */
   @property({
@@ -107,23 +121,36 @@ class Button extends ReactNextElement implements ButtonProps {
   })
   accessor disabled: boolean | undefined;
 
-  /** 链接地址 */
+  /**
+   * 链接地址
+   * @en Link address
+   */
   @property({
     attribute: false,
   })
   accessor url: string | undefined;
 
-  /** 跳转外链地址 */
+  /**
+   * 跳转外链地址
+   * @en External link address to navigate to
+   */
   @property() accessor href: string | undefined;
 
-  /** 链接类型 */
+  /**
+   * 链接类型
+   * @en Link type
+   */
   @property() accessor target: string | undefined;
 
-  /** 鼠标悬停时显示的提示文字 */
+  /**
+   * 鼠标悬停时显示的提示文字
+   * @en Tooltip text displayed on mouse hover
+   */
   @property() accessor tooltip: string | undefined;
 
   /**
    * 按钮样式
+   * @en Button style
    * @group other
    */
   @property({ attribute: false }) accessor buttonStyle:
@@ -139,7 +166,10 @@ class Button extends ReactNextElement implements ButtonProps {
   })
   accessor hasSlot: boolean | undefined;
 
-  /** 主题变体 */
+  /**
+   * 主题变体
+   * @en Theme variant
+   */
   @property()
   accessor themeVariant: "default" | "elevo" | undefined;
 

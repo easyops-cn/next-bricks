@@ -25,13 +25,20 @@ export interface EoEasyopsAvatarProps {
 
 /**
  * EasyOps 头像
+ * @en EasyOps avatar
  *
  * @part eo-avatar - eo-avatar 元素
+ * @partEn eo-avatar - The eo-avatar element
  * @part avatar - 头像容器
+ * @partEn avatar - The avatar container
  * @part avatar-img - 显示为图片时的头像容器
+ * @partEn avatar-img - The avatar container when displayed as an image
  * @part avatar-icon - 显示为图标时的头像容器
+ * @partEn avatar-icon - The avatar container when displayed as an icon
  * @part avatar-text - 显示为文本时的头像容器
+ * @partEn avatar-text - The avatar container when displayed as text
  * @part name - 用户名
+ * @partEn name - The user name
  * @category display-component
  */
 export
@@ -41,16 +48,19 @@ export
 class EoEasyopsAvatar extends ReactNextElement implements EoEasyopsAvatarProps {
   /**
    * 用户名或 instanceId
+   * @en User name or instanceId
    */
   @property() accessor nameOrInstanceId: string | undefined;
 
   /**
    * 尺寸
+   * @en Size
    */
   @property() accessor size: AvatarSize = "medium";
 
   /**
    * 头像和名称间距大小
+   * @en Size of the gap between the avatar and the name
    *
    * @default "medium"
    */
@@ -58,6 +68,7 @@ class EoEasyopsAvatar extends ReactNextElement implements EoEasyopsAvatarProps {
 
   /**
    * 是否有边框
+   * @en Whether there is a border
    */
   @property({
     type: Boolean,
@@ -66,6 +77,7 @@ class EoEasyopsAvatar extends ReactNextElement implements EoEasyopsAvatarProps {
 
   /**
    * 是否展示用户名称
+   * @en Whether to show the user name
    */
   @property({
     type: Boolean,

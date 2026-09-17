@@ -53,13 +53,17 @@ const { defineElement, property } = createDecorators();
 
 /**
  * 通用链接构件
+ * @en A general-purpose link brick
  * @author sailor
  *
  * @part link - 锚元素
+ * @partEn link - The anchor element
  *
  * @event click - 点击
+ * @eventEn click - Click
  *
  * @slot - 链接内容
+ * @slotEn - The link content
  *
  * @category text
  */
@@ -70,23 +74,27 @@ const { defineElement, property } = createDecorators();
 class Link extends ReactNextElement implements LinkProps {
   /**
    * 链接类型
+   * @en Link type
    * @default "link"
    */
   @property() accessor type: LinkType | undefined;
 
   /**
    * 是否禁用
+   * @en Whether it is disabled
    * @default false
    */
   @property({ type: Boolean }) accessor disabled: boolean | undefined;
 
   /**
    * 设置 `href` 时将使用原生 `<a>` 标签，通常用于外链的跳转
+   * @en When `href` is set, the native `<a>` tag is used, usually for navigating to external links
    */
   @property() accessor href: string | undefined;
 
   /**
    * 链接地址
+   * @en Link address
    */
   @property({
     attribute: false,
@@ -95,22 +103,26 @@ class Link extends ReactNextElement implements LinkProps {
 
   /**
    * 标识 `url` 是否为微应用内链接（即使用 APP.homepage 作为前缀）
+   * @en Whether `url` is a link inside the micro app (that is, prefixed with APP.homepage)
    */
   @property({ type: Boolean }) accessor inApp: boolean | undefined;
 
   /**
    * 链接跳转目标
+   * @en Link navigation target
    */
   @property() accessor target: Target | undefined;
 
   /**
    * target 为 _blank 时，是否在后面显示特定图标
+   * @en Whether to show a specific icon after the content when target is _blank
    */
   @property({ type: Boolean })
   accessor showExternalIcon: boolean | undefined;
 
   /**
    * 是否显示下划线
+   * @en Whether to show an underline
    */
   @property({
     type: Boolean,
@@ -119,12 +131,14 @@ class Link extends ReactNextElement implements LinkProps {
 
   /**
    * 是否使用 `history.replace` 而不是默认的 `history.push`
+   * @en Whether to use `history.replace` instead of the default `history.push`
    * @default false
    */
   @property() accessor replace: boolean | undefined;
 
   /**
    * 图标
+   * @en Icon
    * @group io
    */
   @property({
@@ -134,6 +148,7 @@ class Link extends ReactNextElement implements LinkProps {
 
   /**
    * 是否开启危险状态
+   * @en Whether to enable the danger state
    */
   @property({
     type: Boolean,
@@ -142,18 +157,23 @@ class Link extends ReactNextElement implements LinkProps {
 
   /**
    * 文字提示
+   * @en Tooltip text
    */
   @property() accessor tooltip: string | undefined;
 
   /**
    * 链接样式
+   * @en Link style
    * @group other
    */
   @property({ attribute: false }) accessor linkStyle:
     | React.CSSProperties
     | undefined;
 
-  /** 主题变体 */
+  /**
+   * 主题变体
+   * @en Theme variant
+   */
   @property({ render: false })
   accessor themeVariant: "default" | "elevo" | undefined;
 
