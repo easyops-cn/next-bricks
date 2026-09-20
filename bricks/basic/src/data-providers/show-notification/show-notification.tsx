@@ -32,20 +32,36 @@ const WrappedIcon = wrapBrick<GeneralIcon, GeneralIconProps>("eo-icon");
 const WrappedLink = wrapLocalBrick<Link, LinkProps>("eo-link");
 
 export interface NotificationOptions {
-  /** 通知类型 */
+  /**
+   * 通知类型
+   * @en Notification type
+   */
   type?: "success" | "error" | "warn" | "info";
   /**
    * 持续时间（毫秒）
+   * @en Duration in milliseconds
    * @default 3000
    */
   duration?: number;
-  /** 弹出位置，默认居中 */
+  /**
+   * 弹出位置，默认居中
+   * @en Popup placement, centered by default
+   */
   placement?: "center" | "topRight";
-  /** 通知标题 */
+  /**
+   * 通知标题
+   * @en Notification title
+   */
   title?: string | null;
-  /** 通知内容 */
+  /**
+   * 通知内容
+   * @en Notification content
+   */
   message?: string | null;
-  /** HTML 格式的通知内容，该内容会被 dom-purify sanitize */
+  /**
+   * HTML 格式的通知内容，该内容会被 dom-purify sanitize
+   * @en Notification content in HTML format, sanitized by dom-purify
+   */
   htmlMessage?: string;
   inlineLink?: {
     text: string;
@@ -53,25 +69,55 @@ export interface NotificationOptions {
     href?: string;
     target?: Target;
   };
-  /** 允许手动关闭消息提示 */
+  /**
+   * 允许手动关闭消息提示
+   * @en Allow manually closing the notification
+   */
   closable?: boolean;
-  /** 自定义图标 */
+  /**
+   * 自定义图标
+   * @en Custom icon
+   */
   icon?: GeneralIconProps & { style?: React.CSSProperties };
-  /**样式类型，默认圆角样式 */
+  /**
+   * 样式类型，默认圆角样式
+   * @en Style type, rounded corners by default
+   */
   styleType?: "circleAngle" | "rectAngle";
-  /** 确认文本 */
+  /**
+   * 确认文本
+   * @en Confirm text
+   */
   confirmText?: string;
-  /** 确认链接选项 */
+  /**
+   * 确认链接选项
+   * @en Confirm link options
+   */
   confirmLink?: LinkOptions;
-  /** 取消文本 */
+  /**
+   * 取消文本
+   * @en Cancel text
+   */
   cancelText?: string;
-  /** 展示确认按钮 */
+  /**
+   * 展示确认按钮
+   * @en Show the confirm button
+   */
   showConfirm?: boolean;
-  /** 展示取消按钮 */
+  /**
+   * 展示取消按钮
+   * @en Show the cancel button
+   */
   showCancel?: boolean;
-  /** 语音播报的内容 */
+  /**
+   * 语音播报的内容
+   * @en Content for speech broadcast
+   */
   voiceContent?: string;
-  /** 语音播报配置 */
+  /**
+   * 语音播报配置
+   * @en Speech broadcast options
+   */
   voiceOptions?: SpeechNotificationsOptions;
   themeVariant?: SiteVariant;
 }
@@ -84,8 +130,10 @@ export interface LinkOptions {
 
 /**
  * 显示通知消息。
+ * @en Show a notification message.
  *
  * @param options 选项
+ * @paramEn options Options
  */
 export async function showNotification(
   options: NotificationOptions

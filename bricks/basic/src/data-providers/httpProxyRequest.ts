@@ -12,6 +12,7 @@ export interface HttpProxyData {
 
 /**
  * 用于对接第三方接口，请求将会被后台代理转发
+ * @en Used to call third-party APIs; requests will be forwarded by the backend proxy
  */
 export async function httpProxyRequest(data: HttpProxyData) {
   const result = await http.post(

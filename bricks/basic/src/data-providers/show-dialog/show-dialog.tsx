@@ -39,7 +39,10 @@ const WrappedInput = wrapBrick<
 });
 
 export interface DialogOptions {
-  /** 对话框类型 */
+  /**
+   * 对话框类型
+   * @en Dialog type
+   */
   type?: "success" | "error" | "warn" | "info" | "confirm" | "delete";
   title?: string;
   content: string;
@@ -91,8 +94,10 @@ const parseTemplate = (template: string, context: Record<string, any>) => {
 
 /**
  * 显示对话框。
+ * @en Show a dialog.
  *
  * @param options 选项
+ * @paramEn options Options
  */
 export function showDialog(options: DialogOptions): Promise<void> {
   const container = document.createElement("div");

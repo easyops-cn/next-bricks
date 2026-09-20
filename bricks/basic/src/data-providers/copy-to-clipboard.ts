@@ -2,8 +2,10 @@ import { createProviderClass } from "@next-core/utils/general";
 
 /**
  * 复制文本内容到粘贴板。
+ * @en Copy text to the clipboard.
  *
- *  @param text 文本内容
+ * @param text 文本内容
+ * @paramEn text Text content
  */
 export async function copyToClipboard(text: string): Promise<void> {
   return new Promise((resolve, reject) => {
