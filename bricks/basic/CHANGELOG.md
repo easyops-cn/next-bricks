@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.63.11](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.63.10...@next-bricks/basic@1.63.11) (2026-09-21)
+
+
+### Bug Fixes
+
+* **basic:** 补齐 14 个 provider 的英文说明（[@en](https://github.com/en) / [@param](https://github.com/param)En） ([e884b82](https://github.com/easyops-cn/next-bricks/commit/e884b82726ce3e5f1a76b7c73201ec28fe5a5110))
+
+
+
+
+
 ## [1.63.10](https://github.com/easyops-cn/next-bricks/compare/@next-bricks/basic@1.63.9...@next-bricks/basic@1.63.10) (2026-09-17)
 
 
