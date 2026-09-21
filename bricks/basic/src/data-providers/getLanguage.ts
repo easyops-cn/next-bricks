@@ -3,6 +3,7 @@ import { i18n } from "@next-core/i18n";
 
 /**
  * 获取当前站点语言。
+ * @en Get the current site language.
  *
  * @returns 当前语言
  */

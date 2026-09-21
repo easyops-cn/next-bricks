@@ -3,8 +3,10 @@ import { i18n } from "@next-core/i18n";
 
 /**
  * 更改站点语言。
+ * @en Change the site language.
  *
  * @param lang 语言
+ * @paramEn lang Language
  */
 export async function changeLanguage(lang: string): Promise<void> {
   await i18n.changeLanguage(lang);
